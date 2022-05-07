@@ -44,6 +44,7 @@ export default [
   'instead',
   'just about',
   'just',
+  'likewise',
   'kinda',
   'maybe',
   'meanwhile',

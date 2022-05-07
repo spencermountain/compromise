@@ -639,5 +639,7 @@ export default [
   'inconsiderate',
   'inordinate',
   'proximate',
+
+  'renowned',
 ]
 

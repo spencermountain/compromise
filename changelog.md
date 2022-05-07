@@ -16,6 +16,8 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[fix]** - better unicode support with Unicode property escapes 
 - **[fix]** - problems matching on cached documents
 - **[fix]** - typescript fixes
+- **[fix]** - suffix tagging issues
+- **[chaneg]** - drop deprecated .subst() method
 -->
 
 #### 14.1.2 [April 2021]

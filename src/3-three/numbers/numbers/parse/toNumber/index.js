@@ -54,7 +54,7 @@ const parse = function (str) {
     }
     if (w.charAt(0) === '-') {
       isNegative = true
-      w = w.substr(1)
+      w = w.substring(1)
     }
 
     //decimal mode

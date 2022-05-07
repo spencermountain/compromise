@@ -49,7 +49,7 @@ test('pennTreebank-test:', function (t) {
 
     let doc = nlp(sentence.text)
     let perfect = true
-    let msg = `'` + sentence.text.substr(0, 55) + `..   -  `
+    let msg = `'` + sentence.text.substring(0, 55) + `..   -  `
 
     let terms = doc.json()[0].terms
     if (doc.length !== 1) {
@@ -59,7 +59,7 @@ test('pennTreebank-test:', function (t) {
     if (terms.length !== sentence.tags.length) {
       perfect = false
       msg = 'tokenize: '
-      msg += sentence.text.substr(0, 100)
+      msg += sentence.text.substring(0, 100)
     }
     // t.equal(doc.length, 1, 'one sentence #' + index)
     // t.equal(terms.length, sentence.tags.length, 'tokenize#' + index)

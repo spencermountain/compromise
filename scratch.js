@@ -7,17 +7,20 @@ nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 let txt = ''
-txt = 'lane'
-txt = 'coke'
-txt = 'premier'
-txt = 'hormone'
-txt = 'hardwork'
-txt = 'likewise'
-txt = 'forth'
-txt = 'misfortune'
-txt = 'outstanding'
-txt = 'renowned'
-
+txt = 'portal'
+txt = 'parish'
+txt = 'adjective'
+txt = 'attic'
+txt = 'borough'
+txt = 'cathedral'
+txt = 'arithmetic'
+txt = 'constable'
+txt = 'fetish'
+txt = 'conservatory'
+txt = 'mineral'
+txt = 'caterpillar'
+txt = 'fanny'
+txt = 'countryside'
 nlp(txt).debug()
 
 // let doc = nlp('before match after. second sentence here.')

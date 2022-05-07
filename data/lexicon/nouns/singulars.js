@@ -385,6 +385,7 @@ export default [
   'menu',
 
   'owner',
+  'coke',
 
 ]
 

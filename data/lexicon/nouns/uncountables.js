@@ -229,4 +229,9 @@ export default [
   'presense',
   'dope',
   'appeal court',
+
+  'interstate',
+  'fate',
+  'karate',
+  'senate',
 ]

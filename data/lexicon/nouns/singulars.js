@@ -384,7 +384,8 @@ export default [
   'bride',
   'menu',
 
-  'owner'
+  'owner',
+
 ]
 
 

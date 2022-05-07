@@ -719,6 +719,7 @@ export default [
   'myles',
   'myron',
   'nahom',
+  'nate',
   'nathan',
   'nathanael',
   'nathaniel',

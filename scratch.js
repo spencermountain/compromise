@@ -3,11 +3,24 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
+let txt = ''
+txt = 'lane'
+txt = 'coke'
+txt = 'premier'
+txt = 'hormone'
+txt = 'hardwork'
+txt = 'likewise'
+txt = 'forth'
+txt = 'misfortune'
+txt = 'outstanding'
+txt = 'renowned'
 
-let doc = nlp('before match after. second sentence here.')
+nlp(txt).debug()
+
+// let doc = nlp('before match after. second sentence here.')
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 

@@ -64,3 +64,16 @@ test('match-net-basic:', function (t) {
 
   t.end()
 })
+
+
+test('cache-checks:', function (t) {
+  let net = nlp.buildNet([
+    { match: '(will && @isTitleCase) smith', tag: 'Celebrity' }
+  ])
+  let m = nlp('Will Smith').sweep(net).view
+  t.equal(m.has('#Celebrity'), true, here + 'and result found')
+
+  m = nlp('will Smith').sweep(net).view
+  t.equal(m.has('#Celebrity'), false, here + 'and true-negative')
+  t.end()
+})

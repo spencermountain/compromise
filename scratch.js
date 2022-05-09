@@ -23,13 +23,9 @@ txt = 'collide'
 // doc.debug()
 // console.log(doc.verbs().conjugate()[0])
 
-let net = nlp.buildNet([
-  { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' }
-])
-console.log(net)
 
-// let doc = nlp(` and Will Ferrell as best-friends`)
-// doc.debug()
+let doc = nlp(` and Will Ferrell as best-friends`)
+doc.debug()
 
 // let doc = nlp('before match after. second sentence here.')
 

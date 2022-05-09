@@ -8135,15 +8135,14 @@
   ];
   var matches$1 = matches;
 
-  let byGroup = null;
+  let net = null;
 
 
   const doMatches = function (view) {
     let { document, world } = view;
     const { methods } = world;
-    byGroup = byGroup || methods.two.compile(matches$1, methods);
-    let found = methods.two.bulkMatch(document, byGroup, methods);
-    // console.log(found.length, 'found')
+    net = net || methods.two.makeNet(matches$1, methods);
+    let found = methods.two.bulkMatch(document, net, methods);
     methods.two.bulkTagger(found, document, world);
   };
 

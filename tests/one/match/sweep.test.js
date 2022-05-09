@@ -71,7 +71,7 @@ test('uncacheable-match:', function (t) {
   ]
   let net = nlp.buildNet(matches)
   let m = nlp('foo 2nd bar').sweep(net).view
-  t.equal(m.has('RegExp'), true, here + 'found regex-only')
+  t.equal(m.has('#RegExp'), true, here + 'found regex-only')
   t.end()
 })
 
@@ -84,6 +84,25 @@ test('cache-checks:', function (t) {
 
   m = nlp('will Smith').sweep(net).view
   t.equal(m.has('#Celebrity'), false, here + 'and true-negative')
+  t.end()
+})
+
+test('multi-fast-OR:', function (t) {
+  let net = nlp.buildNet([
+    { match: '(one|two|three) (a|b|c)', tag: 'Found' }
+  ])
+  let allForms = [
+    'one a',
+    'one b',
+    'one c',
+    'three a',
+    'three b',
+    'three c',
+  ]
+  allForms.forEach(reg => {
+    let m = nlp(reg).sweep(net).view
+    t.equal(m.has('#Found'), true, here + reg)
+  })
   t.end()
 })
 

@@ -8,31 +8,39 @@ import nlp from './src/one.js'
 
 let txt = ''
 // conjugation fixes
-txt = 'go'
-txt = 'fulfil'
-txt = 'outgrow'
-txt = 'prod'
-txt = 'shine'
-txt = 'shun'
-txt = 'slam'
-txt = 'take part'
-txt = 'unearth'
-txt = 'collide'
-
+// txt = 'go'
+// txt = 'fulfil'
+// txt = 'outgrow'
+// txt = 'prod'
+// txt = 'shine'
+// txt = 'shun'
+// txt = 'slam'
+// txt = 'take part'
+// txt = 'unearth'
+// txt = 'collide'
 // let doc = nlp(txt)
 // doc.debug()
 // console.log(doc.verbs().conjugate()[0])
 
+// nlp('Major Tom').debug()
 
 let matches = [
-  { match: '(foo|one two)' },
+  {
+    match: '/[0-9]{1,2}/',
+    tag: 'BritishDate',
+  },
+
+  { match: '/[0-9]{1,2}(st|nd|rd|th)/', tag: 'RegExp' },
+  // { match: '[(private|major|general)] tom' },
+  // { match: 'before (foo|one two)? after' },
+  // { match: 'foo bar' },
+  // { match: '(one|two|three)' },
 ]
 
 // console.dir(nlp.parseMatch('(foo|bar baz)')[0], { depth: 5 })
 
 let net = nlp.buildNet(matches)
-console.log(net.always)
-let m = nlp('one two').sweep(net).view
+let m = nlp('foo 2nd bar').sweep(net).view
 m.debug()
 // console.log('----')
 // console.dir(net, { depth: 5 })

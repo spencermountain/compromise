@@ -12,7 +12,6 @@ const compile = function (matches, methods) {
   // matches = buildUp(matches) // run this twice
   // retrieve the needs of each match statement
   matches = cache(matches, methods)
-
   // keep all un-cacheable matches (those with no needs) 
   let always = matches.filter(o => o.needs.length === 0)
 

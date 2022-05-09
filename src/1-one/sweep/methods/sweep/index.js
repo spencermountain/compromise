@@ -9,7 +9,7 @@ const sweep = function (document, net, methods, opts = {}) {
   let maybeList = getCandidates(docCache, net.index)
   // ensure all defined needs are met for each match
   maybeList = trimDown(maybeList, docCache)
-  if (net.always.length === 0) {
+  if (net.always.length > 0) {
     maybeList[0] = maybeList[0] || []
     maybeList[0] = maybeList[0].concat(net.always)
   }

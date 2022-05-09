@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -25,17 +25,22 @@ txt = 'collide'
 
 
 let matches = [
-  { match: '/[0-9]{1,2}(st|nd|rd|th)/', tag: 'RegExp' },
-  { match: 'foo', tag: 'Foo' },
-  { match: 'bar', tag: 'Bar' },
+  { match: '(foo|one two)' },
 ]
+
+// console.dir(nlp.parseMatch('(foo|bar baz)')[0], { depth: 5 })
+
 let net = nlp.buildNet(matches)
-console.log(net)
-let doc = nlp('asdf 2nd bar')
+console.log(net.always)
+let m = nlp('one two').sweep(net).view
+m.debug()
+// console.log('----')
+// console.dir(net, { depth: 5 })
+// let doc = nlp('asdf 2nd bar')
 // doc.match('/[0-9]{1,2}(st|nd|rd|th)/').debug()
 
-let m = doc.sweep(net).view
-m.debug()
+// let m = doc.sweep(net).view
+// m.debug()
 
 
 

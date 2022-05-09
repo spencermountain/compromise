@@ -43,6 +43,7 @@ export default [
   'individual',
   'innocent',
   'juvenile',
+  'justice',
   'latter',
   'liberal',
   'light',

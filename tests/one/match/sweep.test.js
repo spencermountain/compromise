@@ -86,3 +86,19 @@ test('cache-checks:', function (t) {
   t.equal(m.has('#Celebrity'), false, here + 'and true-negative')
   t.end()
 })
+
+test('slow-OR-checks:', function (t) {
+  let net = nlp.buildNet([
+    { match: '(foo|one two)', tag: 'Found' }
+  ])
+  let m = nlp('foo').sweep(net).view
+  t.equal(m.has('#Found'), true, here + 'single-choice')
+
+  m = nlp('one two').sweep(net).view
+  t.equal(m.has('#Found'), true, here + 'multi-choice')
+
+  m = nlp('open bar').sweep(net).view
+  t.equal(m.has('#Found'), false, here + 'not-one-multi')
+
+  t.end()
+})

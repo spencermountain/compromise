@@ -1,4 +1,4 @@
-import makeNet from './build/index.js'
+import makeNet from './buildNet/index.js'
 import bulkMatch from './sweep/index.js'
 import bulkTagger from './tagger/index.js'
 

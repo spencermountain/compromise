@@ -43,7 +43,7 @@ const buildUp = function (matches) {
       more.forEach(mo => {
         let newObj = Object.assign({}, obj) //clone
         newObj.regs = obj.regs.slice(0) //clone
-        newObj.regs[foundOr] = mo //!fixme [mo]?
+        newObj.regs[foundOr] = mo
         newObj._expanded = true
         all.push(newObj)
       })
@@ -51,6 +51,7 @@ const buildUp = function (matches) {
     }
     all.push(obj)
   })
+  // console.dir(all, { depth: 7 })
   return all
 }
 

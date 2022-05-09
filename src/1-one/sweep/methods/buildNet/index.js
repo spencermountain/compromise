@@ -9,7 +9,7 @@ const compile = function (matches, methods) {
   matches = parse(matches, methods)
   // convert (a|b) to ['a', 'b']
   matches = buildUp(matches)
-  matches = buildUp(matches) // run this twice
+  // matches = buildUp(matches) // run this twice
   // retrieve the needs of each match statement
   matches = cache(matches, methods)
 

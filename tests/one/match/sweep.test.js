@@ -65,13 +65,18 @@ test('match-net-basic:', function (t) {
   t.end()
 })
 
-test('uncacheable-match:', function (t) {
+test('un-cacheable-match:', function (t) {
   let matches = [
     { match: '/[0-9]{1,2}(st|nd|rd|th)/', tag: 'RegExp' },
   ]
   let net = nlp.buildNet(matches)
   let m = nlp('foo 2nd bar').sweep(net).view
   t.equal(m.has('#RegExp'), true, here + 'found regex-only')
+
+  matches = [{ match: '/foo/' }]
+  net = nlp.buildNet(matches)
+  m = nlp('first. foo bar').sweep(net).view
+  t.equal(m.text(), 'foo', here + 'found reg')
   t.end()
 })
 

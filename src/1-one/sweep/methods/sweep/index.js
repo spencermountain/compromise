@@ -12,6 +12,7 @@ const sweep = function (document, net, methods, opts = {}) {
   if (net.always.length > 0) {
     maybeList[0] = maybeList[0] || []
     maybeList[0] = maybeList[0].concat(net.always)
+    maybeList = maybeList.filter(m => m.length)
   }
   // now actually run the matches
   let results = runMatch(maybeList, document, methods, opts)

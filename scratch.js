@@ -26,21 +26,14 @@ let txt = ''
 
 let matches = [
   {
-    match: '/[0-9]{1,2}/',
-    tag: 'BritishDate',
+    match: '/foo/',
+    tag: 'Reg',
+    reason: '01/01/2020',
   },
-
-  { match: '/[0-9]{1,2}(st|nd|rd|th)/', tag: 'RegExp' },
-  // { match: '[(private|major|general)] tom' },
-  // { match: 'before (foo|one two)? after' },
-  // { match: 'foo bar' },
-  // { match: '(one|two|three)' },
 ]
 
-// console.dir(nlp.parseMatch('(foo|bar baz)')[0], { depth: 5 })
-
 let net = nlp.buildNet(matches)
-let m = nlp('foo 2nd bar').sweep(net).view
+let m = nlp('first. foo bar').sweep(net).view
 m.debug()
 // console.log('----')
 // console.dir(net, { depth: 5 })

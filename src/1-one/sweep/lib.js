@@ -2,10 +2,11 @@ export default {
   // compile a list of matches into a match-net
   buildNet: function (matches) {
     const methods = this.methods()
-    let index = methods.two.compile(matches, methods)
+    let { index, always } = methods.two.makeNet(matches, methods)
     return {
       isNet: true,
-      index
+      index,
+      always
     }
   }
 }

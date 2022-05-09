@@ -1,17 +1,21 @@
-import matchUp from './01-matchUp.js'
-import localTrim from './02-localTrim.js'
+import getCandidates from './01-candidates.js'
+import trimDown from './02-trim-down.js'
 import runMatch from './03-runMatch.js'
 
-const matcher = function (document, byGroup, methods, opts = {}) {
+const sweep = function (document, net, methods, opts = {}) {
   // find suitable matches to attempt, on each sentence
   let docCache = methods.one.cacheDoc(document)
   // collect possible matches for this document
-  let maybeList = matchUp(docCache, byGroup)
+  let maybeList = getCandidates(docCache, net.index)
   // ensure all defined needs are met for each match
-  maybeList = localTrim(maybeList, docCache)
+  maybeList = trimDown(maybeList, docCache)
+  if (net.always.length === 0) {
+    maybeList[0] = maybeList[0] || []
+    maybeList[0] = maybeList[0].concat(net.always)
+  }
   // now actually run the matches
   let results = runMatch(maybeList, document, methods, opts)
   // console.dir(results, { depth: 5 })
   return results
 }
-export default matcher
+export default sweep

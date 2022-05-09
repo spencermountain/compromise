@@ -3,7 +3,7 @@ import bulkMatch from './sweep/index.js'
 import bulkTagger from './tagger/index.js'
 
 export default {
-  compile: makeNet,
+  makeNet,
   bulkMatch,
   bulkTagger
 }

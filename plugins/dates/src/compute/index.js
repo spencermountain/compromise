@@ -3,14 +3,14 @@ import time from './04-time.js'
 import timezone from './07-timezone.js'
 import fixup from './08-fixup.js'
 import matches from './matches.js'
-let byGroup = null
+let net = null
 
 
 const doMatches = function (view) {
   let { document, world } = view
   const { methods } = world
-  byGroup = byGroup || methods.two.compile(matches, methods)
-  let found = methods.two.bulkMatch(document, byGroup, methods)
+  net = net || methods.two.makeNet(matches, methods)
+  let found = methods.two.bulkMatch(document, net, methods)
   methods.two.bulkTagger(found, document, world)
 }
 

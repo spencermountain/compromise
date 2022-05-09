@@ -4,7 +4,7 @@ const api = function (View) {
   View.prototype.sweep = function (net, opts = {}) {
     const { world, document } = this
     const { methods } = world
-    let found = methods.two.bulkMatch(document, net.index, this.methods, opts)
+    let found = methods.two.bulkMatch(document, net, this.methods, opts)
 
     // apply any changes
     if (opts.tagger !== false) {

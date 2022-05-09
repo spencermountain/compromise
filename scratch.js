@@ -24,8 +24,23 @@ txt = 'collide'
 // console.log(doc.verbs().conjugate()[0])
 
 
-let doc = nlp(` and Will Ferrell as best-friends`)
-doc.debug()
+let matches = [
+  { match: '/[0-9]{1,2}(st|nd|rd|th)/', tag: 'RegExp' },
+  { match: 'foo', tag: 'Foo' },
+  { match: 'bar', tag: 'Bar' },
+]
+let net = nlp.buildNet(matches)
+console.log(net)
+let doc = nlp('asdf 2nd bar')
+// doc.match('/[0-9]{1,2}(st|nd|rd|th)/').debug()
+
+let m = doc.sweep(net).view
+m.debug()
+
+
+
+// let doc = nlp(` and Will Ferrell as best-friends`)
+// doc.debug()
 
 // let doc = nlp('before match after. second sentence here.')
 

@@ -64,7 +64,7 @@ const rules = [
   // that is why
   // { match: '[that] (is|was)', group: 0, chunk: 'Noun' },
 ]
-let byGroup = null
+let net = null
 
 const setChunks = function (todo, document, methods) {
   const { getDoc } = methods.one
@@ -84,8 +84,8 @@ const setChunks = function (todo, document, methods) {
 
 const matcher = function (document, world) {
   const { methods } = world
-  byGroup = byGroup || methods.two.compile(rules, methods)
-  let found = methods.two.bulkMatch(document, byGroup, methods)
+  net = net || methods.two.makeNet(rules, methods)
+  let found = methods.two.bulkMatch(document, net, methods)
   found.forEach(todo => {
     setChunks(todo, document, methods)
   })

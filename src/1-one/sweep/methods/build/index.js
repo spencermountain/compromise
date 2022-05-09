@@ -13,6 +13,9 @@ const compile = function (matches, methods) {
   // retrieve the needs of each match statement
   matches = cache(matches, methods)
 
+  // keep all un-cacheable matches (those with no needs) 
+  let always = matches.filter(o => o.needs.length === 0)
+
   // organize them according to need...
   let byGroup = group(matches, methods)
 
@@ -24,7 +27,10 @@ const compile = function (matches, methods) {
   delete byGroup['#Verb']
   // console.log(matches.filter(o => o.needs.length === 1)) //check!
 
-  return byGroup
+  return {
+    index: byGroup,
+    always
+  }
 }
 
 export default compile

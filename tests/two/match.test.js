@@ -548,6 +548,14 @@ let arr = [
   ['caterpillar', '#Noun'],
   ['fanny', '#Noun'],
   ['arithmetic', '#Noun'],
+
+  // person-titlecase
+  ['Ollie Faroo', '#Person #Person'],
+  ['Cliff Clavin', '#Person #Person'],
+  ['Wade Slowagon', '#Person #Person'],
+  ['Wade G. Slapgoop', '#Person #Person'],
+  ['Jan Thierson', '#Person #Person'],
+  ['Gail Emerson', '#Person #Person'],
 ]
 test('match:', function (t) {
   let res = []

@@ -2,6 +2,19 @@
 export default [
   // clues: [person, verb],
   // fallback: 'PresentTense', //maybe?
-  'drew', 'pat', 'wade', 'ollie', 'rob', 'buck', 'sue', 'bob', 'mark', 'jack', 'chuck', 'mack', 'grant'//'sung'
-  // will, may
+  'drew',
+  'pat',
+  'wade',
+  'ollie',
+  'rob',
+  'buck',
+  'sue',
+  'bob',
+  'mark',
+  'jack',
+  'chuck',
+  'mack',
+  'grant',//'sung'
+  // 'will',
+  //  may
 ]

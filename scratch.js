@@ -3,13 +3,33 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // nlp.verbose('chunker')
 
 let txt = ''
-txt = 'quadrillion'
+// conjugation fixes
+txt = 'go'
+txt = 'fulfil'
+txt = 'outgrow'
+txt = 'prod'
+txt = 'shine'
+txt = 'shun'
+txt = 'slam'
+txt = 'take part'
+txt = 'unearth'
+txt = 'collide'
 
-nlp(txt).debug()
+// let doc = nlp(txt)
+// doc.debug()
+// console.log(doc.verbs().conjugate()[0])
+
+let net = nlp.buildNet([
+  { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' }
+])
+console.log(net)
+
+// let doc = nlp(` and Will Ferrell as best-friends`)
+// doc.debug()
 
 // let doc = nlp('before match after. second sentence here.')
 

@@ -689,7 +689,6 @@ export default [
   'profess',
   'bathe',
   'incite',
-  'state chief',
 
   // -ide
   'abide',

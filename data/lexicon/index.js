@@ -106,7 +106,7 @@ const data = [
   [prepositions, 'Preposition'],
   [comparables, 'Comparable'],
 
-  [infinitives, 'Infinitive'],
+  [infinitives, 'Infinitive'],//3kb
   [modals, 'Modal'],
   [verbs, 'Verb'],
   [participles, 'Participle'],

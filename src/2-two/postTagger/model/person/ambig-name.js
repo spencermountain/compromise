@@ -42,7 +42,8 @@ export default [
 
   // ===person-noun===
   // { match: `[%Person|Noun%] (will|had|has|said|says|told|did|learned|wants|wanted)`, tag: 'Person', reason: 'person-said' },
-
+  //Cliff Clavin
+  { match: '%Person|Noun% #ProperNoun', tag: 'Person', reason: 'switch-person', safe: true },
   // ===person-adjective===
   // rusty smith
   { match: `${personAdj} #Person`, tag: 'Person', reason: 'randy-smith' },
@@ -65,4 +66,6 @@ export default [
   // { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
   // will go
   { match: '[will] #Verb', group: 0, tag: 'Modal', reason: 'will-verb' },
+  // will Pharell
+  { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' },
 ]

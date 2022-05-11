@@ -5,13 +5,11 @@ import fixup from './08-fixup.js'
 import matches from './matches.js'
 let net = null
 
-
 const doMatches = function (view) {
-  let { document, world } = view
+  let { world } = view
   const { methods } = world
   net = net || methods.two.makeNet(matches, methods)
-  let found = methods.two.bulkMatch(document, net, methods)
-  methods.two.bulkTagger(found, document, world)
+  view.sweep(net)
 }
 
 // run each of the taggers

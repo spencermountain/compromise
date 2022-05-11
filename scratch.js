@@ -6,29 +6,17 @@ import nlp from './src/three.js'
 // nlp.verbose('tagger')
 
 let txt = `
-List: 
+Header: 
 single
 
-Two bad:
+Header:
 first
 second
 `
 let doc = nlp(txt)
-doc.match('list').tag('Heading')
-doc.match('Two bad').tag('Heading')
-
-
-const mutate = function (obj, doc) {
-  // mutate them
-  // obj.items.forEach((item) => {
-  //   // add the header
-  //   item.prepend(obj.heading)
-  // })
-  // remove the original header
-  doc.remove(obj.heading)
-}
-let obj = { items: [], heading: doc.match('#Heading+') }
-mutate(obj, doc)
+let m = doc.match('Header')
+doc.remove(m)
+// m.debug()
 doc.debug()
 
 

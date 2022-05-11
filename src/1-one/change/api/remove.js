@@ -1,5 +1,44 @@
 import pluckOutTerm from './lib/remove.js'
 
+const fixPointers = function (ptrs, gonePtrs) {
+  ptrs = ptrs.map(ptr => {
+    let [n] = ptr
+    if (!gonePtrs[n]) {
+      return ptr
+    }
+    gonePtrs[n].forEach(no => {
+      let len = no[2] - no[1]
+      // does it effect our pointer?
+      if (ptr[1] <= no[1] && ptr[2] >= no[2]) {
+        ptr[2] -= len
+      }
+    })
+    return ptr
+  })
+
+  // decrement any pointers after a now-empt pointer
+  ptrs.forEach((ptr, i) => {
+    // is it zero-sized?
+    if (ptr[2] - ptr[1] <= 0) {
+      // go down subsequent pointers
+      for (let n = i + 1; n < ptrs.length; n += 1) {
+        ptrs[n][5] += 1
+        ptrs[n][0] -= 1
+      }
+    }
+  })
+  // remove any now-empty pointers
+  ptrs = ptrs.filter(ptr => ptr[2] - ptr[1] > 0)
+
+  // remove old hard-pointers
+  // ptrs = ptrs.map((ptr) => {
+  //   ptr[3] = null
+  //   ptr[4] = null
+  //   return ptr
+  // })
+  return ptrs
+}
+
 const methods = {
   /** */
   remove: function (reg) {
@@ -24,42 +63,8 @@ const methods = {
     // remove them from the actual document)
     let document = pluckOutTerm(this.document, nots)
     // repair our pointers
-    let gone = indexN(nots)
-    ptrs = ptrs.map(ptr => {
-      let [n] = ptr
-      if (!gone[n]) {
-        return ptr
-      }
-      gone[n].forEach(no => {
-        let len = no[2] - no[1]
-        // does it effect our pointer?
-        if (ptr[1] <= no[1] && ptr[2] >= no[2]) {
-          ptr[2] -= len
-        }
-      })
-      return ptr
-    })
-
-    // remove any now-empty pointers
-    ptrs = ptrs.filter((ptr, i) => {
-      const len = ptr[2] - ptr[1]
-      if (len <= 0) {
-        // adjust downstream pointers
-        for (let x = i + 1; x < ptrs.length; x += 1) {
-          ptrs.filter(a => a[0] === x).forEach(a => {
-            a[0] -= 1
-          })
-        }
-        return false
-      }
-      return true
-    })
-    // remove old hard-pointers
-    ptrs = ptrs.map((ptr) => {
-      ptr[3] = null
-      ptr[4] = null
-      return ptr
-    })
+    let gonePtrs = indexN(nots)
+    ptrs = fixPointers(ptrs, gonePtrs)
     // mutate original
     self.ptrs = ptrs
     self.document = document

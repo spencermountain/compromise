@@ -244,6 +244,23 @@ test('remove-bug-2', function (t) {
   t.end()
 })
 
+
+test('remove-bug-3', function (t) {
+  let txt = `
+Header: 
+single
+
+Header:
+first
+second
+`
+  let doc = nlp(txt)
+  let m = doc.match('Header')
+  doc.remove(m)
+  t.deepEqual(doc.out('array'), ['single', 'first', 'second'], here + 'multi-remove issue')
+  t.end()
+})
+
 // test('remove-self-keep-splits', function (t) {
 //   let m = nlp('one two three. four.')
 //   m = m.terms()

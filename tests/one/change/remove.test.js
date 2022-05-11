@@ -224,6 +224,26 @@ test('remove-bug-1', function (t) {
   t.end()
 })
 
+
+// weird remove issue
+test('remove-bug-2', function (t) {
+  let doc = nlp('two three')
+  let arr = doc.splitAfter('two')
+  arr.remove('three') // works
+  t.deepEqual(arr.out('array'), ['two'], here + 'remove match')
+  t.deepEqual(doc.out('array'), ['two'], here + 'doc remove match')
+
+  doc = nlp('two three')
+  arr = doc.splitAfter('two')
+  let m = doc.match('three')
+  m.remove()
+  t.deepEqual(m.json(), [], here + 'self is gone')
+  t.deepEqual(arr.out('array'), ['two'], here + 'remove self')
+  t.deepEqual(doc.out('array'), ['two'], here + 'doc remove self')
+
+  t.end()
+})
+
 // test('remove-self-keep-splits', function (t) {
 //   let m = nlp('one two three. four.')
 //   m = m.terms()

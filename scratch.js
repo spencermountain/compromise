@@ -57,16 +57,10 @@ let txt = ''
 // weird remove issue
 let doc = nlp('two three.')
 let arr = doc.splitAfter('two')
+arr.harden()
+let m = arr.match('three')
+m.remove()
 console.log(arr)
-// arr.harden()
-
-// let m = arr.match('three')
-// m.remove()
-// console.log(arr)
-// arr.debug()
-// console.log(arr)
-// console.log(arr)
-// arr.debug()
 
 
 

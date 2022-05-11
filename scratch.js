@@ -1,15 +1,36 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
 // nlp.verbose('tagger')
 
-let txt = ''
+let txt = `
+List: 
+single
+
+Two bad:
+first
+second
+`
+let doc = nlp(txt)
+doc.match('list').tag('Heading')
+doc.match('Two bad').tag('Heading')
 
 
-nlp(`she's stolen the`).debug()
-nlp(`let's go`).debug()
+const mutate = function (obj, doc) {
+  // mutate them
+  // obj.items.forEach((item) => {
+  //   // add the header
+  //   item.prepend(obj.heading)
+  // })
+  // remove the original header
+  doc.remove(obj.heading)
+}
+let obj = { items: [], heading: doc.match('#Heading+') }
+mutate(obj, doc)
+doc.debug()
+
 
 
 

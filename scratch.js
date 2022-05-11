@@ -8,12 +8,6 @@ import nlp from './src/three.js'
 let txt = ''
 
 
-let matches = [{ match: '/foo/' }]
-// let matches = [{ match: 'foo' }]
-let net = nlp.buildNet(matches)
-let doc = nlp('first. foo bar')
-let m = doc.sweep(net).view
-m.debug()
 
 // doc.match('/foo/').debug()
 
@@ -56,19 +50,21 @@ m.debug()
 // let m = doc.sweep(net).view
 // m.debug()
 
-
-
-// let doc = nlp(` and Will Ferrell as best-friends`)
-// doc.debug()
-
 // let doc = nlp('before match after. second sentence here.')
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 
 // weird remove issue
-// let doc = nlp('two three.')
-// let arr = doc.splitOn('two')
-// arr.match('three').remove()
+let doc = nlp('two three.')
+let arr = doc.splitAfter('two')
+console.log(arr)
+// arr.harden()
+
+// let m = arr.match('three')
+// m.remove()
+// console.log(arr)
+// arr.debug()
+// console.log(arr)
 // console.log(arr)
 // arr.debug()
 

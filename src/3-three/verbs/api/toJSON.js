@@ -24,8 +24,8 @@ const toInfinitive = function (root) {
 }
 
 const toJSON = function (vb) {
-  vb = vb.clone().toView()
   let parsed = parseVerb(vb)
+  vb = vb.clone().toView()
   const info = getGrammar(vb, parsed)
   return {
     root: parsed.root.text(),

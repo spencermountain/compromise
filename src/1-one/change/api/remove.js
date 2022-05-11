@@ -31,11 +31,11 @@ const fixPointers = function (ptrs, gonePtrs) {
   ptrs = ptrs.filter(ptr => ptr[2] - ptr[1] > 0)
 
   // remove old hard-pointers
-  // ptrs = ptrs.map((ptr) => {
-  //   ptr[3] = null
-  //   ptr[4] = null
-  //   return ptr
-  // })
+  ptrs = ptrs.map((ptr) => {
+    ptr[3] = null
+    ptr[4] = null
+    return ptr
+  })
   return ptrs
 }
 
@@ -47,7 +47,7 @@ const methods = {
     //  - a. remove self, from full parent
     let self = this.all()
     let not = this
-    //  - b. remove a part, from self
+    //  - b. remove a match, from self
     if (reg) {
       self = this
       not = this.match(reg)
@@ -65,14 +65,18 @@ const methods = {
     // repair our pointers
     let gonePtrs = indexN(nots)
     ptrs = fixPointers(ptrs, gonePtrs)
-    // mutate original
+
+    // clean up our original inputs
     self.ptrs = ptrs
     self.document = document
     self.compute('index')
-    if (reg) {
-      return self.toView(ptrs) //return new document
+    if (!reg) {
+      return self.none()
     }
-    return self.none()
+    self.harden()
+    let res = self.toView(ptrs) //return new document
+    res.harden()
+    return res
   },
 }
 

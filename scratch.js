@@ -5,21 +5,18 @@ import nlp from './src/three.js'
 
 // nlp.verbose('tagger')
 
-let txt = `
-Header: 
-single
 
-Header:
-first
-second
-`
-let doc = nlp(txt)
-let m = doc.match('Header')
-doc.remove(m)
-// m.debug()
+// let doc = nlp('one match two three')
+// let a = doc.match('match two')
+// let b = a.remove('two')
+// console.log(a)
+// // a.debug()
+// // b.debug()
+// console.log(b)
+
+let doc = nlp(`john is really walking`)
 doc.debug()
-
-
+console.log(doc.verbs().json())
 
 
 // conjugation issues

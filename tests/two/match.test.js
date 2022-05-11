@@ -564,6 +564,25 @@ let arr = [
   ['June Holiday Sweeps', '!#Person+'],
   ['Cliff Climber Group', '!#Person+'],
   // ['Faith Reunion', '!#Person+'],
+
+  [`here's`, 'here is'],
+  [`there's`, 'there is'],
+  [`she's`, 'she is'],
+  [`it's`, 'it is'],
+  [`he's`, 'he is'],
+  [`that's`, 'that is'],
+  [`here's`, 'here is'],
+  [`there's`, 'there is'],
+  [`your's`, '#Possessive'],
+  [`who's`, 'who is'],
+  [`what's`, 'what is'],
+  [`where's`, 'where is'],
+  [`why's the doc`, 'why is doc'],
+  [`when's he coming`, 'when is he .'],
+  [`how's that`, 'how is that'],
+  [`let's`, 'let us'],
+  [`somebody else's`, '. #Possessive'],
+  [`my name's john`, 'my name is .'],
 ]
 test('match:', function (t) {
   let res = []

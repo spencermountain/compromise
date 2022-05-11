@@ -1,10 +1,8 @@
 import splice from './_splice.js'
 import apostropheD from './apostrophe-d.js'
-import apostropheS from './apostrophe-s.js'
 import apostropheT from './apostrophe-t.js'
 import french from './french.js'
 import numberRange from './number-range.js'
-import shouldSplit from './_should-split.js'
 
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
@@ -21,14 +19,6 @@ const byEnd = {
   t: (terms, i) => apostropheT(terms, i),
   // how'd
   d: (terms, i) => apostropheD(terms, i),
-  // bob's
-  s: (terms, i) => {
-    // [bob's house] vs [bob's cool]
-    if (shouldSplit(terms, i) === true) {
-      return apostropheS(terms, i)
-    }
-    return null
-  },
 }
 
 const byStart = {

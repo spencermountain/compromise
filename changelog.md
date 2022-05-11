@@ -11,13 +11,16 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 <!-- #### [Unreleased]
 - **[fix]** - bug with fast-or possessive matches
 - **[fix]** - bug with slow-or end-matches
+- **[change]** - no-longer attempt 's contractions in compromise/one
 - **[new]** - flag novel tags in world.one.tagSet 
 - **[new]** - .sweep() and nlp.buildNet() methods
 - **[fix]** - better unicode support with Unicode property escapes 
 - **[fix]** - problems matching on cached documents
 - **[fix]** - typescript fixes
 - **[fix]** - suffix tagging issues
-- **[chaneg]** - drop deprecated .subst() method
+- **[fix]** - uncached matches missing in .sweep()
+- **[fix]** - non-empty results when pointer is first repaired
+- **[change]** - drop deprecated .subst() method internally
 -->
 
 #### 14.1.2 [April 2021]

@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -8,8 +8,8 @@ import nlp from './src/three.js'
 let txt = ''
 
 
-
-// doc.match('/foo/').debug()
+nlp(`she's stolen the`).debug()
+nlp(`let's go`).debug()
 
 
 
@@ -54,19 +54,8 @@ let txt = ''
 
 // nlp('it is green and he is friendly.').sentences().toFutureTense().debug()
 
-// weird remove issue
-let doc = nlp('two three.')
-let arr = doc.splitAfter('two')
-arr.harden()
-let m = arr.match('three')
-m.remove()
-console.log(arr)
-
-
-
 // isSingular bug
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
-
 
 
 // const doc = nlp("from Houston AZ and De Armanville, TX FTL", lexicon);
@@ -77,14 +66,8 @@ console.log(arr)
 // nlp(`She's got me`).terms().debug() //one
 
 
-// let doc = nlp(`won't`)
-// doc.match(`won't match`).debug()//found
-// doc.match(`will`).debug()//found
+// let doc = nlp(`won't match`)
 // doc.match(`(won't|will|shall) match`).debug()//found
 
-
-
-// let doc = nlp(`my finger looked green afterwards`)
-// doc.nouns().debug().toPlural()
 
 

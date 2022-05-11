@@ -1,7 +1,4 @@
-// const personDate = '(april|june|may|jan|august|eve)'
-// const personMonth = '(january|april|may|june|jan|sep)'
 const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
-const personVerb = '(drew|pat|wade|ollie|will|rob|buck|bob|mark|jack)'
 
 export default [
   // ===person-date===
@@ -40,10 +37,25 @@ export default [
   // // may 5th
   // { match: `[${personMonth}] the? #Value`, group: 0, tag: 'Month', reason: 'may-5th' },
 
+  // ===person-date===
+  { match: '%Person|Date% #Acronym? #ProperNoun', tag: 'Person', reason: 'jan-thierson' },
   // ===person-noun===
-  // { match: `[%Person|Noun%] (will|had|has|said|says|told|did|learned|wants|wanted)`, tag: 'Person', reason: 'person-said' },
   //Cliff Clavin
-  { match: '%Person|Noun% #ProperNoun', tag: 'Person', reason: 'switch-person', safe: true },
+  { match: '%Person|Noun% #Acronym? #ProperNoun', tag: 'Person', reason: 'switch-person', safe: true },
+  // olive garden
+  { match: '%Person|Noun% #Organization', tag: 'Organization', reason: 'olive-garden' },
+  // ===person-verb===
+  // ollie faroo
+  { match: '%Person|Verb% #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-propernoun' },
+  // chuck will ...
+  { match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`, tag: 'Person', reason: 'person-said' },
+
+  // ===person-place===
+  //sydney harbour
+  { match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`, tag: 'Place', reason: 'sydney-harbour' },
+  // east sydney
+  { match: `(west|east|north|south) [%Person|Place%]`, tag: 'Place', reason: 'east-sydney' },
+
   // ===person-adjective===
   // rusty smith
   { match: `${personAdj} #Person`, tag: 'Person', reason: 'randy-smith' },
@@ -54,16 +66,15 @@ export default [
 
   // ===person-verb===
   // would wade
-  { match: `#Modal [${personVerb}]`, group: 0, tag: 'Verb', reason: 'would-mark' },
-  { match: `#Adverb [${personVerb}]`, group: 0, tag: 'Verb', reason: 'really-mark' },
+  { match: `#Modal [%Person|Verb%]`, group: 0, tag: 'Verb', reason: 'would-mark' },
+  // really wade
+  { match: `#Adverb [%Person|Verb%]`, group: 0, tag: 'Verb', reason: 'really-mark' },
   // drew closer
-  { match: `[${personVerb}] (#Adverb|#Comparative)`, group: 0, tag: 'Verb', reason: 'drew-closer' },
+  { match: `[%Person|Verb%] (#Adverb|#Comparative)`, group: 0, tag: 'Verb', reason: 'drew-closer' },
   // wade smith
-  { match: `${personVerb} #Person`, tag: 'Person', reason: 'rob-smith' },
+  { match: `%Person|Verb% #Person`, tag: 'Person', reason: 'rob-smith' },
   // wade m. Cooper
-  { match: `${personVerb} #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
-  //to mark
-  // { match: '(to|#Modal) [mark]', group: 0, tag: 'PresentTense', reason: 'to-mark' },
+  { match: `%Person|Verb% #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
   // will go
   { match: '[will] #Verb', group: 0, tag: 'Modal', reason: 'will-verb' },
   // will Pharell

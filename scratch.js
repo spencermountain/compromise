@@ -1,13 +1,23 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
 // nlp.verbose('tagger')
-// nlp.verbose('chunker')
 
 let txt = ''
-// conjugation fixes
+
+
+// let matches = [{ match: '/foo/' }]
+// let net = nlp.buildNet(matches)
+// let m = nlp('first. foo bar').sweep(net).view
+// m.debug()
+
+
+nlp('i am cool.').debug('chunks')
+
+
+// conjugation issues
 // txt = 'go'
 // txt = 'fulfil'
 // txt = 'outgrow'
@@ -22,19 +32,20 @@ let txt = ''
 // doc.debug()
 // console.log(doc.verbs().conjugate()[0])
 
-// nlp('Major Tom').debug()
+// bug: incompatible tags
+// nlp('Cliff Climber Group').debug()
+// nlp('June Holiday Sweeps').debug()
 
-let matches = [
-  {
-    match: '/foo/',
-    tag: 'Reg',
-    reason: '01/01/2020',
-  },
-]
-
-let net = nlp.buildNet(matches)
-let m = nlp('first. foo bar').sweep(net).view
-m.debug()
+// let matches = [
+//   {
+//     match: '/foo/',
+//     tag: 'Reg',
+//     reason: '01/01/2020',
+//   },
+// ]
+// let net = nlp.buildNet(matches)
+// let m = nlp('first. foo bar').sweep(net).view
+// m.debug()
 // console.log('----')
 // console.dir(net, { depth: 5 })
 // let doc = nlp('asdf 2nd bar')

@@ -18,21 +18,12 @@ const captureName = new RegExp(/^<\s*(\S+)\s*>/)
   choices:[],
 }
 */
-const titleCase = str => {
-  return str.charAt(0).toUpperCase() + str.substring(1)
-}
-const end = function (str) {
-  return str[str.length - 1]
-}
-const start = function (str) {
-  return str[0]
-}
-const stripStart = function (str) {
-  return str.substring(1)
-}
-const stripEnd = function (str) {
-  return str.substring(0, str.length - 1)
-}
+const titleCase = str => str.charAt(0).toUpperCase() + str.substring(1)
+const end = (str) => str.charAt(str.length - 1)
+const start = (str) => str.charAt(0)
+const stripStart = (str) => str.substring(1)
+const stripEnd = (str) => str.substring(0, str.length - 1)
+
 const stripBoth = function (str) {
   str = stripStart(str)
   str = stripEnd(str)

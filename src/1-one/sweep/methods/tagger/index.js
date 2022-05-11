@@ -14,7 +14,7 @@ const tagger = function (list, document, world) {
     console.log(`\n  \x1b[32m→ ${list.length} corrections:\x1b[0m`) //eslint-disable-line
   }
   return list.map(todo => {
-    if (!todo.tag) {
+    if (!todo.tag && !todo.chunk) {
       return
     }
     if (env.DEBUG_TAGS) {
@@ -43,6 +43,10 @@ const tagger = function (list, document, world) {
     }
     if (todo.unTag !== undefined) {
       unTag(terms, todo.unTag, world, todo.safe)
+    }
+    // allow setting chunks, too
+    if (todo.chunk) {
+      terms.forEach(t => t.chunk = todo.chunk)
     }
   })
 }

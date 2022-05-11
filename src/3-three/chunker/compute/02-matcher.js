@@ -64,30 +64,11 @@ const rules = [
   // that is why
   // { match: '[that] (is|was)', group: 0, chunk: 'Noun' },
 ]
+
 let net = null
-
-const setChunks = function (todo, document, methods) {
-  const { getDoc } = methods.one
-  let terms = getDoc([todo.pointer], document)[0]
-  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
-  terms.forEach(term => {
-    if (term.chunk === todo.chunk) {
-      return
-    }
-    if (env.DEBUG_CHUNKS) {
-      let str = (term.normal + "'").padEnd(8)
-      console.log(`  | '${str}  →  \x1b[34m${todo.chunk.padEnd(6)}\x1b[0m - \x1b[2m ${todo.match} \x1b[0m`) // eslint-disable-line
-    }
-    term.chunk = todo.chunk
-  })
-}
-
-const matcher = function (document, world) {
+const matcher = function (view, document, world) {
   const { methods } = world
   net = net || methods.two.makeNet(rules, methods)
-  let found = methods.two.bulkMatch(document, net, methods)
-  found.forEach(todo => {
-    setChunks(todo, document, methods)
-  })
+  view.sweep(net)
 }
 export default matcher

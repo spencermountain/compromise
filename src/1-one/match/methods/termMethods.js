@@ -39,7 +39,6 @@ const methods = {
   /** is it an acronym */
   isAcronym: term => term.tags.has('Acronym'),
   /** does it have any tags */
-  /** does it have any tags */
   isKnown: term => term.tags.size > 0,
   /** uppercase first letter, then a lowercase */
   isTitleCase: term => /^\p{Lu}[a-z'\u00C0-\u00FF]/u.test(term.text),

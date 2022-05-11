@@ -553,9 +553,17 @@ let arr = [
   ['Ollie Faroo', '#Person #Person'],
   ['Cliff Clavin', '#Person #Person'],
   ['Wade Slowagon', '#Person #Person'],
-  ['Wade G. Slapgoop', '#Person #Person'],
   ['Jan Thierson', '#Person #Person'],
   ['Gail Emerson', '#Person #Person'],
+  ['Wade G. Slapgoop', '#Person #Acronym #Person'],
+  ['june F Fobo', '#Person #Acronym #Person'],
+  ['buck M. Fobo', '#Person #Acronym #Person'],
+  ['crystal D. Fobo', '#Person #Acronym #Person'],
+  ['West Sydney', '!#Person+'],
+  ['Sydney Harbour', '!#Person+'],
+  ['June Holiday Sweeps', '!#Person+'],
+  ['Cliff Climber Group', '!#Person+'],
+  // ['Faith Reunion', '!#Person+'],
 ]
 test('match:', function (t) {
   let res = []

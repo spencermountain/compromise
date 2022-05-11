@@ -9,10 +9,9 @@ const sweep = function (document, net, methods, opts = {}) {
   let maybeList = getCandidates(docCache, net.index)
   // ensure all defined needs are met for each match
   maybeList = trimDown(maybeList, docCache)
+  // add unchacheable matches to each sentence's todo-list
   if (net.always.length > 0) {
-    maybeList[0] = maybeList[0] || []
-    maybeList[0] = maybeList[0].concat(net.always)
-    maybeList = maybeList.filter(m => m.length)
+    maybeList = maybeList.map(arr => arr.concat(net.always))
   }
   // now actually run the matches
   let results = runMatch(maybeList, document, methods, opts)

@@ -8,13 +8,15 @@ import nlp from './src/three.js'
 let txt = ''
 
 
-// let matches = [{ match: '/foo/' }]
-// let net = nlp.buildNet(matches)
-// let m = nlp('first. foo bar').sweep(net).view
-// m.debug()
+let matches = [{ match: '/foo/' }]
+// let matches = [{ match: 'foo' }]
+let net = nlp.buildNet(matches)
+let doc = nlp('first. foo bar')
+let m = doc.sweep(net).view
+m.debug()
 
+// doc.match('/foo/').debug()
 
-nlp('i am cool.').debug('chunks')
 
 
 // conjugation issues

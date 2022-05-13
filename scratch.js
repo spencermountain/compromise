@@ -34,6 +34,27 @@ console.log(doc.verbs().json())
 // doc.debug()
 // console.log(doc.verbs().conjugate()[0])
 
+
+// tagging issues
+// txt='housing'
+// txt='logic'
+// txt='perspective'
+// txt='parking'
+// txt='saying'
+// txt='summoning'
+// txt='stocking'
+// txt='upside'
+// txt='wishing'
+// liver
+// hospital
+// incentive
+// vanish
+// represent
+// fishing
+
+// let doc = nlp(txt)
+// doc.debug()
+
 // bug: incompatible tags
 // nlp('Cliff Climber Group').debug()
 // nlp('June Holiday Sweeps').debug()

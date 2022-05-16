@@ -2,13 +2,13 @@ const api = function (View) {
 
   /** speedy match a sequence of matches */
   View.prototype.sweep = function (net, opts = {}) {
-    const { world, document } = this
+    const { world, docs } = this
     const { methods } = world
-    let found = methods.two.bulkMatch(document, net, this.methods, opts)
+    let found = methods.two.bulkMatch(docs, net, this.methods, opts)
 
     // apply any changes
     if (opts.tagger !== false) {
-      methods.two.bulkTagger(found, document, this.world)
+      methods.two.bulkTagger(found, docs, this.world)
     }
 
     // collect all found results into a View

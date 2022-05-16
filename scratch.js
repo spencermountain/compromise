@@ -14,9 +14,15 @@ import nlp from './src/three.js'
 // // b.debug()
 // console.log(b)
 
-let doc = nlp(`john is really walking`)
-doc.debug()
-console.log(doc.verbs().json())
+
+
+let matches = [
+  { match: 'remove .' },
+]
+let net = nlp.buildNet(matches)
+let doc = nlp(`before here. remove this. after here`)
+doc = doc.not('remove this')
+doc.match(net).debug()
 
 
 // conjugation issues

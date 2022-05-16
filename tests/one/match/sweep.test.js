@@ -126,3 +126,15 @@ test('slow-OR-checks:', function (t) {
 
   t.end()
 })
+
+test('sweep partial document:', function (t) {
+  let matches = [
+    { match: 'remove .' },
+  ]
+  let net = nlp.buildNet(matches)
+  let doc = nlp(`before here. remove this. after here`)
+  doc = doc.not('remove this')
+  let m = doc.match(net)
+  t.equal(m.found, false, here + 'shouldnt find excluded sentence')
+  t.end()
+})

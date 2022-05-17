@@ -583,6 +583,12 @@ let arr = [
   [`let's`, 'let us'],
   [`somebody else's`, '. #Possessive'],
   [`my name's john`, 'my name is .'],
+
+  ['logic', '#Noun'],
+  ["liver", '#Noun'],
+  ["incentive", '#Noun'],
+  ["vanish", '#Infinitive'],
+
 ]
 test('match:', function (t) {
   let res = []

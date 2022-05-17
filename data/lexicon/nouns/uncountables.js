@@ -178,6 +178,7 @@ export default [
   'wine',
   'wood',
   'water',
+  'liver',
   'wool',
   'kindergarten',
   'tyranny',
@@ -237,4 +238,5 @@ export default [
 
   'arithmetic',
   'static',
+  'logic',
 ]

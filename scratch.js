@@ -5,7 +5,6 @@ import nlp from './src/three.js'
 
 // nlp.verbose('tagger')
 
-
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
 // let b = a.remove('two')
@@ -16,50 +15,30 @@ import nlp from './src/three.js'
 
 
 
-let matches = [
-  { match: 'remove .' },
-]
-let net = nlp.buildNet(matches)
-let doc = nlp(`before here. remove this. after here`)
-doc = doc.not('remove this')
-doc.match(net).debug()
+// let matches = [
+//   { match: 'remove .' },
+// ]
+// let net = nlp.buildNet(matches)
+// let doc = nlp(`before here. remove this. after here`)
+// doc = doc.not('remove this')
+// doc.match(net).debug()
 
 
 // conjugation issues
-// txt = 'go'
+let txt = ''
+txt = 'go'
+txt = 'take part'
 // txt = 'fulfil'
 // txt = 'outgrow'
 // txt = 'prod'
-// txt = 'shine'
 // txt = 'shun'
 // txt = 'slam'
-// txt = 'take part'
-// txt = 'unearth'
 // txt = 'collide'
-// let doc = nlp(txt)
-// doc.debug()
-// console.log(doc.verbs().conjugate()[0])
+let doc = nlp(txt)
+doc.debug()
+console.log(doc.verbs().conjugate()[0])
 
 
-// tagging issues
-// txt='housing'
-// txt='logic'
-// txt='perspective'
-// txt='parking'
-// txt='saying'
-// txt='summoning'
-// txt='stocking'
-// txt='upside'
-// txt='wishing'
-// liver
-// hospital
-// incentive
-// vanish
-// represent
-// fishing
-
-// let doc = nlp(txt)
-// doc.debug()
 
 // bug: incompatible tags
 // nlp('Cliff Climber Group').debug()

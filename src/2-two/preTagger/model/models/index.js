@@ -33,3 +33,4 @@ export default {
   fromComparative,
   fromSuperlative
 }
+// console.log(convert('collide', toPast))

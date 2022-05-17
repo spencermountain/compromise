@@ -261,6 +261,12 @@ const arr = [
     PastTense: 'egged',
     Gerund: 'egging',
   },
+  // {
+  //   Infinitive: 'take part',
+  //   PresentTense: 'takes part',
+  //   PastTense: 'took part',
+  //   Gerund: 'taking part',
+  // },
 ]
 test('conjugation:', function (t) {
   const test_conjugation = function (inf, o, form, original) {

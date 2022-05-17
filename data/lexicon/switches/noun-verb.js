@@ -711,4 +711,5 @@ export default [
 
   'relish',
   'polish',
+  'stocking',
 ]

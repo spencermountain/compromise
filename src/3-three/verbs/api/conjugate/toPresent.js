@@ -70,7 +70,7 @@ const forms = {
       let str = root.text('normal')
       let pres = verbConjugate(str, vb.model).PresentTense
       if (str !== pres) {
-        vb = vb.replace(root, pres, keep)
+        vb.replace(root, pres, keep)
       }
     }
     return vb

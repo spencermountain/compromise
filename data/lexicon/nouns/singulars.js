@@ -395,6 +395,7 @@ export default [
   'initiative',
   'narrative',
   'perspective',
+  'incentive',
   'parish',
 ]
 

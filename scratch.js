@@ -26,8 +26,9 @@ import nlp from './src/three.js'
 
 // conjugation issues
 let txt = ''
-txt = 'go'
-txt = 'take part'
+txt = 'i will go on a boat'
+txt = `why is the doc`
+// txt = 'take part'
 // txt = 'fulfil'
 // txt = 'outgrow'
 // txt = 'prod'
@@ -35,9 +36,13 @@ txt = 'take part'
 // txt = 'slam'
 // txt = 'collide'
 let doc = nlp(txt)
-doc.debug()
+// doc.debug()
 console.log(doc.verbs().conjugate()[0])
 
+// let doc = nlp('before match after')
+// let m = doc.match('match')
+// m.fullSentence()
+// m.debug()
 
 
 // bug: incompatible tags

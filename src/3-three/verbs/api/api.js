@@ -94,6 +94,10 @@ const api = function (View) {
       return getNth(this, n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
+        // allow imperatives like 'go!' to be conjugated here (only)
+        if (info.form === 'imperative') {
+          info.form = 'simple-present'
+        }
         return {
           Infinitive: toInfinitive(vb.clone(), parsed, info.form).text('normal'),
           PastTense: toPast(vb.clone(), parsed, info.form).text('normal'),

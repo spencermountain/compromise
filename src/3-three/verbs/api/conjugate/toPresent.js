@@ -72,6 +72,8 @@ const forms = {
       if (str !== pres) {
         vb.replace(root, pres, keep)
       }
+    } else {
+      return simple(vb, parsed)
     }
     return vb
   },

@@ -6,6 +6,9 @@ const isOrg = function (term) {
   if (!term) {
     return false
   }
+  if (term.tags.has('Person') || term.tags.has('Place')) {
+    return false
+  }
   if (term.tags.has('ProperNoun') || term.tags.has('Organization') || term.tags.has('Acronym')) {
     return true
   }

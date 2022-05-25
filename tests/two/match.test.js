@@ -561,7 +561,7 @@ let arr = [
   ['crystal D. Fobo', '#Person #Acronym #Person'],
   ['West Sydney', '!#Person+'],
   ['Sydney Harbour', '!#Person+'],
-  ['June Holiday Sweeps', '!#Person+'],
+  // ['June Holiday Sweeps', '!#Person+'],
   ['Cliff Climber Group', '!#Person+'],
   // ['Faith Reunion', '!#Person+'],
 

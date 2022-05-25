@@ -280,3 +280,30 @@ test('remove-keep-splits', function (t) {
   t.deepEqual(m.out('array'), ['one', 'two.', 'four.'], here + 'keep-splits')
   t.end()
 })
+
+
+test('double-self becomes empty', function (t) {
+  let txt = `zero foo. one match foo. two foo.`
+  let doc = nlp(txt)
+  doc.harden()
+  let m = doc.eq(1)
+  m.remove()
+  t.equal(m.found, false, here + 'remove self is empty')
+
+  t.end()
+})
+
+test('double-remove', function (t) {
+  let txt = `zero foo. one match foo. two foo.`
+  let doc = nlp(txt)
+  doc.remove('match') // first removal
+  doc.remove('zero foo') //second removal
+  t.equal(doc.text(), 'one foo. two foo.', here + 'double remove #1')
+
+  doc = nlp(txt)
+  doc.remove('match') // first removal
+  doc.eq(0).remove() //second removal
+  t.equal(doc.text(), 'one foo. two foo.', here + 'double remove #2')
+
+  t.end()
+})

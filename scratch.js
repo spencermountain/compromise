@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -24,11 +24,26 @@ nlp.verbose('tagger')
 // doc = doc.not('remove this')
 // doc.match(net).debug()
 
-let txt = ''
-txt = 'June Holiday Sweeps'
-txt = 'Cliff Group'
-let doc = nlp(txt).debug()
+let txt = `
+zero foo
+one match foo
+two foo
+`
+let doc = nlp(txt)
 
+doc.harden()
+let m = doc.eq(0)
+m.remove()
+console.log(m)
+m.debug()
+// console.log(doc)
+// console.log('----done---')
+// console.log(doc)
+// doc.debug()
+
+
+
+// json = doc.eq(3).json()[0]
 // let matches = [
 //   { match: 'cliff climber', tag: 'Organization' },
 //   { match: 'hello' },

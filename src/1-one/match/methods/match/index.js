@@ -32,6 +32,7 @@ const runMatch = function (docs, todo, cache) {
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
   docs: for (let n = 0; n < docs.length; n += 1) {
     let terms = docs[n]
+    // let index = terms[0].index || []
     // can we skip this sentence?
     if (cache[n] && failFast(regs, cache[n])) {
       continue
@@ -54,6 +55,7 @@ const runMatch = function (docs, todo, cache) {
       let res = fromHere(slice, regs, i, terms.length)
       // did we find a result?
       if (res) {
+        // res = addSentence(res, index[0])
         res = addSentence(res, n)
         results.push(res)
         // should we stop here?

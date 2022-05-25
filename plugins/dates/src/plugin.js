@@ -11,6 +11,7 @@ export default {
   compute,
   api,
   mutate: (world) => {
+    world.model.two.regexText = world.model.two.regexText || []
     world.model.two.regexText = world.model.two.regexText.concat(regex)
     // net = net || methods.two.makeNet(matches, methods)
     // world.model.two.matches = world.model.two.matches.concat(matches)

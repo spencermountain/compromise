@@ -72,14 +72,11 @@ const methods = {
     self.ptrs = ptrs
     self.document = document
     self.compute('index')
-    // self.harden()
     if (!reg) {
       this.ptrs = []
       return self.none()
     }
-    // console.log(reg)
     let res = self.toView(ptrs) //return new document
-    res.harden()
     return res
   },
 }

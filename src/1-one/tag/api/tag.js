@@ -18,9 +18,9 @@ const fns = {
       console.log(' +  ', input, reason || '')
     }
     if (isArray(input)) {
-      input.forEach(tag => methods.one.setTag(terms, tag, world, isSafe))
+      input.forEach(tag => methods.one.setTag(terms, tag, world, isSafe, reason))
     } else {
-      methods.one.setTag(terms, input, world, isSafe)
+      methods.one.setTag(terms, input, world, isSafe, reason)
     }
     // uncache
     this.uncache()

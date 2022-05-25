@@ -3,7 +3,9 @@ const logger = function (todo, document) {
   let terms = document[n]
   let i = start > 4 ? start - 2 : 0
   let tag = typeof todo.tag !== 'string' ? todo.tag.join(' #') : todo.tag
-  let msg = `  [${todo.reason}]`.padEnd(20) + ' - '
+  let reason = todo.reason || todo.match
+  reason = reason ? `|${reason}|` : ''
+  let msg = `  ${reason}`.padEnd(20) + ' - '
   const yellow = str => '\x1b[2m' + str + '\x1b[0m'
   for (; i < terms.length; i += 1) {
     if (i > end + 2) {

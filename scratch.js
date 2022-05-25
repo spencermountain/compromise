@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/two.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -17,17 +17,30 @@ import nlp from './src/three.js'
 
 // let matches = [
 //   { match: 'remove .' },
+//   { match: 'hello' },
 // ]
 // let net = nlp.buildNet(matches)
-// let doc = nlp(`before here. remove this. after here`)
+// let doc = nlp(`before here. hello remove this. after here`)
 // doc = doc.not('remove this')
 // doc.match(net).debug()
 
+let txt = ''
+txt = 'June Holiday Sweeps'
+txt = 'Cliff Group'
+let doc = nlp(txt)
+
+let matches = [
+  { match: 'cliff climber', tag: 'Organization' },
+  { match: 'hello' },
+]
+let net = nlp.buildNet(matches)
+doc.sweep(net)
+doc.debug()
 
 // conjugation issues
-let txt = ''
-txt = 'i will go on a boat'
-txt = `why is the doc`
+// let txt = ''
+// txt = 'i will go on a boat'
+// txt = `why is the doc`
 // txt = 'take part'
 // txt = 'fulfil'
 // txt = 'outgrow'
@@ -35,10 +48,14 @@ txt = `why is the doc`
 // txt = 'shun'
 // txt = 'slam'
 // txt = 'collide'
-let doc = nlp(txt)
+// let doc = nlp(txt)
 // doc.debug()
-console.log(doc.verbs().conjugate()[0])
+// console.log(doc.verbs().conjugate()[0])
 
+// nlp('More seats').debug()
+
+// let doc = nlp('Whatever Will B. Will Bee')
+// doc.debug()
 // let doc = nlp('before match after')
 // let m = doc.match('match')
 // m.fullSentence()

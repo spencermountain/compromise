@@ -66,7 +66,7 @@ const rules = [
 ]
 
 let net = null
-const matcher = function (view, document, world) {
+const matcher = function (view, _, world) {
   const { methods } = world
   net = net || methods.two.makeNet(rules, methods)
   view.sweep(net)

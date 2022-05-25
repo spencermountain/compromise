@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -24,12 +24,9 @@ import nlp from './src/three.js'
 // doc = doc.not('remove this')
 // doc.match(net).debug()
 
-let txt = `zero foo. one foo. two foo.`
-let doc = nlp(txt)
-doc.remove('asdf')
-doc.eq(0).remove()
-console.log(doc)
-doc.debug()
+let txt = `unnecessary.`
+let doc = nlp(txt).debug()
+// console.log(nlp.model().two.matches.length)
 // let doc = nlp('he will walk')
 // let vb=doc.match('will walk')
 

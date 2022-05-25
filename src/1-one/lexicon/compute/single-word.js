@@ -24,7 +24,7 @@ const checkLexicon = function (terms, i, world) {
     let found = t.alias.find(str => lexicon.hasOwnProperty(str))
     if (found) {
       let tag = lexicon[found]
-      setTag([t], tag, world, '1-lexicon-alias')
+      setTag([t], tag, world, false, '1-lexicon-alias')
       // fastTag(t, tag, '1-lexicon-alias')
       return true
     }
@@ -36,7 +36,7 @@ const checkLexicon = function (terms, i, world) {
       // only allow prefixes for verbs/adjectives
       if (allowPrefix.has(lexicon[stem])) {
         // console.log('->', word, stem, lexicon[stem])
-        setTag([t], lexicon[stem], world, '1-lexicon-prefix')
+        setTag([t], lexicon[stem], world, false, '1-lexicon-prefix')
         // fastTag(t, lexicon[stem], '1-lexicon-prefix')
         return true
       }

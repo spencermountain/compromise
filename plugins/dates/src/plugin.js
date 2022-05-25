@@ -3,6 +3,7 @@ import compute from './compute/index.js'
 import tags from './model/tags.js'
 import words from './model/words/index.js'
 import regex from './model/regex.js'
+// import matches from './compute/matches.js'
 
 export default {
   tags,
@@ -11,6 +12,8 @@ export default {
   api,
   mutate: (world) => {
     world.model.two.regexText = world.model.two.regexText.concat(regex)
+    // net = net || methods.two.makeNet(matches, methods)
+    // world.model.two.matches = world.model.two.matches.concat(matches)
   },
   hooks: ['dates']
 }

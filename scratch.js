@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -27,15 +27,15 @@ nlp.verbose('tagger')
 let txt = ''
 txt = 'June Holiday Sweeps'
 txt = 'Cliff Group'
-let doc = nlp(txt)
+let doc = nlp(txt).debug()
 
-let matches = [
-  { match: 'cliff climber', tag: 'Organization' },
-  { match: 'hello' },
-]
-let net = nlp.buildNet(matches)
-doc.sweep(net)
-doc.debug()
+// let matches = [
+//   { match: 'cliff climber', tag: 'Organization' },
+//   { match: 'hello' },
+// ]
+// let net = nlp.buildNet(matches)
+// doc.sweep(net)
+// doc.debug()
 
 // conjugation issues
 // let txt = ''

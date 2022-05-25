@@ -21,6 +21,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[fix]** - uncached matches missing in .sweep()
 - **[fix]** - non-empty results when pointer is first repaired
 - **[change]** - drop deprecated .subst() method internally
+- **[new]** - some support for .numbers().units() again #919
 -->
 
 #### 14.1.2 [April 2021]

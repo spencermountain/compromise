@@ -16,7 +16,6 @@ const fixPointers = function (ptrs, gonePtrs) {
     return ptr
   })
 
-
   // decrement any pointers after a now-empty pointer
   ptrs.forEach((ptr, i) => {
     // is the pointer now empty?
@@ -73,11 +72,12 @@ const methods = {
     self.ptrs = ptrs
     self.document = document
     self.compute('index')
-    self.harden()
+    // self.harden()
     if (!reg) {
       this.ptrs = []
       return self.none()
     }
+    // console.log(reg)
     let res = self.toView(ptrs) //return new document
     res.harden()
     return res

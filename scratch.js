@@ -24,14 +24,12 @@ import nlp from './src/three.js'
 // doc = doc.not('remove this')
 // doc.match(net).debug()
 
-
-let m = nlp('one two three. four.')
-m = m.terms()
-m = m.remove('three')
-console.log(m)
-m.debug()
-
-
+let txt = `zero foo. one foo. two foo.`
+let doc = nlp(txt)
+doc.remove('asdf')
+doc.eq(0).remove()
+console.log(doc)
+doc.debug()
 // let doc = nlp('he will walk')
 // let vb=doc.match('will walk')
 

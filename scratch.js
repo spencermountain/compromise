@@ -24,20 +24,31 @@ import nlp from './src/three.js'
 // doc = doc.not('remove this')
 // doc.match(net).debug()
 
-let txt = `
-zero foo
-one match foo
-two foo
-`
-let doc = nlp(txt)
 
-doc.harden()
-let m = doc.eq(0)
-m.remove()
+let m = nlp('one two three. four.')
+m = m.terms()
+m = m.remove('three')
 console.log(m)
 m.debug()
-// console.log(doc)
-// console.log('----done---')
+
+
+// let doc = nlp('he will walk')
+// let vb=doc.match('will walk')
+
+// doc.verbs().toPresentTense()
+// doc.debug()
+
+// let txt = `
+// zero foo
+// one match foo
+// two foo
+// `
+// let doc = nlp(txt)
+
+// doc.harden()
+// let m = doc.eq(1)
+// m.remove()
+// console.log('\n\n=-=-remove=-=-')
 // console.log(doc)
 // doc.debug()
 

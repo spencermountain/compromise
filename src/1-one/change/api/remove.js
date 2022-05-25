@@ -16,14 +16,17 @@ const fixPointers = function (ptrs, gonePtrs) {
     return ptr
   })
 
-  // decrement any pointers after a now-empt pointer
+
+  // decrement any pointers after a now-empty pointer
   ptrs.forEach((ptr, i) => {
-    // is it zero-sized?
-    if (ptr[2] - ptr[1] <= 0) {
+    // is the pointer now empty?
+    if (ptr[1] === 0 && ptr[2] == 0) {
       // go down subsequent pointers
       for (let n = i + 1; n < ptrs.length; n += 1) {
-        ptrs[n][5] += 1
         ptrs[n][0] -= 1
+        if (ptrs[n][0] < 0) {
+          ptrs[n][0] = 0
+        }
       }
     }
   })

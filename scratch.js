@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -15,17 +15,21 @@ nlp.verbose('tagger')
 
 
 
-// let matches = [
-//   { match: 'remove .' },
-//   { match: 'hello' },
-// ]
-// let net = nlp.buildNet(matches)
-// let doc = nlp(`before here. hello remove this. after here`)
+let matches = [
+  { match: 'third' },
+]
+let net = nlp.buildNet(matches)
+let doc = nlp(`first. second. third`)
+doc = doc.reverse()
+let res = doc.sweep(net)
+res.found[0].view.soften()
+res.found[0].view.debug()
+console.log(res.found[0].view)
 // doc = doc.not('remove this')
 // doc.match(net).debug()
 
-let txt = `unnecessary.`
-let doc = nlp(txt).debug()
+// let txt = `unnecessary.`
+// let doc = nlp(txt).debug()
 // console.log(nlp.model().two.matches.length)
 // let doc = nlp('he will walk')
 // let vb=doc.match('will walk')

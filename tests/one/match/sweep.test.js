@@ -145,3 +145,20 @@ test('sweep partial document:', function (t) {
 
   t.end()
 })
+
+test('sweep absolute indexes:', function (t) {
+  let matches = [
+    { match: 'third' },
+  ]
+  let net = nlp.buildNet(matches)
+  let doc = nlp(`first. second. third`)
+  doc = doc.reverse()
+
+  let res = doc.sweep(net)
+  res.view.soften()
+  t.equal(res.view.text(), 'third', here + 'abs index in res')
+
+  res.found[0].view.soften()
+  t.equal(res.found[0].view.text(), 'third', here + 'abs index in found')
+  t.end()
+})

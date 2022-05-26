@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -15,16 +15,28 @@ import nlp from './src/one.js'
 
 
 
-let matches = [
-  { match: 'third' },
-]
-let net = nlp.buildNet(matches)
-let doc = nlp(`first. second. third`)
-doc = doc.reverse()
-let res = doc.sweep(net)
-res.found[0].view.soften()
-res.found[0].view.debug()
-console.log(res.found[0].view)
+// let matches = [
+//   { match: 'third' },
+// ]
+// let net = nlp.buildNet(matches)
+// let doc = nlp(`first. second. third`)
+// doc = doc.reverse()
+// let res = doc.sweep(net)
+// res.found[0].view.soften()
+// res.found[0].view.debug()
+// console.log(res.found[0].view)
+
+// let doc = nlp(`first. second. third`)
+// doc = doc.reverse()
+// let m = doc.match('third')
+// m.soften()
+// console.log(m)
+// m.debug()
+
+let doc = nlp('ireland potato')
+doc.nouns().toPlural()
+doc.debug()
+
 // doc = doc.not('remove this')
 // doc.match(net).debug()
 

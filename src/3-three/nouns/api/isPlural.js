@@ -2,9 +2,8 @@ const notPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|
 
 const isPlural = function (m, root) {
   // const { looksPlural } = m.world.methods.two
-  // these can't be plural
-  if (root.has(notPlural) === true) {
-    return false
+  if (m.has('#Plural')) {
+    return true
   }
   // two singular nouns are plural noun phrase
   if (m.has('#Noun and #Noun')) {
@@ -13,8 +12,9 @@ const isPlural = function (m, root) {
   if (m.has('(we|they)')) {
     return true
   }
-  if (m.has('#Plural')) {
-    return true
+  // these can't be plural
+  if (root.has(notPlural) === true) {
+    return false
   }
   if (m.has('#Singular')) {
     return false

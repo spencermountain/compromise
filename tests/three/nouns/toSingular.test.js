@@ -87,6 +87,9 @@ test('toSingular:', function (t) {
     ['uses', 'use'],
     ['viruses', 'virus'],
     ['his excuses', 'his excuse'],
+    [`irish potatoes`, 'irish potato'],
+    [`ireland potatoes`, 'ireland potato'],
+    [`john's potatoes`, `john's potato`],
     // ['Isley Brothers members', 'Isley Brothers member'],
   ]
   arr.forEach(function (a) {

@@ -589,6 +589,8 @@ let arr = [
   ["incentive", '#Noun'],
   ["vanish", '#Infinitive'],
 
+  ["a worn dress", '#Determiner #Adjective #Singular'],
+
 ]
 test('match:', function (t) {
   let res = []

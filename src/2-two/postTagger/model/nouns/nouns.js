@@ -67,7 +67,7 @@ export default [
     tag: 'Noun',
     reason: 'det-pres',
   },
-  { match: '(the|those|these|a|an) #Adjective? [#PastTense]', group: 0, tag: 'Noun', reason: 'det-past' },
+  // { match: '(the|those|these|a|an) #Adjective? [#PastTense]', group: 0, tag: 'Noun', reason: 'det-past' },
 
   // ==== Actor ====
   //Aircraft designer

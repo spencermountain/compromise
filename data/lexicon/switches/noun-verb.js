@@ -171,6 +171,7 @@ export default [
   'draft',
   'drain',
   'dream',
+  'dress',
   'drift',
   'drink',
   'drive',

@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 
 nlp.verbose('tagger')
 
@@ -58,9 +58,12 @@ nlp.verbose('tagger')
 // nlp(`i saw the game that the Toronto Maple Leafs won`).verbs().isSingular().debug()
 
 
-// const doc = nlp("from Houston AZ and De Armanville, TX FTL", lexicon);
-const doc = nlp('I flew to Austin, Texas');
-doc.places().debug()
+// contraction issue
+// let txt = `doesn't there's i'd i'll`
+// let doc = nlp(txt).debug()
 
 
+const doc = nlp("A worn dress")
+doc.debug()
+// Normal: some common drugs conflatin aspirin statin statins ivermectin amoxicillin augmentin
 

@@ -12,6 +12,7 @@ const match = function (regs, group, opts) {
   }
   // support param as string
   if (typeof regs === 'string') {
+    regs = one.killUnicode(regs, this.world)
     regs = one.parseMatch(regs, opts)
   }
   let todo = { regs, group }
@@ -33,6 +34,7 @@ const matchOne = function (regs, group, opts) {
     return this.sweep(regs, { tagger: false, matchOne: true }).view
   }
   if (typeof regs === 'string') {
+    regs = one.killUnicode(regs, this.world)
     regs = one.parseMatch(regs, opts)
   }
   let todo = { regs, group, justOne: true }
@@ -55,6 +57,7 @@ const has = function (regs, group, opts) {
     return this.sweep(regs, { tagger: false }).view.found
   }
   if (typeof regs === 'string') {
+    regs = one.killUnicode(regs, this.world)
     regs = one.parseMatch(regs, opts)
   }
   let todo = { regs, group, justOne: true }
@@ -75,6 +78,7 @@ const ifFn = function (regs, group, opts) {
     return this.if(m)//recurse with result
   }
   if (typeof regs === 'string') {
+    regs = one.killUnicode(regs, this.world)
     regs = one.parseMatch(regs, opts)
   }
   let todo = { regs, group, justOne: true }
@@ -102,6 +106,7 @@ const ifNo = function (regs, group, opts) {
   }
   // otherwise parse the match string
   if (typeof regs === 'string') {
+    regs = one.killUnicode(regs, this.world)
     regs = one.parseMatch(regs, opts)
   }
   let cache = this._cache || []

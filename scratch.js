@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+import nlp from './src/one.js'
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -63,7 +63,11 @@ nlp.verbose('tagger')
 // let doc = nlp(txt).debug()
 
 
-const doc = nlp("A worn dress")
-doc.debug()
+
+let doc = nlp("Québec is in canada")
+// console.log(nlp.parseMatch('québec'))
+doc.match('québec').debug()
+// const doc = nlp("Steve talked to Johnson LLC")
+// doc.debug()
 // Normal: some common drugs conflatin aspirin statin statins ivermectin amoxicillin augmentin
 

@@ -588,8 +588,13 @@ let arr = [
   ["liver", '#Noun'],
   ["incentive", '#Noun'],
   ["vanish", '#Infinitive'],
+  ["vanish", '#Infinitive'],
 
   ["a worn dress", '#Determiner #Adjective #Singular'],
+  ["Anna's eating lunch", '#Possessive #Gerund #Singular'],
+  ["Anna's eating was impressive", '#Possessive #Noun #Copula #Adjective'],
+  ["Québec is in canada", "québec #Verb in #Country"],
+  ["Québec is in canada", "quebec #Copula in canada"],
 
 ]
 test('match:', function (t) {

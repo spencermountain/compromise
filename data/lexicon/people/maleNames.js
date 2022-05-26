@@ -96,7 +96,6 @@ export default [
   'aryan',
   'asahi',
   'augustus',
-  'austin',
   'avery',
   'ayaan',
   'aykhan',

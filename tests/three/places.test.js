@@ -15,7 +15,7 @@ test('known-regions:', function (t) {
   t.end()
 })
 
-test('unknown-places:', function (t) {
+test('places-find:', function (t) {
   let arr = [
     ['live in the Rekcjd Province', 'rekcjd province'],
     ['live in the Lekfjs District', 'lekfjs district'],
@@ -24,6 +24,10 @@ test('unknown-places:', function (t) {
     ['see you in West Nunavut', 'west nunavut'],
     ['see you in western Hunan', 'western hunan'],
     ['see you in Northern Hunan province', 'northern hunan province'],
+    ['see you in Toronto, Canada', 'toronto canada'],
+    ['see you in Toronto, Ontario', 'toronto ontario'],
+    ['I flew to Austin, Texas', 'austin texas'],
+    ['I flew to San antonio, Texas', 'san antonio texas'],
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).places(0).text('normal')

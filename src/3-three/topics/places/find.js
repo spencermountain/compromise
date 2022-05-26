@@ -9,7 +9,7 @@ const find = function (doc) {
       return true
     }
     // don't split 'paris, france'
-    if (c.has('(#City|#Region)$') && c.after('^#Country').found) {
+    if (c.has('(#City|#Region|#ProperNoun)$') && c.after('^(#Country|#Region)').found) {
       return false
     }
     return true

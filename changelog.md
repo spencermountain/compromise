@@ -20,6 +20,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[fix]** - suffix tagging issues
 - **[fix]** - uncached matches missing in .sweep()
 - **[fix]** - non-empty results when pointer is first repaired
+- **[fix]** - nouns().toPlural() fix for #921
 - **[change]** - drop deprecated .subst() method internally
 - **[new]** - some support for .numbers().units() again #919
 -->

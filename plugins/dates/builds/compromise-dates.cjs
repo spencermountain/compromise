@@ -8135,15 +8135,15 @@
   ];
   var matches$1 = matches;
 
-  let net = null;
+  let byGroup = null;
 
   const doMatches = function (view) {
-    let { world } = view;
+    let { document, world } = view;
     const { methods } = world;
-    net = net || methods.two.makeNet(matches$1, methods);
-    view.sweep(net);
+    byGroup = byGroup || methods.two.compile(matches$1, methods);
+    let found = methods.two.bulkMatch(document, byGroup, methods);
+    methods.two.bulkTagger(found, document, world);
   };
-
   // run each of the taggers
   const compute = function (view) {
     view.cache();
@@ -8153,15 +8153,12 @@
     timezone(view);
     fixup(view);
     view.uncache();
-
     // sorry, one more
     view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before');
     view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks');
     view.match('#Time [(sharp|on the dot)]').tag('Time', '4pm sharp');
-
     return view
   };
-
   var compute$1 = {
     dates: compute
   };

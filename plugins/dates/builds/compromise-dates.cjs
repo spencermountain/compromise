@@ -8137,13 +8137,11 @@
 
   let net = null;
 
-
   const doMatches = function (view) {
-    let { document, world } = view;
+    let { world } = view;
     const { methods } = world;
     net = net || methods.two.makeNet(matches$1, methods);
-    let found = methods.two.bulkMatch(document, net, methods);
-    methods.two.bulkTagger(found, document, world);
+    view.sweep(net);
   };
 
   // run each of the taggers
@@ -8652,13 +8650,18 @@
 
   ];
 
+  // import matches from './compute/matches.js'
+
   var plugin = {
     tags,
     words,
     compute: compute$1,
     api: api$1,
     mutate: (world) => {
+      world.model.two.regexText = world.model.two.regexText || [];
       world.model.two.regexText = world.model.two.regexText.concat(regex);
+      // net = net || methods.two.makeNet(matches, methods)
+      // world.model.two.matches = world.model.two.matches.concat(matches)
     },
     hooks: ['dates']
   };

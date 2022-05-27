@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/two.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -13,8 +13,13 @@ import nlp from './src/one.js'
 // // b.debug()
 // console.log(b)
 
+// nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
 
-
+let matches = [{ match: '/foo/' }]
+let net = nlp.buildNet(matches)
+let m = nlp('first. foo bar').sweep(net).view
+console.log(m)
+m.debug()
 // let matches = [
 //   { match: 'third' },
 // ]
@@ -22,8 +27,22 @@ import nlp from './src/one.js'
 // let doc = nlp(`first. second. third`)
 // doc = doc.reverse()
 // let res = doc.sweep(net)
-// res.found[0].view.soften()
+// console.log(res.view)
+// res.view.soften()
+// res.view.debug()
 // res.found[0].view.debug()
+
+
+
+// res.found[0].view.debug()
+
+// doc = nlp(`first. second. third`)
+// doc = doc.reverse()
+// res = doc.match('third')
+// console.log(res)
+
+
+
 // console.log(res.found[0].view)
 
 // let doc = nlp(`first. second. third`)
@@ -64,9 +83,9 @@ import nlp from './src/one.js'
 
 
 
-let doc = nlp("Québec is in canada")
+// let doc = nlp("the exploding returns")
 // console.log(nlp.parseMatch('québec'))
-doc.match('québec').debug()
+// doc.debug()
 // const doc = nlp("Steve talked to Johnson LLC")
 // doc.debug()
 // Normal: some common drugs conflatin aspirin statin statins ivermectin amoxicillin augmentin

@@ -10,10 +10,22 @@ const api = function (View) {
     if (opts.tagger !== false) {
       methods.two.bulkTagger(found, docs, this.world)
     }
-
+    // fix the pointers
     // collect all found results into a View
+    found = found.map(o => {
+      let ptr = o.pointer
+      let term = docs[ptr[0]][ptr[1]]
+      let len = ptr[2] - ptr[1]
+      if (term.index) {
+        o.pointer = [
+          term.index[0],
+          term.index[1],
+          ptr[1] + len
+        ]
+      }
+      return o
+    })
     let ptrs = found.map(o => o.pointer)
-
     // cleanup results a bit
     found = found.map(obj => {
       obj.view = this.update([obj.pointer])

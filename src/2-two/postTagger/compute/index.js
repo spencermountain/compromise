@@ -7,12 +7,16 @@ const postTagger = function (view) {
 
   net = net || methods.two.makeNet(model.two.matches, methods)
   // perform these matches on a comma-seperated document
+  // let clauses = view.clauses()
   let document = methods.two.quickSplit(view.document)
-  let found = methods.two.bulkMatch(document, net, methods)
-  methods.two.bulkTagger(found, document, world)
-  // 2nd time?
+  let ptrs = document.map(terms => {
+    let t = terms[0]
+    return [t.index[0], t.index[1], t.index[1] + terms.length]
+  })
+  let m = view.update(ptrs)
+  m.sweep(net)
   view.uncache()
-  return document
+  return view
 }
 
 export default { postTagger }

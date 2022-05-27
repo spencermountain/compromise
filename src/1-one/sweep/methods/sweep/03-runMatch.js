@@ -9,6 +9,7 @@ const runMatch = function (maybeList, document, methods, opts) {
       let res = methods.one.match([document[n]], m)
       // found something.
       if (res.ptrs.length > 0) {
+        // let index=document[n][0].index
         res.ptrs.forEach(ptr => {
           ptr[0] = n // fix the sentence pointer
           let todo = Object.assign({}, m, { pointer: ptr })

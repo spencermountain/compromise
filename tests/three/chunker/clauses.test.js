@@ -15,7 +15,7 @@ test('clauses - with commas', function (t) {
     ['oh and something else, too', ['oh and something else, too']],
     ['tuesday, march 2nd', ['tuesday, march 2nd']],
     ['toronto, canada', ['toronto, canada']],
-    //['june 6, 1992', ['june 6, 1992']] // TODO fix '(#Date && @hasComma) #Year' so it gets this one right
+    ['june 6, 1992', ['june 6, 1992']]
   ]
   arr.forEach(function (a) {
     const clauses = nlp(a[0]).clauses().out('array')

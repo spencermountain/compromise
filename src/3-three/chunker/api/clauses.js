@@ -2,10 +2,10 @@ const clauses = function (n) {
   // an awkward way to disambiguate a comma use
   let commas = this.if('@hasComma')
     .ifNo('@hasComma @hasComma') //fun, cool...
-    .ifNo('@hasComma . .? (and|or) .') //cool, and fun
+    .ifNo('@hasComma (and|or) .') //cool, and fun
     .ifNo('(#City && @hasComma) #Country') //'toronto, canada'
     .ifNo('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
-    .ifNo('(#Date && @hasComma) #Year') //'july 6, 1992'
+    .ifNo('(#Date+ && @hasComma) #Value') //'july 6, 1992'
     .ifNo('@hasComma (too|also)$') //at end of sentence
     .match('@hasComma')
   let found = this.splitAfter(commas)

@@ -115,11 +115,16 @@ const ifNo = function (regs, group, opts) {
     regs = one.parseMatch(regs, opts)
   }
   let cache = this._cache || []
-  return this.filter((m, i) => {
+  let view = this.filter((m, i) => {
     let todo = { regs, group, justOne: true }
     let ptrs = one.match(m.docs, todo, cache[i]).ptrs
     return ptrs.length === 0
   })
+  // try to reconstruct the cache
+  if (this._cache) {
+    view._cache = view.ptrs.map(ptr => cache[ptr[0]])
+  }
+  return view
 }
 
 export default { matchOne, match, has, if: ifFn, ifNo }

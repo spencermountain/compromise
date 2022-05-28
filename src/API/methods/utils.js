@@ -33,7 +33,7 @@ const utils = {
   /** */
   eq: function (n) {
     let ptr = this.pointer
-    let cache = this.cache || []
+    let cache = this._cache || []
     if (!ptr) {
       ptr = this.docs.map((_doc, i) => [i])
     }

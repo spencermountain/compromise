@@ -33,7 +33,8 @@
   "peerDependencies": {
     "compromise": ">=14.0.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "compromise": "^14.1.2"
+  },
   "license": "MIT"
 }

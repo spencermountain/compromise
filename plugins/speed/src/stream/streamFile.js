@@ -1,10 +1,11 @@
 import * as fs from 'fs';
 
-const defaults = { highWaterMark: 64 }//change this for smaller chunks
+// const defaults = {
+// highWaterMark: 64  //change this for smaller chunks
+// }
 
-const streamFile = function (path, fn, opts) {
+const streamFile = function (path, fn, opts = {}) {
   const nlp = this
-  opts = Object.assign({}, defaults, opts)
   return new Promise((resolve, reject) => {
     let model = nlp.model()
     const splitSentences = nlp.methods().one.tokenize.splitSentences
@@ -23,6 +24,7 @@ const streamFile = function (path, fn, opts) {
     s.on('data', function (chunk) {
       txt += chunk;
       let arr = splitSentences(txt, model)
+      // console.log(arr.length)
       txt = arr.pop() //keep last one
       arr.forEach(doIt)
     });

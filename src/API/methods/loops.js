@@ -9,8 +9,10 @@ const forEach = function (cb) {
 
 const map = function (cb, empty) {
   let ptrs = this.fullPointer
+  let cache = this._cache || []
   let res = ptrs.map((ptr, i) => {
     let view = this.update([ptr])
+    view._cache = cache[i]
     return cb(view, i)
   })
   if (res.length === 0) {

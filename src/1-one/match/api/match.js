@@ -89,7 +89,12 @@ const ifFn = function (regs, group, opts) {
     let res = one.match(m.docs, todo, cache[i]).ptrs
     return res.length > 0
   })
-  return this.update(ptrs)
+  let view = this.update(ptrs)
+  // try and reconstruct the cache
+  if (this._cache) {
+    view._cache = ptrs.map(ptr => cache[ptr[0]])
+  }
+  return view
 }
 
 const ifNo = function (regs, group, opts) {

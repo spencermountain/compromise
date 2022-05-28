@@ -20,6 +20,15 @@ const match = function (regs, group, opts) {
   let { ptrs, byGroup } = fixPointers(res, this.fullPointer)
   let view = this.toView(ptrs)
   view._groups = byGroup
+  // try to keep some of the cache
+  // if (this._cache) {
+  //   view._cache = view.ptrs.map(ptr => {
+  //     if (isFull(ptr, this.document)) {
+  //       return this._cache[ptr[0]]
+  //     }
+  //     return null
+  //   })
+  // }
   return view
 }
 

@@ -68,7 +68,7 @@ const rules = [
 let net = null
 const matcher = function (view, _, world) {
   const { methods } = world
-  net = net || methods.two.makeNet(rules, methods)
+  net = net || methods.one.makeNet(rules, methods)
   view.sweep(net)
 }
 export default matcher

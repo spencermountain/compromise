@@ -4,11 +4,11 @@ const api = function (View) {
   View.prototype.sweep = function (net, opts = {}) {
     const { world, docs } = this
     const { methods } = world
-    let found = methods.two.bulkMatch(docs, net, this.methods, opts)
+    let found = methods.one.bulkMatch(docs, net, this.methods, opts)
 
     // apply any changes
     if (opts.tagger !== false) {
-      methods.two.bulkTagger(found, docs, this.world)
+      methods.one.bulkTagger(found, docs, this.world)
     }
     // fix the pointers
     // collect all found results into a View

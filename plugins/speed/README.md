@@ -37,7 +37,6 @@ let net = nlp.buildNet([
   { match: 'every single #Noun' },
   { match: 'not (a|one) #Noun' },
 ])
-
 let doc = await nlp.workerPool(myNovel, net)
 doc.debug()//results
 ```

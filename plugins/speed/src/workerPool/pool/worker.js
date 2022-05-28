@@ -24,7 +24,7 @@ const go = function () {
   // console.log(`${workerIndex} running`)
 
   while (status.queue.length > 0) {
-    let txt = status.queue.join('')
+    let txt = status.queue.pop()//.join('')
     status.queue = []
     let doc = nlp(txt)
     let m = doc.match(reg)
@@ -48,9 +48,7 @@ const go = function () {
 parentPort.on('message', (msg) => {
   // recieve more sentences to do
   if (msg.type === 'work') {
-    msg.work.forEach(str => {
-      status.queue.push(str)
-    })
+    status.queue.push(msg.work)
     // kick it off
     if (!status.running) {
       go()

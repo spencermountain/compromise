@@ -20,7 +20,7 @@ let net = nlp.buildNet([
   { match: 'every single #Noun' },
   { match: 'not (a|one) #Noun' },
 ])
-let doc = await nlp.workerPool(txt, net)
+let doc = await nlp.workerPool(txt, 'every single #Noun')
 doc.debug()
 
 // nlp.streamFile(file, (s) => {

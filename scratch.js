@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -16,7 +16,11 @@ import nlp from './src/two.js'
 // nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
 
 
-
+// const doc = nlp('before. i saw every single house. i met none. ')
+// doc.cache()
+// let m = doc.match('i met none')
+// m.debug()
+// console.log(m._cache)
 
 
 

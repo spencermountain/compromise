@@ -46,7 +46,9 @@ const filter = function (cb) {
     view._cache = cache[i]
     return cb(view, i)
   })
-  return this.update(ptrs)
+  let res = this.update(ptrs) //TODO: keep caches automatically
+  res._cache = ptrs.map(ptr => cache[ptr[0]])
+  return res
 }
 
 const find = function (cb) {

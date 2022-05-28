@@ -13,7 +13,7 @@ export default {
   mutate: (world) => {
     world.model.two.regexText = world.model.two.regexText || []
     world.model.two.regexText = world.model.two.regexText.concat(regex)
-    // net = net || methods.two.makeNet(matches, methods)
+    // net = net || methods.one.makeNet(matches, methods)
     // world.model.two.matches = world.model.two.matches.concat(matches)
   },
   hooks: ['dates']

@@ -58,7 +58,6 @@ nlp.streamFile('./path/to/file.txt', (s)=>{
   // just the returned matches
   doc.debug()
 })
-
 ```
 
 

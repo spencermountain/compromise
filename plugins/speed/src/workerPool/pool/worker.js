@@ -16,13 +16,9 @@ const isObject = val => {
 
 export const isNet = val => val && isObject(val) && val.isNet === true
 
-
-
-
 const go = function () {
   status.running = true
   // console.log(`${workerIndex} running`)
-
   while (status.queue.length > 0) {
     let txt = status.queue.pop()//.join('')
     status.queue = []

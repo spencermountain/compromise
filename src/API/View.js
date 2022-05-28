@@ -80,6 +80,10 @@ class View {
         if (ptr.length === 1) {
           cache.push(m._cache[ptr[0]])
         }
+        // let [n, start, end] = ptr
+        // if (start === 0 && this.document[n][end - 1] && !this.document[n][end]) {
+        //   console.log('=-=-=-= here -=-=-=-')
+        // }
       })
       m._cache = cache
     }

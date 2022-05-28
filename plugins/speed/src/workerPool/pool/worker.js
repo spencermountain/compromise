@@ -1,7 +1,8 @@
 import { workerData, parentPort } from 'worker_threads'
-import nlp from 'compromise'
+// import nlp from 'compromise'
+import nlp from '../../../../../src/three.js'
 
-let { workerIndex } = workerData
+let { workerIndex, reg } = workerData
 
 let status = {
   workerIndex,
@@ -9,18 +10,29 @@ let status = {
   queue: []
 }
 
+const isObject = val => {
+  return Object.prototype.toString.call(val) === '[object Object]'
+}
+
+export const isNet = val => val && isObject(val) && val.isNet === true
+
+
+
+
 const go = function () {
   status.running = true
-  console.log(`${workerIndex} running`)
+  // console.log(`${workerIndex} running`)
+
   while (status.queue.length > 0) {
-    let txt = status.queue.pop()
+    let txt = status.queue.join('')
+    status.queue = []
     let doc = nlp(txt)
-    let m = doc.match('every single #Noun')
+    let m = doc.match(reg)
     if (m.found) {
       parentPort.postMessage({
         type: 'match',
         status,
-        found: m
+        match: m.docs
       })
     }
     // console.log(workerIndex, '  - ', status.queue.length)

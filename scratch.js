@@ -15,11 +15,13 @@ import nlp from './src/two.js'
 
 // nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
 
-let matches = [{ match: '/foo/' }]
-let net = nlp.buildNet(matches)
-let m = nlp('first. foo bar').sweep(net).view
-console.log(m)
-m.debug()
+let net = nlp.buildNet([
+  { match: 'every single #Noun' },
+  { match: 'not (a|one) #Noun' },
+])
+let doc = nlp('i saw every single house. i met none. ')
+doc.match(net).debug()
+// let m = nlp([['first.', 'foo bar']]).debug()
 // let matches = [
 //   { match: 'third' },
 // ]

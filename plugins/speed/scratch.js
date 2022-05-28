@@ -16,17 +16,19 @@ let begin = new Date()
 // let res = nlp(txt).match('every single #Noun')
 // console.log(res.length, 'matches')
 
-let net = nlp.buildNet([
-  { match: 'every single #Noun' },
-  { match: 'not (a|one) #Noun' },
-])
-let doc = await nlp.workerPool(txt, 'every single #Noun')
-doc.debug()
+// let net = nlp.buildNet([
+//   { match: 'every single #Noun' },
+//   { match: 'not (a|one) #Noun' },
+// ])
+// let doc = await nlp.workerPool(txt, net)
+// doc.debug()
+// console.log((new Date().getTime() - begin.getTime()) / 1000, 's')
 
-// nlp.streamFile(file, (s) => {
-//   return s.match('every single #Noun')
-// }).then(res => {
-//   console.log(res.length, 'matches')
-// })
-console.log((new Date().getTime() - begin.getTime()) / 1000, 's')
+nlp.streamFile(file, (s) => {
+  return s.match('every single #Noun')
+}).then(res => {
+  console.log(res.length, 'matches')
+  res.debug()
+  console.log((new Date().getTime() - begin.getTime()) / 1000, 's')
+})
 

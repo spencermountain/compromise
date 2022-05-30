@@ -162,3 +162,14 @@ test('sweep absolute indexes:', function (t) {
   t.equal(res.found[0].view.text(), 'third', here + 'abs index in found')
   t.end()
 })
+
+test('no negative OR false-matches:', function (t) {
+  let txt = 'and us not making appointments'
+  let reg = '!(was|us|me) not making appointments'
+  let doc = nlp(txt)
+  let net = nlp.buildNet([
+    { match: reg }
+  ])
+  t.equal(doc.match(net).found, false, here + 'no negative OR')
+  t.end()
+})

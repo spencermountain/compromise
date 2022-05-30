@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -16,14 +16,9 @@ import nlp from './src/one.js'
 // nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
 // 
 
-let txt = 'and us not making appointments'
-let reg = '!(was|us|me) not making appointments'
-let doc = nlp(txt)
-let net = nlp.buildNet([
-  { match: reg }
-])
-doc.match(net).debug()
-doc.match(reg).debug()
+let doc = nlp(`additional non-urgent appointment.`)
+doc.match(`additional non? urgent? appointment`).debug()
+
 
 // import fs from 'fs'
 // let file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`

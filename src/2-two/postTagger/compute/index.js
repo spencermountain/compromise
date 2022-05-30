@@ -14,8 +14,10 @@ const postTagger = function (view) {
     return [t.index[0], t.index[1], t.index[1] + terms.length]
   })
   let m = view.update(ptrs)
+  m.cache()
   m.sweep(net)
   view.uncache()
+  // view.cache()
   return view
 }
 

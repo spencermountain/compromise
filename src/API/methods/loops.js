@@ -9,10 +9,10 @@ const forEach = function (cb) {
 
 const map = function (cb, empty) {
   let ptrs = this.fullPointer
-  let cache = this._cache || []
+  // let cache = this._cache || []
   let res = ptrs.map((ptr, i) => {
     let view = this.update([ptr])
-    view._cache = cache[i]
+    // view._cache = cache[i]
     return cb(view, i)
   })
   if (res.length === 0) {
@@ -40,23 +40,23 @@ const map = function (cb, empty) {
 
 const filter = function (cb) {
   let ptrs = this.fullPointer
-  let cache = this._cache || []
+  // let cache = this._cache || []
   ptrs = ptrs.filter((ptr, i) => {
     let view = this.update([ptr])
-    view._cache = cache[i]
+    // view._cache = cache[i]
     return cb(view, i)
   })
   let res = this.update(ptrs) //TODO: keep caches automatically
-  res._cache = ptrs.map(ptr => cache[ptr[0]])
+  // res._cache = ptrs.map(ptr => cache[ptr[0]])
   return res
 }
 
 const find = function (cb) {
   let ptrs = this.fullPointer
-  let cache = this._cache || []
+  // let cache = this._cache || []
   let found = ptrs.find((ptr, i) => {
     let view = this.update([ptr])
-    view._cache = cache[i]
+    // view._cache = cache[i]
     return cb(view, i)
   })
   return this.update([found])
@@ -64,10 +64,10 @@ const find = function (cb) {
 
 const some = function (cb) {
   let ptrs = this.fullPointer
-  let cache = this._cache || []
+  // let cache = this._cache || []
   return ptrs.some((ptr, i) => {
     let view = this.update([ptr])
-    view._cache = cache[i]
+    // view._cache = cache[i]
     return cb(view, i)
   })
 }

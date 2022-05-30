@@ -16,6 +16,13 @@ import nlp from './src/three.js'
 // nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
 // 
 
+let txt = ''
+txt = `She will be reviewed in Diabeticare in 6-8 months' time` // missing date
+txt = `She has an appointment for this at the end of January` // missing date
+txt = `has an appointment in around two weeks to explore this further.` //missing date
+nlp(txt).debug()
+
+// dashes
 let doc = nlp(`additional non-urgent appointment.`)
 doc.match(`additional non? urgent? appointment`).debug()
 

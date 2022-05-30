@@ -49,11 +49,11 @@ const rules = [
 
   // === Noun ===
   // the brown fox
-  { match: '#Determiner #Adjective+ #Noun', chunk: 'Noun' },
+  // { match: '#Determiner #Adjective+ #Noun', chunk: 'Noun' },
   // the fox
   // { match: '(the|this) <Noun>', chunk: 'Noun' },
   // brown fox
-  { match: '#Adjective+ <Noun>', chunk: 'Noun' },
+  // { match: '#Adjective+ <Noun>', chunk: 'Noun' },
   // --- of ---
   // son of a gun
   { match: '<Noun> of #Determiner? #Noun', chunk: 'Noun' },

@@ -17,23 +17,23 @@ const rules = [
 
   // === Verb ===
   // quickly run
-  { match: '#Adverb+ {Verb}', chunk: 'Verb' },
+  // { match: '#Adverb+ {Verb}', chunk: 'Verb' },
   // quickly and suddenly run
   { match: '#Adverb+ and #Adverb #Verb', chunk: 'Verb' },
   // run quickly
-  { match: '{Verb} #Adverb+', chunk: 'Verb' },
+  // { match: '{Verb} #Adverb+', chunk: 'Verb' },
   // sitting near
   { match: '#Gerund #Adjective', chunk: 'Verb' },
   // going to walk
   { match: '#Gerund to #Verb', chunk: 'Verb' },
   // is no
-  { match: '#Copula no', chunk: 'Verb' },
+  // { match: '#Copula no', chunk: 'Verb' },
   // had not
-  { match: '#Verb #Negative', chunk: 'Verb' },
+  // { match: '#Verb #Negative', chunk: 'Verb' },
   // not seen
-  { match: '#Negative #Verb', chunk: 'Verb' },
+  // { match: '#Negative #Verb', chunk: 'Verb' },
   // not really
-  { match: '#Negative #Adverb ', chunk: 'Verb' },
+  // { match: '#Negative #Adverb ', chunk: 'Verb' },
   // really not
   { match: '#Adverb #Negative', chunk: 'Verb' },
   // want to see
@@ -41,7 +41,7 @@ const rules = [
   // walk ourselves
   { match: '#Verb #Reflexive', chunk: 'Verb' },
   // tell him the story
-  { match: '#Verb [#Pronoun] #Determiner', group: 0, chunk: 'Verb' },
+  { match: '#PresentTense [#Pronoun] #Determiner', group: 0, chunk: 'Verb' },
   // tries to walk
   { match: '#Verb [to] #Adverb? #Infinitive', group: 0, chunk: 'Verb' },
   // upon seeing
@@ -51,7 +51,7 @@ const rules = [
   // the brown fox
   { match: '#Determiner #Adjective+ #Noun', chunk: 'Noun' },
   // the fox
-  { match: '(the|this) <Noun>', chunk: 'Noun' },
+  // { match: '(the|this) <Noun>', chunk: 'Noun' },
   // brown fox
   { match: '#Adjective+ <Noun>', chunk: 'Noun' },
   // --- of ---

@@ -20,5 +20,5 @@ export default [
   // a bit amusing
   { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
   // the amusing world
-  { match: '(#Determiner|#Possessive) [%Adj|Gerund%] #Noun', group: 0, tag: 'Adjective', reason: 'amusing-world' },
+  // { match: '(#Determiner|#Possessive) [%Adj|Gerund%] #Noun', group: 0, tag: 'Adjective', reason: 'amusing-world' },
 ]

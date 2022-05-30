@@ -36,12 +36,12 @@ export default [
     reason: 'western-line',
   },
   //linear algebra
-  {
-    match: '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun',
-    group: 0,
-    tag: 'Noun',
-    reason: 'technical-noun',
-  },
+  // {
+  //   match: '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun',
+  //   group: 0,
+  //   tag: 'Noun',
+  //   reason: 'technical-noun',
+  // },
   //air-flow
   { match: '(#Noun && @hasHyphen) #PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
   //is no walk

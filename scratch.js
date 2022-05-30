@@ -16,13 +16,8 @@ import nlp from './src/three.js'
 // nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
 
 // [
-//   [ '(#Determiner|#Possessive) [%Adj|Gerund%] #Noun', 3831 ],
 //   [ '#Adjective+ <Noun>', 3642 ],
 //   [ '(the|this) <Noun>', 3524 ],
-//   [
-//     '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun',
-//     3229
-//   ],
 //   [ '(#Noun && @hasHyphen) #PresentTense', 2751 ],
 //   [ '#Determiner #Adjective+ #Noun', 2672 ],
 //   [ '#Verb [#Pronoun] #Determiner', 2326 ],
@@ -65,10 +60,10 @@ import fs from 'fs'
 let file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`
 file = `/Users/spencer/mountain/compromise/plugins/speed/tests/files/freshPrince.txt`
 let txt = fs.readFileSync(file).toString()
-txt = `i know i'd go`
+txt = `that is completely untrue.`
 let doc = nlp(txt)
-doc.debug()
-console.log('done')
+doc.debug('chunks')
+// console.log('done')
 
 // let doc = nlp('one two three four')
 // let m = doc.match('one two three')

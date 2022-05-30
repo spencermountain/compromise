@@ -8,7 +8,7 @@ const easyMode = function (document) {
         term.chunk = 'Verb'
         continue
       }
-      if (term.tags.has('Noun')) {
+      if (term.tags.has('Noun') || term.tags.has('Determiner')) {
         term.chunk = 'Noun'
         continue
       }
@@ -21,6 +21,30 @@ const easyMode = function (document) {
       if (term.tags.has('QuestionWord')) {
         term.chunk = 'Pivot'
         continue
+      }
+      // 'really swimming' vs 'really cool'
+      if (term.tags.has('Adverb') || term.tags.has('Negative')) {
+        // based on last-term
+        let lastT = document[n][t - 1]
+        if (lastT && lastT.tags.has('Adjective')) {
+          term.chunk = 'Adjective'
+          continue
+        }
+        if (lastT && lastT.tags.has('Verb')) {
+          term.chunk = 'Verb'
+          continue
+        }
+
+        // based on next-term
+        let nextT = document[n][t + 1]
+        if (nextT && nextT.tags.has('Adjective')) {
+          term.chunk = 'Adjective'
+          continue
+        }
+        if (nextT && nextT.tags.has('Verb')) {
+          term.chunk = 'Verb'
+          continue
+        }
       }
     }
   }

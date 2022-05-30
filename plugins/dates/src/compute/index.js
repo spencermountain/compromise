@@ -8,7 +8,7 @@ let net = null
 const doMatches = function (view) {
   let { world } = view
   const { methods } = world
-  net = net || methods.one.makeNet(matches, methods)
+  net = net || methods.one.buildNet(matches, methods)
   view.sweep(net)
 }
 

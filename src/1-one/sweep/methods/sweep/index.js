@@ -2,6 +2,15 @@ import getCandidates from './01-candidates.js'
 import trimDown from './02-trim-down.js'
 import runMatch from './03-runMatch.js'
 
+// const counts = {}
+
+
+// setInterval(() => {
+//   let res = Object.keys(counts).map(k => [k, counts[k]])
+//   res = res.sort((a, b) => (a[1] > b[1] ? -1 : 0))
+//   console.log(res)
+// }, 5000)
+
 const sweep = function (document, net, methods, opts = {}) {
   // find suitable matches to attempt, on each sentence
   let docCache = methods.one.cacheDoc(document)
@@ -13,6 +22,12 @@ const sweep = function (document, net, methods, opts = {}) {
   if (net.always.length > 0) {
     maybeList = maybeList.map(arr => arr.concat(net.always))
   }
+  // maybeList.forEach(list => {
+  //   list.forEach(o => {
+  //     counts[o.match] = counts[o.match] || 0
+  //     counts[o.match] += 1
+  //   })
+  // })
   // now actually run the matches
   let results = runMatch(maybeList, document, methods, opts)
   // console.dir(results, { depth: 5 })

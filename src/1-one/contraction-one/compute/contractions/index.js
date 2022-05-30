@@ -8,9 +8,18 @@ const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
 // run tagger on our new implicit terms
-const reTag = function (terms, view) {
+const reTag = function (terms, view, start, len) {
   let tmp = view.update()
   tmp.document = [terms]
+  // offer to re-tag neighbours, too
+  let end = start + len
+  if (start > 0) {
+    start -= 1
+  }
+  if (terms[end]) {
+    end += 1
+  }
+  tmp.ptrs = [[0, start, end]]
   tmp.compute(['lexicon', 'preTagger', 'index'])
 }
 
@@ -83,7 +92,7 @@ const contractions = (view) => {
       if (words) {
         words = toDocs(words, view)
         splice(document, [n, i], words)
-        reTag(document[n], view)
+        reTag(document[n], view, i, words.length)
         continue
       }
       // '44-2' has special care
@@ -97,7 +106,7 @@ const contractions = (view) => {
           if (words[2] && words[2].tags.has('Time')) {
             methods.one.setTag([words[0]], 'Time', world)
           }
-          reTag(document[n], view)
+          reTag(document[n], view, i, words.length)
         }
       }
     }

@@ -15,7 +15,7 @@ const findChunks = function (view) {
   easyMode(document)
   byNeighbour(document)
   matcher(view, document, world)
-  matcher(view, document, world) //run it 2nd time
+  // matcher(view, document, world) //run it 2nd time
   fallback(document, world)
   fixUp(document, world)
 }

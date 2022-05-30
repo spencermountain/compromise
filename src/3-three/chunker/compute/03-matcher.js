@@ -9,7 +9,7 @@ const rules = [
   // was really nice
   { match: '#Copula #Adverb+? [#Adjective]', group: 0, chunk: 'Adjective' },
   // was nice
-  { match: '#Copula [#Adjective]', group: 0, chunk: 'Adjective' },
+  // { match: '#Copula [#Adjective]', group: 0, chunk: 'Adjective' },
   // nice and cool
   { match: '#Adjective and #Adjective', chunk: 'Adjective' },
   // really nice

@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('chunker')
+// nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -14,31 +14,13 @@ nlp.verbose('chunker')
 // console.log(b)
 
 // nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
-let all = [
-  ['(#Noun && @hasHyphen) #PresentTense', 2751],
-  ['#Determiner [%Adj|Noun%] #Noun', 2093],
-  ['[#Copula] (#Adverb|not)+? (#Gerund|#PastTense)', 1942],
-  ['#Singular and #Determiner? #Singular', 1780],
-  ['#PresentTense [#Pronoun] #Determiner', 1722],
-  ['<Noun> of #Determiner? #Noun', 1658],
-  ['(the|these) [#Singular] (were|are)', 1553],
-  ['(#Value|a) [(buck|bucks|grand)]', 1408],
-  ['#Noun in #Determiner? #Noun', 1404],
-  ['#Verb [to] #Adverb? #Infinitive', 1400],
-  ['%Person|Date% #Acronym? #ProperNoun', 1309],
-  ['%Person|Noun% #Acronym? #ProperNoun', 1309],
-  ['%Person|Verb% #Acronym? #ProperNoun', 1309],
-  ['[%Person|Verb%] (#Adverb|#Comparative)', 1284],
-  ['#Copula #Adverb+? [#Adjective]', 1262],
-  ['#Copula [#Adjective]', 1262],
-]
 
 import fs from 'fs'
 let file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`
 file = `/Users/spencer/mountain/compromise/plugins/speed/tests/files/freshPrince.txt`
 let txt = fs.readFileSync(file).toString()
-txt = 'Spencer'
-let doc = nlp(txt)
+txt = 'his complex'
+let doc = nlp(txt).debug()
 // doc.debug('chunks')
 // console.log(doc.match('this').json()[0].terms)
 // console.log('done')

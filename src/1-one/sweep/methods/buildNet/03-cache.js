@@ -10,6 +10,9 @@ const getTokenNeeds = function (reg) {
   if (reg.word) {
     return reg.word
   }
+  if (reg.switch) {
+    return `%${reg.switch}%`
+  }
   return null
 }
 
@@ -42,6 +45,8 @@ const findNeeds = function (regs) {
 const cache = function (matches) {
   matches.forEach(obj => {
     obj.needs = Array.from(findNeeds(obj.regs))
+    // get rid of tiny sentences
+    obj.minWords = obj.regs.filter(o => !o.optional).length
   })
   return matches
 }

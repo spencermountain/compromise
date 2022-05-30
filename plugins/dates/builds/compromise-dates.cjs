@@ -8140,7 +8140,7 @@
   const doMatches = function (view) {
     let { world } = view;
     const { methods } = world;
-    net = net || methods.two.makeNet(matches$1, methods);
+    net = net || methods.one.buildNet(matches$1, methods);
     view.sweep(net);
   };
 
@@ -8660,7 +8660,7 @@
     mutate: (world) => {
       world.model.two.regexText = world.model.two.regexText || [];
       world.model.two.regexText = world.model.two.regexText.concat(regex);
-      // net = net || methods.two.makeNet(matches, methods)
+      // net = net || methods.one.buildNet(matches, methods)
       // world.model.two.matches = world.model.two.matches.concat(matches)
     },
     hooks: ['dates']

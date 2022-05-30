@@ -16,18 +16,27 @@ import nlp from './src/one.js'
 // nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
 // 
 
-import fs from 'fs'
-let file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`
-// file = `/Users/spencer/mountain/compromise/plugins/speed/tests/files/freshPrince.txt`
-let txt = fs.readFileSync(file).toString()
-let begin = new Date()
-// txt = 'his complex'
-let doc = nlp(txt).match('every single #Noun')
-// doc.debug('chunks')
-// console.log(doc.match('this').json()[0].terms)
-console.log('done')
-let end = new Date()
-console.log((end.getTime() - begin.getTime()) / 1000)
+let txt = 'and us not making appointments'
+let reg = '!(was|us|me) not making appointments'
+let doc = nlp(txt)
+let net = nlp.buildNet([
+  { match: reg }
+])
+doc.match(net).debug()
+doc.match(reg).debug()
+
+// import fs from 'fs'
+// let file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`
+// // file = `/Users/spencer/mountain/compromise/plugins/speed/tests/files/freshPrince.txt`
+// let txt = fs.readFileSync(file).toString()
+// let begin = new Date()
+// // txt = 'his complex'
+// let doc = nlp(txt).match('every single #Noun')
+// // doc.debug('chunks')
+// // console.log(doc.match('this').json()[0].terms)
+// console.log('done')
+// let end = new Date()
+// console.log((end.getTime() - begin.getTime()) / 1000)
 
 // let doc = nlp('one two three four')
 // let m = doc.match('one two three')

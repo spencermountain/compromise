@@ -7,7 +7,6 @@ const postTagger = function (view) {
 
   net = net || methods.one.makeNet(model.two.matches, methods)
   // perform these matches on a comma-seperated document
-  // let clauses = view.clauses()
   let document = methods.two.quickSplit(view.document)
   let ptrs = document.map(terms => {
     let t = terms[0]

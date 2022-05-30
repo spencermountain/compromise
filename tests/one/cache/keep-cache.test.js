@@ -41,6 +41,14 @@ test('keep cache', function (t) {
   t.end()
 })
 
+test('cache in match', function (t) {
+  let doc = nlp('one two three four')
+  let m = doc.match('one two three')
+  m.tag('. #Person .')
+  t.equal(doc._cache, null, here + 'invalidate parent cache')
+  t.end()
+})
+
 
 test('remove cache', function (t) {
   let doc = nlp('one two three. four five six. seven eight nine.')

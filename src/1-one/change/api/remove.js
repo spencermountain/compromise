@@ -76,6 +76,7 @@ const methods = {
       this.ptrs = []
       return self.none()
     }
+    // self._cache = null
     let res = self.toView(ptrs) //return new document
     return res
   },

@@ -2,10 +2,11 @@ import { Lexicon, Plugin, matchOptions } from './misc'
 import View from './view/three'
 
 /** parse a given text */
-declare function nlp(text: string, lexicon?: Lexicon): View
+declare function nlp<PluginTypes = {}>(text: string, lexicon?: Lexicon): View & PluginTypes
 
 // Constructor
 declare module nlp {
+  export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
   /** interpret text without tagging */
   export function tokenize(text: string, lexicon?: Lexicon): View
   /** mix in a compromise-plugin */

@@ -6,7 +6,6 @@ declare function nlp<PluginTypes = {}>(text: string, lexicon?: Lexicon): View & 
 
 // Constructor
 declare module nlp {
-  export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
   /** interpret text without tagging */
   export function tokenize(text: string, lexicon?: Lexicon): View
   /** mix in a compromise-plugin */
@@ -33,6 +32,8 @@ declare module nlp {
   export function compile(words: string[]): object
   /** add words to the autoFill dictionary */
   export function typeahead(words: Lexicon): any
+  /** export internal methods for plugins */
+  export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
 }
 
 export default nlp

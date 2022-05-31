@@ -41,7 +41,7 @@ class View {
   /** run a function on each phrase, as an individual document */
   forEach: (fn: (m: View) => void) => View
   /** run each phrase through a function, and create a new document */
-  map: (fn: (m: View) => any, emptyResult?: any) => View | any
+  map: (fn: (m: View) => any, emptyResult?: any) => View | []
   /** return only the phrases that return true */
   filter: (fn: (m: View) => boolean) => View
   /** return a document with only the first phrase that matches */
@@ -108,6 +108,8 @@ class View {
   splitBefore: (match?: string, group?: string | number) => View
   /** separate everything before the word, as a new phrase */
   splitAfter: (match?: string, group?: string | number) => View
+  /** splitAfter() alias */
+  split: (match?: string, group?: string | number) => View
 
   // Case
   /** turn every letter of every term to lower-cse */
@@ -122,12 +124,20 @@ class View {
   // Insert
   /** add these new things to the end */
   concat: (input: string | View) => View
-  /** .prepend() [alias] */
+  /** add these words before each match */
   insertBefore: (input: string | View) => View
-  /** .append() [alias] */
+  /** insertBefore() alias */
+  prepend: (input: string | View) => View
+  /** add these words after each match */
   insertAfter: (text: string | View) => View
+  /** insertAfter() alias */
+  append: (text: string | View) => View
+  /** insertAfter() alias */
+  insert: (text: string | View) => View
   /** fully remove these terms from the document */
   remove: (match: string | View) => View
+  /** alias for .remove() */
+  delete: (match: string | View) => View
   /** search and replace match with new content */
   replace: (from: string | View, to?: string | Function, keep?: object) => View
   /** substitute-in new content */
@@ -151,8 +161,12 @@ class View {
   hyphenate: () => View
   /** remove hyphens between words, and set whitespace */
   dehyphenate: () => View
+  /** alias for .dehyphenate() */
+  deHyphenate: () => View
   /** add quotation marks around selections */
   toQuotations: (start?: string, end?: string) => View
+  /** alias for toQuotations() */
+  toQuotation: (start?: string, end?: string) => View
   /** add parentheses around selections */
   toParentheses: (start?: string, end?: string) => View
 
@@ -175,10 +189,14 @@ class View {
   // ### Pointers
   /** return all matches without duplicates */
   union: (match: string | View) => View
+  /** .union() alias */
+  and: (match: string | View) => View
   /** return only duplicate matches */
   intersection: (match: string | View) => View
   /** return all results except for this */
   not: (match: string | View, options?: any) => View
+  /** .not() alias */
+  difference: (match: string | View, options?: any) => View
   /** get everything that is not a match */
   complement: (match: string | View) => View
   /** remove overlaps in matches */

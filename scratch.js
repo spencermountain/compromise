@@ -20,6 +20,7 @@ let txt = ''
 txt = `She will be reviewed in Diabeticare in 6-8 months' time` // missing date
 txt = `She has an appointment for this at the end of January` // missing date
 txt = `has an appointment in around two weeks to explore this further.` //missing date
+txt = `my name's john`
 nlp(txt).debug()
 
 // dashes

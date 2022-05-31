@@ -21,6 +21,8 @@ export default [
   { match: '^[#Infinitive] (your|my|the|some|a|an)', group: 0, ifNo: 'like', tag: 'Imperative', reason: 'eat-my-shorts' },
   // tell him the story
   { match: '^[#Infinitive] (him|her|it|us|me)', group: 0, tag: 'Imperative', reason: 'tell-him' },
+  // avoid loud noises
+  { match: '^[#Infinitive] #Adjective #Noun$', group: 0, tag: 'Imperative', reason: 'avoid-loud-noises' },
   // one-word imperatives
   { match: '^(go|stop|wait|hurry) please?$', tag: 'Imperative', reason: 'go' },
   // somebody call

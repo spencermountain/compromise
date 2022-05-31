@@ -577,7 +577,7 @@ let arr = [
   [`who's`, 'who is'],
   [`what's`, 'what is'],
   [`where's`, 'where is'],
-  [`why's the doc`, 'why is doc'],
+  [`why's the doc`, 'why is the doc'],
   [`when's he coming`, 'when is he .'],
   [`how's that`, 'how is that'],
   [`let's`, 'let us'],

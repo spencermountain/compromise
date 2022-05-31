@@ -18,6 +18,6 @@ export interface StatsMethods {
 }
 
 /**  **/
-declare const nlpNgrams: nlp.Plugin<StatsMethods,{}>
+declare const nlpNgrams: nlp.TypedPlugin<StatsMethods,{}>
 
 export default nlpNgrams

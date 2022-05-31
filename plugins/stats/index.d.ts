@@ -1,5 +1,7 @@
 import nlp from 'compromise'
 
+export type Freq = [word: string, freq: number]
+
 export interface StatsMethods {
   /** list all repeating sub-phrases, by word-count*/
   ngrams(options?: any): any
@@ -15,9 +17,12 @@ export interface StatsMethods {
   endgrams(options?: any): any
   /** n-grams including the first or last term of a phrase*/
   edgegrams(options?: any): any
+
+  /** compute word-importance in this document */
+  tfidf(): Freq[]
 }
 
-/**  **/
-declare const nlpNgrams: nlp.TypedPlugin<StatsMethods,{}>
+/** extended compromise lib **/
+declare const nlpStats: nlp.TypedPlugin<StatsMethods, {}>
 
-export default nlpNgrams
+export default nlpStats

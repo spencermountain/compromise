@@ -9,6 +9,7 @@ compromise uses semver, and pushes to npm frequently
 While all _Major_ releases should be reviewed, our only two _large_ releases are **v6** in 2016 and and **v12** in 2019. Others have been mostly incremental, or niche.
 
 <!-- #### [Unreleased]
+- **[fix]** - speed improvements
 - **[fix]** - bug with fast-or possessive matches
 - **[fix]** - bug with slow-or end-matches
 - **[change]** - no-longer attempt 's contractions in compromise/one
@@ -21,7 +22,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 - **[fix]** - uncached matches missing in .sweep()
 - **[fix]** - non-empty results when pointer is first repaired
 - **[fix]** - nouns().toPlural() fix for #921
-- **[change]** - drop deprecated .subst() method internally
+- **[fix]** - drop deprecated .subst() method internally
 - **[new]** - some support for .numbers().units() again #919
 -->
 

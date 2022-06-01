@@ -254,6 +254,7 @@ tape('plugin-speech', function (t) {
 
 tape('plugin-speed', function (t) {
   let doc = nlp<SpeedMethods>('foo bar')
+  // nlp.workerPool()
   doc.match('foo')
   t.end()
 })

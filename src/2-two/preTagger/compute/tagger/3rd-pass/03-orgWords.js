@@ -11,7 +11,11 @@ const isOrg = function (term, i) {
     return true
   }
   // allow anything titlecased to be an org
-  if (isTitleCase(term.text) && i > 0) {
+  if (isTitleCase(term.text)) {
+    // only tag a titlecased first-word, if it checks-out
+    if (i === 0) {
+      return term.tags.has('Singular')
+    }
     return true
   }
   return false

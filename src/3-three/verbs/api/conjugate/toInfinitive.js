@@ -12,10 +12,9 @@ const toInfinitive = function (vb, parsed) {
     vb.replace(root, str, keep).tag('Verb').firstTerm().tag('Infinitive')
   }
   // remove any auxiliary terms
+  // aux.debug()
   if (aux.found) {
-    aux.reverse().forEach(m => {
-      vb.remove(m)
-    })
+    vb.remove(aux)
   }
   // there is no real way to do this
   // 'i not walk'?  'i walk not'?

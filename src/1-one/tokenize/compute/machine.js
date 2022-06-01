@@ -1,4 +1,4 @@
-const hasDash = /\p{Letter}-\p{Letter}/u
+const hasDash = /^\p{Letter}+-\p{Letter}+$/u
 // 'machine' is a normalized form that looses human-readability
 const doMachine = function (term) {
   let str = term.implicit || term.normal || term.text

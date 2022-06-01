@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -17,9 +17,12 @@ nlp.verbose('tagger')
 // 
 
 let txt = ''
-txt = `Fantastic Service`
-nlp(txt).debug()
-
+txt = 'i was not being walked'
+// txt = 'i was not really being walked'
+txt = 'i was walking and saw john'
+let doc = nlp(txt)
+doc.verbs().toInfinitive()
+doc.debug()
 // dashes
 // let doc = nlp('inter-species communication')
 // console.log(doc.json()[0])

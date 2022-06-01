@@ -9,6 +9,7 @@ export default [
   'commander',
   'congressman',
   'congresswoman',
+  'constable',
   'councillor',
   'count',
   'doctor',

@@ -7,9 +7,18 @@ import isPossessive from './isPossessive.js'
 const byApostrophe = /'/
 
 // run tagger on our new implicit terms
-const reTag = function (terms, view) {
+const reTag = function (terms, view, start, len) {
   let tmp = view.update()
   tmp.document = [terms]
+  // offer to re-tag neighbours, too
+  let end = start + len
+  if (start > 0) {
+    start -= 1
+  }
+  if (terms[end]) {
+    end += 1
+  }
+  tmp.ptrs = [[0, start, end]]
   tmp.compute(['lexicon', 'preTagger', 'index'])
 }
 

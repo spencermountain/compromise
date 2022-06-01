@@ -2,7 +2,7 @@ const keep = { tags: true }
 
 const hasPlural = function (parsed) {
   let { root } = parsed
-  if (root.has('(#Uncountable|#Possessive|#ProperNoun|#Place|#Pronoun)')) {
+  if (root.has('^(#Uncountable|#Possessive|#ProperNoun|#Place|#Pronoun)+$')) {
     return false
   }
   return true

@@ -1,12 +1,13 @@
 {
   "name": "compromise-stats",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-stats.min.js",
   "type": "module",
   "module": "./builds/compromise-stats.mjs",
+  "types": "index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {

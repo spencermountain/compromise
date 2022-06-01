@@ -60,5 +60,27 @@ TF-IDF values are scaled, but have an unbounded maximum. The result for 'foo foo
 - **[.endgrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the last term of a phrase
 - **[.edgegrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first or last term of a phrase
 
+all methods support the same option params:
+```js
+let doc = nlp('one two three. one two foo.')
+doc.ngrams({ size: 2 }) // only two-word grams
+/*[
+  { size: 2, count: 2, normal: 'one two' },
+  { size: 2, count: 1, normal: 'two three' },
+  { size: 2, count: 1, normal: 'two foo' }
+]
+*/
+```
+
+or all gram-sizes under/over a limit:
+```js
+let doc = nlp('one two three. one two foo.')
+let res = doc.ngrams({ min: 3 }) // or max:2
+/*[
+  { size: 3, count: 1, normal: 'one two three' },
+  { size: 3, count: 1, normal: 'one two foo' }
+]
+*/
+```
 
 MIT

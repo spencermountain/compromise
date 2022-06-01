@@ -2038,4 +2038,10 @@ export default [
   ['levelled', 'level'],
   ['dared', 'dare'],
   ['swam', 'swim'],
+  ['collide', 'collided'],
+  ['slam', 'slammed'],
+  ['shun', 'shunned'],
+  ['prod', 'prodded'],
+  ['outgrow', 'outgrew'],
+  ['fulfil', 'fulfilled'],
 ]

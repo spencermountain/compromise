@@ -1,111 +1,281 @@
 // a smoke-test for our typescipt typings
-import nlp from '../../builds/types'
+import nlp from '../../'
 import tape from 'tape'
+import stats, { StatsMethods } from '../../plugins/stats'
+import dates, { DatesMethods } from '../../plugins/dates'
+import speech, { SpeechMethods } from '../../plugins/speech'
+import speed, { SpeedMethods } from '../../plugins/speed'
+import wiki, { WikiMethods } from '../../plugins/wikipedia'
+nlp.plugin(stats)
+nlp.plugin(dates)
+nlp.plugin(speech)
+nlp.plugin(speed)
+nlp.plugin(wiki)
 
 console.log('\n 🥗  - running types-test..\n')
 
-tape('misc functions', function(t) {
+tape('misc functions', function (t) {
   let doc = nlp('John and Joe walked to the store')
-  t.equal(doc.people().json().length, 2, 'found-people')
-  t.equal(doc.verbs().json().length, 1, 'found-verbs')
-  t.equal(doc.match('joe walked .').found, true, 'match-statement')
-  t.equal(doc.terms(1).text('reduced'), 'and', 'text-out')
-  //ensure lexicon works
-  let tmp = nlp('spencer kelly', { spencer: 'Cool' })
-  t.equal(tmp.match('#Cool').text(), 'spencer', 'lexicon-works')
-  // let tmp = nlp.tokenize('spencer kelly', { spencer: 'Cool' })
+  let m = doc.filter(s => s.found)
+  let b = doc.map(s => s)
+  doc.forEach((s) => s)
+  m = doc.find(s => s.found)
+  m = doc.some(s => s.found)
+  m = doc.random()
+  m = doc.all()
+  m = doc.eq(0)
+  m = doc.first()
+  m = doc.firstTerms()
+  m = doc.fullSentences()
+  m = doc.last()
+  m = doc.lastTerms()
+  m = doc.none()
+  m = doc.slice(0, 1)
+  m = doc.terms()
+  m = doc.update([])
+  m = doc.toView([])
+  m = doc.fromText('')
+  m = doc.clone()
+  let obj = doc.groups()
+  let arr = doc.termList()
+  let c = doc.wordCount()
+  doc.fullPointer
+  doc.docs
+  doc.pointer
+  doc.methods
+  doc.model
+  doc.hooks
+  doc.isView
+  doc.found
+  doc.length
 
-  let obj = nlp('spencer kelly').lookup({ spencer: 'Name' })
-  t.equal(obj['Name'].text(), 'spencer', 'lookup-obj')
+  // One
+  doc.compute('id')
+  // change
+  m = doc.toLowerCase()
+  m = doc.toUpperCase()
+  m = doc.toTitleCase()
+  m = doc.toCamelCase()
+  m = doc.insertAfter('asdf')
+  m = doc.insertBefore('boo')
+  m = doc.append('foo')
+  m = doc.prepend('foo')
+  m = doc.insert('bar')
+  m = doc.match('flood').replaceWith('asf')
+  m = doc.replace('m', 'woo')
+  m = doc.remove('foo')
+  m = doc.delete('bar')
+  m = doc.pre(' ')
+  m = doc.post(' ')
+  m = doc.trim()
+  m = doc.hyphenate()
+  m = doc.dehyphenate()
+  m = doc.toQuotations()
+  m = doc.toParentheses()
+  m = doc.deHyphenate()
+  m = doc.toQuotation()
+  m = doc.unique()
+  m = doc.reverse()
+  m = doc.sort()
+  m = doc.concat(doc.none())
+  // doc.fork()
 
-  let m = nlp('spencer kelly').lookup(['spencer', 'david'])
-  t.equal(m.text(), 'spencer', 'lookup-arr')
+  doc.compute('contractions')
+  doc.compute('lexicon')
+  doc.lookup(['blue jays', 'farmer'])
+
+  // match
+  m = doc.matchOne('#Foo')
+  m = doc.match('#Foo')
+  m = doc.has('#Foo')
+  m = doc.if('#Foo')
+  m = doc.ifNo('#Foo')
+  m = doc.before('#Foo')
+  m = doc.after('#Foo')
+  m = doc.growLeft('#Foo')
+  m = doc.growRight('#Foo')
+  m = doc.grow('#Foo')
+  m = doc.splitOn('#Foo')
+  m = doc.splitBefore('#Foo')
+  m = doc.splitAfter('#Foo')
+  m = doc.split('#Foo')
+
+  // output
+  let res = doc.out()
+  let txt = doc.text()
+  txt = doc.text('normal')
+  txt = doc.text('machine')
+  txt = doc.text('root')
+  txt = doc.text('implicit')
+  txt = doc.json()
+
+  // sets
+  m = doc.union('blah')
+  m = doc.and('blah')
+  m = doc.intersection('blah')
+  m = doc.difference('blah')
+  m = doc.not('blah')
+  m = doc.complement('blah')
+  m = doc.settle('blah')
+
+  m = doc.tag('Foo')
+  m = doc.tagSafe('Foo')
+  m = doc.unTag('Foo')
+  m = doc.canBe('Foo')
+
+  doc.compute('alias')
+  doc.compute('normal')
+  doc.compute('machine')
+  doc.compute('freq')
+  doc.compute('offset')
+  doc.compute('index')
+  doc.compute('wordCount')
+
+  doc.compute('typeahead')
+  doc.autoFill()
+
+
+  // Two
+  doc.compute('contractionTwo')
+  m = doc.contractions()
+  m = doc.contractions().expand()
+
+  doc.confidence()
+
+  doc.compute('preTagger')
+  doc.compute('tagRank')
+  doc.compute('root')
+  doc.compute('penn')
+
+  m = doc.swap('rock', 'stone', '#Noun')
+
+
+  // Three
+  doc.compute('chunks')
+  m = doc.chunks()
+  m = doc.clauses()
+
+  // nouns
+  let tmp = doc.nouns().parse()
+  arr = doc.nouns().json()
+  let noun = doc.nouns().isPlural()
+  noun = doc.nouns().adjectives()
+  noun = doc.nouns().toPlural()
+  noun = doc.nouns().toSingular()
+  // numbers
+  tmp = doc.numbers().parse()
+  doc.numbers().get()
+  arr = doc.numbers().json()
+  let num = doc.numbers().isOrdinal()
+  num = doc.numbers().isCardinal()
+  num = doc.numbers().toNumber()
+  num = doc.numbers().toLocaleString()
+  num = doc.numbers().toText()
+  num = doc.numbers().toCardinal()
+  num = doc.numbers().toOrdinal()
+  num = doc.numbers().isEqual()
+  num = doc.numbers().greaterThan(3)
+  num = doc.numbers().lessThan(3)
+  num = doc.numbers().between(3, 4)
+  num = doc.numbers().set(2)
+  num = doc.numbers().add(3)
+  num = doc.numbers().subtract(2)
+  num = doc.numbers().increment()
+  num = doc.numbers().decrement()
+  num = doc.percentages().json()
+  num = doc.money().json()
+  num = doc.fractions().json()
+
+  // sentences
+  let s = doc.sentences().toPastTense()
+  s = doc.sentences().toPresentTense()
+  s = doc.sentences().toFutureTense()
+  s = doc.sentences().toInfinitive()
+  s = doc.sentences().toNegative()
+  s = doc.questions()
+
+  // verbs
+  arr = doc.verbs().parse()
+  arr = doc.verbs().json()
+  arr = doc.verbs().subjects()
+  let vb = doc.verbs().isSingular()
+  vb = doc.verbs().isPlural()
+  vb = doc.verbs().isImperative()
+  vb = doc.verbs().toInfinitive()
+  vb = doc.verbs().toPresentTense()
+  vb = doc.verbs().toPastTense()
+  vb = doc.verbs().toFutureTense()
+  vb = doc.verbs().toGerund()
+  vb = doc.verbs().conjugate()
+  vb = doc.verbs().isNegative()
+  vb = doc.verbs().isPositive()
+  vb = doc.verbs().toPositive()
+  vb = doc.verbs().toNegative()
+
+  // misc
+  m = doc.redact()
+  m = doc.topics()
+  m = doc.organizations()
+  tmp = doc.people().parse()
+  arr = doc.people().json()
+  m = doc.places()
+
+  m = doc.quotations()
+  m = doc.quotations().strip()
+  m = doc.parentheses()
+  m = doc.parentheses().strip()
+  m = doc.possessives()
+  m = doc.possessives().strip()
+
+  t.ok(true)
   t.end()
 })
 
-// Typed plugins
-type testPlugin = nlp.Plugin<{ test: (text: string) => string }, { test: string }, { test: (text: string) => string }>
-const test: testPlugin = (Doc, world, nlp, Phrase, Term, Pool) => {
-  // Prototype is visible in here with plugin values
-  Doc.prototype.test = text => text
-  world.test = 'Hello world!'
+tape('plugin-date', function (t) {
+  let doc = nlp<DatesMethods>('foo bar baz')
+  let a = doc.dates()
+  let b = doc.times()
+  b = doc.durations()
 
-  world.addTags({
-    Character: {
-      isA: 'Person',
-      notA: 'Adjective',
-    },
-    Dog: {
-      isA: ['Animal'],
-      notA: ['Fish', 'Reptile'],
-    },
-  })
+  let m = doc.dates().match('foo')
+  m = doc.dates().format('foo')
+  let arr = doc.dates().get()
+  // doc.dates().floob()
+  // doc.floob()
+  t.end()
+})
 
-  world.addWords({
-    kermit: 'Character',
-    gonzo: 'Character',
-  })
+tape('plugin-speech', function (t) {
+  let doc = nlp<SpeechMethods>('foo bar baz')
+  let arr = doc.syllables()
+  arr = doc.soundsLike()
+  t.end()
+})
 
-  world.postProcess(doc => {
-    doc.match('light the lights').tag('#Verb . #Plural')
-    world.test = doc.test('boom!')
-  })
+tape('plugin-speed', function (t) {
+  let doc = nlp<SpeedMethods>('foo bar')
+  // nlp.workerPool()
+  doc.match('foo')
+  t.end()
+})
 
-  Term.prototype.test = (text: string) => text
-  Phrase.prototype.test = (text: string) => text
-  Pool.prototype.test = (text: string) => text
-}
+tape('plugin-stats', function (t) {
+  const doc = nlp<StatsMethods>('foo bar baz. foo')
+  let arr = doc.ngrams()
+  arr = doc.ngrams()
+  arr = doc.unigrams()
+  arr = doc.bigrams()
+  arr = doc.trigrams()
+  arr = doc.startgrams()
+  arr = doc.endgrams()
+  arr = doc.edgegrams()
+  let res = doc.tfidf()
+  t.end()
+})
 
-class Numbers {
-  json() {
-    return {}
-  }
-}
+tape('plugin-wikipedia', function (t) {
+  let doc = nlp<WikiMethods>('foo bar baz. foo')
+  doc = doc.wikipedia()
+  t.end()
+})
 
-type numbersPlugin = nlp.Plugin<{ numbers: (n?: number) => Numbers }, {}>
-const numbers: numbersPlugin = Doc => {
-  // Prototype is visible in here with plugin values
-  Doc.prototype.numbers = () => new Numbers()
-}
-
-const nlpEx = nlp.extend(numbers).extend(test)
-
-const doc = nlpEx('hello world') // This type is cleaner
-doc.nouns()
-doc.nouns().world.test
-doc.test('test')
-doc.numbers()
-doc.numbers().json()
-doc.world.test === typeof 'string'
-
-// Demo: For external use
-export type NLP = typeof nlpEx
-
-// Standard still works
-const docSimple = nlp('test')
-docSimple.nouns()
-docSimple.nouns().world
-nlp.tokenize('test')
-nlp.version
-
-// Directly set nlp type
-const doc2 = nlp<
-  {
-    numbers: () => number[]
-  },
-  {
-    a: string
-  }
->('test')
-doc2.numbers()
-doc2.world.a === typeof 'string'
-
-/** Instance test */
-const pluginTest: nlp.Plugin<{}, { test: 'test' }> = (_, world) => {
-  world.test = 'test'
-}
-
-const nlpEx2 = nlp.extend(pluginTest)
-
-nlpEx2().world.test === 'test'
-nlpEx2.clone()().world.test === 'test'

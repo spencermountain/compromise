@@ -105,7 +105,6 @@ let arr = [
   [`our mission of progress.`, '#Possessive #Noun of #Noun'],
   [`the .dat file`, 'the #Noun #Noun'],
   [`the 9pm show`, '#Determiner #Time #Noun'],
-  [`continue as state chief`, '#Verb as #Noun #Noun'],
   [`no tones`, 'no #Plural'],
   [`& other types`, 'and other #Plural'],
   [`40 gallons of water a day`, '#Value #Plural of #Noun a #Noun'],

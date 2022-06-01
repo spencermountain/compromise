@@ -148,6 +148,19 @@ test('tricky-case', function (t) {
   t.end()
 })
 
+// end-OR match bug
+test('multi-word end OR', function (t) {
+  let doc = nlp(`foo at the end.`)
+  let m = doc.match('foo (bar|at the end)$')
+  t.equal(m.text(), 'foo at the end.', here + 'end-or')
+
+  doc = nlp(`not at the end word.`)
+  m = doc.match('foo (bar|at the end)$')
+  t.equal(m.text(), '', here + 'not-end-or')
+
+  t.end()
+})
+
 test('post-process', function (t) {
   let doc = nlp(`jack is guarded end`)
   let m = doc.match('is guarded foo?$')

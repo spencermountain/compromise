@@ -21,8 +21,32 @@
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+### WorkerPool
+parse sentences of a large text in parallel:
+```js
+import {workerPool} from 'compromise-speed'
+nlp.extend(workerPool)
+
+let doc = await nlp.workerPool(myNovel, 'the #Adjective of #Noun')
+doc.debug()//results
+```
+
+you can pass in a [compromise match](https://observablehq.com/@spencermountain/compromise-match-syntax), or a [net](https://observablehq.com/@spencermountain/compromise-sweep):
+```js
+let net = nlp.buildNet([
+  { match: 'every single #Noun' },
+  { match: 'not (a|one) #Noun' },
+])
+let doc = await nlp.workerPool(myNovel, net)
+doc.debug()//results
+```
+
+
+<!-- spacer -->
+<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
 ### StreamFile
-parse and process a file from your filesystem, without loading it all into memory
+parse and process a file from your filesystem, without loading it all into memory:
 ```js
 import {streamFile} from 'compromise-speed'
 nlp.extend(streamFile)
@@ -34,7 +58,6 @@ nlp.streamFile('./path/to/file.txt', (s)=>{
   // just the returned matches
   doc.debug()
 })
-
 ```
 
 

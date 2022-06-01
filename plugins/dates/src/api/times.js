@@ -2,7 +2,6 @@ import normalize from './normalize.js'
 import parseTime from './parse/one/01-tokenize/03-time.js'
 import spacetime from 'spacetime'
 
-
 const find = function (doc) {
   return doc.match('#Time+ (am|pm)?')
 }
@@ -27,9 +26,10 @@ const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 const api = function (View) {
 
   class Times extends View {
-    constructor(document, pointer, groups) {
+    constructor(document, pointer, groups, opts) {
       super(document, pointer, groups)
       this.viewType = 'Times'
+      this.opts = opts || {}
     }
 
     get(n) {

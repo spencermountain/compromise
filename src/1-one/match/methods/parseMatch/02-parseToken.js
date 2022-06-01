@@ -1,5 +1,6 @@
 const hasMinMax = /\{([0-9]+)?(, *[0-9]*)?\}/
 const andSign = /&&/
+// const hasDash = /\p{Letter}-\p{Letter}/u
 const captureName = new RegExp(/^<\s*(\S+)\s*>/)
 /* break-down a match expression into this:
 {
@@ -18,21 +19,12 @@ const captureName = new RegExp(/^<\s*(\S+)\s*>/)
   choices:[],
 }
 */
-const titleCase = str => {
-  return str.charAt(0).toUpperCase() + str.substr(1)
-}
-const end = function (str) {
-  return str[str.length - 1]
-}
-const start = function (str) {
-  return str[0]
-}
-const stripStart = function (str) {
-  return str.substr(1)
-}
-const stripEnd = function (str) {
-  return str.substr(0, str.length - 1)
-}
+const titleCase = str => str.charAt(0).toUpperCase() + str.substring(1)
+const end = (str) => str.charAt(str.length - 1)
+const start = (str) => str.charAt(0)
+const stripStart = (str) => str.substring(1)
+const stripEnd = (str) => str.substring(0, str.length - 1)
+
 const stripBoth = function (str) {
   str = stripStart(str)
   str = stripEnd(str)
@@ -219,6 +211,9 @@ const parseToken = function (w, opts) {
     } else {
       w = w.toLowerCase()
     }
+    // if (hasDash.test(w) === true) {
+    //   w = w.replace(/-/g, '')
+    // }
     obj.word = w
   }
   return obj

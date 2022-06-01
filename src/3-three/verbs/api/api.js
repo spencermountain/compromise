@@ -25,13 +25,13 @@ const api = function (View) {
       return getNth(this, n).map(parseVerb)
     }
     json(opts, n) {
-      let m = getNth(this, n).reverse()
+      let m = getNth(this, n)
       let arr = m.map(vb => {
         let json = vb.toView().json(opts)[0] || {}
         json.verb = toJSON(vb)
         return json
       }, [])
-      return arr.reverse()
+      return arr
     }
     subjects(n) {
       return getNth(this, n).map(vb => {
@@ -94,6 +94,10 @@ const api = function (View) {
       return getNth(this, n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
+        // allow imperatives like 'go!' to be conjugated here (only)
+        if (info.form === 'imperative') {
+          info.form = 'simple-present'
+        }
         return {
           Infinitive: toInfinitive(vb.clone(), parsed, info.form).text('normal'),
           PastTense: toPast(vb.clone(), parsed, info.form).text('normal'),

@@ -21,6 +21,8 @@ export default [
   'cubic centimeter',
   'cubic centimeters',
   'cm3',
+  'litre',
+  'litres',
   'liter',
   'liters',
   // 'dl',

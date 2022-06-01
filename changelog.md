@@ -12,6 +12,24 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 
 -->
 
+#### 14.2.0 [June 2021]
+- **[fix]** - speed improvements
+- **[fix]** - bug with fast-or possessive matches
+- **[fix]** - bug with slow-or end-matches
+- **[change]** - no-longer attempt 's contractions in compromise/one
+- **[new]** - flag novel tags in world.one.tagSet 
+- **[new]** - .sweep() and nlp.buildNet() methods
+- **[new]** - some typescript support in plugins #918
+- **[fix]** - better unicode support with Unicode property escapes 
+- **[fix]** - problems matching on cached documents
+- **[fix]** - typescript fixes
+- **[fix]** - suffix tagging issues
+- **[fix]** - uncached matches missing in .sweep()
+- **[fix]** - non-empty results when pointer is first repaired
+- **[fix]** - nouns().toPlural() fix for #921
+- **[fix]** - drop deprecated .subst() method internally
+- **[new]** - some support for .numbers().units() again #919
+
 #### 14.1.2 [April 2021]
 - **[new]** - add .harden() .soften() undocumented methods
 - **[fix]** - support pre-parsed matches in .has() .if() and .not()

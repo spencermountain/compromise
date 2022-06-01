@@ -1,6 +1,7 @@
 // cities
 export default [
   'alexandria',
+  'austin',
   'darwin',
   'hamilton',
   'houston',

@@ -57,13 +57,17 @@ test('if view:', function (t) {
   t.end()
 })
 
-
-
 test('ifNo view:', function (t) {
   let doc = nlp('here one mid two end').terms()
   let m = doc.match('(one|two)')
   let res = doc.ifNo(m)
   t.equal(res.out('text'), 'here mid end', here + 'ifNo-view')
+
+
+  doc = nlp(`he was john c reilly. oh yeah`)
+  m = doc.match('john . reilly')
+  res = doc.ifNo(m)
+  t.equal(res.text(), 'oh yeah', here + 'ifNo-full')
 
   t.end()
 })

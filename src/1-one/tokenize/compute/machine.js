@@ -1,3 +1,4 @@
+const hasDash = /^\p{Letter}+-\p{Letter}+$/u
 // 'machine' is a normalized form that looses human-readability
 const doMachine = function (term) {
   let str = term.implicit || term.normal || term.text
@@ -7,10 +8,9 @@ const doMachine = function (term) {
   //lookin'->looking (make it easier for conjugation)
   str = str.replace(/([aeiou][ktrp])in'$/, '$1ing')
   //turn re-enactment to reenactment
-  if (/^(re|un)-?[^aeiou]./.test(str) === true) {
-    str = str.replace('-', '')
+  if (hasDash.test(str)) {
+    str = str.replace(/-/g, '')
   }
-
   //#tags, @mentions
   str = str.replace(/^[#@]/, '')
   if (str !== term.normal) {

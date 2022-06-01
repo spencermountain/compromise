@@ -36,14 +36,14 @@ export default [
     reason: 'western-line',
   },
   //linear algebra
-  {
-    match: '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun',
-    group: 0,
-    tag: 'Noun',
-    reason: 'technical-noun',
-  },
+  // {
+  //   match: '(#Determiner|#Value) [(linear|binary|mobile|lexical|technical|computer|scientific|formal)] #Noun',
+  //   group: 0,
+  //   tag: 'Noun',
+  //   reason: 'technical-noun',
+  // },
   //air-flow
-  { match: '(#Noun && @hasHyphen) #PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
+  { match: '(#Singular && @hasHyphen) #PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
   //is no walk
   { match: 'is no [#Verb]', group: 0, tag: 'Noun', reason: 'is-no-verb' },
   //different views than
@@ -67,13 +67,13 @@ export default [
     tag: 'Noun',
     reason: 'det-pres',
   },
-  { match: '(the|those|these|a|an) #Adjective? [#PastTense]', group: 0, tag: 'Noun', reason: 'det-past' },
+  // { match: '(the|those|these|a|an) #Adjective? [#PastTense]', group: 0, tag: 'Noun', reason: 'det-past' },
 
   // ==== Actor ====
   //Aircraft designer
   { match: '#Noun #Actor', tag: 'Actor', reason: 'thing-doer' },
   // co-founder
-  { match: `co #Noun`, tag: 'Actor', reason: 'co-noun' },
+  { match: `co #Singular`, tag: 'Actor', reason: 'co-noun' },
 
   // ==== Singular ====
   //the sun
@@ -100,7 +100,7 @@ export default [
   { match: 'a [#Adjective] #Preposition', group: 0, tag: 'Noun', reason: 'a-minor-in' },
 
   //the repairer said
-  { match: '#Determiner [#Noun] said', group: 0, tag: 'Actor', reason: 'the-actor-said' },
+  { match: '#Determiner [#Singular] said', group: 0, tag: 'Actor', reason: 'the-actor-said' },
   //the euro sense
   {
     match: `#Determiner #Noun [${infNouns}] !(#Preposition|to|#Adverb)?`,
@@ -121,5 +121,5 @@ export default [
   // an impressionist painting
   { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', ifNo: ['#ProperNoun'], reason: 'a-complex-relationship' },
   // visit houses
-  { match: '^[%Noun|Verb%] #Noun', group: 0, tag: 'Verb', reason: 'visit-boards' },
+  // { match: '^[%Noun|Verb%] #Noun', group: 0, tag: 'Verb', reason: 'visit-boards' },
 ]

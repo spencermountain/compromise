@@ -5,19 +5,21 @@ const orBlock = function (state) {
   const { regs } = state
   let reg = regs[state.r]
   let skipNum = doOrBlock(state)
+  // did we find a match?
   if (skipNum) {
     // handle 'not' logic
     if (reg.negative === true) {
       return null // die
     }
+    // tuck in as named-group
     if (state.hasGroup === true) {
       const g = getGroup(state, state.t)
       g.length += skipNum
     }
     // ensure we're at the end
     if (reg.end === true) {
-      let end = state.phrase_length - 1
-      if (state.t + state.start_i !== end) {
+      let end = state.phrase_length
+      if (state.t + state.start_i + skipNum !== end) {
         return null
       }
     }

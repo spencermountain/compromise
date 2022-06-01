@@ -224,6 +224,43 @@ test('remove-bug-1', function (t) {
   t.end()
 })
 
+
+// weird remove issue
+test('remove-bug-2', function (t) {
+  let doc = nlp('two three')
+  let arr = doc.splitAfter('two')
+  arr.remove('three') // works
+  t.deepEqual(arr.out('array'), ['two'], here + 'remove match')
+  t.deepEqual(doc.out('array'), ['two'], here + 'doc remove match')
+
+  doc = nlp('two three')
+  arr = doc.splitAfter('two')
+  let m = doc.match('three')
+  m.remove()
+  t.deepEqual(m.json(), [], here + 'self is gone')
+  t.deepEqual(arr.out('array'), ['two'], here + 'remove self')
+  t.deepEqual(doc.out('array'), ['two'], here + 'doc remove self')
+
+  t.end()
+})
+
+
+test('remove-bug-3', function (t) {
+  let txt = `
+Header: 
+single
+
+Header:
+first
+second
+`
+  let doc = nlp(txt)
+  let m = doc.match('Header')
+  doc.remove(m)
+  t.deepEqual(doc.out('array'), ['single', 'first', 'second'], here + 'multi-remove issue')
+  t.end()
+})
+
 // test('remove-self-keep-splits', function (t) {
 //   let m = nlp('one two three. four.')
 //   m = m.terms()
@@ -241,5 +278,32 @@ test('remove-keep-splits', function (t) {
   m = m.remove('three')
   // [one, two, four]
   t.deepEqual(m.out('array'), ['one', 'two.', 'four.'], here + 'keep-splits')
+  t.end()
+})
+
+
+test('double-self becomes empty', function (t) {
+  let txt = `zero foo. one match foo. two foo.`
+  let doc = nlp(txt)
+  doc.harden()
+  let m = doc.eq(1)
+  m.remove()
+  t.equal(m.found, false, here + 'remove self is empty')
+
+  t.end()
+})
+
+test('double-remove', function (t) {
+  let txt = `zero foo. one match foo. two foo.`
+  let doc = nlp(txt)
+  doc.remove('match') // first removal
+  doc.remove('zero foo') //second removal
+  t.equal(doc.text(), 'one foo. two foo.', here + 'double remove #1')
+
+  doc = nlp(txt)
+  doc.remove('match') // first removal
+  doc.eq(0).remove() //second removal
+  t.equal(doc.text(), 'one foo. two foo.', here + 'double remove #2')
+
   t.end()
 })

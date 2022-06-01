@@ -28,3 +28,32 @@ test('applied cache is sneaky', function (t) {
   t.equal(doc.match('#Person').found, false, here + 'parent is out-of-date')
   t.end()
 })
+
+test('cache term forms', function (t) {
+  let doc = nlp(`spencer's city/town`)
+  doc.cache()
+
+  let m = doc.matchOne('spencer')
+  t.equal(m.length, 1, here + 'posessive')
+
+  m = doc.match('city')
+  t.equal(m.length, 1, here + 'slash')
+
+  m = doc.match('city/town')
+  t.equal(m.length, 1, here + 'full-slash')
+
+  t.end()
+})
+
+
+test('cache if method', function (t) {
+  let doc = nlp('blah blah. foo foo. blah to your town')
+  doc.cache()
+
+  let m = doc.if('to your town')
+  t.equal(m.length, 1, here + 'if')
+
+  m = doc.ifNo('to your town')
+  t.equal(m.length, 2, here + 'ifNo')
+  t.end()
+})

@@ -14,6 +14,13 @@ const createCache = function (document) {
       if (term.implicit) {
         stuff.add(term.implicit)
       }
+      if (term.machine) {
+        stuff.add(term.machine)
+      }
+      // cache slashes words, etc
+      if (term.alias) {
+        term.alias.forEach(str => stuff.add(str))
+      }
       let tags = Array.from(term.tags)
       for (let t = 0; t < tags.length; t += 1) {
         stuff.add('#' + tags[t])

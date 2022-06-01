@@ -216,6 +216,7 @@ export default [
   'safeway',
   'salesforce',
   'samsung',
+  'seagate',
   'sears',
   'siemens',
   'snp',

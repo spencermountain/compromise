@@ -38,12 +38,7 @@ export default [
   { match: '[may] #Adverb? #Infinitive', group: 0, tag: 'Auxiliary', reason: 'may-want' },
 
   // was being walked
-  {
-    match: '#Copula (#Adverb|not)+? [(be|being|been)] #Adverb+? #PastTense',
-    group: 0,
-    tag: 'Auxiliary',
-    reason: 'being-walked',
-  },
+  { match: '#Copula (#Adverb|not)+? [(be|being|been)] #Adverb+? #PastTense', group: 0, tag: 'Auxiliary', reason: 'being-walked' },
   // will be walked
   { match: 'will [be] #PastTense', group: 0, tag: 'Auxiliary', reason: 'will-be-x' },
   // been walking

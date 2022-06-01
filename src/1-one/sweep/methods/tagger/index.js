@@ -1,4 +1,5 @@
 import logger from './_logger.js'
+import canBe from './canBe.js'
 
 const tagger = function (list, document, world) {
   const { model, methods } = world
@@ -12,9 +13,10 @@ const tagger = function (list, document, world) {
     console.log(`\n  \x1b[32m→ ${list.length} corrections:\x1b[0m`) //eslint-disable-line
   }
   return list.map(todo => {
-    if (!todo.tag) {
+    if (!todo.tag && !todo.chunk) {
       return
     }
+    let reason = todo.reason || todo.match
     if (env.DEBUG_TAGS) {
       logger(todo, document)
     }
@@ -22,7 +24,7 @@ const tagger = function (list, document, world) {
     // handle 'safe' tag
     if (todo.safe === true) {
       // check for conflicting tags
-      if (methods.two.canBe(terms, todo.tag, model) === false) {
+      if (canBe(terms, todo.tag, model) === false) {
         return
       }
       // dont tag half of a hyphenated word
@@ -31,16 +33,20 @@ const tagger = function (list, document, world) {
       }
     }
     if (todo.tag !== undefined) {
-      setTag(terms, todo.tag, world, todo.safe)
+      setTag(terms, todo.tag, world, todo.safe, reason)
       // quick and dirty plural tagger
       if (terms.length === 1 && todo.tag === 'Noun') {
         if (terms[0].text && terms[0].text.match(/..s$/) !== null) {
-          setTag(terms, 'Plural', world, todo.safe)
+          setTag(terms, 'Plural', world, todo.safe, 'quick-plural')
         }
       }
     }
     if (todo.unTag !== undefined) {
-      unTag(terms, todo.unTag, world, todo.safe)
+      unTag(terms, todo.unTag, world, todo.safe, reason)
+    }
+    // allow setting chunks, too
+    if (todo.chunk) {
+      terms.forEach(t => t.chunk = todo.chunk)
     }
   })
 }

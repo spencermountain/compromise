@@ -69,3 +69,20 @@ test('append check false-positives', function (t) {
   t.equal(doc.match('. four').text('normal'), 'three four', here + 'now has three four')
   t.end()
 })
+
+
+test('append is cloned', function (t) {
+  let doc = nlp('before match after. second sentence here.')
+  let m = doc.match('match')
+  doc.match('sentence').append(m)
+
+  let id = m.docs[0][0].id
+  let foundIds = doc.termList().filter(term => term.id === id)
+  t.equal(foundIds.length, 1, 'id-different')
+
+  t.equal(m.length, 1, 'match-unchanged')
+  m.tag('NewTag')
+  t.equal(m.match('#NewTag').length, 1, 'tags-are-cloned')
+
+  t.end()
+})

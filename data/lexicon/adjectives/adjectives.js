@@ -90,10 +90,7 @@ export default [
   'straight forward',
   'straightforward',
   'boldface',
-  'bona fide',
-  'offside',
-  'inside',
-  'outside',
+
   'avant garde',
   'home made',
   'wee',
@@ -630,5 +627,20 @@ export default [
   'independent',
   'seated',
   'modest',
+
+  // -ide
+  'bona fide',
+  // -ate
+  'affectionate',
+  'alternate',
+  'celebate',
+  'corporate',
+  'illegitimate',
+  'inconsiderate',
+  'inordinate',
+  'proximate',
+
+  'renowned',
+  'beside',
 ]
 

@@ -1,12 +1,13 @@
 {
   "name": "compromise-speed",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-speed.min.js",
   "module": "./builds/compromise-speed.mjs",
   "type": "module",
+  "types": "index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -33,7 +34,8 @@
   "peerDependencies": {
     "compromise": ">=14.0.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "compromise": "^14.1.2"
+  },
   "license": "MIT"
 }

@@ -1,7 +1,8 @@
 import easyMode from './01-easy.js'
-import matcher from './02-matcher.js'
-import fallback from './03-fallback.js'
-import fixUp from './04-fixUp.js'
+import byNeighbour from './02-neighbours.js'
+import matcher from './03-matcher.js'
+import fallback from './04-fallback.js'
+import fixUp from './05-fixUp.js'
 /* Chunks:
     Noun
     Verb
@@ -12,8 +13,9 @@ import fixUp from './04-fixUp.js'
 const findChunks = function (view) {
   const { document, world } = view
   easyMode(document)
-  matcher(document, world)
-  matcher(document, world) //run it 2nd time
+  byNeighbour(document)
+  matcher(view, document, world)
+  // matcher(view, document, world) //run it 2nd time
   fallback(document, world)
   fixUp(document, world)
 }

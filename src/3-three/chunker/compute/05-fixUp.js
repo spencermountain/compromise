@@ -21,12 +21,6 @@ const fixUp = function (docs) {
         c.terms.forEach(t => t.chunk = null)
       }
     }
-    if (c.chunk === 'Noun') {
-      const hasNoun = c.terms.find(t => t.tags.has('Noun'))
-      if (!hasNoun) {
-        c.terms.forEach(t => t.chunk = null)
-      }
-    }
   })
 }
 export default fixUp

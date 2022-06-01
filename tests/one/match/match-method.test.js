@@ -26,6 +26,15 @@ test('match @functions', function (t) {
   m = nlp('set the SCE to AUX.').match('@isUpperCase')
   t.equal(m.length, 2, here + 'two uppercase')
 
+  doc = nlp('Titlecase UPPERCASE notUPPER ÈPPERCASE')
+  m = doc.match('@isUpperCase')
+  t.equal(m.length, 2, here + 'unicode uppercase')
+
+  doc = nlp('Titlecase UPPERCASE notUPPER Èppercasë')
+  m = doc.match('@isTitleCase')
+  t.equal(m.length, 2, here + 'unicode titlecase')
+
+
   t.end()
 })
 

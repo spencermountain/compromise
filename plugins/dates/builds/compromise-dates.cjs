@@ -2767,7 +2767,7 @@
   const methods$4 = {
     set: function (input, tz) {
       let s = this.clone();
-      s = handleInput(s, input, null);
+      s = handleInput(s, input);
       if (tz) {
         this.tz = findTz(tz);
       }
@@ -4948,12 +4948,12 @@
     doc = doc.not(res.m);
 
     // parse 'tuesday'
-    res = doWeekday(doc, context);
+    res = doWeekday(doc);
     let weekDay = res.result;
     doc = doc.not(res.m);
 
     // parse 'start of x'
-    res = doSection(doc, context);
+    res = doSection(doc);
     let section = res.result;
     doc = doc.not(res.m);
 
@@ -7435,9 +7435,10 @@
   const api$2 = function (View) {
 
     class Times extends View {
-      constructor(document, pointer, groups) {
+      constructor(document, pointer, groups, opts) {
         super(document, pointer, groups);
         this.viewType = 'Times';
+        this.opts = opts || {};
       }
 
       get(n) {
@@ -7934,6 +7935,8 @@
     { match: '#Value #Duration #Conjunction', tag: 'Date', reason: 'val-duration-conjunction' },
     //for four days
     { match: `${preps}? #Value #Duration`, tag: 'Date', reason: 'value-duration' },
+    // 6-8 months
+    { match: 'in? #Value to #Value #Duration time?', tag: 'Date', reason: '6-to-8-years' },
     //two years old
     { match: '#Value #Duration old', unTag: 'Date', reason: 'val-years-old' },
     // 
@@ -7951,7 +7954,7 @@
     //next feb
     { match: '(last|next|this|previous|current|upcoming|coming|the) #Date', tag: 'Date', reason: 'next-feb' },
     //start of june
-    { match: `the? ${sections} of #Date`, tag: 'Date', reason: 'section-of' },
+    { match: `#Preposition? the? ${sections} of #Date`, tag: 'Date', reason: 'section-of' },
     //fifth week in 1998
     { match: '#Ordinal #Duration in #Date', tag: 'Date', reason: 'duration-in' },
     //early in june
@@ -8074,7 +8077,7 @@
     //'two days before'/ 'nine weeks frow now'
     { match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)', tag: 'DateShift', reason: 'nine weeks frow now' },
     // in two weeks
-    { match: 'in #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
+    { match: 'in (around|about|maybe|perhaps)? #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
     { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
     // an hour from now
     { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },
@@ -8135,16 +8138,13 @@
   ];
   var matches$1 = matches;
 
-  let byGroup = null;
-
+  let net = null;
 
   const doMatches = function (view) {
-    let { document, world } = view;
+    let { world } = view;
     const { methods } = world;
-    byGroup = byGroup || methods.two.compile(matches$1, methods);
-    let found = methods.two.bulkMatch(document, byGroup, methods);
-    // console.log(found.length, 'found')
-    methods.two.bulkTagger(found, document, world);
+    net = net || methods.one.buildNet(matches$1, methods);
+    view.sweep(net);
   };
 
   // run each of the taggers
@@ -8653,13 +8653,18 @@
 
   ];
 
+  // import matches from './compute/matches.js'
+
   var plugin = {
     tags,
     words,
     compute: compute$1,
     api: api$1,
     mutate: (world) => {
+      world.model.two.regexText = world.model.two.regexText || [];
       world.model.two.regexText = world.model.two.regexText.concat(regex);
+      // net = net || methods.one.buildNet(matches, methods)
+      // world.model.two.matches = world.model.two.matches.concat(matches)
     },
     hooks: ['dates']
   };

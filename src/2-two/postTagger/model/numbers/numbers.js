@@ -19,7 +19,7 @@ export default [
   // chinese yuan
   { match: '#Demonym #Currency', tag: 'Currency', reason: 'demonym-currency' },
   // ten bucks
-  { match: '(#Value|a) [(buck|bucks|grand)]', group: 0, tag: 'Currency', reason: 'value-bucks' },
+  { match: '#Value [(buck|bucks|grand)]', group: 0, tag: 'Currency', reason: 'value-bucks' },
   // ==== Money ====
   { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: '15 usd' },
 

@@ -13,9 +13,7 @@ const toInfinitive = function (vb, parsed) {
   }
   // remove any auxiliary terms
   if (aux.found) {
-    aux.reverse().forEach(m => {
-      vb.remove(m)
-    })
+    vb.remove(aux)
   }
   // there is no real way to do this
   // 'i not walk'?  'i walk not'?

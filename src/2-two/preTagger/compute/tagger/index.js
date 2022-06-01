@@ -64,7 +64,7 @@ const thirdPass = function (terms, model, world) {
   }
   for (let i = 0; i < terms.length; i += 1) {
     // Johnson LLC
-    third.orgWords(terms, i, model)
+    third.orgWords(terms, i, world)
     // support 'out-lived'
     second.checkHyphen(terms, i, model)
     // verb-noun disambiguation, etc

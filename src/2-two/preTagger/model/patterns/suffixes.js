@@ -62,7 +62,7 @@ export default [
     ten: Prt,//brighten
     ect: Inf,
     ict: Inf,
-    ide: Inf,
+    // ide: Inf,
     ign: Inf,
     ful: Adj,
     bal: Adj,
@@ -135,6 +135,10 @@ export default [
     uist: Sing,
     gist: Sing,
     note: Sing,
+    cide: Sing,//homicide
+    wide: Adj,//nationwide
+    // side: Adj,//alongside
+    vide: Inf,//provide
     ract: Inf,
     duce: Inf,
     pose: Inf,

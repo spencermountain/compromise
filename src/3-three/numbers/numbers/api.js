@@ -32,6 +32,10 @@ const addMethod = function (View) {
         return json
       }, [])
     }
+    /** any known measurement unit, for the number */
+    units() {
+      return this.growRight('#Unit').match('#Unit$')
+    }
     /** return only ordinal numbers */
     isOrdinal() {
       return this.if('#Ordinal')

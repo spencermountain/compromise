@@ -376,7 +376,6 @@ export default [
   'constanza',
   'consuelo',
   'cora',
-  'coral',
   'coralie',
   'cordelia',
   'cori',

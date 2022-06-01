@@ -47,6 +47,19 @@ test('greedy-capture', function (t) {
   t.end()
 })
 
+test('match-posessive', function (t) {
+  let doc = nlp(`spencer's house`)
+  let m = doc.match('spencer')
+  t.equal(m.found, true, here + 'possessive normal')
+
+  m = doc.match('(spencer|foo)')
+  t.equal(m.found, true, here + 'possessive in fast-OR')
+
+  m = doc.match('(spencer|foo bar)')
+  t.equal(m.found, true, here + 'possessive in slow-OR')
+  t.end()
+})
+
 test('match-doc', function (t) {
   let doc = nlp('the boy and the girl.')
   let m = doc.match('(boy|girl)')

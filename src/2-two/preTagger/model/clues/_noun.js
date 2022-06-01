@@ -55,6 +55,14 @@ export default {
     best: n,//
     daily: n,//
     weekly: n,//
+    linear: n,//
+    binary: n,//
+    mobile: n,//
+    lexical: n,//
+    technical: n,//
+    computer: n,//
+    scientific: n,//
+    formal: n
   },
   afterWords: {
     of: n, //date of birth (preposition)

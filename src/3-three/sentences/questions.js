@@ -61,10 +61,10 @@ const findQuestions = function (view) {
   const hasQ = /\?/
   const { document } = view
   return view.filter(m => {
-    let terms = m.docs[0]
+    let terms = m.docs[0] || []
     let lastTerm = terms[terms.length - 1]
     // is it not a full sentence?
-    if (document[lastTerm.index[0]].length !== terms.length) {
+    if (!lastTerm || document[lastTerm.index[0]].length !== terms.length) {
       return false
     }
     // does it end with a question mark?

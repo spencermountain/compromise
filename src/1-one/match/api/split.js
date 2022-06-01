@@ -17,9 +17,12 @@ const getDoc = (reg, view, group) => {
 }
 
 const addIds = function (ptr, view) {
-  let [n, start] = ptr
+  let [n, start, end] = ptr
   if (view.document[n] && view.document[n][start]) {
     ptr[3] = ptr[3] || view.document[n][start].id
+    if (view.document[n][end - 1]) {
+      ptr[4] = ptr[4] || view.document[n][end - 1].id
+    }
   }
   return ptr
 }

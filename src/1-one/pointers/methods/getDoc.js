@@ -77,6 +77,7 @@ const getDoc = function (ptrs, document) {
     // otherwise, looks good!
     doc.push(terms)
   })
+  doc = doc.filter(a => a.length > 0)
   return doc
 }
 export default getDoc

@@ -10,7 +10,7 @@ const anyIntersection = function (setA, setB) {
 const failFast = function (regs, cache) {
   for (let i = 0; i < regs.length; i += 1) {
     let reg = regs[i]
-    if (reg.optional === true || reg.negation === true) {
+    if (reg.optional === true || reg.negative === true || reg.fuzzy === true) {
       continue
     }
     // is the word missing from the cache?

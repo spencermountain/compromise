@@ -1,30 +1,37 @@
 import * as fs from 'fs';
 
-const defaults = { highWaterMark: 64 }//change this for smaller chunks
-
-const streamFile = function (path, fn, opts) {
+const streamFile = function (path, fn, opts = {}) {
   const nlp = this
-  opts = Object.assign({}, defaults, opts)
-  return new Promise((resolve, reject) => {
-    let model = nlp.model()
-    const splitSentences = nlp.methods().one.tokenize.splitSentences
-    const s = fs.createReadStream(path, opts);
+  let model = nlp.model()
+  const splitSentences = nlp.methods().one.tokenize.splitSentences
+  const s = fs.createReadStream(path, opts);
 
-    let txt = ''
-    let res = []
+  let txt = ''
+  let res = []
 
-    const doIt = (str) => {
-      let m = fn(nlp(str))
-      if (m && m.found) {
-        res.push(m.document[0])
-      }
+  const doIt = (str) => {
+    let doc = nlp(str)
+    let m = fn(doc)
+    if (m && m.found) {
+      m.docs.forEach(l => res.push(l))
     }
+  }
 
+  const quickSplit = function (str) {
+    let end = txt.substring(str.length - 300)
+    let arr = splitSentences(end, model)
+    let last = arr[arr.length - 1]
+    let main = str.substr(0, str.length - last.length)
+    return [main, last]
+  }
+
+
+  return new Promise((resolve, reject) => {
     s.on('data', function (chunk) {
       txt += chunk;
-      let arr = splitSentences(txt, model)
-      txt = arr.pop() //keep last one
-      arr.forEach(doIt)
+      let [main, end] = quickSplit(txt, model)
+      doIt(main)
+      txt = end
     });
     s.on('end', function () {
       doIt(txt)// do dangling one

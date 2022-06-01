@@ -2,7 +2,7 @@ import { Lexicon, Plugin, matchOptions } from './misc'
 import View from './view/three'
 
 /** parse a given text */
-declare function nlp(text: string, lexicon?: Lexicon): View
+declare function nlp<PluginTypes = {}>(text: string, lexicon?: Lexicon): View & PluginTypes
 
 // Constructor
 declare module nlp {
@@ -32,6 +32,8 @@ declare module nlp {
   export function compile(words: string[]): object
   /** add words to the autoFill dictionary */
   export function typeahead(words: Lexicon): any
+  /** export library for extending with plugins */
+  export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
 }
 
 export default nlp

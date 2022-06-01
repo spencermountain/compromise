@@ -1,7 +1,7 @@
 {
   "name": "compromise-wikipedia",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-wikipedia.min.js",
@@ -35,8 +35,8 @@
     "efrt": "^2.5.0"
   },
   "devDependencies": {
-    "colorette": "^2.0.16",
-    "node-wget-promise": "^0.1.6"
+    "colorette": "2.0.16",
+    "node-wget-promise": "0.1.6"
   },
   "license": "MIT"
 }

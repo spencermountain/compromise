@@ -4,7 +4,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseWikipedia = factory());
 })(this, (function () { 'use strict';
 
-  let methods$l = {
+  let methods$m = {
     one: {},
     two: {},
     three: {},
@@ -19,9 +19,9 @@
   let compute$9 = {};
   let hooks = [];
 
-  var tmpWrld = { methods: methods$l, model: model$5, compute: compute$9, hooks };
+  var tmpWrld = { methods: methods$m, model: model$5, compute: compute$9, hooks };
 
-  const isArray$7 = input => Object.prototype.toString.call(input) === '[object Array]';
+  const isArray$a = input => Object.prototype.toString.call(input) === '[object Array]';
 
   const fns$4 = {
     /** add metadata to term objects */
@@ -33,7 +33,7 @@
         compute[input](this);
       }
       // allow a list of methods
-      else if (isArray$7(input)) {
+      else if (isArray$a(input)) {
         input.forEach(name => world.compute.hasOwnProperty(name) && compute[name](this));
       }
       // allow a custom compute function
@@ -58,8 +58,10 @@
 
   const map = function (cb, empty) {
     let ptrs = this.fullPointer;
+    // let cache = this._cache || []
     let res = ptrs.map((ptr, i) => {
       let view = this.update([ptr]);
+      // view._cache = cache[i]
       return cb(view, i)
     });
     if (res.length === 0) {
@@ -87,17 +89,23 @@
 
   const filter = function (cb) {
     let ptrs = this.fullPointer;
+    // let cache = this._cache || []
     ptrs = ptrs.filter((ptr, i) => {
       let view = this.update([ptr]);
+      // view._cache = cache[i]
       return cb(view, i)
     });
-    return this.update(ptrs)
+    let res = this.update(ptrs); //TODO: keep caches automatically
+    // res._cache = ptrs.map(ptr => cache[ptr[0]])
+    return res
   };
 
   const find = function (cb) {
     let ptrs = this.fullPointer;
+    // let cache = this._cache || []
     let found = ptrs.find((ptr, i) => {
       let view = this.update([ptr]);
+      // view._cache = cache[i]
       return cb(view, i)
     });
     return this.update([found])
@@ -105,8 +113,10 @@
 
   const some = function (cb) {
     let ptrs = this.fullPointer;
+    // let cache = this._cache || []
     return ptrs.some((ptr, i) => {
       let view = this.update([ptr]);
+      // view._cache = cache[i]
       return cb(view, i)
     })
   };
@@ -129,9 +139,17 @@
     termList: function () {
       return this.methods.one.termList(this.docs)
     },
-    /** */
+    /** return individual terms*/
     terms: function (n) {
-      let m = this.match('.').toView(); //make this faster
+      // this is a bit faster than .match('.') 
+      let ptrs = [];
+      this.docs.forEach((terms) => {
+        terms.forEach((term) => {
+          let [y, x] = term.index || [];
+          ptrs.push([y, x, x + 1]);
+        });
+      });
+      let m = this.update(ptrs);
       return typeof n === 'number' ? m.eq(n) : m
     },
 
@@ -151,11 +169,14 @@
     /** */
     eq: function (n) {
       let ptr = this.pointer;
+      let cache = this._cache || [];
       if (!ptr) {
         ptr = this.docs.map((_doc, i) => [i]);
       }
       if (ptr[n]) {
-        return this.update([ptr[n]])
+        let view = this.update([ptr[n]]);
+        view._cache = cache[n];
+        return view
       }
       return this.none()
     },
@@ -236,11 +257,11 @@
   utils.firstTerm = utils.firstTerms;
   var util = utils;
 
-  const methods$k = Object.assign({}, util, compute$8, loops);
+  const methods$l = Object.assign({}, util, compute$8, loops);
 
   // aliases
-  methods$k.get = methods$k.eq;
-  var api$9 = methods$k;
+  methods$l.get = methods$l.eq;
+  var api$b = methods$l;
 
   class View {
     constructor(document, pointer, groups = {}) {
@@ -321,6 +342,10 @@
           if (ptr.length === 1) {
             cache.push(m._cache[ptr[0]]);
           }
+          // let [n, start, end] = ptr
+          // if (start === 0 && this.document[n][end - 1] && !this.document[n][end]) {
+          //   console.log('=-=-=-= here -=-=-=-')
+          // }
         });
         m._cache = cache;
       }
@@ -363,20 +388,20 @@
       return m
     }
   }
-  Object.assign(View.prototype, api$9);
+  Object.assign(View.prototype, api$b);
   var View$1 = View;
 
-  var version = '14.0.0';
+  var version = '14.2.0-rc2';
 
-  const isObject$5 = function (item) {
+  const isObject$6 = function (item) {
     return item && typeof item === 'object' && !Array.isArray(item)
   };
 
   // recursive merge of objects
   function mergeDeep(model, plugin) {
-    if (isObject$5(plugin)) {
+    if (isObject$6(plugin)) {
       for (const key in plugin) {
-        if (isObject$5(plugin[key])) {
+        if (isObject$6(plugin[key])) {
           if (!model[key]) Object.assign(model, { [key]: {} });
           mergeDeep(model[key], plugin[key]); //recursion
           // } else if (isArray(plugin[key])) {
@@ -438,18 +463,18 @@
 
   /** log the decision-making to console */
   const verbose = function (set) {
-    let env = typeof process === 'undefined' ? self.env || {} : process.env; //use window, in browser
+    const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env; //use window, in browser
     env.DEBUG_TAGS = set === 'tagger' || set === true ? true : '';
     env.DEBUG_MATCH = set === 'match' || set === true ? true : '';
     env.DEBUG_CHUNKS = set === 'chunker' || set === true ? true : '';
     return this
   };
 
-  const isObject$4 = val => {
+  const isObject$5 = val => {
     return Object.prototype.toString.call(val) === '[object Object]'
   };
 
-  const isArray$6 = function (arr) {
+  const isArray$9 = function (arr) {
     return Object.prototype.toString.call(arr) === '[object Array]'
   };
 
@@ -457,7 +482,7 @@
   const fromJson = function (json) {
     return json.map(o => {
       return o.terms.map(term => {
-        if (isArray$6(term.tags)) {
+        if (isArray$9(term.tags)) {
           term.tags = new Set(term.tags);
         }
         return term
@@ -498,13 +523,13 @@
       return new View(document)
     }
     // handle compromise View
-    if (isObject$4(input) && input.isView) {
+    if (isObject$5(input) && input.isView) {
       return new View(input.document, input.ptrs)
     }
     // handle json input
-    if (isArray$6(input)) {
+    if (isArray$9(input)) {
       // pre-tokenized array-of-arrays 
-      if (isArray$6(input[0])) {
+      if (isArray$9(input[0])) {
         let document = preTokenized(input);
         return new View(document)
       }
@@ -523,7 +548,9 @@
       nlp.addWords(lex);
     }
     let doc = handleInputs(input, View$1, world);
-    doc.compute(world.hooks);
+    if (input) {
+      doc.compute(world.hooks);
+    }
     return doc
   };
   Object.defineProperty(nlp, '_world', {
@@ -577,6 +604,75 @@
 
   var nlp$1 = nlp;
 
+  const createCache = function (document) {
+    let cache = document.map(terms => {
+      let stuff = new Set();
+      terms.forEach(term => {
+        // add words
+        if (term.normal !== '') {
+          stuff.add(term.normal);
+        }
+        // cache switch-status - '%Noun|Verb%'
+        if (term.switch) {
+          stuff.add(`%${term.switch}%`);
+        }
+        // cache implicit words, too
+        if (term.implicit) {
+          stuff.add(term.implicit);
+        }
+        if (term.machine) {
+          stuff.add(term.machine);
+        }
+        // cache slashes words, etc
+        if (term.alias) {
+          term.alias.forEach(str => stuff.add(str));
+        }
+        let tags = Array.from(term.tags);
+        for (let t = 0; t < tags.length; t += 1) {
+          stuff.add('#' + tags[t]);
+        }
+      });
+      return stuff
+    });
+    return cache
+  };
+  var cacheDoc = createCache;
+
+  var methods$k = {
+    one: {
+      cacheDoc,
+    },
+  };
+
+  const methods$j = {
+    /** */
+    cache: function () {
+      this._cache = this.methods.one.cacheDoc(this.document);
+      return this
+    },
+    /** */
+    uncache: function () {
+      this._cache = null;
+      return this
+    },
+  };
+  const addAPI$3 = function (View) {
+    Object.assign(View.prototype, methods$j);
+  };
+  var api$a = addAPI$3;
+
+  var compute$7 = {
+    cache: function (view) {
+      view._cache = view.methods.one.cacheDoc(view.document);
+    }
+  };
+
+  var cache$3 = {
+    api: api$a,
+    compute: compute$7,
+    methods: methods$k,
+  };
+
   var caseFns = {
     /** */
     toLowerCase: function () {
@@ -615,7 +711,10 @@
     },
   };
 
-  // punctuation we wanna transfer
+  // case logic
+  const isTitleCase = (str) => /^\p{Lu}[\p{Ll}'’]/u.test(str) || /^\p{Lu}$/u.test(str);
+  const toTitleCase = (str) => str.replace(/^\p{Ll}/u, x => x.toUpperCase());
+  const toLowerCase = (str) => str.replace(/^\p{Lu}/u, x => x.toLowerCase());
 
   // splice an array into an array
   const spliceArr = (parent, index, child) => {
@@ -655,14 +754,6 @@
     }
   };
 
-  const isTitleCase = function (str) {
-    return /^[A-Z][a-z'\u00C0-\u00FF]/.test(str) || /^[A-Z]$/.test(str)
-  };
-
-  const toTitleCase = function (str) {
-    str = str.replace(/^[a-z\u00C0-\u00FF]/, x => x.toUpperCase()); //TODO: support unicode
-    return str
-  };
 
   const moveTitleCase = function (home, start, needle) {
     let from = home[start];
@@ -678,7 +769,7 @@
       return
     }
     if (isTitleCase(old.text) && old.text.length > 1) {
-      old.text = old.text.replace(/^[A-Z]/, x => x.toLowerCase());
+      old.text = toLowerCase(old.text);
     }
   };
 
@@ -805,11 +896,13 @@
     }
   };
 
-  const isArray$5 = (arr) => Object.prototype.toString.call(arr) === '[object Array]';
+  const isArray$8 = (arr) => Object.prototype.toString.call(arr) === '[object Array]';
 
+  // set new ids for each terms
   const addIds$2 = function (terms) {
-    terms.forEach((term) => {
+    terms = terms.map((term) => {
       term.id = uuid(term);
+      return term
     });
     return terms
   };
@@ -822,11 +915,11 @@
     }
     //allow a view object
     if (typeof input === 'object' && input.isView) {
-      return input.docs[0] //assume one sentence
+      return input.clone().docs[0] //assume one sentence
     }
     //allow an array of terms, too
-    if (isArray$5(input)) {
-      return isArray$5(input[0]) ? input[0] : input
+    if (isArray$8(input)) {
+      return isArray$8(input[0]) ? input[0] : input
     }
     return []
   };
@@ -864,7 +957,7 @@
     // shift our self pointer, if necessary
     view.ptrs = selfPtrs;
     // try to tag them, too
-    doc.compute(['index', 'lexicon', 'preTagger']);
+    doc.compute(['id', 'index', 'lexicon', 'preTagger']);
     return doc
   };
 
@@ -887,7 +980,7 @@
   const fns$2 = {};
 
   const titleCase$1 = function (str) {
-    return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+    return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase())
   };
 
   // doc.replace('foo', (m)=>{})
@@ -1013,8 +1106,50 @@
     return document
   };
 
+  var pluckOutTerm = pluckOut;
 
-  const methods$j = {
+  const fixPointers$1 = function (ptrs, gonePtrs) {
+    ptrs = ptrs.map(ptr => {
+      let [n] = ptr;
+      if (!gonePtrs[n]) {
+        return ptr
+      }
+      gonePtrs[n].forEach(no => {
+        let len = no[2] - no[1];
+        // does it effect our pointer?
+        if (ptr[1] <= no[1] && ptr[2] >= no[2]) {
+          ptr[2] -= len;
+        }
+      });
+      return ptr
+    });
+
+    // decrement any pointers after a now-empty pointer
+    ptrs.forEach((ptr, i) => {
+      // is the pointer now empty?
+      if (ptr[1] === 0 && ptr[2] == 0) {
+        // go down subsequent pointers
+        for (let n = i + 1; n < ptrs.length; n += 1) {
+          ptrs[n][0] -= 1;
+          if (ptrs[n][0] < 0) {
+            ptrs[n][0] = 0;
+          }
+        }
+      }
+    });
+    // remove any now-empty pointers
+    ptrs = ptrs.filter(ptr => ptr[2] - ptr[1] > 0);
+
+    // remove old hard-pointers
+    ptrs = ptrs.map((ptr) => {
+      ptr[3] = null;
+      ptr[4] = null;
+      return ptr
+    });
+    return ptrs
+  };
+
+  const methods$i = {
     /** */
     remove: function (reg) {
       const { indexN } = this.methods.one.pointer;
@@ -1022,7 +1157,7 @@
       //  - a. remove self, from full parent
       let self = this.all();
       let not = this;
-      //  - b. remove a part, from self
+      //  - b. remove a match, from self
       if (reg) {
         self = this;
         not = this.match(reg);
@@ -1036,59 +1171,30 @@
       let ptrs = self.fullPointer;
       let nots = not.fullPointer.reverse();
       // remove them from the actual document)
-      let document = pluckOut(this.document, nots);
+      let document = pluckOutTerm(this.document, nots);
       // repair our pointers
-      let gone = indexN(nots);
-      ptrs = ptrs.map(ptr => {
-        let [n] = ptr;
-        if (!gone[n]) {
-          return ptr
-        }
-        gone[n].forEach(no => {
-          let len = no[2] - no[1];
-          // does it effect our pointer?
-          if (ptr[1] <= no[1] && ptr[2] >= no[2]) {
-            ptr[2] -= len;
-          }
-        });
-        return ptr
-      });
+      let gonePtrs = indexN(nots);
+      ptrs = fixPointers$1(ptrs, gonePtrs);
 
-      // remove any now-empty pointers
-      ptrs = ptrs.filter((ptr, i) => {
-        const len = ptr[2] - ptr[1];
-        if (len <= 0) {
-          // adjust downstream pointers
-          for (let x = i + 1; x < ptrs.length; x += 1) {
-            ptrs.filter(a => a[0] === x).forEach(a => {
-              a[0] -= 1;
-            });
-          }
-          return false
-        }
-        return true
-      });
-      // remove old hard-pointers
-      ptrs = ptrs.map((ptr) => {
-        ptr[3] = null;
-        ptr[4] = null;
-        return ptr
-      });
-      // mutate original
+      // clean up our original inputs
       self.ptrs = ptrs;
       self.document = document;
       self.compute('index');
-      if (reg) {
-        return self.toView(ptrs) //return new document
+      if (!reg) {
+        this.ptrs = [];
+        return self.none()
       }
-      return self.none()
+      // self._cache = null
+      let res = self.toView(ptrs); //return new document
+      return res
     },
   };
-  // aliases
-  methods$j.delete = methods$j.remove;
-  var remove = methods$j;
 
-  const methods$i = {
+  // aliases
+  methods$i.delete = methods$i.remove;
+  var remove = methods$i;
+
+  const methods$h = {
     /** add this punctuation or whitespace before each match: */
     pre: function (str, concat) {
       if (str === undefined && this.found) {
@@ -1190,10 +1296,10 @@
       return this
     },
   };
-  methods$i.deHyphenate = methods$i.dehyphenate;
-  methods$i.toQuotation = methods$i.toQuotations;
+  methods$h.deHyphenate = methods$h.dehyphenate;
+  methods$h.toQuotation = methods$h.toQuotations;
 
-  var whitespace$1 = methods$i;
+  var whitespace$1 = methods$h;
 
   /** alphabetical order */
   const alpha = (a, b) => {
@@ -1263,7 +1369,7 @@
     return arr
   };
 
-  var methods$h = { alpha, length, wordCount: wordCount$2, sequential, byFreq };
+  var methods$g = { alpha, length, wordCount: wordCount$2, sequential, byFreq };
 
   // aliases
   const seqNames = new Set(['index', 'sequence', 'seq', 'sequential', 'chron', 'chronological']);
@@ -1308,12 +1414,12 @@
     }
     // sort by frequency
     if (freqNames.has(input)) {
-      arr = methods$h.byFreq(arr);
+      arr = methods$g.byFreq(arr);
       return this.update(arr.map(o => o.pointer))
     }
     // apply sort method on each phrase
-    if (typeof methods$h[input] === 'function') {
-      arr = arr.sort(methods$h[input]);
+    if (typeof methods$g[input] === 'function') {
+      arr = arr.sort(methods$g[input]);
       return this.update(arr.map(o => o.pointer))
     }
     return this
@@ -1344,7 +1450,7 @@
 
   var sort$1 = { unique, reverse, sort };
 
-  const isArray$4 = (arr) => Object.prototype.toString.call(arr) === '[object Array]';
+  const isArray$7 = (arr) => Object.prototype.toString.call(arr) === '[object Array]';
 
   // append a new document, somehow
   const combineDocs = function (homeDocs, inputDocs) {
@@ -1390,7 +1496,7 @@
         return combineViews(this, input)
       }
       // assume it's an array of terms
-      if (isArray$4(input)) {
+      if (isArray$7(input)) {
         let docs = combineDocs(this.document, input);
         this.document = docs;
         return this.all()
@@ -1399,14 +1505,31 @@
     },
   };
 
-  const methods$g = Object.assign({}, caseFns, insert$1, replace, remove, whitespace$1, sort$1, concat);
-
-  const addAPI$3 = function (View) {
-    Object.assign(View.prototype, methods$g);
+  // add indexes to pointers
+  const harden = function () {
+    this.ptrs = this.fullPointer;
+    return this
   };
-  var api$8 = addAPI$3;
+  // remove indexes from pointers
+  const soften = function () {
+    let ptr = this.ptrs;
+    if (!ptr || ptr.length < 1) {
+      return this
+    }
+    ptr = ptr.map(a => a.slice(0, 3));
+    this.ptrs = ptr;
+    return this
+  };
+  var harden$1 = { harden, soften };
 
-  const compute$6 = {
+  const methods$f = Object.assign({}, caseFns, insert$1, replace, remove, whitespace$1, sort$1, concat, harden$1);
+
+  const addAPI$2 = function (View) {
+    Object.assign(View.prototype, methods$f);
+  };
+  var api$9 = addAPI$2;
+
+  const compute$5 = {
     id: function (view) {
       let docs = view.docs;
       for (let n = 0; n < docs.length; n += 1) {
@@ -1418,11 +1541,734 @@
     }
   };
 
-  var compute$7 = compute$6;
+  var compute$6 = compute$5;
 
   var change = {
+    api: api$9,
+    compute: compute$6,
+  };
+
+  var contractions$3 = [
+    // simple mappings
+    { word: '@', out: ['at'] },
+    { word: 'alot', out: ['a', 'lot'] },
+    { word: 'brb', out: ['be', 'right', 'back'] },
+    { word: 'cannot', out: ['can', 'not'] },
+    { word: 'cant', out: ['can', 'not'] },
+    { word: 'dont', out: ['do', 'not'] },
+    { word: 'dun', out: ['do', 'not'] },
+    { word: 'wont', out: ['will', 'not'] },
+    { word: "can't", out: ['can', 'not'] },
+    { word: "shan't", out: ['should', 'not'] },
+    { word: "won't", out: ['will', 'not'] },
+    { word: "that's", out: ['that', 'is'] },
+    { word: 'dunno', out: ['do', 'not', 'know'] },
+    { word: 'gonna', out: ['going', 'to'] },
+    { word: 'gotta', out: ['have', 'got', 'to'] }, //hmm
+    { word: 'gimme', out: ['give', 'me'] },
+    { word: 'tryna', out: ['trying', 'to'] },
+    { word: 'gtg', out: ['got', 'to', 'go'] },
+    { word: 'im', out: ['i', 'am'] },
+    { word: 'imma', out: ['I', 'will'] },
+    { word: 'imo', out: ['in', 'my', 'opinion'] },
+    { word: 'irl', out: ['in', 'real', 'life'] },
+    { word: 'ive', out: ['i', 'have'] },
+    { word: 'rn', out: ['right', 'now'] },
+    { word: 'tbh', out: ['to', 'be', 'honest'] },
+    { word: 'wanna', out: ['want', 'to'] },
+    { word: `c'mere`, out: ['come', 'here'] },
+    { word: `c'mon`, out: ['come', 'on'] },
+    // apostrophe d
+    { word: 'howd', out: ['how', 'did'] },
+    { word: 'whatd', out: ['what', 'did'] },
+    { word: 'whend', out: ['when', 'did'] },
+    { word: 'whered', out: ['where', 'did'] },
+
+    // { after: `cause`, out: ['because'] },
+    { word: "tis", out: ['it', 'is'] },
+    { word: "twas", out: ['it', 'was'] },
+    { word: `y'know`, out: ['you', 'know'] },
+    { word: "ne'er", out: ['never'] },
+    { word: "o'er", out: ['over'] },
+    // contraction-part mappings
+    { after: 'll', out: ['will'] },
+    { after: 've', out: ['have'] },
+    { after: 're', out: ['are'] },
+    { after: 'm', out: ['am'] },
+    // french contractions
+    { before: 'c', out: ['ce'] },
+    { before: 'm', out: ['me'] },
+    { before: 'n', out: ['ne'] },
+    { before: 'qu', out: ['que'] },
+    { before: 's', out: ['se'] },
+    { before: 't', out: ['tu'] }, // t'aime
+  ];
+
+  var model$4 = { one: { contractions: contractions$3 } };
+
+  // put n new words where 1 word was
+  const insertContraction = function (document, point, words) {
+    let [n, w] = point;
+    if (!words || words.length === 0) {
+      return
+    }
+    words = words.map((word) => {
+      word.implicit = word.text;
+      word.machine = word.text;
+      word.pre = '';
+      word.post = '';
+      word.text = '';
+      word.normal = '';
+      return word
+    });
+    if (words[0]) {
+      // move whitespace over
+      words[0].pre = document[n][w].pre;
+      words[words.length - 1].post = document[n][w].post;
+      // add the text/normal to the first term
+      words[0].text = document[n][w].text;
+      words[0].normal = document[n][w].normal; // move tags too?
+    }
+    // do the splice
+    document[n].splice(w, 1, ...words);
+  };
+  var splice = insertContraction;
+
+  const hasContraction$1 = /'/;
+  //look for a past-tense verb
+  // const hasPastTense = (terms, i) => {
+  //   let after = terms.slice(i + 1, i + 3)
+  //   return after.some(t => t.tags.has('PastTense'))
+  // }
+  // he'd walked -> had
+  // how'd -> did
+  // he'd go -> would
+
+  const alwaysDid = new Set([
+    'what',
+    'how',
+    'when',
+    'where',
+    'why',
+  ]);
+
+  // after-words
+  const useWould = new Set([
+    'be',
+    'go',
+    'start',
+    'think',
+    'need',
+  ]);
+
+  const useHad = new Set([
+    'been',
+    'gone'
+  ]);
+  // they'd gone
+  // they'd go
+
+
+  // he'd been
+  //    he had been
+  //    he would been
+
+  const _apostropheD = function (terms, i) {
+    let before = terms[i].normal.split(hasContraction$1)[0];
+
+    // what'd, how'd
+    if (alwaysDid.has(before)) {
+      return [before, 'did']
+    }
+    if (terms[i + 1]) {
+      // they'd gone
+      if (useHad.has(terms[i + 1].normal)) {
+        return [before, 'had']
+      }
+      // they'd go
+      if (useWould.has(terms[i + 1].normal)) {
+        return [before, 'would']
+      }
+    }
+    return null
+    //   if (hasPastTense(terms, i) === true) {
+    //     return [before, 'had']
+    //   }
+    //   // had/would/did
+    //   return [before, 'would']
+  };
+  var apostropheD = _apostropheD;
+
+  //ain't -> are/is not
+  const apostropheT = function (terms, i) {
+    if (terms[i].normal === "ain't" || terms[i].normal === 'aint') {
+      return null //do this in ./two/
+    }
+    let before = terms[i].normal.replace(/n't/, '');
+    return [before, 'not']
+  };
+
+  var apostropheT$1 = apostropheT;
+
+  const hasContraction = /'/;
+
+  // l'amour
+  const preL = (terms, i) => {
+    // le/la
+    let after = terms[i].normal.split(hasContraction)[1];
+    // quick french gender disambig (rough)
+    if (after && after.endsWith('e')) {
+      return ['la', after]
+    }
+    return ['le', after]
+  };
+
+  // d'amerique
+  const preD = (terms, i) => {
+    let after = terms[i].normal.split(hasContraction)[1];
+    // quick guess for noun-agreement (rough)
+    if (after && after.endsWith('e')) {
+      return ['du', after]
+    } else if (after && after.endsWith('s')) {
+      return ['des', after]
+    }
+    return ['de', after]
+  };
+
+  // j'aime
+  const preJ = (terms, i) => {
+    let after = terms[i].normal.split(hasContraction)[1];
+    return ['je', after]
+  };
+
+  var french = {
+    preJ,
+    preL,
+    preD,
+  };
+
+  const isRange = /^([0-9.]{1,3}[a-z]{0,2}) ?[-–—] ?([0-9]{1,3}[a-z]{0,2})$/i;
+  const timeRange = /^([0-9]{1,2}(:[0-9][0-9])?(am|pm)?) ?[-–—] ?([0-9]{1,2}(:[0-9][0-9])?(am|pm)?)$/i;
+
+  const numberRange = function (terms, i) {
+    let term = terms[i];
+    if (term.tags.has('PhoneNumber') === true) {
+      return null
+    }
+    let parts = term.text.match(isRange);
+    if (parts !== null) {
+      return [parts[1], 'to', parts[2]]
+    } else {
+      parts = term.text.match(timeRange);
+      if (parts !== null) {
+        return [parts[1], 'to', parts[4]]
+      }
+    }
+    return null
+  };
+  var numberRange$1 = numberRange;
+
+  const byApostrophe = /'/;
+  const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/;
+
+  // run tagger on our new implicit terms
+  const reTag = function (terms, view, start, len) {
+    let tmp = view.update();
+    tmp.document = [terms];
+    // offer to re-tag neighbours, too
+    let end = start + len;
+    if (start > 0) {
+      start -= 1;
+    }
+    if (terms[end]) {
+      end += 1;
+    }
+    tmp.ptrs = [[0, start, end]];
+    tmp.compute(['lexicon', 'preTagger', 'index']);
+  };
+
+  const byEnd = {
+    // ain't
+    t: (terms, i) => apostropheT$1(terms, i),
+    // how'd
+    d: (terms, i) => apostropheD(terms, i),
+  };
+
+  const byStart = {
+    // j'aime
+    j: (terms, i) => french.preJ(terms, i),
+    // l'amour
+    l: (terms, i) => french.preL(terms, i),
+    // d'amerique
+    d: (terms, i) => french.preD(terms, i),
+  };
+
+  // pull-apart known contractions from model
+  const knownOnes = function (list, term, before, after) {
+    for (let i = 0; i < list.length; i += 1) {
+      let o = list[i];
+      // look for word-word match (cannot-> [can, not])
+      if (o.word === term.normal) {
+        return o.out
+      }
+      // look for after-match ('re -> [_, are])
+      else if (after !== null && after === o.after) {
+        return [before].concat(o.out)
+      }
+      // look for before-match (l' -> [le, _])
+      else if (before !== null && before === o.before) {
+        return o.out.concat(after)
+        // return [o.out, after] //typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
+      }
+    }
+    return null
+  };
+
+  const toDocs = function (words, view) {
+    return view.fromText(words.join(' ')).docs[0]
+  };
+
+  //really easy ones
+  const contractions$1 = (view) => {
+    let { world, document } = view;
+    const { model, methods } = world;
+    let list = model.one.contractions || [];
+    // each sentence
+    document.forEach((terms, n) => {
+      // loop through terms backwards
+      for (let i = terms.length - 1; i >= 0; i -= 1) {
+        let before = null;
+        let after = null;
+        if (byApostrophe.test(terms[i].normal) === true) {
+          [before, after] = terms[i].normal.split(byApostrophe);
+        }
+        // any known-ones, like 'dunno'?
+        let words = knownOnes(list, terms[i], before, after);
+        // ['foo', 's']
+        if (!words && byEnd.hasOwnProperty(after)) {
+          words = byEnd[after](terms, i, world);
+        }
+        // ['j', 'aime']
+        if (!words && byStart.hasOwnProperty(before)) {
+          words = byStart[before](terms, i);
+        }
+        // actually insert the new terms
+        if (words) {
+          words = toDocs(words, view);
+          splice(document, [n, i], words);
+          reTag(document[n], view, i, words.length);
+          continue
+        }
+        // '44-2' has special care
+        if (numDash.test(terms[i].normal)) {
+          words = numberRange$1(terms, i);
+          if (words) {
+            words = toDocs(words, view);
+            splice(document, [n, i], words);
+            methods.one.setTag(words, 'NumberRange', world);//add custom tag
+            // is it a time-range, like '5-9pm'
+            if (words[2] && words[2].tags.has('Time')) {
+              methods.one.setTag([words[0]], 'Time', world);
+            }
+            reTag(document[n], view, i, words.length);
+          }
+        }
+      }
+    });
+  };
+  var contractions$2 = contractions$1;
+
+  var compute$4 = { contractions: contractions$2 };
+
+  const plugin$1 = {
+    model: model$4,
+    compute: compute$4,
+    hooks: ['contractions'],
+  };
+  var contractions = plugin$1;
+
+  // scan-ahead to match multiple-word terms - 'jack rabbit'
+  const checkMulti = function (terms, i, lexicon, setTag, world) {
+    let max = i + 4 > terms.length ? terms.length - i : 4;
+    let str = terms[i].machine || terms[i].normal;
+    for (let skip = 1; skip < max; skip += 1) {
+      let t = terms[i + skip];
+      let word = t.machine || t.normal;
+      str += ' ' + word;
+      if (lexicon.hasOwnProperty(str) === true) {
+        let tag = lexicon[str];
+        let ts = terms.slice(i, i + skip + 1);
+        setTag(ts, tag, world, false, '1-multi-lexicon');
+        return true
+      }
+    }
+    return false
+  };
+
+  const multiWord = function (terms, i, world) {
+    const { model, methods } = world;
+    // const { fastTag } = methods.one
+    const setTag = methods.one.setTag;
+    const multi = model.one._multiCache || {};
+    const lexicon = model.one.lexicon || {};
+    // basic lexicon lookup
+    let t = terms[i];
+    let word = t.machine || t.normal;
+    // multi-word lookup
+    if (terms[i + 1] !== undefined && multi[word] === true) {
+      return checkMulti(terms, i, lexicon, setTag, world)
+    }
+    return null
+  };
+  var multiWord$1 = multiWord;
+
+  const prefix = /^(under|over|mis|re|un|dis|semi|pre|post)-?/;
+  // anti|non|extra|inter|intra|over
+  const allowPrefix = new Set(['Verb', 'Infinitive', 'PastTense', 'Gerund', 'PresentTense', 'Adjective', 'Participle']);
+
+  // tag any words in our lexicon
+  const checkLexicon = function (terms, i, world) {
+    const { model, methods } = world;
+    // const fastTag = methods.one.fastTag
+    const setTag = methods.one.setTag;
+    const lexicon = model.one.lexicon;
+
+    // basic lexicon lookup
+    let t = terms[i];
+    let word = t.machine || t.normal;
+    // normal lexicon lookup
+    if (lexicon[word] !== undefined && lexicon.hasOwnProperty(word)) {
+      let tag = lexicon[word];
+      setTag([t], tag, world, false, '1-lexicon');
+      // fastTag(t, tag, '1-lexicon')
+      return true
+    }
+    // lookup aliases in the lexicon
+    if (t.alias) {
+      let found = t.alias.find(str => lexicon.hasOwnProperty(str));
+      if (found) {
+        let tag = lexicon[found];
+        setTag([t], tag, world, false, '1-lexicon-alias');
+        // fastTag(t, tag, '1-lexicon-alias')
+        return true
+      }
+    }
+    // prefixing for verbs/adjectives
+    if (prefix.test(word) === true) {
+      let stem = word.replace(prefix, '');
+      if (lexicon.hasOwnProperty(stem) && stem.length > 3) {
+        // only allow prefixes for verbs/adjectives
+        if (allowPrefix.has(lexicon[stem])) {
+          // console.log('->', word, stem, lexicon[stem])
+          setTag([t], lexicon[stem], world, false, '1-lexicon-prefix');
+          // fastTag(t, lexicon[stem], '1-lexicon-prefix')
+          return true
+        }
+      }
+    }
+    return null
+  };
+  var singleWord = checkLexicon;
+
+  // tag any words in our lexicon - even if it hasn't been filled-up yet
+  // rest of pre-tagger is in ./two/preTagger
+  const firstPass = function (view) {
+    const world = view.world;
+    view.docs.forEach(terms => {
+      for (let i = 0; i < terms.length; i += 1) {
+        if (terms[i].tags.size === 0) {
+          let found = null;
+          found = found || multiWord$1(terms, i, world);
+          // lookup known words
+          found = found || singleWord(terms, i, world);
+        }
+      }
+    });
+  };
+
+  var compute$3 = {
+    lexicon: firstPass
+  };
+
+  // derive clever things from our lexicon key-value pairs
+  const expand = function (words) {
+    // const { methods, model } = world
+    let lex = {};
+    // console.log('start:', Object.keys(lex).length)
+    let _multi = {};
+
+    // go through each word in this key-value obj:
+    Object.keys(words).forEach(word => {
+      let tag = words[word];
+      // normalize lexicon a little bit
+      word = word.toLowerCase().trim();
+      // cache multi-word terms
+      let split = word.split(/ /);
+      if (split.length > 1) {
+        _multi[split[0]] = true;
+      }
+      lex[word] = lex[word] || tag;
+    });
+    // cleanup
+    delete lex[''];
+    delete lex[null];
+    delete lex[' '];
+    return { lex, _multi }
+  };
+  var expandLexicon = expand;
+
+  var methods$e = {
+    one: {
+      expandLexicon,
+    }
+  };
+
+  /** insert new words/phrases into the lexicon */
+  const addWords = function (words) {
+    const world = this.world();
+    const { methods, model } = world;
+    if (!words) {
+      return
+    }
+    // normalize tag vals
+    Object.keys(words).forEach(k => {
+      if (typeof words[k] === 'string' && words[k].startsWith('#')) {
+        words[k] = words[k].replace(/^#/, '');
+      }
+    });
+    // add some words to our lexicon
+    if (methods.two.expandLexicon) {
+      // do fancy ./two version
+      let { lex, _multi } = methods.two.expandLexicon(words, world);
+      Object.assign(model.one.lexicon, lex);
+      Object.assign(model.one._multiCache, _multi);
+    } else if (methods.one.expandLexicon) {
+      // do basic ./one version
+      let { lex, _multi } = methods.one.expandLexicon(words, world);
+      Object.assign(model.one.lexicon, lex);
+      Object.assign(model.one._multiCache, _multi);
+    } else {
+      //no fancy-business
+      Object.assign(model.one.lexicon, words);
+    }
+  };
+
+  var lib$5 = { addWords };
+
+  const model$3 = {
+    one: {
+      lexicon: {}, //setup blank lexicon
+      _multiCache: {},
+    }
+  };
+
+  var lexicon$1 = {
+    model: model$3,
+    methods: methods$e,
+    compute: compute$3,
+    lib: lib$5,
+    hooks: ['lexicon']
+  };
+
+  // edited by Spencer Kelly
+  // credit to https://github.com/BrunoRB/ahocorasick by Bruno Roberto Búrigo.
+
+  const tokenize$2 = function (phrase, world) {
+    const { methods, model } = world;
+    let terms = methods.one.tokenize.splitTerms(phrase, model).map(methods.one.tokenize.splitWhitespace);
+    return terms.map(term => term.text.toLowerCase())
+  };
+
+  // turn an array or object into a compressed aho-corasick structure
+  const buildTrie = function (phrases, world) {
+
+    // const tokenize=methods.one.
+    let goNext = [{}];
+    let endAs = [null];
+    let failTo = [0];
+
+    let xs = [];
+    let n = 0;
+    phrases.forEach(function (phrase) {
+      let curr = 0;
+      // let wordsB = phrase.split(/ /g).filter(w => w)
+      let words = tokenize$2(phrase, world);
+      for (let i = 0; i < words.length; i++) {
+        let word = words[i];
+        if (goNext[curr] && goNext[curr].hasOwnProperty(word)) {
+          curr = goNext[curr][word];
+        } else {
+          n++;
+          goNext[curr][word] = n;
+          goNext[n] = {};
+          curr = n;
+          endAs[n] = null;
+        }
+      }
+      endAs[curr] = [words.length];
+    });
+    // f(s) = 0 for all states of depth 1 (the ones from which the 0 state can transition to)
+    for (let word in goNext[0]) {
+      n = goNext[0][word];
+      failTo[n] = 0;
+      xs.push(n);
+    }
+
+    while (xs.length) {
+      let r = xs.shift();
+      // for each symbol a such that g(r, a) = s
+      let keys = Object.keys(goNext[r]);
+      for (let i = 0; i < keys.length; i += 1) {
+        let word = keys[i];
+        let s = goNext[r][word];
+        xs.push(s);
+        // set state = f(r)
+        n = failTo[r];
+        while (n > 0 && !goNext[n].hasOwnProperty(word)) {
+          n = failTo[n];
+        }
+        if (goNext.hasOwnProperty(n)) {
+          let fs = goNext[n][word];
+          failTo[s] = fs;
+          if (endAs[fs]) {
+            endAs[s] = endAs[s] || [];
+            endAs[s] = endAs[s].concat(endAs[fs]);
+          }
+        } else {
+          failTo[s] = 0;
+        }
+      }
+    }
+    return { goNext, endAs, failTo }
+  };
+  var build = buildTrie;
+
+  // console.log(buildTrie(['smart and cool', 'smart and nice']))
+
+  // follow our trie structure
+  const scanWords = function (terms, trie, opts) {
+    let n = 0;
+    let results = [];
+    for (let i = 0; i < terms.length; i++) {
+      let word = terms[i][opts.form] || terms[i].normal;
+      // main match-logic loop:
+      while (n > 0 && (trie.goNext[n] === undefined || !trie.goNext[n].hasOwnProperty(word))) {
+        n = trie.failTo[n] || 0; // (usually back to 0)
+      }
+      // did we fail?
+      if (!trie.goNext[n].hasOwnProperty(word)) {
+        continue
+      }
+      n = trie.goNext[n][word];
+      if (trie.endAs[n]) {
+        let arr = trie.endAs[n];
+        for (let o = 0; o < arr.length; o++) {
+          let len = arr[o];
+          let term = terms[i - len + 1];
+          let [no, start] = term.index;
+          results.push([no, start, start + len, term.id]);
+        }
+      }
+    }
+    return results
+  };
+
+  const cacheMiss = function (words, cache) {
+    for (let i = 0; i < words.length; i += 1) {
+      if (cache.has(words[i]) === true) {
+        return false
+      }
+    }
+    return true
+  };
+
+  const scan = function (view, trie, opts) {
+    let results = [];
+    opts.form = opts.form || 'normal';
+    let docs = view.docs;
+    if (!trie.goNext || !trie.goNext[0]) {
+      console.error('Compromise invalid lookup trie');//eslint-disable-line
+      return view.none()
+    }
+    let firstWords = Object.keys(trie.goNext[0]);
+    // do each phrase
+    for (let i = 0; i < docs.length; i++) {
+      // can we skip the phrase, all together?
+      if (view._cache && view._cache[i] && cacheMiss(firstWords, view._cache[i]) === true) {
+        continue
+      }
+      let terms = docs[i];
+      let found = scanWords(terms, trie, opts);
+      if (found.length > 0) {
+        results = results.concat(found);
+      }
+    }
+    return view.update(results)
+  };
+  var scan$1 = scan;
+
+  const isObject$4 = val => {
+    return Object.prototype.toString.call(val) === '[object Object]'
+  };
+
+  function api$8 (View) {
+
+    /** find all matches in this document */
+    View.prototype.lookup = function (input, opts = {}) {
+      if (!input) {
+        return this.none()
+      }
+      if (typeof input === 'string') {
+        input = [input];
+      }
+      let trie = isObject$4(input) ? input : build(input, this.world);
+      let res = scan$1(this, trie, opts);
+      res = res.settle();
+      return res
+    };
+  }
+
+  // chop-off tail of redundant vals at end of array
+  const truncate = (list, val) => {
+    for (let i = list.length - 1; i >= 0; i -= 1) {
+      if (list[i] !== val) {
+        list = list.slice(0, i + 1);
+        return list
+      }
+    }
+    return list
+  };
+
+  // prune trie a bit
+  const compress = function (trie) {
+    trie.goNext = trie.goNext.map(o => {
+      if (Object.keys(o).length === 0) {
+        return undefined
+      }
+      return o
+    });
+    // chop-off tail of undefined vals in goNext array
+    trie.goNext = truncate(trie.goNext, undefined);
+    // chop-off tail of zeros in failTo array
+    trie.failTo = truncate(trie.failTo, 0);
+    // chop-off tail of nulls in endAs array
+    trie.endAs = truncate(trie.endAs, null);
+    return trie
+  };
+  var compress$1 = compress;
+
+  /** pre-compile a list of matches to lookup */
+  const lib$4 = {
+    /** turn an array or object into a compressed trie*/
+    compile: function (input) {
+      const trie = build(input, this.world());
+      return compress$1(trie)
+    }
+  };
+
+  var lookup = {
     api: api$8,
-    compute: compute$7,
+    lib: lib$4
   };
 
   const relPointer = function (ptrs, parent) {
@@ -1450,8 +2296,27 @@
     return { ptrs, byGroup }
   };
 
+  const isObject$3 = val => {
+    return Object.prototype.toString.call(val) === '[object Object]'
+  };
+
   // did they pass-in a compromise object?
-  const isView = regs => regs && typeof regs === 'object' && regs.isView === true;
+  const isView = val => val && isObject$3(val) && val.isView === true;
+
+  const isNet = val => val && isObject$3(val) && val.isNet === true;
+
+
+  // is the pointer the full sentence?
+  // export const isFull = function (ptr, document) {
+  //   let [n, start, end] = ptr
+  //   if (start !== 0) {
+  //     return false
+  //   }
+  //   if (document[n] && document[n][end - 1] && !document[n][end]) {
+  //     return true
+  //   }
+  //   return false
+  // }
 
   const match$2 = function (regs, group, opts) {
     const one = this.methods.one;
@@ -1459,8 +2324,13 @@
     if (isView(regs)) {
       return this.intersection(regs)
     }
+    // support a compiled set of matches
+    if (isNet(regs)) {
+      return this.sweep(regs, { tagger: false }).view.settle()
+    }
     // support param as string
     if (typeof regs === 'string') {
+      regs = one.killUnicode(regs, this.world);
       regs = one.parseMatch(regs, opts);
     }
     let todo = { regs, group };
@@ -1468,6 +2338,15 @@
     let { ptrs, byGroup } = fixPointers(res, this.fullPointer);
     let view = this.toView(ptrs);
     view._groups = byGroup;
+    // try to keep some of the cache
+    // if (this._cache) {
+    //   view._cache = view.ptrs.map(ptr => {
+    //     if (isFull(ptr, this.document)) {
+    //       return this._cache[ptr[0]]
+    //     }
+    //     return null
+    //   })
+    // }
     return view
   };
 
@@ -1477,7 +2356,12 @@
     if (isView(regs)) {
       return this.intersection(regs).eq(0)
     }
+    // support a compiled set of matches
+    if (isNet(regs)) {
+      return this.sweep(regs, { tagger: false, matchOne: true }).view
+    }
     if (typeof regs === 'string') {
+      regs = one.killUnicode(regs, this.world);
       regs = one.parseMatch(regs, opts);
     }
     let todo = { regs, group, justOne: true };
@@ -1490,35 +2374,54 @@
 
   const has = function (regs, group, opts) {
     const one = this.methods.one;
-    let ptrs;
-    if (typeof regs === 'string') {
-      regs = one.parseMatch(regs, opts);
-      let todo = { regs, group, justOne: true };
-      ptrs = one.match(this.docs, todo, this._cache).ptrs;
-    } else if (isView(regs)) {
-      ptrs = regs.fullPointer; // support a view object as input
+    // support view as input
+    if (isView(regs)) {
+      let ptrs = regs.fullPointer; // support a view object as input
+      return ptrs.length > 0
     }
+    // support a compiled set of matches
+    if (isNet(regs)) {
+      return this.sweep(regs, { tagger: false }).view.found
+    }
+    if (typeof regs === 'string') {
+      regs = one.killUnicode(regs, this.world);
+      regs = one.parseMatch(regs, opts);
+    }
+    let todo = { regs, group, justOne: true };
+    let ptrs = one.match(this.docs, todo, this._cache).ptrs;
     return ptrs.length > 0
   };
 
   // 'if'
   const ifFn = function (regs, group, opts) {
     const one = this.methods.one;
-    if (typeof regs === 'string') {
-      regs = one.parseMatch(regs, opts);
-      let todo = { regs, group, justOne: true };
-      let ptrs = this.fullPointer;
-      ptrs = ptrs.filter(ptr => {
-        let m = this.update([ptr]);
-        let res = one.match(m.docs, todo, this._cache).ptrs;
-        return res.length > 0
-      });
-      return this.update(ptrs)
-    }
+    // support view as input
     if (isView(regs)) {
       return this.filter(m => m.intersection(regs).found)
     }
-    return this.none()
+    // support a compiled set of matches
+    if (isNet(regs)) {
+      let m = this.sweep(regs, { tagger: false }).view.settle();
+      return this.if(m)//recurse with result
+    }
+    if (typeof regs === 'string') {
+      regs = one.killUnicode(regs, this.world);
+      regs = one.parseMatch(regs, opts);
+    }
+    let todo = { regs, group, justOne: true };
+    let ptrs = this.fullPointer;
+    let cache = this._cache || [];
+    ptrs = ptrs.filter((ptr, i) => {
+      let m = this.update([ptr]);
+      let res = one.match(m.docs, todo, cache[i]).ptrs;
+      return res.length > 0
+    });
+    let view = this.update(ptrs);
+    // try and reconstruct the cache
+    if (this._cache) {
+      view._cache = ptrs.map(ptr => cache[ptr[0]]);
+    }
+    return view
   };
 
   const ifNo = function (regs, group, opts) {
@@ -1526,18 +2429,29 @@
     const one = methods.one;
     // support a view object as input
     if (isView(regs)) {
-      return this.difference(regs)
+      return this.filter(m => !m.intersection(regs).found)
+    }
+    // support a compiled set of matches
+    if (isNet(regs)) {
+      let m = this.sweep(regs, { tagger: false }).view.settle();
+      return this.ifNo(m)
     }
     // otherwise parse the match string
     if (typeof regs === 'string') {
+      regs = one.killUnicode(regs, this.world);
       regs = one.parseMatch(regs, opts);
     }
-    return this.filter(m => {
+    let cache = this._cache || [];
+    let view = this.filter((m, i) => {
       let todo = { regs, group, justOne: true };
-      let ptrs = one.match(m.docs, todo, m._cache).ptrs;
+      let ptrs = one.match(m.docs, todo, cache[i]).ptrs;
       return ptrs.length === 0
-    })
-
+    });
+    // try to reconstruct the cache
+    if (this._cache) {
+      view._cache = view.ptrs.map(ptr => cache[ptr[0]]);
+    }
+    return view
   };
 
   var match$3 = { matchOne, match: match$2, has, if: ifFn, ifNo };
@@ -1581,7 +2495,9 @@
   };
 
   const growLeft = function (regs, group, opts) {
-    regs = this.world.methods.one.parseMatch(regs, opts);
+    if (typeof regs === 'string') {
+      regs = this.world.methods.one.parseMatch(regs, opts);
+    }
     regs[regs.length - 1].end = true;// ensure matches are beside us ←
     let ptrs = this.fullPointer;
     this.forEach((m, n) => {
@@ -1596,7 +2512,9 @@
   };
 
   const growRight = function (regs, group, opts) {
-    regs = this.world.methods.one.parseMatch(regs, opts);
+    if (typeof regs === 'string') {
+      regs = this.world.methods.one.parseMatch(regs, opts);
+    }
     regs[0].start = true;// ensure matches are beside us →
     let ptrs = this.fullPointer;
     this.forEach((m, n) => {
@@ -1616,32 +2534,38 @@
 
   var lookaround = { before, after, growLeft, growRight, grow };
 
-  const combine = function (left, right) {
+  const combine$1 = function (left, right) {
     return [left[0], left[1], right[2]]
   };
 
+  const isArray$6 = function (arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]'
+  };
+
   const getDoc$3 = (reg, view, group) => {
-    let m = reg;
-    if (typeof reg === 'string') {
-      m = view.match(reg, group);
+    if (typeof reg === 'string' || isArray$6(reg)) {
+      return view.match(reg, group)
     }
-    if (!m) {
+    if (!reg) {
       return view.none()
     }
-    return m
+    return reg
   };
 
   const addIds$1 = function (ptr, view) {
-    let [n, start] = ptr;
+    let [n, start, end] = ptr;
     if (view.document[n] && view.document[n][start]) {
       ptr[3] = ptr[3] || view.document[n][start].id;
+      if (view.document[n][end - 1]) {
+        ptr[4] = ptr[4] || view.document[n][end - 1].id;
+      }
     }
     return ptr
   };
 
-  const methods$f = {};
+  const methods$d = {};
   // [before], [match], [after]
-  methods$f.splitOn = function (m, group) {
+  methods$d.splitOn = function (m, group) {
     const { splitAll } = this.methods.one.pointer;
     let splits = getDoc$3(m, this, group).fullPointer;
     let all = splitAll(this.fullPointer, splits);
@@ -1658,7 +2582,7 @@
   };
 
   // [before], [match after]
-  methods$f.splitBefore = function (m, group) {
+  methods$d.splitBefore = function (m, group) {
     const { splitAll } = this.methods.one.pointer;
     let splits = getDoc$3(m, this, group).fullPointer;
     let all = splitAll(this.fullPointer, splits);
@@ -1668,7 +2592,7 @@
       res.push(o.before);
       if (o.match && o.after) {
         // console.log(combine(o.match, o.after))
-        res.push(combine(o.match, o.after));
+        res.push(combine$1(o.match, o.after));
       } else {
         res.push(o.match);
         res.push(o.after);
@@ -1680,7 +2604,7 @@
   };
 
   // [before match], [after]
-  methods$f.splitAfter = function (m, group) {
+  methods$d.splitAfter = function (m, group) {
     const { splitAll } = this.methods.one.pointer;
     let splits = getDoc$3(m, this, group).fullPointer;
     let all = splitAll(this.fullPointer, splits);
@@ -1688,7 +2612,7 @@
     all.forEach(o => {
       res.push(o.passthrough);
       if (o.before && o.match) {
-        res.push(combine(o.before, o.match));
+        res.push(combine$1(o.before, o.match));
       } else {
         res.push(o.before);
         res.push(o.match);
@@ -1699,21 +2623,21 @@
     res = res.map(p => addIds$1(p, this));
     return this.update(res)
   };
-  methods$f.split = methods$f.splitAfter;
+  methods$d.split = methods$d.splitAfter;
 
-  var split$1 = methods$f;
+  var split$1 = methods$d;
 
-  const methods$e = Object.assign({}, match$3, lookaround, split$1);
+  const methods$c = Object.assign({}, match$3, lookaround, split$1);
   // aliases
-  methods$e.lookBehind = methods$e.before;
-  methods$e.lookBefore = methods$e.before;
+  methods$c.lookBehind = methods$c.before;
+  methods$c.lookBefore = methods$c.before;
 
-  methods$e.lookAhead = methods$e.after;
-  methods$e.lookAfter = methods$e.after;
+  methods$c.lookAhead = methods$c.after;
+  methods$c.lookAfter = methods$c.after;
 
-  methods$e.notIf = methods$e.ifNo;
+  methods$c.notIf = methods$c.ifNo;
   const matchAPI = function (View) {
-    Object.assign(View.prototype, methods$e);
+    Object.assign(View.prototype, methods$c);
   };
   var api$7 = matchAPI;
 
@@ -1766,8 +2690,9 @@
   };
   var parseBlocks$1 = parseBlocks;
 
-  const hasMinMax = /\{([0-9]+)(, *[0-9]*)?\}/;
+  const hasMinMax = /\{([0-9]+)?(, *[0-9]*)?\}/;
   const andSign = /&&/;
+  // const hasDash = /\p{Letter}-\p{Letter}/u
   const captureName = new RegExp(/^<\s*(\S+)\s*>/);
   /* break-down a match expression into this:
   {
@@ -1786,21 +2711,12 @@
     choices:[],
   }
   */
-  const titleCase = str => {
-    return str.charAt(0).toUpperCase() + str.substr(1)
-  };
-  const end = function (str) {
-    return str[str.length - 1]
-  };
-  const start = function (str) {
-    return str[0]
-  };
-  const stripStart = function (str) {
-    return str.substr(1)
-  };
-  const stripEnd = function (str) {
-    return str.substr(0, str.length - 1)
-  };
+  const titleCase = str => str.charAt(0).toUpperCase() + str.substring(1);
+  const end = (str) => str.charAt(str.length - 1);
+  const start = (str) => str.charAt(0);
+  const stripStart = (str) => str.substring(1);
+  const stripEnd = (str) => str.substring(0, str.length - 1);
+
   const stripBoth = function (str) {
     str = stripStart(str);
     str = stripEnd(str);
@@ -1896,6 +2812,9 @@
       //regex
       if (start(w) === '/' && end(w) === '/') {
         w = stripBoth(w);
+        if (opts.caseSensitive) {
+          obj.use = 'text';
+        }
         obj.regex = new RegExp(w); //potential vuln - security/detect-non-literal-regexp
         return obj
       }
@@ -1924,7 +2843,7 @@
         return obj
       }
     }
-    // support #Tag{1,9}
+    // support foo{1,9}
     if (hasMinMax.test(w) === true) {
       w = w.replace(hasMinMax, (_a, b, c) => {
         if (c === undefined) {
@@ -1933,15 +2852,23 @@
           obj.max = Number(b);
         } else {
           c = c.replace(/, */, '');
-          // '{2,4}' Two to four times
-          // '{3,}' Three or more times
-          obj.min = Number(b);
-          obj.max = Number(c || 999);
+          if (b === undefined) {
+            // '{,9}' implied zero min
+            obj.min = 0;
+            obj.max = Number(c);
+          } else {
+            // '{2,4}' Two to four times
+            obj.min = Number(b);
+            // '{3,}' Three or more times
+            obj.max = Number(c || 999);
+          }
         }
         // use same method as '+'
         obj.greedy = true;
         // 0 as min means the same as '?'
-        obj.optional = true;
+        if (!obj.min) {
+          obj.optional = true;
+        }
         return ''
       });
     }
@@ -1971,7 +2898,15 @@
       //somehow handle encoded-chars?
       w = w.replace('\\*', '*');
       w = w.replace('\\.', '.');
-      obj.word = w.toLowerCase();
+      if (opts.caseSensitive) {
+        obj.use = 'text';
+      } else {
+        w = w.toLowerCase();
+      }
+      // if (hasDash.test(w) === true) {
+      //   w = w.replace(/-/g, '')
+      // }
+      obj.word = w;
     }
     return obj
   };
@@ -2083,7 +3018,7 @@
     //turn them into objects
     tokens = tokens.map(str => parseToken$1(str, opts));
     //clean up anything weird
-    tokens = postProcess$1(tokens, opts);
+    tokens = postProcess$1(tokens);
     // console.log(tokens)
     return tokens
   };
@@ -2101,7 +3036,7 @@
   const failFast = function (regs, cache) {
     for (let i = 0; i < regs.length; i += 1) {
       let reg = regs[i];
-      if (reg.optional === true || reg.negation === true) {
+      if (reg.optional === true || reg.negative === true || reg.fuzzy === true) {
         continue
       }
       // is the word missing from the cache?
@@ -2202,14 +3137,14 @@
   const endQuote = /([\u0022\uFF02\u0027\u201D\u2019\u00BB\u203A\u2032\u2033\u2034\u301E\u00B4])/;
 
   const hasHyphen$1 = /^[-–—]$/;
-  const hasDash = / [-–—] /;
+  const hasDash$1 = / [-–—] /;
 
   /** search the term's 'post' punctuation  */
   const hasPost = (term, punct) => term.post.indexOf(punct) !== -1;
   /** search the term's 'pre' punctuation  */
   const hasPre = (term, punct) => term.pre.indexOf(punct) !== -1;
 
-  const methods$d = {
+  const methods$b = {
     /** does it have a quotation symbol?  */
     hasQuote: term => startQuote.test(term.pre) || endQuote.test(term.post),
     /** does it have a comma?  */
@@ -2229,19 +3164,22 @@
     /** a hyphen connects two words like-term */
     hasHyphen: term => hasHyphen$1.test(term.post) || hasHyphen$1.test(term.pre),
     /** a dash separates words - like that */
-    hasDash: term => hasDash.test(term.post) || hasDash.test(term.pre),
+    hasDash: term => hasDash$1.test(term.post) || hasDash$1.test(term.pre),
     /** is it multiple words combinded */
     hasContraction: term => Boolean(term.implicit),
     /** is it an acronym */
     isAcronym: term => term.tags.has('Acronym'),
+    /** does it have any tags */
     isKnown: term => term.tags.size > 0,
-    isTitleCase: term => /^[A-Z][a-z'\u00C0-\u00FF]/.test(term.text), //|| /^[A-Z]$/.test(term.text)
-    isUpperCase: term => /^[A-Z]+$/.test(term.text),
+    /** uppercase first letter, then a lowercase */
+    isTitleCase: term => /^\p{Lu}[a-z'\u00C0-\u00FF]/u.test(term.text),
+    /** uppercase all letters */
+    isUpperCase: term => /^\p{Lu}+$/u.test(term.text),
   };
   // aliases
-  methods$d.hasQuotation = methods$d.hasQuote;
+  methods$b.hasQuotation = methods$b.hasQuote;
 
-  var termMethods = methods$d;
+  var termMethods = methods$b;
 
   //declare it up here
   let wrapMatch = function () { };
@@ -2261,6 +3199,10 @@
     }
     //support a text match
     if (reg.word !== undefined) {
+      // check case-sensitivity, etc
+      if (reg.use) {
+        return reg.word === term[reg.use]
+      }
       //match contractions, machine-form
       if (term.machine !== null && term.machine === reg.word) {
         return true
@@ -2306,7 +3248,11 @@
     }
     //support /reg/
     if (reg.regex !== undefined) {
-      return reg.regex.test(term.normal)
+      let str = term.normal;
+      if (reg.use) {
+        str = term[reg.use];
+      }
+      return reg.regex.test(str)
     }
     //support <chunk>
     if (reg.chunk !== undefined) {
@@ -2326,10 +3272,7 @@
     }
     // support optimized (one|two)
     if (reg.fastOr !== undefined) {
-      if (term.implicit && reg.fastOr.has(term.implicit) === true) {
-        return true
-      }
-      return reg.fastOr.has(term.normal) || reg.fastOr.has(term.text)
+      return reg.fastOr.has(term.implicit) || reg.fastOr.has(term.normal) || reg.fastOr.has(term.text) || reg.fastOr.has(term.machine)
     }
     //support slower (one|two)
     if (reg.choices !== undefined) {
@@ -2352,13 +3295,6 @@
     return result
   };
   var matchTerm = wrapMatch;
-
-  const env = typeof process === 'undefined' ? self.env || {} : process.env;
-  const log$1 = msg => {
-    if (env.DEBUG_MATCH) {
-      console.log(`\n  \x1b[32m ${msg} \x1b[0m`); // eslint-disable-line
-    }
-  };
 
   // for greedy checking, we no longer care about the reg.start
   // value, and leaving it can cause failures for anchored greedy
@@ -2398,7 +3334,7 @@
     //otherwise, we're looking for the next one
     for (; t < state.terms.length; t += 1) {
       if (matchTerm(state.terms[t], nextReg, state.start_i + t, state.phrase_length) === true) {
-        log$1(`greedyTo ${state.terms[t].normal}`);
+        // console.log(`greedyTo ${state.terms[t].normal}`)
         return t
       }
     }
@@ -2411,7 +3347,7 @@
       if (state.start_i + state.t < state.phrase_length - 1) {
         let tmpReg = Object.assign({}, reg, { end: false });
         if (matchTerm(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length) === true) {
-          log$1(`endGreedy ${state.terms[state.t].normal}`);
+          // console.log(`endGreedy ${state.terms[state.t].normal}`)
           return true
         }
       }
@@ -2419,25 +3355,63 @@
     return false
   };
 
-  const isArray$3 = function (arr) {
+  const getGroup$2 = function (state, term_index) {
+    if (state.groups[state.inGroup]) {
+      return state.groups[state.inGroup]
+    }
+    state.groups[state.inGroup] = {
+      start: term_index,
+      length: 0,
+    };
+    return state.groups[state.inGroup]
+  };
+
+  //support 'unspecific greedy' .* properly
+  // its logic is 'greedy until', where it's looking for the next token
+  // '.+ foo' means we check for 'foo', indefinetly
+  const doAstrix = function (state) {
+    let { regs } = state;
+    let reg = regs[state.r];
+
+    let skipto = greedyTo(state, regs[state.r + 1]);
+    //maybe we couldn't find it
+    if (skipto === null || skipto === 0) {
+      return null
+    }
+    // ensure it's long enough
+    if (reg.min !== undefined && skipto - state.t < reg.min) {
+      return null
+    }
+    // reduce it back, if it's too long
+    if (reg.max !== undefined && skipto - state.t > reg.max) {
+      state.t = state.t + reg.max;
+      return true
+    }
+    // set the group result
+    if (state.hasGroup === true) {
+      const g = getGroup$2(state, state.t);
+      g.length = skipto - state.t;
+    }
+    state.t = skipto;
+    // log(`✓ |greedy|`)
+    return true
+  };
+  var doAstrix$1 = doAstrix;
+
+  const isArray$5 = function (arr) {
     return Object.prototype.toString.call(arr) === '[object Array]'
   };
 
-  const doOrBlock = function (state, skipN = 0) {
+  const doOrBlock$1 = function (state, skipN = 0) {
     let block = state.regs[state.r];
     let wasFound = false;
     // do each multiword sequence
     for (let c = 0; c < block.choices.length; c += 1) {
       // try to match this list of tokens
       let regs = block.choices[c];
-      if (!isArray$3(regs)) {
-        // console.log('=-=-=-= bad -=-=-=-')
-        // console.dir(state.regs, { depth: 5 })
+      if (!isArray$5(regs)) {
         return false
-      }// } else {
-      //   // console.log('=-=-=-= good -=-=-=-')
-      //   // console.dir(state.regs[0], { depth: 5 })
-      // }
+      }
       wasFound = regs.every((cr, w_index) => {
         let extra = 0;
         let t = state.t + w_index + skipN + extra;
@@ -2469,12 +3443,12 @@
     }
     // we found a match -  is it greedy though?
     if (wasFound && block.greedy === true) {
-      return doOrBlock(state, skipN) // try it again!
+      return doOrBlock$1(state, skipN) // try it again!
     }
     return skipN
   };
 
-  const doAndBlock = function (state) {
+  const doAndBlock$1 = function (state) {
     let longest = 0;
     // all blocks must match, and we return the greediest match
     let reg = state.regs[state.r];
@@ -2493,32 +3467,217 @@
       return allWords
     });
     if (allDidMatch === true) {
-      log$1(`doAndBlock ${state.terms[state.t].normal}`);
+      // console.log(`doAndBlock ${state.terms[state.t].normal}`)
       return longest
     }
     return false
   };
 
-  const getGroup$2 = function (state, term_index) {
-    if (state.groups[state.inGroup]) {
-      return state.groups[state.inGroup]
+  const orBlock = function (state) {
+    const { regs } = state;
+    let reg = regs[state.r];
+    let skipNum = doOrBlock$1(state);
+    // did we find a match?
+    if (skipNum) {
+      // handle 'not' logic
+      if (reg.negative === true) {
+        return null // die
+      }
+      // tuck in as named-group
+      if (state.hasGroup === true) {
+        const g = getGroup$2(state, state.t);
+        g.length += skipNum;
+      }
+      // ensure we're at the end
+      if (reg.end === true) {
+        let end = state.phrase_length;
+        if (state.t + state.start_i + skipNum !== end) {
+          return null
+        }
+      }
+      state.t += skipNum;
+      // log(`✓ |found-or|`)
+      return true
+    } else if (!reg.optional) {
+      return null //die
     }
-    state.groups[state.inGroup] = {
-      start: term_index,
-      length: 0,
-    };
-    return state.groups[state.inGroup]
+    return true
+  };
+  var doOrBlock = orBlock;
+
+  // '(foo && #Noun)' - require all matches on the term
+  const andBlock = function (state) {
+    const { regs } = state;
+    let reg = regs[state.r];
+
+    let skipNum = doAndBlock$1(state);
+    if (skipNum) {
+      // handle 'not' logic
+      if (reg.negative === true) {
+        return null // die
+      }
+      if (state.hasGroup === true) {
+        const g = getGroup$2(state, state.t);
+        g.length += skipNum;
+      }
+      // ensure we're at the end
+      if (reg.end === true) {
+        let end = state.phrase_length - 1;
+        if (state.t + state.start_i !== end) {
+          return null
+        }
+      }
+      state.t += skipNum;
+      // log(`✓ |found-and|`)
+      return true
+    } else if (!reg.optional) {
+      return null //die
+    }
+    return true
+  };
+  var doAndBlock = andBlock;
+
+  // '!foo' should match anything that isn't 'foo'
+  // if it matches, return false
+  const doNegative = function (state) {
+    const { regs } = state;
+    let reg = regs[state.r];
+    let tmpReg = Object.assign({}, reg);
+    tmpReg.negative = false; // try removing it
+    let foundNeg = matchTerm(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length);
+    if (foundNeg === true) {
+      return null //bye!
+    }
+    return true
+  };
+  var doNegative$1 = doNegative;
+
+  // 'foo? foo' matches are tricky.
+  const foundOptional = function (state) {
+    const { regs } = state;
+    let reg = regs[state.r];
+    let term = state.terms[state.t];
+    // does the next reg match it too?
+    let nextRegMatched = matchTerm(term, regs[state.r + 1], state.start_i + state.t, state.phrase_length);
+    if (reg.negative || nextRegMatched) {
+      // but does the next reg match the next term??
+      // only skip if it doesn't
+      let nextTerm = state.terms[state.t + 1];
+      if (!nextTerm || !matchTerm(nextTerm, regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
+        state.r += 1;
+      }
+    }
   };
 
-  // const log = msg => {
-  //   const env = typeof process === 'undefined' ? self.env || {} : process.env
-  //   if (env.DEBUG_MATCH === true) {
-  //     console.log(`\n  \x1b[32m ${msg} \x1b[0m`) // eslint-disable-line
-  //   }
-  // }
+  var foundOptional$1 = foundOptional;
+
+  // keep 'foo+' or 'foo*' going..
+  const greedyMatch = function (state) {
+    const { regs, phrase_length } = state;
+    let reg = regs[state.r];
+    state.t = getGreedy(state, regs[state.r + 1]);
+    if (state.t === null) {
+      return null //greedy was too short
+    }
+    // foo{2,4} - has a greed-minimum
+    if (reg.min && reg.min > state.t) {
+      return null //greedy was too short
+    }
+    // 'foo+$' - if also an end-anchor, ensure we really reached the end
+    if (reg.end === true && state.start_i + state.t !== phrase_length) {
+      return null //greedy didn't reach the end
+    }
+    return true
+  };
+  var greedyMatch$1 = greedyMatch;
+
+  // for: ['we', 'have']
+  // a match for "we have" should work as normal
+  // but matching "we've" should skip over implict terms
+  const contractionSkip = function (state) {
+    let term = state.terms[state.t];
+    let reg = state.regs[state.r];
+    // did we match the first part of a contraction?
+    if (term.implicit && state.terms[state.t + 1]) {
+      let nextTerm = state.terms[state.t + 1];
+      // ensure next word is implicit
+      if (!nextTerm.implicit) {
+        return
+      }
+      // we matched "we've" - skip-over [we, have]
+      if (reg.word === term.normal) {
+        state.t += 1;
+      }
+      // also skip for @hasContraction
+      if (reg.method === 'hasContraction') {
+        state.t += 1;
+      }
+    }
+  };
+  var contractionSkip$1 = contractionSkip;
+
+  // '[foo]' should also be logged as a group
+  const setGroup = function (state, startAt) {
+    let reg = state.regs[state.r];
+    // Get or create capture group
+    const g = getGroup$2(state, startAt);
+    // Update group - add greedy or increment length
+    if (state.t > 1 && reg.greedy) {
+      g.length += state.t - startAt;
+    } else {
+      g.length++;
+    }
+  };
+
+  // when a reg matches a term
+  const simpleMatch = function (state) {
+    const { regs } = state;
+    let reg = regs[state.r];
+    let term = state.terms[state.t];
+    let startAt = state.t;
+    // if it's a negative optional match... :0
+    if (reg.optional && regs[state.r + 1] && reg.negative) {
+      return true
+    }
+    // okay, it was a match, but if it's optional too,
+    // we should check the next reg too, to skip it?
+    if (reg.optional && regs[state.r + 1]) {
+      foundOptional$1(state);
+    }
+    // Contraction skip:
+    // did we match the first part of a contraction?
+    if (term.implicit && state.terms[state.t + 1]) {
+      contractionSkip$1(state);
+    }
+    //advance to the next term!
+    state.t += 1;
+    //check any ending '$' flags
+    //if this isn't the last term, refuse the match
+    if (reg.end === true && state.t !== state.terms.length && reg.greedy !== true) {
+      return null //die
+    }
+    // keep 'foo+' going...
+    if (reg.greedy === true) {
+      let alive = greedyMatch$1(state);
+      if (!alive) {
+        return null
+      }
+    }
+    // log '[foo]' as a group
+    if (state.hasGroup === true) {
+      setGroup(state, startAt);
+    }
+    return true
+  };
+  var simpleMatch$1 = simpleMatch;
 
   // i formally apologize for how complicated this is.
-  /** tries to match a sequence of terms, starting from here */
+
+  /** 
+   * try a sequence of match tokens ('regs') 
+   * on a sequence of terms, 
+   * starting at this certain term.
+   */
   const tryHere = function (terms, regs, start_i, phrase_length) {
     if (terms.length === 0 || regs.length === 0) {
       return null
@@ -2534,9 +3693,9 @@
       phrase_length: phrase_length,
       inGroup: null,
     };
-    // log('-> [' + terms.map(t => t.implicit || t.normal).join(', ') + ']')
 
-    // we must satisfy each rule in 'regs'
+    // we must satisfy every token in 'regs'
+    // if we get to the end, we have a match.
     for (; state.r < regs.length; state.r += 1) {
       let reg = regs[state.r];
       // Check if this reg has a named capture group
@@ -2550,212 +3709,93 @@
       //have we run-out of terms?
       if (!state.terms[state.t]) {
         //are all remaining regs optional or negative?
-        const haveNeeds = regs.slice(state.r).some(remain => !remain.optional);
-        if (haveNeeds === false) {
+        const alive = regs.slice(state.r).some(remain => !remain.optional);
+        if (alive === false) {
           break //done!
         }
-        // log(`✗ |terms done|`)
         return null // die
       }
-      //support 'unspecific greedy' .* properly
+      // support 'unspecific greedy' .* properly
       if (reg.anything === true && reg.greedy === true) {
-        let skipto = greedyTo(state, regs[state.r + 1]);
-        //maybe we couldn't find it
-        if (skipto === null || skipto === 0) {
+        let alive = doAstrix$1(state);
+        if (!alive) {
           return null
         }
-        // ensure it's long enough
-        if (reg.min !== undefined && skipto - state.t < reg.min) {
-          return null
-        }
-        // reduce it back, if it's too long
-        if (reg.max !== undefined && skipto - state.t > reg.max) {
-          state.t = state.t + reg.max;
-          continue
-        }
-        // set the group result
-        if (state.hasGroup === true) {
-          const g = getGroup$2(state, state.t);
-          g.length = skipto - state.t;
-        }
-        state.t = skipto;
-        // log(`✓ |greedy|`)
         continue
       }
-      // support multi-word OR (a|b|foo bar)
+      // slow-OR - multi-word OR (a|b|foo bar)
       if (reg.choices !== undefined && reg.operator === 'or') {
-        let skipNum = doOrBlock(state);
-        if (skipNum) {
-          // handle 'not' logic
-          if (reg.negative === true) {
-            return null // die
-          }
-          if (state.hasGroup === true) {
-            const g = getGroup$2(state, state.t);
-            g.length += skipNum;
-          }
-          // ensure we're at the end
-          if (reg.end === true) {
-            let end = state.phrase_length - 1;
-            if (state.t + state.start_i !== end) {
-              return null
-            }
-          }
-          state.t += skipNum;
-          // log(`✓ |found-or|`)
-          continue
-        } else if (!reg.optional) {
-          return null //die
-        }
-      }
-      // support AND (#Noun && foo) blocks
-      if (reg.choices !== undefined && reg.operator === 'and') {
-        let skipNum = doAndBlock(state);
-        if (skipNum) {
-          // handle 'not' logic
-          if (reg.negative === true) {
-            return null // die
-          }
-          if (state.hasGroup === true) {
-            const g = getGroup$2(state, state.t);
-            g.length += skipNum;
-          }
-          // ensure we're at the end
-          if (reg.end === true) {
-            let end = state.phrase_length - 1;
-            if (state.t + state.start_i !== end) {
-              return null
-            }
-          }
-          state.t += skipNum;
-          // log(`✓ |found-and|`)
-          continue
-        } else if (!reg.optional) {
-          return null //die
-        }
-      }
-      // ok, finally test the term/reg
-      let term = state.terms[state.t];
-      let hasMatch = matchTerm(term, reg, state.start_i + state.t, state.phrase_length);
-      if (reg.anything === true || hasMatch === true || isEndGreedy(reg, state)) {
-        let startAt = state.t;
-        // if it's a negative optional match... :0
-        if (reg.optional && regs[state.r + 1] && reg.negative) {
-          continue
-        }
-        // okay, it was a match, but if it's optional too,
-        // we should check the next reg too, to skip it?
-        if (reg.optional && regs[state.r + 1]) {
-          // does the next reg match it too?
-          let nextRegMatched = matchTerm(term, regs[state.r + 1], state.start_i + state.t, state.phrase_length);
-          if (reg.negative || nextRegMatched) {
-            // but does the next reg match the next term??
-            // only skip if it doesn't
-            let nextTerm = state.terms[state.t + 1];
-            if (!nextTerm || !matchTerm(nextTerm, regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
-              state.r += 1;
-            }
-          }
-        }
-        // log(`✓ |matched '${state.terms[state.t].normal}'|`)
-        //advance to the next term!
-        state.t += 1;
-        //check any ending '$' flags
-        if (reg.end === true) {
-          //if this isn't the last term, refuse the match
-          if (state.t !== state.terms.length && reg.greedy !== true) {
-            // log(`✗ |end-flag|`)
-            return null //die
-          }
-        }
-        //try keep it going!
-        if (reg.greedy === true) {
-          state.t = getGreedy(state, regs[state.r + 1]);
-          if (state.t === null) {
-            // log(`✗ |too-short|`)
-            return null //greedy was too short
-          }
-          if (reg.min && reg.min > state.t) {
-            // log(`✗ |too-short2|`)
-            return null //greedy was too short
-          }
-          // if this was also an end-anchor match, check to see we really
-          // reached the end
-          if (reg.end === true && state.start_i + state.t !== phrase_length) {
-            // log(`✗ |not-end|`)
-            return null //greedy didn't reach the end
-          }
-        }
-        if (state.hasGroup === true) {
-          // Get or create capture group
-          const g = getGroup$2(state, startAt);
-          // Update group - add greedy or increment length
-          if (state.t > 1 && reg.greedy) {
-            g.length += state.t - startAt;
-          } else {
-            g.length++;
-          }
-        }
-        // should we clump-in the 2nd word of a contraction?
-        // let lastTerm = state.terms[state.t - 1]
-        // let thisTerm = state.terms[state.t]
-        // if (lastTerm && thisTerm && lastTerm.implicit && thisTerm.implicit) {
-        //   // only if it wouldn't match, organically
-        //   let nextReg = regs[state.r + 1]
-        //   if (!nextReg || !matchTerm(thisTerm, nextReg, state.start_i + state.t, state.phrase_length)) {
-        //     state.t += 1
-        //   }
-        // }
-        continue
-      }
-
-      // ok, it doesn't match.
-      // did it *actually match* a negative?
-      if (reg.negative) {
-        let tmpReg = Object.assign({}, reg);
-        tmpReg.negative = false; // try removing it
-        let foundNeg = matchTerm(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length);
-        if (foundNeg === true) {
-          // log(`✗ |no neg|`)
-          return null //bye!
-        }
-      }
-      //bah, who cares, keep going
-      if (reg.optional === true) {
-        // log(`- |optional reg '${reg.word}'|`)
-        continue
-      }
-
-      if (Boolean(state.terms[state.t].implicit) && regs[state.r - 1] && state.terms[state.t + 1]) {
-        // if the last match was implicit too, we're missing a word.
-        if (state.terms[state.t - 1] && state.terms[state.t - 1].implicit === regs[state.r - 1].word) {
+        let alive = doOrBlock(state);
+        if (!alive) {
           return null
         }
-        // does the next one match?
-        if (matchTerm(state.terms[state.t + 1], reg, state.start_i + state.t, state.phrase_length)) {
-          // log(`✓ |contraction| '${state.terms[state.t + 1].implicit}'`)
-          state.t += 2;
-          continue
+        continue
+      }
+      // slow-AND - multi-word AND (#Noun && foo) blocks
+      if (reg.choices !== undefined && reg.operator === 'and') {
+        let alive = doAndBlock(state);
+        if (!alive) {
+          return null
+        }
+        continue
+      }
+      // support '.' as any-single
+      if (reg.anything === true) {
+        let alive = simpleMatch$1(state);
+        if (!alive) {
+          return null
+        }
+        continue
+      }
+      // support 'foo*$' until the end
+      if (isEndGreedy(reg, state) === true) {
+        let alive = simpleMatch$1(state);
+        if (!alive) {
+          return null
+        }
+        continue
+      }
+      // ok, finally test the term-reg
+      let hasMatch = matchTerm(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length);
+      if (hasMatch === true) {
+        let alive = simpleMatch$1(state);
+        if (!alive) {
+          return null
+        }
+        continue
+      }
+      // ok, it doesn't match - but maybe it wasn't *supposed* to?
+      if (reg.negative) {
+        let alive = doNegative$1(state);
+        if (!alive) {
+          return null
         }
       }
-      return null //die
+      //ok who cares, keep going
+      if (reg.optional === true) {
+        continue
+      }
+
+      // finally, we die
+      return null
     }
     //return our results, as pointers
-    let pntr = [null, start_i, state.t + start_i]; //`${start_i}:${state.t + start_i}`
+    let pntr = [null, start_i, state.t + start_i];
     if (pntr[1] === pntr[2]) {
-      // log(`✗ |found nothing|`)
-      return null
+      return null //found 0 terms
     }
     let groups = {};
     Object.keys(state.groups).forEach(k => {
       let o = state.groups[k];
       let start = start_i + o.start;
-      groups[k] = [null, start, start + o.length]; //`${start}:${start + o.length}`
+      groups[k] = [null, start, start + o.length];
     });
     return { pointer: pntr, groups: groups }
   };
   var fromHere = tryHere;
 
+  // support returning a subset of a match
+  // like 'foo [bar] baz' -> bar
   const getGroup = function (res, group) {
     let ptrs = [];
     let byGroup = {};
@@ -2803,7 +3843,7 @@
   };
 
   // ok, here we go.
-  const runMatch = function (docs, todo, cache) {
+  const runMatch$2 = function (docs, todo, cache) {
     cache = cache || [];
     let { regs, group, justOne } = todo;
     let results = [];
@@ -2814,6 +3854,7 @@
     const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length;
     docs: for (let n = 0; n < docs.length; n += 1) {
       let terms = docs[n];
+      // let index = terms[0].index || []
       // can we skip this sentence?
       if (cache[n] && failFast$1(regs, cache[n])) {
         continue
@@ -2836,6 +3877,7 @@
         let res = fromHere(slice, regs, i, terms.length);
         // did we find a result?
         if (res) {
+          // res = addSentence(res, index[0])
           res = addSentence(res, n);
           results.push(res);
           // should we stop here?
@@ -2868,9 +3910,9 @@
     return results
   };
 
-  var match$1 = runMatch;
+  var match$1 = runMatch$2;
 
-  const methods$b = {
+  const methods$9 = {
     one: {
       termMethods,
       parseMatch,
@@ -2878,20 +3920,24 @@
     },
   };
 
-  var methods$c = methods$b;
+  var methods$a = methods$9;
 
-  var lib$4 = {
+  var lib$3 = {
     /** pre-parse any match statements */
     parseMatch: function (str, opts) {
       const world = this.world();
+      let killUnicode = world.methods.one.killUnicode;
+      if (killUnicode) {
+        str = killUnicode(str, world);
+      }
       return world.methods.one.parseMatch(str, opts)
     }
   };
 
   var match = {
     api: api$7,
-    methods: methods$c,
-    lib: lib$4,
+    methods: methods$a,
+    lib: lib$3,
   };
 
   const isClass = /^\../;
@@ -2981,7 +4027,7 @@
 
   const textFromTerms = function (terms, opts, keepSpace = true) {
     let txt = '';
-    terms.forEach(t => {
+    terms.forEach((t) => {
       let pre = t.pre || '';
       let post = t.post || '';
       if (opts.punctuation === 'some') {
@@ -2997,6 +4043,10 @@
         post = post.replace(/\?+/, '?');
         // kill elipses
         post = post.replace(/\.{2,}/, '');
+        // kill abbreviation periods
+        if (t.tags.has('Abbreviation')) {
+          post = post.replace(/\./, '');
+        }
       }
       if (opts.whitespace === 'some') {
         pre = pre.replace(/\s/, ''); //remove pre-whitespace
@@ -3037,6 +4087,9 @@
 
   const textFromDoc = function (docs, opts) {
     let text = '';
+    if (!docs || !docs[0] || !docs[0][0]) {
+      return text
+    }
     for (let i = 0; i < docs.length; i += 1) {
       // middle
       text += textFromTerms(docs[i], opts, true);
@@ -3045,8 +4098,14 @@
       text = text.trim();
     }
     if (opts.keepPunct === false) {
-      text = text.replace(trimStart, '');
-      text = text.replace(trimEnd, '');
+      // don't remove ':)' etc
+      if (!docs[0][0].tags.has('Emoticon')) {
+        text = text.replace(trimStart, '');
+      }
+      let last = docs[docs.length - 1];
+      if (!last[last.length - 1].tags.has('Emoticon')) {
+        text = text.replace(trimEnd, '');
+      }
     }
     if (opts.cleanWhitespace === true) {
       text = text.trim();
@@ -3154,7 +4213,7 @@
   };
 
 
-  const methods$a = {
+  const methods$8 = {
     /** return data */
     json: function (n) {
       let res = toJSON(this, n);
@@ -3164,8 +4223,8 @@
       return res
     },
   };
-  methods$a.data = methods$a.json;
-  var json = methods$a;
+  methods$8.data = methods$8.json;
+  var json = methods$8;
 
   /* eslint-disable no-console */
   const logClientSide = function (view) {
@@ -3382,7 +4441,7 @@
   };
   var wrap$1 = wrap;
 
-  const isObject$3 = val => {
+  const isObject$2 = val => {
     return Object.prototype.toString.call(val) === '[object Object]'
   };
 
@@ -3402,7 +4461,7 @@
   /** some named output formats */
   const out = function (method) {
     // support custom outputs
-    if (isObject$3(method)) {
+    if (isObject$2(method)) {
       return wrap$1(this, method)
     }
     // text out formats
@@ -3463,16 +4522,16 @@
     return this.text()
   };
 
-  const methods$9 = {
+  const methods$7 = {
     /** */
     debug: debug$1,
     /** */
     out: out,
   };
 
-  var out$1 = methods$9;
+  var out$1 = methods$7;
 
-  const isObject$2 = val => {
+  const isObject$1 = val => {
     return Object.prototype.toString.call(val) === '[object Object]'
   };
 
@@ -3485,7 +4544,7 @@
       };
       if (fmt && typeof fmt === 'string' && fmts$1.hasOwnProperty(fmt)) {
         opts = Object.assign({}, fmts$1[fmt]);
-      } else if (fmt && isObject$2(fmt)) {
+      } else if (fmt && isObject$1(fmt)) {
         opts = Object.assign({}, fmt, opts);//todo: fixme
       }
       if (this.pointer) {
@@ -3503,12 +4562,12 @@
     },
   };
 
-  const methods$8 = Object.assign({}, out$1, text, json, html$1);
+  const methods$6 = Object.assign({}, out$1, text, json, html$1);
 
-  const addAPI$2 = function (View) {
-    Object.assign(View.prototype, methods$8);
+  const addAPI$1 = function (View) {
+    Object.assign(View.prototype, methods$6);
   };
-  var api$6 = addAPI$2;
+  var api$6 = addAPI$1;
 
   var output = {
     api: api$6,
@@ -3721,6 +4780,7 @@
       // otherwise, looks good!
       doc.push(terms);
     });
+    doc = doc.filter(a => a.length > 0);
     return doc
   };
   var getDoc$2 = getDoc$1;
@@ -3736,7 +4796,7 @@
     return arr
   };
 
-  var methods$7 = {
+  var methods$5 = {
     one: {
       termList,
       getDoc: getDoc$2,
@@ -3840,8 +4900,19 @@
 
   // console.log(getIntersection([[0, 1, 3]], [[0, 2, 4]]))
 
+  const isArray$4 = function (arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]'
+  };
+
   const getDoc = (m, view) => {
-    return typeof m === 'string' ? view.match(m) : m
+    if (typeof m === 'string' || isArray$4(m)) {
+      return view.match(m)
+    }
+    if (!m) {
+      return view.none()
+    }
+    // support pre-parsed reg object
+    return m
   };
 
   // 'harden' our json pointers, again
@@ -3855,19 +4926,19 @@
     })
   };
 
-  const methods$6 = {};
+  const methods$4 = {};
 
   // all parts, minus duplicates
-  methods$6.union = function (m) {
+  methods$4.union = function (m) {
     m = getDoc(m, this);
     let ptrs = getUnion$1(this.fullPointer, m.fullPointer);
     ptrs = addIds(ptrs, this.document);
     return this.toView(ptrs)
   };
-  methods$6.and = methods$6.union;
+  methods$4.and = methods$4.union;
 
   // only parts they both have
-  methods$6.intersection = function (m) {
+  methods$4.intersection = function (m) {
     m = getDoc(m, this);
     let ptrs = getIntersection$1(this.fullPointer, m.fullPointer);
     ptrs = addIds(ptrs, this.document);
@@ -3875,16 +4946,16 @@
   };
 
   // only parts of a that b does not have
-  methods$6.not = function (m) {
+  methods$4.not = function (m) {
     m = getDoc(m, this);
     let ptrs = getDifference(this.fullPointer, m.fullPointer);
     ptrs = addIds(ptrs, this.document);
     return this.toView(ptrs)
   };
-  methods$6.difference = methods$6.not;
+  methods$4.difference = methods$4.not;
 
   // get opposite of a
-  methods$6.complement = function () {
+  methods$4.complement = function () {
     let doc = this.all();
     let ptrs = getDifference(doc.fullPointer, this.fullPointer);
     ptrs = addIds(ptrs, this.document);
@@ -3892,7 +4963,7 @@
   };
 
   // remove overlaps
-  methods$6.settle = function () {
+  methods$4.settle = function () {
     let ptrs = this.fullPointer;
     ptrs.forEach(ptr => {
       ptrs = getUnion$1(ptrs, [ptr]);
@@ -3902,15 +4973,465 @@
   };
 
 
-  const addAPI$1 = function (View) {
+  const addAPI = function (View) {
     // add set/intersection/union
-    Object.assign(View.prototype, methods$6);
+    Object.assign(View.prototype, methods$4);
   };
-  var api$5 = addAPI$1;
+  var api$5 = addAPI;
 
   var pointers = {
-    methods: methods$7,
+    methods: methods$5,
     api: api$5,
+  };
+
+  var lib$2 = {
+    // compile a list of matches into a match-net
+    buildNet: function (matches) {
+      const methods = this.methods();
+      let { index, always } = methods.one.buildNet(matches, methods);
+      return {
+        isNet: true,
+        index,
+        always
+      }
+    }
+  };
+
+  const api$3 = function (View) {
+
+    /** speedy match a sequence of matches */
+    View.prototype.sweep = function (net, opts = {}) {
+      const { world, docs } = this;
+      const { methods } = world;
+      let found = methods.one.bulkMatch(docs, net, this.methods, opts);
+
+      // apply any changes
+      if (opts.tagger !== false) {
+        methods.one.bulkTagger(found, docs, this.world);
+      }
+      // fix the pointers
+      // collect all found results into a View
+      found = found.map(o => {
+        let ptr = o.pointer;
+        let term = docs[ptr[0]][ptr[1]];
+        let len = ptr[2] - ptr[1];
+        if (term.index) {
+          o.pointer = [
+            term.index[0],
+            term.index[1],
+            ptr[1] + len
+          ];
+        }
+        return o
+      });
+      let ptrs = found.map(o => o.pointer);
+      // cleanup results a bit
+      found = found.map(obj => {
+        obj.view = this.update([obj.pointer]);
+        delete obj.regs;
+        delete obj.needs;
+        delete obj.pointer;
+        delete obj._expanded;
+        return obj
+      });
+      return {
+        view: this.update(ptrs),
+        found
+      }
+    };
+
+  };
+  var api$4 = api$3;
+
+  const parse = function (matches, methods) {
+    const parseMatch = methods.one.parseMatch;
+    matches.forEach(obj => {
+      obj.regs = parseMatch(obj.match);
+      // wrap these ifNo properties into an array
+      if (typeof obj.ifNo === 'string') {
+        obj.ifNo = [obj.ifNo];
+      }
+    });
+    return matches
+  };
+
+  var parse$1 = parse;
+
+  // stich an array into another, replacing one element
+  function spliceArray(main, index, arrayToInsert) {
+    main.splice(index, 1, ...arrayToInsert);
+    return main
+  }
+
+  // enumerate any OR options
+  const getORs = function (reg) {
+    if (reg.fastOr) {
+      return Array.from(reg.fastOr).map(str => {
+        return [{ word: str }]
+      })
+    }
+    return reg.choices
+  };
+
+  // try keeping all other properties on the old reg
+  const combine = function (obj, reg) {
+    let both = Object.assign({}, obj, reg);
+    delete both.choices;
+    delete both.fastOr;
+    delete both.operator;
+    return both
+  };
+
+  const buildUp = function (matches) {
+    let all = [];
+    matches.forEach(obj => {
+      for (let i = 0; i < obj.regs.length; i += 1) {
+        let reg = obj.regs[i];
+        // (negative or is un-multipliable) - !(a|b|c)  -> "a" matches !b
+        if (reg.operator === 'or' && !reg.negative === true) {
+          let more = getORs(reg);
+          more.forEach(r => {
+            let tmp = Object.assign({}, obj);//clone
+            tmp.regs = tmp.regs.slice(0);//clone
+            r = r.map(main => combine(obj.regs[i], main));
+            tmp.regs = spliceArray(tmp.regs, i, r);
+            all.push(tmp);
+          });
+          return
+        }
+      }
+      all.push(obj);
+    });
+    // console.dir(all, { depth: 5 })
+    return all
+  };
+
+
+  var buildUp$1 = buildUp;
+
+  // extract the clear needs for an individual match token
+  const getTokenNeeds = function (reg) {
+    // negatives can't be cached
+    if (reg.optional === true || reg.negative === true) {
+      return null
+    }
+    if (reg.tag) {
+      return '#' + reg.tag
+    }
+    if (reg.word) {
+      return reg.word
+    }
+    if (reg.switch) {
+      return `%${reg.switch}%`
+    }
+    return null
+  };
+
+  // extract the clear needs for each match
+  const findNeeds = function (regs) {
+    // parse match strings
+    let need = new Set();
+    regs.forEach(reg => {
+      let res = getTokenNeeds(reg);
+      if (res) {
+        need.add(res);
+      } else {
+        // support AND (foo && tag)
+        if (reg.operator === 'and' && reg.choices) {
+          reg.choices.forEach(oneSide => {
+            oneSide.forEach(r => {
+              let n = getTokenNeeds(r);
+              if (n) {
+                need.add(n);
+              }
+            });
+          });
+        }
+      }
+    });
+    return need
+  };
+
+  // produce quick lookups for a list of matches
+  const cache$1 = function (matches) {
+    matches.forEach(obj => {
+      obj.needs = Array.from(findNeeds(obj.regs));
+      // get rid of tiny sentences
+      obj.minWords = obj.regs.filter(o => !o.optional).length;
+    });
+    return matches
+  };
+
+  var cache$2 = cache$1;
+
+  const groupBy = function (matches) {
+    let byGroup = {};
+    matches.forEach(obj => {
+      obj.needs.forEach(need => {
+        byGroup[need] = byGroup[need] || [];
+        byGroup[need].push(obj);
+      });
+    });
+    return byGroup
+  };
+
+  var group = groupBy;
+
+  // do some indexing on the list of matches
+  const compile = function (matches, methods) {
+    // turn match-syntax into json
+    matches = parse$1(matches, methods);
+    // convert (a|b) to ['a', 'b']
+    matches = buildUp$1(matches);
+    // matches = buildUp(matches) // run this twice
+    // retrieve the needs of each match statement
+    matches = cache$2(matches);
+    // keep all un-cacheable matches (those with no needs) 
+    let always = matches.filter(o => o.needs.length === 0);
+
+    // organize them according to need...
+    let byGroup = group(matches);
+
+    // Every sentence has a Noun/Verb,
+    // assume any match will be found on another need
+    // this is true now,
+    // but we should stay careful about this.
+    delete byGroup['#Noun'];
+    delete byGroup['#Verb'];
+    // console.log(matches.filter(o => o.needs.length === 1)) //check!
+
+    return {
+      index: byGroup,
+      always
+    }
+  };
+
+  var buildNet = compile;
+
+  // for each cached-sentence, find a list of possible matches
+  const matchUp = function (docNeeds, matchGroups) {
+    return docNeeds.map(needs => {
+      let maybes = [];
+      needs.forEach(need => {
+        if (matchGroups.hasOwnProperty(need)) {
+          maybes = maybes.concat(matchGroups[need]);
+        }
+      });
+      return new Set(maybes)
+    })
+  };
+
+  var getCandidates = matchUp;
+
+  // filter-down list of maybe-matches
+  const localTrim = function (maybeList, docCache) {
+    // console.log(maybeList)
+    for (let n = 0; n < docCache.length; n += 1) {
+      let haves = docCache[n];
+
+      // ensure all stated-needs of the match are met
+      maybeList[n] = Array.from(maybeList[n]).filter(obj => {
+        return obj.needs.every(need => haves.has(need))
+      });
+      // ensure nothing matches in our 'ifNo' property
+      maybeList[n] = maybeList[n].filter(obj => {
+        if (obj.ifNo !== undefined && obj.ifNo.some(no => docCache[n].has(no)) === true) {
+          return false
+        }
+        return true
+      });
+    }
+    return maybeList
+  };
+  var trimDown = localTrim;
+
+  // finally,
+  // actually run these match-statements on the terms
+  const runMatch = function (maybeList, document, methods, opts) {
+    let results = [];
+    for (let n = 0; n < maybeList.length; n += 1) {
+      for (let i = 0; i < maybeList[n].length; i += 1) {
+        let m = maybeList[n][i];
+        // ok, actually do the work.
+        let res = methods.one.match([document[n]], m);
+        // found something.
+        if (res.ptrs.length > 0) {
+          // let index=document[n][0].index
+          res.ptrs.forEach(ptr => {
+            ptr[0] = n; // fix the sentence pointer
+            let todo = Object.assign({}, m, { pointer: ptr });
+            if (m.unTag !== undefined) {
+              todo.unTag = m.unTag;
+            }
+            results.push(todo);
+          });
+          //ok cool, can we stop early?
+          if (opts.matchOne === true) {
+            return [results[0]]
+          }
+        }
+      }
+    }
+    return results
+  };
+  var runMatch$1 = runMatch;
+
+  // const counts = {}
+
+
+  // setInterval(() => {
+  //   let res = Object.keys(counts).map(k => [k, counts[k]])
+  //   res = res.sort((a, b) => (a[1] > b[1] ? -1 : 0))
+  //   console.log(res)
+  // }, 5000)
+
+  const tooSmall = function (maybeList, document) {
+    return maybeList.map((arr, i) => {
+      let termCount = document[i].length;
+      arr = arr.filter(o => {
+        return termCount >= o.minWords
+      });
+      return arr
+    })
+  };
+
+  const sweep$1 = function (document, net, methods, opts = {}) {
+    // find suitable matches to attempt, on each sentence
+    let docCache = methods.one.cacheDoc(document);
+    // collect possible matches for this document
+    let maybeList = getCandidates(docCache, net.index);
+    // ensure all defined needs are met for each match
+    maybeList = trimDown(maybeList, docCache);
+    // add unchacheable matches to each sentence's todo-list
+    if (net.always.length > 0) {
+      maybeList = maybeList.map(arr => arr.concat(net.always));
+    }
+    // if we don't have enough words
+    maybeList = tooSmall(maybeList, document);
+    // console.log(maybeList)
+    // maybeList.forEach(list => {
+    //   list.forEach(o => {
+    //     counts[o.match] = counts[o.match] || 0
+    //     counts[o.match] += 1
+    //   })
+    // })
+    // now actually run the matches
+    let results = runMatch$1(maybeList, document, methods, opts);
+    // console.dir(results, { depth: 5 })
+    return results
+  };
+  var bulkMatch = sweep$1;
+
+  const isArray$3 = function (arr) {
+    return Object.prototype.toString.call(arr) === '[object Array]'
+  };
+
+  const logger = function (todo, document) {
+    let [n, start, end] = todo.pointer;
+    let terms = document[n];
+    let i = start > 4 ? start - 2 : 0;
+    let tag = todo.tag || '';
+    if (isArray$3(todo.tag)) {
+      tag = todo.tag.join(' #');
+    }
+    let reason = todo.reason || todo.match;
+    reason = reason ? `|${reason}|` : '';
+    let msg = `  ${reason}`.padEnd(20) + ' - ';
+    const yellow = str => '\x1b[2m' + str + '\x1b[0m';
+    for (; i < terms.length; i += 1) {
+      if (i > end + 2) {
+        break
+      }
+      let str = terms[i].machine || terms[i].normal;
+      msg += i > start && i < end ? `\x1b[32m${str}\x1b[0m ` : `${yellow(str)} `; // matched terms are green
+    }
+    msg += '  \x1b[32m→\x1b[0m #' + tag.padEnd(12) + '  ';
+    console.log(msg); //eslint-disable-line
+  };
+  var logger$1 = logger;
+
+  // is this tag consistent with the tags they already have?
+  const canBe = function (terms, tag, model) {
+    let tagSet = model.one.tagSet;
+    if (!tagSet.hasOwnProperty(tag)) {
+      return true
+    }
+    let not = tagSet[tag].not || [];
+    for (let i = 0; i < terms.length; i += 1) {
+      let term = terms[i];
+      for (let k = 0; k < not.length; k += 1) {
+        if (term.tags.has(not[k]) === true) {
+          return false //found a tag conflict - bail!
+        }
+      }
+    }
+    return true
+  };
+  var canBe$1 = canBe;
+
+  const tagger = function (list, document, world) {
+    const { model, methods } = world;
+    const { getDoc, setTag, unTag } = methods.one;
+    if (list.length === 0) {
+      return list
+    }
+    // some logging for debugging
+    const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env;
+    if (env.DEBUG_TAGS) {
+      console.log(`\n  \x1b[32m→ ${list.length} corrections:\x1b[0m`); //eslint-disable-line
+    }
+    return list.map(todo => {
+      if (!todo.tag && !todo.chunk) {
+        return
+      }
+      let reason = todo.reason || todo.match;
+      if (env.DEBUG_TAGS) {
+        logger$1(todo, document);
+      }
+      let terms = getDoc([todo.pointer], document)[0];
+      // handle 'safe' tag
+      if (todo.safe === true) {
+        // check for conflicting tags
+        if (canBe$1(terms, todo.tag, model) === false) {
+          return
+        }
+        // dont tag half of a hyphenated word
+        if (terms[terms.length - 1].post === '-') {
+          return
+        }
+      }
+      if (todo.tag !== undefined) {
+        setTag(terms, todo.tag, world, todo.safe, reason);
+        // quick and dirty plural tagger
+        if (terms.length === 1 && todo.tag === 'Noun') {
+          if (terms[0].text && terms[0].text.match(/..s$/) !== null) {
+            setTag(terms, 'Plural', world, todo.safe, 'quick-plural');
+          }
+        }
+      }
+      if (todo.unTag !== undefined) {
+        unTag(terms, todo.unTag, world, todo.safe, reason);
+      }
+      // allow setting chunks, too
+      if (todo.chunk) {
+        terms.forEach(t => t.chunk = todo.chunk);
+      }
+    })
+  };
+  var bulkTagger = tagger;
+
+  var methods$3 = {
+    buildNet,
+    bulkMatch,
+    bulkTagger
+  };
+
+  var sweep = {
+    lib: lib$2,
+    api: api$4,
+    methods: {
+      one: methods$3,
+    }
   };
 
   const isMulti = / /;
@@ -3998,7 +5519,7 @@
       return
     }
     // some logging for debugging
-    let env = typeof process === 'undefined' ? self.env || {} : process.env;
+    const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env;
     if (env && env.DEBUG_TAGS) {
       log(terms[0], tag, reason);
     }
@@ -4076,7 +5597,7 @@
   const fmt = function (nodes) {
     const res = {};
     nodes.forEach(node => {
-      let { not, also, is } = node.props;
+      let { not, also, is, novel } = node.props;
       let parents = node._cache.parents;
       if (also) {
         parents = parents.concat(also);
@@ -4084,6 +5605,7 @@
       res[node.id] = {
         is,
         not,
+        novel,
         also,
         parents,
         children: node._cache.children,
@@ -4165,31 +5687,43 @@
   var validate$1 = validate;
 
   // 'fill-down' parent logic inference
-  const compute$5 = function (allTags) {
+  const compute$2 = function (allTags) {
     // setup graph-lib format
     const flatList = Object.keys(allTags).map(k => {
       let o = allTags[k];
-      const props = { not: new Set(o.not), also: o.also, is: o.is };
+      const props = { not: new Set(o.not), also: o.also, is: o.is, novel: o.novel };
       return { id: k, parent: o.is, props, children: [] }
     });
     const graph = _(flatList).cache().fillDown();
     return graph.out('array')
   };
 
+  const fromUser = function (tags) {
+    Object.keys(tags).forEach(k => {
+      tags[k] = Object.assign({}, tags[k]);
+      tags[k].novel = true;
+    });
+    return tags
+  };
+
   const addTags$1 = function (tags, already) {
+    // are these tags internal ones, or user-generated?
+    if (Object.keys(already).length > 0) {
+      tags = fromUser(tags);
+    }
     tags = validate$1(tags, already);
 
     let allTags = Object.assign({}, already, tags);
     // do some basic setting-up
     // 'fill-down' parent logic
-    const nodes = compute$5(allTags);
+    const nodes = compute$2(allTags);
     // convert it to our final format
     const res = fmt$1(nodes);
     return res
   };
   var addTags$2 = addTags$1;
 
-  var methods$5 = {
+  var methods$2 = {
     one: {
       setTag: setTag$1,
       unTag: unTag$1,
@@ -4217,9 +5751,9 @@
         console.log(' +  ', input, reason || '');
       }
       if (isArray$1(input)) {
-        input.forEach(tag => methods.one.setTag(terms, tag, world, isSafe));
+        input.forEach(tag => methods.one.setTag(terms, tag, world, isSafe, reason));
       } else {
-        methods.one.setTag(terms, input, world, isSafe);
+        methods.one.setTag(terms, input, world, isSafe, reason);
       }
       // uncache
       this.uncache();
@@ -4282,7 +5816,7 @@
   const tagAPI = function (View) {
     Object.assign(View.prototype, tag$1);
   };
-  var api$4 = tagAPI;
+  var api$2 = tagAPI;
 
   // wire-up more pos-tags to our model
   const addTags = function (tags) {
@@ -4294,7 +5828,7 @@
     return this
   };
 
-  var lib$3 = { addTags };
+  var lib$1 = { addTags };
 
   const boringTags = new Set(['Auxiliary', 'Possessive']);
 
@@ -4335,12 +5869,12 @@
     compute: {
       tagRank: tagRank$1
     },
-    methods: methods$5,
-    api: api$4,
-    lib: lib$3
+    methods: methods$2,
+    api: api$2,
+    lib: lib$1
   };
 
-  const initSplit = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s|$)/g;
+  const initSplit = /(\S.+?[.!?\u203D\u2E18\u203C\u2047-\u2049])(?=\s|$)/g; //!TODO: speedup this regex
   const newLine = /((?:\r?\n|\r)+)/; // Match different new-line formats
   // Start with a regex:
   const basicSplit = function (text) {
@@ -4360,7 +5894,7 @@
 
   const isAcronym$1 = /[ .][A-Z]\.? *$/i;
   const hasEllipse = /(?:\u2026|\.{2,}) *$/;
-  const hasLetter$1 = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i;
+  const hasLetter$1 = /\p{L}/u;
 
   /** does this look like a sentence? */
   const isSentence = function (str, abbrevs) {
@@ -4439,7 +5973,7 @@
     for (let i = 0; i < chunks.length; i++) {
       let c = chunks[i];
       //should this chunk be combined with the next one?
-      if (chunks[i + 1] && isSentence$1(c, abbrevs, hasLetter) === false) {
+      if (chunks[i + 1] && isSentence$1(c, abbrevs) === false) {
         chunks[i + 1] = c + (chunks[i + 1] || '');
       } else if (c && c.length > 0) {
         //this chunk is a proper sentence..
@@ -4527,7 +6061,8 @@
   };
   var combineRanges$1 = combineRanges;
 
-  const isSlash = /[a-z] ?\/ ?[a-z]+$/;
+  const isSlash = /\p{L} ?\/ ?\p{L}+$/u;
+
   // 'he / she' should be one word
   const combineSlashes = function (arr) {
     for (let i = 1; i < arr.length - 1; i++) {
@@ -4667,11 +6202,11 @@
     }
     return { str, pre, post }
   };
-  var tokenize$2 = normalizePunctuation;
+  var tokenize$1 = normalizePunctuation;
 
   const parseTerm = txt => {
     // cleanup any punctuation as whitespace
-    let { str, pre, post } = tokenize$2(txt);
+    let { str, pre, post } = tokenize$1(txt);
     const parsed = {
       text: str,
       pre: pre,
@@ -4714,6 +6249,7 @@
   };
   var cleanup = clean;
 
+  // do acronyms need to be ASCII?  ... kind of?
   const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/;
   const oneLetterAcronym = /^[A-Z]\.,?$/;
   const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/;
@@ -4762,6 +6298,7 @@
   // 'Björk' to 'Bjork'.
   const killUnicode = function (str, world) {
     const unicode = world.model.one.unicode || {};
+    str = str || '';
     let chars = str.split('');
     chars.forEach((s, i) => {
       if (unicode[s]) {
@@ -4793,7 +6330,7 @@
     return input
   };
 
-  var methods$4 = {
+  var methods$1 = {
     one: {
       killUnicode: killUnicode$1,
       tokenize: {
@@ -4809,6 +6346,8 @@
     '&': 'and',
     '@': 'at',
     '%': 'percent',
+    'plz': 'please',
+    'bein': 'being',
   };
   var aliases$1 = aliases;
 
@@ -5045,16 +6584,16 @@
   // create key-val for sentence-tokenizer
   let abbreviations = {};
   // add them to a future lexicon
-  let lexicon$1 = {};
+  let lexicon = {};
 
   list$1.forEach(a => {
     a[0].forEach(w => {
       // sentence abbrevs
       abbreviations[w] = true;
       // future-lexicon
-      lexicon$1[w] = 'Abbreviation';
+      lexicon[w] = 'Abbreviation';
       if (a[1] !== undefined) {
-        lexicon$1[w] = [lexicon$1[w], a[1]];
+        lexicon[w] = [lexicon[w], a[1]];
       }
     });
   });
@@ -5066,7 +6605,7 @@
     'bi',
     'co',
     'contra',
-    'counter',
+    // 'counter',
     'de',
     'extra',
     'infra',
@@ -5078,16 +6617,16 @@
     'mis',
     'mono',
     'multi',
-    'non',
-    'over',
+    // 'non',
+    // 'over',
     'peri',
-    'post',
+    // 'post',
     'pre',
     'pro',
     'proto',
     'pseudo',
     're',
-    'semi',
+    // 'semi',
     'sub',
     // 'super', //'super-cool'
     'supra',
@@ -5163,13 +6702,13 @@
   });
   var unicode$1 = unicode;
 
-  var model$4 = {
+  var model$2 = {
     one: {
       aliases: aliases$1,
       abbreviations,
       prefixes,
       suffixes,
-      lexicon: lexicon$1, //give this one forward
+      lexicon, //give this one forward
       unicode: unicode$1,
     },
   };
@@ -5212,6 +6751,7 @@
   };
   var alias = addAliases;
 
+  const hasDash = /^\p{Letter}+-\p{Letter}+$/u;
   // 'machine' is a normalized form that looses human-readability
   const doMachine = function (term) {
     let str = term.implicit || term.normal || term.text;
@@ -5221,10 +6761,9 @@
     //lookin'->looking (make it easier for conjugation)
     str = str.replace(/([aeiou][ktrp])in'$/, '$1ing');
     //turn re-enactment to reenactment
-    if (/^(re|un)-?[^aeiou]./.test(str) === true) {
-      str = str.replace('-', '');
+    if (hasDash.test(str)) {
+      str = str.replace(/-/g, '');
     }
-
     //#tags, @mentions
     str = str.replace(/^[#@]/, '');
     if (str !== term.normal) {
@@ -5326,7 +6865,7 @@
     }
   };
 
-  const methods$3 = {
+  const methods = {
     alias: (view) => termLoop(view, alias),
     machine: (view) => termLoop(view, machine),
     normal: (view) => termLoop(view, normal),
@@ -5335,12 +6874,12 @@
     index: index$1,
     wordCount: wordCount$1,
   };
-  var compute$4 = methods$3;
+  var compute$1 = methods;
 
-  var tokenize$1 = {
-    compute: compute$4,
-    methods: methods$4,
-    model: model$4,
+  var tokenize = {
+    compute: compute$1,
+    methods: methods$1,
+    model: model$2,
     hooks: ['alias', 'machine', 'index', 'id'],
   };
 
@@ -5356,289 +6895,6 @@
   //   // addMethods(View)
   // }
   // export default plugin
-
-  // edited by Spencer Kelly
-  // credit to https://github.com/BrunoRB/ahocorasick by Bruno Roberto Búrigo.
-
-  const tokenize = function (phrase, world) {
-    const { methods, model } = world;
-    let terms = methods.one.tokenize.splitTerms(phrase, model).map(methods.one.tokenize.splitWhitespace);
-    return terms.map(term => term.text.toLowerCase())
-  };
-
-  // turn an array or object into a compressed aho-corasick structure
-  const buildTrie = function (phrases, world) {
-
-    // const tokenize=methods.one.
-    let goNext = [{}];
-    let endAs = [null];
-    let failTo = [0];
-
-    let xs = [];
-    let n = 0;
-    phrases.forEach(function (phrase) {
-      let curr = 0;
-      // let wordsB = phrase.split(/ /g).filter(w => w)
-      let words = tokenize(phrase, world);
-      for (let i = 0; i < words.length; i++) {
-        let word = words[i];
-        if (goNext[curr] && goNext[curr].hasOwnProperty(word)) {
-          curr = goNext[curr][word];
-        } else {
-          n++;
-          goNext[curr][word] = n;
-          goNext[n] = {};
-          curr = n;
-          endAs[n] = null;
-        }
-      }
-      endAs[curr] = [words.length];
-    });
-    // f(s) = 0 for all states of depth 1 (the ones from which the 0 state can transition to)
-    for (let word in goNext[0]) {
-      n = goNext[0][word];
-      failTo[n] = 0;
-      xs.push(n);
-    }
-
-    while (xs.length) {
-      let r = xs.shift();
-      // for each symbol a such that g(r, a) = s
-      let keys = Object.keys(goNext[r]);
-      for (let i = 0; i < keys.length; i += 1) {
-        let word = keys[i];
-        let s = goNext[r][word];
-        xs.push(s);
-        // set state = f(r)
-        n = failTo[r];
-        while (n > 0 && !goNext[n].hasOwnProperty(word)) {
-          n = failTo[n];
-        }
-        if (goNext.hasOwnProperty(n)) {
-          let fs = goNext[n][word];
-          failTo[s] = fs;
-          if (endAs[fs]) {
-            endAs[s] = endAs[s] || [];
-            endAs[s] = endAs[s].concat(endAs[fs]);
-          }
-        } else {
-          failTo[s] = 0;
-        }
-      }
-    }
-    return { goNext, endAs, failTo }
-  };
-  var build = buildTrie;
-
-  // console.log(buildTrie(['smart and cool', 'smart and nice']))
-
-  // follow our trie structure
-  const scanWords = function (terms, trie, opts) {
-    let n = 0;
-    let results = [];
-    for (let i = 0; i < terms.length; i++) {
-      let word = terms[i][opts.form] || terms[i].normal;
-      // main match-logic loop:
-      while (n > 0 && (trie.goNext[n] === undefined || !trie.goNext[n].hasOwnProperty(word))) {
-        n = trie.failTo[n] || 0; // (usually back to 0)
-      }
-      // did we fail?
-      if (!trie.goNext[n].hasOwnProperty(word)) {
-        continue
-      }
-      n = trie.goNext[n][word];
-      if (trie.endAs[n]) {
-        let arr = trie.endAs[n];
-        for (let o = 0; o < arr.length; o++) {
-          let len = arr[o];
-          let term = terms[i - len + 1];
-          let [no, start] = term.index;
-          results.push([no, start, start + len, term.id]);
-        }
-      }
-    }
-    return results
-  };
-
-  const cacheMiss = function (words, cache) {
-    for (let i = 0; i < words.length; i += 1) {
-      if (cache.has(words[i]) === true) {
-        return false
-      }
-    }
-    return true
-  };
-
-  const scan = function (view, trie, opts) {
-    let results = [];
-    opts.form = opts.form || 'normal';
-    let docs = view.docs;
-    if (!trie.goNext || !trie.goNext[0]) {
-      console.error('Compromise invalid lookup trie');//eslint-disable-line
-      return view.none()
-    }
-    let firstWords = Object.keys(trie.goNext[0]);
-    // do each phrase
-    for (let i = 0; i < docs.length; i++) {
-      // can we skip the phrase, all together?
-      if (view._cache && view._cache[i] && cacheMiss(firstWords, view._cache[i]) === true) {
-        continue
-      }
-      let terms = docs[i];
-      let found = scanWords(terms, trie, opts);
-      if (found.length > 0) {
-        results = results.concat(found);
-      }
-    }
-    return view.update(results)
-  };
-  var scan$1 = scan;
-
-  const isObject$1 = val => {
-    return Object.prototype.toString.call(val) === '[object Object]'
-  };
-
-  function api$3 (View) {
-
-    /** find all matches in this document */
-    View.prototype.lookup = function (input, opts = {}) {
-      if (!input) {
-        return this.none()
-      }
-      if (typeof input === 'string') {
-        input = [input];
-      }
-      let trie = isObject$1(input) ? input : build(input, this.world);
-      let res = scan$1(this, trie, opts);
-      res = res.settle();
-      return res
-    };
-  }
-
-  // chop-off tail of redundant vals at end of array
-  const truncate = (list, val) => {
-    for (let i = list.length - 1; i >= 0; i -= 1) {
-      if (list[i] !== val) {
-        list = list.slice(0, i + 1);
-        return list
-      }
-    }
-    return list
-  };
-
-  // prune trie a bit
-  const compress = function (trie) {
-    trie.goNext = trie.goNext.map(o => {
-      if (Object.keys(o).length === 0) {
-        return undefined
-      }
-      return o
-    });
-    // chop-off tail of undefined vals in goNext array
-    trie.goNext = truncate(trie.goNext, undefined);
-    // chop-off tail of zeros in failTo array
-    trie.failTo = truncate(trie.failTo, 0);
-    // chop-off tail of nulls in endAs array
-    trie.endAs = truncate(trie.endAs, null);
-    return trie
-  };
-  var compress$1 = compress;
-
-  /** pre-compile a list of matches to lookup */
-  const lib$2 = {
-    /** turn an array or object into a compressed trie*/
-    compile: function (input) {
-      const trie = build(input, this.world());
-      return compress$1(trie)
-    }
-  };
-
-  var lookup = {
-    api: api$3,
-    lib: lib$2
-  };
-
-  const createCache = function (document) {
-    let cache = document.map(terms => {
-      let stuff = new Set();
-      terms.forEach(term => {
-        // add words
-        if (term.normal !== '') {
-          stuff.add(term.normal);
-        }
-        // cache switch-status - '%Noun|Verb%'
-        if (term.switch) {
-          stuff.add(`%${term.switch}%`);
-        }
-        // cache implicit words, too
-        if (term.implicit) {
-          stuff.add(term.implicit);
-        }
-        let tags = Array.from(term.tags);
-        for (let t = 0; t < tags.length; t += 1) {
-          stuff.add('#' + tags[t]);
-        }
-      });
-      return stuff
-    });
-    return cache
-  };
-  var cacheDoc = createCache;
-
-  const cacheMatch = function (regs) {
-    // parse match strings
-    let need = new Set();
-    regs.forEach(reg => {
-      // negatives can't be cached
-      if (reg.optional === true || reg.negative === true) {
-        return
-      }
-      if (reg.tag) {
-        need.add('#' + reg.tag);
-      }
-      if (reg.word) {
-        need.add(reg.word);
-      }
-    });
-    return need
-  };
-  var cacheMatch$1 = cacheMatch;
-
-  var methods$2 = {
-    one: {
-      cacheDoc,
-      cacheMatch: cacheMatch$1,
-    },
-  };
-
-  const methods$1 = {
-    /** */
-    cache: function () {
-      this._cache = this.methods.one.cacheDoc(this.document);
-      return this
-    },
-    /** */
-    uncache: function () {
-      this._cache = null;
-      return this
-    },
-  };
-  const addAPI = function (View) {
-    Object.assign(View.prototype, methods$1);
-  };
-  var api$2 = addAPI;
-
-  var compute$3 = {
-    cache: function (view) {
-      view._cache = view.methods.one.cacheDoc(view.document);
-    }
-  };
-
-  var cache$1 = {
-    api: api$2,
-    compute: compute$3,
-    methods: methods$2,
-  };
 
   // lookup last word in the type-ahead prefixes
   const typeahead$1 = function (view) {
@@ -5667,7 +6923,7 @@
     }
   };
 
-  var compute$2 = { typeahead: typeahead$1 };
+  var compute = { typeahead: typeahead$1 };
 
   // assume any discovered prefixes
   const autoFill = function () {
@@ -5701,7 +6957,7 @@
         max = opts.max;
       }
       for (let size = opts.min; size < max; size += 1) {
-        let prefix = str.substr(0, size);
+        let prefix = str.substring(0, size);
         // ensure prefix is not a word
         if (opts.safe && world.model.one.lexicon.hasOwnProperty(prefix)) {
           continue
@@ -5758,650 +7014,36 @@
     return this
   };
 
-  var lib$1 = {
+  var lib = {
     typeahead: prepare
   };
 
-  const model$3 = {
+  const model$1 = {
     one: {
       typeahead: {} //set a blank key-val
     }
   };
   var typeahead = {
-    model: model$3,
+    model: model$1,
     api: api$1,
-    lib: lib$1,
-    compute: compute$2,
+    lib,
+    compute,
     hooks: ['typeahead']
   };
 
-  // scan-ahead to match multiple-word terms - 'jack rabbit'
-  const checkMulti = function (terms, i, lexicon, setTag, world) {
-    let max = i + 4 > terms.length ? terms.length - i : 4;
-    let str = terms[i].machine || terms[i].normal;
-    for (let skip = 1; skip < max; skip += 1) {
-      let t = terms[i + skip];
-      let word = t.machine || t.normal;
-      str += ' ' + word;
-      if (lexicon.hasOwnProperty(str) === true) {
-        let tag = lexicon[str];
-        let ts = terms.slice(i, i + skip + 1);
-        setTag(ts, tag, world, false, '1-multi-lexicon');
-        return true
-      }
-    }
-    return false
-  };
-
-  const multiWord = function (terms, i, world) {
-    const { model, methods } = world;
-    // const { fastTag } = methods.one
-    const setTag = methods.one.setTag;
-    const multi = model.one._multiCache || {};
-    const lexicon = model.one.lexicon || {};
-    // basic lexicon lookup
-    let t = terms[i];
-    let word = t.machine || t.normal;
-    // multi-word lookup
-    if (terms[i + 1] !== undefined && multi[word] === true) {
-      return checkMulti(terms, i, lexicon, setTag, world)
-    }
-    return null
-  };
-  var multiWord$1 = multiWord;
-
-  const prefix = /^(under|over|mis|re|un|dis|semi|pre|post)-?/;
-  // anti|non|extra|inter|intra|over
-  const allowPrefix = new Set(['Verb', 'Infinitive', 'PastTense', 'Gerund', 'PresentTense', 'Adjective', 'Participle']);
-
-  // tag any words in our lexicon
-  const checkLexicon = function (terms, i, world) {
-    const { model, methods } = world;
-    // const fastTag = methods.one.fastTag
-    const setTag = methods.one.setTag;
-    const lexicon = model.one.lexicon;
-
-    // basic lexicon lookup
-    let t = terms[i];
-    let word = t.machine || t.normal;
-    // normal lexicon lookup
-    if (lexicon[word] !== undefined && lexicon.hasOwnProperty(word)) {
-      let tag = lexicon[word];
-      setTag([t], tag, world, false, '1-lexicon');
-      // fastTag(t, tag, '1-lexicon')
-      return true
-    }
-    // lookup aliases in the lexicon
-    if (t.alias) {
-      let found = t.alias.find(str => lexicon.hasOwnProperty(str));
-      if (found) {
-        let tag = lexicon[found];
-        setTag([t], tag, world, '1-lexicon-alias');
-        // fastTag(t, tag, '1-lexicon-alias')
-        return true
-      }
-    }
-    // prefixing for verbs/adjectives
-    if (prefix.test(word) === true) {
-      let stem = word.replace(prefix, '');
-      if (lexicon.hasOwnProperty(stem) && stem.length > 3) {
-        // only allow prefixes for verbs/adjectives
-        if (allowPrefix.has(lexicon[stem])) {
-          // console.log('->', word, stem, lexicon[stem])
-          setTag([t], lexicon[stem], world, '1-lexicon-prefix');
-          // fastTag(t, lexicon[stem], '1-lexicon-prefix')
-          return true
-        }
-      }
-    }
-    return null
-  };
-  var singleWord = checkLexicon;
-
-  // tag any words in our lexicon - even if it hasn't been filled-up yet
-  // rest of pre-tagger is in ./two/preTagger
-  const firstPass = function (view) {
-    const world = view.world;
-    view.docs.forEach(terms => {
-      for (let i = 0; i < terms.length; i += 1) {
-        if (terms[i].tags.size === 0) {
-          let found = null;
-          found = found || multiWord$1(terms, i, world);
-          // lookup known words
-          found = found || singleWord(terms, i, world);
-        }
-      }
-    });
-  };
-
-  var compute$1 = {
-    lexicon: firstPass
-  };
-
-  // derive clever things from our lexicon key-value pairs
-  const expand = function (words) {
-    // const { methods, model } = world
-    let lex = {};
-    // console.log('start:', Object.keys(lex).length)
-    let _multi = {};
-
-    // go through each word in this key-value obj:
-    Object.keys(words).forEach(word => {
-      let tag = words[word];
-      // normalize lexicon a little bit
-      word = word.toLowerCase().trim();
-      // cache multi-word terms
-      let split = word.split(/ /);
-      if (split.length > 1) {
-        _multi[split[0]] = true;
-      }
-      lex[word] = lex[word] || tag;
-    });
-    // cleanup
-    delete lex[''];
-    delete lex[null];
-    delete lex[' '];
-    return { lex, _multi }
-  };
-  var expandLexicon = expand;
-
-  var methods = {
-    one: {
-      expandLexicon,
-    }
-  };
-
-  /** insert new words/phrases into the lexicon */
-  const addWords = function (words) {
-    const world = this.world();
-    const { methods, model } = world;
-    if (!words) {
-      return
-    }
-    // normalize tag vals
-    Object.keys(words).forEach(k => {
-      if (typeof words[k] === 'string' && words[k].startsWith('#')) {
-        words[k] = words[k].replace(/^#/, '');
-      }
-    });
-    // add some words to our lexicon
-    if (methods.two.expandLexicon) {
-      // do fancy ./two version
-      let { lex, _multi } = methods.two.expandLexicon(words, world);
-      Object.assign(model.one.lexicon, lex);
-      Object.assign(model.one._multiCache, _multi);
-    } else if (methods.one.expandLexicon) {
-      // do basic ./one version
-      let { lex, _multi } = methods.one.expandLexicon(words, world);
-      Object.assign(model.one.lexicon, lex);
-      Object.assign(model.one._multiCache, _multi);
-    } else {
-      //no fancy-business
-      Object.assign(model.one.lexicon, words);
-    }
-  };
-
-  var lib = { addWords };
-
-  const model$2 = {
-    one: {
-      lexicon: {}, //setup blank lexicon
-      _multiCache: {},
-    }
-  };
-
-  var lexicon = {
-    model: model$2,
-    methods,
-    compute: compute$1,
-    lib,
-    hooks: ['lexicon']
-  };
-
-  var contractions$3 = [
-    // simple mappings
-    { word: '@', out: ['at'] },
-    { word: 'alot', out: ['a', 'lot'] },
-    { word: 'brb', out: ['be', 'right', 'back'] },
-    { word: 'cannot', out: ['can', 'not'] },
-    { word: 'cant', out: ['can', 'not'] },
-    { word: 'dont', out: ['do', 'not'] },
-    { word: 'dun', out: ['do', 'not'] },
-    { word: 'wont', out: ['will', 'not'] },
-    { word: "can't", out: ['can', 'not'] },
-    { word: "shan't", out: ['should', 'not'] },
-    { word: "won't", out: ['will', 'not'] },
-    { word: "that's", out: ['that', 'is'] },
-    { word: 'dunno', out: ['do', 'not', 'know'] },
-    { word: 'gonna', out: ['going', 'to'] },
-    { word: 'gotta', out: ['have', 'got', 'to'] }, //hmm
-    { word: 'gtg', out: ['got', 'to', 'go'] },
-    { word: 'im', out: ['i', 'am'] },
-    { word: 'imma', out: ['I', 'will'] },
-    { word: 'imo', out: ['in', 'my', 'opinion'] },
-    { word: 'irl', out: ['in', 'real', 'life'] },
-    { word: 'ive', out: ['i', 'have'] },
-    { word: 'rn', out: ['right', 'now'] },
-    { word: 'tbh', out: ['to', 'be', 'honest'] },
-    { word: 'wanna', out: ['want', 'to'] },
-    // apostrophe d
-    { word: 'howd', out: ['how', 'did'] },
-    { word: 'whatd', out: ['what', 'did'] },
-    { word: 'whend', out: ['when', 'did'] },
-    { word: 'whered', out: ['where', 'did'] },
-
-    // { after: `cause`, out: ['because'] },
-    { word: "'tis", out: ['it', 'is'] },
-    { word: "'twas", out: ['it', 'was'] },
-    { word: 'twas', out: ['it', 'was'] },
-    { word: 'y\'know', out: ['you', 'know'] },
-    { word: "ne'er", out: ['never'] },
-    { word: "o'er ", out: ['over'] },
-    // contraction-part mappings
-    { after: 'll', out: ['will'] },
-    { after: 've', out: ['have'] },
-    { after: 're', out: ['are'] },
-    { after: 'm', out: ['am'] },
-    // french contractions
-    { before: 'c', out: ['ce'] },
-    { before: 'm', out: ['me'] },
-    { before: 'n', out: ['ne'] },
-    { before: 'qu', out: ['que'] },
-    { before: 's', out: ['se'] },
-    { before: 't', out: ['tu'] }, // t'aime
-    // more-complex ones
-    // { after: 's', out: apostropheS }, //spencer's
-    // { after: 'd', out: apostropheD }, //i'd
-    // { after: 't', out: apostropheT }, //isn't
-    // { before: 'l', out: preL }, // l'amour
-    // { before: 'd', out: preD }, // d'amerique
-  ];
-
-  var model$1 = { one: { contractions: contractions$3 } };
-
-  // put n new words where 1 word was
-  const insertContraction = function (document, point, words) {
-    let [n, w] = point;
-    if (!words || words.length === 0) {
-      return
-    }
-    words = words.map((word) => {
-      word.implicit = word.text;
-      word.machine = word.text;
-      word.pre = '';
-      word.post = '';
-      word.text = '';
-      word.normal = '';
-      return word
-    });
-    if (words[0]) {
-      // move whitespace over
-      words[0].pre = document[n][w].pre;
-      words[words.length - 1].post = document[n][w].post;
-      // add the text/normal to the first term
-      words[0].text = document[n][w].text;
-      words[0].normal = document[n][w].normal; // move tags too?
-    }
-    // do the splice
-    document[n].splice(w, 1, ...words);
-  };
-  var splice = insertContraction;
-
-  const hasContraction$2 = /'/;
-  //look for a past-tense verb
-  // const hasPastTense = (terms, i) => {
-  //   let after = terms.slice(i + 1, i + 3)
-  //   return after.some(t => t.tags.has('PastTense'))
-  // }
-  // he'd walked -> had
-  // how'd -> did
-  // he'd go -> would
-
-  const alwaysDid = new Set([
-    'what',
-    'how',
-    'when',
-    'where',
-    'why',
-  ]);
-
-  // after-words
-  const useWould = new Set([
-    'be',
-    'go',
-    'start',
-    'think',
-    'need',
-  ]);
-
-  const useHad = new Set([
-    'been',
-    'gone'
-  ]);
-  // they'd gone
-  // they'd go
-
-
-  // he'd been
-  //    he had been
-  //    he would been
-
-  const _apostropheD = function (terms, i) {
-    let before = terms[i].normal.split(hasContraction$2)[0];
-
-    // what'd, how'd
-    if (alwaysDid.has(before)) {
-      return [before, 'did']
-    }
-    if (terms[i + 1]) {
-      // they'd gone
-      if (useHad.has(terms[i + 1].normal)) {
-        return [before, 'had']
-      }
-      // they'd go
-      if (useWould.has(terms[i + 1].normal)) {
-        return [before, 'would']
-      }
-    }
-    return null
-    //   if (hasPastTense(terms, i) === true) {
-    //     return [before, 'had']
-    //   }
-    //   // had/would/did
-    //   return [before, 'would']
-  };
-  var apostropheD = _apostropheD;
-
-  const hasContraction$1 = /'/;
-
-  const isHas = (terms, i) => {
-    //look for a past-tense verb
-    let after = terms.slice(i + 1, i + 3);
-    return after.some(t => t.tags.has('PastTense'))
-  };
-
-  // 's -> [possessive, 'has', or 'is']
-  const apostropheS = function (terms, i) {
-    // possessive, is/has
-    let before = terms[i].normal.split(hasContraction$1)[0];
-    // spencer's got -> 'has'
-    if (isHas(terms, i)) {
-      return [before, 'has']
-    }
-    // let's
-    if (before === 'let') {
-      return [before, 'us']
-    }
-    // allow slang "there's" -> there are
-    if (before === 'there') {
-      let nextTerm = terms[i + 1];
-      if (nextTerm && nextTerm.tags.has('Plural')) {
-        return [before, 'are']
-      }
-    }
-    return [before, 'is']
-  };
-  var apostropheS$1 = apostropheS;
-
-  //ain't -> are/is not
-  const apostropheT = function (terms, i) {
-    if (terms[i].normal === "ain't" || terms[i].normal === 'aint') {
-      return null //do this in ./two/
-    }
-    let before = terms[i].normal.replace(/n't/, '');
-    return [before, 'not']
-  };
-
-  var apostropheT$1 = apostropheT;
-
-  const hasContraction = /'/;
-
-  // l'amour
-  const preL = (terms, i) => {
-    // le/la
-    let after = terms[i].normal.split(hasContraction)[1];
-    // quick french gender disambig (rough)
-    if (after && after.endsWith('e')) {
-      return ['la', after]
-    }
-    return ['le', after]
-  };
-
-  // d'amerique
-  const preD = (terms, i) => {
-    let after = terms[i].normal.split(hasContraction)[1];
-    // quick guess for noun-agreement (rough)
-    if (after && after.endsWith('e')) {
-      return ['du', after]
-    } else if (after && after.endsWith('s')) {
-      return ['des', after]
-    }
-    return ['de', after]
-  };
-
-  // j'aime
-  const preJ = (terms, i) => {
-    let after = terms[i].normal.split(hasContraction)[1];
-    return ['je', after]
-  };
-
-  var french = {
-    preJ,
-    preL,
-    preD,
-  };
-
-  const isRange = /^([0-9.]{1,3}[a-z]{0,2}) ?[-–—] ?([0-9]{1,3}[a-z]{0,2})$/i;
-  const timeRange = /^([0-9]{1,2}(:[0-9][0-9])?(am|pm)?) ?[-–—] ?([0-9]{1,2}(:[0-9][0-9])?(am|pm)?)$/i;
-
-  const numberRange = function (terms, i) {
-    let term = terms[i];
-    if (term.tags.has('PhoneNumber') === true) {
-      return null
-    }
-    let parts = term.text.match(isRange);
-    if (parts !== null) {
-      return [parts[1], 'to', parts[2]]
-    } else {
-      parts = term.text.match(timeRange);
-      if (parts !== null) {
-        return [parts[1], 'to', parts[4]]
-      }
-    }
-    return null
-  };
-  var numberRange$1 = numberRange;
-
-  // always a contracttion
-  const always = new Set([
-    'here',
-    'there',
-    'she',
-    'it',
-    'he',
-    'that',
-    'here',
-    'there',
-    'your',
-    'who',
-    'what',
-    'where',
-    'why',
-    'when',
-    'how',
-    'let',
-    'else',
-    'name', //name's dave
-    // 'god', //god's gift
-  ]);
-
-  // // spencer's cool
-  const afterYes = new Set([
-    // adverbs
-    'really',
-    'very',
-    'barely',
-    'also',
-    'not',
-    'just',
-    'more',
-    'only',
-    'often',
-    'quite',
-    'so',
-    'too',
-    'well',
-  ]);
-
-  const shouldSplit = (terms, i) => {
-    let term = terms[i];
-
-    const byApostrophe = /'s/;
-    let [before] = term.normal.split(byApostrophe);
-    if (always.has(before)) {
-      return true
-    }
-
-    // gandhi's so cool
-    let nextTerm = terms[i + 1];
-    if (nextTerm && afterYes.has(nextTerm.normal)) {
-      return true
-    }
-
-    // default to posessive
-    return false
-  };
-  var shouldSplit$1 = shouldSplit;
-
-  const byApostrophe = /'/;
-  const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/;
-
-  // run tagger on our new implicit terms
-  const reTag = function (terms, view) {
-    let tmp = view.update();
-    tmp.document = [terms];
-    tmp.compute(['lexicon', 'preTagger', 'index']);
-  };
-
-  const byEnd = {
-    // ain't
-    t: (terms, i) => apostropheT$1(terms, i),
-    // how'd
-    d: (terms, i) => apostropheD(terms, i),
-    // bob's
-    s: (terms, i) => {
-      // [bob's house] vs [bob's cool]
-      if (shouldSplit$1(terms, i) === true) {
-        return apostropheS$1(terms, i)
-      }
-      return null
-    },
-  };
-
-  const byStart = {
-    // j'aime
-    j: (terms, i) => french.preJ(terms, i),
-    // l'amour
-    l: (terms, i) => french.preL(terms, i),
-    // d'amerique
-    d: (terms, i) => french.preD(terms, i),
-  };
-
-  // pull-apart known contractions from model
-  const knownOnes = function (list, term, before, after) {
-    for (let i = 0; i < list.length; i += 1) {
-      let o = list[i];
-      // look for word-word match (cannot-> [can, not])
-      if (o.word === term.normal) {
-        return o.out
-      }
-      // look for after-match ('re -> [_, are])
-      else if (after !== null && after === o.after) {
-        return [before].concat(o.out)
-      }
-      // look for before-match (l' -> [le, _])
-      else if (before !== null && before === o.before) {
-        return o.out.concat(after)
-        // return [o.out, after] //typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
-      }
-    }
-    return null
-  };
-
-  const toDocs = function (words, view) {
-    return view.fromText(words.join(' ')).docs[0]
-  };
-
-  //really easy ones
-  const contractions$1 = (view) => {
-    let { world, document } = view;
-    const { model, methods } = world;
-    let list = model.one.contractions || [];
-    // each sentence
-    document.forEach((terms, n) => {
-      // loop through terms backwards
-      for (let i = terms.length - 1; i >= 0; i -= 1) {
-        let before = null;
-        let after = null;
-        if (byApostrophe.test(terms[i].normal) === true) {
-          [before, after] = terms[i].normal.split(byApostrophe);
-        }
-        // any known-ones, like 'dunno'?
-        let words = knownOnes(list, terms[i], before, after);
-        // ['foo', 's']
-        if (!words && byEnd.hasOwnProperty(after)) {
-          words = byEnd[after](terms, i, world);
-        }
-        // ['j', 'aime']
-        if (!words && byStart.hasOwnProperty(before)) {
-          words = byStart[before](terms, i);
-        }
-        // actually insert the new terms
-        if (words) {
-          words = toDocs(words, view);
-          splice(document, [n, i], words);
-          reTag(document[n], view);
-          continue
-        }
-        // '44-2' has special care
-        if (numDash.test(terms[i].normal)) {
-          words = numberRange$1(terms, i);
-          if (words) {
-            words = toDocs(words, view);
-            splice(document, [n, i], words);
-            methods.one.setTag(words, 'NumberRange', world);//add custom tag
-            // is it a time-range, like '5-9pm'
-            if (words[2] && words[2].tags.has('Time')) {
-              methods.one.setTag([words[0]], 'Time', world);
-            }
-            reTag(document[n], view);
-          }
-        }
-      }
-    });
-  };
-  var contractions$2 = contractions$1;
-
-  var compute = { contractions: contractions$2 };
-
-  const plugin$1 = {
-    model: model$1,
-    compute: compute,
-    hooks: ['contractions'],
-  };
-  var contractions = plugin$1;
-
+  // order here matters
   nlp$1.extend(change); //0kb
   nlp$1.extend(output); //0kb
   nlp$1.extend(match); //10kb
   nlp$1.extend(pointers); //2kb
   nlp$1.extend(tag); //2kb
   nlp$1.plugin(contractions); //~6kb
-  nlp$1.extend(tokenize$1); //7kb
-  nlp$1.plugin(cache$1); //~1kb
+  nlp$1.extend(tokenize); //7kb
+  nlp$1.plugin(cache$3); //~1kb
   nlp$1.extend(lookup); //7kb
   nlp$1.extend(typeahead); //1kb
-  nlp$1.extend(lexicon); //1kb
+  nlp$1.extend(lexicon$1); //1kb
+  nlp$1.extend(sweep); //1kb
 
   const BASE = 36;
   const seq = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';

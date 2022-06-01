@@ -1,7 +1,7 @@
 {
   "name": "compromise-speech",
   "description": "plugin for nlp-compromise",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-speech.min.js",

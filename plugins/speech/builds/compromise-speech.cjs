@@ -11,7 +11,7 @@
     },
     dropInitialLetters: (s) => {
       if (s.match(/^(kn|gn|pn|ae|wr)/)) {
-        return s.substr(1, s.length - 1)
+        return s.substring(1, s.length - 1)
       }
       return s
     },

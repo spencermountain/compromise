@@ -1,12 +1,8 @@
 import nlp from 'compromise'
 
-export interface SpeedMethods {
+interface nlpSpeed extends nlp {
   /**  */
-  syllables(): String[][]
-
+  workerPool(): String[][]
 }
-
-/** extended compromise lib **/
-declare const nlpSpeed: nlp.TypedPlugin<SpeedMethods>
 
 export default nlpSpeed

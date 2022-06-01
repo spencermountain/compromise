@@ -2,14 +2,14 @@ import nlp from 'compromise'
 
 export interface DatesMethods {
   /** match all date-phrases */
-  dates(): View
+  dates(): any
   /** match time-of-day phrases */
-  times(): View
+  times(): any
   /** match lengths of time, like '2 weeks' */
-  durations(): View
+  durations(): any
 }
 
 /** extended compromise lib **/
-declare const nlpDates: nlp.TypedPlugin<DatesMethods>
+declare const nlpSpeed: nlp.TypedPlugin<DatesMethods>
 
-export default nlpDates
+export default nlpSpeed

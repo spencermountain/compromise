@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -21,12 +21,11 @@ txt = `She will be reviewed in Diabeticare in 6-8 months' time` // missing date
 txt = `She has an appointment for this at the end of January` // missing date
 txt = `has an appointment in around two weeks to explore this further.` //missing date
 txt = `my name's john`
-nlp(txt).debug()
+// nlp(txt).debug()
 
 // dashes
-let doc = nlp(`additional non-urgent appointment.`)
-doc.match(`additional non? urgent? appointment`).debug()
-
+let doc = nlp('inter-species communication')
+doc.debug()
 
 // import fs from 'fs'
 // let file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`

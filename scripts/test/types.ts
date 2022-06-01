@@ -3,8 +3,14 @@ import nlp from '../../'
 import tape from 'tape'
 import stats, { StatsMethods } from '../../plugins/stats'
 import dates, { DatesMethods } from '../../plugins/dates'
+import speech, { SpeechMethods } from '../../plugins/speech'
+import speed, { SpeedMethods } from '../../plugins/speed'
+import wiki, { WikiMethods } from '../../plugins/wikipedia'
 nlp.plugin(stats)
 nlp.plugin(dates)
+nlp.plugin(speech)
+nlp.plugin(speed)
+nlp.plugin(wiki)
 
 console.log('\n 🥗  - running types-test..\n')
 
@@ -226,13 +232,45 @@ tape('misc functions', function (t) {
 })
 
 
-tape('plugin', function (t) {
-  const doc = nlp<StatsMethods>('foo bar baz. foo') // returns type Three & StatsMethods
-  let res = doc.ngrams()
-  console.log(res)
-  doc.match('foo')
 
 
+tape('plugin-date', function (t) {
+  const doc = nlp<DatesMethods>('foo bar baz')
+  doc.dates()
+  doc.times()
+  doc.durations()
+  t.end()
+})
+
+tape('plugin-speech', function (t) {
+  const doc = nlp<SpeechMethods>('foo bar baz')
+  doc.syllables()
+  doc.soundsLike()
+  t.end()
+})
+
+tape('plugin-speed', function (t) {
+  nlp.workerPool('foo bar')
+  t.end()
+})
+
+tape('plugin-stats', function (t) {
+  const doc = nlp<StatsMethods>('foo bar baz. foo')
+  doc.ngrams()
+  doc.ngrams()
+  doc.unigrams()
+  doc.bigrams()
+  doc.trigrams()
+  doc.startgrams()
+  doc.endgrams()
+  doc.edgegrams()
+  doc.tfidf()
+  t.end()
+})
+
+tape('plugin-wikipedia', function (t) {
+  const doc = nlp<WikiMethods>('foo bar baz. foo')
+  doc.wikipedia()
   t.end()
 })
 

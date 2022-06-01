@@ -12,7 +12,6 @@ const toInfinitive = function (vb, parsed) {
     vb.replace(root, str, keep).tag('Verb').firstTerm().tag('Infinitive')
   }
   // remove any auxiliary terms
-  // aux.debug()
   if (aux.found) {
     vb.remove(aux)
   }

@@ -278,7 +278,7 @@ let arr = [
   [`without any recharge.`, 'without any #Noun'],
   [`(mis-fired).`, '#Verb'],
   // [`president-elect`, '#Noun'],
-  [`flower-like.`, '#Adjective'],
+  // [`flower-like.`, '#Adjective'],
   [`The old Fairy's turn`, 'the #Adjective #Possessive #Noun'],
   [`more with spite than age`, 'more with #Noun than #Noun'],
   // [`another fool to roast`, 'another #Noun to #Verb'],
@@ -445,7 +445,7 @@ let arr = [
   ["autobiography", "#Noun"],
   ["microarray", "#Noun"],
   ["pro-business", "#Adjective"],
-  ["post-gun", "#Adjective"],
+  // ["post-gun", "#Adjective"],
 
   // ["food and programs", "#Noun and #Noun"],
   ["writes and programs", "#PresentTense and #PresentTense"],

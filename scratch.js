@@ -17,12 +17,20 @@ nlp.plugin(plg)
 // 
 
 let txt = ''
-txt = 'i was not being walked'
-// txt = 'i was not really being walked'
-txt = 'i was walking and saw john'
-let doc = nlp(txt)
-doc.verbs().toInfinitive()
+
+let doc = nlp(`i'm good`)
+doc.verbs().toPresent()
 doc.debug()
+
+
+
+// verbphrase parsing issue:
+// let doc
+// doc = nlp('i was not being walked').debug()
+// doc = nlp('i was not really being walked').debug()
+// doc.verbs().toInfinitive()
+// doc.debug()
+
 // dashes
 // let doc = nlp('inter-species communication')
 // console.log(doc.json()[0])

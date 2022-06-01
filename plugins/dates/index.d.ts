@@ -1,12 +1,20 @@
 import nlp from 'compromise'
+type View = ReturnType<typeof nlp>
+
+interface DateView extends View {
+  /** convert parsed dates to a date format */
+  format(fmt: string): View
+  /** get parsed date metadata */
+  get(): object[]
+}
 
 export interface DatesMethods {
   /** match all date-phrases */
-  dates(): any
+  dates(): DateView
   /** match time-of-day phrases */
-  times(): any
+  times(): View
   /** match lengths of time, like '2 weeks' */
-  durations(): any
+  durations(): View
 }
 
 /** extended compromise lib **/

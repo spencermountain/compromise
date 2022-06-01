@@ -41,6 +41,7 @@ txt = 'today in PST'
 txt = '4pm sharp on tuesday'
 txt = '130pm'
 txt = 'three twenty'
+txt = '2:45pm'
 // txt = 'aug. 3'
 // txt = 'lets meet 1 weeks from now '
 // txt = 'on april fools 2020 '
@@ -49,13 +50,17 @@ txt = 'three twenty'
 // txt = 'monday'
 
 let doc = nlp(txt).debug()
+
+doc.times().format('24h')
+doc.debug()
+
 // console.log(doc.times(context).json())
-let found = doc.dates(context).json()
+// let found = doc.dates(context).json()
 // console.log(found[0].dates)
-found.forEach((o) => {
-  console.log('start: ', fmt(o.dates.start))
-  console.log('  end: ', fmt(o.dates.end))
-})
+// found.forEach((o) => {
+//   console.log('start: ', fmt(o.dates.start))
+//   console.log('  end: ', fmt(o.dates.end))
+// })
 
 // let doc = nlp(txt).debug()
 // let m = doc.dates(context)

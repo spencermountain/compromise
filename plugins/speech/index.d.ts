@@ -5,7 +5,6 @@ export interface SpeechMethods {
   syllables(): String[][]
   /** estimate pronounciation information */
   soundsLike(): String[][]
-
 }
 
 /** extended compromise lib **/

@@ -2,21 +2,24 @@ import nlp from 'compromise'
 
 export type Freq = [word: string, freq: number]
 
+type Gram = { size: number, count: number, normal: string }
+type Opts = { min: number, max: number }
+
 export interface StatsMethods {
   /** list all repeating sub-phrases, by word-count*/
-  ngrams(options?: any): any
+  ngrams(options?: Opts): Gram[]
   /** n-grams with one word*/
-  unigrams(index?: number): any
+  unigrams(index?: number): Gram[]
   /** n-grams with two words*/
-  bigrams(index?: number): any
+  bigrams(index?: number): Gram[]
   /** n-grams with three words*/
-  trigrams(index?: number): any
+  trigrams(index?: number): Gram[]
   /** n-grams including the first term of a phrase*/
-  startgrams(options?: any): any
+  startgrams(options?: Opts): Gram[]
   /** n-grams including the last term of a phrase*/
-  endgrams(options?: any): any
+  endgrams(options?: Opts): Gram[]
   /** n-grams including the first or last term of a phrase*/
-  edgegrams(options?: any): any
+  edgegrams(options?: Opts): Gram[]
 
   /** compute word-importance in this document */
   tfidf(): Freq[]

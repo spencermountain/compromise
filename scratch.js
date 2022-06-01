@@ -24,8 +24,15 @@ txt = `my name's john`
 // nlp(txt).debug()
 
 // dashes
-let doc = nlp('inter-species communication')
-doc.debug()
+// let doc = nlp('inter-species communication')
+// console.log(doc.json()[0])
+// doc.debug()
+let doc = nlp('counter-argument')
+console.log(doc.json()[0])
+console.log(doc.get())
+doc.match('counter-argument').debug()
+// console.log(nlp.parseMatch('counter-argument'))
+// console.log(nlp.parseMatch(`i've`))
 
 // import fs from 'fs'
 // let file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`

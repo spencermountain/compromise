@@ -1,1 +1,1 @@
-export default '14.2.0-rc2'
+export default '14.2.0'

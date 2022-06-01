@@ -50,6 +50,14 @@ const isPossessive = (terms, i) => {
     if (nextStr === 'here' || nextStr === 'there' || nextStr === 'everywhere') {
       return false
     }
+    // the chair's his
+    if (nextTerm.tags.has('Possessive')) {
+      return false
+    }
+    // the captain's John 
+    if (nextTerm.tags.has('ProperNoun') && !term.tags.has('ProperNoun')) {
+      return false
+    }
     return true
   }
   // by sunday's final

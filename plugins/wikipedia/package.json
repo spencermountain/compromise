@@ -7,6 +7,7 @@
   "unpkg": "./builds/compromise-wikipedia.min.js",
   "type": "module",
   "sideEffects": false,
+  "types": "index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",

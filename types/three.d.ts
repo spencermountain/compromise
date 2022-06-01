@@ -32,7 +32,7 @@ declare module nlp {
   export function compile(words: string[]): object
   /** add words to the autoFill dictionary */
   export function typeahead(words: Lexicon): any
-  /** export internal methods for plugins */
+  /** export library for extending with plugins */
   export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
 }
 

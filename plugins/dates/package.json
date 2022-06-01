@@ -7,7 +7,7 @@
   "unpkg": "./builds/compromise-dates.min.js",
   "module": "./builds/compromise-dates.mjs",
   "type": "module",
-  "types": "types/index.d.ts",
+  "types": "index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {

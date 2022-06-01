@@ -7,7 +7,7 @@
   "unpkg": "./builds/compromise-speech.min.js",
   "module": "./builds/compromise-speech.mjs",
   "type": "module",
-  "types": "types/index.d.ts",
+  "types": "index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {

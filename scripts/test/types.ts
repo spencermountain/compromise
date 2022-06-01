@@ -2,7 +2,9 @@
 import nlp from '../../'
 import tape from 'tape'
 import stats, { StatsMethods } from '../../plugins/stats'
+import dates, { DatesMethods } from '../../plugins/dates'
 nlp.plugin(stats)
+nlp.plugin(dates)
 
 console.log('\n 🥗  - running types-test..\n')
 

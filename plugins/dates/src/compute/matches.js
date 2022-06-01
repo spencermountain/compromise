@@ -46,6 +46,8 @@ let matches = [
   { match: '#Value #Duration #Conjunction', tag: 'Date', reason: 'val-duration-conjunction' },
   //for four days
   { match: `${preps}? #Value #Duration`, tag: 'Date', reason: 'value-duration' },
+  // 6-8 months
+  { match: 'in? #Value to #Value #Duration time?', tag: 'Date', reason: '6-to-8-years' },
   //two years old
   { match: '#Value #Duration old', unTag: 'Date', reason: 'val-years-old' },
   // 
@@ -63,7 +65,7 @@ let matches = [
   //next feb
   { match: '(last|next|this|previous|current|upcoming|coming|the) #Date', tag: 'Date', reason: 'next-feb' },
   //start of june
-  { match: `the? ${sections} of #Date`, tag: 'Date', reason: 'section-of' },
+  { match: `#Preposition? the? ${sections} of #Date`, tag: 'Date', reason: 'section-of' },
   //fifth week in 1998
   { match: '#Ordinal #Duration in #Date', tag: 'Date', reason: 'duration-in' },
   //early in june
@@ -186,7 +188,7 @@ let matches = [
   //'two days before'/ 'nine weeks frow now'
   { match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)', tag: 'DateShift', reason: 'nine weeks frow now' },
   // in two weeks
-  { match: 'in #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
+  { match: 'in (around|about|maybe|perhaps)? #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
   { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
   // an hour from now
   { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },

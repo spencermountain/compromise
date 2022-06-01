@@ -39,7 +39,7 @@ export default {
   },
   // 'months'
   Duration: {
-    is: 'Noun',
-    also: ['Date'],
+    is: 'Date',
+    also: ['Noun'],
   },
 }

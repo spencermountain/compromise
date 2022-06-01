@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -17,10 +17,7 @@ import nlp from './src/three.js'
 // 
 
 let txt = ''
-txt = `She will be reviewed in Diabeticare in 6-8 months' time` // missing date
-txt = `She has an appointment for this at the end of January` // missing date
-txt = `has an appointment in around two weeks to explore this further.` //missing date
-txt = `my name's john`
+txt = `Fantastic Service`
 nlp(txt).debug()
 
 // dashes

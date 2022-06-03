@@ -13,14 +13,28 @@ nlp.plugin(plg)
 // // b.debug()
 // console.log(b)
 
-// nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
-// 
 
-let txt = ''
 
-let doc = nlp(`i'm good`)
-doc.verbs().toPresent()
-doc.debug()
+// let txt = `
+// Test
+// ***
+// book's plane's farm's field's`
+// let txt = `book's plane's`
+let txt = `he's foo she's`
+let doc = nlp(txt)
+console.log(doc.docs[0].map(t => t.index))
+doc.terms().debug()
+
+// console.log(usedWords)
+// let doc = nlp('Maris Piper potatoes')
+// doc.nouns().toSingular()
+// console.log(doc.text())
+
+// nlp("Anna's eating lunch.").debug()
+
+// let doc = nlp(`i'm good`)
+// doc.verbs().toPresent()
+// doc.debug()
 
 
 

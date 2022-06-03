@@ -20,7 +20,7 @@ const reTag = function (terms, view, start, len) {
     end += 1
   }
   tmp.ptrs = [[0, start, end]]
-  tmp.compute(['lexicon', 'preTagger', 'index'])
+  tmp.compute(['lexicon', 'preTagger'])
 }
 
 const byEnd = {
@@ -61,7 +61,9 @@ const knownOnes = function (list, term, before, after) {
 }
 
 const toDocs = function (words, view) {
-  return view.fromText(words.join(' ')).docs[0]
+  let doc = view.fromText(words.join(' '))
+  doc.compute('id')
+  return doc.docs[0]
 }
 
 //really easy ones

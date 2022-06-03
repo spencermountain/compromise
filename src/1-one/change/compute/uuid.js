@@ -8,7 +8,7 @@ Base 36 (numbers+ascii)
 
   TTT|NNN|II|R
 
-TTT -> 46 seconds since load
+TTT -> 46 terms since load
 NNN -> 46 thousand sentences (>1 inf-jest)
 II  -> 1,200 words in a sentence (nuts)
 R   -> 1-36 random number 
@@ -28,7 +28,7 @@ collisions are more-likely after
     after 46-thousand sentences
 
 */
-const start = new Date().getTime()
+let start = 0
 
 const pad3 = (str) => {
   str = str.length < 3 ? '0' + str : str
@@ -37,7 +37,8 @@ const pad3 = (str) => {
 
 const toId = function (term) {
   let [n, i] = term.index || [0, 0]
-  var now = new Date().getTime() - start;
+  start += 1
+  var now = start;
   now = parseInt(now, 10)
 
   //don't overflow time

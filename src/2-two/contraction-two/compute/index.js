@@ -6,6 +6,15 @@ import isPossessive from './isPossessive.js'
 
 const byApostrophe = /'/
 
+// poor-mans reindexing of this sentence only
+const reIndex = function (terms) {
+  terms.forEach((t, i) => {
+    if (t.index) {
+      t.index[1] = i
+    }
+  })
+}
+
 // run tagger on our new implicit terms
 const reTag = function (terms, view, start, len) {
   let tmp = view.update()
@@ -19,7 +28,9 @@ const reTag = function (terms, view, start, len) {
     end += 1
   }
   tmp.ptrs = [[0, start, end]]
-  tmp.compute(['lexicon', 'preTagger', 'index'])
+  tmp.compute(['lexicon', 'preTagger'])
+  // don't for a reindex of the whole document
+  reIndex(terms)
 }
 
 const byEnd = {
@@ -38,8 +49,11 @@ const byEnd = {
 }
 
 const toDocs = function (words, view) {
-  return view.fromText(words.join(' ')).docs[0]
+  let doc = view.fromText(words.join(' '))
+  doc.compute('id')
+  return doc.docs[0]
 }
+
 
 //really easy ones
 const contractionTwo = (view) => {
@@ -66,7 +80,7 @@ const contractionTwo = (view) => {
       if (words) {
         words = toDocs(words, view)
         splice(document, [n, i], words)
-        reTag(document[n], view)
+        reTag(document[n], view, i, words.length)
         continue
       }
     }

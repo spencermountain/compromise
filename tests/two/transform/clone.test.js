@@ -55,7 +55,7 @@ test('clone does not leak', function (t) {
     m = m.not('foo')
     m = m.if('.')
     m = m.eq(0).tag('Yeah')
-    m.compute(['normal', 'tagger', 'foo'])
+    m.compute(['normal', 'preTagger', 'postTagger', 'contractions'])
     m = m.all()
   }
   // is it still unchanged?

@@ -13,7 +13,7 @@ While all _Major_ releases should be reviewed, our only two _large_ releases are
 -->
 
 #### 14.2.1 [June 2021]
-- **[fix]** - double-contraction issue #935
+- **[fix]** - double-contraction issue #925
 - **[fix]** - .not() memleak #926
 
 #### 14.2.0 [June 2021]

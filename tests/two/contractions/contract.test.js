@@ -60,3 +60,17 @@ is`
 
   t.end()
 })
+
+test('multiple contraction in sentence', function (t) {
+  let doc = nlp(`he's foo she's`)
+  t.equal(doc.terms().length, 5, here + 'multi-contraction-count')
+  t.equal(doc.has('he is foo she is'), true, here + 'multi-contraction-order')
+
+  doc = nlp(`he's she's`)
+  t.equal(doc.terms().length, 4, here + 'multi-contraction-count-2')
+  t.equal(doc.has('he is she is'), true, here + 'multi-contraction-order-2')
+
+  doc = nlp(`he's dead, he's dead`)
+  t.equal(doc.match('he is dead').length, 2, here + 'multi-contraction-count')
+  t.end()
+})

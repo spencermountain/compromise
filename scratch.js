@@ -15,38 +15,17 @@ nlp.plugin(plg)
 
 
 
-let begin = new Date()
-let txt = `The hours have passed like stones being pushed up a mountain. For all of the luxury that surrounds us, I can't shake this feeling of unease that's slowly creeping in through the back of my mind. I can tell that Johna and Temmy have noticed it as well—it's just something about the air here that makes me uneasy. Joanna feigns disinterest but behind her shades she's studying the surroundings like the seasoned detective she is.`
-txt = txt.repeat(4)
+// let txt = `
+// Test
+// ***
+// book's plane's farm's field's`
+// let txt = `book's plane's`
+let txt = `he's foo she's`
 let doc = nlp(txt)
-let badTerm = []
-let already = {}
-let words = 0
-// ensure they all have ids
-doc.docs.forEach(terms => {
-  terms.forEach(term => {
-    words += 1
-    console.log(term.id)
-    if (!term.id) {
-      badTerm.push(term)
-    }
-    // collisions should be very unlikely
-    if (already[term.id]) {
-      badTerm.push(term)
-    }
-    already[term.id] = true
-  })
-})
-if (badTerm.length) {
-  console.log('dupe terms:', badTerm)
-}
+console.log(doc.docs[0].map(t => t.index))
+doc.terms().debug()
 
-
-console.log((new Date().getTime() - begin.getTime()) / 1000)
-
-
-// let txt = ''
-
+// console.log(usedWords)
 // let doc = nlp('Maris Piper potatoes')
 // doc.nouns().toSingular()
 // console.log(doc.text())

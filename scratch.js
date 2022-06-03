@@ -16,29 +16,30 @@ nlp.plugin(plg)
 
 
 let begin = new Date()
-const string = `The hours have passed like stones being pushed up a mountain. For all of the luxury that surrounds us, I can't shake this feeling of unease that's slowly creeping in through the back of my mind. I can tell that Johna and Temmy have noticed it as well—it's just something about the air here that makes me uneasy. Joanna feigns disinterest but behind her shades she's studying the surroundings like the seasoned detective she is.`
-
-const text = (string + '\n').repeat(50)
-
-const doc = nlp(text)
-// doc.terms()
-//   .not('#Pronoun')
-//   .not('#Preposition')
-//   .not('#Conjunction')
-//   .not('#Determiner')
-//   .json()
-let m = doc.terms()
-console.log(JSON.stringify(m.pointer, null, 2))
-console.log(m.pointer.length)
-m = m.not('#Pronoun')
-console.log(m.pointer.length)
-m = m.not('#Preposition')
-console.log(m.pointer.length)
-m = m.not('#Conjunction')
-console.log(m.pointer.length)
-m = m.not('#Determiner')
-console.log(m.pointer.length)
-// m.json()
+let txt = `The hours have passed like stones being pushed up a mountain. For all of the luxury that surrounds us, I can't shake this feeling of unease that's slowly creeping in through the back of my mind. I can tell that Johna and Temmy have noticed it as well—it's just something about the air here that makes me uneasy. Joanna feigns disinterest but behind her shades she's studying the surroundings like the seasoned detective she is.`
+txt = txt.repeat(4)
+let doc = nlp(txt)
+let badTerm = []
+let already = {}
+let words = 0
+// ensure they all have ids
+doc.docs.forEach(terms => {
+  terms.forEach(term => {
+    words += 1
+    console.log(term.id)
+    if (!term.id) {
+      badTerm.push(term)
+    }
+    // collisions should be very unlikely
+    if (already[term.id]) {
+      badTerm.push(term)
+    }
+    already[term.id] = true
+  })
+})
+if (badTerm.length) {
+  console.log('dupe terms:', badTerm)
+}
 
 
 console.log((new Date().getTime() - begin.getTime()) / 1000)

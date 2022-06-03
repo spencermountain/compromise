@@ -11,7 +11,13 @@ const fns = {
     }
     // allow a list of methods
     else if (isArray(input)) {
-      input.forEach(name => world.compute.hasOwnProperty(name) && compute[name](this))
+      input.forEach(name => {
+        if (world.compute.hasOwnProperty(name)) {
+          compute[name](this)
+        } else {
+          console.warn('no compute:', input) // eslint-disable-line
+        }
+      })
     }
     // allow a custom compute function
     else if (typeof input === 'function') {

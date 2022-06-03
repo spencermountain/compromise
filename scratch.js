@@ -13,14 +13,48 @@ nlp.plugin(plg)
 // // b.debug()
 // console.log(b)
 
-// nlp(` from malnutrition, chest diseases, cardiovascular disorders, skin problems, infectious diseases and the aftereffects of assaults and rape.`).debug()
-// 
 
-let txt = ''
 
-let doc = nlp(`i'm good`)
-doc.verbs().toPresent()
-doc.debug()
+let begin = new Date()
+const string = `The hours have passed like stones being pushed up a mountain. For all of the luxury that surrounds us, I can't shake this feeling of unease that's slowly creeping in through the back of my mind. I can tell that Johna and Temmy have noticed it as well—it's just something about the air here that makes me uneasy. Joanna feigns disinterest but behind her shades she's studying the surroundings like the seasoned detective she is.`
+
+const text = (string + '\n').repeat(50)
+
+const doc = nlp(text)
+// doc.terms()
+//   .not('#Pronoun')
+//   .not('#Preposition')
+//   .not('#Conjunction')
+//   .not('#Determiner')
+//   .json()
+let m = doc.terms()
+console.log(JSON.stringify(m.pointer, null, 2))
+console.log(m.pointer.length)
+m = m.not('#Pronoun')
+console.log(m.pointer.length)
+m = m.not('#Preposition')
+console.log(m.pointer.length)
+m = m.not('#Conjunction')
+console.log(m.pointer.length)
+m = m.not('#Determiner')
+console.log(m.pointer.length)
+// m.json()
+
+
+console.log((new Date().getTime() - begin.getTime()) / 1000)
+
+
+// let txt = ''
+
+// let doc = nlp('Maris Piper potatoes')
+// doc.nouns().toSingular()
+// console.log(doc.text())
+
+// nlp("Anna's eating lunch.").debug()
+
+// let doc = nlp(`i'm good`)
+// doc.verbs().toPresent()
+// doc.debug()
 
 
 

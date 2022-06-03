@@ -5,6 +5,7 @@ const utils = {
   },
   /** return individual terms*/
   terms: function (n) {
+    // return this.match('.')
     // this is a bit faster than .match('.') 
     let ptrs = []
     this.docs.forEach((terms) => {

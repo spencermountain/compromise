@@ -14,16 +14,19 @@ nlp.plugin(plg)
 // console.log(b)
 
 
+console.log(nlp.parseMatch('score was 10-2'))
 
-// let txt = `
-// Test
-// ***
-// book's plane's farm's field's`
-// let txt = `book's plane's`
-let txt = `he's foo she's`
-let doc = nlp(txt)
-console.log(doc.docs[0].map(t => t.index))
-doc.terms().debug()
+// let txt = `re-sell`
+// let doc = nlp(txt)
+// console.log(doc.docs[0])
+// console.log(nlp.parseMatch(txt))
+// doc.match(txt).debug()
+
+// let txt = `follow-up`
+// let doc = nlp(txt)
+// console.log(nlp.parseMatch(txt))
+// doc.debug()
+// doc.match(txt).debug()
 
 // console.log(usedWords)
 // let doc = nlp('Maris Piper potatoes')

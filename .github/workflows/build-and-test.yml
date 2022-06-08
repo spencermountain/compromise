@@ -48,7 +48,10 @@ jobs:
         run: |
           npm run test:smoke
           npm run test
-          # npm run testb
+          npm run test:one
+          npm run test:two
+          npm run test:three
+          npm run testb
           # npm run perf
           # npm run test:types
           # npm run test:stress

@@ -67,8 +67,8 @@ const rules = [
 
 let net = null
 const matcher = function (view, _, world) {
-  const { methods } = world
-  net = net || methods.one.buildNet(rules, methods)
+  const { methods, model } = world
+  net = net || methods.one.buildNet(rules, methods, model)
   view.sweep(net)
 }
 export default matcher

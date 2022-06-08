@@ -13,18 +13,27 @@ nlp.plugin(plg)
 // // b.debug()
 // console.log(b)
 
+nlp(`i've come and go`)
 
-console.log(nlp.parseMatch('score was 10-2'))
+let txt = ` We will see him in mid-September`
+// txt = ` Otherwise she has a review early next year`
 
-// let txt = `re-sell`
-// let doc = nlp(txt)
-// console.log(doc.docs[0])
-// console.log(nlp.parseMatch(txt))
-// doc.match(txt).debug()
+// tagging issues
+txt = `One killed; 6 hurt in family dispute`
+txt = "First, some of the remaining claims fail because they are not ripe."
+txt = 'Anybody can say charming things '
+
+// 'calculé'
+// x  - La carte des vins est bien calculée, le service est parfait et la nourriture est encore meilleure.
+
+
+
+// let doc = nlp(`before re-purpose after`)
+// console.log(doc.has('re-purpose'))
 
 // let txt = `follow-up`
 // let doc = nlp(txt)
-// console.log(nlp.parseMatch(txt))
+// console.log(nlp.parseMatch('re-purpose'))
 // doc.debug()
 // doc.match(txt).debug()
 

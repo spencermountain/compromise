@@ -13,7 +13,7 @@ const match = function (regs, group, opts) {
   // support param as string
   if (typeof regs === 'string') {
     regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts)
+    regs = one.parseMatch(regs, opts, this.world)
   }
   let todo = { regs, group }
   let res = one.match(this.docs, todo, this._cache)
@@ -44,7 +44,7 @@ const matchOne = function (regs, group, opts) {
   }
   if (typeof regs === 'string') {
     regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts)
+    regs = one.parseMatch(regs, opts, this.world)
   }
   let todo = { regs, group, justOne: true }
   let res = one.match(this.docs, todo, this._cache)
@@ -67,7 +67,7 @@ const has = function (regs, group, opts) {
   }
   if (typeof regs === 'string') {
     regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts)
+    regs = one.parseMatch(regs, opts, this.world)
   }
   let todo = { regs, group, justOne: true }
   let ptrs = one.match(this.docs, todo, this._cache).ptrs
@@ -88,7 +88,7 @@ const ifFn = function (regs, group, opts) {
   }
   if (typeof regs === 'string') {
     regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts)
+    regs = one.parseMatch(regs, opts, this.world)
   }
   let todo = { regs, group, justOne: true }
   let ptrs = this.fullPointer
@@ -121,7 +121,7 @@ const ifNo = function (regs, group, opts) {
   // otherwise parse the match string
   if (typeof regs === 'string') {
     regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts)
+    regs = one.parseMatch(regs, opts, this.world)
   }
   let cache = this._cache || []
   let view = this.filter((m, i) => {

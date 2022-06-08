@@ -4,11 +4,12 @@ import splitHyphens from './03-splitHyphens.js'
 import postProcess from './04-postProcess.js'
 
 /** parse a match-syntax string into json */
-const syntax = function (input, opts = {}) {
+const syntax = function (input, opts, world) {
   // fail-fast
   if (input === null || input === undefined || input === '') {
     return []
   }
+  opts = opts || {}
   if (typeof input === 'number') {
     input = String(input) //go for it?
   }
@@ -16,7 +17,7 @@ const syntax = function (input, opts = {}) {
   //turn them into objects
   tokens = tokens.map(str => parseToken(str, opts))
   // '~re-do~'
-  tokens = splitHyphens(tokens, opts)
+  tokens = splitHyphens(tokens, world)
   //clean up anything weird
   tokens = postProcess(tokens, opts)
   // console.log(tokens)

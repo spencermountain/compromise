@@ -4,9 +4,9 @@ import cache from './03-cache.js'
 import group from './04-group.js'
 
 // do some indexing on the list of matches
-const compile = function (matches, methods) {
+const compile = function (matches, methods, model) {
   // turn match-syntax into json
-  matches = parse(matches, methods)
+  matches = parse(matches, methods, model)
   // convert (a|b) to ['a', 'b']
   matches = buildUp(matches)
   // matches = buildUp(matches) // run this twice

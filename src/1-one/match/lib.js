@@ -7,6 +7,6 @@ export default {
     if (killUnicode) {
       str = killUnicode(str, world)
     }
-    return world.methods.one.parseMatch(str, opts)
+    return world.methods.one.parseMatch(str, opts, world)
   }
 }

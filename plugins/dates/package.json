@@ -36,7 +36,7 @@
     "builds/*.js"
   ],
   "peerDependencies": {
-    "compromise": ">=14.1.0"
+    "compromise": ">=14.2.0"
   },
   "dependencies": {
     "spacetime": "7.1.4",

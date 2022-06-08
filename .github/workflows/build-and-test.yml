@@ -52,6 +52,7 @@ jobs:
           npm run test:two
           npm run test:three
           npm run testb
+          npm run test:plugins
           # npm run perf
           # npm run test:types
           # npm run test:stress

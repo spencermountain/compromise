@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -14,30 +14,8 @@ nlp.verbose('tagger')
 // console.log(b)
 
 
-let txt = ` We will see him in mid-September`
-txt = `2012-06 -`
-txt = `on the day after next -`
-txt = `by the day after tomorrow -`
-txt = `4pm-5 -`
-txt = `today to next friday -`
-txt = `ask june to sell off all my assets in tomorrow's meeting -`
-txt = `the day after next -`
-txt = `tomorrow early in the day -`
-txt = `tomorrow late at night -`
-txt = `March 7th-11th 1987 -`
-txt = `in basically one week from now -`
-txt = `5th day of q1 2002 -`
-txt = `spring 1980`
-// txt = `Pay ABC 2000 -`
-// txt = ` Otherwise she has a review early next year`
 
-// tagging issues
-// txt = `1234-1234`
-
-
-
-let doc = nlp(txt)
-// let doc = nlp(`he out-lived it`)
+let doc = nlp(`he out-lived it`)
 // doc.debug()
 // doc.verbs().toFutureTense()
 doc.debug()

@@ -26,14 +26,10 @@ txt = 'Anybody can say charming things '
 // 'calculé'
 // x  - La carte des vins est bien calculée, le service est parfait et la nourriture est encore meilleure.
 
-let matches = [
-  { match: '2nd quarter of? 2022', tag: 'TimePeriod' },
-  { match: '(from|by|before) now', tag: 'FooBar' },
-]
-let net = nlp.buildNet(matches)
 
-// let doc = nlp(`before re-purpose after`)
-// console.log(doc.has('re-purpose'))
+
+let doc = nlp(`before re-purpose after`)
+console.log(doc.has('re-purpose'))
 
 // let txt = `follow-up`
 // let doc = nlp(txt)

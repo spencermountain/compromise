@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 
@@ -15,7 +15,7 @@ nlp.plugin(plg)
 
 
 
-let doc = nlp(`he out-lived it`)
+let doc = nlp(`let's not`)
 // doc.debug()
 // doc.verbs().toFutureTense()
 doc.debug()

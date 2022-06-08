@@ -1,11 +1,13 @@
 const hasDash = /[a-z0-9][-–—][a-z]/i
 
 // match 're-do' -> ['re','do']
-const splitHyphens = function (regs, model) {
-  if (model) {
+const splitHyphens = function (regs, world) {
+  if (!world.model.one) {
+    console.log('=-=-=-= here -=-=-=-')
+    // console.log(regs)
     // console.log(Object.keys(model))
   } else {
-    console.log('missing')
+    // console.log('missing')
   }
   // let prefixes = world.model.one.prefixes
   for (let i = regs.length - 1; i >= 0; i -= 1) {

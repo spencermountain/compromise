@@ -1,6 +1,7 @@
 import test from 'tape'
 import spacetime from 'spacetime'
 import nlp from './_lib.js'
+const here = ' [dates/times] '
 
 test('times of start and end', function (t) {
   let context = {
@@ -106,5 +107,16 @@ test('times test', function (t) {
   doc = nlp('it was ten after 9')
   json = doc.times().json()[0]
   t.equal(json.time.time, '9:10am', 'ten after 9')
+  t.end()
+})
+
+test('times test', function (t) {
+  let doc = nlp('tomorrow 5:45pm')
+  doc.times().format('24h')
+  t.equal(doc.text(), 'tomorrow 17:45', here + '24h')
+
+  doc = nlp('wednesday at 2:00am')
+  doc.times().format('{hour-24-pad}:{minute-pad}')
+  t.equal(doc.text(), 'wednesday at 02:00', here + 'fmt')
   t.end()
 })

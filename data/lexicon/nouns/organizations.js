@@ -1,7 +1,7 @@
 //just a few named-organizations
 //no acronyms needed. no product/brand pollution.
 export default [
-  'abc',
+  // 'abc',
   'academy of sciences',
   'acer',
   'activision blizzard',

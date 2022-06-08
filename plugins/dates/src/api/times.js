@@ -32,6 +32,26 @@ const api = function (View) {
       this.opts = opts || {}
     }
 
+    format(fmt) {
+      let found = this
+      let res = found.map(m => {
+        let obj = parse(m) || {}
+        if (obj.time) {
+          let s = spacetime.now().time(obj.time)
+          let str = obj.time
+          if (fmt === '24h') {
+            str = s.format('time-24')
+          } else {
+            str = s.format(fmt)
+          }
+          m = m.not('#Preposition')
+          m.replaceWith(str)
+        }
+        return m
+      })
+      return new Times(this.document, res.pointer, null, this.opts)
+    }
+
     get(n) {
       return getNth(this, n).map(parse)
     }

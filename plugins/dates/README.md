@@ -202,6 +202,7 @@ doc.dates().get()[0]
 - **.times()** - find day-times like `three oclock`
   - **.times().get()** - parsed times as json
   - **.times().json()** - overloaded json output with time metadata
+  - **.times().format(fmt)** - convert between time formats '24h' | '{hour-pad}:{minute-pad}' [etc](https://github.com/spencermountain/spacetime/wiki/Formatting)
   - **.times().normalize()** - turn 3mins into 3 minutes
 
 

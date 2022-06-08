@@ -15,6 +15,20 @@ nlp.verbose('tagger')
 
 
 let txt = ` We will see him in mid-September`
+txt = `2012-06 -`
+txt = `on the day after next -`
+txt = `by the day after tomorrow -`
+txt = `4pm-5 -`
+txt = `today to next friday -`
+txt = `ask june to sell off all my assets in tomorrow's meeting -`
+txt = `the day after next -`
+txt = `tomorrow early in the day -`
+txt = `tomorrow late at night -`
+txt = `March 7th-11th 1987 -`
+txt = `in basically one week from now -`
+txt = `5th day of q1 2002 -`
+txt = `spring 1980`
+// txt = `Pay ABC 2000 -`
 // txt = ` Otherwise she has a review early next year`
 
 // tagging issues
@@ -76,8 +90,8 @@ doc.debug()
 // // doc.debug('chunks')
 // // console.log(doc.match('this').json()[0].terms)
 // console.log('done')
-// let end = new Date()
-// console.log((end.getTime() - begin.getTime()) / 1000)
+// let end = new txt = `()`
+// console.log((end.begin.getTime()) / 1000)
 
 // let doc = nlp('one two three four')
 // let m = doc.match('one two three')

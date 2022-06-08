@@ -2,7 +2,7 @@ import fastTag from '../_fastTag.js'
 const min = 1400
 const max = 2100
 
-const dateWords = new Set(['in', 'on', 'by', 'for', 'during', 'within', 'before', 'after', 'of', 'this', 'next', 'last', 'may'])
+const dateWords = new Set(['in', 'on', 'by', 'until', 'for', 'during', 'throughout', 'within', 'before', 'after', 'of', 'this', 'next', 'last', 'may'])
 
 const seemsGood = function (term) {
   if (!term) {
@@ -22,6 +22,9 @@ const seemsOkay = function (term) {
     return false
   }
   if (term.tags.has('Ordinal')) {
+    return true
+  }
+  if (term.normal === 'is' || term.normal === 'was') {
     return true
   }
   return false

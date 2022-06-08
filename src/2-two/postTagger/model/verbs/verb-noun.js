@@ -145,7 +145,7 @@ export default [
   {
     match: '#Value [#PresentTense]',
     group: 0,
-    ifNo: ['one', '1', '#Copula'],
+    ifNo: ['one', '1', '#Copula', '#Infinitive'],
     tag: 'Plural',
     reason: '2-trains',
   },

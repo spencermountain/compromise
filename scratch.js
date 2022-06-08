@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 
 nlp.verbose('tagger')
 
@@ -13,17 +13,13 @@ nlp.verbose('tagger')
 // // b.debug()
 // console.log(b)
 
-nlp(`i've come and go`)
 
 let txt = ` We will see him in mid-September`
 // txt = ` Otherwise she has a review early next year`
 
 // tagging issues
-txt = `One killed; 6 hurt in family dispute`
-txt = "First, some of the remaining claims fail because they are not ripe."
-
-// 'calculé'
-// x  - La carte des vins est bien calculée, le service est parfait et la nourriture est encore meilleure.
+txt = `6 hurt in family dispute`
+txt = `year 1980 `
 
 
 

@@ -14,11 +14,16 @@ nlp.plugin(plg)
 // console.log(b)
 
 
+let matches = [
+  { match: '(he|she|they|#Noun) (has|have) (a|an)' }
+]
+let net = nlp.buildNet(matches)
 
-let doc = nlp(`let's not`)
+let doc = nlp(`you have a appointment`)
 // doc.debug()
 // doc.verbs().toFutureTense()
-doc.debug()
+doc.match(net).debug()
+// doc.debug()
 // console.log(doc.has('re-purpose'))
 
 // let txt = `follow-up`

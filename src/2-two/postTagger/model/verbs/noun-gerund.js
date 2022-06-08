@@ -4,7 +4,9 @@ export default [
   // the paving stones
   { match: '(that|the) [#Gerund #PresentTense]', group: 0, tag: 'Plural', reason: 'the-paving-stones' },
   // this swimming
-  { match: '(this|that|the) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
+  // { match: '(this|that|the) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
+  // the remaining claims
+  { match: '#Determiner [#Gerund] #Noun', group: 0, tag: 'Adjective', reason: 'the-gerund-noun' },
   // i think tipping sucks
   { match: `#Pronoun #Infinitive [#Gerund] #PresentTense`, group: 0, tag: 'Noun', reason: 'tipping-sucks' },
   // early warning

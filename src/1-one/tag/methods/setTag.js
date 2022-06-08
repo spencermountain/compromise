@@ -73,7 +73,7 @@ const log = (term, tag, reason = '') => {
     tag = tag.slice(0, 2).join(', #') + ' +' //truncate the list of tags
   }
   tag = typeof tag !== 'string' ? tag.join(', #') : tag
-  console.log(` ${yellow(word).padEnd(24)} \x1b[32m→\x1b[0m #${tag.padEnd(25)}  ${i(reason)}`) // eslint-disable-line
+  console.log(` ${yellow(word).padEnd(24)} \x1b[32m→\x1b[0m #${tag.padEnd(22)}  ${i(reason)}`) // eslint-disable-line
 }
 
 // add a tag to all these terms

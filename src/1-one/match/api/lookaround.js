@@ -39,7 +39,7 @@ const after = function (regs, group, opts) {
 
 const growLeft = function (regs, group, opts) {
   if (typeof regs === 'string') {
-    regs = this.world.methods.one.parseMatch(regs, opts)
+    regs = this.world.methods.one.parseMatch(regs, opts, this.world)
   }
   regs[regs.length - 1].end = true// ensure matches are beside us ←
   let ptrs = this.fullPointer
@@ -56,7 +56,7 @@ const growLeft = function (regs, group, opts) {
 
 const growRight = function (regs, group, opts) {
   if (typeof regs === 'string') {
-    regs = this.world.methods.one.parseMatch(regs, opts)
+    regs = this.world.methods.one.parseMatch(regs, opts, this.world)
   }
   regs[0].start = true// ensure matches are beside us →
   let ptrs = this.fullPointer

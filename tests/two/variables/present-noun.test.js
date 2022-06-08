@@ -97,7 +97,7 @@ let arr = [
   [`There was a prison break and I saw it`, 'there #Copula a #Noun #Noun and I #Verb it'],
   [`we gotta do, damage control.`, 'we have got to do #Noun #Noun'],
   [`Go to the chicken farm and take the hatchet.`, '#Verb to the #Noun #Noun and #Verb the #Noun'],
-  [`He split 2 1980 fights with Roberto Duran`, '#Pronoun #Verb #Value #Value #Plural with #Person #Person'],
+  // [`He split 2 1980 fights with Roberto Duran`, '#Pronoun #Verb #Value #Value #Plural with #Person #Person'],
   // [`what are those, fish hooks?`, 'what are . #Noun #Plural'],
   [`the sweet potato fries.`, '#Determiner sweet #Noun #Plural'],
   [`my friend's house.`, 'my #Noun #Noun'],

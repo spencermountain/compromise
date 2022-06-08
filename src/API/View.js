@@ -105,8 +105,10 @@ class View {
     let document = methods.one.tokenize.fromString(input, this.world)
     let doc = new View(document)
     doc.world = this.world
-    // doc.compute(world.hooks)
-    doc.compute(['normal', 'lexicon', 'preTagger'])
+    doc.compute(['normal', 'lexicon'])
+    if (this.world.compute.preTagger) {
+      doc.compute('preTagger')
+    }
     return doc
   }
   clone() {

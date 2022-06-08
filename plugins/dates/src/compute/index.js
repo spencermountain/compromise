@@ -1,14 +1,13 @@
-import basic from './00-basic.js'
-import time from './04-time.js'
-import timezone from './07-timezone.js'
-import fixup from './08-fixup.js'
+import basic from './00-year.js'
+import time from './01-time-range.js'
+import timezone from './02-timezone.js'
+import fixup from './03-fixup.js'
 import matches from './matches.js'
 let net = null
 
 const doMatches = function (view) {
   let { world } = view
-  const { methods } = world
-  net = net || methods.one.buildNet(matches, methods)
+  net = net || world.methods.one.buildNet(matches, world)
   view.sweep(net)
 }
 
@@ -16,6 +15,7 @@ const doMatches = function (view) {
 const compute = function (view) {
   view.cache()
   doMatches(view)
+  doMatches(view) // do it twice
   basic(view)
   time(view)
   timezone(view)
@@ -26,6 +26,7 @@ const compute = function (view) {
   view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before')
   view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks')
   view.match('#Time [(sharp|on the dot)]').tag('Time', '4pm sharp')
+  // view.match('in #Adverb #DateShift').tag('Date', 'in-around-2-weeks')
 
   return view
 }

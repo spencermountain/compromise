@@ -397,6 +397,7 @@ export default [
   'perspective',
   'incentive',
   'parish',
+  'tv',
 ]
 
 

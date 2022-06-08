@@ -4331,6 +4331,7 @@
   main.plugin = main.extend;
   var spacetime = main;
 
+  // these should be added to model
   const hardCoded = {
     daybreak: '7:00am', //ergh
     breakfast: '8:00am',
@@ -4346,6 +4347,8 @@
     midnight: '12:00am',
     am: '9:00am', //tomorow am
     pm: '5:00pm',
+    'early day': '8:00am',
+    'late at night': '11:00pm'
   };
   const minMap = {
     quarter: 15,
@@ -4394,6 +4397,7 @@
     time = time.not('^(at|by|for|before|this|after)');
     time = time.not('sharp');
     time = time.not('on the dot');
+    // time.debug()
     let s = spacetime.now(context.timezone);
     let now = s.clone();
     // check for known-times (like 'today')
@@ -7441,6 +7445,26 @@
         this.opts = opts || {};
       }
 
+      format(fmt) {
+        let found = this;
+        let res = found.map(m => {
+          let obj = parse$2(m) || {};
+          if (obj.time) {
+            let s = spacetime.now().time(obj.time);
+            let str = obj.time;
+            if (fmt === '24h') {
+              str = s.format('time-24');
+            } else {
+              str = s.format(fmt);
+            }
+            m = m.not('#Preposition');
+            m.replaceWith(str);
+          }
+          return m
+        });
+        return new Times(this.document, res.pointer, null, this.opts)
+      }
+
       get(n) {
         return getNth(this, n).map(parse$2)
       }
@@ -7889,7 +7913,7 @@
 
   const preps = '(in|by|before|during|on|until|after|of|within|all)'; //6
   const thisNext = '(last|next|this|previous|current|upcoming|coming)'; //2
-  const sections = '(start|end|middle|starting|ending|midpoint|beginning)'; //2
+  const sections = '(start|end|middle|starting|ending|midpoint|beginning|mid)'; //2
   const seasons = '(spring|summer|winter|fall|autumn)';
   const knownDate = '(yesterday|today|tomorrow)';
 
@@ -7975,6 +7999,8 @@
     { match: '(each|every) night', tag: 'Date', reason: 'for-now' },
     //saturday am
     { match: '#Date [(am|pm)]', group: 0, tag: 'Time', reason: 'date-am' },
+    // mid-august
+    { match: `[${sections}] #Date`, group: 0, tag: 'Date', reason: 'mid-sept' },
 
 
     //june 5 to 7th
@@ -8142,8 +8168,7 @@
 
   const doMatches = function (view) {
     let { world } = view;
-    const { methods } = world;
-    net = net || methods.one.buildNet(matches$1, methods);
+    net = net || world.methods.one.buildNet(matches$1, world);
     view.sweep(net);
   };
 
@@ -8151,6 +8176,7 @@
   const compute = function (view) {
     view.cache();
     doMatches(view);
+    doMatches(view); // do it twice
     basic(view);
     time(view);
     timezone(view);
@@ -8161,6 +8187,7 @@
     view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before');
     view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks');
     view.match('#Time [(sharp|on the dot)]').tag('Time', '4pm sharp');
+    // view.match('in #Adverb #DateShift').tag('Date', 'in-around-2-weeks')
 
     return view
   };
@@ -8663,7 +8690,7 @@
     mutate: (world) => {
       world.model.two.regexText = world.model.two.regexText || [];
       world.model.two.regexText = world.model.two.regexText.concat(regex);
-      // net = net || methods.one.buildNet(matches, methods)
+      // net = net || methods.one.buildNet(matches, world)
       // world.model.two.matches = world.model.two.matches.concat(matches)
     },
     hooks: ['dates']

@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 
@@ -15,15 +15,17 @@ nlp.plugin(plg)
 
 
 
-// let txt = `
-// Test
-// ***
-// book's plane's farm's field's`
-// let txt = `book's plane's`
-let txt = `he's foo she's`
-let doc = nlp(txt)
-console.log(doc.docs[0].map(t => t.index))
-doc.terms().debug()
+let doc = nlp(`let's not`)
+// doc.debug()
+// doc.verbs().toFutureTense()
+doc.debug()
+// console.log(doc.has('re-purpose'))
+
+// let txt = `follow-up`
+// let doc = nlp(txt)
+// console.log(nlp.parseMatch('re-purpose'))
+// doc.debug()
+// doc.match(txt).debug()
 
 // console.log(usedWords)
 // let doc = nlp('Maris Piper potatoes')
@@ -66,8 +68,8 @@ doc.terms().debug()
 // // doc.debug('chunks')
 // // console.log(doc.match('this').json()[0].terms)
 // console.log('done')
-// let end = new Date()
-// console.log((end.getTime() - begin.getTime()) / 1000)
+// let end = new txt = `()`
+// console.log((end.begin.getTime()) / 1000)
 
 // let doc = nlp('one two three four')
 // let m = doc.match('one two three')

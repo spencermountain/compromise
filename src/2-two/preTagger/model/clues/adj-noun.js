@@ -5,7 +5,8 @@ import noun from './_noun.js'
 
 const misc = {
   beforeTags: {
-    Determiner: undefined //the premier university
+    Determiner: undefined, //the premier university
+    Cardinal: 'Noun'//1950 convertable
   }
 }
 const clue = {

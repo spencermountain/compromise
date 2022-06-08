@@ -54,7 +54,10 @@ fns.replaceWith = function (input, keep = {}) {
   // delete the original terms
   main.delete(original) //science.
   // what should we return?
-  let m = main.toView(ptrs).compute(['index', 'lexicon', 'preTagger'])
+  let m = main.toView(ptrs).compute(['index', 'lexicon'])
+  if (m.world.compute.preTagger) {
+    m.compute('preTagger')
+  }
   // replace any old tags
   if (keep.tags) {
     m.terms().forEach((term, i) => {

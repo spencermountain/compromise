@@ -1,6 +1,6 @@
 const preps = '(in|by|before|during|on|until|after|of|within|all)' //6
 const thisNext = '(last|next|this|previous|current|upcoming|coming)' //2
-const sections = '(start|end|middle|starting|ending|midpoint|beginning)' //2
+const sections = '(start|end|middle|starting|ending|midpoint|beginning|mid)' //2
 const seasons = '(spring|summer|winter|fall|autumn)'
 const knownDate = '(yesterday|today|tomorrow)'
 
@@ -86,6 +86,8 @@ let matches = [
   { match: '(each|every) night', tag: 'Date', reason: 'for-now' },
   //saturday am
   { match: '#Date [(am|pm)]', group: 0, tag: 'Time', reason: 'date-am' },
+  // mid-august
+  { match: `[${sections}] #Date`, group: 0, tag: 'Date', reason: 'mid-sept' },
 
 
   //june 5 to 7th

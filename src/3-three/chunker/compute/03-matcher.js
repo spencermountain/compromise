@@ -56,7 +56,7 @@ const rules = [
   // { match: '#Adjective+ <Noun>', chunk: 'Noun' },
   // --- of ---
   // son of a gun
-  { match: '<Noun> of #Determiner? #Noun', chunk: 'Noun' },
+  { match: '#Noun of #Determiner? #Noun', chunk: 'Noun' },
   // --- in ---
   { match: '#Noun in #Determiner? #Noun', chunk: 'Noun' },
   // indoor and outdoor seating
@@ -67,8 +67,8 @@ const rules = [
 
 let net = null
 const matcher = function (view, _, world) {
-  const { methods } = world
-  net = net || methods.one.buildNet(rules, methods)
+  const { methods, model } = world
+  net = net || methods.one.buildNet(rules, world)
   view.sweep(net)
 }
 export default matcher

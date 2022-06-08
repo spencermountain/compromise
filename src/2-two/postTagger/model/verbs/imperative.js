@@ -33,6 +33,8 @@ export default [
   { match: '^[(shut|close|open|start|stop|end|keep)] #Determiner #Noun', group: 0, tag: 'Imperative', reason: 'shut-the-door' },
   // go to toronto
   { match: '^[go] to .', group: 0, tag: 'Imperative', reason: 'go-to-toronto' },
+  // would you recommend
+  { match: '^#Modal you [#Infinitive]', group: 0, tag: 'Imperative', reason: 'would-you-' },
   // never say
   { match: '^never [#Infinitive]', group: 0, tag: 'Imperative', reason: 'never-stop' },
   // stay away

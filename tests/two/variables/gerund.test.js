@@ -49,7 +49,7 @@ let arr = [
   [`more disgusting than`, '#Adverb #Adjective #Preposition'],
   [`was so nausiating`, '#Copula #Adverb #Adjective'],
   [`extremely moving`, '#Adverb #Adjective'],
-  [`this reckoning`, '#Determiner #Noun'],
+  // [`this reckoning`, '#Determiner #Noun'],
   // [`he is redefining his art`, '#Pronoun #Copula #Gerund his #Noun'],
   // [`he is redefining art`, '#Pronoun #Copula #Gerund #Noun'],
   [`it was redefining`, '#Pronoun #Copula #Adjective'],

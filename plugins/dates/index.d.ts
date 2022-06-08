@@ -8,11 +8,18 @@ interface DateView extends View {
   get(): object[]
 }
 
+interface TimeView extends View {
+  /** convert parsed dates to a time format */
+  format(fmt: string): View
+  /** get parsed time metadata */
+  get(): object[]
+}
+
 export interface DatesMethods {
   /** match all date-phrases */
   dates(): DateView
   /** match time-of-day phrases */
-  times(): View
+  times(): TimeView
   /** match lengths of time, like '2 weeks' */
   durations(): View
 }

@@ -4,8 +4,7 @@ let net = null
 const postTagger = function (view) {
   const { world } = view
   const { model, methods } = world
-
-  net = net || methods.one.buildNet(model.two.matches, methods)
+  net = net || methods.one.buildNet(model.two.matches, world)
   // perform these matches on a comma-seperated document
   let document = methods.two.quickSplit(view.document)
   let ptrs = document.map(terms => {

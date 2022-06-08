@@ -114,12 +114,12 @@ export default [
   // { match: '%Noun|Gerund%$', tag: 'Noun', reason: 'music-playing' },
   // fight and win
   { match: '#Infinitive and [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'fight and win' },
-  // hopes and dreams
-  // { match: '#Noun and [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'hopes-and-dreams' },
   // bride and groom
   { match: '#Noun and [%Noun|Verb%]', group: 0, tag: 'Singular', ifNo: ['#ProperNoun'], reason: 'bride-and-groom' },
   // an impressionist painting
   { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', ifNo: ['#ProperNoun'], reason: 'a-complex-relationship' },
-  // visit houses
-  // { match: '^[%Noun|Verb%] #Noun', group: 0, tag: 'Verb', reason: 'visit-boards' },
+  // the 1992 classic
+  { match: 'the #Cardinal [%Adj|Noun%]', group: 0, tag: 'Noun', reason: 'the-1992-classic' },
+  // 
+  // { match: '[%Adj|Noun%] #ProperNoun', group: 0, tag: 'Adjective', ifNo: ['#ProperNoun'], reason: 'epic-instagram' },
 ]

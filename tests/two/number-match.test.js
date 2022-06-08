@@ -84,7 +84,7 @@ let arr = [
   ['1-1', '#NumberRange #NumberRange #NumberRange'],
   ['12-12', '#NumberRange #NumberRange #NumberRange'],
   ['123-123', '#NumberRange #NumberRange #NumberRange'],
-  ['1234-1234', '#Noun'],
+  ['1234-1234', '#NumberRange+'],
 
 ]
 test('match:', function (t) {

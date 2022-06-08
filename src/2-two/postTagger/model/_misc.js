@@ -16,6 +16,8 @@ let matches = [
   { match: '^(well|so|okay|now)', tag: 'Expression', reason: 'well-' },
   // some sort of
   { match: 'some sort of', tag: 'Adjective Noun Conjunction', reason: 'some-sort-of' },
+  // some of
+  // { match: 'some of', tag: 'Noun Conjunction', reason: 'some-of' },
   // of some sort
   { match: 'of some sort', tag: 'Conjunction Adjective Noun', reason: 'of-some-sort' },
 

@@ -255,7 +255,7 @@ let arr = [
   [`john's whole world`, '#Possessive #Adjective #Noun'],
   [`your online profiles`, '#Possessive #Adjective #Noun'],
   [`their past mistakes`, '#Possessive #Adjective #Noun'],
-  [`Toronto's epic Instagram feed`, '#Possessive #Adjective #Noun #Noun'],
+  // [`Toronto's epic Instagram feed`, '#Possessive #Adjective #Noun #Noun'],
   [`in your foul shoes`, 'in #Possessive #Adjective #Noun'],
   [`MY DEAR WIFE`, '#Possessive #Adjective #Noun'],
   // [`your majesty shall`, '#Possessive #Noun #Verb'],
@@ -596,6 +596,34 @@ let arr = [
   ["Québec is in canada", "québec #Verb in #Country"],
   ["Québec is in canada", "quebec #Copula in canada"],
 
+  [`the remaining claims fail`, '#Determiner #Adjective #Plural #PresentTense'],
+  [`6 hurt in family dispute`, '#Value #Infinitive in #Singular #Singular'],
+
+
+  ['not be until 1982 that', 'not #Verb until #Year that'],
+  ['in his case 1500 cakes', 'in #Possessive #Singular !#Year #Plural'],
+  ['July 13, 1996 - video', '#Date+ #Singular'],
+  ['3 men from 1938 through the end of WWII', '#Cardinal #Plural from #Year through . #Singular of #Acronym'],
+  ['back in 1996', 'back in #Year'],
+  // ['the 1989 epic', 'the #Year #Singular'],
+  ['the 1975 hit', 'the #Year #Singular'],
+  ['back to 2000', 'back to #Year'],
+  ['the 1923 Tokyo disaster', 'the #Year #ProperNoun+ #Singular'],
+  // ['Dave Fleischer\'s 1939 version', '#Person+ #Year #Singular'],
+  ['the films made in 1931 are this creaky', 'the #Plural #Verb in #Year #Copula this #Adjective'],
+  ['at the 1999 Melbourne International Film Festival', 'at the #Year #ProperNoun+'],
+  ['its 1993 TV remake', 'its #Year #Noun+'],
+  // ['in 1999 - 2001 Ted had a crisis', 'in #Year+ #Person had a #Singular'],
+  ['circa 1971', '. #Year'],
+  ['Set in 1976 for no apparent reason', '#Verb in #Year for no #Adjective #Singular'],
+  ['the post - 1985 Perry Mason movies', 'the post #Year #Person+ #Plural'],
+  // ['the 1988 blockbuster movie', 'the #Year #Noun+'],
+  ['with its 1950 beds', 'with #Possessive !#Year #Plural'],
+  ['His death in 1994 went barely noticed', '#Possessive #Noun in #Year #Verb #Adverb noticed'],
+  ['the films in 1972 and 1974 respectively', 'the #Plural in #Year and #Year .'],
+  ['seen over 2000 Studio-Era sound films', '#Verb over !#Year #Noun+'],
+  ['This 1925 film narrates the story', '#Determiner #Year #Noun #PresentTense the #Singular'],
+  // ['my 1950 convertable', '#Possessive #Year #Singular'],
 ]
 test('match:', function (t) {
   let res = []

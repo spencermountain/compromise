@@ -1,5 +1,6 @@
 import spacetime from 'spacetime'
 
+// these should be added to model
 const hardCoded = {
   daybreak: '7:00am', //ergh
   breakfast: '8:00am',
@@ -15,6 +16,8 @@ const hardCoded = {
   midnight: '12:00am',
   am: '9:00am', //tomorow am
   pm: '5:00pm',
+  'early day': '8:00am',
+  'late at night': '11:00pm'
 }
 const minMap = {
   quarter: 15,
@@ -63,6 +66,7 @@ const parseTime = function (doc, context) {
   time = time.not('^(at|by|for|before|this|after)')
   time = time.not('sharp')
   time = time.not('on the dot')
+  // time.debug()
   let s = spacetime.now(context.timezone)
   let now = s.clone()
   // check for known-times (like 'today')

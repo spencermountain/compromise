@@ -15,6 +15,7 @@ const doMatches = function (view) {
 const compute = function (view) {
   view.cache()
   doMatches(view)
+  doMatches(view) // do it twice
   basic(view)
   time(view)
   timezone(view)
@@ -25,6 +26,7 @@ const compute = function (view) {
   view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before')
   view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks')
   view.match('#Time [(sharp|on the dot)]').tag('Time', '4pm sharp')
+  // view.match('in #Adverb #DateShift').tag('Date', 'in-around-2-weeks')
 
   return view
 }

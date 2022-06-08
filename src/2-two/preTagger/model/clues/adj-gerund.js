@@ -6,6 +6,8 @@ import gerund from './_gerund.js'
 const clue = {
   beforeTags: Object.assign({}, adj.beforeTags, gerund.beforeTags, {
     // Copula: 'Adjective', 
+    Imperative: 'Gerund',//recommend living in
+    Infinitive: 'Adjective',//say charming things
     PresentTense: 'Gerund',
     Plural: 'Gerund'//kids cutting
   }),
@@ -16,7 +18,9 @@ const clue = {
 
   beforeWords: Object.assign({}, adj.beforeWords, gerund.beforeWords, {
     is: 'Adjective',
-    was: 'Adjective'
+    was: 'Adjective',
+    suggest: 'Gerund',
+    recommend: 'Gerund',
   }),
 
   afterWords: Object.assign({}, adj.afterWords, gerund.afterWords, {

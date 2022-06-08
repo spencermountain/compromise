@@ -596,6 +596,8 @@ let arr = [
   ["Québec is in canada", "québec #Verb in #Country"],
   ["Québec is in canada", "quebec #Copula in canada"],
 
+  [`the remaining claims fail`, '#Determiner #Adjective #Plural #PresentTense']
+
 ]
 test('match:', function (t) {
   let res = []

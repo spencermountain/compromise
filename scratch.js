@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -21,15 +21,18 @@ let txt = ` We will see him in mid-September`
 // tagging issues
 txt = `One killed; 6 hurt in family dispute`
 txt = "First, some of the remaining claims fail because they are not ripe."
-txt = 'Anybody can say charming things '
 
 // 'calculé'
 // x  - La carte des vins est bien calculée, le service est parfait et la nourriture est encore meilleure.
 
 
 
-let doc = nlp(`before re-purpose after`)
-console.log(doc.has('re-purpose'))
+let doc = nlp(txt)
+// let doc = nlp(`he out-lived it`)
+// doc.debug()
+// doc.verbs().toFutureTense()
+doc.debug()
+// console.log(doc.has('re-purpose'))
 
 // let txt = `follow-up`
 // let doc = nlp(txt)

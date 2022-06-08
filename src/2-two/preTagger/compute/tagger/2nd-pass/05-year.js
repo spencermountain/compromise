@@ -33,7 +33,8 @@ const seemsGood = function (term) {
   if (!term) {
     return false
   }
-  if (dateWords.has(term.normal)) {
+  let str = term.normal || term.implicit
+  if (dateWords.has(str)) {
     return true
   }
   if (term.tags.has('Date') || term.tags.has('Month') || term.tags.has('WeekDay') || term.tags.has('Year')) {

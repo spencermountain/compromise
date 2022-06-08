@@ -13,6 +13,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - unwanted logging in compromise/one
 - **[fix]** - dependency export path for react-native builds #928
 - **[change]** - split hyphenated words in match syntax 'foo-bar'
+- **[change]** - support 4-digit number-ranges (when not a phone number)
   _plugin-releases_: dates
 
 #### 14.2.1 [June 2021]

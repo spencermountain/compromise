@@ -1,7 +1,7 @@
-import basic from './00-basic.js'
-import time from './04-time.js'
-import timezone from './07-timezone.js'
-import fixup from './08-fixup.js'
+import basic from './00-year.js'
+import time from './01-time-range.js'
+import timezone from './02-timezone.js'
+import fixup from './03-fixup.js'
 import matches from './matches.js'
 let net = null
 

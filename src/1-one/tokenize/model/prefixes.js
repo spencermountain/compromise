@@ -26,7 +26,7 @@ export default [
   'trans',
   'tri',
   'un',
-  'counter',
+  // 'counter',
   // 'mid',
   // 'out',
   // 'non',

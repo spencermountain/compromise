@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 
 nlp.verbose('tagger')
 
@@ -18,7 +18,7 @@ let txt = ` We will see him in mid-September`
 // txt = ` Otherwise she has a review early next year`
 
 // tagging issues
-txt = `in 1999 - 2001`
+// txt = `1234-1234`
 
 
 

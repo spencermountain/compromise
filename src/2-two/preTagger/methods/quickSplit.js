@@ -1,12 +1,13 @@
 // roughly, split a document by comma or semicolon
 
 const splitOn = function (terms, i) {
+  const isNum = /^[0-9]+$/
   let term = terms[i]
   // early on, these may not be dates yet:
-  const maybeDate = new Set(['may', 'april', 'august', 'jan'])
   if (!term) {
     return false
   }
+  const maybeDate = new Set(['may', 'april', 'august', 'jan'])
   // veggies, like figs
   if (term.normal === 'like' || maybeDate.has(term.normal)) {
     return false
@@ -17,6 +18,13 @@ const splitOn = function (terms, i) {
   }
   if (terms[i - 1]) {
     if (terms[i - 1].tags.has('Date') || maybeDate.has(terms[i - 1].normal)) {
+      return false
+    }
+  }
+  // don't split numbers, yet
+  let str = term.normal
+  if (str.length === 1 || str.length === 2 || str.length === 4) {
+    if (isNum.test(str)) {
       return false
     }
   }

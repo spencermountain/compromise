@@ -11,6 +11,10 @@ const logger = function (todo, document) {
   if (isArray(todo.tag)) {
     tag = todo.tag.join(' #')
   }
+  // don't show if it's already there
+  if (!tag || terms.every(t => t.tags.has(tag))) {
+    return
+  }
   let reason = todo.reason || todo.match
   reason = reason ? `|${reason}|` : ''
   let msg = `  ${reason}`.padEnd(20) + ' - '

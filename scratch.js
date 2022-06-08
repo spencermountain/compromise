@@ -18,8 +18,7 @@ let txt = ` We will see him in mid-September`
 // txt = ` Otherwise she has a review early next year`
 
 // tagging issues
-txt = `6 hurt in family dispute`
-txt = `year 1980 `
+txt = `in 1999 - 2001`
 
 
 

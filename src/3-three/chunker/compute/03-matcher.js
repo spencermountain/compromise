@@ -56,7 +56,7 @@ const rules = [
   // { match: '#Adjective+ <Noun>', chunk: 'Noun' },
   // --- of ---
   // son of a gun
-  { match: '<Noun> of #Determiner? #Noun', chunk: 'Noun' },
+  { match: '#Noun of #Determiner? #Noun', chunk: 'Noun' },
   // --- in ---
   { match: '#Noun in #Determiner? #Noun', chunk: 'Noun' },
   // indoor and outdoor seating

@@ -13,6 +13,38 @@ nlp.plugin(plg)
 // // b.debug()
 // console.log(b)
 
+// tagging/root issues June 10
+// "Okay, okay, okay should I be scared?"
+// "This is when I started to get scared."
+
+// "A 40-year-old man called me swell."
+// "that's just not swell"
+
+// Let’s get you into wardrobe for a fitting.
+
+// "My pants don't even fit right",
+// "In a baseball hat fit for a queen"
+// "Srinath will be fit in three weeks"
+// "does the different part fit together"
+
+// License fee for beach vendors hiked
+// "TTC to hike fares by 10 cents in March"
+
+// "He deserted from the Dragoons at",
+// "Offices; banks wear deserted look"
+
+// "CBI catches DD acting director taking bribe"
+// "How do I keep kissing you and catch my breath?"
+
+// "who were always throwing stones at me."
+// "People in glass houses should not throw stones, Dick, said Jaqueline."
+// 
+// "Why did the mechanic sleep under the car?"
+
+// Loblaws reducing food prices at Toronto stores
+// "Stock prices closed higher in Stockholm
+
+// Upload documents required to verify your eligibility
 
 let matches = [
   { match: '(he|she|they|#Noun) (has|have) (a|an)' }

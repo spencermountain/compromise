@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/two.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -37,15 +37,20 @@ import nlp from './src/one.js'
 
 // Upload documents required to verify your eligibility
 
+let m = '(he|she|they|and|but|#Patient|#Noun|#Honorific|#ProperNoun+) #ProperNoun+? (will|shall|should|would) be followed up .{0,3}?$'
+let txt = `and he will be followed up after the injection.`//followUp positive
+
+
+m = `!(not|would) (discharge|discharging|discharged) (him|her|them|you|#Honorific|#ProperNoun+) #ProperNoun+? from * (service|services|clinic|unit|ward|care)`
+txt = `At this stage we discharged him from clinic.`
 
 let matches = [
-  // {    match: '(he|she|they|and|but|#Patient|#Noun|#Honorific|#ProperNoun+) #ProperNoun+? (will|shall|should|would) be followed up .{0,3}?$'  }
-  { match: '(one|two) and (three|four)' }
+  { match: m }
 ]
 
 
 let net = nlp.buildNet(matches)
-let doc = nlp('one and foo')
+let doc = nlp(txt)
 // doc.debug()
 // doc.verbs().toFutureTense()
 doc.match(net).debug()

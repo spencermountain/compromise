@@ -26,7 +26,7 @@ const checkTag = (term, obj = {}, tagSet) => {
   })
   let found = tags.find(tag => obj[tag])
   if (found && env.DEBUG_TAGS) {
-    console.log(`\n  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)//eslint-disable-line
+    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)//eslint-disable-line
   }
   found = obj[found]
   return found
@@ -73,11 +73,8 @@ const doSwitches = function (terms, i, world) {
     }
     // did we find anything?
     if (tag) {
-      if (env.DEBUG_TAGS) {
-        console.log(`\n  \x1b[32m [variable] - '${str}' - (${form}) → #${tag} \x1b[0m\n`)//eslint-disable-line
-      }
       // setTag(term, tag, model)
-      setTag([term], tag, world, null, `3-[variable]`)
+      setTag([term], tag, world, null, `3-[variable] (${form})`)
     } else if (env.DEBUG_TAGS) {
       console.log(`\n -> X  - '${str}'  : ${form}  `)//eslint-disable-line
     }

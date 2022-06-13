@@ -2,18 +2,8 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-import fs from 'fs'
-let txt = fs.readFileSync('/Users/spencer/mountain/compromise/plugins/speed/tests/files/freshPrince.txt').toString()
+
 nlp.verbose('tagger')
-
-// let doc = nlp('one match two three')
-// let a = doc.match('match two')
-// let b = a.remove('two')
-// console.log(a)
-// // a.debug()
-// // b.debug()
-// console.log(b)
-
 // tagging/root issues June 10
 // "Okay, okay, okay should I be scared?"
 // "This is when I started to get scared."

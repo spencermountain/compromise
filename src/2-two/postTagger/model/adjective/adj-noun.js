@@ -11,4 +11,6 @@ export default [
   { match: `(have|had) [#Adjective] #Preposition .`, group: 0, tag: 'Noun', reason: 'have-fun' },
   // brewing giant
   { match: `#Gerund (giant|capital|center|zone|application)`, tag: 'Noun', reason: 'brewing-giant' },
+  // in an instant
+  { match: `#Preposition (a|an) [#Adjective]$`, group: 0, tag: 'Noun', reason: 'an-instant' },
 ]

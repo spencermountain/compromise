@@ -100,6 +100,7 @@ export default [
   'token',
   'top',
   'total',
+  'trial',
   'undergraduate',
   'underground',
   'upstairs',

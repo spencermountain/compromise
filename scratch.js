@@ -14,17 +14,9 @@ let txt = ''
 // "that's just not swell"
 
 txt = "Let’s get you into wardrobe for a fitting."
-txt = " any need for a trial"
-txt = " definitely worth a rental."
-txt = "go kayaking in a tributary?."
-txt = "any need for a trial."
-txt = "keeping the matter a secret"
-txt = "on this as a whole"
-txt = "he had fallen into a cold"
-txt = " I was an expert"
-txt = " taken from us in an instant"
-txt = " the instant he walked"
-txt = " pressure on the terrorist countries."
+// txt = "I was an expert"
+// txt = "definitely worth a rental."
+// txt = "keeping the matter a secret"
 
 // txt = "My pants don't even fit right"
 // txt = "In a baseball hat fit for a queen"
@@ -40,10 +32,7 @@ txt = " pressure on the terrorist countries."
 // txt = "CBI catches DD acting director taking bribe"
 // txt = "How do I keep kissing you, and catch my breath?"
 
-// "who were always throwing stones at me."
 // txt = " throw stones, Dick, said Jaqueline."
-// 
-
 // txt = "Loblaws reducing food prices at Toronto stores"
 // txt = "Stock prices closed higher in Stockholm"
 

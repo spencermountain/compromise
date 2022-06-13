@@ -624,6 +624,20 @@ let arr = [
   ['seen over 2000 Studio-Era sound films', '#Verb over !#Year #Noun+'],
   ['This 1925 film narrates the story', '#Determiner #Year #Noun #PresentTense the #Singular'],
   // ['my 1950 convertable', '#Possessive #Year #Singular'],
+
+  ["always throwing stones at me", '#Adverb #Gerund #Plural at #Pronoun'],
+
+  ["any need for a trial", 'any #Noun for a #Noun'],
+  ["go kayaking in a tributary?.", '#Verb #Gerund in a #Noun'],
+  ["any need for a trial.", 'any #Noun for a #Noun'],
+  ["as a whole", 'as a #Noun'],
+  ["he had fallen into a cold", '#Pronoun #Auxiliary #Verb into a #Noun'],
+  ["taken from us in an instant", 'taken from #Pronoun in an #Noun'],
+  ["the instant he walked", 'the #Noun #Pronoun #PastTense'],
+
+  // ["I was an expert", 'i was an #Noun'],
+  // ["definitely worth a rental.", '#Adverb #Verb a #Noun'],
+  // ["keeping the matter a secret", '#Gerund the #Noun a #Noun'],
 ]
 test('match:', function (t) {
   let res = []

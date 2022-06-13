@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // tagging/root issues June 10
 // "Okay, okay, okay should I be scared?"
 // "This is when I started to get scared."
@@ -38,9 +38,20 @@ nlp.verbose('tagger')
 // Upload documents required to verify your eligibility
 
 
+let matches = [
+  // {    match: '(he|she|they|and|but|#Patient|#Noun|#Honorific|#ProperNoun+) #ProperNoun+? (will|shall|should|would) be followed up .{0,3}?$'  }
+  { match: '(one|two) and (three|four)' }
+]
+
+
+let net = nlp.buildNet(matches)
+let doc = nlp('one and foo')
+// doc.debug()
+// doc.verbs().toFutureTense()
+doc.match(net).debug()
 
 // let doc = nlp(`he will have been walking`).debug()
-let doc = nlp(`Bob has handled`).debug()
+// let doc = nlp(`Bob has handled`).debug()
 // doc.match('have').tag('Auxiliary')
 // doc.verbs().toPresent()
 // console.log(doc.has('he has really walked'))
@@ -116,14 +127,14 @@ let doc = nlp(`Bob has handled`).debug()
 // doc.match('#Person').debug()
 
 // let net = nlp.buildNet([
-//   { match: 'every single #Noun' },
-//   { match: 'not (a|one) #Singular' },
+//  { match: 'every single #Noun' },
+//  { match: 'not (a|one) #Singular' },
 // ])
 // let doc = nlp('i saw every single house. i met none. ')
 // doc.match(net).debug()
 // let m = nlp([['first.', 'foo bar']]).debug()
 // let matches = [
-//   { match: 'third' },
+//  { match: 'third' },
 // ]
 // let net = nlp.buildNet(matches)
 // let doc = nlp(`first. second. third`)

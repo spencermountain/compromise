@@ -19,7 +19,8 @@ const localTrim = function (maybeList, docCache) {
         return true
       }
       // ensure there's one cache-hit
-      return obj.wants.find(str => haves.has(str))
+      let found = obj.wants.filter(str => haves.has(str)).length
+      return found >= obj.minWant
     })
     return list
   })

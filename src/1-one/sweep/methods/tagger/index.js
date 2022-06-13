@@ -1,4 +1,3 @@
-import logger from './_logger.js'
 import canBe from './canBe.js'
 
 const tagger = function (list, document, world) {

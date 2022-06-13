@@ -34,6 +34,7 @@ const getNeeds = function (regs) {
 
 const getWants = function (regs) {
   let wants = []
+  let count = 0
   regs.forEach(reg => {
     if (reg.operator === 'or' && !reg.optional) {
       // add fast-or terms
@@ -53,9 +54,10 @@ const getWants = function (regs) {
           })
         })
       }
+      count += 1
     }
   })
-  return wants
+  return { wants, count }
 }
 
 const parse = function (matches, world) {
@@ -68,7 +70,9 @@ const parse = function (matches, world) {
     }
     // cache any requirements up-front 
     obj.needs = getNeeds(obj.regs)
-    obj.wants = getWants(obj.regs)
+    let { wants, count } = getWants(obj.regs)
+    obj.wants = wants
+    obj.minWant = count
     // get rid of tiny sentences
     obj.minWords = obj.regs.filter(o => !o.optional).length
   })

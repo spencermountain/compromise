@@ -35,7 +35,7 @@ const getNeeds = function (regs) {
 const getWants = function (regs) {
   let wants = []
   regs.forEach(reg => {
-    if (reg.operator === 'or') {
+    if (reg.operator === 'or' && !reg.optional) {
       // add fast-or terms
       if (reg.fastOr) {
         Array.from(reg.fastOr).forEach(w => {

@@ -1,10 +1,10 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 import fs from 'fs'
 let txt = fs.readFileSync('/Users/spencer/mountain/compromise/plugins/speed/tests/files/freshPrince.txt').toString()
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // let doc = nlp('one match two three')
 // let a = doc.match('match two')
@@ -47,50 +47,13 @@ let txt = fs.readFileSync('/Users/spencer/mountain/compromise/plugins/speed/test
 
 // Upload documents required to verify your eligibility
 
-let matches = [
-  // { match: 'two flub' },
-  // { match: '(one|two) foo' }
-  // { match: '^(go|stop|wait) please (and|stop)' },
-  // { match: '(foo|bar) please' }
-  // { match: '(one|two) please' },
-  // { match: ' please two please' },
-  // { match: '#Determiner [(shit|damn|hell)]' },
-  // { match: 'the [(can|will|may)]' },
-  // { match: 'to [(shit|hell)]' },
-  // { match: '(right|rights) of .' }
-  // { match: 'please (and|stop) please' }
-
-  // - #Determiner #Noun [(feel|sense|process|rush|side|bomb|bully|challenge|cover|crush|dump|exchange|flow|function|issue|lecture|limit|march|process)] !(#Preposition|to|#Adverb)?
-  // - (had|has) to [#Noun] (#Determiner|#Possessive)
-  // - (a|an) #Adjective? #Noun [#Infinitive] (#Preposition|#Noun)
-  // - (king|queen|prince|saint|lady) of #Noun
-  // - (the|these) [#Singular] (were|are)
-  // - (let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)
-  // - (the|those|these|a|an) #Adjective? [#Infinitive]
-  // - (the|those|these|a|an) #Adjective? [#PresentTense]
-  // - #Infinitive (this|that|the) [#Infinitive]
-  // - (the|this|a|an) [#Infinitive] #Adverb? #Verb
-  // - ^[#Infinitive] (your|my|the|some|a|an)
-  // - #Verb [(out|for|through|about|around|in|down|up|on|off)] #Preposition
-  // - [#Verb (in|out|up|down|off|back)] (on|in)
-  // - (prince|lady) #Place
-  // - (king|queen|prince|saint) #ProperNoun
-  // - (this|next|last) [(march|may)]
-  // - [(half|quarter)] of? (a|an)
-  // - !once? [(a|an)] (#Duration|hundred|thousand|million|billion|trillion)
-  // - ^(go|stop|wait|hurry) please?$
-  { match: '(well|so|okay|now)' }
-]
 
 
-matches = [
-  { match: '2nd quarter 2022' },
-]
-let net = nlp.buildNet(matches)
-let doc = nlp(` in the 2nd quarter 2022`)
-let { view, found } = doc.sweep(net)
-view.debug()
-
+// let doc = nlp(`he will have been walking`).debug()
+let doc = nlp(`Bob has handled`).debug()
+// doc.match('have').tag('Auxiliary')
+// doc.verbs().toPresent()
+// console.log(doc.has('he has really walked'))
 // let net = nlp.buildNet(matches)
 // console.log(net)
 // console.log(net.hooks)

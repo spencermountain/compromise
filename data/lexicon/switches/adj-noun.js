@@ -45,6 +45,7 @@ export default [
   'incumbent',
   'individual',
   'innocent',
+  'instant',
   'juvenile',
   'justice',
   'latter',

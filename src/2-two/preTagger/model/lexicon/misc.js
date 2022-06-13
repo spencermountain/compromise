@@ -48,18 +48,19 @@ let misc = {
 
 
   // irregular conjugations with two forms
-  'babysat': 'PastTense',
-  'blew': 'PastTense',
-  'drank': 'PastTense',
-  'drove': 'PastTense',
-  'forgave': 'PastTense',
-  'skiied': 'PastTense',
-  'spilt': 'PastTense',
-  'stung': 'PastTense',
-  'swam': 'PastTense',
-  'swung': 'PastTense',
-  'guaranteed': 'PastTense',
-  'shrunk': 'PastTense',
+  babysat: 'PastTense',
+  blew: 'PastTense',
+  drank: 'PastTense',
+  drove: 'PastTense',
+  forgave: 'PastTense',
+  skiied: 'PastTense',
+  spilt: 'PastTense',
+  stung: 'PastTense',
+  swam: 'PastTense',
+  swung: 'PastTense',
+  guaranteed: 'PastTense',
+  shrunk: 'PastTense',
 
+  no: ['Negative', 'Expression']
 }
 export default misc

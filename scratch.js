@@ -3,7 +3,9 @@ import nlp from './src/two.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
+
+let txt = ''
 // tagging/root issues June 10
 // "Okay, okay, okay should I be scared?"
 // "This is when I started to get scared."
@@ -11,49 +13,59 @@ import nlp from './src/two.js'
 // "A 40-year-old man called me swell."
 // "that's just not swell"
 
-// Let’s get you into wardrobe for a fitting.
+txt = "Let’s get you into wardrobe for a fitting."
+txt = " any need for a trial"
+txt = " definitely worth a rental."
+txt = "go kayaking in a tributary?."
+txt = "any need for a trial."
+txt = "keeping the matter a secret"
+txt = "on this as a whole"
+txt = "he had fallen into a cold"
+txt = " I was an expert"
+txt = " taken from us in an instant"
+txt = " the instant he walked"
+txt = " pressure on the terrorist countries."
 
-// "My pants don't even fit right",
-// "In a baseball hat fit for a queen"
-// "Srinath will be fit in three weeks"
-// "does the different part fit together"
+// txt = "My pants don't even fit right"
+// txt = "In a baseball hat fit for a queen"
+// txt = "Srinath will be fit in three weeks"
+// txt = "does the different part fit together"
 
-// License fee for beach vendors hiked
-// "TTC to hike fares by 10 cents in March"
+// txt = "License fee for beach vendors hiked"
+// txt = "TTC to hike fares by 10 cents in March"
 
-// "He deserted from the Dragoons at",
-// "Offices; banks wear deserted look"
+// txt = "He deserted from the Dragoons at"
+// txt = "banks wear deserted look"
 
-// "CBI catches DD acting director taking bribe"
-// "How do I keep kissing you and catch my breath?"
+// txt = "CBI catches DD acting director taking bribe"
+// txt = "How do I keep kissing you, and catch my breath?"
 
 // "who were always throwing stones at me."
-// "People in glass houses should not throw stones, Dick, said Jaqueline."
+// txt = " throw stones, Dick, said Jaqueline."
 // 
-// "Why did the mechanic sleep under the car?"
 
-// Loblaws reducing food prices at Toronto stores
-// "Stock prices closed higher in Stockholm
+// txt = "Loblaws reducing food prices at Toronto stores"
+// txt = "Stock prices closed higher in Stockholm"
 
-// Upload documents required to verify your eligibility
-
-let m = '(he|she|they|and|but|#Patient|#Noun|#Honorific|#ProperNoun+) #ProperNoun+? (will|shall|should|would) be followed up .{0,3}?$'
-let txt = `and he will be followed up after the injection.`//followUp positive
+// txt = `Upload documents required to verify your eligibility`
 
 
-m = `!(not|would) (discharge|discharging|discharged) (him|her|them|you|#Honorific|#ProperNoun+) #ProperNoun+? from * (service|services|clinic|unit|ward|care)`
-txt = `At this stage we discharged him from clinic.`
 
-let matches = [
-  { match: m }
-]
+// let txt = `There are no open wounds `
 
-
-let net = nlp.buildNet(matches)
+// let matches = [
+//   { match: m }
+// ]
+// let net = nlp.buildNet(matches)
 let doc = nlp(txt)
+// console.log(doc.docs)
 // doc.debug()
 // doc.verbs().toFutureTense()
-doc.match(net).debug()
+// doc.match(net).debug()
+doc.debug()
+
+// banks wear
+// %Plural|Verb% %Noun|Verb%
 
 // let doc = nlp(`he will have been walking`).debug()
 // let doc = nlp(`Bob has handled`).debug()

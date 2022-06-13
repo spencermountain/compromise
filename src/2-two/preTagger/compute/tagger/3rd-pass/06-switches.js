@@ -73,10 +73,9 @@ const doSwitches = function (terms, i, world) {
     }
     // did we find anything?
     if (tag) {
-      // setTag(term, tag, model)
       setTag([term], tag, world, null, `3-[variable] (${form})`)
     } else if (env.DEBUG_TAGS) {
-      console.log(`\n -> X  - '${str}'  : ${form}  `)//eslint-disable-line
+      console.log(`\n -> X  - '${str}'  : (${form})  `)//eslint-disable-line
     }
   }
 }

@@ -115,7 +115,6 @@ export default [
   'icy',
   'ill',
   'insecure',
-  'instant',
   'intellegent',
   'intermediate',
   'intimate',

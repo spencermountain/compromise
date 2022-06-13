@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -47,14 +47,19 @@ import nlp from './src/two.js'
 // Upload documents required to verify your eligibility
 
 let matches = [
-  { match: '(he|she|they|#Noun) (has|have) (a|an)' }
+  // { match: '(he|she|they|#Noun) (has|have) (a|an|some)' },
+  // { match: 'you foo' },
+  // { match: 'foo bar' },
+  { match: '{appointment}' }
 ]
 let net = nlp.buildNet(matches)
-let doc = nlp(`you have a appointment`)
+let doc = nlp(`you have some appointments`)
+doc.compute('root')
+console.log(doc.text('root'))
 // doc.debug()
 // doc.verbs().toFutureTense()
 doc.match(net).debug()
-console.log(doc.has(net))
+// console.log(doc.has(net))
 // doc.debug()
 // console.log(doc.has('re-purpose'))
 

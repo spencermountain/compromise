@@ -17,6 +17,9 @@ const createCache = function (document) {
       if (term.machine) {
         stuff.add(term.machine)
       }
+      if (term.root) {
+        stuff.add(term.root)
+      }
       // cache slashes words, etc
       if (term.alias) {
         term.alias.forEach(str => stuff.add(str))

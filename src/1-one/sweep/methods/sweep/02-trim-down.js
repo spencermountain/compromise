@@ -1,6 +1,5 @@
 // filter-down list of maybe-matches
 const localTrim = function (maybeList, docCache) {
-  // console.log(maybeList)
   for (let n = 0; n < docCache.length; n += 1) {
     let haves = docCache[n]
 

@@ -23,8 +23,8 @@ const compile = function (matches, world) {
   // assume any match will be found on another need
   // this is true now,
   // but we should stay careful about this.
-  delete byGroup['#Noun']
-  delete byGroup['#Verb']
+  // delete byGroup['#Noun']
+  // delete byGroup['#Verb']
   // console.log(matches.filter(o => o.needs.length === 1)) //check!
 
   return {

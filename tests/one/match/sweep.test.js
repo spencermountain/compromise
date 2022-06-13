@@ -89,8 +89,10 @@ test('cache-checks:', function (t) {
 
   m = nlp('will Smith').sweep(net).view
   t.equal(m.has('#Celebrity'), false, here + 'and true-negative')
+
   t.end()
 })
+
 
 test('multi-fast-OR:', function (t) {
   let net = nlp.buildNet([

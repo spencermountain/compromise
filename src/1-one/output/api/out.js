@@ -1,6 +1,6 @@
 import debug from './debug/index.js'
 import wrap from './wrap.js'
-
+import hash from './lib/hash.js'
 
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'
@@ -34,6 +34,9 @@ const out = function (method) {
   }
   if (method === 'machine' || method === 'reduced') {
     return this.text('machine')
+  }
+  if (method === 'hash' || method === 'md5') {
+    return hash(this.text())
   }
 
   // json data formats

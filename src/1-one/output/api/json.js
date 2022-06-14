@@ -1,5 +1,8 @@
-import { textFromTerms } from './_text.js'
+import { textFromTerms } from './lib/_text.js'
 import fmts from './_fmts.js'
+import hash from './lib/hash.js'
+
+
 const defaults = {
   text: true,
   terms: true,
@@ -12,14 +15,14 @@ const merge = function (a, b) {
 }
 
 const fns = {
-  text: (terms) => {
-    return textFromTerms(terms, { keepPunct: true }, false)
-  },
+  text: (terms) => textFromTerms(terms, { keepPunct: true }, false),
   normal: (terms) => textFromTerms(terms, merge(fmts.normal, { keepPunct: true }), false),
   implicit: (terms) => textFromTerms(terms, merge(fmts.implicit, { keepPunct: true }), false),
 
   machine: (terms) => textFromTerms(terms, opts, false),
   root: (terms) => textFromTerms(terms, merge(opts, { form: 'root' }), false),
+
+  hash: (terms) => hash(textFromTerms(terms, { keepPunct: true }, false)),
 
   offset: (terms) => {
     let len = fns.text(terms).length

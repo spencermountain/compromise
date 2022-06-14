@@ -7,6 +7,7 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 <!-- #### [Unreleased]
+- **[new]** - .out('hash') and `.json({hash:true})`
 -->
 
 #### 14.3.0 [June 2021]

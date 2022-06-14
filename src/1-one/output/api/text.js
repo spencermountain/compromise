@@ -1,4 +1,4 @@
-import { textFromDoc } from './_text.js'
+import { textFromDoc } from './lib/_text.js'
 import fmts from './_fmts.js'
 
 const isObject = val => {

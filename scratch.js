@@ -3,7 +3,7 @@ import nlp from './src/two.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let txt = ''
 // tagging/root issues June 10
@@ -46,12 +46,8 @@ txt = "Let’s get you into wardrobe for a fitting."
 //   { match: m }
 // ]
 // let net = nlp.buildNet(matches)
-let doc = nlp(txt)
-// console.log(doc.docs)
-// doc.debug()
-// doc.verbs().toFutureTense()
-// doc.match(net).debug()
-doc.debug()
+let doc = nlp('fruit salad. food-safety')
+console.log(doc.json({ hash: true }))
 
 // banks wear
 // %Plural|Verb% %Noun|Verb%

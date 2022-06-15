@@ -82,7 +82,7 @@ let arr = [
   [`the city strains`, `the #Noun #Plural`],
   // [`the software patches`, `the #Noun #Plural`],
   // [`the toronto fires`, `the #Noun #Plural`],
-  [`The paving-stones`, `the #Noun #Plural`],
+  [`The paving-stones`, `the #Adjective #Plural`],
   // [`cost of living`, `#PastTense #Preposition #Noun`],
   [`The similar TORRO scale ranges from`, 'the #Adjective #Noun #Noun #PresentTense from'],
   // [`New project crowdsources help for Toronto's homeless`, '#Adjective #Noun #PresentTense #Noun for #Possessive #Noun'],

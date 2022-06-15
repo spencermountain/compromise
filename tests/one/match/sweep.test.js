@@ -3,7 +3,6 @@ import nlp from '../_lib.js'
 const here = '[one/sweep] '
 
 test('sweep-basic:', function (t) {
-
   let matches = [
     { match: '2nd quarter of? 2022', tag: 'TimePeriod' },
     { match: '(from|by|before) now', tag: 'FooBar' },
@@ -38,6 +37,7 @@ test('match-net-basic:', function (t) {
   // return after the first match
   let { view, found } = doc.sweep(net, { tagger: false, matchOne: true })
   t.equal(view.length, 1, here + 'matchOne')
+  found[0] = found[0] || {}
   t.equal(found[0].match, 'john c .', here + 'matchOne-first')
 
   // .match
@@ -89,8 +89,10 @@ test('cache-checks:', function (t) {
 
   m = nlp('will Smith').sweep(net).view
   t.equal(m.has('#Celebrity'), false, here + 'and true-negative')
+
   t.end()
 })
+
 
 test('multi-fast-OR:', function (t) {
   let net = nlp.buildNet([
@@ -158,6 +160,8 @@ test('sweep absolute indexes:', function (t) {
   res.view.soften()
   t.equal(res.view.text(), 'third', here + 'abs index in res')
 
+  res.found[0] = res.found[0] || {}
+  res.found[0].view = res.found[0].view || doc.none()
   res.found[0].view.soften()
   t.equal(res.found[0].view.text(), 'third', here + 'abs index in found')
   t.end()

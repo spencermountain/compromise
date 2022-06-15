@@ -1,21 +1,28 @@
 // filter-down list of maybe-matches
 const localTrim = function (maybeList, docCache) {
-  // console.log(maybeList)
-  for (let n = 0; n < docCache.length; n += 1) {
+  return maybeList.map((list, n) => {
     let haves = docCache[n]
-
     // ensure all stated-needs of the match are met
-    maybeList[n] = Array.from(maybeList[n]).filter(obj => {
+    list = list.filter(obj => {
       return obj.needs.every(need => haves.has(need))
     })
     // ensure nothing matches in our 'ifNo' property
-    maybeList[n] = maybeList[n].filter(obj => {
+    list = list.filter(obj => {
       if (obj.ifNo !== undefined && obj.ifNo.some(no => docCache[n].has(no)) === true) {
         return false
       }
       return true
     })
-  }
-  return maybeList
+    // ensure atleast one(?) of the wants is found
+    list = list.filter(obj => {
+      if (obj.wants.length === 0) {
+        return true
+      }
+      // ensure there's one cache-hit
+      let found = obj.wants.filter(str => haves.has(str)).length
+      return found >= obj.minWant
+    })
+    return list
+  })
 }
 export default localTrim

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import parseVerb from './parse/index.js'
-
+console.log('HELLOOO')
 const reset = '\x1b[0m'
 const yellow = str => `\x1b[2m\x1b[33m\x1b[3m ${str} ${reset}`
 const bgGreen = str => `\x1b[42m\x1b[30m •${str}• ${reset}`

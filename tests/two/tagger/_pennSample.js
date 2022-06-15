@@ -763,10 +763,6 @@ export default [
     tags: 'NNP, VBZ, VBN, IN, NNP, NNP, NNP, CC, NNP',
   },
   {
-    text: 'This is a significant strategic change and it applies strong pressure on the terrorist countries.',
-    tags: 'DT, VBZ, DT, JJ, JJ, NN, CC, PRP, VBZ, JJ, NN, IN, DT, JJ, NNS',
-  },
-  {
     text: 'Zawahiri was associated with a faction of the Egyptian Islamic Jihad known as the Vanguards of Conquest.',
     tags: 'NNP, VBD, VBN, IN, DT, NN, IN, DT, NNP, NNP, NNP, VBN, IN, DT, NNPS, IN, NNP',
   },

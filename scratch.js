@@ -1,24 +1,86 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+import nlp from './src/two.js'
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 
 // nlp.verbose('tagger')
 
-// let doc = nlp('one match two three')
-// let a = doc.match('match two')
-// let b = a.remove('two')
-// console.log(a)
-// // a.debug()
-// // b.debug()
-// console.log(b)
+let txt = ''
+// tagging/root issues June 10
+// "Okay, okay, okay should I be scared?"
+// "This is when I started to get scared."
+
+// "A 40-year-old man called me swell."
+// "that's just not swell"
+
+txt = "Let’s get you into wardrobe for a fitting."
+// txt = "I was an expert"
+// txt = "definitely worth a rental."
+// txt = "keeping the matter a secret"
+
+// txt = "My pants don't even fit right"
+// txt = "In a baseball hat fit for a queen"
+// txt = "Srinath will be fit in three weeks"
+// txt = "does the different part fit together"
+
+// txt = "License fee for beach vendors hiked"
+// txt = "TTC to hike fares by 10 cents in March"
+
+// txt = "He deserted from the Dragoons at"
+// txt = "banks wear deserted look"
+
+// txt = "CBI catches DD acting director taking bribe"
+// txt = "How do I keep kissing you, and catch my breath?"
+
+// txt = " throw stones, Dick, said Jaqueline."
+// txt = "Loblaws reducing food prices at Toronto stores"
+// txt = "Stock prices closed higher in Stockholm"
+
+// txt = `Upload documents required to verify your eligibility`
+
+txt = `It sure seemed that way.`
+txt = `I am not sure when to take.`
+txt = `Pretty sure my arm is broke`
+txt = `Not sure about the details.`
+txt = `Sure you don't wanna pretzel?`
+txt = `You, you sure you need shoes?`
+txt = `Sure enough, no one was there.`
+txt = `Are you sure you wanna do this?`
+txt = `make sure that it's truly lost.`
+txt = `You sure this is what you want?`
+
+// let txt = `There are no open wounds `
+
+// let matches = [
+//   { match: m }
+// ]
+// let net = nlp.buildNet(matches)
 
 
 
-let doc = nlp(`let's not`)
+
+
+// banks wear
+// %Plural|Verb% %Noun|Verb%
+
+// let doc = nlp(`he will have been walking`).debug()
+// let doc = nlp(`Bob has handled`).debug()
+// doc.match('have').tag('Auxiliary')
+// doc.verbs().toPresent()
+// console.log(doc.has('he has really walked'))
+// let net = nlp.buildNet(matches)
+// console.log(net)
+// console.log(net.hooks)
+// let doc = nlp(txt)
+// let doc = nlp(`To sit on my throne as the Prince of Bel Air`)
+// let m = doc.match(net).debug()
+// doc.compute('root')
+// console.log(doc.text('root'))
 // doc.debug()
 // doc.verbs().toFutureTense()
-doc.debug()
+// doc.match(net).debug()
+// console.log(doc.has(net))
+// doc.debug()
 // console.log(doc.has('re-purpose'))
 
 // let txt = `follow-up`
@@ -78,14 +140,14 @@ doc.debug()
 // doc.match('#Person').debug()
 
 // let net = nlp.buildNet([
-//   { match: 'every single #Noun' },
-//   { match: 'not (a|one) #Singular' },
+//  { match: 'every single #Noun' },
+//  { match: 'not (a|one) #Singular' },
 // ])
 // let doc = nlp('i saw every single house. i met none. ')
 // doc.match(net).debug()
 // let m = nlp([['first.', 'foo bar']]).debug()
 // let matches = [
-//   { match: 'third' },
+//  { match: 'third' },
 // ]
 // let net = nlp.buildNet(matches)
 // let doc = nlp(`first. second. third`)

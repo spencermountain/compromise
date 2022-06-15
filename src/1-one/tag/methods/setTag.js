@@ -65,10 +65,12 @@ const isArray = function (arr) {
 }
 
 // verbose-mode tagger debuging
-const log = (term, tag, reason = '') => {
+const log = (terms, tag, reason = '') => {
   const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
   const i = str => '\x1b[3m' + str + '\x1b[0m'
-  let word = term.text || '[' + term.implicit + ']'
+  let word = terms.map(t => {
+    return t.text || '[' + t.implicit + ']'
+  }).join(' ')
   if (typeof tag !== 'string' && tag.length > 2) {
     tag = tag.slice(0, 2).join(', #') + ' +' //truncate the list of tags
   }
@@ -85,7 +87,7 @@ const setTag = function (terms, tag, world = {}, isSafe, reason) {
   // some logging for debugging
   const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
   if (env && env.DEBUG_TAGS) {
-    log(terms[0], tag, reason)
+    log(terms, tag, reason)
   }
   if (isArray(tag) === true) {
     tag.forEach(tg => setTag(terms, tg, world, isSafe))

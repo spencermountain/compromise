@@ -117,9 +117,10 @@ export default [
   // bride and groom
   { match: '#Noun and [%Noun|Verb%]', group: 0, tag: 'Singular', ifNo: ['#ProperNoun'], reason: 'bride-and-groom' },
   // an impressionist painting
-  { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', ifNo: ['#ProperNoun'], reason: 'a-complex-relationship' },
+  // { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', ifNo: ['#ProperNoun', '#Pronoun'], reason: 'a-complex-relationship' },
   // the 1992 classic
   { match: 'the #Cardinal [%Adj|Noun%]', group: 0, tag: 'Noun', reason: 'the-1992-classic' },
+
   // 
   // { match: '[%Adj|Noun%] #ProperNoun', group: 0, tag: 'Adjective', ifNo: ['#ProperNoun'], reason: 'epic-instagram' },
 ]

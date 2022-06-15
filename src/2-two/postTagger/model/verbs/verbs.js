@@ -10,13 +10,6 @@ export default [
   // adj -> gerund
   // like
   { match: '(#Modal|i|they|we|do) not? [like]', group: 0, tag: 'PresentTense', reason: 'modal-like' },
-  // do not simply like
-  {
-    match: 'do (simply|just|really|not)+ [(#Adjective|like)]',
-    group: 0,
-    tag: 'Verb',
-    reason: 'do-simply-like',
-  },
   // ==== Tense ====
   //he left
   { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
@@ -81,5 +74,10 @@ export default [
   // jobs that fit
   { match: '#Plural that %Noun|Verb%', tag: '. #Preposition #Infinitive', reason: 'jobs-that-work' },
   // works for me
-  { match: '[works] for me', group: 0, tag: '#PresentTense', reason: 'works-for-me' },
+  { match: '[works] for me', group: 0, tag: 'PresentTense', reason: 'works-for-me' },
+  // no no no
+  // { match: 'no+', tag: 'Expression', reason: 'no-no' },
+
+
+  // { match: '%Plural|Verb% %Noun|Verb%', tag: '#Plural #PresentTense', reason: 'banks-wear' },
 ]

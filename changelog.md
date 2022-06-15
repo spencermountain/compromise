@@ -9,6 +9,10 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!-- #### [Unreleased]
 -->
 
+#### 14.3.1 [June 2021]
+- **[fix]** - missed caches in .sweep()
+- **[new]** - .out('hash') and `.json({hash:true})`
+
 #### 14.3.0 [June 2021]
 - **[fix]** - unwanted logging in compromise/one
 - **[fix]** - dependency export path for react-native builds #928

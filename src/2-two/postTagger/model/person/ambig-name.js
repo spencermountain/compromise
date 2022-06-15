@@ -48,13 +48,13 @@ export default [
   // ollie faroo
   { match: '%Person|Verb% #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-propernoun' },
   // chuck will ...
-  { match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`, tag: 'Person', reason: 'person-said' },
+  { match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`, group: 0, tag: 'Person', reason: 'person-said' },
 
   // ===person-place===
   //sydney harbour
-  { match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`, tag: 'Place', reason: 'sydney-harbour' },
+  { match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`, group: 0, tag: 'Place', reason: 'sydney-harbour' },
   // east sydney
-  { match: `(west|east|north|south) [%Person|Place%]`, tag: 'Place', reason: 'east-sydney' },
+  { match: `(west|east|north|south) [%Person|Place%]`, group: 0, tag: 'Place', reason: 'east-sydney' },
 
   // ===person-adjective===
   // rusty smith

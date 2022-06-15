@@ -60,6 +60,7 @@ export default {
     out: v,
     // on: v,
     off: v,
+    under: v,
     when: v,//starts when
     // for:true, //settled for
     all: v,//shiver all night
@@ -70,6 +71,7 @@ export default {
     before: v,//
     how: v,//
     otherwise: v,//
+    together: v,//fit together
     though: v,//
     yet: v,//
   },

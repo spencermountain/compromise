@@ -398,6 +398,9 @@ export default [
   'incentive',
   'parish',
   'tv',
+
+  'stone',
+  'tributary',
 ]
 
 

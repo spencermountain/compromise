@@ -3,6 +3,7 @@ import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
 import french from './french.js'
 import numberRange from './number-range.js'
+import numberUnit from './number-unit.js'
 
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
@@ -74,6 +75,7 @@ const contractions = (view) => {
   let { world, document } = view
   const { model, methods } = world
   let list = model.one.contractions || []
+  let units = new Set(model.one.units || [])
   // each sentence
   document.forEach((terms, n) => {
     // loop through terms backwards
@@ -113,6 +115,13 @@ const contractions = (view) => {
           }
           reTag(document[n], view, i, words.length)
         }
+        continue
+      }
+      // split-apart '4km'
+      words = numberUnit(terms, i, units)
+      if (words) {
+        words = toDocs(words, view)
+        splice(document, [n, i], words)
       }
     }
   })

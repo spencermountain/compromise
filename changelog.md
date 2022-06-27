@@ -7,6 +7,8 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 <!-- #### [Unreleased]
+- **[new]** - tokenize '12km' as contraction #919
+- **[fix]** - support unTag property in sweep
 -->
 
 #### 14.3.1 [June 2021]

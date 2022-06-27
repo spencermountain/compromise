@@ -97,16 +97,20 @@ test('number-text mixes:', function (t) {
 })
 
 test('prefix/suffix:', function (t) {
-  let doc = nlp('$7,938').numbers().add(1)
+  let doc = nlp('$7,938')
+  doc.numbers().add(1)
   t.equal(doc.text(), '$7,939', here + 'add money')
 
-  doc = nlp('7,938kg').numbers().minus(1)
-  t.equal(doc.text(), '7,937kg', here + 'minus w/ unit')
+  doc = nlp('7,938kg')
+  doc.numbers().minus(1)
+  t.equal(doc.text(), '7,937 kg', here + 'minus w/ unit')
 
-  doc = nlp('938.4cm').numbers().minus(1)
-  t.equal(doc.text(), '937.4cm', here + 'minus w/ decimal')
+  doc = nlp('938.4cm')
+  doc.numbers().minus(1)
+  t.equal(doc.text(), '937.4 cm', here + 'minus w/ decimal')
 
-  doc = nlp('33rd').numbers().add(1)
+  doc = nlp('33rd')
+  doc.numbers().add(1)
   t.equal(doc.text(), '34th', here + 'add ordinal')
   t.end()
 })

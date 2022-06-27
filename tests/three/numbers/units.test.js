@@ -19,11 +19,26 @@ test('units-parse:', function (t) {
     ['44 °c', 44, '°c'],
     ['12µs', 12, 'µs'],
     ['12km/h', 12, 'km/h'],
+    // unrecognized units
+    ['3rem', 3, 'rem'],
+    ['500ccs', 500, 'ccs'],
+    ['300max', 300, ''],
+    ['3rd', 3, ''],
+    ['500+', 500, ''],
+    ['500 ccs', 500, ''],
   ]
   arr.forEach(a => {
-    let m = nlp(a[0]).numbers()
-    t.equal(m.get()[0], a[1], here + ' [num] ' + a[0])
-    t.equal(m.units().text('root'), a[2], here + ' [unit] ' + a[0])
+    let [str, num, unit] = a
+    let doc = nlp(str)
+    let m = doc.numbers()
+    t.equal(m.get()[0], num, here + ' [num] ' + str)
+    t.equal(m.units().text('root'), unit, here + ' [unit] ' + str)
+    // t.equal(doc.has(String(num)), true, here + '[has-num] ' + str)
+    if (unit) {
+      t.equal(doc.has(unit), true, here + '[has-unit] ' + str)
+    } else {
+      t.equal(doc.has('#Unit'), false, here + '[no-unit] ' + str)
+    }
   })
   t.end()
 })
@@ -37,5 +52,24 @@ test('units-convert:', function (t) {
   doc = nlp('we covered 3km² in total')
   doc.numbers().toText()
   t.equal(doc.text(), 'we covered three km² in total', here + 'no space unit')
+
+
+  t.equal(nlp('44,000 ft').has(44000), true, here + '44,000 ft')
+  t.equal(nlp('44,000ft').has('44,000'), true, here + '44,000')
+  // t.equal(nlp('44,000ft').has(44000), true, here + '44000')
   t.end()
 })
+
+// test('implicit units', function (t) {
+//   let arr = [
+//     ['99%', '99%'],
+//     ['99%', '99 percent'],
+//     ['99%', '%'],
+//     ['9ft', 'feet'],
+//   ]
+//   arr.forEach(a => {
+//     let doc = nlp(a[0])
+//     t.ok(doc.has(a[1]), here + a[1])
+//   })
+//   t.end()
+// })

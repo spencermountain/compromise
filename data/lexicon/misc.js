@@ -55,6 +55,7 @@ export default {
 
   //misc
   records: 'Plural',
+  feet: 'Plural',
   'a few': 'Value',
   'ones': 'Plural', //those ones
 

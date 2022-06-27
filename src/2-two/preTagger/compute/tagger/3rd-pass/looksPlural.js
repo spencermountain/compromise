@@ -21,6 +21,9 @@ const isPlural = {
   ],
   n: [
     'men',
+  ],
+  t: [
+    'feet'
   ]
 }
 // plural words as exceptions to suffix-rules

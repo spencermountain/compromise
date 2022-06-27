@@ -10,7 +10,7 @@ let arr = [
   ['twenty', '#Value'],
   ['thousand', '#Value'],
   ['eighteenth', '#Value'],
-  ['tbsp', '#Unit'],
+  ['2tbsp', '#Value #Unit'],
   ['425-1231', '#PhoneNumber'],
   ['823-425-1231', '#PhoneNumber'],
   ['823 425-1231', '#PhoneNumber'],

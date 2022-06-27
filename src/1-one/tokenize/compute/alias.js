@@ -5,7 +5,7 @@ const isMath = /[0-9]/
 // const hasApostrophe = /['’]s$/
 
 const addAliases = function (term, world) {
-  let str = term.normal || term.text
+  let str = term.normal || term.text || term.machine
   const aliases = world.model.one.aliases
   // lookup known aliases like '&'
   if (aliases.hasOwnProperty(str)) {

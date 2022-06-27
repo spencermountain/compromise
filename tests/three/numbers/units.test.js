@@ -62,9 +62,9 @@ test('units-convert:', function (t) {
 
 // test('implicit units', function (t) {
 //   let arr = [
-//     ['99%', '99%'],
-//     ['99%', '99 percent'],
-//     ['99%', '%'],
+//     // ['99%', '99%'],
+//     // ['99%', '99 percent'],
+//     // ['99%', '%'],
 //     ['9ft', 'feet'],
 //   ]
 //   arr.forEach(a => {

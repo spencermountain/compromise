@@ -66,7 +66,7 @@ const knownOnes = function (list, term, before, after) {
 
 const toDocs = function (words, view) {
   let doc = view.fromText(words.join(' '))
-  doc.compute('id')
+  doc.compute(['id', 'alias'])
   return doc.docs[0]
 }
 

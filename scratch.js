@@ -9,5 +9,9 @@ let txt = ''
 // let doc = nlp('33gbps').debug()
 // doc = nlp('33 gbps').debug()
 
-let doc = nlp('50ft').debug()
+let lex = {
+  'queen anne\'s lace': 'Flower'
+}
+let doc = nlp(`Queen Anne's lace`, lex)
+doc.match(`#Flower`).debug()
 console.log(doc.docs[0])

@@ -60,3 +60,16 @@ test('tricky lexicon:', function (t) {
   t.equal(str, 'bed bath and beyond', here + 'many-hyphenated-word')
   t.end()
 })
+
+test('apostrophe lexicon:', function (t) {
+  let lex = {
+    'queen anne\'s lace': 'Flower',
+    'applebee\'s': 'Restaurant'
+  }
+  let doc = nlp(`i went to applebee's for dinner`, lex)
+  t.equal(doc.has(`#Restaurant`), true, here + 'lexicon w/ apostrophe')
+
+  doc = nlp(`Queen Anne's lace`, lex)
+  t.equal(doc.has(`#Flower`), true, here + 'multi lexicon w/ apostrophe')
+  t.end()
+})

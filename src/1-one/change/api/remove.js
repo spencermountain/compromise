@@ -77,7 +77,7 @@ const methods = {
       return self.none()
     }
     // self._cache = null
-    let res = self.toView(ptrs) //return new document
+    let res = self.update(ptrs) //return new document
     return res
   },
 }

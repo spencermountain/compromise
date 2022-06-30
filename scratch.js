@@ -10,10 +10,17 @@ let doc
 // doc = nlp('33 kilos').debug()
 // doc = doc.match('33 km').debug()
 
-doc = nlp('he sweetly sang').debug()
-doc.match('{sweet}').debug()
-console.log(nlp.parseMatch('{sweet/adj}'))
+// doc = nlp('he sweetly sang').debug()
+// doc.match('{sweet}').debug()
+// console.log(nlp.parseMatch('{sweet/adj}'))
 
+doc = nlp('one two three. four five')
+doc.cache()
+
+doc.filter(m => {
+  console.log('  inside', m._cache)
+})
+// nlp.lazy('the sweeter the sugar', '{sweet}').debug()
 // console.log(doc.numbers().json())
 
 

@@ -28,7 +28,7 @@ const toGerund = function (vb, parsed) {
   }
   vb.replace('not is', 'is not')
   vb.replace('not are', 'are not')
-  vb.fullSentence().compute(['preTagger', 'postTagger', 'chunks'])
+  vb.fullSentence().compute(['tagger', 'chunks'])
   return vb
 }
 export default toGerund

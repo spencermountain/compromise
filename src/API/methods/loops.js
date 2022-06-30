@@ -1,3 +1,5 @@
+// wrappers for loops in javascript arrays
+
 const forEach = function (cb) {
   let ptrs = this.fullPointer
   ptrs.forEach((ptr, i) => {
@@ -9,11 +11,14 @@ const forEach = function (cb) {
 
 const map = function (cb, empty) {
   let ptrs = this.fullPointer
-  // let cache = this._cache || []
   let res = ptrs.map((ptr, i) => {
     let view = this.update([ptr])
-    // view._cache = cache[i]
-    return cb(view, i)
+    let out = cb(view, i)
+    // if we returned nothing, return a view
+    if (out === undefined) {
+      return this.none()
+    }
+    return out
   })
   if (res.length === 0) {
     return empty || this.update([])
@@ -40,23 +45,18 @@ const map = function (cb, empty) {
 
 const filter = function (cb) {
   let ptrs = this.fullPointer
-  // let cache = this._cache || []
   ptrs = ptrs.filter((ptr, i) => {
     let view = this.update([ptr])
-    // view._cache = cache[i]
     return cb(view, i)
   })
-  let res = this.update(ptrs) //TODO: keep caches automatically
-  // res._cache = ptrs.map(ptr => cache[ptr[0]])
+  let res = this.update(ptrs)
   return res
 }
 
 const find = function (cb) {
   let ptrs = this.fullPointer
-  // let cache = this._cache || []
   let found = ptrs.find((ptr, i) => {
     let view = this.update([ptr])
-    // view._cache = cache[i]
     return cb(view, i)
   })
   return this.update([found])
@@ -64,10 +64,8 @@ const find = function (cb) {
 
 const some = function (cb) {
   let ptrs = this.fullPointer
-  // let cache = this._cache || []
   return ptrs.some((ptr, i) => {
     let view = this.update([ptr])
-    // view._cache = cache[i]
     return cb(view, i)
   })
 }

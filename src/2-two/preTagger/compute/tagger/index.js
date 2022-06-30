@@ -87,8 +87,6 @@ const preTagger = function (view) {
     // guess by the neighbours
     thirdPass(terms, model, world)
   }
-  // leave a nice cache for the next people
-  view.compute('cache')
   return document
 }
 

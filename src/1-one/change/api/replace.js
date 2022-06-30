@@ -33,6 +33,7 @@ const subDollarSign = function (input, main) {
 fns.replaceWith = function (input, keep = {}) {
   let ptrs = this.fullPointer
   let main = this
+  this.uncache()
   if (typeof input === 'function') {
     return replaceByFn(main, input)
   }

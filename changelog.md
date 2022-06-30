@@ -15,6 +15,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - split numbers+units '12km' as contraction - #919
 - **[fix]** - support apostrophes in lexicon #932
 - **[fix]** - support unTag property in sweep
+- **[change]** - keep sentence caches, when still valid
 
 #### 14.3.1 [June 2021]
 - **[fix]** - missed caches in .sweep()

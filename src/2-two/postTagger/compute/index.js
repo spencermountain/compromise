@@ -19,4 +19,7 @@ const postTagger = function (view) {
   return view
 }
 
-export default { postTagger }
+// helper function for compute('tagger')
+const tagger = (view) => view.compute(['lexicon', 'preTagger', 'postTagger'])
+
+export default { postTagger, tagger }

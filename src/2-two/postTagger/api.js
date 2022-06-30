@@ -19,6 +19,6 @@ export default function (View) {
 
   // (re-) run the POS-tagger
   View.prototype.tagger = function () {
-    return this.compute(['preTagger', 'contractionTwo', 'postTagger'])
+    return this.compute(['tagger'])
   }
 }

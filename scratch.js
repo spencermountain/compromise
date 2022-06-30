@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
-import plg from './plugins/speed/src/plugin.js'
-nlp.plugin(plg)
+import nlp from './src/two.js'
+// import plg from './plugins/speed/src/plugin.js'
+// nlp.plugin(plg)
 
 // nlp.verbose('tagger')
 
@@ -14,12 +14,16 @@ let doc
 // doc.match('{sweet}').debug()
 // console.log(nlp.parseMatch('{sweet/adj}'))
 
-doc = nlp('one two three. four five')
-doc.cache()
 
-doc.filter(m => {
-  console.log('  inside', m._cache)
-})
+doc = nlp.tokenize('one two three. four five six. seven eight nine.')
+doc.compute('tagger')
+doc.debug()
+
+
+// doc = nlp('one two three. four five').cache()
+// let m = doc.remove('four')
+// console.log(m._cache)
+
 // nlp.lazy('the sweeter the sugar', '{sweet}').debug()
 // console.log(doc.numbers().json())
 

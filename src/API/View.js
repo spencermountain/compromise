@@ -74,15 +74,14 @@ class View {
     let m = new View(this.document, pointer)
     // send the cache down, too?
     if (this._cache && pointer && pointer.length > 0) {
-      let cache = []
       // only keep cache if it's a full-sentence
+      let cache = []
       pointer.forEach((ptr, i) => {
-        if (ptr.length === 1) {
-          cache[i] = this._cache[i]
-        }
         let [n, start, end] = ptr
-        if (start === 0 && this.document[n].length === end) {
-          cache[i] = this._cache[i]
+        if (ptr.length === 1) {
+          cache[i] = this._cache[n]
+        } else if (start === 0 && this.document[n].length === end) {
+          cache[i] = this._cache[n]
         }
       })
       if (cache.length > 0) {

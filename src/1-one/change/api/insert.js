@@ -39,6 +39,7 @@ const getTerms = function (input, world) {
 
 const insert = function (input, view, prepend) {
   const { document, world } = view
+  view.uncache()
   // insert words at end of each doc
   let ptrs = view.fullPointer
   let selfPtrs = view.fullPointer

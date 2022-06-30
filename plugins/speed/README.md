@@ -21,12 +21,15 @@
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+to install:
+```js
+import plg from 'compromise-speed'
+nlp.extend(plug)
+```
+
 ### WorkerPool
 parse sentences of a large text in parallel:
 ```js
-import {workerPool} from 'compromise-speed'
-nlp.extend(workerPool)
-
 let doc = await nlp.workerPool(myNovel, 'the #Adjective of #Noun')
 doc.debug()//results
 ```
@@ -48,9 +51,6 @@ doc.debug()//results
 ### StreamFile
 parse and process a file from your filesystem, without loading it all into memory:
 ```js
-import {streamFile} from 'compromise-speed'
-nlp.extend(streamFile)
-
 nlp.streamFile('./path/to/file.txt', (s)=>{
   // map fn on each sentence
   return s.if('the #Adjective of times')
@@ -67,9 +67,6 @@ This plugin will cache any already-parsed sentences, and combine them in-memory,
 
 it will also un-cache any temporary sentences, to clear-up memory.
 ```js
-import {keyPress} from 'compromise-speed'
-nlp.extend(keyPress)
-
 let doc = nlp.keyPress('parsed once. it was the blurst of')
 doc = nlp.keyPress('parsed once. it was the blurst of times')
 ```

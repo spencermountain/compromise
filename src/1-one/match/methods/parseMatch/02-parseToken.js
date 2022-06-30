@@ -127,14 +127,22 @@ const parseToken = function (w, opts) {
       return obj
     }
 
-    //machine/sense overloaded
+    //root/sense overloaded
     if (start(w) === '{' && end(w) === '}') {
       w = stripBoth(w)
+      obj.id = w
+      obj.root = w
       if (/\//.test(w)) {
-        obj.sense = w
-        obj.greedy = true
-      } else {
-        obj.machine = w
+        let split = obj.root.split(/\//)
+        obj.root = split[0]
+        obj.pos = split[1]
+        if (obj.pos === 'adj') {
+          obj.pos = 'adjective'
+        }
+        // add sense-number too
+        if (split[2] !== undefined) {
+          obj.num = split[2]
+        }
       }
       return obj
     }

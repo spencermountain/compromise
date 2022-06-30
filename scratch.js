@@ -7,10 +7,14 @@ nlp.plugin(plg)
 
 let txt = ''
 let doc
-doc = nlp('33 kilos').debug()
+// doc = nlp('33 kilos').debug()
 // doc = doc.match('33 km').debug()
 
-console.log(doc.numbers().json())
+doc = nlp('walking')
+doc.match('{walk}').debug()
+console.log(nlp.parseMatch('{live/verb}'))
+
+// console.log(doc.numbers().json())
 
 
 

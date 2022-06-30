@@ -1,7 +1,8 @@
 import parseBlocks from './01-parseBlocks.js'
 import parseToken from './02-parseToken.js'
 import splitHyphens from './03-splitHyphens.js'
-import postProcess from './04-postProcess.js'
+import conjugateRoot from './04-conjugate.js'
+import postProcess from './05-postProcess.js'
 
 /** parse a match-syntax string into json */
 const syntax = function (input, opts, world) {
@@ -18,6 +19,8 @@ const syntax = function (input, opts, world) {
   tokens = tokens.map(str => parseToken(str, opts))
   // '~re-do~'
   tokens = splitHyphens(tokens, world)
+  // '{walk}'
+  tokens = conjugateRoot(tokens, world)
   //clean up anything weird
   tokens = postProcess(tokens, opts)
   // console.log(tokens)

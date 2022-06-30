@@ -7,9 +7,14 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 <!-- #### 14.4.0 [Unreleased]
-- **[change]** - split numbers+units '12km' as contraction - #919
-- **[fix]** - support unTag property in sweep
+
 -->
+
+#### 14.4.0 [June 2021]
+- **[change]** - root matches like '{walk}' work without doing .compute('root')
+- **[change]** - split numbers+units '12km' as contraction - #919
+- **[fix]** - support apostrophes in lexicon #932
+- **[fix]** - support unTag property in sweep
 
 #### 14.3.1 [June 2021]
 - **[fix]** - missed caches in .sweep()

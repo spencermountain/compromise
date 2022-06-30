@@ -137,8 +137,10 @@ const parseToken = function (w, opts) {
         obj.root = split[0]
         obj.pos = split[1]
         if (obj.pos === 'adj') {
-          obj.pos = 'adjective'
+          obj.pos = 'Adjective'
         }
+        // titlecase
+        obj.pos = obj.pos.charAt(0).toUpperCase() + obj.pos.substr(1).toLowerCase()
         // add sense-number too
         if (split[2] !== undefined) {
           obj.num = split[2]

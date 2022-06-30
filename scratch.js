@@ -10,9 +10,9 @@ let doc
 // doc = nlp('33 kilos').debug()
 // doc = doc.match('33 km').debug()
 
-doc = nlp('walking')
-doc.match('{walk}').debug()
-console.log(nlp.parseMatch('{live/verb}'))
+doc = nlp('he sweetly sang').debug()
+doc.match('{sweet}').debug()
+console.log(nlp.parseMatch('{sweet/adj}'))
 
 // console.log(doc.numbers().json())
 

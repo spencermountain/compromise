@@ -13,28 +13,30 @@ const addNoun = function (token, world) {
 }
 
 const addAdjective = function (token, world) {
-  let { adjToSuperlative, adjToComparative } = world.methods.two.transform
+  let { adjToSuperlative, adjToComparative, adjToAdverb } = world.methods.two.transform
   let res = [token.root]
   res.push(adjToSuperlative(token.root, world.model))
   res.push(adjToComparative(token.root, world.model))
+  res.push(adjToAdverb(token.root, world.model))
   return res
 }
 
 // turn '{walk}' into 'walking', 'walked', etc
-const conjugateRoot = function (regs, world) {
+const inflectRoot = function (regs, world) {
   // do we have compromise/two?
   if (world.methods.two && world.methods.two.transform) {
     regs = regs.map(token => {
       // a reg to convert '{foo}'
       if (token.root) {
         let choices = []
-        if (!token.pos || token.pos === 'verb') {
+        if (!token.pos || token.pos === 'Verb') {
           choices = choices.concat(addVerbs(token, world))
         }
-        if (!token.pos || token.pos === 'noun') {
+        if (!token.pos || token.pos === 'Noun') {
           choices = choices.concat(addNoun(token, world))
         }
-        if (!token.pos || token.pos === 'adjective') {
+        // don't run these by default
+        if (!token.pos || token.pos === 'Adjective') {
           choices = choices.concat(addAdjective(token, world))
         }
         choices = choices.filter(str => str)
@@ -48,4 +50,4 @@ const conjugateRoot = function (regs, world) {
   }
   return regs
 }
-export default conjugateRoot
+export default inflectRoot

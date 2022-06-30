@@ -43,7 +43,7 @@ const parseNumber = function (m) {
   }
   let str = m.text('reduced')
   // reach for '12 litres'
-  let unit = m.growRight('#Unit').match('#Unit$').text('normal')
+  let unit = m.growRight('#Unit').match('#Unit$').text('machine')
   // is it in '3,123' format?
   let hasComma = /[0-9],[0-9]/.test(m.text('text'))
   // parse a numeric-number like '$4.00'

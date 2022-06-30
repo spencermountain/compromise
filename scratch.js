@@ -1,17 +1,24 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/speed/src/plugin.js'
+nlp.plugin(plg)
 
 // nlp.verbose('tagger')
 
 let txt = ''
-// let doc = nlp('33gbps').debug()
-// doc = nlp('33 gbps').debug()
+let doc
+doc = nlp('33 kilos').debug()
+// doc = doc.match('33 km').debug()
 
-let lex = {
-  'queen anne\'s lace': 'Flower'
-}
-let doc = nlp(`Queen Anne's lace`, lex)
-doc.match(`#Flower`).debug()
-console.log(doc.docs[0])
+console.log(doc.numbers().json())
+
+
+
+
+// apostrophe
+// let lex = {
+//   'queen anne\'s lace': 'Flower'
+// }
+// let doc = nlp(`Queen Anne's lace`, lex)
+// doc.match(`#Flower`).debug()
+// console.log(doc.docs[0])

@@ -26,10 +26,9 @@ export default [
   // got tired of
   { match: 'got #Adverb? [#PastTense] of', group: 0, tag: 'Adjective', reason: 'got-tired-of' },
   //felt loved
-  {
-    match: '(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adverb|#Adjective)? [#PastTense]',
-    group: 0,
-    tag: 'Adjective',
-    reason: 'felt-loved',
-  },
+  { match: '(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adverb|#Adjective)? [#PastTense]', group: 0, tag: 'Adjective', reason: 'felt-loved' },
+  // seem confused
+  { match: '(seem|feel|seemed|felt) [#PastTense]', group: 0, tag: 'Adjective', reason: 'seem-confused' },
+  // a bit confused
+  { match: 'a (bit|little|tad) [#PastTense]', group: 0, tag: 'Adjective', reason: 'a-bit-confused' },
 ]

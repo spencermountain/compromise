@@ -64,13 +64,7 @@ txt = `You sure this is what you want?`
 
 
 txt = `she'll come around`
+txt = ` felt a bit confused`
 
 
-
-// apostrophe
-let lex = {
-  'queen anne\'s lace': 'Flower'
-}
-doc = nlp(`queen anne's lace`, lex).debug()
-doc.match(`#Flower`).debug()
-// console.log(doc.docs[0])
+nlp(txt).debug()

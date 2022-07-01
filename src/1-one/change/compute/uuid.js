@@ -42,11 +42,11 @@ const toId = function (term) {
   now = parseInt(now, 10)
 
   //don't overflow time
-  now = now > 46655 ? 46655 : now
+  now = now > 46655 ? 0 : now
   //don't overflow sentences
-  n = n > 46655 ? 46655 : n
+  n = n > 46655 ? 0 : n
   // //don't overflow terms
-  i = i > 1294 ? 1294 : i
+  i = i > 1294 ? 0 : i
 
   // 3 digits for time
   let id = pad3(now.toString(36))

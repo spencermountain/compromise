@@ -12,12 +12,20 @@ const isAloneVerb = (terms, i, tag) => {
   return null
 }
 
+// 'a rental'
+const isEndNoun = function (terms, i) {
+  if (!terms[i + 1] && terms[i - 1] && terms[i - 1].tags.has('Determiner')) {
+    return 'Noun'
+  }
+  return null
+}
+
 const adhoc = {
   'Adj|Gerund': (terms, i) => {
     return isCapital(terms, i)
   },
   'Adj|Noun': (terms, i) => {
-    return isCapital(terms, i)
+    return isCapital(terms, i) || isEndNoun(terms, i)
   },
   'Adj|Past': (terms, i) => {
     return isCapital(terms, i)

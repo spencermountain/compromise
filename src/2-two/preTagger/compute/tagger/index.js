@@ -11,7 +11,7 @@ import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
 import nounFallback from './3rd-pass/04-fallback.js'
-import variables from './3rd-pass/06-switches.js'
+import switches from './3rd-pass/06-switches.js'
 import checkHyphen from './3rd-pass/05-prefixes.js'
 
 const second = {
@@ -29,7 +29,7 @@ const third = {
   neighbours,
   orgWords,
   nounFallback,
-  variables,
+  switches,
 }
 
 //
@@ -68,7 +68,7 @@ const thirdPass = function (terms, model, world) {
     // support 'out-lived'
     second.checkHyphen(terms, i, model)
     // verb-noun disambiguation, etc
-    third.variables(terms, i, world)
+    third.switches(terms, i, world)
   }
 }
 

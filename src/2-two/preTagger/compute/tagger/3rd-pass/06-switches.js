@@ -1,3 +1,4 @@
+import fillTags from './_fillTags.js'
 const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env // eslint-disable-line
 import adhoc from './_adhoc.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
@@ -73,7 +74,10 @@ const doSwitches = function (terms, i, world) {
     }
     // did we find anything?
     if (tag) {
+      // tag it
       setTag([term], tag, world, null, `3-[variable] (${form})`)
+      // add plural/singular etc.
+      fillTags(terms, i, model)
     } else if (env.DEBUG_TAGS) {
       console.log(`\n -> X  - '${str}'  : (${form})  `)//eslint-disable-line
     }

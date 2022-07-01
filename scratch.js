@@ -27,8 +27,9 @@ let doc
 // "that's just not swell"
 
 txt = "Let’s get you into wardrobe for a fitting."
-// txt = "I was an expert"
-// txt = "definitely worth a rental."
+txt = "I was an expert"
+txt = "definitely worth a rental."
+txt = "the genious"
 // txt = "keeping the matter a secret"
 
 // txt = "My pants don't even fit right"
@@ -51,20 +52,18 @@ txt = "Let’s get you into wardrobe for a fitting."
 
 // txt = `Upload documents required to verify your eligibility`
 
-txt = `It sure seemed that way.`
-txt = `I am not sure when to take.`
-txt = `Pretty sure my arm is broke`
-txt = `Not sure about the details.`
-txt = `Sure you don't wanna pretzel?`
-txt = `You, you sure you need shoes?`
-txt = `Sure enough, no one was there.`
-txt = `Are you sure you wanna do this?`
-txt = `make sure that it's truly lost.`
-txt = `You sure this is what you want?`
+// txt = `It sure seemed that way.`
+// txt = `I am not sure when to take.`
+// txt = `Pretty sure my arm is broke`
+// txt = `Not sure about the details.`
+// txt = `Sure you don't wanna pretzel?`
+// txt = `You, you sure you need shoes?`
+// txt = `Sure enough, no one was there.`
+// txt = `Are you sure you wanna do this?`
+// txt = `make sure that it's truly lost.`
+// txt = `You sure this is what you want?`
 
-txt = 'i see 55. and some more'
-let m = nlp.model()
-console.log(Object.keys(m.one))
-// m.one.abbreviations['5'] = true
-doc = nlp(txt).debug()
+doc = nlp(txt)
+doc.nouns().toPlural()
+doc.debug()
 

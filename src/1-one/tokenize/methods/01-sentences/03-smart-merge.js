@@ -1,8 +1,9 @@
-import isSentence from './is-sentence.js'
 
 //loop through these chunks, and join the non-sentence chunks back together..
 const smartMerge = function (chunks, world) {
-  let abbrevs = world.model.one.abbreviations || new Set()
+  const isSentence = world.methods.one.tokenize.isSentence
+  const abbrevs = world.model.one.abbreviations || new Set()
+
   let sentences = []
   for (let i = 0; i < chunks.length; i++) {
     let c = chunks[i]

@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 // import plg from './plugins/speed/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -62,9 +62,6 @@ txt = `Are you sure you wanna do this?`
 txt = `make sure that it's truly lost.`
 txt = `You sure this is what you want?`
 
+txt = 'i see 5. and some more'
+doc = nlp(txt)
 
-txt = `she'll come around`
-txt = ` felt a bit confused`
-
-
-nlp(txt).debug()

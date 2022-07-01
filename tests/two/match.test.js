@@ -621,7 +621,7 @@ let arr = [
   ['with its 1950 beds', 'with #Possessive !#Year #Plural'],
   ['His death in 1994 went barely noticed', '#Possessive #Noun in #Year #Verb #Adverb noticed'],
   ['the films in 1972 and 1974 respectively', 'the #Plural in #Year and #Year .'],
-  ['seen over 2000 Studio-Era sound films', '#Verb over !#Year #Noun+'],
+  ['seen over 2000 studio-era sound films', '#Verb over !#Year #Noun+'],
   ['This 1925 film narrates the story', '#Determiner #Year #Noun #PresentTense the #Singular'],
   // ['my 1950 convertable', '#Possessive #Year #Singular'],
 
@@ -649,6 +649,9 @@ let arr = [
   ["wizard of oz", '#Noun of !#Unit'],
   ["downtown pa", '#Noun !#Unit'],
 
+  ["felt confused", '#PastTense #Adjective'],
+  ["felt a bit confused", '#PastTense a #Noun #Adjective'],
+  [`she'll come around`, '#Pronoun will #PhrasalVerb #Particle']
   // ["I was an expert", 'i was an #Noun'],
   // ["definitely worth a rental.", '#Adverb #Verb a #Noun'],
   // ["keeping the matter a secret", '#Gerund the #Noun a #Noun'],
@@ -658,6 +661,7 @@ test('match:', function (t) {
   arr.forEach(function (a) {
     let [str, match] = a
     let doc = nlp(str).compute('tagRank')
+    // doc.tagger().tagger()
     let tags = doc.json()[0].terms.map(term => term.tagRank[0])
     let msg = `'${(str + "' ").padEnd(20, ' ')}  - '${tags.join(', ')}'`
     let m = doc.match(match)

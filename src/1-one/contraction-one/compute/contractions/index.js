@@ -21,10 +21,6 @@ const reTag = function (terms, view, start, len) {
     end += 1
   }
   tmp.ptrs = [[0, start, end]]
-  tmp.compute('lexicon')
-  if (tmp.world.compute.preTagger) {
-    tmp.compute('preTagger')
-  }
 }
 
 const byEnd = {

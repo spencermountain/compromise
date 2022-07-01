@@ -28,7 +28,7 @@ collisions are more-likely after
     after 46-thousand sentences
 
 */
-let start = 0
+let index = 0
 
 const pad3 = (str) => {
   str = str.length < 3 ? '0' + str : str
@@ -37,19 +37,17 @@ const pad3 = (str) => {
 
 const toId = function (term) {
   let [n, i] = term.index || [0, 0]
-  start += 1
-  var now = start;
-  now = parseInt(now, 10)
+  index += 1
 
-  //don't overflow time
-  now = now > 46655 ? 0 : now
+  //don't overflow index
+  index = index > 46655 ? 0 : index
   //don't overflow sentences
   n = n > 46655 ? 0 : n
   // //don't overflow terms
   i = i > 1294 ? 0 : i
 
   // 3 digits for time
-  let id = pad3(now.toString(36))
+  let id = pad3(index.toString(36))
   // 3 digit  for sentence index (46k)
   id += pad3(n.toString(36))
 

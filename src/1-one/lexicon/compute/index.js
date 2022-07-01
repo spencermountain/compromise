@@ -3,7 +3,7 @@ import singleWord from './single-word.js'
 
 // tag any words in our lexicon - even if it hasn't been filled-up yet
 // rest of pre-tagger is in ./two/preTagger
-const firstPass = function (view) {
+const lexicon = function (view) {
   const world = view.world
   view.docs.forEach(terms => {
     for (let i = 0; i < terms.length; i += 1) {
@@ -18,5 +18,5 @@ const firstPass = function (view) {
 }
 
 export default {
-  lexicon: firstPass
+  lexicon
 }

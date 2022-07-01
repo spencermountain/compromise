@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
-import plg from './plugins/speed/src/plugin.js'
-nlp.plugin(plg)
+import nlp from './src/two.js'
+// import plg from './plugins/speed/src/plugin.js'
+// nlp.plugin(plg)
 
 // nlp.verbose('tagger')
 
@@ -15,8 +15,8 @@ let doc
 // console.log(nlp.parseMatch('{sweet/adj}'))
 
 
-doc = nlp.lazy('one two three. four five six. seven foo eight nine.', 'foo #Value')
-doc.debug()
+// doc = nlp.lazy('one two three. four five six. seven foo eight nine.', 'foo #Value')
+// doc.debug()
 
 
 
@@ -68,9 +68,9 @@ txt = `she'll come around`
 
 
 // apostrophe
-// let lex = {
-//   'queen anne\'s lace': 'Flower'
-// }
-// let doc = nlp(`Queen Anne's lace`, lex)
-// doc.match(`#Flower`).debug()
+let lex = {
+  'queen anne\'s lace': 'Flower'
+}
+doc = nlp(`queen anne's lace`, lex).debug()
+doc.match(`#Flower`).debug()
 // console.log(doc.docs[0])

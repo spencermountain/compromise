@@ -11,8 +11,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 -->
 
 #### 14.4.0 [June 2021]
-- **[change]** - root matches like '{walk}' work without doing .compute('root')
+- **[change]** - support root matches like '{walk}' work without doing .compute('root')
 - **[change]** - split numbers+units '12km' as contraction - #919
+- **[new]** - `.lazy(txt, match)` fast-scan method [1](https://observablehq.com/@spencermountain/compromise-performance)
 - **[fix]** - support apostrophes in lexicon #932
 - **[fix]** - support unTag property in sweep
 - **[change]** - keep sentence caches, when still valid

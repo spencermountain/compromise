@@ -4,12 +4,12 @@ const expand = function (words) {
   let lex = {}
   // console.log('start:', Object.keys(lex).length)
   let _multi = {}
-
   // go through each word in this key-value obj:
   Object.keys(words).forEach(word => {
     let tag = words[word]
     // normalize lexicon a little bit
     word = word.toLowerCase().trim()
+    word = word.replace(/'s\b/, '')
     // cache multi-word terms
     let split = word.split(/ /)
     if (split.length > 1) {

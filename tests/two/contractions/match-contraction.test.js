@@ -100,7 +100,7 @@ test('lookup contraction', function (t) {
     'afghanistan',
     'foo',
   ]
-  let trie = nlp.compile(arr)
+  let trie = nlp.buildTrie(arr)
   let res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
   t.equal(res.has('marines'), true, 'post-contraction found first one')
   t.equal(res.has('afghanistan'), true, 'post-contraction found second one')

@@ -5,50 +5,6 @@ nlp.plugin(plg)
 
 let txt = ''
 // tagging/root issues June 10
-// "Okay, okay, okay should I be scared?"
-// "This is when I started to get scared."
-
-// "A 40-year-old man called me swell."
-// "that's just not swell"
-
-txt = "Let’s get you into wardrobe for a fitting."
-// txt = "I was an expert"
-// txt = "definitely worth a rental."
-// txt = "keeping the matter a secret"
-
-// txt = "My pants don't even fit right"
-// txt = "In a baseball hat fit for a queen"
-// txt = "Srinath will be fit in three weeks"
-// txt = "does the different part fit together"
-
-// txt = "License fee for beach vendors hiked"
-// txt = "TTC to hike fares by 10 cents in March"
-
-// txt = "He deserted from the Dragoons at"
-// txt = "banks wear deserted look"
-
-// txt = "CBI catches DD acting director taking bribe"
-// txt = "How do I keep kissing you, and catch my breath?"
-
-// txt = " throw stones, Dick, said Jaqueline."
-// txt = "Loblaws reducing food prices at Toronto stores"
-// txt = "Stock prices closed higher in Stockholm"
-
-// txt = `Upload documents required to verify your eligibility`
-
-txt = `It sure seemed that way.`
-txt = `I am not sure when to take.`
-txt = `Pretty sure my arm is broke`
-txt = `Not sure about the details.`
-txt = `Sure you don't wanna pretzel?`
-txt = `You, you sure you need shoes?`
-txt = `Sure enough, no one was there.`
-txt = `Are you sure you wanna do this?`
-txt = `make sure that it's truly lost.`
-txt = `You sure this is what you want?`
-
-
-txt = `she'll come around`
 txt = ``
 txt = ``
 txt = ` wade boggs was cool`
@@ -144,10 +100,11 @@ let doc = nlp(txt).debug()
 // console.log(doc._cache)
 // doc.match('#Person').debug()
 
-// let net = nlp.buildNet([
-//  { match: 'every single #Noun' },
-//  { match: 'not (a|one) #Singular' },
-// ])
+let net = nlp.buildNet([
+  { match: 'every single #Noun' },
+  { match: 'not (a|one) #Singular' },
+])
+console.log(net)
 // let doc = nlp('i saw every single house. i met none. ')
 // doc.match(net).debug()
 // let m = nlp([['first.', 'foo bar']]).debug()

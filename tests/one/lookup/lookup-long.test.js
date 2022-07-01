@@ -61,7 +61,7 @@ let arr = [
 ]
 
 test('lookup-long', function (t) {
-  let trie = nlp.compile(arr)
+  let trie = nlp.buildTrie(arr)
   let doc = nlp(text)
   let res = doc.lookup(trie)
   t.equal(res.length, 11, here + 'found all')

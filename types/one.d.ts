@@ -1,4 +1,4 @@
-import { Lexicon, Plugin, matchOptions } from './misc'
+import { Lexicon, Plugin, matchOptions, Match, Net } from './misc'
 import View from './view/one'
 
 /** parse a given text */
@@ -31,7 +31,9 @@ declare module nlp {
   /** add new words to internal lexicon */
   export function addWords(words: Lexicon): any
   /** turn a list of words into a searchable graph */
-  export function compile(words: string[]): object
+  export function buildTrie(words: string[]): object
+  /** compile a set of match objects to a more optimized form */
+  export function buildNet(matches: Match[]): Net
   /** add words to the autoFill dictionary */
   export function typeahead(words: Lexicon): any
   /** export internal methods for plugins */

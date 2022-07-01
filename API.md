@@ -146,7 +146,7 @@
 * .uncache()
 
 ### Lookup
-* nlp.compile()
+* nlp.buildTrie()
 * .lookup()
 
 ### Typeahead

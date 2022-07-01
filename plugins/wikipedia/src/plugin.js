@@ -7,7 +7,7 @@ let list = Object.keys(unpack(model))
 // console.log(list.length.toLocaleString(), 'articles')
 
 // console.log('compiling lookup..')
-let trie = nlp.compile(list)
+let trie = nlp.buildTrie(list)
 
 const plugin = {
   api: function (View) {

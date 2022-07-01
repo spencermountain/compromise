@@ -38,7 +38,6 @@ nlp.tokenize = function (input, lex) {
   return doc
 }
 
-
 /** extend compromise functionality */
 nlp.plugin = function (plugin) {
   extend(plugin, this._world, View, this)

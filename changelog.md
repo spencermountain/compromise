@@ -16,6 +16,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - support apostrophes in lexicon #932
 - **[fix]** - support unTag property in sweep
 - **[change]** - keep sentence caches, when still valid
+- **[change]** - alias nlp.compile() to .buildTrie()
 
 #### 14.3.1 [June 2021]
 - **[fix]** - missed caches in .sweep()

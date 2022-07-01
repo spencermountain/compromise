@@ -76,3 +76,17 @@ export interface matchOptions {
   fuzzy?: number,
   caseSensitive?: boolean,
 }
+
+export interface Match {
+  match: string,
+  tag?: string | string[],
+  unTag?: string | string[],
+  group?: string | number,
+  reason?: string,
+}
+
+export interface Net {
+  hooks: object,
+  always?: any,
+  isNet: boolean
+}

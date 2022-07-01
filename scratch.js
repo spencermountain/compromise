@@ -62,6 +62,9 @@ txt = `Are you sure you wanna do this?`
 txt = `make sure that it's truly lost.`
 txt = `You sure this is what you want?`
 
-txt = 'i see 5. and some more'
-doc = nlp(txt)
+txt = 'i see 55. and some more'
+let m = nlp.model()
+console.log(Object.keys(m.one))
+// m.one.abbreviations['5'] = true
+doc = nlp(txt).debug()
 

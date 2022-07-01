@@ -23,6 +23,8 @@ let doc = nlp(txt).debug()
 
 // banks wear
 // %Plural|Verb% %Noun|Verb%
+// upload documents
+// %Noun|Verb% %Plural|Verb% 
 
 // let doc = nlp(`he will have been walking`).debug()
 // let doc = nlp(`Bob has handled`).debug()
@@ -121,6 +123,40 @@ console.log(net)
 // res.found[0].view.debug()
 
 
+
+// txt = "should I be scared?"
+// txt = "i started to get scared."
+
+
+// txt = "My pants don't even fit right"
+// txt = "In a baseball hat fit for a queen"
+// txt = "does the different part fit together"
+
+// txt = "License fee for beach vendors hiked"
+// txt = "TTC to hike fares by 10 cents in March"
+
+// txt = "He deserted from the Dragoons at"
+// txt = "banks wear deserted look"
+
+// txt = "CBI catches DD acting director taking bribe"
+// txt = "How do I keep kissing you, and catch my breath?"
+
+// txt = " throw stones, Dick, said Jaqueline."
+// txt = "Loblaws reducing food price at Toronto stores"
+// txt = "Stock prices closed higher in Stockholm"
+
+// txt = `Upload documents`
+
+// txt = `It sure seemed that way.`
+// txt = `I am not sure when to take.`
+// txt = `Pretty sure my arm is broke`
+// txt = `Not sure about the details.`
+// txt = `Sure you don't wanna pretzel?`
+// txt = `You, you sure you need shoes?`
+// txt = `Sure enough, no one was there.`
+// txt = `Are you sure you wanna do this?`
+// txt = `make sure that it's truly lost.`
+// txt = `You sure this is what you want?`
 
 // res.found[0].view.debug()
 

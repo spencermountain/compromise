@@ -3282,10 +3282,6 @@ export default [
     tags: 'IN, DT, JJ, NN, PRP, VBD, NNP, VBD, DT, JJ, NN, IN, NN, CC, VBD, DT, JJ, NN',
   },
   {
-    text: 'The 69 year old Dr. Lopez was found guilty and was summarily hung and quartered on June 7, 1594 at Tyburn.',
-    tags: 'DT, CD, NN, JJ, NNP, NNP, VBD, VBN, JJ, CC, VBD, RB, VBN, CC, VBN, IN, NNP, CD, CD, IN, NNP',
-  },
-  {
     text: '1533 Atahualpa, inca emperor of peru, imprisoned & learns chess.',
     tags: 'CD, NNP, NNP, NN, IN, NNP, VBN, CC, VBZ, NN',
   },

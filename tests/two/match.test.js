@@ -651,10 +651,11 @@ let arr = [
 
   ["felt confused", '#PastTense #Adjective'],
   ["felt a bit confused", '#PastTense a #Noun #Adjective'],
-  [`she'll come around`, '#Pronoun will #PhrasalVerb #Particle']
-  // ["I was an expert", 'i was an #Noun'],
-  // ["definitely worth a rental.", '#Adverb #Verb a #Noun'],
-  // ["keeping the matter a secret", '#Gerund the #Noun a #Noun'],
+  [`she'll come around`, '#Pronoun will #PhrasalVerb #Particle'],
+  ['that\'s not swell', 'that is not #Adjective'],
+  ["I was an expert", 'i was an #Noun'],
+  ["definitely worth a rental.", '#Adverb #Verb a #Noun'],
+  ["keeping the matter a secret", '#Gerund the #Noun a #Noun'],
 ]
 test('match:', function (t) {
   let res = []

@@ -138,5 +138,6 @@ export default [
   'attosecond',
   'attoseconds',
   'percent',
+  'year old',
   'years old',
 ]

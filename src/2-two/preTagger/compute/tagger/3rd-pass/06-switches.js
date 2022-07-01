@@ -27,7 +27,7 @@ const checkTag = (term, obj = {}, tagSet) => {
   })
   let found = tags.find(tag => obj[tag])
   if (found && env.DEBUG_TAGS) {
-    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)//eslint-disable-line
+    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`)//eslint-disable-line
   }
   found = obj[found]
   return found

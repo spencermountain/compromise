@@ -20,7 +20,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - alias nlp.compile() to .buildTrie()
 - **[fix]** - tagging fixes
 - **[update]** - dependencies
-  _plugin-releases_: dates, speed
+  _plugin-releases_: dates, speed, de-compromise
 
 #### 14.3.1 [June 2021]
 - **[fix]** - missed caches in .sweep()

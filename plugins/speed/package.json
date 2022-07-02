@@ -1,7 +1,7 @@
 {
   "name": "compromise-speed",
   "description": "plugin for nlp-compromise",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-speed.min.js",
@@ -24,7 +24,8 @@
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "watch": "amble ./scratch.js",
-    "build": "rollup -c --silent"
+    "version": "node ./scripts/version.js",
+    "build": "npm run version && rollup -c --silent"
   },
   "files": [
     "builds/",

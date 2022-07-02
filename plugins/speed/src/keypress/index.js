@@ -4,7 +4,7 @@ let sentenceCache = {}
 const keyPress = function (text, lex, opts = {}) {
   const nlp = this
   const splitSentences = this.methods().one.tokenize.splitSentences
-  let arr = splitSentences(text, this.model())
+  let arr = splitSentences(text, this.world())
 
   let list = []
   arr.forEach(str => {

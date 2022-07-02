@@ -102,7 +102,7 @@ class View {
   /** expand the view with any left-or-right matches*/
   grow: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** apply a sequence of match objects to the document */
-  sweep: (match: Net, opts?: object) => View
+  sweep: (match: Net, opts?: object) => { view: View, found: object[] }
 
   /** .split() [alias] */
   splitOn: (match?: string, group?: string | number) => View

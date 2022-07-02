@@ -8,6 +8,8 @@ declare function nlp(text: string, lexicon?: Lexicon): View
 declare module nlp {
   /** interpret text without tagging */
   export function tokenize(text: string, lexicon?: Lexicon): View
+  /** scan through text with minimal analysis */
+  export function lazy(text: string, match?: string): View
   /** mix-in a compromise plugin */
   export function plugin(plugin: Plugin): any
   /** mix-in a compromise plugin */

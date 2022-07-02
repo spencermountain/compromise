@@ -4268,7 +4268,7 @@
   };
   var whereIts$1 = whereIts;
 
-  var version = '7.1.4';
+  var version$1 = '7.1.4';
 
   const main = (input, tz, options) => new Spacetime(input, tz, options);
 
@@ -4325,7 +4325,7 @@
 
   //find tz by time
   main.whereIts = whereIts$1;
-  main.version = version;
+  main.version = version$1;
 
   //aliases:
   main.plugin = main.extend;
@@ -7382,7 +7382,7 @@
     }
 
     if (!doc.numbers) {
-      console.warn(`Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`); //eslint-disable-line
+      console.warn(`Warning: compromise .numbers() not loaded.\n   This plugin requires >= v14`); //eslint-disable-line
     } else {
       // doc.numbers().normalize()
       // convert 'two' to 2
@@ -7391,7 +7391,9 @@
       num.toCardinal(false);
     }
     // expand 'aug 20-21'
-    doc.contractions().expand();
+    if (doc.contractions) {
+      doc.contractions().expand();
+    }
     // remove adverbs
     doc.adverbs().remove();
     // 'week-end'
@@ -8680,6 +8682,8 @@
 
   ];
 
+  var version = '3.4.1';
+
   // import matches from './compute/matches.js'
 
   var plugin = {
@@ -8693,7 +8697,8 @@
       // net = net || methods.one.buildNet(matches, world)
       // world.model.two.matches = world.model.two.matches.concat(matches)
     },
-    hooks: ['dates']
+    hooks: ['dates'],
+    version
   };
 
   return plugin;

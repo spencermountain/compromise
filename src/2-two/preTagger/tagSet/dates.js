@@ -3,13 +3,13 @@ export default {
     not: ['Verb', 'Adverb', 'Adjective'],
   },
   Month: {
-    is: 'Singular',
-    also: ['Date'],
+    is: 'Date',
+    also: ['Noun'],
     not: ['Year', 'WeekDay', 'Time'],
   },
   WeekDay: {
-    is: 'Noun',
-    also: ['Date'],
+    is: 'Date',
+    also: ['Noun'],
   },
   Year: {
     is: 'Date',
@@ -29,8 +29,8 @@ export default {
     is: 'Date',
   },
   Timezone: {
-    is: 'Noun',
-    also: ['Date'],
+    is: 'Date',
+    also: ['Noun'],
     not: ['ProperNoun'],
   },
   Time: {

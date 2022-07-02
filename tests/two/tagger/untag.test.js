@@ -67,3 +67,15 @@ test('untag wildcard', function (t) {
   t.equal(term.tags.size, 0, here + 'toronto-has-no-tags-now')
   t.end()
 })
+
+test('tagset conflict:', function (t) {
+  let doc = nlp('april 5th')
+  doc.match('april').tag('Person')
+  t.equal(doc.has('#Month'), false, here + 'no-month')
+  t.equal(doc.firstTerm().has('#Date'), false, here + 'no-date')
+  doc.match('april').tag('Imperative')
+  t.equal(doc.has('#Person'), false, here + 'no-person')
+  t.equal(doc.has('#Noun'), false, here + 'no-noun')
+  t.end()
+})
+

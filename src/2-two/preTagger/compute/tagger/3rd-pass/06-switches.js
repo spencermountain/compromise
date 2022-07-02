@@ -75,7 +75,7 @@ const doSwitches = function (terms, i, world) {
     // did we find anything?
     if (tag) {
       // tag it
-      setTag([term], tag, world, null, `3-[variable] (${form})`)
+      setTag([term], tag, world, null, `3-[switch] (${form})`)
       // add plural/singular etc.
       fillTags(terms, i, model)
     } else if (env.DEBUG_TAGS) {

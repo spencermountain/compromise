@@ -1,14 +1,16 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+import nlp from './src/two.js'
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let txt = ''
 let doc
-doc = nlp('jan 4th').debug()
-doc.dates().debug()
+doc = nlp('May, 2009...')
+// doc.match('april').tag('Person')
+doc.debug()
+// doc.dates().debug()
 // doc = doc.match('33 km').debug()
 
 // doc = nlp('he sweetly sang').debug()

@@ -10,7 +10,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 -->
 
-#### 14.4.0 [June 2021]
+#### 14.4.0 [July 2021]
 - **[change]** - support root matches like '{walk}' work without doing .compute('root')
 - **[change]** - split numbers+units '12km' as contraction - #919
 - **[new]** - `.lazy(txt, match)` fast-scan method [1](https://observablehq.com/@spencermountain/compromise-performance)
@@ -19,6 +19,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - keep sentence caches, when still valid
 - **[change]** - alias nlp.compile() to .buildTrie()
 - **[fix]** - tagging fixes
+- **[update]** - dependencies
 
 #### 14.3.1 [June 2021]
 - **[fix]** - missed caches in .sweep()

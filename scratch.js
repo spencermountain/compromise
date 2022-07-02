@@ -17,10 +17,3 @@ let doc
 
 // doc = nlp.lazy('one two three. four five six. seven foo eight nine.', 'foo #Value')
 // doc.debug()
-
-
-
-
-doc = nlp(txt)
-doc.debug()
-

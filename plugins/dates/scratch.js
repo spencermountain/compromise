@@ -2,7 +2,9 @@
 import nlp from '../../src/three.js'
 import spacetime from 'spacetime'
 
-import datePlugin from './src/plugin.js'
+// import datePlugin from './src/plugin.js'
+import datePlugin from './builds/compromise-dates.mjs'
+console.log(datePlugin)
 nlp.plugin(datePlugin)
 // nlp.verbose('tagger')
 // nlp.verbose('date')

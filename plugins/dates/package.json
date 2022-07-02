@@ -25,7 +25,8 @@
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "watch": "amble ./scratch.js",
     "perf": "node ./scripts/perf.js",
-    "build": "rollup -c --silent"
+    "version": "node ./scripts/version.js",
+    "build": "npm run version && rollup -c --silent"
   },
   "files": [
     "builds/",

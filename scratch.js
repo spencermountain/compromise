@@ -1,13 +1,14 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
-// import plg from './plugins/speed/src/plugin.js'
-// nlp.plugin(plg)
+import nlp from './src/one.js'
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 
 nlp.verbose('tagger')
 
 let txt = ''
 let doc
-// doc = nlp('33 kilos').debug()
+doc = nlp('jan 4th').debug()
+doc.dates().debug()
 // doc = doc.match('33 km').debug()
 
 // doc = nlp('he sweetly sang').debug()

@@ -1,5 +1,18 @@
 import { fixPointers, isView, isNet } from './_lib.js'
 
+const parseRegs = function (regs, opts, world) {
+  const one = world.methods.one
+  if (typeof regs === 'number') {
+    regs = String(regs)
+  }
+  // support param as string
+  if (typeof regs === 'string') {
+    regs = one.killUnicode(regs, world)
+    regs = one.parseMatch(regs, opts, world)
+  }
+  return regs
+}
+
 const match = function (regs, group, opts) {
   const one = this.methods.one
   // support param as view object
@@ -10,25 +23,12 @@ const match = function (regs, group, opts) {
   if (isNet(regs)) {
     return this.sweep(regs, { tagger: false }).view.settle()
   }
-  // support param as string
-  if (typeof regs === 'string') {
-    regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts, this.world)
-  }
+  regs = parseRegs(regs, opts, this.world)
   let todo = { regs, group }
   let res = one.match(this.docs, todo, this._cache)
   let { ptrs, byGroup } = fixPointers(res, this.fullPointer)
   let view = this.toView(ptrs)
   view._groups = byGroup
-  // try to keep some of the cache
-  // if (this._cache) {
-  //   view._cache = view.ptrs.map(ptr => {
-  //     if (isFull(ptr, this.document)) {
-  //       return this._cache[ptr[0]]
-  //     }
-  //     return null
-  //   })
-  // }
   return view
 }
 
@@ -42,10 +42,7 @@ const matchOne = function (regs, group, opts) {
   if (isNet(regs)) {
     return this.sweep(regs, { tagger: false, matchOne: true }).view
   }
-  if (typeof regs === 'string') {
-    regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts, this.world)
-  }
+  regs = parseRegs(regs, opts, this.world)
   let todo = { regs, group, justOne: true }
   let res = one.match(this.docs, todo, this._cache)
   let { ptrs, byGroup } = fixPointers(res, this.fullPointer)
@@ -65,10 +62,7 @@ const has = function (regs, group, opts) {
   if (isNet(regs)) {
     return this.sweep(regs, { tagger: false }).view.found
   }
-  if (typeof regs === 'string') {
-    regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts, this.world)
-  }
+  regs = parseRegs(regs, opts, this.world)
   let todo = { regs, group, justOne: true }
   let ptrs = one.match(this.docs, todo, this._cache).ptrs
   return ptrs.length > 0
@@ -86,10 +80,7 @@ const ifFn = function (regs, group, opts) {
     let m = this.sweep(regs, { tagger: false }).view.settle()
     return this.if(m)//recurse with result
   }
-  if (typeof regs === 'string') {
-    regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts, this.world)
-  }
+  regs = parseRegs(regs, opts, this.world)
   let todo = { regs, group, justOne: true }
   let ptrs = this.fullPointer
   let cache = this._cache || []
@@ -119,10 +110,7 @@ const ifNo = function (regs, group, opts) {
     return this.ifNo(m)
   }
   // otherwise parse the match string
-  if (typeof regs === 'string') {
-    regs = one.killUnicode(regs, this.world)
-    regs = one.parseMatch(regs, opts, this.world)
-  }
+  regs = parseRegs(regs, opts, this.world)
   let cache = this._cache || []
   let view = this.filter((m, i) => {
     let todo = { regs, group, justOne: true }

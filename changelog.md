@@ -6,8 +6,21 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
-<!-- #### [Unreleased]
+<!-- #### 14.4.0 [Unreleased]
+
 -->
+
+#### 14.4.0 [July 2021]
+- **[change]** - support root matches like '{walk}' work without doing .compute('root')
+- **[change]** - split numbers+units '12km' as contraction - #919
+- **[new]** - `.lazy(txt, match)` fast-scan method [1](https://observablehq.com/@spencermountain/compromise-performance)
+- **[fix]** - support apostrophes in lexicon #932
+- **[fix]** - support unTag property in sweep
+- **[change]** - keep sentence caches, when still valid
+- **[change]** - alias nlp.compile() to .buildTrie()
+- **[fix]** - tagging fixes
+- **[update]** - dependencies
+  _plugin-releases_: dates, speed, de-compromise
 
 #### 14.3.1 [June 2021]
 - **[fix]** - missed caches in .sweep()

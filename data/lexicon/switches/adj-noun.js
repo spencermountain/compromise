@@ -93,6 +93,7 @@ export default [
   'subject',
   'subordinate',
   'superior',
+  'swell',
   'taboo',
   'tan',
   'teen',

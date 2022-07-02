@@ -62,7 +62,7 @@ test('drop back to View', function (t) {
   t.equal(m.viewType, 'View', here + 'insert-to-view')
 
   m = vb.remove('jack')
-  t.equal(m.viewType, 'View', here + 'insert-to-view')
+  t.equal(m.viewType, 'View', here + 'remove-to-view')
 
   m = vb.replaceWith('jack', 'blue')
   t.equal(m.viewType, 'View', here + 'replace-to-view')

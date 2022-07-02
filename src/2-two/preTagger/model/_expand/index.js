@@ -33,6 +33,8 @@ const switchDefaults = {
   'Person|Place': 'Person',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
+  // 'miles'
+  'Unit|Noun': 'Noun',
 }
 
 const expandLexicon = function (words, model) {

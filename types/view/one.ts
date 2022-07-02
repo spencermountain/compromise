@@ -1,4 +1,4 @@
-import { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Term } from '../misc'
+import { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Term, Net } from '../misc'
 
 class View {
   // Utils
@@ -81,15 +81,15 @@ class View {
 
   // Match
   /** return matching patterns in this doc */
-  match: (match: string | View, group?: string | number, options?: matchOptions) => View
+  match: (match: string | View | Net, group?: string | number, options?: matchOptions) => View
   /** return only the first match */
-  matchOne: (match: string | View, group?: string | number, options?: matchOptions) => View
+  matchOne: (match: string | View | Net, group?: string | number, options?: matchOptions) => View
   /** Return a boolean if this match exists */
-  has: (match: string | View, group?: string | number, options?: matchOptions) => boolean
+  has: (match: string | View | Net, group?: string | number, options?: matchOptions) => boolean
   /** return each current phrase, only if it contains this match */
-  if: (match: string | View, group?: string | number, options?: matchOptions) => View
+  if: (match: string | View | Net, group?: string | number, options?: matchOptions) => View
   /** Filter-out any current phrases that have this match */
-  ifNo: (match: string | View, group?: string | number, options?: matchOptions) => View
+  ifNo: (match: string | View | Net, group?: string | number, options?: matchOptions) => View
 
   /** return the terms before each match */
   before: (match: string | View, group?: string | number, options?: matchOptions) => View
@@ -101,6 +101,8 @@ class View {
   growRight: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** expand the view with any left-or-right matches*/
   grow: (match: string | View, group?: string | number, options?: matchOptions) => View
+  /** apply a sequence of match objects to the document */
+  sweep: (match: Net, opts?: object) => { view: View, found: object[] }
 
   /** .split() [alias] */
   splitOn: (match?: string, group?: string | number) => View

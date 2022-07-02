@@ -1,3 +1,4 @@
+import fillTags from './_fillTags.js'
 const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env // eslint-disable-line
 import adhoc from './_adhoc.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
@@ -26,7 +27,7 @@ const checkTag = (term, obj = {}, tagSet) => {
   })
   let found = tags.find(tag => obj[tag])
   if (found && env.DEBUG_TAGS) {
-    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal}' (#${found})  \x1b[0m`)//eslint-disable-line
+    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`)//eslint-disable-line
   }
   found = obj[found]
   return found
@@ -73,7 +74,10 @@ const doSwitches = function (terms, i, world) {
     }
     // did we find anything?
     if (tag) {
-      setTag([term], tag, world, null, `3-[variable] (${form})`)
+      // tag it
+      setTag([term], tag, world, null, `3-[switch] (${form})`)
+      // add plural/singular etc.
+      fillTags(terms, i, model)
     } else if (env.DEBUG_TAGS) {
       console.log(`\n -> X  - '${str}'  : (${form})  `)//eslint-disable-line
     }

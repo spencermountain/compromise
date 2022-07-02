@@ -7,6 +7,23 @@ let misc = {
   g8: 'Organization',
   vh1: 'Organization',
 
+  'km2': 'Unit',
+  'm2': 'Unit',
+  'dm2': 'Unit',
+  'cm2': 'Unit',
+  'mm2': 'Unit',
+  'mile2': 'Unit',
+  'in2': 'Unit',
+  'yd2': 'Unit',
+  'ft2': 'Unit',
+  'm3': 'Unit',
+  'dm3': 'Unit',
+  'cm3': 'Unit',
+  'in3': 'Unit',
+  'ft3': 'Unit',
+  'yd3': 'Unit',
+
+
   // ampersands
   'at&t': 'Organization',
   'black & decker': 'Organization',

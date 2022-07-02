@@ -143,7 +143,7 @@ doc.cache()
 doc.uncache()
 
 // ### Lookup
-nlp.compile([''])
+nlp.buildTrie([''])
 doc.lookup({})
 
 // ### Typeahead

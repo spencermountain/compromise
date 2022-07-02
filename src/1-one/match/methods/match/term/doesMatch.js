@@ -92,6 +92,10 @@ const doesMatch = function (term, reg, index, length) {
   }
   // support optimized (one|two)
   if (reg.fastOr !== undefined) {
+    // {work/verb} must be a verb
+    if (reg.pos && !term.tags.has(reg.pos)) {
+      return null
+    }
     return reg.fastOr.has(term.implicit) || reg.fastOr.has(term.normal) || reg.fastOr.has(term.text) || reg.fastOr.has(term.machine)
   }
   //support slower (one|two)

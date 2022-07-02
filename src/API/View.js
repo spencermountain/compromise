@@ -73,31 +73,27 @@ class View {
   update(pointer) {
     let m = new View(this.document, pointer)
     // send the cache down, too?
-    if (m._cache && pointer && pointer.length > 1) {
-      // only if it's full
+    if (this._cache && pointer && pointer.length > 0) {
+      // only keep cache if it's a full-sentence
       let cache = []
-      pointer.forEach(ptr => {
+      pointer.forEach((ptr, i) => {
+        let [n, start, end] = ptr
         if (ptr.length === 1) {
-          cache.push(m._cache[ptr[0]])
+          cache[i] = this._cache[n]
+        } else if (start === 0 && this.document[n].length === end) {
+          cache[i] = this._cache[n]
         }
-        // let [n, start, end] = ptr
-        // if (start === 0 && this.document[n][end - 1] && !this.document[n][end]) {
-        //   console.log('=-=-=-= here -=-=-=-')
-        // }
       })
-      m._cache = cache
+      if (cache.length > 0) {
+        m._cache = cache
+      }
     }
     m.world = this.world
     return m
   }
   // create a new View, from this one
   toView(pointer) {
-    if (pointer === undefined) {
-      pointer = this.pointer
-    }
-    let m = new View(this.document, pointer)
-    // m._cache = this._cache // share this full thing
-    return m
+    return new View(this.document, pointer || this.pointer)
   }
   fromText(input) {
     const { methods } = this

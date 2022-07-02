@@ -55,6 +55,6 @@ export default [
   [/^[0-9.]{1,3}[a-z]{0,2}[-–—][0-9]{1,3}[a-z]{0,2}$/, ['Value', 'NumberRange'], '3-4'],
   //time-range
   [/^[0-9]{1,2}(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9]{1,2}(:[0-9][0-9])?(am|pm)$/, ['Time', 'NumberRange'], '3-4pm'],
-  //with unit
+  //number with unit
   [/^[0-9.]+([a-z]{1,4})$/, 'Value', '9km'],
 ]

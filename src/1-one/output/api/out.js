@@ -32,6 +32,9 @@ const out = function (method) {
   if (method === 'normal') {
     return this.text('normal')
   }
+  if (method === 'root') {
+    return this.text('root')
+  }
   if (method === 'machine' || method === 'reduced') {
     return this.text('machine')
   }

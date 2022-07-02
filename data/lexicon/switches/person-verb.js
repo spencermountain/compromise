@@ -15,6 +15,7 @@ export default [
   'chuck',
   'mack',
   'grant',//'sung'
+  'chase'
   // 'will',
   //  may
 ]

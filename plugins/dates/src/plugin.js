@@ -3,6 +3,8 @@ import compute from './compute/index.js'
 import tags from './model/tags.js'
 import words from './model/words/index.js'
 import regex from './model/regex.js'
+import version from './_version.js'
+
 // import matches from './compute/matches.js'
 
 export default {
@@ -16,5 +18,6 @@ export default {
     // net = net || methods.one.buildNet(matches, world)
     // world.model.two.matches = world.model.two.matches.concat(matches)
   },
-  hooks: ['dates']
+  hooks: ['dates'],
+  version
 }

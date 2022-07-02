@@ -48,6 +48,8 @@ export default {
     nothing: jj, //nothing secret, 
     something: jj,//something wrong
     anything: jj,
+    not: jj,//not swell
+    me: jj,//called me swell
   },
   afterWords: {
     too: jj, //insulting too

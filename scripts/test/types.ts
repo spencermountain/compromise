@@ -19,7 +19,7 @@ tape('misc functions', function (t) {
   let m = doc.filter(s => s.found)
   let b = doc.map(s => s)
   doc.forEach((s) => s)
-  m = doc.find(s => s.found)
+  let o = doc.find(s => s.found)
   m = doc.some(s => s.found)
   m = doc.random()
   m = doc.all()
@@ -87,7 +87,7 @@ tape('misc functions', function (t) {
   // match
   m = doc.matchOne('#Foo')
   m = doc.match('#Foo')
-  m = doc.has('#Foo')
+  let bool = doc.has('#Foo')
   m = doc.if('#Foo')
   m = doc.ifNo('#Foo')
   m = doc.before('#Foo')
@@ -134,6 +134,17 @@ tape('misc functions', function (t) {
   doc.compute('typeahead')
   doc.autoFill()
 
+  // sweep
+  let matches = [
+    { match: '2nd quarter of? 2022', tag: 'TimePeriod' },
+    { match: '(from|by|before) now', tag: 'FooBar' },
+  ]
+  let net = nlp.buildNet(matches)
+  doc = nlp(`so good by now. woo hoo before now. in the 2nd quarter 2022`)
+  let sr = doc.sweep(net)
+
+  // lazy
+  doc = nlp.lazy('hello', 'foo')
 
   // Two
   doc.compute('contractionTwo')
@@ -195,9 +206,9 @@ tape('misc functions', function (t) {
   s = doc.questions()
 
   // verbs
-  arr = doc.verbs().parse()
+  // arr = doc.verbs().parse()
   arr = doc.verbs().json()
-  arr = doc.verbs().subjects()
+  let sj = doc.verbs().subjects()
   let vb = doc.verbs().isSingular()
   vb = doc.verbs().isPlural()
   vb = doc.verbs().isImperative()
@@ -235,7 +246,7 @@ tape('plugin-date', function (t) {
   let doc = nlp<DatesMethods>('foo bar baz')
   let a = doc.dates()
   let b = doc.times()
-  b = doc.durations()
+  let c = doc.durations()
 
   let m = doc.dates().match('foo')
   m = doc.dates().format('foo')
@@ -275,7 +286,7 @@ tape('plugin-stats', function (t) {
 
 tape('plugin-wikipedia', function (t) {
   let doc = nlp<WikiMethods>('foo bar baz. foo')
-  doc = doc.wikipedia()
+  let wp = doc.wikipedia()
   t.end()
 })
 

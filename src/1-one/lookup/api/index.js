@@ -1,4 +1,4 @@
-import build from './compile/build.js'
+import build from './buildTrie/index.js'
 import scan from './scan.js'
 
 const isObject = val => {

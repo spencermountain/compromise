@@ -28,6 +28,7 @@ const addMethod = function (View) {
           num: parsed.num,
           suffix: parsed.suffix,
           hasComma: parsed.hasComma,
+          unit: parsed.unit
         }
         return json
       }, [])

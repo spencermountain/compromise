@@ -400,6 +400,7 @@ export default [
   'tv',
 
   'stone',
+  'man',
   'tributary',
 ]
 

@@ -12,6 +12,7 @@ const expand = function (words, world) {
     let tag = words[word]
     // normalize lexicon a little bit
     word = word.toLowerCase().trim()
+    word = word.replace(/'s\b/, '')
     // cache multi-word terms
     let split = word.split(/ /)
     if (split.length > 1) {

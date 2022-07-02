@@ -15,9 +15,9 @@ const prefixes = {
 const suffixes = {
   '%': 'percent',
   // s: 'seconds',
-  cm: 'centimetres',
-  km: 'kilometres',
-  ft: 'feet',
+  // cm: 'centimetres',
+  // km: 'kilometres',
+  // ft: 'feet',
   '°': 'degrees'
 }
 

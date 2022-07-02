@@ -4,29 +4,29 @@ const here = '[one/lookup] '
 
 test('lookup-basic', function (t) {
   let doc = nlp('one two three four five. no here results.')
-  let trie = nlp.compile(['one', 'onety'])
+  let trie = nlp.buildTrie(['one', 'onety'])
   let res = doc.lookup(trie).json()
   t.equal(res.length, 1, 'one results')
   t.equal(res[0].text, 'one', here + 'one result')
 
-  trie = nlp.compile(['two three', 'onety foo'])
+  trie = nlp.buildTrie(['two three', 'onety foo'])
   res = doc.lookup(trie).json()
   t.equal(res.length, 1, 'one results')
   t.equal(res[0].text, 'two three', here + 'two three result')
 
-  trie = nlp.compile(['two three', 'four five', 'five six'])
+  trie = nlp.buildTrie(['two three', 'four five', 'five six'])
   res = doc.lookup(trie).json()
   t.equal(res.length, 2, here + 'two results')
 
-  trie = nlp.compile(['two three four', 'four five six', 'five five', 'five'])
+  trie = nlp.buildTrie(['two three four', 'four five six', 'five five', 'five'])
   res = doc.lookup(trie).json()
   t.equal(res.length, 2, here + 'two three-results')
 
-  trie = nlp.compile(['two three', 'two', 'seven', 'one', 'onety', 'eleventy eight'])
+  trie = nlp.buildTrie(['two three', 'two', 'seven', 'one', 'onety', 'eleventy eight'])
   res = doc.lookup(trie)
   t.equal(res.length, 2, here + 'no-dupe results')
 
-  trie = nlp.compile(['twoe three', 'twsasdf so', 'sefven', 'onde', 'onety', 'eleventy eight'])
+  trie = nlp.buildTrie(['twoe three', 'twsasdf so', 'sefven', 'onde', 'onety', 'eleventy eight'])
   res = doc.lookup(trie)
   t.equal(res.length, 0, here + 'no results')
 
@@ -55,14 +55,14 @@ test('lookup-tricky', function (t) {
 })
 
 test('lookup-dupes', function (t) {
-  let trie = nlp.compile([`Toronto`, `Toronto Rangers`])
+  let trie = nlp.buildTrie([`Toronto`, `Toronto Rangers`])
   let res = nlp('toronto rangers').lookup(trie)
   t.equal(res.length, 1, here + 'no-sub-matches')
   t.end()
 })
 
 test('lookup-repeat', function (t) {
-  let trie = nlp.compile([
+  let trie = nlp.buildTrie([
     `Toronto`,
     `Toronto Toronto`,
     `Toronto Rangers`,
@@ -81,22 +81,22 @@ test('lookup-repeat', function (t) {
 
 
 test('lookup-fallback', function (t) {
-  let trie = nlp.compile(['a b c d e f', 'a b'])
+  let trie = nlp.buildTrie(['a b c d e f', 'a b'])
   let doc = nlp('one two a b three')
   let res = doc.lookup(trie)
   t.equal(res.text(), 'a b', here + 'fallback-pass')
 
-  trie = nlp.compile(['a a a', 'a a b'])
+  trie = nlp.buildTrie(['a a a', 'a a b'])
   doc = nlp('one two three. a a b')
   res = doc.lookup(trie)
   t.equal(res.text(), 'a a b', here + 'fallback-double-pass')
 
-  trie = nlp.compile(['a a a', 'a a b'])
+  trie = nlp.buildTrie(['a a a', 'a a b'])
   doc = nlp('one two three. a a c')
   res = doc.lookup(trie)
   t.equal(res.text(), '', here + 'fallback-double-fail')
 
-  trie = nlp.compile(['a b c d e f', 'a b c'])
+  trie = nlp.buildTrie(['a b c d e f', 'a b c'])
   doc = nlp('one two three. a b')
   res = doc.lookup(trie)
   t.equal(res.text(), '', here + 'fallback-fail')
@@ -134,7 +134,7 @@ test('lookup-reserved', function (t) {
     "Bridgewater State University",
     "Bridie",
   ]
-  let trie = nlp.compile(arr)
+  let trie = nlp.buildTrie(arr)
   let res = nlp('before Bridge Constructor Portal after').lookup(trie)
   t.equal(res.found, true, 'found-reserved-word')
   t.end()
@@ -148,7 +148,7 @@ test('lookup no-contractions', function (t) {
     'afghanistan',
     'foo',
   ]
-  let trie = nlp.compile(arr)
+  let trie = nlp.buildTrie(arr)
   let res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
   t.equal(res.has('marines'), true, 'no-contraction got first one')
   t.equal(res.has('afghanistan'), true, 'no-contraction got first one')
@@ -194,17 +194,17 @@ test('lookup backtrack', function (t) {
 
 // test('obj-scan', function(t) {
 //   let doc = nlp('one one two three four five.  here one result.')
-//   let trie = nlp.compile({ two: 'Fun', here: 'Fun' })
+//   let trie = nlp.buildTrie({ two: 'Fun', here: 'Fun' })
 //   let res = doc.lookup(trie)
 //   t.equal(res['Fun'].length, 2, 'two single results')
 
 //   doc = nlp('one one two three four five.  here one result.')
-//   trie = nlp.compile({ one: 'One', 'not here': 'Missing' })
+//   trie = nlp.buildTrie({ one: 'One', 'not here': 'Missing' })
 //   res = doc.lookup(trie)
 //   t.equal(res['One'].length, 3, 'three one results')
 //   t.equal(res['Missing'], undefined, 'no missing results')
 
-//   trie = nlp.compile({})
+//   trie = nlp.buildTrie({})
 //   res = doc.lookup(trie)
 //   t.equal(Object.keys(res).length, 0, 'no results')
 

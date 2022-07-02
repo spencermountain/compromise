@@ -60,6 +60,7 @@ import personNoun from './switches/person-noun.js'
 import personDate from './switches/person-date.js'
 import personVerb from './switches/person-verb.js'
 import personPlace from './switches/person-place.js'
+import unitNoun from './switches/unit-noun.js'
 
 //add-in the generic, flat word-lists
 const data = [
@@ -123,6 +124,7 @@ const data = [
   [personPlace, 'Person|Place'],
   [personDate, 'Person|Date'],
   [personVerb, 'Person|Verb'],
+  [unitNoun, 'Unit|Noun'],
 ]
 for (let i = 0; i < data.length; i++) {
   const list = data[i][0]

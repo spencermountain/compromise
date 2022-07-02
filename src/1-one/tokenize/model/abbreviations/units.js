@@ -3,7 +3,7 @@ export default [
   'dl',
   'ml',
   'gal',
-  'ft', //ambiguous
+  // 'ft', //ambiguous
   'qt',
   'pt',
   'tbl',
@@ -32,12 +32,11 @@ export default [
   'kmph', //kilometers per hour
   'kb', //kilobyte
   'mb', //megabyte
-  'gb', //ambig
+  // 'gb', //ambig
   'tb', //terabyte
   'lx', //lux
   'lm', //lumen
-  'pa', //ambig
+  // 'pa', //ambig
   'fl oz', //
-
   'yb',
 ]

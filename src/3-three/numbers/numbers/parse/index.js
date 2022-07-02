@@ -42,6 +42,8 @@ const parseNumber = function (m) {
     return { num: parseText(m) }
   }
   let str = m.text('reduced')
+  // reach for '12 litres'
+  let unit = m.growRight('#Unit').match('#Unit$').text('machine')
   // is it in '3,123' format?
   let hasComma = /[0-9],[0-9]/.test(m.text('text'))
   // parse a numeric-number like '$4.00'
@@ -49,6 +51,7 @@ const parseNumber = function (m) {
     let res = parseNumeric(str, m)
     if (res !== null) {
       res.hasComma = hasComma
+      res.unit = unit
       return res
     }
   }
@@ -75,15 +78,18 @@ const parseNumber = function (m) {
   if (fraction && fraction.decimal) {
     num += fraction.decimal
   }
+
+
   return {
-    hasComma: hasComma,
+    hasComma,
     prefix: '',
-    num: num,
+    num,
     suffix: '',
     isOrdinal: m.has('#Ordinal'),
     isText: m.has('#TextValue'),
     isFraction: m.has('#Fraction'),
     isMoney: m.has('#Money'),
+    unit
   }
 }
 export default parseNumber

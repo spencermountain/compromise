@@ -47,7 +47,7 @@ let matches = [
   `West Toronto Nationals`,
   `Toronto Young Rangers`,
 ]
-const trie = nlp.compile(matches)
+const trie = nlp.buildTrie(matches)
 
 const doit = async function (txt) {
   let doc = nlp(txt)

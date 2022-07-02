@@ -1,7 +1,7 @@
 import parse from './01-parse.js'
 
 // do some indexing on the list of matches
-const compile = function (matches, world) {
+const buildNet = function (matches, world) {
   // turn match-syntax into json
   matches = parse(matches, world)
 
@@ -39,4 +39,4 @@ const compile = function (matches, world) {
   }
 }
 
-export default compile
+export default buildNet

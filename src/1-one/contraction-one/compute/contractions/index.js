@@ -3,6 +3,7 @@ import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
 import french from './french.js'
 import numberRange from './number-range.js'
+import numberUnit from './number-unit.js'
 
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
@@ -20,10 +21,6 @@ const reTag = function (terms, view, start, len) {
     end += 1
   }
   tmp.ptrs = [[0, start, end]]
-  tmp.compute('lexicon')
-  if (tmp.world.compute.preTagger) {
-    tmp.compute('preTagger')
-  }
 }
 
 const byEnd = {
@@ -65,7 +62,7 @@ const knownOnes = function (list, term, before, after) {
 
 const toDocs = function (words, view) {
   let doc = view.fromText(words.join(' '))
-  doc.compute('id')
+  doc.compute(['id', 'alias'])
   return doc.docs[0]
 }
 
@@ -74,6 +71,7 @@ const contractions = (view) => {
   let { world, document } = view
   const { model, methods } = world
   let list = model.one.contractions || []
+  let units = new Set(model.one.units || [])
   // each sentence
   document.forEach((terms, n) => {
     // loop through terms backwards
@@ -109,10 +107,18 @@ const contractions = (view) => {
           methods.one.setTag(words, 'NumberRange', world)//add custom tag
           // is it a time-range, like '5-9pm'
           if (words[2] && words[2].tags.has('Time')) {
-            methods.one.setTag([words[0]], 'Time', world)
+            methods.one.setTag([words[0]], 'Time', world, null, 'time-range')
           }
           reTag(document[n], view, i, words.length)
         }
+        continue
+      }
+      // split-apart '4km'
+      words = numberUnit(terms, i, units)
+      if (words) {
+        words = toDocs(words, view)
+        splice(document, [n, i], words)
+        methods.one.setTag([words[1]], 'Unit', world, null, 'contraction-unit')
       }
     }
   })

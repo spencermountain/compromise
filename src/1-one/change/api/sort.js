@@ -19,6 +19,7 @@ const customSort = function (view, fn) {
 /** re-arrange the order of the matches (in place) */
 const sort = function (input) {
   let { docs, pointer } = this
+  this.uncache()
   if (typeof input === 'function') {
     return customSort(this, input)
   }
@@ -58,6 +59,9 @@ const reverse = function () {
   let ptrs = this.pointer || this.docs.map((_d, n) => [n])
   ptrs = [].concat(ptrs)
   ptrs = ptrs.reverse()
+  if (this._cache) {
+    this._cache = this._cache.reverse()
+  }
   return this.update(ptrs)
 }
 

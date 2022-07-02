@@ -1,5 +1,5 @@
 import nlp from '../../../../src/three.js'
-let model = nlp.model()
+let world = nlp.world()
 const splitSentences = nlp.methods().one.tokenize.splitSentences
 
 const fastSplit = function (str, numChunks = 1) {
@@ -14,7 +14,7 @@ const fastSplit = function (str, numChunks = 1) {
 const pluckStarts = function (arr) {
   for (let i = 1; i < arr.length; i += 1) {
     let top = arr[i].substr(0, 200)
-    let first = splitSentences(top, model)[0]
+    let first = splitSentences(top, world)[0]
     // move the first (part) sentence onto the end of the last one
     let len = first.length
     arr[i - 1] += first

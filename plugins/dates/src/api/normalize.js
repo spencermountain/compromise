@@ -15,7 +15,7 @@ const normalize = function (doc) {
   }
 
   if (!doc.numbers) {
-    console.warn(`Warning: compromise-numbers plugin is not loaded.\n   You should load this plugin \n     - https://bit.ly/3t8RfFG`) //eslint-disable-line
+    console.warn(`Warning: compromise .numbers() not loaded.\n   This plugin requires >= v14`) //eslint-disable-line
   } else {
     // doc.numbers().normalize()
     // convert 'two' to 2
@@ -24,7 +24,9 @@ const normalize = function (doc) {
     num.toCardinal(false)
   }
   // expand 'aug 20-21'
-  doc.contractions().expand()
+  if (doc.contractions) {
+    doc.contractions().expand()
+  }
   // remove adverbs
   doc.adverbs().remove()
   // 'week-end'

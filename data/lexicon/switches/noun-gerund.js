@@ -58,7 +58,6 @@ export default [
   'debating',
   'directing',
   'doubting',
-  'downloading',
   'drawing',
   'dressing',
   'drinking',

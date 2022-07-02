@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 const here = '[two/number-match] '
 
 let arr = [
@@ -10,7 +10,7 @@ let arr = [
   ['twenty', '#Value'],
   ['thousand', '#Value'],
   ['eighteenth', '#Value'],
-  ['tbsp', '#Unit'],
+  ['2tbsp', '#Value #Unit'],
   ['425-1231', '#PhoneNumber'],
   ['823-425-1231', '#PhoneNumber'],
   ['823 425-1231', '#PhoneNumber'],

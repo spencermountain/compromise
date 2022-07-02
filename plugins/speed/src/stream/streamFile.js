@@ -2,7 +2,7 @@ import * as fs from 'fs';
 
 const streamFile = function (path, fn, opts = {}) {
   const nlp = this
-  let model = nlp.model()
+  let world = nlp.world()
   const splitSentences = nlp.methods().one.tokenize.splitSentences
   const s = fs.createReadStream(path, opts);
 
@@ -19,7 +19,7 @@ const streamFile = function (path, fn, opts = {}) {
 
   const quickSplit = function (str) {
     let end = txt.substring(str.length - 300)
-    let arr = splitSentences(end, model)
+    let arr = splitSentences(end, world)
     let last = arr[arr.length - 1]
     let main = str.substr(0, str.length - last.length)
     return [main, last]
@@ -29,7 +29,7 @@ const streamFile = function (path, fn, opts = {}) {
   return new Promise((resolve, reject) => {
     s.on('data', function (chunk) {
       txt += chunk;
-      let [main, end] = quickSplit(txt, model)
+      let [main, end] = quickSplit(txt, world)
       doIt(main)
       txt = end
     });

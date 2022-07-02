@@ -21,6 +21,7 @@
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+
 ### WorkerPool
 parse sentences of a large text in parallel:
 ```js
@@ -86,9 +87,5 @@ or in the browser:
   }
 </script>
 ```
-
-<!-- ### StreamFetch 
-
- ### WorkerPool -->
 
 MIT

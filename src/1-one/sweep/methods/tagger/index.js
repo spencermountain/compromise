@@ -12,7 +12,7 @@ const tagger = function (list, document, world) {
     console.log(`\n\n  \x1b[32m→ ${list.length} post-tagger:\x1b[0m`) //eslint-disable-line
   }
   return list.map(todo => {
-    if (!todo.tag && !todo.chunk) {
+    if (!todo.tag && !todo.chunk && !todo.unTag) {
       return
     }
     let reason = todo.reason || todo.match

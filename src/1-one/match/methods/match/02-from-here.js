@@ -13,6 +13,7 @@ import matchTerm from './term/doesMatch.js'
  * starting at this certain term.
  */
 const tryHere = function (terms, regs, start_i, phrase_length) {
+  // console.log(`\n\n:start: '${terms[0].text}':`)
   if (terms.length === 0 || regs.length === 0) {
     return null
   }
@@ -89,7 +90,17 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
+    // ok, it doesn't match - but maybe it wasn't *supposed* to?
+    if (reg.negative) {
+      // we want *anything* but this term
+      let alive = doNegative(state)
+      if (!alive) {
+        return null
+      }
+      continue
+    }
     // ok, finally test the term-reg
+    // console.log('   - ' + state.terms[state.t].text)
     let hasMatch = matchTerm(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length)
     if (hasMatch === true) {
       let alive = simpleMatch(state)
@@ -98,13 +109,8 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
-    // ok, it doesn't match - but maybe it wasn't *supposed* to?
-    if (reg.negative) {
-      let alive = doNegative(state)
-      if (!alive) {
-        return null
-      }
-    }
+    // console.log('=-=-=-= here -=-=-=-')
+
     //ok who cares, keep going
     if (reg.optional === true) {
       continue

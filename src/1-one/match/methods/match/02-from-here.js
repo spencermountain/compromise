@@ -76,6 +76,10 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     }
     // support '.' as any-single
     if (reg.anything === true) {
+      // '!.' negative anything should insta-fail
+      if (reg.negative && reg.anything) {
+        return null
+      }
       let alive = simpleMatch(state)
       if (!alive) {
         return null

@@ -5,6 +5,9 @@ import matchTerm from '../term/doesMatch.js'
 const doNegative = function (state) {
   const { regs } = state
   let reg = regs[state.r]
+
+
+
   // match *anything* but this term
   let tmpReg = Object.assign({}, reg)
   tmpReg.negative = false // try removing it
@@ -23,6 +26,14 @@ const doNegative = function (state) {
       let fNext = matchTerm(state.terms[state.t], nextReg, state.start_i + state.t, state.phrase_length)
       if (fNext) {
         state.r += 1
+      } else if (nextReg.optional && regs[state.r + 2]) {
+        // ugh. ok,
+        // support "!foo? extra? need"
+        // but don't scan ahead more than that.
+        let fNext2 = matchTerm(state.terms[state.t], regs[state.r + 2], state.start_i + state.t, state.phrase_length)
+        if (fNext2) {
+          state.r += 2
+        }
       }
     }
   }

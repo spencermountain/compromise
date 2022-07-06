@@ -10,20 +10,20 @@ let doc
 let m
 
 
-
-// doc = nlp("before baz after")
-// m = doc.match("before !foo after").debug()
-
+// skips term 'baz'
 // doc = nlp("before baz after")
 // m = doc.match("before !foo? after").debug()
 
-// neg
+// doesn't skip term
 // doc = nlp("before after")
 // m = doc.match("before !foo? after").debug()
 
-// (end)
-// doc = nlp("before baz after")
-// m = doc.match("before !foo?").debug()
 
-doc = nlp.tokenize(`one after`)
-m = doc.match(`one !foo? moo? after`).debug()
+
+// not supported - 3 optionals
+doc = nlp(`one after`)
+m = doc.match(`one !foo? foo? foo? after`).debug()
+
+// doc = nlp(`one after`)
+// m = doc.match(`one !foo? .? after`).debug()
+

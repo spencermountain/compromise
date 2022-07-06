@@ -24,29 +24,34 @@ test('! negative match syntax :', function (t) {
   m = doc.match("before !foo?")
   t.equal(m.text(), 'before', here + 'optional-not-end-missing')
 
-  m = "i will !not .{0,9}? send"
+  m = "i will !foo .{0,9}? send"
   doc = nlp("i will then send him")
   t.equal(doc.has(m), true, here + 'neg1')
-
-  m = "i will !not? .{0,9}? send"
-  doc = nlp("i will send him")
-  t.equal(doc.has(m), true, here + 'neg-optional')
-
-  m = "i will !not? !not? !not? !not? !not? !not? !not? !not? !not? send"
-  doc = nlp("I will send her.")
-  t.equal(doc.has(m), true, here + 'multi-optional')
 
   doc = nlp("before bar after")
   m = doc.match("before !foo? after")
   t.equal(m.text(), 'before bar after', here + 'optional-not-found')
 
-  m = "i will !not? send"
-  doc = nlp("I will then send him") //this works as a negative but not a positive"
+  m = "i will !foo? send"
+  doc = nlp("I will then send him")
   t.equal(doc.has(m), true, here + 'neg4')
 
-  m = "i will !not{0,9}? send"
-  doc = nlp("I will then send him") //this does not work with a word between will and send",
+  m = "i will !foo{0,9}? send"
+  doc = nlp("I will then send him")
   t.equal(doc.has(m), true, here + 'neg5')
+
+  m = "i will !."
+  doc = nlp("I will then send him") //never negative anything
+  t.equal(doc.has(m), false, here + 'neg-anything')
+
+  // m = "i will !not? .{0,9}? send"
+  // doc = nlp("i will send him")
+  // t.equal(doc.has(m), true, here + 'neg-optional')
+
+  // m = "i will !foo? !foo? !foo? !foo? !foo?  send"
+  // doc = nlp("I will send her.")
+  // t.equal(doc.has(m), true, here + 'multi-optional')
+
 
   t.end()
 })

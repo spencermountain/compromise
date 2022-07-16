@@ -24,7 +24,6 @@ const mergeParens = function (splits) {
     }
     arr.push(splits[i])
   }
-
   return arr
 }
 export default mergeParens

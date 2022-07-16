@@ -1,6 +1,7 @@
-const isAcronym = /[ .][A-Z]\.? *$/i
-const hasEllipse = /(?:\u2026|\.{2,}) *$/
+const isAcronym = /[ .][A-Z]\.? *$/i //asci - 'n.s.a.'
+const hasEllipse = /(?:\u2026|\.{2,}) *$/ // '...'
 const hasLetter = /\p{L}/u
+const leadInit = /^[A-Z]\. $/ // "W. Kensington"
 
 /** does this look like a sentence? */
 const isSentence = function (str, abbrevs) {
@@ -10,6 +11,10 @@ const isSentence = function (str, abbrevs) {
   }
   // check for 'F.B.I.'
   if (isAcronym.test(str) === true) {
+    return false
+  }
+  // check for leading initial - "W. Kensington"
+  if (str.length === 3 && leadInit.test(str)) {
     return false
   }
   //check for '...'

@@ -21,9 +21,9 @@ const splitSentences = function (text, world) {
   // First do a greedy-split..
   let splits = simpleSplit(text)
   // Filter-out the crap ones
-  let chunks = simpleMerge(splits)
+  let sentences = simpleMerge(splits)
   //detection of non-sentence chunks:
-  let sentences = smartMerge(chunks, world)
+  sentences = smartMerge(sentences, world)
   // allow 'he said "no sir." and left.'
   sentences = quoteMerge(sentences)
   // allow 'i thought (no way!) and left.'

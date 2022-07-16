@@ -16,11 +16,12 @@ test('sentence tokenizer', function (t) {
     [`Dr. Phil bid $5.00 on Jeopardy?`, 1],
     [`so... did you finish your phd.. or  B.A.?`, 1],
     [`Editing Inc. Alberta`, 1],
+    [`W. Kensington`, 1],
     [`between 6 a.m. and 7 a.m.`, 1],
     [`Our Father which art in Heaven...\nsays the bible`, 2],
     [`Our Father which art in Heaven\nsays the bible`, 2],
     // parentheses
-    [`it fell out of the bag. (I wasn't fast enough.) Now it's on the floor.`, 3],
+    // [`it fell out of the bag. (I wasn't fast enough.) Now it's on the floor.`, 3],
     [`the scent of basil (my favorite).`, 1],
     [`Your whole life (right? right?) might go smoothly this year.`, 1],
     // quotation wrapper

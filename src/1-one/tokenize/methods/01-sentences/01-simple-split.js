@@ -8,6 +8,7 @@ const basicSplit = function (text) {
   for (let i = 0; i < lines.length; i++) {
     //split by period, question-mark, and exclamation-mark
     let arr = lines[i].split(initSplit)
+    // console.log(arr)
     for (let o = 0; o < arr.length; o++) {
       all.push(arr[o])
     }

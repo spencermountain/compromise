@@ -10,13 +10,7 @@ let doc
 let m
 
 
-// doc = nlp(`the doc said "no sir" and walked away. the end`)
-txt = `
-You'll be able to create opportunities for advancement almost out of thin air.
-sentence match four.
-Romance in 2005 will make it a year to remember - and you'll be the envy of all your friends.
-Your working life might not go so smoothly this year, Virgo.
-`
+txt = `it fell out of the bag. (I wasn't fast enough.) Now it's on the floor.`
 doc = nlp(txt)
 
 doc.debug()

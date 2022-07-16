@@ -16,11 +16,9 @@ const pairs = {
   '\u201A': '\u2019', // 'LowCurlySingleQuotes'
   '\u00AB': '\u00BB', // 'AngleDoubleQuotes'
   '\u2039': '\u203A', // 'AngleSingleQuotes'
-  // Prime 'non quotation'
   '\u2035': '\u2032', // 'PrimeSingleQuotes'
   '\u2036': '\u2033', // 'PrimeDoubleQuotes'
   '\u2037': '\u2034', // 'PrimeTripleQuotes'
-  // Prime 'quotation' variation
   '\u301D': '\u301E', // 'PrimeDoubleQuotes'
   // '\u0060': '\u00B4', // 'PrimeSingleQuotes'
   '\u301F': '\u301E', // 'LowPrimeDoubleQuotesReversed'

@@ -1,7 +1,8 @@
 import simpleSplit from './01-simple-split.js'
 import simpleMerge from './02-simple-merge.js'
-import quoteMerge from './04-quote-merge.js'
 import smartMerge from './03-smart-merge.js'
+import quoteMerge from './04-quote-merge.js'
+import parensMerge from './05-parens-merge.js'
 //(Rule-based sentence boundary segmentation) - chop given text into its proper sentences.
 // Ignore periods/questions/exclamations used in acronyms/abbreviations/numbers, etc.
 //regs-
@@ -25,6 +26,8 @@ const splitSentences = function (text, world) {
   let sentences = smartMerge(chunks, world)
   // allow 'he said "no sir." and left.'
   sentences = quoteMerge(sentences)
+  // allow 'i thought (no way!) and left.'
+  sentences = parensMerge(sentences)
   //if we never got a sentence, return the given text
   if (sentences.length === 0) {
     return [text]

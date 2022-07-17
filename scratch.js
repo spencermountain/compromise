@@ -3,14 +3,16 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let txt = ''
 let doc
 let m
 
 
-txt = `107°`
+txt = ` \n  #_22ll`
+txt = `-4`
+txt = `.com`
 doc = nlp(txt)
 
 doc.debug()

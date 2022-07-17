@@ -10,10 +10,11 @@ let doc
 let m
 
 
-txt = `it fell out of the bag. (I wasn't fast enough.) Now it's on the floor.`
+txt = `107°`
 doc = nlp(txt)
 
 doc.debug()
+console.log(doc.docs[0])
 // let json = doc.json()
 // t.equal(json[4].text, 'sentence number four.', 'got sentence')
 // console.log(json[3])

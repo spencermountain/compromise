@@ -41,15 +41,21 @@
 
 
 <div align="left">
-do you find it strange, how we struggle to parse text?
+don't you find it strange,
 <br/>
+<ul>
+  <sub>how <b>text</b> is so easy to make,</sub>
+<br/>
+  <i>↬<sub>ᔐᖜ</sub><b>↬</b></i> &nbsp; <sub></sub>
+  <sub >and so hard to actually <b>parse</b> and <i>use</i>?</sub>
+</ul>
 </div>
 
 <!-- spacer -->
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to turn text into data.
+  <img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <i><a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a></i> to turn text into data.
   <br/>
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>it makes limited and sensible decisions.
   <br/>
@@ -83,7 +89,7 @@ doc.text()
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-don't fancy at all:
+<i>don't be fancy at all:</i>
 </div>
 
 ```js
@@ -100,7 +106,7 @@ if (doc.has('simon says #Verb')) {
 
 
 <div align="left">
-select parts of the text:
+<i>select parts of the text:</i>
 </div>
 
 ```js

@@ -13,7 +13,7 @@
       </a>
     </sub>
   </div>
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <img height="22px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 <div align="center">
@@ -25,12 +25,13 @@
     <img src="https://codecov.io/gh/spencermountain/compromise/branch/master/graph/badge.svg" />
   </a>
   <a href="https://bundlephobia.com/result?p=compromise">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
+    <img src="https://img.shields.io/bundlephobia/min/compromise"/>
+    <!-- <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" /> -->
   </a>
   </div>
   <div align="center">
     <sub>
-     see: <a href="https://github.com/nlp-compromise/fr-compromise">french</a> • <a href="https://github.com/nlp-compromise/de-compromise">german</a>  • <a href="https://github.com/nlp-compromise/it-compromise">italian</a> • and <a href="https://github.com/nlp-compromise/es-compromise">spanish</a>
+     <a href="https://github.com/nlp-compromise/fr-compromise">french</a> • <a href="https://github.com/nlp-compromise/de-compromise">german</a>  • <a href="https://github.com/nlp-compromise/it-compromise">italian</a> • <a href="https://github.com/nlp-compromise/es-compromise">spanish</a>
     </sub>
   </div>
 </div>
@@ -39,28 +40,9 @@
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 
- <div align="left">
+<div align="left">
 do you find it strange, how we struggle to parse text?
 <br/>
-<ul>
-   <i>↬<sub>ᔐᖜ</sub>↬-</i> 
-  <br/>
-  how <b>error-prone</b> and <b><i>tricky</i></b> the simplest things are?
-  <div>
-<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  </div>
-  <sub>how easy text is to make, then how difficult it is <i>to use</i>?</sub>
-</ul>
-</div>
-<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
-<div align="right">
-<sub >how it becomes</sub>
-<div>
-  <sub>basically a dead-end</sub>
-  <br/>
-  <sub>for our information?</sub>
-</div>
 </div>
 
 <!-- spacer -->
@@ -100,8 +82,8 @@ doc.text()
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="center">
-the idea is to be not fancy at all:
+<div align="left">
+don't fancy at all:
 </div>
 
 ```js

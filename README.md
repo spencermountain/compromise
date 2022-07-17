@@ -44,10 +44,10 @@
 don't you find it strange,
 <br/>
 <ul>
-  <sub>how <b>text</b> is so easy to <b>make</b>,</sub>
+  <sub>how <b>easy</b> text is to <b>make</b>,</sub>
 <br/>
   <i>↬<sub>ᔐᖜ</sub><b>↬</b></i> &nbsp; <sub></sub>
-  <sub >and so hard to actually <b>parse</b> and <i>use</i>?</sub>
+  and how hard it is to actually <b>parse</b> and <i>use</i>?
 </ul>
 </div>
 

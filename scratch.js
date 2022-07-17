@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let txt = ''
 let doc
@@ -12,11 +12,14 @@ let m
 
 txt = ` \n  #_22ll`
 txt = `-4`
-txt = `.com`
+txt = `.com%`
+txt = 'the F.B.I. in'
 doc = nlp(txt)
 
 doc.debug()
 console.log(doc.docs[0])
+console.log(doc.text())
+// console.log(doc.docs[0])
 // let json = doc.json()
 // t.equal(json[4].text, 'sentence number four.', 'got sentence')
 // console.log(json[3])

@@ -28,6 +28,11 @@
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
   </a>
   </div>
+  <div align="center">
+    <sub>
+     see: <a href="https://github.com/nlp-compromise/fr-compromise">french</a> • <a href="https://github.com/nlp-compromise/de-compromise">german</a>  • <a href="https://github.com/nlp-compromise/it-compromise">italian</a> • and <a href="https://github.com/nlp-compromise/es-compromise">spanish</a>
+    </sub>
+  </div>
 </div>
 
 <!-- spacer -->

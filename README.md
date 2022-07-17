@@ -44,7 +44,7 @@
 don't you find it strange,
 <br/>
 <ul>
-  <sub>how <b>text</b> is so easy to make,</sub>
+  <sub>how <b>text</b> is so easy to <b>make</b>,</sub>
 <br/>
   <i>↬<sub>ᔐᖜ</sub><b>↬</b></i> &nbsp; <sub></sub>
   <sub >and so hard to actually <b>parse</b> and <i>use</i>?</sub>
@@ -60,7 +60,7 @@ don't you find it strange,
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>it makes limited and sensible decisions.
   <br/>
   <sub >
-   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it is not as smart as you'd think.
+   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it's not as smart as you'd think.
   </sub>
 
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -89,7 +89,7 @@ doc.text()
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-<i>don't be fancy at all:</i>
+<i>don't be fancy, at all:</i>
 </div>
 
 ```js
@@ -106,7 +106,7 @@ if (doc.has('simon says #Verb')) {
 
 
 <div align="left">
-<i>select parts of the text:</i>
+<i>grab parts of the text:</i>
 </div>
 
 ```js
@@ -123,7 +123,7 @@ doc.match('the #Adjective of times').text()
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-and get data:
+<i>and get data:</i>
 ```js
 import plg from 'compromise-speech'
 nlp.extend(plg)
@@ -261,7 +261,7 @@ doc.verbs().toNegative()
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-compromise is **~200kb** (minified):
+compromise is **~250kb** (minified):
 
 <div align="center">
   <!-- filesize -->

@@ -4,8 +4,8 @@ let beforeReg = new RegExp(`[${allowBefore.join('')}]+$`, '')
 let afterReg = new RegExp(`^[${allowAfter.join('')}]+`, '')
 
 //we have slightly different rules for start/end - like #hashtags.
-const endings = /[\p{Separator}\p{Punctuation}]+$/u
-const startings = /^[\p{Separator}\p{Punctuation}]+/u
+const endings = /[\p{Punctuation}\s]+$/u
+const startings = /^[\p{Punctuation}\s]+/u
 const hasApostrophe = /['’]/
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const shortYear = /^'[0-9]{2}/

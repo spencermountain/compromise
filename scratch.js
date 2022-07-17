@@ -13,13 +13,12 @@ let m
 txt = ` \n  #_22ll`
 txt = `-4`
 txt = `.com%`
-txt = 'the F.B.I. in'
+txt = 'juice. \n\n '
 doc = nlp(txt)
 
 doc.debug()
+console.log(doc.text(''))
 console.log(doc.docs[0])
-console.log(doc.text())
-// console.log(doc.docs[0])
 // let json = doc.json()
 // t.equal(json[4].text, 'sentence number four.', 'got sentence')
 // console.log(json[3])

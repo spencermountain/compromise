@@ -44,11 +44,12 @@
 don't you find it strange,
 <br/>
 <ul>
+  <img height="2px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <sub>how <b>easy</b> text is to <b>make</b>,</sub>
-<br/>
-<img height="4px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <br/>
+  <img height="2px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-  <i>↬<sub>ᔐᖜ</sub><b>↬</b></i> &nbsp; <sub></sub>
+  &nbsp;<i>↬<sub>ᔐᖜ</sub><b>↬</b></i> &nbsp; <sub></sub>
   and how hard it is to actually <b>parse</b> and <i>use</i>?
 </ul>
 </div>

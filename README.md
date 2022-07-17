@@ -556,7 +556,7 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.insertBefore(str)](https://observablehq.com/@spencermountain/compromise-insert)** - add these new terms to the front of each match (prepend)
 - **[.insertAfter(str)](https://observablehq.com/@spencermountain/compromise-insert)** - add these new terms to the end of each match (append)
 - **[.concat()](https://observablehq.com/@spencermountain/compromise-insert)** - add these new things to the end
-- **[.swap(fromLemma, toLemma)](https://observablehq.com/@spencermountain/compromise-insert)** - smart replace of root-words,using proper conjugation
+- **[.swap(fromLemma, toLemma)](https://observablehq.com/@spencermountain/compromise-root)** - smart replace of root-words,using proper conjugation
 
 ##### Transform
 
@@ -829,6 +829,7 @@ nlp.extend({
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace)         |                    [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
 | [World data](https://observablehq.com/@spencermountain/compromise-world)              |       [Normalization](https://observablehq.com/@spencermountain/compromise-normalization)       |   [Sweep](https://observablehq.com/@spencermountain/compromise-sweep)         |
 | [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |          [Typescript](https://observablehq.com/@spencermountain/compromise-typescript)          | [Mutation](https://observablehq.com/@spencermountain/compromise-mutation)  |
+| [Root-forms](https://observablehq.com/@spencermountain/compromise-root) |              |   |
 
 
 <div >

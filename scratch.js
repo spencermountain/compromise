@@ -10,15 +10,21 @@ let doc
 let m
 
 
-txt = ` \n  #_22ll`
-txt = `-4`
-txt = `.com%`
-txt = 'juice. \n\n '
-doc = nlp(txt)
 
+doc = nlp('two hot dogs please').compute('root')
+doc.swap('hot dog', 'hamburger') //use singular-forms
 doc.debug()
-console.log(doc.text(''))
-console.log(doc.docs[0])
-// let json = doc.json()
-// t.equal(json[4].text, 'sentence number four.', 'got sentence')
-// console.log(json[3])
+
+doc = nlp('he ran faster than her')
+doc.compute('root')
+doc.swap('fast', 'quick')
+doc.debug()
+
+doc = nlp('i dug up the solution, while digging up treasure.')
+doc.compute('root')
+doc.swap('dig up', 'find')
+doc.debug()
+// txt = 'juice. \n\n '
+// doc = nlp(txt)
+// doc.debug()
+// console.log(doc.text(''))

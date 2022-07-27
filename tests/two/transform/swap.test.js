@@ -46,3 +46,21 @@ test('swap-adverb', function (t) {
   t.equal(doc.text(), 'immediately and warmly', here + 'swap-adverb')
   t.end()
 })
+
+test('swap-adjective', function (t) {
+  let doc = nlp('he was fast')
+  doc.compute('root')
+  doc.swap('fast', 'quick')
+  t.equal(doc.text(), 'he was quick', here + 'swap-adj')
+
+  doc = nlp('he ran faster than her')
+  doc.compute('root')
+  doc.swap('fast', 'quick')
+  t.equal(doc.text(), 'he ran quicker than her', here + 'swap-comparative')
+
+  doc = nlp('he was the fastest')
+  doc.compute('root')
+  doc.swap('fast', 'quick')
+  t.equal(doc.text(), 'he was the quickest', here + 'swap-superlative')
+  t.end()
+})

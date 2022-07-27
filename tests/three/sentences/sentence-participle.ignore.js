@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../three/_lib.js'
+import nlp from '../_lib.js'
 const here = '[three/sentence-participle] '
 
 test('toPast finds participle form', function (t) {

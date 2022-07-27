@@ -17,9 +17,22 @@ const swapAdverb = function (m, lemma) {
     m.replaceWith(adv)
   }
 }
+const swapAdjective = function (m, lemma) {
+  const { adjToComparative, adjToSuperlative } = m.methods.two.transform
+  let str = lemma
+  if (m.has('#Comparative')) {
+    str = adjToComparative(str, m.model)
+  } else if (m.has('#Superlative')) {
+    str = adjToSuperlative(str, m.model)
+  }
+  if (str) {
+    m.replaceWith(str)
+  }
+}
 
 const swap = function (from, to, tag) {
-  let m = this.match(`{${from}}`)
+  let reg = from.split(/ /g).map(str => `{${str}}`).join(' ')
+  let m = this.match(reg)
   // guard against some homonyms
   if (tag) {
     m = m.if(tag)
@@ -32,6 +45,9 @@ const swap = function (from, to, tag) {
   }
   if (m.has('#Adverb')) {
     return swapAdverb(m, to)
+  }
+  if (m.has('#Adjective')) {
+    return swapAdjective(m, to)
   }
   return this
 }

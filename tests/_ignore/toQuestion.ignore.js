@@ -1,5 +1,6 @@
-const test = require('tape')
-const nlp = require('../../_old/plugins/sentences/tests/_lib')
+import test from 'tape'
+import nlp from '../three/_lib.js'
+const here = '[three/toQuestion] '
 
 test('simple chanage-punct', function (t) {
   let statement = `I can't believe it's a law firm.`

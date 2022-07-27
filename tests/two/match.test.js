@@ -648,6 +648,9 @@ let arr = [
   ["dr oz", '#Noun !#Unit'],
   ["wizard of oz", '#Noun of !#Unit'],
   ["downtown pa", '#Noun !#Unit'],
+  ["1 ft wide", '#Cardinal #Unit wide'],
+  ["1 ft. wide", '#Cardinal #Unit wide'],
+  ["1-ft wide", '#Cardinal #Unit wide'],
 
   ["felt confused", '#PastTense #Adjective'],
   ["felt a bit confused", '#PastTense a #Noun #Adjective'],

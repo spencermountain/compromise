@@ -30,3 +30,12 @@ test('get multiple-copies of one sentence:', function (t) {
   t.equal(arr[2], 'Cindy Lauper and Carl Sagan here.', here + 'two person sentence #2')
   t.end()
 })
+
+test('sentence append:', function (t) {
+  let doc = nlp('"Good bye," he said.')
+  doc.sentences().forEach((match) => {
+    match.append('and left')
+  })
+  t.equal(doc.text(), `"Good bye," he said and left.`, here + 'sentence-append')
+  t.end()
+})

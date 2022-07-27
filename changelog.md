@@ -6,11 +6,18 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
-<!-- #### 14.4.0 [Unreleased]
-
+<!-- #### 14.5.0 [Unreleased]
 -->
+#### 14.4.1 [July 2022]
+- **[change]** - improvements to negative-optional match logic - `!foo?`
+- **[change]** - support short sentences embedded in quotes+parentheses
+- **[change]** - faster sentence tokenizer
+- **[change]** - ° symbol is not punctuation
+- **[new]** - implement .swap() for comparative/superlative adjectives
+- **[fix]** - sentence.toFuture() conjugation rules
+- **[update]** - dependencies
 
-#### 14.4.0 [July 2021]
+#### 14.4.0 [July 2022]
 - **[change]** - support root matches like '{walk}' work without doing .compute('root')
 - **[change]** - split numbers+units '12km' as contraction - #919
 - **[new]** - `.lazy(txt, match)` fast-scan method [1](https://observablehq.com/@spencermountain/compromise-performance)
@@ -22,22 +29,22 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
   _plugin-releases_: dates, speed, de-compromise
 
-#### 14.3.1 [June 2021]
+#### 14.3.1 [June 2022]
 - **[fix]** - missed caches in .sweep()
 - **[new]** - .out('hash') and `.json({hash:true})`
 
-#### 14.3.0 [June 2021]
+#### 14.3.0 [June 2022]
 - **[fix]** - unwanted logging in compromise/one
 - **[fix]** - dependency export path for react-native builds #928
 - **[change]** - split hyphenated words in match syntax 'foo-bar'
 - **[change]** - support 4-digit number-ranges (when not a phone number)
   _plugin-releases_: dates
 
-#### 14.2.1 [June 2021]
+#### 14.2.1 [June 2022]
 - **[fix]** - double-contraction issue #925
 - **[fix]** - .not() memleak #926
 
-#### 14.2.0 [June 2021]
+#### 14.2.0 [June 2022]
 - **[fix]** - speed improvements
 - **[fix]** - bug with fast-or possessive matches
 - **[fix]** - bug with slow-or end-matches
@@ -55,7 +62,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - drop deprecated .subst() method internally
 - **[new]** - some support for .numbers().units() again #919
 
-#### 14.1.2 [April 2021]
+#### 14.1.2 [April 2022]
 - **[new]** - add .harden() .soften() undocumented methods
 - **[fix]** - support pre-parsed matches in .has() .if() and .not()
 - **[fix]** - contraction OR match issue
@@ -64,10 +71,10 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - date plugin release
 - **[update]** - dependencies
 
-#### 14.1.1 [April 2021]
+#### 14.1.1 [April 2022]
 - **[fix]** - main property in package.json #911
 
-#### 14.1.0 [April 2021]
+#### 14.1.0 [April 2022]
 - **[fix]** - client-side export format for plugins
 - **[new]** - more adjective transformation methods
 - **[new]** - emoji + emoticon tagger

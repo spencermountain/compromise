@@ -13,7 +13,7 @@
       </a>
     </sub>
   </div>
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <img height="22px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </div>
 
 <div align="center">
@@ -25,8 +25,14 @@
     <img src="https://codecov.io/gh/spencermountain/compromise/branch/master/graph/badge.svg" />
   </a>
   <a href="https://bundlephobia.com/result?p=compromise">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" />
+    <img src="https://img.shields.io/bundlephobia/min/compromise"/>
+    <!-- <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" /> -->
   </a>
+  </div>
+  <div align="center">
+    <sub>
+     <a href="https://github.com/nlp-compromise/fr-compromise">french</a> • <a href="https://github.com/nlp-compromise/de-compromise">german</a>  • <a href="https://github.com/nlp-compromise/it-compromise">italian</a> • <a href="https://github.com/nlp-compromise/es-compromise">spanish</a>
+    </sub>
   </div>
 </div>
 
@@ -34,40 +40,30 @@
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 
- <div align="left">
-do you find it strange, how we struggle to parse text?
+<div align="left">
+don't you find it strange,
 <br/>
 <ul>
-   <i>↬<sub>ᔐᖜ</sub>↬-</i> 
+  <img height="2px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <sub>how <b>easy</b> text is to <b>make</b>,</sub>
   <br/>
-  how <b>error-prone</b> and <b><i>tricky</i></b> the simplest things are?
-  <div>
-<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  </div>
-  <sub>how easy text is to make, then how difficult it is <i>to use</i>?</sub>
-</ul>
-</div>
-<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <img height="2px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="right">
-<sub >how it becomes</sub>
-<div>
-  <sub>basically a dead-end</sub>
-  <br/>
-  <sub>for our information?</sub>
-</div>
+  &nbsp;<i>↬<sub>ᔐᖜ</sub><b>↬</b></i> &nbsp; <sub></sub>
+  and how hard it is to actually <b>parse</b> and <i>use</i>?
+</ul>
 </div>
 
 <!-- spacer -->
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a> to turn text into data.
+  <img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <i><a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a></i> to turn text into data.
   <br/>
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>it makes limited and sensible decisions.
   <br/>
   <sub >
-   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it is not as smart as you'd think.
+   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it's not as smart as you'd think.
   </sub>
 
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -95,8 +91,8 @@ doc.text()
 <!-- spacer -->
 <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="center">
-the idea is to be not fancy at all:
+<div align="left">
+<i>don't be fancy, at all:</i>
 </div>
 
 ```js
@@ -113,7 +109,7 @@ if (doc.has('simon says #Verb')) {
 
 
 <div align="left">
-select parts of the text:
+<i>grab parts of the text:</i>
 </div>
 
 ```js
@@ -130,7 +126,7 @@ doc.match('the #Adjective of times').text()
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-and get data:
+<i>and get data:</i>
 ```js
 import plg from 'compromise-speech'
 nlp.extend(plg)
@@ -268,7 +264,7 @@ doc.verbs().toNegative()
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-compromise is **~200kb** (minified):
+compromise is **~250kb** (minified):
 
 <div align="center">
   <!-- filesize -->
@@ -560,7 +556,7 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.insertBefore(str)](https://observablehq.com/@spencermountain/compromise-insert)** - add these new terms to the front of each match (prepend)
 - **[.insertAfter(str)](https://observablehq.com/@spencermountain/compromise-insert)** - add these new terms to the end of each match (append)
 - **[.concat()](https://observablehq.com/@spencermountain/compromise-insert)** - add these new things to the end
-- **[.swap(fromLemma, toLemma)](https://observablehq.com/@spencermountain/compromise-insert)** - smart replace of root-words,using proper conjugation
+- **[.swap(fromLemma, toLemma)](https://observablehq.com/@spencermountain/compromise-root)** - smart replace of root-words,using proper conjugation
 
 ##### Transform
 
@@ -833,6 +829,7 @@ nlp.extend({
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace)         |                    [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
 | [World data](https://observablehq.com/@spencermountain/compromise-world)              |       [Normalization](https://observablehq.com/@spencermountain/compromise-normalization)       |   [Sweep](https://observablehq.com/@spencermountain/compromise-sweep)         |
 | [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |          [Typescript](https://observablehq.com/@spencermountain/compromise-typescript)          | [Mutation](https://observablehq.com/@spencermountain/compromise-mutation)  |
+| [Root-forms](https://observablehq.com/@spencermountain/compromise-root) |              |   |
 
 
 <div >

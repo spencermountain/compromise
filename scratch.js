@@ -1,18 +1,17 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/two.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import nlp from './src/three.js'
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let txt = ''
 let doc
-doc = doc.match('33 km').debug()
-
-// doc = nlp('he sweetly sang').debug()
-// doc.match('{sweet}').debug()
-// console.log(nlp.parseMatch('{sweet/adj}'))
+let m
 
 
-// doc = nlp.lazy('one two three. four five six. seven foo eight nine.', 'foo #Value')
-// doc.debug()
+let arr = []
+
+doc = nlp("she is cool").sentences()
+doc.toFutureTense()
+console.log(doc.text())

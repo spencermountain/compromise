@@ -10,10 +10,10 @@ let doc
 let m
 
 
+let arr = []
 
-doc = nlp('i dug up the solution, while digging up treasure.')
-doc.compute('root')
-doc.swap('dig up', 'find')
+doc = nlp("she will be cool").sentences()
 doc.debug()
-
-
+doc.toPresentTense()
+console.log(doc.text())
+doc.debug()

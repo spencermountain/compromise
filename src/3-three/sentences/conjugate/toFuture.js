@@ -28,14 +28,28 @@ const toFuture = function (s) {
         return true
       }
       // 'he will see when he watches'
-      if (vb.has('#PresentTense') && s.has('(when|as|how)')) {
+      if (vb.has('#PresentTense') && !vb.has('#Infinitive') && vb.lookBefore('(he|she|it|that|which)$').found) {
         return false
       }
       return true
     })
     // otherwise, change em too
     if (toChange.found) {
-      toChange.toInfinitive()
+      toChange.forEach(m => {
+        //extra rules for 'is'
+        if (m.has('#Copula')) {
+          // when he was out..
+          m.match('was').replaceWith('is')
+          // when he is out
+          m.match('is').replaceWith('will be')
+          return
+        }
+        // if (m.has('#PastTense')) {
+        //   m.toPresentTense()
+        //   return
+        // }
+        m.toInfinitive()
+      })
     }
   }
   return s

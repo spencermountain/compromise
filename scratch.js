@@ -12,8 +12,6 @@ let m
 
 let arr = []
 
-doc = nlp("she will be cool").sentences()
-doc.debug()
-doc.toPresentTense()
+doc = nlp("she is cool").sentences()
+doc.toFutureTense()
 console.log(doc.text())
-doc.debug()

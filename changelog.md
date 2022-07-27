@@ -14,6 +14,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - faster sentence tokenizer
 - **[change]** - ° symbol is not punctuation
 - **[new]** - implement .swap() for comparative/superlative adjectives
+- **[fix]** - sentence.toFuture() conjugation rules
 - **[update]** - dependencies
 
 #### 14.4.0 [July 2022]

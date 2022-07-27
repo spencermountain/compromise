@@ -13,6 +13,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - support short sentences embedded in quotes+parentheses
 - **[change]** - faster sentence tokenizer
 - **[change]** - ° symbol is not punctuation
+- **[new]** - implement .swap() for comparative/superlative adjectives
 - **[update]** - dependencies
 
 #### 14.4.0 [July 2022]

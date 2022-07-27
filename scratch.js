@@ -10,18 +10,10 @@ let doc
 let m
 
 
-// doc = nlp('two hot dogs please').compute('root')
-// doc.swap('hot dog', 'hamburger') //use singular-forms
-// doc.debug()
 
-doc = nlp('he ran faster than her').debug()
+doc = nlp('i dug up the solution, while digging up treasure.')
 doc.compute('root')
-doc.swap('fast', 'quick')
+doc.swap('dig up', 'find')
 doc.debug()
-
-// doc = nlp('i dug up the solution, while digging up treasure.')
-// doc.compute('root')
-// doc.swap('dig up', 'find')
-// doc.debug()
 
 

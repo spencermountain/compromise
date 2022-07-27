@@ -19,6 +19,12 @@ test('swap-verb', function (t) {
   doc.swap('stroll', 'walk')
   t.equal(doc.text(), 'walk downtown please', here + 'vb-imp')
 
+
+  doc = nlp('i dug up the solution, while digging up treasure.')
+  doc.compute('root')
+  doc.swap('dig up', 'find')
+  t.equal(doc.text(), 'i found the solution, while finding treasure.', here + 'vb-multi')
+
   t.end()
 })
 
@@ -36,6 +42,11 @@ test('swap-noun', function (t) {
   doc = nlp('I am Cliff Clavin').compute('root')
   doc.swap('cliff', 'giraffe', '!#Person')
   t.equal(doc.text(), 'I am Cliff Clavin', here + 'nn-guard')
+
+  doc = nlp('two hot dogs please').compute('root')
+  doc.swap('hot dog', 'hamburger') //use singular-forms
+  t.equal(doc.text(), 'two hamburgers please', here + 'multi-word')
+
   t.end()
 })
 

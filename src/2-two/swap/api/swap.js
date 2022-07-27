@@ -31,7 +31,8 @@ const swapAdjective = function (m, lemma) {
 }
 
 const swap = function (from, to, tag) {
-  let m = this.match(`{${from}}`)
+  let reg = from.split(/ /g).map(str => `{${str}}`).join(' ')
+  let m = this.match(reg)
   // guard against some homonyms
   if (tag) {
     m = m.if(tag)

@@ -1,6 +1,6 @@
-import { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Term, Net } from '../misc'
+import type { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Term, Net } from '../misc'
 
-class View {
+declare class View {
   // Utils
   /** is this document empty? */
   found: boolean
@@ -51,7 +51,7 @@ class View {
   /** sample a subset of the results */
   random: (n?: number) => View
 
-  // Accessors    
+  // Accessors
   /** split-up results by each individual term */
   terms: (n?: number) => View
   /** grab a specific named capture group */
@@ -220,7 +220,7 @@ class View {
   cache: (options?: object) => View
   /** un-freezes the current state of the document, so it may be transformed */
   uncache: (options?: object) => View
-  /* 
+  /*
    harden: () => View
    soften: () => View
    */

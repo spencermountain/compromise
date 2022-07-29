@@ -87,5 +87,17 @@ test('emoji-only sentence', function (t) {
 test('nested quotes', function (t) {
   let doc = nlp(`The hero was stunned by the scary monster. The glowing girl said "Hey! Leave him alone!".`)
   t.equal(doc.length, 2, here + 'nested quote sentence')
+
+  doc = nlp(`foo bar. Before "quote here" and "quote here".`)
+  t.equal(doc.length, 2, here + '2 quote sentence')
+
+  doc = nlp(`foo bar. Before "quote here?" and "quote here?".`)
+  t.equal(doc.length, 2, here + '2 quotes with sentence')
+
+  doc = nlp(`Foo bar. Before "quote here? and quote here?". After`)
+  t.equal(doc.length, 3, here + '1 quotes with 2 sentences')
+
+  doc = nlp(`Foo bar. Before "quote here? and quote here? also here!". After`)
+  t.equal(doc.length, 3, here + '1 quotes with 3 sentences')
   t.end()
 })

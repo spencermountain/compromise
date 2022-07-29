@@ -40,6 +40,9 @@ test('sentence tokenizer', function (t) {
     // mis-matched examples
     ['i thought "no way! and he said "yes way".', 2],//
     ['i thought (no way! and he said (yes)', 2],//
+    ['i thought (no way! and he said yes', 2],
+    ['(no way! and he said yes', 2],
+    ['"no way! and he\'s cool', 2],
   ]
   arr.forEach(a => {
     let [str, len] = a

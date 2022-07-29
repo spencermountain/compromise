@@ -13,5 +13,5 @@ let m
 // doc.nouns(0).toSingular()
 // console.log(doc.text())
 
-doc = nlp(`The hero was stunned by the scary monster. The glowing girl said "Hey! Leave him alone!".`)
+doc = nlp(`The hero was stunned by the scary monster. The glowing girl said (Hey! Leave him alone!).`)
 doc.debug()

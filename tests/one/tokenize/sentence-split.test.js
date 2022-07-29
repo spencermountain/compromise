@@ -24,6 +24,9 @@ test('sentence tokenizer', function (t) {
     // [`it fell out of the bag. (I wasn't fast enough.) Now it's on the floor.`, 3],
     [`the scent of basil (my favorite).`, 1],
     [`Your whole life (right? right?) might go smoothly this year.`, 1],
+    [`before. (inside word) and (inside). after`, 3],
+    [`before. (inside word?) and (inside!). after`, 3],
+    [`before. (the whole thing is inside). after`, 3],
     // quotation wrapper
     [`the doc said "no sir" and walked away. the end`, 2],
     [`Kendal asked, “What time is it?”`, 1],

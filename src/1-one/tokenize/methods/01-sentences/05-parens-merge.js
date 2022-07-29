@@ -16,6 +16,7 @@ const mergeParens = function (splits) {
         if (m2 !== null && m.length === 1 && !hasOpen.test(splits[i + 1])) {
           // merge in 2nd sentence
           splits[i] += splits[i + 1]
+          arr.push(splits[i])
           splits[i + 1] = ''
           i += 1
           continue

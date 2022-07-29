@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-const here = '[two/tokenize] '
+import nlp from '../../two/_lib.js'
+const here = '[one/sentence-split] '
 
 
 test('sentence tokenizer', function (t) {
@@ -24,6 +24,9 @@ test('sentence tokenizer', function (t) {
     // [`it fell out of the bag. (I wasn't fast enough.) Now it's on the floor.`, 3],
     [`the scent of basil (my favorite).`, 1],
     [`Your whole life (right? right?) might go smoothly this year.`, 1],
+    [`before. (inside word) and (inside). after`, 3],
+    [`before. (inside word?) and (inside!). after`, 3],
+    [`before. (the whole thing is inside). after`, 3],
     // quotation wrapper
     [`the doc said "no sir" and walked away. the end`, 2],
     [`Kendal asked, “What time is it?”`, 1],
@@ -37,6 +40,9 @@ test('sentence tokenizer', function (t) {
     // mis-matched examples
     ['i thought "no way! and he said "yes way".', 2],//
     ['i thought (no way! and he said (yes)', 2],//
+    ['i thought (no way! and he said yes', 2],
+    ['(no way! and he said yes', 2],
+    ['"no way! and he\'s cool', 2],
   ]
   arr.forEach(a => {
     let [str, len] = a
@@ -81,5 +87,23 @@ test('em-dash, en-dash', function (t) {
 test('emoji-only sentence', function (t) {
   let doc = nlp('good night! 💋')
   t.equal(doc.length, 2, here + 'boemojith sentence')
+  t.end()
+})
+
+test('nested quotes', function (t) {
+  let doc = nlp(`The hero was stunned by the scary monster. The glowing girl said "Hey! Leave him alone!".`)
+  t.equal(doc.length, 2, here + 'nested quote sentence')
+
+  doc = nlp(`foo bar. Before "quote here" and "quote here".`)
+  t.equal(doc.length, 2, here + '2 quote sentence')
+
+  doc = nlp(`foo bar. Before "quote here?" and "quote here?".`)
+  t.equal(doc.length, 2, here + '2 quotes with sentence')
+
+  doc = nlp(`Foo bar. Before "quote here? and quote here?". After`)
+  t.equal(doc.length, 3, here + '1 quotes with 2 sentences')
+
+  doc = nlp(`Foo bar. Before "quote here? and quote here? also here!". After`)
+  t.equal(doc.length, 3, here + '1 quotes with 3 sentences')
   t.end()
 })

@@ -50,6 +50,7 @@ const quoteMerge = function (splits) {
       // look at the next sentence for a closing quote,
       if (closesQuote(splits[i + 1]) && splits[i + 1].length < MAX_QUOTE) {
         splits[i] += splits[i + 1]// merge them
+        arr.push(splits[i])
         splits[i + 1] = ''
         i += 1
         continue
@@ -60,6 +61,7 @@ const quoteMerge = function (splits) {
         //make sure it's not too-long
         if (toAdd.length < MAX_QUOTE) {
           splits[i] += toAdd
+          arr.push(splits[i])
           splits[i + 1] = ''
           splits[i + 2] = ''
           i += 2

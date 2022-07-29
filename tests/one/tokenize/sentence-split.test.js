@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-const here = '[two/tokenize] '
+import nlp from '../../two/_lib.js'
+const here = '[one/sentence-split] '
 
 
 test('sentence tokenizer', function (t) {
@@ -81,5 +81,11 @@ test('em-dash, en-dash', function (t) {
 test('emoji-only sentence', function (t) {
   let doc = nlp('good night! 💋')
   t.equal(doc.length, 2, here + 'boemojith sentence')
+  t.end()
+})
+
+test('nested quotes', function (t) {
+  let doc = nlp(`The hero was stunned by the scary monster. The glowing girl said "Hey! Leave him alone!".`)
+  t.equal(doc.length, 2, here + 'nested quote sentence')
   t.end()
 })

@@ -56,6 +56,10 @@ test('toInfinitive-phrase:', function (t) {
     ['he did not walk', 'he does not walk'],
     ['i was not being walked', 'i do not walk'],
     ['i had not walked', 'i do not walk'],
+    ['I will do that', 'I do that'],
+    ['I will not do that', 'I do not do that'],
+    ['I won\'t do that', 'I do not do that'],
+    // ['I will never do that', 'I do not do that'],
 
     // want-infinitive
     // ['he wants to walk', 'he want to walk'],

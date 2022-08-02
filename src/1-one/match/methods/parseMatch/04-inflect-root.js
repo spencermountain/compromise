@@ -1,5 +1,8 @@
 const addVerbs = function (token, world) {
   let { verbConjugate } = world.methods.two.transform
+  if (!verbConjugate) {
+    return []
+  }
   let res = verbConjugate(token.root, world.model)
   delete res.FutureTense
   return Object.values(res).filter(str => str)
@@ -8,6 +11,9 @@ const addVerbs = function (token, world) {
 const addNoun = function (token, world) {
   let { nounToPlural } = world.methods.two.transform
   let res = [token.root]
+  if (!nounToPlural) {
+    return res
+  }
   res.push(nounToPlural(token.root, world.model))
   return res
 }
@@ -15,6 +21,9 @@ const addNoun = function (token, world) {
 const addAdjective = function (token, world) {
   let { adjToSuperlative, adjToComparative, adjToAdverb } = world.methods.two.transform
   let res = [token.root]
+  if (!adjToSuperlative || !adjToComparative || !adjToAdverb) {
+    return res
+  }
   res.push(adjToSuperlative(token.root, world.model))
   res.push(adjToComparative(token.root, world.model))
   res.push(adjToAdverb(token.root, world.model))

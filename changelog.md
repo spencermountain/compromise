@@ -8,6 +8,10 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 <!-- #### 14.5.0 [Unreleased]
 -->
+#### 14.4.3 [August 2022]
+- **[fix]** - guard for toRoot methods in root match
+- **[update]** - compromise-stats
+
 #### 14.4.2 [July 2022]
 - **[fix]** - hotfix for sentence tokenization issue #935
 

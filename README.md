@@ -1012,7 +1012,7 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
       <summary>🌎 Compromise in other Languages?</summary>
       <p></p>
       <ul>
-        we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a> and <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, in the same philosophy.
+        we've got work-in-progress forks for <a href="https://github.com/nlp-compromise/de-compromise">German</a>, <a href="https://github.com/nlp-compromise/fr-compromise">French</a>, <a href="https://github.com/nlp-compromise/es-compromise">Spanish</a>, and <a href="https://github.com/nlp-compromise/it-compromise">Italian</a> in the same philosophy.
         <br/>
         and need some help.
       </ul>
@@ -1024,7 +1024,7 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
       <summary>✨ Partial builds?</summary>
       <p></p>
       <ul>
-        we do offer a <a href="./builds/compromise-tokenize.js">compromise-tokenize</a> build, which has the POS-tagger pulled-out.
+        we do offer a <a href="https://observablehq.com/@spencermountain/compromise-filesize">tokenize-only</a> build, which has the POS-tagger pulled-out.
         <br/> 
         but otherwise, compromise isn't easily tree-shaken.
         <br/> 

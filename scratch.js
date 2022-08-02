@@ -13,7 +13,7 @@ let m
 // doc.nouns(0).toSingular()
 // console.log(doc.text())
 
-let str = nlp('I will do that').verbs().toInfinitive().all().out()
+let str = nlp('I will never do that').verbs().toInfinitive().all().out()
 console.log(str)
 
 // console.log(doc.world)

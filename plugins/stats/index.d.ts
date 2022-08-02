@@ -3,7 +3,7 @@ import nlp from 'compromise'
 export type Freq = [word: string, freq: number]
 
 type Gram = { size: number, count: number, normal: string }
-type Opts = { min: number, max: number }
+type Opts = { min: number, max: number } | { size: number }
 
 export interface StatsMethods {
   /** list all repeating sub-phrases, by word-count*/

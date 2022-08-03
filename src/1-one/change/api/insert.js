@@ -3,7 +3,7 @@ import uuid from '../compute/uuid.js'
 // are we inserting inside a contraction?
 // expand it first
 const expand = function (m) {
-  if (m.has('@hasContraction')) {//&& m.after('^.').has('@hasContraction')
+  if (m.has('@hasContraction') && typeof m.contractions === 'function') {//&& m.after('^.').has('@hasContraction')
     let more = m.grow('@hasContraction')
     more.contractions().expand()
   }

@@ -33,10 +33,11 @@ const addAdjective = function (token, world) {
 // turn '{walk}' into 'walking', 'walked', etc
 const inflectRoot = function (regs, world) {
   // do we have compromise/two?
-  if (world.methods.two && world.methods.two.transform) {
-    regs = regs.map(token => {
-      // a reg to convert '{foo}'
-      if (token.root) {
+  regs = regs.map(token => {
+    // a reg to convert '{foo}'
+    if (token.root) {
+      // check if compromise/two is loaded
+      if (world.methods.two && world.methods.two.transform && world.methods.two.transform.verbConjugate) {
         let choices = []
         if (!token.pos || token.pos === 'Verb') {
           choices = choices.concat(addVerbs(token, world))
@@ -53,10 +54,16 @@ const inflectRoot = function (regs, world) {
           token.operator = 'or'
           token.fastOr = new Set(choices)
         }
+      } else {
+        // if no compromise/two, drop down into 'machine' lookup
+        token.machine = token.root
+        delete token.id
+        delete token.root
       }
-      return token
-    })
-  }
+    }
+    return token
+  })
+
   return regs
 }
 export default inflectRoot

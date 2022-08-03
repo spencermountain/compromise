@@ -8,6 +8,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 <!-- #### 14.5.0 [Unreleased]
 -->
+#### 14.4.4 [August 2022]
+- **[fix]** - support {root} matches without compromise/two
+
 #### 14.4.3 [August 2022]
 - **[fix]** - guard for toRoot methods in root match
 - **[update]** - compromise-stats

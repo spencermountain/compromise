@@ -659,6 +659,7 @@ let arr = [
   ["I was an expert", 'i was an #Noun'],
   ["definitely worth a rental.", '#Adverb #Verb a #Noun'],
   ["keeping the matter a secret", '#Gerund the #Noun a #Noun'],
+  ["30/01/194", '!#Date'],
 ]
 test('match:', function (t) {
   let res = []

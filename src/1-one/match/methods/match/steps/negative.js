@@ -1,4 +1,5 @@
 import matchTerm from '../term/doesMatch.js'
+import negGreedy from './logic/negative-greedy.js'
 
 // '!foo' should match anything that isn't 'foo'
 // if it matches, return false
@@ -6,20 +7,18 @@ const doNegative = function (state) {
   const { regs } = state
   let reg = regs[state.r]
 
-
-
   // match *anything* but this term
   let tmpReg = Object.assign({}, reg)
   tmpReg.negative = false // try removing it
+
+  // found it? if so, we die here
   let found = matchTerm(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length)
   if (found) {
-    return false//die
+    return false//bye
   }
-
   // should we skip the term too?
-  // "before after"
-  //  match("before !foo? after")
   if (reg.optional) {
+    // "before after" - "before !foo? after"
     // does the next reg match the this term?
     let nextReg = regs[state.r + 1]
     if (nextReg) {
@@ -37,7 +36,10 @@ const doNegative = function (state) {
       }
     }
   }
-
+  // negative greedy - !foo+  - super hard!
+  if (reg.greedy) {
+    return negGreedy(state, tmpReg, regs[state.r + 1])
+  }
   state.t += 1
   return true
 }

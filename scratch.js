@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let txt = ''
 let doc
@@ -13,8 +13,7 @@ let m
 // doc.nouns(0).toSingular()
 // console.log(doc.text())
 
-let str = nlp('I will never do that').verbs().toInfinitive().all().out()
-console.log(str)
+doc = nlp('30/01/194').debug()
 
 // console.log(doc.world)
 // console.log(nlp.world())

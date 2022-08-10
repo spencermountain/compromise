@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import nlp from './src/three.js'
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let txt = ''
 let doc
@@ -13,8 +13,7 @@ let m
 // doc.nouns(0).toSingular()
 // console.log(doc.text())
 
-doc = nlp('before one two three four five after')
-doc.match('before !(not|no|maybe|perhaps){0,3} after').debug()
+doc = nlp('30/01/194').debug()
 
 // console.log(doc.world)
 // console.log(nlp.world())

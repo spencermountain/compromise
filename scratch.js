@@ -13,8 +13,8 @@ let m
 // doc.nouns(0).toSingular()
 // console.log(doc.text())
 
-doc = nlp('before one two after')
-doc.match('before !(not|no|maybe|perhaps)+ after').debug()
+doc = nlp('before one after end')
+doc.match('before !maybe{1,2}').debug()
 
 // console.log(doc.world)
 // console.log(nlp.world())

@@ -77,7 +77,7 @@ test('negative optional logic', function (t) {
   t.end()
 })
 
-test('negative greedy', function (t) {
+test('negative greedy-max', function (t) {
   const check = (doc) => doc.has('before !(not|no|maybe|perhaps){0,3} after')
 
   let doc = nlp('before after')
@@ -95,5 +95,45 @@ test('negative greedy', function (t) {
   doc = nlp('before one two three four after')
   t.equal(check(doc), false, 'four middle')
 
+  doc = nlp('before one two three maybe')
+  let m = doc.match('before !maybe{1}')
+  t.equal(m.text(), 'before one', 'greedy-max-one')
+
+  doc = nlp('before one two three maybe')
+  m = doc.match('before !maybe{1,2}')
+  t.equal(m.text(), 'before one two', 'greedy-max-two')
+
+  t.end()
+})
+
+test('negative greedy', function (t) {
+  // simpler version
+  let doc = nlp('before one after')
+  t.equal(doc.has('before !maybe+ after'), true, 'greedy-not-one')
+
+  doc = nlp('before one two after')
+  t.equal(doc.has('before !maybe+ after'), true, 'greedy-not-two')
+
+  // greedyEnd
+  doc = nlp('before one two')
+  let m = doc.match('before !maybe+')
+  t.equal(m.text(), 'before one two', 'greedy-end')
+
+  doc = nlp('before maybe')
+  m = doc.match('before !maybe+')
+  t.equal(m.text(), '', 'greedy-zero-fail')
+
+  doc = nlp('before one maybe')
+  m = doc.match('before !maybe+')
+  t.equal(m.text(), 'before one', 'greedy-one-stop')
+
+  doc = nlp('before one two maybe')
+  m = doc.match('before !maybe+')
+  t.equal(m.text(), 'before one two', 'greedy-two-stop')
+
+  // greedy-to
+  doc = nlp('before one after end')
+  m = doc.match('before !maybe+ after')
+  t.equal(m.text(), 'before one after', 'greedy-to-pos')
   t.end()
 })

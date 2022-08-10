@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+import nlp from './src/one.js'
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 
 // nlp.verbose('tagger')
 
@@ -13,8 +13,8 @@ let m
 // doc.nouns(0).toSingular()
 // console.log(doc.text())
 
-let str = nlp('I will never do that').verbs().toInfinitive().all().out()
-console.log(str)
+doc = nlp('before one two after')
+doc.match('before !(not|no|maybe|perhaps)+ after').debug()
 
 // console.log(doc.world)
 // console.log(nlp.world())

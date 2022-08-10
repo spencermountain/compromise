@@ -52,7 +52,6 @@ test('! negative match syntax :', function (t) {
   // doc = nlp("I will send her.")
   // t.equal(doc.has(m), true, here + 'multi-optional')
 
-
   t.end()
 })
 
@@ -74,6 +73,27 @@ test('negative optional logic', function (t) {
   // but with tricky next-term greedy
   m = doc.match(`have !not? * booked`)
   t.equal(m.found, false, here + 'neg-then-astrix')
+
+  t.end()
+})
+
+test('negative greedy', function (t) {
+  const check = (doc) => doc.has('before !(not|no|maybe|perhaps){0,3} after')
+
+  let doc = nlp('before after')
+  t.equal(check(doc), true, 'no middle')
+
+  doc = nlp('before one after')
+  t.equal(check(doc), true, 'one middle')
+
+  doc = nlp('before one two after')
+  t.equal(check(doc), true, 'two middle')
+
+  doc = nlp('before one two three after')
+  t.equal(check(doc), true, 'three middle')
+
+  doc = nlp('before one two three four after')
+  t.equal(check(doc), false, 'four middle')
 
   t.end()
 })

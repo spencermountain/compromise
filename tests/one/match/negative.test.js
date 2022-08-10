@@ -103,10 +103,14 @@ test('negative greedy-max', function (t) {
   m = doc.match('before !maybe{1,2}')
   t.equal(m.text(), 'before one two', 'greedy-max-two')
 
+  doc = nlp('before one two three maybe')
+  m = doc.match('before !maybe{4,5}')
+  t.equal(m.text(), '', 'greedy-unmet-min')
+
   t.end()
 })
 
-test('negative greedy', function (t) {
+test('negative greedy-end', function (t) {
   // simpler version
   let doc = nlp('before one after')
   t.equal(doc.has('before !maybe+ after'), true, 'greedy-not-one')
@@ -130,10 +134,17 @@ test('negative greedy', function (t) {
   doc = nlp('before one two maybe')
   m = doc.match('before !maybe+')
   t.equal(m.text(), 'before one two', 'greedy-two-stop')
+  t.end()
+})
 
-  // greedy-to
-  doc = nlp('before one after end')
-  m = doc.match('before !maybe+ after')
+
+test('negative greedy-to', function (t) {
+  let doc = nlp('before one after end')
+  let m = doc.match('before !maybe+ after')
   t.equal(m.text(), 'before one after', 'greedy-to-pos')
+
+  doc = nlp('before one after end')
+  m = doc.match('before !maybe+ none')
+  t.equal(m.text(), '', 'greedy-no-after')
   t.end()
 })

@@ -228,7 +228,6 @@ export default [
   'float',
   'flood',
   'flow',
-  'flower',
   'fly',
   'focus',
   'fog',

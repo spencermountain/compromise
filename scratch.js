@@ -5,16 +5,12 @@ nlp.plugin(plg)
 // nlp.verbose('tagger')
 
 let txt = ''
-// let doc
+let doc
 // let m
 
 // bug 1
-let doc = nlp('we swim')
+doc = nlp('we swim')
 console.log(doc.verbs().conjugate())
-
-
-// bug 2
-doc = nlp('peace and flowers and dove').debug()
 
 
 // date issues:

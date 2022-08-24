@@ -402,6 +402,7 @@ export default [
   'stone',
   'man',
   'tributary',
+  'flower',
 ]
 
 

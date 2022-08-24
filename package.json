@@ -63,6 +63,7 @@
     "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "tape \"./plugins/**/tests/**/*.test.js\" | tap-dancer",
+    "stress": "node scripts/test/stress.js",
     "debug": "node ./scripts/debug.js",
     "match": "node ./scripts/match.js",
     "coverage": "c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",

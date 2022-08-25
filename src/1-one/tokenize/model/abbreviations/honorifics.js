@@ -21,7 +21,6 @@ export default [
   'lt',
   'maj',
   'messrs',
-  'mister',
   'mlle',
   'mme',
   'mr',
@@ -42,7 +41,7 @@ export default [
   'sir',
   'sr',
   'supt',
-  'surg',
+  'surg'
   //miss
   //misses
 ]

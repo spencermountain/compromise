@@ -661,6 +661,15 @@ let arr = [
   ["keeping the matter a secret", '#Gerund the #Noun a #Noun'],
   ["30/01/194", '!#Date'],
   ["peace, flowers and doves", '#Noun #Noun and #Noun'],
+  ["the lady", 'the !#Honorific'],
+  ["the ship's captain", 'the #Possessive !#Honorific'],
+  ["count backwards", '#Imperative #Adverb'],
+  ["lady jones", '#Honorific #Person'],
+  ["king jones", '#Honorific #Person'],
+  ["count jones", '#Honorific #Person'],
+  ["my worst miss", 'my #Adjective #Sigular'],
+  ["a near miss", 'a #Adjective #Sigular'],
+  ["that miss was horrid", 'that #Sigular #Copula #Adjective'],
 ]
 test('match:', function (t) {
   let res = []

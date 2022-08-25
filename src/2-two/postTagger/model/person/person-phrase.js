@@ -86,6 +86,8 @@ export default [
     tag: ['Honorific', 'Person'],
     reason: 'his-excellency',
   },
+  // lady jones
+  { match: '[(count|judge|king|lady|lord)] #Person', group: 0, tag: 'Honorific', reason: 'lady-jones' },
   //general pearson
   { match: '#Honorific #Person', tag: 'Person', reason: 'honorific-person' },
 ]

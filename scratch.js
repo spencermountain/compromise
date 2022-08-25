@@ -9,8 +9,22 @@ let doc
 // let m
 
 // bug 1
-doc = nlp('we swim')
-console.log(doc.verbs().conjugate())
+// doc = nlp('we swim')
+// console.log(doc.verbs().conjugate())
+
+// bug 2
+// doc = nlp('blew').debug()
+// console.log(doc.verbs().conjugate())
+
+// bug 3
+txt = 'miss'
+txt = 'the constable'
+// txt = 'lord'
+// txt = 'lady'
+// txt = 'miss jones'
+// txt = 'lord jones'
+// txt = 'lady jones'
+doc = nlp(txt).debug()
 
 
 // date issues:

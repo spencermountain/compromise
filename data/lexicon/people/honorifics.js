@@ -2,6 +2,8 @@
 export default [
   'admiral',
   'ayatullah',
+  'baron',
+  'baroness',
   'brigadier',
   'captain',
   'chancellor',
@@ -20,10 +22,15 @@ export default [
   'first lieutenant',
   // 'judge',
   'king',
+  'lady',
   'lieutenant',
+  'lord',
   'magistrate',
   'marshal',
   'mayor',
+  'miss',
+  'missus',
+  'mister',
   'officer',
   'pastor',
   'president',
@@ -39,5 +46,5 @@ export default [
   'sergeant',
   'sultan',
   'taoiseach',
-  'vice admiral',
+  'vice admiral'
 ]

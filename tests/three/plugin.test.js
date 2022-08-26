@@ -37,9 +37,9 @@ test('change adj inflection', function (t) {
         comparative: 'slyer',
         superlative: 'slyest',
       },
-      fast: {
-        comparative: 'speedier',
-        superlative: 'speediest',
+      spedorious: {
+        comparative: 'speedorier',
+        superlative: 'speedoriest',
       }
     }
   })
@@ -48,13 +48,13 @@ test('change adj inflection', function (t) {
   t.equal(res.Comparative, 'slyer', here + 'Comparative')
   t.equal(res.Superlative, 'slyest', here + 'Superlative')
 
-  doc = nlp('fast')
+  doc = nlp('spedorious')
   res = doc.adjectives().conjugate()[0] || {}
-  t.equal(res.Superlative, 'speediest', here + 'Superlative')
-  t.equal(res.Comparative, 'speedier', here + 'comparative')
+  t.equal(res.Superlative, 'speedoriest', here + 'Superlative')
+  t.equal(res.Comparative, 'speedorier', here + 'comparative')
   // backwards
-  doc = nlp('speediest')
+  doc = nlp('speedoriest')
   res = doc.adjectives().conjugate()[0] || {}
-  t.equal(res.Adjective, 'fast', here + 'past')
+  t.equal(res.Adjective, 'spedorious', here + 'past')
   t.end()
 })

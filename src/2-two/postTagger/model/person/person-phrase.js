@@ -1,5 +1,4 @@
 export default [
-  { match: '[(private|general|major)] #Honorific? #Person', group: 0, tag: 'Honorific', reason: 'ambg-honorifics' },
   // ==== FirstNames ====
   //is foo Smith
   { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
@@ -63,15 +62,15 @@ export default [
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   //Anthony de Marco
   { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
+
+  // ==== Honorics ====
+  { match: '[(private|general|major|rear|prime|field)] #Honorific? #Person', group: 0, tag: 'Honorific', reason: 'ambg-honorifics' },
   // dr john foobar
   { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', ifNo: '#Possessive', reason: 'dr-john-foo', safe: true },
   //his-excellency
-  {
-    match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person',
-    group: 0,
-    tag: 'Honorific',
-    reason: 'his-excellency',
-  },
+  { match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person', group: 0, tag: 'Honorific', reason: 'his-excellency' },
   // Lieutenant colonel
   { match: '%Honorific|Noun% %Honorific|Noun%', tag: 'Honorific', reason: 'Lieutenant colonel' },
+  // first lady, second admiral
+  { match: '(first|second|third|1st|2nd|3rd) %Honorific|Noun%', tag: 'Honorific', reason: 'first lady' },
 ]

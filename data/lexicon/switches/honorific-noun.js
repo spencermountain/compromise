@@ -11,6 +11,7 @@ export default [
   'congressman',
   'congresswoman',
   'constable',
+  'corporal',
   'councillor',
   'doctor',
   'dutchess',
@@ -36,6 +37,7 @@ export default [
   'president',
   'prime minister',
   'prince',
+  'premier',
   'princess',
   'professor',
   'queen',
@@ -44,6 +46,7 @@ export default [
   'reverend',
   'second lieutenant',
   'sergeant',
+  'secretary',
   'sultan',
   'taoiseach',
   'vice admiral'

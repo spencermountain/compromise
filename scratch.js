@@ -24,7 +24,7 @@ txt = 'the constable'
 // txt = 'miss jones'
 // txt = 'lord jones'
 // txt = 'lady jones'
-txt = 'Lieutenant general James Baker'
+txt = 'Lieutenant colonel Bing Crosby'
 doc = nlp(txt).debug()
 
 

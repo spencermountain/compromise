@@ -47,8 +47,6 @@ test('change adj inflection', function (t) {
   let res = doc.adjectives().conjugate()[0] || {}
   t.equal(res.Comparative, 'slyer', here + 'Comparative')
   t.equal(res.Superlative, 'slyest', here + 'Superlative')
-  // t.equal(res.Noun, 'slyness', here + 'present')
-  // t.equal(res.Adverb, 'slyly', here + 'present')
 
   doc = nlp('fast')
   res = doc.adjectives().conjugate()[0] || {}

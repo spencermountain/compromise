@@ -93,6 +93,10 @@ const setTag = function (terms, tag, world = {}, isSafe, reason) {
     tag.forEach(tg => setTag(terms, tg, world, isSafe))
     return
   }
+  if (typeof tag !== 'string') {
+    console.warn(`compromise: Invalid tag '${tag}'`)// eslint-disable-line
+    return
+  }
   tag = tag.trim()
   // support '#Noun . #Adjective' syntax
   if (isMulti.test(tag)) {

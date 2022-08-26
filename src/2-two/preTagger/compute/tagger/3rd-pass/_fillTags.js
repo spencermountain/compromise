@@ -1,5 +1,5 @@
 import fastTag from '../_fastTag.js'
-import looksPlural from './looksPlural.js'
+import looksPlural from '../../../methods/looksPlural.js'
 import getTense from '../../../methods/transform/verbs/getTense/index.js'
 // tags that are neither plural or singular
 const uncountable = [

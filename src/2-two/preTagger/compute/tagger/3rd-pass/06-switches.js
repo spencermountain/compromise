@@ -8,7 +8,10 @@ const checkWord = (term, obj) => {
     return null
   }
   let str = term.normal || term.implicit
-  const found = obj[str]
+  let found = null
+  if (obj.hasOwnProperty(str)) {
+    found = obj[str]
+  }
   if (found && env.DEBUG_TAGS) {
     console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)//eslint-disable-line
   }

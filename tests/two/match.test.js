@@ -660,6 +660,16 @@ let arr = [
   ["definitely worth a rental.", '#Adverb #Verb a #Noun'],
   ["keeping the matter a secret", '#Gerund the #Noun a #Noun'],
   ["30/01/194", '!#Date'],
+  ["peace, flowers and doves", '#Noun #Noun and #Noun'],
+  ["the lady", 'the !#Honorific'],
+  ["the ship's captain", 'the #Possessive !#Honorific'],
+  ["count backwards", '#Imperative #Adverb'],
+  ["lady jones", '#Honorific #Person'],
+  ["king jones", '#Honorific #Person'],
+  ["count jones", '#Honorific #Person'],
+  ["my worst miss", 'my #Adjective #Singular'],
+  ["a near miss", 'a #Adjective #Singular'],
+  ["that miss was horrid", 'that #Singular #Copula #Adjective'],
 ]
 test('match:', function (t) {
   let res = []

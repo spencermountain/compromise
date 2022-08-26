@@ -34,7 +34,7 @@ export default {
   },
   // 'dr.'
   Honorific: {
-    is: 'Noun',
+    is: 'Person',
     not: ['FirstName', 'LastName', 'Value'],
   },
   Place: {

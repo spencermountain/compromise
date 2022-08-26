@@ -1,22 +1,9 @@
 export default [
-  // ==== Honorifics ====
-  { match: '[(1st|2nd|first|second)] #Honorific', group: 0, tag: 'Honorific', reason: 'ordinal-honorific' },
-  {
-    match: '[(private|general|major|corporal|lord|lady|secretary|premier)] #Honorific? #Person',
-    group: 0,
-    tag: 'Honorific',
-    reason: 'ambg-honorifics',
-  },
   // ==== FirstNames ====
   //is foo Smith
   { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
   //pope francis
-  {
-    match: '(lady|queen|sister|king|pope|father) #ProperNoun',
-    tag: 'Person',
-    reason: 'lady-titlecase',
-    safe: true,
-  },
+  { match: '(sister|pope|father) #ProperNoun', tag: 'Person', reason: 'lady-titlecase', safe: true },
 
   // ==== Nickname ====
   // Dwayne 'the rock' Johnson
@@ -75,17 +62,15 @@ export default [
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   //Anthony de Marco
   { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
-  //Joe springer sr
-  { match: '#ProperNoun [#Honorific]', group: 0, tag: 'Person', reason: 'last-sr' },
+
+  // ==== Honorics ====
+  { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: 'Honorific', reason: 'ambg-honorifics' },
   // dr john foobar
   { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', ifNo: '#Possessive', reason: 'dr-john-foo', safe: true },
   //his-excellency
-  {
-    match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person',
-    group: 0,
-    tag: ['Honorific', 'Person'],
-    reason: 'his-excellency',
-  },
-  //general pearson
-  { match: '#Honorific #Person', tag: 'Person', reason: 'honorific-person' },
+  { match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person', group: 0, tag: 'Honorific', reason: 'his-excellency' },
+  // Lieutenant colonel
+  { match: '%Honorific|Noun% %Honorific|Noun%', tag: 'Honorific', reason: 'Lieutenant colonel' },
+  // first lady, second admiral
+  { match: '(first|second|third|1st|2nd|3rd) %Honorific|Noun%', tag: 'Honorific', reason: 'first lady' },
 ]

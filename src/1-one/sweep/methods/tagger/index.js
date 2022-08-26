@@ -3,6 +3,7 @@ import canBe from './canBe.js'
 const tagger = function (list, document, world) {
   const { model, methods } = world
   const { getDoc, setTag, unTag } = methods.one
+  const looksPlural = methods.two.looksPlural
   if (list.length === 0) {
     return list
   }
@@ -32,8 +33,10 @@ const tagger = function (list, document, world) {
       setTag(terms, todo.tag, world, todo.safe, `[post] '${reason}'`)
       // quick and dirty plural tagger
       if (terms.length === 1 && todo.tag === 'Noun') {
-        if (terms[0].text && terms[0].text.match(/..s$/) !== null) {
+        if (looksPlural(terms[0].text)) {
           setTag(terms, 'Plural', world, todo.safe, 'quick-plural')
+        } else {
+          setTag(terms, 'Singular', world, todo.safe, 'quick-singular')
         }
       }
     }

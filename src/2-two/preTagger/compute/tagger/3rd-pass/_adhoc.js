@@ -46,7 +46,10 @@ const adhoc = {
     return isCapital(terms, i)
   },
   'Person|Verb': (terms, i) => {
-    return i !== 0 && isCapital(terms, i)
+    if (i !== 0) {
+      return isCapital(terms, i)
+    }
+    return null
   },
 }
 export default adhoc

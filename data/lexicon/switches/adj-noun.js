@@ -69,7 +69,7 @@ export default [
   'periodical',
   'pet',
   'potential',
-  // 'premier',
+  'premier',
   'present',
   'principal',
   'rear',

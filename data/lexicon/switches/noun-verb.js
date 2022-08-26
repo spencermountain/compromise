@@ -352,6 +352,7 @@ export default [
   'milk',
   'mind',
   'mine',
+  'miss',
   'mirror',
   'mix',
   'model',

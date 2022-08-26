@@ -403,7 +403,6 @@ export default [
   'mingle',
   'minus',
   'misplace',
-  'miss',
   'molest',
   'mourn',
   'multiply',

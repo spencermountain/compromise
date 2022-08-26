@@ -122,7 +122,7 @@ export default [
   // 30 trains
   { match: '#Value [#PresentTense]', group: 0, ifNo: ['one', '1', '#Copula', '#Infinitive'], tag: 'Plural', reason: '2-trains' },
   // compromises are possible
-  { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
+  { match: '[#PresentTense] (are|were) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   // hope i helped
   { match: '^[(hope|guess|thought|think)] #Pronoun #Verb', group: 0, tag: 'Infinitive', reason: 'suppose-i' },
   //pursue its dreams

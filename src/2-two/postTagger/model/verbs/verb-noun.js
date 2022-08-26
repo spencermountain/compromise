@@ -45,16 +45,8 @@ export default [
   { match: 'number of [#PresentTense]', group: 0, tag: 'Noun', reason: 'number-of-x' },
   // teaches/taught
   { match: '(taught|teaches|learns|learned) [#PresentTense]', group: 0, tag: 'Noun', reason: 'teaches-x' },
-
   // use reverse
-  {
-    match: '(try|use|attempt|build|make) [#Verb]',
-    ifNo: ['#Copula', '#PhrasalVerb'],
-    group: 0,
-    tag: 'Noun',
-    reason: 'do-verb',
-  },
-
+  { match: '(try|use|attempt|build|make) [#Verb]', ifNo: ['#Copula', '#PhrasalVerb'], group: 0, tag: 'Noun', reason: 'do-verb' },
   // checkmate is
   { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
   // get much sleep
@@ -62,9 +54,7 @@ export default [
   // cause i gotta
   { match: '[cause] #Pronoun #Verb', group: 0, tag: 'Conjunction', reason: 'cause-cuz' },
   // the cardio dance party
-  { match: 'the #Singular [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'cardio-dance' },
-  // the dining experience
-  // { match: 'the #Noun [#Infinitive] #Copula', group: 0, tag: 'Noun', reason: 'dining-experience' },
+  { match: 'the #Singular [#Infinitive] #Noun', group: 0, tag: 'Noun', ifNo: '#Pronoun', reason: 'cardio-dance' },
 
   // that should smoke
   { match: '#Determiner #Modal [#Noun]', group: 0, tag: 'PresentTense', reason: 'should-smoke' },
@@ -79,14 +69,7 @@ export default [
   },
 
   // assign all tasks
-  {
-    match: '#Verb (all|every|each|most|some|no) [#PresentTense]',
-    ifNo: '#Modal',
-    group: 0,
-    tag: 'Noun',
-    reason: 'all-presentTense',
-  },
-  // PresentTense/Noun ambiguities
+  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', ifNo: '#Modal', group: 0, tag: 'Noun', reason: 'all-presentTense' },  // PresentTense/Noun ambiguities
   // big dreams, critical thinking
   // have big dreams
   { match: '(had|have|#PastTense) #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
@@ -114,12 +97,7 @@ export default [
   // to facilitate gas exchange with
   { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
   // waited until release
-  {
-    match: `#PastTense (until|as|through|without) [#PresentTense]`,
-    group: 0,
-    tag: 'Noun',
-    reason: 'waited-until-release',
-  },
+  { match: `#PastTense (until|as|through|without) [#PresentTense]`, group: 0, tag: 'Noun', reason: 'waited-until-release' },
   // selling like hot cakes
   { match: `#Gerund like #Adjective? [#PresentTense]`, group: 0, tag: 'Plural', reason: 'like-hot-cakes' },
   // some valid reason
@@ -142,13 +120,7 @@ export default [
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
 
   // 30 trains
-  {
-    match: '#Value [#PresentTense]',
-    group: 0,
-    ifNo: ['one', '1', '#Copula', '#Infinitive'],
-    tag: 'Plural',
-    reason: '2-trains',
-  },
+  { match: '#Value [#PresentTense]', group: 0, ifNo: ['one', '1', '#Copula', '#Infinitive'], tag: 'Plural', reason: '2-trains' },
   // compromises are possible
   { match: '[#PresentTense] (are|were|was) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   // hope i helped
@@ -164,13 +136,7 @@ export default [
   // are you plauing golf
   { match: '^are #Pronoun [#Noun]', group: 0, ifNo: ['here', 'there'], tag: 'Verb', reason: 'are-you-x' },
   // ignoring commute
-  {
-    match: '#Copula #Gerund [#PresentTense] !by?',
-    group: 0,
-    tag: 'Noun',
-    ifNo: ['going'],
-    reason: 'ignoring-commute',
-  },
+  { match: '#Copula #Gerund [#PresentTense] !by?', group: 0, tag: 'Noun', ifNo: ['going'], reason: 'ignoring-commute' },
   // noun-pastTense variables
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', group: 0, tag: 'Noun', reason: 'noun-past' },
 ]

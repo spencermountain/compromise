@@ -24,7 +24,7 @@ txt = 'the constable'
 // txt = 'miss jones'
 // txt = 'lord jones'
 // txt = 'lady jones'
-txt = 'rear admiral Smit'
+txt = 'This is THE premier university in Virginia'
 doc = nlp(txt).debug()
 
 

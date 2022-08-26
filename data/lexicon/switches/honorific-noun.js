@@ -35,7 +35,6 @@ export default [
   'president',
   'prime minister',
   'prince',
-  'premier',
   'princess',
   'professor',
   'queen',

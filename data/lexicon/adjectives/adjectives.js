@@ -620,7 +620,6 @@ export default [
   'contradictory',
   'satisfactory',
 
-  'premier',
   'skilled',
   'antique',
   'dependent',

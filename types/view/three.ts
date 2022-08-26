@@ -212,7 +212,7 @@ interface Verbs extends View {
   toGerund: () => View
 
   /** return all forms of these verbs */
-  conjugate: () => View
+  conjugate: () => object[]
   /** return verbs with 'not' */
   isNegative: () => View
   /** only verbs without 'not'*/
@@ -245,6 +245,8 @@ interface Quotations extends View {
 interface Adjectives extends View {
   /** get the words describing this adjective */
   adverbs: () => View
+  /**  return all forms of these */
+  conjugate: () => object[]
   /** 'quick' -> 'quicker' */
   toComparative: (n?: number) => View
   /** 'quick' -> 'quickest' */

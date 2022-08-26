@@ -8,11 +8,6 @@ let txt = ''
 let doc
 // let m
 
-doc = nlp('we swim')
-// let m = doc.match('swim')
-// doc.splitAfter(m).debug()
-console.log(doc.verbs().conjugate())
-
 
 // bug 1
 // doc = nlp('we swim')
@@ -21,6 +16,23 @@ console.log(doc.verbs().conjugate())
 // bug 2
 // doc = nlp('blew').debug()
 // console.log(doc.verbs().conjugate())
+
+nlp.plugin({
+  irregulars: {
+    get: {
+      pastTense: 'gotten',
+      presentTense: 'getts',
+      gerund: 'gettin'
+    },
+    sly: {
+      comparative: 'slyer',
+      superlative: 'slyest',
+    }
+  }
+})
+doc = nlp('sly')
+console.log(doc.adjectives().conjugate())
+// console.log(doc.verbs().toGerund().text())
 
 
 // date issues:

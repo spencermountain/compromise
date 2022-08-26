@@ -629,7 +629,7 @@ _(these methods are on the main `nlp` object)_
   - **[.verbs().toFutureTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'will walk'`
   - **[.verbs().toInfinitive()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walk'`
   - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walking'`
-  - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all forms of these verbs
+  - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all conjugations of these verbs
   - **[.verbs().isNegative()](https://observablehq.com/@spencermountain/verbs)** - return verbs with 'not', 'never' or 'no'
   - **[.verbs().isPositive()](https://observablehq.com/@spencermountain/verbs)** - only verbs without 'not', 'never' or 'no'
   - **[.verbs().toNegative()](https://observablehq.com/@spencermountain/verbs)** - `'went' → 'did not go'`
@@ -689,6 +689,7 @@ _(these methods are on the main `nlp` object)_
 ##### Adjectives
 - **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quick'`
 - **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
+- **[.adjectives().conjugate()](https://observablehq.com/@spencermountain/compromise-selections)** - return all inflections of these adjectives
 - **[.adjectives().adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverbs describing this adjective
 - **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quicker'
 - **[.adjectives().toSuperlative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickest'

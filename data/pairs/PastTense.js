@@ -1928,7 +1928,7 @@ export default [
   ['bit', 'bite'],
   ['bled', 'bleed'],
   ['blitzed', 'blitz'],
-  ['blown', 'blow'],
+  // ['blown', 'blow'],
   ['boned', 'bone'],
   ['burst', 'burst'],
   ['caned', 'cane'],

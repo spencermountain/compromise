@@ -31,6 +31,27 @@ function mergeQuick(model, plugin) {
   return model
 }
 
+const addIrregulars = function (model, conj) {
+  let m = model.two.models || {}
+  Object.keys(conj).forEach(k => {
+    if (conj[k].pastTense && m.toPast) {
+      m.toPast.exceptions[k] = conj[k].pastTense
+    }
+    if (conj[k].presentTense && m.toPresent) {
+      m.toPresent.exceptions[k] = conj[k].presentTense
+    }
+    if (conj[k].gerund && m.toGerund) {
+      m.toGerund.exceptions[k] = conj[k].gerund
+    }
+    if (conj[k].comparative && m.toComparative) {
+      m.toComparative.exceptions[k] = conj[k].comparative
+    }
+    if (conj[k].superlative && m.toSuperlative) {
+      m.toSuperlative.exceptions[k] = conj[k].superlative
+    }
+  })
+}
+
 const extend = function (plugin, world, View, nlp) {
   const { methods, model, compute, hooks } = world
   if (plugin.methods) {
@@ -38,6 +59,9 @@ const extend = function (plugin, world, View, nlp) {
   }
   if (plugin.model) {
     mergeDeep(model, plugin.model)
+  }
+  if (plugin.irregulars) {
+    addIrregulars(model, plugin.irregulars)
   }
   // shallow-merge compute
   if (plugin.compute) {

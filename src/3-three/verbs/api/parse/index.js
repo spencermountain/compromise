@@ -17,6 +17,12 @@ const getNegative = function (vb) {
 
 // pull-apart phrasal-verb into verb-particle
 const getPhrasal = function (root) {
+  if (!root.has('(#Particle|#PhrasalVerb)')) {
+    return {
+      verb: root.none(),
+      particle: root.none()
+    }
+  }
   let particle = root.match('#Particle$')
   return {
     verb: root.not(particle),

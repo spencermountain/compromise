@@ -2,11 +2,17 @@
 import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let txt = ''
 let doc
 // let m
+
+doc = nlp('we swim')
+// let m = doc.match('swim')
+// doc.splitAfter(m).debug()
+console.log(doc.verbs().conjugate())
+
 
 // bug 1
 // doc = nlp('we swim')
@@ -15,17 +21,6 @@ let doc
 // bug 2
 // doc = nlp('blew').debug()
 // console.log(doc.verbs().conjugate())
-
-// bug 3
-txt = 'miss'
-txt = 'the constable'
-// txt = 'lord'
-// txt = 'lady'
-// txt = 'miss jones'
-// txt = 'lord jones'
-// txt = 'lady jones'
-txt = 'that miss was horrid'
-doc = nlp(txt).debug()
 
 
 // date issues:

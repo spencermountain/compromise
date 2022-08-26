@@ -34,20 +34,47 @@ function mergeQuick(model, plugin) {
 const addIrregulars = function (model, conj) {
   let m = model.two.models || {}
   Object.keys(conj).forEach(k => {
-    if (conj[k].pastTense && m.toPast) {
-      m.toPast.exceptions[k] = conj[k].pastTense
+    // verb forms
+    if (conj[k].pastTense) {
+      if (m.toPast) {
+        m.toPast.exceptions[k] = conj[k].pastTense
+      }
+      if (m.fromPast) {
+        m.fromPast.exceptions[conj[k].pastTense] = k
+      }
     }
-    if (conj[k].presentTense && m.toPresent) {
-      m.toPresent.exceptions[k] = conj[k].presentTense
+    if (conj[k].presentTense) {
+      if (m.toPresent) {
+        m.toPresent.exceptions[k] = conj[k].presentTense
+      }
+      if (m.fromPresent) {
+        m.fromPresent.exceptions[conj[k].presentTense] = k
+      }
     }
-    if (conj[k].gerund && m.toGerund) {
-      m.toGerund.exceptions[k] = conj[k].gerund
+    if (conj[k].gerund) {
+      if (m.toGerund) {
+        m.toGerund.exceptions[k] = conj[k].gerund
+      }
+      if (m.fromGerund) {
+        m.fromGerund.exceptions[conj[k].gerund] = k
+      }
     }
-    if (conj[k].comparative && m.toComparative) {
-      m.toComparative.exceptions[k] = conj[k].comparative
+    // adjective forms
+    if (conj[k].comparative) {
+      if (m.toComparative) {
+        m.toComparative.exceptions[k] = conj[k].comparative
+      }
+      if (m.fromComparative) {
+        m.fromComparative.exceptions[conj[k].comparative] = k
+      }
     }
-    if (conj[k].superlative && m.toSuperlative) {
-      m.toSuperlative.exceptions[k] = conj[k].superlative
+    if (conj[k].superlative) {
+      if (m.toSuperlative) {
+        m.toSuperlative.exceptions[k] = conj[k].superlative
+      }
+      if (m.fromSuperlative) {
+        m.fromSuperlative.exceptions[conj[k].superlative] = k
+      }
     }
   })
 }

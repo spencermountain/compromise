@@ -14,6 +14,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - make #Honorific always a #Person #951
 - **[new]** - manually change conjugations/inflections from plugin #949
 - **[new]** - `.adjectives().conjugate()` method
+- **[update]** - dependencies
 
 #### 14.4.5 [August 2022]
 - **[fix]** - fix logic for greedy-negative matches - #936 

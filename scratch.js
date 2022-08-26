@@ -26,12 +26,12 @@ nlp.plugin({
     },
     sly: {
       comparative: 'slyer',
-      superlative: 'slyest',
+      superlative: 'sliiest',
     }
   }
 })
-doc = nlp('sly')
-console.log(doc.adjectives().conjugate())
+doc = nlp('gettin').tag('Gerund').debug()
+console.log(doc.verbs().conjugate())
 // console.log(doc.verbs().toGerund().text())
 
 

@@ -44,6 +44,7 @@ const api = function (View) {
       return getNth(this, n).map(adj => {
         let root = toRoot(adj)
         return {
+          Adjective: root,
           Comparative: adjToComparative(root, this.model),
           Superlative: adjToSuperlative(root, this.model),
           Noun: adjToNoun(root, this.model),

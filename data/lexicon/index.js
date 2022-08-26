@@ -16,7 +16,6 @@ import cities from './places/cities.js'
 import countries from './places/countries.js'
 import femaleNames from './people/femaleNames.js'
 import firstnames from './people/firstnames.js'
-import honorifics from './people/honorifics.js'
 import lastnames from './people/lastnames.js'
 import maleNames from './people/maleNames.js'
 import people from './people/people.js'
@@ -61,6 +60,8 @@ import personDate from './switches/person-date.js'
 import personVerb from './switches/person-verb.js'
 import personPlace from './switches/person-place.js'
 import unitNoun from './switches/unit-noun.js'
+import honorificNoun from './switches/honorific-noun.js'
+
 
 //add-in the generic, flat word-lists
 const data = [
@@ -93,7 +94,6 @@ const data = [
 
   [femaleNames, 'FemaleName'],
   [firstnames, 'FirstName'],
-  [honorifics, 'Honorific'],
   [lastnames, 'LastName'],
   [maleNames, 'MaleName'],
   [people, 'Person'],
@@ -125,6 +125,7 @@ const data = [
   [personDate, 'Person|Date'],
   [personVerb, 'Person|Verb'],
   [unitNoun, 'Unit|Noun'],
+  [honorificNoun, 'Honorific|Noun'],
 ]
 for (let i = 0; i < data.length; i++) {
   const list = data[i][0]

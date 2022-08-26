@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let txt = ''
 let doc
@@ -24,6 +24,7 @@ txt = 'the constable'
 // txt = 'miss jones'
 // txt = 'lord jones'
 // txt = 'lady jones'
+txt = 'Lieutenant general James Baker'
 doc = nlp(txt).debug()
 
 

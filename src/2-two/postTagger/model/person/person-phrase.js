@@ -64,7 +64,7 @@ export default [
   { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
 
   // ==== Honorics ====
-  { match: '[(private|general|major|rear|prime|field)] #Honorific? #Person', group: 0, tag: 'Honorific', reason: 'ambg-honorifics' },
+  { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: 'Honorific', reason: 'ambg-honorifics' },
   // dr john foobar
   { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', ifNo: '#Possessive', reason: 'dr-john-foo', safe: true },
   //his-excellency

@@ -667,9 +667,9 @@ let arr = [
   ["lady jones", '#Honorific #Person'],
   ["king jones", '#Honorific #Person'],
   ["count jones", '#Honorific #Person'],
-  ["my worst miss", 'my #Adjective #Sigular'],
-  ["a near miss", 'a #Adjective #Sigular'],
-  ["that miss was horrid", 'that #Sigular #Copula #Adjective'],
+  ["my worst miss", 'my #Adjective #Singular'],
+  ["a near miss", 'a #Adjective #Singular'],
+  ["that miss was horrid", 'that #Singular #Copula #Adjective'],
 ]
 test('match:', function (t) {
   let res = []

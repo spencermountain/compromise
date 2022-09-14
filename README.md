@@ -772,6 +772,13 @@ nlp.extend({
     kermit: 'Character',
     gonzo: 'Character',
   },
+  // change inflections
+  irregulars: {
+    get: {
+      pastTense: 'gotten',
+      gerund: 'gettin'
+    },
+  },
   // add new methods to compromise
   api: (View) => {
     View.prototype.kermitVoice = function () {

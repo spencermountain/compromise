@@ -17,21 +17,9 @@ let doc
 // doc = nlp('blew').debug()
 // console.log(doc.verbs().conjugate())
 
-nlp.plugin({
-  irregulars: {
-    get: {
-      pastTense: 'gotten',
-      presentTense: 'getts',
-      gerund: 'gettin'
-    },
-    sly: {
-      comparative: 'slyer',
-      superlative: 'sliiest',
-    }
-  }
-})
-doc = nlp('gettin').tag('Gerund').debug()
-console.log(doc.verbs().conjugate())
+
+doc = nlp(' « gouvernement »').debug()
+// console.log(doc.verbs().conjugate())
 // console.log(doc.verbs().toGerund().text())
 
 

@@ -9,7 +9,7 @@ const pairs = {
   '\u201E': '\u201D', // 'LowCurlyDoubleQuotes'
   '\u2E42': '\u201D', // 'LowCurlyDoubleQuotesReversed'
   '\u201A': '\u2019', // 'LowCurlySingleQuotes'
-  '\u00AB': '\u00BB', // 'AngleDoubleQuotes'
+  '\u00AB': '\u00BB', // 'AngleDoubleQuotes' «, »
   '\u2039': '\u203A', // 'AngleSingleQuotes'
   // Prime 'non quotation'
   '\u2035': '\u2032', // 'PrimeSingleQuotes'

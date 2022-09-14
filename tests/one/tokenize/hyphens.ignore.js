@@ -30,8 +30,8 @@ test('independence', function (t) {
   t.equal(doc.has('load'), true, here + 'load')
   t.equal(doc.has('bearing'), true, here + 'bearing')
   t.equal(doc.has('load-bearing walls'), true, here + 'load-bearing')
-  t.equal(doc.has('loadbearing'), true, here + 'loadbearing')
-  t.equal(doc.has('loadbearing walls'), true, here + 'loadbearing walls')
+  // t.equal(doc.has('loadbearing'), true, here + 'loadbearing')
+  // t.equal(doc.has('loadbearing walls'), true, here + 'loadbearing walls')
   t.equal(doc.has('load walls'), false, here + 'load walls')
 
   doc = nlp('a half-baked idea')
@@ -55,7 +55,7 @@ test('independence', function (t) {
 
   // unsupported prefix
   doc = nlp('the counter-argument')
-  t.equal(doc.has('counterargument'), true, here + 'counter one word')
+  // t.equal(doc.has('counterargument'), true, here + 'counter one word')
   t.equal(doc.has('counter-argument'), true, here + 'counter dashed word')
   t.equal(doc.has('counter argument'), true, here + 'counter two words')
 
@@ -63,7 +63,7 @@ test('independence', function (t) {
   let m = doc.match(`additional non? urgent? appointment`)
   t.equal(m.found, true, here + 'non-urgent')
   t.equal(doc.has('additional non'), true, here + 'additional non')
-  t.equal(doc.has('additional nonurgent'), true, here + 'additional nonurgent')
+  // t.equal(doc.has('additional nonurgent'), true, here + 'additional nonurgent')
   t.equal(doc.has('additional non-urgent'), true, here + 'additional non-urgent')
   t.equal(doc.has('additional urgent'), false, here + 'additional urgent')
   t.equal(doc.has('additional appointment'), false, here + 'additional appointment')

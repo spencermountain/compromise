@@ -1,4 +1,4 @@
-const numUnit = /^([+-]?[0-9][.,0-9]*)([a-z°²³µ/]+)$/
+const numUnit = /^([+-]?[0-9][.,0-9]*)([a-z°²³µ/]+)$/ //(must be lowercase)
 
 const notUnit = new Set([
   'st',

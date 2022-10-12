@@ -1,13 +1,12 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let txt = ''
-let doc
+// let txt = ''
+// let doc
 // let m
-
 
 // bug 1
 // doc = nlp('we swim')
@@ -17,21 +16,44 @@ let doc
 // doc = nlp('blew').debug()
 // console.log(doc.verbs().conjugate())
 
-nlp.plugin({
-  irregulars: {
-    get: {
-      pastTense: 'gotten',
-      presentTense: 'getts',
-      gerund: 'gettin'
-    },
-    sly: {
-      comparative: 'slyer',
-      superlative: 'sliiest',
-    }
-  }
-})
-doc = nlp('gettin').tag('Gerund').debug()
-console.log(doc.verbs().conjugate())
+// bug 3
+// doc = nlp(' 18e').debug()
+
+
+
+// const text = `Remove me 1:
+// - A some text
+// - B some text
+// - C some text`
+
+// const doc = nlp(text)
+// doc.match('Remove me #NumericValue').forEach((m) => doc.remove(m))
+// doc.match('* some text$').forEach((m) => m.prepend('prefix'))
+// console.log(doc.out())
+
+// remove bug 1
+// const txt = `before SW1A 2AA Remove me after`
+// const doc = nlp(txt)
+// const matches = doc.match('Remove me')
+// matches.forEach((m) => doc.remove(m))
+// console.log(doc.text())
+
+let doc = nlp("he said I am a boy")
+console.log(doc.verbs().json().map(obj => obj.verb.grammar))
+// [ { form: 'simple-present', tense: 'PresentTense', copula: true } ]
+
+// let doc = nlp(`Remove me 1. A some text. B some text. C some text`)
+// console.log(doc)
+// doc.match('Remove me 1').forEach((m) => doc.remove(m))
+// console.log(doc)
+// // let res = doc.match('* some text$').prepend('prefix')
+// doc.match('* some text$').forEach(m => m.prepend('prefix'))
+// doc.all()
+// console.log(doc)
+// console.log(doc.text())//`Prefix A some text. Prefix B some text. Prefix C some text`
+// console.log(doc.text() === `Prefix A some text. Prefix B some text. Prefix C some text`)
+
+// console.log(doc.verbs().conjugate())
 // console.log(doc.verbs().toGerund().text())
 
 

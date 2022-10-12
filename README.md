@@ -45,7 +45,7 @@ don't you find it strange,
 <br/>
 <ul>
   <img height="2px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  <sub>how <b>easy</b> text is to <b>make</b>,</sub>
+  <sub>how easy <b>text</b> is to <b>make</b>,</sub>
   <br/>
   <img height="2px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
@@ -150,25 +150,7 @@ doc.places().json()
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>  
 </div> 
-<!-- spacer -->
-<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-quickly flip between *parsed* and *unparsed* forms:
-
-```js
-let doc = nlp('soft and yielding like a nerf ball')
-doc.out({ 
-  '#Adjective': (m) => `<i>${m.text()}</i>` 
-})
-// '<i>soft</i> and <i>yielding</i> like a nerf ball'
-```
-
-<div align="right">
-  <a href="https://docs.compromise.cool/compromise-output">output docs</a>
-</div>
-<div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
-</div>
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>  
 
@@ -771,6 +753,13 @@ nlp.extend({
   words: {
     kermit: 'Character',
     gonzo: 'Character',
+  },
+  // change inflections
+  irregulars: {
+    get: {
+      pastTense: 'gotten',
+      gerund: 'gettin'
+    },
   },
   // add new methods to compromise
   api: (View) => {

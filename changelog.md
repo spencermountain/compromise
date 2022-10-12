@@ -9,6 +9,10 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!-- #### 14.5.0 [Unreleased]
 -->
 
+#### 14.5.1 [Oct 2022]
+- **[fix]** - .remove() fixes
+- **[update]** - dependencies
+
 #### 14.5.0 [August 2022]
 - **[fix]** - possible runtime error in setTag method
 - **[change]** - make #Honorific always a #Person #951

@@ -12,6 +12,7 @@ test('quotation test', function (t) {
     ["the 'truthiness' i said", 'truthiness'],
     ['yeah, “fun” and stuff', 'fun'],
     ['“Fun” and stuff', 'fun'],
+    ['démontre que «le gouvernement» exploite', 'le gouvernement'],
     //dangling start/end
     ["'twas good cookin", ''],
     ["twas good cookin'", ''],

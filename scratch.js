@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 // nlp.verbose('tagger')
 
 // let txt = ''
@@ -38,17 +38,23 @@ nlp.plugin(plg)
 // matches.forEach((m) => doc.remove(m))
 // console.log(doc.text())
 
-
-// remove bug 2
-const text = `Remove 1. Remove 2. Remove 3. Remove 4. Remove 5. Remove 6. Remove 7. Remove 8. after 1. after 2. after 3. after 4. after 5.`
-// const text = `Remove 1. Remove 2. after 1. after 2. after 3. after 4. after 5.`
-const doc = nlp(text)
-let matches = doc.match('Remove #NumericValue')
+const txt = `before SW1A 2AA Remove me after`
+const doc = nlp(txt)
+doc.debug()
+const matches = doc.match('Remove me')
 matches.forEach((m) => doc.remove(m))
-// doc.remove(matches)
-console.log(doc)
-console.log(doc.out())
-console.log(doc.text() === 'after 1. after 2. after 3. after 4. after 5.')
+doc.debug()
+
+// let doc = nlp(`Remove me 1. A some text. B some text. C some text`)
+// console.log(doc)
+// doc.match('Remove me 1').forEach((m) => doc.remove(m))
+// console.log(doc)
+// // let res = doc.match('* some text$').prepend('prefix')
+// doc.match('* some text$').forEach(m => m.prepend('prefix'))
+// doc.all()
+// console.log(doc)
+// console.log(doc.text())//`Prefix A some text. Prefix B some text. Prefix C some text`
+// console.log(doc.text() === `Prefix A some text. Prefix B some text. Prefix C some text`)
 
 // console.log(doc.verbs().conjugate())
 // console.log(doc.verbs().toGerund().text())

@@ -48,11 +48,17 @@ test('remove-bug-3 :', function (t) {
   let out = `Remove me 1. Prefix A some text. Prefix B some text. Prefix C some text`
   t.equal(doc.out(), out, here + 'prepend only')
 
+  out = `Prefix A some text. Prefix B some text. Prefix C some text`
 
   doc = nlp(`Remove me 1. A some text. B some text. C some text`)
   doc.match('Remove me #NumericValue').forEach((m) => doc.remove(m))
-  doc.match('* some text$').forEach((m) => m.prepend('prefix'))
-  out = `Prefix A some text. Prefix B some text. Prefix C some text`
-  t.equal(doc.out(), out, here + 'remove then prepend')
+  let res = doc.match('* some text$').map((m) => m.prepend('prefix'))
+  t.equal(res.out(), out, here + 'remove then prepend - output')
+
+  // doc = nlp(`Remove me 1. A some text. B some text. C some text`)
+  // doc.match('Remove me #NumericValue').forEach((m) => doc.remove(m))
+  // doc.match('* some text$').forEach((m) => m.prepend('prefix'))
+  // t.equal(doc.out(), out, here + 'remove then prepend - self')
+
   t.end()
 })

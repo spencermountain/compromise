@@ -68,7 +68,6 @@ const methods = {
     // repair our pointers
     let gonePtrs = indexN(nots)
     ptrs = fixPointers(ptrs, gonePtrs)
-
     // clean up our original inputs
     self.ptrs = ptrs
     self.document = document

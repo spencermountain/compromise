@@ -1,4 +1,4 @@
-const max = 4
+const max = 20
 
 // sweep-around looking for our start term uuid
 const blindSweep = function (id, doc, n) {

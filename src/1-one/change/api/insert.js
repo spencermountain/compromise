@@ -28,7 +28,7 @@ const getTerms = function (input, world) {
   }
   //allow a view object
   if (typeof input === 'object' && input.isView) {
-    return input.clone().docs[0] //assume one sentence
+    return input.clone().docs[0] || [] //assume one sentence
   }
   //allow an array of terms, too
   if (isArray(input)) {
@@ -49,6 +49,10 @@ const insert = function (input, view, prepend) {
     // add-in the words
     let home = document[n]
     let terms = getTerms(input, world)
+    // are we inserting nothing?
+    if (terms.length === 0) {
+      return
+    }
     terms = addIds(terms)
     if (prepend) {
       expand(view.update([ptr]).firstTerm())

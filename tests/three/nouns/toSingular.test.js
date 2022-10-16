@@ -112,11 +112,12 @@ test('toSingular:', function (t) {
   t.end()
 })
 
-
-
 test('toSingular - longer:', function (t) {
   let arr = [
     [`my fingers looked green afterwards`, `my finger looked green afterwards`],
+    [`other person`, 'other person'],
+    [`other people`, 'other person'],
+    [`other people's kids`, 'other person\'s kid'],
   ]
   arr.forEach(function (a) {
     let doc = nlp(a[0])

@@ -5,11 +5,12 @@ const getRoot = function (m) {
   let tmp = m.clone()
   tmp = tmp.match('#Noun+')
   tmp = tmp.remove('(#Adjective|#Preposition|#Determiner|#Value)')
-  // team's captain
-  // if (tmp.has('#Possessive .? #Noun')) {
   tmp = tmp.not('#Possessive')
-  // }
-  return tmp.first()
+  tmp = tmp.first()
+  if (!tmp.found) {
+    // return m
+  }
+  return tmp
 }
 
 const parseNoun = function (m) {

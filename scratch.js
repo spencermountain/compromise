@@ -38,8 +38,13 @@ import nlp from './src/three.js'
 // matches.forEach((m) => doc.remove(m))
 // console.log(doc.text())
 
-let doc = nlp("he said I am a boy")
-console.log(doc.verbs().json().map(obj => obj.verb.grammar))
+
+const doc = nlp("people's").debug()
+doc.nouns().toSingular()
+
+// let doc = nlp("he said I am a boy")
+// console.log(doc.sentences().json())
+
 // [ { form: 'simple-present', tense: 'PresentTense', copula: true } ]
 
 // let doc = nlp(`Remove me 1. A some text. B some text. C some text`)

@@ -473,6 +473,7 @@ export default [
   'moreau',
   'moreira',
   'moreno',
+  'monroe',
   'moretti',
   'mori',
   'morin',

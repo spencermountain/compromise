@@ -9,6 +9,11 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!-- #### 14.5.0 [Unreleased]
 -->
 
+#### 14.5.2 [Oct 2022]
+- **[fix]** - runtime error #965
+- **[fix]** - misc possessive tagging issues
+- **[update]** - dependencies
+
 #### 14.5.1 [Oct 2022]
 - **[fix]** - .remove() fixes
 - **[change]** - support  « angle quotes »

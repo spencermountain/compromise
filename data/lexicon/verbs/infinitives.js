@@ -26,6 +26,7 @@ export default [
   'adorn',
   'adsorb',
   'affix',
+  'afford',
   'agree',
   'align',
   'allege',

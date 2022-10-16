@@ -676,7 +676,8 @@ let arr = [
   [`your keys`, `#Possessive #Plural`],
   [`life’s challenges`, `#Possessive #Plural`],
   [`My mate`, `#Possessive #Noun`],
-  [`I can't afford your pricing`, `I can not #Verb #Possessive #Singular`],
+  // anna's eating, anna's eating lunch
+  [`I can't afford your prices`, `I can not #Verb #Possessive #Plural`],
   [`the water's edge`, `the #Possessive #Noun`],
   [`my bitches`, `#Possessive #Plural`],
   [`demanding his rights`, `#Gerund #Possessive #Plural`],

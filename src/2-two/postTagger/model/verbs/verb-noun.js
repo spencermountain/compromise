@@ -126,7 +126,7 @@ export default [
   // hope i helped
   { match: '^[(hope|guess|thought|think)] #Pronoun #Verb', group: 0, tag: 'Infinitive', reason: 'suppose-i' },
   //pursue its dreams
-  { match: '#PresentTense #Possessive [#PresentTense]', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
+  { match: '#PresentTense #Possessive [#PresentTense]', ifNo: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
   // our unyielding support
   { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'our-full-support' },
   // they do serve fish

@@ -66,10 +66,8 @@ export default [
   { match: '#Organization+ #Possessive', tag: 'Possessive', reason: 'org-possessive' },
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
-
   // Ptolemy's experiments
-  { match: '#Possessive #PresentTense', ifNo: '#Copula', tag: 'Plural', reason: 'possessive-verb' },
-
+  { match: '#Possessive #PresentTense', ifNo: '#Gerund', tag: 'Plural', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
   // 10th of a second
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds

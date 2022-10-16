@@ -39,9 +39,10 @@ import nlp from './src/three.js'
 // console.log(doc.text())
 
 
-const doc = nlp("people's").debug()
+// const doc = nlp("the waitress's shirt")
+const doc = nlp("the women's room")
 doc.nouns().toSingular()
-
+doc.debug()
 // let doc = nlp("he said I am a boy")
 // console.log(doc.sentences().json())
 

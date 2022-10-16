@@ -8,7 +8,7 @@ const getRoot = function (m) {
   tmp = tmp.not('#Possessive')
   tmp = tmp.first()
   if (!tmp.found) {
-    // return m
+    return m
   }
   return tmp
 }

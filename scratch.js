@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 // let txt = ''
 // let doc
@@ -31,15 +31,16 @@ import nlp from './src/three.js'
 // doc.match('* some text$').forEach((m) => m.prepend('prefix'))
 // console.log(doc.out())
 
-// remove bug 1
-// const txt = `before SW1A 2AA Remove me after`
+// const txt = `before Remove 500mg of paracetamol`
 // const doc = nlp(txt)
-// const matches = doc.match('Remove me')
-// matches.forEach((m) => doc.remove(m))
+// doc.remove('Remove')
 // console.log(doc.text())
 
-let doc = nlp("he said I am a boy")
-console.log(doc.verbs().json().map(obj => obj.verb.grammar))
+const doc = nlp("demanding his rights").debug()
+
+// let doc = nlp("he said I am a boy")
+// console.log(doc.sentences().json())
+
 // [ { form: 'simple-present', tense: 'PresentTense', copula: true } ]
 
 // let doc = nlp(`Remove me 1. A some text. B some text. C some text`)

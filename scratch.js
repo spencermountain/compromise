@@ -31,18 +31,13 @@ import nlp from './src/three.js'
 // doc.match('* some text$').forEach((m) => m.prepend('prefix'))
 // console.log(doc.out())
 
-// remove bug 1
-// const txt = `before SW1A 2AA Remove me after`
+// const txt = `before Remove 500mg of paracetamol`
 // const doc = nlp(txt)
-// const matches = doc.match('Remove me')
-// matches.forEach((m) => doc.remove(m))
+// doc.remove('Remove')
 // console.log(doc.text())
 
+const doc = nlp("How has chemistry improved people's lives?").debug()
 
-// const doc = nlp("the waitress's shirt")
-const doc = nlp("the women's room")
-doc.nouns().toSingular()
-doc.debug()
 // let doc = nlp("he said I am a boy")
 // console.log(doc.sentences().json())
 

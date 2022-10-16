@@ -36,7 +36,7 @@ import nlp from './src/three.js'
 // doc.remove('Remove')
 // console.log(doc.text())
 
-const doc = nlp("How has chemistry improved people's lives?").debug()
+const doc = nlp("improved people's lives?").debug()
 
 // let doc = nlp("he said I am a boy")
 // console.log(doc.sentences().json())

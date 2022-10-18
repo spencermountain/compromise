@@ -8,7 +8,7 @@ const hasPlural = function (parsed) {
   return true
 }
 
-const toPlural = function (m, parsed) {
+const nounToPlural = function (m, parsed) {
   // already plural?
   if (parsed.isPlural === true) {
     return m
@@ -18,10 +18,10 @@ const toPlural = function (m, parsed) {
     return m
   }
   const { methods, model } = m.world
-  const { nounToPlural } = methods.two.transform
+  const { toPlural } = methods.two.transform.noun
   // inflect the root noun
   let str = parsed.root.text('normal')
-  let plural = nounToPlural(str, model)
+  let plural = toPlural(str, model)
   m.match(parsed.root).replaceWith(plural, keep).tag('Plural', 'toPlural')
   // should we change the determiner/article?
   if (parsed.determiner.has('(a|an)')) {
@@ -30,4 +30,4 @@ const toPlural = function (m, parsed) {
   }
   return m
 }
-export default toPlural
+export default nounToPlural

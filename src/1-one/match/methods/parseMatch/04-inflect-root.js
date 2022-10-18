@@ -9,24 +9,24 @@ const addVerbs = function (token, world) {
 }
 
 const addNoun = function (token, world) {
-  let { nounToPlural } = world.methods.two.transform
+  let { toPlural } = world.methods.two.transform.noun
   let res = [token.root]
-  if (!nounToPlural) {
+  if (!toPlural) {
     return res
   }
-  res.push(nounToPlural(token.root, world.model))
+  res.push(toPlural(token.root, world.model))
   return res
 }
 
 const addAdjective = function (token, world) {
-  let { adjToSuperlative, adjToComparative, adjToAdverb } = world.methods.two.transform.adjective
+  let { toSuperlative, toComparative, toAdverb } = world.methods.two.transform.adjective
   let res = [token.root]
-  if (!adjToSuperlative || !adjToComparative || !adjToAdverb) {
+  if (!toSuperlative || !toComparative || !toAdverb) {
     return res
   }
-  res.push(adjToSuperlative(token.root, world.model))
-  res.push(adjToComparative(token.root, world.model))
-  res.push(adjToAdverb(token.root, world.model))
+  res.push(toSuperlative(token.root, world.model))
+  res.push(toComparative(token.root, world.model))
+  res.push(toAdverb(token.root, world.model))
   return res
 }
 

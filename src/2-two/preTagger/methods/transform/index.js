@@ -1,24 +1,26 @@
-import nounToPlural from './nouns/toPlural/index.js'
-import nounToSingular from './nouns/toSingular/index.js'
+import toPlural from './nouns/toPlural/index.js'
+import toSingular from './nouns/toSingular/index.js'
 
 import verbToInfinitive from './verbs/toInfinitive/index.js'
 import verbConjugate from './verbs/conjugate/index.js'
 import getTense from './verbs/getTense/index.js'
-import advToAdjective from './adverbs/toAdjective.js'
-import adjToAdverb from './adverbs/toAdverb.js'
-import adjToNoun from './adverbs/toNoun.js'
+import fromAdverb from './adverbs/toAdjective.js'
+import toAdverb from './adverbs/toAdverb.js'
+import toNoun from './adverbs/toNoun.js'
 
 
-import { adjToSuperlative, adjToComparative, adjFromSuperlative, adjFromComparative } from './adjectives/index.js'
+import { toSuperlative, toComparative, fromSuperlative, fromComparative } from './adjectives/index.js'
 
 export default {
-  nounToPlural, nounToSingular,
+  noun: {
+    toPlural, toSingular,
+  },
   verbToInfinitive, getTense,
   verbConjugate,
 
   adjective: {
-    adjToSuperlative, adjToComparative, adjFromSuperlative, adjFromComparative,
-    advToAdjective, adjToAdverb, adjToNoun
+    toSuperlative, toComparative, toAdverb, toNoun,
+    fromAdverb, fromSuperlative, fromComparative,
   },
 
 }

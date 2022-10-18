@@ -3,14 +3,14 @@ import swapVerb from './swap-verb.js'
 const swapNoun = function (m, lemma) {
   let str = lemma
   if (m.has('#Plural')) {
-    const toPlural = m.methods.two.transform.nounToPlural
+    const toPlural = m.methods.two.transform.noun.toPlural
     str = toPlural(lemma, m.model)
   }
   m.replaceWith(str)
 }
 
 const swapAdverb = function (m, lemma) {
-  const toAdverb = m.methods.two.transform.adjective.adjToAdverb
+  const { toAdverb } = m.methods.two.transform.adjective
   let str = lemma
   let adv = toAdverb(str)
   if (adv) {
@@ -18,12 +18,12 @@ const swapAdverb = function (m, lemma) {
   }
 }
 const swapAdjective = function (m, lemma) {
-  const { adjToComparative, adjToSuperlative } = m.methods.two.transform.adjective
+  const { toComparative, toSuperlative } = m.methods.two.transform.adjective
   let str = lemma
   if (m.has('#Comparative')) {
-    str = adjToComparative(str, m.model)
+    str = toComparative(str, m.model)
   } else if (m.has('#Superlative')) {
-    str = adjToSuperlative(str, m.model)
+    str = toSuperlative(str, m.model)
   }
   if (str) {
     m.replaceWith(str)

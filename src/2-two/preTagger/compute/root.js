@@ -8,7 +8,7 @@ const toRoot = {
   // 'drinks' -> 'drink'
   'Plural': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.nounToSingular(str, world.model)
+    return world.methods.two.transform.noun.toSingular(str, world.model)
   },
   // ''
   'Copula': () => {
@@ -35,18 +35,18 @@ const toRoot = {
   // 'quieter' -> 'quiet'
   'Comparative': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.adjective.adjFromComparative(str, world.model)
+    return world.methods.two.transform.adjective.fromComparative(str, world.model)
   },
   // 'quietest' -> 'quiet'
   'Superlative': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.adjective.adjFromSuperlative(str, world.model)
+    return world.methods.two.transform.adjective.fromSuperlative(str, world.model)
   },
   // 'suddenly' -> 'sudden'
   'Adverb': (term, world) => {
-    const { advToAdjective } = world.methods.two.transform.adjective
+    const { fromAdverb } = world.methods.two.transform.adjective
     let str = term.machine || term.normal || term.text
-    return advToAdjective(str)
+    return fromAdverb(str)
   },
 }
 

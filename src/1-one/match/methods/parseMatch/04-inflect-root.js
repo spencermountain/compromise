@@ -1,9 +1,9 @@
 const addVerbs = function (token, world) {
-  let { verbConjugate } = world.methods.two.transform
-  if (!verbConjugate) {
+  let { conjugate } = world.methods.two.transform.verb
+  if (!conjugate) {
     return []
   }
-  let res = verbConjugate(token.root, world.model)
+  let res = conjugate(token.root, world.model)
   delete res.FutureTense
   return Object.values(res).filter(str => str)
 }
@@ -37,7 +37,7 @@ const inflectRoot = function (regs, world) {
     // a reg to convert '{foo}'
     if (token.root) {
       // check if compromise/two is loaded
-      if (world.methods.two && world.methods.two.transform && world.methods.two.transform.verbConjugate) {
+      if (world.methods.two && world.methods.two.transform && world.methods.two.transform.verb.conjugate) {
         let choices = []
         if (!token.pos || token.pos === 'Verb') {
           choices = choices.concat(addVerbs(token, world))

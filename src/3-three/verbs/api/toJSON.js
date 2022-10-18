@@ -17,10 +17,10 @@ const toText = function (m) {
   return m.text('normal')
 }
 
-const toInfinitive = function (root) {
-  const { verbToInfinitive } = root.methods.two.transform
+const toInf = function (root) {
+  const { toInfinitive } = root.methods.two.transform.verb
   let str = root.text('normal')
-  return verbToInfinitive(str, root.model, getTense(root))
+  return toInfinitive(str, root.model, getTense(root))
 }
 
 const toJSON = function (vb) {
@@ -34,7 +34,7 @@ const toJSON = function (vb) {
     auxiliary: toText(parsed.auxiliary),
     negative: parsed.negative.found,
     prefix: toText(parsed.prefix),
-    infinitive: toInfinitive(parsed.root),
+    infinitive: toInf(parsed.root),
     grammar: info,
   }
 }

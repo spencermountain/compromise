@@ -17,12 +17,12 @@ const toRoot = {
   // 'walked' -> 'walk'
   'PastTense': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.verbToInfinitive(str, world.model, 'PastTense')
+    return world.methods.two.transform.verb.toInfinitive(str, world.model, 'PastTense')
   },
   // 'walking' -> 'walk'
   'Gerund': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.verbToInfinitive(str, world.model, 'Gerund')
+    return world.methods.two.transform.verb.toInfinitive(str, world.model, 'Gerund')
   },
   // 'walks' -> 'walk'
   'PresentTense': (term, world) => {
@@ -30,7 +30,7 @@ const toRoot = {
     if (term.tags.has('Infinitive')) {
       return str
     }
-    return world.methods.two.transform.verbToInfinitive(str, world.model, 'PresentTense')
+    return world.methods.two.transform.verb.toInfinitive(str, world.model, 'PresentTense')
   },
   // 'quieter' -> 'quiet'
   'Comparative': (term, world) => {

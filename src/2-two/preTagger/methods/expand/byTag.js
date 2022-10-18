@@ -36,7 +36,7 @@ export default {
   // conjugate all forms of these verbs
   Infinitive: (word, lex, methods, model) => {
     let already = model.one.lexicon
-    let all = methods.two.transform.verbConjugate(word, model)
+    let all = methods.two.transform.verb.conjugate(word, model)
     Object.entries(all).forEach(a => {
       if (!already[a[1]] && !lex[a[1]]) {
         lex[a[1]] = a[0]
@@ -55,7 +55,7 @@ export default {
       lex[inf] = lex[inf] || 'Infinitive'
     }
     // conjugate it
-    let all = methods.two.transform.verbConjugate(inf, model)
+    let all = methods.two.transform.verb.conjugate(inf, model)
     Object.entries(all).forEach(a => {
       // not 'walker up', or 'had taken up'
       if (a[0] === 'Actor' || a[1] === '') {

@@ -45,7 +45,11 @@ const conjugate = function (inf, model) {
   return found
 }
 
-export default conjugate
+const all = function (str, model) {
+  return Object.values(conjugate(str, model)).filter(s => s)
+}
+
+export { conjugate, all }
 
 // console.log(toPresent.rules.y)
 // console.log(convert('buy', toPresent))

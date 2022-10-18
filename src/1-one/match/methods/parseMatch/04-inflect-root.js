@@ -1,38 +1,36 @@
 
 // add all conjugations of this verb
 const addVerbs = function (token, world) {
-  let { conjugate, toInfinitive } = world.methods.two.transform.verb || {}
-  if (!conjugate || !toInfinitive) {
+  let { all, toInfinitive } = world.methods.two.transform.verb || {}
+  let str = token.root
+  if (toInfinitive) {
+    str = toInfinitive(str, world.model)
+  }
+  if (!all) {
+    console.log('bail verb!')
     return []
   }
-  let str = toInfinitive(token.root, world.model)
-  let res = conjugate(str, world.model)
-  delete res.FutureTense
-  return Object.values(res).filter(s => s)
+  return all(str, world.model)
 }
 
 // add all inflections of this noun
 const addNoun = function (token, world) {
-  let { toPlural } = world.methods.two.transform.noun || {}
-  let res = [token.root]
-  if (!toPlural) {
-    return res
+  let { all } = world.methods.two.transform.noun || {}
+  if (!all) {
+    console.log('bail noun!')
+    return [token.root]
   }
-  res.push(toPlural(token.root, world.model))
-  return res
+  return all(token.root, world.model)
 }
 
 // add all inflections of this adjective
 const addAdjective = function (token, world) {
-  let { toSuperlative, toComparative, toAdverb } = world.methods.two.transform.adjective || {}
-  let res = [token.root]
-  if (!toSuperlative || !toComparative || !toAdverb) {
-    return res
+  let { all } = world.methods.two.transform.adjective || {}
+  if (!all) {
+    console.log('bail adj!')
+    return [token.root]
   }
-  res.push(toSuperlative(token.root, world.model))
-  res.push(toComparative(token.root, world.model))
-  res.push(toAdverb(token.root, world.model))
-  return res
+  return all(token.root, world.model)
 }
 
 // turn '{walk}' into 'walking', 'walked', etc

@@ -1,4 +1,6 @@
 import { convert } from 'suffix-thumb'
+import toAdverb from '../adverbs/toAdverb.js'
+
 
 const toSuperlative = function (adj, model) {
   const mod = model.two.models.toSuperlative
@@ -17,6 +19,17 @@ const fromSuperlative = function (adj, model) {
   return convert(adj, mod)
 }
 
+const all = function (str, model) {
+  let arr = [str]
+  arr.push(toSuperlative(str, model))
+  arr.push(toComparative(str, model))
+  arr.push(toAdverb(str))
+  arr = arr.filter(s => s)
+  arr = new Set(arr)
+  return Array.from(arr)
+}
+
 export {
+  all,
   toSuperlative, toComparative, fromComparative, fromSuperlative
 }

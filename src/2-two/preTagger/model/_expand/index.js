@@ -1,7 +1,7 @@
 import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
 import expandModels from './models.js'
-import conjugate from '../../methods/transform/verbs/conjugate/index.js'
+import { conjugate } from '../../methods/transform/verbs/conjugate/index.js'
 import { toSuperlative, toComparative } from '../../methods/transform/adjectives/index.js'
 import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
 import models from '../models/index.js'

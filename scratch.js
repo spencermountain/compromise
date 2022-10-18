@@ -36,7 +36,7 @@ import nlp from './src/two.js'
 // doc.remove('Remove')
 // console.log(doc.text())
 
-console.log(nlp.parseMatch('{sweet}'))
+console.log(nlp.parseMatch('{sweet/adjective}'))
 
 // const doc = nlp("These are the old-fashioned dilemmas").debug()
 // const doc = nlp("foobar. he was demanding his rights after. walking his plank after")

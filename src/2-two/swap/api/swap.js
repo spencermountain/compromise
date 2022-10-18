@@ -10,7 +10,7 @@ const swapNoun = function (m, lemma) {
 }
 
 const swapAdverb = function (m, lemma) {
-  const toAdverb = m.methods.two.transform.adjToAdverb
+  const toAdverb = m.methods.two.transform.adjective.adjToAdverb
   let str = lemma
   let adv = toAdverb(str)
   if (adv) {
@@ -18,7 +18,7 @@ const swapAdverb = function (m, lemma) {
   }
 }
 const swapAdjective = function (m, lemma) {
-  const { adjToComparative, adjToSuperlative } = m.methods.two.transform
+  const { adjToComparative, adjToSuperlative } = m.methods.two.transform.adjective
   let str = lemma
   if (m.has('#Comparative')) {
     str = adjToComparative(str, m.model)

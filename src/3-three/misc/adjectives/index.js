@@ -3,7 +3,7 @@ export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 // guard against superlative+comparative forms
 const toRoot = function (adj) {
-  const { adjFromComparative, adjFromSuperlative } = adj.methods.two.transform
+  const { adjFromComparative, adjFromSuperlative } = adj.methods.two.transform.adjective
   let str = adj.text('normal')
   if (adj.has('#Comparative')) {
     return adjFromComparative(str, adj.model)
@@ -22,7 +22,7 @@ const api = function (View) {
       this.viewType = 'Adjectives'
     }
     json(opts = {}) {
-      const { adjToAdverb, adjToNoun, adjToSuperlative, adjToComparative } = this.methods.two.transform
+      const { adjToAdverb, adjToNoun, adjToSuperlative, adjToComparative } = this.methods.two.transform.adjective
       opts.normal = true
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
@@ -40,7 +40,7 @@ const api = function (View) {
       return this.before('#Adverb+$').concat(this.after('^#Adverb+'))
     }
     conjugate(n) {
-      const { adjToComparative, adjToSuperlative, adjToNoun, adjToAdverb } = this.methods.two.transform
+      const { adjToComparative, adjToSuperlative, adjToNoun, adjToAdverb } = this.methods.two.transform.adjective
       return getNth(this, n).map(adj => {
         let root = toRoot(adj)
         return {
@@ -53,7 +53,7 @@ const api = function (View) {
       }, [])
     }
     toComparative(n) {
-      const { adjToComparative } = this.methods.two.transform
+      const { adjToComparative } = this.methods.two.transform.adjective
       return getNth(this, n).map(adj => {
         let root = toRoot(adj)
         let str = adjToComparative(root, this.model)
@@ -61,7 +61,7 @@ const api = function (View) {
       })
     }
     toSuperlative(n) {
-      const { adjToSuperlative } = this.methods.two.transform
+      const { adjToSuperlative } = this.methods.two.transform.adjective
       return getNth(this, n).map(adj => {
         let root = toRoot(adj)
         let str = adjToSuperlative(root, this.model)
@@ -69,7 +69,7 @@ const api = function (View) {
       })
     }
     toAdverb(n) {
-      const { adjToAdverb } = this.methods.two.transform
+      const { adjToAdverb } = this.methods.two.transform.adjective
       return getNth(this, n).map(adj => {
         let root = toRoot(adj)
         let str = adjToAdverb(root, this.model)
@@ -77,7 +77,7 @@ const api = function (View) {
       })
     }
     toNoun(n) {
-      const { adjToNoun } = this.methods.two.transform
+      const { adjToNoun } = this.methods.two.transform.adjective
       return getNth(this, n).map(adj => {
         let root = toRoot(adj)
         let str = adjToNoun(root, this.model)

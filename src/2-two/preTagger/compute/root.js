@@ -35,18 +35,18 @@ const toRoot = {
   // 'quieter' -> 'quiet'
   'Comparative': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.adjFromComparative(str, world.model)
+    return world.methods.two.transform.adjective.adjFromComparative(str, world.model)
   },
   // 'quietest' -> 'quiet'
   'Superlative': (term, world) => {
     let str = term.machine || term.normal || term.text
-    return world.methods.two.transform.adjFromSuperlative(str, world.model)
+    return world.methods.two.transform.adjective.adjFromSuperlative(str, world.model)
   },
   // 'suddenly' -> 'sudden'
   'Adverb': (term, world) => {
-    const toAdj = world.methods.two.transform.advToAdjective
+    const { advToAdjective } = world.methods.two.transform.adjective
     let str = term.machine || term.normal || term.text
-    return toAdj(str)
+    return advToAdjective(str)
   },
 }
 

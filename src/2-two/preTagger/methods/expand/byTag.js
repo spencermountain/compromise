@@ -12,13 +12,14 @@ export default {
   // superlative/ comparative forms for adjectives
   Comparable: (word, lex, methods, model) => {
     let already = model.one.lexicon
+    let { adjToSuperlative, adjToComparative } = methods.two.transform.adjective
     // fast -> fastest
-    let sup = methods.two.transform.adjToSuperlative(word, model)
+    let sup = adjToSuperlative(word, model)
     if (!already[sup]) {
       lex[sup] = lex[sup] || 'Superlative'
     }
     // fast -> faster
-    let comp = methods.two.transform.adjToComparative(word, model)
+    let comp = adjToComparative(word, model)
     if (!already[comp]) {
       lex[comp] = lex[comp] || 'Comparative'
     }

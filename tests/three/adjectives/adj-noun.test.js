@@ -73,7 +73,7 @@ let arr = [
 ]
 
 test('toNoun:', function (t) {
-  let adjToNoun = nlp().methods.two.transform.adjToNoun
+  let adjToNoun = nlp().methods.two.transform.adjective.adjToNoun
   arr.forEach(a => {
     let res = adjToNoun(a[0])
     t.equal(res, a[1], here + ` [toNoun] ${a[1]}`)

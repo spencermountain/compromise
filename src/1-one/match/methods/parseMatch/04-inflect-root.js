@@ -19,7 +19,7 @@ const addNoun = function (token, world) {
 }
 
 const addAdjective = function (token, world) {
-  let { adjToSuperlative, adjToComparative, adjToAdverb } = world.methods.two.transform
+  let { adjToSuperlative, adjToComparative, adjToAdverb } = world.methods.two.transform.adjective
   let res = [token.root]
   if (!adjToSuperlative || !adjToComparative || !adjToAdverb) {
     return res

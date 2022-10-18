@@ -16,7 +16,9 @@ export default {
   verbToInfinitive, getTense,
   verbConjugate,
 
-  adjToSuperlative, adjToComparative, adjFromSuperlative, adjFromComparative,
+  adjective: {
+    adjToSuperlative, adjToComparative, adjFromSuperlative, adjFromComparative,
+    advToAdjective, adjToAdverb, adjToNoun
+  },
 
-  advToAdjective, adjToAdverb, adjToNoun
 }

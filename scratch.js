@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/two.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 nlp.verbose('tagger')
-
+console.log(nlp.world().methods.two)
 // let txt = ''
 // let doc
 // let m
@@ -36,7 +36,10 @@ nlp.verbose('tagger')
 // doc.remove('Remove')
 // console.log(doc.text())
 
-const doc = nlp("demanding his rights").debug()
+const doc = nlp("These are the old-fashioned dilemmas").debug()
+// const doc = nlp("foobar. he was demanding his rights after. walking his plank after")
+// let net = nlp.buildNet([{ match: 'his .', ifNo: ['demanding', 'rights'] }])
+// doc.match(net).debug()
 
 // let doc = nlp("he said I am a boy")
 // console.log(doc.sentences().json())

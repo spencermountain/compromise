@@ -20,7 +20,7 @@ const sweep = function (document, net, methods, opts = {}) {
   // collect possible matches for this document
   let maybeList = getHooks(docCache, net.hooks)
   // ensure all defined needs are met for each match
-  maybeList = trimDown(maybeList, docCache)
+  maybeList = trimDown(maybeList, docCache, document)
   // add unchacheable matches to each sentence's todo-list
   if (net.always.length > 0) {
     maybeList = maybeList.map(arr => arr.concat(net.always))
@@ -28,16 +28,8 @@ const sweep = function (document, net, methods, opts = {}) {
   // if we don't have enough words
   maybeList = tooSmall(maybeList, document)
 
-  // maybeList.forEach((arr, i) => {
-  //   let txt = document[i].map(t => t.text).join(' ')
-  //   console.log(`==== ${txt} ====`)
-  //   arr.forEach(m => {
-  //     console.log(`    - ${m.match}`)
-  //   })
-  // })
-
   // now actually run the matches
-  let results = runMatch(maybeList, document, methods, opts)
+  let results = runMatch(maybeList, document, docCache, methods, opts)
   // console.dir(results, { depth: 5 })
   return results
 }

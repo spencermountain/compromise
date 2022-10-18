@@ -8,7 +8,7 @@ const localTrim = function (maybeList, docCache) {
     })
     // ensure nothing matches in our 'ifNo' property
     list = list.filter(obj => {
-      if (obj.ifNo !== undefined && obj.ifNo.some(no => docCache[n].has(no)) === true) {
+      if (obj.ifNo !== undefined && obj.ifNo.some(no => haves.has(no)) === true) {
         return false
       }
       return true

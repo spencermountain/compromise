@@ -1,11 +1,11 @@
 
 // add all conjugations of this verb
 const addVerbs = function (token, world) {
-  let { all, toInfinitive } = world.methods.two.transform.verb || {}
+  let { all } = world.methods.two.transform.verb || {}
   let str = token.root
-  if (toInfinitive) {
-    str = toInfinitive(str, world.model)
-  }
+  // if (toInfinitive) {
+  //   str = toInfinitive(str, world.model)
+  // }
   if (!all) {
     return []
   }

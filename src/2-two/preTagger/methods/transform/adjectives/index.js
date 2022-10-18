@@ -1,23 +1,7 @@
-import { convert } from 'suffix-thumb'
-import toAdverb from '../adverbs/toAdverb.js'
-
-
-const toSuperlative = function (adj, model) {
-  const mod = model.two.models.toSuperlative
-  return convert(adj, mod)
-}
-const toComparative = function (adj, model) {
-  const mod = model.two.models.toComparative
-  return convert(adj, mod)
-}
-const fromComparative = function (adj, model) {
-  const mod = model.two.models.fromComparative
-  return convert(adj, mod)
-}
-const fromSuperlative = function (adj, model) {
-  const mod = model.two.models.fromSuperlative
-  return convert(adj, mod)
-}
+import { toSuperlative, toComparative, fromSuperlative, fromComparative } from './inflect.js'
+import fromAdverb from './adverbs/toAdjective.js'
+import toAdverb from './adverbs/toAdverb.js'
+import toNoun from './adverbs/toNoun.js'
 
 const all = function (str, model) {
   let arr = [str]
@@ -29,7 +13,8 @@ const all = function (str, model) {
   return Array.from(arr)
 }
 
-export {
+export default {
+  toSuperlative, toComparative, toAdverb, toNoun,
+  fromAdverb, fromSuperlative, fromComparative,
   all,
-  toSuperlative, toComparative, fromComparative, fromSuperlative
 }

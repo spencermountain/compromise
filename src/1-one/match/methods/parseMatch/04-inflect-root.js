@@ -1,15 +1,19 @@
+
+// add all conjugations of this verb
 const addVerbs = function (token, world) {
-  let { conjugate } = world.methods.two.transform.verb
-  if (!conjugate) {
+  let { conjugate, toInfinitive } = world.methods.two.transform.verb || {}
+  if (!conjugate || !toInfinitive) {
     return []
   }
-  let res = conjugate(token.root, world.model)
+  let str = toInfinitive(token.root, world.model)
+  let res = conjugate(str, world.model)
   delete res.FutureTense
-  return Object.values(res).filter(str => str)
+  return Object.values(res).filter(s => s)
 }
 
+// add all inflections of this noun
 const addNoun = function (token, world) {
-  let { toPlural } = world.methods.two.transform.noun
+  let { toPlural } = world.methods.two.transform.noun || {}
   let res = [token.root]
   if (!toPlural) {
     return res
@@ -18,8 +22,9 @@ const addNoun = function (token, world) {
   return res
 }
 
+// add all inflections of this adjective
 const addAdjective = function (token, world) {
-  let { toSuperlative, toComparative, toAdverb } = world.methods.two.transform.adjective
+  let { toSuperlative, toComparative, toAdverb } = world.methods.two.transform.adjective || {}
   let res = [token.root]
   if (!toSuperlative || !toComparative || !toAdverb) {
     return res
@@ -37,16 +42,21 @@ const inflectRoot = function (regs, world) {
     // a reg to convert '{foo}'
     if (token.root) {
       // check if compromise/two is loaded
-      if (world.methods.two && world.methods.two.transform && world.methods.two.transform.verb.conjugate) {
+      if (world.methods.two && world.methods.two.transform) {
         let choices = []
-        if (!token.pos || token.pos === 'Verb') {
+        // have explicitly set from POS - '{sweet/adjective}'
+        if (token.pos) {
+          if (token.pos === 'Verb') {
+            choices = choices.concat(addVerbs(token, world))
+          } else if (token.pos === 'Noun') {
+            choices = choices.concat(addNoun(token, world))
+          } else if (token.pos === 'Adjective') {
+            choices = choices.concat(addAdjective(token, world))
+          }
+        } else {
+          // do verb/noun/adj by default
           choices = choices.concat(addVerbs(token, world))
-        }
-        if (!token.pos || token.pos === 'Noun') {
           choices = choices.concat(addNoun(token, world))
-        }
-        // don't run these by default
-        if (!token.pos || token.pos === 'Adjective') {
           choices = choices.concat(addAdjective(token, world))
         }
         choices = choices.filter(str => str)

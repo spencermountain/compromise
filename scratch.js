@@ -1,9 +1,9 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/two.js'
+// console.log(nlp.world().methods.two.transform)
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
-console.log(nlp.world().methods.two)
+// nlp.verbose('tagger')
 // let txt = ''
 // let doc
 // let m
@@ -36,7 +36,9 @@ console.log(nlp.world().methods.two)
 // doc.remove('Remove')
 // console.log(doc.text())
 
-const doc = nlp("These are the old-fashioned dilemmas").debug()
+console.log(nlp.parseMatch('{sweet}'))
+
+// const doc = nlp("These are the old-fashioned dilemmas").debug()
 // const doc = nlp("foobar. he was demanding his rights after. walking his plank after")
 // let net = nlp.buildNet([{ match: 'his .', ifNo: ['demanding', 'rights'] }])
 // doc.match(net).debug()

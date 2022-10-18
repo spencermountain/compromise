@@ -3,7 +3,6 @@ import toSingular from './nouns/toSingular/index.js'
 
 import toInfinitive from './verbs/toInfinitive/index.js'
 import conjugate from './verbs/conjugate/index.js'
-import getTense from './verbs/getTense/index.js'
 import fromAdverb from './adverbs/toAdjective.js'
 import toAdverb from './adverbs/toAdverb.js'
 import toNoun from './adverbs/toNoun.js'
@@ -19,7 +18,6 @@ export default {
     toInfinitive,
     conjugate,
   },
-  getTense,
 
   adjective: {
     toSuperlative, toComparative, toAdverb, toNoun,

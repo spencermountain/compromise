@@ -35,9 +35,6 @@ const copulaMap = {
 
 const toInfinitive = function (str, model, tense) {
   const { fromPast, fromPresent, fromGerund, fromParticiple } = model.two.models
-  // if (str.length < 3) {
-  //   return str
-  // }
   let { prefix, verb, particle } = toParts(str, model)
   let inf = ''
   if (!tense) {

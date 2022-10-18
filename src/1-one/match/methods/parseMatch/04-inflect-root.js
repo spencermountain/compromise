@@ -7,7 +7,6 @@ const addVerbs = function (token, world) {
     str = toInfinitive(str, world.model)
   }
   if (!all) {
-    console.log('bail verb!')
     return []
   }
   return all(str, world.model)
@@ -17,7 +16,6 @@ const addVerbs = function (token, world) {
 const addNoun = function (token, world) {
   let { all } = world.methods.two.transform.noun || {}
   if (!all) {
-    console.log('bail noun!')
     return [token.root]
   }
   return all(token.root, world.model)
@@ -27,7 +25,6 @@ const addNoun = function (token, world) {
 const addAdjective = function (token, world) {
   let { all } = world.methods.two.transform.adjective || {}
   if (!all) {
-    console.log('bail adj!')
     return [token.root]
   }
   return all(token.root, world.model)

@@ -1,5 +1,19 @@
 import findMain from './mainClause.js'
 
+const grammar = function (vb) {
+  let tense = null
+  if (vb.has('#PastTense')) {
+    tense = 'PastTense'
+  } else if (vb.has('#FutureTense')) {
+    tense = 'FutureTense'
+  } else if (vb.has('#PresentTense')) {
+    tense = 'PresentTense'
+  }
+  return {
+    tense
+  }
+}
+
 const parse = function (s) {
   let clauses = s.clauses()
   let main = findMain(clauses)
@@ -27,7 +41,8 @@ const parse = function (s) {
   return {
     subj,
     verb,
-    pred
+    pred,
+    grammar: grammar(verb)
   }
 }
 export default parse

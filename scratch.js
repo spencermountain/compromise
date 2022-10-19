@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // let txt = ''
 // let doc
 // let m
@@ -107,10 +107,10 @@ let arr = [
 
 let i = 0
 let txt = arr[i]
-txt = "C'mon Luisa"
+txt = "when the rain pours, come and have a drink"
 let doc = nlp(txt)
-doc.clauses().debug()
-console.log(doc.sentences().json())
+// doc.clauses().debug()
+console.log(doc.sentences().json()[0].sentence)
 
 // [ { form: 'simple-present', tense: 'PresentTense', copula: true } ]
 

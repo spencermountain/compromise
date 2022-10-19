@@ -34,6 +34,8 @@ const rules = [
   // { match: '#Negative #Verb', chunk: 'Verb' },
   // not really
   // { match: '#Negative #Adverb ', chunk: 'Verb' },
+  // come and have a drink
+  { match: '#PresentTense and #PresentTense', chunk: 'Verb' },
   // really not
   { match: '#Adverb #Negative', chunk: 'Verb' },
   // want to see

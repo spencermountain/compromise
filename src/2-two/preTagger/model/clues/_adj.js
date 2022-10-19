@@ -50,6 +50,7 @@ export default {
     anything: jj,
     not: jj,//not swell
     me: jj,//called me swell
+    is: jj
   },
   afterWords: {
     too: jj, //insulting too

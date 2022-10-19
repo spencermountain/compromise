@@ -499,7 +499,7 @@ let arr = [
   ["werner", "#Singular"],
   ["winner", "#Singular"],
   ["it is eager to forget", "it is #Adjective to #Verb"],
-  ["it is direct to ciaro", "it is #Verb to #Noun"],
+  ["it is direct to ciaro", "it is #Adjective to #Noun"],
 
 
   ['corporate', '!#Verb'],

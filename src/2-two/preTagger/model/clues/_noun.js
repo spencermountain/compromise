@@ -80,5 +80,6 @@ export default {
     said: n,
     wants: n,
     wanted: n,
+    is: n,
   },
 }

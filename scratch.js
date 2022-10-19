@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // let txt = ''
 // let doc
 // let m
@@ -58,7 +58,6 @@ let arr = [
   // "St. Nicholas shall leave the helm and that the only cargo shall be black cats.",
   // "we need the fastest, most reliable ways .",
   // "A moment later, he dropped the phone, walked to the other room, and started crying so hard.",
-  "The Episcopal Church at 193 Salem Street in Boston has been holding services continually since December 29, 1723",
   "Surely fire is warm enough already?..",
   "consented to take off his own.",
   "And I bought the shoes that just walked out on me",

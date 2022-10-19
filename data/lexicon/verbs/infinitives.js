@@ -705,5 +705,15 @@ export default [
   'subside',
 
   'squish',
-  'vanish'
+  'vanish',
+
+  // present participles
+  'awaken',
+  'frighten',
+  'hasten',
+  'heighten',
+  'lengthen',
+  'lessen',
+  'worsen',
+  'sweeten',
 ]

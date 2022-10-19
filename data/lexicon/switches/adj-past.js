@@ -23,6 +23,7 @@ export default [
   'awarded',
   'balanced',
   'based',//modern slang
+  'baked', //baked goods
   'biased',
   'boiled',
   'bored',

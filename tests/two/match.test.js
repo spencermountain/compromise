@@ -697,8 +697,6 @@ let arr = [
   // [`I saw her go`, `I #PastTense !#Possessive #PresentTense`],
   // [`I watched her throw`, `I #PastTense !#Possessive #PresentTense`],
 
-
-
   ['well?', '#Expression'],
   ['alright!', '#Expression'],
   ['it was alright', 'it was #Adjective'],
@@ -706,6 +704,10 @@ let arr = [
   ['shoo!', '#Expression'],
   ['hell', '#Expression'],
   ['live in hell', '#Verb in #Noun'],
+  [`we gave tax reductions`, `#Pronoun #PastTense #Noun #Plural`],
+  [`brand new`, `#Adverb #Adjective`],
+  [`brand spanking new`, `#Adverb #Adverb #Adjective`],
+  // [``, ``],
 ]
 test('match:', function (t) {
   let res = []

@@ -29,7 +29,9 @@ let matches = [
   // sorry
   { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
   // ok,
-  { match: '^(ok|alright|well|shoot|hell)', tag: 'Expression', reason: 'ok-' },
+  { match: '^(ok|alright|well|shoot|hell|anyways)', tag: 'Expression', reason: 'ok-' },
+  // say,
+  { match: '^(say && @hasComma)', tag: 'Expression', reason: 'say-' },
 
   // double-prepositions
   // rush out of

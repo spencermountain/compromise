@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // let txt = ''
 // let doc
 // let m
@@ -89,15 +89,6 @@ let arr = [
   // "Pride themed bikes",
   // "Tell Monica I say goodbye.",
   // "Reading ARP related article lor.",
-  "recorded at the Alys Stephens Center.",
-  "I spoke with someone on the phone who heard a brief intro to my situation, put me on hold for about 5 minutes- came back and basically told me without even listening to the whole situation told me there was basically nothing they could she would talk to the attorney and call me.",
-  "Charming replied that he was perfectly willing to go, and would set out the very next day.",
-  "Ok, well, this was very special.",
-  "The top 10 bars and pubs with cider on tap in Boston",
-  "Adventurous 26th president, he was 1st to ride in an automobile & an airplane",
-  "A girl just told me I've got a huge ego... I think she means cock.",
-  "It frightened me like nothing else ever has.",
-  "I couldn't hear a word, a word he said.",
 
 
 

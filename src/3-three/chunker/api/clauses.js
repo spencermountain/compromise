@@ -51,6 +51,7 @@ const clauses = function (n) {
   // various conjunctions
   found = found.splitBefore('and while')
   found = found.splitBefore('now that')
+  found = found.splitBefore('ever since')
   found = found.splitBefore('(supposing|although)')
   found = found.splitBefore('even (while|if|though)')
   found = found.splitBefore('(whereas|whose)')

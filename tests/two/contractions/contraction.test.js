@@ -27,6 +27,10 @@ test('tricky contractions', function (t) {
   doc.contractions().expand()
   t.equal(doc.text(), 'spencer would go see', here + 'spencerd')
 
+  doc = nlp(`I ain't gettin' picked last`)
+  doc.contractions().expand()
+  t.equal(doc.text(), 'I am not gettin\' picked last', here + 'aint')
+
   t.end()
 })
 

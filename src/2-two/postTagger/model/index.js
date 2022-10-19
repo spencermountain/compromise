@@ -25,6 +25,7 @@ import auxiliary from './verbs/auxiliary.js'
 import phrasal from './verbs/phrasal.js'
 import imperative from './verbs/imperative.js'
 import adjGerund from './verbs/adj-gerund.js'
+import passive from './verbs/passive.js'
 
 import misc from './_misc.js'
 
@@ -33,6 +34,8 @@ import places from './nouns/places.js'
 import conjunctions from './conjunctions.js'
 
 let matches = [].concat(
+  // order matters top-matches can get overwritten
+  passive,
   adj,
   advAdj,
   gerundAdj,

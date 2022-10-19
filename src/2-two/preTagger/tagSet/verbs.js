@@ -53,4 +53,8 @@ export default {
     is: 'PhrasalVerb',
     not: ['PastTense', 'PresentTense', 'Copula', 'Gerund'],
   },
+  // 'walked by'
+  Passive: {
+    is: 'Verb',
+  },
 }

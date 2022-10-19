@@ -498,6 +498,8 @@ let arr = [
   ["toner", "#Singular"],
   ["werner", "#Singular"],
   ["winner", "#Singular"],
+  ["aunt brenda", "#Person+"],
+  ["uncle sam", "#Person+"],
   ["it is eager to forget", "it is #Adjective to #Verb"],
   ["it is direct to ciaro", "it is #Adjective to #Noun"],
 
@@ -694,6 +696,16 @@ let arr = [
   // not posessive
   // [`I saw her go`, `I #PastTense !#Possessive #PresentTense`],
   // [`I watched her throw`, `I #PastTense !#Possessive #PresentTense`],
+
+
+
+  ['well?', '#Expression'],
+  ['alright!', '#Expression'],
+  ['it was alright', 'it was #Adjective'],
+  ['shoot', '#Expression'],
+  ['shoo!', '#Expression'],
+  ['hell', '#Expression'],
+  ['live in hell', '#Verb in #Noun'],
 ]
 test('match:', function (t) {
   let res = []

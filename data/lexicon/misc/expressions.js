@@ -43,7 +43,6 @@ export default [
   'hai',
   'hallelujah',
   'hee',
-  'hell',
   'hello',
   'hey',
   'hi',
@@ -120,4 +119,5 @@ export default [
   'yuck',
   'yup',
   `d'oh`,
+  'shoo'
 ]

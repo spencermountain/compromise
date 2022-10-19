@@ -83,6 +83,8 @@ let misc = {
   nearing: 'Gerund',
   neared: 'PastTense',
 
-  no: ['Negative', 'Expression']
+  no: ['Negative', 'Expression'],
+
+  there: 'There'
 }
 export default misc

@@ -52,7 +52,12 @@ let matches = [
   { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
   // dude we should
   { match: '^[(dude|man|girl)] #Pronoun', group: 0, tag: 'Expression', reason: 'dude-i' },
-  // are welcome
-  // { match: '#Copula [#Expression]', group: 0, tag: 'Noun', reason: 'are-welcome' },
+
+  // 'there' as noun
+  { match: '(from|to|in|near|around|right|over) [there]', group: 0, tag: 'Noun', reason: 'from-there' },
+  // 'there' as adjective
+  { match: '(always|nearly|barely|practically) [there]', group: 0, tag: 'Adjective', reason: 'always-there' },
+  // existential 'there'
+  // { match: '[there] #Copula', group: 0, tag: 'There', reason: 'there-is' },
 ]
 export default matches

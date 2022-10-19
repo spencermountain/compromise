@@ -26,25 +26,14 @@ import nlp from './src/three.js'
 // - A some text
 // - B some text
 // - C some text`
-
 // const doc = nlp(text)
-// doc.match('Remove me #NumericValue').forEach((m) => doc.remove(m))
-// doc.match('* some text$').forEach((m) => m.prepend('prefix'))
-// console.log(doc.out())
+// doc.remove('Remove me #NumericValue')
+// console.log(doc)
+// doc.match('text').prepend('prefix')
+// console.log(doc)
+// console.log(doc.text())
 
-const txt = `before Remove 500mg of paracetamol`
-const doc = nlp(txt)
-doc.remove('Remove')
-console.log(doc.text())
 
-// let doc = nlp('i strolled downtown')
-// doc.match('{stroll}')
-// nlp.parseMatch('{stroll}')
-// doc.swap('stroll', 'walk')
-
-// console.log(nlp.parseMatch('{kiss/verb}'))
-
-// const doc = nlp("These are the old-fashioned dilemmas").debug()
 // const doc = nlp("foobar. he was demanding his rights after. walking his plank after")
 // let net = nlp.buildNet([{ match: 'his .', ifNo: ['demanding', 'rights'] }])
 // doc.match(net).debug()
@@ -93,7 +82,7 @@ let arr = [
   // "Tell Monica I say goodbye.",
   // "Reading ARP related article lor.",
 
-  // "jack is guarded",
+
   // "they might have been spared",
   // "the King's courage was unshaken",
   "auction games are brought up",
@@ -105,10 +94,9 @@ let arr = [
 ]
 
 
-// let i = 0
-// let txt = arr[i]
+let txt = arr[0]
 // txt = "when the rain pours, come and have a drink"
-// let doc = nlp(txt)
+let doc = nlp(txt).debug()
 // doc.clauses().debug()
 // console.log(doc.sentences().json()[0].sentence)
 

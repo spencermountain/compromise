@@ -714,8 +714,12 @@ let arr = [
   [`The Island airport tunnel nears completion`, `the #Noun+ #PresentTense #Noun`],
   [`come have a drink`, `#Imperative #Imperative a #Singular`],
   [`come and have a drink`, `#Imperative and #Imperative a #Singular`],
-  // [``, ``],
-  // [``, ``],
+  [`there are issues`, `#There #Copula #Plural`],
+  [`nobody in there`, `#Noun in #Noun`],
+  [`go near there`, `#Verb near #Noun`],
+  [`he is always there`, `#Pronoun #Copula #Adverb #Adjective`],
+  [`there it is`, `#There it is`],
+  ['I ate me sandwich', '#Pronoun #Verb #Possessive #Singular']
 ]
 test('match:', function (t) {
   let res = []

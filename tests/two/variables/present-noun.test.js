@@ -143,9 +143,9 @@ let arr = [
 
   ['The stream really runs', '#Determiner #Noun #Adverb #Verb'],
   ['The nice stream really runs', '#Determiner #Adjective #Noun #Adverb #Verb'],
-  ['there are reasons', '#Noun #Copula #Plural'],
-  ['there were many walks', '#Noun #Copula #Adjective #Plural'],
-  ['there were the phase', '#Noun #Copula #Determiner #Noun'],
+  ['there are reasons', '#There #Copula #Plural'],
+  ['there were many walks', '#There #Copula #Adjective #Plural'],
+  ['there were the phase', '#There #Copula #Determiner #Noun'],
   ['book the flight', '#Verb #Determiner #Noun'],
   ['the euro challenge to', '#Determiner #Noun #Singular to'],
   ['the euro challenge', '#Determiner #Noun #Noun'],

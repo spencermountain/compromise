@@ -92,4 +92,8 @@ export default [
   { match: 'the #Cardinal [%Adj|Noun%]', group: 0, tag: 'Noun', reason: 'the-1992-classic' },
   // the premier university
   { match: '#Copula the [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', reason: 'the-premier-university' },
+
+  // scottish - i ate me sandwich
+  { match: 'i #Verb [me] #Noun', group: 0, tag: 'Possessive', reason: 'scottish-me' },
+
 ]

@@ -47,7 +47,7 @@ const mapping = {
   'Plural': 'NNS',
   'Noun': 'NN',
 
-  // 'Noun':'EX', //'there'
+  'There': 'EX', //'there'
   // 'Adverb':'WRB',
   // 'Noun':'PDT', //predeterminer
   // 'Noun':'SYM', //symbol

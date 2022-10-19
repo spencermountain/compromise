@@ -119,5 +119,7 @@ export default [
   'yuck',
   'yup',
   `d'oh`,
-  'shoo'
+  'shoo',
+  'there now',
+  'aye'
 ]

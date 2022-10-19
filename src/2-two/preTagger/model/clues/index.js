@@ -36,7 +36,10 @@ const copy = (obj, more) => {
 
 // make a copy of this one
 clues['Plural|Verb'] = {
-  beforeWords: copy(clues['Noun|Verb'].beforeWords, {}),
+  beforeWords: copy(clues['Noun|Verb'].beforeWords, {
+    had: 'Plural', //had tears
+    have: 'Plural',
+  }),
   afterWords: copy(clues['Noun|Verb'].afterWords, {
     his: 'PresentTense', her: 'PresentTense', its: 'PresentTense',
     in: null, to: null,

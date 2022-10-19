@@ -708,9 +708,12 @@ let arr = [
   [`brand new`, `#Adverb #Adjective`],
   [`brand spanking new`, `#Adverb #Adverb #Adjective`],
 
-  ["Right after.", '#Adverb #Adjective'],
+  ["Right after.", '#Adverb .'],
   ["Right in", '#Adverb #Preposition'],
   ["Right angle.", '#Adjective #Noun'],
+  [`The Island airport tunnel nears completion`, `the #Noun+ #PresentTense #Noun`],
+  // [``, ``],
+  // [``, ``],
   // [``, ``],
 ]
 test('match:', function (t) {

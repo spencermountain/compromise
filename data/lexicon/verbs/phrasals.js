@@ -122,6 +122,7 @@ export default [
   'carry away',
   'carry off',
   'carry on',
+  'carry out',
   'carve down',
   'carve in',
   'carve out',

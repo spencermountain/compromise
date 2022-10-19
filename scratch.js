@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 // let txt = ''
 // let doc
 // let m
@@ -72,32 +72,22 @@ let arr = [
   // "UPDATE: /u/Averyhonestguy has raised a very sobering point",
   // "Bike Share rolls out Pride themed bikes in New York",
   // "C'mon, Luisa, you have a chance to be the bigger person here!",
-  // "just after.",
-  // "just in",
-  "Listen, calling people names says a lot more about you than it does about them, idiot.",
-  "Hook, line, and sinker",
-  "Brand new bags.",
-  "Sweeten baked goods.",
+  // "Do quick and easy exercises at home.",
+  // "Determine whether you have the necessary qualities for the profession.",
+  // "Be sure to say goodbye to the interviewers before you leave.",
+  // "Make room for flexibility in your schedule.",
+  // "Reduce medications during less stressful periods.",
+  // "Focus on her qualities and accomplishments",
+  // "Sweeten baked goods.",
 
-  "Both sulfurization/desulfurization techniques and the use of removable thiol auxiliaries involve the installation of a synthetic thiol moiety to carry out the standard native chemical ligation chemistry, followed by removal of the auxiliary/thiol.",
-  "After my first class on a Wednesday i knew id be sore and would need a day or two rest.",
-  "Yes, my sultaness, my queen, I'll give you my heart without the least reserve.",
-  "You have tears in your eyes.",
-  "Boston through the eyes of Mayor John Tory",
-  "Bismarck & Kissinger are among masters of this, politics based on pragmatic concerns",
-  "What kind of key opens a banana?",
-  "beating her--not hard, you know; just a smack or two, enough to set her",
-  "If you turn me on to anything",
-  "The Transaction is for hot rolled steel with a thickness of 1\" and a width of 72 inches.",
-  "It has not worked out very well.",
-  "Hey love.. sorry I crashed =(",
-  "We’ve all paid the price for lenders who sold mortgages to people who couldn’t afford them, and buyers who knew they couldn’t afford them.",
-  ",Consider the track record of the manufacturer and any previous experience with them or their consoles, also remember to consider reliability issues with either console",
-  "The following lists do not include the lifeguard patrolled beaches which also have their own equipment including inflatable boats and jetskis.",
-  "The shoes ran from new to sketchy, but mine were in the former category (and they said 'team cobra' on the side--awesome, whatever that means!).",
-  "You have despised my counsel, and have gone your own evil way until you are only outwardly a man; really you are a monster -- the horror of everyone who knows you.",
-  "Tell Monica I say goodbye.",
-  "The Island airport tunnel nears completion",
+  // "After my first class on a Wednesday i knew id be sore.",
+  // "without the least reserve.",
+  // "If you turn me on to anything",
+  // "Consider the track record of the manufacturer and any previous experience with them or their consoles, also remember to consider reliability issues with either console",
+  // "government-funded research",
+  // "lifeguard patrolled beaches",
+  // "Pride themed bikes",
+  // "Tell Monica I say goodbye.",
   "Prime minister during the war, some later called him \"the minister who lost America\"",
   "She thought it was diet coke.",
   "merchants with whom Mr. Shuttleworthy dealt, I gave instructions to my",

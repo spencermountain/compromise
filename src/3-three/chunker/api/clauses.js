@@ -57,6 +57,7 @@ const clauses = function (n) {
   found = found.splitBefore('(whereas|whose)')
   found = found.splitBefore('as (far|long|much|soon) as')
   found = found.splitBefore('as (though|if)')
+  found = found.splitBefore('(til|until)')
 
   // it is cool and it is ..
   // let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction')

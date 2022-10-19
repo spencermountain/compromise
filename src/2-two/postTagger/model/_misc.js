@@ -32,6 +32,10 @@ let matches = [
   { match: '^(ok|alright|well|shoot|hell|anyways)', tag: 'Expression', reason: 'ok-' },
   // say,
   { match: '^(say && @hasComma)', tag: 'Expression', reason: 'say-' },
+  { match: '^(like && @hasComma)', tag: 'Expression', reason: 'like-' },
+
+  // right after
+  { match: '[right] (before|after|in|into|to|toward)', group: 0, tag: '#Adverb', reason: 'right-into' },
 
   // double-prepositions
   // rush out of

@@ -69,11 +69,11 @@ let arr = [
 
 
 
-  "UPDATE: /u/Averyhonestguy has raised a very sobering point",
-  "Bike Share rolls out Pride themed bikes in New York",
-  "Like I don't need nobody else",
-  "C'mon, Luisa, you have a chance to be the bigger person here!",
-  "Right after we broke up, my ex-girlfriend asked me how to change.",
+  // "UPDATE: /u/Averyhonestguy has raised a very sobering point",
+  // "Bike Share rolls out Pride themed bikes in New York",
+  // "C'mon, Luisa, you have a chance to be the bigger person here!",
+  // "just after.",
+  // "just in",
   "Listen, calling people names says a lot more about you than it does about them, idiot.",
   "Hook, line, and sinker",
   "Brand new bags.",

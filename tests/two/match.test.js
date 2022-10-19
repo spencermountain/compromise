@@ -707,6 +707,10 @@ let arr = [
   [`we gave tax reductions`, `#Pronoun #PastTense #Noun #Plural`],
   [`brand new`, `#Adverb #Adjective`],
   [`brand spanking new`, `#Adverb #Adverb #Adjective`],
+
+  ["Right after.", '#Adverb #Adjective'],
+  ["Right in", '#Adverb #Preposition'],
+  ["Right angle.", '#Adjective #Noun'],
   // [``, ``],
 ]
 test('match:', function (t) {

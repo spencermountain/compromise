@@ -1,31 +1,32 @@
 import person from './_person.js'
+const p = 'Place'
 
 // 'paris hilton' vs 'paris france'
 const place = {
   beforeTags: {
-    Place: 'Place'
+    Place: p
   },
   afterTags: {
-    Place: 'Place',
-    Abbreviation: 'Place'
+    Place: p,
+    Abbreviation: p
   },
   beforeWords: {
-    in: 'Place',
-    by: 'Place',
-    near: 'Place',
-    from: 'Place',
-    to: 'Place',
+    in: p,
+    by: p,
+    near: p,
+    from: p,
+    to: p,
   },
   afterWords: {
-    in: 'Place',
-    by: 'Place',
-    near: 'Place',
-    from: 'Place',
-    to: 'Place',
-    government: 'Place',
-    council: 'Place',
-    region: 'Place',
-    city: 'Place',
+    in: p,
+    by: p,
+    near: p,
+    from: p,
+    to: p,
+    government: p,
+    council: p,
+    region: p,
+    city: p,
   },
 }
 

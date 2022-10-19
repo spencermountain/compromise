@@ -641,6 +641,6 @@ export default [
 
   'renowned',
   'beside',
-  'alright'
+  'alright',
 ]
 

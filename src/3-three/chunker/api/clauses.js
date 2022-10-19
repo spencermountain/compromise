@@ -22,9 +22,18 @@ const byComma = function (doc) {
   return doc.splitAfter(commas)
 }
 
-// should we split-out parentheses?
+// should we split-out a clause (in brackets)?
 const splitParentheses = function (doc) {
   let matches = doc.parentheses()
+  matches = matches.filter(m => {
+    return m.wordCount() >= 3 && m.has('#Verb') && m.has('#Noun')
+  })
+  return doc.splitOn(matches)
+}
+
+// split-out a long quotion, but not 'inline quotes'.
+const splitQuotes = function (doc) {
+  let matches = doc.quotations()
   matches = matches.filter(m => {
     return m.wordCount() >= 3 && m.has('#Verb') && m.has('#Noun')
   })
@@ -35,6 +44,7 @@ const clauses = function (n) {
   let found = this
 
   found = splitParentheses(found)
+  found = splitQuotes(found)
 
   found = byComma(found)
 
@@ -55,7 +65,7 @@ const clauses = function (n) {
   found = found.splitBefore('(supposing|although)')
   found = found.splitBefore('even (while|if|though)')
   found = found.splitBefore('(whereas|whose)')
-  found = found.splitBefore('as (far|long|much|soon) as')
+  // found = found.splitBefore('as (far|long|much|soon) as')
   found = found.splitBefore('as (though|if)')
   found = found.splitBefore('(til|until)')
 

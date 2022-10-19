@@ -2,7 +2,7 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // let txt = ''
 // let doc
 // let m
@@ -88,16 +88,8 @@ let arr = [
   // "lifeguard patrolled beaches",
   // "Pride themed bikes",
   // "Tell Monica I say goodbye.",
-  "Prime minister during the war, some later called him \"the minister who lost America\"",
-  "She thought it was diet coke.",
-  "merchants with whom Mr. Shuttleworthy dealt, I gave instructions to my",
-  "But there you go again train travelin'",
-  "Robert B Cass",
-  "The nearest interstate is a 4 hour drive away.",
-  "Reading ARP related article lor.",
-  "We need to resolve the status of the illegal immigrants who are already in our country without animosity and without amnesty.",
-  "Do a ground combo as soon as you block a clone’s attack.",
-  "\"UAB SuperJazz, featuring Ellis Marsalis\" (2001)  (Co-produced by Ray Reach and Henry Panion), recorded at the Alys Stephens Center.",
+  // "Reading ARP related article lor.",
+  "recorded at the Alys Stephens Center.",
   "I spoke with someone on the phone who heard a brief intro to my situation, put me on hold for about 5 minutes- came back and basically told me without even listening to the whole situation told me there was basically nothing they could she would talk to the attorney and call me.",
   "Charming replied that he was perfectly willing to go, and would set out the very next day.",
   "Ok, well, this was very special.",

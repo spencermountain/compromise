@@ -58,6 +58,7 @@ export default [
   'w/o',
   'whereas',
   'with',
+  'with whom',
   'within',
   'without',
   `'o`,

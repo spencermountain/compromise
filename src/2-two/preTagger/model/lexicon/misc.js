@@ -78,6 +78,11 @@ let misc = {
   guaranteed: 'PastTense',
   shrunk: 'PastTense',
 
+  // support 'near', 'nears', 'nearing'
+  nears: 'PresentTense',
+  nearing: 'Gerund',
+  neared: 'PastTense',
+
   no: ['Negative', 'Expression']
 }
 export default misc

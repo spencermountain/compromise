@@ -46,7 +46,16 @@ const clauses = function (n) {
   found = found.splitBefore('(said|says) #ProperNoun$')
 
   // ... if it was
-  found = found.splitBefore('if .{4}')
+  found = found.splitBefore('. . if .{4}')
+
+  // various conjunctions
+  found = found.splitBefore('and while')
+  found = found.splitBefore('now that')
+  found = found.splitBefore('(supposing|although)')
+  found = found.splitBefore('even (while|if|though)')
+  found = found.splitBefore('(whereas|whose)')
+  found = found.splitBefore('as (far|long|much|soon) as')
+  found = found.splitBefore('as (though|if)')
 
   // it is cool and it is ..
   // let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction')
@@ -92,7 +101,6 @@ const clauses = function (n) {
   //   // let m = tooLong.splitAfter('#Noun .* #Verb .* #Noun+')
   //   // found = found.splitOn(m.eq(0))
   // }
-
   if (typeof n === 'number') {
     found = found.get(n)
   }

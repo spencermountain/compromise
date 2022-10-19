@@ -13,6 +13,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - move internal conjugation methods
 - **[update]** - github scripts
 - **[change]** - fixes to .clauses() parser
+- **[change]** - an astrix is not a word
 - **[new]** - @hasColon method
 
 #### 14.5.2 [Oct 2022]

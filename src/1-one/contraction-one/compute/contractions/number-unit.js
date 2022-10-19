@@ -7,7 +7,8 @@ const notUnit = new Set([
   'th',
   'am',
   'pm',
-  'max'
+  'max',
+  's' // 1990s
 ])
 
 const numberUnit = function (terms, i) {

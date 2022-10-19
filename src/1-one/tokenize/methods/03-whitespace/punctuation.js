@@ -2,7 +2,7 @@ const allowBefore = [
   '#', //#hastag
   '@', //@atmention
   '_',//underscore
-  '\\-',//-4  (escape)
+  // '\\-',//-4  (escape)
   '+',//+4
   '.',//.4
 ]

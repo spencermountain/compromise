@@ -9,6 +9,7 @@ const startings = /^[\p{Punctuation}\s]+/u
 const hasApostrophe = /['’]/
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const shortYear = /^'[0-9]{2}/
+const isNumber = /^-[0-9]/
 
 const normalizePunctuation = function (str) {
   let original = str
@@ -25,6 +26,10 @@ const normalizePunctuation = function (str) {
     // support years like '97
     if (pre === `'` && shortYear.test(str)) {
       pre = ''
+      return found
+    }
+    // support prefix negative signs like '-45'
+    if (found === '-' && isNumber.test(str)) {
       return found
     }
     pre = found //keep it

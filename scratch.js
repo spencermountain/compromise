@@ -94,12 +94,18 @@ let arr = [
 
 ]
 
+let doc = nlp('Please -Match me')
+// let doc = nlp('Please -7 me')
+doc.debug()
+console.log(doc.json()[0])
+console.log(doc.match('Match me').out())
+
 // let doc = nlp("he said I am a boy, so far")
-let i = 0
-let txt = arr[i]
-let doc = nlp(txt)
-console.log(doc.text())
-doc.clauses().debug()
+// let i = 0
+// let txt = arr[i]
+// let doc = nlp(txt)
+// console.log(doc.text())
+// doc.clauses().debug()
 // console.log(doc.sentences().json())
 
 // [ { form: 'simple-present', tense: 'PresentTense', copula: true } ]

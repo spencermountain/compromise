@@ -32,10 +32,10 @@ import nlp from './src/three.js'
 // doc.match('* some text$').forEach((m) => m.prepend('prefix'))
 // console.log(doc.out())
 
-// const txt = `before Remove 500mg of paracetamol`
-// const doc = nlp(txt)
-// doc.remove('Remove')
-// console.log(doc.text())
+const txt = `before Remove 500mg of paracetamol`
+const doc = nlp(txt)
+doc.remove('Remove')
+console.log(doc.text())
 
 // let doc = nlp('i strolled downtown')
 // doc.match('{stroll}')
@@ -105,12 +105,12 @@ let arr = [
 ]
 
 
-let i = 0
-let txt = arr[i]
-txt = "when the rain pours, come and have a drink"
-let doc = nlp(txt)
+// let i = 0
+// let txt = arr[i]
+// txt = "when the rain pours, come and have a drink"
+// let doc = nlp(txt)
 // doc.clauses().debug()
-console.log(doc.sentences().json()[0].sentence)
+// console.log(doc.sentences().json()[0].sentence)
 
 // [ { form: 'simple-present', tense: 'PresentTense', copula: true } ]
 

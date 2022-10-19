@@ -19,15 +19,34 @@ const byComma = function (doc) {
     // more = more.ifNo('@hasComma (too|also)$') //at end of sentence
     return more.found
   })
-
-
   return doc.splitAfter(commas)
 }
 
-const clauses = function (n) {
-  let found = byComma(this)
+// should we split-out parentheses?
+const splitParentheses = function (doc) {
+  let matches = doc.parentheses()
+  matches = matches.filter(m => {
+    return m.wordCount() >= 3 && m.has('#Verb') && m.has('#Noun')
+  })
+  return doc.splitOn(matches)
+}
 
-  found = found.splitAfter('(@hasEllipses|@hasSemicolon|@hasDash)')
+const clauses = function (n) {
+  let found = this
+
+  found = splitParentheses(found)
+
+  found = byComma(found)
+
+  found = found.splitAfter('(@hasEllipses|@hasSemicolon|@hasDash|@hasColon)')
+
+  // i said
+  found = found.splitAfter('^#Pronoun (said|says)')
+  // ... said John.
+  found = found.splitBefore('(said|says) #ProperNoun$')
+
+  // ... if it was
+  found = found.splitBefore('if .{4}')
 
   // it is cool and it is ..
   // let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction')

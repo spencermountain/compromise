@@ -29,6 +29,13 @@ test('clauses-count', function (t) {
     [`Use quinoa in any place you’d use lentils, corn, millet, rice, or pasta.`, 1],
     [`These are the steps I used.`, 1],
     [`actually, that's the shirt`, 1],
+    [`we can help the world if Congress gives us the means `, 2],
+    // [``, 2],
+    // [``, 2],
+    // [``, 2],
+
+    // "Stances include regular, goofy foot & this one ",
+    // "He got in touch with me last night and wants me to meet him today at 2 pm",
   ]
   arr.forEach(function (a) {
     const clauses = nlp(a[0]).clauses()

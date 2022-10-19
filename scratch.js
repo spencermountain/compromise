@@ -1,6 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// console.log(nlp.world().methods.two.transform)
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
@@ -52,48 +51,58 @@ import nlp from './src/three.js'
 
 
 let arr = [
-  "Police say they have nothing to go on.",
-  "proper adjustment, depending upon the character of the general effect.",
-  "I'm glad that we stopped kissing the tar on the highway",
-  "MHC",
-  "I've been \"trying it\" for months now.",
-  "Dear dear I reach home le!",
-  "Heat waves, droughts, wildfires, and floods – all are now more frequent and intense.",
-  "Click and drag the “aether” and “gilded-games-util” .jar files from your desktop and into the Minecraft folder.",
-  "Between the hepatocyte plates are liver sinusoids, which are enlarged capillaries through which blood from the hepatic portal vein and hepatic artery enters via the portal triads, then drains to the central vein.",
-  "But, the wings are cooked in soy!",
-  "If you can trust me with this cross till to-morrow, Rosina, I should like to have it examined and analysed.",
-  "Are you, are you, are you sure it’s ah, a new bump?",
-  "OF FOOTBALL AND DIL CHAHTA HAI",
-  "In chapter 8, this tribe of Israelites is appointed to work in the tabernacle",
-  "As Mr Peanut left his house, he said to his wife, \"see you, I'll be back in a Jif",
-  "sensible forms for the purpose of conveying a particular meaning.",
-  "He watches, lurking beneath the sea",
-  "Brandee",
-  "Only somewhat related: I wonder sometimes if simile and analogy resonate or mean as much to some people.",
-  "Ya had just now.",
-  "To cut through the barriers of hateful propaganda, the Voice of America and other broadcast services are expanding their programming in Arabic and Persian - and soon, a new television service will begin providing reliable news and information across the region.",
-  "Ask your sponsor to sign a DD FORM 1172-2.",
-  "The modern adventure novel goes back to Daniel Defoe's Robinson Crusoe (1719) and its immediate successors.",
-  "They have a couple tables where you can eat there too if you want.",
-  "But we keep his Majesty the Inca waiting, said Prigio.",
-  "MONICA: No, I will not cave.",
-  "Patients made to vanish on Malaria Day",
-  "Stances include regular, goofy foot & this one that angles the toes of both feet in opposite directions",
-  "I failed my audition as Romeo through a misunderstanding over a stage direction.",
-  "She was a oneyer, if you like, sir",
-  "Life's a schoolyard, I ain't gettin' picked last (oh oh)",
-  "Jane",
-  "I've *never* been able to shop at all the \"cute\" stores - Abercrombie, Hollister, Aeropostale, American Eagle..all those places that seem like such a big deal when you're in junior high and high school.",
-  "He got in touch with me last night and wants me to meet him today at 2 pm",
-  "I respect that part of our culture; I grew up in it.",
-  "Check with your state and local governments.",
+  // "Stances include regular, goofy foot & this one ",
+  // "He got in touch with me last night and wants me to meet him today at 2 pm",
+  // "Life's a schoolyard, I ain't gettin' picked last",
+
+  "The late 1990s onwards have seen substantial growth in the reach and market of board games.",
+  "I've tried the flautas, enchiladas, and juevos rancheros and while none of them were the absolute best mexican dishes I've ever had, I was not disappointed at all.",
+  "I desire that the golden ship shall turn to black wood, and the crew to hideous negroes; that St. Nicholas shall leave the helm and that the only cargo shall be black cats.",
+  "I can’t believe he taped the two of them having sex!",
+  "Surat doctors discuss need for awareness on anthrax",
+  "The last British athlete to win the Olympic decathlon, he won it back-to-back in 1980 & 1984",
+  "There's no reason to be tailgating me when I'm doing 50 in a 35...and those flashing lights on your car look stupid.",
+  "while what did he do but ask me to go wid him to the widdy’s, saying he",
+  "Young nigga just ran the sac the up",
+  "It's great for cutting, just be careful because it's easy to injure your knees/hips/groin.",
+  "By a patient zero who infected many others.",
+  "To attract new businesses to our shores, we need the fastest, most reliable ways to move people, goods, and information – from high-speed rail to high-speed internet.",
+  "Respond to the biofeedback.",
+  "* The large Austronesian language family, with such languages as Malay (Indonesian), and Polynesian languages such as Maori and Hawaiian",
+  "One thing I didn't like was the fact that the fried rice was a secret $2 charge that they didn't make you aware of.",
+  "From time to time, indeed, one regains his own proper form and goes back again to his place in the upper world; but the other beings whom you saw are the rivals or the enemies of Ragotte, whom she has imprisoned for a hundred years or so; though even they will go back at last.",
+  "Although, I have enjoyed the fact that, uh your shirt's been stickin' outta your zipper ever since you came back from the bathroom.",
+  "Difference surface on oil marketing",
+  "On May 7, 1915 German submarine commander Walter Schweiger gave the command to torpedo this British liner",
+  "I hate when I lose my white friends in the snow",
+  "It is a very dangerous thing",
+  "I ain't never fuck with no broke bitch",
+  "Bill -",
+  "A moment later, he dropped the phone, walked to the other room, and started crying so hard.",
+  "Oh so you're not meeting them today?",
+  "Every step toward freedom in the world makes our country safer, and so we will act boldly in freedom’s cause.",
+  "Initiate a trade with your trade partner.",
+  "At age 11, he joined the High School in Rajkot.",
+  "After 15 minutes of this, my husband had had enough.",
+  "But afterwards he used to say that the moment when the Earthquaker stirred was the most dreadful in his life.",
+  "I got the feeling we made you a little uncomfortable.",
+  "Track & Field owners open a snack bar",
+  "The Episcopal Church at 193 Salem Street in Boston has been holding services continually since December 29, 1723",
+  "Surely fire is warm enough already?..",
+  "consented to take off his own.",
+  "And I bought the shoes that just walked out on me",
+  "Bill",
+  "Why are there people that doubleclick?",
+  "Anyway we r movin off now only lor.",
+  "Legislation to achieve excellence in education, building on the partnership forged with the 50 governors at the education summit, enabling parents to choose their children's schools and helping to make America No.",
+  "Type the cheat in the message bar a second time and press Enter to disable it (unless it is a cheat that changes the amount of lumber/gold/oil you have).",
+  "In Watt's conception, a rise in fictional realism during the 18th century came to distinguish the novel from earlier prose narratives.",
+  "This is now my favorite restaurant in Portland, and I've been some great ones before now.",
 ]
 
 // let doc = nlp("he said I am a boy, so far")
-let i = 14
+let i = 0
 let txt = arr[i]
-txt = 'so lentils, or pasta for your sauce'
 let doc = nlp(txt)
 console.log(doc.text())
 doc.clauses().debug()

@@ -28,6 +28,8 @@ const methods = {
   hasEllipses: term => hasPost(term, '..') || hasPost(term, '…') || hasPre(term, '..') || hasPre(term, '…'),
   /** is there a semicolon after term word? */
   hasSemicolon: term => hasPost(term, ';'),
+  /** is there a colon after term word? */
+  hasColon: term => hasPost(term, ':'),
   /** is there a slash '/' in term word? */
   hasSlash: term => /\//.test(term.text),
   /** a hyphen connects two words like-term */

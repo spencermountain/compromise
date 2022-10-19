@@ -12,6 +12,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 #### 14.6.0 [Oct 2022]
 - **[change]** - move internal conjugation methods
 - **[update]** - github scripts
+- **[change]** - fixes to .clauses() parser
+- **[new]** - @hasColon method
 
 #### 14.5.2 [Oct 2022]
 - **[fix]** - runtime error #965

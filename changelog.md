@@ -16,6 +16,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - an astrix is not a word
 - **[new]** - @hasColon method
 - **[new]** - @hasDash supports two dashes
+- **[new]** - #Passive tag
 
 #### 14.5.2 [Oct 2022]
 - **[fix]** - runtime error #965

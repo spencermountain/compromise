@@ -712,7 +712,8 @@ let arr = [
   ["Right in", '#Adverb #Preposition'],
   ["Right angle.", '#Adjective #Noun'],
   [`The Island airport tunnel nears completion`, `the #Noun+ #PresentTense #Noun`],
-  // [``, ``],
+  [`come have a drink`, `#Imperative #Imperative a #Singular`],
+  [`come and have a drink`, `#Imperative and #Imperative a #Singular`],
   // [``, ``],
   // [``, ``],
 ]

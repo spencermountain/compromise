@@ -8,7 +8,7 @@ export default [
   { match: '(had|have|has) been (#PastTense|#Participle)', tag: 'Passive', reason: 'had-been' },
   // will be cleaned
   { match: 'will be being? (#PastTense|#Participle)', tag: 'Passive', reason: 'will-be-cleaned' },
-  // 
-  { match: '#Noun [(#PastTense|#Participle)] by (the|a) #Noun', group: 0, tag: 'Passive', reason: '' },
+  // suffered by the country
+  { match: '#Noun [(#PastTense|#Participle)] by (the|a) #Noun', group: 0, tag: 'Passive', reason: 'suffered-by' },
 
 ]

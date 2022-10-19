@@ -18,7 +18,9 @@ nlp.verbose('tagger')
 // bug 3
 // doc = nlp(' 18e').debug()
 
-
+// bug 4
+// let doc = nlp("when the rain pours, come have a drink")
+// console.log(doc.verbs().conjugate())
 
 // const text = `Remove me 1:
 // - A some text
@@ -92,6 +94,10 @@ let arr = [
   // "Reading ARP related article lor.",
 
   // "jack is guarded",
+  // "they might have been spared",
+  // "the King's courage was unshaken",
+  "auction games are brought up",
+  "a plate had been broken",
   " the economic loss suffered by the country",
   "i've been knocked down",
   "At this point we're frustrated but the hotel"
@@ -101,9 +107,8 @@ let arr = [
 
 let i = 0
 let txt = arr[i]
-// txt = "he said I am a boy, so far"
+txt = "C'mon Luisa"
 let doc = nlp(txt)
-// console.log(doc.text())
 doc.clauses().debug()
 console.log(doc.sentences().json())
 

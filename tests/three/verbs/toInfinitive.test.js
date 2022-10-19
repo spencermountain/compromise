@@ -221,7 +221,6 @@ test('toInfinitive-phrase:', function (t) {
     ["attuned", "attune"],
     ["tuned", "tune"],
     ["boned", "bone"],
-    ["stunned", "stun"],
     ["twinned", "twin"],
     ["underpinned", "underpin"],
     ["skinned", "skin"],
@@ -452,7 +451,8 @@ test('toInfinitive-coerced:', function (t) {
     ['controlled', 'control'],
     ['recorded', 'record'],
     ['trapped', 'trap'],
-    ['associated', 'associate']
+    ['associated', 'associate'],
+    ["stunned", "stun"],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0]).tag('PastTense')

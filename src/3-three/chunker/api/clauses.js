@@ -1,37 +1,58 @@
+const byComma = function (doc) {
+  let commas = doc.match('@hasComma')
+  // remove any non-clause uses
+  commas = commas.filter(m => {
+    // don't split the first word
+    if (m.growLeft('.').wordCount() === 1) {
+      return false
+    }
+    // don't split the last word
+    if (m.growRight('. .').wordCount() === 1) {
+      return false
+    }
+    let more = m.grow(".") // grow by 1 word in either direction
+    more = more.ifNo('@hasComma @hasComma') //fun, cool...
+    more = more.ifNo('@hasComma (and|or) .') //cool, and fun
+    more = more.ifNo('(#City && @hasComma) #Country') //'toronto, canada'
+    more = more.ifNo('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
+    more = more.ifNo('(#Date+ && @hasComma) #Value') //'july 6, 1992'
+    // more = more.ifNo('@hasComma (too|also)$') //at end of sentence
+    return more.found
+  })
+
+
+  return doc.splitAfter(commas)
+}
+
 const clauses = function (n) {
-  // an awkward way to disambiguate a comma use
-  let commas = this.if('@hasComma')
-    .ifNo('@hasComma @hasComma') //fun, cool...
-    .ifNo('@hasComma (and|or) .') //cool, and fun
-    .ifNo('(#City && @hasComma) #Country') //'toronto, canada'
-    .ifNo('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
-    .ifNo('(#Date+ && @hasComma) #Value') //'july 6, 1992'
-    .ifNo('@hasComma (too|also)$') //at end of sentence
-    .match('@hasComma')
-  let found = this.splitAfter(commas)
+  let found = byComma(this)
 
-  // let quotes = found.quotations()
-  // found = found.splitOn(quotes)
-
-  // let parentheses = found.parentheses()
-  // found = found.splitOn(parentheses)
+  found = found.splitAfter('(@hasEllipses|@hasSemicolon|@hasDash)')
 
   // it is cool and it is ..
-  let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction')
-  found = found.splitBefore(conjunctions)
+  // let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction')
+  // found = found.splitBefore(conjunctions)
 
-  // if it is this then that
-  let condition = found.if('if .{2,9} then .').match('then')
-  found = found.splitBefore(condition)
+  // // if it is this then that
+  // let condition = found.if('if .{2,9} then .').match('then')
+  // found = found.splitBefore(condition)
 
-  // misc clause partitions
-  found = found.splitBefore('as well as .')
-  found = found.splitBefore('such as .')
-  found = found.splitBefore('in addition to .')
+  // // misc clause partitions
+  // found = found.splitBefore('as well as .')
+  // found = found.splitBefore('such as .')
+  // found = found.splitBefore('in addition to .')
 
-  // semicolons, dashes
-  found = found.splitAfter('@hasSemicolon')
-  found = found.splitAfter('@hasDash')
+  // // semicolons, dashes
+  // found = found.splitAfter('@hasSemicolon')
+  // found = found.splitAfter('@hasDash')
+
+  // // 
+  // found = found.splitBefore('which (were|are|will)')
+
+  // // he said [...]
+  // found = found.splitAfter('#Noun (said|say|says)')
+
+
 
   // passive voice verb - '.. which was robbed is empty'
   // let passive = found.match('#Noun (which|that) (was|is) #Adverb? #PastTense #Adverb?')
@@ -44,11 +65,14 @@ const clauses = function (n) {
   //   found = found.splitAfter(passive)
   // }
   // does there appear to have relative/subordinate clause still?
-  let tooLong = found.filter(d => d.wordCount() > 5 && d.match('#Verb+').length >= 2)
-  if (tooLong.found) {
-    let m = tooLong.splitAfter('#Noun .* #Verb .* #Noun+')
-    found = found.splitOn(m.eq(0))
-  }
+  // let tooLong = found.filter(d => d.wordCount() > 5 && d.match('#Verb+').length >= 2)
+  // if (tooLong.found) {
+  //   // and after the ..
+  //   found = found.splitBefore('#Conjunction #Preposition')
+
+  //   // let m = tooLong.splitAfter('#Noun .* #Verb .* #Noun+')
+  //   // found = found.splitOn(m.eq(0))
+  // }
 
   if (typeof n === 'number') {
     found = found.get(n)

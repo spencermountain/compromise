@@ -6,8 +6,12 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
-<!-- #### 14.5.0 [Unreleased]
+<!-- #### 14.6.0 [Unreleased]
 -->
+
+#### 14.6.0 [Oct 2022]
+- **[change]** - move internal conjugation methods
+- **[update]** - github scripts
 
 #### 14.5.2 [Oct 2022]
 - **[fix]** - runtime error #965

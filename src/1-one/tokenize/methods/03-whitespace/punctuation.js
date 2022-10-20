@@ -9,6 +9,7 @@ const allowBefore = [
 const allowAfter = [
   '%',//88%
   '_',//underscore
+  '°',//degrees, italian ordinal
   // '\'',// \u0027
 ]
 

@@ -53,11 +53,14 @@ let matches = [
   // dude we should
   { match: '^[(dude|man|girl)] #Pronoun', group: 0, tag: 'Expression', reason: 'dude-i' },
 
-  // 'there' as noun
-  { match: '(from|to|in|near|around|right|over) [there]', group: 0, tag: 'Noun', reason: 'from-there' },
   // 'there' as adjective
   { match: '(always|nearly|barely|practically) [there]', group: 0, tag: 'Adjective', reason: 'always-there' },
   // existential 'there'
-  // { match: '[there] #Copula', group: 0, tag: 'There', reason: 'there-is' },
+  // there she is
+  { match: '[there] (#Adverb|#Pronoun)? #Copula', group: 0, tag: 'There', reason: 'there-is' },
+  // is there food
+  { match: '#Copula [there] .', group: 0, tag: 'There', reason: 'is-there' },
+  // should there
+  { match: '#Modal #Adverb? [there]', group: 0, tag: 'There', reason: 'should-there' },
 ]
 export default matches

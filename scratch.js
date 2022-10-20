@@ -3,8 +3,8 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
-// let txt = ''
-// let doc
+let txt = ''
+let doc
 // let m
 
 // bug 1
@@ -16,7 +16,7 @@ import nlp from './src/three.js'
 // console.log(doc.verbs().conjugate())
 
 // bug 3
-// doc = nlp(' 18e').debug()
+doc = nlp(' 10°').numbers().add(1).debug()
 
 // bug 4
 // let doc = nlp("when the rain pours, come have a drink")
@@ -85,6 +85,7 @@ let arr = [
 
   // "they might have been spared",
   // "the King's courage was unshaken",
+  "there it is",
   "auction games are brought up",
   "a plate had been broken",
   " the economic loss suffered by the country",
@@ -94,9 +95,9 @@ let arr = [
 ]
 
 
-let txt = arr[0]
+// let txt = arr[0]
 // txt = "when the rain pours, come and have a drink"
-let doc = nlp(txt).debug()
+// let doc = nlp(txt).debug()
 // doc.clauses().debug()
 // console.log(doc.sentences().json()[0].sentence)
 

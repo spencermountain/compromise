@@ -16,7 +16,7 @@ test('units-parse:', function (t) {
     ['3 km²', 3, 'km²'],
     ['3km²', 3, 'km²'],
     ['44°c', 44, '°c'],
-    ['44°', 44, '°'],
+    // ['44°', 44, '°'], //treat like ordinal, for italian
     ['44 °c', 44, '°c'],
     ['12µs', 12, 'µs'],
     ['12km/h', 12, 'km/h'],
@@ -58,6 +58,9 @@ test('units-convert:', function (t) {
   t.equal(nlp('44,000 ft').has(44000), true, here + '44,000 ft')
   t.equal(nlp('44,000ft').has('44,000'), true, here + '44,000')
   // t.equal(nlp('44,000ft').has(44000), true, here + '44000')
+
+  doc = nlp('10°').numbers().add(1)
+  t.equal(doc.text(), '11°', here + 'add degrees')
   t.end()
 })
 

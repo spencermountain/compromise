@@ -160,6 +160,7 @@ export default [
   'tennis',
   'thermodynamics',
   'thunder',
+  'there',
   'time',
   'toothpaste',
   'traffic',

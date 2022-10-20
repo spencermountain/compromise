@@ -8,7 +8,9 @@ const notUnit = new Set([
   'am',
   'pm',
   'max',
-  's' // 1990s
+  '°',
+  's', // 1990s
+  'e' // 18e - french/spanish ordinal
 ])
 
 const numberUnit = function (terms, i) {

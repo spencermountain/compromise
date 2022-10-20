@@ -85,6 +85,6 @@ let misc = {
 
   no: ['Negative', 'Expression'],
 
-  there: 'There'
+  // there: 'There'
 }
 export default misc

@@ -42,6 +42,7 @@ export default [
   'sans',
   'since',
   'so that',
+  'such as',
   'than',
   'through',
   'throughout',
@@ -61,7 +62,7 @@ export default [
   'with whom',
   'within',
   'without',
-  `'o`,
-  `a'`,
-  `o'`,
+  // `'o`,
+  // `a'`,
+  // `o'`,
 ]

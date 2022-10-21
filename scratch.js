@@ -2,9 +2,9 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
-// let txt = ''
-// let doc
+nlp.verbose('tagger')
+let txt = ''
+let doc
 // let m
 
 // bug 1
@@ -12,21 +12,17 @@ import nlp from './src/three.js'
 // console.log(doc.verbs().conjugate())
 
 // bug 2
-// doc = nlp('blew').debug()
+// doc = nlp("when the rain pours, come have a drink").debug()
 // console.log(doc.verbs().conjugate())
 
-// bug 4
-// let doc = nlp("when the rain pours, come have a drink")
-// console.log(doc.verbs().conjugate())
-
-const text = `Remove me 1:
-- A some text
-- B some text
-- C some text`
-let doc = nlp(text)
-doc.remove('Remove me #NumericValue')
-doc.match('text').prepend('prefix')
-console.log(doc.text())
+// bug 3
+// let doc = nlp("Dr. John Smith-McDonald...")
+// let opts = {
+//   keepPunct: false,
+//   abbreviations: false,
+//   case: false,
+// }
+// console.log(doc.text(opts))
 
 
 // let doc = nlp(`zero foo. one match foo. two foo.`)
@@ -84,23 +80,36 @@ let arr = [
   // "Tell Monica I say goodbye.",
   // "Reading ARP related article lor.",
 
-
+  // `want to see`,
+  // `Try to see`,
+  // `lift & extend`,
+  // `by crossing`,
+  // `Avoid cuddling`,
+  // `start exercising`,
+  // `Be more`,
+  // `don't become discouraged`,
+  // `such as teaching`,
+  // `held annually is called`,
+  `Avoid sending romantic messages`,
+  `subsequently remained`,
+  `said jocularly`,
+  `fails so miserably`,
   // "they might have been spared",
   // "the King's courage was unshaken",
-  "there it is",
-  "auction games are brought up",
-  "a plate had been broken",
-  " the economic loss suffered by the country",
-  "i've been knocked down",
-  "At this point we're frustrated but the hotel"
+  // "there it is",
+  // "auction games are brought up",
+  // "a plate had been broken",
+  // " the economic loss suffered by the country",
+  // "i've been knocked down",
+  // "At this point we're frustrated but the hotel"
 
 ]
 
 
-// let txt = arr[0]
+txt = arr[0]
 // txt = "when the rain pours, come and have a drink"
-// let doc = nlp(txt).debug()
-// doc.clauses().debug()
+doc = nlp(txt)
+doc.verbs().debug()
 // console.log(doc.sentences().json()[0].sentence)
 
 // [ { form: 'simple-present', tense: 'PresentTense', copula: true } ]

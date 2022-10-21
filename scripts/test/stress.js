@@ -10,7 +10,12 @@ for (let i = 0; i < texts.length; i++) {
   nlp(txt)
     .sentences()
     .forEach(s => {
-      let vb = s.verbs(0)
+      s.verbs().forEach(vb => {
+        if (vb.wordCount() >= 2 && !vb.has('(#Modal|#PhrasalVerb)')) {
+          console.log(vb.text())
+        }
+      })
+
     })
 }
 

@@ -719,7 +719,10 @@ let arr = [
   [`go near there`, `#Verb near #Noun`],
   [`he is always there`, `#Pronoun #Copula #Adverb #Adjective`],
   [`there it is`, `#There it is`],
-  ['I ate me sandwich', '#Pronoun #Verb #Possessive #Singular']
+  ['I ate me sandwich', '#Pronoun #Verb #Possessive #Singular'],
+  [`will get discouraged`, `#Verb #Verb #Adjective`],
+  [`do not get discouraged`, `#Verb #Negative #Verb #Adjective`],
+  [`do not be embarrassed`, `#Verb #Negative #Verb #Adjective`],
 ]
 test('match:', function (t) {
   let res = []

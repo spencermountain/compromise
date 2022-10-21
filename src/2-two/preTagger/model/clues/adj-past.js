@@ -21,9 +21,9 @@ const adjPast = {
     Date: past,// alleged thursday
   },
   beforeWords: {
-    be: past,//be hooked
+    be: past,//be hooked vs be embarrassed
     who: past,//who lost
-    get: past,//get charged
+    get: 'Adjective',//get charged
     had: past,
     has: past,
     have: past,

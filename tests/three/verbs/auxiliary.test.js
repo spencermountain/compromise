@@ -12,7 +12,7 @@ test('participle/auxiliary toPast', function (t) {
   t.equal(doc.text(), 'he had been stalking his prey', here + 'to-past2')
 
   doc = nlp('she bit her tongue instead of criticizing her prom date')
-  doc.verbs().toPastTense()
+  doc.sentences().toPastTense()
   t.equal(doc.text(), 'she bit her tongue instead of criticizing her prom date', here + 'to-past3')
 
   doc = nlp('he should have been eating')

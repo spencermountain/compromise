@@ -4,8 +4,19 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 let txt = ''
-let doc
+// let doc
 // let m
+
+let doc = nlp("I am a boy")
+console.log(doc.sentences().json()[0].sentence)
+/*
+{
+  subject: 'i',
+  verb: 'am',
+  predicate: 'a boy',
+  grammar: { tense: 'PresentTense' }
+}
+*/
 
 // bug 3
 // let doc = nlp("Dr. John Smith-McDonald...")

@@ -2,13 +2,24 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 let txt = ''
 let doc
 // let m
 
 // bug 1
-// doc = nlp('we swim')
+// doc = nlp('we fished')
+// let vb = doc.verbs()
+
+
+doc = nlp('gotten')
+let res = doc.verbs().conjugate()[0]
+// console.log(res)
+let m = doc.verbs().debug().toGerund().debug()
+doc.debug()
+
+// vb.fullSentence().compute(['lexicon', 'preTagger', 'postTagger', 'chunks'])
+// vb.debug()
 // console.log(doc.verbs().conjugate())
 
 // bug 2
@@ -80,20 +91,33 @@ let arr = [
   // "Tell Monica I say goodbye.",
   // "Reading ARP related article lor.",
 
+
+  'end to end',
+  `employing natural`,
+  `need to renew`,
+  `is home`,
+  `seem to be well adjusted`,
+  `did Arnold`,
+  `more power to innovate`,
+  `creepy`,
+  `Legend says`,
+  `not being true`,
+  `are phrased to elicit`,
+  `find myself singing`,
+  `feeling threatened`,
+  `privatized firms may face`,
   // `want to see`,
   // `Try to see`,
   // `lift & extend`,
   // `by crossing`,
   // `Avoid cuddling`,
   // `start exercising`,
+  // `Avoid sending romantic messages`,
   // `Be more`,
   // `don't become discouraged`,
   // `such as teaching`,
   // `held annually is called`,
-  `Avoid sending romantic messages`,
-  `subsequently remained`,
-  `said jocularly`,
-  `fails so miserably`,
+
   // "they might have been spared",
   // "the King's courage was unshaken",
   // "there it is",
@@ -108,8 +132,8 @@ let arr = [
 
 txt = arr[0]
 // txt = "when the rain pours, come and have a drink"
-doc = nlp(txt)
-doc.verbs().debug()
+// doc = nlp(txt)
+// doc.verbs().debug()
 // console.log(doc.sentences().json()[0].sentence)
 
 // [ { form: 'simple-present', tense: 'PresentTense', copula: true } ]

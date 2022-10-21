@@ -80,6 +80,7 @@ fns.replace = function (match, input, keep) {
   if (!m.found) {
     return this
   }
+  this.soften()
   return m.replaceWith(input, keep)
 }
 export default fns

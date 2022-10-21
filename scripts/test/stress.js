@@ -11,7 +11,7 @@ for (let i = 0; i < texts.length; i++) {
     .sentences()
     .forEach(s => {
       s.verbs().forEach(vb => {
-        if (vb.wordCount() >= 2 && !vb.has('(#Modal|#PhrasalVerb)')) {
+        if (vb.terms().not('(#Adverb|#Auxiliary|#Negative|#PhrasalVerb)').length > 1) {
           console.log(vb.text())
         }
       })

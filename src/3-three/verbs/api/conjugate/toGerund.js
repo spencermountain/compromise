@@ -17,8 +17,6 @@ const toGerund = function (vb, parsed) {
   // 'are walking', 'is walking'
   if (gerund) {
     gerund = `${isAreAm(vb, parsed)} ${gerund}`
-    // console.log(root, gerund)
-    // vb.match(root).debug()
     vb.replace(root, gerund, keep)
   }
 

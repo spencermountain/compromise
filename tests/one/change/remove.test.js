@@ -326,3 +326,19 @@ test('double-remove', function (t) {
 
   t.end()
 })
+
+test('full-to-full', function (t) {
+  const text = `Remove me 1:
+  - A some text
+  - B some text
+  - C some text`
+  let doc = nlp(text)
+  doc.remove('Remove me #NumericValue')
+  doc.match('text').prepend('prefix')
+
+  const want = `- A some prefix text
+  - B some prefix text
+  - C some prefix text`
+  t.equal(doc.text(), want, here + 'full-to-full')
+  t.end()
+})

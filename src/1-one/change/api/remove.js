@@ -55,6 +55,7 @@ const methods = {
       self = this
       not = this.match(reg)
     }
+    let isFull = !self.ptrs
     // is it part of a contraction?
     if (not.has('@hasContraction') && not.contractions) {
       let more = not.grow('@hasContraction')
@@ -72,6 +73,10 @@ const methods = {
     self.ptrs = ptrs
     self.document = document
     self.compute('index')
+    // if we started zoomed-out, try to end zoomed-out
+    if (isFull) {
+      self.ptrs = undefined
+    }
     if (!reg) {
       this.ptrs = []
       return self.none()

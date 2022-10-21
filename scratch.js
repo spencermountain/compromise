@@ -3,8 +3,8 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
-let txt = ''
-let doc
+// let txt = ''
+// let doc
 // let m
 
 // bug 1
@@ -15,24 +15,26 @@ let doc
 // doc = nlp('blew').debug()
 // console.log(doc.verbs().conjugate())
 
-// bug 3
-doc = nlp(' 10°').numbers().add(1).debug()
-
 // bug 4
 // let doc = nlp("when the rain pours, come have a drink")
 // console.log(doc.verbs().conjugate())
 
-// const text = `Remove me 1:
-// - A some text
-// - B some text
-// - C some text`
-// const doc = nlp(text)
-// doc.remove('Remove me #NumericValue')
-// console.log(doc)
-// doc.match('text').prepend('prefix')
-// console.log(doc)
-// console.log(doc.text())
+const text = `Remove me 1:
+- A some text
+- B some text
+- C some text`
+let doc = nlp(text)
+doc.remove('Remove me #NumericValue')
+doc.match('text').prepend('prefix')
+console.log(doc.text())
 
+
+// let doc = nlp(`zero foo. one match foo. two foo.`)
+// doc.remove('match') // first removal
+// console.log(doc)
+// doc.eq(0).remove() //second removal
+// console.log(doc)
+// doc.debug()
 
 // const doc = nlp("foobar. he was demanding his rights after. walking his plank after")
 // let net = nlp.buildNet([{ match: 'his .', ifNo: ['demanding', 'rights'] }])

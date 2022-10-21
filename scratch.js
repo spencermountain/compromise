@@ -7,25 +7,6 @@ let txt = ''
 let doc
 // let m
 
-// bug 1
-// doc = nlp('we fished')
-// let vb = doc.verbs()
-
-
-doc = nlp('gotten')
-let res = doc.verbs().conjugate()[0]
-// console.log(res)
-let m = doc.verbs().debug().toGerund().debug()
-doc.debug()
-
-// vb.fullSentence().compute(['lexicon', 'preTagger', 'postTagger', 'chunks'])
-// vb.debug()
-// console.log(doc.verbs().conjugate())
-
-// bug 2
-// doc = nlp("when the rain pours, come have a drink").debug()
-// console.log(doc.verbs().conjugate())
-
 // bug 3
 // let doc = nlp("Dr. John Smith-McDonald...")
 // let opts = {
@@ -36,12 +17,6 @@ doc.debug()
 // console.log(doc.text(opts))
 
 
-// let doc = nlp(`zero foo. one match foo. two foo.`)
-// doc.remove('match') // first removal
-// console.log(doc)
-// doc.eq(0).remove() //second removal
-// console.log(doc)
-// doc.debug()
 
 // const doc = nlp("foobar. he was demanding his rights after. walking his plank after")
 // let net = nlp.buildNet([{ match: 'his .', ifNo: ['demanding', 'rights'] }])

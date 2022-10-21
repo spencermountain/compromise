@@ -18,7 +18,10 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - @hasDash supports two dashes
 - **[new]** - `#Passive` verb tag
 - **[new]** - existential `#There` tag
+- **[new]** - add tense info to sentence json
 - **[fix]** - verb tokenization issues
+- **[fix]** - .replace() issues
+- **[update]** - dependencies
 
 #### 14.5.2 [Oct 2022]
 - **[fix]** - runtime error #965

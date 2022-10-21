@@ -28,11 +28,6 @@ const findVerbs = function (doc) {
   // what i can sell will be
   m = m.splitBefore('(#PresentTense|#PastTense) [will be]$', 0)
 
-  // professes love
-  let toVerbs = m.match('(#PresentTense|#PastTense) #Infinitive')
-  if (toVerbs.found && !toVerbs.has('^go')) {
-    m = m.splitBefore('(#PresentTense|#PastTense) [#Infinitive]', 0)
-  }
   // 'allow yourself'
   m = m.not('#Reflexive$')
 

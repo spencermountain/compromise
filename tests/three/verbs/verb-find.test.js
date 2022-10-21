@@ -61,8 +61,12 @@ test('verb-splitter:', function (t) {
       verbs: ['will go eat'],
     },
     {
-      str: `we will walk eat`,
+      str: `we will walk and eat`,
       verbs: ['will walk', 'eat'],
+    },
+    {
+      str: `when the rain pours, come have a drink`,
+      verbs: ['pours,', 'come have'],
     },
     // {
     //   str: `poodles like to be pampered`,

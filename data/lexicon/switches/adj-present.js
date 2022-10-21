@@ -26,6 +26,7 @@ export default [
   'mature',
   'mean',
   'moderate',
+  // 'near',
   'narrow',
   'obscure',
   'open',

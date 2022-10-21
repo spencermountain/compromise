@@ -498,8 +498,10 @@ let arr = [
   ["toner", "#Singular"],
   ["werner", "#Singular"],
   ["winner", "#Singular"],
+  ["aunt brenda", "#Person+"],
+  ["uncle sam", "#Person+"],
   ["it is eager to forget", "it is #Adjective to #Verb"],
-  ["it is direct to ciaro", "it is #Verb to #Noun"],
+  ["it is direct to ciaro", "it is #Adjective to #Noun"],
 
 
   ['corporate', '!#Verb'],
@@ -694,6 +696,33 @@ let arr = [
   // not posessive
   // [`I saw her go`, `I #PastTense !#Possessive #PresentTense`],
   // [`I watched her throw`, `I #PastTense !#Possessive #PresentTense`],
+
+  ['well?', '#Expression'],
+  ['alright!', '#Expression'],
+  ['it was alright', 'it was #Adjective'],
+  ['shoot', '#Expression'],
+  ['shoo!', '#Expression'],
+  ['hell', '#Expression'],
+  ['live in hell', '#Verb in #Noun'],
+  [`we gave tax reductions`, `#Pronoun #PastTense #Noun #Plural`],
+  [`brand new`, `#Adverb #Adjective`],
+  [`brand spanking new`, `#Adverb #Adverb #Adjective`],
+
+  ["Right after.", '#Adverb .'],
+  ["Right in", '#Adverb #Preposition'],
+  ["Right angle.", '#Adjective #Noun'],
+  [`The Island airport tunnel nears completion`, `the #Noun+ #PresentTense #Noun`],
+  [`come have a drink`, `#Imperative #Imperative a #Singular`],
+  [`come and have a drink`, `#Imperative and #Imperative a #Singular`],
+  [`there are issues`, `#There #Copula #Plural`],
+  [`nobody in there`, `#Noun in #Noun`],
+  [`go near there`, `#Verb near #Noun`],
+  [`he is always there`, `#Pronoun #Copula #Adverb #Adjective`],
+  [`there it is`, `#There it is`],
+  ['I ate me sandwich', '#Pronoun #Verb #Possessive #Singular'],
+  [`will get discouraged`, `#Verb #Verb #Adjective`],
+  [`do not get discouraged`, `#Verb #Negative #Verb #Adjective`],
+  [`do not be embarrassed`, `#Verb #Negative #Verb #Adjective`],
 ]
 test('match:', function (t) {
   let res = []

@@ -15,7 +15,7 @@ export default {
     if (fmt && typeof fmt === 'string' && fmts.hasOwnProperty(fmt)) {
       opts = Object.assign({}, fmts[fmt])
     } else if (fmt && isObject(fmt)) {
-      opts = Object.assign({}, fmt, opts)//todo: fixme
+      opts = Object.assign({}, opts, fmt)//todo: fixme
     }
     if (this.pointer) {
       opts.keepSpace = false

@@ -70,9 +70,9 @@ const getTense = function (m) {
 }
 
 const toInf = function (vb, parsed) {
-  const { verbToInfinitive } = vb.methods.two.transform
+  const { toInfinitive } = vb.methods.two.transform.verb
   let str = parsed.root.text({ keepPunct: false })
-  str = verbToInfinitive(str, vb.model, getTense(vb))
+  str = toInfinitive(str, vb.model, getTense(vb))
   if (str) {
     vb.replace(parsed.root, str)
   }

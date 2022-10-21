@@ -1,18 +1,18 @@
 const keep = { tags: true }
 
-const toSingular = function (m, parsed) {
+const nounToSingular = function (m, parsed) {
   // already singular?
   if (parsed.isPlural === false) {
     return m
   }
   const { methods, model } = m.world
-  const { nounToSingular } = methods.two.transform
+  const { toSingular } = methods.two.transform.noun
   // inflect the root noun
   let str = parsed.root.text('normal')
-  let single = nounToSingular(str, model)
+  let single = toSingular(str, model)
   m.replace(parsed.root, single, keep).tag('Singular', 'toPlural')
   // should we change the determiner/article?
   // m.debug()
   return m
 }
-export default toSingular
+export default nounToSingular

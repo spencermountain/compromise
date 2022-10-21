@@ -6,7 +6,7 @@ const startQuote =
 const endQuote = /([\u0022\uFF02\u0027\u201D\u2019\u00BB\u203A\u2032\u2033\u2034\u301E\u00B4])/
 
 const hasHyphen = /^[-–—]$/
-const hasDash = / [-–—] /
+const hasDash = / [-–—]{1,3} /
 
 /** search the term's 'post' punctuation  */
 const hasPost = (term, punct) => term.post.indexOf(punct) !== -1
@@ -28,6 +28,8 @@ const methods = {
   hasEllipses: term => hasPost(term, '..') || hasPost(term, '…') || hasPre(term, '..') || hasPre(term, '…'),
   /** is there a semicolon after term word? */
   hasSemicolon: term => hasPost(term, ';'),
+  /** is there a colon after term word? */
+  hasColon: term => hasPost(term, ':'),
   /** is there a slash '/' in term word? */
   hasSlash: term => /\//.test(term.text),
   /** a hyphen connects two words like-term */

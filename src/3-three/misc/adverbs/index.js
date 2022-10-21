@@ -9,12 +9,12 @@ const api = function (View) {
       this.viewType = 'Adverbs'
     }
     json(opts = {}) {
-      const toAdj = this.methods.two.transform.advToAdjective
+      const fromAdverb = this.methods.two.transform.adjective.fromAdverb
       opts.normal = true
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
         json.adverb = {
-          adjective: toAdj(json.normal)
+          adjective: fromAdverb(json.normal)
         }
         return json
       }, [])

@@ -2,12 +2,12 @@ import { doDoes, getTense } from '../lib.js'
 const keep = { tags: true }
 
 // all verb forms are the same
-const toInfinitive = function (vb, parsed) {
-  const { verbToInfinitive } = vb.methods.two.transform
+const toInf = function (vb, parsed) {
+  const { toInfinitive } = vb.methods.two.transform.verb
   const { root, auxiliary } = parsed
   let aux = auxiliary.terms().harden()
   let str = root.text('normal')
-  str = verbToInfinitive(str, vb.model, getTense(root))
+  str = toInfinitive(str, vb.model, getTense(root))
   if (str) {
     vb.replace(root, str, keep).tag('Verb').firstTerm().tag('Infinitive')
   }
@@ -27,4 +27,4 @@ const toInfinitive = function (vb, parsed) {
   vb.fullSentence().compute(['lexicon', 'preTagger', 'postTagger', 'chunks'])
   return vb
 }
-export default toInfinitive
+export default toInf

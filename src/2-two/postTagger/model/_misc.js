@@ -28,6 +28,16 @@ let matches = [
 
   // sorry
   { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
+  // ok,
+  { match: '^(ok|alright|well|shoot|hell|anyways)', tag: 'Expression', reason: 'ok-' },
+  // c'mon marge..
+  { match: '^[come on] #Noun', group: 0, tag: 'Expression', reason: 'come-on' },
+  // say,
+  { match: '^(say && @hasComma)', tag: 'Expression', reason: 'say-' },
+  { match: '^(like && @hasComma)', tag: 'Expression', reason: 'like-' },
+
+  // right after
+  { match: '[right] (before|after|in|into|to|toward)', group: 0, tag: '#Adverb', reason: 'right-into' },
 
   // double-prepositions
   // rush out of
@@ -42,7 +52,15 @@ let matches = [
   { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
   // dude we should
   { match: '^[(dude|man|girl)] #Pronoun', group: 0, tag: 'Expression', reason: 'dude-i' },
-  // are welcome
-  // { match: '#Copula [#Expression]', group: 0, tag: 'Noun', reason: 'are-welcome' },
+
+  // 'there' as adjective
+  { match: '(always|nearly|barely|practically) [there]', group: 0, tag: 'Adjective', reason: 'always-there' },
+  // existential 'there'
+  // there she is
+  { match: '[there] (#Adverb|#Pronoun)? #Copula', group: 0, tag: 'There', reason: 'there-is' },
+  // is there food
+  { match: '#Copula [there] .', group: 0, tag: 'There', reason: 'is-there' },
+  // should there
+  { match: '#Modal #Adverb? [there]', group: 0, tag: 'There', reason: 'should-there' },
 ]
 export default matches

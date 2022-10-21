@@ -3,7 +3,7 @@ export default {
   // add plural forms of singular nouns
   Singular: (word, lex, methods, model) => {
     let already = model.one.lexicon
-    let plural = methods.two.transform.nounToPlural(word, model)
+    let plural = methods.two.transform.noun.toPlural(word, model)
     if (!already[plural]) {
       lex[plural] = lex[plural] || 'Plural'
     }
@@ -12,13 +12,14 @@ export default {
   // superlative/ comparative forms for adjectives
   Comparable: (word, lex, methods, model) => {
     let already = model.one.lexicon
+    let { toSuperlative, toComparative } = methods.two.transform.adjective
     // fast -> fastest
-    let sup = methods.two.transform.adjToSuperlative(word, model)
+    let sup = toSuperlative(word, model)
     if (!already[sup]) {
       lex[sup] = lex[sup] || 'Superlative'
     }
     // fast -> faster
-    let comp = methods.two.transform.adjToComparative(word, model)
+    let comp = toComparative(word, model)
     if (!already[comp]) {
       lex[comp] = lex[comp] || 'Comparative'
     }
@@ -28,14 +29,14 @@ export default {
 
   // 'german' -> 'germans'
   Demonym: (word, lex, methods, model) => {
-    let plural = methods.two.transform.nounToPlural(word, model)
+    let plural = methods.two.transform.noun.toPlural(word, model)
     lex[plural] = lex[plural] || ['Demonym', 'Plural']
   },
 
   // conjugate all forms of these verbs
   Infinitive: (word, lex, methods, model) => {
     let already = model.one.lexicon
-    let all = methods.two.transform.verbConjugate(word, model)
+    let all = methods.two.transform.verb.conjugate(word, model)
     Object.entries(all).forEach(a => {
       if (!already[a[1]] && !lex[a[1]]) {
         lex[a[1]] = a[0]
@@ -54,7 +55,7 @@ export default {
       lex[inf] = lex[inf] || 'Infinitive'
     }
     // conjugate it
-    let all = methods.two.transform.verbConjugate(inf, model)
+    let all = methods.two.transform.verb.conjugate(inf, model)
     Object.entries(all).forEach(a => {
       // not 'walker up', or 'had taken up'
       if (a[0] === 'Actor' || a[1] === '') {

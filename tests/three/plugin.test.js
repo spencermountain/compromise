@@ -16,7 +16,7 @@ test('change verb conjugation', function (t) {
   let res = doc.verbs().conjugate()[0]
   t.equal(res.PastTense, 'gotten', here + 'past')
   t.equal(res.PresentTense, 'getts', here + 'present')
-  t.equal(doc.verbs().toGerund().text(), 'is gettin', here + 'toGerund')
+  t.equal(doc.verbs().toGerund().fullSentence().text(), 'is gettin', here + 'toGerund')
   // backwards
   doc = nlp('getts').tag('PresentTense')
   res = doc.verbs().conjugate()[0]

@@ -7,7 +7,7 @@ const softMapping = {
   CC: 'Conjunction',
   CD: 'Cardinal',
   DT: 'Determiner',
-  EX: 'Noun', //'there'
+  EX: 'There', //existential 'there'
   FW: 'Expression',
   IN: 'Preposition',
   JJ: 'Adjective',

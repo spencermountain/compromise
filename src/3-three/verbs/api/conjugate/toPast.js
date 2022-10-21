@@ -12,15 +12,15 @@ const fns = {
 
   // walk->walked
   simple: (vb, parsed) => {
-    const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
+    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
     const root = parsed.root
     // 'i may'
     if (root.has('#Modal')) {
       return vb
     }
     let str = root.text({ keepPunct: false })
-    str = verbToInfinitive(str, vb.model, getTense(root))
-    let all = verbConjugate(str, vb.model)
+    str = toInfinitive(str, vb.model, getTense(root))
+    let all = conjugate(str, vb.model)
     // 'driven' || 'drove'
     str = all.PastTense
     // all.Participle || all.PastTense
@@ -55,11 +55,11 @@ const fns = {
   // some verbs have this weird past-tense form
   // drive -> driven, (!drove)
   hasParticiple: (vb, parsed) => {
-    const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
+    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
     const root = parsed.root
     let str = root.text('normal')
-    str = verbToInfinitive(str, vb.model, getTense(root))
-    return verbConjugate(str, vb.model).Participle
+    str = toInfinitive(str, vb.model, getTense(root))
+    return conjugate(str, vb.model).Participle
   },
 
 

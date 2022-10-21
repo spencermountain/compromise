@@ -45,6 +45,7 @@ const conjugate = function (inf, model) {
   return found
 }
 
+
 export default conjugate
 
 // console.log(toPresent.rules.y)

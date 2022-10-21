@@ -2,14 +2,14 @@ import { noop, getTense } from '../lib.js'
 const keep = { tags: true }
 
 const simple = (vb, parsed) => {
-  const { verbToInfinitive } = vb.methods.two.transform
+  const { toInfinitive } = vb.methods.two.transform.verb
   const { root, auxiliary } = parsed
   // 'i may'
   if (root.has('#Modal')) {
     return vb
   }
   let str = root.text('normal')
-  str = verbToInfinitive(str, vb.model, getTense(root))
+  str = toInfinitive(str, vb.model, getTense(root))
   if (str) {
     vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('Verb')
@@ -21,12 +21,12 @@ const simple = (vb, parsed) => {
 
 // 'will be walking'
 const progressive = (vb, parsed) => {
-  const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
+  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
   const { root, auxiliary } = parsed
   let str = root.text('normal')
-  str = verbToInfinitive(str, vb.model, getTense(root))
+  str = toInfinitive(str, vb.model, getTense(root))
   if (str) {
-    str = verbConjugate(str, vb.model).Gerund
+    str = conjugate(str, vb.model).Gerund
     vb.replace(root, str, keep)
     vb.not('#Particle').tag('PresentTense')
   }

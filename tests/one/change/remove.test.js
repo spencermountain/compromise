@@ -261,6 +261,25 @@ second
   t.end()
 })
 
+test('remove-with-contractions', function (t) {
+  let doc = nlp(`before Remove 500mg of paracetamol`)
+  doc.remove('Remove')
+  t.equal(doc.text(), 'before 500mg of paracetamol', here + 'remove before contraction')
+
+  doc = nlp(`before 500mg Remove of paracetamol`)
+  doc.remove('Remove')
+  t.equal(doc.text(), 'before 500mg of paracetamol', here + 'remove after contraction')
+
+  doc = nlp(`before 500mg Remove of paracetamol`)
+  doc.remove('500mg remove')
+  t.equal(doc.text(), 'before of paracetamol', here + 'remove with contraction')
+
+  doc = nlp(`before i've had paracetamol`)
+  doc.remove(`i've`)
+  t.equal(doc.text(), 'before had paracetamol', here + 'remove only contraction')
+  t.end()
+})
+
 // test('remove-self-keep-splits', function (t) {
 //   let m = nlp('one two three. four.')
 //   m = m.terms()
@@ -305,5 +324,21 @@ test('double-remove', function (t) {
   doc.eq(0).remove() //second removal
   t.equal(doc.text(), 'one foo. two foo.', here + 'double remove #2')
 
+  t.end()
+})
+
+test('full-to-full', function (t) {
+  const text = `Remove me 1:
+- A some text
+- B some text
+- C some text`
+  let doc = nlp(text)
+  doc.remove('Remove me 1')
+  doc.match('text').prepend('prefix')
+
+  const want = `- A some prefix text
+- B some prefix text
+- C some prefix text`
+  t.equal(doc.text(), want, here + 'full-to-full')
   t.end()
 })

@@ -16,6 +16,9 @@ let arr = [
   ['mexico city hall', '/mex/? .+'],
   ['mexico', '/mex/'],
   ['mexico', '.{0,3}'],
+  ['Please -Match me', 'please match me'],
+  ['the -5 runner', 'the -5 runner'],
+  ['the -5th runner', 'the -5th runner'],
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {

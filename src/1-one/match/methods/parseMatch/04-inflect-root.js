@@ -1,33 +1,33 @@
+
+// add all conjugations of this verb
 const addVerbs = function (token, world) {
-  let { verbConjugate } = world.methods.two.transform
-  if (!verbConjugate) {
+  let { all } = world.methods.two.transform.verb || {}
+  let str = token.root
+  // if (toInfinitive) {
+  //   str = toInfinitive(str, world.model)
+  // }
+  if (!all) {
     return []
   }
-  let res = verbConjugate(token.root, world.model)
-  delete res.FutureTense
-  return Object.values(res).filter(str => str)
+  return all(str, world.model)
 }
 
+// add all inflections of this noun
 const addNoun = function (token, world) {
-  let { nounToPlural } = world.methods.two.transform
-  let res = [token.root]
-  if (!nounToPlural) {
-    return res
+  let { all } = world.methods.two.transform.noun || {}
+  if (!all) {
+    return [token.root]
   }
-  res.push(nounToPlural(token.root, world.model))
-  return res
+  return all(token.root, world.model)
 }
 
+// add all inflections of this adjective
 const addAdjective = function (token, world) {
-  let { adjToSuperlative, adjToComparative, adjToAdverb } = world.methods.two.transform
-  let res = [token.root]
-  if (!adjToSuperlative || !adjToComparative || !adjToAdverb) {
-    return res
+  let { all } = world.methods.two.transform.adjective || {}
+  if (!all) {
+    return [token.root]
   }
-  res.push(adjToSuperlative(token.root, world.model))
-  res.push(adjToComparative(token.root, world.model))
-  res.push(adjToAdverb(token.root, world.model))
-  return res
+  return all(token.root, world.model)
 }
 
 // turn '{walk}' into 'walking', 'walked', etc
@@ -37,16 +37,21 @@ const inflectRoot = function (regs, world) {
     // a reg to convert '{foo}'
     if (token.root) {
       // check if compromise/two is loaded
-      if (world.methods.two && world.methods.two.transform && world.methods.two.transform.verbConjugate) {
+      if (world.methods.two && world.methods.two.transform) {
         let choices = []
-        if (!token.pos || token.pos === 'Verb') {
+        // have explicitly set from POS - '{sweet/adjective}'
+        if (token.pos) {
+          if (token.pos === 'Verb') {
+            choices = choices.concat(addVerbs(token, world))
+          } else if (token.pos === 'Noun') {
+            choices = choices.concat(addNoun(token, world))
+          } else if (token.pos === 'Adjective') {
+            choices = choices.concat(addAdjective(token, world))
+          }
+        } else {
+          // do verb/noun/adj by default
           choices = choices.concat(addVerbs(token, world))
-        }
-        if (!token.pos || token.pos === 'Noun') {
           choices = choices.concat(addNoun(token, world))
-        }
-        // don't run these by default
-        if (!token.pos || token.pos === 'Adjective') {
           choices = choices.concat(addAdjective(token, world))
         }
         choices = choices.filter(str => str)

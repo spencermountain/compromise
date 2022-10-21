@@ -66,5 +66,9 @@ export default {
   },
   Condition: {
     not: ['Verb', 'Adjective', 'Noun', 'Value'],
+  },
+  // existential 'there'
+  There: {
+    not: ['Verb', 'Adjective', 'Noun', 'Value', 'Conjunction', 'Preposition'],
   }
 }

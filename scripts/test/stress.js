@@ -10,7 +10,12 @@ for (let i = 0; i < texts.length; i++) {
   nlp(txt)
     .sentences()
     .forEach(s => {
-      let vb = s.verbs(0)
+      s.verbs().forEach(vb => {
+        if (vb.terms().not('(#Adverb|#Auxiliary|#Negative|#PhrasalVerb)').length > 1) {
+          console.log(vb.text())
+        }
+      })
+
     })
 }
 

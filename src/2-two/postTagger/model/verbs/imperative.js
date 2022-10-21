@@ -37,6 +37,10 @@ export default [
   { match: '^#Modal you [#Infinitive]', group: 0, tag: 'Imperative', reason: 'would-you-' },
   // never say
   { match: '^never [#Infinitive]', group: 0, tag: 'Imperative', reason: 'never-stop' },
+  // come have a drink
+  { match: '^come #Infinitive', tag: 'Imperative', reason: 'come-have' },
+  // come and have a drink
+  { match: '^come and? #Infinitive', tag: 'Imperative . Imperative', reason: 'come-and-have' },
   // stay away
   { match: '^stay (out|away|back)', tag: 'Imperative', reason: 'stay-away' },
   // stay cool
@@ -47,4 +51,10 @@ export default [
   { match: '^do not [#Infinitive]', group: 0, tag: 'Imperative', reason: 'do-not-be' },
   // allow yourself
   { match: '[#Infinitive] (yourself|yourselves)', group: 0, tag: 'Imperative', reason: 'allow-yourself' },
+  // continue playing
+  { match: '^[#Infinitive] #Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
+  // go to it
+  { match: '^[#Infinitive] (to|for|into|toward)', group: 0, tag: 'Imperative', reason: 'go-to' },
+  // relax and unwind
+  { match: '^[#Infinitive] (and|or) #Infinitive', group: 0, tag: 'Imperative', reason: 'inf-and-inf' },
 ]

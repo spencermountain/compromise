@@ -1,5 +1,10 @@
 const findVerbs = function (doc) {
   let m = doc.match('<Verb>')
+  // want to see
+  m = m.not('(#Conjunction && !to)')
+  // by walking
+  m = m.not('#Preposition')
+
 
   m = m.splitAfter('@hasComma')
 
@@ -23,17 +28,18 @@ const findVerbs = function (doc) {
   // what i can sell will be
   m = m.splitBefore('(#PresentTense|#PastTense) [will be]$', 0)
 
-  // professes love
-  let toVerbs = m.match('(#PresentTense|#PastTense) #Infinitive')
-  if (toVerbs.found && !toVerbs.has('^go')) {
-    m = m.splitBefore('(#PresentTense|#PastTense) [#Infinitive]', 0)
-  }
   // 'allow yourself'
   m = m.not('#Reflexive$')
+
   //ensure there's actually a verb
   m = m.if('#Verb')
   // the reason he will is ...
   // ensure it's not two verbs
+
+  // held annually is called
+  if (m.has('(#Verb && !#Auxiliary) #Adverb+? #Copula')) {
+    m = m.splitBefore('#Copula')
+  }
   return m
 }
 export default findVerbs

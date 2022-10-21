@@ -72,7 +72,6 @@ export default [
   'home',
   'someone',
   'headphone',
-  'there',
   'press release',
   'premise',
   'highrise',
@@ -403,6 +402,7 @@ export default [
   'man',
   'tributary',
   'flower',
+  'sandwich',
 ]
 
 

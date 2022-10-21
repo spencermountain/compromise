@@ -29,5 +29,5 @@ const clue = {
     in: null
   }),
 }
-// console.log(clue.afterWords.of)
+
 export default clue

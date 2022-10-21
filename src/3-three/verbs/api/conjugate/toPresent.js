@@ -3,13 +3,13 @@ const keep = { tags: true }
 
 // walk->walked
 const simple = (vb, parsed) => {
-  const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
+  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
   let str = root.text('normal')
-  str = verbToInfinitive(str, vb.model, getTense(root))
+  str = toInfinitive(str, vb.model, getTense(root))
   // 'i walk' vs 'he walks'
   if (isPlural(vb, parsed) === false) {
-    str = verbConjugate(str, vb.model).PresentTense
+    str = conjugate(str, vb.model).PresentTense
   }
   // handle copula
   if (root.has('#Copula')) {
@@ -24,13 +24,13 @@ const simple = (vb, parsed) => {
 }
 
 const toGerund = (vb, parsed) => {
-  const { verbConjugate, verbToInfinitive } = vb.methods.two.transform
+  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
   let str = root.text('normal')
-  str = verbToInfinitive(str, vb.model, getTense(root))
+  str = toInfinitive(str, vb.model, getTense(root))
   // 'i walk' vs 'he walks'
   if (isPlural(vb, parsed) === false) {
-    str = verbConjugate(str, vb.model).Gerund
+    str = conjugate(str, vb.model).Gerund
   }
   if (str) {
     vb = vb.replace(root, str, keep)
@@ -39,11 +39,11 @@ const toGerund = (vb, parsed) => {
   return vb
 }
 
-const toInfinitive = (vb, parsed) => {
-  const { verbToInfinitive } = vb.methods.two.transform
+const vbToInf = (vb, parsed) => {
+  const { toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
   let str = parsed.root.text('normal')
-  str = verbToInfinitive(str, vb.model, getTense(root))
+  str = toInfinitive(str, vb.model, getTense(root))
   if (str) {
     vb = vb.replace(parsed.root, str, keep)
   }
@@ -57,7 +57,7 @@ const forms = {
   'infinitive': simple,
   // he walks -> he walked
   'simple-present': (vb, parsed) => {
-    const { verbConjugate } = vb.methods.two.transform
+    const { conjugate } = vb.methods.two.transform.verb
     let { root } = parsed
     // is it *only* a infinitive? - 'we buy' etc
     if (root.has('#Infinitive')) {
@@ -68,7 +68,7 @@ const forms = {
         return vb
       }
       let str = root.text('normal')
-      let pres = verbConjugate(str, vb.model).PresentTense
+      let pres = conjugate(str, vb.model).PresentTense
       if (str !== pres) {
         vb.replace(root, pres, keep)
       }
@@ -199,7 +199,7 @@ const forms = {
   'modal-infinitive': noop,
   // must have walked
   'modal-past': (vb, parsed) => {
-    toInfinitive(vb, parsed)
+    vbToInf(vb, parsed)
     return vb.remove('have')
   },
   // started looking

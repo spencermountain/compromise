@@ -65,6 +65,16 @@ test('adverbs method', function (t) {
   t.end()
 })
 
+test('conjugate stable', function (t) {
+  let doc = nlp('we fished')
+  let res = doc.verbs().conjugate()[0]
+  t.equal(res.Infinitive, 'fish', here + 'Infinitive conj')
+  t.equal(res.PastTense, 'fished', here + 'PastTense conj')
+  t.equal(res.PresentTense, 'fish', here + 'PresentTense conj')
+  t.equal(res.FutureTense, 'will fish', here + 'FutureTense conj')
+  t.end()
+})
+
 // test('was shocked looking at', function (t) {
 //   let doc = nlp('i was shocked looking at the race')
 //   let verbs = doc.verbs()

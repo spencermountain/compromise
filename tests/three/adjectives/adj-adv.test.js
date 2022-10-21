@@ -121,10 +121,10 @@ test('toAdjective:', function (t) {
 })
 
 test('toAdverb:', function (t) {
-  let adjToAdverb = nlp().methods.two.transform.adjToAdverb
+  let toAdverb = nlp().methods.two.transform.adjective.toAdverb
   arr.forEach(a => {
     if (a[1]) {
-      t.equal(adjToAdverb(a[1]), a[0], here + ` [ToAdverb] ${a[1]}`)
+      t.equal(toAdverb(a[1]), a[0], here + ` [ToAdverb] ${a[1]}`)
     }
     // let doc = nlp(a[1]).compute('root')
     // let json = doc.adjectives().json()[0] || { terms: [{}] }

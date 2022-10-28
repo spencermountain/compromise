@@ -2,13 +2,21 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
 let txt = ''
 // let doc
 // let m
 
-let doc = nlp("I am a boy")
-console.log(doc.sentences().json()[0].sentence)
+// nlp.verbose('tagger')
+
+// let doc = nlp('i got in one little fight and my momma got scared, she said you\'re moving')
+
+
+
+let doc = nlp('one two three')
+let two = doc.match('two')
+let id = two.json()[0].terms[0].id
+doc.match([{ id: id }]).debug()
+// console.log(id)
 /*
 {
   subject: 'i',

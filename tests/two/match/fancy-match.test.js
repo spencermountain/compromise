@@ -76,3 +76,12 @@ test('match-doc-freeze', function (t) {
   t.deepEqual(arr, ['boy', 'girl.'], here + 'match-doc-2')
   t.end()
 })
+
+test('match-term-id', function (t) {
+  let doc = nlp('one two three')
+  let two = doc.match('two')
+  let id = two.json()[0].terms[0].id
+  let m = doc.match([{ id: id }])
+  t.ok(m.has('^two$'), here + 'match-id')
+  t.end()
+})

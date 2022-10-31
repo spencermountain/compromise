@@ -89,8 +89,7 @@ Second paragraph! Oh yeah! my friends
 `
 
 let doc = nlp(txt)
-// doc.debug()
-console.log(doc.paragraphs().has('my girl'))
+let out = doc.paragraphs().debug()
 
 // doc.verbs().debug()
 // console.log(doc.sentences().json()[0].sentence)

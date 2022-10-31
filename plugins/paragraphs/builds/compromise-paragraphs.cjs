@@ -49,14 +49,42 @@
       get length() {
         return this.views.length
       }
-      json() {
-        return concatArr(this.views, 'json')
-      }
+
       text(fmt) {
         return concatStr(this.views, (m) => m.text(fmt))
       }
+      json() {
+        return concatArr(this.views, 'json')
+      }
       match(reg) {
         return concatDoc(this.views, (view) => view.match(reg))
+      }
+      not(reg) {
+        return concatDoc(this.views, (view) => view.match(reg))
+      }
+      sentences() {
+        return concatDoc(this.views, (view) => view)
+      }
+      terms() {
+        return concatDoc(this.views, (view) => view.terms())
+      }
+      filter(fn) {
+        let res = this.views.filter(p => {
+          return p.some(fn)
+        });
+        return this.update(res)
+      }
+      forEach(fn) {
+        this.views.forEach(p => {
+          p.forEach(fn);
+        });
+        return this
+      }
+      map(fn) {
+        let res = this.views.map(view => {
+          return fn(view)
+        });
+        return this.update(res)
       }
       // boolean
       has(reg) {
@@ -65,6 +93,29 @@
       if(reg) {
         let views = this.views.filter(view => view.has(reg));
         return this.update(views)
+      }
+      ifNo(reg) {
+        let views = this.views.filter(view => !view.has(reg));
+        return this.update(views)
+      }
+      eq(num) {
+        let p = this.views[num];
+        if (p) {
+          return this.update([p])
+        }
+        return this.update([])
+      }
+      first() {
+        return this.eq(0)
+      }
+      last() {
+        return this.eq(this.length - 1)
+      }
+      debug() {
+        this.views.forEach((view) => {
+          console.log('\n=-=-=-=-');//eslint-disable-line
+          view.debug();
+        });
       }
 
       // overloaded - keep Paragraphs class

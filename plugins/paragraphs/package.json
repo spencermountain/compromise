@@ -1,31 +1,30 @@
 {
-  "name": "compromise-paragraphs",
+  "name": "compromise-speed",
   "description": "plugin for nlp-compromise",
   "version": "0.1.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-paragraphs.min.js",
-  "module": "./builds/compromise-paragraphs.mjs",
+  "unpkg": "./builds/compromise-speed.min.js",
+  "module": "./builds/compromise-speed.mjs",
   "type": "module",
   "types": "index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
       "import": "./src/plugin.js",
-      "require": "./builds/compromise-paragraphs.cjs"
+      "require": "./builds/compromise-speed.cjs"
     }
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
   },
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/speed",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "watch": "amble ./scratch.js",
-    "version": "node ./scripts/version.js",
-    "build": "npm run version && rollup -c --silent"
+    "build": "rollup -c --silent"
   },
   "files": [
     "builds/",

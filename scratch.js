@@ -1,12 +1,12 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/paragraphs/src/plugin.js'
+nlp.plugin(plg)
 let txt = ''
 // let doc
 // let m
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
@@ -57,11 +57,17 @@ let arr = [
   // "Reading ARP related article lor.",
 
 
-  'bike to work',
-  'like to drink',
-  'came to light',
-  'refused to harbour',
-  'bring to market',
+  `If you notice swelling`,
+  `and whisk to fully incorporate`,
+  `Going shopping alone`,
+  `when the killer strikes`,
+  `Your refusal may cause hurt and disappointment`,
+  'Carpenter\'s one year of coaching',
+  `Holly objects to Nia's character`,
+  ' visa & travel assistance',
+  'Let the dishwasher run for an entire cycle',
+  'by encouraging carpooling',
+  'Ohio beaver trapping season starts in late December ',
 
   'We Personally Guarantee Everything We Sell',
   'we personally guarantee',
@@ -76,8 +82,16 @@ let arr = [
 
 
 txt = arr[0]
+
+txt = `What's with these homies dissin' my girl? Why do they gotta front? What did we ever do to these guys that made them so violent?
+
+Second paragraph! Oh yeah! my friends
+`
+
 let doc = nlp(txt)
-doc.debug()
+// doc.debug()
+console.log(doc.paragraphs().has('my girl'))
+
 // doc.verbs().debug()
 // console.log(doc.sentences().json()[0].sentence)
 

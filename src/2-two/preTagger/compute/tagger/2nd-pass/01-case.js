@@ -18,21 +18,21 @@ const nope = {
 }
 
 // 'Buy Our Affordable Cars!'
-const isAllTitleCase = function (terms) {
-  if (terms.length <= 3) {
-    return false
-  }
-  let count = 0
-  terms.forEach(term => {
-    if (titleCase.test(term.text)) {
-      count += 1
-    }
-  })
-  if (count >= terms.length - 2) {
-    return true
-  }
-  return false
-}
+// const isAllTitleCase = function (terms) {
+//   if (terms.length <= 3) {
+//     return false
+//   }
+//   let count = 0
+//   terms.forEach(term => {
+//     if (titleCase.test(term.text)) {
+//       count += 1
+//     }
+//   })
+//   if (count >= terms.length - 2) {
+//     return true
+//   }
+//   return false
+// }
 
 // if it's a unknown titlecase word, it's a propernoun
 const checkCase = function (terms, i, model) {

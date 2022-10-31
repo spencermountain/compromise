@@ -6,7 +6,7 @@ let txt = ''
 // let doc
 // let m
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
@@ -56,6 +56,12 @@ let arr = [
   // "Tell Monica I say goodbye.",
   // "Reading ARP related article lor.",
 
+
+  'bike to work',
+  'like to drink',
+  'came to light',
+  'refused to harbour',
+  'bring to market',
 
   'We Personally Guarantee Everything We Sell',
   'we personally guarantee',

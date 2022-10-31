@@ -139,4 +139,9 @@ export default [
   { match: '#Copula #Gerund [#PresentTense] !by?', group: 0, tag: 'Noun', ifNo: ['going'], reason: 'ignoring-commute' },
   // noun-pastTense variables
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', group: 0, tag: 'Noun', reason: 'noun-past' },
+
+  // how to watch
+  { match: 'how to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'how-to-noun' },
+  // ready to stream
+  { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'ready-to-noun' },
 ]

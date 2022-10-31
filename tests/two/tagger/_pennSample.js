@@ -4824,10 +4824,6 @@ export default [
     tags: 'DT, NN, IN, NNP, VBD, JJ',
   },
   {
-    text: 'This place is top notch and highly affordable!',
-    tags: 'DT, NN, VBZ, JJ, JJ, CC, RB, JJ',
-  },
-  {
     text: 'Tried Crust on Broad on 3 occasions.',
     tags: 'VBD, NNP, IN, NNP, IN, CD, NNS',
   },

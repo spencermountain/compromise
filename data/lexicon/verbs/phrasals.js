@@ -853,4 +853,5 @@ export default [
   'zip up',
   'zone out',
   'zonk out',
+  'grab hold'
 ]

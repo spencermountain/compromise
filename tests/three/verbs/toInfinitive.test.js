@@ -273,7 +273,7 @@ test('toInfinitive-phrase:', function (t) {
     ["he spiked", "he spike"],
     ["mimicked", "mimic"],
     ["flaked", "flake"],
-    ["baked", "bake"],
+    // ["baked", "bake"],
     ["guaranteed", "guarantee"],
     ["agreed", "agree"],
     ["freed", "free"],

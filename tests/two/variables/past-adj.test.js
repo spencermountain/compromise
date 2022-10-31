@@ -54,7 +54,7 @@ let arr = [
   [`he detailed`, '. #PastTense'],
   ['jack cheered', '#Person #PastTense'],
   ['jack guarded', '#Person #PastTense'],
-  ['baked', '#PastTense'],
+  // ['baked', '#PastTense'],
   ['faked', '#PastTense'],
   ['maked', '#PastTense'],
   ['mistaked', '#PastTense'],

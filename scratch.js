@@ -6,25 +6,13 @@ let txt = ''
 // let doc
 // let m
 
-// nlp.verbose('tagger')
-
-// let doc = nlp('i got in one little fight and my momma got scared, she said you\'re moving')
+nlp.verbose('tagger')
 
 
+// let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
+// doc.compute('coreference')
 
-let doc = nlp('one two three')
-let two = doc.match('two')
-let id = two.json()[0].terms[0].id
-doc.match([{ id: id }]).debug()
-// console.log(id)
-/*
-{
-  subject: 'i',
-  verb: 'am',
-  predicate: 'a boy',
-  grammar: { tense: 'PresentTense' }
-}
-*/
+
 
 // bug 3
 // let doc = nlp("Dr. John Smith-McDonald...")
@@ -84,6 +72,33 @@ let arr = [
   // "Pride themed bikes",
   // "Tell Monica I say goodbye.",
   // "Reading ARP related article lor.",
+  `A beautiful woman arrives to Paris for the first time from South America.`,
+  `She meets a dashing, Moroccan-born Frenchman.`,
+  `A Golden-crowned Kinglet overlooks the fallen leaves.`,
+  `New data shows that the rate of unfilled hospital nursing positions has TRIPLED since 2020`,
+  `You should uproot your entire life and move to my city so we can hang out once a month`,
+  `The weapon used by the suspect to attack Paul Pelosi was a hammer`,
+  `People say CRA are only efficient when you owe THEM money but that's actually not true at all in many ways.`,
+  `scientists at stanford university have reconstructed this 3D model of how adam and eve might have looked`,
+  `Every dollar moved out of public health care into private profits means less for working people, for local hospitals and emergency rooms.`,
+  `I 
+    recently joined 
+        MIT 
+        to study how genetic engineering is taught, 
+        and 
+          how we can improve`,
+
+
+  `Testing sign language using VRChat's new hand tracking feature with @TheFoxipso`,
+  `Insert the retractor and crank it until the ribs swing open, like a rusty drawbridge`,
+  `Debugging intuition comes from experience & is built up from years & years of seeing systems fail in different ways`,
+  `The versatility that Rust brings to the table is just mind-blowing.`,
+  `Russian soldier in the Donetsk area says that due to lack of food or water, they had to drink from a puddle`,
+  `People tell me that the Republicans should be doing worse but the problem is that Democrats are bad at messaging`,
+  `Man, my neighbour is a huge bro and I thought he’d kinda suck but he rules`,
+  `If you know of any open positions for project managers or senior software engineers, let me know`,
+  `A beautiful woman arrives to Paris for the first time from South America.`,
+  `She meets a dashing, Moroccan-born Frenchman.`,
 
 
   'end to end',
@@ -125,8 +140,10 @@ let arr = [
 
 
 txt = arr[0]
+txt = 'is place is top notch'
 // txt = "when the rain pours, come and have a drink"
-// doc = nlp(txt)
+let doc = nlp(txt)
+doc.debug()
 // doc.verbs().debug()
 // console.log(doc.sentences().json()[0].sentence)
 

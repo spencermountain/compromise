@@ -4825,7 +4825,7 @@ export default [
   },
   {
     text: 'This place is top notch and highly affordable!',
-    tags: 'DT, NN, VBZ, JJ, NN, CC, RB, JJ',
+    tags: 'DT, NN, VBZ, JJ, JJ, CC, RB, JJ',
   },
   {
     text: 'Tried Crust on Broad on 3 occasions.',

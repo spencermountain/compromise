@@ -403,6 +403,7 @@ export default [
   'tributary',
   'flower',
   'sandwich',
+  'x ray',
 ]
 
 

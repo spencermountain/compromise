@@ -2,6 +2,25 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[one/concat] '
 
+test('concat tag :', function (t) {
+  let doc = nlp('the start and the end. another one')
+  doc.concat('cool times. oh yeah')
+  t.equal(doc.has('#Adjective times'), true, here + 'tagged - 1')
+
+  doc = nlp('the start and the end. another one')
+  let b = nlp('cool times. oh yeah')
+  doc.concat(b)
+  t.equal(doc.has('#Adjective times'), true, here + 'tagged - 2')
+  t.end()
+})
+
+// test('concat tag :', function (t) {
+//   let doc = nlp('one here. two here. three here')
+//   let mid = doc.match('two here')
+//   mid.concat('cool times. oh yeah')
+//   t.end()
+// })
+
 test('concat pointers :', function (t) {
   let doc = nlp('one two three four')
   let a = doc.match('two three')

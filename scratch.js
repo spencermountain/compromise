@@ -25,20 +25,15 @@ let txt = ''
 
 
 
+
 // const doc = nlp("foobar. he was demanding his rights after. walking his plank after")
 // let net = nlp.buildNet([{ match: 'his .', ifNo: ['demanding', 'rights'] }])
 // doc.match(net).debug()
 
 
-let doc = nlp('one here. two here. three here')
-// let mid = doc.match('two here')
-// mid = mid.concat('cool times. oh yeah')
-doc.concat('cool times. oh yeah')
-doc.debug()
-// mid.all().debug()
+// let doc = nlp('one here. two here. three here')
 
 let arr = [
-
 
   // `If you notice swelling`,
   // `and whisk to fully incorporate`,
@@ -61,9 +56,7 @@ let arr = [
 
 
 ]
-
-
-// txt = a[0]
-// let doc = nlp(txt)
-// doc.debug()
+txt = arr[0]
+let doc = nlp(txt).debug()
+// doc.match('#Conjunction #Adjective #Noun').debug()
 

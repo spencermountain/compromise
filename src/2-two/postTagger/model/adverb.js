@@ -28,7 +28,7 @@ export default [
   //cheering hard - dropped -ly's
   {
     match: '#PresentTense [(hard|quick|long|bright|slow|fast|backwards|forwards)]',
-    ifNo: '#Copula',
+    notIf: '#Copula',
     group: 0,
     tag: 'Adverb',
     reason: 'lazy-ly',

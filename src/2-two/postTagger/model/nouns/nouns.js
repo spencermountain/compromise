@@ -43,7 +43,7 @@ export default [
   { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
   // walk the walk
   { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
-  { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', ifNo: ['#Gerund', '#Copula'], group: 0, tag: 'Noun', reason: 'det-pres' },
+  { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', notIf: '(#Gerund|#Copula)', group: 0, tag: 'Noun', reason: 'det-pres' },
 
   // ==== Actor ====
   //Aircraft designer
@@ -67,7 +67,7 @@ export default [
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // Ptolemy's experiments
-  { match: '#Possessive #PresentTense', ifNo: '#Gerund', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
+  { match: '#Possessive #PresentTense', notIf: '#Gerund', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
   // 10th of a second
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds
@@ -84,8 +84,6 @@ export default [
   { match: '[#PresentTense] (of|by|for) (a|an|the) #Noun #Copula', group: 0, tag: 'Plural', reason: 'photographs-of' },
   // fight and win
   { match: '#Infinitive and [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'fight and win' },
-  // bride and groom
-  // { match: '#Noun and [%Noun|Verb%]', group: 0, tag: 'Singular', ifNo: ['#ProperNoun'], reason: 'bride-and-groom' },
   // peace and flowers and love
   { match: '#Noun and [#Verb] and #Noun', group: 0, tag: 'Noun', reason: 'peace-and-flowers' },
   // the 1992 classic

@@ -8,7 +8,7 @@ export default [
   // walk in on
   {
     match: '[#Verb (in|out|up|down|off|back)] (on|in)',
-    ifNo: ['#Copula'],
+    notIf: '#Copula',
     tag: 'PhrasalVerb Particle',
     reason: 'walk-in-on',
   },

@@ -10,6 +10,7 @@ const fmts = {
     form: 'normal',
   },
   machine: {
+    keepSpace: false,
     whitespace: 'some',
     punctuation: 'some',
     case: 'none',
@@ -17,6 +18,7 @@ const fmts = {
     form: 'machine',
   },
   root: {
+    keepSpace: false,
     whitespace: 'some',
     punctuation: 'some',
     case: 'some',

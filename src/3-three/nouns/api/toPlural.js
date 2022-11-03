@@ -20,7 +20,7 @@ const nounToPlural = function (m, parsed) {
   const { methods, model } = m.world
   const { toPlural } = methods.two.transform.noun
   // inflect the root noun
-  let str = parsed.root.text('normal')
+  let str = parsed.root.text({ keepPunct: false })
   let plural = toPlural(str, model)
   m.match(parsed.root).replaceWith(plural, keep).tag('Plural', 'toPlural')
   // should we change the determiner/article?

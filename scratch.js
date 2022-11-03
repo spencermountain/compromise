@@ -15,17 +15,16 @@ let txt = ''
 
 
 // bug 3
-// let doc = nlp("Dr. John Smith-McDonald...?")
+// let doc = nlp("Dr. John Smith-McDonald?")
+// // let doc = nlp("Petsmart application? ")
 // let opts = {
 //   keepPunct: false,
-//   abbreviations: false,
+//   punctuation: 'none',
+//   // abbreviations: false,
 //   case: false,
 // }
-// console.log(doc.text(opts))
+// console.log(doc.match('McDonald').text('machine') + '|')
 
-
-let doc = nlp('one two three. four five')
-console.log(doc.isFull())
 
 let arr = [
   // "keep a cool head",
@@ -36,11 +35,11 @@ let arr = [
   // "HP to be self-sufficient by 2010",
   // "the woman isn't dead.",
 ]
-// arr.forEach(str => {
-//   let doc = nlp(str)
-//   doc.nouns().toPlural()
-//   console.log(doc.text())
-// })
+arr.forEach(str => {
+  let doc = nlp(str)
+  doc.nouns().toPlural()
+  console.log(doc.text())
+})
 // let doc = nlp("petsmart application?")
 // let m = doc.match('application')
 // console.log(doc.text({ punctuation: false }))

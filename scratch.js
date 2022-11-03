@@ -15,14 +15,17 @@ let txt = ''
 
 
 // bug 3
-let doc = nlp("Dr. John Smith-McDonald...")
-let opts = {
-  keepPunct: false,
-  abbreviations: false,
-  case: false,
-}
-console.log(doc.text(opts))
+// let doc = nlp("Dr. John Smith-McDonald...?")
+// let opts = {
+//   keepPunct: false,
+//   abbreviations: false,
+//   case: false,
+// }
+// console.log(doc.text(opts))
 
+
+let doc = nlp('one two three. four five')
+console.log(doc.isFull())
 
 let arr = [
   // "keep a cool head",

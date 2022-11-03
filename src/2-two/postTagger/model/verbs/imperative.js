@@ -1,16 +1,16 @@
 // this is really hard to do
-const notIf = ['i', 'we', 'they'] //we do not go
+const ifNo = ['i', 'we', 'they'] //we do not go
 export default [
   // do not go
-  { match: '^do not? [#Infinitive #Particle?]', notIf, group: 0, tag: 'Imperative', reason: 'do-eat' },
+  { match: '^do not? [#Infinitive #Particle?]', ifNo, group: 0, tag: 'Imperative', reason: 'do-eat' },
   // please go
   { match: '^please do? not? [#Infinitive #Particle?]', group: 0, tag: 'Imperative', reason: 'please-go' },
   // just go
   { match: '^just do? not? [#Infinitive #Particle?]', group: 0, tag: 'Imperative', reason: 'just-go' },
   // do it better
-  { match: '^[#Infinitive] it #Comparative', notIf, group: 0, tag: 'Imperative', reason: 'do-it-better' },
+  { match: '^[#Infinitive] it #Comparative', ifNo, group: 0, tag: 'Imperative', reason: 'do-it-better' },
   // do it again
-  { match: '^[#Infinitive] it (please|now|again|plz)', notIf, group: 0, tag: 'Imperative', reason: 'do-it-please' },
+  { match: '^[#Infinitive] it (please|now|again|plz)', ifNo, group: 0, tag: 'Imperative', reason: 'do-it-please' },
   // go!
   // { match: '^[#Infinitive]$', group: 0, tag: 'Imperative', reason: 'go' },
   // go quickly.

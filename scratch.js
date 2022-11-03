@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/paragraphs/src/plugin.js'
 // nlp.plugin(plg)
 let txt = ''
@@ -26,12 +26,17 @@ let txt = ''
 
 
 
-// const doc = nlp("foobar. he was demanding his rights after. walking his plank after")
-// let net = nlp.buildNet([{ match: 'his .', ifNo: ['demanding', 'rights'] }])
+// const doc = nlp("foo. found one after found bad")
+// let net = nlp.buildNet([{ match: 'found .', ifNo: ['bad'] }])
 // doc.match(net).debug()
 
 
-// let doc = nlp('one here. two here. three here')
+
+
+// let doc = nlp('the remaining claims fail').debug()
+let doc = nlp('The service is fast psych')
+let net = nlp.buildNet([{ match: 'is fast .', notIf: 'psych' }])
+doc.match(net).debug()
 
 let arr = [
 
@@ -57,6 +62,6 @@ let arr = [
 
 ]
 txt = arr[0]
-let doc = nlp(txt).debug()
+// let doc = nlp(txt).debug()
 // doc.match('#Conjunction #Adjective #Noun').debug()
 

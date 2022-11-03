@@ -643,5 +643,6 @@ export default [
   'beside',
   'alright',
   'top notch',
+  'self sufficient'
 ]
 

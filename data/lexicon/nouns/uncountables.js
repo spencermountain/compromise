@@ -240,4 +240,7 @@ export default [
   'arithmetic',
   'static',
   'logic',
+  'hunger',
+  'sushi',
+  'seating',
 ]

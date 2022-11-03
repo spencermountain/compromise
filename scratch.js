@@ -15,15 +15,32 @@ let txt = ''
 
 
 // bug 3
-// let doc = nlp("Dr. John Smith-McDonald...")
-// let opts = {
-//   keepPunct: false,
-//   abbreviations: false,
-//   case: false,
-// }
-// console.log(doc.text(opts))
+let doc = nlp("Dr. John Smith-McDonald...")
+let opts = {
+  keepPunct: false,
+  abbreviations: false,
+  case: false,
+}
+console.log(doc.text(opts))
 
-// nlp('i drank a margharita').nouns().toPlural().all().text()
+
+let arr = [
+  // "keep a cool head",
+  "petsmart application?",
+  // "attacked by a bear?",
+  // "Gal's DIARY: He ws quiet 2dy.",
+  // "All right relax.",
+  // "HP to be self-sufficient by 2010",
+  // "the woman isn't dead.",
+]
+// arr.forEach(str => {
+//   let doc = nlp(str)
+//   doc.nouns().toPlural()
+//   console.log(doc.text())
+// })
+// let doc = nlp("petsmart application?")
+// let m = doc.match('application')
+// console.log(doc.text({ punctuation: false }))
 
 // nlp('two turtledoves and a partridge in a pear tree').nouns().isSingular().out('array')
 
@@ -49,13 +66,8 @@ let txt = ''
 // nlp('~sorta').match('sorta').debug()
 
 
-// console.log(nlp("telegram for Heywood U. Cuddleme").people().json(0))
 
-// let doc = nlp('i walk and swim gracefully')
-// let json = doc.json(0)
-// console.log(json)
-
-let arr = [
+arr = [
 
   // `If you notice swelling`,
   // `and whisk to fully incorporate`,

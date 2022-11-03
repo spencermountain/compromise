@@ -11,7 +11,7 @@ export default [
   // my first thought
   { match: '#Possessive #Ordinal [#PastTense]', group: 0, tag: 'Noun', reason: 'first-thought' },
   //the nice swim
-  { match: '(the|this|those|these) #Adjective [%Verb|Noun%]', group: 0, tag: 'Noun', ifNo: '#Copula', reason: 'the-adj-verb' },
+  { match: '(the|this|those|these) #Adjective [%Verb|Noun%]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'the-adj-verb' },
   // the truly nice swim
   { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'determiner4' },
   //the wait to vote
@@ -19,9 +19,9 @@ export default [
   //a sense of
   { match: '#Determiner [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
   //the threat of force
-  { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', ifNo: '#Gerund', reason: 'noun-of-noun' },
+  { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', notIf: '#Gerund', reason: 'noun-of-noun' },
   // ended in ruins
-  { match: '#PastTense #Preposition [#PresentTense]', group: 0, ifNo: ['#Gerund'], tag: 'Noun', reason: 'ended-in-ruins' },
+  { match: '#PastTense #Preposition [#PresentTense]', group: 0, notIf: '#Gerund', tag: 'Noun', reason: 'ended-in-ruins' },
   //'u' as pronoun
   { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },
   { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-pronoun-1' },

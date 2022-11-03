@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/paragraphs/src/plugin.js'
 // nlp.plugin(plg)
 let txt = ''
@@ -30,13 +30,13 @@ let txt = ''
 // let net = nlp.buildNet([{ match: 'found .', ifNo: ['bad'] }])
 // doc.match(net).debug()
 
-
+nlp(`were based out of`).debug()
 
 
 // let doc = nlp('the remaining claims fail').debug()
-let doc = nlp('The service is fast psych')
-let net = nlp.buildNet([{ match: 'is fast .', notIf: 'psych' }])
-doc.match(net).debug()
+// let doc = nlp('The service is fast psych')
+// let net = nlp.buildNet([{ match: 'is fast .', notIf: 'psych' }])
+// doc.match(net).debug()
 
 let arr = [
 

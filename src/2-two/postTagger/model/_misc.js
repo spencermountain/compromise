@@ -38,16 +38,6 @@ let matches = [
 
   // right after
   { match: '[right] (before|after|in|into|to|toward)', group: 0, tag: '#Adverb', reason: 'right-into' },
-
-  // double-prepositions
-  // rush out of
-  {
-    match: '#Verb [(out|for|through|about|around|in|down|up|on|off)] #Preposition',
-    group: 0,
-    ifNo: ['#Copula'],//were out
-    tag: 'Particle',
-    reason: 'rush-out',
-  },
   // at about
   { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
   // dude we should

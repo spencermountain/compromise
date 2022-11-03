@@ -46,6 +46,9 @@ fns.replaceWith = function (input, keep = {}) {
   // original.freeze()
   let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
   // slide this in
+  if (typeof input === 'string') {
+    input = this.fromText(input).compute('id')
+  }
   main.insertAfter(input)
   // are we replacing part of a contraction?
   if (original.has('@hasContraction') && main.contractions) {
@@ -69,6 +72,13 @@ fns.replaceWith = function (input, keep = {}) {
   if (keep.case && m.docs[0] && m.docs[0][0] && m.docs[0][0].index[1] === 0) {
     m.docs[0][0].text = titleCase(m.docs[0][0].text)
   }
+  // console.log(input.docs[0])
+  // let regs = input.docs[0].map(t => {
+  //   return { id: t.id, optional: true }
+  // })
+  // m.after('(a|hoy)').debug()
+  // m.growRight('(a|hoy)').debug()
+  // console.log(m)
   return m
 }
 

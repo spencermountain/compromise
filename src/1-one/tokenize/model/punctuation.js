@@ -1,4 +1,4 @@
-const allowBefore = [
+const prePunctuation = [
   '#', //#hastag
   '@', //@atmention
   '_',//underscore
@@ -6,11 +6,11 @@ const allowBefore = [
   '+',//+4
   '.',//.4
 ]
-const allowAfter = [
+const postPunctuation = [
   '%',//88%
   '_',//underscore
   '°',//degrees, italian ordinal
   // '\'',// \u0027
 ]
 
-export { allowBefore, allowAfter }
+export { prePunctuation, postPunctuation }

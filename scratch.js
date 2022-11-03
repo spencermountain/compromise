@@ -23,13 +23,24 @@ let txt = ''
 // }
 // console.log(doc.text(opts))
 
+// nlp('i drank a margharita').nouns().toPlural().all().text()
 
-let doc = nlp("before (match), after")
-let out = doc.wrap({
-  'match': () => `few more words`,
-})
-console.log(out)
+// nlp('two turtledoves and a partridge in a pear tree').nouns().isSingular().out('array')
 
+// let doc = nlp('hello there after words')
+// let regs = doc.match('(after|words)+').docs[0].map(t => {
+//   return { id: t.id, optional: true }
+// })
+// let m = doc.match('hello there')
+// console.log(m.json({ sentence: true }))
+// m.growRight(regs).debug()
+// console.log(doc.replaceWith('a hoy hoy').text())
+
+// let doc = nlp('hello there')
+// console.log(doc.replaceWith('a hoy hoy').text())
+
+nlp.world().model.one.prefixes.semi = true
+nlp('semi-detatched').debug()
 
 let arr = [
 

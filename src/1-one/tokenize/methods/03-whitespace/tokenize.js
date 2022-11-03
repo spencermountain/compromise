@@ -1,7 +1,7 @@
 //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
-import { allowBefore, allowAfter } from './punctuation.js'
-let beforeReg = new RegExp(`[${allowBefore.join('')}]+$`, '')
-let afterReg = new RegExp(`^[${allowAfter.join('')}]+`, '')
+import { prePunctuation, postPunctuation } from '../../model/punctuation.js'
+let beforeReg = new RegExp(`[${prePunctuation.join('')}]+$`, '')
+let afterReg = new RegExp(`^[${postPunctuation.join('')}]+`, '')
 
 //we have slightly different rules for start/end - like #hashtags.
 const endings = /[\p{Punctuation}\s]+$/u

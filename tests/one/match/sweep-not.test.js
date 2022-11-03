@@ -13,7 +13,7 @@ test('sweep-not:', function (t) {
   m = doc.match(net)
   t.equal(m.text(), '', here + 'psych-found')
 
-  doc = nlp('i swim in the lake')
+  doc = nlp('i swim in the lake and walk in the road')
   net = nlp.buildNet([{ match: 'i (swim|walk) in the .', notIf: 'in the (park|lake)' }])
   m = doc.match(net)
   t.equal(m.text(), '', here + 'notIf optional')

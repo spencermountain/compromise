@@ -26,6 +26,7 @@ const wrap = function (doc, obj) {
       if (starts.hasOwnProperty(t.id)) {
         let { fn, end } = starts[t.id]
         let m = doc.update([[n, i, end]])
+        text += terms[i].pre || ''
         text += fn(m)
         i = end - 1
         text += terms[i].post || ''

@@ -69,7 +69,7 @@ export default [
   },
 
   // assign all tasks
-  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', ifNo: '#Modal', group: 0, tag: 'Noun', reason: 'all-presentTense' },  // PresentTense/Noun ambiguities
+  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', notIf: '#Modal', group: 0, tag: 'Noun', reason: 'all-presentTense' },  // PresentTense/Noun ambiguities
   // big dreams, critical thinking
   // have big dreams
   { match: '(had|have|#PastTense) #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
@@ -120,13 +120,13 @@ export default [
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
 
   // 30 trains
-  { match: '#Value [#PresentTense]', group: 0, ifNo: ['one', '1', '#Copula', '#Infinitive'], tag: 'Plural', reason: '2-trains' },
+  { match: '#Value [#PresentTense]', group: 0, notIf: '(one|1|#Copula|#Infinitive)', tag: 'Plural', reason: '2-trains' },
   // compromises are possible
   { match: '[#PresentTense] (are|were) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   // hope i helped
   { match: '^[(hope|guess|thought|think)] #Pronoun #Verb', group: 0, tag: 'Infinitive', reason: 'suppose-i' },
   //pursue its dreams
-  { match: '#PresentTense #Possessive [#PresentTense]', ifNo: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
+  { match: '#PresentTense #Possessive [#PresentTense]', notIf: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
   // our unyielding support
   { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'our-full-support' },
   // they do serve fish
@@ -134,9 +134,9 @@ export default [
   // tastes good
   { match: '[(tastes|smells)] #Adverb? #Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
   // are you plauing golf
-  { match: '^are #Pronoun [#Noun]', group: 0, ifNo: ['here', 'there'], tag: 'Verb', reason: 'are-you-x' },
+  { match: '^are #Pronoun [#Noun]', group: 0, notIf: '(here|there)', tag: 'Verb', reason: 'are-you-x' },
   // ignoring commute
-  { match: '#Copula #Gerund [#PresentTense] !by?', group: 0, tag: 'Noun', ifNo: ['going'], reason: 'ignoring-commute' },
+  { match: '#Copula #Gerund [#PresentTense] !by?', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring-commute' },
   // noun-pastTense variables
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', group: 0, tag: 'Noun', reason: 'noun-past' },
 

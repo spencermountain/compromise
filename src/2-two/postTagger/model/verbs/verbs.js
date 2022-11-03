@@ -21,7 +21,7 @@ export default [
   { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-copula' },
   // ==== Infinitive ====
   //march to
-  { match: '[march] (up|down|back|toward)', ifNo: ['#Date'], group: 0, tag: 'Infinitive', reason: 'march-to' },
+  { match: '[march] (up|down|back|toward)', notIf: '#Date', group: 0, tag: 'Infinitive', reason: 'march-to' },
   //must march
   { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
   // may be
@@ -47,7 +47,7 @@ export default [
   //had to walk
   { match: `(had|has) to [#Noun] (#Determiner|#Possessive)`, group: 0, tag: 'Infinitive', reason: 'had-to-noun' },
   // have read
-  { match: `have [#PresentTense]`, group: 0, tag: 'PastTense', ifNo: ['come', 'gotten'], reason: 'have-read' },
+  { match: `have [#PresentTense]`, group: 0, tag: 'PastTense', notIf: '(come|gotten)', reason: 'have-read' },
   // does that work
   { match: `(does|will|#Modal) that [work]`, group: 0, tag: 'PastTense', reason: 'does-that-work' },
   // sounds fun

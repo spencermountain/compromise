@@ -9,6 +9,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!-- #### 14.6.0 [Unreleased]
 - **[new]** - match term id
 - **[change]** - tag text by default on .concat('')
+- **[new]** - .wrap() method
 -->
 
 #### 14.6.0 [Oct 2022]

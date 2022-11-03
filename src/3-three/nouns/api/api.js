@@ -19,8 +19,9 @@ const api = function (View) {
       return getNth(this, n).map(parseNoun)
     }
 
-    json(opts = {}) {
-      return this.map(m => {
+    json(n) {
+      let opts = typeof n === 'object' ? n : {}
+      return getNth(this, n).map(m => {
         let json = m.toView().json(opts)[0] || {}
         if (opts && opts.noun !== true) {
           json.noun = toJSON(m)

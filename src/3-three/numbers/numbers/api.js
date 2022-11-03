@@ -19,9 +19,9 @@ const addMethod = function (View) {
       return getNth(this, n).map(parse).map(o => o.num)
     }
     json(n) {
-      let doc = getNth(this, n)
-      return doc.map(p => {
-        let json = p.toView().json(n)[0]
+      let opts = typeof n === 'object' ? n : {}
+      return getNth(this, n).map(p => {
+        let json = p.toView().json(opts)[0]
         let parsed = parse(p)
         json.number = {
           prefix: parsed.prefix,

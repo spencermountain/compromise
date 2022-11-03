@@ -15,5 +15,9 @@ test('canBe', function (t) {
 
   let canBeMisc = nlp('spencer kelly').canBe('asdf')
   t.equal(canBeMisc.length, 1, here + 'all results are one')
+
+
+  let found = nlp("Moe Sizlak.").terms().canBe('#Verb').found
+  t.equal(found, false, here + 'no verb')
   t.end()
 })

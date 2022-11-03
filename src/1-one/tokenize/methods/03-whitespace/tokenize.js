@@ -1,7 +1,6 @@
 //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
-import { prePunctuation, postPunctuation } from '../../model/punctuation.js'
-let beforeReg = new RegExp(`[${prePunctuation.join('')}]+$`, '')
-let afterReg = new RegExp(`^[${postPunctuation.join('')}]+`, '')
+let beforeReg = null
+let afterReg = null
 
 //we have slightly different rules for start/end - like #hashtags.
 const endings = /[\p{Punctuation}\s]+$/u
@@ -11,10 +10,17 @@ const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const shortYear = /^'[0-9]{2}/
 const isNumber = /^-[0-9]/
 
-const normalizePunctuation = function (str) {
+const normalizePunctuation = function (str, model) {
   let original = str
   let pre = ''
   let post = ''
+
+  // create these regexes in a lazy way
+  if (beforeReg === null) {
+    let { prePunctuation, postPunctuation } = model.one
+    beforeReg = new RegExp(`[${prePunctuation.join('')}]+$`, '')
+    afterReg = new RegExp(`^[${postPunctuation.join('')}]+`, '')
+  }
   // adhoc cleanup for pre
   str = str.replace(startings, found => {
     // punctuation symboles like '@' to allow at start of term
@@ -37,7 +43,7 @@ const normalizePunctuation = function (str) {
   })
   // ad-hoc cleanup for post 
   str = str.replace(endings, found => {
-    // punctuation symboles like '@' to allow at start of term
+    // punctuation symbols like '@' to allow at start of term
     let m = found.match(afterReg)
     if (m) {
       post = found.replace(afterReg, '')

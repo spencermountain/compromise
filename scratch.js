@@ -39,8 +39,21 @@ let txt = ''
 // let doc = nlp('hello there')
 // console.log(doc.replaceWith('a hoy hoy').text())
 
-nlp.world().model.one.prefixes.semi = true
-nlp('semi-detatched').debug()
+// nlp.world().model.one.prefixes.semi = true
+// nlp('semi-detatched').debug()
+
+// let world = nlp.world()
+// world.model.one.prePunctuation.push('~')
+// console.log(nlp.world().model.one.prePunctuation)
+// console.log(nlp('~sorta').docs)
+// nlp('~sorta').match('sorta').debug()
+
+
+// console.log(nlp("telegram for Heywood U. Cuddleme").people().json(0))
+
+// let doc = nlp('i walk and swim gracefully')
+// let json = doc.json(0)
+// console.log(json)
 
 let arr = [
 

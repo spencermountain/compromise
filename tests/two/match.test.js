@@ -742,6 +742,9 @@ let arr = [
   ['x-ray', '#Noun'],
   ['my ex-husband', 'my #Noun'],
   ['The F-102 saw service', 'the #Noun #Verb #Noun'],
+  // titlecase
+  ['We Sell All Brands', '#Pronoun #Verb all #Plural'],
+  ['WE SELL ALL BRANDS', '#Pronoun #Verb all #Plural']
 ]
 test('match:', function (t) {
   let res = []

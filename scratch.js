@@ -6,7 +6,7 @@ let txt = ''
 // let doc
 // let m
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
@@ -53,17 +53,18 @@ let txt = ''
 let arr = [
 
 
-  'We Sell All Brands And We Offer Live Support',
-  'Caring for Kaneohe since 1986',
-  'Boost user engagement',
-  'Work to improve lives',
-  'A swaging machine works by using two or four',
-  'NMDAR signaling increases RanBP1 expression',
-  'Notes on eastern American poetry',
-  'call ahead and reserve one',
-  'in the room where you usually nurse',
+  // 'Caring for Kaneohe since 1986',
+  // 'Boost user engagement',
+  // 'Work to improve lives',
+  // 'A swaging machine works by using two or four',
+  // 'NMDAR signaling increases RanBP1 expression',
+  // 'Notes on eastern American poetry',
+  // 'call ahead and reserve one',
+  // 'in the room where you usually nurse',
+  'We Sell All Brands',
+  'Hillary Rodham Clinton',
   'place tea bags in hot water',
-  'while the therapist watches',
+  // 'while the therapist watches',
   // 'All right relax'
   // `If you notice swelling`,
   // `and whisk to fully incorporate`,

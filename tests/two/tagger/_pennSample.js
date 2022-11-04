@@ -923,10 +923,6 @@ export default [
     tags: 'NNP, NNP, NNPS, NNP',
   },
   {
-    text: '86M-Enron Net Works LLC',
-    tags: 'NNP, NNP, NNPS, NNP',
-  },
-  {
     text: 'Despite the name, this entity appears to be a MTM company.',
     tags: 'IN, DT, NN, DT, NN, VBZ, TO, VB, DT, NNP, NN',
   },
@@ -4478,10 +4474,6 @@ export default [
   {
     text: 'You do realise it is quite expensive to visit Ireland?',
     tags: 'PRP, VBP, VB, PRP, VBZ, RB, JJ, TO, VB, NNP',
-  },
-  {
-    text: 'Golden Wonder KilliFish Breeding Help?',
-    tags: 'NN, NN, NN, NN, NN',
   },
   {
     text: 'I have 4 Golden Wonder Killifish.',

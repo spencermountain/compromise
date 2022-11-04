@@ -400,11 +400,11 @@ export default [
   },
   {
     text: 'The F-102 saw service in the Vietnam theater between March 1962 and December 1969.',
-    tags: 'DT, NNP, CD, VBD, NN, IN, DT, NNP, NN, IN, NNP, CD, CC, NNP, CD',
+    tags: 'DT, NNP, VBD, NN, IN, DT, NNP, NN, IN, NNP, CD, CC, NNP, CD',
   },
   {
     text: 'During this time, F-102 squadrons were based out of Tan Son Nhut, Da Nang and Bien Hoa in Vietnam, and Udorn and Don Muang in Thailand.',
-    tags: 'IN, DT, NN, NNP, CD, NNS, VBD, VBN, IN, IN, NNP, NNP, NNP, NNP, NNP, CC, NNP, NNP, IN, NNP, CC, NNP, CC, NNP, NNP, IN, NNP',
+    tags: 'IN, DT, NN, NNP, NNS, VBD, VBN, IN, IN, NNP, NNP, NNP, NNP, NNP, CC, NNP, NNP, IN, NNP, CC, NNP, CC, NNP, NNP, IN, NNP',
   },
   {
     text: 'Six weeks of basic training.',
@@ -4284,7 +4284,7 @@ export default [
   },
   {
     text: 'Did they do any x-rays?',
-    tags: 'VBD, PRP, VB, DT, NN, NNS',
+    tags: 'VBD, PRP, VB, DT, NNS',
   },
   {
     text: 'They are also very secretive about being in a relationship.',

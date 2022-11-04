@@ -35,6 +35,11 @@ const api = function (View) {
       return getNth(arr, n)
     }
 
+    isSingular(n) {
+      let arr = this.filter(m => !parseNoun(m).isPlural)
+      return getNth(arr, n)
+    }
+
     adjectives(n) {
       let list = this.update([])
       this.forEach(m => {

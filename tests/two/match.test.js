@@ -737,6 +737,11 @@ let arr = [
   [`i bike to work`, `i #Verb to #Noun`],
   [`bring to market`, `#Verb to #Noun`],
   [`went to sleep`, `#Verb to #Noun`],
+
+  ['l-theanine', '#Noun'],
+  ['x-ray', '#Noun'],
+  ['my ex-husband', 'my #Noun'],
+  ['The F-102 saw service', 'the #Noun #Verb #Noun'],
 ]
 test('match:', function (t) {
   let res = []

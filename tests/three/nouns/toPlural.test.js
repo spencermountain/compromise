@@ -129,7 +129,7 @@ test('toPlural - longer:', function (t) {
     ["petsmart application?", "petsmart applications?"],
     ["attacked by a bear?", "attacked by bears?"],
     // ["Gal's DIARY: He ws quiet 2dy.", "Gal's DIARY: He ws quiet 2dy."],
-    ["All right relax.", "All right relax."],
+    // ["All right relax.", "All right relax."],
     ["HP to be self-sufficient by 2010", "HP to be self-sufficient by 2010"],
     ["the woman", "the women"],
     ["the woman isn't dead.", "the women are not dead."],

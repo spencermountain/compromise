@@ -14,46 +14,27 @@ let txt = ''
 
 
 
-// bug 3
-// let doc = nlp("Dr. John Smith-McDonald?")
-// // let doc = nlp("Petsmart application? ")
+// // bug 3
+// let doc = nlp("Dr. John Smith-McDonald...?  ")
 // let opts = {
 //   keepPunct: false,
-//   punctuation: 'none',
-//   // abbreviations: false,
+//   keepSpace: false,
 //   case: false,
 // }
-// console.log(doc.match('McDonald').text('machine') + '|')
+// console.log(doc.text(opts) + '|')
 
 
-let arr = [
-  // "keep a cool head",
-  "petsmart application?",
-  // "attacked by a bear?",
-  // "Gal's DIARY: He ws quiet 2dy.",
-  // "All right relax.",
-  // "HP to be self-sufficient by 2010",
-  // "the woman isn't dead.",
-]
-arr.forEach(str => {
-  let doc = nlp(str)
-  doc.nouns().toPlural()
-  console.log(doc.text())
-})
-// let doc = nlp("petsmart application?")
-// let m = doc.match('application')
-// console.log(doc.text({ punctuation: false }))
-
-// nlp('two turtledoves and a partridge in a pear tree').nouns().isSingular().out('array')
+// console.log(nlp('two turtledoves and a partridge in a pear tree').nouns().isSingular().out('array'))
 
 // let doc = nlp('hello there after words')
 // let regs = doc.match('(after|words)+').docs[0].map(t => {
 //   return { id: t.id, optional: true }
 // })
+
 // let m = doc.match('hello there')
+// console.log(doc.replaceWith('a hoy hoy').text())
 // console.log(m.json({ sentence: true }))
 // m.growRight(regs).debug()
-// console.log(doc.replaceWith('a hoy hoy').text())
 
 // let doc = nlp('hello there')
 // console.log(doc.replaceWith('a hoy hoy').text())
@@ -69,8 +50,21 @@ arr.forEach(str => {
 
 
 
-arr = [
+let arr = [
 
+
+  'We Sell All Brands And We Offer Live Support',
+  'Caring for Kaneohe since 1986',
+  'Boost user engagement',
+  'Work to improve lives',
+  'A swaging machine works by using two or four',
+  'NMDAR signaling increases RanBP1 expression',
+  'Notes on eastern American poetry',
+  'call ahead and reserve one',
+  'in the room where you usually nurse',
+  'place tea bags in hot water',
+  'while the therapist watches',
+  // 'All right relax'
   // `If you notice swelling`,
   // `and whisk to fully incorporate`,
   // `Going shopping alone`,
@@ -93,6 +87,6 @@ arr = [
 
 ]
 txt = arr[0]
-// let doc = nlp(txt).debug()
+let doc = nlp(txt).debug()
 // doc.match('#Conjunction #Adjective #Noun').debug()
 

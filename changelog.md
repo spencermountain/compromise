@@ -8,14 +8,17 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 <!-- #### [planned breaking]
 - fix doc.json(0) inconsistency
+- fix text() options
 -->
 
-<!-- #### 14.6.0 [Unreleased]
+<!-- #### 14.6.1 [Unreleased]
 - **[new]** - match term id
 - **[change]** - tag text by default on .concat('')
-- **[change]** - allow changing term prePunctuation
+- **[change]** - allow modifying term prePunctuation
 - **[new]** - .wrap() method
 - **[new]** - .isFull() method
+- **[fix]** - text params for #953
+- **[fix]** - nouns().isSingular() missing
 -->
 
 #### 14.6.0 [Oct 2022]

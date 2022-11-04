@@ -18,6 +18,8 @@ test('term punctuation', function (t) {
     [`{word}`, 'word'],
     [`-word-`, 'word'],
     [`«‛“word〉`, 'word'],
+    [`'word'`, 'word'],
+    [`flanders'`, `flanders'`],
     // [`_word_`, 'word'],
   ]
   arr.forEach(a => {

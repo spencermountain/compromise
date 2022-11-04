@@ -4,11 +4,7 @@
 const isLetter = /\p{Letter}/u
 const isNumber = /[\p{Number}\p{Currency_Symbol}]/u
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
-
-// const endings = /[\p{Punctuation}\s~]+$/u
-// const startings = /^[\p{Punctuation}\s~]+/u
-// .,\/#!$%\^&\*;:{}=\-_`~()
-// const hasApostrophe = /['’]/
+const chillin = /[sn]['’]$/
 
 const normalizePunctuation = function (str, model) {
   // quick lookup for allowed pre/post punctuation
@@ -60,14 +56,13 @@ const normalizePunctuation = function (str, model) {
       break //done
     }
     // F.B.I.
-    if (c === '.' && hasAcronym.test(str) === true) {
+    if (c === '.' && hasAcronym.test(original) === true) {
       continue//keep it
     }
-    //   // keep s-apostrophe - "flanders'" or "chillin'"
-    //   if (hasApostrophe.test(found) && /[sn]['’]$/.test(original) && hasApostrophe.test(pre) === false) {
-    //     post = post.replace(hasApostrophe, '')
-    //     return `'`
-    //   }
+    //  keep s-apostrophe - "flanders'" or "chillin'"
+    if (c === "'" && chillin.test(original) === true) {
+      continue//keep it
+    }
     // punctuation
     post = chars.pop() + post//keep going
   }

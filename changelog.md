@@ -20,6 +20,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - allow modifying term prePunctuation
 - **[new]** - .wrap() method
 - **[new]** - .isFull() method
+- **[new]** - support full `notIf` matches on sweep
 - **[fix]** - text params for #953
 - **[fix]** - nouns().isSingular() missing
 - **[change]** - one-character w/ dash tokenization #977

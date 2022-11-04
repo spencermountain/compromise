@@ -6,7 +6,7 @@ let txt = ''
 // let doc
 // let m
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
@@ -39,13 +39,11 @@ nlp.verbose('tagger')
 // let doc = nlp('hello there')
 // console.log(doc.replaceWith('a hoy hoy').text())
 
-// nlp.world().model.one.prefixes.semi = true
-// nlp('semi-detatched').debug()
 
-// let world = nlp.world()
-// world.model.one.prePunctuation.push('~')
-// console.log(nlp.world().model.one.prePunctuation)
-// console.log(nlp('~sorta').docs)
+let world = nlp.world()
+world.model.one.prePunctuation.push('_')
+console.log(nlp.world().model.one.prePunctuation)
+console.log(nlp('_sorta_').docs[0])
 // nlp('~sorta').match('sorta').debug()
 
 
@@ -88,6 +86,6 @@ let arr = [
 
 ]
 txt = arr[0]
-let doc = nlp(txt).debug()
+// let doc = nlp(txt).debug()
 // doc.match('#Conjunction #Adjective #Noun').debug()
 

@@ -11,6 +11,14 @@ test('term punctuation', function (t) {
     [`the  "gouvernement" party`, 'gouvernement'],
     [`i guess... but`, 'guess'],
     [`he did. (but barely)`, 'but barely'],
+    [`~word~`, 'word'],
+    [`'word'`, 'word'],
+    [`(word)`, 'word'],
+    [`([word])`, 'word'],
+    [`{word}`, 'word'],
+    [`-word-`, 'word'],
+    [`«‛“word〉`, 'word'],
+    // [`_word_`, 'word'],
   ]
   arr.forEach(a => {
     let [txt, match] = a

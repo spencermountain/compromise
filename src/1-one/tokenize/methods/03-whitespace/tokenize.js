@@ -3,8 +3,8 @@ let beforeReg = null
 let afterReg = null
 
 //we have slightly different rules for start/end - like #hashtags.
-const endings = /[\p{Punctuation}\s]+$/u
-const startings = /^[\p{Punctuation}\s]+/u
+const endings = /[\p{Punctuation}\s~]+$/u
+const startings = /^[\p{Punctuation}\s~]+/u
 const hasApostrophe = /['’]/
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const shortYear = /^'[0-9]{2}/
@@ -22,23 +22,23 @@ const normalizePunctuation = function (str, model) {
     afterReg = new RegExp(`^[${postPunctuation.join('')}]+`, '')
   }
   // adhoc cleanup for pre
-  str = str.replace(startings, found => {
+  str = str.replace(startings, punct => {
     // punctuation symboles like '@' to allow at start of term
-    let m = found.match(beforeReg)
+    let m = punct.match(beforeReg)
     if (m) {
-      pre = found.replace(beforeReg, '')
-      return m
+      pre = punct.replace(beforeReg, '')
+      return punct
     }
     // support years like '97
     if (pre === `'` && shortYear.test(str)) {
       pre = ''
-      return found
+      return punct
     }
     // support prefix negative signs like '-45'
-    if (found === '-' && isNumber.test(str)) {
-      return found
+    if (punct === '-' && isNumber.test(str)) {
+      return punct
     }
-    pre = found //keep it
+    pre = punct //keep it
     return ''
   })
   // ad-hoc cleanup for post 

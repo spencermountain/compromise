@@ -28,3 +28,27 @@ test('term punctuation', function (t) {
   })
   t.end()
 })
+
+test('modify existing punctuation', function (t) {
+  let world = nlp.world()
+
+  let term = nlp('=cool=').docs[0][0]
+  t.equal(term.normal, 'cool', here + 'before')
+
+  // change it
+  world.model.one.prePunctuation['='] = true
+  term = nlp('=cool=').docs[0][0]
+  t.equal(term.normal, '=cool', here + 'allow before')
+
+  world.model.one.postPunctuation['='] = true
+  term = nlp('=cool=').docs[0][0]
+  t.equal(term.normal, '=cool=', here + 'both')
+
+  world.model.one.prePunctuation['='] = false
+  world.model.one.postPunctuation['='] = false
+  term = nlp('=cool=').docs[0][0]
+  t.equal(term.normal, 'cool', here + 'fixed')
+
+
+  t.end()
+})

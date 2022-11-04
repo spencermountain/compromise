@@ -40,15 +40,11 @@ let txt = ''
 // console.log(doc.replaceWith('a hoy hoy').text())
 
 
-// let world = nlp.world()
-// world.model.one.prePunctuation.push('=')
-// console.log(nlp.world().model.one.prePunctuation)
-// console.log(nlp('44°c').docs[0])
+let world = nlp.world()
+world.model.one.postPunctuation['='] = true
+console.log(nlp('=cool=').docs[0])
 
 
-let str = `</3 sad :^)`
-let docs = nlp(str).docs[0]
-console.log(docs)
 // console.log(nlp('$sorta').docs[0])
 // console.log(nlp('....... the rest was history!.. - ').docs[0])
 // nlp('~sorta').match('sorta').debug()

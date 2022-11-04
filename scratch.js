@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/paragraphs/src/plugin.js'
 // nlp.plugin(plg)
 let txt = ''
@@ -40,10 +40,17 @@ let txt = ''
 // console.log(doc.replaceWith('a hoy hoy').text())
 
 
-let world = nlp.world()
-world.model.one.prePunctuation.push('_')
-console.log(nlp.world().model.one.prePunctuation)
-console.log(nlp('_sorta_').docs[0])
+// let world = nlp.world()
+// world.model.one.prePunctuation.push('=')
+// console.log(nlp.world().model.one.prePunctuation)
+// console.log(nlp('44°c').docs[0])
+
+
+let str = `</3 sad :^)`
+let docs = nlp(str).docs[0]
+console.log(docs)
+// console.log(nlp('$sorta').docs[0])
+// console.log(nlp('....... the rest was history!.. - ').docs[0])
 // nlp('~sorta').match('sorta').debug()
 
 

@@ -1,68 +1,78 @@
 //all punctuation marks, from https://en.wikipedia.org/wiki/Punctuation
-let beforeReg = null
-let afterReg = null
 
 //we have slightly different rules for start/end - like #hashtags.
-const endings = /[\p{Punctuation}\s~]+$/u
-const startings = /^[\p{Punctuation}\s~]+/u
-const hasApostrophe = /['’]/
+const isLetter = /\p{Letter}/u
+const isNumber = /[\p{Number}\p{Currency_Symbol}]/u
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
-const shortYear = /^'[0-9]{2}/
-const isNumber = /^-[0-9]/
+
+// const endings = /[\p{Punctuation}\s~]+$/u
+// const startings = /^[\p{Punctuation}\s~]+/u
+// .,\/#!$%\^&\*;:{}=\-_`~()
+// const hasApostrophe = /['’]/
 
 const normalizePunctuation = function (str, model) {
+  // quick lookup for allowed pre/post punctuation
+  let { prePunctuation, postPunctuation, emoticons } = model.one
   let original = str
   let pre = ''
   let post = ''
+  let chars = Array.from(str)
 
-  // create these regexes in a lazy way
-  if (beforeReg === null) {
-    let { prePunctuation, postPunctuation } = model.one
-    beforeReg = new RegExp(`[${prePunctuation.join('')}]+$`, '')
-    afterReg = new RegExp(`^[${postPunctuation.join('')}]+`, '')
+  // punctuation-only words, like '<3'
+  if (emoticons.hasOwnProperty(str.trim())) {
+    return { str: str.trim(), pre, post: ' ' } //not great
   }
-  // adhoc cleanup for pre
-  str = str.replace(startings, punct => {
-    // punctuation symboles like '@' to allow at start of term
-    let m = punct.match(beforeReg)
-    if (m) {
-      pre = punct.replace(beforeReg, '')
-      return punct
-    }
-    // support years like '97
-    if (pre === `'` && shortYear.test(str)) {
-      pre = ''
-      return punct
-    }
-    // support prefix negative signs like '-45'
-    if (punct === '-' && isNumber.test(str)) {
-      return punct
-    }
-    pre = punct //keep it
-    return ''
-  })
-  // ad-hoc cleanup for post 
-  str = str.replace(endings, found => {
-    // punctuation symbols like '@' to allow at start of term
-    let m = found.match(afterReg)
-    if (m) {
-      post = found.replace(afterReg, '')
-      return m
-    }
 
-    // keep s-apostrophe - "flanders'" or "chillin'"
-    if (hasApostrophe.test(found) && /[sn]['’]$/.test(original) && hasApostrophe.test(pre) === false) {
-      post = post.replace(hasApostrophe, '')
-      return `'`
+  // pop any punctuation off of the start
+  let len = chars.length
+  for (let i = 0; i < len; i += 1) {
+    let c = chars[0]
+    // keep any declared chars
+    if (prePunctuation[c] === true) {
+      continue//keep it
     }
-    //keep end-period in acronym
-    if (hasAcronym.test(str) === true) {
-      post = found.replace(/^\./, '')
-      return '.'
+    // keep '+' or '-' only before a number
+    if ((c === '+' || c === '-') && isNumber.test(chars[1])) {
+      break//done
     }
-    post = found//keep it
-    return ''
-  })
+    // '97 - year short-form
+    if (c === "'" && c.length === 3 && isNumber.test(chars[1])) {
+      break//done
+    }
+    // start of word
+    if (isLetter.test(c) || isNumber.test(c)) {
+      break //done
+    }
+    // punctuation
+    pre += chars.shift()//keep going
+  }
+
+  // pop any punctuation off of the end
+  len = chars.length
+  for (let i = 0; i < len; i += 1) {
+    let c = chars[chars.length - 1]
+    // keep any declared chars
+    if (postPunctuation[c] === true) {
+      continue//keep it
+    }
+    // start of word
+    if (isLetter.test(c) || isNumber.test(c)) {
+      break //done
+    }
+    // F.B.I.
+    if (c === '.' && hasAcronym.test(str) === true) {
+      continue//keep it
+    }
+    //   // keep s-apostrophe - "flanders'" or "chillin'"
+    //   if (hasApostrophe.test(found) && /[sn]['’]$/.test(original) && hasApostrophe.test(pre) === false) {
+    //     post = post.replace(hasApostrophe, '')
+    //     return `'`
+    //   }
+    // punctuation
+    post = chars.pop() + post//keep going
+  }
+
+  str = chars.join('')
   //we went too far..
   if (str === '') {
     // do a very mild parse, and hope for the best.

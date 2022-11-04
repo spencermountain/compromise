@@ -18,17 +18,17 @@ export default [
   // jury is out - preposition ➔ adjective
   { match: '#Copula #Adjective? [(out|in|through)]$', group: 0, tag: 'Adjective', reason: 'still-out' },
   // shut the door
-  { match: '^[#Adjective] (the|your) #Noun', group: 0, ifNo: ['all', 'even'], tag: 'Infinitive', reason: 'shut-the' },
+  { match: '^[#Adjective] (the|your) #Noun', group: 0, notIf: '(all|even)', tag: 'Infinitive', reason: 'shut-the' },
   // the said card
   { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'the-said-card' },
   // a myth that uncovered wounds heal
-  {
-    match: '#Noun (that|which|whose) [#PastTense] #Noun',
-    ifNo: '#Copula',
-    group: 0,
-    tag: 'Adjective',
-    reason: 'that-past-noun',
-  },
+  // {
+  //   match: '#Noun (that|which|whose) [#PastTense] #Noun',
+  //   ifNo: '#Copula',
+  //   group: 0,
+  //   tag: 'Adjective',
+  //   reason: 'that-past-noun',
+  // },
 
   { match: 'too much', tag: 'Adverb Adjective', reason: 'bit-4' },
   { match: 'a bit much', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },

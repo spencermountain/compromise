@@ -642,5 +642,7 @@ export default [
   'renowned',
   'beside',
   'alright',
+  'top notch',
+  'self sufficient'
 ]
 

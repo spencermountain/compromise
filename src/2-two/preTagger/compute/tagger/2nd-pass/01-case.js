@@ -17,6 +17,22 @@ const nope = {
   ml: true,
 }
 
+// 'Buy Our Affordable Cars!'
+// const isAllTitleCase = function (terms) {
+//   if (terms.length <= 3) {
+//     return false
+//   }
+//   let count = 0
+//   terms.forEach(term => {
+//     if (titleCase.test(term.text)) {
+//       count += 1
+//     }
+//   })
+//   if (count >= terms.length - 2) {
+//     return true
+//   }
+//   return false
+// }
 
 // if it's a unknown titlecase word, it's a propernoun
 const checkCase = function (terms, i, model) {
@@ -30,6 +46,10 @@ const checkCase = function (terms, i, model) {
     if (notProper.find(tag => term.tags.has(tag))) {
       return null
     }
+    // ignore 'Buy Our Affordable Cars!'
+    // if (isAllTitleCase(terms)) {
+    //   return null
+    // }
     fillTags(terms, i, model)
     if (!term.tags.has('Noun')) {
       term.tags.clear()

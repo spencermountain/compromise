@@ -723,6 +723,28 @@ let arr = [
   [`will get discouraged`, `#Verb #Verb #Adjective`],
   [`do not get discouraged`, `#Verb #Negative #Verb #Adjective`],
   [`do not be embarrassed`, `#Verb #Negative #Verb #Adjective`],
+
+  [`like to drink`, `#Verb to #Verb`],
+  [`try to hold`, `#Verb to #Verb`],
+  [`need to ask`, `#Verb to #Verb`],
+  [`want to stand`, `#Verb to #Verb`],
+  [`have to face`, `#Verb to #Verb`],
+  [`agreeing to purchase`, `#Verb to #Verb`],
+  [`continue to reform`, `#Verb to #Verb`],
+  [`refused to harbour`, `#Verb to #Verb`],
+  [`begin to fear`, `#Verb to #Verb`],
+  // [`came to light`, `#Verb to #Noun`],
+  [`i bike to work`, `i #Verb to #Noun`],
+  [`bring to market`, `#Verb to #Noun`],
+  [`went to sleep`, `#Verb to #Noun`],
+
+  ['l-theanine', '#Noun'],
+  ['x-ray', '#Noun'],
+  ['my ex-husband', 'my #Noun'],
+  ['The F-102 saw service', 'the #Noun #Verb #Noun'],
+  // titlecase
+  ['We Sell All Brands', '#Pronoun #Verb all #Plural'],
+  ['WE SELL ALL BRANDS', '#Pronoun #Verb all #Plural']
 ]
 test('match:', function (t) {
   let res = []

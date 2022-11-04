@@ -5,6 +5,10 @@ const hasHyphen = function (str, model) {
   }
   const { prefixes, suffixes } = model.one
 
+  // l-theanine, x-ray
+  if (parts[0].length === 1 && /[a-z]/i.test(parts[0])) {
+    return false
+  }
   //dont split 're-do'
   if (prefixes.hasOwnProperty(parts[0])) {
     return false

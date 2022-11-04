@@ -169,6 +169,7 @@ export default [
   'creep out',
   'creep up',
   'cross in',
+  'crowd out',
   'cross out',
   'cut away',
   'cut back',
@@ -853,4 +854,5 @@ export default [
   'zip up',
   'zone out',
   'zonk out',
+  'grab hold'
 ]

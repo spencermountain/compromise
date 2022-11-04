@@ -12,6 +12,19 @@ const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') :
 
 // process.env.DEBUG_DATE = true
 
+
+
+// date issues:
+// 'the month before christmas' vs 'a month before christmas'
+// middle september
+// end of september
+// first half of march
+// week of june 3rd
+// fridays in june
+// every saturday
+// now
+// until christmas
+
 const context = {
   // today: '1999-04-17',
   // today: [1999, 3, 12]

@@ -111,6 +111,27 @@ const utils = {
     }, 0)
   },
 
+  // is the pointer the full sentence?
+  isFull: function () {
+    let ptrs = this.pointer
+    if (!ptrs) {
+      return true
+    }
+    let document = this.document
+    for (let i = 0; i < ptrs.length; i += 1) {
+      let [n, start, end] = ptrs[i]
+      // it's not the start
+      if (n !== i || start !== 0) {
+        return false
+      }
+      // it's too short
+      if (document[n].length > end) {
+        return false
+      }
+    }
+    return true
+  }
+
 }
 utils.group = utils.groups
 utils.fullSentence = utils.fullSentences

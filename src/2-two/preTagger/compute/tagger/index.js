@@ -11,8 +11,9 @@ import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
 import nounFallback from './3rd-pass/04-fallback.js'
-import switches from './3rd-pass/06-switches.js'
 import checkHyphen from './3rd-pass/05-prefixes.js'
+import switches from './3rd-pass/06-switches.js'
+// import imperative from './3rd-pass/07-imperative.js'
 
 const second = {
   tagSwitch,
@@ -30,16 +31,29 @@ const third = {
   orgWords,
   nounFallback,
   switches,
+  // imperative
 }
 
-//
+// is it all yelling-case?
+const ignoreCase = function (terms) {
+  // allow 'John F Kennedy'
+  if (terms.filter(t => !t.tags.has('ProperNoun')).length <= 3) {
+    return false
+  }
+  const lowerCase = /^[a-z]/
+  return terms.every(t => !lowerCase.test(t.text))
+}
+
+
 // these methods don't care about word-neighbours
-const secondPass = function (terms, model, world) {
+const secondPass = function (terms, model, world, yelling) {
   for (let i = 0; i < terms.length; i += 1) {
     // mark Noun|Verb on term metadata
     second.tagSwitch(terms, i, model)
     //  is it titlecased?
-    second.checkCase(terms, i, model)
+    if (yelling === false) {
+      second.checkCase(terms, i, model)
+    }
     // look at word ending
     second.checkSuffix(terms, i, model)
     // try look-like rules
@@ -51,7 +65,7 @@ const secondPass = function (terms, model, world) {
   }
 }
 
-const thirdPass = function (terms, model, world) {
+const thirdPass = function (terms, model, world, yelling) {
   for (let i = 0; i < terms.length; i += 1) {
     // let these tags get layered
     let found = third.checkAcronym(terms, i, model)
@@ -64,28 +78,29 @@ const thirdPass = function (terms, model, world) {
   }
   for (let i = 0; i < terms.length; i += 1) {
     // Johnson LLC
-    third.orgWords(terms, i, world)
+    third.orgWords(terms, i, world, yelling)
     // support 'out-lived'
     second.checkHyphen(terms, i, model)
     // verb-noun disambiguation, etc
     third.switches(terms, i, world)
   }
+  // place tea bags
+  // third.imperative(terms, world)
 }
 
 const preTagger = function (view) {
   const { methods, model, world } = view
-  // assign known-words
-  // view.compute('lexicon')
   // roughly split sentences up by clause
   let document = methods.two.quickSplit(view.docs)
   // start with all terms
   for (let n = 0; n < document.length; n += 1) {
     let terms = document[n]
-    // firstPass(terms, model)
+    // is it all upper-case?
+    const yelling = ignoreCase(terms)
     // guess by the letters
-    secondPass(terms, model, world)
+    secondPass(terms, model, world, yelling)
     // guess by the neighbours
-    thirdPass(terms, model, world)
+    thirdPass(terms, model, world, yelling)
   }
   return document
 }

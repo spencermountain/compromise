@@ -400,11 +400,11 @@ export default [
   },
   {
     text: 'The F-102 saw service in the Vietnam theater between March 1962 and December 1969.',
-    tags: 'DT, NNP, CD, VBD, NN, IN, DT, NNP, NN, IN, NNP, CD, CC, NNP, CD',
+    tags: 'DT, NNP, VBD, NN, IN, DT, NNP, NN, IN, NNP, CD, CC, NNP, CD',
   },
   {
     text: 'During this time, F-102 squadrons were based out of Tan Son Nhut, Da Nang and Bien Hoa in Vietnam, and Udorn and Don Muang in Thailand.',
-    tags: 'IN, DT, NN, NNP, CD, NNS, VBD, VBN, IN, IN, NNP, NNP, NNP, NNP, NNP, CC, NNP, NNP, IN, NNP, CC, NNP, CC, NNP, NNP, IN, NNP',
+    tags: 'IN, DT, NN, NNP, NNS, VBD, VBN, IN, IN, NNP, NNP, NNP, NNP, NNP, CC, NNP, NNP, IN, NNP, CC, NNP, CC, NNP, NNP, IN, NNP',
   },
   {
     text: 'Six weeks of basic training.',
@@ -920,10 +920,6 @@ export default [
   },
   {
     text: '18T-EI Indonesia Operations LLC',
-    tags: 'NNP, NNP, NNPS, NNP',
-  },
-  {
-    text: '86M-Enron Net Works LLC',
     tags: 'NNP, NNP, NNPS, NNP',
   },
   {
@@ -4284,7 +4280,7 @@ export default [
   },
   {
     text: 'Did they do any x-rays?',
-    tags: 'VBD, PRP, VB, DT, NN, NNS',
+    tags: 'VBD, PRP, VB, DT, NNS',
   },
   {
     text: 'They are also very secretive about being in a relationship.',
@@ -4478,10 +4474,6 @@ export default [
   {
     text: 'You do realise it is quite expensive to visit Ireland?',
     tags: 'PRP, VBP, VB, PRP, VBZ, RB, JJ, TO, VB, NNP',
-  },
-  {
-    text: 'Golden Wonder KilliFish Breeding Help?',
-    tags: 'NN, NN, NN, NN, NN',
   },
   {
     text: 'I have 4 Golden Wonder Killifish.',
@@ -4822,10 +4814,6 @@ export default [
   {
     text: 'The service at Instep was great !!',
     tags: 'DT, NN, IN, NNP, VBD, JJ',
-  },
-  {
-    text: 'This place is top notch and highly affordable!',
-    tags: 'DT, NN, VBZ, JJ, NN, CC, RB, JJ',
   },
   {
     text: 'Tried Crust on Broad on 3 occasions.',

@@ -27,6 +27,8 @@ export default [
   'tri',
   'un',
   'out', //out-lived
+  'ex',//ex-wife
+
   // 'counter',
   // 'mid',
   // 'out',

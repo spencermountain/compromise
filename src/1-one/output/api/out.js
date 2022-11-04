@@ -93,7 +93,11 @@ const methods = {
   /** */
   debug: debug,
   /** */
-  out: out,
+  out,
+  /** */
+  wrap: function (obj) {
+    return wrap(this, obj)
+  },
 }
 
 export default methods

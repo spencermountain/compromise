@@ -53,9 +53,9 @@ export default [
   //Foo Ford
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
   // john keith jones
-  { match: '#Person [#ProperNoun #ProperNoun]', group: 0, tag: 'Person', ifNo: '#Possessive', reason: 'three-name-person', safe: true },
+  { match: '#Person [#ProperNoun #ProperNoun]', group: 0, tag: 'Person', notIf: '#Possessive', reason: 'three-name-person', safe: true },
   //John Foo
-  { match: '#FirstName #Acronym? [#ProperNoun]', group: 0, tag: 'LastName', ifNo: '#Possessive', reason: 'firstname-titlecase' },
+  { match: '#FirstName #Acronym? [#ProperNoun]', group: 0, tag: 'LastName', notIf: '#Possessive', reason: 'firstname-titlecase' },
   // john stewart
   { match: '#FirstName [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
   //Joe K. Sombrero
@@ -66,7 +66,7 @@ export default [
   // ==== Honorics ====
   { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: 'Honorific', reason: 'ambg-honorifics' },
   // dr john foobar
-  { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', ifNo: '#Possessive', reason: 'dr-john-foo', safe: true },
+  { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', notIf: '#Possessive', reason: 'dr-john-foo', safe: true },
   //his-excellency
   { match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person', group: 0, tag: 'Honorific', reason: 'his-excellency' },
   // Lieutenant colonel

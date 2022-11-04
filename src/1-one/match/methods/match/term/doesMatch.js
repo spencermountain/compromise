@@ -17,6 +17,10 @@ const doesMatch = function (term, reg, index, length) {
   if (reg.end === true && index !== length - 1) {
     return false
   }
+  // match an id
+  if (reg.id !== undefined && reg.id === term.id) {
+    return true
+  }
   //support a text match
   if (reg.word !== undefined) {
     // check case-sensitivity, etc

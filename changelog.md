@@ -6,8 +6,25 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
-<!-- #### 14.6.0 [Unreleased]
+<!-- #### [planned breaking]
+- fix doc.json(0) inconsistency
+- fix text() options
 -->
+
+<!-- #### 14.7.1 [Unreleased]
+-->
+
+#### 14.7.0 
+- **[new]** - match term id
+- **[change]** - tag text by default on .concat('')
+- **[change]** - allow modifying term prePunctuation
+- **[new]** - .wrap() method
+- **[new]** - .isFull() method
+- **[fix]** - text params for #953
+- **[fix]** - nouns().isSingular() missing
+- **[change]** - one-character w/ dash tokenization #977
+- **[change]** - allow setting `model.one.prePunctuation` + `postPunctuation`
+- **[fix]** - compromise-paragraphs plugin
 
 #### 14.6.0 [Oct 2022]
 - **[change]** - move internal conjugation methods

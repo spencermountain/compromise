@@ -1,0 +1,39 @@
+{
+  "name": "compromise-paragraphs",
+  "description": "plugin for nlp-compromise",
+  "version": "0.1.0",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./src/plugin.js",
+  "unpkg": "./builds/compromise-paragraphs.min.js",
+  "module": "./builds/compromise-paragraphs.mjs",
+  "type": "module",
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js",
+      "require": "./builds/compromise-paragraphs.cjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/compromise.git"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs",
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent"
+  },
+  "files": [
+    "builds/",
+    "src/",
+    "index.d.ts"
+  ],
+  "peerDependencies": {
+    "compromise": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}

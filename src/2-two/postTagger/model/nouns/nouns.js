@@ -11,7 +11,7 @@ export default [
   // my first thought
   { match: '#Possessive #Ordinal [#PastTense]', group: 0, tag: 'Noun', reason: 'first-thought' },
   //the nice swim
-  { match: '(the|this|those|these) #Adjective [%Verb|Noun%]', group: 0, tag: 'Noun', ifNo: '#Copula', reason: 'the-adj-verb' },
+  { match: '(the|this|those|these) #Adjective [%Verb|Noun%]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'the-adj-verb' },
   // the truly nice swim
   { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'determiner4' },
   //the wait to vote
@@ -19,9 +19,9 @@ export default [
   //a sense of
   { match: '#Determiner [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
   //the threat of force
-  { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', ifNo: '#Gerund', reason: 'noun-of-noun' },
+  { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', notIf: '#Gerund', reason: 'noun-of-noun' },
   // ended in ruins
-  { match: '#PastTense #Preposition [#PresentTense]', group: 0, ifNo: ['#Gerund'], tag: 'Noun', reason: 'ended-in-ruins' },
+  { match: '#PastTense #Preposition [#PresentTense]', group: 0, notIf: '#Gerund', tag: 'Noun', reason: 'ended-in-ruins' },
   //'u' as pronoun
   { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },
   { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-pronoun-1' },
@@ -43,7 +43,7 @@ export default [
   { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
   // walk the walk
   { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
-  { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', ifNo: ['#Gerund', '#Copula'], group: 0, tag: 'Noun', reason: 'det-pres' },
+  { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', notIf: '(#Gerund|#Copula)', group: 0, tag: 'Noun', reason: 'det-pres' },
 
   // ==== Actor ====
   //Aircraft designer
@@ -67,7 +67,7 @@ export default [
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // Ptolemy's experiments
-  { match: '#Possessive #PresentTense', ifNo: '#Gerund', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
+  { match: '#Possessive #PresentTense', notIf: '#Gerund', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
   // 10th of a second
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds
@@ -84,8 +84,6 @@ export default [
   { match: '[#PresentTense] (of|by|for) (a|an|the) #Noun #Copula', group: 0, tag: 'Plural', reason: 'photographs-of' },
   // fight and win
   { match: '#Infinitive and [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'fight and win' },
-  // bride and groom
-  // { match: '#Noun and [%Noun|Verb%]', group: 0, tag: 'Singular', ifNo: ['#ProperNoun'], reason: 'bride-and-groom' },
   // peace and flowers and love
   { match: '#Noun and [#Verb] and #Noun', group: 0, tag: 'Noun', reason: 'peace-and-flowers' },
   // the 1992 classic

@@ -12,7 +12,7 @@ for (let i = 0; i < texts.length; i++) {
     .forEach(s => {
       s.verbs().forEach(vb => {
         if (vb.terms().not('(#Adverb|#Auxiliary|#Negative|#PhrasalVerb)').length > 1) {
-          console.log(vb.text())
+          // console.log(vb.text())
         }
       })
 

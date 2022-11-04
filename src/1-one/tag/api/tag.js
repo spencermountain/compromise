@@ -59,6 +59,7 @@ const fns = {
 
   /** return only the terms that can be this tag  */
   canBe: function (tag) {
+    tag = tag.replace(/^#/, '')
     let tagSet = this.model.one.tagSet
     // everything can be an unknown tag
     if (!tagSet.hasOwnProperty(tag)) {

@@ -15,6 +15,7 @@ export default {
   // '[walk] now!'
   Imperative: {
     is: 'Infinitive',
+    not: ['PastTense', 'Gerund', 'Copula'],
   },
   // walking
   Gerund: {

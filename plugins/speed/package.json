@@ -36,7 +36,6 @@
     "compromise": ">=14.0.0"
   },
   "devDependencies": {
-    "compromise": "14.3.1",
     "nlp-corpus": "^4.4.0"
   },
   "license": "MIT"

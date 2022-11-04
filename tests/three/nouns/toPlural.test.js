@@ -124,7 +124,16 @@ test('toPlural - longer:', function (t) {
     [`the tornado in Barrie swept through downtown`, `the tornados in Barrie swept through downtown`],
     [`no cookie until after dinner`, `no cookies until after dinners`],
     [`my finger looked green afterwards`, `my fingers looked green afterwards`],
-    // [`my finger was green afterwards`, `my fingers were green afterwards`],
+
+    // ["keep a cool head", "keep cool heads"],
+    ["petsmart application?", "petsmart applications?"],
+    ["attacked by a bear?", "attacked by bears?"],
+    // ["Gal's DIARY: He ws quiet 2dy.", "Gal's DIARY: He ws quiet 2dy."],
+    // ["All right relax.", "All right relax."],
+    ["HP to be self-sufficient by 2010", "HP to be self-sufficient by 2010"],
+    ["the woman", "the women"],
+    ["the woman isn't dead.", "the women are not dead."],
+    [`my finger was green afterwards`, `my fingers were green afterwards`],
   ]
   arr.forEach(function (a) {
     let doc = nlp(a[0])

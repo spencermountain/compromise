@@ -14,7 +14,7 @@ export default [
   // all singing
   { match: '[all] #Verb', group: 0, tag: 'Adverb', reason: 'all-verb' },
   // sing like an angel
-  { match: '#Verb  [like]', group: 0, ifNo: ['#Modal', '#PhrasalVerb'], tag: 'Adverb', reason: 'verb-like' },
+  { match: '#Verb  [like]', group: 0, notIf: '(#Modal|#PhrasalVerb)', tag: 'Adverb', reason: 'verb-like' },
   //barely even walk
   { match: '(barely|hardly) even', tag: 'Adverb', reason: 'barely-even' },
   //even held
@@ -28,7 +28,7 @@ export default [
   //cheering hard - dropped -ly's
   {
     match: '#PresentTense [(hard|quick|long|bright|slow|fast|backwards|forwards)]',
-    ifNo: '#Copula',
+    notIf: '#Copula',
     group: 0,
     tag: 'Adverb',
     reason: 'lazy-ly',

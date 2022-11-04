@@ -15,7 +15,7 @@ export default [
   'clerk',
   'deputy',
   'dietician',
-  'engineer',
+  // 'engineer',
   'farmer',
   'firefighter',
   'fireman',

@@ -1,8 +1,8 @@
 import tokenize from './tokenize.js'
 
-const parseTerm = txt => {
+const parseTerm = (txt, model) => {
   // cleanup any punctuation as whitespace
-  let { str, pre, post } = tokenize(txt)
+  let { str, pre, post } = tokenize(txt, model)
   const parsed = {
     text: str,
     pre: pre,

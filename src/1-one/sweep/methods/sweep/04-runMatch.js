@@ -18,9 +18,14 @@ const runMatch = function (maybeList, document, docCache, methods, opts) {
           //     const no = m.ifNo[k]
           //     // quick-check cache
           //     if (docCache[n].has(no)) {
-          //       // console.log(no)
-          //       if (terms.find(t => t.normal === no || t.tags.has(no))) {
-          //         // console.log('+' + no)
+          //       if (no.startsWith('#')) {
+          //         let tag = no.replace(/^#/, '')
+          //         if (terms.find(t => t.tags.has(tag))) {
+          //           console.log('+' + tag)
+          //           return
+          //         }
+          //       } else if (terms.find(t => t.normal === no || t.tags.has(no))) {
+          //         console.log('+' + no)
           //         return
           //       }
           //     }

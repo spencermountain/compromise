@@ -1,5 +1,3 @@
-import { spliceArr } from './lib/insert.js'
-
 const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]'
 
 // append a new document, somehow
@@ -32,14 +30,20 @@ const combineViews = function (home, input) {
 export default {
   // add string as new match/sentence
   concat: function (input) {
-    const { methods, document, world } = this
     // parse and splice-in new terms
     if (typeof input === 'string') {
-      let json = methods.one.tokenize.fromString(input, world)
-      let ptrs = this.fullPointer
-      let lastN = ptrs[ptrs.length - 1][0]
-      spliceArr(document, lastN + 1, json)
-      return this.compute('index')
+      let more = this.fromText(input)
+      // easy concat
+      if (!this.found || !this.ptrs) {
+        this.document = this.document.concat(more.document)
+      } else {
+        // if we are in the middle, this is actually a splice operation
+        let ptrs = this.fullPointer
+        let at = ptrs[ptrs.length - 1][0]
+        this.document.splice(at, 0, ...more.document)
+      }
+      // put the docs
+      return this.all().compute('index')
     }
     // plop some view objects together
     if (typeof input === 'object' && input.isView) {

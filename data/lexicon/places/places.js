@@ -66,6 +66,7 @@ export default [
   'bel air',
   'malibu',
   'gay village',
+  'orange county',
   'sunderland',
 
   // places with their own timezones

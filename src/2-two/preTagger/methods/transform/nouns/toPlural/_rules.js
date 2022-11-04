@@ -2,7 +2,7 @@
 const suffixes = {
   a: [
     [/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae'],
-    [/([ti])a$/i, '$1a'],
+    [/ia$/i, 'ia'],
   ],
   e: [
     [/(kn|l|w)ife$/i, '$1ives'],

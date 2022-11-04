@@ -32,6 +32,13 @@ test('out-wrap', function (t) {
   let out = doc.out({
     '#Adjective': (m) => `[${m.text()}]`
   })
-  t.equal(out, `[soft] and [yielding] like a nerf ball`, 'two matches')
+  t.equal(out, `[soft] and [yielding] like a nerf ball`, here + 'two matches')
+
+  // pre-post
+  doc = nlp("before (match) after")
+  out = doc.wrap({
+    'match': () => `few more words`,
+  })
+  t.equal(out, `before (few more words) after`, here + 'pre+post')
   t.end()
 })

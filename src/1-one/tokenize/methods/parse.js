@@ -11,7 +11,7 @@ const parse = function (input, world) {
   input = sentences.map((txt) => {
     let terms = splitTerms(txt, model)
     // split into [pre-text-post]
-    terms = terms.map(splitWhitespace)
+    terms = terms.map(t => splitWhitespace(t, model))
     // add normalized term format, always
     terms.forEach((t) => {
       normalize(t, world)

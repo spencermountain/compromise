@@ -68,6 +68,9 @@ const parse = function (matches, world) {
     if (typeof obj.ifNo === 'string') {
       obj.ifNo = [obj.ifNo]
     }
+    if (obj.notIf) {
+      obj.notIf = parseMatch(obj.notIf, {}, world)
+    }
     // cache any requirements up-front 
     obj.needs = getNeeds(obj.regs)
     let { wants, count } = getWants(obj.regs)

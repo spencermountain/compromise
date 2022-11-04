@@ -1,6 +1,8 @@
 import failFast from './01-failFast.js'
 import fromHere from './02-from-here.js'
 import getGroup from './03-getGroup.js'
+import notIf from './03-notIf.js'
+
 
 // make proper pointers
 const addSentence = function (res, n) {
@@ -76,6 +78,9 @@ const runMatch = function (docs, todo, cache) {
       let n = res.pointer[0]
       return docs[n].length === res.pointer[2]
     })
+  }
+  if (todo.notIf) {
+    results = notIf(results, todo.notIf, docs)
   }
   // grab the requested group
   results = getGroup(results, group)

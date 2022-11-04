@@ -5,12 +5,12 @@ const here = '[one/concat] '
 test('concat tag :', function (t) {
   let doc = nlp('the start and the end. another one')
   doc.concat('cool times. oh yeah')
-  t.equal(doc.has('#Adjective times'), true, here + 'tagged - 1')
+  t.equal(doc.has('cool times'), true, here + 'tagged - 1')
 
   doc = nlp('the start and the end. another one')
   let b = nlp('cool times. oh yeah')
   doc.concat(b)
-  t.equal(doc.has('#Adjective times'), true, here + 'tagged - 2')
+  t.equal(doc.has('cool times'), true, here + 'tagged - 2')
   t.end()
 })
 

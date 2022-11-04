@@ -11,7 +11,10 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - fix text() options
 -->
 
-<!-- #### 14.6.1 [Unreleased]
+<!-- #### 14.7.1 [Unreleased]
+-->
+
+#### 14.7.0 
 - **[new]** - match term id
 - **[change]** - tag text by default on .concat('')
 - **[change]** - allow modifying term prePunctuation
@@ -19,7 +22,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - .isFull() method
 - **[fix]** - text params for #953
 - **[fix]** - nouns().isSingular() missing
--->
+- **[change]** - one-character w/ dash tokenization #977
+- **[change]** - allow setting `model.one.prePunctuation` + `postPunctuation`
+- **[fix]** - compromise-paragraphs plugin
 
 #### 14.6.0 [Oct 2022]
 - **[change]** - move internal conjugation methods

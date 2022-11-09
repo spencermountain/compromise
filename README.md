@@ -853,6 +853,11 @@ nlp.extend({
 - **[Tasking Slack-bot](https://github.com/kevinsuh/toki)** - by Kevin Suh
   [[see more]](https://observablehq.com/@spencermountain/compromise-projects)
 
+##### Comparisons
+- [Compromise and Spacy](https://observablehq.com/@spencermountain/compromise-and-spacy)
+- [Compromise and NLTK](https://observablehq.com/@spencermountain/compromise-and-NLTK)
+
+
 <!-- spacer -->
 <div align="center">
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>

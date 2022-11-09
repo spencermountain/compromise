@@ -62,7 +62,8 @@ export default {
     technical: n,//
     computer: n,//
     scientific: n,//
-    formal: n
+    formal: n,
+    no: n//no worries
   },
   afterWords: {
     of: n, //date of birth (preposition)

@@ -405,6 +405,7 @@ export default [
   'flower',
   'sandwich',
   'x ray',
+  'pig',
 ]
 
 

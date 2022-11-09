@@ -769,8 +769,8 @@ let arr = [
   [`Instagram star [captures] the silent beauty`, `#Noun+ #PresentTense the #Adjective #Singular`],
   [`go as i please`, `#Infinitive as #Pronoun #Infinitive`],
   [`the Oak tree [understood] and felt sad`, `the #Noun+ #PastTense and #PastTense #Adjective`],
-  // [``, ``],
-  // [``, ``],
+  [`by asking [questions] about her`, `by #Gerund #Plural . her`],
+  [`no worries`, `no #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

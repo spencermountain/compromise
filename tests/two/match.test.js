@@ -767,6 +767,10 @@ let arr = [
   [`Bite or [lick] your lower lip`, `#Infinitive or #Infinitive #Possessive #Adjective #Singular`],
   [`[burnt] the cake`, `#Verb the #Singular`],
   [`Instagram star [captures] the silent beauty`, `#Noun+ #PresentTense the #Adjective #Singular`],
+  [`go as i please`, `#Infinitive as #Pronoun #Infinitive`],
+  [`the Oak tree [understood] and felt sad`, `the #Noun+ #PastTense and #PastTense #Adjective`],
+  // [``, ``],
+  // [``, ``],
   // [``, ``],
 ]
 test('match:', function (t) {

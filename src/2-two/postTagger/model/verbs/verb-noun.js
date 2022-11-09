@@ -126,7 +126,7 @@ export default [
   //pursue its dreams
   // { match: '#PresentTense #Possessive [#PresentTense]', notIf: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
   // our unyielding support
-  { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'our-full-support' },
+  { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'our-full-support' },
   // they do serve fish
   { match: '(do|did|will) [#Singular] #Noun', group: 0, tag: 'PresentTense', reason: 'do-serve-fish' },
   // tastes good

@@ -78,6 +78,9 @@ export default [
   // no no no
   // { match: 'no+', tag: 'Expression', reason: 'no-no' },
 
+  // as we please
+  { match: 'as #Pronoun [please]', group: 0, tag: 'Infinitive', reason: 'as-we-please' },
+
 
   // { match: '%Plural|Verb% %Noun|Verb%', tag: '#Plural #PresentTense', reason: 'banks-wear' },
 ]

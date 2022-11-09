@@ -225,7 +225,8 @@ export default [
   // prefixes
   'overlooked',
   'muted',
-  'burnt'
+  'burnt',
+  'understood',
 ]
 
 

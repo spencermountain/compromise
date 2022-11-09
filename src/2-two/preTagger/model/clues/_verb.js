@@ -77,6 +77,8 @@ export default {
     otherwise: v,//
     together: v,//fit together
     though: v,//
+    into: v,//
     yet: v,//
+    more: v,//kill more
   },
 }

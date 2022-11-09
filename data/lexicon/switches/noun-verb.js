@@ -798,4 +798,6 @@ export default [
   'commit',
   'lick',
   'capture',
+  'ground',
+  'hug',
 ]

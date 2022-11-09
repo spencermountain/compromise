@@ -79,7 +79,6 @@ export default [
   'blind',
   'beyond',
   'good',
-  'understood',
   'substandard',
   'on board',
   'aboard',

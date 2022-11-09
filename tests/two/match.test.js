@@ -755,16 +755,17 @@ let arr = [
   [`[Ditch] the schedule`, '#Imperative the #Noun'],
   [`Stick to doing "Bookie payouts"`, '#Imperative to #Gerund #Noun #Plural'],
   [`[Resolve] yourself`, `#Imperative #Reflexive`],
-  [``, ``],
-  [``, ``],
-  [``, ``],
-  [``, ``],
-  [``, ``],
-  [``, ``],
-  [``, ``],
-  [``, ``],
-  [``, ``],
-  [``, ``],
+
+  [`[Maintain] eye contact`, `#Imperative #Singular #Singular`],
+  // [`[Wear] muted or neutral colors`, `#Imperative #Adjective or #Adjective #Plural`],
+  [`don't forget to clean`, `#Verb not #Imperative to #Imperative`],
+  // [``, ``],
+  // [``, ``],
+  // [``, ``],
+  // [``, ``],
+  // [``, ``],
+  // [``, ``],
+  // [``, ``],
 ]
 test('match:', function (t) {
   let res = []

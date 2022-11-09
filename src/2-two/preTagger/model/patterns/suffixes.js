@@ -136,6 +136,7 @@ export default [
     gist: Sing,
     note: Sing,
     cide: Sing,//homicide
+    ence: Sing,//absence
     wide: Adj,//nationwide
     // side: Adj,//alongside
     vide: Inf,//provide

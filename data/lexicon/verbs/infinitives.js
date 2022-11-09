@@ -712,4 +712,5 @@ export default [
   'sweeten',
 
   'explain',
+  'maintain',
 ]

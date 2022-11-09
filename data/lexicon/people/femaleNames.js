@@ -589,7 +589,6 @@ export default [
   'fien',
   'fiona',
   'flora',
-  'florence',
   'florencia',
   'fozia',
   'fran',

@@ -55,4 +55,12 @@ export default [
   { match: '^[#Infinitive] (to|for|into|toward)', group: 0, tag: 'Imperative', reason: 'go-to' },
   // relax and unwind
   { match: '^[#Infinitive] (and|or) #Infinitive', group: 0, tag: 'Imperative', reason: 'inf-and-inf' },
+
+  // commit to
+  { match: '^[%Noun|Verb%] to', group: 0, tag: 'Imperative', reason: 'commit-to' },
+  // maintain eye contact
+  { match: '^[#Infinitive] #Adjective? #Singular #Singular', group: 0, tag: 'Imperative', reason: 'maintain-eye-contact' },
+  // don't forget to clean
+  { match: 'do not (forget|omit|neglect) to [#Infinitive]', group: 0, tag: 'Imperative', reason: 'do-not-forget' },
+
 ]

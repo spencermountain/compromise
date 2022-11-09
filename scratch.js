@@ -6,7 +6,7 @@ let txt = ''
 // let doc
 // let m
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
@@ -50,15 +50,13 @@ let arr = [
   // missing verbs
   // imperative
 
-  `[Wear] muted or neutral colors `,
-  `[Guess] who's doing laundry`,
-  `[Maintain] eye contact `,
-  `[Talk] one on one `,
+  // `[Talk] one on one `,
+  // `[Guess] who's doing laundry`,
 
   // hmmm
-  `Though Foster [is] associated with beer`,
-  `My very existence [is] oppressive `,
-  `the things that makes Frozen so great [is] that few if any have dealt with the idea`,
+  // `Though Foster [is] associated with beer`,
+  // `My very existence [is] oppressive `,
+  `Frozen so great [is] that few `,
   `while your kids are still growing [is] like shoveling`,
 
 

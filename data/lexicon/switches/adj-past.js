@@ -223,7 +223,8 @@ export default [
   'wet',
   'worried',
   // prefixes
-  'overlooked'
+  'overlooked',
+  'muted'
 ]
 
 

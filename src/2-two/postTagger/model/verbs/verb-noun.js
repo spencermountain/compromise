@@ -82,7 +82,7 @@ export default [
   // many poses
   { match: '(many|few|several|couple) [#PresentTense]', group: 0, tag: 'Noun', reason: 'many-poses' },
   // very big dreams
-  { match: '#Adverb #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'very-big-dream' },
+  { match: '#Adverb #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'very-big-dream' },
   // adorable little store
   { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adorable-little-store' },
   // of basic training
@@ -140,10 +140,9 @@ export default [
   // noun-pastTense variables
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', group: 0, tag: 'Noun', reason: 'noun-past' },
 
+  // 'verb-to'
   // how to watch
   { match: 'how to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'how-to-noun' },
-  // commit to
-  { match: '^[%Noun|Verb%] to', group: 0, tag: 'Imperative', reason: 'commit-to' },
   // ready to stream
   { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'ready-to-noun' },
   // bring to market

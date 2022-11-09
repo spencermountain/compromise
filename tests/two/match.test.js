@@ -765,6 +765,8 @@ let arr = [
   // [`you're [set]`, `#Pronoun #PresentTense #Adjective`],
   [`make her [see] that`, `#Imperative her #Infinitive that`],
   [`Bite or [lick] your lower lip`, `#Infinitive or #Infinitive #Possessive #Adjective #Singular`],
+  [`[burnt] the cake`, `#Verb the #Singular`],
+  [`Instagram star [captures] the silent beauty`, `#Noun+ #PresentTense the #Adjective #Singular`],
   // [``, ``],
 ]
 test('match:', function (t) {

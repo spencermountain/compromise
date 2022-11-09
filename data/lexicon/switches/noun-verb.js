@@ -797,4 +797,5 @@ export default [
   'temper',
   'commit',
   'lick',
+  'capture',
 ]

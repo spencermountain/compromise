@@ -2440,10 +2440,6 @@ export default [
     tags: 'VBD, EX, DT',
   },
   {
-    text: 'It is a fairly standard, fully reimbursable interconnect with Questar.',
-    tags: 'PRP, VBZ, DT, RB, JJ, RB, JJ, NN, IN, NNP',
-  },
-  {
     text: 'Robert Guthrie with the tax department has worked with us to develop this language.',
     tags: 'NNP, NNP, IN, DT, NN, NN, VBZ, VBN, IN, PRP, TO, VB, DT, NN',
   },
@@ -2452,7 +2448,7 @@ export default [
     tags: 'PRP, VBP, TO, VB, DT, NN, DT, NN',
   },
   {
-    text: 'It is a fairly standard, fully reimbursable interconnect with Questar.',
+    text: 'It is a fairly standard, fully reimbursable connection with Questar.',
     tags: 'PRP, VBZ, DT, RB, JJ, RB, JJ, NN, IN, NNP',
   },
   {

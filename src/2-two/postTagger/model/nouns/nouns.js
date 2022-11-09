@@ -67,7 +67,7 @@ export default [
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // Ptolemy's experiments
-  { match: '#Possessive #PresentTense', notIf: '#Gerund', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
+  { match: '#Possessive #PresentTense', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
   // 10th of a second
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds

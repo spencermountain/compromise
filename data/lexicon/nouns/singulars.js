@@ -275,6 +275,7 @@ export default [
   'aspect',
   'prospect',
   'insect',
+  'intellect',
   'verdict',
   'district',
   'free market',

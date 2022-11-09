@@ -712,5 +712,7 @@ export default [
   'sweeten',
 
   'explain',
+  'occur',
+  'concur',
   'maintain',
 ]

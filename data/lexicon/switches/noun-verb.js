@@ -444,6 +444,7 @@ export default [
   'range',
   'rank',
   'rat',
+  'read',
   'reason',
   'recall',
   'record',
@@ -795,4 +796,5 @@ export default [
   'guess',
   'temper',
   'commit',
+  'lick',
 ]

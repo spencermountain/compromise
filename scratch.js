@@ -53,21 +53,6 @@ let arr = [
   // `[Talk] one on one `,
   // `[Guess] who's doing laundry`,
 
-  // hmmm
-  // `Though Foster [is] associated with beer`,
-  // `My very existence [is] oppressive `,
-  `Frozen so great [is] that few `,
-  `while your kids are still growing [is] like shoveling`,
-
-
-  `the earliest [recorded] interment`,
-  `While it does [occur] sometimes`,
-  `if you [like] comics`,
-  `concessions that are [needed]`,
-  `you’ll also soon pfind] that you’ve become her friend`,
-  `you're [set] `,
-  `will also make her [see] that you're [interested]`,
-  `Bite or [lick] your lower lip`,
   `you seem unapproachable and [closed] [off]`,
   `lost all track of time and [burnt] the cake `,
   `But before I do that [let] me put a hand on it `,
@@ -78,6 +63,7 @@ let arr = [
   `did the sailor [ground] his son `,
   `if the trees [hug] back `,
   `if your fast [was] on the shorter side `,
+  `if you [like] comics`,
   `19 tornadoes in its history [kill] more than 100 people`,
   `helped [marshal] support`,
   `Find out if your [desired] pet is virtual`,

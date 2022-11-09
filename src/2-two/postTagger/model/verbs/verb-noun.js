@@ -142,6 +142,8 @@ export default [
 
   // how to watch
   { match: 'how to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'how-to-noun' },
+  // commit to
+  { match: '^[%Noun|Verb%] to', group: 0, tag: 'Imperative', reason: 'commit-to' },
   // ready to stream
   { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'ready-to-noun' },
   // bring to market

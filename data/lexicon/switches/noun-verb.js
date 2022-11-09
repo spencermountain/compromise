@@ -791,4 +791,8 @@ export default [
   'ask',
   'drone',
   'tangle',
+  'ditch',
+  'guess',
+  'temper',
+  'commit',
 ]

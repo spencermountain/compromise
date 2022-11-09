@@ -710,4 +710,6 @@ export default [
   'lessen',
   'worsen',
   'sweeten',
+
+  'explain',
 ]

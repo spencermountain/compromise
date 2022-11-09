@@ -744,7 +744,15 @@ let arr = [
   ['The F-102 saw service', 'the #Noun #Verb #Noun'],
   // titlecase
   ['We Sell All Brands', '#Pronoun #Verb all #Plural'],
-  ['WE SELL ALL BRANDS', '#Pronoun #Verb all #Plural']
+  ['WE SELL ALL BRANDS', '#Pronoun #Verb all #Plural'],
+
+
+  [`[commit] to a fun activity`, '#Imperative to a #Adjective #Noun'],
+  [`[Talk] to her`, '#Imperative to #Pronoun'],
+  [`[Explain] to him`, '#Imperative to #Pronoun'],
+  [`[Temper] your expectations`, '#Imperative your #Plural'],
+  [`[Ditch] the schedule`, '#Imperative the #Noun'],
+  [`Stick to doing "Bookie payouts"`, '#Imperative to #Gerund #Noun #Plural'],
 ]
 test('match:', function (t) {
   let res = []

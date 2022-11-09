@@ -49,17 +49,12 @@ let txt = ''
 let arr = [
   // missing verbs
   // imperative
-  `[commit] to a fun activity`,
-  `[Talk] to her`,
-  `[Talk] one on one `,
-  `[Explain] [to] him`,
-  `[Temper] your expectations `,
-  `[While] sex does [occur] sometimes`,
-  `[Maintain] eye contact `,
-  `[Ditch] the schedule`,
+
+  `[Wear] muted or neutral colors `,
   `[Resolve] yourself`,
   `[Guess] who's doing laundry`,
-  `[Wear] muted or neutral colors `,
+  `[Maintain] eye contact `,
+  `[Talk] one on one `,
 
   // hmmm
   `Though Foster [is] associated with beer`,
@@ -69,6 +64,7 @@ let arr = [
 
 
   `the earliest [recorded] interment`,
+  `While it does [occur] sometimes`,
   `if you [like] comics`,
   `concessions that are [needed]`,
   `you’ll also soon pfind] that you’ve become her friend`,
@@ -212,22 +208,9 @@ let arr = [
 
 ]
 
-let found = nlp('')
-let docs = [
-  nlp('We Sell All Brands'),
-  nlp('all we are'),
-  nlp('see, we drop our prices'),
-  // nlp('All right relax'),
-  // nlp(`If you notice swelling, we will accept damages`),
-  // nlp(`and whisk to fully incorporate`),
-]
-docs.forEach(doc => {
-  found = found.concat(doc.match("we ."))
-})
-console.log(found)
-found.debug()
 
-// txt = arr[0]
-// let doc = nlp(txt).debug()
+txt = arr[0]
+let doc = nlp(txt).debug()
+// console.log(doc.docs)
 // doc.match('#Conjunction #Adjective #Noun').debug()
 

@@ -747,12 +747,24 @@ let arr = [
   ['WE SELL ALL BRANDS', '#Pronoun #Verb all #Plural'],
 
 
+  // imperative
   [`[commit] to a fun activity`, '#Imperative to a #Adjective #Noun'],
   [`[Talk] to her`, '#Imperative to #Pronoun'],
   [`[Explain] to him`, '#Imperative to #Pronoun'],
   [`[Temper] your expectations`, '#Imperative your #Plural'],
   [`[Ditch] the schedule`, '#Imperative the #Noun'],
   [`Stick to doing "Bookie payouts"`, '#Imperative to #Gerund #Noun #Plural'],
+  [`[Resolve] yourself`, `#Imperative #Reflexive`],
+  [``, ``],
+  [``, ``],
+  [``, ``],
+  [``, ``],
+  [``, ``],
+  [``, ``],
+  [``, ``],
+  [``, ``],
+  [``, ``],
+  [``, ``],
 ]
 test('match:', function (t) {
   let res = []

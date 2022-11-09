@@ -51,7 +51,6 @@ let arr = [
   // imperative
 
   `[Wear] muted or neutral colors `,
-  `[Resolve] yourself`,
   `[Guess] who's doing laundry`,
   `[Maintain] eye contact `,
   `[Talk] one on one `,

@@ -12,6 +12,7 @@ export default {
     Determiner: v, //flash the
     Adverb: v, //date quickly
     Possessive: v, //date his
+    Reflexive: v,//resolve yourself
     // Noun:true, //date spencer
     Preposition: v, //date around, dump onto, grumble about
     // Conjunction: v, // dip to, dip through

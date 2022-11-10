@@ -9,6 +9,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!-- #### [planned breaking]
 - fix doc.json(0) inconsistency
 - fix text() options
+- deprecate #Participle for #PastParticiple
 -->
 
 <!-- #### 14.7.1 [Unreleased]

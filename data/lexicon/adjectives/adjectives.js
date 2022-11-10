@@ -575,6 +575,11 @@ export default [
   'unruly',
   'many',
   'sparkly',
+  'approximately',
+  'fortunately',
+  'unfortunately',
+  'lately',
+  'ultimately',
 
   // -ry
   'legendary',
@@ -646,5 +651,7 @@ export default [
   'self sufficient',
   'middle aged',
   'no more',
+  'ashen',
+  'scarlet',
 ]
 

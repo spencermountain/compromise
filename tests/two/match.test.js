@@ -777,7 +777,7 @@ let arr = [
   [`we pre established it`, `we #Verb #PastTense it`],
   [`quickly co writing it`, `#Adverb #Verb #Gerund it`],
   [`it was really mis firing`, `it #Copula #Adverb #Verb+`],
-  [`it was pre written`, `#Pronoun #PastTense (#Verb && #Prefix) #Participle`],
+  // [`it was pre written`, `#Pronoun #PastTense (#Verb && #Prefix) #Participle`],
   [`we will out run the monster`, `we #Verb #Prefix #Infinitive the #Singular`],
   [`it can re spawn`, `it #Modal #Prefix #Infinitive`],
   [`it was un cool`, `it #PastTense (#Prefix && #Adjective) #Adjective`],
@@ -798,6 +798,7 @@ let arr = [
   ['Helping hardworking families', '#Gerund #Adjective #Plural'],
   [`I'm practising walking`, `i am #Gerund #Noun`],
   [`The pot seen here`, `#Determiner #Singular #Participle #Uncountable`],
+  [`his [ashen] gray face became [scarlet] with [rage]`, `his #Adjective+ #Noun #PastTense #Adjective with #Singular`],
   // [``, ``],
   // [``, ``],
 ]

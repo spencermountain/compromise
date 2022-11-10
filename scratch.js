@@ -84,11 +84,11 @@ let arr = [
   // 'For being organized',
   // 'a nearly overpowering feeling',
   // 'keep subsidizing skyrocketing tuition',
+  // `Grimy [work] you guys do`,
 
-  `his [ashen] gray face became [scarlet] with [rage]`,
-  `Grimy [work] you guys do`,
-  `she's [worth] a [shot]`,
-  `Where ships dock`,
+  // 'lengthen',
+  'the newly written book',
+
   `in the [most] [stately] [manner]`,
   `Engage your body and [mind] with yoga`,
   `We did a little [improv] there`,

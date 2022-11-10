@@ -703,13 +703,15 @@ export default [
 
   // present participles
   'awaken',
+  'freshen',
   'frighten',
   'hasten',
   'heighten',
   'lengthen',
   'lessen',
-  'worsen',
+  'strengthen',
   'sweeten',
+  'worsen',
 
   'explain',
   'occur',

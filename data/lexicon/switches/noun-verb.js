@@ -802,5 +802,9 @@ export default [
   'hug',
   'rape',
   'panic',
+  'rage',
   'parent',
+  'shot',
+  'dock',
+  'manner',
 ]

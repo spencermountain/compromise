@@ -409,7 +409,7 @@ export default [
   'loser',
   'time out',
   'time off',
-  'darling'
+  'darling',
 ]
 
 

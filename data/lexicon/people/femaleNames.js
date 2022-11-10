@@ -1499,7 +1499,7 @@ export default [
   'sasha',
   'savanna',
   'savannah',
-  'scarlet',
+  // 'scarlet',
   'scarlett',
   'selena',
   'selene',

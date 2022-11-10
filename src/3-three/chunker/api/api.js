@@ -20,6 +20,9 @@ const api = function (View) {
     isAdjective() {
       return this.filter(c => c.has('<Adjective>'))
     }
+    isPivot() {
+      return this.filter(c => c.has('<Pivot>'))
+    }
     // chunk-friendly debug
     debug() {
       this.toView().debug('chunks')

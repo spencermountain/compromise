@@ -168,13 +168,22 @@ let arr = [
 // doc.nouns().debug()
 // console.log(doc.docs)
 // doc.match('#Conjunction #Adjective #Noun').debug()
-txt = 'everybody swam carefully to the rock'
-txt = 'please eat carefully in the kitchen'
-txt = `The band's first album Cracker was released in 1992 on Virgin Records`
-txt = `A cracker is a flat, dry baked food typically made with flour`
-txt = `A cracker is a flat, dry food typically made with flour`
+// txt = 'she swam carefully to the rock'
+// txt = 'spencer ate a sandwich carefully'
+txt = 'the whole team waited to sing'
+txt = 'he made a sandwich with tomato and sang a tune'
+// txt = 'please eat carefully in the kitchen'
+// txt = `The band's first album Cracker was released in 1992 on Virgin Records`
+// txt = `A cracker is a flat, dry baked food typically made with flour`
+// txt = `A cracker is a flat, dry food typically made with flour`
+// txt = `can you see the birds?`
+// txt = `i saw the birds and i fed the squirrels`
+// txt = `diana is pretty and cheerful`
 // txt = 'she was beautiful'
 // txt = 'the beautiful girl walked slowly toward the store'
 //  txt = 'scientists     at stanford university     have reconstructed     this 3D model       of how adam and eve         might have looked'
-let facts = nlp(txt).facts()
-console.dir(facts, { depth: 5 })
+
+
+let table = nlp(txt).facts()
+table.debug()
+// console.dir(table.facts, { depth: 5 })

@@ -1,16 +1,7 @@
+import parseVerb from '../verb.js'
+import parseNoun from '../noun.js'
 
 /*
-Instruction
-
-Statement
-Statement/Action - she walked home, i could have seen
-Statement/Definition - Tootsie is a movie
-Statement/Description - he is tall
-
-Question
-Question/Time
-Question/Amount
-
 
 
 */
@@ -25,19 +16,6 @@ const factType = function (vb) {
   return 'Action'
 }
 
-const parseVerb = function (chunk) {
-  let obj = chunk.verbs().json()[0].verb
-  return {
-    desc: obj.preAdverbs.concat(obj.postAdverbs),
-    root: obj.infinitive,
-    tense: obj.grammar.tense
-  }
-}
-
-const parseNoun = function (chunk) {
-  let obj = chunk.nouns().json()[0].noun
-  return obj
-}
 
 const getFacts = function (s) {
   let facts = []

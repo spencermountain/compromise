@@ -11,7 +11,7 @@ import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
 import nounFallback from './3rd-pass/04-fallback.js'
-import checkHyphen from './3rd-pass/05-prefixes.js'
+// import checkHyphen from './3rd-pass/05-prefixes.js'
 import switches from './3rd-pass/06-switches.js'
 // import imperative from './3rd-pass/07-imperative.js'
 
@@ -21,7 +21,7 @@ const second = {
   checkRegex,
   checkCase,
   checkPrefix,
-  checkHyphen,
+  // checkHyphen,
   checkYear,
 }
 
@@ -80,7 +80,7 @@ const thirdPass = function (terms, model, world, yelling) {
     // Johnson LLC
     third.orgWords(terms, i, world, yelling)
     // support 'out-lived'
-    second.checkHyphen(terms, i, model)
+    // second.checkHyphen(terms, i, model)
     // verb-noun disambiguation, etc
     third.switches(terms, i, world)
   }

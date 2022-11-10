@@ -771,6 +771,17 @@ let arr = [
   [`the Oak tree [understood] and felt sad`, `the #Noun+ #PastTense and #PastTense #Adjective`],
   [`by asking [questions] about her`, `by #Gerund #Plural . her`],
   [`no worries`, `no #Plural`],
+  [`for the first time`, `for the #Ordinal #Singular`],
+
+  // prefixes
+  [`we pre established it`, `we #Verb #PastTense it`],
+  [`quickly co writing it`, `#Adverb #Verb #Gerund it`],
+  [`it was really mis firing`, `it #Copula #Adverb #Verb+`],
+  [`it was pre written`, `#Pronoun #PastTense (#Verb && #Prefix) #Participle`],
+  [`we will out run the monster`, `we #Verb #Prefix #Infinitive the #Singular`],
+  [`it can re spawn`, `it #Modal #Prefix #Infinitive`],
+  // [``, ``],
+  // [``, ``],
   // [``, ``],
 ]
 test('match:', function (t) {

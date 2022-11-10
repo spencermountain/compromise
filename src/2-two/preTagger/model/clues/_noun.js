@@ -13,6 +13,7 @@ export default {
     PastTense: n, //saved storm victims
     Infinitive: n, //profess love
     Date: n,//9pm show
+    Ordinal: n//first date
   },
   afterTags: {
     Value: n, //date nine  -?

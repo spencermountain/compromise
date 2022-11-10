@@ -45,6 +45,20 @@ export default {
     she: v,
     it: v,
     being: v,
+    // prefixes
+    bi: v,
+    co: v,
+    contra: v,
+    de: v,
+    inter: v,
+    intra: v,
+    mis: v,
+    pre: v,
+    un: v,
+    out: v,
+    counter: v,
+    over: v,
+    under: v,
   },
   afterWords: {
     the: v, //echo the

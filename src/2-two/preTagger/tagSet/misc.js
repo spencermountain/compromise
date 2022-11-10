@@ -70,5 +70,9 @@ export default {
   // existential 'there'
   There: {
     not: ['Verb', 'Adjective', 'Noun', 'Value', 'Conjunction', 'Preposition'],
+  },
+  // 'co-wrote'
+  Prefix: {
+    not: ['Abbreviation', 'Acronym', 'ProperNoun']
   }
 }

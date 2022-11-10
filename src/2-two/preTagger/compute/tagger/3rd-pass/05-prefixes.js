@@ -12,18 +12,18 @@ const doPrefix = function (terms, i, model) {
   let term = terms[i]
 
   // word like 'over'
-  if (prefixes[term.normal] === true) {
-    // 'over cooked'
-    if (nextTerm.tags.has('Verb')) {
-      fastTag(term, 'Verb', '3-[prefix]')
-      fastTag(term, 'Prefix', '3-[prefix]')
-    }
-    // 'pseudo clean'
-    if (nextTerm.tags.has('Adjective')) {
-      fastTag(term, 'Adjective', '3-[prefix]')
-      fastTag(term, 'Prefix', '3-[prefix]')
-    }
-  }
+  // if (prefixes[term.normal] === true) {
+  //   // 'over cooked'
+  //   if (nextTerm.tags.has('Verb')) {
+  //     fastTag(term, 'Verb', '3-[prefix]')
+  //     fastTag(term, 'Prefix', '3-[prefix]')
+  //   }
+  //   // 'pseudo clean'
+  //   if (nextTerm.tags.has('Adjective')) {
+  //     fastTag(term, 'Adjective', '3-[prefix]')
+  //     fastTag(term, 'Prefix', '3-[prefix]')
+  //   }
+  // }
 
 }
 export default doPrefix

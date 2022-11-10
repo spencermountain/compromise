@@ -799,6 +799,10 @@ let arr = [
   [`I'm practising walking`, `i am #Gerund #Noun`],
   [`The pot seen here`, `#Determiner #Singular #Participle #Uncountable`],
   [`his [ashen] gray face became [scarlet] with [rage]`, `his #Adjective+ #Noun #PastTense #Adjective with #Singular`],
+  [`dance music`, `#Noun+`],
+  [`bowling league`, `#Noun+`],
+  [`annual dancing festival`, `#Adjective #Noun+`],
+  // [``, ``],
   // [``, ``],
   // [``, ``],
 ]

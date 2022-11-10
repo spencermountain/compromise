@@ -410,6 +410,7 @@ export default [
   'time out',
   'time off',
   'darling',
+  'dump truck',
 ]
 
 

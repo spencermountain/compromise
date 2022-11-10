@@ -87,14 +87,9 @@ let arr = [
   // `Grimy [work] you guys do`,
 
   // 'lengthen',
-  'the newly written book',
 
-  `in the [most] [stately] [manner]`,
-  `Engage your body and [mind] with yoga`,
-  `We did a little [improv] there`,
-  `This was the first [time] a Scottish team had qualified`,
-  `dump truck smashing into [overpass] on the 401`,
-  `[Iron] Maiden land in Beijing`,
+  // `dump truck smashing into [overpass] on the 401`,
+  // `[Iron] Maiden land in Beijing`,
   `The top 10 [dance] music festivals`,
   `I never hurt you [sweetheart] I never pulled my gun`,
   `[Frame] dental procedures in simple terms`,

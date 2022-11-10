@@ -406,6 +406,7 @@ export default [
   'sandwich',
   'x ray',
   'pig',
+  'loser',
 ]
 
 

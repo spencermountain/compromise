@@ -42,6 +42,8 @@ let matches = [
   { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
   // dude we should
   { match: '^[(dude|man|girl)] #Pronoun', group: 0, tag: 'Expression', reason: 'dude-i' },
+  // are ya
+  { match: '(are|#Modal|see|do|for) [ya]', group: 0, tag: 'Pronoun', reason: 'are-ya' },
 
   // 'there' as adjective
   { match: '(always|nearly|barely|practically) [there]', group: 0, tag: 'Adjective', reason: 'always-there' },

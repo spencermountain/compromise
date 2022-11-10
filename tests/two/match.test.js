@@ -782,6 +782,12 @@ let arr = [
   [`it can re spawn`, `it #Modal #Prefix #Infinitive`],
   [`it was un cool`, `it #PastTense (#Prefix && #Adjective) #Adjective`],
   [`it was pre windy`, `it #PastTense (#Prefix && #Adjective) #Adjective`],
+
+  [`could ya`, `#Modal #Pronoun`],
+  [`burst out laughing`, `#Verb+`],
+  [`you guys are nice`, `#Uncountable+ are #Adjective`],
+  [`On [Dutch] [maps]`, `on #Demonym #Plural`],
+  [`Our balanced budget will increase [funding]`, `#Possessive #Adjective #Singular will #Infinitive #Singular`],
   // [``, ``],
 ]
 test('match:', function (t) {

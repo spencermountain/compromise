@@ -800,4 +800,5 @@ export default [
   'capture',
   'ground',
   'hug',
+  'rape',
 ]

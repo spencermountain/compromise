@@ -13,7 +13,8 @@ export default {
     PastTense: n, //saved storm victims
     Infinitive: n, //profess love
     Date: n,//9pm show
-    Ordinal: n//first date
+    Ordinal: n,//first date
+    Demonym: n//dutch map
   },
   afterTags: {
     Value: n, //date nine  -?
@@ -39,6 +40,10 @@ export default {
     // thing-ish verbs
     cut: n,//cut spending
     cuts: n,//cut spending
+    increase: n,// increase funding
+    decrease: n,//
+    raise: n,// 
+    drop: n,//
     save: n,//
     saved: n,//
     saves: n,//

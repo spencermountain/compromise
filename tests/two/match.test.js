@@ -780,8 +780,8 @@ let arr = [
   [`it was pre written`, `#Pronoun #PastTense (#Verb && #Prefix) #Participle`],
   [`we will out run the monster`, `we #Verb #Prefix #Infinitive the #Singular`],
   [`it can re spawn`, `it #Modal #Prefix #Infinitive`],
-  // [``, ``],
-  // [``, ``],
+  [`it was un cool`, `it #PastTense (#Prefix && #Adjective) #Adjective`],
+  [`it was pre windy`, `it #PastTense (#Prefix && #Adjective) #Adjective`],
   // [``, ``],
 ]
 test('match:', function (t) {

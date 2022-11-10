@@ -117,6 +117,7 @@ export default [
   'call off',
   'call on',
   'call up',
+  'call out',
   'calm down',
   'cancel out',
   'carry away',

@@ -70,8 +70,8 @@ let arr = [
   // `this witch who turned men into [pigs]`,
   // `[Snow] White roommate who fits the category`,
 
-  'will out run',
-  'over-cooked',
+  // 'will out run',
+  'it was un cool',
   'His mother, on hearing this, burst out laughing',
 
   ' when he was out hunting',

@@ -34,6 +34,6 @@ export default [
   { match: 'a bit much', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },
 
   // adjective-prefixes - 'un skilled'
-  // { match: '[(un|contra|extra|inter|intra|macro|micro|mid|mis|mono|multi|pre|sub|tri|out|ex)] #Adjective', group: 0, tag: ['Adjective', 'Prefix'], reason: 'un-skilled' },
+  { match: '[(un|contra|extra|inter|intra|macro|micro|mid|mis|mono|multi|pre|sub|tri|ex)] #Adjective', group: 0, tag: ['Adjective', 'Prefix'], reason: 'un-skilled' },
 
 ]

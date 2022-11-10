@@ -54,11 +54,11 @@ export default {
     intra: v,
     mis: v,
     pre: v,
-    un: v,
     out: v,
     counter: v,
-    over: v,
-    under: v,
+    // un: v,
+    // over: v,
+    // under: v,
   },
   afterWords: {
     the: v, //echo the

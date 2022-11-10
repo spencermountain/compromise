@@ -168,7 +168,11 @@ let arr = [
 // doc.nouns().debug()
 // console.log(doc.docs)
 // doc.match('#Conjunction #Adjective #Noun').debug()
-txt = 'we all swam carefully to the rock'
+txt = 'everybody swam carefully to the rock'
+txt = 'please eat carefully in the kitchen'
+txt = `The band's first album Cracker was released in 1992 on Virgin Records`
+txt = `A cracker is a flat, dry baked food typically made with flour`
+txt = `A cracker is a flat, dry food typically made with flour`
 // txt = 'she was beautiful'
 // txt = 'the beautiful girl walked slowly toward the store'
 //  txt = 'scientists     at stanford university     have reconstructed     this 3D model       of how adam and eve         might have looked'

@@ -16,7 +16,7 @@ export default [
   // turn down the noise
   { match: '^[#Infinitive] (up|down|over) #Determiner', group: 0, tag: 'Imperative', reason: 'turn-down' },
   // eat my shorts
-  { match: '^[#Infinitive] (your|my|the|some|a|an)', group: 0, notIf: 'like', tag: 'Imperative', reason: 'eat-my-shorts' },
+  { match: '^[#Infinitive] (your|my|the|a|an|any|each|every|some|more)', group: 0, notIf: 'like', tag: 'Imperative', reason: 'eat-my-shorts' },
   // tell him the story
   { match: '^[#Infinitive] (him|her|it|us|me)', group: 0, tag: 'Imperative', reason: 'tell-him' },
   // avoid loud noises

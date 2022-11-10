@@ -76,14 +76,15 @@ let arr = [
   // `Let me take you to [places]`,
   // `Guess who's doing [laundry] there too`,
   // `You've had [smoke] blown your way`,
-  `What's small brown, hairy and [wears] sunglasses`,
-  `Give more [details]`,
-  `this place is a[must]`,
-  `Tremors in Saurashtra spread [panic]`,
-  `With more [holes] than a rug`,
-  `Only [parents] can make sure the TV is turned off`,
-  `It's [buzzcut] season anyway`,
-  `[Channel] [surfing][reigns] again`,
+  // `With more [holes] than a rug`,
+  // `It's [buzzcut] season anyway`,
+
+  // 'you are hugging parked cars',
+  // 'recognizing written language',
+  // 'For being organized',
+  // 'a nearly overpowering feeling',
+  // 'keep subsidizing skyrocketing tuition',
+
   `his [ashen] gray face became [scarlet] with [rage]`,
   `Grimy [work] you guys do`,
   `she's [worth] a [shot]`,
@@ -174,6 +175,8 @@ let arr = [
 
 txt = arr[0]
 let doc = nlp(txt).debug()
+// doc.verbs().debug()
+// doc.nouns().debug()
 // console.log(doc.docs)
 // doc.match('#Conjunction #Adjective #Noun').debug()
 

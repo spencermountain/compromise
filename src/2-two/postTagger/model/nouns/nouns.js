@@ -2,9 +2,16 @@ const infNouns =
   '(feel|sense|process|rush|side|bomb|bully|challenge|cover|crush|dump|exchange|flow|function|issue|lecture|limit|march|process)'
 export default [
   //'more' is not always an adverb
-  { match: 'more #Noun', tag: 'Noun', reason: 'more-noun' },
+  // any more
+  { match: '(the|any) [more]', group: 0, tag: 'Singular', reason: 'more-noun' },
+  // more players
+  { match: '[more] #Noun', group: 0, tag: 'Adjective', reason: 'more-noun' },
+  // rights of man
   { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' },
-  { match: 'a [bit]', group: 0, tag: 'Noun', reason: 'bit-2' },
+  // a bit
+  { match: 'a [bit]', group: 0, tag: 'Singular', reason: 'bit-2' },
+  // a must
+  { match: 'a [must]', group: 0, tag: 'Singular', reason: 'must-2' },
 
   //some pressing issues
   { match: 'some [#Verb] #Plural', group: 0, tag: 'Noun', reason: 'determiner6' },

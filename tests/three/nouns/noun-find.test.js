@@ -85,7 +85,7 @@ test('noun-phrases', function (t) {
     [`They walked on through the night`, ['They', 'the night']],
     [`you have only the practice of friendship`, ['you', 'the practice of friendship']],
     [`we commended him for his bravery`, ['we', 'him', 'his bravery']],
-    [`should give parents the power`, ['parents', 'the power']],
+    [`should give parents their power`, ['parents', 'their power']],
     [`Sweet is the scent`, ['the scent']],
     [`the surly captain of the basketball team`, ['the surly captain of the basketball team']],
     [`the nine captains of the new orleans basketball team`, ['the nine captains of the new orleans basketball team']],

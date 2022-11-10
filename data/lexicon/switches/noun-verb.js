@@ -801,4 +801,6 @@ export default [
   'ground',
   'hug',
   'rape',
+  'panic',
+  'parent',
 ]

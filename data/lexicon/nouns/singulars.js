@@ -407,6 +407,9 @@ export default [
   'x ray',
   'pig',
   'loser',
+  'time out',
+  'time off',
+  'darling'
 ]
 
 

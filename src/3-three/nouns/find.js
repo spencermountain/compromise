@@ -21,7 +21,8 @@ const findNouns = function (doc) {
   // put it there
   m = m.splitOn('[#Noun] (here|there)', 0)
   // its great purposes
-  // m = m.splitAfter('#Possessive')
+  // give [parents] [our money]
+  m = m.splitBefore('(our|my|their|your)')
   // his excuses
   // m = m.splitAfter('(his|hers|yours|ours|theirs)')
   //ensure there's actually a noun

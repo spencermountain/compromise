@@ -4287,10 +4287,6 @@ export default [
     tags: 'VBZ, PRP, JJ',
   },
   {
-    text: 'Have I just fallen victim in a cultural trap?',
-    tags: 'VBP, PRP, RB, VBN, NN, IN, DT, JJ, NN',
-  },
-  {
     text: 'Christiane gave you a good answer.',
     tags: 'NNP, VBD, PRP, DT, JJ, NN',
   },

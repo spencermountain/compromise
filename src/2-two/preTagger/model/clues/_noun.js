@@ -44,6 +44,7 @@ export default {
     decrease: n,//
     raise: n,// 
     drop: n,//
+    // give: n,//give parents
     save: n,//
     saved: n,//
     saves: n,//
@@ -69,7 +70,8 @@ export default {
     computer: n,//
     scientific: n,//
     formal: n,
-    no: n//no worries
+    no: n,//no worries
+    more: n//more details
   },
   afterWords: {
     of: n, //date of birth (preposition)
@@ -88,5 +90,6 @@ export default {
     wants: n,
     wanted: n,
     is: n,
+    can: n,//parents can
   },
 }

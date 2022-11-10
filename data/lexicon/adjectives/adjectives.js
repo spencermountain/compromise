@@ -595,6 +595,7 @@ export default [
   'auditory',
   'statutory',
   'sorry',
+  'hairy',
   'uppity',
   'guilty',
   'woozy',
@@ -643,6 +644,7 @@ export default [
   'alright',
   'top notch',
   'self sufficient',
-  'middle aged'
+  'middle aged',
+  'no more',
 ]
 

@@ -788,6 +788,17 @@ let arr = [
   [`you guys are nice`, `#Uncountable+ are #Adjective`],
   [`On [Dutch] [maps]`, `on #Demonym #Plural`],
   [`Our balanced budget will increase [funding]`, `#Possessive #Adjective #Singular will #Infinitive #Singular`],
+  [`What's small brown, hairy and [wears] sunglasses`, `what is #Adjective+ and #PresentTense #Plural`],
+  // [`the town sang no more`, `the #Singular is #Adjective+`],
+  [`the more he yearned`, `the #Noun he #PastTense`],
+  [`Give more [details]`, `#Imperative #Adjective #Plural`],
+  [`this place is a [must]`, `this #Noun is a #Singular`],
+  [`Only [parents] can make sure the TV is turned off`, `only #Plural #Verb #PhrasalVerb+ the #Singular #Copula #PhrasalVerb+`],
+  ['repairing crumbling roads', '#Gerund #Adjective #Plural'],
+  ['Helping hardworking families', '#Gerund #Adjective #Plural'],
+  [`I'm practising walking`, `i am #Gerund #Noun`],
+  [`The pot seen here`, `#Determiner #Singular #Participle #Uncountable`],
+  // [``, ``],
   // [``, ``],
 ]
 test('match:', function (t) {

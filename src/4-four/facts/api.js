@@ -34,6 +34,9 @@ const api = function (View) {
         writable: true,
       })
     }
+    json() {
+      return this.facts
+    }
     // chunk-friendly debug
     debug() {
       let lastSentence = null
@@ -41,7 +44,7 @@ const api = function (View) {
         let subj = ''
         let verb = ''
         let obj = ''
-        let mod = ''
+        let mods = []
         let txt = this.doc.update([fact.ptr]).text()
         if (fact.subj) {
           subj = fact.subj.root
@@ -53,18 +56,20 @@ const api = function (View) {
           obj = fact.obj.root
           if (fact.obj.mod) {
             Object.keys(fact.obj.mod).forEach(k => {
-              mod += `[${k}] ${fact.obj.mod[k].root}`
+              mods.push(`[${k}] ${fact.obj.mod[k].root}`)
             })
           }
         }
         if (txt !== lastSentence) {
-          console.log(`\n'${dim(txt)}'`)
+          console.log(`\n'${dim(txt)}'`)//eslint-disable-line
           lastSentence = txt
         }
         //eslint-disable-next-line
         console.log(`${blue(subj.padEnd(10))} | ${green(verb.padEnd(10))}  | ${cyan(obj.padEnd(10))}`)
-        if (mod) {
-          console.log(''.padEnd(15) + `+${dim(mod)}`)
+        if (mods.length) {
+          mods.forEach(mod => {
+            console.log(''.padEnd(25) + `+${dim(mod)}`)//eslint-disable-line
+          })
         }
       })
       return this

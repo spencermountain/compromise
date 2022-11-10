@@ -63,7 +63,12 @@ const getParts = function (s) {
     },
     // "however"
     Pivot: (chunk) => {
-      pivot = parsePivot(chunk)
+      let p = parsePivot(chunk)
+      pivot = p.root
+      if (res.obj && p.breakPoint) {
+        parts.push(res)
+        res = {}
+      }
     },
   }
 

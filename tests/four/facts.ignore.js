@@ -50,6 +50,18 @@ let arr = [
       obj: 'manager',
     }]
   },
+  {
+    txt: 'he made a sandwich for dinner with tomatos and cheese and sang a tune',
+    facts: [{
+      subj: 'he',
+      verb: 'make',
+      obj: 'sandwich',
+    }, {
+      subj: 'he',
+      verb: 'sing',
+      obj: 'tune',
+    }]
+  },
   // {
   //   txt: '',
   //   facts: [{
@@ -62,7 +74,7 @@ let arr = [
 
 test('facts', function (t) {
   arr.forEach(obj => {
-    let all = nlp(obj.txt).facts()
+    let all = nlp(obj.txt).facts().json()
 
     t.equal(all.length, obj.facts.length, here + ` [facts] ${obj.txt}`)
 

@@ -79,7 +79,7 @@ export default [
   'thus',
   'too',
   'totally',
-  'toward',
+  // 'toward',
   'twice',
   'up to',
   'upwards of',

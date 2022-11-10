@@ -807,4 +807,5 @@ export default [
   'shot',
   'dock',
   'manner',
+  'bitch',
 ]

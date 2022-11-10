@@ -1,12 +1,12 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/four.js'
 // import plg from './plugins/paragraphs/src/plugin.js'
 // nlp.plugin(plg)
 let txt = ''
 // let doc
 // let m
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
@@ -86,14 +86,8 @@ let arr = [
   // 'keep subsidizing skyrocketing tuition',
   // `Grimy [work] you guys do`,
 
-  // 'lengthen',
-
   // `dump truck smashing into [overpass] on the 401`,
   // `[Iron] Maiden land in Beijing`,
-  `The top 10 [dance] music festivals`,
-  `I never hurt you [sweetheart] I never pulled my gun`,
-  `[Frame] dental procedures in simple terms`,
-  `[Bitches] be frustrated`,
 
 
   // missing adjectives
@@ -168,10 +162,15 @@ let arr = [
 ]
 
 
-txt = arr[0]
-let doc = nlp(txt).debug()
+// txt = arr[0]
+// let doc = nlp(txt).debug()
 // doc.verbs().debug()
 // doc.nouns().debug()
 // console.log(doc.docs)
 // doc.match('#Conjunction #Adjective #Noun').debug()
-
+txt = 'we all swam carefully to the rock'
+// txt = 'she was beautiful'
+// txt = 'the beautiful girl walked slowly toward the store'
+//  txt = 'scientists     at stanford university     have reconstructed     this 3D model       of how adam and eve         might have looked'
+let facts = nlp(txt).facts()
+console.dir(facts, { depth: 5 })

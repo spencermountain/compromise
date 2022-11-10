@@ -411,6 +411,7 @@ export default [
   'time off',
   'darling',
   'dump truck',
+  'sweetheart',
 ]
 
 

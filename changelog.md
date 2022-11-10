@@ -10,6 +10,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - fix doc.json(0) inconsistency
 - fix text() options
 - deprecate #Participle for #PastParticiple
+- run chunker only when necessary
+- cleanup verb+noun metadata in json()
 -->
 
 <!-- #### 14.7.1 [Unreleased]

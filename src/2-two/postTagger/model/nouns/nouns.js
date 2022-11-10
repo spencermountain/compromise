@@ -12,6 +12,8 @@ export default [
   { match: 'a [bit]', group: 0, tag: 'Singular', reason: 'bit-2' },
   // a must
   { match: 'a [must]', group: 0, tag: 'Singular', reason: 'must-2' },
+  // we all
+  { match: '(we|us) [all]', group: 0, tag: 'Noun', reason: 'we all' },
 
   //some pressing issues
   { match: 'some [#Verb] #Plural', group: 0, tag: 'Noun', reason: 'determiner6' },

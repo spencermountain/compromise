@@ -1,8 +1,8 @@
-const chunks = function () {
+const chunks = function (doc) {
   let carry = []
   let ptr = null
   let current = null
-  this.docs.forEach(terms => {
+  doc.docs.forEach(terms => {
     terms.forEach(term => {
       // start a new chunk
       if (term.chunk !== current) {
@@ -18,7 +18,7 @@ const chunks = function () {
   if (ptr) {
     carry.push(ptr)
   }
-  let parts = this.update(carry)
+  let parts = doc.update(carry)
   // split up verb-phrases, and noun-phrases
   parts = parts.map(c => {
     if (c.has('<Noun>')) {

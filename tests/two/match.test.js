@@ -802,7 +802,9 @@ let arr = [
   [`dance music`, `#Noun+`],
   [`bowling league`, `#Noun+`],
   [`annual dancing festival`, `#Adjective #Noun+`],
-  // [``, ``],
+  [`[Bitches] be frustrated`, `#Plural #Verb #PastTense`],
+  [`we all swam`, `#Noun #Noun #PastTense`],
+  [`he ate us all`, `#Pronoun #Verb #Noun #Noun`],
   // [``, ``],
   // [``, ``],
 ]

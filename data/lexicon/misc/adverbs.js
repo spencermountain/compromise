@@ -8,7 +8,6 @@ export default [
   'all but',
   'all that',
   'almost',
-  'alone',
   'already',
   'also',
   'always',

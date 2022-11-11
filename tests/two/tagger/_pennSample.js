@@ -2496,10 +2496,6 @@ export default [
     tags: 'DT, VBP, DT, NNS, IN, NN, VBN, IN, DT, NN',
   },
   {
-    text: 'We have worked with Daniels on a chromatograph on another project and prepayment has taken 45 days alone.',
-    tags: 'PRP, VBP, VBN, IN, NNP, IN, DT, NN, IN, DT, NN, CC, NN, VBZ, VBN, CD, NNS, RB',
-  },
-  {
     text: 'Great.',
     tags: 'JJ',
   },
@@ -4189,10 +4185,6 @@ export default [
   {
     text: 'Do you speak a foreign language?',
     tags: 'VBP, PRP, VB, DT, JJ, NN',
-  },
-  {
-    text: 'I could spend a year in Spain alone.',
-    tags: 'PRP, MD, VB, DT, NN, IN, NNP, RB',
   },
   {
     text: 'Amount of time could be dependent on so many things.',

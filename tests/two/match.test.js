@@ -805,7 +805,8 @@ let arr = [
   [`[Bitches] be frustrated`, `#Plural #Verb #PastTense`],
   [`we all swam`, `#Noun #Noun #PastTense`],
   [`he ate us all`, `#Pronoun #Verb #Noun #Noun`],
-  // [``, ``],
+  [`I might be [alone] forever`, `#Pronoun #Auxiliary #Verb #Adjective #Adverb`],
+  [`It was her [favorite] book`, `it #Verb #Possessive #Adjective #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

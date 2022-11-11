@@ -653,5 +653,11 @@ export default [
   'no more',
   'ashen',
   'scarlet',
+  'alone',
+  'homesick',
+  'longtime',
+  'bigtime',
+  'inside',
+  'outside',
 ]
 

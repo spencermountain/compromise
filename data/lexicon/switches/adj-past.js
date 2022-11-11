@@ -227,6 +227,7 @@ export default [
   'muted',
   'burnt',
   'understood',
+  'inflated',
 ]
 
 

@@ -6,7 +6,7 @@ let txt = ''
 // let doc
 // let m
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
@@ -16,13 +16,6 @@ let txt = ''
 
 // let doc = nlp('hello there')
 // console.log(doc.replaceWith('a hoy hoy').text())
-
-
-let doc = nlp('it was an emergency')
-doc.docs[0][3].sense = 'foo'
-let reg = nlp.parseMatch('{emergency/Noun/foo}')
-doc.match(reg).debug()
-
 
 
 let arr = [
@@ -70,16 +63,10 @@ let arr = [
 
 
   // missing adjectives
-  `I might be [alone] here`,
-  `It's amazing how [slow] a day like this can pass`,
-  `The [holy] [well] of St Guron`,
-  `Must be [homesick] for the real`,
-  `Consumers given [inflated] electricity bills`,
-  `Sally Field & Loni Anderson were [longtime] loves of this hunk`,
-  `with many [key] commanders`,
-  `'Cause girl you 're [amazing] just the way you are`,
-  `Everyone is [inside]`,
-  `It was her [favorite] book as a kid`,
+  // `The [holy] [well] of St Guron`,
+  // `with many [key] commanders`,
+  // `'Cause girl you're [amazing] just the way you are`,
+  `You and my sister, sittin’ in a tree.`,
   `in this [artsy] area`,
   `I wish my [only] problem in life`,
   `It starts out [fine] but things turn [sour] really quick`,
@@ -88,12 +75,12 @@ let arr = [
   `this is her [favourite] restaurant in Vancouver`,
   `were seamed [over] with [little] red lines`,
   `A lot of [exaggerated] hip swinging`,
-  `I'll just be [alone] forever`,
   `my cupboard is [bare]`,
   `having my steak [undercooked]`,
   `Everybody was [delighted] that he should be king`,
   `Are you [as] [confused] as I am`,
   `The bennies were [outstanding]`,
+  // `prepayment has taken 45 days alone`
 
 
   // numerous case studies
@@ -142,7 +129,7 @@ let arr = [
 
 
 txt = arr[0]
-// let doc = nlp(txt).debug()
+let doc = nlp(txt).debug()
 // doc.verbs().debug()
 // doc.nouns().debug()
 // console.log(doc.docs)

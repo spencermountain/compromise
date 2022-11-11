@@ -16,6 +16,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 <!-- #### 14.7.1 [Unreleased]
 - **[fix]** - concat fix
+- **[change]** - tagging fixes
+- **[change]** - sense-match syntax changes
 -->
 
 #### 14.7.0 

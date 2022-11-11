@@ -14,35 +14,14 @@ let txt = ''
 
 
 
-// // bug 3
-// let doc = nlp("Dr. John Smith-McDonald...?  ")
-// let opts = {
-//   keepPunct: false,
-//   keepSpace: false,
-//   case: false,
-// }
-// console.log(doc.text(opts) + '|')
-
-
-// console.log(nlp('two turtledoves and a partridge in a pear tree').nouns().isSingular().out('array'))
-
-// let doc = nlp('hello there after words')
-// let regs = doc.match('(after|words)+').docs[0].map(t => {
-//   return { id: t.id, optional: true }
-// })
-
-// let m = doc.match('hello there')
-// console.log(doc.replaceWith('a hoy hoy').text())
-// console.log(m.json({ sentence: true }))
-// m.growRight(regs).debug()
-
 // let doc = nlp('hello there')
 // console.log(doc.replaceWith('a hoy hoy').text())
 
 
-// console.log(nlp('$sorta').docs[0])
-// console.log(nlp('....... the rest was history!.. - ').docs[0])
-// nlp('~sorta').match('sorta').debug()
+let doc = nlp('it was an emergency')
+doc.docs[0][3].sense = 'foo'
+let reg = nlp.parseMatch('{emergency/Noun/foo}')
+doc.match(reg).debug()
 
 
 
@@ -162,7 +141,7 @@ let arr = [
 ]
 
 
-// txt = arr[0]
+txt = arr[0]
 // let doc = nlp(txt).debug()
 // doc.verbs().debug()
 // doc.nouns().debug()
@@ -186,6 +165,6 @@ txt = 'i tried the waterslide and so my knees were shaking'
 txt = 'scientists at stanford university have reconstructed this 3D model of how adam and eve might have looked'
 
 
-let table = nlp(txt).facts()
-table.debug()
+// let table = nlp(txt).facts()
+// table.debug()
 // console.dir(table.json(), { depth: 5 })

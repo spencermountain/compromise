@@ -25,7 +25,7 @@ const showTags = function (view) {
       let tags = [...(t.tags || [])]
       let text = t.text || '-'
       if (t.sense) {
-        text = '{' + t.sense + '}'
+        text = `{${t.normal}/${t.sense}}`
       }
       if (t.implicit) {
         text = '[' + t.implicit + ']'

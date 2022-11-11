@@ -130,7 +130,7 @@ const parseToken = function (w, opts) {
     //root/sense overloaded
     if (start(w) === '{' && end(w) === '}') {
       w = stripBoth(w)
-      obj.id = w
+      // obj.sense = w
       obj.root = w
       if (/\//.test(w)) {
         let split = obj.root.split(/\//)
@@ -143,7 +143,7 @@ const parseToken = function (w, opts) {
         obj.pos = obj.pos.charAt(0).toUpperCase() + obj.pos.substr(1).toLowerCase()
         // add sense-number too
         if (split[2] !== undefined) {
-          obj.num = split[2]
+          obj.sense = split[2]
         }
       }
       return obj

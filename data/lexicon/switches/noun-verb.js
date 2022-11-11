@@ -808,4 +808,5 @@ export default [
   'dock',
   'manner',
   'bitch',
+  'war',
 ]

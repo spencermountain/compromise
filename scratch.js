@@ -76,7 +76,8 @@ let arr = [
 
   // `the Co-Chairmen of the International Conference`,
   // `countries as a whole seem brighter`,
-  `in times of both war and peace `,
+  // `four years of uninterrupted economic growth`,
+  // `because people of varying ethnicities`,
 
   // 'Caring for Kaneohe since 1986',
   // 'Boost user engagement',
@@ -87,7 +88,6 @@ let arr = [
   // 'call ahead and reserve one',
   // 'in the room where you usually nurse',
   'We Sell All Brands',
-  'Hillary Rodham Clinton',
   'place tea bags in hot water',
   // 'while the therapist watches',
   // 'All right relax'

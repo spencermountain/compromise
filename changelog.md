@@ -14,11 +14,13 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - cleanup verb+noun metadata in json()
 -->
 
-<!-- #### 14.7.1 [Unreleased]
+<!-- #### 14.7.2 [Unreleased]
+-->
+
+#### 14.7.1 
 - **[fix]** - concat fix
 - **[change]** - tagging fixes
-- **[change]** - sense-match syntax changes
--->
+- **[change]** - `{word/tag/sense}` sense-match syntax
 
 #### 14.7.0 
 - **[new]** - match term id

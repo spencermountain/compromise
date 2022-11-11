@@ -817,6 +817,7 @@ let arr = [
   [`quickly brought under control`, `#Adverb #PhrasalVerb+ #Noun`],
   [`This claim was settled between`, `this #Noun was #PastTense between`],
   [`expect a period of sub-standard investment`, `#Imperative a #Noun of #Adjective #Singular`],
+  [`in times of war and peace`, `in #Plural of #Singular and #Uncountable`],
   // [``, ``],
 ]
 test('match:', function (t) {

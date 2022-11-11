@@ -23,7 +23,8 @@ const clue = {
     be: 'Adjective'
   }),
   afterWords: Object.assign({}, adj.afterWords, verb.afterWords, {
-    to: undefined//slick to the touch
+    to: undefined,//slick to the touch
+    as: 'Adjective',//pale as
   }),
 }
 // console.log(clue.beforeWords)

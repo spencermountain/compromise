@@ -2,6 +2,25 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[one/concat] '
 
+test('concat misc :', function (t) {
+  let found = nlp('')
+  let docs = [
+    nlp('We Sell All Brands'),
+    nlp('all we are'),
+    nlp('see, we drop our prices'),
+    nlp('All right relax'),
+    nlp(`If you notice swelling, we will accept damages`),
+    nlp(`and whisk to fully incorporate`),
+  ]
+  docs.forEach(doc => {
+    found = found.concat(doc.match("we ."))
+  })
+  t.equal(found.length, 4, here + 'found all four')
+  t.equal(found.all().has('prices'), false, here + 'only merged selection')
+  t.equal(found.not('we .').found, false, here + 'only we .')
+  t.end()
+})
+
 test('concat tag :', function (t) {
   let doc = nlp('the start and the end. another one')
   doc.concat('cool times. oh yeah')

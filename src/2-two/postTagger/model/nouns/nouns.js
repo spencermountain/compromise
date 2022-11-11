@@ -2,9 +2,18 @@ const infNouns =
   '(feel|sense|process|rush|side|bomb|bully|challenge|cover|crush|dump|exchange|flow|function|issue|lecture|limit|march|process)'
 export default [
   //'more' is not always an adverb
-  { match: 'more #Noun', tag: 'Noun', reason: 'more-noun' },
+  // any more
+  { match: '(the|any) [more]', group: 0, tag: 'Singular', reason: 'more-noun' },
+  // more players
+  { match: '[more] #Noun', group: 0, tag: 'Adjective', reason: 'more-noun' },
+  // rights of man
   { match: '(right|rights) of .', tag: 'Noun', reason: 'right-of' },
-  { match: 'a [bit]', group: 0, tag: 'Noun', reason: 'bit-2' },
+  // a bit
+  { match: 'a [bit]', group: 0, tag: 'Singular', reason: 'bit-2' },
+  // a must
+  { match: 'a [must]', group: 0, tag: 'Singular', reason: 'must-2' },
+  // we all
+  { match: '(we|us) [all]', group: 0, tag: 'Noun', reason: 'we all' },
 
   //some pressing issues
   { match: 'some [#Verb] #Plural', group: 0, tag: 'Noun', reason: 'determiner6' },
@@ -67,7 +76,7 @@ export default [
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // Ptolemy's experiments
-  { match: '#Possessive #PresentTense', notIf: '#Gerund', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
+  { match: '#Possessive #PresentTense', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
   // 10th of a second
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds
@@ -93,5 +102,7 @@ export default [
 
   // scottish - i ate me sandwich
   { match: 'i #Verb [me] #Noun', group: 0, tag: 'Possessive', reason: 'scottish-me' },
+  // dance music
+  { match: '[#PresentTense] (music|class|lesson|night|party|festival|league|ceremony)', group: 0, tag: 'Noun', reason: 'dance-music' },
 
 ]

@@ -4,6 +4,8 @@ const rules = [
   { match: '[that] #Determiner #Noun', group: 0, chunk: 'Pivot' },
   // estimated that
   { match: '#PastTense [that]', group: 0, chunk: 'Pivot' },
+  // so the
+  { match: '[so] #Determiner', group: 0, chunk: 'Pivot' },
 
   // === Adjective ===
   // was really nice
@@ -63,6 +65,8 @@ const rules = [
   { match: '#Noun in #Determiner? #Noun', chunk: 'Noun' },
   // indoor and outdoor seating
   { match: '#Singular and #Determiner? #Singular', chunk: 'Noun' },
+  // tomatoes and cheese
+  // { match: '#Noun and #Determiner? #Noun', notIf: '#Pronoun', chunk: 'Noun' },
   // that is why
   // { match: '[that] (is|was)', group: 0, chunk: 'Noun' },
 ]

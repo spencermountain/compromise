@@ -45,6 +45,7 @@ const adjPast = {
     as: past, //known as
     on: past, //focused on
     at: past, //recorded at
+    between: past,//settled between
   },
 }
 

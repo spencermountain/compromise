@@ -79,7 +79,6 @@ export default [
   'blind',
   'beyond',
   'good',
-  'understood',
   'substandard',
   'on board',
   'aboard',
@@ -576,6 +575,11 @@ export default [
   'unruly',
   'many',
   'sparkly',
+  'approximately',
+  'fortunately',
+  'unfortunately',
+  'lately',
+  'ultimately',
 
   // -ry
   'legendary',
@@ -596,6 +600,7 @@ export default [
   'auditory',
   'statutory',
   'sorry',
+  'hairy',
   'uppity',
   'guilty',
   'woozy',
@@ -629,6 +634,7 @@ export default [
 
   // -ide
   'bona fide',
+  'bonafide',
   // -ate
   'affectionate',
   'alternate',
@@ -643,6 +649,21 @@ export default [
   'beside',
   'alright',
   'top notch',
-  'self sufficient'
+  'self sufficient',
+  'middle aged',
+  'no more',
+  'ashen',
+  'scarlet',
+  'alone',
+  'homesick',
+  'longtime',
+  'bigtime',
+  'inside',
+  'outside',
+  'artsy',
+  'antsy',
+  'golden',
+  'bare',
+  'subpar',
 ]
 

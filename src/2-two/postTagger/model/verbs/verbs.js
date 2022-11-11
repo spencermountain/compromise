@@ -78,6 +78,10 @@ export default [
   // no no no
   // { match: 'no+', tag: 'Expression', reason: 'no-no' },
 
+  // as we please
+  { match: 'as #Pronoun [please]', group: 0, tag: 'Infinitive', reason: 'as-we-please' },
 
-  // { match: '%Plural|Verb% %Noun|Verb%', tag: '#Plural #PresentTense', reason: 'banks-wear' },
+  // verb-prefixes - 'co write'
+  { match: '[(co|mis|de|inter|intra|pre|re|un|out|under|over|counter)] #Verb', group: 0, tag: ['Verb', 'Prefix'], notIf: '(#Copula|#PhrasalVerb)', reason: 'co-write' },
+
 ]

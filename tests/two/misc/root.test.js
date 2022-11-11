@@ -107,3 +107,13 @@ test('root match', function (t) {
 
   t.end()
 })
+
+test('sense match', function (t) {
+  let doc = nlp('the stool was brown')
+  doc.docs[0][1].sense = 'chair'
+  t.equal(doc.has('{stool}'), true, here + '{stool}')
+  t.equal(doc.has('{stool/Noun}'), true, here + '{stool/Noun}')
+  t.equal(doc.has('{stool/Noun/poop}'), false, here + '{stool/Noun/poop}')
+  t.equal(doc.has('{stool/Noun/chair}'), true, here + '{stool/Noun/chair}')
+  t.end()
+})

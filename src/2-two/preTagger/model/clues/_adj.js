@@ -34,6 +34,7 @@ export default {
     quite: jj,
     well: jj,
     very: jj,
+    how: jj,//how slow
     deeply: jj,
     // always: jj,
     // never: jj,
@@ -50,7 +51,7 @@ export default {
     anything: jj,
     not: jj,//not swell
     me: jj,//called me swell
-    is: jj
+    is: jj,
   },
   afterWords: {
     too: jj, //insulting too

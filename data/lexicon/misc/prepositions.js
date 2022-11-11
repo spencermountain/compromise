@@ -48,6 +48,7 @@ export default [
   'throughout',
   'thru',
   'till',
+  'toward',
   'towards',
   'unlike',
   'until',

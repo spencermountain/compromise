@@ -2,11 +2,13 @@ const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]
 
 // append a new document, somehow
 const combineDocs = function (homeDocs, inputDocs) {
-  // add a space
-  let end = homeDocs[homeDocs.length - 1]
-  let last = end[end.length - 1]
-  if (/ /.test(last.post) === false) {
-    last.post += ' '
+  if (homeDocs.length > 0) {
+    // add a space
+    let end = homeDocs[homeDocs.length - 1]
+    let last = end[end.length - 1]
+    if (/ /.test(last.post) === false) {
+      last.post += ' '
+    }
   }
   homeDocs = homeDocs.concat(inputDocs)
   return homeDocs
@@ -23,7 +25,7 @@ const combineViews = function (home, input) {
   ptrs.forEach(a => {
     a[0] += home.document.length
   })
-  home.document = combineDocs(home.document, input.document)
+  home.document = combineDocs(home.document, input.docs)
   return home.all()
 }
 

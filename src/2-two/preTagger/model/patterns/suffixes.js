@@ -98,6 +98,9 @@ export default [
     ruct: Inf,
     ines: Plrl,
     ions: Plrl,
+    ners: Plrl,
+    pers: Plrl,
+    lers: Plrl,
     less: Adj,
     llen: Adj,
     made: Adj,
@@ -136,6 +139,7 @@ export default [
     gist: Sing,
     note: Sing,
     cide: Sing,//homicide
+    ence: Sing,//absence
     wide: Adj,//nationwide
     // side: Adj,//alongside
     vide: Inf,//provide

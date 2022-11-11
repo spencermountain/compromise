@@ -310,4 +310,5 @@ export default [
   'weak',
   'white',
   'wide',
+  'stately',
 ]

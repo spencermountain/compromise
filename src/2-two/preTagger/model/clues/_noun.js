@@ -13,6 +13,8 @@ export default {
     PastTense: n, //saved storm victims
     Infinitive: n, //profess love
     Date: n,//9pm show
+    Ordinal: n,//first date
+    Demonym: n//dutch map
   },
   afterTags: {
     Value: n, //date nine  -?
@@ -38,6 +40,11 @@ export default {
     // thing-ish verbs
     cut: n,//cut spending
     cuts: n,//cut spending
+    increase: n,// increase funding
+    decrease: n,//
+    raise: n,// 
+    drop: n,//
+    // give: n,//give parents
     save: n,//
     saved: n,//
     saves: n,//
@@ -62,7 +69,9 @@ export default {
     technical: n,//
     computer: n,//
     scientific: n,//
-    formal: n
+    formal: n,
+    no: n,//no worries
+    more: n//more details
   },
   afterWords: {
     of: n, //date of birth (preposition)
@@ -81,5 +90,6 @@ export default {
     wants: n,
     wanted: n,
     is: n,
+    can: n,//parents can
   },
 }

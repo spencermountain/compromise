@@ -4,11 +4,7 @@ export default [
   'seen',
   'flown',
   'shown',
-  'frighten',
   'given',
-  'hasten',
-  'heighten',
-  'lessen',
-  'worsen',
   'written',
+
 ]

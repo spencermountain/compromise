@@ -14,5 +14,7 @@ export default [
   // in an instant
   { match: `#Preposition (a|an) [#Adjective]$`, group: 0, tag: 'Noun', reason: 'an-instant' },
   // brand new
-  { match: `[brand #Gerund?] new`, tag: 'Adverb', group: 0, reason: 'brand-new' },
+  { match: `[brand #Gerund?] new`, group: 0, tag: 'Adverb', reason: 'brand-new' },
+  // her favourite sport
+  { match: `#Possessive [%Adj|Noun%] #Noun`, group: 0, tag: 'Adjective', reason: 'her-favourite' },
 ]

@@ -11,9 +11,11 @@ export default [
   'mickey',
   'finn',
   'missy',
+  'florence',
 
   // currencies
   'nis',
   'riel',
   'euro',
+  'iron maiden',
 ]

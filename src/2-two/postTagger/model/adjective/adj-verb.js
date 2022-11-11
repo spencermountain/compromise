@@ -33,4 +33,7 @@ export default [
   { match: 'a (bit|little|tad) [#PastTense]', group: 0, tag: 'Adjective', reason: 'a-bit-confused' },
   // do not be embarrassed
   { match: 'not be [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'do-not-be-confused' },
+  // as pale as
+  { match: 'as [#Infinitive] as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
+
 ]

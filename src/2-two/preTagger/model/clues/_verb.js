@@ -12,6 +12,7 @@ export default {
     Determiner: v, //flash the
     Adverb: v, //date quickly
     Possessive: v, //date his
+    Reflexive: v,//resolve yourself
     // Noun:true, //date spencer
     Preposition: v, //date around, dump onto, grumble about
     // Conjunction: v, // dip to, dip through
@@ -44,6 +45,20 @@ export default {
     she: v,
     it: v,
     being: v,
+    // prefixes
+    bi: v,
+    co: v,
+    contra: v,
+    de: v,
+    inter: v,
+    intra: v,
+    mis: v,
+    pre: v,
+    out: v,
+    counter: v,
+    // un: v,
+    // over: v,
+    // under: v,
   },
   afterWords: {
     the: v, //echo the
@@ -76,6 +91,8 @@ export default {
     otherwise: v,//
     together: v,//fit together
     though: v,//
+    into: v,//
     yet: v,//
+    more: v,//kill more
   },
 }

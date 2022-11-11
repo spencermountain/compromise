@@ -275,6 +275,7 @@ export default [
   'aspect',
   'prospect',
   'insect',
+  'intellect',
   'verdict',
   'district',
   'free market',
@@ -404,6 +405,13 @@ export default [
   'flower',
   'sandwich',
   'x ray',
+  'pig',
+  'loser',
+  'time out',
+  'time off',
+  'darling',
+  'dump truck',
+  'sweetheart',
 ]
 
 

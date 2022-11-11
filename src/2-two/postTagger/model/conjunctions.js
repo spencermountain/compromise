@@ -28,6 +28,8 @@ export default [
   { match: '#Noun [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
   //like the time
   { match: '^[like] #Determiner', group: 0, tag: 'Preposition', reason: 'like-the' },
+  //a day like this
+  { match: 'a #Noun [like] (#Noun|#Determiner)', group: 0, tag: 'Preposition', reason: 'a-noun-like' },
   // really like
   { match: '#Adverb [like]', group: 0, tag: 'Verb', reason: 'really-like' },
   // nothing like

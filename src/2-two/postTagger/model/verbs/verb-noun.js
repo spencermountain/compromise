@@ -7,8 +7,6 @@ export default [
   { match: '#Determiner #Adverb [#Infinitive]', group: 0, tag: 'Noun', reason: 'the-reason' },
   // a stream runs
   { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', group: 0, tag: 'Noun', reason: 'determiner5' },
-  //the test string
-  { match: '#Determiner [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'determiner7' },
   //a nice deal
   { match: '#Determiner #Adjective #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'a-nice-inf' },
   // the mexican train
@@ -76,21 +74,21 @@ export default [
   // excellent answer spencer
   // { match: '^#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'start adj-presentTense' },
   // one big reason
-  { match: '#Value #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'one-big-reason' },
+  { match: '#Value #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'one-big-reason' },
   // won widespread support
-  { match: '#PastTense #Adjective+ [#PresentTense]', group: 0, tag: 'Noun', reason: 'won-wide-support' },
+  { match: '#PastTense #Adjective+ [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'won-wide-support' },
   // many poses
-  { match: '(many|few|several|couple) [#PresentTense]', group: 0, tag: 'Noun', reason: 'many-poses' },
+  { match: '(many|few|several|couple) [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'many-poses' },
   // very big dreams
-  { match: '#Adverb #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'very-big-dream' },
+  { match: '#Determiner #Adverb #Adjective [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'very-big-dream' },
   // adorable little store
-  { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adorable-little-store' },
+  { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'adorable-little-store' },
   // of basic training
   // { match: '#Preposition #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'of-basic-training' },
   // justifiying higher costs
-  { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', reason: 'higher-costs' },
+  { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'higher-costs' },
 
-  { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', reason: 'noun-list' },
+  { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'noun-list' },
 
   // any questions for
   { match: '(many|any|some|several) [#PresentTense] for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
@@ -126,22 +124,25 @@ export default [
   // hope i helped
   { match: '^[(hope|guess|thought|think)] #Pronoun #Verb', group: 0, tag: 'Infinitive', reason: 'suppose-i' },
   //pursue its dreams
-  { match: '#PresentTense #Possessive [#PresentTense]', notIf: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
+  // { match: '#PresentTense #Possessive [#PresentTense]', notIf: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
   // our unyielding support
-  { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'our-full-support' },
+  { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'our-full-support' },
   // they do serve fish
   { match: '(do|did|will) [#Singular] #Noun', group: 0, tag: 'PresentTense', reason: 'do-serve-fish' },
   // tastes good
   { match: '[(tastes|smells)] #Adverb? #Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
-  // are you plauing golf
-  { match: '^are #Pronoun [#Noun]', group: 0, notIf: '(here|there)', tag: 'Verb', reason: 'are-you-x' },
+  // are you playing golf
+  // { match: '^are #Pronoun [#Noun]', group: 0, notIf: '(here|there)', tag: 'Verb', reason: 'are-you-x' },
   // ignoring commute
   { match: '#Copula #Gerund [#PresentTense] !by?', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring-commute' },
   // noun-pastTense variables
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', group: 0, tag: 'Noun', reason: 'noun-past' },
 
+  // 'verb-to'
   // how to watch
   { match: 'how to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'how-to-noun' },
+  // asking questions
+  { match: '#Gerund [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'asking-questions' },
   // ready to stream
   { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'ready-to-noun' },
   // bring to market

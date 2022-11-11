@@ -65,4 +65,5 @@ export default {
   'hurry up': 'Imperative',
   'make sure': 'Imperative',
   // 'stand back': 'Imperative'
+  // 'subpar': 'Adjective'
 }

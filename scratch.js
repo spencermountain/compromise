@@ -68,23 +68,15 @@ let arr = [
   // `'Cause girl you're [amazing] just the way you are`,
   // `things turn [sour] really quick`,
   // `their [chosen] paths`,
-  `pale as a marble statue`,
-  `Are you [as] [confused] as I am`,
-  `You and my sister, sittin’ in a tree.`,
-  `I wish my [only] problem in life`,
-  `this is her [favourite] restaurant in Vancouver`,
-  `were seamed [over] with [little] red lines`,
+  // `Are you [as] [confused] as I am`,
+  // `I wish my [only] problem in life`,
+  // `You and my sister, sittin’ in a tree.`,
   // `prepayment has taken 45 days alone`
 
 
-  // numerous case studies
-  //  the Co-Chairmen of the International Conference
-  // quickly brought under control
-  // This claim was settled between 
-  // countries as a whole seem brighter
-  // I could believe my eyes
-  // expect a period of sub-par investment
-  // in times of both war and peace 
+  // `the Co-Chairmen of the International Conference`,
+  // `countries as a whole seem brighter`,
+  `in times of both war and peace `,
 
   // 'Caring for Kaneohe since 1986',
   // 'Boost user engagement',

@@ -86,6 +86,7 @@ export default [
   'bring in',
   'bring out',
   'bring up',
+  'bring under',
   'brush off',
   'brush up',
   'bubble over',

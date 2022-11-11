@@ -811,6 +811,12 @@ let arr = [
   [`It works out [fine]`, `it #PresentTense #PhrasalVerb #Adjective`],
   [`the [most] [stately] [manner]`, `the #Adverb #Adjective #Singular`],
   [`The bennies were [outstanding]`, `the #Plural #Copula #Adjective`],
+  [`pale as a marble statue`, '#Adjective as a . #Singular'],
+  // [`as [confused] as I am`, 'as #Adjective as #Pronoun am']
+  [`numerous case studies`, `#Adjective #Noun+`],
+  [`quickly brought under control`, `#Adverb #PhrasalVerb+ #Noun`],
+  [`This claim was settled between`, `this #Noun was #PastTense between`],
+  [`expect a period of sub-standard investment`, `#Imperative a #Noun of #Adjective #Singular`],
   // [``, ``],
 ]
 test('match:', function (t) {

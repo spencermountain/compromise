@@ -634,6 +634,7 @@ export default [
 
   // -ide
   'bona fide',
+  'bonafide',
   // -ate
   'affectionate',
   'alternate',
@@ -663,5 +664,6 @@ export default [
   'antsy',
   'golden',
   'bare',
+  'subpar',
 ]
 

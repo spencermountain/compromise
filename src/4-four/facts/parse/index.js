@@ -1,11 +1,8 @@
-
 import parseVerb from './verb.js'
 import parseNoun from './noun.js'
 import parseAdjective from './adjective.js'
 import parsePivot from './pivot.js'
 import postProcess from './postProcess.js'
-
-
 
 const chunkType = function (chunk) {
   if (chunk.isVerb().found) {
@@ -41,7 +38,7 @@ const getParts = function (s) {
             res.obj.mod = res.obj.mod || {}
             res.obj.mod[pivot] = parseNoun(chunk)
           } else {
-            console.log('=-=-=-= missing mod -=-=-=-')
+            // console.log('=-=-=-= missing mod -=-=-=-')
           }
         } else {
           res.obj = parseNoun(chunk)
@@ -78,7 +75,7 @@ const getParts = function (s) {
   chunks.forEach(chunk => {
     let type = chunkType(chunk)
     if (!type) {
-      console.log(' ! ' + chunk.text())
+      // console.log(' ! ' + chunk.text())
       return
     }
     process[type](chunk)

@@ -659,5 +659,9 @@ export default [
   'bigtime',
   'inside',
   'outside',
+  'artsy',
+  'antsy',
+  'golden',
+  'bare',
 ]
 

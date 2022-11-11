@@ -6,7 +6,8 @@ import noun from './_noun.js'
 const misc = {
   beforeTags: {
     Determiner: undefined, //the premier university
-    Cardinal: 'Noun'//1950 convertable
+    Cardinal: 'Noun',//1950 convertable
+    PhrasalVerb: 'Adjective'//starts out fine
   }
 }
 const clue = {
@@ -15,6 +16,9 @@ const clue = {
   beforeWords: Object.assign({}, adj.beforeWords, noun.beforeWords, {
     // are representative
     are: 'Adjective', is: 'Adjective', was: 'Adjective', be: 'Adjective',
+    // phrasals
+    off: 'Adjective',//start off fine
+    out: 'Adjective',//comes out fine
   }),
   afterWords: Object.assign({}, adj.afterWords, noun.afterWords),
 }

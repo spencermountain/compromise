@@ -228,6 +228,10 @@ export default [
   'burnt',
   'understood',
   'inflated',
+  'exaggerated',
+  'delighted',
+  'elated',
+  'confused',
 ]
 
 

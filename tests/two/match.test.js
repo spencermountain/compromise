@@ -807,6 +807,10 @@ let arr = [
   [`he ate us all`, `#Pronoun #Verb #Noun #Noun`],
   [`I might be [alone] forever`, `#Pronoun #Auxiliary #Verb #Adjective #Adverb`],
   [`It was her [favorite] book`, `it #Verb #Possessive #Adjective #Noun`],
+  [`It starts off [fine]`, `it #PresentTense #PhrasalVerb #Adjective`],
+  [`It works out [fine]`, `it #PresentTense #PhrasalVerb #Adjective`],
+  [`the [most] [stately] [manner]`, `the #Adverb #Adjective #Singular`],
+  [`The bennies were [outstanding]`, `the #Plural #Copula #Adjective`],
   // [``, ``],
 ]
 test('match:', function (t) {

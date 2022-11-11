@@ -703,6 +703,7 @@ export default [
   'stand up',
   'start out',
   'start up',
+  'start off',
   'stave off',
   'stay up',
   'step up',

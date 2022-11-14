@@ -246,5 +246,7 @@ export default [
   'existence',
   'make up',
   'you guys',
-  'improv'
+  'improv',
+  'phys ed',
+  'cont ed'
 ]

@@ -1,3 +1,4 @@
+const prp = ['Possessive', 'Pronoun']
 //words that can't be compressed, for whatever reason
 let misc = {
   // numbers
@@ -45,15 +46,19 @@ let misc = {
   are: ['Copula', 'PresentTense'],
   am: ['Copula', 'PresentTense'],
   were: ['Copula', 'PastTense'],
-  her: ['Possessive', 'Pronoun'],
-  his: ['Possessive', 'Pronoun'],
-  hers: ['Possessive', 'Pronoun'],
-  their: ['Possessive', 'Pronoun'],
-  themselves: ['Possessive', 'Pronoun'],
-  your: ['Possessive', 'Pronoun'],
-  our: ['Possessive', 'Pronoun'],
-  my: ['Possessive', 'Pronoun'],
-  its: ['Possessive', 'Pronoun'],
+
+  // possessive pronouns
+  her: prp,
+  his: prp,
+  hers: prp,
+  their: prp,
+  theirs: prp,
+  themselves: prp,
+  your: prp,
+  our: prp,
+  ours: prp,
+  my: prp,
+  its: prp,
 
   // misc
   vs: ['Conjunction', 'Abbreviation'],

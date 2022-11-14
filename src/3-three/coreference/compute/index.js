@@ -1,5 +1,6 @@
 import getPerson from './findPerson.js'
 import getThey from './findThey.js'
+import getIt from './findIt.js'
 import { prevSentence } from './lib.js'
 
 const addReference = function (pron, m) {
@@ -10,7 +11,7 @@ const addReference = function (pron, m) {
   }
 }
 
-const find = function (m, cb) {
+const stepBack = function (m, cb) {
   // 1st - in same sentence
   let s = m.before()
   let res = cb(s)
@@ -33,14 +34,16 @@ const find = function (m, cb) {
 }
 
 const coreference = function (view) {
-  view.match('(he|his|she|her|they|their|it|its)').forEach(pron => {
+  let pronouns = view.match('(he|him|his|she|her|hers|they|their|theirs|it|its)')
+  pronouns.forEach(pron => {
     let res = null
-    if (pron.has('(he|his)')) {
-      res = find(pron, (m) => getPerson(m, 'm'))
-    } else if (pron.has('(she|her)')) {
-      res = find(pron, (m) => getPerson(m, 'f'))
-    } else if (pron.has('(they|their)')) {
-      res = find(pron, getThey)
+    // connect pronoun to its reference
+    if (pron.has('(he|him|his)')) {
+      res = stepBack(pron, (m) => getPerson(m, 'm'))
+    } else if (pron.has('(she|her|hers)')) {
+      res = stepBack(pron, (m) => getPerson(m, 'f'))
+    } else if (pron.has('(they|their|theirs)')) {
+      res = stepBack(pron, getThey)
     }
     if (res && res.found) {
       addReference(pron, res)

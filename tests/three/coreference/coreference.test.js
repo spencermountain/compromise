@@ -40,11 +40,6 @@ test('anaphor:', function (t) {
       text: `jamie smith said no and he bailed out`,
       refs: { he: `jamie smith` },
     },
-    // basic it
-    // {
-    //   text: `my toaster heated and it started smoking`,
-    //   refs: { it: `my toaster` },
-    // },
     // basic they
     {
       text: `Tornadoes are swirling clouds, they arrive during the summer`,
@@ -60,9 +55,14 @@ test('anaphor:', function (t) {
     },
 
     // basic 'her'
+    {
+      text: `Sally arrived, but nobody saw her`,
+      refs: { her: `Sally` },
+    },
+    // basic it
     // {
-    //   text: `Sally arrived, but nobody saw her`,
-    //   refs: { her: `sally` },
+    //   text: `my toaster heated and it started smoking`,
+    //   refs: { it: `my toaster` },
     // },
     // generic 'it'
     // {
@@ -86,10 +86,10 @@ test('anaphor:', function (t) {
       text: `the cowboy shot his gun and he walked away`,
       refs: { his: `the cowboy`, he: `the cowboy` },
     },
-    {
-      text: `spencer's aunt is fun. she is smart`,
-      refs: { she: `spencer's aunt` },
-    },
+    // {
+    //   text: `spencer's aunt is fun. she is smart`,
+    //   refs: { she: `spencer's aunt` },
+    // },
     {
       text: `the cheerleader did a flip but she landed awkwardly`,
       refs: { she: `the cheerleader` },
@@ -99,6 +99,10 @@ test('anaphor:', function (t) {
     //   text: ` In their free time, the boys play video games`,
     //   refs: { their: 'the boys' },
     // },
+    {
+      text: `the boys play video games in their free time`,
+      refs: { their: 'the boys' },
+    },
 
   ]
   arr.forEach(obj => {

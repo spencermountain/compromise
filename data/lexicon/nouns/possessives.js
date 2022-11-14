@@ -11,10 +11,10 @@ export default [
   'our',
   'ours',
   'something',
-  'their',
-  'theirs',
-  'your',
-  'yours',
+  // 'their',
+  // 'theirs',
+  // 'your',
+  // 'yours',
 
 
 ]

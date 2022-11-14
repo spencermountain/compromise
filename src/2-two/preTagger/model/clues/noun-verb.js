@@ -24,6 +24,8 @@ const clue = {
     // that: 'Singular',//subject that was
     // for: 'Infinitive',//work for
     about: 'Infinitive',//talk about
+    his: 'Infinitive',//shot his
+    her: 'Infinitive',//
     to: null,
     by: null,
     in: null

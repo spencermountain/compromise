@@ -1,45 +1,4 @@
-
-const prevSentence = function (m) {
-  if (!m.found) {
-    return m
-  }
-  let [n] = m.fullPointer[0]
-  if (n && n > 0) {
-    return m.update([[n - 1]])
-  }
-  return m.none()
-}
-
-const byGender = function (ppl, gender) {
-  if (gender === 'm') {
-    return ppl.presumedMale()
-  } else if (gender === 'f') {
-    return ppl.presumedFemale()
-  }
-  return ppl
-}
-
-const lastPerson = function (m, gender) {
-  // look at current sentence
-  let ppl = m.before().people()
-  let person = byGender(ppl, gender)
-  if (person.found) {
-    return person
-  }
-  // look at prev sentence
-  let s = prevSentence(m)
-  person = byGender(s.people(), gender)
-  if (person.found) {
-    return person
-  }
-  // look two sentences backward
-  s = prevSentence(s)
-  person = byGender(s.people(), gender)
-  if (person.found) {
-    return person
-  }
-  return m.none()
-}
+import findPerson from './lastPerson.js'
 
 
 const addReference = function (pron, m) {
@@ -51,12 +10,12 @@ const addReference = function (pron, m) {
 }
 
 const coreference = function (view) {
-  view.match('(he|she|they|his|her|their|it|its)').forEach(pron => {
+  view.match('(he|his|she|her|they|their|it|its)').forEach(pron => {
     let res = null
     if (pron.has('(he|his)')) {
-      res = lastPerson(pron, 'm')
+      res = findPerson(pron, 'm')
     } else if (pron.has('(she|her)')) {
-      res = lastPerson(pron, 'f')
+      res = findPerson(pron, 'f')
     }
     if (res && res.found) {
       addReference(pron, res)

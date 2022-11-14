@@ -30,6 +30,16 @@ test('anaphor:', function (t) {
       text: `Judy Dench is an American film director. She wrote, directed and starred in three films`,
       refs: { she: `Judy Dench` },
     },
+    // ambiguous person names
+    {
+      text: `jamie smith said no and she left`,
+      refs: { she: `jamie smith` },
+    },
+    // ambiguous person names
+    {
+      text: `jamie smith said no and he bailed out`,
+      refs: { he: `jamie smith` },
+    },
     // basic it
     {
       text: `my toaster heated and it started smoking`,
@@ -43,6 +53,10 @@ test('anaphor:', function (t) {
     {
       text: `plumbers are funny. they never stop talking`,
       refs: { they: `plumbers` },
+    },
+    {
+      text: `the viola player said no and she dropped her bow`,
+      refs: { she: `the viola player`, her: `the viola player` },
     },
 
     // basic 'her'

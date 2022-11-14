@@ -13,10 +13,10 @@ let txt = ''
 // doc.compute('coreference')
 
 
-let doc = nlp('Tornadoes are swirling clouds, they arrive during the summer')
+let doc = nlp('Tornadoes are dangerous. they arrive in summer')
 doc.compute('coreference')
 doc.debug()
-doc.match('they').pronouns().refersTo().debug()
+doc.pronouns('they').debug()
 // console.log(doc.docs[0])
 
 

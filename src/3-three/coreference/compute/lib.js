@@ -1,10 +1,10 @@
 
 // borrow a reference from another pronoun
 // 'mike is tall, [he] climbs and [he] swims'
-const findChain = function (want, s) {
+const findChained = function (want, s) {
   let m = s.match(want)
   if (m.found) {
-    let ref = m.pronouns().referenceTo()
+    let ref = m.pronouns().refersTo()
     if (ref.found) {
       return ref
     }
@@ -22,4 +22,4 @@ const prevSentence = function (m) {
   }
   return m.none()
 }
-export { prevSentence, findChain }
+export { prevSentence, findChained }

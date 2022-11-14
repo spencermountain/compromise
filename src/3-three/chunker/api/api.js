@@ -1,9 +1,6 @@
 import clauses from './clauses.js'
 import getChunks from './chunks.js'
 
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-
 const api = function (View) {
 
   class Chunks extends View {

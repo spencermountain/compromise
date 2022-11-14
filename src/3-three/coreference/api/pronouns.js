@@ -1,6 +1,3 @@
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-
 const api = function (View) {
 
   class Pronouns extends View {

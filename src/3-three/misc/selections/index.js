@@ -18,7 +18,7 @@ const selections = [
   ['emoticons', '#Emoticon'],
   ['atMentions', '#AtMention'],
   ['urls', '#Url'],
-  ['pronouns', '#Pronoun'],
+  // ['pronouns', '#Pronoun'],
   ['conjunctions', '#Conjunction'],
   ['prepositions', '#Preposition'],
   ['abbreviations', '#Abbreviation'],

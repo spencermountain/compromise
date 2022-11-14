@@ -8,8 +8,10 @@ import redact from './3-three/redact/plugin.js'
 import sentences from './3-three/sentences/plugin.js'
 import topics from './3-three/topics/plugin.js'
 import verbs from './3-three/verbs/plugin.js'
+import coreference from './3-three/coreference/plugin.js'
 
 nlp.plugin(chunker) //
+nlp.plugin(coreference)
 nlp.plugin(misc) //
 nlp.plugin(normalize) //
 nlp.plugin(nouns) //

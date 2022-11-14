@@ -15,6 +15,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 -->
 
 <!-- #### 14.7.2 [Unreleased]
+- **[new]** - add Person .presumedMale(), .presumedFemale() methods
+- **[new]** - add Pronoun class, .refersTo()
+- **[new]** - add Noun.references()
 -->
 
 #### 14.7.1 

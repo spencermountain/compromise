@@ -31,6 +31,17 @@ const addMethod = function (View) {
         return json
       }, [])
     }
+    // used for co-reference resolution only
+    presumedMale() {
+      return this.filter(m => {
+        return m.has('(#MaleName|mr|mister|sr|jr|king|pope|prince|sir)')//todo configure these in .world
+      })
+    }
+    presumedFemale() {
+      return this.filter(m => {
+        return m.has('(#FemaleName|mrs|miss|queen|princess|madam)')
+      })
+    }
     // overloaded - keep People class
     update(pointer) {
       let m = new People(this.document, pointer)

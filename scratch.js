@@ -6,11 +6,18 @@ let txt = ''
 // let doc
 // let m
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
 // doc.compute('coreference')
+
+
+let doc = nlp('the cowboy shot his gun and he walked away')
+doc.compute('coreference')
+doc.debug()
+doc.match('he').pronouns().refersTo().debug()
+// console.log(doc.docs[0])
 
 
 
@@ -114,14 +121,14 @@ let arr = [
 ]
 
 
-txt = arr[0]
-let doc = nlp(txt).debug()
+// txt = arr[0]
+// let doc = nlp(txt).debug()
 // doc.verbs().debug()
 // doc.nouns().debug()
 // console.log(doc.docs)
 // doc.match('#Conjunction #Adjective #Noun').debug()
-txt = 'she swam carefully away from the rock'
-txt = 'i tried the waterslide and so my knees were shaking'
+// txt = 'she swam carefully away from the rock'
+// txt = 'i tried the waterslide and so my knees were shaking'
 // txt = 'spencer ate a sandwich carefully'
 // txt = 'the whole team waited to sing the canadian national anthem'
 // txt = 'he made a sandwich for dinner with tomatos and cheese and sang a tune'
@@ -135,7 +142,7 @@ txt = 'i tried the waterslide and so my knees were shaking'
 // txt = `diana is pretty and cheerful`
 // txt = 'she was beautiful'
 // txt = 'the beautiful girl walked slowly toward the store'
-txt = 'scientists at stanford university have reconstructed this 3D model of how adam and eve might have looked'
+// txt = 'scientists at stanford university have reconstructed this 3D model of how adam and eve might have looked'
 
 
 // let table = nlp(txt).facts()

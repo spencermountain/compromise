@@ -1,19 +1,34 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-const here = '[three/anaphor] '
+import nlp from '../three/_lib.js'
+const here = '[three/coreference] '
 
 // https://github.com/google-research-datasets/gap-coreference
 test('anaphor:', function (t) {
   let arr = [
-    // basic he
+    // one-sentence
     {
-      text: `spencer is quiet. he is lame`,
+      text: `spencer is not working because he is unemployed`,
       refs: { he: `spencer` },
+    },
+    // back-sentence
+    {
+      text: `spencer is quiet. he is not loud`,
+      refs: { he: `spencer` },
+    },
+    // back-two-sentences
+    {
+      text: `spencer is quiet. I mean, not always, but usually. he is not loud`,
+      refs: { he: `spencer` },
+    },
+    // two pronouns
+    {
+      text: `i saw spencer kelly. he forgot his name`,
+      refs: { he: `spencer kelly`, his: 'spencer kelly' },
     },
     // basic she
     {
-      text: `Miranda July is an American film director. She wrote, directed and starred in three films`,
-      refs: { she: `Miranda July` },
+      text: `Judy Dench is an American film director. She wrote, directed and starred in three films`,
+      refs: { she: `Judy Dench` },
     },
     // basic it
     {
@@ -25,12 +40,16 @@ test('anaphor:', function (t) {
       text: `Tornadoes are swirling clouds, they arrive during the summer`,
       refs: { they: `Tornadoes` },
     },
+    {
+      text: `plumbers are funny. they never stop talking`,
+      refs: { they: `plumbers` },
+    },
 
     // basic 'her'
-    {
-      text: `Sally arrived, but nobody saw her`,
-      refs: { her: `sally` },
-    },
+    // {
+    //   text: `Sally arrived, but nobody saw her`,
+    //   refs: { her: `sally` },
+    // },
     // generic 'it'
     // {
     //   text: `the plane took off. it was exciting.`,
@@ -51,7 +70,7 @@ test('anaphor:', function (t) {
     // person-like
     {
       text: `the cowboy shot his gun and he walked away`,
-      refs: { he: `the cowboy` },
+      refs: { his: `the cowboy`, he: `the cowboy` },
     },
     {
       text: `spencer's aunt is fun. she is smart`,
@@ -70,8 +89,12 @@ test('anaphor:', function (t) {
   ]
   arr.forEach(obj => {
     let { text, refs } = obj
-    let doc = nlp(text).compute('anaphor')
-    t.equal()
+    let doc = nlp(text).compute('coreference')
+    let pronouns = doc.pronouns()
+    Object.keys(refs).forEach(k => {
+      let m = pronouns.if(k).refersTo()
+      t.equal(m.text(), refs[k], here + ` [${k}] - ${refs[k]}`)
+    })
   })
   t.end()
 })

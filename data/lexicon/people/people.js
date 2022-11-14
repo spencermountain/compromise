@@ -37,6 +37,8 @@ export default [
   'scarlett johansson',
   'theresa may',
   'tyra banks',
+  'wednesday adams',
+  'miranda july',
 
   //sometimes firstname, sometimes lastname
   'brock',

@@ -57,6 +57,8 @@ export default [
   // ==== Actor ====
   //Aircraft designer
   { match: '#Noun #Actor', tag: 'Actor', reason: 'thing-doer' },
+  // captain sanders
+  { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'sgt-kelly' },
   // co-founder
   { match: `co #Singular`, tag: 'Actor', reason: 'co-noun' },
 

@@ -13,10 +13,11 @@ nlp.verbose('tagger')
 // doc.compute('coreference')
 
 
-let doc = nlp('the viola player said no and she walked away')
+// let doc = nlp('the viola player said no and she walked away')
+let doc = nlp('sergeant major Harold')
 doc.compute('coreference')
 doc.debug()
-doc.match('he').pronouns().refersTo().debug()
+// doc.match('he').pronouns().refersTo().debug()
 // console.log(doc.docs[0])
 
 

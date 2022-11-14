@@ -6,9 +6,6 @@ import toFuture from './conjugate/toFuture.js'
 import { toNegative, toPositive } from './conjugate/toNegative.js'
 import toInfinitive from './conjugate/toInfinitive.js'
 
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-
 const api = function (View) {
   class Sentences extends View {
     constructor(document, pointer, groups) {
@@ -29,38 +26,38 @@ const api = function (View) {
       }, [])
     }
     toPastTense(n) {
-      return getNth(this, n).map(s => {
+      return this.getNth(n).map(s => {
         let parsed = parse(s)
         return toPast(s, parsed)
       })
     }
     toPresentTense(n) {
-      return getNth(this, n).map(s => {
+      return this.getNth(n).map(s => {
         let parsed = parse(s)
         return toPresent(s, parsed)
       })
     }
     toFutureTense(n) {
-      return getNth(this, n).map(s => {
+      return this.getNth(n).map(s => {
         let parsed = parse(s)
         s = toFuture(s, parsed)
         return s
       })
     }
     toInfinitive(n) {
-      return getNth(this, n).map(s => {
+      return this.getNth(n).map(s => {
         let parsed = parse(s)
         return toInfinitive(s, parsed)
       })
     }
     toNegative(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parse(vb)
         return toNegative(vb, parsed)
       })
     }
     toPositive(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parse(vb)
         return toPositive(vb, parsed)
       })
@@ -70,11 +67,11 @@ const api = function (View) {
     }
     isExclamation(n) {
       let res = this.filter(s => s.lastTerm().has('@hasExclamation'))
-      return getNth(res, n)
+      return res.getNth(n)
     }
     isStatement(n) {
       let res = this.filter(s => !s.isExclamation().found && !s.isQuestion().found)
-      return getNth(res, n)
+      return res.getNth(n)
     }
     // overloaded - keep Sentences class
     update(pointer) {
@@ -91,12 +88,12 @@ const api = function (View) {
   const methods = {
     sentences: function (n) {
       let m = this.map(s => s.fullSentence())
-      m = getNth(m, n)
+      m = m.getNth(n)
       return new Sentences(this.document, m.pointer)
     },
     questions: function (n) {
       let m = isQuestion(this)
-      return getNth(m, n)
+      return m.getNth(n)
     },
   }
 

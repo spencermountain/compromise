@@ -5,8 +5,6 @@ import toPlural from './toPlural.js'
 import toSingular from './toSingular.js'
 
 // return the nth elem of a doc
-const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-// const isObject = val => Object.prototype.toString.call(val) === '[object Object]'
 
 const api = function (View) {
   class Nouns extends View {
@@ -16,12 +14,12 @@ const api = function (View) {
     }
 
     parse(n) {
-      return getNth(this, n).map(parseNoun)
+      return this.getNth(n).map(parseNoun)
     }
 
     json(n) {
       let opts = typeof n === 'object' ? n : {}
-      return getNth(this, n).map(m => {
+      return this.getNth(n).map(m => {
         let json = m.toView().json(opts)[0] || {}
         if (opts && opts.noun !== true) {
           json.noun = toJSON(m)
@@ -31,35 +29,35 @@ const api = function (View) {
     }
 
     isPlural(n) {
-      let arr = this.filter(m => parseNoun(m).isPlural)
-      return getNth(arr, n)
+      let res = this.filter(m => parseNoun(m).isPlural)
+      return res.getNth(n)
     }
 
     isSingular(n) {
-      let arr = this.filter(m => !parseNoun(m).isPlural)
-      return getNth(arr, n)
+      let res = this.filter(m => !parseNoun(m).isPlural)
+      return res.getNth(n)
     }
 
     adjectives(n) {
-      let list = this.update([])
+      let res = this.update([])
       this.forEach(m => {
         let adj = parseNoun(m).adjectives
         if (adj.found) {
-          list = list.concat(adj)
+          res = res.concat(adj)
         }
       })
-      return getNth(list, n)
+      return res.getNth(n)
     }
 
     toPlural(n) {
-      return getNth(this, n).map(m => {
+      return this.getNth(n).map(m => {
         return toPlural(m, parseNoun(m))
       })
       // return new Nouns(all.document, all.pointer)
     }
 
     toSingular(n) {
-      return getNth(this, n).map(m => {
+      return this.getNth(n).map(m => {
         let res = parseNoun(m)
         return toSingular(m, res)
       })
@@ -73,7 +71,7 @@ const api = function (View) {
   }
   View.prototype.nouns = function (n) {
     let m = find(this)
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Nouns(this.document, m.pointer)
   }
 }

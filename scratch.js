@@ -6,17 +6,17 @@ let txt = ''
 // let doc
 // let m
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
 // doc.compute('coreference')
 
 
-let doc = nlp('the cowboy shot his gun ')
+let doc = nlp('Tornadoes are swirling clouds, they arrive during the summer')
 doc.compute('coreference')
 doc.debug()
-// doc.match('he').pronouns().refersTo().debug()
+doc.match('they').pronouns().refersTo().debug()
 // console.log(doc.docs[0])
 
 

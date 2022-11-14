@@ -3,9 +3,6 @@ import parse from './parse.js'
 import toCardinal from './convert/toCardinal.js'
 import toOrdinal from './convert/toOrdinal.js'
 
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-
 const plugin = function (View) {
   /**
    */
@@ -15,13 +12,13 @@ const plugin = function (View) {
       this.viewType = 'Fractions'
     }
     parse(n) {
-      return getNth(this, n).map(parse)
+      return this.getNth(n).map(parse)
     }
     get(n) {
-      return getNth(this, n).map(parse)
+      return this.getNth(n).map(parse)
     }
     json(n) {
-      return getNth(this, n).map(p => {
+      return this.getNth(n).map(p => {
         let json = p.toView().json(n)[0]
         let parsed = parse(p)
         json.fraction = parsed
@@ -30,7 +27,7 @@ const plugin = function (View) {
     }
     // become 0.5
     toDecimal(n) {
-      getNth(this, n).forEach(m => {
+      this.getNth(n).forEach(m => {
         let { decimal } = parse(m)
         m = m.replaceWith(String(decimal), true)
         m.tag('NumericValue')
@@ -39,7 +36,7 @@ const plugin = function (View) {
       return this
     }
     toFraction(n) {
-      getNth(this, n).forEach(m => {
+      this.getNth(n).forEach(m => {
         let obj = parse(m)
         if (obj && typeof obj.numerator === 'number' && typeof obj.denominator === 'number') {
           let str = `${obj.numerator}/${obj.denominator}`
@@ -49,7 +46,7 @@ const plugin = function (View) {
       return this
     }
     toOrdinal(n) {
-      getNth(this, n).forEach(m => {
+      this.getNth(n).forEach(m => {
         let obj = parse(m)
         let str = toOrdinal(obj)
         if (m.after('^#Noun').found) {
@@ -60,7 +57,7 @@ const plugin = function (View) {
       return this
     }
     toCardinal(n) {
-      getNth(this, n).forEach(m => {
+      this.getNth(n).forEach(m => {
         let obj = parse(m)
         let str = toCardinal(obj)
         m.replaceWith(str)
@@ -68,7 +65,7 @@ const plugin = function (View) {
       return this
     }
     toPercentage(n) {
-      getNth(this, n).forEach(m => {
+      this.getNth(n).forEach(m => {
         let { decimal } = parse(m)
         let percent = decimal * 100
         percent = Math.round(percent * 100) / 100 // round it
@@ -80,7 +77,7 @@ const plugin = function (View) {
 
   View.prototype.fractions = function (n) {
     let m = find(this)
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Fractions(this.document, m.pointer)
   }
 }

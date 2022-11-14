@@ -2,9 +2,6 @@ import find from './find.js'
 import parse from './parse/index.js'
 import format from './format/index.js'
 
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-
 const addMethod = function (View) {
   /**   */
   class Numbers extends View {
@@ -13,14 +10,14 @@ const addMethod = function (View) {
       this.viewType = 'Numbers'
     }
     parse(n) {
-      return getNth(this, n).map(parse)
+      return this.getNth(n).map(parse)
     }
     get(n) {
-      return getNth(this, n).map(parse).map(o => o.num)
+      return this.getNth(n).map(parse).map(o => o.num)
     }
     json(n) {
       let opts = typeof n === 'object' ? n : {}
-      return getNth(this, n).map(p => {
+      return this.getNth(n).map(p => {
         let json = p.toView().json(opts)[0]
         let parsed = parse(p)
         json.number = {
@@ -254,19 +251,19 @@ const addMethod = function (View) {
 
   View.prototype.numbers = function (n) {
     let m = find(this)
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Numbers(this.document, m.pointer)
   }
   View.prototype.percentages = function (n) {
     let m = find(this)
     m = m.filter(v => v.has('#Percent') || v.after('^percent'))
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Numbers(this.document, m.pointer)
   }
   View.prototype.money = function (n) {
     let m = find(this)
     m = m.filter(v => v.has('#Money') || v.after('^#Currency'))
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Numbers(this.document, m.pointer)
   }
   // alias

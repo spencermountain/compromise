@@ -1,5 +1,3 @@
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 // guard against superlative+comparative forms
 const toRoot = function (adj) {
@@ -41,7 +39,7 @@ const api = function (View) {
     }
     conjugate(n) {
       const { toComparative, toSuperlative, toNoun, toAdverb } = this.methods.two.transform.adjective
-      return getNth(this, n).map(adj => {
+      return this.getNth(n).map(adj => {
         let root = toRoot(adj)
         return {
           Adjective: root,
@@ -54,7 +52,7 @@ const api = function (View) {
     }
     toComparative(n) {
       const { toComparative } = this.methods.two.transform.adjective
-      return getNth(this, n).map(adj => {
+      return this.getNth(n).map(adj => {
         let root = toRoot(adj)
         let str = toComparative(root, this.model)
         return adj.replaceWith(str)
@@ -62,7 +60,7 @@ const api = function (View) {
     }
     toSuperlative(n) {
       const { toSuperlative } = this.methods.two.transform.adjective
-      return getNth(this, n).map(adj => {
+      return this.getNth(n).map(adj => {
         let root = toRoot(adj)
         let str = toSuperlative(root, this.model)
         return adj.replaceWith(str)
@@ -70,7 +68,7 @@ const api = function (View) {
     }
     toAdverb(n) {
       const { toAdverb } = this.methods.two.transform.adjective
-      return getNth(this, n).map(adj => {
+      return this.getNth(n).map(adj => {
         let root = toRoot(adj)
         let str = toAdverb(root, this.model)
         return adj.replaceWith(str)
@@ -78,7 +76,7 @@ const api = function (View) {
     }
     toNoun(n) {
       const { toNoun } = this.methods.two.transform.adjective
-      return getNth(this, n).map(adj => {
+      return this.getNth(n).map(adj => {
         let root = toRoot(adj)
         let str = toNoun(root, this.model)
         return adj.replaceWith(str)
@@ -88,17 +86,17 @@ const api = function (View) {
 
   View.prototype.adjectives = function (n) {
     let m = this.match('#Adjective')
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Adjectives(m.document, m.pointer)
   }
   View.prototype.superlatives = function (n) {
     let m = this.match('#Superlative')
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Adjectives(m.document, m.pointer)
   }
   View.prototype.comparatives = function (n) {
     let m = this.match('#Comparative')
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Adjectives(m.document, m.pointer)
   }
 }

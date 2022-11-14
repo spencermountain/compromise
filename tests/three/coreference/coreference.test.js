@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../three/_lib.js'
+import nlp from '../_lib.js'
 const here = '[three/coreference] '
 
 // https://github.com/google-research-datasets/gap-coreference
@@ -41,10 +41,10 @@ test('anaphor:', function (t) {
       refs: { he: `jamie smith` },
     },
     // basic it
-    {
-      text: `my toaster heated and it started smoking`,
-      refs: { it: `my toaster` },
-    },
+    // {
+    //   text: `my toaster heated and it started smoking`,
+    //   refs: { it: `my toaster` },
+    // },
     // basic they
     {
       text: `Tornadoes are swirling clouds, they arrive during the summer`,

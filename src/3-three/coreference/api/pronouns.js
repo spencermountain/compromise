@@ -31,7 +31,7 @@ const api = function (View) {
 
   View.prototype.pronouns = function (n) {
     let m = this.match('#Pronoun')
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Pronouns(m.document, m.pointer)
   }
 }

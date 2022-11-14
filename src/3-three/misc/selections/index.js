@@ -1,11 +1,8 @@
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-
 /** return anything tagged as a phone number */
 const phoneNumbers = function (n) {
   let m = this.splitAfter('@hasComma')
   m = m.match('#PhoneNumber+')
-  m = getNth(m, n)
+  m = m.getNth(n)
   return m
 }
 

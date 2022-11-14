@@ -130,6 +130,16 @@ const utils = {
       }
     }
     return true
+  },
+
+  // return the nth elem of a doc
+  getNth: function (n) {
+    if (typeof n === 'number') {
+      return this.eq(n)
+    } else if (typeof n === 'string') {
+      return this.if(n)
+    }
+    return this
   }
 
 }

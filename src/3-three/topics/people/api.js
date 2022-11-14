@@ -2,8 +2,6 @@ import find from './find.js'
 import parse from './parse.js'
 import gender from './gender.js'
 
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const addMethod = function (View) {
   /**
@@ -15,11 +13,11 @@ const addMethod = function (View) {
       this.viewType = 'People'
     }
     parse(n) {
-      return getNth(this, n).map(parse)
+      return this.getNth(n).map(parse)
     }
     json(n) {
       let opts = typeof n === 'object' ? n : {}
-      return getNth(this, n).map(p => {
+      return this.getNth(n).map(p => {
         let json = p.toView().json(opts)[0]
         let parsed = parse(p)
         json.person = {
@@ -52,7 +50,7 @@ const addMethod = function (View) {
 
   View.prototype.people = function (n) {
     let m = find(this)
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new People(this.document, m.pointer)
   }
 }

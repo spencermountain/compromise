@@ -9,11 +9,7 @@ import toGerund from './conjugate/toGerund.js'
 import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
 import toNegative from './conjugate/toNegative.js'
-// import debug from './debug.js'
 
-
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const api = function (View) {
   class Verbs extends View {
@@ -22,10 +18,10 @@ const api = function (View) {
       this.viewType = 'Verbs'
     }
     parse(n) {
-      return getNth(this, n).map(parseVerb)
+      return this.getNth(n).map(parseVerb)
     }
     json(opts, n) {
-      let m = getNth(this, n)
+      let m = this.getNth(n)
       let arr = m.map(vb => {
         let json = vb.toView().json(opts)[0] || {}
         json.verb = toJSON(vb)
@@ -34,64 +30,64 @@ const api = function (View) {
       return arr
     }
     subjects(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         return getSubject(vb, parsed).subject
       })
     }
     adverbs(n) {
-      return getNth(this, n).map(vb => vb.match('#Adverb'))
+      return this.getNth(n).map(vb => vb.match('#Adverb'))
     }
     isSingular(n) {
-      return getNth(this, n).filter(vb => {
+      return this.getNth(n).filter(vb => {
         return getSubject(vb).plural !== true
       })
     }
     isPlural(n) {
-      return getNth(this, n).filter(vb => {
+      return this.getNth(n).filter(vb => {
         return getSubject(vb).plural === true
       })
     }
     isImperative(n) {
-      return getNth(this, n).filter(vb => vb.has('#Imperative'))
+      return this.getNth(n).filter(vb => vb.has('#Imperative'))
     }
     toInfinitive(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         return toInfinitive(vb, parsed, info.form)
       })
     }
     toPresentTense(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         return toPresent(vb, parsed, info.form)
       })
     }
     toPastTense(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         return toPast(vb, parsed, info.form)
       })
     }
     toFutureTense(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         return toFuture(vb, parsed, info.form)
       })
     }
     toGerund(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         return toGerund(vb, parsed, info.form)
       })
     }
     conjugate(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         // allow imperatives like 'go!' to be conjugated here (only)
@@ -124,7 +120,7 @@ const api = function (View) {
       return this.remove('#Negative')
     }
     toNegative(n) {
-      return getNth(this, n).map(vb => {
+      return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
         return toNegative(vb, parsed, info.form)
@@ -143,7 +139,7 @@ const api = function (View) {
 
   View.prototype.verbs = function (n) {
     let vb = find(this)
-    vb = getNth(vb, n)
+    vb = vb.getNth(n)
     return new Verbs(this.document, vb.pointer)
   }
 }

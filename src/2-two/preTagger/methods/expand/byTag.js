@@ -8,6 +8,14 @@ export default {
       lex[plural] = lex[plural] || 'Plural'
     }
   },
+  // 'lawyer', 'manager' plural forms
+  Actor: (word, lex, methods, model) => {
+    let already = model.one.lexicon
+    let plural = methods.two.transform.noun.toPlural(word, model)
+    if (!already[plural]) {
+      lex[plural] = lex[plural] || ['Plural', 'Actor']
+    }
+  },
 
   // superlative/ comparative forms for adjectives
   Comparable: (word, lex, methods, model) => {

@@ -5,7 +5,7 @@ import lex from './misc.js'
 import demonyms from './nouns/demonyms.js'
 import organizations from './nouns/organizations.js'
 import possessives from './nouns/possessives.js'
-import professions from './nouns/professions.js'
+import actors from './nouns/actors.js'
 import pronouns from './nouns/pronouns.js'
 import singulars from './nouns/singulars.js'
 import sportsTeams from './nouns/sportsTeams.js'
@@ -69,7 +69,7 @@ const data = [
   [demonyms, 'Demonym'],
   [organizations, 'Organization'],
   [possessives, 'Possessive'],
-  [professions, 'Actor'],
+  [actors, 'Actor'],
   [pronouns, 'Pronoun'],
   [singulars, 'Singular'],
   [sportsTeams, 'SportsTeam'],

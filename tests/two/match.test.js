@@ -818,6 +818,21 @@ let arr = [
   [`This claim was settled between`, `this #Noun was #PastTense between`],
   [`expect a period of sub-standard investment`, `#Imperative a #Noun of #Adjective #Singular`],
   [`in times of war and peace`, `in #Plural of #Singular and #Uncountable`],
+  // actor/person
+  [`the finance minister`, `the #Actor+`],
+  [`the product manager`, `the #Actor+`],
+  [`the city clerk`, `the #Actor+`],
+  [`the staff lawyers`, `the #Actor+`],
+  [`the senior developer`, `the #Actor+`],
+  [`the viola player`, `the #Actor+`],
+  [`the nursary workers`, `the #Actor+`],
+  [`the Safety Specialists`, `the #Actor+`],
+  [`the postsecondary teachers`, `the #Actor+`],
+  [`a spa manager`, `a #Actor+`],
+  [`Wildlife Biologists found`, `#Actor+ #Verb`],
+  [`the radiologist`, `the #Actor+`],
+  [`3 biochemists`, `3 #Actor+`],
+
   // [``, ``],
 ]
 test('match:', function (t) {

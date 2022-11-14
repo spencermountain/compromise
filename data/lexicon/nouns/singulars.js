@@ -127,7 +127,6 @@ export default [
   // -ive
   'prerogative',
   'objective',
-  'detective',
   'disincentive',
   'motive',
   'haze',
@@ -262,7 +261,6 @@ export default [
   'métier',
   'reformer',
   'dinner',
-  'player',
 
 
   'door',

@@ -832,6 +832,9 @@ let arr = [
   [`3 biochemists`, `3 #Actor+`],
   [`nurse Kelly`, `#Person+`],
 
+  [`breaking: dogs nice`, `#Expression #Plural #Adjective`],
+  [`forward: appartment pricing`, `#Expression #Noun+`],
+  [`email: spencer@cool.com`, `#Noun #Email`],
   // [``, ``],
 ]
 test('match:', function (t) {

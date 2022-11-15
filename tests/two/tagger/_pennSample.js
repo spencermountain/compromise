@@ -2701,10 +2701,6 @@ export default [
     tags: 'DT, NN, TO, VB, VBZ, CD',
   },
   {
-    text: 'LOCATION: Conference Call',
-    tags: 'NN, NN, NN',
-  },
-  {
     text: 'I encourage you to do this dance, as it has tremendous positive effects.',
     tags: 'PRP, VBP, PRP, TO, VB, DT, NN, IN, PRP, VBZ, JJ, JJ, NNS',
   },
@@ -2858,10 +2854,6 @@ export default [
     tags: 'NNS, VBP, JJ',
   },
   {
-    text: 'Groups: misc.consumers',
-    tags: 'NNS, NNS',
-  },
-  {
     text: 'I am GEORGE WALKER BUSH, son of the former president of the United States of America George Herbert Walker Bush, and currently serving as President of the United States of America.',
     tags: 'PRP, VBP, NNP, NNP, NNP, NN, IN, DT, JJ, NNP, IN, DT, NNP, NNP, IN, NNP, NNP, NNP, NNP, NNP, CC, RB, VBG, IN, NNP, IN, DT, NNP, NNP, IN, NNP',
   },
@@ -2940,10 +2932,6 @@ export default [
   {
     text: 'I hope you have a huge network.',
     tags: 'PRP, VBP, PRP, VBP, DT, JJ, NN',
-  },
-  {
-    text: 'ADMISSION: DONATIONS AT THE DOOR',
-    tags: 'NN, NNS, IN, DT, NN',
   },
   {
     text: 'Donations can also be made through Charter One Bank.',

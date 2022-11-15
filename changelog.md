@@ -12,6 +12,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - deprecate #Participle for #PastParticiple
 - run chunker only when necessary
 - cleanup verb+noun metadata in json()
+- remove confidence numbers
 -->
 
 <!-- #### 14.7.2 [Unreleased]

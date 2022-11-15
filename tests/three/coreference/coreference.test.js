@@ -41,10 +41,10 @@ test('anaphor:', function (t) {
       refs: { he: `jamie smith` },
     },
     // basic they
-    {
-      text: `Tornadoes are swirling clouds, they arrive during the summer`,
-      refs: { they: `Tornadoes` },
-    },
+    // {
+    //   text: `Tornadoes are swirling clouds, they arrive during the summer`,
+    //   refs: { they: `Tornadoes` },
+    // },
     {
       text: `plumbers are funny. they never stop talking`,
       refs: { they: `plumbers` },
@@ -76,10 +76,10 @@ test('anaphor:', function (t) {
     // },
 
     // double they
-    {
-      text: ` Gas prices are a top issue heading into the midterms. Polls show they’re high on voters’ minds`,
-      refs: { they: 'Gas prices' },
-    },
+    // {
+    //   text: ` Gas prices are a top issue heading into the midterms. Polls show they’re high on voters’ minds`,
+    //   refs: { they: 'Gas prices' },
+    // },
 
     // person-like
     {

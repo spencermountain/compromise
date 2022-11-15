@@ -29,18 +29,11 @@ let arr = [
   // missing verbs
   // imperative
 
-  `was [left] [dancing] alone`,
-  `where users [submit] drawings`,
-  `[Shares] [finish] [lower] on [sustained] selling `,
-  `had [ingrown] hairs and [follicle] problems`,
-  `[Obtain] some bones`,
-  `could be transcribed and [extended] [to] the systematic language of matrices`,
-  `self esteem has gotten [better]`,
-  `Offices [banks] [wear] [deserted] look `,
-  `[Place] items in the top`,
-  `the many charms [which] [ravish] my soul`,
-  `[all] the [stately] [buildings]`,
-  `OA is [dedicated] [to] helping those`,
+  //  %Plural|Verb% %Noun|Verb%
+  // `[Shares] [finish] [lower] on [sustained] selling `,
+  // `forward: appartment pricing`,
+  // `[wear] [deserted] look `,
+  // `[Place] items in the top`,
   `[Treat] UFO landings and crashes`,
   `soy green tea lattes are [amazing] `,
   `child care is [now] [provided] by relatives`,

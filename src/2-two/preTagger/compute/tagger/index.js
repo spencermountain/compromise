@@ -5,7 +5,7 @@ import checkSuffix from './2nd-pass/02-suffix.js'
 import checkRegex from './2nd-pass/03-regex.js'
 import checkPrefix from './2nd-pass/04-prefix.js'
 import checkYear from './2nd-pass/05-year.js'
-import checkPunct from './2nd-pass/06-punctuation.js'
+import checkPunct from './1st-pass/01-punctuation.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
@@ -15,6 +15,9 @@ import nounFallback from './3rd-pass/04-fallback.js'
 import switches from './3rd-pass/06-switches.js'
 // import imperative from './3rd-pass/07-imperative.js'
 
+const first = {
+  checkPunct,
+}
 const second = {
   tagSwitch,
   checkSuffix,
@@ -22,7 +25,6 @@ const second = {
   checkCase,
   checkPrefix,
   checkYear,
-  checkPunct,
 }
 
 const third = {
@@ -47,9 +49,6 @@ const ignoreCase = function (terms) {
 
 // these methods don't care about word-neighbours
 const secondPass = function (terms, model, world, yelling) {
-  // check whitespace/punctuation
-  second.checkPunct(terms, 0, model, world)
-
   for (let i = 0; i < terms.length; i += 1) {
     // mark Noun|Verb on term metadata
     second.tagSwitch(terms, i, model)
@@ -92,7 +91,14 @@ const thirdPass = function (terms, model, world, yelling) {
 const preTagger = function (view) {
   const { methods, model, world } = view
   // roughly split sentences up by clause
-  let document = methods.two.quickSplit(view.docs)
+  let docs = view.docs
+  // first-pass
+  docs.forEach(terms => {
+    // check whitespace/punctuation
+    first.checkPunct(terms, 0, model, world)
+  })
+  // second, third pass
+  let document = methods.two.quickSplit(docs)
   // start with all terms
   for (let n = 0; n < document.length; n += 1) {
     let terms = document[n]

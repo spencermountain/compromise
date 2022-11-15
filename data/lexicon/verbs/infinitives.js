@@ -718,4 +718,7 @@ export default [
   'concur',
   'maintain',
   'undercut',
+  'submit',
+  'obtain',
+  'ravish',
 ]

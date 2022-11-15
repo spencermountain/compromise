@@ -4,7 +4,7 @@ const byPunctuation = function (terms, i, model, world) {
   // colon following first word 
   // edit: foo
   // breaking: foobar
-  if (i === 0 && terms.length > 3) {
+  if (i === 0 && terms.length >= 3) {
     const hasColon = /:/
     let post = terms[0].post
     if (post.match(hasColon)) {

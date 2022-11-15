@@ -35,5 +35,7 @@ export default [
   { match: 'not be [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'do-not-be-confused' },
   // as pale as
   { match: 'as [#Infinitive] as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
+  //failed and oppressive
+  { match: '[%Adj|Past%] and #Adjective', group: 0, tag: 'Adjective', reason: 'faled-and-oppressive' },
 
 ]

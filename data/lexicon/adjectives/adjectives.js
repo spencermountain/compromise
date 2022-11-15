@@ -665,5 +665,6 @@ export default [
   'golden',
   'bare',
   'subpar',
+  'ingrown',
 ]
 

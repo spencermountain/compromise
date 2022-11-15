@@ -833,8 +833,14 @@ let arr = [
   [`nurse Kelly`, `#Person+`],
 
   [`breaking: dogs nice`, `#Expression #Plural #Adjective`],
-  [`forward: appartment pricing`, `#Expression #Noun+`],
+  [`forward: appartment price`, `#Expression #Noun+`],
   [`email: spencer@cool.com`, `#Noun #Email`],
+  [`was [left] [dancing] alone`, `#Verb+ #Adjective`],
+  [`where users [submit] drawings`, `#QuestionWord #Plural #Infinitive #Plural`],
+  [`could be transcribed and [extended]`, `could be #PastTense and #PastTense`],
+  [`self esteem has gotten [better]`, `#Noun+ #Verb #Verb #Comparative`],
+  [`the many charms [which] [ravish] my soul`, `#Determiner #Adjective #Plural #Preposition #Infinitive #Possessive #Singular`],
+  [`OA is [dedicated] [to] helping`, `#Acronym #Copula #PastTense #Conjunction #Gerund`],
   // [``, ``],
 ]
 test('match:', function (t) {

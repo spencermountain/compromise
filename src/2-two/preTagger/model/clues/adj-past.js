@@ -19,6 +19,7 @@ const adjPast = {
     Adverb: past, //cooked perfectly
     Comparative: past,//closed higher
     Date: past,// alleged thursday
+    Gerund: past,//left dancing
   },
   beforeWords: {
     be: past,//be hooked vs be embarrassed
@@ -46,6 +47,7 @@ const adjPast = {
     on: past, //focused on
     at: past, //recorded at
     between: past,//settled between
+    to: past,//dedicated to
   },
 }
 

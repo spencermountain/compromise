@@ -911,10 +911,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Do you concur?',
-    tags: 'VBP, PRP, VB',
-  },
-  {
     text: 'Please let me know Monday morning.',
     tags: 'UH, VB, PRP, VB, NNP, NN',
   },
@@ -953,10 +949,6 @@ export default [
   {
     text: 'Same as 1307.',
     tags: 'JJ, IN, CD',
-  },
-  {
-    text: 'Do you concur?',
-    tags: 'VBP, PRP, VB',
   },
   {
     text: 'Please let me know Monday morning.',
@@ -1526,10 +1518,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Do you know the address to send cards ??',
-    tags: 'VBP, PRP, VB, DT, NN, TO, VB, NNS',
-  },
-  {
     text: 'Bobby is one of those with major injuries .?',
     tags: 'NNP, VBZ, CD, IN, DT, IN, JJ, NNS',
   },
@@ -2076,10 +2064,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Do you also have a SSD we can use?',
-    tags: 'VBP, PRP, RB, VB, DT, NN, PRP, MD, VB',
-  },
-  {
     text: 'Sunjay Arya',
     tags: 'NNP, NNP',
   },
@@ -2238,10 +2222,6 @@ export default [
   {
     text: 'In a new franchise business?',
     tags: 'IN, DT, JJ, NN, NN',
-  },
-  {
-    text: 'Do you miss me?',
-    tags: 'VBP, PRP, VB, PRP',
   },
   {
     text: 'Robert Quick',
@@ -2840,10 +2820,6 @@ export default [
   {
     text: 'Please tell me there is a deeper reason.',
     tags: 'UH, VB, PRP, EX, VBZ, DT, JJR, NN',
-  },
-  {
-    text: 'Do you feel safer?',
-    tags: 'VBP, PRP, VB, JJR',
   },
   {
     text: 'Are you ready?',
@@ -3795,10 +3771,6 @@ export default [
     tags: 'NNS, MD, VB',
   },
   {
-    text: "Do you think he's teething?",
-    tags: 'VBP, PRP, VB, PRP, VBZ, VBG',
-  },
-  {
     text: 'You always want to go higher rather than wider for rats.',
     tags: 'PRP, RB, VBP, TO, VB, RBR, RB, IN, RBR, IN, NNS',
   },
@@ -4169,10 +4141,6 @@ export default [
   {
     text: 'Southern charm of Nashville, Birmingham, New Orleans or Charlotte.',
     tags: 'JJ, NN, IN, NNP, NNP, NNP, NNP, CC, NNP',
-  },
-  {
-    text: 'Do you speak a foreign language?',
-    tags: 'VBP, PRP, VB, DT, JJ, NN',
   },
   {
     text: 'Amount of time could be dependent on so many things.',

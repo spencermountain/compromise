@@ -54,11 +54,7 @@ let arr = [
   // `re-tool my exhaust`,
 
 
-  'I hope you have',
   // `soy green tea lattes are [amazing] `,
-  `you can [grace] the [front] page`,
-  `[Cute] neighborhood`,
-  `do [you] [eat] [it] [up] before`,
   `Seeing them [drive] away`,
   `[Light] [travels] [faster] than [sound] `,
   `[this] [is] [a] [cool] [place] hang out`,

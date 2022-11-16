@@ -39,5 +39,7 @@ let matches = [
   { match: '#Copula [there] .', group: 0, tag: 'There', reason: 'is-there' },
   // should there
   { match: '#Modal #Adverb? [there]', group: 0, tag: 'There', reason: 'should-there' },
+  // do you
+  { match: '^[do] (you|we|they)', group: 0, tag: 'QuestionWord', reason: 'do-you' },
 ]
 export default matches

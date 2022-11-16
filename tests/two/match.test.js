@@ -859,6 +859,12 @@ let arr = [
   [`you can bunny bump`, `#Pronoun #Modal #Noun #Infinitive`],
   [`The pedicurist did not massage`, `the #Actor #Verb not #Infinitive`],
   [`child care is [now] [provided] by relatives`, `#Singular+ #Copula now #PastTense #Preposition #Plural`],
+  [`nick the skin`, `#Infinitive the #Noun`],
+  [`I saw nick`, `i #PastTense #FirstName`],
+  [`you can [grace] the cover`, `#Pronoun #Verb+ the #Noun`],
+  [`[Cute] neighborhood`, `#Adjective #Singular`],
+  [`do [you] eat it`, `#QuestionWord #Pronoun #Infinitive it`],
+  [`do they even know`, `#QuestionWord #Pronoun #Adverb #Infinitive`],
   // [``, ``],
 ]
 test('match:', function (t) {

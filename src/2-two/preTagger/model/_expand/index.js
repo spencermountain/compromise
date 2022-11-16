@@ -28,7 +28,7 @@ const switchDefaults = {
   // 'April'
   'Person|Date': 'Month',
   // 'rob'
-  'Person|Verb': 'Person',//+conjugations
+  'Person|Verb': 'FirstName',//+conjugations
   // 'victoria'
   'Person|Place': 'Person',
   // 'boxes'

@@ -1,13 +1,3 @@
-// verbs that are often imperative
-const favorites = {
-  go: true,
-  have: true,
-  see: true,
-  try: true,
-  move: true,
-  let: true,
-}
-
 const beside = {
   there: true,//go there
   this: true,//try this
@@ -29,15 +19,15 @@ const imperative = function (terms, world) {
       return
     }
     // avoid multi-noun words like '[board] room'
-    if (!favorites[t.normal] && multiWords.hasOwnProperty(t.normal)) {
+    if (!t.tags.has('PhrasalVerb') && multiWords.hasOwnProperty(t.normal)) {
       return
     }
     // is the next word a noun? - 'compile information ..'
-    let nextNoun = terms[1].tags.has('Noun')
+    let nextNoun = terms[1].tags.has('Noun') || terms[1].tags.has('Determiner')
     if (nextNoun) {
       // ensure no soon-verb -  'waste materials are ..'
       let soonVerb = terms.slice(1, 3).some(term => term.tags.has('Verb'))
-      if (!soonVerb) {
+      if (!soonVerb || t.tags.has('#PhrasalVerb')) {
         setTag([t], 'Imperative', world, null, '3-[imperative]')
       }
     }

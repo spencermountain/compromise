@@ -73,6 +73,7 @@ export default [
   'burn',
   'bust',
   'buzz',
+  'bump',
   'bypass',
   'cake',
   'call',

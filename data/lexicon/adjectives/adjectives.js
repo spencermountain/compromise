@@ -666,5 +666,6 @@ export default [
   'bare',
   'subpar',
   'ingrown',
+  'agreeable',
 ]
 

@@ -411,6 +411,7 @@ export default [
   'dump truck',
   'soft serve',
   'sweetheart',
+  'car',
 ]
 
 

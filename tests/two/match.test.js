@@ -849,6 +849,13 @@ let arr = [
   [`[Treat] UFO landings seriously`, `#Imperative #Acronym #Plural #Adverb`],
   [`Honey, would you like a snack?`, `#Noun #Modal #Pronoun #Infinitive a #Singular`],
   [`go there quickly`, `#Imperative there #Adverb`],
+  [`Fill up the tank`, `#Imperative #Particle #Determiner #Singular`],
+
+  [`I find myself singing the blues`, `#Pronoun #Infinitive #Reflexive #Gerund the #Plural`],
+  [`make myself agreeable`, `#Infinitive #Reflexive #Adjective`],
+  [`can i sleep`, `#Modal #Noun #Infinitive`],
+  [`would you look`, `#Modal #Noun #Infinitive`],
+  [`may car camp`, `#Modal #Noun #Infinitive`],
   // [``, ``],
 ]
 test('match:', function (t) {

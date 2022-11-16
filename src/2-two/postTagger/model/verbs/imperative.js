@@ -36,7 +36,7 @@ export default [
   // never say
   { match: '^never [#Infinitive]', group: 0, tag: 'Imperative', reason: 'never-stop' },
   // come have a drink
-  { match: '^come #Infinitive', tag: 'Imperative', notIf: '#PhrasalVerb', reason: 'come-have' },
+  { match: '^come #Infinitive', tag: 'Imperative', notIf: 'on', reason: 'come-have' },
   // come and have a drink
   { match: '^come and? #Infinitive', tag: 'Imperative . Imperative', notIf: '#PhrasalVerb', reason: 'come-and-have' },
   // stay away

@@ -147,4 +147,6 @@ export default [
   { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'ready-to-noun' },
   // bring to market
   { match: '(bring|went|go|drive|run|bike) to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'bring-to-noun' },
+  // can i sleep, would you look
+  { match: '#Modal #Noun [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'would-you-look' },
 ]

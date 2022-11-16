@@ -91,5 +91,6 @@ export default {
     wanted: n,
     is: n,
     can: n,//parents can
+    wise: n,//service-wise
   },
 }

@@ -810,4 +810,5 @@ export default [
   'manner',
   'bitch',
   'war',
+  'poop',
 ]

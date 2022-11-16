@@ -856,6 +856,9 @@ let arr = [
   [`can i sleep`, `#Modal #Noun #Infinitive`],
   [`would you look`, `#Modal #Noun #Infinitive`],
   [`may car camp`, `#Modal #Noun #Infinitive`],
+  [`you can bunny bump`, `#Pronoun #Modal #Noun #Infinitive`],
+  [`The pedicurist did not massage`, `the #Actor #Verb not #Infinitive`],
+  [`child care is [now] [provided] by relatives`, `#Singular+ #Copula now #PastTense #Preposition #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

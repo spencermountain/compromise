@@ -59,6 +59,7 @@ export default [
   'miles',
   'olive',
   'patsy',
+  'page',
   'pearl',
   'penny',
   'pol',
@@ -77,8 +78,8 @@ export default [
   'viola',
   'violet',
   'wang',
+  'ward',
   'venus',
-
 
 ]
 

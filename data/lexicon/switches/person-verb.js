@@ -14,8 +14,26 @@ export default [
   'jack',
   'chuck',
   'mack',
-  'grant',//'sung'
-  'chase'
+  'grant',
+  'chase',
+  'grace',
+  'biff',
+  'bill',
+  'blaze',
+  'blossom',
+  'foster',
+  'hope',
+  'lance',
+  'marshal',
+  'nick',
+  'pat',
+  'peg',
+  'pierce',
+  'spike',
+  'stew',
+  'trace',
   // 'will',
-  //  may
+  // 'sung'
+  // 'may'
+  // 'peter',
 ]

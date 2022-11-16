@@ -13,7 +13,7 @@ import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
 import nounFallback from './3rd-pass/04-fallback.js'
 import switches from './3rd-pass/06-switches.js'
-// import imperative from './3rd-pass/07-imperative.js'
+import imperative from './3rd-pass/07-imperative.js'
 
 const first = {
   checkPunct,
@@ -33,7 +33,7 @@ const third = {
   orgWords,
   nounFallback,
   switches,
-  // imperative
+  imperative
 }
 
 // is it all yelling-case?
@@ -85,7 +85,7 @@ const thirdPass = function (terms, model, world, yelling) {
     third.switches(terms, i, world)
   }
   // place tea bags
-  // third.imperative(terms, world)
+  third.imperative(terms, world)
 }
 
 const preTagger = function (view) {

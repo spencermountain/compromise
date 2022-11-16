@@ -64,6 +64,7 @@ export default {
     }
     // conjugate it
     let all = methods.two.transform.verb.conjugate(inf, model)
+    delete all.FutureTense
     Object.entries(all).forEach(a => {
       // not 'walker up', or 'had taken up'
       if (a[0] === 'Actor' || a[1] === '') {

@@ -35,8 +35,6 @@ const switchDefaults = {
   'Plural|Verb': 'Plural', //(these are already derivative)
   // 'miles'
   'Unit|Noun': 'Noun',
-  // 'captain'
-  'Honorific|Noun': 'Noun',
 }
 
 const expandLexicon = function (words, model) {

@@ -841,6 +841,14 @@ let arr = [
   [`self esteem has gotten [better]`, `#Noun+ #Verb #Verb #Comparative`],
   [`the many charms [which] [ravish] my soul`, `#Determiner #Adjective #Plural #Preposition #Infinitive #Possessive #Singular`],
   [`OA is [dedicated] [to] helping`, `#Acronym #Copula #PastTense #Conjunction #Gerund`],
+
+  // imperatives
+  // [`C'mon, Luisa`, `#Expression+ #Person`],
+  [`Make fun of the monsters`, `#PhrasalVerb+ of the #Plural`],
+  [`Waste materials are disposed`, `#Singular #Plural are #PastTense`],
+  [`[Treat] UFO landings seriously`, `#Imperative #Acronym #Plural #Adverb`],
+  [`Honey, would you like a snack?`, `#Noun #Modal #Pronoun #Infinitive a #Singular`],
+  [`go there quickly`, `#Imperative there #Adverb`],
   // [``, ``],
 ]
 test('match:', function (t) {

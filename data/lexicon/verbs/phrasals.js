@@ -454,6 +454,7 @@ export default [
   'make out',
   'make up',
   'make sure',
+  'make fun',
   'man down',
   'man up',
   'mark down',

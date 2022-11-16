@@ -75,8 +75,6 @@ export default [
   { match: '#Plural that %Noun|Verb%', tag: '. #Preposition #Infinitive', reason: 'jobs-that-work' },
   // works for me
   { match: '[works] for me', group: 0, tag: 'PresentTense', reason: 'works-for-me' },
-  // no no no
-  // { match: 'no+', tag: 'Expression', reason: 'no-no' },
   // as we please
   { match: 'as #Pronoun [please]', group: 0, tag: 'Infinitive', reason: 'as-we-please' },
   // verb-prefixes - 'co write'

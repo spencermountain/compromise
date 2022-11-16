@@ -4,7 +4,7 @@ import fillTags from '../3rd-pass/_fillTags.js'
 const titleCase = /^\p{Lu}[\p{Ll}'’]/u
 const hasNumber = /[0-9]/
 
-const notProper = ['Date', 'Month', 'WeekDay', 'Unit']
+const notProper = ['Date', 'Month', 'WeekDay', 'Unit', 'Expression']
 
 // https://stackoverflow.com/a/267405/168877
 const romanNumeral = /^[IVXLCDM]{2,}$/

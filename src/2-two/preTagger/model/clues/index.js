@@ -9,7 +9,6 @@ import personNoun from './person-noun.js'
 import personVerb from './person-verb.js'
 import personPlace from './person-place.js'
 import unitNoun from './unit-noun.js'
-import honorificNoun from './honorific-noun.js'
 
 const clues = {
   'Adj|Gerund': adjGerund,
@@ -23,7 +22,6 @@ const clues = {
   'Person|Verb': personVerb,
   'Person|Place': personPlace,
   'Unit|Noun': unitNoun,
-  'Honorific|Noun': honorificNoun
 }
 
 const copy = (obj, more) => {

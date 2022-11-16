@@ -121,5 +121,6 @@ export default [
   `d'oh`,
   'shoo',
   'there now',
-  'aye'
+  'aye',
+  'cmon',//come on
 ]

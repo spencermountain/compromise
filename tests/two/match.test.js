@@ -865,6 +865,7 @@ let arr = [
   [`[Cute] neighborhood`, `#Adjective #Singular`],
   [`do [you] eat it`, `#QuestionWord #Pronoun #Infinitive it`],
   [`do they even know`, `#QuestionWord #Pronoun #Adverb #Infinitive`],
+  [`been overrun by insurgents`, `#Auxiliary #PresentTense by #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

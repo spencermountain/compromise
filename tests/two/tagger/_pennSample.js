@@ -3963,10 +3963,6 @@ export default [
     tags: 'VBP, NNS, VB, VBG, NN',
   },
   {
-    text: 'Do they have this anywhere?',
-    tags: 'VBP, PRP, VB, DT, RB',
-  },
-  {
     text: 'I want to take a cruise around the world.',
     tags: 'PRP, VBP, TO, VB, DT, NN, IN, DT, NN',
   },

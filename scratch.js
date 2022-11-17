@@ -45,8 +45,11 @@ let arr = [
   // `Have things to occupy yourself during the trip.`,
   // `Service wise, no complaints`,
 
-
+  'does he agree',
+  `were overrun by insurgents`,
   // `been overrun by insurgents`,
+  `would not give rise`,
+  `he will stroll downtown`,
   // `I wasn't born until he was`,
   // `people who will explore`,
   // 'Does he blink frequently?',
@@ -56,6 +59,7 @@ let arr = [
 
   // `soy green tea lattes are [amazing] `,
   `Seeing them [drive] away`,
+  'some require equity in order to qualify',
   `[Light] [travels] [faster] than [sound] `,
   `[this] [is] [a] [cool] [place] hang out`,
   `Not, not more bureaucracy, not more red tape`,

@@ -41,5 +41,7 @@ let matches = [
   { match: '#Modal #Adverb? [there]', group: 0, tag: 'There', reason: 'should-there' },
   // do you
   { match: '^[do] (you|we|they)', group: 0, tag: 'QuestionWord', reason: 'do-you' },
+  // does he
+  { match: '^[does] (he|she|it|#ProperNoun)', group: 0, tag: 'QuestionWord', reason: 'does-he' },
 ]
 export default matches

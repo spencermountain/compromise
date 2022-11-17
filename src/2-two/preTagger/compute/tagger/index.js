@@ -1,11 +1,13 @@
 
+import checkPunct from './1st-pass/01-punctuation.js'
+
 import tagSwitch from './2nd-pass/00-tagSwitch.js'
 import checkCase from './2nd-pass/01-case.js'
 import checkSuffix from './2nd-pass/02-suffix.js'
 import checkRegex from './2nd-pass/03-regex.js'
 import checkPrefix from './2nd-pass/04-prefix.js'
 import checkYear from './2nd-pass/05-year.js'
-import checkPunct from './1st-pass/01-punctuation.js'
+import verbType from './3rd-pass/06-verb-type.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
@@ -25,6 +27,7 @@ const second = {
   checkCase,
   checkPrefix,
   checkYear,
+  verbType
 }
 
 const third = {
@@ -46,6 +49,13 @@ const ignoreCase = function (terms) {
   return terms.every(t => !lowerCase.test(t.text))
 }
 
+const firstPass = function (docs, model, world) {
+  // first-pass
+  docs.forEach(terms => {
+    // check whitespace/punctuation
+    first.checkPunct(terms, 0, model, world)
+  })
+}
 
 // these methods don't care about word-neighbours
 const secondPass = function (terms, model, world, yelling) {
@@ -64,6 +74,7 @@ const secondPass = function (terms, model, world, yelling) {
     second.checkPrefix(terms, i, model)
     // turn '1993' into a year
     second.checkYear(terms, i, model)
+
   }
 }
 
@@ -83,6 +94,8 @@ const thirdPass = function (terms, model, world, yelling) {
     third.orgWords(terms, i, world, yelling)
     // verb-noun disambiguation, etc
     third.switches(terms, i, world)
+    // give bare verbs more tags
+    second.verbType(terms, i, model, world)
   }
   // place tea bags
   third.imperative(terms, world)
@@ -90,14 +103,10 @@ const thirdPass = function (terms, model, world, yelling) {
 
 const preTagger = function (view) {
   const { methods, model, world } = view
-  // roughly split sentences up by clause
   let docs = view.docs
-  // first-pass
-  docs.forEach(terms => {
-    // check whitespace/punctuation
-    first.checkPunct(terms, 0, model, world)
-  })
-  // second, third pass
+  // try some early stuff
+  firstPass(docs, model, world)
+  // roughly split sentences up by clause
   let document = methods.two.quickSplit(docs)
   // start with all terms
   for (let n = 0; n < document.length; n += 1) {

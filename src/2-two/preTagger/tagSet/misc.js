@@ -29,7 +29,7 @@ export default {
     not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Determiner'],
   },
   QuestionWord: {
-    not: ['Determiner', 'Verb'],
+    not: ['Determiner'],
   },
   Currency: {
     is: 'Noun',

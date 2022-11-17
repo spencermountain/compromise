@@ -9,11 +9,11 @@ const findNouns = function (doc) {
   // yo there
   m = m.splitOn('#Expression')
   // these are individual nouns
-  m = m.splitOn('(he|she|we|you|they)')
+  m = m.splitOn('(he|she|we|you|they|i)')
   // a client i saw
-  m = m.splitOn('(#Noun|#Adjective) [#Pronoun]', 0)
+  m = m.splitOn('(#Noun|#Adjective) [(he|him|she|it)]', 0)
   // give him the best
-  m = m.splitOn('[#Pronoun] (#Determiner|#Value)', 0)
+  m = m.splitOn('[(he|him|she|it)] (#Determiner|#Value)', 0)
   // the noise the slide makes
   m = m.splitBefore('#Noun [(the|a|an)] #Adjective? #Noun', 0)
   // here spencer slept

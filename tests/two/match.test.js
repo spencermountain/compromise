@@ -864,6 +864,8 @@ let arr = [
   [`you can [grace] the cover`, `#Pronoun #Verb+ the #Noun`],
   [`[Cute] neighborhood`, `#Adjective #Singular`],
   [`do [you] eat it`, `#QuestionWord #Pronoun #Infinitive it`],
+  [`does he agree`, `#QuestionWord #Pronoun #Infinitive`],
+  [`he does homework`, `#Pronoun !#QuestionWord #Noun`],
   [`do they even know`, `#QuestionWord #Pronoun #Adverb #Infinitive`],
   [`been overrun by insurgents`, `#Auxiliary #PresentTense by #Plural`],
   // [``, ``],

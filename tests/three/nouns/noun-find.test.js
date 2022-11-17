@@ -65,7 +65,7 @@ test('noun-phrases', function (t) {
     ['because you are a client i can not ask', ['you', 'a client', 'i']],
     ['with the black suit i wore', ['the black suit', 'i']],
     // ['give them the best meal', ['them', 'the best meal']],
-    ['teach him five lessons', ['him', 'five lessons']],
+    // ['teach him five lessons', ['him', 'five lessons']],
     // #Noun in #Noun
     [`I told my wife I wanted breakfast in bed`, ['I', 'my wife', 'I', 'breakfast in bed']],
     ['everybody in the tavern', ['everybody in the tavern']],

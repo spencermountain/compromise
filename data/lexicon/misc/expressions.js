@@ -107,7 +107,7 @@ export default [
   'wtf',
   'ya',
   'yaa',
-  'yahoo',
+  // 'yahoo',
   'yay',
   'yeah',
   'yep',

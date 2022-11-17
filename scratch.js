@@ -45,7 +45,8 @@ let arr = [
   // `Have things to occupy yourself during the trip.`,
   // `Service wise, no complaints`,
 
-  'does he agree',
+  'The Bill was passed',
+  'give parents their power',
   `were overrun by insurgents`,
   // `been overrun by insurgents`,
   `would not give rise`,

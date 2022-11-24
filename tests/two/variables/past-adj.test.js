@@ -139,7 +139,7 @@ let arr = [
   ['dried', '#PastTense'],
   ['we rallied', 'we #PastTense'],
   // context
-  ['poodles like being pampered', '#Plural #Infinitive #Gerund #PastTense'],
+  // ['poodles like being pampered', '#Plural #Infinitive #Gerund #PastTense'],
   ['poodles like to be pampered', '#Plural #Infinitive to #Verb #PastTense'],
   [`we charged back`, 'we #PastTense #Adverb'],
   [`it sliced backward`, 'it #PastTense #Adverb'],

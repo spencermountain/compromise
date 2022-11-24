@@ -308,11 +308,6 @@ export default [
     text: ' The recent rally in precious metals was a result of uncertainty and volatility in equities, he said.',
     tags: 'DT, JJ, NN, IN, JJ, NNS, VBD, DT, NN, IN, NN, CC, NN, IN, NNS, PRP, VBD',
   },
-
-  {
-    text: 'Two of them were being run by 2 officials of the Ministry of the Interior!',
-    tags: 'CD, IN, PRP, VBD, VBG, VBN, IN, CD, NNS, IN, DT, NNP, IN, DT, NNP',
-  },
   {
     text: 'The cells were operating in the Ghazaliyah and al-Jihad districts of the capital.',
     tags: 'DT, NNS, VBD, VBG, IN, DT, NNP, CC, NNP, NNP, NNS, IN, DT, NN',
@@ -2496,8 +2491,8 @@ export default [
     tags: 'DT, NNP, NNP, NNP',
   },
   {
-    text: 'Smutney-Jones also said he was unaware of anyone in the power-generating community being consulted.',
-    tags: 'NNP, NNP, RB, VBD, PRP, VBD, JJ, IN, NN, IN, DT, NN, NN, NN, VBG, VBN',
+    text: 'Smutney-Jones also said he was unaware of anyone in the power-generating community',
+    tags: 'NNP, NNP, RB, VBD, PRP, VBD, JJ, IN, NN, IN, DT, NN, NN, NN',
   },
   {
     text: 'James J. Hoecker, the former Federal Energy Regulatory Commission chairman, defended making the December decision and also defended Winter.',

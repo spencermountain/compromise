@@ -18,7 +18,7 @@ export default [
   // eat my shorts
   { match: '^[#Infinitive] (your|my|the|a|an|any|each|every|some|more)', group: 0, notIf: 'like', tag: 'Imperative', reason: 'eat-my-shorts' },
   // tell him the story
-  { match: '^[#Infinitive] (him|her|it|us|me)', group: 0, tag: 'Imperative', reason: 'tell-him' },
+  { match: '^[#Infinitive] (him|her|it|us|me|there)', group: 0, tag: 'Imperative', reason: 'tell-him' },
   // avoid loud noises
   { match: '^[#Infinitive] #Adjective #Noun$', group: 0, tag: 'Imperative', reason: 'avoid-loud-noises' },
   // one-word imperatives

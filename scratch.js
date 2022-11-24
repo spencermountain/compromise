@@ -359,6 +359,9 @@ let arr = [
   // 'my racing snail',
   // 'a nearly overpowering feeling',
   // 'and so requires stirring',
+  'it all came apart',
+  'two of them were being run by 2 officials of',
+  'a nearly overpowering feeling',
   'wanted to send around',
   'permit roasting.',
   // ' whilst being rocked to permit even roasting.',
@@ -374,7 +377,9 @@ let arr = [
 
 
 txt = arr[0]
-nlp(txt).debug()
+let doc = nlp(txt)
+doc.verbs().toPresentTense()
+doc.debug()
 // console.log(nlp(txt).docs[0])
 
 

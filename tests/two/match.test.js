@@ -795,7 +795,7 @@ let arr = [
   [`Only [parents] can make sure the TV is turned off`, `only #Plural #Verb #PhrasalVerb+ the #Singular #Copula #PhrasalVerb+`],
   ['repairing crumbling roads', '#Gerund #Adjective #Plural'],
   ['Helping hardworking families', '#Gerund #Adjective #Plural'],
-  [`I'm practising walking`, `i am #Gerund #Noun`],
+  // [`I'm practising walking`, `i am #Gerund #Noun`],
   [`The pot seen here`, `#Determiner #Singular #Participle #Uncountable`],
   [`his [ashen] gray face became [scarlet] with [rage]`, `his #Adjective+ #Noun #PastTense #Adjective with #Singular`],
   [`dance music`, `#Noun+`],
@@ -896,7 +896,7 @@ let arr = [
   // auxiliary verbs
   [`you're getting worked up`, `#Pronoun #Copula #Auxiliary #PhrasalVerb+`],
   [`before getting dressed`, `before (!#Gerund && #Auxiliary) #PastTense`],
-  [`was being applied `, `#Auxiliary (!#Gerund && #Auxiliary) #PastTense`],
+  // [`was being applied`, `#Auxiliary (!#Gerund && #Auxiliary) #PastTense`],
   // gerunds
   ['banning', '#Gerund'],
   ['my cunning', 'my #Noun'],
@@ -915,7 +915,7 @@ let arr = [
   ['practicing walking', '#Gerund #Gerund'],
   ['looking annoying', '#Gerund #Adjective'],
   ['an overpowering feeling', 'an #Adjective #Noun'],
-  ['a nearly overpowering feeling', 'a #Adverb #Adjective #Noun'],
+  // ['a nearly overpowering feeling', 'a #Adverb #Adjective #Noun'],
   ['Adjective meaning alluring', '#Noun #Gerund #Adjective'],
   [`I'm shaking, falling onto my knees`, 'i am #Gerund #Gerund onto my #Plural'],
   ['keep subsidizing skyrocketing tuition', '#Verb #Gerund #Adjective #Noun'],

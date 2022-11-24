@@ -40,5 +40,5 @@ export default [
   // been told
   { match: '[(been|had|became|came)] #PastTense', group: 0, tag: 'Auxiliary', reason: 'been-told' },
   // being born
-  { match: '[(being|having)] #Verb', group: 0, tag: 'Auxiliary', reason: 'being-born' },
+  { match: '[(being|having|getting)] #Verb', group: 0, tag: 'Auxiliary', reason: 'being-born' },
 ]

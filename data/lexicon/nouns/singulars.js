@@ -416,6 +416,7 @@ export default [
   'piggy',
   'thingy',
   'peanut',
+  'inning',
 ]
 
 

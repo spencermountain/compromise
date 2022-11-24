@@ -27,6 +27,10 @@ test('verb-splitter:', function (t) {
     [`Everyone he met had told him`, ['met', 'had told']],
     [`Particularly sought was information`, ['Particularly sought', 'was']],
     [`The one he invented was expensive`, ['invented', 'was']],
+    // [`fans that are blowing feel amazing`, ['are blowing', 'feel amazing']],
+    [`fans that were blowing felt amazing`, ['were blowing', 'felt']],
+    // [`recognizing written language`, ['recognizing']],
+    [`I'm getting written up`, ['getting written up']],
   ]
   arr.forEach(a => {
     let [str, vbs] = a

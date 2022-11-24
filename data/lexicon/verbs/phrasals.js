@@ -859,6 +859,7 @@ export default [
   'work in',
   'work off',
   'work out',
+  'work up',
   'write off',
   'write up',
   'yammer on',

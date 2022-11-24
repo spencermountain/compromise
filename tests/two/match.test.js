@@ -893,6 +893,30 @@ let arr = [
   // [`hard-fought victories`, `#Adjective+ #Noun`],
   [`hella-boring meeting`, `#Adverb #Adjective #Singular`],
   [`a quick-cut`, `a #Adjective #Singular`],
+  // auxiliary verbs
+  [`you're getting worked up`, `#Pronoun #Copula #Auxiliary #PhrasalVerb+`],
+  [`before getting dressed`, `before (!#Gerund && #Auxiliary) #PastTense`],
+  [`was being applied `, `#Auxiliary (!#Gerund && #Auxiliary) #PastTense`],
+  // gerunds
+  ['banning', '#Gerund'],
+  ['my cunning', 'my #Noun'],
+  ['fanning', '#Gerund'],
+  ['planning', '#Gerund'],
+  ['running', '#Gerund'],
+  ['spanning', '#Gerund'],
+  ['spinning', '#Gerund'],
+  ['stunning', '#Adjective'],
+  ['no soviet would go', 'no #Noun #Modal #Infinitive'],
+  [`per inning pitched`, `#Preposition #Singular #PastTense`],
+  [`ripping open its packaging`, `#PhrasalVerb+ #Possessive #Noun`],
+  [`using roof shingles`, `#Gerund #Singular #Noun`],
+
+  ['practicing walking', '#Gerund #Gerund'],
+  ['looking annoying', '#Gerund #Adjective'],
+  ['a nearly overpowering feeling', 'a #Adverb #Adjective #Noun'],
+  ['Adjective meaning alluring', '#Noun #Gerund #Adjective'],
+  [`I'm shaking, falling onto my knees`, 'i am #Gerund #Gerund onto my #Plural'],
+  ['keep subsidizing skyrocketing tuition', '#Verb #Gerund #Adjective #Noun'],
   // [``, ``],
 ]
 test('match:', function (t) {

@@ -37,6 +37,10 @@ const findVerbs = function (doc) {
   // Everyone he [met] had [told] him
   m = m.splitAfter('[#PastTense] #Auxiliary+ #PastTense', 0)
 
+  // fans that were blowing felt amazing
+  m = m.splitAfter('#Copula [#Gerund] #PastTense', 0)
+
+
   //ensure there's actually a verb
   m = m.if('#Verb')
   // the reason he will is ...

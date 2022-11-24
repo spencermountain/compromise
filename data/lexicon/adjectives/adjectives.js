@@ -241,7 +241,6 @@ export default [
   'unappealing',
   'unbecoming',
   'unassuming',
-  'cunning',
   'foregoing',
   'ongoing',
   'easygoing',
@@ -265,7 +264,7 @@ export default [
   'stylish',
   'squeamish',
   'loutish',
-  'lush',
+
 
   'mammoth',
   'north',
@@ -273,7 +272,6 @@ export default [
   'punjabi',
   'mini',
   'a priori',
-  'back',
   'ok',
   'brisk',
 
@@ -305,8 +303,6 @@ export default [
   'royal',
 
   // -el
-  'rebel',
-  'parallel',
   'civil',
   'all',
   'overall',
@@ -338,8 +334,6 @@ export default [
 
   'dim',
   'longterm',
-  'premium',
-  'humdrum',
   'ad infinitum',
   'urban',
   'suburban',
@@ -357,7 +351,6 @@ export default [
   'proven',
   'frozen',
 
-  'sovereign',
   'foreign',
   'benign',
   'main',
@@ -372,7 +365,6 @@ export default [
   'unknown',
   'gung ho',
   'macho',
-  'pro',
   'in vitro',
   'de facto',
   'ipso facto',
@@ -412,7 +404,6 @@ export default [
   'sui generis',
   'gratis',
   'for keeps',
-  'excess',
   'bogus',
   'dangerous',
   'offbeat',
@@ -531,7 +522,6 @@ export default [
   'past',
   'best',
   'honest',
-  'racist',
   'populist',
   'against',
   'most',

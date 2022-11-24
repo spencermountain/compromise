@@ -23,6 +23,7 @@ export default [
   'convertable',
   'cooperative',
   'crude',
+  'cunning',
   'demographic',
   'derivative',
   'elder',
@@ -118,5 +119,16 @@ export default [
   'communist',
   'socialist',
   'modernist',
+
+  'lush',
+  'back',
+  'rebel',
+  'parallel',
+  'premium',
+  'humdrum',
+  'sovereign',
+  'excess',
+  'pro',
+  'racist',
 
 ]

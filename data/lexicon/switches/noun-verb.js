@@ -813,4 +813,5 @@ export default [
   'poop',
   'slouch',
   'dish',
+  'roof'
 ]

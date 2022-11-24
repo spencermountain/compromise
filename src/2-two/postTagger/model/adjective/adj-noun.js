@@ -13,6 +13,8 @@ export default [
   { match: `#Gerund (giant|capital|center|zone|application)`, tag: 'Noun', reason: 'brewing-giant' },
   // in an instant
   { match: `#Preposition (a|an) [#Adjective]$`, group: 0, tag: 'Noun', reason: 'an-instant' },
+  // no golden would
+  { match: `no [#Adjective] #Modal`, group: 0, tag: 'Noun', reason: 'no-golden' },
   // brand new
   { match: `[brand #Gerund?] new`, group: 0, tag: 'Adverb', reason: 'brand-new' },
   // her favourite sport

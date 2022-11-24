@@ -31,9 +31,11 @@ export default [
   // },
 
   // faith-based, much-appreciated
-  { match: '#Hyphenated [(#Hyphenated && #PastTense)]', group: 0, tag: 'Adjective', reason: 'faith-based' },
+  { match: '#Hyphenated [(#Hyphenated && #PastTense)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'faith-based' },
   //self-driving
-  { match: '#Hyphenated [(#Hyphenated && #Gerund)]', group: 0, tag: 'Adjective', reason: 'self-driving' },
+  { match: '#Hyphenated [(#Hyphenated && #Gerund)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'self-driving' },
+  //dammed-up
+  { match: '[#PastTense (#Hyphenated && #PhrasalVerb)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'dammed-up' },
   //two-fold
   { match: '(#Hyphenated && #Value) fold', tag: 'Adjective', reason: 'two-fold' },
   //must-win

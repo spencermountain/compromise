@@ -880,18 +880,16 @@ let arr = [
   [`faith-based groups`, `#Noun #Adjective #Noun`],
   [`self-absorbed bimbo`, `#Noun #Adjective #Noun`],
   [`The self-released EP`, `the #Noun #Adjective #Acronym`],
-
-  [`must-see show`, `#Adjective+ #Noun`],
-  [`much-appreciated movie`, `#Adjective+ #Noun`],
+  [`much-appreciated movie`, `#Adverb #Adjective #Noun`],
   [`2-fold strategy`, `#Adjective+ #Noun`],
+  // [`must-see show`, `#Adjective+ #Noun`],
   // [`pop-up shop`, `#Adjective+ #Noun`],
-
   [`hard-nosed veteran`, `#Adjective+ #Noun`],
   [`good-tempered and polite`, `#Adjective+ and #Adjective`],
   [`10 just-announced films`, `#Value #Adverb #Adjective #Noun`],
-
-  [`the dammed-up gutters`, `the #Adjective+ #Plural`],
+  [`fed-up users`, `#Adjective+ #Plural`],
   [`rapidly-changing economy`, `#Adverb #Adjective #Noun`],
+  // [`the dammed-up gutters`, `the #Adjective+ #Plural`],
   // [`hard-fought victories`, `#Adjective+ #Noun`],
   // [``, ``],
 ]

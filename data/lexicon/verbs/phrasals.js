@@ -182,6 +182,7 @@ export default [
   'cut down',
   'cut out',
   'cut up',
+  'dam up',
   'do over',
   'double down',
   'double up',

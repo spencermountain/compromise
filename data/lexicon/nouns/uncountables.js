@@ -248,5 +248,10 @@ export default [
   'you guys',
   'improv',
   'phys ed',
-  'cont ed'
+  'cont ed',
+
+  'scissors',
+  'pants',
+  'shorts',
+  'panties'
 ]

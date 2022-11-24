@@ -14,6 +14,8 @@ export default [
   { match: 'a [must]', group: 0, tag: 'Singular', reason: 'must-2' },
   // we all
   { match: '(we|us) [all]', group: 0, tag: 'Noun', reason: 'we all' },
+  // due to weather
+  { match: 'due to [#Verb]', group: 0, tag: 'Noun', reason: 'due-to' },
 
   //some pressing issues
   { match: 'some [#Verb] #Plural', group: 0, tag: 'Noun', reason: 'determiner6' },

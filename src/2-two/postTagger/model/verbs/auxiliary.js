@@ -37,4 +37,6 @@ export default [
   { match: '#Imperative [(me|him|her)]', group: 0, tag: 'Reflexive', reason: 'tell-him' },
   // there is no x
   { match: '(is|was) #Adverb? [no]', group: 0, tag: 'Negative', reason: 'is-no' },
+  // been told
+  { match: '[(been|had|became|came)] #PastTense', group: 0, tag: 'Auxiliary', reason: 'been-told' },
 ]

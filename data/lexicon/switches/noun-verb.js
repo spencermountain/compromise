@@ -811,4 +811,5 @@ export default [
   'bitch',
   'war',
   'poop',
+  'slouch',
 ]

@@ -868,6 +868,11 @@ let arr = [
   [`he does homework`, `#Pronoun !#QuestionWord #Noun`],
   [`do they even know`, `#QuestionWord #Pronoun #Adverb #Infinitive`],
   [`been overrun by insurgents`, `#Auxiliary #PresentTense by #Plural`],
+  [`Due to weather`, `#Adjective #Conjunction #Noun`],
+  [`weather the storm`, `#Verb the #Noun`],
+  [`while the weather is clear`, `#Conjunction #Determiner #Noun #Copula #Adjective`],
+  // past-past
+  [`I've been told`, `i #Auxiliary !#PastTense #PastTense`],
   // [``, ``],
 ]
 test('match:', function (t) {

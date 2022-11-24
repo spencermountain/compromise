@@ -72,6 +72,20 @@ test('verb-splitter:', function (t) {
     //   str: `poodles like to be pampered`,
     //   verbs: ['like', 'be pampered'],
     // },
+
+    // pastTense-pastTense
+    {
+      str: `i have been told`,
+      verbs: ['have been told'],
+    },
+    {
+      str: `Everyone he met told him`,
+      verbs: ['met', 'told'],
+    },
+    {
+      str: `Everyone he met had told him`,
+      verbs: ['met', 'had told'],
+    },
   ]
   arr.forEach(o => {
     let verbs = nlp(o.str).verbs().out('array')

@@ -13,5 +13,5 @@ export default [
   // a bit amusing
   { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
   // looking annoying
-  { match: '#Gerund [#Gerund]', group: 0, tag: 'Adjective', notIf: '(impersonating|practicing)', reason: 'looking-annoying' },
+  { match: '#Gerund [#Gerund]', group: 0, tag: 'Adjective', notIf: '(impersonating|practicing|considering|assuming)', reason: 'looking-annoying' },
 ]

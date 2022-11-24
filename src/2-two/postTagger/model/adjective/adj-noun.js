@@ -19,4 +19,6 @@ export default [
   { match: `[brand #Gerund?] new`, group: 0, tag: 'Adverb', reason: 'brand-new' },
   // her favourite sport
   { match: `#Possessive [%Adj|Noun%] #Noun`, group: 0, tag: 'Adjective', reason: 'her-favourite' },
+  // must-win
+  { match: `must && #Hyphenated .`, tag: 'Adjective', reason: 'must-win' },
 ]

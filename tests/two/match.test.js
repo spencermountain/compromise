@@ -919,6 +919,14 @@ let arr = [
   ['Adjective meaning alluring', '#Noun #Gerund #Adjective'],
   [`I'm shaking, falling onto my knees`, 'i am #Gerund #Gerund onto my #Plural'],
   ['keep subsidizing skyrocketing tuition', '#Verb #Gerund #Adjective #Noun'],
+
+  [`people of varying ethnicities`, `#Noun of #Adjective #Plural`],
+  [`The 5 stages of buying gasoline`, `the 5 #Noun of #Verb #Noun`],
+  [`are you considering dining`, `are you #Gerund #Gerund`],
+  [`You'll find dancing noodles`, `#Pronoun will #Infinitive #Gerund #Plural`],
+  [`Practice breathing techniques.`, '#Infinitive #Gerund #Plural'],
+  // ['help working families', '#Infinitive #Gerund #Plural'],
+  ['stop posting schedules', '#Infinitive #Gerund #Plural'],
   // [``, ``],
 ]
 test('match:', function (t) {

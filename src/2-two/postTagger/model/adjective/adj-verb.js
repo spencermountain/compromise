@@ -38,4 +38,5 @@ export default [
   //failed and oppressive
   { match: '[%Adj|Past%] and #Adjective', group: 0, tag: 'Adjective', reason: 'faled-and-oppressive' },
 
+
 ]

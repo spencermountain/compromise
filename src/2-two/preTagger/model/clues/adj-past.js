@@ -48,6 +48,7 @@ const adjPast = {
     at: past, //recorded at
     between: past,//settled between
     to: past,//dedicated to
+    into: past,//pumped into
   },
 }
 

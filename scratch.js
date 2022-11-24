@@ -359,27 +359,24 @@ let arr = [
   // 'my racing snail',
   // 'a nearly overpowering feeling',
   // 'and so requires stirring',
-  'it all came apart',
-  'two of them were being run by 2 officials of',
-  'a nearly overpowering feeling',
-  'wanted to send around',
-  'permit roasting.',
+  // 'a nearly overpowering feeling',
   // ' whilst being rocked to permit even roasting.',
-  ' pumped into jars and vacuum-sealed',
-  'Both crunchy and smooth peanut butter are sources of saturated and monounsaturated fats',
-  'List of peanut dishes – includes dishes that use peanut butter ',
-  `I'm practising walking`,
-  `are even considering dining`,
-  `You'll find dancing noodles`,
-  `Practice breathing techniques.`,
-  `Sports awards to be given on Tuesday`
+  // '300 gang-related',
+  // '5 must-try burgers',
+  // 'vacuum-sealed',
+  // 'raise standards of living',
+  // 'sources of saturated and monounsaturated fats',
+  // `I'm practising walking`,
+
+  // 'going to stop posting schedules',
+  // `Sports awards to be given on Tuesday`
 ]
 
 
 txt = arr[0]
-let doc = nlp(txt)
-doc.verbs().toPresentTense()
-doc.debug()
+let doc = nlp(txt).debug()
+// doc.verbs().toPresentTense()
+// doc.debug()
 // console.log(nlp(txt).docs[0])
 
 

@@ -52,7 +52,7 @@ export default {
     ['there', vb],
     ['me', vb],
     ['man', 'Adjective'],
-    ['only', vb],
+    // ['only', vb],
     ['him', vb],
     ['it', vb],//relaunch it
     ['were', nn],

@@ -346,24 +346,38 @@ let arr = [
   // 'must-see movie',
 
 
-  'he wholly-owned the couch',
-  'fed-up users',
-  'rapidly-changing economy',
-  'some coarsely-ground peanut fragments included',
-  'food scientists working in the US',
-  'peanut butter normally contains only peanuts and salt',
+  // 'some coarsely-ground peanut fragments included',
+  // 'food scientists working in the US',
+  // 'helping prepare',
+  // 'selecting paste',
+  // 'bringing hope',
+  // 'getting time off',
+  // 'for being born',
+  'was being applied on',
+  'per inning pitched ',
+  'fans that were blowing felt amazing',
+  'recognizing written language',
   'a process of milling roasted peanuts',
+  'ripping open its legs',
+  'my racing snail',
+  ' using roof shingles',
+  'keep subsidizing skyrocketing tuition',
+  'bringing hope for new peace',
   'the peanut paste, and so requires stirring after separation',
   'Peanut butter is a nutrient-rich food containing high levels of protein',
   ' whilst being rocked to permit even roasting.',
   ' pumped into jars and vacuum-sealed',
   'Both crunchy and smooth peanut butter are sources of saturated and monounsaturated fats',
   'List of peanut dishes – includes dishes that use peanut butter ',
+  `I'm practising walking`,
+  `are even considering dining`,
 ]
 
 
 txt = arr[0]
 nlp(txt).debug()
+// console.log(nlp(txt).docs[0])
+
 
 // doc.nouns().debug()
 // console.log(doc.docs)

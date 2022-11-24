@@ -39,4 +39,6 @@ export default [
   { match: '(is|was) #Adverb? [no]', group: 0, tag: 'Negative', reason: 'is-no' },
   // been told
   { match: '[(been|had|became|came)] #PastTense', group: 0, tag: 'Auxiliary', reason: 'been-told' },
+  // being born
+  { match: '[(being|having)] #Verb', group: 0, tag: 'Auxiliary', reason: 'being-born' },
 ]

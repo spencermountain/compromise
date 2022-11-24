@@ -21,6 +21,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - add Noun.references()
 - **[new]** - .nouns('spencer') shorthand as an if-match
 - **[change]** - "[do] you .." etc now #QuestionWord
+- **[new]** - add #Hyphenated tag
 -->
 
 #### 14.7.1 

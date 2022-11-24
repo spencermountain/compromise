@@ -891,6 +891,8 @@ let arr = [
   [`rapidly-changing economy`, `#Adverb #Adjective #Noun`],
   // [`the dammed-up gutters`, `the #Adjective+ #Plural`],
   // [`hard-fought victories`, `#Adjective+ #Noun`],
+  [`hella-boring meeting`, `#Adverb #Adjective #Singular`],
+  [`a quick-cut`, `a #Adjective #Singular`],
   // [``, ``],
 ]
 test('match:', function (t) {

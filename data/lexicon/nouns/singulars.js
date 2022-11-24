@@ -415,6 +415,7 @@ export default [
   'strategy',
   'piggy',
   'thingy',
+  'peanut',
 ]
 
 

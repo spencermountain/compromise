@@ -253,5 +253,6 @@ export default [
   'scissors',
   'pants',
   'shorts',
-  'panties'
+  'panties',
+  'time off'
 ]

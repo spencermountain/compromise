@@ -343,7 +343,11 @@ let arr = [
   // 'they are stored unshelled in silos',
   // 'the liver is found associated with the kidneys',
   // 'over-joyous',
-  'faith-based groups',
+  // 'must-see movie',
+
+
+  '2-fold strategy',
+  'rapidly-changing economy',
   'some coarsely-ground peanut fragments included',
   'food scientists working in the US',
   'peanut butter normally contains only peanuts and salt',

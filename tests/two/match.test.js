@@ -876,14 +876,15 @@ let arr = [
   // hasDash
   //noun-past
   [`a bone-headed decision`, `a #Noun #Adjective #Noun`],
-  [`Peer-reviewed reports`, `#Adjective+ #Noun`],
+  [`Peer-reviewed reports`, `#Noun #Adjective #Noun`],
   [`faith-based groups`, `#Noun #Adjective #Noun`],
   [`self-absorbed bimbo`, `#Noun #Adjective #Noun`],
-  [`The self-released EP`, `the #Noun #Adjective #Plural`],
+  [`The self-released EP`, `the #Noun #Adjective #Acronym`],
 
   [`must-see show`, `#Adjective+ #Noun`],
-  [`pop-up shop`, `#Adjective+ #Noun`],
+  [`much-appreciated movie`, `#Adjective+ #Noun`],
   [`2-fold strategy`, `#Adjective+ #Noun`],
+  // [`pop-up shop`, `#Adjective+ #Noun`],
 
   [`hard-nosed veteran`, `#Adjective+ #Noun`],
   [`good-tempered and polite`, `#Adjective+ and #Adjective`],

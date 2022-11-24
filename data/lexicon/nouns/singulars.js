@@ -412,6 +412,9 @@ export default [
   'soft serve',
   'sweetheart',
   'car',
+  'strategy',
+  'piggy',
+  'thingy',
 ]
 
 

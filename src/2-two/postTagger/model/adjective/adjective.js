@@ -30,6 +30,15 @@ export default [
   //   reason: 'that-past-noun',
   // },
 
+  // faith-based, much-appreciated
+  { match: '#Hyphenated [(#Hyphenated && #PastTense)]', group: 0, tag: 'Adjective', reason: 'faith-based' },
+  //self-driving
+  { match: '#Hyphenated [(#Hyphenated && #Gerund)]', group: 0, tag: 'Adjective', reason: 'self-driving' },
+  //two-fold
+  { match: '(#Hyphenated && #Value) fold', tag: 'Adjective', reason: 'two-fold' },
+  //must-win
+  { match: 'must (#Hyphenated && #Infinitive)', tag: 'Adjective', reason: 'must-win' },
+
   { match: 'too much', tag: 'Adverb Adjective', reason: 'bit-4' },
   { match: 'a bit much', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },
 

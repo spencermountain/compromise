@@ -357,16 +357,19 @@ let arr = [
   // 'recognizing written language',
   // 'a process of milling roasted peanuts',
   // 'my racing snail',
-  'a nearly overpowering feeling',
-  'bringing hope for new peace',
-  'the peanut paste, and so requires stirring after separation',
-  'Peanut butter is a nutrient-rich food containing high levels of protein',
-  ' whilst being rocked to permit even roasting.',
+  // 'a nearly overpowering feeling',
+  // 'and so requires stirring',
+  'wanted to send around',
+  'permit roasting.',
+  // ' whilst being rocked to permit even roasting.',
   ' pumped into jars and vacuum-sealed',
   'Both crunchy and smooth peanut butter are sources of saturated and monounsaturated fats',
   'List of peanut dishes – includes dishes that use peanut butter ',
   `I'm practising walking`,
   `are even considering dining`,
+  `You'll find dancing noodles`,
+  `Practice breathing techniques.`,
+  `Sports awards to be given on Tuesday`
 ]
 
 

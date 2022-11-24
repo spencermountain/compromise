@@ -232,6 +232,7 @@ export default [
   'delighted',
   'elated',
   'confused',
+  'pissed',
 ]
 
 

@@ -20,7 +20,7 @@ test('verb-splitter:', function (t) {
     [`we will go eat`, ['will go eat']],
     [`we will walk and eat`, ['will walk', 'eat']],
     [`when the rain pours, come have a drink`, ['pours,', 'come have']],
-    // [    //    `poodles like to be pampered`,  verbs: ['like', 'be pampered'] ] 
+    // [ `poodles like to be pampered`,  verbs: ['like', 'be pampered'] ] 
     // pastTense-pastTense
     [`i have been told`, ['have been told']],
     [`Everyone he met told him`, ['met', 'told']],
@@ -31,6 +31,25 @@ test('verb-splitter:', function (t) {
     [`fans that were blowing felt amazing`, ['were blowing', 'felt']],
     // [`recognizing written language`, ['recognizing']],
     [`I'm getting written up`, ['getting written up']],
+
+    // -- verb [to] verb --
+    [`while being rocked to sleep`, ['being rocked to sleep']],
+    [`whilst being rocked to permit even roasting`, ['being rocked', 'permit', 'even roasting']],
+    [`he would not stop asking questions`, ['would not stop asking']],
+    [`he was pissed off for having to wait`, ['was', 'having to wait']],
+    [`so I'm not going to walk a mile`, ['not going to walk']],
+    [`Some refused to leave`, ['refused to leave']],
+    [`I got to feeling like Superman`, ['got to feeling']],
+    [`you mean to do it`, ['mean to do']],
+    [`They used to wander around here`, ['used to wander around']],
+    [`it continues to function as a phone`, ['continues to function']],
+    [`i am fully expecting to find the piece of rubber`, ['am fully expecting to find']],
+    // [`the kids are not to be allowed to swim`, ['']],
+    [`We have got to do better`, ['have got to do']],
+    // [`trying to get loose`, ['']],
+    [` I look forward to coming to your city`, ['look forward to coming']],
+    [` I did not seem to mind`, ['did not seem to mind']],
+    // [``, ['']],
   ]
   arr.forEach(a => {
     let [str, vbs] = a

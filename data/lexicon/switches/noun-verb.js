@@ -813,5 +813,6 @@ export default [
   'poop',
   'slouch',
   'dish',
-  'roof'
+  'roof',
+  'paste'
 ]

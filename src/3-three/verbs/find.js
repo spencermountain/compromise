@@ -40,6 +40,9 @@ const findVerbs = function (doc) {
   // fans that were blowing felt amazing
   m = m.splitAfter('#Copula [#Gerund] #PastTense', 0)
 
+  // managed to see
+  // m = m.splitOn('#PastTense [to] #Infinitive', 0)
+
 
   //ensure there's actually a verb
   m = m.if('#Verb')

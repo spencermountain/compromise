@@ -1,5 +1,5 @@
-
-import checkPunct from './1st-pass/01-punctuation.js'
+import colons from './1st-pass/01-colons.js'
+import hyphens from './1st-pass/02-hyphens.js'
 
 import tagSwitch from './2nd-pass/00-tagSwitch.js'
 import checkCase from './2nd-pass/01-case.js'
@@ -17,28 +17,6 @@ import nounFallback from './3rd-pass/04-fallback.js'
 import switches from './3rd-pass/06-switches.js'
 import imperative from './3rd-pass/07-imperative.js'
 
-const first = {
-  checkPunct,
-}
-const second = {
-  tagSwitch,
-  checkSuffix,
-  checkRegex,
-  checkCase,
-  checkPrefix,
-  checkYear,
-  verbType
-}
-
-const third = {
-  checkAcronym,
-  neighbours,
-  orgWords,
-  nounFallback,
-  switches,
-  imperative
-}
-
 // is it all yelling-case?
 const ignoreCase = function (terms) {
   // allow 'John F Kennedy'
@@ -49,56 +27,63 @@ const ignoreCase = function (terms) {
   return terms.every(t => !lowerCase.test(t.text))
 }
 
+// taggers with no clause-splitting
 const firstPass = function (docs, model, world) {
-  // first-pass
   docs.forEach(terms => {
     // check whitespace/punctuation
-    first.checkPunct(terms, 0, model, world)
+    colons(terms, 0, model, world)
+
+    for (let i = 0; i < terms.length; i += 1) {
+      // hard-nosed, faith-based
+      // hyphens(terms, i, model, world)
+    }
   })
 }
 
 // these methods don't care about word-neighbours
-const secondPass = function (terms, model, world, yelling) {
+const secondPass = function (terms, model, world, isYelling) {
   for (let i = 0; i < terms.length; i += 1) {
     // mark Noun|Verb on term metadata
-    second.tagSwitch(terms, i, model)
+    tagSwitch(terms, i, model)
     //  is it titlecased?
-    if (yelling === false) {
-      second.checkCase(terms, i, model)
+    if (isYelling === false) {
+      checkCase(terms, i, model)
     }
     // look at word ending
-    second.checkSuffix(terms, i, model)
+    checkSuffix(terms, i, model)
     // try look-like rules
-    second.checkRegex(terms, i, model, world)
+    checkRegex(terms, i, model, world)
     // check for recognized prefix, like 'micro-'
-    second.checkPrefix(terms, i, model)
+    checkPrefix(terms, i, model)
     // turn '1993' into a year
-    second.checkYear(terms, i, model)
-
+    checkYear(terms, i, model)
   }
 }
 
-const thirdPass = function (terms, model, world, yelling) {
+// neighbour-based tagging
+const thirdPass = function (terms, model, world, isYelling) {
   for (let i = 0; i < terms.length; i += 1) {
     // let these tags get layered
-    let found = third.checkAcronym(terms, i, model)
+    let found = checkAcronym(terms, i, model)
     // deduce parent tags
     fillTags(terms, i, model)
     // look left+right for hints
-    found = found || third.neighbours(terms, i, model)
+    found = found || neighbours(terms, i, model)
     //  ¯\_(ツ)_/¯ - found nothing
-    found = found || third.nounFallback(terms, i, model)
+    found = found || nounFallback(terms, i, model)
   }
   for (let i = 0; i < terms.length; i += 1) {
     // Johnson LLC
-    third.orgWords(terms, i, world, yelling)
+    orgWords(terms, i, world, isYelling)
     // verb-noun disambiguation, etc
-    third.switches(terms, i, world)
+    switches(terms, i, world)
     // give bare verbs more tags
-    second.verbType(terms, i, model, world)
+    verbType(terms, i, model, world)
+    // hard-nosed
+    hyphens(terms, i, model, world)
   }
   // place tea bags
-  third.imperative(terms, world)
+  imperative(terms, world)
 }
 
 const preTagger = function (view) {
@@ -112,11 +97,11 @@ const preTagger = function (view) {
   for (let n = 0; n < document.length; n += 1) {
     let terms = document[n]
     // is it all upper-case?
-    const yelling = ignoreCase(terms)
+    const isYelling = ignoreCase(terms)
     // guess by the letters
-    secondPass(terms, model, world, yelling)
+    secondPass(terms, model, world, isYelling)
     // guess by the neighbours
-    thirdPass(terms, model, world, yelling)
+    thirdPass(terms, model, world, isYelling)
   }
   return document
 }

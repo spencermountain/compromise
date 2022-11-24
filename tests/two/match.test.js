@@ -867,12 +867,31 @@ let arr = [
   [`does he agree`, `#QuestionWord #Pronoun #Infinitive`],
   [`he does homework`, `#Pronoun !#QuestionWord #Noun`],
   [`do they even know`, `#QuestionWord #Pronoun #Adverb #Infinitive`],
-  [`been overrun by insurgents`, `#Auxiliary #PresentTense by #Plural`],
+  // [`been overrun by insurgents`, `#Auxiliary #PresentTense by #Plural`],
   [`Due to weather`, `#Adjective #Conjunction #Noun`],
   [`weather the storm`, `#Verb the #Noun`],
   [`while the weather is clear`, `#Conjunction #Determiner #Noun #Copula #Adjective`],
-  // past-past
   [`I've been told`, `i #Auxiliary !#PastTense #PastTense`],
+  [`a number of breakfast dishes and desserts`, `a #Noun of #Noun+ and #Noun`],
+  // hasDash
+  //noun-past
+  [`a bone-headed decision`, `a #Noun #Adjective #Noun`],
+  [`Peer-reviewed reports`, `#Adjective+ #Noun`],
+  [`faith-based groups`, `#Noun #Adjective #Noun`],
+  [`self-absorbed bimbo`, `#Noun #Adjective #Noun`],
+  [`The self-released EP`, `the #Noun #Adjective #Plural`],
+
+  [`must-see show`, `#Adjective+ #Noun`],
+  [`pop-up shop`, `#Adjective+ #Noun`],
+  [`2-fold strategy`, `#Adjective+ #Noun`],
+
+  [`hard-nosed veteran`, `#Adjective+ #Noun`],
+  [`good-tempered and polite`, `#Adjective+ and #Adjective`],
+  [`10 just-announced films`, `#Value #Adverb #Adjective #Noun`],
+
+  [`the dammed-up gutters`, `the #Adjective+ #Plural`],
+  [`rapidly-changing economy`, `#Adverb #Adjective #Noun`],
+  // [`hard-fought victories`, `#Adjective+ #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

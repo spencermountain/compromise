@@ -812,4 +812,5 @@ export default [
   'war',
   'poop',
   'slouch',
+  'dish',
 ]

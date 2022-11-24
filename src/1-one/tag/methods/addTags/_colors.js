@@ -9,6 +9,7 @@ const colors = {
   Preposition: 'cyan',
   Conjunction: 'cyan',
   Determiner: 'cyan',
+  Hyphenated: 'cyan',
   Adverb: 'cyan',
 }
 

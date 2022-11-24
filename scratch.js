@@ -340,10 +340,11 @@ let arr = [
   // "Attack and resolve your issues",
   // 'Co-accused denied bail',
 
-  // 'weather',
-  'they are stored unshelled in silos',
-  'It is also used in a number of breakfast dishes and desserts',
-  ' some coarsely-ground peanut fragments included to give extra texture',
+  // 'they are stored unshelled in silos',
+  // 'the liver is found associated with the kidneys',
+  // 'over-joyous',
+  'faith-based groups',
+  'some coarsely-ground peanut fragments included',
   'food scientists working in the US',
   'peanut butter normally contains only peanuts and salt',
   'a process of milling roasted peanuts',
@@ -358,10 +359,6 @@ let arr = [
 
 txt = arr[0]
 nlp(txt).debug()
-
-
-// double-verbs
-nlp('Everyone he met had told him').verbs().debug()
 
 // doc.nouns().debug()
 // console.log(doc.docs)

@@ -18,5 +18,7 @@ const byPunctuation = function (terms, i, model, world) {
       setTag([terms[0]], 'Expression', world, null, `2-punct-colon''`)
     }
   }
+
+
 }
 export default byPunctuation

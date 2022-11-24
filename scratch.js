@@ -361,10 +361,7 @@ nlp(txt).debug()
 
 
 // double-verbs
-// nlp('The one he invented was too expensive').verbs().debug()
-// nlp('Particularly sought was information').verbs().debug()
-// nlp('Everyone he met told him').verbs().debug()
-nlp(`I've been told`).verbs().debug()
+nlp('Everyone he met had told him').verbs().debug()
 
 // doc.nouns().debug()
 // console.log(doc.docs)

@@ -256,5 +256,9 @@ export default [
   'panties',
   'time off',
   'reins',
-  'flesh'
+  'flesh',
+
+  'anyone',
+  'anything',
+  'something',
 ]

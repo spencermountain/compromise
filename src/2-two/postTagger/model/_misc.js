@@ -16,19 +16,18 @@ let matches = [
   // { match: 'some of', tag: 'Noun Conjunction', reason: 'some-of' },
   // of some sort
   { match: 'of some sort', tag: 'Conjunction Adjective Noun', reason: 'of-some-sort' },
-
   // such skill
   { match: '[such] (a|an|is)? #Noun', group: 0, tag: 'Determiner', reason: 'such-skill' },
-  // that is
-  // { match: '^[that] (is|was)', group: 0, tag: 'Noun', reason: 'that-is' },
-
-
+  // another one
+  // { match: '[another] (#Noun|#Value)', group: 0, tag: 'Adjective', reason: 'another-one' },
   // right after
   { match: '[right] (before|after|in|into|to|toward)', group: 0, tag: '#Adverb', reason: 'right-into' },
   // at about
   { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
   // are ya
   { match: '(are|#Modal|see|do|for) [ya]', group: 0, tag: 'Pronoun', reason: 'are-ya' },
+  // long live
+  { match: '[long live] .', group: 0, tag: '#Adjective #Infinitive', reason: 'long-live' },
 
   // 'there' as adjective
   { match: '(always|nearly|barely|practically) [there]', group: 0, tag: 'Adjective', reason: 'always-there' },

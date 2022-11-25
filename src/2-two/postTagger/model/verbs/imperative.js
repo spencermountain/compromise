@@ -49,6 +49,8 @@ export default [
   { match: '^do not [#Infinitive]', group: 0, tag: 'Imperative', reason: 'do-not-be' },
   // allow yourself
   { match: '[#Infinitive] (yourself|yourselves)', group: 0, tag: 'Imperative', reason: 'allow-yourself' },
+  // look what
+  { match: '[#Infinitive] what .', group: 0, tag: 'Imperative', reason: 'look-what' },
   // continue playing
   { match: '^[#Infinitive] #Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
   // go to it

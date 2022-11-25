@@ -622,6 +622,7 @@ export default [
   'run',
   'rush',
   'rust',
+  'sack',
   'sacrifice',
   'sail',
   'scale',
@@ -859,6 +860,7 @@ export default [
   'zip',
   'zone',
   'zoom',
+  'combat',
   // -ate
   // -ide
   // 'saw',//hmm

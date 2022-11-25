@@ -957,6 +957,11 @@ let arr = [
   ['confess', '#Verb'],
   ['careless', '#Adjective'],
 
+  [`I ask Congress to enact new safeguards`, `#Pronoun #Infinitive #Noun to #Infinitive #Adjective #Plural`],
+  [`enforcement will help [combat] illegal drugs`, `#Noun #Verb+ #Adjective #Noun`],
+  [`something funny [happened] to you`, `#Noun #Adjective #PastTense to #Noun`],
+  [`Long live Prince Prigio`, `#Adjective #Verb #Person+`],
+  [`look what we almost left`, `#Imperative what #Pronoun #Adverb #Verb`],
   // [``, ``],
 ]
 test('match:', function (t) {

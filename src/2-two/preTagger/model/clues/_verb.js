@@ -40,6 +40,7 @@ export default {
     let: v,
     even: v,
     when: v,
+    help: v, //help combat
     // them: v,
     he: v,
     she: v,
@@ -79,6 +80,7 @@ export default {
     // on: v,
     off: v,
     under: v,
+    what: v, //look what
     when: v,//starts when
     // for:true, //settled for
     all: v,//shiver all night

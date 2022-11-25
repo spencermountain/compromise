@@ -74,7 +74,8 @@ export default {
     popular: n,//
     formal: n,
     no: n,//no worries
-    more: n//more details
+    more: n,//more details
+    one: n,//one flood
   },
   afterWords: {
     of: n, //date of birth (preposition)

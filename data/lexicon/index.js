@@ -91,10 +91,10 @@ const data = [
   [dates, 'Date'],
   [durations, 'Duration'],
 
-  [femaleNames, 'FemaleName'],
+  [femaleNames, 'FemaleName'], //5kb
   [firstnames, 'FirstName'],
-  [lastnames, 'LastName'],
-  [maleNames, 'MaleName'],
+  [lastnames, 'LastName'], //3k
+  [maleNames, 'MaleName'], //5kb
   [people, 'Person'],
 
   [adjectives, 'Adjective'],
@@ -110,9 +110,9 @@ const data = [
   [modals, 'Modal'],
   [verbs, 'Verb'],
   [participles, 'Participle'],
-  [phrasals, 'PhrasalVerb'], //5kb
+  [phrasals, 'PhrasalVerb'], //3kb
 
-  // switches
+  // switches - 10kb
   [adjGerund, 'Adj|Gerund'],
   [adjNoun, 'Adj|Noun'],
   [adjPast, 'Adj|Past'],

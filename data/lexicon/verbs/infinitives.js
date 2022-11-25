@@ -284,6 +284,8 @@ export default [
   'evoke',
   'evolve',
   'exclude',
+  'exceed',
+  'exclaim',
   'exert',
   'exhale',
   'exist',
@@ -681,9 +683,15 @@ export default [
   'confirm',
   'vie',
   'reconcile',
-  'profess',
   'bathe',
   'incite',
+
+  // -ess
+  'profess',
+  'impress',
+  'possess',
+  'assess',
+  'confess',
 
   // -ide
   'abide',

@@ -6,8 +6,11 @@ const hasNumber = /[0-9]/
 
 const notProper = ['Date', 'Month', 'WeekDay', 'Unit', 'Expression']
 
-// https://stackoverflow.com/a/267405/168877
+// roman numeral by regex
+const hasIVX = /[IVX]/ // does it ~look like~ a roman numeral?
+// quick-version
 const romanNumeral = /^[IVXLCDM]{2,}$/
+// https://stackoverflow.com/a/267405/168877
 const romanNumValid = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
 const nope = {
   li: true,
@@ -58,7 +61,7 @@ const checkCase = function (terms, i, model) {
     return true
   }
   //roman numberals - XVII
-  if (str.length >= 2 && romanNumeral.test(str) && romanNumValid.test(str) && !nope[term.normal]) {
+  if (str.length >= 2 && romanNumeral.test(str) && hasIVX.test(str) && romanNumValid.test(str) && !nope[term.normal]) {
     fastTag(term, 'RomanNumeral', '2-xvii')
     return true
   }

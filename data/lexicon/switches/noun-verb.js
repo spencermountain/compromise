@@ -861,6 +861,9 @@ export default [
   'zone',
   'zoom',
   'combat',
+  'profile',
+  'stockpile',
+  'tile',
   // -ate
   // -ide
   // 'saw',//hmm

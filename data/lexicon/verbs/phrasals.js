@@ -691,6 +691,7 @@ export default [
   'spell out',
   'spill over',
   'spin up',
+  'spice up',
   'splash out',
   'split off',
   'split up',

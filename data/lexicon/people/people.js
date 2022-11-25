@@ -27,6 +27,7 @@ export default [
   'tiger woods',
   'valentino rossi',
   'van gogh',
+  'niles crane',
 
   //female
   'halle berry',

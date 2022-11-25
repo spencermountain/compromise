@@ -57,6 +57,7 @@ export default {
     another: n,//
     versus: n,//
     neither: n,//
+    about: n,//about claims
     // strong adjectives
     favorite: n,//
     best: n,//

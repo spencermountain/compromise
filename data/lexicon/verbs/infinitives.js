@@ -682,9 +682,12 @@ export default [
   'remain',
   'confirm',
   'vie',
-  'reconcile',
   'bathe',
   'incite',
+
+  // -ile
+  'reconcile',
+  'compile',
 
   // -ess
   'profess',

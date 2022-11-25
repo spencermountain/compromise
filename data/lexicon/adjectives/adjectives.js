@@ -657,5 +657,7 @@ export default [
   'subpar',
   'ingrown',
   'agreeable',
+  'vile',
+  'win win',
 ]
 

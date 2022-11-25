@@ -15,7 +15,11 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - remove confidence numbers
 -->
 
-<!-- #### 14.7.2 [Unreleased]
+<!-- #### 14.7.3 [Unreleased]
+-->
+
+#### 14.8.0 
+- **[fix]** - tagging fixes
 - **[new]** - add Person .presumedMale(), .presumedFemale() methods
 - **[new]** - add Pronoun class, .refersTo()
 - **[new]** - add Noun.references()
@@ -23,7 +27,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - "[do] you .." etc now #QuestionWord
 - **[new]** - add #Hyphenated tag
 - **[fix]** - improved Auxiliary verb tagging
--->
+- **[update]** - dependencies
 
 #### 14.7.1 
 - **[fix]** - concat fix

@@ -66,9 +66,17 @@ export default {
     me: v, //date me
     you: v, //date you
     him: v, //loves him
+    us: v,//cost us
     her: v, //
     them: v, //
     it: v, //hope it
+    himself: v,
+    herself: v,
+    itself: v,
+    myself: v,
+    ourselves: v,
+    themselves: v,
+
     a: v, //covers a
     an: v, //covers an
     // from: v, //ranges from

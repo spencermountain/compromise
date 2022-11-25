@@ -370,6 +370,8 @@ let arr = [
 
   // 'going to stop posting schedules',
   // `Sports awards to be given on Tuesday`
+
+  'hang the cloak on the hook with rope',
 ]
 
 

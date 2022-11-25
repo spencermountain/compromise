@@ -39,6 +39,7 @@ export default [
   'female',
   'fluid',
   'fine',
+  'firm',
   'gold',
   'genious',
   'homeless',

@@ -69,6 +69,9 @@ export default {
     technical: n,//
     computer: n,//
     scientific: n,//
+    security: n,//
+    government: n,//
+    popular: n,//
     formal: n,
     no: n,//no worries
     more: n//more details

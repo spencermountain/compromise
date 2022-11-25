@@ -962,6 +962,9 @@ let arr = [
   [`something funny [happened] to you`, `#Noun #Adjective #PastTense to #Noun`],
   [`Long live Prince Prigio`, `#Adjective #Verb #Person+`],
   [`look what we almost left`, `#Imperative what #Pronoun #Adverb #Verb`],
+  [`programs [which] [boost] achievement`, `#Plural which #Verb #Noun`],
+  [`shirts [last] a long time`, `#Plural #Infinitive #Determiner #Adjective #Noun`],
+  [`I am really a sweets person`, `#Pronoun #Copula #Adverb a #Plural #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

@@ -67,4 +67,5 @@ export default [
   'alight',
   'tender',
   'close',
+  'last',
 ]

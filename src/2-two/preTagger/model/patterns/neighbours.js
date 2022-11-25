@@ -35,7 +35,7 @@ export default {
     ['old', nn],
     ['never', vb],
     ['before', nn],
-    ['a', 'Singular'],
+    ['a', nn],
     ['the', nn],
     ['been', vb],
   ],

@@ -123,4 +123,5 @@ export default [
   'there now',
   'aye',
   'cmon',//come on
+  'excuse me',
 ]

@@ -35,7 +35,7 @@ export default {
     ['old', nn],
     ['never', vb],
     ['before', nn],
-    ['a', 'Singular'],
+    ['a', nn],
     ['the', nn],
     ['been', vb],
   ],
@@ -52,7 +52,7 @@ export default {
     ['there', vb],
     ['me', vb],
     ['man', 'Adjective'],
-    ['only', vb],
+    // ['only', vb],
     ['him', vb],
     ['it', vb],//relaunch it
     ['were', nn],

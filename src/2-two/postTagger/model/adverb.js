@@ -53,4 +53,6 @@ export default [
   { match: '(the|those|these|a|an) [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'blown-motor' },
   // charged back
   { match: '(#PresentTense|#PastTense) [back]', group: 0, tag: 'Adverb', reason: 'charge-back' },
+  // send around
+  { match: '#Verb [around]', group: 0, tag: 'Adverb', ifNo: '#PhrasalVerb', reason: 'send-around' },
 ]

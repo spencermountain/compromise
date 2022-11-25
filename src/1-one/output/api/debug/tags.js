@@ -32,6 +32,10 @@ const showTags = function (view) {
       }
       text = cli.yellow(text)
       let word = "'" + text + "'"
+      if (t.reference) {
+        let str = view.update([t.reference]).text('normal')
+        word += ` - ${cli.dim(cli.i('[' + str + ']'))}`
+      }
       word = word.padEnd(18)
       let str = cli.blue('  │ ') + cli.i(word) + '  - ' + tagString(tags, model)
       console.log(str)

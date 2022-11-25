@@ -19,6 +19,7 @@ const clue = {
   beforeWords: Object.assign({}, adj.beforeWords, gerund.beforeWords, {
     is: 'Adjective',
     was: 'Adjective',
+    of: 'Adjective', //of varying
     suggest: 'Gerund',
     recommend: 'Gerund',
   }),

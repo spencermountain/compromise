@@ -1,5 +1,4 @@
 import { find, strip } from './fns.js'
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const api = function (View) {
 
@@ -15,7 +14,7 @@ const api = function (View) {
 
   View.prototype.quotations = function (n) {
     let m = find(this)
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Quotations(m.document, m.pointer)
   }
 }

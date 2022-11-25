@@ -1,6 +1,4 @@
 export default [
-  'anyone',
-  'anything',
   // 'her', //this one is check ambiguous
   // 'hers',
   // 'his',
@@ -10,11 +8,10 @@ export default [
   'none',
   'our',
   'ours',
-  'something',
-  'their',
-  'theirs',
-  'your',
-  'yours',
+  // 'their',
+  // 'theirs',
+  // 'your',
+  // 'yours',
 
 
 ]

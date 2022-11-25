@@ -35,7 +35,7 @@ export default [
   // nothing like
   { match: '(not|nothing|never) [like]', group: 0, tag: 'Preposition', reason: 'nothing-like' },
   // treat them like
-  { match: '#Verb #Pronoun [like]', group: 0, tag: 'Preposition', reason: 'treat-them-like' },
+  { match: '#Infinitive #Pronoun [like]', group: 0, tag: 'Preposition', reason: 'treat-them-like' },
 
 
 

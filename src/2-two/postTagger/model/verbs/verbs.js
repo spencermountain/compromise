@@ -75,13 +75,13 @@ export default [
   { match: '#Plural that %Noun|Verb%', tag: '. #Preposition #Infinitive', reason: 'jobs-that-work' },
   // works for me
   { match: '[works] for me', group: 0, tag: 'PresentTense', reason: 'works-for-me' },
-  // no no no
-  // { match: 'no+', tag: 'Expression', reason: 'no-no' },
-
   // as we please
   { match: 'as #Pronoun [please]', group: 0, tag: 'Infinitive', reason: 'as-we-please' },
-
   // verb-prefixes - 'co write'
   { match: '[(co|mis|de|inter|intra|pre|re|un|out|under|over|counter)] #Verb', group: 0, tag: ['Verb', 'Prefix'], notIf: '(#Copula|#PhrasalVerb)', reason: 'co-write' },
+  // dressed and left
+  { match: '#PastTense and [%Adj|Past%]', group: 0, tag: 'PastTense', reason: 'dressed-and-left' },
+  // melted and fallen
+  { match: '[%Adj|Past%] and #PastTense', group: 0, tag: 'PastTense', reason: 'dressed-and-left' },
 
 ]

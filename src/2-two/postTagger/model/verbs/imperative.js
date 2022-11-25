@@ -18,7 +18,7 @@ export default [
   // eat my shorts
   { match: '^[#Infinitive] (your|my|the|a|an|any|each|every|some|more)', group: 0, notIf: 'like', tag: 'Imperative', reason: 'eat-my-shorts' },
   // tell him the story
-  { match: '^[#Infinitive] (him|her|it|us|me)', group: 0, tag: 'Imperative', reason: 'tell-him' },
+  { match: '^[#Infinitive] (him|her|it|us|me|there)', group: 0, tag: 'Imperative', reason: 'tell-him' },
   // avoid loud noises
   { match: '^[#Infinitive] #Adjective #Noun$', group: 0, tag: 'Imperative', reason: 'avoid-loud-noises' },
   // one-word imperatives
@@ -36,9 +36,9 @@ export default [
   // never say
   { match: '^never [#Infinitive]', group: 0, tag: 'Imperative', reason: 'never-stop' },
   // come have a drink
-  { match: '^come #Infinitive', tag: 'Imperative', reason: 'come-have' },
+  { match: '^come #Infinitive', tag: 'Imperative', notIf: 'on', reason: 'come-have' },
   // come and have a drink
-  { match: '^come and? #Infinitive', tag: 'Imperative . Imperative', reason: 'come-and-have' },
+  { match: '^come and? #Infinitive', tag: 'Imperative . Imperative', notIf: '#PhrasalVerb', reason: 'come-and-have' },
   // stay away
   { match: '^stay (out|away|back)', tag: 'Imperative', reason: 'stay-away' },
   // stay cool
@@ -49,6 +49,8 @@ export default [
   { match: '^do not [#Infinitive]', group: 0, tag: 'Imperative', reason: 'do-not-be' },
   // allow yourself
   { match: '[#Infinitive] (yourself|yourselves)', group: 0, tag: 'Imperative', reason: 'allow-yourself' },
+  // look what
+  { match: '[#Infinitive] what .', group: 0, tag: 'Imperative', reason: 'look-what' },
   // continue playing
   { match: '^[#Infinitive] #Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
   // go to it

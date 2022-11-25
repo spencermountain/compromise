@@ -1,10 +1,12 @@
+const isTitleCase = /^[A-Z][a-z]/
 
 const isCapital = (terms, i) => {
-  if (terms[i].tags.has('ProperNoun')) {// 'Comfort Inn'
+  if (terms[i].tags.has('ProperNoun') && isTitleCase.test(terms[i].text)) {// 'Comfort Inn'
     return 'Noun'
   }
   return null
 }
+
 const isAloneVerb = (terms, i, tag) => {
   if (i === 0 && !terms[1]) {// 'Help'
     return tag

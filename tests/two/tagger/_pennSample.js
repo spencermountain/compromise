@@ -308,11 +308,6 @@ export default [
     text: ' The recent rally in precious metals was a result of uncertainty and volatility in equities, he said.',
     tags: 'DT, JJ, NN, IN, JJ, NNS, VBD, DT, NN, IN, NN, CC, NN, IN, NNS, PRP, VBD',
   },
-
-  {
-    text: 'Two of them were being run by 2 officials of the Ministry of the Interior!',
-    tags: 'CD, IN, PRP, VBD, VBG, VBN, IN, CD, NNS, IN, DT, NNP, IN, DT, NNP',
-  },
   {
     text: 'The cells were operating in the Ghazaliyah and al-Jihad districts of the capital.',
     tags: 'DT, NNS, VBD, VBG, IN, DT, NNP, CC, NNP, NNP, NNS, IN, DT, NN',
@@ -911,10 +906,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Do you concur?',
-    tags: 'VBP, PRP, VB',
-  },
-  {
     text: 'Please let me know Monday morning.',
     tags: 'UH, VB, PRP, VB, NNP, NN',
   },
@@ -953,10 +944,6 @@ export default [
   {
     text: 'Same as 1307.',
     tags: 'JJ, IN, CD',
-  },
-  {
-    text: 'Do you concur?',
-    tags: 'VBP, PRP, VB',
   },
   {
     text: 'Please let me know Monday morning.',
@@ -1526,10 +1513,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Do you know the address to send cards ??',
-    tags: 'VBP, PRP, VB, DT, NN, TO, VB, NNS',
-  },
-  {
     text: 'Bobby is one of those with major injuries .?',
     tags: 'NNP, VBZ, CD, IN, DT, IN, JJ, NNS',
   },
@@ -2076,10 +2059,6 @@ export default [
     tags: 'NNP, NNP',
   },
   {
-    text: 'Do you also have a SSD we can use?',
-    tags: 'VBP, PRP, RB, VB, DT, NN, PRP, MD, VB',
-  },
-  {
     text: 'Sunjay Arya',
     tags: 'NNP, NNP',
   },
@@ -2238,10 +2217,6 @@ export default [
   {
     text: 'In a new franchise business?',
     tags: 'IN, DT, JJ, NN, NN',
-  },
-  {
-    text: 'Do you miss me?',
-    tags: 'VBP, PRP, VB, PRP',
   },
   {
     text: 'Robert Quick',
@@ -2516,8 +2491,8 @@ export default [
     tags: 'DT, NNP, NNP, NNP',
   },
   {
-    text: 'Smutney-Jones also said he was unaware of anyone in the power-generating community being consulted.',
-    tags: 'NNP, NNP, RB, VBD, PRP, VBD, JJ, IN, NN, IN, DT, NN, NN, NN, VBG, VBN',
+    text: 'Smutney-Jones also said he was unaware of anyone in the power-generating community',
+    tags: 'NNP, NNP, RB, VBD, PRP, VBD, JJ, IN, NN, IN, DT, NN, NN, NN',
   },
   {
     text: 'James J. Hoecker, the former Federal Energy Regulatory Commission chairman, defended making the December decision and also defended Winter.',
@@ -2701,10 +2676,6 @@ export default [
     tags: 'DT, NN, TO, VB, VBZ, CD',
   },
   {
-    text: 'LOCATION: Conference Call',
-    tags: 'NN, NN, NN',
-  },
-  {
     text: 'I encourage you to do this dance, as it has tremendous positive effects.',
     tags: 'PRP, VBP, PRP, TO, VB, DT, NN, IN, PRP, VBZ, JJ, JJ, NNS',
   },
@@ -2846,20 +2817,12 @@ export default [
     tags: 'UH, VB, PRP, EX, VBZ, DT, JJR, NN',
   },
   {
-    text: 'Do you feel safer?',
-    tags: 'VBP, PRP, VB, JJR',
-  },
-  {
     text: 'Are you ready?',
     tags: 'VBP, PRP, JJ',
   },
   {
     text: 'Ideas are welcome.',
     tags: 'NNS, VBP, JJ',
-  },
-  {
-    text: 'Groups: misc.consumers',
-    tags: 'NNS, NNS',
   },
   {
     text: 'I am GEORGE WALKER BUSH, son of the former president of the United States of America George Herbert Walker Bush, and currently serving as President of the United States of America.',
@@ -2940,10 +2903,6 @@ export default [
   {
     text: 'I hope you have a huge network.',
     tags: 'PRP, VBP, PRP, VBP, DT, JJ, NN',
-  },
-  {
-    text: 'ADMISSION: DONATIONS AT THE DOOR',
-    tags: 'NN, NNS, IN, DT, NN',
   },
   {
     text: 'Donations can also be made through Charter One Bank.',
@@ -3807,10 +3766,6 @@ export default [
     tags: 'NNS, MD, VB',
   },
   {
-    text: "Do you think he's teething?",
-    tags: 'VBP, PRP, VB, PRP, VBZ, VBG',
-  },
-  {
     text: 'You always want to go higher rather than wider for rats.',
     tags: 'PRP, RB, VBP, TO, VB, RBR, RB, IN, RBR, IN, NNS',
   },
@@ -4003,10 +3958,6 @@ export default [
     tags: 'VBP, NNS, VB, VBG, NN',
   },
   {
-    text: 'Do they have this anywhere?',
-    tags: 'VBP, PRP, VB, DT, RB',
-  },
-  {
     text: 'I want to take a cruise around the world.',
     tags: 'PRP, VBP, TO, VB, DT, NN, IN, DT, NN',
   },
@@ -4181,10 +4132,6 @@ export default [
   {
     text: 'Southern charm of Nashville, Birmingham, New Orleans or Charlotte.',
     tags: 'JJ, NN, IN, NNP, NNP, NNP, NNP, CC, NNP',
-  },
-  {
-    text: 'Do you speak a foreign language?',
-    tags: 'VBP, PRP, VB, DT, JJ, NN',
   },
   {
     text: 'Amount of time could be dependent on so many things.',

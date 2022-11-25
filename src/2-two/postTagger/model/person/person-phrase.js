@@ -40,7 +40,7 @@ export default [
   //Andrew Lloyd Webber
   { match: '#FirstName #FirstName #ProperNoun', tag: 'Person', reason: 'bill-firstname-title' },
   //Mr Foo
-  { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
+  { match: '(#Honorific|#Actor) #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
 
@@ -64,13 +64,13 @@ export default [
   { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
 
   // ==== Honorics ====
-  { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: 'Honorific', reason: 'ambg-honorifics' },
+  { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: ['Honorific', 'Person'], reason: 'ambg-honorifics' },
   // dr john foobar
   { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', notIf: '#Possessive', reason: 'dr-john-foo', safe: true },
   //his-excellency
   { match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person', group: 0, tag: 'Honorific', reason: 'his-excellency' },
   // Lieutenant colonel
-  { match: '%Honorific|Noun% %Honorific|Noun%', tag: 'Honorific', reason: 'Lieutenant colonel' },
+  { match: '#Honorific #Actor', tag: 'Honorific', reason: 'Lieutenant colonel' },
   // first lady, second admiral
-  { match: '(first|second|third|1st|2nd|3rd) %Honorific|Noun%', tag: 'Honorific', reason: 'first lady' },
+  { match: '(first|second|third|1st|2nd|3rd) #Actor', tag: 'Honorific', reason: 'first lady' },
 ]

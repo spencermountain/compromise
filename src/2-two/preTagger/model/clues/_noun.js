@@ -57,6 +57,7 @@ export default {
     another: n,//
     versus: n,//
     neither: n,//
+    about: n,//about claims
     // strong adjectives
     favorite: n,//
     best: n,//
@@ -69,9 +70,13 @@ export default {
     technical: n,//
     computer: n,//
     scientific: n,//
+    security: n,//
+    government: n,//
+    popular: n,//
     formal: n,
     no: n,//no worries
-    more: n//more details
+    more: n,//more details
+    one: n,//one flood
   },
   afterWords: {
     of: n, //date of birth (preposition)
@@ -91,5 +96,6 @@ export default {
     wanted: n,
     is: n,
     can: n,//parents can
+    wise: n,//service-wise
   },
 }

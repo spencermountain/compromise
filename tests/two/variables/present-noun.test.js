@@ -109,7 +109,7 @@ let arr = [
   [`& other types`, 'and other #Plural'],
   [`40 gallons of water a day`, '#Value #Plural of #Noun a #Noun'],
 
-  ['3 trains', '#Value #Noun'],
+  ['3 trains were', '#Value #Noun #Verb'],
   // ['help unmask the great slice', '#Verb #Verb the #Adjective #Noun'],
   ['help Dubai heal', '#Verb #Noun #Verb'],
   ['the euro sense', 'the #Noun #Noun'],

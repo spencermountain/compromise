@@ -127,7 +127,6 @@ export default [
   // -ive
   'prerogative',
   'objective',
-  'detective',
   'disincentive',
   'motive',
   'haze',
@@ -262,7 +261,6 @@ export default [
   'métier',
   'reformer',
   'dinner',
-  'player',
 
 
   'door',
@@ -411,7 +409,14 @@ export default [
   'time off',
   'darling',
   'dump truck',
+  'soft serve',
   'sweetheart',
+  'car',
+  'strategy',
+  'piggy',
+  'thingy',
+  'peanut',
+  'inning',
 ]
 
 

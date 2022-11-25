@@ -1,5 +1,4 @@
 // return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 const apostropheS = /'s$/
 
 const find = function (doc) {
@@ -38,7 +37,7 @@ const api = function (View) {
 
   View.prototype.possessives = function (n) {
     let m = find(this)
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Possessives(m.document, m.pointer)
   }
 }

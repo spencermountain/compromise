@@ -40,6 +40,7 @@ export default {
     let: v,
     even: v,
     when: v,
+    help: v, //help combat
     // them: v,
     he: v,
     she: v,
@@ -65,9 +66,17 @@ export default {
     me: v, //date me
     you: v, //date you
     him: v, //loves him
+    us: v,//cost us
     her: v, //
     them: v, //
     it: v, //hope it
+    himself: v,
+    herself: v,
+    itself: v,
+    myself: v,
+    ourselves: v,
+    themselves: v,
+
     a: v, //covers a
     an: v, //covers an
     // from: v, //ranges from
@@ -79,6 +88,7 @@ export default {
     // on: v,
     off: v,
     under: v,
+    what: v, //look what
     when: v,//starts when
     // for:true, //settled for
     all: v,//shiver all night

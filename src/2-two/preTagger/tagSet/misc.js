@@ -74,5 +74,7 @@ export default {
   // 'co-wrote'
   Prefix: {
     not: ['Abbreviation', 'Acronym', 'ProperNoun']
-  }
+  },
+  // hard-nosed, bone-headed
+  Hyphenated: {}
 }

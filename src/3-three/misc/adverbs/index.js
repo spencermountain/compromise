@@ -1,6 +1,4 @@
 // return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
-
 const api = function (View) {
 
   class Adverbs extends View {
@@ -23,7 +21,7 @@ const api = function (View) {
 
   View.prototype.adverbs = function (n) {
     let m = this.match('#Adverb')
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Adverbs(m.document, m.pointer)
   }
 }

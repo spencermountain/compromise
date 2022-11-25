@@ -27,6 +27,7 @@ export default [
   'tiger woods',
   'valentino rossi',
   'van gogh',
+  'niles crane',
 
   //female
   'halle berry',
@@ -37,6 +38,8 @@ export default [
   'scarlett johansson',
   'theresa may',
   'tyra banks',
+  'wednesday adams',
+  'miranda july',
 
   //sometimes firstname, sometimes lastname
   'brock',

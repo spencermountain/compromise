@@ -738,6 +738,7 @@ export default [
   'nikau',
   'nikhil',
   'nikola',
+  'niles',
   'noah',
   'noam',
   'noel',

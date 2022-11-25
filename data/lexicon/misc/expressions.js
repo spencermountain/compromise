@@ -107,7 +107,7 @@ export default [
   'wtf',
   'ya',
   'yaa',
-  'yahoo',
+  // 'yahoo',
   'yay',
   'yeah',
   'yep',
@@ -121,5 +121,7 @@ export default [
   `d'oh`,
   'shoo',
   'there now',
-  'aye'
+  'aye',
+  'cmon',//come on
+  'excuse me',
 ]

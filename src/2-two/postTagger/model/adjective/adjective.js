@@ -30,6 +30,19 @@ export default [
   //   reason: 'that-past-noun',
   // },
 
+  // faith-based, much-appreciated, soft-boiled
+  { match: '#Hyphenated [(#Hyphenated && #PastTense)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'faith-based' },
+  //self-driving
+  { match: '#Hyphenated [(#Hyphenated && #Gerund)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'self-driving' },
+  //dammed-up
+  { match: '[#PastTense (#Hyphenated && #PhrasalVerb)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'dammed-up' },
+  //two-fold
+  { match: '(#Hyphenated && #Value) fold', tag: 'Adjective', reason: 'two-fold' },
+  //must-win
+  { match: 'must (#Hyphenated && #Infinitive)', tag: 'Adjective', reason: 'must-win' },
+  // vacuum-sealed
+  { match: `(#Hyphenated && #Infinitive) #Hyphenated`, tag: 'Adjective', notIf: '#PhrasalVerb', reason: 'vacuum-sealed' },
+
   { match: 'too much', tag: 'Adverb Adjective', reason: 'bit-4' },
   { match: 'a bit much', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },
 

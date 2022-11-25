@@ -4,7 +4,7 @@ export default [
   //running-a-show
   { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },
   //the-only-reason
-  { match: '#Determiner #Adverb [#Infinitive]', group: 0, tag: 'Noun', reason: 'the-reason' },
+  { match: '#Determiner (only|further|just|more|backward) [#Infinitive]', group: 0, tag: 'Noun', reason: 'the-only-reason' },
   // a stream runs
   { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', group: 0, tag: 'Noun', reason: 'determiner5' },
   //a nice deal
@@ -29,8 +29,6 @@ export default [
   { match: '#Gerund #Adjective? for [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-for' },
   // running to work
   { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
-  // 1 train
-  { match: '(one|1) [#Infinitive]', group: 0, tag: 'Singular', reason: '1-trains' },
   // about love
   { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
   // on stage
@@ -116,9 +114,8 @@ export default [
   { match: `#PhrasalVerb #PhrasalVerb #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   //there are reasons
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
-
   // 30 trains
-  { match: '#Value [#PresentTense]', group: 0, notIf: '(one|1|#Copula|#Infinitive)', tag: 'Plural', reason: '2-trains' },
+  { match: '#Value [#PresentTense] of', group: 0, notIf: '(one|1|#Copula|#Infinitive)', tag: 'Plural', reason: '2-trains' },
   // compromises are possible
   { match: '[#PresentTense] (are|were) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   // hope i helped
@@ -127,8 +124,6 @@ export default [
   // { match: '#PresentTense #Possessive [#PresentTense]', notIf: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
   // our unyielding support
   { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'our-full-support' },
-  // they do serve fish
-  { match: '(do|did|will) [#Singular] #Noun', group: 0, tag: 'PresentTense', reason: 'do-serve-fish' },
   // tastes good
   { match: '[(tastes|smells)] #Adverb? #Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
   // are you playing golf
@@ -140,11 +135,17 @@ export default [
 
   // 'verb-to'
   // how to watch
-  { match: 'how to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'how-to-noun' },
+  { match: 'how to [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'how-to-noun' },
+  // which boost it
+  { match: 'which [%Noun|Verb%] #Noun', group: 0, tag: 'Infinitive', reason: 'which-boost-it' },
   // asking questions
   { match: '#Gerund [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'asking-questions' },
   // ready to stream
-  { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Verb', reason: 'ready-to-noun' },
+  { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'ready-to-noun' },
   // bring to market
   { match: '(bring|went|go|drive|run|bike) to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'bring-to-noun' },
+  // can i sleep, would you look
+  { match: '#Modal #Noun [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'would-you-look' },
+  // is just spam
+  { match: '#Copula just [#Infinitive]', group: 0, tag: 'Noun', reason: 'is-just-spam' },
 ]

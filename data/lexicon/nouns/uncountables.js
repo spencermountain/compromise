@@ -246,5 +246,19 @@ export default [
   'existence',
   'make up',
   'you guys',
-  'improv'
+  'improv',
+  'phys ed',
+  'cont ed',
+
+  'scissors',
+  'pants',
+  'shorts',
+  'panties',
+  'time off',
+  'reins',
+  'flesh',
+
+  'anyone',
+  'anything',
+  'something',
 ]

@@ -6,7 +6,7 @@ export default [
   //was walking
   { match: `[#Copula] (#Adverb|not)+? (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
   //would walk
-  { match: `#Adverb+? [(#Modal|did)+] (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
+  { match: `[(#Modal|did)+] (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
   //would have had
   { match: `#Modal (#Adverb|not)+? [have] (#Adverb|not)+? [had] (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'would-have' },
   //support a splattering of auxillaries before a verb
@@ -37,4 +37,10 @@ export default [
   { match: '#Imperative [(me|him|her)]', group: 0, tag: 'Reflexive', reason: 'tell-him' },
   // there is no x
   { match: '(is|was) #Adverb? [no]', group: 0, tag: 'Negative', reason: 'is-no' },
+  // been told
+  { match: '[(been|had|became|came)] #PastTense', group: 0, notIf: '#PhrasalVerb', tag: 'Auxiliary', reason: 'been-told' },
+  // being born
+  { match: '[(being|having|getting)] #Verb', group: 0, tag: 'Auxiliary', reason: 'being-born' },
+  // be walking
+  { match: '[be] #Gerund', group: 0, tag: 'Auxiliary', reason: 'be-walking' },
 ]

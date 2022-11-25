@@ -1,5 +1,4 @@
 // return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 const hasPeriod = /\./g
 
 const api = function (View) {
@@ -33,7 +32,7 @@ const api = function (View) {
 
   View.prototype.acronyms = function (n) {
     let m = this.match('#Acronym')
-    m = getNth(m, n)
+    m = m.getNth(n)
     return new Acronyms(m.document, m.pointer)
   }
 }

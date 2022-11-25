@@ -5,6 +5,7 @@ export default {
     Determiner: jj, //the detailed
     // Copula: jj, //is detailed
     Possessive: jj, //spencer's detailed
+    Hyphenated: jj, //rapidly-changing
   },
 
   afterTags: {

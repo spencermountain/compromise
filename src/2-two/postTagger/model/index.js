@@ -32,6 +32,7 @@ import misc from './_misc.js'
 import orgs from './orgs/organizations.js'
 import places from './nouns/places.js'
 import conjunctions from './conjunctions.js'
+import expressions from './expressions.js'
 
 let matches = [].concat(
   // order matters top-matches can get overwritten
@@ -60,7 +61,8 @@ let matches = [].concat(
   misc,
   orgs,
   places,
-  conjunctions
+  conjunctions,
+  expressions,
 )
 export default {
   two: {

@@ -28,15 +28,13 @@ const switchDefaults = {
   // 'April'
   'Person|Date': 'Month',
   // 'rob'
-  'Person|Verb': 'Person',//+conjugations
+  'Person|Verb': 'FirstName',//+conjugations
   // 'victoria'
   'Person|Place': 'Person',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
   // 'miles'
   'Unit|Noun': 'Noun',
-  // 'captain'
-  'Honorific|Noun': 'Noun',
 }
 
 const expandLexicon = function (words, model) {

@@ -5,7 +5,7 @@ import lex from './misc.js'
 import demonyms from './nouns/demonyms.js'
 import organizations from './nouns/organizations.js'
 import possessives from './nouns/possessives.js'
-import professions from './nouns/professions.js'
+import actors from './nouns/actors.js'
 import pronouns from './nouns/pronouns.js'
 import singulars from './nouns/singulars.js'
 import sportsTeams from './nouns/sportsTeams.js'
@@ -60,7 +60,6 @@ import personDate from './switches/person-date.js'
 import personVerb from './switches/person-verb.js'
 import personPlace from './switches/person-place.js'
 import unitNoun from './switches/unit-noun.js'
-import honorificNoun from './switches/honorific-noun.js'
 
 
 //add-in the generic, flat word-lists
@@ -69,7 +68,7 @@ const data = [
   [demonyms, 'Demonym'],
   [organizations, 'Organization'],
   [possessives, 'Possessive'],
-  [professions, 'Actor'],
+  [actors, 'Actor'],
   [pronouns, 'Pronoun'],
   [singulars, 'Singular'],
   [sportsTeams, 'SportsTeam'],
@@ -92,10 +91,10 @@ const data = [
   [dates, 'Date'],
   [durations, 'Duration'],
 
-  [femaleNames, 'FemaleName'],
+  [femaleNames, 'FemaleName'], //5kb
   [firstnames, 'FirstName'],
-  [lastnames, 'LastName'],
-  [maleNames, 'MaleName'],
+  [lastnames, 'LastName'], //3k
+  [maleNames, 'MaleName'], //5kb
   [people, 'Person'],
 
   [adjectives, 'Adjective'],
@@ -111,9 +110,9 @@ const data = [
   [modals, 'Modal'],
   [verbs, 'Verb'],
   [participles, 'Participle'],
-  [phrasals, 'PhrasalVerb'], //5kb
+  [phrasals, 'PhrasalVerb'], //3kb
 
-  // switches
+  // switches - 10kb
   [adjGerund, 'Adj|Gerund'],
   [adjNoun, 'Adj|Noun'],
   [adjPast, 'Adj|Past'],
@@ -125,7 +124,6 @@ const data = [
   [personDate, 'Person|Date'],
   [personVerb, 'Person|Verb'],
   [unitNoun, 'Unit|Noun'],
-  [honorificNoun, 'Honorific|Noun'],
 ]
 for (let i = 0; i < data.length; i++) {
   const list = data[i][0]

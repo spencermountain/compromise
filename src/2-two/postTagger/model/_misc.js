@@ -10,40 +10,24 @@ let matches = [
   // were he to survive
   { match: '[were] #Noun+ to #Infinitive', group: 0, tag: 'Condition', reason: 'were-he' },
 
-  //swear-words as non-expression POS
-  { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },
-  // well..
-  { match: '^(well|so|okay|now)', tag: 'Expression', reason: 'well-' },
   // some sort of
   { match: 'some sort of', tag: 'Adjective Noun Conjunction', reason: 'some-sort-of' },
   // some of
   // { match: 'some of', tag: 'Noun Conjunction', reason: 'some-of' },
   // of some sort
   { match: 'of some sort', tag: 'Conjunction Adjective Noun', reason: 'of-some-sort' },
-
   // such skill
   { match: '[such] (a|an|is)? #Noun', group: 0, tag: 'Determiner', reason: 'such-skill' },
-  // that is
-  // { match: '^[that] (is|was)', group: 0, tag: 'Noun', reason: 'that-is' },
-
-  // sorry
-  { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
-  // ok,
-  { match: '^(ok|alright|well|shoot|hell|anyways)', tag: 'Expression', reason: 'ok-' },
-  // c'mon marge..
-  { match: '^[come on] #Noun', group: 0, tag: 'Expression', reason: 'come-on' },
-  // say,
-  { match: '^(say && @hasComma)', tag: 'Expression', reason: 'say-' },
-  { match: '^(like && @hasComma)', tag: 'Expression', reason: 'like-' },
-
+  // another one
+  // { match: '[another] (#Noun|#Value)', group: 0, tag: 'Adjective', reason: 'another-one' },
   // right after
   { match: '[right] (before|after|in|into|to|toward)', group: 0, tag: '#Adverb', reason: 'right-into' },
   // at about
   { match: '#Preposition [about]', group: 0, tag: 'Adjective', reason: 'at-about' },
-  // dude we should
-  { match: '^[(dude|man|girl)] #Pronoun', group: 0, tag: 'Expression', reason: 'dude-i' },
   // are ya
   { match: '(are|#Modal|see|do|for) [ya]', group: 0, tag: 'Pronoun', reason: 'are-ya' },
+  // long live
+  { match: '[long live] .', group: 0, tag: '#Adjective #Infinitive', reason: 'long-live' },
 
   // 'there' as adjective
   { match: '(always|nearly|barely|practically) [there]', group: 0, tag: 'Adjective', reason: 'always-there' },
@@ -54,5 +38,9 @@ let matches = [
   { match: '#Copula [there] .', group: 0, tag: 'There', reason: 'is-there' },
   // should there
   { match: '#Modal #Adverb? [there]', group: 0, tag: 'There', reason: 'should-there' },
+  // do you
+  { match: '^[do] (you|we|they)', group: 0, tag: 'QuestionWord', reason: 'do-you' },
+  // does he
+  { match: '^[does] (he|she|it|#ProperNoun)', group: 0, tag: 'QuestionWord', reason: 'does-he' },
 ]
 export default matches

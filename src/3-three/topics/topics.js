@@ -1,5 +1,3 @@
-// return the nth elem of a doc
-export const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 //combine them with .topics() method
 const find = function (n) {
@@ -12,7 +10,7 @@ const find = function (n) {
   //return them to normal ordering
   m = m.sort('seq')
   // m = m.unique()
-  m = getNth(m, n)
+  m = m.getNth(n)
   return m
 }
 

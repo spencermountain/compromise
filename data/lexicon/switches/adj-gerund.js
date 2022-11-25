@@ -224,7 +224,8 @@ export default [
   // prefixes
   'resting',
   'redefining',
-  'overpowering'
+  'overpowering',
+  'varying'
 
 ]
 

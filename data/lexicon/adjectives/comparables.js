@@ -58,7 +58,6 @@ export default [
   'essential',
   'evil',
   'extreme',
-  'fair',
   'fake',
   'fancy',
   'far',

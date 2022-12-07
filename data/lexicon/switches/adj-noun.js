@@ -33,6 +33,7 @@ export default [
   'expert',
   'executive',
   'fat',
+  'fair',
   'favorite',
   'favourite',
   'fellow',

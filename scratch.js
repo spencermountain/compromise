@@ -102,11 +102,22 @@ let arr = [
 
 
   // missing nouns
+  // 'aliens',
+  // 'burdens',
+  // 'chickens',
+  // 'dickens',
+  // 'greens',
+  // 'havens',
+  // 'mittens',
+  // 'pathogens',
+  // 'sapiens',
+  // 'stevens',
+  'teens',
 
   // `hundred shots in my face and [hands] `,
-  `he'd make it right`,
-  `look more intimidating.`,
-  `Men are like bank accounts.`,
+  // `he'd make it right`,
+  // `look more intimidating.`,
+  // `Men are like bank accounts.`,
   `MMVAs with hordes of teens`,
   `can we account for earthquakes?`,
   `back to my friends house`,

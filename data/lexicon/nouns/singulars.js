@@ -419,6 +419,15 @@ export default [
   'decimal',
   'pedal',
   'canal',
+
+  'alien',
+  'chicken',
+  'haven',
+  'mitten',
+  'pathogen',
+  'sapien',
+  'teen',
+
 ]
 
 

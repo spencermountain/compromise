@@ -58,6 +58,9 @@ export default {
   feet: 'Plural',
   'a few': 'Value',
   'ones': 'Plural', //those ones
+  'dickens': 'Plural',
+  'greens': 'Plural',
+
 
   // 
   'come here': 'Imperative',

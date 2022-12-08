@@ -1,6 +1,7 @@
 import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
 import expandModels from './models.js'
+import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import conjugate from '../../methods/transform/verbs/conjugate/index.js'
 import { toSuperlative, toComparative } from '../../methods/transform/adjectives/inflect.js'
 import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
@@ -75,6 +76,11 @@ const expandAdjective = function (str, words, model) {
   words[comp] = words[comp] || 'Comparative'
 }
 
+const expandNoun = function (str, words, model) {
+  let plur = toPlural(str, model)
+  words[plur] = words[plur] || 'Plural'
+}
+
 // harvest ambiguous words for any conjugations
 const expandVariable = function (switchWords, model) {
   let words = {}
@@ -91,11 +97,16 @@ const expandVariable = function (switchWords, model) {
       expandVerb(w, lex, true)
       expandAdjective(w, lex, model)
     }
+    // add infinitives for gerunds
     if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
       let inf = toInfinitive(w, tmpModel, 'Gerund')
       if (!lex[inf]) {
         words[inf] = 'Infinitive' //expand it later
       }
+    }
+    // add plurals for nouns
+    if (name === 'Noun|Gerund' || name === 'Adj|Noun' || name === 'Person|Noun') {
+      expandNoun(w, lex, model)
     }
     if (name === 'Adj|Past') {
       let inf = toInfinitive(w, tmpModel, 'PastTense')

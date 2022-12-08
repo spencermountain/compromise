@@ -225,7 +225,8 @@ export default [
   'resting',
   'redefining',
   'overpowering',
-  'varying'
+  'varying',
+  'intimidating'
 
 ]
 

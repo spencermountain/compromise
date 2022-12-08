@@ -982,6 +982,8 @@ let arr = [
   [`Ask questions`, '#Imperative #Plural'],
   // [`it's well known for it's burger`, `#Pronoun #Copula #Adverb #Adjective for #Possessive #Singular`],
   [`very friendly and [passionate] about coffee`, `#Adverb #Adjective and #Adjective #Preposition #Noun`],
+  [`[Excuse] yourself by saying you need a bit of fresh air`, `#Imperative #Reflexive by #Gerund #Pronoun #Infinitive a #Noun of #Adjective #Noun`],
+  [`We remain on the [offensive] in Afghanistan`, `#Pronoun #Infinitive on the #Noun in #Place`],
   // [``, ``],
 ]
 test('match:', function (t) {

@@ -754,6 +754,7 @@ export default [
   'take away',
   'take back',
   'take down',
+  'take leave',
   'take in',
   'take off',
   'take on',

@@ -262,4 +262,6 @@ export default [
   'anything',
   'something',
   'time off',
+  'tonight',
+  'house arrest',
 ]

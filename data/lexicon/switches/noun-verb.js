@@ -871,6 +871,7 @@ export default [
   'intent',
   'biopsy',
   'patent',
+  'excuse',
   // -ate
   // -ide
   // 'saw',//hmm

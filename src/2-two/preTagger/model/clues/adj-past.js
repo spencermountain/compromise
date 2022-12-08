@@ -51,6 +51,9 @@ const adjPast = {
     between: past,//settled between
     to: past,//dedicated to
     into: past,//pumped into
+    us: past,//charged us
+    them: past,//charged us
+    me: past,//
   },
 }
 

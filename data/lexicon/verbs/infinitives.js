@@ -733,4 +733,5 @@ export default [
   'obtain',
   'ravish',
   'reup',//'re-up'
+  'irk'
 ]

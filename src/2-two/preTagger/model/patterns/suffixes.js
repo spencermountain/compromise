@@ -50,6 +50,8 @@ export default [
     // oid: Adj,
     ous: Adj,
     que: Adj,
+    ger: Noun,
+    ber: Noun,
     rol: Sing,
     sis: Sing,
     ogy: Sing,

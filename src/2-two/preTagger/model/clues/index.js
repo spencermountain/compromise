@@ -41,6 +41,7 @@ clues['Plural|Verb'] = {
   afterWords: copy(clues['Noun|Verb'].afterWords, {
     his: 'PresentTense', her: 'PresentTense', its: 'PresentTense',
     in: null, to: null,
+    is: 'PresentTense' //the way it works is
   }),
   beforeTags: copy(clues['Noun|Verb'].beforeTags, {
     Conjunction: 'PresentTense', //and changes

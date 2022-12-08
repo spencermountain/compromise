@@ -267,7 +267,6 @@ export default [
   'indices',
   'others',
   'caucus',
-  'effect',
   'dialect',
   'aspect',
   'prospect',
@@ -290,8 +289,6 @@ export default [
   'talent',
   'referent',
   'deterrent',
-  'patent',
-  'intent',
   'discontent',
   'extent',
   'event',
@@ -367,7 +364,6 @@ export default [
   'documentary',
   'notary',
 
-  'biopsy',
   'autopsy',
   'city',
   'guy',
@@ -416,6 +412,7 @@ export default [
   'thingy',
   'peanut',
   'inning',
+  'accident'
 ]
 
 

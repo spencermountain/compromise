@@ -681,6 +681,7 @@ export default [
   'smash out',
   'smash up',
   'smoke out',
+  'snuggle up',
   'snap off',
   'snap on',
   'snap up',

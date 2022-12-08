@@ -31,8 +31,8 @@ export default [
   { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
   // about love
   { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
-  // on stage
-  { match: 'on [#Infinitive]', group: 0, tag: 'Noun', reason: 'on-stage' },
+  // singers on stage
+  { match: '#Plural on [#Infinitive]', group: 0, tag: 'Noun', reason: 'on-stage' },
   // any charge
   { match: 'any [#Infinitive]', group: 0, tag: 'Noun', reason: 'any-charge' },
   // no doubt
@@ -42,7 +42,7 @@ export default [
   // teaches/taught
   { match: '(taught|teaches|learns|learned) [#PresentTense]', group: 0, tag: 'Noun', reason: 'teaches-x' },
   // use reverse
-  { match: '(try|use|attempt|build|make) [#Verb]', notIf: '(#Copula|#PhrasalVerb)', group: 0, tag: 'Noun', reason: 'do-verb' },
+  { match: '(try|use|attempt|build|make) [#Verb]', notIf: '(#Copula|#PhrasalVerb|#Noun)', group: 0, tag: 'Noun', reason: 'do-verb' },
   // checkmate is
   { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
   // get much sleep
@@ -55,7 +55,7 @@ export default [
   // that should smoke
   { match: '#Determiner #Modal [#Noun]', group: 0, tag: 'PresentTense', reason: 'should-smoke' },
   //this rocks
-  { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', reason: 'this-verbs' },
+  { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'this-verbs' },
   //let him glue
   {
     match: '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)',
@@ -148,4 +148,6 @@ export default [
   { match: '#Modal #Noun [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'would-you-look' },
   // is just spam
   { match: '#Copula just [#Infinitive]', group: 0, tag: 'Noun', reason: 'is-just-spam' },
+  // request copies
+  { match: '^%Noun|Verb% %Plural|Verb%', tag: 'Imperative #Plural', reason: 'request-copies' },
 ]

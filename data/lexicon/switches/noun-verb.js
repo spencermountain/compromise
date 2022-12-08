@@ -867,6 +867,10 @@ export default [
   'tile',
   'stoop',
   'ace',
+  'effect',
+  'intent',
+  'biopsy',
+  'patent',
   // -ate
   // -ide
   // 'saw',//hmm

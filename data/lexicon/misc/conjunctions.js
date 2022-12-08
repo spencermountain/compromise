@@ -35,6 +35,7 @@ export default [
   'now',
   'now since',
   'now that',
+  'so that',
   'now when',
   'or',
   'or not',
@@ -67,5 +68,6 @@ export default [
   'whoever',
   'whose',
   // 'why',
-  'yet'
+  'yet',
+  'either',
 ]

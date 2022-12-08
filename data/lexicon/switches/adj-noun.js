@@ -133,5 +133,5 @@ export default [
   'excess',
   'pro',
   'racist',
-
+  'resident'
 ]

@@ -14,7 +14,7 @@ export default {
     Infinitive: n, //profess love
     Date: n,//9pm show
     Ordinal: n,//first date
-    Demonym: n//dutch map
+    Demonym: n,//dutch map
   },
   afterTags: {
     Value: n, //date nine  -?

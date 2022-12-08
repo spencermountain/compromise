@@ -16,6 +16,7 @@ export default {
     // Noun:true, //date spencer
     Preposition: v, //date around, dump onto, grumble about
     // Conjunction: v, // dip to, dip through
+    Cardinal: v//cut 3 squares
   },
   beforeWords: {
     i: v, //i date

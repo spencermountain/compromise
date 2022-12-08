@@ -5,7 +5,6 @@ export default [
   'any',
   'both',
   'each',
-  'either',
   'else',
   'every',
   'few',

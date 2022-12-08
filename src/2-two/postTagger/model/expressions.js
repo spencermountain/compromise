@@ -9,7 +9,7 @@ export default [
   // sorry
   { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
   // ok,
-  { match: '^(ok|alright|well|shoot|hell|anyways)', tag: 'Expression', reason: 'ok-' },
+  { match: '^(ok|alright|shoot|hell|anyways)', tag: 'Expression', reason: 'ok-' },
   // c'mon marge..
   // { match: '^[come on] #Noun', group: 0, tag: 'Expression', reason: 'come-on' },
   // say,

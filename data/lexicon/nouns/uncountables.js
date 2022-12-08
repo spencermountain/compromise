@@ -261,4 +261,5 @@ export default [
   'anyone',
   'anything',
   'something',
+  'time off',
 ]

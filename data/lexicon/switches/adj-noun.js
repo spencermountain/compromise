@@ -134,5 +134,8 @@ export default [
   'pro',
   'racist',
   'resident',
-  'offensive'
+  'offensive',
+  'last',
+  'past',
+  'best',
 ]

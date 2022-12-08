@@ -103,17 +103,7 @@ let arr = [
 
   // missing nouns
 
-  `hundred shots in my face and [hands] `,
-  `my dog makes [fun] of me `,
-  `My window [cleaner] was banging on my window`,
-  `This tour is [SUCH] a great idea`,
-  `was the [undisclosed] information`,
-  `cured my homesickness for [LA] `,
-  `Hunsur [canal] breach `,
-  `The [very] [breadth] of the subjects`,
-  `Keep a food [journal] [where] you note down everything`,
-  `shall be many a [lute]`,
-  `The [past] and the future`,
+  // `hundred shots in my face and [hands] `,
   `he'd make it right`,
   `look more intimidating.`,
   `Men are like bank accounts.`,

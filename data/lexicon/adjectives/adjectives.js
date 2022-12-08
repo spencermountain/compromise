@@ -517,9 +517,6 @@ export default [
   'least',
   'abreast',
   'steadfast',
-  'last',
-  'past',
-  'best',
   'honest',
   'populist',
   'against',
@@ -655,6 +652,7 @@ export default [
   'ingrown',
   'agreeable',
   'vile',
+  'undisclosed',
   'win win',
 ]
 

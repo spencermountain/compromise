@@ -984,6 +984,10 @@ let arr = [
   [`very friendly and [passionate] about coffee`, `#Adverb #Adjective and #Adjective #Preposition #Noun`],
   [`[Excuse] yourself by saying you need a bit of fresh air`, `#Imperative #Reflexive by #Gerund #Pronoun #Infinitive a #Noun of #Adjective #Noun`],
   [`We remain on the [offensive] in Afghanistan`, `#Pronoun #Infinitive on the #Noun in #Place`],
+  [`my dog makes [fun] of me`, `#Possessive #Noun #PhrasalVerb #Particle of #Pronoun`],
+  [`This tour is [SUCH] a great idea`, `#Determiner #Singular #Copula #Adverb a #Adjective #Noun`],
+  [`Hunsur [canal] breach`, `#Noun+`],
+  [`The [past] and the future`, `the #Noun and the #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

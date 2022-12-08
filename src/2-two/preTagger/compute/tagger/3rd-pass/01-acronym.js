@@ -10,6 +10,16 @@ const oneLetterWord = {
   I: true,
   A: true,
 }
+
+// only assume these are places if they are uppercased
+const places = {
+  la: true,
+  ny: true,
+  us: true,
+  dc: true,
+  gb: true,
+}
+
 // just uppercase acronyms, no periods - 'UNOCHA'
 const isNoPeriodAcronym = function (term, model) {
   let str = term.text
@@ -58,6 +68,11 @@ const isAcronym = function (terms, i, model) {
   if (isNoPeriodAcronym(term, model)) {
     term.tags.clear()
     fastTag(term, ['Acronym', 'Noun'], '3-no-period-acronym')
+    // ny, la
+    if (places[term.normal] === true) {
+      fastTag(term, 'Place', '3-place-acronym')
+    }
+    // if(term.normal
     return true
   }
   // one-letter acronyms

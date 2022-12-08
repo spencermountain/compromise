@@ -6,7 +6,7 @@ export default [
   'foot',
   'ft',
   'gal',
-  'gb',
+  // 'gb',
   'hg',
   'inch',
   'inches',

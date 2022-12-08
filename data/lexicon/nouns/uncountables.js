@@ -264,4 +264,5 @@ export default [
   'time off',
   'tonight',
   'house arrest',
+  'breadth',
 ]

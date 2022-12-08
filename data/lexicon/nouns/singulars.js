@@ -412,7 +412,13 @@ export default [
   'thingy',
   'peanut',
   'inning',
-  'accident'
+  'accident',
+  'journal',
+  'tribunal',
+  'ritual',
+  'decimal',
+  'pedal',
+  'canal',
 ]
 
 

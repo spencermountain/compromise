@@ -873,10 +873,6 @@ export default [
   'patent',
   'excuse',
   'burden',
-
-  // -ate
-  // -ide
-  // 'saw',//hmm
-  // from phrasals
-  // prefixes
+  'wrap',
+  'alarm'
 ]

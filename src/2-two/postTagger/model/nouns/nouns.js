@@ -81,6 +81,9 @@ export default [
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // Ptolemy's experiments
   { match: '#Possessive #PresentTense', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
+  // my presidents house
+  { match: '(my|our|their|her|his|its) [(#Plural && #Actor)] #Noun', tag: 'Possessive', reason: 'my-dads' },
+
   // 10th of a second
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds

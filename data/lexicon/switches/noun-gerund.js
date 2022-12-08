@@ -207,6 +207,7 @@ export default [
   'writing',
   'yelling',
   'zoning',
+  'uprising',
 
 ]
 

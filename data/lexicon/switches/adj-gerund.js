@@ -220,6 +220,7 @@ export default [
   'revolving',
   'owing',
   'outlying',
+  'remaining',
 
   // prefixes
   'resting',

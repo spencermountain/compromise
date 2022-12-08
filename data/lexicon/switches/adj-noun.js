@@ -138,4 +138,5 @@ export default [
   'last',
   'past',
   'best',
+  'visionary',
 ]

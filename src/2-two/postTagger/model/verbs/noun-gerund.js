@@ -23,4 +23,6 @@ export default [
   { match: '#Singular for [%Noun|Gerund%]', group: 0, tag: 'Gerund', reason: 'noun-for-gerund' },
   // better for training
   { match: '#Comparative (for|at) [%Noun|Gerund%]', group: 0, tag: 'Gerund', reason: 'better-for-gerund' },
+  // keep the touching
+  { match: '#PresentTense the [#Gerund]', group: 0, tag: 'Noun', reason: 'keep-the-touching' },
 ]

@@ -23,7 +23,7 @@ export default [
   'critic',
   'characteristic',
   'statistic',
-  'dad',
+
 
   // -ed
   'seabed',
@@ -229,23 +229,9 @@ export default [
   // -er
   'number',
   'wafer',
-  'staffer',
-  'golfer',
-  'surfer',
-  'stranger',
-  'father',
-  'grandfather',
-  'stepfather',
-  'mother',
-  'grandmother',
-  'stepmother',
-  'brother',
   'glacier',
-  'financier',
   'grenadier',
   'cahier',
-  'cashier',
-  'skier',
   'chandelier',
   'pier',
   'copier',
@@ -255,7 +241,6 @@ export default [
   'tier',
   'barrier',
   'carrier',
-  'courier',
   'dossier',
   'frontier',
   'métier',
@@ -364,7 +349,6 @@ export default [
   'documentary',
   'notary',
 
-  'autopsy',
   'city',
   'guy',
   'school',
@@ -427,6 +411,11 @@ export default [
   'pathogen',
   'sapien',
   'teen',
+
+  'autopsy',
+  'embassy',
+  'pussy',
+  'sissy',
 
 ]
 

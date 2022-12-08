@@ -254,7 +254,7 @@ let arr = [
   [`My old position`, '#Possessive #Adjective #Noun'],
   [`john's whole world`, '#Possessive #Adjective #Noun'],
   [`your online profiles`, '#Possessive #Adjective #Noun'],
-  [`their past mistakes`, '#Possessive #Adjective #Noun'],
+  // [`their past mistakes`, '#Possessive #Adjective #Noun'],
   // [`Toronto's epic Instagram feed`, '#Possessive #Adjective #Noun #Noun'],
   [`in your foul shoes`, 'in #Possessive #Adjective #Noun'],
   [`MY DEAR WIFE`, '#Possessive #Adjective #Noun'],
@@ -989,6 +989,14 @@ let arr = [
   [`Hunsur [canal] breach`, `#Noun+`],
   [`The [past] and the future`, `the #Noun and the #Noun`],
   [`MMVAs with hordes of teens`, `#Plural with #Plural of #Plural`],
+  [`my advisors audit`, `#Possessive #Possessive #Singular`],
+  [`the school's fire alarm`, `the #Possessive #Noun #Singular`],
+  [`for being too handsy`, `#Preposition #Gerund #Adverb #Adjective`],
+  [`from start to finish`, `#Preposition #Noun to #Singular`],
+  [`for comparison or contrast`, `#Preposition #Noun #Conjunction #Noun`],
+  [`with comparison not contrast`, `#Preposition #Noun not #Noun`],
+  [`crushing the uprising`, `#Gerund the #Noun`],
+  [`the remaining 42.1%`, `the #Adjective #Percent`],
   // [``, ``],
 ]
 test('match:', function (t) {

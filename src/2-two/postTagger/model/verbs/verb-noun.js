@@ -79,6 +79,10 @@ export default [
   { match: '(many|few|several|couple) [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'many-poses' },
   // very big dreams
   { match: '#Determiner #Adverb #Adjective [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'very-big-dream' },
+  // from start to finish
+  { match: 'from #Noun to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'start-to-finish' },
+  // for comparison or contrast
+  { match: '(for|with|of) #Noun (and|or|not) [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'for-food-and-gas' },
   // adorable little store
   { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'adorable-little-store' },
   // of basic training

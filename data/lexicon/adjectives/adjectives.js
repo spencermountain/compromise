@@ -254,6 +254,7 @@ export default [
   'mindblowing',
   'knowing',
   'appetizing',
+  'appalling',
 
   'smug',
   // -ish
@@ -539,6 +540,16 @@ export default [
   'unwieldy',
   'moldy',
   'handy',
+  'cutesy',
+  'creepy',
+  'sleepy',
+  'drowsy',
+  'folksy',
+  'handsy',
+  'fiery',
+  'flowery',
+  'cheery',
+  'chintzy',
 
   // -ly
   'kindly',

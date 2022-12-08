@@ -2,6 +2,7 @@ import fastTag from '../_fastTag.js'
 
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
 const isUpperCase = /^[A-Z-]+$/
+const upperThenS = /^[A-Z]+s$/
 const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
 const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
 const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/
@@ -25,7 +26,12 @@ const isNoPeriodAcronym = function (term, model) {
   let str = term.text
   // ensure it's all upper-case
   if (isUpperCase.test(str) === false) {
-    return false
+    // allow lower-case plural - 'MMVAs'
+    if (str.length > 3 && upperThenS.test(str) === true) {
+      str = str.replace(/s$/, '')
+    } else {
+      return false
+    }
   }
   // long capitalized words are not usually either
   if (str.length > 5) {
@@ -71,6 +77,10 @@ const isAcronym = function (terms, i, model) {
     // ny, la
     if (places[term.normal] === true) {
       fastTag(term, 'Place', '3-place-acronym')
+    }
+    // UFOs
+    if (upperThenS.test(term.text) === true) {
+      fastTag(term, 'Plural', '3-plural-acronym')
     }
     // if(term.normal
     return true

@@ -988,6 +988,7 @@ let arr = [
   [`This tour is [SUCH] a great idea`, `#Determiner #Singular #Copula #Adverb a #Adjective #Noun`],
   [`Hunsur [canal] breach`, `#Noun+`],
   [`The [past] and the future`, `the #Noun and the #Noun`],
+  [`MMVAs with hordes of teens`, `#Plural with #Plural of #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

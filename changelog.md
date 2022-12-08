@@ -15,7 +15,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - remove confidence numbers
 -->
 
-<!-- #### 14.7.3 [Unreleased]
+<!-- #### 14.8.1 [Unreleased]
+- **[fix]** - tagging fixes
+- **[change]** - allow #Plural acronyms
 -->
 
 #### 14.8.0 

@@ -27,7 +27,6 @@ export default [
   'chaos',
   'cheese',
   'chewing',
-  'chicken',
   'civics',
   'classics',
   // 'clothing',

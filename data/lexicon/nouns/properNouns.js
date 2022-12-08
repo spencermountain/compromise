@@ -12,7 +12,7 @@ export default [
   'finn',
   'missy',
   'florence',
-
+  'stevens',
   // currencies
   'nis',
   'riel',

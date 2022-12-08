@@ -101,18 +101,6 @@ let arr = [
   // `were as [follows]`,
 
 
-  // missing nouns
-  // 'aliens',
-  // 'burdens',
-  // 'chickens',
-  // 'dickens',
-  // 'greens',
-  // 'havens',
-  // 'mittens',
-  // 'pathogens',
-  // 'sapiens',
-  // 'stevens',
-  'teens',
 
   // `hundred shots in my face and [hands] `,
   // `he'd make it right`,

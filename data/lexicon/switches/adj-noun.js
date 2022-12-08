@@ -43,6 +43,7 @@ export default [
   'firm',
   'gold',
   'genious',
+  'half',
   'homeless',
   'ideal',
   'incumbent',

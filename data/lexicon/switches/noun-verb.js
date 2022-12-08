@@ -854,6 +854,7 @@ export default [
   'worry',
   'worship',
   'wreck',
+  'worth',
   'yawn',
   'yell',
   'yield',
@@ -864,6 +865,8 @@ export default [
   'profile',
   'stockpile',
   'tile',
+  'stoop',
+  'ace',
   // -ate
   // -ide
   // 'saw',//hmm

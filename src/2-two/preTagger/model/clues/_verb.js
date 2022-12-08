@@ -76,6 +76,8 @@ export default {
     myself: v,
     ourselves: v,
     themselves: v,
+    something: v,
+    anything: v,
 
     a: v, //covers a
     an: v, //covers an
@@ -96,6 +98,7 @@ export default {
     to: v,//dip to
     because: v,//
     although: v,//
+    after: v,
     before: v,//
     how: v,//
     otherwise: v,//
@@ -104,5 +107,7 @@ export default {
     into: v,//
     yet: v,//
     more: v,//kill more
+    here: v,// look here
+    there: v,//
   },
 }

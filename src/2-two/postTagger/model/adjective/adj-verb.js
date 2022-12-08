@@ -17,6 +17,8 @@ export default [
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
   //is eager to go
   { match: '#Copula [%Adj|Present%] to #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
+  //is done well
+  { match: '#Copula [#Adjective] (well|badly|quickly|slowly)', group: 0, tag: 'Verb', reason: 'done-well' },
   // rude and insulting
   { match: '#Adjective and [#Gerund] !#Preposition?', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // were over cooked

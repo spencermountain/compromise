@@ -2,7 +2,7 @@ export default [
   // the planning processes
   { match: '(this|that|the|a|an) [#Gerund #Infinitive]', group: 0, tag: 'Singular', reason: 'the-planning-process' },
   // the paving stones
-  { match: '(that|the) [#Gerund #PresentTense]', group: 0, tag: 'Plural', reason: 'the-paving-stones' },
+  { match: '(that|the) [#Gerund #PresentTense]', group: 0, ifNo: '#Copula', tag: 'Plural', reason: 'the-paving-stones' },
   // this swimming
   // { match: '(this|that|the) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
   // the remaining claims

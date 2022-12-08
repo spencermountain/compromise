@@ -269,7 +269,6 @@ export default [
   'caucus',
   'effect',
   'dialect',
-  'connect',
   'aspect',
   'prospect',
   'insect',

@@ -220,6 +220,7 @@ export default [
   'weakened',
   'weathered',
   'shared',
+  'seated',
   'wet',
   'worried',
   // prefixes

@@ -498,7 +498,7 @@ export default [
   'congruent',
   'insolvent',
 
-  'faint',
+
   'conjoint',
   'disjoint',
   'in front',
@@ -509,8 +509,7 @@ export default [
   'nondescript',
   'exempt',
   'abrupt',
-  'bankrupt',
-  'corrupt',
+
   'inert',
   'overt',
   'covert',
@@ -536,7 +535,6 @@ export default [
   'faux',
   'everyday',
   'okay',
-  'stray',
   'underway',
   'nearby',
   'muddy',
@@ -619,7 +617,6 @@ export default [
   'antique',
   'dependent',
   'independent',
-  'seated',
   'modest',
 
   // -ide

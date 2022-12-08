@@ -28,7 +28,7 @@ export default [
   //the wait to vote
   { match: 'the [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'determiner1' },
   //a sense of
-  { match: '#Determiner [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
+  { match: '(a|an|the) [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
   //the threat of force
   { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', notIf: '#Gerund', reason: 'noun-of-noun' },
   // ended in ruins

@@ -54,7 +54,7 @@ export default [
   // continue playing
   { match: '^[#Infinitive] #Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
   // go to it
-  { match: '^[#Infinitive] (to|for|into|toward)', group: 0, tag: 'Imperative', reason: 'go-to' },
+  { match: '^[#Infinitive] (to|for|into|toward|here|there)', group: 0, tag: 'Imperative', reason: 'go-to' },
   // relax and unwind
   { match: '^[#Infinitive] (and|or) #Infinitive', group: 0, tag: 'Imperative', reason: 'inf-and-inf' },
 

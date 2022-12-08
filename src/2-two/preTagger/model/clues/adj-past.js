@@ -40,6 +40,8 @@ const adjPast = {
     in: past, //crowded in
     up: past, //heated up
     down: past, //hammered down
+    before: past, //
+    after: past, //
     for: past, //settled for
     the: past, //settled the
     with: past, //obsessed with

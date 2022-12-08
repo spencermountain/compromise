@@ -965,6 +965,10 @@ let arr = [
   [`programs [which] [boost] achievement`, `#Plural which #Verb #Noun`],
   [`shirts [last] a long time`, `#Plural #Infinitive #Determiner #Adjective #Noun`],
   [`I am really a sweets person`, `#Pronoun #Copula #Adverb a #Plural #Noun`],
+  [`Fireplace tool that [consists] of matching`, `#Noun+ that #PresentTense of .`],
+  [`[Left] after an hour`, `#Verb after an #Noun`],
+  [`I hear the bowling [is] good`, `#Pronoun #Verb the #Noun #Copula #Adjective`],
+  [`[Ace] your oral examinations`, `#Imperative #Possessive #Adjective #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

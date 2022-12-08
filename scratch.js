@@ -132,7 +132,8 @@ let arr = [
   // 'the appalling chemical-weapons attack',
   // `[The] [housing] and employment crisis`,
 
-  'we better go',
+  // 'then better bring dog too',
+  'You had better go',
   'he would later say',
   'even worse is',
   `brighter [lights] and [colours] `,

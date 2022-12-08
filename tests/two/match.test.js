@@ -997,6 +997,10 @@ let arr = [
   [`with comparison not contrast`, `#Preposition #Noun not #Noun`],
   [`crushing the uprising`, `#Gerund the #Noun`],
   [`the remaining 42.1%`, `the #Adjective #Percent`],
+  [`we better go`, `#Pronoun #Modal #Infinitive`],
+  [`better walking`, `#Comparative #Noun`],
+  [`is even better`, `#Copula #Adverb #Comparative`],
+  [`you'd better go`, `#Pronoun had #Modal #Infinitive`],
   // [``, ``],
 ]
 test('match:', function (t) {

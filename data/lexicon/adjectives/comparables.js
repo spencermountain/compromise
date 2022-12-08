@@ -301,4 +301,5 @@ export default [
   'white',
   'wide',
   'stately',
+  'nibbly',
 ]

@@ -179,6 +179,7 @@ export default [
   'stepfather',
   'stepmother',
   'brother',
+  'sister',
   'financier',
   'cashier',
   'skier',

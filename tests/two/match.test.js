@@ -1013,7 +1013,12 @@ let arr = [
   [`i have a good read`, `#Pronoun #Infinitive a #Adjective #Noun`],
   [`is a tough read`, `#Copula a #Adjective #Noun`],
   [`a smarter [kind] of leadership`, `a #Comparative #Noun of #Noun`],
+  [`a new [kind]`, `a #Adjective #Noun`],
   [`some [kind] of lesson`, `#Determiner #Noun of #Noun`],
+  [`I'm [still] in love`, `i am #Adverb #Preposition #Noun`],
+  [`I'm [still] walking`, `i am #Adverb #Gerund`],
+  [`I'm [still]`, `i am #Adjective`],
+  [`I feel quite [drowsy]`, `i #PresentTense #Adverb #Adjective`],
   // [``, ``],
 ]
 test('match:', function (t) {

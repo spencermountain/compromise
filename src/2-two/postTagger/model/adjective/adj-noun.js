@@ -18,7 +18,7 @@ export default [
   // brand new
   { match: `[brand #Gerund?] new`, group: 0, tag: 'Adverb', reason: 'brand-new' },
   // some kind
-  { match: `(#Determiner|#Comparative) [kind]`, group: 0, tag: 'Noun', reason: 'some-kind' },
+  { match: `(#Determiner|#Comparative|new|different) [kind]`, group: 0, tag: 'Noun', reason: 'some-kind' },
   // her favourite sport
   { match: `#Possessive [%Adj|Noun%] #Noun`, group: 0, tag: 'Adjective', reason: 'her-favourite' },
   // must-win

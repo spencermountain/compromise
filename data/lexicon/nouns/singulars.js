@@ -417,7 +417,8 @@ export default [
   'pussy',
   'sissy',
   'spin off',
-
+  'poppy',
+  'epidemic'
 ]
 
 

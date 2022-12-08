@@ -86,7 +86,6 @@ export default [
   'secret',
   'senior',
   'serial',
-  'sister',
   'sole',
   'solvent',
   'sound',
@@ -139,4 +138,5 @@ export default [
   'past',
   'best',
   'visionary',
+  'grave',
 ]

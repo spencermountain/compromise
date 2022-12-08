@@ -10,7 +10,7 @@ export default [
   // i think tipping sucks
   { match: `#Pronoun #Infinitive [#Gerund] #PresentTense`, group: 0, tag: 'Noun', reason: 'tipping-sucks' },
   // early warning
-  { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', reason: 'early-warning' },
+  { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', notIf: '(still|even|just)', reason: 'early-warning' },
   //walking is cool
   { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
   //walking should be fun

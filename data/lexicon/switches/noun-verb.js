@@ -873,5 +873,6 @@ export default [
   'excuse',
   'burden',
   'wrap',
-  'alarm'
+  'alarm',
+  'stage'
 ]

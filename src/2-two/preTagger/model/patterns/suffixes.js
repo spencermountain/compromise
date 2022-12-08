@@ -90,6 +90,7 @@ export default [
     ends: Vb,
     enko: Last,
     ette: Sing,
+    iary: Sing,
     wner: Sing,//owner
     fies: Pres,
     fore: Avb,
@@ -111,6 +112,7 @@ export default [
     ould: Modal,
     some: Adj,
     sson: Last,
+    ians: Plrl,
     // tage: Inf,
     tion: Sing,
     tage: Noun,

@@ -72,7 +72,7 @@ let arr = [
 
   ['may leave', '#Verb #Infinitive'],
   ['they may', '#Pronoun #Verb'],
-  ['this may', '#Determiner #Noun'],
+  ['this may was', '#Determiner #Noun #Copula'],
 
   [`walk in on`, '#PhrasalVerb #Particle #Preposition'],
   [`standing out in`, '#PhrasalVerb #Particle #Preposition'],

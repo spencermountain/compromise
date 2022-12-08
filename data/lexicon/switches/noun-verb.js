@@ -561,7 +561,6 @@ export default [
   'rat',
   'rate',
   'reach',
-  'read',
   'reason',
   'recall',
   'record',

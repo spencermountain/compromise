@@ -19,6 +19,8 @@ export default [
   { match: '(barely|hardly) even', tag: 'Adverb', reason: 'barely-even' },
   //even held
   { match: '[even] #Verb', group: 0, tag: 'Adverb', reason: 'even-walk' },
+  //even worse
+  { match: '[even] #Comparative', group: 0, tag: 'Adverb', reason: 'even-worse' },
   // even the greatest
   { match: '[even] (#Determiner|#Possessive)', group: 0, tag: '#Adverb', reason: 'even-the' },
   // even left
@@ -55,4 +57,6 @@ export default [
   { match: '(#PresentTense|#PastTense) [back]', group: 0, tag: 'Adverb', reason: 'charge-back' },
   // send around
   { match: '#Verb [around]', group: 0, tag: 'Adverb', ifNo: '#PhrasalVerb', reason: 'send-around' },
+  // later say
+  { match: '[later] #PresentTense', group: 0, tag: 'Adverb', reason: 'later-say' },
 ]

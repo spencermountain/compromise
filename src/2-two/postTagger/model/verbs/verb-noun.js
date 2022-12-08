@@ -154,4 +154,8 @@ export default [
   { match: '#Copula just [#Infinitive]', group: 0, tag: 'Noun', reason: 'is-just-spam' },
   // request copies
   { match: '^%Noun|Verb% %Plural|Verb%', tag: 'Imperative #Plural', reason: 'request-copies' },
+  // homemade pickles and drinks
+  { match: '#Adjective #Plural and [%Plural|Verb%]', group: 0, tag: '#Plural', reason: 'pickles-and-drinks' },
+  // the 1968 film
+  { match: '#Determiner #Year [#Verb]', group: 0, tag: 'Noun', reason: 'the-1968-film' },
 ]

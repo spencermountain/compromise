@@ -58,6 +58,8 @@ export default [
   { match: `[(need|needs)] to #Infinitive`, group: 0, tag: 'PresentTense', reason: 'need-to-learn' },
   // stops thinking
   { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-thinking' },
+  // have read
+  { match: `(have|had) read`, tag: 'Modal #PastTense', reason: 'read-read' },
   //were under cooked
   {
     match: `(is|was|were) [(under|over) #PastTense]`,

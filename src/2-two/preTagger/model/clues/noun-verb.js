@@ -16,7 +16,8 @@ const clue = {
     // is time
     is: 'Singular', was: 'Singular',
     //balance of power
-    of: 'Singular'
+    of: 'Singular',
+    have: null //have cash
   }),
   afterWords: Object.assign({}, verb.afterWords, noun.afterWords, {
     // for: 'Infinitive',//work for

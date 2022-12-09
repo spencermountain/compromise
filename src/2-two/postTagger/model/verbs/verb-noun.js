@@ -42,7 +42,7 @@ export default [
   // teaches/taught
   { match: '(taught|teaches|learns|learned) [#PresentTense]', group: 0, tag: 'Noun', reason: 'teaches-x' },
   // use reverse
-  { match: '(try|use|attempt|build|make) [#Verb]', notIf: '(#Copula|#PhrasalVerb|#Noun)', group: 0, tag: 'Noun', reason: 'do-verb' },
+  { match: '(try|use|attempt|build|make) [#Verb #Particle?]', notIf: '(#Copula|#Noun|sure)', group: 0, tag: 'Noun', reason: 'do-verb' },
   // checkmate is
   { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
   // get much sleep
@@ -115,7 +115,7 @@ export default [
   // whose name was
   { match: 'whose [#PresentTense] #Copula', group: 0, tag: 'Noun', reason: 'whos-name-was' },
   // give up on reason
-  { match: `#PhrasalVerb #PhrasalVerb #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
+  { match: `#PhrasalVerb #Particle #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   //there are reasons
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
   // 30 trains
@@ -158,4 +158,6 @@ export default [
   { match: '#Adjective #Plural and [%Plural|Verb%]', group: 0, tag: '#Plural', reason: 'pickles-and-drinks' },
   // the 1968 film
   { match: '#Determiner #Year [#Verb]', group: 0, tag: 'Noun', reason: 'the-1968-film' },
+  // the break up
+  { match: '#Determiner [#PhrasalVerb #Particle]', group: 0, tag: 'Noun', reason: 'the-break-up' },
 ]

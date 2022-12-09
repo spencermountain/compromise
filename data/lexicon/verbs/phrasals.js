@@ -684,6 +684,7 @@ export default [
   'shoot back',
   'shoot for',
   'shoot off',
+  'shoot out',
   'shout out',
   'show down',
   'show off',

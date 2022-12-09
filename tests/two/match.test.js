@@ -1025,6 +1025,14 @@ let arr = [
   [`pub serves up [indulgent] mac and cheese`, `#Noun #PhrasalVerb #Particle #Adjective #Noun and #Noun`],
   [`three of my [favorite] [coats]`, `#Value of my #Adjective #Plural`],
   [`security can vanish in an [instant]`, `#Noun #Modal #Verb in #Determiner #Noun`],
+  [`his break up`, `#Possessive #Noun #Noun`],
+  [`the tear down`, `#Determiner #Noun #Noun`],
+  [`every suck up`, `#Determiner #Noun #Noun`],
+  [`our catch up`, `#Possessive #Noun #Noun`],
+  [`the major give-away`, `#Determiner #Adjective #Noun #Noun`],
+  [`you shoulda seen her [face] [when] I took it`, `#Pronoun #Modal have #Verb her #Noun when #Pronoun #Verb it`],
+  [`there is no quit in them`, `#There #Copula no #Noun in #Pronoun`],
+  [`looking [beyond] the [present]`, `#Gerund #Adjective the #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

@@ -408,7 +408,9 @@ export default [
   'epidemic',
   'row',
   'hash brown',
-  'drive thru'
+  'drive thru',
+  'shut out',
+  'seminar'
 ]
 
 

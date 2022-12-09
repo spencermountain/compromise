@@ -92,7 +92,7 @@ export default {
     off: v,
     under: v,
     what: v, //look what
-    when: v,//starts when
+    // when: v,//starts when
     // for:true, //settled for
     all: v,//shiver all night
     // conjunctions

@@ -53,8 +53,8 @@ export default [
   // a comdominium, or simply condo
   { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
   // walk the walk
-  { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
-  { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', notIf: '(#Gerund|#Copula)', group: 0, tag: 'Noun', reason: 'det-pres' },
+  { match: '(the|those|these|a|an) #Adjective? [#Infinitive #Particle?]', group: 0, tag: 'Noun', reason: 'det-inf' },
+  { match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', notIf: '(#Gerund|#Copula)', group: 0, tag: 'Noun', reason: 'det-pres' },
 
   // ==== Actor ====
   //Aircraft designer
@@ -80,7 +80,7 @@ export default [
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // Ptolemy's experiments
-  { match: '#Possessive #PresentTense', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
+  { match: '#Possessive #PresentTense #Particle?', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
   // my presidents house
   { match: '(my|our|their|her|his|its) [(#Plural && #Actor)] #Noun', tag: 'Possessive', reason: 'my-dads' },
 

@@ -23,4 +23,6 @@ export default [
   { match: `#Possessive [%Adj|Noun%] #Noun`, group: 0, tag: 'Adjective', reason: 'her-favourite' },
   // must-win
   { match: `must && #Hyphenated .`, tag: 'Adjective', reason: 'must-win' },
+  // the present
+  { match: `#Determiner [#Adjective]$`, tag: 'Noun', notIf: '(this|that|#Comparative|#Superlative)', reason: 'the-south' }, //are that crazy.
 ]

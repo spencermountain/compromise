@@ -30,7 +30,6 @@ let matches = [
   { match: '[long live] .', group: 0, tag: '#Adjective #Infinitive', reason: 'long-live' },
   // plenty of
   { match: '[plenty] of', group: 0, tag: '#Uncountable', reason: 'plenty-of' },
-
   // 'there' as adjective
   { match: '(always|nearly|barely|practically) [there]', group: 0, tag: 'Adjective', reason: 'always-there' },
   // existential 'there'

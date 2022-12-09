@@ -259,4 +259,5 @@ export default [
   'tonight',
   'house arrest',
   'breadth',
+  'knickers',
 ]

@@ -874,5 +874,9 @@ export default [
   'burden',
   'wrap',
   'alarm',
-  'stage'
+  'stage',
+  'belt',
+  'hash',
+  'bite',
+  'coat'
 ]

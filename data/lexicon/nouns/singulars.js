@@ -406,7 +406,9 @@ export default [
   'leg up',
   'poppy',
   'epidemic',
-  'row'
+  'row',
+  'hash brown',
+  'drive thru'
 ]
 
 

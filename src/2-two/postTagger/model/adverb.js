@@ -54,9 +54,9 @@ export default [
   // a blown motor
   { match: '(the|those|these|a|an) [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'blown-motor' },
   // charged back
-  { match: '(#PresentTense|#PastTense) [back]', group: 0, tag: 'Adverb', reason: 'charge-back' },
+  { match: '(#PresentTense|#PastTense) [back]', group: 0, tag: 'Adverb', notIf: '#PhrasalVerb', reason: 'charge-back' },
   // send around
-  { match: '#Verb [around]', group: 0, tag: 'Adverb', ifNo: '#PhrasalVerb', reason: 'send-around' },
+  { match: '#Verb [around]', group: 0, tag: 'Adverb', notIf: '#PhrasalVerb', reason: 'send-around' },
   // later say
   { match: '[later] #PresentTense', group: 0, tag: 'Adverb', reason: 'later-say' },
 ]

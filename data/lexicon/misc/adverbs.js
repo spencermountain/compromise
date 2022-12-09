@@ -87,5 +87,6 @@ export default [
   'well',
   'backward',
   'hella',
+  'by no means',
 
 ]

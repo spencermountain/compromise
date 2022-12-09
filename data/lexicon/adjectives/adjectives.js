@@ -656,6 +656,8 @@ export default [
   'ingrown',
   'agreeable',
   'vile',
+  'frilly',
+  'indulgent',
   'undisclosed',
   'win win',
   'strung out',

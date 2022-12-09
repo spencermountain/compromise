@@ -151,6 +151,7 @@ export default [
   'cheer up',
   'chew up',
   'chew out',
+  'chill out',
   'chip in',
   'clean down',
   'clean up',

@@ -11,6 +11,11 @@ const checkMulti = function (terms, i, lexicon, setTag, world) {
       let tag = lexicon[str]
       let ts = terms.slice(i, i + skip + 1)
       setTag(ts, tag, world, false, '1-multi-lexicon')
+
+      // special case for phrasal-verbs - 2nd word is a #Particle
+      if (tag && tag.length === 2 && (tag[0] === 'PhrasalVerb' || tag[1] === 'PhrasalVerb')) {
+        setTag([ts[1]], 'Particle', world, false, '1-phrasal-particle')
+      }
       return true
     }
   }

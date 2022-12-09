@@ -1019,6 +1019,12 @@ let arr = [
   [`I'm [still] walking`, `i am #Adverb #Gerund`],
   [`I'm [still]`, `i am #Adjective`],
   [`I feel quite [drowsy]`, `i #PresentTense #Adverb #Adjective`],
+  [`he [drew] [plans] for [building] a dam`, `#Pronoun #Verb #Plural for . a #Noun`],
+  [`both [dishes] came with steak [fries]`, `both #Plural #Verb with #Noun+`],
+  [`putting on frilly [knickers]`, `#PhrasalVerb #Particle #Adjective #Uncountable`],
+  [`pub serves up [indulgent] mac and cheese`, `#Noun #PhrasalVerb #Particle #Adjective #Noun and #Noun`],
+  [`three of my [favorite] [coats]`, `#Value of my #Adjective #Plural`],
+  [`security can vanish in an [instant]`, `#Noun #Modal #Verb in #Determiner #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

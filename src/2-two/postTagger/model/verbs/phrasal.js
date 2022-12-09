@@ -12,8 +12,6 @@ export default [
     tag: 'PhrasalVerb Particle',
     reason: 'walk-in-on',
   },
-  //fall over
-  { match: '#PhrasalVerb [#PhrasalVerb]', group: 0, tag: 'Particle', reason: 'phrasal-particle' },
   // went on for
   { match: '(lived|went|crept|go) [on] for', group: 0, tag: 'PhrasalVerb', reason: 'went-on' },
   // got me thinking

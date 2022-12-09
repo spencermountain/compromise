@@ -22,13 +22,9 @@ import fs from 'fs'
 
     let begin = new Date()
     let doc = nlp(txt)
-    doc.chunks().forEach(s => {
-      if (s.verbs().length === 2) {
-        console.log(s.text())
-      }
-    })
-    let arr = doc.json()
-    console.log(arr.length)
+    let m = doc.match('#Verb #Preposition').out('topk')
+    m = m.slice(0, 4000).filter(o => o.count > 2)
+    console.log(JSON.stringify(m, null, 2))
 
     let end = new Date()
     console.log((end.getTime() - begin.getTime()) / 1000, 'seconds')

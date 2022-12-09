@@ -210,7 +210,6 @@ export default [
   'flores',
   'fontana',
   'fortin',
-  'foster',
   'fournier',
   // 'franco',
   'friedman',

@@ -114,7 +114,6 @@ export default [
   // -ile
   'fragile',
   'worthwhile',
-  'juvenile',
   'sterile',
   'volatile',
   'versatile',
@@ -141,7 +140,6 @@ export default [
   'masculine',
   'feminine',
   'pristine',
-  'routine',
 
   'done',
   'autoimmune',
@@ -225,7 +223,6 @@ export default [
   'bronze',
   'well off',
   'far off',
-  'half',
   'aloof',
   'soundproof',
   'weatherproof',
@@ -344,11 +341,9 @@ export default [
   // -en
   'wooden',
   'unforeseen',
-  'broken',
   'barren',
   'rotten',
   'craven',
-  'even',
   'proven',
   'frozen',
 
@@ -515,7 +510,6 @@ export default [
   'overt',
   'covert',
   'east',
-  'least',
   'abreast',
   'steadfast',
   'honest',
@@ -632,7 +626,6 @@ export default [
   'bonafide',
   // -ate
   'affectionate',
-  'alternate',
   'celebate',
   'corporate',
   'illegitimate',
@@ -665,5 +658,7 @@ export default [
   'vile',
   'undisclosed',
   'win win',
+  'strung out',
+  'whacked out',
 ]
 

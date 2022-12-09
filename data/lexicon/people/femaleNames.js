@@ -238,7 +238,6 @@ export default [
   'bismah',
   'blanca',
   'blanche',
-  'blossom',
   'blythe',
   'bobbi',
   'bobbie',

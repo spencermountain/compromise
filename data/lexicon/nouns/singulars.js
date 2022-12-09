@@ -48,7 +48,6 @@ export default [
   'tribe',
   'downside',
   'upside',
-  'tide',
   'dude',
   'voltage',
   'advantage',
@@ -66,9 +65,7 @@ export default [
   'mandible',
 
   'uncle',
-  'hole',
   'example',
-  'flame',
   'home',
   'someone',
   'headphone',
@@ -142,9 +139,7 @@ export default [
   'ceiling',
   'evening',
   'morning',
-  'string',
 
-  'bog',
   'lunch',
   'breakthrough',
   'trough',
@@ -153,8 +148,6 @@ export default [
   'garnish',
   'varnish',
   'death',
-  'mouth',
-  'shack',
   'question mark',
 
   // -al
@@ -187,7 +180,6 @@ export default [
   'urinal',
 
   'record label',
-  'pencil',
   'skill',
   'high school',
   'christmas carol',
@@ -196,12 +188,10 @@ export default [
   'bowl',
   'super bowl',
   'team',
-  'ham',
   'grand slam',
   'problem',
   'ad hominem',
   'system',
-  'mom',
   'room',
   'chrysanthemum',
   'bean',
@@ -303,7 +293,6 @@ export default [
   'daddy',
   'tragedy',
   'body',
-  'key',
   'doggy',
   'effigy',
   'clergy',
@@ -382,10 +371,7 @@ export default [
   'flower',
   'sandwich',
   'x ray',
-  'pig',
   'loser',
-  'time out',
-  'time off',
   'darling',
   'dump truck',
   'soft serve',
@@ -410,15 +396,17 @@ export default [
   'mitten',
   'pathogen',
   'sapien',
-  'teen',
 
   'autopsy',
   'embassy',
   'pussy',
   'sissy',
   'spin off',
+  'lay up',
+  'leg up',
   'poppy',
-  'epidemic'
+  'epidemic',
+  'row'
 ]
 
 

@@ -42,7 +42,7 @@ export default [
   // stay away
   { match: '^stay (out|away|back)', tag: 'Imperative', reason: 'stay-away' },
   // stay cool
-  { match: '^[stay] #Adjective', tag: 'Imperative', reason: 'stay-cool' },
+  { match: '^[(stay|be|keep)] #Adjective', group: 0, tag: 'Imperative', reason: 'stay-cool' },
   // keep it silent
   { match: '^[keep it] #Adjective', group: 0, tag: 'Imperative', reason: 'keep-it-cool' },
   // don't be late

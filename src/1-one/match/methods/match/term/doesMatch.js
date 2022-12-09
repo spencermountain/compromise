@@ -100,7 +100,8 @@ const doesMatch = function (term, reg, index, length) {
     if (reg.pos && !term.tags.has(reg.pos)) {
       return null
     }
-    return reg.fastOr.has(term.implicit) || reg.fastOr.has(term.normal) || reg.fastOr.has(term.text) || reg.fastOr.has(term.machine)
+    let str = term.root || term.implicit || term.machine || term.normal
+    return reg.fastOr.has(str) || reg.fastOr.has(term.text)
   }
   //support slower (one|two)
   if (reg.choices !== undefined) {

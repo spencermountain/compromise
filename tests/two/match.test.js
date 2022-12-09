@@ -1033,6 +1033,7 @@ let arr = [
   [`you shoulda seen her [face] [when] I took it`, `#Pronoun #Modal have #Verb her #Noun when #Pronoun #Verb it`],
   [`there is no quit in them`, `#There #Copula no #Noun in #Pronoun`],
   [`looking [beyond] the [present]`, `#Gerund #Adjective the #Noun`],
+  [`Be friendly to the guards`, `#Imperative #Adjective to the #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

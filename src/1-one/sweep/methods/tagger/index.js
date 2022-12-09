@@ -32,7 +32,7 @@ const tagger = function (list, document, world) {
     if (todo.tag !== undefined) {
       setTag(terms, todo.tag, world, todo.safe, `[post] '${reason}'`)
       // quick and dirty plural tagger
-      if (todo.tag === 'Noun') {
+      if (todo.tag === 'Noun' && looksPlural) {
         let term = terms[terms.length - 1]
         if (looksPlural(term.text)) {
           setTag([term], 'Plural', world, todo.safe, 'quick-plural')

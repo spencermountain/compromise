@@ -142,4 +142,5 @@ export default [
   'alternative',
   'silver',
   'rash',
+  'professional',
 ]

@@ -666,6 +666,8 @@ export default [
   'crystal clear',
   'skin deep',
   'pent up',
+  'partisan',
+  'bipartisan',
   'ice cold',
 ]
 

@@ -411,7 +411,10 @@ export default [
   'drive thru',
   'shut out',
   'hash brown',
-  'seminar'
+  'living room',
+  'seminar',
+  'variety',
+  'laboratory',
 ]
 
 

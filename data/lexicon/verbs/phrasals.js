@@ -704,6 +704,7 @@ export default [
   'shut in',
   'shut out',
   'shut up',
+  'shut down',
   'side with',
   'sign in',
   'sign out',

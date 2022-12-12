@@ -642,10 +642,6 @@ export default [
     tags: 'PRP, VBD, VBN, IN, DT, NN, PRP, VBD',
   },
   {
-    text: 'Kindly young men, but utterly programmed and brain-dead.',
-    tags: 'JJ, JJ, NNS, CC, RB, VBN, CC, NN, JJ',
-  },
-  {
     text: 'It would have been too painful to watch.',
     tags: 'PRP, MD, VB, VBN, RB, JJ, TO, VB',
   },
@@ -3365,10 +3361,6 @@ export default [
     tags: 'CD, NN, IN, NNS, IN, DT, NNS, IN, NNP',
   },
   {
-    text: 'A health-conscious president',
-    tags: 'DT, NN, JJ, NN',
-  },
-  {
     text: 'Image booster for the US',
     tags: 'NN, NN, IN, DT, NNP',
   },
@@ -5306,10 +5298,6 @@ export default [
   {
     text: 'I would call it the Taj Mahal of the east coast!',
     tags: 'PRP, MD, VB, PRP, DT, NNP, NNP, IN, DT, JJ, NN',
-  },
-  {
-    text: 'Pho-nomenal !!',
-    tags: 'NN, JJ',
   },
   {
     text: 'hope this helps !!',

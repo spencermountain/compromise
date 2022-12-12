@@ -3,7 +3,7 @@ export default [
   //swear-words as non-expression POS
   { match: 'holy (shit|fuck|hell)', tag: 'Expression', reason: 'swears-expression' },
   // well..
-  { match: '^(well|so|okay|now)', tag: 'Expression', reason: 'well-' },
+  { match: '^[(well|so|okay|now)] !#Adjective?', group: 0, tag: 'Expression', reason: 'well-' },
   // well..
   { match: '^come on', tag: 'Expression', reason: 'come-on' },
   // sorry

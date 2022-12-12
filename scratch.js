@@ -180,6 +180,9 @@ let arr = [
   // `If a ball [hit] into play rolls foul before passing through the infield`,
   // `does my molecule [bind]`,
 
+  `Next, take a look`,
+  'hella-boring meeting',
+  'his best-known lyrics',
   'went right in',
 
   // missing nouns

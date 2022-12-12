@@ -41,6 +41,7 @@ export default [
   { match: 'as [#Infinitive] as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
   //failed and oppressive
   { match: '[%Adj|Past%] and #Adjective', group: 0, tag: 'Adjective', reason: 'faled-and-oppressive' },
-
+  // or heightened emotion
+  { match: 'or [#PastTense] #Noun', group: 0, tag: 'Adjective', notIf: '(#Copula|#Pronoun)', reason: 'or-heightened-emotion' },
 
 ]

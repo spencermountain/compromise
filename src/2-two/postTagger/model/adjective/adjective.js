@@ -21,19 +21,10 @@ export default [
   { match: '^[#Adjective] (the|your) #Noun', group: 0, notIf: '(all|even)', tag: 'Infinitive', reason: 'shut-the' },
   // the said card
   { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'the-said-card' },
-  // a myth that uncovered wounds heal
-  // {
-  //   match: '#Noun (that|which|whose) [#PastTense] #Noun',
-  //   ifNo: '#Copula',
-  //   group: 0,
-  //   tag: 'Adjective',
-  //   reason: 'that-past-noun',
-  // },
-
   // faith-based, much-appreciated, soft-boiled
-  { match: '#Hyphenated [(#Hyphenated && #PastTense)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'faith-based' },
+  { match: '[#Hyphenated (#Hyphenated && #PastTense)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', notIf: '#Adverb', reason: 'faith-based' },
   //self-driving
-  { match: '#Hyphenated [(#Hyphenated && #Gerund)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'self-driving' },
+  { match: '[#Hyphenated (#Hyphenated && #Gerund)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', notIf: '#Adverb', reason: 'self-driving' },
   //dammed-up
   { match: '[#PastTense (#Hyphenated && #PhrasalVerb)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', reason: 'dammed-up' },
   //two-fold

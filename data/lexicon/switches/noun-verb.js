@@ -878,5 +878,6 @@ export default [
   'belt',
   'hash',
   'bite',
-  'coat'
+  'coat',
+  'lust'
 ]

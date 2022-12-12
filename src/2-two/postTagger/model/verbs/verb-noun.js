@@ -42,7 +42,7 @@ export default [
   // teaches/taught
   { match: '(taught|teaches|learns|learned) [#PresentTense]', group: 0, tag: 'Noun', reason: 'teaches-x' },
   // use reverse
-  { match: '(try|use|attempt|build|make) [#Verb #Particle?]', notIf: '(#Copula|#Noun|sure|fun)', group: 0, tag: 'Noun', reason: 'do-verb' },//make sure of
+  { match: '(try|use|attempt|build|make) [#Verb #Particle?]', notIf: '(#Copula|#Noun|sure|fun|up)', group: 0, tag: 'Noun', reason: 'do-verb' },//make sure of
   // checkmate is
   { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
   // get much sleep
@@ -82,7 +82,7 @@ export default [
   // from start to finish
   { match: 'from #Noun to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'start-to-finish' },
   // for comparison or contrast
-  { match: '(for|with|of) #Noun (and|or|not) [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'for-food-and-gas' },
+  { match: '(for|with|of) #Noun (and|or|not) [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'for-food-and-gas' },
   // adorable little store
   { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'adorable-little-store' },
   // of basic training
@@ -160,4 +160,6 @@ export default [
   { match: '#Determiner #Year [#Verb]', group: 0, tag: 'Noun', reason: 'the-1968-film' },
   // the break up
   { match: '#Determiner [#PhrasalVerb #Particle]', group: 0, tag: 'Noun', reason: 'the-break-up' },
+  // the individual goals
+  { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', reason: 'the-individual-goals' },
 ]

@@ -1034,6 +1034,15 @@ let arr = [
   [`there is no quit in them`, `#There #Copula no #Noun in #Pronoun`],
   [`looking [beyond] the [present]`, `#Gerund #Adjective the #Noun`],
   [`Be friendly to the guards`, `#Imperative #Adjective to the #Plural`],
+  [`they call it [self] confidence`, `#Pronoun #Infinitive #Pronoun #Noun+`],
+  [`I couldn't make up my mind`, `#Pronoun #Modal not #PhrasalVerb+ #Possessive #Noun`],
+  [`She is a bit taken back`, `#Pronoun #Copula a #Noun #Adjective #Adjective`],
+  [`She said "Come over"`, `#Pronoun #PastTense #Infinitive #Particle`],
+  [`cannot be shut out in the finals`, `#Verb not be #PhrasalVerb #Particle #Preposition #Determiner #Plural`],
+  [`Get off the corner`, `#PhrasalVerb #Particle the #Singular`],
+  [`meet with him and set up an appointment`, `#Imperative with #Pronoun and #PhrasalVerb+ #Determiner #Noun`],
+  [`cry for the heartbreak`, `#Imperative #Preposition the #Noun`],
+  [`sing to the baby`, `#Imperative to the #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

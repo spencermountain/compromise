@@ -656,11 +656,16 @@ export default [
   'ingrown',
   'agreeable',
   'vile',
+  'mega',
   'frilly',
   'indulgent',
   'undisclosed',
   'win win',
   'strung out',
   'whacked out',
+  'crystal clear',
+  'skin deep',
+  'pent up',
+  'ice cold',
 ]
 

@@ -123,14 +123,6 @@ export default [
     text: "The Japanese fret openly about the U.S. public's rancor.",
     tags: 'DT, NNP, NN, RB, IN, DT, NNP, NN, NN',
   },
-  // {
-  //   text: 'They operate ships and banks.',
-  //   tags: 'PRP, VBP, NNS, CC, NNS',
-  // },
-  {
-    text: 'Adds Takeshi Kondo, senior vice president of C. Itoh America Inc.: We have a great interest in making investments, particularly in new ventures.',
-    tags: 'VBZ, NNP, NNP, JJ, NN, NN, IN, NNP, NNP, NNP, NNP, PRP, VBP, DT, JJ, NN, IN, VBG, NNS, RB, IN, JJ, NNS',
-  },
   {
     text: 'But many banks are turning away from strict price competition.',
     tags: 'CC, JJ, NNS, VBP, VBG, RB, IN, JJ, NN, NN',

@@ -46,7 +46,12 @@ const checkCase = function (terms, i, model) {
   let str = term.text || '' //need case info
   // titlecase and not first word of sentence
   if (index !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
+    // skip Dates and stuff
     if (notProper.find(tag => term.tags.has(tag))) {
+      return null
+    }
+    // first word in a quotation?
+    if (term.pre.match(/["']$/)) {
       return null
     }
     // ignore 'Buy Our Affordable Cars!'

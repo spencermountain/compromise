@@ -410,6 +410,7 @@ export default [
   'hash brown',
   'drive thru',
   'shut out',
+  'hash brown',
   'seminar'
 ]
 

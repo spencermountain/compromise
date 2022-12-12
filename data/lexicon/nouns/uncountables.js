@@ -246,6 +246,7 @@ export default [
   'cont ed',
 
   'scissors',
+  'self',
   'pants',
   'shorts',
   'panties',
@@ -260,4 +261,5 @@ export default [
   'house arrest',
   'breadth',
   'knickers',
+  'whisky',
 ]

@@ -1691,6 +1691,7 @@ export default [
   'vicki',
   'vickie',
   'vicky',
+  'vikky',
   // 'victoria',
   'viktoria',
   'viktorie',

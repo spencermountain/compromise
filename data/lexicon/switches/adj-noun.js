@@ -139,4 +139,7 @@ export default [
   'best',
   'visionary',
   'grave',
+  'alternative',
+  'silver',
+  'rash',
 ]

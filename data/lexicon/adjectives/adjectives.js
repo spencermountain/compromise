@@ -669,5 +669,6 @@ export default [
   'partisan',
   'bipartisan',
   'ice cold',
+  'one on one',
 ]
 

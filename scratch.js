@@ -168,14 +168,9 @@ let arr = [
   // 'for the days ahead stay firm',
   // 'a new Act compelling registration',
   // 'The vet considered amputation',
-  'with your hands up',
-  'the tear down',
-  'to prevent plaque build-up',
-
-  // `[Talk] one on one`,
-  // `[Guess] who's doing laundry`,
-
+  // 'with your hands up',
   // `you seem unapproachable and [closed] [off]`,
+  // 'the instant he walked',
   // `make your girl [feel] greater`,
   // `what your Majesty [asks] of me`,
   // `did the sailor [ground] his son`,
@@ -185,6 +180,7 @@ let arr = [
   // `If a ball [hit] into play rolls foul before passing through the infield`,
   // `does my molecule [bind]`,
 
+  'went right in',
 
   // missing nouns
   // `A little [make up] can go a long way`,

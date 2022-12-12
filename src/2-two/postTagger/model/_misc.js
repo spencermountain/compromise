@@ -45,5 +45,7 @@ let matches = [
   { match: '^[does] (he|she|it|#ProperNoun)', group: 0, tag: 'QuestionWord', reason: 'does-he' },
   // a while
   { match: 'a [while]', group: 0, tag: 'Noun', reason: 'a-while' },
+  // guess who
+  { match: 'guess who', tag: '#Infinitive #QuestionWord', reason: 'guess-who' },
 ]
 export default matches

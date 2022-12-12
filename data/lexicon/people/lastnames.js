@@ -232,6 +232,7 @@ export default [
   'georgiev',
   'georgieva',
   'gheorghe',
+  'gibson',
   'gil',
   'gimenez',
   'giordano',

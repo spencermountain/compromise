@@ -709,7 +709,7 @@ let arr = [
   [`brand spanking new`, `#Adverb #Adverb #Adjective`],
 
   ["Right after.", '#Adverb .'],
-  ["Right in", '#Adverb #Preposition'],
+  // ["went right in", '#Adverb #Preposition'],
   ["Right angle.", '#Adjective #Noun'],
   [`The Island airport tunnel nears completion`, `the #Noun+ #PresentTense #Noun`],
   [`come have a drink`, `#Imperative #Imperative a #Singular`],
@@ -1050,7 +1050,7 @@ let arr = [
   [`the teen pregnancy rate`, `#Determiner #Adjective #Noun #Noun`],
   [`look up some best practices`, `#Imperative #Particle #Determiner #Adjective #Plural`],
   [`Focus on the best parts.`, `#Imperative on #Determiner #Adjective #Plural`],
-  [`Gibson made a routine catch`, `#Person #Verb #Determiner #Adjective #Plural`],
+  [`Gibson made a routine catch`, `#Person #Verb #Determiner #Adjective #Singular`],
   [`Don’t make any rash decisions`, `do not #Imperative #Determiner #Adjective #Plural`],
   // hyphentated adjectives
   [`carries oxygen-rich blood`, `#PresentTense #Adjective #Adjective #Noun`],
@@ -1066,7 +1066,8 @@ let arr = [
   [`Two vultures [board] an airplane`, `#Value #Plural #Infinitive an #Noun`],
   [`Become a crime [laboratory] analyst`, `#Imperative a #Noun+`],
   [`your taxes should go up`, `#Possessive #Plural #Modal #PhrasalVerb #Particle`],
-  // [``, ``],
+  [`[Guess] who's doing laundry`, `#Verb #QuestionWord is #Gerund #Noun`],
+  [`display of fear or heightened emotion`, `#Noun of #Noun or #Adjective #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

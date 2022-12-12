@@ -3734,10 +3734,6 @@ export default [
     tags: 'PRP, VBZ, RB, RB, JJ, CC, JJ',
   },
   {
-    text: 'Is Fujairah a nice place to live in?',
-    tags: 'VBZ, NNP, DT, JJ, NN, TO, VB, IN',
-  },
-  {
     text: 'Things to do in Fujairah ..',
     tags: 'NNS, TO, VB, IN, NNP',
   },
@@ -5118,10 +5114,6 @@ export default [
   {
     text: 'MUST TRY !!!',
     tags: 'MD, VB',
-  },
-  {
-    text: 'friendly, fine food',
-    tags: 'JJ, JJ, NN',
   },
   {
     text: 'The food continues to be very good -- deli sandwiches, homemade soups, fresh salads.',

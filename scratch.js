@@ -180,10 +180,10 @@ let arr = [
   // `If a ball [hit] into play rolls foul before passing through the infield`,
   // `does my molecule [bind]`,
 
-  `Next, take a look`,
-  'hella-boring meeting',
-  'his best-known lyrics',
-  'went right in',
+  // `Next, take a look`,
+  // 'hella-boring meeting',
+  // 'his best-known lyrics',
+  // 'went right in',
 
   // missing nouns
   // `A little [make up] can go a long way`,
@@ -223,21 +223,21 @@ let arr = [
   // `prepayment has taken 45 days alone`
 
 
-  // `the Co-Chairmen of the International Conference`,
   // `countries as a whole seem brighter`,
   // `four years of uninterrupted economic growth`,
   // `because people of varying ethnicities`,
 
-  // 'Caring for Kaneohe since 1986',
+  'designed to help use the newly written',
+  // 'Power watchdog raps utility',
   // 'Boost user engagement',
-  // 'Work to improve lives',
-  // 'A swaging machine works by using two or four',
-  // 'NMDAR signaling increases RanBP1 expression',
-  // 'Notes on eastern American poetry',
-  // 'call ahead and reserve one',
-  // 'in the room where you usually nurse',
-  // 'We Sell All Brands',
-  // 'place tea bags in hot water',
+  // 'To place close together',
+  'A swaging machine works by using two or four',
+  'NMDAR signaling increases RanBP1 expression',
+  'Notes on eastern American poetry',
+  'call ahead and reserve one',
+  'in the room where you usually nurse',
+  'We Sell All Brands',
+  'place tea bags in hot water',
   // 'while the therapist watches',
   // 'All right relax'
   // `If you notice swelling`,

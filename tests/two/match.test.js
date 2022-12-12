@@ -1069,6 +1069,10 @@ let arr = [
   [`[Guess] who's doing laundry`, `#Verb #QuestionWord is #Gerund #Noun`],
   [`display of fear or heightened emotion`, `#Noun of #Noun or #Adjective #Noun`],
   [`so ugly or deformed`, `#Adverb #Adjective #Conjunction #Adjective`],
+  [`the Co-Chairmen of the International Conference`, `the #Noun+ of the #Noun+`],
+  [`to give thanks`, `to #Infinitive #Plural`],
+  [`wish to go home`, `#Infinitive to #PresentTense #Noun`],
+  [`Work to improve lives`, `#Imperative to #Infinitive #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

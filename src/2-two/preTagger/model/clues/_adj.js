@@ -20,6 +20,7 @@ export default {
     feel: jj, //feel prepared
     feels: jj,
     felt: jj,
+    stay: jj,
     appear: jj,
     appears: jj,
     appeared: jj,

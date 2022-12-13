@@ -22,7 +22,6 @@ export default [
   'burly',
   'busy',
   'cagey',
-  'caring',
   'cheap',
   'cheesy',
   'chilly',

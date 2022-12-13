@@ -64,9 +64,9 @@ export default {
 
   // 
   'come here': 'Imperative',
-  'go away': 'Imperative',
-  'hurry up': 'Imperative',
-  'make sure': 'Imperative',
+  // 'go away': 'Imperative',
+  // 'hurry up': 'Imperative',
+  // 'make sure': 'Imperative',
   // 'stand back': 'Imperative'
   // 'subpar': 'Adjective'
 }

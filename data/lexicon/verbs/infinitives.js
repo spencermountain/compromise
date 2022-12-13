@@ -703,14 +703,11 @@ export default [
   'vanish',
 
   // present participles
-  'awaken',
   'freshen',
   'frighten',
   'hasten',
   'heighten',
-  'lengthen',
   'lessen',
-  'strengthen',
   'sweeten',
   'worsen',
 
@@ -724,5 +721,4 @@ export default [
   'ravish',
   'reup',//'re-up'
   'irk',
-  'read'
 ]

@@ -1076,6 +1076,9 @@ let arr = [
   [`for January 2022`, `#Preposition #Month #Year`],
   [`A swaging machine works by using two`, `a #Adjective #Noun #PresentTense #Preposition #Gerund #Value`],
   [`Notes on eastern American poetry`, `#Plural on #Adjective #Demonym #Noun`],
+  // [`call and reserve one`, `#Imperative and #Infinitive one`],
+  [`We Sell All Brands`, `#Pronoun #Infinitive #Adjective #Plural`],
+  [`China aims to rebrand downtown`, `#Country #PresentTense #Conjunction #Infinitive #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

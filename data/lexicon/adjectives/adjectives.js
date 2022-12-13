@@ -670,5 +670,6 @@ export default [
   'bipartisan',
   'ice cold',
   'one on one',
+  'ongoing',
 ]
 

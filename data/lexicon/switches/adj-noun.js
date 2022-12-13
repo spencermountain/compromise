@@ -129,7 +129,6 @@ export default [
   'premium',
   'humdrum',
   'sovereign',
-  'excess',
   'pro',
   'racist',
   'resident',

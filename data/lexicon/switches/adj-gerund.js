@@ -203,7 +203,6 @@ export default [
   'convincing',
   'degrading',
   'overriding',
-  'guiding',
   'groundbreaking',
   'willing',
   'forthcoming',

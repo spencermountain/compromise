@@ -256,10 +256,10 @@ export default [
   'anyone',
   'anything',
   'something',
-  'time off',
   'tonight',
   'house arrest',
   'breadth',
   'knickers',
   'whisky',
+  'shopping',
 ]

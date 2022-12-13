@@ -22,6 +22,14 @@ const isEndNoun = function (terms, i) {
   return null
 }
 
+// the first word in the sentence
+const isStart = function (terms, i, tag) {
+  if (i === 0 && terms.length > 3) {
+    return tag
+  }
+  return null
+}
+
 const adhoc = {
   'Adj|Gerund': (terms, i) => {
     return isCapital(terms, i)
@@ -42,7 +50,7 @@ const adhoc = {
     return isCapital(terms, i) || isAloneVerb(terms, i, 'Infinitive')
   },
   'Plural|Verb': (terms, i) => {
-    return isCapital(terms, i) || isAloneVerb(terms, i, 'PresentTense')
+    return isCapital(terms, i) || isAloneVerb(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
   },
   'Person|Noun': (terms, i) => {
     return isCapital(terms, i)

@@ -1074,6 +1074,8 @@ let arr = [
   [`wish to go home`, `#Infinitive to #PresentTense #Noun`],
   [`Work to improve lives`, `#Imperative to #Infinitive #Plural`],
   [`for January 2022`, `#Preposition #Month #Year`],
+  [`A swaging machine works by using two`, `a #Adjective #Noun #PresentTense #Preposition #Gerund #Value`],
+  [`Notes on eastern American poetry`, `#Plural on #Adjective #Demonym #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

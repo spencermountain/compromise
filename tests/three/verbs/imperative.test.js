@@ -51,7 +51,7 @@ test('isImperative:', function (t) {
     [`Be friendly, nice and interesting.  `, true],
     [`Get your foot off my contestant!`, true],
     [`Let me ask you some questions about, is it, uh, Marcel?`, true],
-    [`Next, take a look at your dropsuit fittings.`, true],
+    [`take a look at your dropsuit fittings.`, true],
     [`I'll sing the same old song, hear me call your name`, true],
     [`Use the ESRB rating system.`, true],
     [`Don’t help in avoiding situations.`, true],

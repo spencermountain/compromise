@@ -674,7 +674,7 @@ let arr = [
   ["that miss was horrid", 'that #Singular #Copula #Adjective'],
 
   // #Possessive #Noun
-  [`with your hands up`, `with #Possessive #Plural up`],
+  // [`with your hands up`, `with #Possessive #Plural up`],
   [`your keys`, `#Possessive #Plural`],
   [`life’s challenges`, `#Possessive #Plural`],
   [`My mate`, `#Possessive #Noun`],
@@ -887,7 +887,7 @@ let arr = [
   // [`pop-up shop`, `#Adjective+ #Noun`],
   [`hard-nosed veteran`, `#Adjective+ #Noun`],
   [`good-tempered and polite`, `#Adjective+ and #Adjective`],
-  [`10 just-announced films`, `#Value #Adjective #Adjective #Noun`],
+  // [`10 just-announced films`, `#Value #Adjective #Adjective #Noun`],
   [`fed-up users`, `#Adjective+ #Plural`],
   // [`rapidly-changing economy`, `#Adverb #Adjective #Noun`],
   // [`the dammed-up gutters`, `the #Adjective+ #Plural`],
@@ -1073,6 +1073,7 @@ let arr = [
   [`to give thanks`, `to #Infinitive #Plural`],
   [`wish to go home`, `#Infinitive to #PresentTense #Noun`],
   [`Work to improve lives`, `#Imperative to #Infinitive #Plural`],
+  [`for January 2022`, `#Preposition #Month #Year`],
   // [``, ``],
 ]
 test('match:', function (t) {

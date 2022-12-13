@@ -665,10 +665,10 @@ export default [
     text: 'Peace.',
     tags: 'NN',
   },
-  {
-    text: "It's a long but very worthwhile read.",
-    tags: 'PRP, VBZ, DT, JJ, CC, RB, JJ, NN',
-  },
+  // {
+  //   text: "It's a long but very worthwhile read.",
+  //   tags: 'PRP, VBZ, DT, JJ, CC, RB, JJ, NN',
+  // },
   {
     text: '"A View from the Eye of the Storm"',
     tags: 'DT, NNP, IN, DT, NNP, IN, DT, NNP',
@@ -3518,7 +3518,7 @@ export default [
     tags: 'NNP, NN',
   },
   {
-    text: '- Hash Browns',
+    text: '- Hash browns',
     tags: 'NN, NNS',
   },
   {

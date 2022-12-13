@@ -4,7 +4,7 @@ export default {
   beforeTags: {
     Honorific: p,
     Person: p,
-    Preposition: p, //with sue
+    // Preposition: p, //with sue
   },
   afterTags: {
     Person: p,

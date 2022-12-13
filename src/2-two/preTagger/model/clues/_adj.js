@@ -37,6 +37,7 @@ export default {
     very: jj,
     how: jj,//how slow
     deeply: jj,
+    hella: jj,
     // always: jj,
     // never: jj,
     profoundly: jj,

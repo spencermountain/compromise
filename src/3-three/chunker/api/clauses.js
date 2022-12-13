@@ -16,6 +16,7 @@ const byComma = function (doc) {
     more = more.ifNo('(#City && @hasComma) #Country') //'toronto, canada'
     more = more.ifNo('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
     more = more.ifNo('(#Date+ && @hasComma) #Value') //'july 6, 1992'
+    more = more.ifNo('(#Adjective && @hasComma) #Adjective') //nice, pretty
     // more = more.ifNo('@hasComma (too|also)$') //at end of sentence
     return more.found
   })

@@ -5,7 +5,6 @@ export default [
   'any',
   'both',
   'each',
-  'either',
   'else',
   'every',
   'few',
@@ -25,7 +24,7 @@ export default [
   'whatever',
   'whichever',
   //some other languages (what could go wrong?)
-  'la',
+  // 'la',
   'le',
   'les',
   'des',

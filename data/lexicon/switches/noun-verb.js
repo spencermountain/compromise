@@ -561,7 +561,6 @@ export default [
   'rat',
   'rate',
   'reach',
-  'read',
   'reason',
   'recall',
   'record',
@@ -810,7 +809,7 @@ export default [
   'upgrade',
   'upload',
   'urge',
-  'use',
+  // 'use',
   'usher',
   'vacuum',
   'value',
@@ -854,6 +853,7 @@ export default [
   'worry',
   'worship',
   'wreck',
+  'worth',
   'yawn',
   'yell',
   'yield',
@@ -864,9 +864,20 @@ export default [
   'profile',
   'stockpile',
   'tile',
-  // -ate
-  // -ide
-  // 'saw',//hmm
-  // from phrasals
-  // prefixes
+  'stoop',
+  'ace',
+  'effect',
+  'intent',
+  'biopsy',
+  'patent',
+  'excuse',
+  'burden',
+  'wrap',
+  'alarm',
+  'stage',
+  'belt',
+  'hash',
+  'bite',
+  'coat',
+  'lust'
 ]

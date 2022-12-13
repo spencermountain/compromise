@@ -17,7 +17,13 @@ const splitOn = function (terms, i) {
     return false
   }
   if (terms[i - 1]) {
-    if (terms[i - 1].tags.has('Date') || maybeDate.has(terms[i - 1].normal)) {
+    let lastTerm = terms[i - 1]
+    // thursday, june
+    if (lastTerm.tags.has('Date') || maybeDate.has(lastTerm.normal)) {
+      return false
+    }
+    // pretty, nice, and fun
+    if (lastTerm.tags.has('Adjective') || term.tags.has('Adjective')) {
       return false
     }
   }

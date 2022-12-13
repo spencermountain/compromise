@@ -15,10 +15,16 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - remove confidence numbers
 -->
 
-<!-- #### 14.7.3 [Unreleased]
+<!-- #### 14.8.1 [Unreleased]
 -->
 
-#### 14.8.0 
+#### 14.8.1 [Dec 2022]
+- **[fix]** - tagging fixes
+- **[change]** - allow #Plural acronyms
+- **[fix]** - allow root matches in fastOr
+- **[fix]** - more flexible PhrasalVerb tagging
+
+#### 14.8.0 [Dec 2022]
 - **[fix]** - tagging fixes
 - **[new]** - add Person .presumedMale(), .presumedFemale() methods
 - **[new]** - add Pronoun class, .refersTo()
@@ -29,12 +35,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - improved Auxiliary verb tagging
 - **[update]** - dependencies
 
-#### 14.7.1 
+#### 14.7.1 [Nov 2022]
 - **[fix]** - concat fix
 - **[change]** - tagging fixes
 - **[change]** - `{word/tag/sense}` sense-match syntax
 
-#### 14.7.0 
+#### 14.7.0 [Nov 2022]
 - **[new]** - match term id
 - **[change]** - tag text by default on .concat('')
 - **[change]** - allow modifying term prePunctuation

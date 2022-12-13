@@ -22,14 +22,25 @@ const isPossessive = (terms, i) => {
   if (term.tags.has('Possessive')) {
     return true
   }
-  //a pronoun can't be possessive - "he's house"
-  if (term.tags.has('Pronoun') || term.tags.has('QuestionWord')) {
+  // who's
+  if (term.tags.has('QuestionWord')) {
+    return false
+  }
+  // some pronouns are never possessive
+  if (term.normal === `he's` || term.normal === `she's`) {
     return false
   }
   //if end of sentence, it is possessive - "was spencer's"
   let nextTerm = terms[i + 1]
   if (!nextTerm) {
     return true
+  }
+  // "it's a life" vs "run it's business"
+  if (term.normal === `it's`) {
+    if (nextTerm.tags.has('#Noun')) {
+      return true
+    }
+    return false
   }
   //a gerund suggests 'is walking'
   if (nextTerm.tags.has('Verb')) {

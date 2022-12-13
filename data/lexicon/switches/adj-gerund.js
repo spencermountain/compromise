@@ -203,7 +203,6 @@ export default [
   'convincing',
   'degrading',
   'overriding',
-  'guiding',
   'groundbreaking',
   'willing',
   'forthcoming',
@@ -220,12 +219,16 @@ export default [
   'revolving',
   'owing',
   'outlying',
+  'remaining',
 
   // prefixes
   'resting',
   'redefining',
   'overpowering',
-  'varying'
+  'varying',
+  'intimidating',
+
+  'caring'
 
 ]
 

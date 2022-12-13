@@ -123,14 +123,6 @@ export default [
     text: "The Japanese fret openly about the U.S. public's rancor.",
     tags: 'DT, NNP, NN, RB, IN, DT, NNP, NN, NN',
   },
-  // {
-  //   text: 'They operate ships and banks.',
-  //   tags: 'PRP, VBP, NNS, CC, NNS',
-  // },
-  {
-    text: 'Adds Takeshi Kondo, senior vice president of C. Itoh America Inc.: We have a great interest in making investments, particularly in new ventures.',
-    tags: 'VBZ, NNP, NNP, JJ, NN, NN, IN, NNP, NNP, NNP, NNP, PRP, VBP, DT, JJ, NN, IN, VBG, NNS, RB, IN, JJ, NNS',
-  },
   {
     text: 'But many banks are turning away from strict price competition.',
     tags: 'CC, JJ, NNS, VBP, VBG, RB, IN, JJ, NN, NN',
@@ -650,10 +642,6 @@ export default [
     tags: 'PRP, VBD, VBN, IN, DT, NN, PRP, VBD',
   },
   {
-    text: 'Kindly young men, but utterly programmed and brain-dead.',
-    tags: 'JJ, JJ, NNS, CC, RB, VBN, CC, NN, JJ',
-  },
-  {
     text: 'It would have been too painful to watch.',
     tags: 'PRP, MD, VB, VBN, RB, JJ, TO, VB',
   },
@@ -677,10 +665,10 @@ export default [
     text: 'Peace.',
     tags: 'NN',
   },
-  {
-    text: "It's a long but very worthwhile read.",
-    tags: 'PRP, VBZ, DT, JJ, CC, RB, JJ, NN',
-  },
+  // {
+  //   text: "It's a long but very worthwhile read.",
+  //   tags: 'PRP, VBZ, DT, JJ, CC, RB, JJ, NN',
+  // },
   {
     text: '"A View from the Eye of the Storm"',
     tags: 'DT, NNP, IN, DT, NNP, IN, DT, NNP',
@@ -3373,10 +3361,6 @@ export default [
     tags: 'CD, NN, IN, NNS, IN, DT, NNS, IN, NNP',
   },
   {
-    text: 'A health-conscious president',
-    tags: 'DT, NN, JJ, NN',
-  },
-  {
     text: 'Image booster for the US',
     tags: 'NN, NN, IN, DT, NNP',
   },
@@ -3534,7 +3518,7 @@ export default [
     tags: 'NNP, NN',
   },
   {
-    text: '- Hash Browns',
+    text: '- Hash browns',
     tags: 'NN, NNS',
   },
   {
@@ -3740,10 +3724,6 @@ export default [
   {
     text: "He's probably still scared and unsure.",
     tags: 'PRP, VBZ, RB, RB, JJ, CC, JJ',
-  },
-  {
-    text: 'Is Fujairah a nice place to live in?',
-    tags: 'VBZ, NNP, DT, JJ, NN, TO, VB, IN',
   },
   {
     text: 'Things to do in Fujairah ..',
@@ -5128,10 +5108,6 @@ export default [
     tags: 'MD, VB',
   },
   {
-    text: 'friendly, fine food',
-    tags: 'JJ, JJ, NN',
-  },
-  {
     text: 'The food continues to be very good -- deli sandwiches, homemade soups, fresh salads.',
     tags: 'DT, NN, VBZ, TO, VB, RB, JJ, NN, NNS, JJ, NNS, JJ, NNS',
   },
@@ -5322,10 +5298,6 @@ export default [
   {
     text: 'I would call it the Taj Mahal of the east coast!',
     tags: 'PRP, MD, VB, PRP, DT, NNP, NNP, IN, DT, JJ, NN',
-  },
-  {
-    text: 'Pho-nomenal !!',
-    tags: 'NN, JJ',
   },
   {
     text: 'hope this helps !!',

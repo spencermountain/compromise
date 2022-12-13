@@ -16,6 +16,9 @@ export default {
     // Noun:true, //date spencer
     Preposition: v, //date around, dump onto, grumble about
     // Conjunction: v, // dip to, dip through
+    Cardinal: v,//cut 3 squares
+    Comparative: v,//feel greater
+    Superlative: v,//feel greatest
   },
   beforeWords: {
     i: v, //i date
@@ -76,6 +79,8 @@ export default {
     myself: v,
     ourselves: v,
     themselves: v,
+    something: v,
+    anything: v,
 
     a: v, //covers a
     an: v, //covers an
@@ -89,13 +94,14 @@ export default {
     off: v,
     under: v,
     what: v, //look what
-    when: v,//starts when
+    // when: v,//starts when
     // for:true, //settled for
     all: v,//shiver all night
     // conjunctions
     to: v,//dip to
     because: v,//
     although: v,//
+    after: v,
     before: v,//
     how: v,//
     otherwise: v,//
@@ -104,5 +110,7 @@ export default {
     into: v,//
     yet: v,//
     more: v,//kill more
+    here: v,// look here
+    there: v,//
   },
 }

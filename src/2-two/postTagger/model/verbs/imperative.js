@@ -16,11 +16,13 @@ export default [
   // turn down the noise
   { match: '^[#Infinitive] (up|down|over) #Determiner', group: 0, tag: 'Imperative', reason: 'turn-down' },
   // eat my shorts
-  { match: '^[#Infinitive] (your|my|the|a|an|any|each|every|some|more)', group: 0, notIf: 'like', tag: 'Imperative', reason: 'eat-my-shorts' },
+  { match: '^[#Infinitive] (your|my|the|a|an|any|each|every|some|more|with|on)', group: 0, notIf: 'like', tag: 'Imperative', reason: 'eat-my-shorts' },
   // tell him the story
   { match: '^[#Infinitive] (him|her|it|us|me|there)', group: 0, tag: 'Imperative', reason: 'tell-him' },
   // avoid loud noises
   { match: '^[#Infinitive] #Adjective #Noun$', group: 0, tag: 'Imperative', reason: 'avoid-loud-noises' },
+  // call and reserve
+  { match: '^[#Infinitive] (#Adjective|#Adverb)? and #Infinitive', group: 0, tag: 'Imperative', reason: 'call-and-reserve' },
   // one-word imperatives
   { match: '^(go|stop|wait|hurry) please?$', tag: 'Imperative', reason: 'go' },
   // somebody call
@@ -42,7 +44,7 @@ export default [
   // stay away
   { match: '^stay (out|away|back)', tag: 'Imperative', reason: 'stay-away' },
   // stay cool
-  { match: '^[stay] #Adjective', tag: 'Imperative', reason: 'stay-cool' },
+  { match: '^[(stay|be|keep)] #Adjective', group: 0, tag: 'Imperative', reason: 'stay-cool' },
   // keep it silent
   { match: '^[keep it] #Adjective', group: 0, tag: 'Imperative', reason: 'keep-it-cool' },
   // don't be late
@@ -54,7 +56,7 @@ export default [
   // continue playing
   { match: '^[#Infinitive] #Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
   // go to it
-  { match: '^[#Infinitive] (to|for|into|toward)', group: 0, tag: 'Imperative', reason: 'go-to' },
+  { match: '^[#Infinitive] (to|for|into|toward|here|there)', group: 0, tag: 'Imperative', reason: 'go-to' },
   // relax and unwind
   { match: '^[#Infinitive] (and|or) #Infinitive', group: 0, tag: 'Imperative', reason: 'inf-and-inf' },
 

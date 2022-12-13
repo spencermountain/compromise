@@ -477,4 +477,23 @@ export default [
   'ranchi',
   'shillong',
   'shimla',
+
+  // relevant european cities
+  'venice',
+  'bari',
+  'catania',
+  'verona',
+  'messina',
+  'padua',
+  'prato',
+  'trieste',
+  'cagliari',
+  'ancona',
+  'rennes',
+  'reimes',
+  'toulon',
+  'montpellier',
+  'le mans',
+  'dunkirk',
+  'versailles',
 ]

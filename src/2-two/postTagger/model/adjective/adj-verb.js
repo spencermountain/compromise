@@ -17,6 +17,8 @@ export default [
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
   //is eager to go
   { match: '#Copula [%Adj|Present%] to #Verb', group: 0, tag: 'Verb', reason: 'adj-to' },
+  //is done well
+  { match: '#Copula [#Adjective] (well|badly|quickly|slowly)', group: 0, tag: 'Verb', reason: 'done-well' },
   // rude and insulting
   { match: '#Adjective and [#Gerund] !#Preposition?', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // were over cooked
@@ -28,17 +30,18 @@ export default [
   //felt loved
   { match: '(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adverb|#Adjective)? [#PastTense]', group: 0, tag: 'Adjective', reason: 'felt-loved' },
   // seem confused
-  { match: '(seem|feel|seemed|felt) [#PastTense]', group: 0, tag: 'Adjective', reason: 'seem-confused' },
+  { match: '(seem|feel|seemed|felt) [#PastTense #Particle?]', group: 0, tag: 'Adjective', reason: 'seem-confused' },
   // a bit confused
-  { match: 'a (bit|little|tad) [#PastTense]', group: 0, tag: 'Adjective', reason: 'a-bit-confused' },
+  { match: 'a (bit|little|tad) [#PastTense #Particle?]', group: 0, tag: 'Adjective', reason: 'a-bit-confused' },
   // do not be embarrassed
-  { match: 'not be [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'do-not-be-confused' },
+  { match: 'not be [%Adj|Past% #Particle?]', group: 0, tag: 'Adjective', reason: 'do-not-be-confused' },
   // is just right
-  { match: '#Copula just [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'is-just-right' },
+  { match: '#Copula just [%Adj|Past% #Particle?]', group: 0, tag: 'Adjective', reason: 'is-just-right' },
   // as pale as
   { match: 'as [#Infinitive] as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
   //failed and oppressive
   { match: '[%Adj|Past%] and #Adjective', group: 0, tag: 'Adjective', reason: 'faled-and-oppressive' },
-
+  // or heightened emotion
+  { match: 'or [#PastTense] #Noun', group: 0, tag: 'Adjective', notIf: '(#Copula|#Pronoun)', reason: 'or-heightened-emotion' },
 
 ]

@@ -28,6 +28,7 @@ export default [
   'valentino rossi',
   'van gogh',
   'niles crane',
+  'run dmc',
 
   //female
   'halle berry',

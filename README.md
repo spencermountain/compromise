@@ -1042,6 +1042,7 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
 
 - &nbsp; **[en-pos](https://github.com/finnlp/en-pos)** - very clever javascript pos-tagger _by [Alex Corvi](https://github.com/alexcorvi)_
 - &nbsp; **[naturalNode](https://github.com/NaturalNode/natural)** - fancier statistical nlp in javascript
+- &nbsp; **[winkJS](https://winkjs.org/)** - POS-tagger, tokenizer, machine-learning in javascript
 - &nbsp; **[dariusk/pos-js ](https://github.com/dariusk/pos-js)** - fastTag fork in javascript
 - &nbsp; **[compendium-js](https://github.com/Ulflander/compendium-js)** - POS and sentiment analysis in javascript
 - &nbsp; **[nodeBox linguistics](https://www.nodebox.net/code/index.php/Linguistics)** - conjugation, inflection in javascript

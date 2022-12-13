@@ -2,7 +2,7 @@ export default [
   // the planning processes
   { match: '(this|that|the|a|an) [#Gerund #Infinitive]', group: 0, tag: 'Singular', reason: 'the-planning-process' },
   // the paving stones
-  { match: '(that|the) [#Gerund #PresentTense]', group: 0, tag: 'Plural', reason: 'the-paving-stones' },
+  { match: '(that|the) [#Gerund #PresentTense]', group: 0, ifNo: '#Copula', tag: 'Plural', reason: 'the-paving-stones' },
   // this swimming
   // { match: '(this|that|the) [#Gerund]', group: 0, tag: 'Noun', reason: 'this-gerund' },
   // the remaining claims
@@ -10,7 +10,7 @@ export default [
   // i think tipping sucks
   { match: `#Pronoun #Infinitive [#Gerund] #PresentTense`, group: 0, tag: 'Noun', reason: 'tipping-sucks' },
   // early warning
-  { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', reason: 'early-warning' },
+  { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', notIf: '(still|even|just)', reason: 'early-warning' },
   //walking is cool
   { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
   //walking should be fun
@@ -23,4 +23,6 @@ export default [
   { match: '#Singular for [%Noun|Gerund%]', group: 0, tag: 'Gerund', reason: 'noun-for-gerund' },
   // better for training
   { match: '#Comparative (for|at) [%Noun|Gerund%]', group: 0, tag: 'Gerund', reason: 'better-for-gerund' },
+  // keep the touching
+  { match: '#PresentTense the [#Gerund]', group: 0, tag: 'Noun', reason: 'keep-the-touching' },
 ]

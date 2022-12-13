@@ -114,7 +114,6 @@ export default [
   // -ile
   'fragile',
   'worthwhile',
-  'juvenile',
   'sterile',
   'volatile',
   'versatile',
@@ -141,7 +140,6 @@ export default [
   'masculine',
   'feminine',
   'pristine',
-  'routine',
 
   'done',
   'autoimmune',
@@ -225,7 +223,6 @@ export default [
   'bronze',
   'well off',
   'far off',
-  'half',
   'aloof',
   'soundproof',
   'weatherproof',
@@ -254,6 +251,7 @@ export default [
   'mindblowing',
   'knowing',
   'appetizing',
+  'appalling',
 
   'smug',
   // -ish
@@ -343,11 +341,9 @@ export default [
   // -en
   'wooden',
   'unforeseen',
-  'broken',
   'barren',
   'rotten',
   'craven',
-  'even',
   'proven',
   'frozen',
 
@@ -498,7 +494,7 @@ export default [
   'congruent',
   'insolvent',
 
-  'faint',
+
   'conjoint',
   'disjoint',
   'in front',
@@ -509,18 +505,13 @@ export default [
   'nondescript',
   'exempt',
   'abrupt',
-  'bankrupt',
-  'corrupt',
+
   'inert',
   'overt',
   'covert',
   'east',
-  'least',
   'abreast',
   'steadfast',
-  'last',
-  'past',
-  'best',
   'honest',
   'populist',
   'against',
@@ -536,7 +527,6 @@ export default [
   'faux',
   'everyday',
   'okay',
-  'stray',
   'underway',
   'nearby',
   'muddy',
@@ -544,6 +534,16 @@ export default [
   'unwieldy',
   'moldy',
   'handy',
+  'cutesy',
+  'creepy',
+  'sleepy',
+  'drowsy',
+  'folksy',
+  'handsy',
+  'fiery',
+  'flowery',
+  'cheery',
+  'chintzy',
 
   // -ly
   'kindly',
@@ -619,7 +619,6 @@ export default [
   'antique',
   'dependent',
   'independent',
-  'seated',
   'modest',
 
   // -ide
@@ -627,7 +626,6 @@ export default [
   'bonafide',
   // -ate
   'affectionate',
-  'alternate',
   'celebate',
   'corporate',
   'illegitimate',
@@ -658,6 +656,20 @@ export default [
   'ingrown',
   'agreeable',
   'vile',
+  'mega',
+  'frilly',
+  'indulgent',
+  'undisclosed',
   'win win',
+  'strung out',
+  'whacked out',
+  'crystal clear',
+  'skin deep',
+  'pent up',
+  'partisan',
+  'bipartisan',
+  'ice cold',
+  'one on one',
+  'ongoing',
 ]
 

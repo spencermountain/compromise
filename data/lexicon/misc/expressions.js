@@ -124,4 +124,6 @@ export default [
   'aye',
   'cmon',//come on
   'excuse me',
+  'oh well',
+  'oh hell',
 ]

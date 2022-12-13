@@ -28,7 +28,7 @@ export default [
   //the wait to vote
   { match: 'the [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'determiner1' },
   //a sense of
-  { match: '#Determiner [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
+  { match: '(a|an|the) [#Verb] of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
   //the threat of force
   { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', notIf: '#Gerund', reason: 'noun-of-noun' },
   // ended in ruins
@@ -53,8 +53,8 @@ export default [
   // a comdominium, or simply condo
   { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
   // walk the walk
-  { match: '(the|those|these|a|an) #Adjective? [#Infinitive]', group: 0, tag: 'Noun', reason: 'det-inf' },
-  { match: '(the|those|these|a|an) #Adjective? [#PresentTense]', notIf: '(#Gerund|#Copula)', group: 0, tag: 'Noun', reason: 'det-pres' },
+  { match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', group: 0, tag: 'Noun', notIf: '(seem|appear|include|#Gerund|#Copula)', reason: 'det-inf' },
+  // { match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula)', reason: 'det-pres' },
 
   // ==== Actor ====
   //Aircraft designer
@@ -80,7 +80,10 @@ export default [
   //Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-possessive' },
   // Ptolemy's experiments
-  { match: '#Possessive #PresentTense', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
+  { match: '#Possessive #PresentTense #Particle?', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
+  // my presidents house
+  { match: '(my|our|their|her|his|its) [(#Plural && #Actor)] #Noun', tag: 'Possessive', reason: 'my-dads' },
+
   // 10th of a second
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds

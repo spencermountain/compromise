@@ -20,6 +20,7 @@ export default {
     feel: jj, //feel prepared
     feels: jj,
     felt: jj,
+    stay: jj,
     appear: jj,
     appears: jj,
     appeared: jj,
@@ -37,6 +38,7 @@ export default {
     very: jj,
     how: jj,//how slow
     deeply: jj,
+    hella: jj,
     // always: jj,
     // never: jj,
     profoundly: jj,

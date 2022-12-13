@@ -43,4 +43,8 @@ export default [
   { match: '[(being|having|getting)] #Verb', group: 0, tag: 'Auxiliary', reason: 'being-born' },
   // be walking
   { match: '[be] #Gerund', group: 0, tag: 'Auxiliary', reason: 'be-walking' },
+  // better go
+  { match: '[better] #PresentTense', group: 0, tag: 'Modal', notIf: '(#Copula|#Gerund)', reason: 'better-go' },
+  // even better
+  { match: 'even better', tag: 'Adverb #Comparative', reason: 'even-better' },
 ]

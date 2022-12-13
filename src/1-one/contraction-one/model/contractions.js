@@ -36,6 +36,11 @@ export default [
   { word: 'whatd', out: ['what', 'did'] },
   { word: 'whend', out: ['when', 'did'] },
   { word: 'whered', out: ['where', 'did'] },
+  // shoulda, coulda
+  { word: 'shoulda', out: ['should', 'have'] },
+  { word: 'coulda', out: ['coulda', 'have'] },
+  { word: 'woulda', out: ['woulda', 'have'] },
+  { word: 'musta', out: ['must', 'have'] },
 
   // { after: `cause`, out: ['because'] },
   { word: "tis", out: ['it', 'is'] },

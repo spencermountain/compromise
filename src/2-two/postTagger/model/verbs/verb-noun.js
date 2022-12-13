@@ -22,7 +22,7 @@ export default [
   //a tv show
   { match: '(a|an) #Noun [#Infinitive]$', group: 0, tag: 'Noun', reason: 'a-noun-inf2' },
   //is mark hughes
-  { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
+  // { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
   // good wait staff
   // { match: '#Adjective [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'good-wait-staff' },
   // running for congress
@@ -31,8 +31,8 @@ export default [
   { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
   // about love
   { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
-  // on stage
-  { match: 'on [#Infinitive]', group: 0, tag: 'Noun', reason: 'on-stage' },
+  // singers on stage
+  { match: '#Plural on [#Infinitive]', group: 0, tag: 'Noun', reason: 'on-stage' },
   // any charge
   { match: 'any [#Infinitive]', group: 0, tag: 'Noun', reason: 'any-charge' },
   // no doubt
@@ -42,7 +42,7 @@ export default [
   // teaches/taught
   { match: '(taught|teaches|learns|learned) [#PresentTense]', group: 0, tag: 'Noun', reason: 'teaches-x' },
   // use reverse
-  { match: '(try|use|attempt|build|make) [#Verb]', notIf: '(#Copula|#PhrasalVerb)', group: 0, tag: 'Noun', reason: 'do-verb' },
+  { match: '(try|use|attempt|build|make) [#Verb #Particle?]', notIf: '(#Copula|#Noun|sure|fun|up)', group: 0, tag: 'Noun', reason: 'do-verb' },//make sure of
   // checkmate is
   { match: '^[#Infinitive] (is|was)', group: 0, tag: 'Noun', reason: 'checkmate-is' },
   // get much sleep
@@ -55,7 +55,7 @@ export default [
   // that should smoke
   { match: '#Determiner #Modal [#Noun]', group: 0, tag: 'PresentTense', reason: 'should-smoke' },
   //this rocks
-  { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', reason: 'this-verbs' },
+  { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'this-verbs' },
   //let him glue
   {
     match: '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)',
@@ -68,17 +68,21 @@ export default [
   { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', notIf: '#Modal', group: 0, tag: 'Noun', reason: 'all-presentTense' },  // PresentTense/Noun ambiguities
   // big dreams, critical thinking
   // have big dreams
-  { match: '(had|have|#PastTense) #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'adj-presentTense' },
+  { match: '(had|have|#PastTense) #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: 'better', reason: 'adj-presentTense' },
   // excellent answer spencer
   // { match: '^#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'start adj-presentTense' },
   // one big reason
   { match: '#Value #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'one-big-reason' },
   // won widespread support
-  { match: '#PastTense #Adjective+ [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'won-wide-support' },
+  { match: '#PastTense #Adjective+ [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Copula|better)', reason: 'won-wide-support' },
   // many poses
   { match: '(many|few|several|couple) [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'many-poses' },
   // very big dreams
   { match: '#Determiner #Adverb #Adjective [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'very-big-dream' },
+  // from start to finish
+  { match: 'from #Noun to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'start-to-finish' },
+  // for comparison or contrast
+  { match: '(for|with|of) #Noun (and|or|not) [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'for-food-and-gas' },
   // adorable little store
   { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'adorable-little-store' },
   // of basic training
@@ -107,11 +111,11 @@ export default [
   // doing better for fights
   { match: `#Gerund #Adjective #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'doing-better-for-x' },
   // get better aim
-  { match: `(get|got|have|had) #Comparative [#PresentTense]`, group: 0, tag: 'Noun', reason: 'got-better-aim' },
+  { match: `(get|got|have) #Comparative [#PresentTense]`, group: 0, tag: 'Noun', reason: 'got-better-aim' },
   // whose name was
   { match: 'whose [#PresentTense] #Copula', group: 0, tag: 'Noun', reason: 'whos-name-was' },
   // give up on reason
-  { match: `#PhrasalVerb #PhrasalVerb #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
+  { match: `#PhrasalVerb #Particle #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   //there are reasons
   { match: 'there (are|were) #Adjective? [#PresentTense]', group: 0, tag: 'Plural', reason: 'there-are' },
   // 30 trains
@@ -148,4 +152,18 @@ export default [
   { match: '#Modal #Noun [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'would-you-look' },
   // is just spam
   { match: '#Copula just [#Infinitive]', group: 0, tag: 'Noun', reason: 'is-just-spam' },
+  // request copies
+  { match: '^%Noun|Verb% %Plural|Verb%', tag: 'Imperative #Plural', reason: 'request-copies' },
+  // homemade pickles and drinks
+  { match: '#Adjective #Plural and [%Plural|Verb%]', group: 0, tag: '#Plural', reason: 'pickles-and-drinks' },
+  // the 1968 film
+  { match: '#Determiner #Year [#Verb]', group: 0, tag: 'Noun', reason: 'the-1968-film' },
+  // the break up
+  { match: '#Determiner [#PhrasalVerb #Particle]', group: 0, tag: 'Noun', reason: 'the-break-up' },
+  // the individual goals
+  { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', notIf: '(#Pronoun|#Possessive|#ProperNoun)', reason: 'the-individual-goals' },
+  // work or prepare
+  { match: '[%Noun|Verb%] or #Infinitive', group: 0, tag: 'Infinitive', reason: 'work-or-prepare' },
+  // to give thanks
+  { match: 'to #Infinitive [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula|help)', reason: 'to-give-thanks' },
 ]

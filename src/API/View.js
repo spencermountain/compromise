@@ -109,7 +109,7 @@ class View {
   }
   clone() {
     // clone the whole document
-    let document = this.document.slice(0)
+    let document = this.document.slice(0)    //node 17: structuredClone(document);
     document = document.map(terms => {
       return terms.map(term => {
         term = Object.assign({}, term)

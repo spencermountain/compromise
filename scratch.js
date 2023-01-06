@@ -1,12 +1,16 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/four.js'
-// import plg from './plugins/paragraphs/src/plugin.js'
-// nlp.plugin(plg)
+// import plg from './plugins/dates/src/plugin.js'
+import plg from '/Users/spencer/mountain/de-compromise/src/index.js'
+nlp.plugin(plg)
+
+let tokens = nlp("Ich bin der Hund, der bellt.").json({root:true})
+console.log(tokens)
 let txt = ''
 // let doc
 // let m
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 // let doc = nlp('When Dona Valeria finds out that Fernando Jose is in a relationship, she gets mad at her son for dating someone beneath their social status')
@@ -303,8 +307,15 @@ let arr = [
 ]
 
 
-txt = arr[0]
-let doc = nlp(txt).debug()
+// txt = arr[0]
+// let doc = nlp(txt).debug()
+// console.dir(doc.json(), { depth: 5 })
+
+
+nlp('freelancing', { freelance: ['Infinitive', 'EmploymentType'] }).debug()
+
+// nlp.world().model.one.prefixes['free'] = true
+// console.log(nlp('freelance ').has('freelance'))
 // doc.verbs().toPresentTense()
 // doc.debug()
 // console.log(nlp(txt).docs[0])
@@ -335,3 +346,49 @@ let doc = nlp(txt).debug()
 // table.debug()
 // console.dir(table.json(), { depth: 5 })
 
+
+/*
+Upcoming:
+
+#Swear
+#Yelling
+
+.normalize({
+  --light--
+  spaces:true, // two-spaces after period, etc
+  yelling:true // 
+  newlines:true // 
+  
+  --medium--
+  removeDashes:true, //'like - this',
+  removeHyphens:true, // like-this
+  removeHonorics:true,
+  removeEmoji:true,
+  removeEmoticons:true,
+  butcherUnicode:true
+  removeSomePunctuation:true // commas, semicolons - keep sentence-ending
+  expandContractions:true
+  noPeriodsInAcronyms:true
+  removeSomeQuotationMarks:true, - 
+  removeExpressions:true, -  'gee', 'dang', etc.
+  
+  --heavy--
+  removeParentheses:true, - 
+  removeQuotations:true, - 
+  resolvePronouns: true, // 'he' -> 'john'
+  removeAdverbs: true,
+  noPossessives: true, // moe's -> moe
+  noPlurals: true,
+  noFutureTense: true,
+  noPastTense: true,
+
+
+})
+  add normalize methods as plugin
+
+compression:
+  simplify() - lossy english substitutions
+  toRoot()
+  tag reduction
+
+*/

@@ -490,7 +490,7 @@ export default [
   'cagliari',
   'ancona',
   'rennes',
-  'reimes',
+  'reims',
   'toulon',
   'montpellier',
   'le mans',

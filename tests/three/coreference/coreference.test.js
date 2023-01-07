@@ -56,8 +56,14 @@ test('coreference:', function (t) {
       `jamie smith said no and he bailed out`,
       { he: `jamie smith` }
     ],
+    [
+      `nobody tell Josh's mom that she burned her toast.`,
+      { she: `josh's mom`, her: `josh's mom` }
+    ],
     // basic they
-    // [    //   `Tornadoes are swirling clouds, they arrive during the summer`,    //    { they: `Tornadoes` },    // ],
+    // [     `Tornadoes are swirling clouds, they arrive during the summer`,    
+    //    { they: `Tornadoes` },    
+    // ],
     [
       `plumbers are funny. they never stop talking`,
       { they: `plumbers` }
@@ -98,12 +104,21 @@ test('coreference:', function (t) {
       `the boys play video games in their free time`,
       { their: 'the boys' }
     ],
+    [
+      `i walked to my school`,
+      {}
+    ],
+    [
+      `thom is the singer of his band`,
+      { his: 'thom' }
+    ],
 
   ]
   arr.forEach(a => {
     let [text, refs] = a
     let doc = nlp(text)
-    let pronouns = doc.pronouns()
+    let pronouns = doc.pronouns().hasReference()
+    t.equal(Object.keys(refs).length, pronouns.length, here + `[count] '${text}'`)
     Object.keys(refs).forEach(k => {
       let m = pronouns.if(k).refersTo()
       t.equal(m.text('normal'), refs[k], here + ` [${k}] - ${refs[k]}`)

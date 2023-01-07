@@ -5,6 +5,13 @@ const api = function (View) {
       super(document, pointer, groups)
       this.viewType = 'Pronouns'
     }
+    hasReference() {
+      this.compute('coreference')
+      return this.filter(m => {
+        let term = m.docs[0][0]
+        return term.reference
+      })
+    }
     // get the noun-phrase this pronoun refers to
     refersTo() {
       //calculate links

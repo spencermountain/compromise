@@ -43,4 +43,6 @@ export default [
   { match: '[will] #Verb', group: 0, tag: 'Modal', reason: 'will-verb' },
   // will Pharell
   { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' },
+  // jack layton won
+  { match: '#FirstName [#Singular] #Verb', group: 0, safe: true, tag: 'LastName', reason: 'jack-layton' },
 ]

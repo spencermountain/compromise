@@ -34,7 +34,7 @@ const stepBack = function (m, cb) {
 }
 
 const coreference = function (view) {
-  let pronouns = view.match('(he|him|his|she|her|hers|they|their|theirs|it|its)')
+  let pronouns = view.pronouns().if('(he|him|his|she|her|hers|they|their|theirs|it|its)')
   pronouns.forEach(pron => {
     let res = null
     // connect pronoun to its reference

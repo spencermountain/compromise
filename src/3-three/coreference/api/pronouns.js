@@ -7,6 +7,9 @@ const api = function (View) {
     }
     // get the noun-phrase this pronoun refers to
     refersTo() {
+      //calculate links
+      this.compute('coreference')
+      // return them
       return this.map(m => {
         if (!m.found) {
           return m.none()

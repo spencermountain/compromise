@@ -9,3 +9,4 @@ coverage.lcov
 codecov.yml
 plugins/phrases/data/
 learn/giga/result/
+.scratch.js

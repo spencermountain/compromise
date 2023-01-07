@@ -3,115 +3,110 @@ import nlp from '../_lib.js'
 const here = '[three/coreference] '
 
 // https://github.com/google-research-datasets/gap-coreference
-test('anaphor:', function (t) {
+test('coreference:', function (t) {
   let arr = [
     // one-sentence
-    {
-      text: `spencer is not working because he is unemployed`,
-      refs: { he: `spencer` },
-    },
+    [
+      `spencer is not working because he is unemployed`,
+      { he: `spencer` }
+    ],
     // back-sentence
-    {
-      text: `spencer is quiet. he is not loud`,
-      refs: { he: `spencer` },
-    },
+    [
+      `spencer is quiet. he is not loud`,
+      { he: `spencer` }
+    ],
     // back-two-sentences
-    {
-      text: `spencer is quiet. I mean, not always, but usually. he is not loud`,
-      refs: { he: `spencer` },
-    },
+    [
+      `spencer is quiet. I mean, not always, but usually. he is not loud`,
+      { he: `spencer` }
+    ],
+    [
+      "Spencer kelly forgot to update github. Maybe he should remember to",
+      { he: `spencer kelly` }
+    ],
+    [
+      "Lester B. Pearson founded Canada but despite being 6ft tall, he forgot to update github.",
+      { he: `lester b. pearson` }
+    ],
+    [
+      "i don't know why jack layton won his election, but he did.",
+      { he: `jack layton`, his: 'jack layton' }
+    ],
+    [
+      "you said kirk douglass won, and he'll fall asleep afterwards",
+      { he: `kirk douglass` }
+    ],
     // two pronouns
-    {
-      text: `i saw spencer kelly. he forgot his name`,
-      refs: { he: `spencer kelly`, his: 'spencer kelly' },
-    },
+    [
+      `i saw spencer kelly. he forgot his name`,
+      { he: `spencer kelly`, his: 'spencer kelly' }
+    ],
     // basic she
-    {
-      text: `Judy Dench is an American film director. She wrote, directed and starred in three films`,
-      refs: { she: `Judy Dench` },
-    },
+    [
+      `Judy Dench is an American film director. She wrote, directed and starred in three films`,
+      { she: `judy dench` }
+    ],
     // ambiguous person names
-    {
-      text: `jamie smith said no and she left`,
-      refs: { she: `jamie smith` },
-    },
+    [
+      `jamie smith said no and she left`,
+      { she: `jamie smith` }
+    ],
     // ambiguous person names
-    {
-      text: `jamie smith said no and he bailed out`,
-      refs: { he: `jamie smith` },
-    },
+    [
+      `jamie smith said no and he bailed out`,
+      { he: `jamie smith` }
+    ],
     // basic they
-    // {
-    //   text: `Tornadoes are swirling clouds, they arrive during the summer`,
-    //   refs: { they: `Tornadoes` },
-    // },
-    {
-      text: `plumbers are funny. they never stop talking`,
-      refs: { they: `plumbers` },
-    },
-    {
-      text: `the viola player said no and she dropped her bow`,
-      refs: { she: `the viola player`, her: `the viola player` },
-    },
+    // [    //   `Tornadoes are swirling clouds, they arrive during the summer`,    //    { they: `Tornadoes` },    // ],
+    [
+      `plumbers are funny. they never stop talking`,
+      { they: `plumbers` }
+    ],
+    [
+      `the viola player said no and she dropped her bow`,
+      { she: `the viola player`, her: `the viola player` }
+    ],
 
     // basic 'her'
-    {
-      text: `Sally arrived, but nobody saw her`,
-      refs: { her: `Sally` },
-    },
+    [
+      `Sally arrived, but nobody saw her`,
+      { her: `sally` }
+    ],
     // basic it
-    // {
-    //   text: `my toaster heated and it started smoking`,
-    //   refs: { it: `my toaster` },
-    // },
+    // [    //   `my toaster heated and it started smoking`,    //    { it: `my toaster` },    // ],
     // generic 'it'
-    // {
-    //   text: `the plane took off. it was exciting.`,
-    //   refs: {},
-    // },
+    // [    //   `the plane took off. it was exciting.`,    //    {},    // ],
     // 'it' as verb.
-    // {
-    //   text: ` If Sam buys a new bike, I will do it as well.`,
-    //   refs: {  },
-    // },
+    // [    //   ` If Sam buys a new bike, I will do it as well.`,    //    {  },    // ],
 
     // double they
-    // {
-    //   text: ` Gas prices are a top issue heading into the midterms. Polls show they’re high on voters’ minds`,
-    //   refs: { they: 'Gas prices' },
-    // },
+    // [    //   ` Gas prices are a top issue heading into the midterms. Polls show they’re high on voters’ minds`,    //    { they: 'Gas prices' },    // ],
 
     // person-like
-    {
-      text: `the cowboy shot his gun and he walked away`,
-      refs: { his: `the cowboy`, he: `the cowboy` },
-    },
-    // {
-    //   text: `spencer's aunt is fun. she is smart`,
-    //   refs: { she: `spencer's aunt` },
-    // },
-    {
-      text: `the cheerleader did a flip but she landed awkwardly`,
-      refs: { she: `the cheerleader` },
-    },
+    [
+      `the cowboy shot his gun and he walked away`,
+      { his: `the cowboy`, he: `the cowboy` }
+    ],
+    // [    //   `spencer's aunt is fun. she is smart`,    //    { she: `spencer's aunt` },    // ],
+    [
+      `the cheerleader did a flip but she landed awkwardly`,
+      { she: `the cheerleader` }
+    ],
     // anaphor-before
-    // {
-    //   text: ` In their free time, the boys play video games`,
-    //   refs: { their: 'the boys' },
-    // },
-    {
-      text: `the boys play video games in their free time`,
-      refs: { their: 'the boys' },
-    },
+    // [    //   ` In their free time, the boys play video games`,    //    { their: 'the boys' },    // ],
+    [
+      `the boys play video games in their free time`,
+      { their: 'the boys' }
+    ],
 
   ]
-  arr.forEach(obj => {
-    let { text, refs } = obj
-    let doc = nlp(text).compute('coreference')
+  arr.forEach(a => {
+    let [text, refs] = a
+    let doc = nlp(text)
     let pronouns = doc.pronouns()
     Object.keys(refs).forEach(k => {
       let m = pronouns.if(k).refersTo()
-      t.equal(m.text(), refs[k], here + ` [${k}] - ${refs[k]}`)
+      t.equal(m.text('normal'), refs[k], here + ` [${k}] - ${refs[k]}`)
     })
   })
   t.end()

@@ -50,6 +50,8 @@ const rules = [
   { match: '#Verb [to] #Adverb? #Infinitive', group: 0, chunk: 'Verb' },
   // upon seeing
   { match: '[#Preposition] #Gerund', group: 0, chunk: 'Verb' },
+  // ensure that
+  { match: '#Infinitive [that] <Noun>', group: 0, chunk: 'Verb' },
 
   // === Noun ===
   // the brown fox

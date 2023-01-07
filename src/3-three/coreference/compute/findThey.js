@@ -4,14 +4,8 @@ import { findChained } from './lib.js'
 const getThey = function (s) {
   let nouns = s.nouns()
 
-  // somebody shaved their head
-  let things = nouns.match('(somebody|nobody|everybody|anybody)')
-  if (things.found) {
-    return things.last()
-  }
-
   // 'the bananas'
-  things = nouns.isPlural()
+  let things = nouns.isPlural().notIf('#Pronoun')
   if (things.found) {
     return things.last()
   }
@@ -19,6 +13,16 @@ const getThey = function (s) {
   let chain = findChained('(they|their|theirs)', s)
   if (chain.found) {
     return chain
+  }
+
+  // they can also refer to a singular noun
+  // "the restaurant sold their food"
+  // "a choir sang their song"
+
+  // somebody shaved their head
+  things = nouns.match('(somebody|nobody|everybody|anybody|someone|noone|everyone|anyone)')
+  if (things.found) {
+    return things.last()
   }
   return s.none()
 }

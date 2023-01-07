@@ -69,6 +69,54 @@ test('coreference:', function (t) {
       `they said i was losing my marbles`,
       {},
     ],
+    [
+      `the American people are using their money far better`,
+      { their: 'the american people' },
+    ],
+    [
+      `a medicine given to cows to increase their milk`,
+      { their: 'cows' },
+    ],
+    [
+      `every time someone gave me their dog`,
+      { their: 'someone' },
+    ],
+    [
+      `But we shouldn't put them and their children out on the street`,
+      {},
+    ],
+    [
+      `People go out of their way`,
+      { their: 'people' },
+    ],
+    // [
+    //   `give a precise scientific theory of the syntax rules of grammar and their function`,
+    //   { their: 'the syntax rules' },
+    // ],
+    [
+      `17 taxpayers would see their taxes rise`,
+      { their: '17 taxpayers' },
+    ],
+    [
+      `ensure that all African Americans could exercise their right`,
+      { their: 'all african americans' },
+    ],
+    [
+      `all states and school districts must turn around their worst performing schools`,
+      { their: 'all states and school districts' },
+    ],
+    [
+      `It will raise critical questions about the way we finance our campaigns and how lobbyists yield their influence.`,
+      { their: 'lobbyists' },
+    ],
+    // [
+    //   `the copy-holders had writings with their holdings.`,
+    //   { their: 'the copy-holders' },
+    // ],
+    [
+      `9 out of 10 people who have insurance get it through their employers`,
+      { their: '9 out of 10 people' },
+    ],
     // singular word as group
     // [
     //   `the committee gathered their delegates`,
@@ -102,21 +150,19 @@ test('coreference:', function (t) {
     // 'it' as verb.
     // [    //   ` If Sam buys a new bike, I will do it as well.`,    //    {  },    // ],
 
-    // double they
-    // [    //   ` Gas prices are a top issue heading into the midterms. Polls show they’re high on voters’ minds`,    //    { they: 'Gas prices' },    // ],
-
     // person-like
     [
       `the cowboy shot his gun and he walked away`,
       { his: `the cowboy`, he: `the cowboy` }
     ],
-    // [    //   `spencer's aunt is fun. she is smart`,    //    { she: `spencer's aunt` },    // ],
+    [
+      `spencer's aunt is fun. she is smart`,
+      { she: `spencer's aunt` },
+    ],
     [
       `the cheerleader did a flip but she landed awkwardly`,
       { she: `the cheerleader` }
     ],
-    // anaphor-before
-    // [    //   ` In their free time, the boys play video games`,    //    { their: 'the boys' },    // ],
     [
       `the boys play video games in their free time`,
       { their: 'the boys' }
@@ -149,6 +195,10 @@ test('coreference:', function (t) {
       `i saw sara. spencer likes the captain but not her brother`,
       { her: 'the captain' }
     ],
+    // double they
+    // [    //   ` Gas prices are a top issue heading into the midterms. Polls show they’re high on voters’ minds`,    //    { they: 'Gas prices' },    // ],
+    // anaphor-before
+    // [   ` In their free time, the boys play video games`,    //    { their: 'the boys' },    // ],
 
   ]
   arr.forEach(a => {

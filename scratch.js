@@ -3,19 +3,19 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
-// let doc = nlp("the boys and the cows studied")//.debug()
-let doc = nlp("He weighs fifty kilos and his skin is the color of squash.").debug()
-// let doc = nlp("the boys and girls studied their numbers")//.debug()
+// let doc = nlp("New restaurant organizes their menu by feelings")//.debug()
+let doc = nlp("spencer's aunt is fun. she is smart")//.debug()
+// let doc = nlp("a state implemented voting to increase their total")//.debug()
 
 
-doc.nouns().debug()
-// console.log('from:')
-// let pron = doc.pronouns().debug()
+// doc.nouns().debug()
+console.log('from:')
+let pron = doc.pronouns().debug()
 
-// console.log('to:')
-// pron.refersTo().debug()
+console.log('to:')
+pron.refersTo().debug()
 
 
 

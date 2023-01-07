@@ -2,8 +2,16 @@ import { findChained } from './lib.js'
 
 // find best reference for 'they' & 'their'
 const getThey = function (s) {
+  let nouns = s.nouns()
+
+  // somebody shaved their head
+  let things = nouns.match('(somebody|nobody|everybody|anybody)')
+  if (things.found) {
+    return things.last()
+  }
+
   // 'the bananas'
-  let things = s.nouns().isPlural()
+  things = nouns.isPlural()
   if (things.found) {
     return things.last()
   }

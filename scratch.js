@@ -5,13 +5,17 @@ import nlp from './src/four.js'
 
 // nlp.verbose('tagger')
 
-let doc = nlp("spencer is quiet. I mean, not always, but usually. he is not loud")//.debug()
+// let doc = nlp("the boys and the cows studied")//.debug()
+let doc = nlp("He weighs fifty kilos and his skin is the color of squash.").debug()
+// let doc = nlp("the boys and girls studied their numbers")//.debug()
 
-console.log('from:')
-let pron = doc.pronouns().debug()
 
-console.log('to:')
-pron.refersTo().debug()
+doc.nouns().debug()
+// console.log('from:')
+// let pron = doc.pronouns().debug()
+
+// console.log('to:')
+// pron.refersTo().debug()
 
 
 

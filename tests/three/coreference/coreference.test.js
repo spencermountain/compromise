@@ -61,8 +61,25 @@ test('coreference:', function (t) {
       { she: `josh's mom`, her: `josh's mom` }
     ],
     // basic they
-    // [     `Tornadoes are swirling clouds, they arrive during the summer`,    
-    //    { they: `Tornadoes` },    
+    [
+      `Goaltenders often trick their opponents`,
+      { their: `goaltenders` },
+    ],
+    [
+      `they said i was losing my marbles`,
+      {},
+    ],
+    // singular word as group
+    // [
+    //   `the committee gathered their delegates`,
+    //   { their: 'the committee' },
+    // ],
+    [
+      `the boys and girls studied their numbers`,
+      { their: 'the boys and girls' },
+    ],
+    // [`Tornadoes are swirling clouds. They arrive during the summer`,
+    //   { they: `Tornadoes` },
     // ],
     [
       `plumbers are funny. they never stop talking`,
@@ -109,8 +126,28 @@ test('coreference:', function (t) {
       {}
     ],
     [
+      `her opinion was that he missed`,
+      {}
+    ],
+    [
+      `her son brushed his teeth`,
+      { his: 'her son' }
+    ],
+    [
+      `somebody shaved their legs`,
+      { their: 'somebody' }
+    ],
+    [
       `thom is the singer of his band`,
       { his: 'thom' }
+    ],
+    [
+      `spencer likes john but not his brother`,
+      { his: 'john' }
+    ],
+    [
+      `i saw sara. spencer likes the captain but not her brother`,
+      { her: 'the captain' }
     ],
 
   ]

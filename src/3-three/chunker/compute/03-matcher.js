@@ -64,7 +64,9 @@ const rules = [
   // --- in ---
   { match: '#Noun in #Determiner? #Noun', chunk: 'Noun' },
   // indoor and outdoor seating
-  { match: '#Singular and #Determiner? #Singular', chunk: 'Noun' },
+  { match: '#Noun and #Determiner? #Noun', notIf: '(#Possessive|#Pronoun)', chunk: 'Noun' },
+  //  boys and girls
+  // { match: '#Plural and #Determiner? #Plural', chunk: 'Noun' },
   // tomatoes and cheese
   // { match: '#Noun and #Determiner? #Noun', notIf: '#Pronoun', chunk: 'Noun' },
   // that is why

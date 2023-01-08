@@ -1,7 +1,7 @@
 import corpus from 'nlp-corpus'
 import nlp from '../../src/three.js'
 
-let start = 20000
+let start = 80000
 let list = corpus.all().slice(start, start + 1000)
 list.forEach(str => {
   let doc = nlp(str)

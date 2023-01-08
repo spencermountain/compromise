@@ -278,6 +278,9 @@ let arr = [
   "for the poor, this is the largest tax",
   "bought a warhol",
   "will.i.am",
+  "If a red-headed man works at a bakery",
+  "Marc Singer is back",
+  "5. The signatories to this Declaration"
 ]
 
 let str = arr[0]

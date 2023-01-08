@@ -54,6 +54,7 @@
   "scripts": {
     "build": "npm run version && rollup -c --silent",
     "watch": "amble ./scratch.js",
+    "watch:tag": "amble ./tagger.scratch.js",
     "pack": "node ./scripts/pack.js",
     "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",

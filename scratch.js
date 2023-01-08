@@ -5,9 +5,13 @@ import nlp from './src/four.js'
 
 nlp.verbose('tagger')
 
-// let doc = nlp("New restaurant organizes their menu by feelings")//.debug()
-let doc = nlp("spencer's aunt is fun. she is smart")//.debug()
-// let doc = nlp("a state implemented voting to increase their total")//.debug()
+let arr = [
+  "Louis VI of France was known as this; as a child he must have shopped in le husky department",
+  "Oh my god he sounded just like my high school wrestling  coach.",
+  "New restaurant organizes their menu by feelings",
+  "a state implemented voting to increase their total"
+]
+let doc = nlp(arr[0])//.debug()
 
 
 // doc.nouns().debug()

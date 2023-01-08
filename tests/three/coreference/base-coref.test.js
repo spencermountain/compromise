@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/coreference] '
 
 // https://github.com/google-research-datasets/gap-coreference
-test('coreference:', function (t) {
+test('basic-coreference:', function (t) {
   let arr = [
     // one-sentence
     [
@@ -143,13 +143,6 @@ test('coreference:', function (t) {
       `Sally arrived, but nobody saw her`,
       { her: `sally` }
     ],
-    // basic it
-    // [    //   `my toaster heated and it started smoking`,    //    { it: `my toaster` },    // ],
-    // generic 'it'
-    // [    //   `the plane took off. it was exciting.`,    //    {},    // ],
-    // 'it' as verb.
-    // [    //   ` If Sam buys a new bike, I will do it as well.`,    //    {  },    // ],
-
     // person-like
     [
       `the cowboy shot his gun and he walked away`,
@@ -200,6 +193,139 @@ test('coreference:', function (t) {
     // anaphor-before
     // [   ` In their free time, the boys play video games`,    //    { their: 'the boys' },    // ],
 
+    // single-sentence misc
+    [
+      "I was looking at black crows go by and right after they went by, a good 100+ more crows flew by",
+      {
+        "they": "black crows"
+      }
+    ],
+
+    [
+      "As its Valentines Day, the missus has said she'll go on top tonight for a change.",
+      {
+        "she'll": "the missus"
+      }
+    ],
+    [
+      "You must really like... Joey... to go to all that trouble for him.",
+      {
+        "him": "joey"
+      }
+    ],
+    [
+      "When the children saw they were left alone.",
+      {
+        "they": "the children"
+      }
+    ],
+    [
+      "One mother of two, a woman named Kathy Proctor, had worked in the furniture industry since she was 18 years old.",
+      {
+        "she": "kathy proctor"
+      }
+    ],
+    [
+      "We've got to do something to empower people to improve their skills.",
+      {
+        "their": "people"
+      }
+    ],
+    [
+      "Hey Mon, that was really nice of you to loan Rachel your car so she could  go and get the cake.",
+      {
+        "she": "rachel"
+      }
+    ],
+    [
+      "Sweet justice: after the doc pulled the gigantic beetle out of my ear, my mom asked if she could have it.",
+      {
+        "she": "my mom"
+      }
+    ],
+    [
+      "Elaine Kinslow and all those like her are the real heroes of the welfare revolution.",
+      {
+        "her": "elaine kinslow"
+      }
+    ],
+    [
+      "Contrary to public opinion, most people want to work to get their income.",
+      {
+        "their": "most people"
+      }
+    ],
+    [
+      "The giants were terrified at the apparition, and, fearful lest he should slay them, they all took to their heels",
+      {
+        "they": "the giants",
+        "their": "the giants"
+      }
+    ],
+    [
+      "Mrs and 3 of her pals squeezed into my car after weight watchers.",
+      {
+        "her": "mrs"
+      }
+    ],
+    [
+      "One time I heard this woman to the right of me complaining how spicy her curry was.",
+      {
+        "her": "this woman"
+      }
+    ],
+    [
+      "When people put their party's fortunes, whatever the party, whatever side of this aisle, before the public good, they court defeat not only for their country but for themselves.",
+      {
+        "their": "people",
+        "they": "people"
+      }
+    ],
+
+    [
+      "Social Security now offers workers a return of less than 2 percent on the money they pay into the system.",
+      {
+        "they": "workers"
+      }
+    ],
+    [
+      "There's a scene where Drake sneaks into Olivia's bedroom, and she doesn't know he's there - which never happened with us!",
+      {
+        "she": "olivia's"
+      }
+    ],
+    [
+      "If you are going to send someone to save the world, make sure they like it the way it is.",
+      {
+        "they": "someone"
+      }
+    ],
+    [
+      "The Queen was so confused that at first she did not notice another little door in the orange tree, but presently it opened and she found herself in a field of thistles and nettles.",
+      {
+        "she": "the queen"
+      }
+    ],
+    [
+      "Gandhi moved his headquarters to Nadiad, organising scores of supporters and fresh volunteers",
+      {
+        "his": "gandhi"
+      }
+    ],
+    [
+      "In a moment Prince Ricardo's foot was on the blade of the diamond sword, which he passed thrice through the body of the Yellow Dwarf.",
+      {
+        "he": "prince ricardo's"
+      }
+    ],
+
+    [
+      "The Princess was very sorry, but as Grabugeon was really dead, she allowed the Captain of the Guard to take her tongue; but, alas!",
+      {
+        "she": "the princess",
+        "her": "the princess"
+      }
+    ],
   ]
   arr.forEach(a => {
     let [text, refs] = a

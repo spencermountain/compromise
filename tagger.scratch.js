@@ -273,6 +273,11 @@ let arr = [
   // 'going to stop posting schedules',
   // `Sports awards to be given on Tuesday`
 
+  "Sherwood Anderson told him",
+  "and how very rich Prince Ahmed was",
+  "for the poor, this is the largest tax",
+  "bought a warhol",
+  "will.i.am",
 ]
 
 let str = arr[0]

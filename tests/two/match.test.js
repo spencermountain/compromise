@@ -1079,6 +1079,8 @@ let arr = [
   // [`call and reserve one`, `#Imperative and #Infinitive one`],
   [`We Sell All Brands`, `#Pronoun #Infinitive #Adjective #Plural`],
   [`China aims to rebrand downtown`, `#Country #PresentTense #Conjunction #Infinitive #Noun`],
+  [`Cass Gilbert designed`, `#Person+ #Verb`],
+  [`Sherwood Anderson told him`, `#Person+ #Verb him`],
   // [``, ``],
 ]
 test('match:', function (t) {

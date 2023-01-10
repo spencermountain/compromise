@@ -3,7 +3,7 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let arr = [
   "Louis VI of France was known as this; as a child he must have shopped in le husky department",

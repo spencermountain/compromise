@@ -1,6 +1,8 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/four.js'
 
+// nlp.verbose('tagger')
+
 let arr = [
   //  %Plural|Verb% %Noun|Verb%
   // `[Shares] [finish] [lower] on [sustained] selling`,
@@ -221,10 +223,10 @@ let arr = [
   // `and whisk to fully incorporate`,
   // 'gourmet burgers back home in LA',
   // `Going shopping alone`,
-  'SO FREAKING GOOD!',
-  'consider becoming a member',
-  'would not work right.',
-  'doing a holiday card together',
+  // 'SO FREAKING GOOD!',
+  // 'consider becoming a member',
+  // 'would not work right.',
+  // 'doing a holiday card together',
   // `when the killer strikes`,
   // `Your refusal may cause hurt and disappointment`,
   // 'Carpenter\'s one year of coaching',

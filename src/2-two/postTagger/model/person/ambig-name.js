@@ -45,4 +45,7 @@ export default [
   { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' },
   // jack layton won
   { match: '(#FirstName && !#Possessive) [#Singular] #Verb', group: 0, safe: true, tag: 'LastName', reason: 'jack-layton' },
+  // sherwood anderson told
+  { match: '^[#Singular] #Person #Verb', group: 0, safe: true, tag: 'Person', reason: 'sherwood-anderson' },
+
 ]

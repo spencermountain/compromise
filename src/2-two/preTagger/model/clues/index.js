@@ -8,6 +8,7 @@ import personDate from './person-date.js'
 import personNoun from './person-noun.js'
 import personVerb from './person-verb.js'
 import personPlace from './person-place.js'
+import personAdj from './person-adj.js'
 import unitNoun from './unit-noun.js'
 
 const clues = {
@@ -21,6 +22,7 @@ const clues = {
   'Person|Date': personDate,
   'Person|Verb': personVerb,
   'Person|Place': personPlace,
+  'Person|Adj': personAdj,
   'Unit|Noun': unitNoun,
 }
 

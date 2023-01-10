@@ -54,6 +54,9 @@ const checkCase = function (terms, i, model) {
     if (term.pre.match(/["']$/)) {
       return null
     }
+    if (term.normal === 'the') {
+      return null
+    }
     // ignore 'Buy Our Affordable Cars!'
     // if (isAllTitleCase(terms)) {
     //   return null

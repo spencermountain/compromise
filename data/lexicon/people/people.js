@@ -83,6 +83,7 @@ export default [
   'santigold',
   'timbaland',
   'yanni',
+  'will.i.am',
 
   //tricky female names
   'halle berry',

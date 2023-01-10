@@ -59,6 +59,7 @@ import personNoun from './switches/person-noun.js'
 import personDate from './switches/person-date.js'
 import personVerb from './switches/person-verb.js'
 import personPlace from './switches/person-place.js'
+import personAdj from './switches/person-adj.js'
 import unitNoun from './switches/unit-noun.js'
 
 
@@ -123,6 +124,7 @@ const data = [
   [personPlace, 'Person|Place'],
   [personDate, 'Person|Date'],
   [personVerb, 'Person|Verb'],
+  [personAdj, 'Person|Adj'],
   [unitNoun, 'Unit|Noun'],
 ]
 for (let i = 0; i < data.length; i++) {

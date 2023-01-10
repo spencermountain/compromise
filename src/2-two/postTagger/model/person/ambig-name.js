@@ -1,4 +1,4 @@
-const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
+// const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
 
 export default [
   // ===person-date===
@@ -22,11 +22,11 @@ export default [
 
   // ===person-adjective===
   // rusty smith
-  { match: `${personAdj} #Person`, tag: 'Person', reason: 'randy-smith' },
+  // { match: `${personAdj} #Person`, tag: 'Person', reason: 'randy-smith' },
   // rusty a. smith
-  { match: `${personAdj} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rusty-smith' },
+  // { match: `${personAdj} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rusty-smith' },
   // very rusty
-  { match: `#Adverb [${personAdj}]`, group: 0, tag: 'Adjective', reason: 'really-rich' },
+  // { match: `#Adverb [${personAdj}]`, group: 0, tag: 'Adjective', reason: 'really-rich' },
 
   // ===person-verb===
   // would wade
@@ -47,5 +47,7 @@ export default [
   { match: '(#FirstName && !#Possessive) [#Singular] #Verb', group: 0, safe: true, tag: 'LastName', reason: 'jack-layton' },
   // sherwood anderson told
   { match: '^[#Singular] #Person #Verb', group: 0, safe: true, tag: 'Person', reason: 'sherwood-anderson' },
+  // bought a warhol
+  { match: '(a|an) [#Person]$', group: 0, unTag: 'Person', reason: 'a-warhol' },
 
 ]

@@ -61,5 +61,11 @@ const adhoc = {
     }
     return null
   },
+  'Person|Adj': (terms, i) => {
+    if (i === 0 && terms.length > 1) {
+      return 'Person'
+    }
+    return isCapital(terms, i) ? 'Person' : null
+  },
 }
 export default adhoc

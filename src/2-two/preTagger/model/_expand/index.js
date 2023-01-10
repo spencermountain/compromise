@@ -32,6 +32,8 @@ const switchDefaults = {
   'Person|Verb': 'FirstName',//+conjugations
   // 'victoria'
   'Person|Place': 'Person',
+  // 'rusty'
+  'Person|Adj': 'Adjective',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
   // 'miles'

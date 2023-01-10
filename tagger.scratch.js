@@ -1,7 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/four.js'
 
-// nlp.verbose('tagger')
 
 let arr = [
   //  %Plural|Verb% %Noun|Verb%
@@ -274,16 +273,9 @@ let arr = [
 
   // 'going to stop posting schedules',
   // `Sports awards to be given on Tuesday`
-
-  "Sherwood Anderson told him",
-  "and how very rich Prince Ahmed was",
-  "for the poor, this is the largest tax",
-  "bought a warhol",
-  "will.i.am",
-  "If a red-headed man works at a bakery",
-  "Marc Singer is back",
-  "5. The signatories to this Declaration"
+  "5. The signatories to this Declaration",
 ]
 
+nlp.verbose('tagger')
 let str = arr[0]
 nlp(str).debug()

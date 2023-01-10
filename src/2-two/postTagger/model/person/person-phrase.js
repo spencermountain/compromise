@@ -73,4 +73,6 @@ export default [
   { match: '#Honorific #Actor', tag: 'Honorific', reason: 'Lieutenant colonel' },
   // first lady, second admiral
   { match: '(first|second|third|1st|2nd|3rd) #Actor', tag: 'Honorific', reason: 'first lady' },
+  // Louis IV
+  { match: '#Person #RomanNumeral', tag: 'Person', reason: 'louis-IV' },
 ]

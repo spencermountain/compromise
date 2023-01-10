@@ -63,8 +63,14 @@ const rules = [
   // --- of ---
   // son of a gun
   { match: '#Noun of #Determiner? #Noun', chunk: 'Noun' },
-  // --- in ---
-  { match: '#Noun in #Determiner? #Noun', chunk: 'Noun' },
+  // 3 beautiful women
+  { match: '#Value+ #Adverb? #Adjective', chunk: 'Noun' },
+  // the last russian tsar
+  { match: 'the [#Adjective] #Noun', chunk: 'Noun' },
+  // breakfast in bed
+  { match: '#Singular in #Determiner? #Singular', chunk: 'Noun' },
+  // Some citizens in this Canadian capital
+  { match: '#Plural [in] #Determiner? #Noun', group: 0, chunk: 'Pivot' },
   // indoor and outdoor seating
   { match: '#Noun and #Determiner? #Noun', notIf: '(#Possessive|#Pronoun)', chunk: 'Noun' },
   //  boys and girls

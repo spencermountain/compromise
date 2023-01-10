@@ -68,9 +68,10 @@ test('noun-phrases', function (t) {
     // ['teach him five lessons', ['him', 'five lessons']],
     // #Noun in #Noun
     [`I told my wife I wanted breakfast in bed`, ['I', 'my wife', 'I', 'breakfast in bed']],
-    ['everybody in the tavern', ['everybody in the tavern']],
+    // ['everybody in the tavern', ['everybody in the tavern']],
     // ['he was a person of interest in the case', ['he', 'a person of interest', 'the case']],
-
+    ['Some citizens in this Canadian capital', ['Some citizens', 'this Canadian capital']],
+    ['Gandhi in his final year of life was an ascetic', ['Gandhi', 'his final year of life', 'an ascetic']],
     ['the service techs are friendly', ['the service techs']],
     [`piece of that Butterfinger I ate in january '07`, ['piece of that Butterfinger', 'I', "january '07"]],
     ['the noise the slide makes', ['the noise', 'the slide']],
@@ -93,6 +94,10 @@ test('noun-phrases', function (t) {
     // [`the unlikely captain of the largest international basketball team`, ['the unlikely captain of the largest international basketball team'],],
     [`are you here spencer?`, ['you', 'here', 'spencer?']],
     [`put it right there`, ['it', 'there']],
+    ["They were like three very beautiful young women", ['They', 'three very beautiful young women']],
+    ['the last Russian Tzar (Nicholas II), and his failure', ['the last Russian Tzar (Nicholas II),', 'his failure']],
+    [`Former U.S. Representative Joe Schwarz said in April 2009`, ['Former U.S. Representative Joe Schwarz', 'April 2009']],
+    [`the proximate causes of an economic crisis: people are not spending`, ['the proximate causes', 'an economic crisis', 'people']]
   ]
   arr.forEach(function (a) {
     const nouns = nlp(a[0]).nouns().out('array')

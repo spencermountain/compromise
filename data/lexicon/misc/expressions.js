@@ -126,4 +126,6 @@ export default [
   'excuse me',
   'oh well',
   'oh hell',
+  'oh my god',
+  'oh my gosh',
 ]

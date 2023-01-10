@@ -425,7 +425,18 @@ test('basic-coreference:', function (t) {
       "The world has grown used to US drone strikes, but recent news reports suggest that China and Japan are also investing in unmanned aircraft – in part to enhance their leverage in disputes over islands in the East China Sea.",
       { "their": "china and japan" }
     ],
-
+    [
+      "Louis VI was known as this; as a child he must have shopped in le husky department",
+      { he: 'Louis VI' }
+    ],
+    [
+      `Oh my god he sounded just like it`,
+      {}
+    ],
+    [
+      ``,
+      {}
+    ],
   ]
   arr.forEach(a => {
     let [text, refs] = a

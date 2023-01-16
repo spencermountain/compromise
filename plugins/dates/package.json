@@ -31,7 +31,7 @@
   "files": [
     "builds/",
     "src/",
-    "types/index.d.ts"
+    "index.d.ts"
   ],
   "eslintIgnore": [
     "builds/*.js"

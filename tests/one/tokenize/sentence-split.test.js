@@ -43,6 +43,8 @@ test('sentence tokenizer', function (t) {
     ['i thought (no way! and he said yes', 2],
     ['(no way! and he said yes', 2],
     ['"no way! and he\'s cool', 2],
+    // japanese
+    ['少年は店に向かった。 彼はパンを買った', 2],
   ]
   arr.forEach(a => {
     let [str, len] = a

@@ -17,21 +17,28 @@ let arr = [
   'the committee gathered their delegates',
   'the leverage of Brussels over new member states increases after they join'
 ]
-let doc = nlp(arr[0]).debug()
+// let doc = nlp(arr[0]).debug()
 
-// doc.nouns().debug()
-console.log('from:')
-let pron = doc.pronouns().debug()
+// // doc.nouns().debug()
+// console.log('from:')
+// let pron = doc.pronouns().debug()
 
-console.log('to:')
-pron.refersTo().debug()
+// console.log('to:')
+// pron.refersTo().debug()
 
 
 // .nouns() issues
 // arr = [
-  // `1 of these carried a Kansas woman 60 ft., dropping her `,
+// `1 of these carried a Kansas woman 60 ft., dropping her `,
 // ]
 // let doc = nlp(arr[0]).debug()
 // doc.nouns().debug()
 
-
+// japanese punctuation
+// 「」
+// 『』
+// 【】
+let txt = "皆さんこんにちは、トウフグのコウイチでございます。ハロー！" //comma
+// txt = "ザー・モンキー"//interpunct
+txt = "少年は店に向かった。 彼はパンを買った。"
+nlp(txt).debug()

@@ -1,7 +1,7 @@
 // split by periods, question marks, unicode ⁇, etc
-const initSplit = /([.!?\u203D\u2E18\u203C\u2047-\u2049]+\s)/g
+const initSplit = /([.!?\u203D\u2E18\u203C\u2047-\u2049\u3002]+\s)/g
 // merge these back into prev sentence
-const splitsOnly = /^[.!?\u203D\u2E18\u203C\u2047-\u2049]+\s$/
+const splitsOnly = /^[.!?\u203D\u2E18\u203C\u2047-\u2049\u3002]+\s$/
 const newLine = /((?:\r?\n|\r)+)/ // Match different new-line formats
 
 // Start with a regex:

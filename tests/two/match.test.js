@@ -1086,6 +1086,9 @@ let arr = [
   [`a red-headed man`, `#Determiner #Adjective+ #Noun`],
   ["Marc Singer is back", `#Person+ is back`],
   [`bought a warhol`, `#Verb a !#Person`],
+  ['I am planning a three month scan', 'i #Verb+ #Determiner #Value #Noun #Noun'],
+  ['he arranged a 12 month journey', 'he #PastTense #Determiner #Value #Noun #Noun'],
+  ['I will book a 24-hour ECG', 'i #Verb+ #Determiner #Value #Noun #Noun'],
   // [``, ``],
 ]
 test('match:', function (t) {

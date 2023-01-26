@@ -40,7 +40,7 @@ export default [
   //Andrew Lloyd Webber
   { match: '#FirstName #FirstName #ProperNoun', tag: 'Person', reason: 'bill-firstname-title' },
   //Mr Foo
-  { match: '(#Honorific|#Actor) #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
+  { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
 

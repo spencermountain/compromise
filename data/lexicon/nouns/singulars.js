@@ -15,11 +15,9 @@ export default [
   'tunic',
   'topic',
   'fabric',
-  'cleric',
   'rhetoric',
   'tic',
   'tactic',
-  'critic',
   'characteristic',
   'statistic',
 
@@ -173,7 +171,6 @@ export default [
   'skill',
   'high school',
   'christmas carol',
-  'girl',
   'handful',
   'bowl',
   'super bowl',
@@ -198,7 +195,6 @@ export default [
   'home run',
   'cellar',
   'us dollar',
-  'scholar',
   'exemplar',
   'civil war',
 

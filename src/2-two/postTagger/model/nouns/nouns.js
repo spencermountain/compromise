@@ -59,18 +59,22 @@ export default [
   // ==== Actor ====
   //Aircraft designer
   { match: '#Noun #Actor', tag: 'Actor', notIf: '#Person', reason: 'thing-doer' },
+  //lighting designer
+  { match: '#Gerund #Actor', tag: 'Actor', reason: 'gerund-doer' },
   // captain sanders
   { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'sgt-kelly' },
   // co-founder
   { match: `co #Singular`, tag: 'Actor', reason: 'co-noun' },
   // co-founder
-  { match: `[#Noun+] #Actor`, tag: 'Actor', reason: 'air-traffic-controller' },
+  { match: `[#Noun+] #Actor`, group: 0, tag: 'Actor', reason: 'air-traffic-controller' },
   // fine-artist
-  { match: `[(urban|cardiac|respiratory|medical|visual|graphic|creative|dental|exotic|fine|certified|registered)] #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
+  { match: `(urban|cardiac|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical)+ #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
   // dance coach
-  { match: `#Noun (coach|chef|king|engineer|fellow)`, tag: 'Actor', reason: 'dance-coach' },
+  { match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman)`, tag: 'Actor', reason: 'dance-coach' },
   // chief design officer
   { match: `chief . officer`, tag: 'Actor', reason: 'chief-x-officer' },
+  // chief of police
+  { match: `chief of #Noun+`, tag: 'Actor', reason: 'chief-of-police' },
   // president of marketing
   { match: `senior? vice? president of #Noun+`, tag: 'Actor', reason: 'president-of' },
 

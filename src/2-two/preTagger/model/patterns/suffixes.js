@@ -205,6 +205,7 @@ export default [
     // ctory: Adj,
     rient: Sing,
     dient: Sing,
+    maker: Actor
   },
   {
     //6-letter
@@ -216,6 +217,9 @@ export default [
     keeper: Actor,
     logist: Actor,
     teenth: 'Value',
+    worker: Actor,
+    master: Actor,
+    writer: Actor,
   },
   {
     //7-letter

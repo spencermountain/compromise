@@ -3,7 +3,7 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let arr = [
   // "New restaurant organizes their menu by feelings",
@@ -38,7 +38,10 @@ let arr = [
 // 「」
 // 『』
 // 【】
-let txt = "皆さんこんにちは、トウフグのコウイチでございます。ハロー！" //comma
+// let txt = "皆さんこんにちは、トウフグのコウイチでございます。ハロー！" //comma
 // txt = "ザー・モンキー"//interpunct
-txt = "少年は店に向かった。 彼はパンを買った。"
+let txt = "the bartender laughed, he was funny"//interpunct
+txt = 'air traffic controller'
+txt = 'Respiratory Therapist '
+// txt = "少年は店に向かった。 彼はパンを買った。"
 nlp(txt).debug()

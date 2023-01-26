@@ -63,6 +63,17 @@ export default [
   { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'sgt-kelly' },
   // co-founder
   { match: `co #Singular`, tag: 'Actor', reason: 'co-noun' },
+  // co-founder
+  { match: `[#Noun+] #Actor`, tag: 'Actor', reason: 'air-traffic-controller' },
+  // fine-artist
+  { match: `[(urban|cardiac|respiratory|medical|visual|graphic|creative|dental|exotic|fine|certified|registered)] #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
+  // dance coach
+  { match: `#Noun (coach|chef|king|engineer|fellow)`, tag: 'Actor', reason: 'dance-coach' },
+  // chief design officer
+  { match: `chief . officer`, tag: 'Actor', reason: 'chief-x-officer' },
+  // president of marketing
+  { match: `senior? vice? president of #Noun+`, tag: 'Actor', reason: 'president-of' },
+
 
   // ==== Singular ====
   //the sun

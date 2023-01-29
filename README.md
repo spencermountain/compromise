@@ -912,8 +912,8 @@ These are some helpful extensions:
 
 `npm install compromise-syllables`
 
-- **[.syllables()](https://observablehq.com/@spencermountain/compromise-syllables)** - split each term by its typical pronounciation
-- **[.soundsLike()](https://observablehq.com/@spencermountain/compromise-soundsLike)** - produce a estimated pronounciation
+- **[.syllables()](https://observablehq.com/@spencermountain/compromise-syllables)** - split each term by its typical pronunciation
+- **[.soundsLike()](https://observablehq.com/@spencermountain/compromise-soundsLike)** - produce a estimated pronunciation
 
 ##### Wikipedia
 

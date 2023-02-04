@@ -88,7 +88,7 @@ export default {
   // 'swimmer'
   Actor: {
     is: 'Noun',
-    not: entity,
+    not: ['Place', 'Organization'],
   },
   // walking
   Activity: {

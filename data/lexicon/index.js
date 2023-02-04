@@ -18,6 +18,7 @@ import femaleNames from './people/femaleNames.js'
 import firstnames from './people/firstnames.js'
 import lastnames from './people/lastnames.js'
 import maleNames from './people/maleNames.js'
+import honorifics from './people/honorifics.js'
 import people from './people/people.js'
 import places from './places/places.js'
 import regions from './places/regions.js'
@@ -97,6 +98,7 @@ const data = [
   [firstnames, 'FirstName'],
   [lastnames, 'LastName'], //3k
   [maleNames, 'MaleName'], //5kb
+  [honorifics, 'Honorific'],
   [people, 'Person'],
 
   [adjectives, 'Adjective'],

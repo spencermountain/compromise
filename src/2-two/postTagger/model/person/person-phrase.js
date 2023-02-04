@@ -63,6 +63,10 @@ export default [
   //Anthony de Marco
   { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
 
+  // baker jenna smith
+  { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam-smith' },
+  // sergeant major Harold
+  { match: '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal)+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'seargeant-john' },
   // ==== Honorics ====
   { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: ['Honorific', 'Person'], reason: 'ambg-honorifics' },
   // dr john foobar

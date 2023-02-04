@@ -66,7 +66,7 @@ export default [
   // co-founder
   { match: `co #Singular`, tag: 'Actor', reason: 'co-noun' },
   // co-founder
-  { match: `[#Noun+] #Actor`, group: 0, tag: 'Actor', reason: 'air-traffic-controller' },
+  { match: `[#Noun+] #Actor`, group: 0, tag: 'Actor', notIf: '#Honorific', reason: 'air-traffic-controller' },
   // fine-artist
   { match: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
   // dance coach

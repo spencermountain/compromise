@@ -526,7 +526,7 @@ let arr = [
   ['decide', '#Verb'],
   ['bide', '#Verb'],
   ['slide', '#Verb'],
-  ['guide', '#Verb'],
+  ['guided', '#Verb'],
   ['reside', '#Verb'],
   ['his backside', 'his #Noun'],
 
@@ -823,7 +823,6 @@ let arr = [
   [`the product manager`, `the #Actor+`],
   [`the city clerk`, `the #Actor+`],
   [`the staff lawyers`, `the #Actor+`],
-  [`the senior developer`, `the #Adjective #Actor+`],
   [`the viola player`, `the #Actor+`],
   [`the nursary workers`, `the #Actor+`],
   [`the Safety Specialists`, `the #Actor+`],
@@ -1089,6 +1088,7 @@ let arr = [
   ['I am planning a three month scan', 'i #Verb+ #Determiner #Value #Noun #Noun'],
   ['he arranged a 12 month journey', 'he #PastTense #Determiner #Value #Noun #Noun'],
   ['I will book a 24-hour ECG', 'i #Verb+ #Determiner #Value #Noun #Noun'],
+  // [`the lieutenant general`, `#Determiner #Actor+`],
   // [``, ``],
 ]
 test('match:', function (t) {

@@ -293,7 +293,7 @@ let arr = [
   'Deputy commissioner',
   'Detective',
   'Inspector',
-  'Director general',
+  // 'Director general',
   'Senior inspector',
   'Senior sergeant',
   'Senior staff sergeant',

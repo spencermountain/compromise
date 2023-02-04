@@ -10,7 +10,7 @@ export default [
   { match: '%Person|Noun% #Organization', tag: 'Organization', reason: 'olive-garden' },
   // ===person-verb===
   // ollie faroo
-  { match: '%Person|Verb% #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-propernoun' },
+  { match: '%Person|Verb% #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
   // chuck will ...
   { match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`, group: 0, tag: 'Person', reason: 'person-said' },
 

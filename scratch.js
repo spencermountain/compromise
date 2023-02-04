@@ -43,7 +43,7 @@ let arr = [
 let txt = "the bartender laughed, he was funny"//interpunct
 txt = 'air traffic controller'
 txt = 'Field marshal Herring '
-txt = 'the lieutenant general'
+txt = 'Thank you Doctor Gonzales'
 
 // txt = "少年は店に向かった。 彼はパンを買った。"
 nlp(txt).debug()

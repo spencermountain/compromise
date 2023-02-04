@@ -93,6 +93,7 @@ export default [
   'tyra banks',
   'wednesday adams',
   'miranda july',
+  'lady gaga',
 
   //sometimes firstname, sometimes lastname
   'brock',

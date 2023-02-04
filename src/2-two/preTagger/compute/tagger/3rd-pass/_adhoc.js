@@ -37,6 +37,9 @@ const adhoc = {
   'Adj|Noun': (terms, i) => {
     return isCapital(terms, i) || isEndNoun(terms, i)
   },
+  'Actor|Verb': (terms, i) => {
+    return isCapital(terms, i)
+  },
   'Adj|Past': (terms, i) => {
     return isCapital(terms, i)
   },

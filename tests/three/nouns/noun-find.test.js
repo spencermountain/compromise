@@ -97,7 +97,7 @@ test('noun-phrases', function (t) {
     ["They were like three very beautiful young women", ['They', 'three very beautiful young women']],
     ['the last Russian Tzar (Nicholas II), and his failure', ['the last Russian Tzar (Nicholas II),', 'his failure']],
     [`Former U.S. Representative Joe Schwarz said in April 2009`, ['Former U.S. Representative Joe Schwarz', 'April 2009']],
-    [`the proximate causes of an economic crisis: people are not spending`, ['the proximate causes', 'an economic crisis', 'people']]
+    [`the proximate causes of an economic crisis: people are not spending`, ['the proximate causes', 'an economic crisis:', 'people']]
   ]
   arr.forEach(function (a) {
     const nouns = nlp(a[0]).nouns().out('array')

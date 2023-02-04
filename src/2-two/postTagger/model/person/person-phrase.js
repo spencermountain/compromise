@@ -66,7 +66,7 @@ export default [
   // baker jenna smith
   { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam-smith' },
   // sergeant major Harold
-  { match: '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal)+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'seargeant-john' },
+  { match: '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'seargeant-john' },
   // ==== Honorics ====
   { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: ['Honorific', 'Person'], reason: 'ambg-honorifics' },
   // dr john foobar

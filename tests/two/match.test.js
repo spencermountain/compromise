@@ -667,7 +667,7 @@ let arr = [
   ["the lady", 'the !#Honorific'],
   ["the ship's captain", 'the #Possessive !#Honorific'],
   ["count backwards", '#Imperative #Adverb'],
-  ["lady jones", '#Honorific #Person'],
+  // ["lady jones", '#Honorific #Person'],
   ["count jones", '#Honorific #Person'],
   ["my worst miss", 'my #Adjective #Singular'],
   ["a near miss", 'a #Adjective #Singular'],

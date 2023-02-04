@@ -1,6 +1,6 @@
 import getPerson from './findPerson.js'
 import getThey from './findThey.js'
-import getIt from './findIt.js'
+// import getIt from './findIt.js'
 import { prevSentence } from './lib.js'
 
 const addReference = function (pron, m) {

@@ -5,8 +5,8 @@ export default [
   'rich',
   'randy',
   'sandy',
-  'young',
   'earnest',
   'frank',
+  // 'young',
   'brown'
 ]

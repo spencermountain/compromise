@@ -49,6 +49,7 @@ import expressions from './misc/expressions.js'
 import prepositions from './misc/prepositions.js'
 
 
+import actorVerb from './switches/actor-verb.js'
 import adjGerund from './switches/adj-gerund.js'
 import adjNoun from './switches/adj-noun.js'
 import adjPast from './switches/adj-past.js'
@@ -114,6 +115,7 @@ const data = [
   [phrasals, 'PhrasalVerb'], //3kb
 
   // switches - 10kb
+  [actorVerb, 'Actor|Verb'],
   [adjGerund, 'Adj|Gerund'],
   [adjNoun, 'Adj|Noun'],
   [adjPast, 'Adj|Past'],

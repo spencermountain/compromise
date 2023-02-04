@@ -1,3 +1,4 @@
+import actorVerb from './actor-verb.js'
 import adjGerund from './adj-gerund.js'
 import adjNoun from './adj-noun.js'
 import adjPast from './adj-past.js'
@@ -12,6 +13,7 @@ import personAdj from './person-adj.js'
 import unitNoun from './unit-noun.js'
 
 const clues = {
+  'Actor|Verb': actorVerb,
   'Adj|Gerund': adjGerund,
   'Adj|Noun': adjNoun,
   'Adj|Past': adjPast,

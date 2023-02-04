@@ -31,7 +31,6 @@ export default [
   'run dmc',
 
   // one-named artists/athletes
-  'byron',
   'dante',
   'keats',
   'shakespeare',
@@ -56,7 +55,6 @@ export default [
   'sinbad',
   'kesha',
   'nelly',
-  'homer',
   'monet',
   'moliere',
   'rembrandt',
@@ -75,7 +73,6 @@ export default [
   'pele',
   'raffi',
   'rihanna',
-  'ronaldo',
   'rivaldo',
   'eminem',
   'rupaul',
@@ -104,7 +101,6 @@ export default [
   'dalton',
   'harrison',
   'tatum',
-  'dante',
   'effie',
   'ezekiel',
   'gaston',

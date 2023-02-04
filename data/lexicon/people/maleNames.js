@@ -1,4 +1,5 @@
 //names with a distinctive signal that they identify as a male, internationally
+// some are in ./switches/person-verb etc
 export default [
   'aarav',
   'aaron',
@@ -349,7 +350,6 @@ export default [
   'francis',
   'francisco',
   'franciszek',
-  'frank',
   'frankie',
   'franklin',
   'franklyn',
@@ -794,7 +794,6 @@ export default [
   'randal',
   'randall',
   'randolph',
-  'randy',
   'raphael',
   'rashad',
   'rasmus',

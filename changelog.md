@@ -18,6 +18,13 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!-- #### 14.8.1 [Unreleased]
 -->
 
+#### 14.8.2 [Feb 2022]
+- **[change]** - #Actor tagging - in advance of #565
+- **[change]** - .noun() lumping changes - in advance of #565
+- **[new]** - support japanese full-stop
+- **[fix]** - number tagging #992
+- **[update]** - dependencies
+
 #### 14.8.1 [Dec 2022]
 - **[fix]** - tagging fixes
 - **[change]** - allow #Plural acronyms

@@ -296,5 +296,7 @@ export default [
   'yogi',
   'youtuber',
   'fire marshal',
-
+  'commissioner',
+  'political scientist',
+  'customer representative',
 ]

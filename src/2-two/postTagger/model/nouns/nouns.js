@@ -62,13 +62,13 @@ export default [
   //lighting designer
   { match: '#Gerund #Actor', tag: 'Actor', reason: 'gerund-doer' },
   // captain sanders
-  { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'sgt-kelly' },
+  // { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'sgt-kelly' },
   // co-founder
   { match: `co #Singular`, tag: 'Actor', reason: 'co-noun' },
   // co-founder
   { match: `[#Noun+] #Actor`, group: 0, tag: 'Actor', reason: 'air-traffic-controller' },
   // fine-artist
-  { match: `(urban|cardiac|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical)+ #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
+  { match: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
   // dance coach
   { match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman)`, tag: 'Actor', reason: 'dance-coach' },
   // chief design officer

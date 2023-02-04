@@ -42,6 +42,6 @@ let arr = [
 // txt = "ザー・モンキー"//interpunct
 let txt = "the bartender laughed, he was funny"//interpunct
 txt = 'air traffic controller'
-txt = 'coach'
+txt = 'Deputy commissioner '
 // txt = "少年は店に向かった。 彼はパンを買った。"
 nlp(txt).debug()

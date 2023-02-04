@@ -58,17 +58,32 @@ export default [
 
   // ==== Actor ====
   //Aircraft designer
-  { match: '#Noun #Actor', tag: 'Actor', reason: 'thing-doer' },
+  { match: '#Noun #Actor', tag: 'Actor', notIf: '#Person', reason: 'thing-doer' },
+  //lighting designer
+  { match: '#Gerund #Actor', tag: 'Actor', reason: 'gerund-doer' },
   // captain sanders
-  { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'sgt-kelly' },
+  // { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'sgt-kelly' },
   // co-founder
   { match: `co #Singular`, tag: 'Actor', reason: 'co-noun' },
+  // co-founder
+  { match: `[#Noun+] #Actor`, group: 0, tag: 'Actor', notIf: '#Honorific', reason: 'air-traffic-controller' },
+  // fine-artist
+  { match: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
+  // dance coach
+  { match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman)`, tag: 'Actor', reason: 'dance-coach' },
+  // chief design officer
+  { match: `chief . officer`, tag: 'Actor', reason: 'chief-x-officer' },
+  // chief of police
+  { match: `chief of #Noun+`, tag: 'Actor', reason: 'chief-of-police' },
+  // president of marketing
+  { match: `senior? vice? president of #Noun+`, tag: 'Actor', reason: 'president-of' },
+
 
   // ==== Singular ====
   //the sun
   { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'the-sun' },
   //did a 900, paid a 20
-  { match: '#Verb (a|an) [#Value]', group: 0, tag: 'Singular', reason: 'did-a-value' },
+  { match: '#Verb (a|an) [#Value]$', group: 0, tag: 'Singular', reason: 'did-a-value' },
   //'the can'
   { match: 'the [(can|will|may)]', group: 0, tag: 'Singular', reason: 'the can' },
 

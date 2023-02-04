@@ -40,7 +40,7 @@ export default [
   //Andrew Lloyd Webber
   { match: '#FirstName #FirstName #ProperNoun', tag: 'Person', reason: 'bill-firstname-title' },
   //Mr Foo
-  { match: '(#Honorific|#Actor) #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
+  { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-Title' },
   //peter the great
   { match: '#FirstName the #Adjective', tag: 'Person', reason: 'name-the-great' },
 
@@ -63,6 +63,10 @@ export default [
   //Anthony de Marco
   { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
 
+  // baker jenna smith
+  { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam-smith' },
+  // sergeant major Harold
+  { match: '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'seargeant-john' },
   // ==== Honorics ====
   { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: ['Honorific', 'Person'], reason: 'ambg-honorifics' },
   // dr john foobar
@@ -73,4 +77,6 @@ export default [
   { match: '#Honorific #Actor', tag: 'Honorific', reason: 'Lieutenant colonel' },
   // first lady, second admiral
   { match: '(first|second|third|1st|2nd|3rd) #Actor', tag: 'Honorific', reason: 'first lady' },
+  // Louis IV
+  { match: '#Person #RomanNumeral', tag: 'Person', reason: 'louis-IV' },
 ]

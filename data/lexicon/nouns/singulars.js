@@ -3,7 +3,6 @@
 // they are all inflected to add their plural form
 
 export default [
-  'fella',
   'light bulb',
 
   // -ic
@@ -16,11 +15,9 @@ export default [
   'tunic',
   'topic',
   'fabric',
-  'cleric',
   'rhetoric',
   'tic',
   'tactic',
-  'critic',
   'characteristic',
   'statistic',
 
@@ -37,18 +34,13 @@ export default [
   'lipid',
   'grid',
   'dividend',
-  'friend',
-  'girlfriend',
-  'boyfriend',
   'stipend',
   'way around',
-  'god',
   'credit card',
   'security guard',
   'tribe',
   'downside',
   'upside',
-  'dude',
   'voltage',
   'advantage',
   'percentage',
@@ -64,7 +56,6 @@ export default [
   'crucible',
   'mandible',
 
-  'uncle',
   'example',
   'home',
   'someone',
@@ -78,7 +69,6 @@ export default [
   // -ate
   'rebate',
   'certificate',
-  'laureate',
   'frigate',
   'surrogate',
   'opiate',
@@ -101,7 +91,6 @@ export default [
   'prostate',
 
 
-  'athlete',
   'plebiscite',
   'luddite',
   'urbanite',
@@ -114,7 +103,6 @@ export default [
   'keynote',
   'coyote',
   'flute',
-  'prostitute',
   'plaque',
   'cheque',
   'communique',
@@ -183,7 +171,6 @@ export default [
   'skill',
   'high school',
   'christmas carol',
-  'girl',
   'handful',
   'bowl',
   'super bowl',
@@ -196,8 +183,6 @@ export default [
   'chrysanthemum',
   'bean',
   'ocean',
-  'gentleman',
-  'woman',
   'student loan',
   'skeleten',
   'kitten',
@@ -208,11 +193,8 @@ export default [
   'gelatin',
   'tax return',
   'home run',
-  'bro',
-  'burglar',
   'cellar',
   'us dollar',
-  'scholar',
   'exemplar',
   'civil war',
 
@@ -268,21 +250,12 @@ export default [
   'extent',
   'event',
 
-  'aunt',
   'head start',
   'breakfast',
-  'priest',
-  'athiest',
 
   // -ist
   'waist',
-  'pharmacist',
-  'buddhist',
-  'bicyclist',
-  'panellist',
-  'hygienist',
-  'columnist',
-  'soloist',
+
 
   'bout',
   'overview',
@@ -290,7 +263,6 @@ export default [
   't rex',
   'array',
   'way',
-  'daddy',
   'tragedy',
   'body',
   'doggy',
@@ -317,14 +289,10 @@ export default [
   'monopoly',
   'panoply',
 
-  'mommy',
-  'mummy',
   'tummy',
   'economy',
   'fanny',
-  'nanny',
   'bunny',
-  'boy',
   'puppy',
 
   // -ry
@@ -345,7 +313,6 @@ export default [
   'prediction',
   'pie',
   'rerun',
-  'bride',
   'menu',
 
   'owner',
@@ -366,16 +333,12 @@ export default [
   'tv',
 
   'stone',
-  'man',
   'tributary',
   'flower',
   'sandwich',
   'x ray',
-  'loser',
-  'darling',
   'dump truck',
   'soft serve',
-  'sweetheart',
   'car',
   'strategy',
   'piggy',
@@ -400,7 +363,6 @@ export default [
   'autopsy',
   'embassy',
   'pussy',
-  'sissy',
   'spin off',
   'lay up',
   'leg up',

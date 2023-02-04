@@ -1,4 +1,4 @@
-const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
+// const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
 
 export default [
   // ===person-date===
@@ -10,7 +10,7 @@ export default [
   { match: '%Person|Noun% #Organization', tag: 'Organization', reason: 'olive-garden' },
   // ===person-verb===
   // ollie faroo
-  { match: '%Person|Verb% #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-propernoun' },
+  { match: '%Person|Verb% #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
   // chuck will ...
   { match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`, group: 0, tag: 'Person', reason: 'person-said' },
 
@@ -22,11 +22,11 @@ export default [
 
   // ===person-adjective===
   // rusty smith
-  { match: `${personAdj} #Person`, tag: 'Person', reason: 'randy-smith' },
+  // { match: `${personAdj} #Person`, tag: 'Person', reason: 'randy-smith' },
   // rusty a. smith
-  { match: `${personAdj} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rusty-smith' },
+  // { match: `${personAdj} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rusty-smith' },
   // very rusty
-  { match: `#Adverb [${personAdj}]`, group: 0, tag: 'Adjective', reason: 'really-rich' },
+  // { match: `#Adverb [${personAdj}]`, group: 0, tag: 'Adjective', reason: 'really-rich' },
 
   // ===person-verb===
   // would wade
@@ -43,4 +43,11 @@ export default [
   { match: '[will] #Verb', group: 0, tag: 'Modal', reason: 'will-verb' },
   // will Pharell
   { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' },
+  // jack layton won
+  { match: '(#FirstName && !#Possessive) [#Singular] #Verb', group: 0, safe: true, tag: 'LastName', reason: 'jack-layton' },
+  // sherwood anderson told
+  { match: '^[#Singular] #Person #Verb', group: 0, safe: true, tag: 'Person', reason: 'sherwood-anderson' },
+  // bought a warhol
+  { match: '(a|an) [#Person]$', group: 0, unTag: 'Person', reason: 'a-warhol' },
+
 ]

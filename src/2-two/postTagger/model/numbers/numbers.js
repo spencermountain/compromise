@@ -50,4 +50,6 @@ export default [
   { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', group: 0, tag: 'Unit', reason: '12-miles-per-second' },
   // 5 square miles
   { match: '#Value [(square|cubic)] #Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
+  // 5) The expenses
+  { match: '^[#Value] (#Determiner|#Gerund)', group: 0, tag: 'Expression', unTag: 'Value', reason: 'numbered-list' },
 ]

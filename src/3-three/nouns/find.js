@@ -1,5 +1,5 @@
 const findNouns = function (doc) {
-  let m = doc.match('<Noun>')
+  let m = doc.clauses().match('<Noun>')
   let commas = m.match('@hasComma')
   // allow toronto, ontario
   commas = commas.not('#Place')
@@ -23,6 +23,8 @@ const findNouns = function (doc) {
   // its great purposes
   // give [parents] [our money]
   m = m.splitBefore('(our|my|their|your)')
+  // tell my friend that he
+  m = m.splitOn('#Noun [#Determiner]', 0)
   // his excuses
   // m = m.splitAfter('(his|hers|yours|ours|theirs)')
   //ensure there's actually a noun

@@ -37,6 +37,9 @@ const adhoc = {
   'Adj|Noun': (terms, i) => {
     return isCapital(terms, i) || isEndNoun(terms, i)
   },
+  'Actor|Verb': (terms, i) => {
+    return isCapital(terms, i)
+  },
   'Adj|Past': (terms, i) => {
     return isCapital(terms, i)
   },
@@ -60,6 +63,12 @@ const adhoc = {
       return isCapital(terms, i)
     }
     return null
+  },
+  'Person|Adj': (terms, i) => {
+    if (i === 0 && terms.length > 1) {
+      return 'Person'
+    }
+    return isCapital(terms, i) ? 'Person' : null
   },
 }
 export default adhoc

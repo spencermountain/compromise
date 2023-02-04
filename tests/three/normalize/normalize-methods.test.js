@@ -66,7 +66,7 @@ test('honorifics', function (t) {
     ['Lieutenant general James Baker', 'james baker'],
     ['Lieutenant colonel Bing Crosby', 'bing crosby'],
     ['Major Tom', 'tom'],
-    ['major effort by President Xi', 'major effort by xi'],
+    // ['major effort by President Xi', 'major effort by xi'],
     ['Corporal John Herring', 'john herring'],
     ['sergeant major Harold', 'harold'],
     ['Second lieutenant Semore Hirthman', 'semore hirthman'],

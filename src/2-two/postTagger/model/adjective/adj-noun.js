@@ -27,4 +27,6 @@ export default [
   { match: `#Determiner [#Adjective]$`, tag: 'Noun', notIf: '(this|that|#Comparative|#Superlative)', reason: 'the-south' }, //are that crazy.
   // company-wide
   { match: `(#Noun && #Hyphenated) (#Adjective && #Hyphenated)`, tag: 'Adjective', notIf: '(this|that|#Comparative|#Superlative)', reason: 'company-wide' },
+  // the poor were
+  { match: `#Determiner [#Adjective] (#Copula|#Determiner)`, notIf: '(#Comparative|#Superlative)', group: 0, tag: 'Noun', reason: 'the-poor' },
 ]

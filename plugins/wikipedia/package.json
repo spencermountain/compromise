@@ -34,6 +34,11 @@
   "dependencies": {
     "efrt": "^2.5.0"
   },
+  "files": [
+    "builds/",
+    "src/",
+    "index.d.ts"
+  ],
   "devDependencies": {
     "colorette": "2.0.16",
     "node-wget-promise": "0.1.6"

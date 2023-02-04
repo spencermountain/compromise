@@ -20,7 +20,7 @@ const getPerson = function (s, gender) {
     return people.last()
   }
   // non-named people, like 'the cowboy'
-  people = s.nouns('#Actor+')
+  people = s.nouns('#Actor')
   if (people.found) {
     return people.last()
   }

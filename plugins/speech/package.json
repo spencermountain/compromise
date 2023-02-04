@@ -29,6 +29,11 @@
   "eslintIgnore": [
     "builds/*.js"
   ],
+  "files": [
+    "builds/",
+    "src/",
+    "index.d.ts"
+  ],
   "peerDependencies": {
     "compromise": ">=14.0.0"
   },

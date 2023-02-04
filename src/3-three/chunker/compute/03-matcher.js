@@ -50,6 +50,8 @@ const rules = [
   { match: '#Verb [to] #Adverb? #Infinitive', group: 0, chunk: 'Verb' },
   // upon seeing
   { match: '[#Preposition] #Gerund', group: 0, chunk: 'Verb' },
+  // ensure that
+  { match: '#Infinitive [that] <Noun>', group: 0, chunk: 'Verb' },
 
   // === Noun ===
   // the brown fox
@@ -61,10 +63,18 @@ const rules = [
   // --- of ---
   // son of a gun
   { match: '#Noun of #Determiner? #Noun', chunk: 'Noun' },
-  // --- in ---
-  { match: '#Noun in #Determiner? #Noun', chunk: 'Noun' },
+  // 3 beautiful women
+  { match: '#Value+ #Adverb? #Adjective', chunk: 'Noun' },
+  // the last russian tsar
+  { match: 'the [#Adjective] #Noun', chunk: 'Noun' },
+  // breakfast in bed
+  { match: '#Singular in #Determiner? #Singular', chunk: 'Noun' },
+  // Some citizens in this Canadian capital
+  { match: '#Plural [in] #Determiner? #Noun', group: 0, chunk: 'Pivot' },
   // indoor and outdoor seating
-  { match: '#Singular and #Determiner? #Singular', chunk: 'Noun' },
+  { match: '#Noun and #Determiner? #Noun', notIf: '(#Possessive|#Pronoun)', chunk: 'Noun' },
+  //  boys and girls
+  // { match: '#Plural and #Determiner? #Plural', chunk: 'Noun' },
   // tomatoes and cheese
   // { match: '#Noun and #Determiner? #Noun', notIf: '#Pronoun', chunk: 'Noun' },
   // that is why

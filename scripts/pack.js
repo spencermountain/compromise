@@ -2,6 +2,8 @@
 import fs from 'fs'
 import { pack } from 'efrt'
 import { compress, learn } from 'suffix-thumb'
+// import { compress, learn } from '/Users/spencer/mountain/suffix-thumb/src/index.js'
+
 import lexicon from '../data/lexicon/index.js'
 import models from '../data/pairs/index.js'
 
@@ -33,11 +35,14 @@ const steps = [
     label: 'pairs',
     path: './src/2-two/preTagger/model/models/_data.js',
     compress: function () {
+      let begin = new Date()
       Object.keys(models).forEach(k => {
         console.log('     - ' + k)
         const model = learn(models[k])
         models[k] = compress(model)
       })
+      let end = new Date()
+      console.log((end.getTime() - begin.getTime()) / 1000)
       return models
     },
   },

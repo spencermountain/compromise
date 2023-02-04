@@ -12,6 +12,8 @@ let tmpModel = {
 
 // defaults for switches
 const switchDefaults = {
+  // 'pilot'
+  'Actor|Verb': 'Actor', //
   // 'amusing'
   'Adj|Gerund': 'Adjective', //+conjugations
   // 'standard'
@@ -32,6 +34,8 @@ const switchDefaults = {
   'Person|Verb': 'FirstName',//+conjugations
   // 'victoria'
   'Person|Place': 'Person',
+  // 'rusty'
+  'Person|Adj': 'Adjective',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
   // 'miles'
@@ -90,7 +94,7 @@ const expandVariable = function (switchWords, model) {
     const name = switchWords[w]
     words[w] = switchDefaults[name]
     // conjugate some verbs
-    if (name === 'Noun|Verb' || name === 'Person|Verb') {
+    if (name === 'Noun|Verb' || name === 'Person|Verb' || name === 'Actor|Verb') {
       expandVerb(w, lex, false)
     }
     if (name === 'Adj|Present') {

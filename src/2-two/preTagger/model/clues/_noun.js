@@ -23,7 +23,8 @@ export default {
     PresentTense: n, //babysitting sucks
     PastTense: n, //babysitting sucked
     // Noun:n, //talking therapy, planning process
-    Demonym: n//american touch
+    Demonym: n,//american touch
+    Actor: n//dance therapist
   },
   // ownTags: { ProperNoun: n },
   beforeWords: {

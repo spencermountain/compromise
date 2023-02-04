@@ -28,8 +28,7 @@
   },
   "files": [
     "builds/",
-    "src/",
-    "index.d.ts"
+    "src/"
   ],
   "peerDependencies": {
     "compromise": ">=14.0.0"

@@ -18,6 +18,7 @@ import femaleNames from './people/femaleNames.js'
 import firstnames from './people/firstnames.js'
 import lastnames from './people/lastnames.js'
 import maleNames from './people/maleNames.js'
+import honorifics from './people/honorifics.js'
 import people from './people/people.js'
 import places from './places/places.js'
 import regions from './places/regions.js'
@@ -49,6 +50,7 @@ import expressions from './misc/expressions.js'
 import prepositions from './misc/prepositions.js'
 
 
+import actorVerb from './switches/actor-verb.js'
 import adjGerund from './switches/adj-gerund.js'
 import adjNoun from './switches/adj-noun.js'
 import adjPast from './switches/adj-past.js'
@@ -59,6 +61,7 @@ import personNoun from './switches/person-noun.js'
 import personDate from './switches/person-date.js'
 import personVerb from './switches/person-verb.js'
 import personPlace from './switches/person-place.js'
+import personAdj from './switches/person-adj.js'
 import unitNoun from './switches/unit-noun.js'
 
 
@@ -95,6 +98,7 @@ const data = [
   [firstnames, 'FirstName'],
   [lastnames, 'LastName'], //3k
   [maleNames, 'MaleName'], //5kb
+  [honorifics, 'Honorific'],
   [people, 'Person'],
 
   [adjectives, 'Adjective'],
@@ -113,6 +117,7 @@ const data = [
   [phrasals, 'PhrasalVerb'], //3kb
 
   // switches - 10kb
+  [actorVerb, 'Actor|Verb'],
   [adjGerund, 'Adj|Gerund'],
   [adjNoun, 'Adj|Noun'],
   [adjPast, 'Adj|Past'],
@@ -123,6 +128,7 @@ const data = [
   [personPlace, 'Person|Place'],
   [personDate, 'Person|Date'],
   [personVerb, 'Person|Verb'],
+  [personAdj, 'Person|Adj'],
   [unitNoun, 'Unit|Noun'],
 ]
 for (let i = 0; i < data.length; i++) {

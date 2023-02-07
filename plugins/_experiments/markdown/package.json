@@ -1,0 +1,52 @@
+{
+  "name": "compromise-markdown",
+  "description": "plugin for nlp-compromise",
+  "version": "0.0.0",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./src/plugin.js",
+  "unpkg": "./builds/compromise-markdown.min.js",
+  "module": "./builds/compromise-markdown.mjs",
+  "type": "module",
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js",
+      "require": "./builds/compromise-markdown.cjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/compromise.git"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/markdown",
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent"
+  },
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
+  "files": [
+    "builds/",
+    "src/",
+    "index.d.ts"
+  ],
+  "peerDependencies": {
+    "compromise": ">=14.0.0"
+  },
+  "dependencies": {
+    "hast-util-to-mdast": "^9.0.0",
+    "mdast-util-frontmatter": "^1.0.1",
+    "mdast-util-gfm-table": "^1.0.7",
+    "mdast-util-to-markdown": "^1.5.0",
+    "micromark-extension-gfm-table": "^1.0.5",
+    "unist-util-visit": "^4.1.2"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1"
+  }
+}

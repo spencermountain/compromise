@@ -1,0 +1,45 @@
+{
+  "name": "compromise-ast",
+  "description": "plugin for nlp-compromise",
+  "version": "0.0.0",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./src/plugin.js",
+  "unpkg": "./builds/compromise-ast.min.js",
+  "module": "./builds/compromise-ast.mjs",
+  "type": "module",
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js",
+      "require": "./builds/compromise-ast.cjs"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/compromise.git"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/ast",
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent"
+  },
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
+  "files": [
+    "builds/",
+    "src/",
+    "index.d.ts"
+  ],
+  "peerDependencies": {
+    "compromise": ">=14.0.0"
+  },
+  "dependencies": {},
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1"
+  }
+}

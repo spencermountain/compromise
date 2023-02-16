@@ -26,14 +26,16 @@ hello ![alpha](https://example.com/favicon.ico "bravo") world
 
 `
 
-md = `ok **cool** after.
 
-below`
 
 md = `| cool | also | here  |   |   |
 |------|------|-------|---|---|
 | one  | two  | three |   |   |
 | four | five |       |   |   |
 |      |      |       |   |   |`
+
+md = `ok **cool** after.
+
+below`
 let doc = nlp.fromMarkdown(md)
 console.log(doc)

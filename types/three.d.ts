@@ -1,5 +1,5 @@
-import type { Lexicon, Plugin, matchOptions, Match, Net } from './misc'
-import type View from './view/three'
+import type { Lexicon, Plugin, matchOptions, Match, Net } from './misc.d.ts'
+import type View from './view/three.d.ts'
 
 /** parse a given text */
 declare function nlp<PluginTypes = {}>(text: string, lexicon?: Lexicon): View & PluginTypes

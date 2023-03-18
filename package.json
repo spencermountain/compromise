@@ -35,6 +35,19 @@
       "types": "./types/three.d.ts"
     }
   },
+  "typesVersions": {
+    "*": {
+      "one": [
+        "./types/one.d.ts"
+      ],
+      "two": [
+        "./types/two.d.ts"
+      ],
+      "three": [
+        "./types/three.d.ts"
+      ]
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"

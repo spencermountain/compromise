@@ -8,6 +8,7 @@
   "type": "module",
   "module": "./builds/compromise-stats.mjs",
   "sideEffects": false,
+  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",

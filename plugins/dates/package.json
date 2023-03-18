@@ -7,12 +7,12 @@
   "unpkg": "./builds/compromise-dates.min.js",
   "module": "./builds/compromise-dates.mjs",
   "type": "module",
-  "types": "index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
       "import": "./src/plugin.js",
-      "require": "./builds/compromise-dates.cjs"
+      "require": "./builds/compromise-dates.cjs",
+      "types": "./index.d.ts"
     }
   },
   "repository": {

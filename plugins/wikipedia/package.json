@@ -7,11 +7,11 @@
   "unpkg": "./builds/compromise-wikipedia.min.js",
   "type": "module",
   "sideEffects": false,
-  "types": "index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",
-      "require": "./builds/compromise-wikipedia.cjs"
+      "require": "./builds/compromise-wikipedia.cjs",
+      "types": "./index.d.ts"
     }
   },
   "repository": {

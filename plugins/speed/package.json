@@ -7,12 +7,12 @@
   "unpkg": "./builds/compromise-speed.min.js",
   "module": "./builds/compromise-speed.mjs",
   "type": "module",
-  "types": "index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
       "import": "./src/plugin.js",
-      "require": "./builds/compromise-speed.cjs"
+      "require": "./builds/compromise-speed.cjs",
+      "types": "./index.d.ts"
     }
   },
   "repository": {

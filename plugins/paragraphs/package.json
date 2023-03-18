@@ -7,12 +7,12 @@
   "unpkg": "./builds/compromise-paragraphs.min.js",
   "module": "./builds/compromise-paragraphs.mjs",
   "type": "module",
-  "types": "index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
       "import": "./src/plugin.js",
-      "require": "./builds/compromise-paragraphs.cjs"
+      "require": "./builds/compromise-paragraphs.cjs",
+      "types": "./index.d.ts"
     }
   },
   "repository": {

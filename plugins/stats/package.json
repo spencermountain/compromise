@@ -7,12 +7,13 @@
   "unpkg": "./builds/compromise-stats.min.js",
   "type": "module",
   "module": "./builds/compromise-stats.mjs",
-  "types": "index.d.ts",
   "sideEffects": false,
+  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",
-      "require": "./builds/compromise-stats.cjs"
+      "require": "./builds/compromise-stats.cjs",
+      "types": "./index.d.ts"
     }
   },
   "repository": {

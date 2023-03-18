@@ -1,4 +1,4 @@
-import type View from './two'
+import type View from './two.d.ts'
 
 interface Three extends View {
   // Selections

@@ -7,12 +7,13 @@
   "unpkg": "./builds/compromise-speech.min.js",
   "module": "./builds/compromise-speech.mjs",
   "type": "module",
-  "types": "index.d.ts",
   "sideEffects": false,
+  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",
-      "require": "./builds/compromise-speech.cjs"
+      "require": "./builds/compromise-speech.cjs",
+      "types": "./index.d.ts"
     }
   },
   "repository": {

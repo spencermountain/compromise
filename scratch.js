@@ -3,7 +3,10 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
-nlp('Management Plan: Review in 2 weeks').debug()
+let doc = nlp('match one two bar three four five six')
+doc.match('match !(foo|bar){0,3}').debug()
+
+// console.log(nlp.parseMatch('match !(foo|bar){0,3}'))

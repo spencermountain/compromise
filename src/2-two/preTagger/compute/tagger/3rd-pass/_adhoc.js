@@ -50,7 +50,7 @@ const adhoc = {
     return isCapital(terms, i)
   },
   'Noun|Verb': (terms, i) => {
-    return isCapital(terms, i) || isAloneVerb(terms, i, 'Infinitive')
+    return (i > 0 && isCapital(terms, i)) || isAloneVerb(terms, i, 'Infinitive')
   },
   'Plural|Verb': (terms, i) => {
     return isCapital(terms, i) || isAloneVerb(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')

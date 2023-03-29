@@ -6,7 +6,6 @@ import nlp from './src/four.js'
 // nlp.verbose('tagger')
 
 
-let doc = nlp('match one two bar three four five six')
-doc.match('match !(foo|bar){0,3}').debug()
-
-// console.log(nlp.parseMatch('match !(foo|bar){0,3}'))
+let txt = `five days.`
+let doc = nlp(txt).compute('root').debug()
+console.log(doc.text('root'))

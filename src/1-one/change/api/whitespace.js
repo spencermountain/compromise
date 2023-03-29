@@ -79,23 +79,13 @@ const methods = {
   /** remove bullets from beginning of phrase */
   debullet: function () {
     const hasBullet = /^\s*([-–—*•])\s*$/
-    let killTerms = []
     this.docs.forEach(terms => {
       //remove bullet symbols
       terms.forEach(t => {
         if (hasBullet.test(t.pre)) {
           t.pre = ''
         }
-        // sometimes, the bullet makes it into `text`
-        if (/^•$/.test(t.text)) {
-          killTerms.push(t)
-        }
       })
-    })
-    killTerms.forEach(t => {
-      // ❌ this is breaking
-      // ❌ `` gets replaced with `ÔÇó `
-      this.not([{ id: t.id }])
     })
     return this
   },

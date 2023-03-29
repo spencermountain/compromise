@@ -65,6 +65,7 @@ test('api:', function (t) {
     doc.post(' ')
     doc.trim()
     doc.hyphenate()
+    doc.debullet()
     doc.dehyphenate()
     doc.toQuotations()
     doc.toParentheses()

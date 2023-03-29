@@ -518,6 +518,7 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.trim()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove start and end whitespace
 - **[.hyphenate()](https://observablehq.com/@spencermountain/compromise-whitespace)** - connect words with hyphen, and remove whitespace
 - **[.dehyphenate()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove hyphens between words, and set whitespace
+- **[.debullet()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove bullet-points
 - **[.toQuotations()](https://observablehq.com/@spencermountain/compromise-whitespace)** - add quotation marks around these matches
 - **[.toParentheses()](https://observablehq.com/@spencermountain/compromise-whitespace)** - add brackets around these matches
 

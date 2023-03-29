@@ -1052,6 +1052,7 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
 
 - &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 - &nbsp; **[Prose](https://github.com/jdkato/prose/)** - quick tagger in Go by Joseph Kato
+- &nbsp; **[TextBlob](https://github.com/sloria/TextBlob)** - python tagger
 
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 

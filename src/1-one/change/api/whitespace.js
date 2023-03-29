@@ -81,11 +81,9 @@ const methods = {
     const hasBullet = /^\s*([-–—*•])\s*$/
     this.docs.forEach(terms => {
       //remove bullet symbols
-      terms.forEach(t => {
-        if (hasBullet.test(t.pre)) {
-          t.pre = ''
-        }
-      })
+      if (hasBullet.test(terms[0].pre)) {
+        terms[0].pre = terms[0].pre.replace(hasBullet, '')
+      }
     })
     return this
   },

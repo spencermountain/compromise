@@ -18,7 +18,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!-- #### 14.8.1 [Unreleased]
 -->
 
-#### 14.8.2 [Feb 2022]
+#### 14.9.0 [Mar 2023]
+- **[change]** - typescript path changes (thanks @rotemdan !)
+- **[fix]** - parsematch bug #997
+- **[fix]** - tagger fix #998
+
+#### 14.8.2 [Feb 2023]
 - **[change]** - #Actor tagging - in advance of #565
 - **[change]** - .noun() lumping changes - in advance of #565
 - **[new]** - support japanese full-stop

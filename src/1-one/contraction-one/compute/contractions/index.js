@@ -114,7 +114,7 @@ const contractions = (view) => {
         continue
       }
       // split-apart '4km'
-      words = numberUnit(terms, i, units)
+      words = numberUnit(terms, i, world)
       if (words) {
         words = toDocs(words, view)
         splice(document, [n, i], words)

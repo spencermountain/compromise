@@ -6,6 +6,5 @@ import nlp from './src/four.js'
 // nlp.verbose('tagger')
 
 
-let txt = `five days.`
-let doc = nlp(txt).compute('root').debug()
-console.log(doc.text('root'))
+let txt = `1er`
+let doc = nlp(txt).debug()

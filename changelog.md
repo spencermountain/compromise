@@ -22,6 +22,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - typescript path changes (thanks @rotemdan !)
 - **[fix]** - parsematch bug #997
 - **[fix]** - tagger fix #998
+- **[new]** - .debullet() method
 
 #### 14.8.2 [Feb 2023]
 - **[change]** - #Actor tagging - in advance of #565

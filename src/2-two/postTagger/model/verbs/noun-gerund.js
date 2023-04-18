@@ -13,6 +13,8 @@ export default [
   { match: '#Adjective [#Gerund]', group: 0, tag: 'Noun', notIf: '(still|even|just)', reason: 'early-warning' },
   //walking is cool
   { match: '[#Gerund] #Adverb? not? #Copula', group: 0, tag: 'Activity', reason: 'gerund-copula' },
+  //are doing is
+  { match: '#Copula [(#Gerund|#Activity)] #Copula', group: 0, tag: 'Gerund', reason: 'are-doing-is' },
   //walking should be fun
   { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'gerund-modal' },
   // finish listening

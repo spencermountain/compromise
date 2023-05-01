@@ -565,11 +565,11 @@ export default [
   'unruly',
   'many',
   'sparkly',
-  'approximately',
-  'fortunately',
-  'unfortunately',
+  // 'approximately',
+  // 'fortunately',
+  // 'unfortunately',
   'lately',
-  'ultimately',
+  // 'ultimately',
 
   // -ry
   'legendary',

@@ -265,4 +265,11 @@ export default [
   'knickers',
   'whisky',
   'shopping',
+  'feeling',
+  'majesty',
+  'commentary',
+  'bowling',
+  'parking',
+  'pollen',
+  'arsenic',
 ]

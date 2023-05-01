@@ -725,4 +725,5 @@ export default [
   'borne',
   'persuade',
   'summarise',
+  'desist',
 ]

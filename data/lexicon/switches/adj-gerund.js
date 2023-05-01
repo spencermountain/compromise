@@ -195,6 +195,7 @@ export default [
   'yielding',
   'disgusting',
 
+  'sentencing',
 
   'convincing',
   'degrading',

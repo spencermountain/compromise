@@ -1089,6 +1089,8 @@ let arr = [
   ['he arranged a 12 month journey', 'he #PastTense #Determiner #Value #Noun #Noun'],
   ['I will book a 24-hour ECG', 'i #Verb+ #Determiner #Value #Noun #Noun'],
   // [`the lieutenant general`, `#Determiner #Actor+`],
+  ['bowling alley', '#Noun+'],
+  ['bowling ball', '#Noun+'],
   // [``, ``],
 ]
 test('match:', function (t) {

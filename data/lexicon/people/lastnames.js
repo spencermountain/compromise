@@ -656,6 +656,7 @@ export default [
   'schroeder',
   'schulz',
   'schwarz',
+  'seinfeld',
   'segura',
   'semjonov',
   'semyonov',

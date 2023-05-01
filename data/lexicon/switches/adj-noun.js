@@ -124,6 +124,7 @@ export default [
   'modernist',
   'homeless',
 
+  'fugitive',
   'lush',
   'back',
   'rebel',
@@ -144,4 +145,9 @@ export default [
   'silver',
   'rash',
   'professional',
+  'excess',
+  'hobby',
+  'arctic',
+  'antarctic',
+
 ]

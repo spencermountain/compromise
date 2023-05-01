@@ -1,6 +1,7 @@
 export default [
   // simple mappings
   { word: '@', out: ['at'] },
+  { word: 'arent', out: ['are', 'not'] },
   { word: 'alot', out: ['a', 'lot'] },
   { word: 'brb', out: ['be', 'right', 'back'] },
   { word: 'cannot', out: ['can', 'not'] },

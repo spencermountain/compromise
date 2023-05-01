@@ -6,64 +6,6 @@ import nlp from './src/four.js'
 nlp.verbose('tagger')
 
 
-/*
-verbs
-
-  
-  
-  */
-
-/*
-  adj
-  'about',
-
-  'unfortunately',
-    'keeping',
-  'wanting',
-    'nevertheless',
-  'solar',
-
-  'lately',
-    'principal',
-  'medal',
-  'majesty',
-  'feeling',
-'commentary',
-  'saying',
-  'speaking',
-  'focal',
-    'fortunately',
-  'fashioned',
-  'parking',
-'was',
-  'utter',
-    'recipient',
-  'excess',
-  'mentioned',
-  'hobby',
-  'heist',
-  'signatory',
-  'bowling',
-  'lunatic',
-  'narcotic',
-  'pollen',
-'sentencing',
-  'fugitive',
-  'arent',
-  'dwelling',
-  'arctic',
-  'threesome',
-  'biopic',
-  'sabbatical',
-  'oatmeal',
-  'arsenal',
-  'arsenic',
-  'desist',
-  'seinfeld',
-  'nutrient',
-  'missive',
-  
-  */
 
 let arr = [
 
@@ -79,6 +21,8 @@ let arr = [
   // 'matchmaking',
 
   // 'became seated',
+
+
 
   // 'please do not speak',
   // 'is a tough read',

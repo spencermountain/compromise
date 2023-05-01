@@ -388,7 +388,19 @@ export default [
   'hormone',
   'sibling',
   'outspoken',
-
+  'medal',
+  'saying',
+  'recipient',
+  'heist',
+  'signatory',
+  'narcotic',
+  'threesome',
+  'foursome',
+  'biopic',
+  'arsenal',
+  'oatmeal',
+  'sabbatical',
+  'missive',
 ]
 
 

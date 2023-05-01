@@ -208,6 +208,6 @@ export default [
   'yelling',
   'zoning',
   'uprising',
-
+  'dwelling',
 ]
 

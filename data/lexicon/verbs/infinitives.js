@@ -722,6 +722,7 @@ export default [
   'reup',//'re-up'
   'irk',
   'succeed',
-  "borne",
-  "persuade",
+  'borne',
+  'persuade',
+  'summarise',
 ]

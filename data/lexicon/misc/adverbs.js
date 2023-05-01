@@ -91,4 +91,5 @@ export default [
   'by no means',
   'altogether',
   "outright",
+  'ultimately',
 ]

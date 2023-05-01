@@ -375,6 +375,20 @@ export default [
   'seminar',
   'variety',
   'laboratory',
+  'programme',
+  'legend',
+  'fiend',
+  'cloth',
+  'institute',
+  'tonite',
+  'paradise',
+  'enterprise',
+  'lime',
+  'magnate',
+  'hormone',
+  'sibling',
+  'outspoken',
+
 ]
 
 

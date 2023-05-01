@@ -43,4 +43,5 @@ emoticons.forEach(str => lexicon[str] = 'Emoticon')
 delete lexicon['']
 delete lexicon[null]
 delete lexicon[' ']
+
 export { lexicon, switches }

@@ -632,7 +632,7 @@ export default [
   'shock',
   'shop',
   'shore',
-  'shot',
+  // 'shot',
   'show',
   'shuffle',
   'side',
@@ -680,6 +680,7 @@ export default [
   'stamp',
   'stand',
   'staple',
+  'stick',
   'star',
   'stare',
   'start',
@@ -847,5 +848,9 @@ export default [
   'hash',
   'bite',
   'coat',
-  'lust'
+  'lust',
+  'bruise',
+  'disguise',
+
+  'paise',
 ]

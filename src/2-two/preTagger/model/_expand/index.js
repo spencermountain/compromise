@@ -35,7 +35,7 @@ const switchDefaults = {
   // 'victoria'
   'Person|Place': 'Person',
   // 'rusty'
-  'Person|Adj': 'Adjective',
+  'Person|Adj': 'Comparative',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
   // 'miles'
@@ -99,6 +99,9 @@ const expandVariable = function (switchWords, model) {
     }
     if (name === 'Adj|Present') {
       expandVerb(w, lex, true)
+      expandAdjective(w, lex, model)
+    }
+    if (name === 'Person|Adj') {
       expandAdjective(w, lex, model)
     }
     // add infinitives for gerunds

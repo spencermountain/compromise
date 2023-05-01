@@ -797,7 +797,7 @@ export default [
   'strike up',
   'string up',
   'string along',
-  'stuck up',
+  'stick up',
   'study up',
   'suck in',
   'suck off',

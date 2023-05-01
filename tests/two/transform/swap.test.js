@@ -47,6 +47,10 @@ test('swap-noun', function (t) {
   doc.swap('hot dog', 'hamburger') //use singular-forms
   t.equal(doc.text(), 'two hamburgers please', here + 'multi-word')
 
+  doc = nlp("Jeff's bikes")
+  doc.swap('Jeff', 'John')
+  t.equal(doc.text(), `John's bikes`, here + 'keep-possessive')
+
   t.end()
 })
 

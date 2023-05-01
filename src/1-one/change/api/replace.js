@@ -72,6 +72,11 @@ fns.replaceWith = function (input, keep = {}) {
   if (keep.case && m.docs[0] && m.docs[0][0] && m.docs[0][0].index[1] === 0) {
     m.docs[0][0].text = titleCase(m.docs[0][0].text)
   }
+  // try to keep some pre-post punctuation
+  // if (m.terms().length === 1 && main.terms().length === 1) {
+  //   console.log(original.docs)
+  // }
+
   // console.log(input.docs[0])
   // let regs = input.docs[0].map(t => {
   //   return { id: t.id, optional: true }

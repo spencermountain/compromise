@@ -3,9 +3,7 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
-
-
+// nlp.verbose('tagger')
 
 let arr = [
 
@@ -35,9 +33,15 @@ let arr = [
   'what companies are doing is',
   'stick'
 ]
-let doc = nlp(arr[0]).debug()
-console.log(doc.compute('root').text('root'))
+// let doc = nlp(arr[0]).debug()
+// console.log(doc.compute('root').text('root'))
+
 // console.log(doc.json({ root: true })[0])
+
+let doc = nlp("Jeff's bikes")
+doc.swap('Jeff', 'John')
+console.log(doc.text())
+console.log(doc.json()[0])
 
 // import adj from './data/lexicon/adjectives/adjectives.js'
 

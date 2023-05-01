@@ -13,6 +13,7 @@ export default [
   'always',
   'anymore',
   'anyway',
+  'alongside',
   'apart',
   'aside',
   'as soon',
@@ -88,5 +89,6 @@ export default [
   'backward',
   'hella',
   'by no means',
-
+  'altogether',
+  "outright",
 ]

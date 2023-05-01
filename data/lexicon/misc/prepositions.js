@@ -46,6 +46,7 @@ export default [
   'than',
   'through',
   'throughout',
+  'thereby',
   'thru',
   'till',
   'toward',

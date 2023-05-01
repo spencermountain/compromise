@@ -3,7 +3,7 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 
 /*
@@ -140,52 +140,7 @@ verbs
 /*
   nouns
 
-  "guys",
-  "humanitarian",
-  "thereby",
-  "headquarter",
-  "succeed",
-  "earning",
-  "jeans",
-  "interim",
-  "thy",
-  "literary",
-  "alongside",
-  "beneath",
-  "altogether",
-  "outright",
-  "mainstream",
-  "underlying",
-  "alike",
-  "farther",
-  "including",
-  "whatsoever",
-  "borne",
-  "mighty",
-  "metropolitan",
-  "doin",
-  "overboard",
-  "btw",
-  "guts",
-  "mediocre",
-  "friends",
-  "maritime",
-  "functioning",
-  "flirty",
-  
-  "paranoid",
-  "beware",
-  "whereby",
-  "undercover",
-  "persuade",
-  "compulsory",
-  "richest",
-  "hardcore",
-  "grim",
-  "rainy",
-  "homeless",
-  "nerdy",
-  "parents",
+ 
   
   
   
@@ -195,7 +150,35 @@ verbs
   */
 
 let arr = [
+  'please do not speak',
+  'is a tough read',
+  // "spot on",
+  // "up to date",
+  "sleepier",
+  "guiltier",
+  "hairier",
+  "richest",
+  "hardcore",
+  "grim",
+  "rainy",
+  "homeless",
+  "nerdy",
+  "parents",
   'what companies are doing is'
 ]
 let doc = nlp(arr[0]).debug()
+console.log(doc.compute('root').text('root'))
 // console.log(doc.json({ root: true })[0])
+
+// import adj from './data/lexicon/adjectives/adjectives.js'
+
+// adj.forEach(str => {
+//   let obj = nlp(str).adjectives().conjugate()[0]
+//   if (!obj || !obj.Comparative) {
+//     // console.log(str, obj)
+//     return
+//   }
+//   if (!nlp(obj.Comparative).has('#Comparative')) {
+//     console.log([str, obj.Comparative])
+//   }
+// })

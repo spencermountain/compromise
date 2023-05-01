@@ -46,6 +46,7 @@ export default [
   'half',
   'homeless',
   'ideal',
+  'interim',
   'incumbent',
   'individual',
   'innocent',

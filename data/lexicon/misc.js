@@ -1,5 +1,6 @@
 export default {
   better: 'Comparative',
+  farther: 'Comparative',
   earlier: 'Superlative',
   sounds: 'PresentTense',
 
@@ -22,6 +23,7 @@ export default {
   according: 'Gerund',
   resulting: 'Gerund',
   staining: 'Gerund',
+  doin: 'Gerund',
 
   no: 'Expression',
   non: 'Negative',
@@ -64,6 +66,7 @@ export default {
 
   // 
   'come here': 'Imperative',
+  'beware': 'Imperative',
   // 'go away': 'Imperative',
   // 'hurry up': 'Imperative',
   // 'make sure': 'Imperative',

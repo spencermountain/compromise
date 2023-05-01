@@ -671,5 +671,17 @@ export default [
   'ice cold',
   'one on one',
   'ongoing',
+  'literary',
+  'beneath',
+  "alike",
+  "mainstream",
+  "metropolitan",
+  "overboard",
+  "mediocre",
+  "maritime",
+  "flirty",
+  "paranoid",
+  "undercover",
+  "compulsory",
 ]
 

@@ -129,4 +129,8 @@ export default [
   'oh my god',
   'oh my gosh',
   // 'thank you',
+  "whatsoever",
+  "btw",
+
+
 ]

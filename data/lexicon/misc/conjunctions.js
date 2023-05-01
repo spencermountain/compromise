@@ -68,4 +68,5 @@ export default [
   // 'why',
   'yet',
   'either',
+  "whereby",
 ]

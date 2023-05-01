@@ -156,6 +156,7 @@ export default [
     lyse: Inf,
     iant: Adj,
     nary: Adj,
+    ghty: Adj,
     erer: Actor,//caterer
   },
   {

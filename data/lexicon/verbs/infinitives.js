@@ -721,4 +721,7 @@ export default [
   'ravish',
   'reup',//'re-up'
   'irk',
+  'succeed',
+  "borne",
+  "persuade",
 ]

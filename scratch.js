@@ -3,7 +3,7 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let arr = [
 
@@ -51,6 +51,8 @@ let arr = [
   // "comin",
   // "livin",
   // "sayin",
+  // "doin",
+  // "lovin",
   // "tone",
   // "shore",
   // "combat",
@@ -62,39 +64,23 @@ let arr = [
   // "ink",
 
 
+  // 'overtime',
 
-
-  // "overworked",
-  // "disinterested",
-  // "uprise",
-
-  // "reputed",
-  // "overused",
-  // "pending",
   // "distress",
   // "would be amusing",
   // "fragment",
-  // "doin",
   // "withdrawn",
-  // "hands",
   // "would be outstanding",
-  // "redefined",
   // "thread",
 
-  // "hammer",
-  // "tattooed",
-  // "puzzled",
-  // "recycled",
-  // "lovin",
   // "rid",
-
   // 'probe',
+
   // 'bargain',
   // 'manufacturing',
   // 'stream',
   // 'cave',
   // 'what companies are doing is',
-
 
 
 ]

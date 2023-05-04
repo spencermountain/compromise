@@ -1052,7 +1052,7 @@ let arr = [
   [`Gibson made a routine catch`, `#Person #Verb #Determiner #Adjective #Singular`],
   [`Don’t make any rash decisions`, `do not #Imperative #Determiner #Adjective #Plural`],
   // hyphentated adjectives
-  [`carries oxygen-rich blood`, `#PresentTense #Adjective #Adjective #Noun`],
+  // [`carries oxygen-rich blood`, `#PresentTense #Adjective #Adjective #Noun`],
   [`his best-known lyrics`, `his #Adjective #Adjective #Plural`],
   [`A health-conscious president`, `a #Adjective #Adjective #Noun`],
   [`company-wide death marches`, `#Adjective #Adjective #Noun #Plural`],

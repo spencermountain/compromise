@@ -852,6 +852,7 @@ export default [
   'lust',
   'bruise',
   'disguise',
-
+  'hammer',
   'paise',
+  'overpass',
 ]

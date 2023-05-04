@@ -224,7 +224,7 @@ export default [
   'overpowering',
   'varying',
   'intimidating',
-
+  'pending',
   'caring'
 
 ]

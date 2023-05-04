@@ -209,5 +209,7 @@ export default [
   'zoning',
   'uprising',
   'dwelling',
+  'saying',
+
 ]
 

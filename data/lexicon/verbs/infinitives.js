@@ -729,6 +729,6 @@ export default [
   'desist',
   'pursuant',
   'falter',
-  "unfounded",
-
+  'unfounded',
+  'oversee',
 ]

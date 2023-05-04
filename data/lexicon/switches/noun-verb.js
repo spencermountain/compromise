@@ -294,6 +294,7 @@ export default [
   'fund',
   'fuss',
   'fuzz',
+  'gag',
   'gain',
   'game',
   'gang',

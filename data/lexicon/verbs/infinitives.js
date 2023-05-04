@@ -104,6 +104,7 @@ export default [
   'cherish',
   'chew',
   'choose',
+  'chop',
   'circumvent',
   'cite',
   'cleanse',
@@ -726,4 +727,8 @@ export default [
   'persuade',
   'summarise',
   'desist',
+  'pursuant',
+  'falter',
+  "unfounded",
+
 ]

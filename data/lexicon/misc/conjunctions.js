@@ -52,6 +52,7 @@ export default [
   'to',
   //  'unless',
   'until',
+  'til',
   // 'versus',
   // 'what',
   //  'when',
@@ -69,4 +70,6 @@ export default [
   'yet',
   'either',
   "whereby",
+  "cos",
+  "coz",
 ]

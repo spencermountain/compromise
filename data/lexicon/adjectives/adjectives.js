@@ -701,6 +701,17 @@ export default [
   'dizzy',
   'breathtaking',
   'infinite',
+  "lil",
+  "southwest",
+  "northwest",
+  "southeast",
+  "northeast",
+  "underneath",
+  "indie",
+  "nude",
+  "destitute",
+  "obligated",
+  "naval",
 
 ]
 

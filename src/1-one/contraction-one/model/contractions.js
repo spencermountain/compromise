@@ -20,6 +20,7 @@ export default [
   { word: 'gonna', out: ['going', 'to'] },
   { word: 'gotta', out: ['have', 'got', 'to'] }, //hmm
   { word: 'gimme', out: ['give', 'me'] },
+  { word: 'outta', out: ['out', 'of'] },
   { word: 'tryna', out: ['trying', 'to'] },
   { word: 'gtg', out: ['got', 'to', 'go'] },
   { word: 'im', out: ['i', 'am'] },

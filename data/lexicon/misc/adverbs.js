@@ -48,6 +48,7 @@ export default [
   'kinda',
   'maybe',
   'meanwhile',
+  'awhile',
   'more',
   'moreover',
   'newly',

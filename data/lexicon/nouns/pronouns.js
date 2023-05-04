@@ -11,7 +11,7 @@ export default [
   'us',
   'we',
   'thou',
-
+  'thee',
   'il',
   'elle',
   `'em`,

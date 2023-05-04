@@ -272,4 +272,13 @@ export default [
   'parking',
   'pollen',
   'arsenic',
+  'tin',
+  "nowadays",
+  "jazz",
+  "granite",
+  'anger',
+  'spite',
+  "putty",
+  "hooky",
+
 ]

@@ -131,6 +131,12 @@ export default [
   // 'thank you',
   'whatsoever',
   'btw',
-  'nevertheless'
-
+  'nevertheless',
+  "pls",
+  "ahh",
+  "sic",
+  "leh",
+  "wat",
+  "omg",
+  "aka",
 ]

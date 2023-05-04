@@ -855,4 +855,5 @@ export default [
   'hammer',
   'paise',
   'overpass',
+  'fragment'
 ]

@@ -65,18 +65,12 @@ let arr = [
 
 
   // 'overtime',
-
-  // "distress",
-  // "would be amusing",
-  // "fragment",
-  // "withdrawn",
-  // "would be outstanding",
-  // "thread",
-
   // "rid",
-  // 'probe',
 
-  // 'bargain',
+  // "would be amusing",
+  // "would be outstanding",
+  // "small fragment",
+
   // 'manufacturing',
   // 'stream',
   // 'cave',

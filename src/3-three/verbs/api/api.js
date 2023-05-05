@@ -1,7 +1,7 @@
 import find from '../find.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
-import toInfinitive from './conjugate/toInfinitive.js'
+import toInf from './conjugate/toInfinitive.js'
 import toPast from './conjugate/toPast.js'
 import toParticiple from './conjugate/toParticiple.js'
 import toPresent from './conjugate/toPresent.js'
@@ -56,7 +56,7 @@ const api = function (View) {
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
-        return toInfinitive(vb, parsed, info.form)
+        return toInf(vb, parsed, info.form)
       })
     }
     toPresentTense(n) {
@@ -95,6 +95,7 @@ const api = function (View) {
       })
     }
     conjugate(n) {
+      const { conjugate, toInfinitive } = this.world.methods.two.transform.verb
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
@@ -102,21 +103,9 @@ const api = function (View) {
         if (info.form === 'imperative') {
           info.form = 'simple-present'
         }
-        let res = {
-          Infinitive: toInfinitive(vb.clone(), parsed, info.form).text('normal'),
-          PastTense: toPast(vb.clone(), parsed, info.form).text('normal'),
-          PresentTense: toPresent(vb.clone(), parsed, info.form).text('normal'),
-          FutureTense: toFuture(vb.clone(), parsed, info.form).text('normal'),
-          Gerund: toGerund(vb.clone(), parsed, info.form).text('normal'),
-          Participle: toParticiple(vb.clone(), parsed, info.form).text('normal'),
-        }
-        res.Gerund = res.Gerund.replace(/^is /, '')
-        // only return participle if it's novel
-        res.Participle = res.Participle.replace(/^(had|have|has) /, '')
-        if (res.Participle === res.PastTense) {
-          delete res.Participle
-        }
-        return res
+        let str = parsed.root.text('normal')
+        let inf = toInfinitive(str, vb.model) || str
+        return conjugate(inf, vb.model)
       }, [])
     }
 

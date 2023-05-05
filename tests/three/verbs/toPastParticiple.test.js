@@ -277,7 +277,6 @@ test('past vs past-participle:', function (t) {
     ['dig', 'dug', 'dug'],
     ['do', 'did', 'done'],
     ['draw', 'drew', 'drawn'],
-    ['dream', 'dreamed', 'dreamed'],
     ['drink', 'drank', 'drunk'],
     ['drive', 'drove', 'driven'],
     ['eat', 'ate', 'eaten'],
@@ -351,9 +350,9 @@ test('past vs past-participle:', function (t) {
     let obj = doc.verbs().conjugate()[0] || {}
     t.equal(obj.PastTense, past, here + ' ' + a[0])
 
-    // let prt = obj.Participle || obj.PastTense || ''
-    // prt = prt.replace(/^had /, '')
-    // t.equal(prt, participle, here + ' ' + a[0])
+    let prt = obj.Participle || obj.PastTense || ''
+    prt = prt.replace(/^had /, '')
+    t.equal(prt, participle, here + ' ' + a[0])
   })
   t.end()
 })

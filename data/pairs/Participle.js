@@ -2,10 +2,11 @@ export default [
   ['arise', 'arisen'],
   ['arisen', 'arise'],
   ['awake', 'awoken'],
-  ['awaken', 'awake'],
+  ['awoken', 'awake'],
   ['awoken', 'awake'],
   ['beaten', 'beat'],
-  ['become', 'become'],
+  ['bear', 'born'],
+  ['become', 'became'],
   ['been', 'be'],
   ['begun', 'begin'],
   ['bent', 'bend'],
@@ -161,5 +162,8 @@ export default [
   ['woven', 'weave'],
   ['written', 'write'],
   ['wrung', 'wring'],
+  // ['catch', 'caught'],
+  // ['teach', 'taught'],
+  // ['think', 'thought'],
 
 ]

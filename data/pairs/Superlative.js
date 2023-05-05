@@ -369,6 +369,8 @@ export default [
   ['dire', 'direst'],
   ['polite', 'politest'],
   ['eager', 'eagerest'],
+  ['prompt', 'promptest'],
+  ['cheerful', 'cheerfullest'],
 
 
 ]

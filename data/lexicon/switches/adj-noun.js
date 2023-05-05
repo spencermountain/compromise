@@ -149,6 +149,7 @@ export default [
   'hobby',
   'arctic',
   'antarctic',
-  "darling",
-  "marine",
+  'darling',
+  'marine',
+  'slack',
 ]

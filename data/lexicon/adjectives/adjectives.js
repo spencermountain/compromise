@@ -711,25 +711,17 @@ export default [
   'overboard',
   'mediocre',
   'maritime',
-  'flirty',
   'paranoid',
   'compulsory',
   'hardcore',
-  'grim',
-  'rainy',
-  'whiny',
-  'nerdy',
-  'hardy',
   'clockwise',
   'counterclockwise',
   'multifaceted',
   'lighthearted',
   'belated',
   'bestselling',
-  'dizzy',
   'breathtaking',
   'infinite',
-  'lil',
   'southwest',
   'northwest',
   'southeast',
@@ -744,8 +736,8 @@ export default [
   'overhand',
   'overhead',
   'hardworking',
-
-
+  'gauche',
+  'stout',
 
 ]
 

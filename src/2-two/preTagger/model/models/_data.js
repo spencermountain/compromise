@@ -1,10 +1,10 @@
 // generated in ./lib/pairs
 export default {
   "Comparative": {
-    "fwd": "2:er¦1er:h,l,n,f,s¦1r:e¦2er:ar,or,om",
-    "both": "4er:weet,uiet,reat¦3er:ray,alm,ght¦3ter:lat¦3ner:hin¦2er:st,rt,ft,nt,rm,ct,ng¦2mer:im¦2ter:ot¦1er:b,p,k,d,w¦ier:y",
-    "rev": "1:gger,tter,yer¦2:gher,ller,aner,eer,ener,sher,uer,ffer,ver,eler,iler,uler,cer,rner,adder¦3:rger,oser,pler,icher,ooler,other,earer,rser,user,tler,uter,bler,osser,uger,maler,domer,ealer,emner,amer,eafer,iter¦4:enser,ucher,mmoner,viner,uiner,somer,moter,uarer¦5:rther,emier",
-    "ex": "6:lesser¦better:good¦worse:bad¦3ger:big¦4er:fair,poor,soon,vain¦3ter:wet,fat¦3er:lay,far,fun¦4ter:neat¦3der:mad,sad¦4r:wide,late,safe,fine,pure,wise,dire,fake,pale,rare,rude,sore,ripe¦5r:eerie,stale¦5er:plain"
+    "fwd": "3:ser,ier¦1er:h,t,f,l,n¦1r:e¦2er:ss,or,om",
+    "both": "3er:ver,ear,alm¦3ner:hin¦3ter:lat¦2mer:im¦2er:ng,rm,mb¦2ber:ib¦2ger:ig¦1er:w,p,k,d¦ier:y",
+    "rev": "1:tter,yer¦2:uer,ver,ffer,oner,eler,ller,iler,ster,cer,uler,sher,ener,gher,aner,adder,nter,eter,rter,hter,rner,fter¦3:oser,ooler,eafer,user,airer,bler,maler,tler,eater,uger,rger,ainer,urer,ealer,icher,pler,emner,icter,nser,iser¦4:arser,viner,ucher,rosser,somer,ndomer,moter,oother,uarer,hiter¦5:nuiner,esser,emier¦ar:urther",
+    "ex": "worse:bad¦better:good¦4er:fair,gray,poor¦1urther:far¦3ter:fat,hot,wet¦3er:lay,shy,fun¦3der:mad,sad¦4der:glad¦:¦4r:cute,dire,fake,fine,free,lame,late,pale,rare,ripe,rude,safe,sore,tame,wide¦5r:eerie,stale"
   },
   "Gerund": {
     "fwd": "1:nning,tting,rring,pping,eing,mming,gging,dding,bbing,kking¦2:eking,oling,eling,eming¦3:velling,siting,uiting,fiting,loting,geting,ialing¦4:graming",

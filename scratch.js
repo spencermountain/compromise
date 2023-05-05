@@ -19,8 +19,15 @@ let arr = [
   // 'sleepier',
   // 'guiltier',
   // 'clean',
-  'cynically',
-  'hairy',
+
+  // 'drunk',
+  // 'hearty',
+  // 'holy',
+  // 'leery',
+
+  // 'solitary',
+  // 'cynically',
+  // 'hairy',
   // 'richest',
 
   // 'jet',
@@ -77,12 +84,12 @@ let arr = [
 ]
 let doc = nlp(arr[0]).debug()
 // console.log(doc.verbs().conjugate())
-console.log(doc.adverbs().conjugate())
+console.log(doc.adjectives().conjugate())
 // doc.verbs().toGerund()
 // doc.verbs().toPastParticiple()
 // console.log(doc.text())
-console.log(doc.compute('root').text('root'))
-console.log(doc.json({ root: true })[0])
+// console.log(doc.compute('root').text('root'))
+// console.log(doc.json({ root: true })[0])
 
 // let doc = nlp("Jeff's bikes")
 // doc.swap('Jeff', 'John')

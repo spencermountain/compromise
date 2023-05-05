@@ -7,7 +7,7 @@ import nlp from './src/four.js'
 
 let arr = [
 
-  'we will convert',
+  // 'we will convert',
   // 'matchmaking',
   // "would be amusing",
   // "would be outstanding",
@@ -18,7 +18,9 @@ let arr = [
   // 'up to date',
   // 'sleepier',
   // 'guiltier',
-  // 'hairier',
+  // 'clean',
+  'cynically',
+  'hairy',
   // 'richest',
 
   // 'jet',
@@ -75,11 +77,12 @@ let arr = [
 ]
 let doc = nlp(arr[0]).debug()
 // console.log(doc.verbs().conjugate())
-doc.verbs().toGerund()
+console.log(doc.adverbs().conjugate())
+// doc.verbs().toGerund()
 // doc.verbs().toPastParticiple()
-console.log(doc.text())
-// console.log(doc.compute('root').text('root'))
-// console.log(doc.json({ root: true })[0])
+// console.log(doc.text())
+console.log(doc.compute('root').text('root'))
+console.log(doc.json({ root: true })[0])
 
 // let doc = nlp("Jeff's bikes")
 // doc.swap('Jeff', 'John')

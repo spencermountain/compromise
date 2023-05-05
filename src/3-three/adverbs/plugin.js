@@ -1,3 +1,9 @@
+// guard against superlative+comparative forms
+const toRoot = function (adj) {
+  let str = adj.compute('root').text('root')
+  return str
+}
+
 // return the nth elem of a doc
 const api = function (View) {
 
@@ -5,6 +11,15 @@ const api = function (View) {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
       this.viewType = 'Adverbs'
+    }
+    conjugate(n) {
+      return this.getNth(n).map(adv => {
+        let adj = toRoot(adv)
+        return {
+          Adverb: adv.text('normal'),
+          Adjective: adj,
+        }
+      }, [])
     }
     json(opts = {}) {
       const fromAdverb = this.methods.two.transform.adjective.fromAdverb
@@ -25,4 +40,4 @@ const api = function (View) {
     return new Adverbs(m.document, m.pointer)
   }
 }
-export default api
+export default { api }

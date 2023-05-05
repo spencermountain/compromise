@@ -100,4 +100,4 @@ const api = function (View) {
     return new Adjectives(m.document, m.pointer)
   }
 }
-export default api
+export default { api }

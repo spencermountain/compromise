@@ -14,3 +14,14 @@ test('adjectives misc', function (t) {
 
   t.end()
 })
+
+
+test('pessimistic conjugation', function (t) {
+
+  let res = nlp('hairy').adjectives().conjugate()[0] || {}
+  t.equal(res.Comparative, 'hairier', here + 'comp')
+  t.equal(res.Superlative, 'hairiest', here + 'sup')
+  t.ok(!res.Adverb, here + 'no advb')
+
+  t.end()
+})

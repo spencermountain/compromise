@@ -1,7 +1,7 @@
 import gpt from './api.js'
 import fs from 'fs'
 
-let res = await gpt(`generate example 150 [infinitive, gerund] verb pairs`)
+let res = await gpt(`generate 120 adverb-adjective pairs, in the format 'adjective|adverb'`)
 console.log(res.text)
 
 

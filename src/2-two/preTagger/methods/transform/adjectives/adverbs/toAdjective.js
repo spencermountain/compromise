@@ -102,8 +102,8 @@ const exceptions = {
   customarily: 'customary',
   idly: 'idle',
   publically: 'public',
-  quickly: 'fast',
-
+  quickly: 'quick',
+  cynically: 'cynical',
   well: 'good',// -?
 }
 

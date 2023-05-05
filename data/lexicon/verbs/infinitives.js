@@ -753,7 +753,11 @@ export default [
   'exalt',
   'encircle',
   'exhort',
-
+  'snatch',
   'impinge',
   'revere',
+  'tumble',
+  'greet',
+  'conform',
+  'breathe',
 ]

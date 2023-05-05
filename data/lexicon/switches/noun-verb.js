@@ -859,4 +859,10 @@ export default [
   'fragment',
   'catalog',
   'scribble',
+  'whisper',
+  'hatch',
+  'stalk',
+  'hint',
+  'blink',
+  'quiver',
 ]

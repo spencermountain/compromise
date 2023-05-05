@@ -12,8 +12,6 @@ let arr = [
   // 'catch',
   // 'teach',
   // 'buy',
-  'replicate',
-
   'bought',
   'drove',
   'spoke',

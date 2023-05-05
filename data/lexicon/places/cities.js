@@ -458,6 +458,7 @@ export default [
   'windhoek',
   'chengzhong',
   'wuzhou',
+  'peking',
 
   // india state-capitals
   'agartala',

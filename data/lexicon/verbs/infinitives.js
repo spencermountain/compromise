@@ -734,4 +734,8 @@ export default [
   'rid',
   'impale',
   'beguile',
+  'fundraise',
+  'respond',
+  'declare',
+  'transport'
 ]

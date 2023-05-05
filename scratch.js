@@ -7,25 +7,10 @@ import nlp from './src/four.js'
 
 let arr = [
 
-  // 'peacemaking',
-  // 'fundraising',
+  'we will convert',
   // 'matchmaking',
-
-
-
-  'pile',
-  'profile',
-  'projectile',
-  'reconcile',
-  'smile',
-  'sterile',
-  'stile',
-  'stockpile',
-  'textile',
-  'tile',
-  'vile',
-  'impale',
-  'beguile',
+  // "would be amusing",
+  // "would be outstanding",
 
   // 'please do not speak',
   // 'is a tough read',
@@ -41,7 +26,6 @@ let arr = [
   // "sittin",
   // "ridin",
   // "jus",
-  // "foregoing",
   // "allergic",
   // "listed",
 
@@ -79,8 +63,7 @@ let arr = [
 
   // 'overtime',
 
-  // "would be amusing",
-  // "would be outstanding",
+
   // "small fragment",
 
   // 'manufacturing',
@@ -91,9 +74,10 @@ let arr = [
 
 ]
 let doc = nlp(arr[0]).debug()
-console.log(doc.verbs().conjugate())
+// console.log(doc.verbs().conjugate())
+doc.verbs().toGerund()
 // doc.verbs().toPastParticiple()
-// console.log(doc.text())
+console.log(doc.text())
 // console.log(doc.compute('root').text('root'))
 // console.log(doc.json({ root: true })[0])
 

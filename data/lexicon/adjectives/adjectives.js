@@ -743,6 +743,7 @@ export default [
   'overdue',
   'overhand',
   'overhead',
+  'hardworking',
 
 
 

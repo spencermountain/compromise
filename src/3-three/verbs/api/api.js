@@ -107,8 +107,10 @@ const api = function (View) {
           PastTense: toPast(vb.clone(), parsed, info.form).text('normal'),
           PresentTense: toPresent(vb.clone(), parsed, info.form).text('normal'),
           FutureTense: toFuture(vb.clone(), parsed, info.form).text('normal'),
+          Gerund: toGerund(vb.clone(), parsed, info.form).text('normal'),
           Participle: toParticiple(vb.clone(), parsed, info.form).text('normal'),
         }
+        res.Gerund = res.Gerund.replace(/^is /, '')
         // only return participle if it's novel
         res.Participle = res.Participle.replace(/^(had|have|has) /, '')
         if (res.Participle === res.PastTense) {

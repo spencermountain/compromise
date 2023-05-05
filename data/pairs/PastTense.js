@@ -2063,5 +2063,7 @@ export default [
   ['colored', 'color'],
   ['vied', 'vie'],
   ['exiled', 'exile'],
+  ['freaked', 'freak'],
+  ['shrieked', 'shriek'],
   // ['', ''],
 ]

@@ -161,6 +161,11 @@ test('toPast:', function (t) {
     // ['john will not be nice', 'john was not nice'],
     // ['john will be not nice', 'john was not nice'],
     // ['john had not been nice', 'john had not been nice'],
+
+    ['impale', 'impaled'],
+    ['beguile', 'beguiled'],
+    ['convolute', 'convoluted'],
+    ['root', 'rooted'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

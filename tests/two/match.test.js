@@ -1091,6 +1091,20 @@ let arr = [
   // [`the lieutenant general`, `#Determiner #Actor+`],
   ['bowling alley', '#Noun+'],
   ['bowling ball', '#Noun+'],
+  // rivers
+  ['the nile', '#Determiner #Place'],
+  ['the ganges', '#Determiner #Place'],
+  ['mekong river', '#Place+'],
+  ['river thames', '#Place+'],
+  ['the danube', '#Determiner #Place'],
+  ['the yangtze', '#Determiner #Place'],
+  ['orinoco river', '#Place+'],
+  ['the seine', '#Determiner #Place'],
+  ['rio grande', '#Place+'],
+  ['Godavari River', '#Place+'],
+  ['the Saint Lawrence River', 'the #Place+'],
+  ['by Foo Estuary', 'by #Place+'],
+
   // [``, ``],
 ]
 test('match:', function (t) {

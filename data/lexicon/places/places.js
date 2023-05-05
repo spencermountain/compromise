@@ -34,6 +34,7 @@ export default [
   'syd',
   'yyz',
 
+  // bodies of water
   'antarctic ocean',
   'arctic ocean',
   'atlantic ocean',
@@ -43,6 +44,18 @@ export default [
   'indian ocean',
   'new england',
   'pacific ocean',
+
+  // rivers
+  'nile',
+  'ganges',
+  'mekong',
+  'thames',
+  'danube',
+  'yangtze',
+  'orinoco',
+  'seine',
+  'rio grande',
+  'godavari',
 
   //continents
   'africa',

@@ -7,20 +7,25 @@ import nlp from './src/four.js'
 
 let arr = [
 
-  // 'stuck',
   // 'peacemaking',
-  // 'revered',
-  // 'panicked',
-  // 'flooded',
-  // 'suited',
-  // 'beguiled',
   // 'fundraising',
-  // 'impaled',
   // 'matchmaking',
 
-  // 'became seated',
 
 
+  'pile',
+  'profile',
+  'projectile',
+  'reconcile',
+  'smile',
+  'sterile',
+  'stile',
+  'stockpile',
+  'textile',
+  'tile',
+  'vile',
+  'impale',
+  'beguile',
 
   // 'please do not speak',
   // 'is a tough read',
@@ -42,40 +47,37 @@ let arr = [
 
   // "quo",
   // "triple",
-  // "playin",
   // "foremost",
   // "friends",
-  // "waitin",
   // "guys",
+
+  // "playin",
+  // "waitin",
   // "gettin",
   // "comin",
   // "livin",
   // "sayin",
   // "doin",
   // "lovin",
+
+
   // "tone",
   // "shore",
 
   // "i drive to the cottage",
   // "He will study biology in college.",
-  "walk",
-  "drive",
-  "vie",
+  // "drive",
+  // "vie",
   // "convoluted",
   // "rooted",
   // "trumpeted",
-  // "colored",
 
-  // "combat",
   // "wad",
   // "sub",
-  // "slope",
 
 
-  // "ink",
 
   // 'overtime',
-  // "rid",
 
   // "would be amusing",
   // "would be outstanding",

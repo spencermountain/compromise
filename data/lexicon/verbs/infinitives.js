@@ -731,4 +731,7 @@ export default [
   'falter',
   'unfounded',
   'oversee',
+  'rid',
+  'impale',
+  'beguile',
 ]

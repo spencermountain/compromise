@@ -7,6 +7,10 @@ import nlp from './src/four.js'
 
 let arr = [
 
+  // 'sensationally',
+  'superbly',
+  // 'cheerful',
+  // 'secure',
   // 'we will convert',
   // 'matchmaking',
   // "would be amusing",
@@ -84,7 +88,7 @@ let arr = [
 ]
 let doc = nlp(arr[0]).debug()
 // console.log(doc.verbs().conjugate())
-console.log(doc.adjectives().conjugate())
+console.log(doc.adverbs().conjugate())
 // doc.verbs().toGerund()
 // doc.verbs().toPastParticiple()
 // console.log(doc.text())

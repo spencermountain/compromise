@@ -359,7 +359,7 @@ export default [
   ['steep', 'steepest'],
   ['stiff', 'stiffest'],
   ['straight', 'straightest'],
-  ['sweet', 'sweettest'],
+  ['sweet', 'sweetest'],
   ['thick', 'thickest'],
   ['tight', 'tightest'],
   ['tough', 'toughest'],
@@ -368,6 +368,7 @@ export default [
   ['wide', 'widest'],
   ['dire', 'direst'],
   ['polite', 'politest'],
+  ['eager', 'eagerest'],
 
 
 ]

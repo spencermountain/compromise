@@ -32,7 +32,7 @@ export default {
   },
   "Superlative": {
     "fwd": "1st:e¦1est:l,m,f,s¦1iest:cey¦2est:or,ir¦3est:ver",
-    "both": "4:east¦5:hwest¦4test:weet¦4est:lgar,tter,oung¦4most:uter¦3test:lat¦3est:der,rey,iet,ong,ear¦3most:ner¦2est:ft,nt,ct,rt,ht¦2test:it¦2gest:ig¦1est:b,k,n,p,h,d,w¦iest:y",
+    "both": "4:east¦5:hwest¦4est:weet,lgar,tter,oung¦4most:uter¦3est:ger,der,rey,iet,ong,ear¦3test:lat¦3most:ner¦2est:ft,nt,ct,rt,ht¦2test:it¦2gest:ig¦1est:b,k,n,p,h,d,w¦iest:y",
     "rev": "1:ttest,nnest,yest¦2:sest,stest,llest,rmest,cest,vest,lmest,olest,ilest,ulest,ssest,imest,uest¦3:rgest,eatest,plest,airest,urest,iefest,uelest,blest,ugest,tlest,ealest,amest,itest¦4:cerest,eriest,somest,rmalest,ndomest,motest,uarest,tiffest¦5:leverest,rangest¦ar:urthest¦3ey:riciest",
     "ex": "best:good¦worst:bad¦5est:great,loyal¦4est:fast,poor¦3test:hot,wet,fat¦4nest:thin¦1urthest:far¦3est:gay,shy¦4test:neat¦4st:late,wide,fine,safe,cute,fake,pale,rare,rude,sore,ripe,dire¦6st:severe"
   }

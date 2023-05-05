@@ -856,5 +856,7 @@ export default [
   'hammer',
   'paise',
   'overpass',
-  'fragment'
+  'fragment',
+  'catalog',
+  'scribble',
 ]

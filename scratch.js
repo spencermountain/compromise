@@ -3,14 +3,17 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let arr = [
+
 
   // 'sensationally',
   // 'catch',
   // 'teach',
   // 'buy',
+  'replicate',
+
   'bought',
   'drove',
   'spoke',

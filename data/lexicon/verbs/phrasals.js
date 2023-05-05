@@ -206,6 +206,7 @@ export default [
   'do over',
   'double down',
   'double up',
+  'drum up',
   'drag on',
   'draw on',
   'dress down',

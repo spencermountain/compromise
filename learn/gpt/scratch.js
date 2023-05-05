@@ -1,7 +1,7 @@
 import gpt from './api.js'
 import fs from 'fs'
 
-let res = await gpt(`generate 150 example adjective-superlative pairs. Please ensure each word has a common superlative conjugation`)
+let res = await gpt(`generate 150 example infinitive verbs, conjugated to present-tense. Return them in the form 'infinitive|present'`)
 console.log(res.text)
 
 

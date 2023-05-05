@@ -103,8 +103,10 @@ const api = function (View) {
         if (info.form === 'imperative') {
           info.form = 'simple-present'
         }
-        let str = parsed.root.text('normal')
-        let inf = toInfinitive(str, vb.model) || str
+        let inf = parsed.root.text('normal')
+        if (!parsed.root.has('#Infinitive')) {
+          inf = toInfinitive(inf, vb.model) || inf
+        }
         return conjugate(inf, vb.model)
       }, [])
     }

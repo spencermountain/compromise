@@ -56,7 +56,10 @@ let arr = [
   // "tone",
   // "shore",
 
-  "i drive to the cottage",
+  // "i drive to the cottage",
+  // "He will study biology in college.",
+  "walk",
+  "drive",
   "vie",
   // "convoluted",
   // "rooted",
@@ -87,8 +90,8 @@ let arr = [
 ]
 let doc = nlp(arr[0]).debug()
 console.log(doc.verbs().conjugate())
-doc.verbs().toPastParticiple()
-console.log(doc.text())
+// doc.verbs().toPastParticiple()
+// console.log(doc.text())
 // console.log(doc.compute('root').text('root'))
 // console.log(doc.json({ root: true })[0])
 

@@ -611,6 +611,7 @@ _(these methods are on the main `nlp` object)_
   - **[.verbs().toFutureTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'will walk'`
   - **[.verbs().toInfinitive()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walk'`
   - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walking'`
+  - **[.verbs().toPastParticiple()](https://observablehq.com/@spencermountain/verbs)** - `'drive' → 'had driven'`
   - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all conjugations of these verbs
   - **[.verbs().isNegative()](https://observablehq.com/@spencermountain/verbs)** - return verbs with 'not', 'never' or 'no'
   - **[.verbs().isPositive()](https://observablehq.com/@spencermountain/verbs)** - only verbs without 'not', 'never' or 'no'

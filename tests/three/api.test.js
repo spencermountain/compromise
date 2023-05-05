@@ -203,6 +203,7 @@ test('api:', function (t) {
     doc.verbs().toPastTense()
     doc.verbs().toFutureTense()
     doc.verbs().toGerund()
+    doc.verbs().toPastParticiple()
     doc.verbs().conjugate()
     doc.verbs().isNegative()
     doc.verbs().isPositive()

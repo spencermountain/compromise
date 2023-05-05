@@ -109,6 +109,11 @@ const api = function (View) {
           FutureTense: toFuture(vb.clone(), parsed, info.form).text('normal'),
           Participle: toParticiple(vb.clone(), parsed, info.form).text('normal'),
         }
+        // only return participle if it's novel
+        res.Participle = res.Participle.replace(/^(had|have|has) /, '')
+        if (res.Participle === res.PastTense) {
+          delete res.Participle
+        }
         return res
       }, [])
     }

@@ -10,6 +10,7 @@ import toGerund from './conjugate/toGerund.js'
 import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
 import toNegative from './conjugate/toNegative.js'
+import { getTense } from './lib.js'
 
 
 const api = function (View) {
@@ -105,7 +106,8 @@ const api = function (View) {
         }
         let inf = parsed.root.text('normal')
         if (!parsed.root.has('#Infinitive')) {
-          inf = toInfinitive(inf, vb.model) || inf
+          let tense = getTense(parsed.root)
+          inf = toInfinitive(inf, vb.model, tense) || inf
         }
         return conjugate(inf, vb.model)
       }, [])

@@ -7,6 +7,7 @@ import { toSuperlative, toComparative } from '../../methods/transform/adjectives
 import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
 import models from '../models/index.js'
 let tmpModel = {
+  one: { lexicon: {} },
   two: { models }
 }
 

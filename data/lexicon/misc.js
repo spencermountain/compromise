@@ -1,6 +1,7 @@
 export default {
   better: 'Comparative',
   farther: 'Comparative',
+  finer: 'Comparative',
   fewer: 'Comparative',
   earlier: 'Superlative',
   sounds: 'PresentTense',

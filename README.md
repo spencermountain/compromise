@@ -518,7 +518,6 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.trim()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove start and end whitespace
 - **[.hyphenate()](https://observablehq.com/@spencermountain/compromise-whitespace)** - connect words with hyphen, and remove whitespace
 - **[.dehyphenate()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove hyphens between words, and set whitespace
-- **[.debullet()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove bullet-points
 - **[.toQuotations()](https://observablehq.com/@spencermountain/compromise-whitespace)** - add quotation marks around these matches
 - **[.toParentheses()](https://observablehq.com/@spencermountain/compromise-whitespace)** - add brackets around these matches
 
@@ -668,6 +667,7 @@ _(these methods are on the main `nlp` object)_
   - **[.sentences().isQuestion()](https://observablehq.com/@spencermountain/compromise-sentences)** - return questions with a `?`
   - **[.sentences().isExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences with a `!`
   - **[.sentences().isStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences without `?` or `!`
+  - **[.sentences().debullet()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove bullet-points
 
 ##### Adjectives
 - **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quick'`

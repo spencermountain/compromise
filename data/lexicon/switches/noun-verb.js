@@ -818,6 +818,7 @@ export default [
   'wipe',
   'wire',
   'wish',
+  'wound',
   'wonder',
   'work',
   'worry',

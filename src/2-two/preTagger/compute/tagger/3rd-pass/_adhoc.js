@@ -7,7 +7,7 @@ const isCapital = (terms, i) => {
   return null
 }
 
-const isAloneVerb = (terms, i, tag) => {
+const isAlone = (terms, i, tag) => {
   if (i === 0 && !terms[1]) {// 'Help'
     return tag
   }
@@ -50,10 +50,10 @@ const adhoc = {
     return isCapital(terms, i)
   },
   'Noun|Verb': (terms, i) => {
-    return (i > 0 && isCapital(terms, i)) || isAloneVerb(terms, i, 'Infinitive')
+    return (i > 0 && isCapital(terms, i)) || isAlone(terms, i, 'Infinitive')
   },
   'Plural|Verb': (terms, i) => {
-    return isCapital(terms, i) || isAloneVerb(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
+    return isCapital(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
   },
   'Person|Noun': (terms, i) => {
     return isCapital(terms, i)

@@ -152,7 +152,7 @@ let arr = [
   "Screenwriter",
   // "Investigative Journalist",
   "Journalist",
-  "Literary editor",
+  // "Literary editor",
   "Producer",
   "Director",
   "Playwright",

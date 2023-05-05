@@ -76,18 +76,6 @@ const methods = {
     return this
   },
 
-  /** remove bullets from beginning of phrase */
-  debullet: function () {
-    const hasBullet = /^\s*([-–—*•])\s*$/
-    this.docs.forEach(terms => {
-      //remove bullet symbols
-      if (hasBullet.test(terms[0].pre)) {
-        terms[0].pre = terms[0].pre.replace(hasBullet, '')
-      }
-    })
-    return this
-  },
-
   /** add quotations around these matches */
   toQuotations: function (start, end) {
     start = start || `"`

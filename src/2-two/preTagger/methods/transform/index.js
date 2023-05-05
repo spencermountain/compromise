@@ -6,5 +6,4 @@ export default {
   noun: nouns,
   verb: verbs,
   adjective: adjectives
-
 }

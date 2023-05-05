@@ -1,13 +1,13 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/bullets] '
+const here = '[three/bullets] '
 
 // should not strip bullets
 test('dont-debullet', function (t) {
   t.plan(2)
   let str = 'it is-cool. he is- nice-'
   let m = nlp(str)
-  m.debullet()
+  m.sentences().debullet()
   t.equal(m.out('text'), str, here + `don't debullet hyphens`)
 
   str = `i was -
@@ -15,7 +15,7 @@ feeling weird -
 were you too?`
 
   m = nlp(str)
-  m.debullet()
+  m.sentences().debullet()
   t.equal(m.out('text'), str, here + `don't debullet hyphens with multi-line`)
   t.end()
 })
@@ -26,7 +26,7 @@ test('do-debullet', function (t) {
   let str = '- it is-cool - he is nice'
   let expected = 'it is-cool - he is nice'
   let m = nlp(str)
-  m.debullet()
+  m.sentences().debullet()
   t.equal(m.out('text'), expected, here + `do debullet line beginning hyphen`)
 
   // all `str` below should match `expected` after debullet()
@@ -40,7 +40,7 @@ oooh yeah, baby!`
 
   m = nlp(str)
 
-  m.debullet()
+  m.sentences().debullet()
   t.equal(m.out('text'), expected, here + `do debullet multiline beginning hyphen`)
 
   str = `-it is-cool 
@@ -49,7 +49,7 @@ oooh yeah, baby!`
 
   m = nlp(str)
 
-  m.debullet()
+  m.sentences().debullet()
   t.equal(m.out('text'), expected, here + `do debullet multiline beginning hyphen no-space`)
 
   str = `* it is-cool 
@@ -58,7 +58,7 @@ oooh yeah, baby!`
 
   m = nlp(str)
 
-  m.debullet()
+  m.sentences().debullet()
   t.equal(m.out('text'), expected, here + `do debullet multiline beginning asterisk`)
 
   str = `• it is-cool 
@@ -67,7 +67,7 @@ oooh yeah, baby!`
 
   m = nlp(str)
 
-  m.debullet()
+  m.sentences().debullet()
   t.equal(m.out('text'), expected, here + `do debullet multiline beginning bullet char`)
 
   str = `•it is-cool 
@@ -76,7 +76,7 @@ oooh yeah, baby!`
 
   m = nlp(str)
 
-  m.debullet()
+  m.sentences().debullet()
   t.equal(m.out('text'), expected, here + `do debullet multiline beginning bullet char nospace`)
 
   t.end()

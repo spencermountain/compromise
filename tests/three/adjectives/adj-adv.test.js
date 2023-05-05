@@ -34,8 +34,6 @@ let arr = [
   ['deeply', 'deep'],
   ['methodically', 'methodical'],
   ['imperfectly', 'imperfect'],
-  ['unfortunately', null],
-  ['fortunately', null],
   ['namely', null],
   ['unduly', null],
   ['accordingly', null],

@@ -3,6 +3,7 @@ import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
 import toInfinitive from './conjugate/toInfinitive.js'
 import toPast from './conjugate/toPast.js'
+import toParticiple from './conjugate/toParticiple.js'
 import toPresent from './conjugate/toPresent.js'
 import toFuture from './conjugate/toFuture.js'
 import toGerund from './conjugate/toGerund.js'
@@ -86,6 +87,13 @@ const api = function (View) {
         return toGerund(vb, parsed, info.form)
       })
     }
+    toPastParticiple(n) {
+      return this.getNth(n).map(vb => {
+        let parsed = parseVerb(vb)
+        let info = getGrammar(vb, parsed)
+        return toParticiple(vb, parsed, info.form)
+      })
+    }
     conjugate(n) {
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
@@ -94,12 +102,14 @@ const api = function (View) {
         if (info.form === 'imperative') {
           info.form = 'simple-present'
         }
-        return {
+        let res = {
           Infinitive: toInfinitive(vb.clone(), parsed, info.form).text('normal'),
           PastTense: toPast(vb.clone(), parsed, info.form).text('normal'),
           PresentTense: toPresent(vb.clone(), parsed, info.form).text('normal'),
           FutureTense: toFuture(vb.clone(), parsed, info.form).text('normal'),
+          Participle: toParticiple(vb.clone(), parsed, info.form).text('normal'),
         }
+        return res
       }, [])
     }
 

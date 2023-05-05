@@ -3,7 +3,7 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let arr = [
 
@@ -55,6 +55,14 @@ let arr = [
   // "lovin",
   // "tone",
   // "shore",
+
+  "i drive to the cottage",
+  "vie",
+  // "convoluted",
+  // "rooted",
+  // "trumpeted",
+  // "colored",
+
   // "combat",
   // "wad",
   // "sub",
@@ -62,7 +70,6 @@ let arr = [
 
 
   // "ink",
-
 
   // 'overtime',
   // "rid",
@@ -79,11 +86,16 @@ let arr = [
 
 ]
 let doc = nlp(arr[0]).debug()
-console.log(doc.compute('root').text('root'))
-
+console.log(doc.verbs().conjugate())
+console.log(doc.verbs().toPastParticiple())
+console.log(doc.text())
+// console.log(doc.compute('root').text('root'))
 // console.log(doc.json({ root: true })[0])
 
 // let doc = nlp("Jeff's bikes")
 // doc.swap('Jeff', 'John')
 // console.log(doc.text())
 // console.log(doc.json()[0])
+
+
+

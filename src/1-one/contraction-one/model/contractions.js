@@ -15,7 +15,7 @@ export default [
   { word: "that's", out: ['that', 'is'] },
   { word: "what's", out: ['what', 'is'] },
   { word: "let's", out: ['let', 'us'] },
-  { word: "there's", out: ['there', 'is'] },
+  // { word: "there's", out: ['there', 'is'] },
   { word: 'dunno', out: ['do', 'not', 'know'] },
   { word: 'gonna', out: ['going', 'to'] },
   { word: 'gotta', out: ['have', 'got', 'to'] }, //hmm

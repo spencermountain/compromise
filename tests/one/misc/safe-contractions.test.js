@@ -50,3 +50,28 @@ test('safe-apostrophe-d', function (t) {
   })
   t.end()
 })
+
+
+test('theres', function (t) {
+  let arr = [
+    [`there's a`, 'there is'],
+    [`there's no going back`, 'there is'],
+    [`there's no honor`, 'there is'],
+    [`where there's a job`, 'there is'],
+    [`and there's a little old man`, 'there is'],
+    [`there's always`, 'there is'],
+    [`there's one`, 'there is'],
+    [`there’s gonna be strippers`, 'there is'],
+    [`There's something strange`, 'there is'],
+    [`guess there's not much to do `, 'there is'],
+    [`There's never been a more important moment`, 'there has'],
+    [`there's been`, 'there has'],
+    [`there's never been`, 'there has'],
+    [`There's hardly been any progress`, 'there has'],
+  ]
+  arr.forEach(a => {
+    let doc = nlp(a[0])
+    t.ok(doc.has(a[1]), a[0])
+  })
+  t.end()
+})

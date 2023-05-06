@@ -154,6 +154,7 @@ test('api:', function (t) {
     // nouns
     doc.nouns().parse()
     doc.nouns().json()
+    doc.nouns().conjugate()
     doc.nouns().isPlural()
     doc.nouns().adjectives()
     doc.nouns().toPlural()
@@ -209,6 +210,12 @@ test('api:', function (t) {
     doc.verbs().isPositive()
     doc.verbs().toPositive()
     doc.verbs().toNegative()
+
+    doc.adjectives().json()
+    doc.adjectives().conjugate()
+
+    doc.adverbs().json()
+    doc.adverbs().conjugate()
 
     // misc
     doc.redact()

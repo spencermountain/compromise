@@ -27,6 +27,7 @@ const findNouns = function (doc) {
   m = m.splitOn('#Noun [#Determiner]', 0)
   // his excuses
   // m = m.splitAfter('(his|hers|yours|ours|theirs)')
+  // m = m.not('^#Determiner')
   //ensure there's actually a noun
   m = m.if('#Noun')
   return m

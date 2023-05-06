@@ -27,6 +27,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - keep possessive in replace #1011
 - **[update]** - dependencies
 - **[fix]** - parsematch bug #997
+- **[fix]** - "there's been" contraction
+- **[new]** - .conjugate() methods on Noun/Adverb/Adjective classes
+- **[new]** - add Gerund and PastParticiple to .verbs().conjugate() results
 - **[fix]** - tagger fix #998
 
 #### 14.8.2 [Feb 2023]

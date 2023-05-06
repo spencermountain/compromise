@@ -865,4 +865,6 @@ export default [
   'hint',
   'blink',
   'quiver',
+  'bitch',
+  'rant',
 ]

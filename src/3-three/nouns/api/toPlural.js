@@ -1,12 +1,6 @@
-const keep = { tags: true }
+import hasPlural from './hasPlural.js'
 
-const hasPlural = function (parsed) {
-  let { root } = parsed
-  if (root.has('^(#Uncountable|#ProperNoun|#Place|#Pronoun|#Acronym)+$')) {
-    return false
-  }
-  return true
-}
+const keep = { tags: true }
 
 const nounToPlural = function (m, parsed) {
   // already plural?
@@ -18,7 +12,7 @@ const nounToPlural = function (m, parsed) {
     parsed.root = parsed.root.possessives().strip()
   }
   // is a plural appropriate?
-  if (!hasPlural(parsed)) {
+  if (!hasPlural(parsed.root)) {
     return m
   }
   const { methods, model } = m.world

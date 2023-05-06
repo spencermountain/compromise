@@ -2054,6 +2054,7 @@ export default [
   ['wrung', 'wring'],
   ['yielded', 'yield'],
   ['zoned', 'zone'],
+  ['smelled', 'smell'],
   // ['blown', 'blow'],
   // ['', ''],
 ]

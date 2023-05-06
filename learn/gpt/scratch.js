@@ -1,7 +1,7 @@
 import gpt from './api.js'
 import fs from 'fs'
 
-let res = await gpt(`generate 150 nouns and return them in a 'singular|plural' format'`)
+let res = await gpt(`generate 130 examples of adjectives with their noun form, like "quick, quickness"`)
 console.log(res.text)
 
 

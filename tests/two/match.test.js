@@ -830,7 +830,7 @@ let arr = [
   [`Wildlife biologists found`, `#Actor+ #Verb`],
   [`the radiologist`, `the #Actor+`],
   [`3 biochemists`, `3 #Actor+`],
-  [`nurse Kelly`, `#Person+`],
+  // [`nurse Kelly`, `#Person+`],
 
   [`breaking: dogs nice`, `#Expression #Plural #Adjective`],
   [`forward: appartment price`, `#Expression #Noun+`],

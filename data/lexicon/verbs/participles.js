@@ -12,7 +12,7 @@ export default [
   'built',
   'chosen',
   'clung',
-  'done',
+  // 'done',
   'dove',
   'drawn',
   'dreamt',

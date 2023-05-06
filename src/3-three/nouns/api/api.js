@@ -2,6 +2,7 @@ import find from '../find.js'
 import parseNoun from './parse.js'
 import toJSON from './toJSON.js'
 import toPlural from './toPlural.js'
+import hasPlural from './hasPlural.js'
 import toSingular from './toSingular.js'
 
 const api = function (View) {
@@ -26,12 +27,15 @@ const api = function (View) {
       }, [])
     }
     conjugate(n) {
+      const methods = this.world.methods.two.transform.noun
       return this.getNth(n).map(m => {
-        let root = m.compute('root').text('root')
         let parsed = parseNoun(m)
+        let root = parsed.root.compute('root').text('root')
         let res = {
           Singular: root,
-          Plural: toPlural(m, parsed).text('normal')
+        }
+        if (hasPlural(parsed.root)) {
+          res.Plural = methods.toPlural(root, this.model)
         }
         // only show plural if one exists
         if (res.Singular === res.Plural) {

@@ -28,8 +28,10 @@ const isPlural = {
 }
 // plural words as exceptions to suffix-rules
 const exceptions = new Set([
-  'formulas',
-  'koalas',
+  // 'formulas',
+  // 'umbrellas',
+  // 'gorillas',
+  // 'koalas',
   'israelis',
   'menus',
 ])
@@ -38,7 +40,7 @@ const notPlural = [
   'bus',
   'mas',//christmas
   'was',
-  'las',
+  // 'las',
   'ias',//alias
   'xas',
   'vas',

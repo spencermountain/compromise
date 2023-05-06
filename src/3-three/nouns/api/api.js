@@ -4,8 +4,6 @@ import toJSON from './toJSON.js'
 import toPlural from './toPlural.js'
 import toSingular from './toSingular.js'
 
-// return the nth elem of a doc
-
 const api = function (View) {
   class Nouns extends View {
     constructor(document, pointer, groups) {
@@ -27,7 +25,21 @@ const api = function (View) {
         return json
       }, [])
     }
-
+    conjugate(n) {
+      return this.getNth(n).map(m => {
+        let root = m.compute('root').text('root')
+        let parsed = parseNoun(m)
+        let res = {
+          Singular: root,
+          Plural: toPlural(m, parsed).text('normal')
+        }
+        // only show plural if one exists
+        if (res.Singular === res.Plural) {
+          delete res.Plural
+        }
+        return res
+      }, [])
+    }
     isPlural(n) {
       let res = this.filter(m => parseNoun(m).isPlural)
       return res.getNth(n)

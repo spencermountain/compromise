@@ -44,6 +44,8 @@ export default [
   'indian ocean',
   'new england',
   'pacific ocean',
+  'red sea',
+  'adriadic',
 
   // rivers
   'nile',

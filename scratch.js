@@ -3,21 +3,23 @@ import nlp from './src/four.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let arr = [
 
+  // 'the fish',
 
   // 'sensationally',
   // 'catch',
   // 'teach',
   // 'buy',
-  'break',
-  'sink',
-  'know',
-  'run',
-  'swim',
-
+  // 'break',
+  // 'sink',
+  // 'know',
+  // 'run',
+  // 'swim',
+  // 'sea of japan',
+  // 'adriadic sea',
   'walk the earth',
   'more broken promises',
   'think',
@@ -100,7 +102,7 @@ let arr = [
 ]
 let doc = nlp(arr[0]).debug()
 // console.log(doc.verbs().conjugate())
-console.log(doc.verbs().conjugate())
+console.log(doc.nouns().conjugate())
 // doc.verbs().toGerund()
 // doc.verbs().toPastParticiple()
 // console.log(doc.text())

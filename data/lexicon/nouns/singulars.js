@@ -431,6 +431,7 @@ export default [
   'underestimate',
   'underwear',
   'overview',
+  'yo yo',
 ]
 
 

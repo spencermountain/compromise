@@ -2,7 +2,7 @@ const keep = { tags: true }
 
 const hasPlural = function (parsed) {
   let { root } = parsed
-  if (root.has('^(#Uncountable|#Possessive|#ProperNoun|#Place|#Pronoun|#Acronym)+$')) {
+  if (root.has('^(#Uncountable|#ProperNoun|#Place|#Pronoun|#Acronym)+$')) {
     return false
   }
   return true
@@ -12,6 +12,10 @@ const nounToPlural = function (m, parsed) {
   // already plural?
   if (parsed.isPlural === true) {
     return m
+  }
+  // handle "steve's"
+  if (parsed.root.has('#Possessive')) {
+    parsed.root = parsed.root.possessives().strip()
   }
   // is a plural appropriate?
   if (!hasPlural(parsed)) {

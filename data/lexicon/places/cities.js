@@ -497,4 +497,6 @@ export default [
   'le mans',
   'dunkirk',
   'versailles',
+
+  'salt lake city',
 ]

@@ -90,6 +90,14 @@ test('toSingular:', function (t) {
     [`irish potatoes`, 'irish potato'],
     [`ireland potatoes`, 'ireland potato'],
     [`john's potatoes`, `john's potato`],
+    ['bases', 'base'],
+    ['cases', 'case'],
+    ['decreases', 'decrease'],
+    ['diseases', 'disease'],
+    ['increases', 'increase'],
+    ['phrases', 'phrase'],
+    ['pleases', 'please'],
+    ['releases', 'release'],
     // ['Isley Brothers members', 'Isley Brothers member'],
   ]
   arr.forEach(function (a) {

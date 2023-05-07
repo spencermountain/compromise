@@ -13,9 +13,6 @@ list.forEach(str => {
     }
   })
   if (Object.keys(out).length) {
-    console.log(JSON.stringify([
-      str,
-      out
-    ], null, 2) + ',\n')
+    // console.log(JSON.stringify([str, out], null, 2) + ',\n')
   }
 })

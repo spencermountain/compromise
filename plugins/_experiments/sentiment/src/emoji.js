@@ -1,3 +1,4 @@
+/* eslint-disable */
 import RegExpEscape from './escape.js'
 
 /**

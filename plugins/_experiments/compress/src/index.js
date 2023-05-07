@@ -5,11 +5,11 @@ let string = fs.readFileSync('../../../plugins/speed/tests/files/freshPrince.txt
 // string = "This is my compression test.";
 
 
-console.log("Size of sample is: " + string.length, '\n\n');
+// console.log("Size of sample is: " + string.length, '\n\n');
 let compressed = lz.compress(string);
 // console.log(string)
 // console.log(compressed)
-console.log("\n\nSize of compressed sample is: " + compressed.length);
+// console.log("\n\nSize of compressed sample is: " + compressed.length);
 string = lz.decompress(compressed);
 
 

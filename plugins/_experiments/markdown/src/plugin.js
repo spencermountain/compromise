@@ -22,7 +22,7 @@ export default {
     fromMarkdown: function (md = '') {
       let tree = parse(md)
       tree = cleanup(tree)
-      console.dir(tree, { depth: 8 })
+      // console.dir(tree, { depth: 8 })
       return toPlaintexts(tree)
     }
   }

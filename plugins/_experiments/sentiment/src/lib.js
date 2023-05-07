@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { intensifiers, negations } from './data/index.js'
 
 // HELPER FUNCTIONS
@@ -154,11 +155,11 @@ function chunkArrays(wordsArr, labelsArr) {
     tempLocArr.push(element.lastIndexOf('intensifier'));
     tempLocArr.push(Math.max(element.lastIndexOf('opinion'), element.lastIndexOf('opinion!')));
     // Filter words and labels down to just the items at the indices in tempLocArr
-    wordsArr2d[index] = wordsArr2d[index].filter(function (element, index) {
-      return tempLocArr.includes(index);
+    wordsArr2d[index] = wordsArr2d[index].filter(function (_, i) {
+      return tempLocArr.includes(i);
     });
-    labelsArr2d[index] = labelsArr2d[index].filter(function (element, index) {
-      return tempLocArr.includes(index);
+    labelsArr2d[index] = labelsArr2d[index].filter(function (_, i) {
+      return tempLocArr.includes(i);
     });
   });
   // chunkReturnObj = {'word_chunks': wordsArr2d, 'label_chunks': labelsArr2d};

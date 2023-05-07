@@ -6,7 +6,7 @@ const swapNoun = function (m, lemma) {
     const toPlural = m.methods.two.transform.noun.toPlural
     str = toPlural(lemma, m.model)
   }
-  m.replaceWith(str)
+  m.replaceWith(str, { possessives: true })
 }
 
 const swapAdverb = function (m, lemma) {

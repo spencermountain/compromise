@@ -668,7 +668,6 @@ _(these methods are on the main `nlp` object)_
   - **[.sentences().isQuestion()](https://observablehq.com/@spencermountain/compromise-sentences)** - return questions with a `?`
   - **[.sentences().isExclamation()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences with a `!`
   - **[.sentences().isStatement()](https://observablehq.com/@spencermountain/compromise-sentences)** - return sentences without `?` or `!`
-  - **[.sentences().debullet()](https://observablehq.com/@spencermountain/compromise-whitespace)** - remove bullet-points
 
 ##### Adjectives
 - **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quick'`

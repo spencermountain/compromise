@@ -73,17 +73,6 @@ const api = function (View) {
       let res = this.filter(s => !s.isExclamation().found && !s.isQuestion().found)
       return res.getNth(n)
     }
-    /** remove bullets from beginning of phrase */
-    debullet() {
-      const hasBullet = /^\s*([-–—*•])\s*$/
-      this.docs.forEach(terms => {
-        //remove bullet symbols
-        if (hasBullet.test(terms[0].pre)) {
-          terms[0].pre = terms[0].pre.replace(hasBullet, '')
-        }
-      })
-      return this
-    }
     // overloaded - keep Sentences class
     update(pointer) {
       let m = new Sentences(this.document, pointer)

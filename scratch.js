@@ -9,12 +9,6 @@ let arr = [
 
 
   // 'poviding care',
-  'joyous',
-  'resolute',
-  'zealous',
-  'crafty',
-  'He swims laps',
-  'more broken promises',
   'We take walks in the park.',
   'the tree will grow',
   'They listen to music on their way to work.',
@@ -119,12 +113,13 @@ let arr = [
 // console.log(doc.compute('root').text('root'))
 // console.log(doc.json({ root: true })[0])
 
-// let doc = nlp("Jeff's bikes")
-// doc.swap('Jeff', 'John')
-// console.log(doc.text())
-// console.log(doc.json()[0])
+let str = `• it is-cool 
+• He is nice
+• oooh yeah, baby!`
+let doc = nlp(str)
+// doc.sentences().debullet()
+doc.normalize('medium')
+console.log(doc.text())
 
-let res = nlp('generous').tag('Adjective').adjectives().conjugate()[0] || {}
-console.log(res)
 
 

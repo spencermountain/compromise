@@ -103,7 +103,6 @@ const methods = {
 
 // aliases
 methods.deHyphenate = methods.dehyphenate
-methods.deBullet = methods.debullet
 methods.toQuotation = methods.toQuotations
 
 export default methods

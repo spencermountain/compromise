@@ -254,7 +254,6 @@ let arr = [
   ['obedient', 'obedience'],
   ['oblivious', 'obliviousness'],
   ['observant', 'observation'],
-  ['obstreperous', 'obstreperousness'],
   ['offensive', 'offence'],
   ['offhand', 'offhandedness'],
   ['ominous', 'ominousness'],

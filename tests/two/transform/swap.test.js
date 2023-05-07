@@ -51,6 +51,14 @@ test('swap-noun', function (t) {
   doc.swap('Jeff', 'John')
   t.equal(doc.text(), `John's bikes`, here + 'keep-possessive')
 
+  doc = nlp("Spencer Kelly's superstore")
+  doc.swap('Spencer Kelly', 'Sam Altman')
+  t.equal(doc.text(), `Sam Altman's superstore`, here + 'keep-possessive 2-term')
+
+  doc = nlp("it was Montreal's.")
+  doc.swap('Montreal', 'Quebec City')
+  t.equal(doc.text(), `it was Quebec City's.`, here + 'keep-possessive mismatch')
+
   t.end()
 })
 

@@ -9,15 +9,15 @@ test('simple chanage-punct', function (t) {
   let doc = nlp(statement)
 
   doc.sentences().toExclamation()
-  t.equal(doc.text(), excl, 'statement -> excl')
+  t.equal(doc.text(), excl, here + 'statement -> excl')
   doc.sentences().toStatement()
-  t.equal(doc.text(), statement, 'excl -> statement')
+  t.equal(doc.text(), statement, here + 'excl -> statement')
   doc.sentences().toQuestion()
-  t.equal(doc.text(), question, 'statement -> question')
+  t.equal(doc.text(), question, here + 'statement -> question')
   doc.sentences().toExclamation()
-  t.equal(doc.text(), excl, 'question -> excl')
+  t.equal(doc.text(), excl, here + 'question -> excl')
   doc.sentences().toQuestion()
-  t.equal(doc.text(), question, 'excl -> question')
+  t.equal(doc.text(), question, here + 'excl -> question')
 
   t.end()
 })
@@ -25,7 +25,7 @@ test('simple chanage-punct', function (t) {
 test('toquestion edge-cases ', function (t) {
   let doc = nlp('how do you do...')
   doc = doc.sentences().toExclamation()
-  t.equal(doc.text(), 'how do you do!', 'elipses')
+  t.equal(doc.text(), 'how do you do!', here + 'elipses')
 
   // doc = nlp('how do you do (today)')
   // doc = doc.sentences().toQuestion()

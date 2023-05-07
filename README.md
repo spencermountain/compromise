@@ -611,6 +611,7 @@ _(these methods are on the main `nlp` object)_
   - **[.verbs().toFutureTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'will walk'`
   - **[.verbs().toInfinitive()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walk'`
   - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walking'`
+  - **[.verbs().toPastParticiple()](https://observablehq.com/@spencermountain/verbs)** - `'drive' → 'had driven'`
   - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all conjugations of these verbs
   - **[.verbs().isNegative()](https://observablehq.com/@spencermountain/verbs)** - return verbs with 'not', 'never' or 'no'
   - **[.verbs().isPositive()](https://observablehq.com/@spencermountain/verbs)** - only verbs without 'not', 'never' or 'no'
@@ -1052,6 +1053,7 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
 
 - &nbsp; **[spaCy](https://spacy.io/)** - speedy, multilingual tagger in C/python
 - &nbsp; **[Prose](https://github.com/jdkato/prose/)** - quick tagger in Go by Joseph Kato
+- &nbsp; **[TextBlob](https://github.com/sloria/TextBlob)** - python tagger
 
 <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 

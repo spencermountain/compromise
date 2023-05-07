@@ -9,7 +9,7 @@ const split = (str) => {
 }
 
 const light = 'unicode|punctuation|whitespace|acronyms'
-const medium = '|case|contractions|parentheses|quotations|emoji|honorifics'
+const medium = '|case|contractions|parentheses|quotations|emoji|honorifics|debullet'
 const heavy = '|possessives|adverbs|nouns|verbs'
 const presets = {
   light: split(light),

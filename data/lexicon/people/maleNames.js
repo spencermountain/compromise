@@ -49,6 +49,7 @@ export default [
   'alfonso',
   'alfred',
   'ali',
+  'aladdin',
   'allan',
   'allen',
   'alonso',

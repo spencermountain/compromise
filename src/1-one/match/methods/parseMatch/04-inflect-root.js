@@ -3,9 +3,6 @@
 const addVerbs = function (token, world) {
   let { all } = world.methods.two.transform.verb || {}
   let str = token.root
-  // if (toInfinitive) {
-  //   str = toInfinitive(str, world.model)
-  // }
   if (!all) {
     return []
   }

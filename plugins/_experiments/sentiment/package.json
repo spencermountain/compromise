@@ -1,0 +1,46 @@
+{
+  "name": "compromise-sentiment",
+  "description": "plugin for nlp-compromise",
+  "version": "0.0.0",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "main": "./src/plugin.js",
+  "unpkg": "./builds/compromise-sentiment.min.js",
+  "module": "./builds/compromise-sentiment.mjs",
+  "type": "module",
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./src/plugin.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/spencermountain/compromise.git"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/sentiment",
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "watch": "amble ./scratch.js",
+    "build": "rollup -c --silent"
+  },
+  "eslintIgnore": [
+    "builds/*.js"
+  ],
+  "files": [
+    "builds/",
+    "src/",
+    "index.d.ts"
+  ],
+  "peerDependencies": {
+    "compromise": ">=14.0.0"
+  },
+  "dependencies": {
+    "efrt": "^2.7.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1"
+  }
+}

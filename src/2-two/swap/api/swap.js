@@ -6,7 +6,7 @@ const swapNoun = function (m, lemma) {
     const toPlural = m.methods.two.transform.noun.toPlural
     str = toPlural(lemma, m.model)
   }
-  m.replaceWith(str)
+  m.replaceWith(str, { possessives: true })
 }
 
 const swapAdverb = function (m, lemma) {
@@ -31,7 +31,9 @@ const swapAdjective = function (m, lemma) {
 }
 
 const swap = function (from, to, tag) {
-  let reg = from.split(/ /g).map(str => `{${str}}`).join(' ')
+  let reg = from.split(/ /g).map(str => str.toLowerCase().trim())
+  reg = reg.filter(str => str)
+  reg = reg.map(str => `{${str}}`).join(' ')
   let m = this.match(reg)
   // guard against some homonyms
   if (tag) {

@@ -64,7 +64,7 @@ export default [
   { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
 
   // baker jenna smith
-  { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam-smith' },
+  // { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam-smith' },
   // sergeant major Harold
   { match: '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'seargeant-john' },
   // ==== Honorics ====

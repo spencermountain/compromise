@@ -8,6 +8,7 @@ export default [
   'none',
   'our',
   'ours',
+  'thy',
   // 'their',
   // 'theirs',
   // 'your',

@@ -16,14 +16,17 @@ const toGerund = function (vb, parsed) {
   let gerund = conjugate(str, vb.model).Gerund
   // 'are walking', 'is walking'
   if (gerund) {
-    gerund = `${isAreAm(vb, parsed)} ${gerund}`
+    let aux = isAreAm(vb, parsed)
     vb.replace(root, gerund, keep)
-  }
-
-  // remove any existing auxiliary
-  if (auxiliary.found) {
     vb.remove(auxiliary)
+    vb.prepend(aux)//.match(aux)
   }
+  // remove any existing auxiliary
+  // if (auxiliary.found) {
+  // vb.match(auxiliary).debug()
+  // vb.remove(auxiliary)
+  // }
+
   vb.replace('not is', 'is not')
   vb.replace('not are', 'are not')
   vb.fullSentence().compute(['tagger', 'chunks'])

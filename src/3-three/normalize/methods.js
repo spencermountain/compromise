@@ -100,4 +100,15 @@ export default {
     doc.numbers().toNumber()
   },
 
+  /** remove bullets from beginning of phrase */
+  'debullet': (doc) => {
+    const hasBullet = /^\s*([-–—*•])\s*$/
+    doc.docs.forEach(terms => {
+      //remove bullet symbols
+      if (hasBullet.test(terms[0].pre)) {
+        terms[0].pre = terms[0].pre.replace(hasBullet, '')
+      }
+    })
+    return doc
+  }
 }

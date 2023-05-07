@@ -18,7 +18,23 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!-- #### 14.8.1 [Unreleased]
 -->
 
-#### 14.8.2 [Feb 2022]
+#### 14.9.0 [May 2023]
+- **[new]** - .verbs().toPastParticiple() method
+- **[new]** - `.normalize({ debullet: true })` #1004
+- **[change]** - typescript path changes (thanks @rotemdan !)
+- **[fix]** - suffix tagging issues
+- **[fix]** - match syntax issue #997
+- **[change]** - keep possessive in replace #1011
+- **[change]** - major improvements to adj.toNoun() conjugator
+- **[fix]** - parsematch bug #997
+- **[fix]** - "there's been" contraction
+- **[new]** - .conjugate() methods on Noun/Adverb/Adjective classes
+- **[new]** - add Gerund and PastParticiple to .verbs().conjugate() results
+- **[new]** - option to keep possessives in .replace() #1011
+- **[fix]** - tagger fix #998
+- **[update]** - dependencies
+
+#### 14.8.2 [Feb 2023]
 - **[change]** - #Actor tagging - in advance of #565
 - **[change]** - .noun() lumping changes - in advance of #565
 - **[new]** - support japanese full-stop

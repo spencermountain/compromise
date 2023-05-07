@@ -14,6 +14,7 @@ export default [
   [/(ouse)s$/i, '$1'],//houses
   [/(ose)s$/i, '$1'],//roses
 
+  [/(..ase)s$/i, '$1'],
   [/(..[aeiu]s)es$/i, '$1'],
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],

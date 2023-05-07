@@ -46,6 +46,7 @@ export default [
   'half',
   'homeless',
   'ideal',
+  'interim',
   'incumbent',
   'individual',
   'innocent',
@@ -121,7 +122,9 @@ export default [
   'communist',
   'socialist',
   'modernist',
+  'homeless',
 
+  'fugitive',
   'lush',
   'back',
   'rebel',
@@ -142,4 +145,13 @@ export default [
   'silver',
   'rash',
   'professional',
+  'excess',
+  'hobby',
+  'arctic',
+  'antarctic',
+  'darling',
+  'marine',
+  'slack',
+  'sage',
+
 ]

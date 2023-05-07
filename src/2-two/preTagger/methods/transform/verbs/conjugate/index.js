@@ -34,7 +34,15 @@ const conjugate = function (inf, model) {
   // drive -> driven (not drove)
   let pastPrt = convert(str, toParticiple)
   if (pastPrt !== inf && pastPrt !== found.PastTense) {
-    found.Participle = pastPrt
+    // ensure it's a known participle
+    let lex = model.one.lexicon || {}
+    if (lex[pastPrt] === 'Participle' || lex[pastPrt] === 'Adjective') {
+      // one exception
+      if (inf === 'play') {
+        pastPrt = 'played'
+      }
+      found.Participle = pastPrt
+    }
   }
   // put phrasal-verbs back together again
   if (particle) {

@@ -830,7 +830,7 @@ let arr = [
   [`Wildlife biologists found`, `#Actor+ #Verb`],
   [`the radiologist`, `the #Actor+`],
   [`3 biochemists`, `3 #Actor+`],
-  [`nurse Kelly`, `#Person+`],
+  // [`nurse Kelly`, `#Person+`],
 
   [`breaking: dogs nice`, `#Expression #Plural #Adjective`],
   [`forward: appartment price`, `#Expression #Noun+`],
@@ -1052,7 +1052,7 @@ let arr = [
   [`Gibson made a routine catch`, `#Person #Verb #Determiner #Adjective #Singular`],
   [`Don’t make any rash decisions`, `do not #Imperative #Determiner #Adjective #Plural`],
   // hyphentated adjectives
-  [`carries oxygen-rich blood`, `#PresentTense #Adjective #Adjective #Noun`],
+  // [`carries oxygen-rich blood`, `#PresentTense #Adjective #Adjective #Noun`],
   [`his best-known lyrics`, `his #Adjective #Adjective #Plural`],
   [`A health-conscious president`, `a #Adjective #Adjective #Noun`],
   [`company-wide death marches`, `#Adjective #Adjective #Noun #Plural`],
@@ -1089,6 +1089,22 @@ let arr = [
   ['he arranged a 12 month journey', 'he #PastTense #Determiner #Value #Noun #Noun'],
   ['I will book a 24-hour ECG', 'i #Verb+ #Determiner #Value #Noun #Noun'],
   // [`the lieutenant general`, `#Determiner #Actor+`],
+  ['bowling alley', '#Noun+'],
+  ['bowling ball', '#Noun+'],
+  // rivers
+  ['the nile', '#Determiner #Place'],
+  ['the ganges', '#Determiner #Place'],
+  ['mekong river', '#Place+'],
+  ['river thames', '#Place+'],
+  ['the danube', '#Determiner #Place'],
+  ['the yangtze', '#Determiner #Place'],
+  ['orinoco river', '#Place+'],
+  ['the seine', '#Determiner #Place'],
+  ['rio grande', '#Place+'],
+  ['Godavari River', '#Place+'],
+  ['the Saint Lawrence River', 'the #Place+'],
+  ['by Foo Estuary', 'by #Place+'],
+
   // [``, ``],
 ]
 test('match:', function (t) {

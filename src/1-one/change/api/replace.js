@@ -37,6 +37,8 @@ fns.replaceWith = function (input, keep = {}) {
   if (typeof input === 'function') {
     return replaceByFn(main, input)
   }
+  let terms = main.docs[0]
+  let isPossessive = keep.possessives && terms[terms.length - 1].tags.has('Possessive')
   // support 'foo $0' replacements
   input = subDollarSign(input, main)
 
@@ -57,6 +59,17 @@ fns.replaceWith = function (input, keep = {}) {
   }
   // delete the original terms
   main.delete(original) //science.
+
+  // keep "John's"
+  if (isPossessive) {
+    let tmp = main.docs[0]
+    let term = tmp[tmp.length - 1]
+    if (!term.tags.has('Possessive')) {
+      term.text += '\'s'
+      term.normal += '\'s'
+      term.tags.add('Possessive')
+    }
+  }
   // what should we return?
   let m = main.toView(ptrs).compute(['index', 'lexicon'])
   if (m.world.compute.preTagger) {
@@ -72,6 +85,12 @@ fns.replaceWith = function (input, keep = {}) {
   if (keep.case && m.docs[0] && m.docs[0][0] && m.docs[0][0].index[1] === 0) {
     m.docs[0][0].text = titleCase(m.docs[0][0].text)
   }
+
+  // try to keep some pre-post punctuation
+  // if (m.terms().length === 1 && main.terms().length === 1) {
+  //   console.log(original.docs)
+  // }
+
   // console.log(input.docs[0])
   // let regs = input.docs[0].map(t => {
   //   return { id: t.id, optional: true }

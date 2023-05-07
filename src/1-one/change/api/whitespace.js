@@ -100,6 +100,8 @@ const methods = {
     return this
   },
 }
+
+// aliases
 methods.deHyphenate = methods.dehyphenate
 methods.toQuotation = methods.toQuotations
 

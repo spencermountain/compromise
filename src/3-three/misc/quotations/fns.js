@@ -1,3 +1,4 @@
+/* eslint-disable regexp/no-dupe-characters-character-class */
 const pairs = {
   '\u0022': '\u0022', // 'StraightDoubleQuotes'
   '\uFF02': '\uFF02', // 'StraightDoubleQuotesWide'
@@ -21,8 +22,8 @@ const pairs = {
   '\u301F': '\u301E', // 'LowPrimeDoubleQuotesReversed'
 }
 
-const hasOpen = RegExp('(' + Object.keys(pairs).join('|') + ')')
-const hasClosed = RegExp('(' + Object.values(pairs).join('|') + ')')
+const hasOpen = RegExp('[' + Object.keys(pairs).join('') + ']')
+const hasClosed = RegExp('[' + Object.values(pairs).join('') + ']')
 
 const findEnd = function (terms, i) {
   const have = terms[i].pre.match(hasOpen)[0] || ''

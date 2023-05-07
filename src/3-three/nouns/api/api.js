@@ -2,9 +2,8 @@ import find from '../find.js'
 import parseNoun from './parse.js'
 import toJSON from './toJSON.js'
 import toPlural from './toPlural.js'
+import hasPlural from './hasPlural.js'
 import toSingular from './toSingular.js'
-
-// return the nth elem of a doc
 
 const api = function (View) {
   class Nouns extends View {
@@ -27,7 +26,24 @@ const api = function (View) {
         return json
       }, [])
     }
-
+    conjugate(n) {
+      const methods = this.world.methods.two.transform.noun
+      return this.getNth(n).map(m => {
+        let parsed = parseNoun(m)
+        let root = parsed.root.compute('root').text('root')
+        let res = {
+          Singular: root,
+        }
+        if (hasPlural(parsed.root)) {
+          res.Plural = methods.toPlural(root, this.model)
+        }
+        // only show plural if one exists
+        if (res.Singular === res.Plural) {
+          delete res.Plural
+        }
+        return res
+      }, [])
+    }
     isPlural(n) {
       let res = this.filter(m => parseNoun(m).isPlural)
       return res.getNth(n)

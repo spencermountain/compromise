@@ -13,6 +13,7 @@ export default [
   'always',
   'anymore',
   'anyway',
+  'alongside',
   'apart',
   'aside',
   'as soon',
@@ -29,7 +30,7 @@ export default [
   'definitely',
   'directly',
   'en masse',
-  'enough',
+  // 'enough',
   'ever',
   'for example',
   'for good',
@@ -47,6 +48,7 @@ export default [
   'kinda',
   'maybe',
   'meanwhile',
+  'awhile',
   'more',
   'moreover',
   'newly',
@@ -88,5 +90,7 @@ export default [
   'backward',
   'hella',
   'by no means',
-
+  'altogether',
+  "outright",
+  'ultimately',
 ]

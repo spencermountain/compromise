@@ -18,6 +18,8 @@ const toSuperlative = uncompress(data.Superlative)
 const fromComparative = reverse(toComparative)
 const fromSuperlative = reverse(toSuperlative)
 
+const adjToNoun = uncompress(data.AdjToNoun)
+
 export default {
   fromPast,
   fromPresent,
@@ -31,6 +33,7 @@ export default {
   toComparative,
   toSuperlative,
   fromComparative,
-  fromSuperlative
+  fromSuperlative,
+  adjToNoun
 }
 // console.log(convert('collide', toPast))

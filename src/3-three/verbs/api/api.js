@@ -1,14 +1,16 @@
 import find from '../find.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
-import toInfinitive from './conjugate/toInfinitive.js'
+import toInf from './conjugate/toInfinitive.js'
 import toPast from './conjugate/toPast.js'
+import toParticiple from './conjugate/toParticiple.js'
 import toPresent from './conjugate/toPresent.js'
 import toFuture from './conjugate/toFuture.js'
 import toGerund from './conjugate/toGerund.js'
 import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
 import toNegative from './conjugate/toNegative.js'
+import { getTense } from './lib.js'
 
 
 const api = function (View) {
@@ -55,7 +57,7 @@ const api = function (View) {
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
-        return toInfinitive(vb, parsed, info.form)
+        return toInf(vb, parsed, info.form)
       })
     }
     toPresentTense(n) {
@@ -86,7 +88,15 @@ const api = function (View) {
         return toGerund(vb, parsed, info.form)
       })
     }
+    toPastParticiple(n) {
+      return this.getNth(n).map(vb => {
+        let parsed = parseVerb(vb)
+        let info = getGrammar(vb, parsed)
+        return toParticiple(vb, parsed, info.form)
+      })
+    }
     conjugate(n) {
+      const { conjugate, toInfinitive } = this.world.methods.two.transform.verb
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
@@ -94,12 +104,12 @@ const api = function (View) {
         if (info.form === 'imperative') {
           info.form = 'simple-present'
         }
-        return {
-          Infinitive: toInfinitive(vb.clone(), parsed, info.form).text('normal'),
-          PastTense: toPast(vb.clone(), parsed, info.form).text('normal'),
-          PresentTense: toPresent(vb.clone(), parsed, info.form).text('normal'),
-          FutureTense: toFuture(vb.clone(), parsed, info.form).text('normal'),
+        let inf = parsed.root.text('normal')
+        if (!parsed.root.has('#Infinitive')) {
+          let tense = getTense(parsed.root)
+          inf = toInfinitive(inf, vb.model, tense) || inf
         }
+        return conjugate(inf, vb.model)
       }, [])
     }
 

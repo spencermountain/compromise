@@ -98,4 +98,12 @@ export default {
     lex[word] = ['TextValue', 'Ordinal']
     lex[word + 's'] = ['TextValue', 'Fraction']
   },
+  // 'thames'
+  Place: (word, lex) => {
+    lex[word] = ['Place', 'ProperNoun']
+  },
+  // 'ontario'
+  Region: (word, lex) => {
+    lex[word] = ['Region', 'ProperNoun']
+  },
 }

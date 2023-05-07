@@ -59,12 +59,12 @@ test('lexicon-guard test', function (t) {
   nlp.typeahead(['swimsuit'])
   // t.equal(nlp('swim').has('swimsuit'), false, here + 'lexicon-block')
   t.equal(nlp('swimsu').has('swimsuit'), true, here + 'lexicon-continue')
-
   nlp.world().model.one.typeahead = {} //whoosh!
   // who cares - do it anyways
   nlp.typeahead(['swimsuit'], { safe: false })
   t.equal(nlp('swim').has('swimsuit'), true, here + 'safemode-off')
   t.equal(nlp('swimsu').has('swimsuit'), true, here + 'lexicon-continue-2')
+  nlp.world().model.one.typeahead = {} //whoosh!
   t.end()
 })
 

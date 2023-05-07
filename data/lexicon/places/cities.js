@@ -458,6 +458,7 @@ export default [
   'windhoek',
   'chengzhong',
   'wuzhou',
+  'peking',
 
   // india state-capitals
   'agartala',
@@ -496,4 +497,6 @@ export default [
   'le mans',
   'dunkirk',
   'versailles',
+
+  'salt lake city',
 ]

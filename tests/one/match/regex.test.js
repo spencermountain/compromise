@@ -53,3 +53,19 @@ test('regex-match:', function (t) {
 
   t.end()
 })
+
+
+test('multi-not:', function (t) {
+  let doc = nlp('match one two three four five six')
+  let m = doc.match('match !(foo|bar){0,3}')
+  t.equal(m.text(), 'match one two three', here + 'no-match')
+
+  doc = nlp('match one two bar three four five six')
+  m = doc.match('match !(foo|bar){0,3}')
+  t.equal(m.text(), 'match one two', here + 'found-match')
+
+  doc = nlp('match foo one two three four')
+  m = doc.match('match !(foo|bar){0,3}')
+  t.equal(m.text(), '', here + 'no-match')
+  t.end()
+})

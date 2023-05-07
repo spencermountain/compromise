@@ -1,6 +1,7 @@
 export default [
   // simple mappings
   { word: '@', out: ['at'] },
+  { word: 'arent', out: ['are', 'not'] },
   { word: 'alot', out: ['a', 'lot'] },
   { word: 'brb', out: ['be', 'right', 'back'] },
   { word: 'cannot', out: ['can', 'not'] },
@@ -14,11 +15,12 @@ export default [
   { word: "that's", out: ['that', 'is'] },
   { word: "what's", out: ['what', 'is'] },
   { word: "let's", out: ['let', 'us'] },
-  { word: "there's", out: ['there', 'is'] },
+  // { word: "there's", out: ['there', 'is'] },
   { word: 'dunno', out: ['do', 'not', 'know'] },
   { word: 'gonna', out: ['going', 'to'] },
   { word: 'gotta', out: ['have', 'got', 'to'] }, //hmm
   { word: 'gimme', out: ['give', 'me'] },
+  { word: 'outta', out: ['out', 'of'] },
   { word: 'tryna', out: ['trying', 'to'] },
   { word: 'gtg', out: ['got', 'to', 'go'] },
   { word: 'im', out: ['i', 'am'] },

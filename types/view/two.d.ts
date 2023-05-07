@@ -1,4 +1,4 @@
-import type View from './one'
+import type View from './one.d.ts'
 
 interface Two extends View {
   /** return any multi-word terms, like "didn't"  */

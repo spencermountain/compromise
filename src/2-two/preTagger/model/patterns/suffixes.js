@@ -68,6 +68,7 @@ export default [
     ign: Inf,
     ful: Adj,
     bal: Adj,
+    ton: Noun,
   },
   {
     //4-letter
@@ -156,7 +157,15 @@ export default [
     lyse: Inf,
     iant: Adj,
     nary: Adj,
+    ghty: Adj,
+    uent: Adj,
     erer: Actor,//caterer
+    bury: Place,
+    dorf: Noun,
+    esty: Noun,
+    wych: Place,
+    dale: Place,
+    folk: Place,
   },
   {
     //5-letter
@@ -206,7 +215,12 @@ export default [
     // ctory: Adj,
     rient: Sing,
     dient: Sing,
-    maker: Actor
+    maker: Actor,
+    burgh: Place,
+    mouth: Place,
+    ceter: Place,
+    ville: Place,
+    worth: Noun
   },
   {
     //6-letter
@@ -221,6 +235,8 @@ export default [
     worker: Actor,
     master: Actor,
     writer: Actor,
+    brough: Place,
+    cester: Place
   },
   {
     //7-letter

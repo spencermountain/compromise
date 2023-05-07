@@ -23,6 +23,7 @@ export default [
   'various',
   'whatever',
   'whichever',
+  'tha',
   //some other languages (what could go wrong?)
   // 'la',
   'le',

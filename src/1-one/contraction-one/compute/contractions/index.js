@@ -66,12 +66,26 @@ const toDocs = function (words, view) {
   return doc.docs[0]
 }
 
+// there's is usually [there, is]
+// but can be 'there has' for 'there has (..) been'
+const thereHas = function (terms, i) {
+  for (let k = i + 1; k < 5; k += 1) {
+    if (!terms[k]) {
+      break
+    }
+    if (terms[k].normal === 'been') {
+      return ['there', 'has']
+    }
+  }
+  return ['there', 'is']
+}
+
 //really easy ones
 const contractions = (view) => {
   let { world, document } = view
   const { model, methods } = world
   let list = model.one.contractions || []
-  let units = new Set(model.one.units || [])
+  // let units = new Set(model.one.units || [])
   // each sentence
   document.forEach((terms, n) => {
     // loop through terms backwards
@@ -90,6 +104,10 @@ const contractions = (view) => {
       // ['j', 'aime']
       if (!words && byStart.hasOwnProperty(before)) {
         words = byStart[before](terms, i)
+      }
+      // 'there is' vs 'there has'
+      if (before === 'there' && after === 's') {
+        words = thereHas(terms, i)
       }
       // actually insert the new terms
       if (words) {
@@ -114,7 +132,7 @@ const contractions = (view) => {
         continue
       }
       // split-apart '4km'
-      words = numberUnit(terms, i, units)
+      words = numberUnit(terms, i, world)
       if (words) {
         words = toDocs(words, view)
         splice(document, [n, i], words)

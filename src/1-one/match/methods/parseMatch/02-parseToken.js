@@ -94,6 +94,46 @@ const parseToken = function (w, opts) {
       }
     }
 
+    //regex
+    if (start(w) === '/' && end(w) === '/') {
+      w = stripBoth(w)
+      if (opts.caseSensitive) {
+        obj.use = 'text'
+      }
+      obj.regex = new RegExp(w) //potential vuln - security/detect-non-literal-regexp
+      return obj
+    }
+
+    // support foo{1,9}
+    if (hasMinMax.test(w) === true) {
+      w = w.replace(hasMinMax, (_a, b, c) => {
+        if (c === undefined) {
+          // '{3}'	Exactly three times
+          obj.min = Number(b)
+          obj.max = Number(b)
+        } else {
+          c = c.replace(/, */, '')
+          if (b === undefined) {
+            // '{,9}' implied zero min
+            obj.min = 0
+            obj.max = Number(c)
+          } else {
+            // '{2,4}' Two to four times
+            obj.min = Number(b)
+            // '{3,}' Three or more times
+            obj.max = Number(c || 999)
+          }
+        }
+        // use same method as '+'
+        obj.greedy = true
+        // 0 as min means the same as '?'
+        if (!obj.min) {
+          obj.optional = true
+        }
+        return ''
+      })
+    }
+
     //wrapped-flags
     if (start(w) === '(' && end(w) === ')') {
       // support (one && two)
@@ -116,15 +156,6 @@ const parseToken = function (w, opts) {
         return str.split(/ /g).map(s => parseToken(s, opts))
       })
       w = ''
-    }
-    //regex
-    if (start(w) === '/' && end(w) === '/') {
-      w = stripBoth(w)
-      if (opts.caseSensitive) {
-        obj.use = 'text'
-      }
-      obj.regex = new RegExp(w) //potential vuln - security/detect-non-literal-regexp
-      return obj
     }
 
     //root/sense overloaded
@@ -160,35 +191,6 @@ const parseToken = function (w, opts) {
       obj.switch = w
       return obj
     }
-  }
-  // support foo{1,9}
-  if (hasMinMax.test(w) === true) {
-    w = w.replace(hasMinMax, (_a, b, c) => {
-      if (c === undefined) {
-        // '{3}'	Exactly three times
-        obj.min = Number(b)
-        obj.max = Number(b)
-      } else {
-        c = c.replace(/, */, '')
-        if (b === undefined) {
-          // '{,9}' implied zero min
-          obj.min = 0
-          obj.max = Number(c)
-        } else {
-          // '{2,4}' Two to four times
-          obj.min = Number(b)
-          // '{3,}' Three or more times
-          obj.max = Number(c || 999)
-        }
-      }
-      // use same method as '+'
-      obj.greedy = true
-      // 0 as min means the same as '?'
-      if (!obj.min) {
-        obj.optional = true
-      }
-      return ''
-    })
   }
   //do the actual token content
   if (start(w) === '#') {

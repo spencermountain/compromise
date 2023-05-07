@@ -109,5 +109,6 @@ export default {
   stomach: 'stomachs',
   tornado: 'tornados',
   tuxedo: 'tuxedos',
+  volcano: 'volcanoes',
 
 }

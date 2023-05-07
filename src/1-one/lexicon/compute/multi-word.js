@@ -14,6 +14,8 @@ const checkMulti = function (terms, i, lexicon, setTag, world) {
 
       // special case for phrasal-verbs - 2nd word is a #Particle
       if (tag && tag.length === 2 && (tag[0] === 'PhrasalVerb' || tag[1] === 'PhrasalVerb')) {
+        // guard against 'take walks in'
+        // if (terms[i + skip - 2] && terms[i + skip - 2].tags.has('Infinitive')) { }
         setTag([ts[1]], 'Particle', world, false, '1-phrasal-particle')
       }
       return true

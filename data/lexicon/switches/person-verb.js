@@ -28,8 +28,8 @@ export default [
   'spike',
   'stew',
   'sue',
-  'trace',
   'wade',
+  // 'trace',
   // 'bill',
   // 'will',
   // 'sung'

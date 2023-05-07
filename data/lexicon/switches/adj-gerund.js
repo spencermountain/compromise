@@ -1,9 +1,6 @@
 // rallying the troops
 // her rallying cry
 export default [
-  // clues: [adj, gerund],
-  // fallback: 'Adjective',
-  // words: [
   'absorbing',
   'accelerating',
   'accompanying',
@@ -34,7 +31,6 @@ export default [
   'captivating',
   'challenging',
   'charming',
-  'cheating',
   'chilling',
   'closing',
   'comforting',
@@ -199,6 +195,7 @@ export default [
   'yielding',
   'disgusting',
 
+  'sentencing',
 
   'convincing',
   'degrading',
@@ -227,7 +224,7 @@ export default [
   'overpowering',
   'varying',
   'intimidating',
-
+  'pending',
   'caring'
 
 ]

@@ -1,12 +1,12 @@
 import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
-import expandModels from './models.js'
 import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import conjugate from '../../methods/transform/verbs/conjugate/index.js'
 import { toSuperlative, toComparative } from '../../methods/transform/adjectives/inflect.js'
 import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
 import models from '../models/index.js'
 let tmpModel = {
+  one: { lexicon: {} },
   two: { models }
 }
 
@@ -35,7 +35,7 @@ const switchDefaults = {
   // 'victoria'
   'Person|Place': 'Person',
   // 'rusty'
-  'Person|Adj': 'Adjective',
+  'Person|Adj': 'Comparative',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
   // 'miles'
@@ -101,6 +101,9 @@ const expandVariable = function (switchWords, model) {
       expandVerb(w, lex, true)
       expandAdjective(w, lex, model)
     }
+    if (name === 'Person|Adj') {
+      expandAdjective(w, lex, model)
+    }
     // add infinitives for gerunds
     if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
       let inf = toInfinitive(w, tmpModel, 'Gerund')
@@ -128,7 +131,6 @@ const expand = function (model) {
   model = expandLexicon(model.one.lexicon, model)
   model = addUncountables(model.one.lexicon, model)
   model = expandVariable(model.two.switches, model)
-  model = expandModels(model)
   model = expandIrregulars(model)
   return model
 }

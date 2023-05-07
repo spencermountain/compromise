@@ -1,36 +1,24 @@
+// split terms into Nounphrase, verbphrase, etc groups
 const chunks = function (doc) {
-  let carry = []
-  let ptr = null
-  let current = null
-  doc.docs.forEach(terms => {
+  let all = []
+  let lastOne = null
+  // first, split by comma, etc
+  let m = doc.clauses()
+  // loop through each clause
+  m.docs.forEach(terms => {
     terms.forEach(term => {
-      // start a new chunk
-      if (term.chunk !== current) {
-        if (ptr) {
-          ptr[2] = term.index[1]
-          carry.push(ptr)
-        }
-        current = term.chunk
-        ptr = [term.index[0], term.index[1]]
+      // new chunk
+      if (!term.chunk || term.chunk !== lastOne) {
+        lastOne = term.chunk
+        all.push([term.index[0], term.index[1], term.index[1] + 1])
+      } else {
+        // keep the chunk going
+        all[all.length - 1][2] = term.index[1] + 1
       }
     })
+    lastOne = null
   })
-  if (ptr) {
-    carry.push(ptr)
-  }
-  let parts = doc.update(carry)
-  // split up verb-phrases, and noun-phrases
-  parts = parts.map(c => {
-    if (c.has('<Noun>')) {
-      return c.nouns()
-    }
-    // if (c.has('<Verb>')) {
-    //   if (c.verbs().length > 1) {
-    //     console.log(c.text())
-    //   }
-    // }
-    return c
-  })
+  let parts = doc.update(all)
   return parts
 }
 export default chunks

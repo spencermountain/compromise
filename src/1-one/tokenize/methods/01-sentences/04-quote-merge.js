@@ -1,3 +1,5 @@
+/* eslint-disable regexp/no-dupe-characters-character-class */
+
 // merge embedded quotes into 1 sentence
 // like - 'he said "no!" and left.' 
 const MAX_QUOTE = 280// ¯\_(ツ)_/¯
@@ -23,8 +25,8 @@ const pairs = {
   // '\u0060': '\u00B4', // 'PrimeSingleQuotes'
   '\u301F': '\u301E', // 'LowPrimeDoubleQuotesReversed'
 }
-const openQuote = RegExp('(' + Object.keys(pairs).join('|') + ')', 'g')
-const closeQuote = RegExp('(' + Object.values(pairs).join('|') + ')', 'g')
+const openQuote = RegExp('[' + Object.keys(pairs).join('') + ']', 'g')
+const closeQuote = RegExp('[' + Object.values(pairs).join('') + ']', 'g')
 
 const closesQuote = function (str) {
   if (!str) {

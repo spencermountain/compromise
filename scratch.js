@@ -1,49 +1,125 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/four.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let arr = [
-  // "New restaurant organizes their menu by feelings",
-  // "a state implemented voting to increase their total",
-  "give our people the tools they need",
-  'I have also heard rumors that drivers save on gas when they idle',
-  'when I looked at my girlfriend her head would grow and shrink',
-  'before any of the ladies of the Court could stop him he spoke',
-  `was very well pleased with the magician's conduct, and said to her`,
-  'Men are of different heights, yet they range about a mode',
-  'the committee gathered their delegates',
-  'the leverage of Brussels over new member states increases after they join'
+
+
+  // 'poviding care',
+  'We take walks in the park.',
+  'the tree will grow',
+  'They listen to music on their way to work.',
+  // `find just one law abiding citizen`,
+  // 'sensationally',
+  // 'catch',
+  // 'teach',
+  // 'buy',
+  // 'break',
+  // 'sink',
+  // 'know',
+  // 'run',
+  // 'swim',
+  // 'sea of japan',
+  // 'adriadic sea',
+  // 'more broken promises',
+  // 'cheerful',
+  // 'secure',
+  // 'we will convert',
+  // 'matchmaking',
+  // "would be amusing",
+  // "would be outstanding",
+
+  // 'please do not speak',
+  // 'is a tough read',
+  // 'spot on',
+  // 'up to date',
+  // 'sleepier',
+  // 'guiltier',
+  // 'clean',
+
+  // 'drunk',
+  // 'hearty',
+  // 'holy',
+  // 'leery',
+
+  // 'solitary',
+  // 'cynically',
+  // 'hairy',
+  // 'richest',
+
+  // 'jet',
+
+  // "sittin",
+  // "ridin",
+  // "jus",
+  // "allergic",
+  // "listed",
+
+  // "quo",
+  // "triple",
+  // "foremost",
+  // "friends",
+  // "guys",
+
+  // "playin",
+  // "waitin",
+  // "gettin",
+  // "comin",
+  // "livin",
+  // "sayin",
+  // "doin",
+  // "lovin",
+
+
+  // "tone",
+  // "shore",
+
+  // "i drive to the cottage",
+  // "He will study biology in college.",
+  // "drive",
+  // "vie",
+  // "convoluted",
+  // "rooted",
+  // "trumpeted",
+
+  // "wad",
+  // "sub",
+
+
+
+  // 'overtime',
+
+
+  // "small fragment",
+
+  // 'manufacturing',
+  // 'stream',
+  // 'cave',
+  // 'what companies are doing is',
+
+
 ]
 // let doc = nlp(arr[0]).debug()
+// // doc.verbs().toPastParticiple()
+// console.log(doc.verbs().conjugate())
+// // doc.verbs().toGerund()
+// doc.verbs().toPastParticiple()
+// doc.debug()
 
-// // doc.nouns().debug()
-// console.log('from:')
-// let pron = doc.pronouns().debug()
+// console.log(doc.text())
+// console.log(doc.compute('root').text('root'))
+// console.log(doc.json({ root: true })[0])
 
-// console.log('to:')
-// pron.refersTo().debug()
+let str = `• it is-cool 
+• He is nice
+• oooh yeah, baby!`
+let doc = nlp(str)
+// doc.sentences().debullet()
+doc.normalize('medium')
+console.log(doc.text())
 
 
-// .nouns() issues
-// arr = [
-// `1 of these carried a Kansas woman 60 ft., dropping her `,
-// ]
-// let doc = nlp(arr[0]).debug()
-// doc.nouns().debug()
 
-// japanese punctuation
-// 「」
-// 『』
-// 【】
-// let txt = "皆さんこんにちは、トウフグのコウイチでございます。ハロー！" //comma
-// txt = "ザー・モンキー"//interpunct
-let txt = "the bartender laughed, he was funny"//interpunct
-txt = 'air traffic controller'
-txt = 'Field marshal Herring '
-txt = 'Thank you Doctor Gonzales'
-
-// txt = "少年は店に向かった。 彼はパンを買った。"
-nlp(txt).debug()

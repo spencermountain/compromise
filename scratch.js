@@ -113,7 +113,7 @@ let arr = [
 // console.log(doc.compute('root').text('root'))
 // console.log(doc.json({ root: true })[0])
 
-// let doc = nlp('sept 4 1998')
+let doc = nlp('sept 4 1998')
 console.log(nlp.parseMatch('[<month>#Month] [<date>#Value] [<year>#Year]?'))
 console.log(nlp.parseMatch('[<month>#Month] [<date>#Value] [<year>#Year?]'))
 // let m = doc.match('[<month>#Month] [<date>#Value] [<year>#Year]?')

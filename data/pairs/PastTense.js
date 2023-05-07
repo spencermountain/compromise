@@ -2055,6 +2055,7 @@ export default [
   ['yielded', 'yield'],
   ['zoned', 'zone'],
   ['smelled', 'smell'],
+  ['chirped', 'chirp'],
   // ['blown', 'blow'],
   // ['', ''],
 ]

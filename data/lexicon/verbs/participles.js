@@ -59,6 +59,7 @@ export default [
   'stolen',
   'strewn',
   'sung',
+  'sunk',
   'sworn',
   'swum',
   'taken',

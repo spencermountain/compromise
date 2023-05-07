@@ -3,11 +3,14 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let arr = [
 
-  `find just one law abiding citizen`,
+  'We take walks in the park.',
+  'the tree will grow',
+  'They listen to music on their way to work.',
+  // `find just one law abiding citizen`,
   // 'sensationally',
   // 'catch',
   // 'teach',
@@ -98,7 +101,8 @@ let arr = [
 
 ]
 let doc = nlp(arr[0]).debug()
-console.log(doc.verbs().conjugate())
+doc.verbs().toPastParticiple()
+doc.debug()
 // console.log(doc.nouns().conjugate())
 // doc.verbs().toGerund()
 // doc.verbs().toPastParticiple()

@@ -1,55 +1,58 @@
-import { noop, getTense } from '../lib.js'
+import { noop, getTense, getSubject } from '../lib.js'
 
-//  'have/had/has eaten'
-const haveHadHas = function (all) {
-  let w = 'have'
-  if (all.Participle !== all.PastTense) {
-    w = 'had'
+const haveHas = function (vb, parsed) {
+  let subj = getSubject(vb, parsed)
+  let m = subj.subject
+  if (m.has('(i|we|you)')) {
+    return 'have'
   }
-  return w
+  // the dog has
+  if (subj.plural === false) {
+    return 'has'
+  }
+  // spencer has
+  if (m.has('he') || m.has('she') || m.has('#Person')) {
+    return 'has'
+  }
+  return 'have'
 }
 
-const fns = {
-
-
-  // walk->walked
-  simple: (vb, parsed) => {
-    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
-    const { root, auxiliary } = parsed
-    // 'i may'
-    if (root.has('#Modal')) {
-      return vb
-    }
-    let str = root.text({ keepPunct: false })
-    str = toInfinitive(str, vb.model, getTense(root))
-    let all = conjugate(str, vb.model)
-    // 'driven' || 'drove'
-    str = all.Participle || all.PastTense
-
-    if (str) {
-      vb = vb.replace(root, str)
-      // 'have/had/has eaten'
-      let have = haveHadHas(all)
-      vb.prepend(have).match(have).tag('Auxiliary')
-      vb.remove(auxiliary)
-    }
-
+// walk-> has walked
+const simple = (vb, parsed) => {
+  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
+  const { root, auxiliary } = parsed
+  // 'i may'
+  if (root.has('#Modal')) {
     return vb
-  },
+  }
+  let str = root.text({ keepPunct: false })
+  str = toInfinitive(str, vb.model, getTense(root))
+  let all = conjugate(str, vb.model)
+  // 'driven' || 'drove'
+  str = all.Participle || all.PastTense
 
+  if (str) {
+    vb = vb.replace(root, str)
+    // 'have/had/has eaten'
+    let have = haveHas(vb, parsed)
+    vb.prepend(have).match(have).tag('Auxiliary')
+    vb.remove(auxiliary)
+  }
 
+  return vb
 }
+
 
 
 const forms = {
   // walk -> walked
-  'infinitive': fns.simple,
+  'infinitive': simple,
   // he walks -> he walked
-  'simple-present': fns.simple,
+  'simple-present': simple,
   // he walked
   // 'simple-past': noop,
   // he will walk -> he walked
-  // 'simple-future': noop,
+  'simple-future': (vb, parsed) => vb.replace('will', haveHas(vb, parsed)),
 
   // he is walking
   // 'present-progressive': noop,
@@ -59,18 +62,18 @@ const forms = {
   // 'future-progressive': noop,
 
   // has walked -> had walked (?)
-  // 'present-perfect': noop,
+  'present-perfect': noop,
   // had walked
-  // 'past-perfect': noop,
+  'past-perfect': noop,
   // will have walked -> had walked
-  // 'future-perfect': noop,
+  'future-perfect': (vb, parsed) => vb.replace('will have', haveHas(vb, parsed)),
 
   // has been walking -> had been
-  // 'present-perfect-progressive': noop,
+  'present-perfect-progressive': noop,
   // had been walking
-  // 'past-perfect-progressive': noop,
+  'past-perfect-progressive': noop,
   // will have been -> had
-  // 'future-perfect-progressive': noop,
+  'future-perfect-progressive': noop,
 
   // got walked
   // 'passive-past': noop,
@@ -109,9 +112,9 @@ const toPast = function (vb, parsed, form) {
     return vb
   }
   // do the simple form
-  vb = fns.simple(vb, parsed)
+  vb = simple(vb, parsed, form)
   vb.fullSentence().compute(['tagger', 'chunks'])
-  // do nothing i guess?
+  // do nothing, then
   return vb
 }
 export default toPast

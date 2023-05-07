@@ -36,7 +36,11 @@ const conjugate = function (inf, model) {
   if (pastPrt !== inf && pastPrt !== found.PastTense) {
     // ensure it's a known participle
     let lex = model.one.lexicon || {}
-    if (lex[pastPrt] === 'Participle') {
+    if (lex[pastPrt] === 'Participle' || lex[pastPrt] === 'Adjective') {
+      // one exception
+      if (inf === 'play') {
+        pastPrt = 'played'
+      }
       found.Participle = pastPrt
     }
   }

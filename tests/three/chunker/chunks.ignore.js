@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/chunks] '
+// const here = '[three/chunks] '
 
 test('chunker', function (t) {
   let arr = [

@@ -1,6 +1,5 @@
 import methods from '../../methods/index.js'
 import expandIrregulars from './irregulars.js'
-import expandModels from './models.js'
 import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import conjugate from '../../methods/transform/verbs/conjugate/index.js'
 import { toSuperlative, toComparative } from '../../methods/transform/adjectives/inflect.js'
@@ -132,7 +131,6 @@ const expand = function (model) {
   model = expandLexicon(model.one.lexicon, model)
   model = addUncountables(model.one.lexicon, model)
   model = expandVariable(model.two.switches, model)
-  model = expandModels(model)
   model = expandIrregulars(model)
   return model
 }

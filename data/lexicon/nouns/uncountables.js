@@ -270,6 +270,10 @@ export default [
   'neptune',
   'pluto',
   'vapor',
+  'magic',
+  'melancholy',
+
+
   // 'art',
   // 'cash',
   // 'clothing',

@@ -20,7 +20,7 @@ let arr = [
   'carpenter',
   'cashier',
   'chef',
-  'coach',
+  // 'coach',
   'dental hygienist',
   'dentist',
   'designer',

@@ -38,7 +38,11 @@ const steps = [
       let begin = new Date()
       Object.keys(models).forEach(k => {
         console.log('     - ' + k)
-        const model = learn(models[k])
+        let opts = {}
+        if (k === 'AdjToNoun') {
+          opts.reverse = false
+        }
+        const model = learn(models[k], opts)
         models[k] = compress(model)
       })
       let end = new Date()

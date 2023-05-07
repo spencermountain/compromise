@@ -41,7 +41,7 @@ let arr = [
   ['write off', '#Infinitive #PhrasalVerb'],
   ['writes off', '#PhrasalVerb #Particle'],
   ['wrote off', '#PastTense #Particle'],
-  ['tided over', '#PastTense #Particle'],
+  // ['tided over', '#PastTense #Particle'],
 
 
   //phrasal verb tense

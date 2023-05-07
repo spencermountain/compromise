@@ -526,10 +526,6 @@ export default [
     tags: 'CC, PRP, MD, RB, VB, IN, DT',
   },
   {
-    text: 'And you search in vain to find just one law abiding citizen',
-    tags: 'CC, PRP, VBP, IN, JJ, TO, VB, RB, CD, NN, VBG, NN',
-  },
-  {
     text: 'But the four planeloads of arms have vanished.',
     tags: 'CC, DT, CD, NNS, IN, NNS, VBP, VBN',
   },

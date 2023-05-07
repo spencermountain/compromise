@@ -1,8 +1,4 @@
-import test from 'tape'
-import nlp from '../_lib.js'
-const here = '[three/adj-noun] '
-
-let arr = [
+export default [
   ['abject', 'abjection'],
   ['abstemious', 'abstemiousness'],
   ['abundant', 'abundance'],
@@ -27,6 +23,7 @@ let arr = [
   ['amorous', 'amorousness'],
   ['ample', 'ampleness'],
   ['amused', 'amusement'],
+  ['amusing', 'amusement'],
   ['ancient', 'antiquity'],
   ['apprehensive', 'apprehensiveness'],
   ['ardent', 'ardor'],
@@ -60,6 +57,7 @@ let arr = [
   ['circumspect', 'circumspection'],
   ['clean', 'cleanliness'],
   ['clear', 'clarity'],
+  ['clear', 'clearness'],
 
   ['clever', 'cleverness'],
   ['cold', 'coldness'],
@@ -113,6 +111,8 @@ let arr = [
   ['enough', 'enoughness'],
   ['enthusiastic', 'enthusiasm'],
   ['excellent', 'excellence'],
+  ['excited', 'excitement'],
+  ['exciting', 'excitement'],
   ['exemplary', 'exemplariness'],
   ['expedient', 'expedience'],
   ['expensive', 'expense'],
@@ -203,8 +203,8 @@ let arr = [
   ['ironic', 'irony'],
   ['jittery', 'jitteriness'],
   ['jovial', 'joviality'],
-  // ['joyful', 'joy'],
-  // ['joyous', 'joy'],
+  ['joyful', 'joy'],
+  ['joyous', 'joy'],
   ['keen', 'keenness'],
   ['kind', 'kindness'],
   ['knowledgeable', 'knowledge'],
@@ -258,7 +258,7 @@ let arr = [
   ['offensive', 'offence'],
   ['offhand', 'offhandedness'],
   ['ominous', 'ominousness'],
-  // ['open-minded', 'open-mindedness'],
+  ['open-minded', 'open-mindedness'],
   ['optimistic', 'optimism'],
   ['organized', 'organization'],
   ['orotund', 'orotundity'],
@@ -300,9 +300,9 @@ let arr = [
   ['punctual', 'punctuality'],
   ['purposeful', 'purpose'],
   ['querulous', 'querulousness'],
-  // ['quick-witted', 'quick-wittedness'],
+  ['quick-witted', 'quick-wittedness'],
   ['quick', 'quickness'],
-  // ['quiet', 'quiet'],
+  ['quiet', 'quietness'],
   ['quixotic', 'quixoticism'],
   ['radiant', 'radiance'],
   ['rampant', 'rampantness'],
@@ -320,7 +320,8 @@ let arr = [
   ['reliable', 'reliability'],
   ['reprobate', 'reprobacy'],
   ['resilient', 'resilience'],
-  // ['resolute', 'resolution'],
+  ['resolute', 'resoluteness'],
+  ['resolute', 'resolution'],
   ['resourceful', 'resourcefulness'],
   ['respectable', 'respect'],
   ['respectful', 'respect'],
@@ -338,8 +339,8 @@ let arr = [
   ['scrupulous', 'scrupulousness'],
   ['scurrilous', 'scurrility'],
   ['seditious', 'seditiousness'],
-  // ['self-assured', 'self-assurance'],
-  // ['self-disciplined', 'self-discipline'],
+  ['self-assured', 'self-assurance'],
+  ['self-disciplined', 'self-discipline'],
   ['selfless', 'selflessness'],
   ['sensible', 'sensibility'],
   ['sensitive', 'sensitivity'],
@@ -440,22 +441,10 @@ let arr = [
   ['wise', 'wisdom'],
   ['wistful', 'wistfulness'],
   ['witty', 'wit'],
+  ['witty', 'wittiness'],
   ['woebegone', 'woefulness'],
   ['yielding', 'yieldingness'],
   ['young', 'youth'],
   ['zany', 'zaniness'],
   ['zealous', 'zeal'],
 ]
-
-test('toNoun:', function (t) {
-  // let { toNoun } = nlp().methods.two.transform.adjective
-  arr.forEach(a => {
-    let [adj, noun] = a
-    // t.ok(nlp(noun).has('#Noun'), here + noun)
-    // t.ok(nlp(adj).has('#Adjective'), here + adj)
-    let res = nlp(adj).tag('Adjective').adjectives().conjugate()[0] || {}
-    // let res = toNoun(adj)
-    t.equal(res.Noun, noun, here + ` [${adj}, ${noun}]`)
-  })
-  t.end()
-})

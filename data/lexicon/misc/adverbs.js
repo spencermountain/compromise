@@ -30,7 +30,7 @@ export default [
   'definitely',
   'directly',
   'en masse',
-  'enough',
+  // 'enough',
   'ever',
   'for example',
   'for good',

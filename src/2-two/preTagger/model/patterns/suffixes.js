@@ -158,9 +158,11 @@ export default [
     iant: Adj,
     nary: Adj,
     ghty: Adj,
+    uent: Adj,
     erer: Actor,//caterer
     bury: Place,
     dorf: Noun,
+    esty: Noun,
     wych: Place,
     dale: Place,
     folk: Place,

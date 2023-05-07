@@ -2056,6 +2056,7 @@ export default [
   ['zoned', 'zone'],
   ['smelled', 'smell'],
   ['chirped', 'chirp'],
+  ['doomed', 'doom'],
   // ['blown', 'blow'],
   // ['', ''],
 ]

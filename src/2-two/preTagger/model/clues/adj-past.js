@@ -32,6 +32,7 @@ const adjPast = {
     it: past,//it intoxicated him
     as: past,//as requested
     for: 'Adjective',//for discounted items
+    more: 'Adjective',//more broken promises
   },
   afterWords: {
     by: past, //damaged by

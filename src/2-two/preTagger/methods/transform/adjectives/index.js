@@ -1,7 +1,7 @@
-import { toSuperlative, toComparative, fromSuperlative, fromComparative } from './inflect.js'
-import fromAdverb from './adverbs/toAdjective.js'
-import toAdverb from './adverbs/toAdverb.js'
-import toNoun from './adverbs/toNoun.js'
+import { toSuperlative, toComparative, fromSuperlative, fromComparative, toNoun } from './inflect.js'
+import fromAdverb from './conjugate/fromAdverb.js'
+import toAdverb from './conjugate/toAdverb.js'
+// import toNoun from './conjugate/toNoun.js'
 
 const all = function (str, model) {
   let arr = [str]
@@ -12,6 +12,7 @@ const all = function (str, model) {
   arr = new Set(arr)
   return Array.from(arr)
 }
+
 
 export default {
   toSuperlative, toComparative, toAdverb, toNoun,

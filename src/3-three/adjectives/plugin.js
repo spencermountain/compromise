@@ -26,8 +26,8 @@ const api = function (View) {
         let json = m.toView().json(opts)[0] || {}
         let str = toRoot(m)
         json.adjective = {
-          adverb: toAdverb(str),
-          noun: toNoun(str),
+          adverb: toAdverb(str, this.model),
+          noun: toNoun(str, this.model),
           superlative: toSuperlative(str, this.model),
           comparative: toComparative(str, this.model),
         }

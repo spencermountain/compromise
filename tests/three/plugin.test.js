@@ -27,6 +27,17 @@ test('change verb conjugation', function (t) {
   doc = nlp('gettin').tag('Gerund')
   res = doc.verbs().conjugate()[0]
   t.equal(res.Infinitive, 'get', here + 'inf-3')
+
+  // reset it
+  nlp.plugin({
+    irregulars: {
+      get: {
+        pastTense: 'got',
+        presentTense: 'gets',
+        gerund: 'getting'
+      }
+    }
+  })
   t.end()
 })
 

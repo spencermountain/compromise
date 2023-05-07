@@ -9,14 +9,31 @@ const suffixes = [
     'le': 'ility',
     'al': 'ality',
     'ay': 'ayness',
+    'rm': 'rmth',
+    'pt': 'ptitude',
+    'he': 'heness ',
+    'ct': 'ction',
+    'id': 'idity',
+    'ic': 'ism',
+    'nt': 'ncy',
+    // 'al': 'ality',
   },
   {
     'ial': 'y',
-    'ing': 'ment',
+    'ing': 'ingness',
+    // 'ing': 'ment',
     'ess': 'essness',
     'ous': 'ousness',
     'ive': 'ivity',
-    'ect': 'ection'
+    'ect': 'ection',
+    'yal': 'yalty',
+    'ean': 'eanliness',
+    'ain': 'ainty',
+    'ave': 'avery',
+    'est': 'esty',
+    'ant': 'ance',
+    'ent': 'ence',
+    'ful': '',
   },
   {
     'ting': 'ting',
@@ -28,11 +45,16 @@ const suffixes = [
     'atic': 'acy',//democratic
     'sing': 'se',
     'iful': 'y',//beautify, merciful
-    'ible': 'ibility'//credible
+    'ible': 'ibility',//credible
+    'tive': 'tion',
+    'nial': 'niality'
   },
   {
-    'erate': 'eration'
-
+    'erate': 'eration',
+    'istic': 'ism',
+    'ssive': 'ssion',
+    'gical': 'gic'
+    // 'tious': 'tion'
   },
   {
     'ionate': 'ion'
@@ -54,12 +76,38 @@ const exceptions = {
   gentle: 'gentleness',
   quiet: 'quiet',
   expensive: 'expense',
-  offensive: 'offence'
+  offensive: 'offence',
+  modest: 'modesty',
+  hot: 'heat',
+  curious: 'curiosity',
+  beautiful: 'beauty',
+  discreet: 'discretion',
+  suspicious: 'suspicion',
+  witty: 'wit',
+  young: 'youth',
+  romantic: 'romance',
+  poor: 'poverty',
+  practical: 'practicality',
+  sensitive: 'sensitivity',
+  valuable: 'value',
+  spontaneous: 'spontaneity',
+  humble: 'humility',
+  furious: 'fury',
+  generous: 'generosity',
+  exciting: 'excitement',
+  accurate: 'accuracy',
+  agile: 'agility',
+  active: 'activity',
+  agitated: 'agitation',
+  authentic: 'authenticity',
+  comfortable: 'comfort'
 }
 
 const dontDo = new Set([
   'terrible',
   'annoying',
+  'heroic',
+  'docile',
 ])
 
 // a lot of adjectives *don't really* have a noun-form
@@ -77,7 +125,9 @@ const toNoun = function (str) {
   if (res) {
     return res
   }
+  // let maybe = str + 'ness'
+  // if (model && model.one && model.one.lexicon) { }
   return str + 'ness'
 }
 export default toNoun
-// console.log(toNoun('clever'))
+// console.log(toNoun('authentic'))

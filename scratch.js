@@ -7,6 +7,14 @@ import nlp from './src/three.js'
 
 let arr = [
 
+
+  // 'poviding care',
+  'joyous',
+  'resolute',
+  'zealous',
+  'crafty',
+  'He swims laps',
+  'more broken promises',
   'We take walks in the park.',
   'the tree will grow',
   'They listen to music on their way to work.',
@@ -100,12 +108,13 @@ let arr = [
 
 
 ]
-let doc = nlp(arr[0]).debug()
-doc.verbs().toPastParticiple()
-doc.debug()
-// console.log(doc.nouns().conjugate())
-// doc.verbs().toGerund()
+// let doc = nlp(arr[0]).debug()
+// // doc.verbs().toPastParticiple()
+// console.log(doc.verbs().conjugate())
+// // doc.verbs().toGerund()
 // doc.verbs().toPastParticiple()
+// doc.debug()
+
 // console.log(doc.text())
 // console.log(doc.compute('root').text('root'))
 // console.log(doc.json({ root: true })[0])
@@ -115,5 +124,7 @@ doc.debug()
 // console.log(doc.text())
 // console.log(doc.json()[0])
 
+let res = nlp('generous').tag('Adjective').adjectives().conjugate()[0] || {}
+console.log(res)
 
 

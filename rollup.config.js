@@ -1,6 +1,6 @@
-import { terser } from 'rollup-plugin-terser'
+import terser from '@rollup/plugin-terser'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import sizeCheck from 'rollup-plugin-filesize-check'
-import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 const opts = { keep_classnames: true, module: true }
 

@@ -83,7 +83,7 @@ interface Three extends View {
 }
 
 // Nouns class
-interface Nouns extends View {
+export interface Nouns extends View {
   /** grab the parsed noun-phrase */
   parse: (n?: number) => object[]
   /** return only plural nouns */
@@ -96,7 +96,7 @@ interface Nouns extends View {
   toSingular: (setArticle?: boolean) => View
 }
 
-interface Numbers extends View {
+export interface Numbers extends View {
   /** grab the parsed number */
   parse: (n?: number) => object[]
   /** grab the parsed number */
@@ -137,7 +137,7 @@ interface Numbers extends View {
   decrement: () => View
 }
 
-interface Fractions extends View {
+export interface Fractions extends View {
   /** grab the parsed number */
   parse: (n?: number) => object[]
   /** grab the parsed number */
@@ -155,7 +155,7 @@ interface Fractions extends View {
 }
 
 // Sentences class
-interface Sentences extends View {
+export interface Sentences extends View {
   /** grab the parsed sentence */
   parse: (n?: number) => object[]
   /** 'will go' → 'went' */
@@ -180,13 +180,13 @@ interface Sentences extends View {
   isStatement: () => View
 }
 
-interface People extends View {
+export interface People extends View {
   /** get first/last/middle names */
   parse: () => object[]
 }
 
 // Verbs class
-interface Verbs extends View {
+export interface Verbs extends View {
   /** grab the parsed verb-phrase */
   parse: (n?: number) => object[]
   /** grab what [doing] the verb */
@@ -223,26 +223,26 @@ interface Verbs extends View {
   toNegative: () => View
 }
 
-interface Acronyms extends View {
+export interface Acronyms extends View {
   /** 'F.B.I.' -> 'FBI' */
   strip: () => View
   /** 'FBI' -> 'F.B.I.' */
   addPeriods: () => View
 }
-interface Parentheses extends View {
+export interface Parentheses extends View {
   /** remove ( and ) punctuation */
   strip: () => View
 }
-interface Possessives extends View {
+export interface Possessives extends View {
   /** "spencer's" -> "spencer" */
   strip: () => View
 }
-interface Quotations extends View {
+export interface Quotations extends View {
   /** remove leading and trailing quotation marks */
   strip: () => View
 }
 
-interface Adjectives extends View {
+export interface Adjectives extends View {
   /** get the words describing this adjective */
   adverbs: () => View
   /**  return all forms of these */
@@ -258,6 +258,6 @@ interface Adjectives extends View {
 }
 
 // only overloads .json()
-interface Adverbs extends View { }
+export interface Adverbs extends View { }
 
 export default Three

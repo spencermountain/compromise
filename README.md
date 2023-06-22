@@ -659,7 +659,7 @@ _(these methods are on the main `nlp` object)_
 ##### Sentences
 - **[.sentences()](https://observablehq.com/@spencermountain/compromise-sentences)** - return a sentence class with additional methods
   - **[.sentences().json()](https://observablehq.com/@spencermountain/compromise-sentences)** - overloaded output with sentence metadata
-  - **[.sentences().subjects()](https://observablehq.com/@spencermountain/compromise-sentences)** - return the main noun of each sentence
+  <!-- - **[.sentences().subjects()](https://observablehq.com/@spencermountain/compromise-sentences)** - return the main noun of each sentence -->
   - **[.sentences().toPastTense()](https://observablehq.com/@spencermountain/compromise-sentences)** - `he walks` -> `he walked`
   - **[.sentences().toPresentTense()](https://observablehq.com/@spencermountain/compromise-sentences)** - `he walked` -> `he walks`
   - **[.sentences().toFutureTense()](https://observablehq.com/@spencermountain/compromise-sentences)** -- `he walks` -> `he will walk`

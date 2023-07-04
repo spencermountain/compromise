@@ -7,7 +7,7 @@ import nlp from './src/three.js'
 let arr = [
 
 
-  'He courted disaster ',
+  'The waiter emptied the water ',
   'can\'t help but fork',
   // 'poviding care',
   'We take walks in the park.',
@@ -104,7 +104,7 @@ let arr = [
 
 ]
 let doc = nlp(arr[0]).debug()
-console.log(nlp('court').verbs().conjugate()[0])
+console.log(nlp('empty').tag('Verb').verbs().conjugate()[0])
 
 
 // // doc.verbs().toPastParticiple()

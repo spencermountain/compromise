@@ -2071,6 +2071,7 @@ export default [
   ['yelled', 'yell'],
   ['jammed', 'jam'],
   ['courted', 'court'],
+  ['emptied', 'empty'],
   // ['blown', 'blow'],
   // ['', ''],
 ]

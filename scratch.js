@@ -4,10 +4,11 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 
 // nlp.verbose('tagger')
-
 let arr = [
 
 
+  'He courted disaster ',
+  'can\'t help but fork',
   // 'poviding care',
   'We take walks in the park.',
   'the tree will grow',
@@ -102,10 +103,12 @@ let arr = [
 
 
 ]
-// let doc = nlp(arr[0]).debug()
+let doc = nlp(arr[0]).debug()
+console.log(nlp('court').verbs().conjugate()[0])
+
+
 // // doc.verbs().toPastParticiple()
 // console.log(doc.verbs().conjugate())
-// // doc.verbs().toGerund()
 // doc.verbs().toPastParticiple()
 // doc.debug()
 
@@ -114,8 +117,8 @@ let arr = [
 // console.log(doc.json({ root: true })[0])
 
 
-let doc = nlp('she ran to the sea to see what he could see')
-doc.sentences().subjects().debug()
+// let doc = nlp('she ran to the sea to see what he could see')
+// doc.sentences().subjects().debug()
 // let m = doc.match('[<date>#Value] [<month>#Month]')
 // m.debug()
 // m.groups().date.debug()

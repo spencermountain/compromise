@@ -832,6 +832,7 @@ export default [
   'zone',
   'zoom',
   'combat',
+  'court',
   'profile',
   'stockpile',
   'tile',

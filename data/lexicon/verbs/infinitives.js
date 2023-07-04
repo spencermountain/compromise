@@ -760,5 +760,6 @@ export default [
   'greet',
   'conform',
   'breathe',
-  'chirp'
+  'chirp',
+  'beg'
 ]

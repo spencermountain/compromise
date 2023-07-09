@@ -526,6 +526,7 @@ export default [
   'push',
   'question',
   'race',
+  'rhyme',
   'rack',
   'rage',
   'raise',

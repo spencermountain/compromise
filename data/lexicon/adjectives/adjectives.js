@@ -50,6 +50,13 @@ export default [
   'hallowed',
   'crazed',
   'infrared',
+  'grizzled',
+  'appalled',
+  'enamored',
+  'newlywed',
+  'famed',
+  'jaded',
+  'conceited',
 
   // -id
   'plaid',

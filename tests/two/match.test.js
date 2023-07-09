@@ -1104,6 +1104,10 @@ let arr = [
   ['Godavari River', '#Place+'],
   ['the Saint Lawrence River', 'the #Place+'],
   ['by Foo Estuary', 'by #Place+'],
+  ['he became involved', '#Pronoun #PastTense #Adjective'],
+  ['they become creepy', '#Pronoun #PresentTense #Adjective'],
+  // ['becoming entangled with', '#Gerund #Adjective .'],
+  // ['becoming involved', '#Gerund #Adjective'],
 
   // [``, ``],
 ]

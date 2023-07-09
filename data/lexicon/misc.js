@@ -77,5 +77,6 @@ export default {
 
   // double-conjugations
   'kneeled': 'PastTense',
-  'leaped': 'PastTense'
+  'leaped': 'PastTense',
+  'msged': 'PastTense'
 }

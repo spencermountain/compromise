@@ -3,11 +3,15 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 let arr = [
 
-  'sat in',
-  'chimed in',
+
+  // 'gets paid',
+  // 'gets drunk',
+  // 'becoming involved',
+  // 'becoming entangled',
+
   '(The cat) jumped onto the counter. [It] knocked over a glass.',
 
   'The waiter emptied the water ',

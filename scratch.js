@@ -5,7 +5,34 @@ import nlp from './src/three.js'
 
 // nlp.verbose('tagger')
 let arr = [
-
+  // 'bulldoze the field',
+  'deleted',
+  'secreted',
+  'tamed',
+  'glared',
+  'impelled',
+  'dwelled',
+  'dwelled',
+  'honored',
+  'obliged',
+  'lubed',
+  'stared',
+  'growled',
+  'gasped',
+  'chimed in',
+  'roped off',
+  'ridiculed',
+  'prided',
+  'quelled',
+  'indulged',
+  'eloped',
+  'dropped',
+  'backfired',
+  'concluded',
+  'sat in',
+  'infrared',
+  'viewers voted',
+  '(The cat) jumped onto the counter. [It] knocked over a glass.',
 
   'The waiter emptied the water ',
   'can\'t help but fork',
@@ -104,7 +131,9 @@ let arr = [
 
 ]
 let doc = nlp(arr[0]).debug()
-console.log(nlp('empty').tag('Verb').verbs().conjugate()[0])
+// let p = doc.pronouns().debug().refersTo().debug()
+console.log(doc.verbs().conjugate())
+
 
 
 // // doc.verbs().toPastParticiple()

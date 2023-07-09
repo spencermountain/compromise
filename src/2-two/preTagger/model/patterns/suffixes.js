@@ -66,6 +66,7 @@ export default [
     ict: Inf,
     // ide: Inf,
     ign: Inf,
+    oze: Inf,
     ful: Adj,
     bal: Adj,
     ton: Noun,

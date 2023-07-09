@@ -49,6 +49,7 @@ export default [
   'beloved',
   'hallowed',
   'crazed',
+  'infrared',
 
   // -id
   'plaid',

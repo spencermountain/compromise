@@ -5,12 +5,9 @@ import nlp from './src/three.js'
 
 // nlp.verbose('tagger')
 let arr = [
-  // 'bulldoze the field',
 
   'sat in',
-  // 'chimed in',
-  'infrared',
-  'viewers voted',
+  'chimed in',
   '(The cat) jumped onto the counter. [It] knocked over a glass.',
 
   'The waiter emptied the water ',

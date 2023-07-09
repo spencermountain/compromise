@@ -66,7 +66,6 @@ const normalizePunctuation = function (str, model) {
     // punctuation
     post = chars.pop() + post//keep going
   }
-
   str = chars.join('')
   //we went too far..
   if (str === '') {

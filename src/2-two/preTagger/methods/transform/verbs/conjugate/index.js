@@ -24,11 +24,11 @@ const conjugate = function (inf, model) {
   }
   let [str, particle] = parse(inf)
   let found = {
-    Infinitive: inf,
+    Infinitive: str,
     PastTense: convert(str, toPast),
     PresentTense: convert(str, toPresent),
     Gerund: convert(str, toGerund),
-    FutureTense: 'will ' + inf
+    FutureTense: 'will ' + str
   }
   // add past-participle if it's interesting
   // drive -> driven (not drove)

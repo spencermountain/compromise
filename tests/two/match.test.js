@@ -1106,8 +1106,15 @@ let arr = [
   ['by Foo Estuary', 'by #Place+'],
   ['he became involved', '#Pronoun #PastTense #Adjective'],
   ['they become creepy', '#Pronoun #PresentTense #Adjective'],
+
   // ['becoming entangled with', '#Gerund #Adjective .'],
   // ['becoming involved', '#Gerund #Adjective'],
+
+  ['he studies hard', '#Pronoun #PresentTense #Adverb'],
+  ['she flies direct', '#Pronoun #PresentTense #Adverb'],
+  ['she guesses early', '#Pronoun #PresentTense #Adverb'],
+  ['he swings low', '#Pronoun #PresentTense #Adverb'],
+  ['he shops early', '#Pronoun #PresentTense #Adverb'],
 
   // [``, ``],
 ]

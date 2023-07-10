@@ -3,14 +3,22 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 let arr = [
 
+
+  // 'he tries to improve her English',
+  // 'he learns to play tennis',
+  'he learns to code',
+  'he tried to code',
+  'he travelled around the world',
+  'he thought about toronto',
 
   // 'gets paid',
   // 'gets drunk',
   // 'becoming involved',
   // 'becoming entangled',
+
 
   '(The cat) jumped onto the counter. [It] knocked over a glass.',
 

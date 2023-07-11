@@ -908,7 +908,8 @@ export default [
   'zoom',
   'stoop',
   'caution',
-  'silence'
+  'silence',
+  'bit'
   // 'shot',
   // 'take',
   // 'try',

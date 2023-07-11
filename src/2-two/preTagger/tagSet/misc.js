@@ -59,7 +59,7 @@ export default {
     not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
   },
   Acronym: {
-    not: ['Plural', 'RomanNumeral'],
+    not: ['Plural', 'RomanNumeral', 'Pronoun'],
   },
   Negative: {
     not: ['Noun', 'Adjective', 'Value', 'Expression'],

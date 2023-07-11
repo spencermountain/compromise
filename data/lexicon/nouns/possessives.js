@@ -5,7 +5,7 @@ export default [
   'its',
   'mine',
   'my',
-  'none',
+  // 'none',
   'our',
   'ours',
   'thy',

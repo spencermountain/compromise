@@ -17,9 +17,6 @@ let arr = [
   // `They will fast before`,
   // `They forgot to bill me`,
   // `The news is broadcast at 6 p.m.`,
-  'imbalances that provide early warning',
-  'while being rocked to sleep',
-  `He is learning to articulate his thoughts.`,
   // `She is determined to attain her fitness goals.`,
   // `The seal barks to communicate with others.`,
   // `He always tries to best his personal records.`,
@@ -40,20 +37,13 @@ let arr = [
   // `The hammer pounds the nail into the wood.`,
   // `I couldn't help but sob when I heard the sad news.`,
   // `The old man stoops to pet the cat.`,
-  `The teacher welcomes questions from students.`,
-  `I attended a workshop on photography.`,
-  `She organized a workshop for graphic designers.`,
-  `They will be conducting a workshop on coding.`,
-  `We are hosting a workshop on public speaking.`,
-  `She is developing a new product.`,
-  `They are working together to develop a plan.`,
-  `The company is developing a new product line.`,
+  // `The teacher welcomes questions from students.`,
 
   // nouns
-  `She manages the company's social media accounts.`,//account/noun 
-  `As an adult, I enjoy the freedom to make my own choices.`,//adult/noun 
-  `The company invested a lot of money in advertising.`,//advertising/noun 
-  `I only have a small bit of money left.`,//bit/noun 
+  // `She manages the company's social media accounts.`,//account/noun 
+  // `The company invested a lot of money in advertising.`,//advertising/noun 
+  'must take their declared intentions seriously',
+  'and its sprawling metropolis.',
   `My sister left her boots by the front door.`,//boot/noun 
   `I need to buy more bricks for my project.`,//brick/noun 
   `The advertising campaign increased sales by 20%.`,//campaign/noun 

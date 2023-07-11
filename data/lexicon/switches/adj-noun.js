@@ -153,5 +153,5 @@ export default [
   'marine',
   'slack',
   'sage',
-
+  'graphic',
 ]

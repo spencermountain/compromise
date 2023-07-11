@@ -236,6 +236,7 @@ export default [
   'pissed',
   'recycled',
   'aged',
+  'emaciated',
 
 ]
 

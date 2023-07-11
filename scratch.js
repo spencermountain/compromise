@@ -7,13 +7,9 @@ nlp.verbose('tagger')
 let arr = [
 
   // verbs
-  `She is developing a new product.`,
-  `The couple wed in a traditional church`,
-  `Fish surface to breathe in oxygen`,
-  `The crowd sways to the music`,
-  `The old man stoops to pet the cat.`,
-  `The NGO sponsors educational programs`,
-  `The car is speeding down the highway.`,
+  // `The couple wed in a traditional church`,
+  // `Fish surface to breathe in oxygen`,
+  // `The NGO sponsors educational programs`,
   `The bakery smells like freshly baked bread.`,
   `Don't let one mistake ruin your day.`,
   `They round out their meal`,

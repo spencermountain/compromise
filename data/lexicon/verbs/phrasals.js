@@ -749,6 +749,7 @@ export default [
   'sound like',
   'spark up',
   'speed up',
+  'speed down',
   'speak up',
   'speak out',
   'spell out',

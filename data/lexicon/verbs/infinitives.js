@@ -785,9 +785,7 @@ export default [
   'wrestle',
   'wring',
   'write',
-  // -ess
-  // -ide
-  // -ile
-  // prefixes
-  // present participles
+
+  'sway',
+
 ]

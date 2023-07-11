@@ -78,7 +78,6 @@ export default [
   // president of marketing
   { match: `senior? vice? president of #Noun+`, tag: 'Actor', reason: 'president-of' },
 
-
   // ==== Singular ====
   //the sun
   { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'the-sun' },

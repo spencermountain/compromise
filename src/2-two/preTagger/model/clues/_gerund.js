@@ -63,5 +63,7 @@ export default {
     on: g, // landing on
     about: g, // talking about
     for: g, // paying for
+    up: g, //speeding up
+    down: g, //
   },
 }

@@ -2115,6 +2115,7 @@ export default [
   ['msged', 'msg'],
   ['txted', 'txt'],
   ['rhymed', 'rhyme'],
+  ['sped', 'speed'],
 
 
   // ['', ''],

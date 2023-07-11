@@ -665,7 +665,6 @@ export default [
   'shun',
   'sift',
   'sing',
-  'sink',
   'sit',
   'slam',
   'slay',

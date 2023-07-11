@@ -921,6 +921,10 @@ export default [
   'mistake',
   'network',
   'pay',
+  'sink',
+  'snake',
+  'spell',
+
   // 'shot',
   // 'take',
   // 'try',

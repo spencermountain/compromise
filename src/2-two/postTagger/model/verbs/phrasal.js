@@ -20,6 +20,8 @@ export default [
   // { match: '(got|had) me [#Noun]', group: 0, tag: 'Verb', reason: 'got-me-gerund' },
   // help stop
   { match: 'help [(stop|end|make|start)]', group: 0, tag: 'Infinitive', reason: 'help-stop' },
+  // work in the office
+  { match: '#PhrasalVerb (in && #Particle) #Determiner', tag: '#Verb #Preposition', unTag: 'PhrasalVerb', reason: 'work-in-the' },
   // start listening
   { match: '[(stop|start|finish|help)] #Gerund', group: 0, tag: 'Infinitive', reason: 'start-listening' },
   // mis-fired

@@ -1127,6 +1127,8 @@ let arr = [
   ['for instant access to training', 'for #Adjective #Noun to .'],
   [`fair pay.`, '#Adjective #Noun'],
   ['ballistic missile attacks aimed at innocent civilians', `#Adjective #Singular #Plural #PastTense at #Adjective #Plural`],
+  [`fix the kitchen sink.`, `#Infinitive #Determiner #Singular+`],
+  [`Her stay in the city`, `her #Infinitive #Preposition #Determiner #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

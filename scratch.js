@@ -69,17 +69,12 @@ let arr = [
   // `My sister is a minor and still goes to high school.`,//minor/noun 
 
   // %Adj|Noun% %Noun|Verb%
-  `He turned off the television screen before leaving.`,//screen/noun 
-  'investigating unfair trade practices',
-  `She is a senior studying computer science.`,//senior/noun 
-  `The little girl has short hair.`,//short/noun 
-  `I need to fix the kitchen sink.`,//sink/noun 
-  `I am scared of snakes, they're so creepy.`,//snake/noun 
-  `Can you help me with this spell?`,//spell/noun 
-  `The magician performed an incredible magic spell.`,//spell/noun 
-  `Her stay in the city was short but memorable.`,//stay/noun 
-  `She is seeking emotional support after the loss.`,//support/noun 
+  // `He turned off the television screen before leaving.`,//screen/noun 
+  // `She is a senior studying computer science.`,//senior/noun 
+  // `She is seeking emotional support after the loss.`,//support/noun 
   `The suspect denied any involvement in the crime.`,//suspect/noun 
+
+
   `The company set ambitious sales targets.`,//target/noun 
   `The children enjoyed their Halloween treats.`,//treat/noun 
   `His first try at cooking ended in disaster.`,//try/noun 

@@ -84,6 +84,7 @@ export default {
     their: n,//
     our: n,//
     us: n,//served us drinks
+    they: n,//snakes they
   },
   afterWords: {
     of: n, //date of birth (preposition)

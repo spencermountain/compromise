@@ -805,6 +805,7 @@ export default [
   'succinct',
   'major',
   'minor',
+  'fast paced',
 
 ]
 

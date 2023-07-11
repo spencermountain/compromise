@@ -43,6 +43,8 @@ let arr = [
   // 'average',
   // 'welcome',
 
+  // 'advertising'
+
   // nouns
   // `She manages the company's social media accounts.`,//account/noun 
   // `The company invested a lot of money in advertising.`,//advertising/noun 
@@ -50,42 +52,14 @@ let arr = [
   // 'Ideas are welcome',
   // 'days the average American receives each Year',
   // 'and its sprawling metropolis.',
-  'She shoved her hand under my mouth',
-  'I saw my ex-girlfriend',
-  'would have taken her tongue it turned out',
-  `My sister left her boots by the front door.`,//boot/noun 
-  `I need to buy more bricks for my project.`,//brick/noun 
-  `The advertising campaign increased sales by 20%.`,//campaign/noun 
-  `There were rumors of a cannibal living in the forest.`,//cannibal/noun 
-  `She threw her graduation cap into the air with joy.`,//cap/noun 
-  `The conference room has twenty chairs for the participants.`,//chair/noun 
-  `I watch a lot of cooking channels on YouTube.`,//channel/noun 
-  `I joined a book club to meet new people.`,//club/noun 
-  `We went to a night club and danced all night.`,//club/noun 
-  `The vending machine accepts both bills and coins.`,//coin/noun 
-  `I caught a cold and have a runny nose.`,//cold/noun 
-  `She has many business contacts in the industry.`,//contact/noun 
-  `The content of the book was very informative.`,//content/noun 
-  `The map has grid lines to help with coordinates.`,//coordinate/noun 
-  `The police arrested the criminal yesterday.`,//criminal/noun 
-  `I love to watch ballet dances.`,//dance/noun 
-  `He felt a deep sense of defeat after failing the exam.`,//defeat/noun 
-  `The children's laughter filled the room with delight.`,//delight/noun 
-  `Can you provide more details about the project?`,//detail/noun 
-  `I love the attention to detail in this design.`,//detail/noun 
-  `She had doubts about her decision.`,//doubt/noun 
-  `The bartender served us drinks at the party.`,//drink/noun 
-  `I enjoy fishing with my friends on weekends.`,//fishing/noun 
-  `The company received funding for its new project.`,//funding/noun 
-  `I love playing video games with my friends.`,//game/noun 
-  `The children are having fun playing games in the park.`,//game/noun 
-  `I need to buy new camping gear.`,//gear/noun 
-  `The general led the troops into battle.`,//general/noun 
-  `The giant towered over the city, casting a long shadow.`,//giant/noun 
-  `They exchanged gifts during the holiday season.`,//gift/noun 
-  `Don't let hate consume your heart and cloud your judgement.`,//hate/noun 
-  `She lost her hold on reality.`,//hold/noun 
-  `I have hope that everything will work out.`,//hope/noun 
+  // 'She shoved her hand under my mouth',
+  // `I watch a lot of cooking channels on YouTube.`,//channel/noun 
+  // `The police arrested the criminal yesterday.`,//criminal/noun 
+  // `Can you provide more details about the project?`,//detail/noun 
+  // `I love the attention to detail in this design.`,//detail/noun 
+  // `The company received funding for its new project.`,//funding/noun 
+  // `I love playing video games with my friends.`,//game/noun 
+  // `The giant towered over the city, casting a long shadow.`,//giant/noun 
   `The ruler is twelve inches long.`,//inch/noun 
   `She was collecting colorful autumn leaves.`,//leaf/noun 
   `They paid off their student loans after graduation.`,//loan/noun 

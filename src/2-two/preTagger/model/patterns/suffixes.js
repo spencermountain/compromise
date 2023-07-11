@@ -89,6 +89,7 @@ export default [
     chuk: Last,
     czyk: Last,
     ects: Pres,
+    iend: Sing,
     ends: Vb,
     enko: Last,
     ette: Sing,

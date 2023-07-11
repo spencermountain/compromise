@@ -1,5 +1,5 @@
 const adverbAdj = `(dark|bright|flat|light|soft|pale|dead|dim|faux|little|wee|sheer|most|near|good|extra|all)`
-const noLy = '(hard|fast|late|early|high|right|deep|close|long|direct|low)'
+const noLy = '(hard|fast|late|early|high|right|deep|close|direct)'
 
 export default [
   // kinda sparkly
@@ -13,7 +13,7 @@ export default [
   // studies hard
   { match: `#Plural ${noLy}`, tag: '#PresentTense #Adverb', reason: 'studies-hard' },
   // shops direct
-  { match: `#Verb [${noLy}]`, group: 0, notIf: '#Copula', tag: 'Adverb', reason: 'studies-hard' },
+  { match: `#Verb [${noLy}]`, group: 0, notIf: '#Copula', tag: 'Adverb', reason: 'shops-direct' },
   // studies a lot
   { match: `[#Plural] a lot`, tag: 'PresentTense', reason: 'studies-a-lot' },
 ]

@@ -1118,6 +1118,11 @@ let arr = [
   [`The dictator used torture to silence dissent.`, `#Determiner #Singular #PastTense #Noun to #Infinitive #Noun`],
   ['the world’s leading manufacturer', '#Determiner #Possessive #Adjective #Singular'],
   ['its sprawling metropolis.', '#Possessive #Adjective #Singular'],
+  [`I saw my ex-girlfriend`, `#Pronoun #PastTense #Possessive #Singular`],
+  [`she left her boots by the door`, `#Pronoun #PastTense #Possessive #Plural by the #Singular`],
+  [`She had doubts`, `#Pronoun #PastTense #Plural`],
+  [`Don't let hate consume your heart and cloud your judgement`, `do not #Verb #Noun #Infinitive your #Singular and #Infinitive your #Noun`],
+  [`She lost her hold on reality`, `she #PastTense her #Noun on #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

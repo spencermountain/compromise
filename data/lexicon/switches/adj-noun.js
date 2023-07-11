@@ -27,6 +27,7 @@ export default [
   'companion',
   'complex',
   'concrete',
+  'content',
   'constituent',
   'contemporary',
   'convertable',

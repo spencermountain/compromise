@@ -791,4 +791,5 @@ export default [
   'abduct',
   'attain',
   'pound',
+  'consume'
 ]

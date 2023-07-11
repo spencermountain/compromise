@@ -433,6 +433,9 @@ export default [
   'overview',
   'yo yo',
   'phone call',
+  'brick',
+  'cannibal',
+  'video game'
 ]
 
 

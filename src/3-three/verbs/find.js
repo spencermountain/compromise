@@ -1,7 +1,7 @@
 const findVerbs = function (doc) {
   let m = doc.match('<Verb>')
   // want to see
-  m = m.not('(#Conjunction && !to)')
+  m = m.not('#Conjunction')
   // by walking
   m = m.not('#Preposition')
 
@@ -48,7 +48,6 @@ const findVerbs = function (doc) {
   m = m.if('#Verb')
   // the reason he will is ...
   // ensure it's not two verbs
-
   // held annually is called
   if (m.has('(#Verb && !#Auxiliary) #Adverb+? #Copula')) {
     m = m.splitBefore('#Copula')

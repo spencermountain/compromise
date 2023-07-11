@@ -17,8 +17,9 @@ let arr = [
   // `They will fast before`,
   // `They forgot to bill me`,
   // `The news is broadcast at 6 p.m.`,
-
-  // `He is learning to articulate his thoughts.`,
+  'imbalances that provide early warning',
+  'while being rocked to sleep',
+  `He is learning to articulate his thoughts.`,
   // `She is determined to attain her fitness goals.`,
   // `The seal barks to communicate with others.`,
   // `He always tries to best his personal records.`,
@@ -359,14 +360,13 @@ let arr = [
 let doc = nlp(arr[0]).debug()
 // let p = doc.pronouns().debug().refersTo().debug()
 console.log(doc.verbs().conjugate())
-doc.match('{sway/verb}').debug()
+// doc.match('{sway/verb}').debug()
 
 
 
 // // doc.verbs().toPastParticiple()
 // console.log(doc.verbs().conjugate())
-// doc.verbs().toPastParticiple()
-// doc.debug()
+// doc.verbs().debug()
 
 // console.log(doc.text())
 // console.log(doc.compute('root').text('root'))

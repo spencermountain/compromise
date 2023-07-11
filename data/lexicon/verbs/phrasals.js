@@ -203,6 +203,7 @@ export default [
   'cut off',
   'die down',
   'dam up',
+  'dole out',
   'do over',
   'double down',
   'double up',

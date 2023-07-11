@@ -789,4 +789,5 @@ export default [
   'sway',
   'constrain',
   'abduct',
+  'attain'
 ]

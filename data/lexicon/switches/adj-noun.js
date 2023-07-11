@@ -2,6 +2,7 @@
 // watching the commercial
 export default [
 
+
   'academic',
   'adolescent',
   'adult',
@@ -20,6 +21,7 @@ export default [
   'brute',
   'chief',
   'classic',
+  'comic',
   'commercial',
   'communist',
   'companion',
@@ -31,6 +33,7 @@ export default [
   'cooperative',
   'crude',
   'cunning',
+  'dark',
   'darling',
   'demographic',
   'derivative',
@@ -51,6 +54,8 @@ export default [
   'firm',
   'fluid',
   'fugitive',
+  'future',
+  'general',
   'genious',
   'gold',
   'graphic',
@@ -70,9 +75,12 @@ export default [
   'juvenile',
   'last',
   'latter',
+  'left',
   'liberal',
   'light',
+  'liquid',
   'lush',
+  'major',
   'male',
   'marine',
   'median',
@@ -95,6 +103,8 @@ export default [
   'patient',
   'periodical',
   'pet',
+  'plastic',
+  'poor',
   'potential',
   'premier',
   'premium',
@@ -111,6 +121,9 @@ export default [
   'representative',
   'republican',
   'resident',
+  'rich',
+  'right',
+  'round',
   'routine',
   'rubbish',
   'sage',
@@ -152,4 +165,6 @@ export default [
   'void',
   'watershed',
   'welcome',
+
+
 ]

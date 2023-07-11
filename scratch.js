@@ -65,11 +65,10 @@ let arr = [
   // `My sister is a minor and still goes to high school.`,//minor/noun 
 
   // %Adj|Noun% %Noun|Verb%
-  'for instant access to training',
-  'investigating unfair trade practices',
-  `His hard work is deserving of fair pay.`,//pay/noun 
+
   `The company hired a representative to handle customer inquiries.`,//representative/noun 
   `He turned off the television screen before leaving.`,//screen/noun 
+  'investigating unfair trade practices',
   `She is a senior studying computer science.`,//senior/noun 
   `The little girl has short hair.`,//short/noun 
   `I need to fix the kitchen sink.`,//sink/noun 

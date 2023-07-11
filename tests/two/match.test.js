@@ -1124,6 +1124,8 @@ let arr = [
   [`She lost her hold on reality`, `she #PastTense her #Noun on #Noun`],
   [`The ruler is twelve inches long.`, `the #Noun is #Value #Plural long`],
   [`The company offers competitive pay for employees`, `the #Noun #PresentTense #Adjective #Noun for #Plural`],
+  ['for instant access to training', 'for #Adjective #Noun to .'],
+  [`fair pay.`, '#Adjective #Noun'],
   // [``, ``],
 ]
 test('match:', function (t) {

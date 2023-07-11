@@ -52,7 +52,7 @@ const knownOnes = function (list, term, before, after) {
       return [before].concat(o.out)
     }
     // look for before-match (l' -> [le, _])
-    else if (before !== null && before === o.before) {
+    else if (before !== null && before === o.before && after && after.length > 2) {
       return o.out.concat(after)
       // return [o.out, after] //typeof o.out === 'string' ? [o.out, after] : o.out(terms, i)
     }

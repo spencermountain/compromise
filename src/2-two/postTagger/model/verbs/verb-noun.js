@@ -166,4 +166,6 @@ export default [
   { match: '[%Noun|Verb%] or #Infinitive', group: 0, tag: 'Infinitive', reason: 'work-or-prepare' },
   // to give thanks
   { match: 'to #Infinitive [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula|help)', reason: 'to-give-thanks' },
+  // kills me
+  { match: '[#Noun] me', group: 0, tag: 'Verb', reason: 'kills-me' },
 ]

@@ -117,5 +117,6 @@ export default {
     more: v,//kill more
     here: v,// look here
     there: v,//
+    away: v,//float away
   },
 }

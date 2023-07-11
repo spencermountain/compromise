@@ -789,5 +789,6 @@ export default [
   'sway',
   'constrain',
   'abduct',
-  'attain'
+  'attain',
+  'pound',
 ]

@@ -907,6 +907,8 @@ export default [
   'zone',
   'zoom',
   'stoop',
+  'caution',
+  'silence'
   // 'shot',
   // 'take',
   // 'try',

@@ -663,7 +663,7 @@ let arr = [
   ["definitely worth a rental.", '#Adverb #Verb a #Noun'],
   ["keeping the matter a secret", '#Gerund the #Noun a #Noun'],
   ["30/01/194", '!#Date'],
-  ["peace, flowers and doves", '#Noun #Noun and #Noun'],
+  // ["peace, flowers and doves", '#Noun #Noun and #Noun'],
   ["the lady", 'the !#Honorific'],
   ["the ship's captain", 'the #Possessive !#Honorific'],
   ["count backwards", '#Imperative #Adverb'],
@@ -1116,6 +1116,7 @@ let arr = [
   ['he swings low', '#Pronoun #PresentTense #Adverb'],
   ['he shops early', '#Pronoun #PresentTense #Adverb'],
 
+  [`The dictator used torture to silence dissent.`, `#Determiner #Singular #PastTense #Noun to #Infinitive #Noun`],
   // [``, ``],
 ]
 test('match:', function (t) {

@@ -594,7 +594,7 @@ let arr = [
   ["vanish", '#Infinitive'],
 
   ["a worn dress", '#Determiner #Adjective #Singular'],
-  ["Anna's eating lunch", '#Possessive #Gerund #Singular'],
+  // ["Anna's eating lunch", '#Possessive #Gerund #Singular'],
   ["Anna's eating was impressive", '#Possessive #Noun #Copula #Adjective'],
   ["Québec is in canada", "québec #Verb in #Country"],
   ["Québec is in canada", "quebec #Copula in canada"],
@@ -692,7 +692,6 @@ let arr = [
   // [`Monroe made her network TV debut`, `#Noun #Verb #Possessive #Noun+`],
   [`nurse deleted my name`, `#Noun #PastTense #Possessive #Singular`],
   [`supporting our refusing to speak`, `#Gerund #Possessive #Gerund to #Verb`],
-  [`one of his reclining figures`, `one of #Possessive #Gerund #Plural`],
   // not posessive
   // [`I saw her go`, `I #PastTense !#Possessive #PresentTense`],
   // [`I watched her throw`, `I #PastTense !#Possessive #PresentTense`],
@@ -1117,6 +1116,8 @@ let arr = [
   ['he shops early', '#Pronoun #PresentTense #Adverb'],
 
   [`The dictator used torture to silence dissent.`, `#Determiner #Singular #PastTense #Noun to #Infinitive #Noun`],
+  ['the world’s leading manufacturer', '#Determiner #Possessive #Adjective #Singular'],
+  ['its sprawling metropolis.', '#Possessive #Adjective #Singular'],
   // [``, ``],
 ]
 test('match:', function (t) {

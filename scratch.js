@@ -42,8 +42,8 @@ let arr = [
   // nouns
   // `She manages the company's social media accounts.`,//account/noun 
   // `The company invested a lot of money in advertising.`,//advertising/noun 
-  'must take their declared intentions seriously',
-  'and its sprawling metropolis.',
+  "Anna's eating lunch",
+  // 'and its sprawling metropolis.',
   `My sister left her boots by the front door.`,//boot/noun 
   `I need to buy more bricks for my project.`,//brick/noun 
   `The advertising campaign increased sales by 20%.`,//campaign/noun 

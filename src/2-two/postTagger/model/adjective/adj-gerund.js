@@ -16,4 +16,6 @@ export default [
   { match: '#Gerund [#Gerund]', group: 0, tag: 'Adjective', notIf: '(impersonating|practicing|considering|assuming)', reason: 'looking-annoying' },
   // developing a
   { match: '[%Adj|Gerund%] #Determiner', group: 0, tag: 'Gerund', reason: 'developing-a' },
+  // world's leading manufacturer
+  { match: '#Possessive [%Adj|Gerund%] #Noun', group: 0, tag: 'Adjective', reason: 'leading-manufacturer' },
 ]

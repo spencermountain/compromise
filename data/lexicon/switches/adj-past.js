@@ -278,7 +278,6 @@ export default [
   'steamed',
   'stereotyped',
   'stirred',
-  'stopped',
   'strengthened',
   'striped',
   'stripped',

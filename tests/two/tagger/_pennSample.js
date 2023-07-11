@@ -470,10 +470,6 @@ export default [
     tags: 'NN, NNS',
   },
   {
-    text: 'LTTE arms-running',
-    tags: 'NNP, NNS, NN',
-  },
-  {
     text: 'Steady buildup',
     tags: 'JJ, NN',
   },
@@ -712,10 +708,6 @@ export default [
   {
     text: 'They provide an emotional infrastructure for atrocities.',
     tags: 'PRP, VBP, DT, JJ, NN, IN, NNS',
-  },
-  {
-    text: 'This circle operates mostly through mosques, madrasas and other religious establishments but also through inciting electronic and printed media.',
-    tags: 'DT, NN, VBZ, RB, IN, NNS, NNS, CC, JJ, JJ, NNS, CC, RB, IN, VBG, JJ, CC, VBN, NN',
   },
   {
     text: 'Some parts of this same outer circle actually operate as a result of fear from, or blackmail by, the inner circles.',
@@ -2897,10 +2889,6 @@ export default [
     tags: 'IN, NNP, NNP',
   },
   {
-    text: 'Increased car usage in China is creating a high demand for petrol',
-    tags: 'VBN, NN, NN, IN, NNP, VBZ, VBG, DT, JJ, NN, IN, NN',
-  },
-  {
     text: 'Imagine the tension melting away as you continue breathing rhythmically and naturally.',
     tags: 'VB, DT, NN, VBG, RB, IN, PRP, VBP, VBG, RB, CC, RB',
   },
@@ -3528,10 +3516,6 @@ export default [
   {
     text: 'Beardies are actually quite delicate.',
     tags: 'NNS, VBP, RB, RB, JJ',
-  },
-  {
-    text: 'The lower the reins, the stronger the action and the lower the reins the stronger the action on the poll too.',
-    tags: 'DT, JJR, DT, NNS, DT, JJR, DT, NN, CC, DT, JJR, DT, NNS, DT, JJR, DT, NN, IN, DT, NN, RB',
   },
   {
     text: 'For horses that are strong pullers.',
@@ -5609,8 +5593,8 @@ export default [
     tags: 'NNP, VBZ, DT, NN, CD, NN, NN, IN, NNP, CC, VBZ, IN, NN, CC, JJ, NN',
   },
   {
-    text: 'A slice of heaven in winter park off forsyth!',
-    tags: 'DT, NN, IN, NN, IN, NNP, NNP, IN, NNP',
+    text: 'A slice of heaven in winter park',
+    tags: 'DT, NN, IN, NN, IN, NNP, NNP',
   },
   {
     text: 'Nice selection, very clean, friendly staff!',

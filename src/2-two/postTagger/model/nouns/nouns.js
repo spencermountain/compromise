@@ -70,7 +70,7 @@ export default [
   // fine-artist
   { match: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
   // dance coach
-  { match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman)`, tag: 'Actor', reason: 'dance-coach' },
+  { match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`, tag: 'Actor', reason: 'dance-coach' },
   // chief design officer
   { match: `chief . officer`, tag: 'Actor', reason: 'chief-x-officer' },
   // chief of police
@@ -127,5 +127,7 @@ export default [
   { match: '[#PresentTense] (music|class|lesson|night|party|festival|league|ceremony)', group: 0, tag: 'Noun', reason: 'dance-music' },
   // wit it
   { match: '[wit] (me|it)', group: 0, tag: 'Presposition', reason: 'wit-me' },
+  //left-her-boots, shoved her hand
+  { match: '#PastTense #Possessive [#Verb]', group: 0, tag: 'Noun', notIf: '(saw|made)', reason: 'left-her-boots' },
 
 ]

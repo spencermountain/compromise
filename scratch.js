@@ -72,10 +72,10 @@ let arr = [
   // `He turned off the television screen before leaving.`,//screen/noun 
   // `She is a senior studying computer science.`,//senior/noun 
   // `She is seeking emotional support after the loss.`,//support/noun 
-  `The suspect denied any involvement in the crime.`,//suspect/noun 
+  // `The suspect denied any involvement in the crime.`,//suspect/noun 
 
+  'They ride bikes.',
 
-  `The company set ambitious sales targets.`,//target/noun 
   `The children enjoyed their Halloween treats.`,//treat/noun 
   `His first try at cooking ended in disaster.`,//try/noun 
   `I always make good use of my time.`,//use/noun 

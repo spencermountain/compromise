@@ -1129,7 +1129,8 @@ let arr = [
   ['ballistic missile attacks aimed at innocent civilians', `#Adjective #Singular #Plural #PastTense at #Adjective #Plural`],
   [`fix the kitchen sink.`, `#Infinitive #Determiner #Singular+`],
   [`Her stay in the city`, `her #Infinitive #Preposition #Determiner #Noun`],
-  // [``, ``],
+  [`near death experiences`, `#Adjective #Noun #Plural`],
+  [`ambitious sales targets`, `#Adjective #Noun #Plural`],
 ]
 test('match:', function (t) {
   let res = []

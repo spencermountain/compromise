@@ -136,6 +136,10 @@ export default [
   //instant access
   { match: '%Adj|Noun% %Noun|Verb%', tag: '#Adjective #Noun', reason: 'instant-access' },
   // a representative to 
-  { match: '#Determiner [%Adj|Noun%] #Conjunction', group: 0, tag: '#Noun', reason: 'a-rep-to' },
+  { match: '#Determiner [%Adj|Noun%] #Conjunction', group: 0, tag: 'Noun', reason: 'a-rep-to' },
+  // near death experiences, ambitious sales targets
+  { match: '#Adjective #Noun [%Plural|Verb%]$', group: 0, tag: 'Plural', reason: 'near-death-experiences' },
+  // your guild colors
+  { match: '#Possessive #Noun [%Plural|Verb%]$', group: 0, tag: 'Plural', reason: 'your-guild-colors' },
 
 ]

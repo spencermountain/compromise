@@ -629,6 +629,7 @@ export default [
   'ring out',
   'rip off',
   'rip open',
+  'rope off',
   'roll around',
   'roll in',
   'roll out',

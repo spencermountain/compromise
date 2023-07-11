@@ -2116,7 +2116,16 @@ export default [
   ['txted', 'txt'],
   ['rhymed', 'rhyme'],
   ['sped', 'speed'],
-
+  ['barricaded', 'barricade'],
+  ['draped', 'drape'],
+  ['cringed', 'cringe'],
+  ['rebuked', 'rebuke'],
+  ['chronicled', 'chronicle'],
+  ['martialed', 'martial'],
+  ['quaked', 'quake'],
+  ['coveted', 'covet'],
+  ['honeymooned', 'honeymoon'],
+  ['accustomed', 'accustom'],
 
   // ['', ''],
 ]

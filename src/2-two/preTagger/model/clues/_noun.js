@@ -102,6 +102,8 @@ export default {
     wants: n,
     wanted: n,
     is: n,
+    did: n,
+    do: n,
     can: n,//parents can
     wise: n,//service-wise
   },

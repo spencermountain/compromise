@@ -30,6 +30,8 @@ const findVerbs = function (doc) {
 
   // 'allow yourself'
   m = m.not('#Reflexive$')
+  // sitting near
+  m = m.not('#Adjective')
 
   // pastTense-pastTense
   // Everyone he [met] [told] him

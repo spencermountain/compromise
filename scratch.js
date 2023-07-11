@@ -44,8 +44,12 @@ let arr = [
   // 'welcome',
 
   // 'advertising'
-  // `She was collecting colorful autumn leaves.`,//leaf/noun 
 
+  // 'gets compounded',
+  // 'always gets flirted with',
+
+
+  // 'reports stated',
   // nouns
   // `She manages the company's social media accounts.`,//account/noun 
   // `The company invested a lot of money in advertising.`,//advertising/noun 
@@ -65,8 +69,6 @@ let arr = [
   // `My sister is a minor and still goes to high school.`,//minor/noun 
 
   // %Adj|Noun% %Noun|Verb%
-
-  `The company hired a representative to handle customer inquiries.`,//representative/noun 
   `He turned off the television screen before leaving.`,//screen/noun 
   'investigating unfair trade practices',
   `She is a senior studying computer science.`,//senior/noun 

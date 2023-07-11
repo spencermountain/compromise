@@ -14,7 +14,7 @@ for (let i = 0; i < texts.length; i++) {
         let str = vb.text('normal')
         let inf = vb.toInfinitive().text('normal')
         if (inf === str) {
-          console.log(str, '  -> ', inf)
+          console.log(vb.text('normal'), '  -> ', inf)
         }
       })
 

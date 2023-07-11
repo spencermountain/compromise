@@ -1126,6 +1126,7 @@ let arr = [
   [`The company offers competitive pay for employees`, `the #Noun #PresentTense #Adjective #Noun for #Plural`],
   ['for instant access to training', 'for #Adjective #Noun to .'],
   [`fair pay.`, '#Adjective #Noun'],
+  ['ballistic missile attacks aimed at innocent civilians', `#Adjective #Singular #Plural #PastTense at #Adjective #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

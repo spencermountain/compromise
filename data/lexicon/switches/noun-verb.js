@@ -884,6 +884,7 @@ export default [
   'whisk',
   'whisper',
   'whistle',
+  'wrinkle',
   'wick',
   'win',
   'wind',

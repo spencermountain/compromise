@@ -42,6 +42,10 @@ let arr = [
   // nouns
   // `She manages the company's social media accounts.`,//account/noun 
   // `The company invested a lot of money in advertising.`,//advertising/noun 
+  'Removes wrinkles',
+  'rewashed',
+  'he travels around the world',
+  'before getting dressed',
   "Anna's eating lunch",
   // 'and its sprawling metropolis.',
   `My sister left her boots by the front door.`,//boot/noun 

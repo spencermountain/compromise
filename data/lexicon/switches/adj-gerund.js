@@ -164,6 +164,7 @@ export default [
   'lasting',
   'laughing',
   'leaning',
+  'leading',
   'learning',
   'lifesaving',
   'limiting',

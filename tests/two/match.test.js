@@ -526,7 +526,7 @@ let arr = [
   ['decide', '#Verb'],
   ['bide', '#Verb'],
   ['slide', '#Verb'],
-  ['guided', '#Verb'],
+  ['safely guided', '#Adverb #Verb'],
   ['reside', '#Verb'],
   ['his backside', 'his #Noun'],
 

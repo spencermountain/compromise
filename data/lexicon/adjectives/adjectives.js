@@ -802,8 +802,9 @@ export default [
   'demure',
   'docile',
   'watery',
-
   'succinct',
+  'major',
+  'minor',
 
 ]
 

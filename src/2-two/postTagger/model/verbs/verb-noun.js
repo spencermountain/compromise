@@ -168,4 +168,6 @@ export default [
   { match: 'to #Infinitive [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula|help)', reason: 'to-give-thanks' },
   // kills me
   { match: '[#Noun] me', group: 0, tag: 'Verb', reason: 'kills-me' },
+  // removes wrinkles
+  { match: '%Plural|Verb% %Plural|Verb%', tag: '#PresentTense #Plural', reason: 'removes-wrinkles' },
 ]

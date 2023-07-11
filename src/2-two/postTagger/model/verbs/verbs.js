@@ -54,8 +54,6 @@ export default [
   { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
   // look good
   { match: `[(look|looks)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'looks-good' },
-  // needs to learn
-  { match: `[(need|needs)] to #Infinitive`, group: 0, tag: 'PresentTense', reason: 'need-to-learn' },
   // stops thinking
   { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-thinking' },
   // have read

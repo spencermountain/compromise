@@ -511,7 +511,6 @@ export default [
   'participate',
   'patrol',
   'pave',
-  'pay',
   'perceive',
   'perform',
   'perish',

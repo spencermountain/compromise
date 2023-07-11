@@ -44,6 +44,7 @@ let arr = [
   // 'welcome',
 
   // 'advertising'
+  // `She was collecting colorful autumn leaves.`,//leaf/noun 
 
   // nouns
   // `She manages the company's social media accounts.`,//account/noun 
@@ -60,17 +61,12 @@ let arr = [
   // `The company received funding for its new project.`,//funding/noun 
   // `I love playing video games with my friends.`,//game/noun 
   // `The giant towered over the city, casting a long shadow.`,//giant/noun 
-  `The ruler is twelve inches long.`,//inch/noun 
-  `She was collecting colorful autumn leaves.`,//leaf/noun 
-  `They paid off their student loans after graduation.`,//loan/noun 
-  `He works as a freelance writer for various mediums.`,//medium/noun 
-  `The marathon is 26.2 miles long.`,//mile/noun 
-  `My sister is a minor and still goes to high school.`,//minor/noun 
-  `Making mistakes is a part of learning.`,//mistake/noun 
-  `There is no need to worry, everything will be fine.`,//need/noun 
-  `I joined a professional network to expand my connections.`,//network/noun 
-  `The orange tree was full of ripe fruits.`,//orange/noun 
-  `The company offers competitive pay for employees.`,//pay/noun 
+  // `They paid off their student loans after graduation.`,//loan/noun 
+  // `My sister is a minor and still goes to high school.`,//minor/noun 
+
+  // %Adj|Noun% %Noun|Verb%
+  'for instant access to training',
+  'investigating unfair trade practices',
   `His hard work is deserving of fair pay.`,//pay/noun 
   `The company hired a representative to handle customer inquiries.`,//representative/noun 
   `He turned off the television screen before leaving.`,//screen/noun 

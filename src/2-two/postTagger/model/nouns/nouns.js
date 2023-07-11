@@ -133,5 +133,7 @@ export default [
   { match: '#Value [%Plural|Verb%]', group: 0, tag: 'Plural', notIf: '(one|1|a|an)', reason: '35-signs' },
   //had time
   { match: 'had [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|come|become)', reason: 'had-time' },
+  //instant access
+  { match: '%Adj|Noun% %Noun|Verb%', tag: '#Adjective #Noun', reason: 'instant-access' },
 
 ]

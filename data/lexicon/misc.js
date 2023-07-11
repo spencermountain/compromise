@@ -80,4 +80,7 @@ export default {
   'leaped': 'PastTense',
   'msged': 'PastTense',
   'bests': 'PresentTense',
+
+  // funny switches
+  'leaves': 'Plural|Verb'
 }

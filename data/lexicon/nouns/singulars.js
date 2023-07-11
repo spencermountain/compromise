@@ -435,7 +435,7 @@ export default [
   'phone call',
   'brick',
   'cannibal',
-  'video game'
+  'video game',
 ]
 
 

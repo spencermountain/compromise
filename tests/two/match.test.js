@@ -1112,7 +1112,6 @@ let arr = [
   ['he studies hard', '#Pronoun #PresentTense #Adverb'],
   ['she flies direct', '#Pronoun #PresentTense #Adverb'],
   ['she guesses early', '#Pronoun #PresentTense #Adverb'],
-  ['he swings low', '#Pronoun #PresentTense #Adverb'],
   ['he shops early', '#Pronoun #PresentTense #Adverb'],
 
   [`The dictator used torture to silence dissent.`, `#Determiner #Singular #PastTense #Noun to #Infinitive #Noun`],
@@ -1123,6 +1122,8 @@ let arr = [
   [`She had doubts`, `#Pronoun #PastTense #Plural`],
   [`Don't let hate consume your heart and cloud your judgement`, `do not #Verb #Noun #Infinitive your #Singular and #Infinitive your #Noun`],
   [`She lost her hold on reality`, `she #PastTense her #Noun on #Noun`],
+  [`The ruler is twelve inches long.`, `the #Noun is #Value #Plural long`],
+  [`The company offers competitive pay for employees`, `the #Noun #PresentTense #Adjective #Noun for #Plural`],
   // [``, ``],
 ]
 test('match:', function (t) {

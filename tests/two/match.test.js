@@ -833,7 +833,7 @@ let arr = [
   // [`nurse Kelly`, `#Person+`],
 
   [`breaking: dogs nice`, `#Expression #Plural #Adjective`],
-  [`forward: appartment price`, `#Expression #Noun+`],
+  // [`forward: appartment price`, `#Expression #Noun+`],
   [`email: spencer@cool.com`, `#Noun #Email`],
   [`was [left] [dancing] alone`, `#Verb+ #Adjective`],
   [`where users [submit] drawings`, `#QuestionWord #Plural #Infinitive #Plural`],

@@ -785,7 +785,8 @@ export default [
   'wrestle',
   'wring',
   'write',
-
+  'giggle',
   'sway',
-
+  'constrain',
+  'abduct',
 ]

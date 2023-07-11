@@ -235,6 +235,8 @@ export default [
   'confused',
   'pissed',
   'recycled',
+  'aged',
+
 ]
 
 

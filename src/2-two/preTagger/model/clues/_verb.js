@@ -75,6 +75,7 @@ export default {
     him: v, //loves him
     us: v,//cost us
     her: v, //
+    his: v, //
     them: v, //
     it: v, //hope it
     himself: v,

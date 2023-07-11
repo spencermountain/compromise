@@ -635,6 +635,7 @@ export default [
   'root about',
   'root for',
   'root out',
+  'round out',
   'rough up',
   'round off',
   'rub down',

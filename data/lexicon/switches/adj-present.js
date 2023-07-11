@@ -66,6 +66,7 @@ export default [
   'counterfeit',
   'alight',
   'tender',
+  'lower',
   'close',
   'last',
   'faint',
@@ -80,4 +81,7 @@ export default [
   'calm',
   'dull',
   'stray',
+  'perfect',
+  'exempt',
+  'articulate',
 ]

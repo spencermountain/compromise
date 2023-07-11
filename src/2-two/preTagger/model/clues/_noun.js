@@ -78,6 +78,7 @@ export default {
     no: n,//no worries
     more: n,//more details
     one: n,//one flood
+    let: n,//let fear
   },
   afterWords: {
     of: n, //date of birth (preposition)

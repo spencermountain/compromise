@@ -29,7 +29,7 @@ export default [
   { match: '[way] #Adjective', group: 0, tag: '#Adverb', reason: 'way-over' },
   //cheering hard - dropped -ly's
   {
-    match: '#PresentTense [(hard|quick|long|bright|slow|fast|backwards|forwards)]',
+    match: '#PresentTense [(hard|quick|bright|slow|fast|backwards|forwards)]',
     notIf: '#Copula',
     group: 0,
     tag: 'Adverb',
@@ -59,4 +59,6 @@ export default [
   { match: '#Verb [around]', group: 0, tag: 'Adverb', notIf: '#PhrasalVerb', reason: 'send-around' },
   // later say
   { match: '[later] #PresentTense', group: 0, tag: 'Adverb', reason: 'later-say' },
+  // the well
+  { match: '#Determiner [well] !#PastTense?', group: 0, tag: 'Noun', reason: 'the-well' },
 ]

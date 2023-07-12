@@ -42,6 +42,7 @@ let arr = [
   // noun|verb|adjective:
   // 'average',
   // 'welcome',
+  // 'light',
 
   // 'advertising'
 
@@ -74,26 +75,15 @@ let arr = [
   // `She is seeking emotional support after the loss.`,//support/noun 
   // `The suspect denied any involvement in the crime.`,//suspect/noun 
 
-  'They ride bikes.',
-
-  `The children enjoyed their Halloween treats.`,//treat/noun 
-  `His first try at cooking ended in disaster.`,//try/noun 
-  `I always make good use of my time.`,//use/noun 
-  `I enjoy taking long walks in the park.`,//walk/noun 
-  `There was a warning about heavy rain.`,//warning/noun 
-  `He threw a coin into the well.`,//well/noun 
-  `She ordered a plate of buffalo wings at the restaurant.`,//wing/noun 
-  `The sun provides light during the day.`,//light/noun 
-  `She turned on the light in the room.`,//light/noun 
-  `The light in the room was very bright.`,//light/noun 
-  `Turn off the light when you leave.`,//light/noun 
-  `The forest is filled with tall trees and lush woods.`,//wood/noun 
-
+  // 'Dance like a stripper',
+  // 'and bickering occurred ',
+  // `I enjoy taking long walks in the park.`,//walk/noun 
+  // `There was a warning about heavy rain.`,//warning/noun 
+  // `She ordered a plate of buffalo wings at the restaurant.`,//wing/noun 
 
   // adjectives
-  `He is always accommodating to his guests.`,//accommodating/adjective   
-  `The company offers advanced training programs for employees.`,//advanced/adjective   
-  `The sunset over the ocean looked absolutely amazing.`,//amazing/adjective   
+  // `He is always accommodating to his guests.`,//accommodating/adjective   
+  // `The company offers advanced training programs for employees.`,//advanced/adjective   
   `The comedian's jokes were incredibly amusing and had everyone in stitches.`,//amusing/adjective   
   `He is known for his anarchist views.`,//anarchist/adjective   
   `The loud music was really annoying.`,//annoying/adjective   

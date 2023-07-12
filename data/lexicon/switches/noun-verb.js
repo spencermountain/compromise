@@ -927,6 +927,6 @@ export default [
 
   // 'shot',
   // 'take',
-  // 'try',
+  'try',
   // 'use',
 ]

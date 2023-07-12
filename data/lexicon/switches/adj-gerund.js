@@ -289,6 +289,7 @@ export default [
   'working',
   'worrying',
   'yielding',
+  'accommodating',
   // prefixes
 ]
 

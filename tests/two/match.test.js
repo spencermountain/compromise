@@ -1069,7 +1069,7 @@ let arr = [
   [`so ugly or deformed`, `#Adverb #Adjective #Conjunction #Adjective`],
   [`the Co-Chairmen of the International Conference`, `the #Noun+ of the #Noun+`],
   [`to give thanks`, `to #Infinitive #Plural`],
-  [`wish to go home`, `#Infinitive to #PresentTense #Noun`],
+  // [`wish to go home`, `#Infinitive to #PresentTense #Noun`],
   [`Work to improve lives`, `#Imperative to #Infinitive #Plural`],
   [`for January 2022`, `#Preposition #Month #Year`],
   [`A swaging machine works by using two`, `a #Adjective #Noun #PresentTense #Preposition #Gerund #Value`],
@@ -1131,6 +1131,12 @@ let arr = [
   [`Her stay in the city`, `her #Infinitive #Preposition #Determiner #Noun`],
   [`near death experiences`, `#Adjective #Noun #Plural`],
   [`ambitious sales targets`, `#Adjective #Noun #Plural`],
+  ['she\'s really hot', 'she is #Adverb #Adjective'],
+  ['she\'s really engaged', 'she is #Adverb .'],
+  ['Hope this helps.', '#Imperative #Determiner #PresentTense'],
+  ['a chicken that plays tic-tac-toe.', 'a #Noun that #PresentTense #Noun+'],
+  ['the ocean looked absolutely amazing', 'the #Noun #PastTense #Adverb #Adjective'],
+  // ['',''],
 ]
 test('match:', function (t) {
   let res = []

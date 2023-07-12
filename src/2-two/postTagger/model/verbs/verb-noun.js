@@ -55,7 +55,11 @@ export default [
   // that should smoke
   { match: '#Determiner #Modal [#Noun]', group: 0, tag: 'PresentTense', reason: 'should-smoke' },
   //this rocks
-  { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'this-verbs' },
+  { match: 'this [#Plural]', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'this-verbs' },
+  //voice that rocks
+  { match: '#Noun that [#Plural]', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Pronoun|way)', reason: 'voice-that-rocks' },
+  //that leads to
+  { match: 'that [#Plural] to', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'that-leads-to' },
   //let him glue
   {
     match: '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)',

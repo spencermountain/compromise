@@ -93,4 +93,5 @@ export default [
   'altogether',
   "outright",
   'ultimately',
+  'fucking',
 ]

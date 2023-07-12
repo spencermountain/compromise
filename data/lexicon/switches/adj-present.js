@@ -21,7 +21,7 @@ export default [
   'idle',
   'lay',//lay-people
   'lean',
-  'light',
+  // 'light',
   'live',
   'mature',
   'mean',

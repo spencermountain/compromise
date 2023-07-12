@@ -1136,6 +1136,7 @@ let arr = [
   ['Hope this helps.', '#Imperative #Determiner #PresentTense'],
   ['a chicken that plays tic-tac-toe.', 'a #Noun that #PresentTense #Noun+'],
   ['the ocean looked absolutely amazing', 'the #Noun #PastTense #Adverb #Adjective'],
+  ['get close', '#Imperative #Adjective'],
   // ['',''],
 ]
 test('match:', function (t) {

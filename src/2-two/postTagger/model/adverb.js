@@ -50,7 +50,7 @@ export default [
   //a close
   { match: '#Determiner #Adverb? [close]', group: 0, tag: 'Adjective', reason: 'a-close' },
   //walking close
-  { match: '#Gerund #Adverb? [close]', group: 0, tag: 'Adverb', reason: 'being-close' },
+  { match: '#Gerund #Adverb? [close]', group: 0, tag: 'Adverb', notIf: '(getting|becoming|feeling)', reason: 'being-close' },
   // a blown motor
   { match: '(the|those|these|a|an) [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'blown-motor' },
   // charged back
@@ -61,4 +61,6 @@ export default [
   { match: '[later] #PresentTense', group: 0, tag: 'Adverb', reason: 'later-say' },
   // the well
   { match: '#Determiner [well] !#PastTense?', group: 0, tag: 'Noun', reason: 'the-well' },
+  // high enough
+  { match: '#Adjective [enough]', group: 0, tag: 'Adverb', reason: 'high-enough' },
 ]

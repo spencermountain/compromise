@@ -84,26 +84,10 @@ let arr = [
   // adjectives
   // `He is always accommodating to his guests.`,//accommodating/adjective   
   // `The company offers advanced training programs for employees.`,//advanced/adjective   
-  `The comedian's jokes were incredibly amusing and had everyone in stitches.`,//amusing/adjective   
-  `He is known for his anarchist views.`,//anarchist/adjective   
-  `The loud music was really annoying.`,//annoying/adjective   
-  `The constant interruptions during the movie were annoying.`,//annoying/adjective   
-  `I need a back pillow for my chair.`,//back/adjective   
-  `I find history classes to be boring and uninteresting.`,//boring/adjective   
-  `He wore a bright orange shirt to the party.`,//bright/adjective   
-  `My mother is always caring and supportive.`,//caring/adjective   
-  `The doctor provided caring and empathetic treatment.`,//caring/adjective   
-  `Learning a new language can be challenging.`,//challenging/adjective   
-  `Solving complex math problems can be challenging.`,//challenging/adjective   
-  `Playing chess against a skilled opponent can be challenging.`,//challenging/adjective   
-  `Skiing down a steep slope can be challenging.`,//challenging/adjective   
-  `The cookies were soft and chewy.`,//chewy/adjective   
-  `The steak was too tough and not chewy enough.`,//chewy/adjective   
-  `The candy bar had a deliciously chewy texture.`,//chewy/adjective   
-  `The bread was stale and not chewy at all.`,//chewy/adjective   
-  `We're getting close to the finish line.`,//close/adjective   
-  `The book's characters are compelling and relatable.`,//compelling/adjective   
-  `The artist's work is visually compelling and unique.`,//compelling/adjective   
+  // `The comedian's jokes were incredibly amusing and had everyone in stitches.`,//amusing/adjective   
+  // `Learning a new language can be challenging.`,//challenging/adjective   
+  // `The book's characters are compelling and relatable.`,//compelling/adjective   
+  // `The artist's work is visually compelling and unique.`,//compelling/adjective   
   `The instructions for this game are confusing.`,//confusing/adjective   
   `The road signs in this town are confusing.`,//confusing/adjective   
   `The new computer program is confusing to use.`,//confusing/adjective   

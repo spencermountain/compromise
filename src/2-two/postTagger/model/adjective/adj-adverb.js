@@ -13,7 +13,7 @@ export default [
   // studies hard
   { match: `#Plural ${noLy}`, tag: '#PresentTense #Adverb', reason: 'studies-hard' },
   // shops direct
-  { match: `#Verb [${noLy}]`, group: 0, notIf: '#Copula', tag: 'Adverb', reason: 'shops-direct' },
+  { match: `#Verb [${noLy}]`, group: 0, notIf: '(#Copula|get|got|getting|become|became|becoming|feel|feels|feeling)', tag: 'Adverb', reason: 'shops-direct' },
   // studies a lot
   { match: `[#Plural] a lot`, tag: 'PresentTense', reason: 'studies-a-lot' },
 ]

@@ -806,6 +806,6 @@ export default [
   'major',
   'minor',
   'fast paced',
-
+  'chewy',
 ]
 

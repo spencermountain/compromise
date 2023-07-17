@@ -807,5 +807,9 @@ export default [
   'minor',
   'fast paced',
   'chewy',
+  'drunk',
+  'greasy',
+  'pointy',
+  'testy',
 ]
 

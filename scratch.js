@@ -5,6 +5,20 @@ import nlp from './src/three.js'
 
 nlp.verbose('tagger')
 let arr = [
+  // noun|verb|adjective:
+  // 'average',
+  // 'welcome',
+  // 'light',
+  // 'forward',
+  // 'square',
+  // 'welcome',
+  // 'mean',
+  // 'right',
+
+
+  // adjectives
+  // 'even',
+  // 'was very holy',
 
   // verbs
   // `The couple wed in a traditional church`,
@@ -39,10 +53,6 @@ let arr = [
   // `The old man stoops to pet the cat.`,
   // `The teacher welcomes questions from students.`,
 
-  // noun|verb|adjective:
-  // 'average',
-  // 'welcome',
-  // 'light',
 
   // 'advertising'
 
@@ -80,7 +90,8 @@ let arr = [
   // `I enjoy taking long walks in the park.`,//walk/noun 
   // `There was a warning about heavy rain.`,//warning/noun 
   // `She ordered a plate of buffalo wings at the restaurant.`,//wing/noun 
-
+  'The boat floats on the water.',
+  'I caught a cold and have a runny nose.',
   // adjectives
   // `He is always accommodating to his guests.`,//accommodating/adjective   
   // `The company offers advanced training programs for employees.`,//advanced/adjective   

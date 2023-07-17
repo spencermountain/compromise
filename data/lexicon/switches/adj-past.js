@@ -322,7 +322,8 @@ export default [
   'wounded',
   'wrinkled',
   'yellowed',
-  'engaged'
+  'engaged',
+  'seasoned'
 ]
 
 

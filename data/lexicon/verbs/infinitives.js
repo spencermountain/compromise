@@ -789,5 +789,6 @@ export default [
   'abduct',
   'attain',
   'pound',
-  'consume'
+  'consume',
+  'befriend'
 ]

@@ -290,6 +290,8 @@ export default [
   'worrying',
   'yielding',
   'accommodating',
+  'trifling',
+
   // prefixes
 ]
 

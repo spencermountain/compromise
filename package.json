@@ -3,7 +3,7 @@
   "name": "compromise",
   "description": "modest natural language processing",
   "version": "14.9.0",
-  "main": "./src/three.js",
+  "module": "./src/three.js",
   "unpkg": "./builds/compromise.js",
   "type": "module",
   "sideEffects": false,

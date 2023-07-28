@@ -3,8 +3,9 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 let arr = [
+  // 'He befriend a stray dog',
   // noun|verb|adjective:
   // 'average',
   // 'welcome',
@@ -308,9 +309,7 @@ let arr = [
 
 ]
 let doc = nlp(arr[0]).debug()
-// let p = doc.pronouns().debug().refersTo().debug()
 console.log(doc.verbs().conjugate())
-// doc.match('{sway/verb}').debug()
 
 
 

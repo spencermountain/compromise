@@ -3,7 +3,55 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
+const max = 5
+
+const splitter = function (str) {
+  let doc = nlp(str)
+
+  doc.splitBefore('. #Pronoun').debug()
+  // split commas, semicolons
+  // let parts = doc.clauses()
+  // // split prepositions 'in, by, for'
+  // parts = parts.splitBefore('#Preposition .+')
+  // // greedy split for long sections
+  // parts = parts.map(part => {
+  //   // step 1:
+  //   if (part.terms().length > max) {
+  //     // 'and, or, but'
+  //     part = part.splitAfter('#Conjunction')
+  //     // 'spencer kelly'
+  //     part = part.splitAfter('#ProperNoun+')
+  //   }
+  //   // step 2:
+  //   if (part.terms().length > max) {
+  //     // 'i suspect'
+  //     part = part.splitBefore('[#Pronoun] #Verb', 0)
+  //   }
+  //   return part
+  // })
+
+  // return parts.json({ offsets: true, terms: false })
+}
+
+// let txt = `I am not quite sure of the exact place or exact date of my birth, but at any rate I suspect I must have been born somewhere and at some time.`
+// let res = splitter(txt)
+// console.log(res)
+
+let txt = `any rate I suspect foo I must `
+nlp(txt).splitBefore('#Pronoun').debug()
+
+// I am not quite sure
+// of the exact place
+// or exact date
+// of my birth,
+// but at any rate
+// I suspect
+// I must have been born
+// somewhere and
+// at some time.
+
+
+// nlp.verbose('tagger')
 let arr = [
   // noun|verb|adjective:
   // 'average',
@@ -307,9 +355,9 @@ let arr = [
 
 
 ]
-let doc = nlp(arr[0]).debug()
+// let doc = nlp(arr[0]).debug()
 // let p = doc.pronouns().debug().refersTo().debug()
-console.log(doc.verbs().conjugate())
+// console.log(doc.verbs().conjugate())
 // doc.match('{sway/verb}').debug()
 
 

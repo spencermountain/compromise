@@ -1752,6 +1752,7 @@ export default [
   ['spread', 'spread'],
   ['sprinkled', 'sprinkle'],
   ['sprouted', 'sprout'],
+  ['routed', 'route'],
   ['spun', 'spin'],
   ['spurred', 'spur'],
   ['squared', 'square'],
@@ -2126,6 +2127,6 @@ export default [
   ['coveted', 'covet'],
   ['honeymooned', 'honeymoon'],
   ['accustomed', 'accustom'],
-
+  ['befriended', 'befriend'],
   // ['', ''],
 ]

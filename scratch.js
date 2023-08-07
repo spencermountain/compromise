@@ -52,6 +52,7 @@ console.log(res)
 
 // nlp.verbose('tagger')
 let arr = [
+  // 'He befriend a stray dog',
   // noun|verb|adjective:
   // 'average',
   // 'welcome',
@@ -358,7 +359,6 @@ let arr = [
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(doc.verbs().conjugate())
 // doc.match('{sway/verb}').debug()
-
 
 
 // // doc.verbs().toPastParticiple()

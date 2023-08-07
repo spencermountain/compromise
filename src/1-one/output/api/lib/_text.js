@@ -8,7 +8,7 @@ const hasSpace = / /
 
 const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
-  terms.forEach((t) => {
+  terms.forEach((t, i) => {
     let pre = t.pre || ''
     let post = t.post || ''
     if (opts.punctuation === 'some') {
@@ -78,11 +78,12 @@ const textFromDoc = function (docs, opts) {
   if (!opts.keepSpace) {
     text = text.trim()
   }
-  if (opts.keepPunct === false) {
+  if (opts.keepEndPunct === false) {
     // don't remove ':)' etc
     if (!docs[0][0].tags.has('Emoticon')) {
       text = text.replace(trimStart, '')
     }
+    // remove ending periods
     let last = docs[docs.length - 1]
     if (!last[last.length - 1].tags.has('Emoticon')) {
       text = text.replace(trimEnd, '')

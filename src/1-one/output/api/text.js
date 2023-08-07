@@ -17,12 +17,12 @@ export default {
     if (opts.keepSpace === undefined && this.pointer) {
       opts.keepSpace = false
     }
-    if (opts.keepPunct === undefined && this.pointer) {
+    if (opts.keepEndPunct === undefined && this.pointer) {
       let ptr = this.pointer[0]
       if (ptr && ptr[1]) {
-        opts.keepPunct = false
+        opts.keepEndPunct = false
       } else {
-        opts.keepPunct = true
+        opts.keepEndPunct = true
       }
     }
     // set defaults

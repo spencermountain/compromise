@@ -58,11 +58,14 @@ test('splitBefore', function (t) {
     ['maybe doug but possibly nancy', 'but', ['maybe doug', 'but possibly nancy']],
     ['doug is really nice', 'is', ['doug', 'is really nice']],
     ['any rate I suspect that I must', 'i', ['any rate', 'I suspect that', 'I must']],
-    ['a x b x c', 'x', ['a', 'x b', 'x c']],  //fix me!
+    ['a x b x c', 'x', ['a', 'x b', 'x c']], //fix me!
     ['a b x x c', 'x', ['a b', 'x', 'x c']],
     ['x a b x c', 'x', ['x a b', 'x c']],
     ['x x a b c', 'x', ['x', 'x a b c']],
     ['a x b x', 'x', ['a', 'x b', 'x']],
+    ['a a x b b', 'x', ['a a', 'x b b']],
+    ['a a x b b x', 'x', ['a a', 'x b b', 'x']],
+    ['a a x b b x c c', 'x', ['a a', 'x b b', 'x c c']],
   ]
   arr.forEach(function (a) {
     const want = a[2]

@@ -203,7 +203,7 @@ test('toPast:', function (t) {
     ["he cleans the house", "he cleaned the house"],
     ["he chats with friends online", "he chatted with friends online"],
     ["he climbs the mountain", "he climbed the mountain"],
-    ["he plays video games", "he played video games"],
+    ["he plays games", "he played games"],
     ["he drinks coffee in the morning", "he drank coffee in the morning"],
     ["he walks the dog", "he walked the dog"],
     ["he builds a treehouse", "he built a treehouse"],

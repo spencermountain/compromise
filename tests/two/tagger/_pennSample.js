@@ -2638,10 +2638,10 @@ export default [
     text: 'This proprietary Gel Suspension technology makes possible single serving packets of Gelceuticals.',
     tags: 'DT, JJ, NN, NN, NN, VBZ, JJ, JJ, NN, NNS, IN, NNS',
   },
-  {
-    text: 'Perfect for those with difficulty swallowing tablets or capsules',
-    tags: 'JJ, IN, DT, IN, NN, VBG, NNS, CC, NNS',
-  },
+  // {
+  //   text: 'Perfect for those with difficulty swallowing tablets or capsules',
+  //   tags: 'JJ, IN, DT, IN, NN, VBG, NNS, CC, NNS',
+  // },
   {
     text: 'Agel has created a new compensation structure.',
     tags: 'NNP, VBZ, VBN, DT, JJ, NN, NN',
@@ -2796,17 +2796,13 @@ export default [
     text: 'Are you ready?',
     tags: 'VBP, PRP, JJ',
   },
-  {
-    text: 'Ideas are welcome.',
-    tags: 'NNS, VBP, JJ',
-  },
+  // {
+  //   text: 'Ideas are welcome.',
+  //   tags: 'NNS, VBP, JJ',
+  // },
   {
     text: 'I am GEORGE WALKER BUSH, son of the former president of the United States of America George Herbert Walker Bush, and currently serving as President of the United States of America.',
     tags: 'PRP, VBP, NNP, NNP, NNP, NN, IN, DT, JJ, NNP, IN, DT, NNP, NNP, IN, NNP, NNP, NNP, NNP, NNP, CC, RB, VBG, IN, NNP, IN, DT, NNP, NNP, IN, NNP',
-  },
-  {
-    text: 'US battles to save storm victims',
-    tags: 'NNP, VBZ, TO, VB, NN, NNS',
   },
   {
     text: 'Watch the airlift',

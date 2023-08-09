@@ -18,7 +18,7 @@ const max = 5
 // somewhere and
 // at some time.
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 let arr = [
   // 'He befriend a stray dog',
   // noun|verb|adjective:
@@ -310,13 +310,13 @@ let arr = [
   // 'cave',
   // 'what companies are doing is',
 ]
-// let doc = nlp(arr[0]).debug()
+let doc = nlp(arr[0]).debug()
 // let p = doc.pronouns().debug().refersTo().debug()
-// console.log(doc.verbs().conjugate())
+// console.log(nlp('colored').debug().verbs().conjugate())
 // doc.match('{sway/verb}').debug()
 
 // // doc.verbs().toPastParticiple()
-// console.log(doc.verbs().conjugate())
+// console.log(nlp('wore').verbs().conjugate())
 // doc.verbs().debug()
 
 // console.log(doc.text())
@@ -335,6 +335,4 @@ let arr = [
 // let m = doc.match('[<month>#Month] [<date>#Value] [<year>#Year]?')
 // console.log(m.groups())
 
-// let doc = nlp('a x b x c')
-let doc = nlp('a a x b b x c c')
-doc.splitBefore('x').debug()
+

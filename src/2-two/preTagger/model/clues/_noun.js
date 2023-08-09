@@ -106,6 +106,6 @@ export default {
     do: n,
     can: n,//parents can
     wise: n,//service-wise
-    they: n,//snakes they
+    // they: n,//snakes they
   },
 }

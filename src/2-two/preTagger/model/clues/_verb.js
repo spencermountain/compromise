@@ -77,6 +77,7 @@ export default {
     her: v, //
     his: v, //
     them: v, //
+    they: v, //
     it: v, //hope it
     himself: v,
     herself: v,

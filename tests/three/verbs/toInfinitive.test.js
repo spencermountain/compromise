@@ -316,7 +316,7 @@ test('toInfinitive-phrase:', function (t) {
     ["persevered", "persevere"],
     ["imprisoned", "imprison"],
     ["poisoned", "poison"],
-    ["seasoned", "season"],
+    ["he seasoned", "he season"],
     ["combed", "comb"],
     ["climbed", "climb"],
     ["succumbed", "succumb"],

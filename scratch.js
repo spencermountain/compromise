@@ -20,6 +20,7 @@ const max = 5
 
 nlp.verbose('tagger')
 let arr = [
+  'he wants to walk',
   // 'He befriend a stray dog',
   // noun|verb|adjective:
   // 'average',

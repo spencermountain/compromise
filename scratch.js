@@ -20,7 +20,9 @@ const max = 5
 
 nlp.verbose('tagger')
 let arr = [
-  'he wore',
+  'suppressed by the Republican Guard',
+  'You have all devoted considerable time',
+  'that rocks dude',
   // 'He befriend a stray dog',
   // noun|verb|adjective:
   // 'average',

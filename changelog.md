@@ -26,6 +26,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .splitBefore() bugfix
 - **[fix]** - typescript+docs fixes #1023
 - **[fix]** - subtle changes to .text() and .isFull()
+- **[update]** - dependencies
 
 #### 14.9.0 [May 2023]
 - **[new]** - .verbs().toPastParticiple() method

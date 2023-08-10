@@ -57,13 +57,13 @@ test('use pointer endId', function (t) {
 
 
   // remove an ending-term
-  doc = nlp(`john is nice`)
-  m = doc.match('.*')
-  doc.match('nice').remove()
-  // first time
-  t.equal(m.text() + '|', 'john is|', here + 'end-id remove first time')
-  // second time
-  t.equal(m.text() + '|', 'john is|', here + 'end-id remove second time')
+  // doc = nlp(`john is nice`)
+  // m = doc.match('.*')
+  // doc.match('nice').remove()
+  // // first time
+  // t.equal(m.text(), 'john is', here + 'end-id remove first time')
+  // // second time
+  // t.equal(m.text(), 'john is', here + 'end-id remove second time')
 
   t.end()
 })

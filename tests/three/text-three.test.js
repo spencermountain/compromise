@@ -2,15 +2,15 @@ import test from 'tape'
 import nlp from './_lib.js'
 const here = '[three/text] '
 import penn from '../two/tagger/_pennSample.js'
+let txt = penn.map(o => o.text).join(' ')
 
 test('text-in-text-out', function (t) {
-  let txt = penn.map(o => o.text).join(' ')
   let doc = nlp(txt)
   let methods = [
     'terms',
     'all',
-    // 'clauses', // fixme
-    // 'chunks',
+    'clauses',
+    'chunks',
   ]
   methods.forEach(fn => {
     t.equal(doc[fn]().text(), txt, here + fn)
@@ -22,5 +22,17 @@ test('text-in-text-out', function (t) {
   t.equal(doc.splitOn('is').text(), txt, here + 'splitOn')
   t.equal(doc.splitBefore('no').text(), txt, here + 'splitBefore')
   t.equal(doc.splitAfter('how').text(), txt, here + 'splitAfter')
+  t.end()
+})
+
+
+test('wordcount-split', function (t) {
+  let doc = nlp(txt)
+  let m = doc.splitBefore('#Noun+')
+  t.equal(m.wordCount(), doc.wordCount(), 'splitBefore-wordcount')
+  m = doc.splitOn('#Noun+')
+  t.equal(m.wordCount(), doc.wordCount(), 'splitOn-wordcount')
+  m = doc.splitAfter('#Noun+')
+  t.equal(m.terms().length, doc.terms().length, 'splitAfter-wordcount')
   t.end()
 })

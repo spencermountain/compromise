@@ -24,13 +24,13 @@ const max = 5
 // console.log(doc.text() + '|')
 // console.log(b.text() + '|')
 
-let doc = nlp('one two three. four five. six seven eight. nine')
-
-let m = doc.match('four five')
-m = doc.terms()
-m.debug()
-console.log(m.isFull())
-
+let str = `Boston University. The monthly sales have`
+let doc = nlp(str)
+// doc.match('#Noun+').debug()
+let m = doc.splitBefore('#Noun+')
+// m.debug()
+console.log(doc.text())
+console.log(m.text())
 
 // nlp.verbose('tagger')
 let arr = [

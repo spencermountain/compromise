@@ -31,6 +31,7 @@ jobs:
       - name: install
         run: |
           npm ci
+          npm run plugins:ci
 
       - name: static checks
         run: |

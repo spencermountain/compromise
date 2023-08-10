@@ -83,5 +83,6 @@ export default [
   { match: '#PastTense and [%Adj|Past%]', group: 0, tag: 'PastTense', reason: 'dressed-and-left' },
   // melted and fallen
   { match: '[%Adj|Past%] and #PastTense', group: 0, tag: 'PastTense', reason: 'dressed-and-left' },
-
+  // is he stoked
+  { match: '#Copula #Pronoun [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'is-he-stoked' },
 ]

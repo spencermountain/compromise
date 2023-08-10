@@ -3,38 +3,19 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-const max = 5
 
-// let txt = `any rate I suspect foo I must `
-// nlp(txt).splitBefore('#Pronoun').debug()
-
-// I am not quite sure
-// of the exact place
-// or exact date
-// of my birth,
-// but at any rate
-// I suspect
-// I must have been born
-// somewhere and
-// at some time.
-
-// let txt = `Videoconference Room. should `
-// let doc = nlp(txt)
-// let b = doc.splitBefore('no')
-// console.log(doc.text() + '|')
-// console.log(b.text() + '|')
-
-let str = `Boston University. The monthly sales have`
-let doc = nlp(str)
-// doc.match('#Noun+').debug()
-let m = doc.splitBefore('#Noun+')
-// m.debug()
-console.log(doc.text())
-console.log(m.text())
-
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 let arr = [
-  'You have all devoted considerable time',
+
+  'am i stoked',
+  'Iran also stands accused of aiding terrorism ',
+  'give it a shot ',
+  'writer jessamyn west babysat this cousin',
+  'if we all recycled our stuff',
+  'the dialog and directing had little to add',
+  'the belief that bees got a sweet substance ',
+  'just tired and my thought patterns are strange',
+  // 'You have all devoted considerable time',
   // 'He befriend a stray dog',
   // noun|verb|adjective:
   // 'average',
@@ -325,11 +306,12 @@ let arr = [
   // 'cave',
   // 'what companies are doing is',
 ]
-// let doc = nlp(arr[0]).debug()
+let doc = nlp(arr[0]).debug()
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())
 // doc.match('{sway/verb}').debug()
-// console.log(doc.verbs().conjugate())
+// console.log(doc.verbs().toPresentTense().text())
+console.log(doc.verbs().conjugate())
 // doc.verbs().toPastParticiple()
 // console.log(nlp('wore').verbs().conjugate())
 // doc.verbs().debug()

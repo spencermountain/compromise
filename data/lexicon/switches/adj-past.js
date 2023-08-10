@@ -323,7 +323,8 @@ export default [
   'wrinkled',
   'yellowed',
   'engaged',
-  'seasoned'
+  'seasoned',
+  'stoked'
 ]
 
 

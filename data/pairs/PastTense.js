@@ -2218,6 +2218,7 @@ export default [
   ["vetoed", "veto"],
   ["withheld", "withhold"],
   ["witnessed", "witness"],
+  ["welled", "well"],
 
 
   // ['', ''],

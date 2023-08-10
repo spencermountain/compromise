@@ -47,4 +47,6 @@ export default [
   { match: '(become|became|becoming|becomes) [#Verb]', group: 0, tag: 'Adjective', reason: 'become-verb' },
   // their declared intentions
   { match: '#Possessive [#PastTense] #Noun', group: 0, tag: 'Adjective', reason: 'declared-intentions' },
+  // is he cool
+  { match: '#Copula #Pronoun [%Adj|Present%]', group: 0, tag: 'Adjective', reason: 'is-he-cool' },
 ]

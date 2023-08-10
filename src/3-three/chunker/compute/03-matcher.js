@@ -33,7 +33,7 @@ const rules = [
   // walk ourselves
   { match: '#Verb #Reflexive', chunk: 'Verb' },
   // tell him the story
-  { match: '#PresentTense [#Pronoun] #Determiner', group: 0, chunk: 'Verb' },
+  // { match: '#PresentTense [#Pronoun] #Determiner', group: 0, chunk: 'Verb' },
   // tries to walk
   { match: '#Verb [to] #Adverb? #Infinitive', group: 0, chunk: 'Verb' },
   // upon seeing

@@ -7,9 +7,8 @@ import nlp from './src/three.js'
 nlp.verbose('tagger')
 let arr = [
 
-  'am i stoked',
-  'Iran also stands accused of aiding terrorism ',
   'give it a shot ',
+  'Iran also stands accused of aiding terrorism ',
   'writer jessamyn west babysat this cousin',
   'if we all recycled our stuff',
   'the dialog and directing had little to add',

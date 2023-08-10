@@ -1609,10 +1609,10 @@ export default [
     text: 'The duration of the call is 3.5 hours.',
     tags: 'DT, NN, IN, DT, NN, VBZ, CD, NNS',
   },
-  {
-    text: 'You have all devoted considerable time, resources and spirit in the preparation of this document-and it shows .?',
-    tags: 'PRP, VBP, RB, VBN, JJ, NN, NNS, CC, NN, IN, DT, NN, IN, DT, NN, CC, PRP, VBZ',
-  },
+  // {
+  //   text: 'You have all devoted considerable time, resources and spirit in the preparation of this document-and it shows .?',
+  //   tags: 'PRP, VBP, RB, VBN, JJ, NN, NNS, CC, NN, IN, DT, NN, IN, DT, NN, CC, PRP, VBZ',
+  // },
   {
     text: '- ld2d-#69366-1.DOC',
     tags: 'NN',

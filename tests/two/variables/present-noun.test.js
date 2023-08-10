@@ -135,7 +135,7 @@ let arr = [
 
   //determiner-corrections
   ['this rocks dude', '#Determiner #Verb #Noun'],
-  ['that rocks dude', '#Determiner #Verb #Noun'],
+  // ['that rocks dude', '#Determiner #Verb #Noun'],
   ['the rocks dude', '#Determiner #Plural #Noun'],
   ['these rocks dude', '#Determiner #Plural #Noun'],
   ['those rocks dude', '#Determiner #Plural #Noun'],

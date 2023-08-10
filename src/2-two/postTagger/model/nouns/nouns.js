@@ -134,7 +134,7 @@ export default [
   //had time
   { match: 'had [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|come|become)', reason: 'had-time' },
   //instant access
-  { match: '%Adj|Noun% %Noun|Verb%', tag: '#Adjective #Noun', reason: 'instant-access' },
+  { match: '%Adj|Noun% %Noun|Verb%', tag: '#Adjective #Noun', notIf: '#ProperNoun #Noun', reason: 'instant-access' },
   // a representative to 
   { match: '#Determiner [%Adj|Noun%] #Conjunction', group: 0, tag: 'Noun', reason: 'a-rep-to' },
   // near death experiences, ambitious sales targets

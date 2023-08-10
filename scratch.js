@@ -20,9 +20,7 @@ const max = 5
 
 nlp.verbose('tagger')
 let arr = [
-  'suppressed by the Republican Guard',
   'You have all devoted considerable time',
-  'that rocks dude',
   // 'He befriend a stray dog',
   // noun|verb|adjective:
   // 'average',
@@ -317,7 +315,7 @@ let doc = nlp(arr[0]).debug()
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())
 // doc.match('{sway/verb}').debug()
-console.log(doc.verbs().conjugate())
+// console.log(doc.verbs().conjugate())
 // doc.verbs().toPastParticiple()
 // console.log(nlp('wore').verbs().conjugate())
 // doc.verbs().debug()

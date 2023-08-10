@@ -27,6 +27,8 @@ const findVerbs = function (doc) {
   m = m.splitBefore('(#PresentTense|#PastTense) [#Copula]$', 0)
   // what i can sell will be
   m = m.splitBefore('(#PresentTense|#PastTense) [will be]$', 0)
+  // directing had
+  m = m.splitBefore('(#PresentTense|#PastTense) [(had|has)]', 0)
 
   // 'allow yourself'
   m = m.not('#Reflexive$')

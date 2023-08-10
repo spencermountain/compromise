@@ -2219,6 +2219,8 @@ export default [
   ["withheld", "withhold"],
   ["witnessed", "witness"],
   ["welled", "well"],
+  ["babysat", "babysit"],
+  ["recycled", "recycle"],
 
 
   // ['', ''],

@@ -6,14 +6,17 @@ import nlp from './src/three.js'
 
 nlp.verbose('tagger')
 let arr = [
-
-  'give it a shot ',
-  'Iran also stands accused of aiding terrorism ',
-  'writer jessamyn west babysat this cousin',
-  'if we all recycled our stuff',
-  'the dialog and directing had little to add',
-  'the belief that bees got a sweet substance ',
-  'just tired and my thought patterns are strange',
+  ' planning to dispose of the company',
+  'kept her secret hidden',
+  'He has a medium build',
+  'I left the window open for fresh air.',
+  'The bridge is built on stable foundations.',
+  'find it shocking that people still believe',
+  'The old man stoops to pet the cat.',
+  'I dream of becoming a doctor',
+  ' Franchising can be a profitable business ',
+  // 'Iran also stands accused of aiding terrorism ',
+  // 'the belief that bees got a sweet substance ',
   // 'You have all devoted considerable time',
   // 'He befriend a stray dog',
   // noun|verb|adjective:

@@ -31,7 +31,7 @@ const month = {
     previous: m,
     following: m,
     with: p,
-    for: p,
+    // for: p,
   },
   afterWords: {
     sometime: m,

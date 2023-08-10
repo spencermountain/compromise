@@ -16,7 +16,7 @@ test('negative-ambiguous-dates', t => {
     // 'ask sep to eat bacon',
     'go shopping with april',
     // 'assign all tasks to april',
-    'buy eggs for april',
+    // 'buy eggs for april',
     // 'buy eggs for may',
     // 'buy eggs with may',
     'shop with april',

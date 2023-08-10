@@ -21,8 +21,6 @@ export default [
   { match: `#WeekDay #Month #Ordinal`, tag: 'Date', reason: 'week mm-dd' },
   // aug 5th 2021
   { match: `#Month #Ordinal #Cardinal`, tag: 'Date', reason: 'mm-dd-yyy' },
-  // this march
-  { match: `this (march|may)`, tag: 'Month', reason: 'this-march' },
 
   // === timezones ===
   // china standard time

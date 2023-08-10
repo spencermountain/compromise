@@ -20,7 +20,7 @@ test('text-in-text-out', function (t) {
   t.equal(doc.growRight('*').text(), txt, here + 'growRight *')
 
   t.equal(doc.splitOn('is').text(), txt, here + 'splitOn')
-  t.equal(doc.splitBefore('no').text(), txt, here + 'splitBefore') //broken
+  t.equal(doc.splitBefore('no').text(), txt, here + 'splitBefore')
   t.equal(doc.splitAfter('how').text(), txt, here + 'splitAfter')
   t.end()
 })

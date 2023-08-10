@@ -10,7 +10,7 @@ test('isFull :', function (t) {
   t.equal(m.isFull(), false, here + 'part')
 
   m = doc.terms()
-  t.equal(m.isFull(), false, here + 'terms')
+  t.equal(m.isFull(), true, here + 'terms')
 
   m = doc.harden()
   t.equal(m.isFull(), true, here + 'harden')
@@ -25,5 +25,18 @@ test('isFull :', function (t) {
 
   m = doc.terms().all()
   t.equal(m.isFull(), true, here + 'all')
+  t.end()
+})
+
+test('isFull-split', function (t) {
+  let doc = nlp('one two foo three. four foo five')
+  let a = doc.splitOn('foo')
+  t.equal(a.isFull(), true, 'spliton')
+
+  let b = doc.splitBefore('foo')
+  t.equal(b.isFull(), true, 'splitbefore')
+
+  let c = doc.splitAfter('foo')
+  t.equal(c.isFull(), true, 'splitafter')
   t.end()
 })

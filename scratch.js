@@ -18,7 +18,21 @@ const max = 5
 // somewhere and
 // at some time.
 
-nlp.verbose('tagger')
+// let txt = `Videoconference Room. should `
+// let doc = nlp(txt)
+// let b = doc.splitBefore('no')
+// console.log(doc.text() + '|')
+// console.log(b.text() + '|')
+
+let doc = nlp('one two three. four five. six seven eight. nine')
+
+let m = doc.match('four five')
+m = doc.terms()
+m.debug()
+console.log(m.isFull())
+
+
+// nlp.verbose('tagger')
 let arr = [
   'You have all devoted considerable time',
   // 'He befriend a stray dog',
@@ -311,7 +325,7 @@ let arr = [
   // 'cave',
   // 'what companies are doing is',
 ]
-let doc = nlp(arr[0]).debug()
+// let doc = nlp(arr[0]).debug()
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())
 // doc.match('{sway/verb}').debug()

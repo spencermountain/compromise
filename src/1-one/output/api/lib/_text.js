@@ -8,7 +8,7 @@ const hasSpace = / /
 
 const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
-  terms.forEach((t, i) => {
+  terms.forEach((t) => {
     let pre = t.pre || ''
     let post = t.post || ''
     if (opts.punctuation === 'some') {

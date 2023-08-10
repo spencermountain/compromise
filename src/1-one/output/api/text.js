@@ -14,7 +14,8 @@ export default {
     } else if (fmt && isObject(fmt)) {
       opts = Object.assign({}, fmt)//todo: fixme
     }
-    if (opts.keepSpace === undefined && this.pointer) {
+    // is it a full document?
+    if (opts.keepSpace === undefined && !this.isFull()) {    // 
       opts.keepSpace = false
     }
     if (opts.keepEndPunct === undefined && this.pointer) {

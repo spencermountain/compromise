@@ -25,7 +25,7 @@ test('basic pointer getters', function (t) {
   ]
   arr.forEach(a => {
     let doc = nlp(txt).update([a[0]])
-    t.equal(doc.text(), a[1], here + JSON.stringify(a[0]))
+    t.equal(doc.text() + '|', a[1] + '|', here + JSON.stringify(a[0]))
 
     t.equal(doc.found, Boolean(doc.text()), here + a[0])
   })
@@ -52,8 +52,8 @@ test('use pointer endId', function (t) {
   doc = nlp(`john is nice`)
   m = doc.match('.*')
   doc.match('is').remove()
-  t.equal(m.text(), 'john nice', here + 'end-id shrink')
-  t.equal(m.text(), 'john nice', here + 'end-id shrink 2nd time')
+  t.equal(m.text() + '|', 'john nice|', here + 'end-id shrink')
+  t.equal(m.text() + '|', 'john nice|', here + 'end-id shrink 2nd time')
 
 
   // remove an ending-term
@@ -61,9 +61,9 @@ test('use pointer endId', function (t) {
   m = doc.match('.*')
   doc.match('nice').remove()
   // first time
-  t.equal(m.text(), 'john is', here + 'end-id remove first time')
+  t.equal(m.text() + '|', 'john is|', here + 'end-id remove first time')
   // second time
-  t.equal(m.text(), 'john is', here + 'end-id remove second time')
+  t.equal(m.text() + '|', 'john is|', here + 'end-id remove second time')
 
   t.end()
 })

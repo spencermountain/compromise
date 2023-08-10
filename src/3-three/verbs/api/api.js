@@ -64,6 +64,9 @@ const api = function (View) {
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
+        if (info.isInfinitive) {
+          return vb
+        }
         return toPresent(vb, parsed, info.form)
       })
     }
@@ -71,6 +74,9 @@ const api = function (View) {
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
+        if (info.isInfinitive) {
+          return vb
+        }
         return toPast(vb, parsed, info.form)
       })
     }
@@ -78,6 +84,9 @@ const api = function (View) {
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
+        if (info.isInfinitive) {
+          return vb
+        }
         return toFuture(vb, parsed, info.form)
       })
     }
@@ -85,6 +94,9 @@ const api = function (View) {
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
+        if (info.isInfinitive) {
+          return vb
+        }
         return toGerund(vb, parsed, info.form)
       })
     }
@@ -92,6 +104,9 @@ const api = function (View) {
       return this.getNth(n).map(vb => {
         let parsed = parseVerb(vb)
         let info = getGrammar(vb, parsed)
+        if (info.isInfinitive) {
+          return vb
+        }
         return toParticiple(vb, parsed, info.form)
       })
     }

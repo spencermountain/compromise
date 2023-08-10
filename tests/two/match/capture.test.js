@@ -62,3 +62,13 @@ test('tricky capture', function (t) {
 
   t.end()
 })
+
+
+test('optional capture', function (t) {
+  let doc = nlp('sept 4 1998')
+  let m = doc.match('[<month>#Month] [<date>#Value] [<year>#Year]?')
+  t.equal(m.groups('year').found, true, here + '[]?')
+  m = doc.match('[<month>#Month] [<date>#Value] [<year>#Year?]')
+  t.equal(m.groups('year').found, true, here + '[?]')
+  t.end()
+})

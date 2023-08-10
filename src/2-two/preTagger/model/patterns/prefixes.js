@@ -18,6 +18,7 @@ export default [
     'de-': Verb,
     're-': Verb,
     'un-': Verb,
+    'ex-': Noun,
   },
   {
     // 4-letter

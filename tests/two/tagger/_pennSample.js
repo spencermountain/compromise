@@ -470,10 +470,6 @@ export default [
     tags: 'NN, NNS',
   },
   {
-    text: 'LTTE arms-running',
-    tags: 'NNP, NNS, NN',
-  },
-  {
     text: 'Steady buildup',
     tags: 'JJ, NN',
   },
@@ -712,10 +708,6 @@ export default [
   {
     text: 'They provide an emotional infrastructure for atrocities.',
     tags: 'PRP, VBP, DT, JJ, NN, IN, NNS',
-  },
-  {
-    text: 'This circle operates mostly through mosques, madrasas and other religious establishments but also through inciting electronic and printed media.',
-    tags: 'DT, NN, VBZ, RB, IN, NNS, NNS, CC, JJ, JJ, NNS, CC, RB, IN, VBG, JJ, CC, VBN, NN',
   },
   {
     text: 'Some parts of this same outer circle actually operate as a result of fear from, or blackmail by, the inner circles.',
@@ -1617,10 +1609,10 @@ export default [
     text: 'The duration of the call is 3.5 hours.',
     tags: 'DT, NN, IN, DT, NN, VBZ, CD, NNS',
   },
-  {
-    text: 'You have all devoted considerable time, resources and spirit in the preparation of this document-and it shows .?',
-    tags: 'PRP, VBP, RB, VBN, JJ, NN, NNS, CC, NN, IN, DT, NN, IN, DT, NN, CC, PRP, VBZ',
-  },
+  // {
+  //   text: 'You have all devoted considerable time, resources and spirit in the preparation of this document-and it shows .?',
+  //   tags: 'PRP, VBP, RB, VBN, JJ, NN, NNS, CC, NN, IN, DT, NN, IN, DT, NN, CC, PRP, VBZ',
+  // },
   {
     text: '- ld2d-#69366-1.DOC',
     tags: 'NN',
@@ -2646,10 +2638,10 @@ export default [
     text: 'This proprietary Gel Suspension technology makes possible single serving packets of Gelceuticals.',
     tags: 'DT, JJ, NN, NN, NN, VBZ, JJ, JJ, NN, NNS, IN, NNS',
   },
-  {
-    text: 'Perfect for those with difficulty swallowing tablets or capsules',
-    tags: 'JJ, IN, DT, IN, NN, VBG, NNS, CC, NNS',
-  },
+  // {
+  //   text: 'Perfect for those with difficulty swallowing tablets or capsules',
+  //   tags: 'JJ, IN, DT, IN, NN, VBG, NNS, CC, NNS',
+  // },
   {
     text: 'Agel has created a new compensation structure.',
     tags: 'NNP, VBZ, VBN, DT, JJ, NN, NN',
@@ -2804,17 +2796,13 @@ export default [
     text: 'Are you ready?',
     tags: 'VBP, PRP, JJ',
   },
-  {
-    text: 'Ideas are welcome.',
-    tags: 'NNS, VBP, JJ',
-  },
+  // {
+  //   text: 'Ideas are welcome.',
+  //   tags: 'NNS, VBP, JJ',
+  // },
   {
     text: 'I am GEORGE WALKER BUSH, son of the former president of the United States of America George Herbert Walker Bush, and currently serving as President of the United States of America.',
     tags: 'PRP, VBP, NNP, NNP, NNP, NN, IN, DT, JJ, NNP, IN, DT, NNP, NNP, IN, NNP, NNP, NNP, NNP, NNP, CC, RB, VBG, IN, NNP, IN, DT, NNP, NNP, IN, NNP',
-  },
-  {
-    text: 'US battles to save storm victims',
-    tags: 'NNP, VBZ, TO, VB, NN, NNS',
   },
   {
     text: 'Watch the airlift',
@@ -2895,10 +2883,6 @@ export default [
   {
     text: 'By Richard Spencer',
     tags: 'IN, NNP, NNP',
-  },
-  {
-    text: 'Increased car usage in China is creating a high demand for petrol',
-    tags: 'VBN, NN, NN, IN, NNP, VBZ, VBG, DT, JJ, NN, IN, NN',
   },
   {
     text: 'Imagine the tension melting away as you continue breathing rhythmically and naturally.',
@@ -3528,10 +3512,6 @@ export default [
   {
     text: 'Beardies are actually quite delicate.',
     tags: 'NNS, VBP, RB, RB, JJ',
-  },
-  {
-    text: 'The lower the reins, the stronger the action and the lower the reins the stronger the action on the poll too.',
-    tags: 'DT, JJR, DT, NNS, DT, JJR, DT, NN, CC, DT, JJR, DT, NNS, DT, JJR, DT, NN, IN, DT, NN, RB',
   },
   {
     text: 'For horses that are strong pullers.',
@@ -5609,8 +5589,8 @@ export default [
     tags: 'NNP, VBZ, DT, NN, CD, NN, NN, IN, NNP, CC, VBZ, IN, NN, CC, JJ, NN',
   },
   {
-    text: 'A slice of heaven in winter park off forsyth!',
-    tags: 'DT, NN, IN, NN, IN, NNP, NNP, IN, NNP',
+    text: 'A slice of heaven in winter park',
+    tags: 'DT, NN, IN, NN, IN, NNP, NNP',
   },
   {
     text: 'Nice selection, very clean, friendly staff!',

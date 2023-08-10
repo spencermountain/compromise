@@ -117,19 +117,27 @@ const utils = {
     if (!ptrs) {
       return true
     }
-    let document = this.document
-    for (let i = 0; i < ptrs.length; i += 1) {
-      let [n, start, end] = ptrs[i]
-      // it's not the start
-      if (n !== i || start !== 0) {
-        return false
-      }
-      // it's too short
-      if (document[n].length > end) {
-        return false
-      }
+    // must start at beginning
+    if (ptrs.length === 0 || ptrs[0][0] !== 0) {
+      return false
     }
-    return true
+    let wantTerms = 0
+    let haveTerms = 0
+    this.document.forEach(terms => wantTerms += terms.length)
+    this.docs.forEach(terms => haveTerms += terms.length)
+    return wantTerms === haveTerms
+    // for (let i = 0; i < ptrs.length; i += 1) {
+    //   let [n, start, end] = ptrs[i]
+    //   // it's not the start
+    //   if (n !== i || start !== 0) {
+    //     return false
+    //   }
+    //   // it's too short
+    //   if (document[n].length > end) {
+    //     return false
+    //   }
+    // }
+    // return true
   },
 
   // return the nth elem of a doc

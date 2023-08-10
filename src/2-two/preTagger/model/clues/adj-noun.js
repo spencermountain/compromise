@@ -8,11 +8,14 @@ const misc = {
     Determiner: undefined, //the premier university
     Cardinal: 'Noun',//1950 convertable
     PhrasalVerb: 'Adjective'//starts out fine
+  },
+  afterTags: {
+    // Pronoun: 'Noun'//as an adult i
   }
 }
 const clue = {
   beforeTags: Object.assign({}, adj.beforeTags, noun.beforeTags, misc.beforeTags),
-  afterTags: Object.assign({}, adj.afterTags, noun.afterTags),
+  afterTags: Object.assign({}, adj.afterTags, noun.afterTags, misc.afterTags),
   beforeWords: Object.assign({}, adj.beforeWords, noun.beforeWords, {
     // are representative
     are: 'Adjective', is: 'Adjective', was: 'Adjective', be: 'Adjective',

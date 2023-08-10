@@ -27,6 +27,17 @@ const cleanUp = function (vb, res) {
   return vb
 }
 
+// 'learned [to code]'
+const isInfinitive = function (vb) {
+  if (vb.has('#Infinitive')) {
+    let m = vb.growLeft('to')
+    if (m.has('^to #Infinitive')) {
+      return true
+    }
+  }
+  return false
+}
+
 const getGrammar = function (vb, res) {
   let grammar = {}
   // make it easy to classify, first
@@ -50,6 +61,8 @@ const getGrammar = function (vb, res) {
     grammar.tense = res.root.has('#PastTense') ? 'PastTense' : 'PresentTense'
   }
   grammar.copula = res.root.has('#Copula')
+  // 'learn to code'
+  grammar.isInfinitive = isInfinitive(vb)
   return grammar
 }
 

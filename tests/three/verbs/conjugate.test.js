@@ -261,6 +261,12 @@ const arr = [
     PastTense: 'egged',
     Gerund: 'egging',
   },
+  {
+    Infinitive: 'sit in',
+    PresentTense: 'sits in',
+    PastTense: 'sat in',
+    Gerund: 'sitting in',
+  },
   // {
   //   Infinitive: 'take part',
   //   PresentTense: 'takes part',

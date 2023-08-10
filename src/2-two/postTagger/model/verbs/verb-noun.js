@@ -18,7 +18,7 @@ export default [
   // goes to sleep
   { match: '(go|goes|went) to [#Infinitive]', group: 0, tag: 'Noun', reason: 'goes-to-verb' },
   //a close watch on
-  { match: '(a|an) #Adjective? #Noun [#Infinitive] (#Preposition|#Noun)', group: 0, tag: 'Noun', reason: 'a-noun-inf' },
+  { match: '(a|an) #Adjective? #Noun [#Infinitive] (#Preposition|#Noun)', group: 0, notIf: 'from', tag: 'Noun', reason: 'a-noun-inf' },
   //a tv show
   { match: '(a|an) #Noun [#Infinitive]$', group: 0, tag: 'Noun', reason: 'a-noun-inf2' },
   //is mark hughes
@@ -28,7 +28,7 @@ export default [
   // running for congress
   { match: '#Gerund #Adjective? for [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-for' },
   // running to work
-  { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
+  // { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
   // about love
   { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
   // singers on stage
@@ -55,7 +55,11 @@ export default [
   // that should smoke
   { match: '#Determiner #Modal [#Noun]', group: 0, tag: 'PresentTense', reason: 'should-smoke' },
   //this rocks
-  { match: '(this|that) [#Plural]', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'this-verbs' },
+  { match: 'this [#Plural]', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Date)', reason: 'this-verbs' },
+  //voice that rocks
+  { match: '#Noun that [#Plural]', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Pronoun|way)', reason: 'voice-that-rocks' },
+  //that leads to
+  { match: 'that [#Plural] to', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'that-leads-to' },
   //let him glue
   {
     match: '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)',
@@ -166,4 +170,8 @@ export default [
   { match: '[%Noun|Verb%] or #Infinitive', group: 0, tag: 'Infinitive', reason: 'work-or-prepare' },
   // to give thanks
   { match: 'to #Infinitive [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula|help)', reason: 'to-give-thanks' },
+  // kills me
+  { match: '[#Noun] me', group: 0, tag: 'Verb', reason: 'kills-me' },
+  // removes wrinkles
+  { match: '%Plural|Verb% %Plural|Verb%', tag: '#PresentTense #Plural', reason: 'removes-wrinkles' },
 ]

@@ -16,7 +16,6 @@ const checkLexicon = function (terms, i, world) {
   if (lexicon[word] !== undefined && lexicon.hasOwnProperty(word)) {
     let tag = lexicon[word]
     setTag([t], tag, world, false, '1-lexicon')
-    // fastTag(t, tag, '1-lexicon')
     return true
   }
   // lookup aliases in the lexicon
@@ -25,7 +24,6 @@ const checkLexicon = function (terms, i, world) {
     if (found) {
       let tag = lexicon[found]
       setTag([t], tag, world, false, '1-lexicon-alias')
-      // fastTag(t, tag, '1-lexicon-alias')
       return true
     }
   }
@@ -37,7 +35,6 @@ const checkLexicon = function (terms, i, world) {
       if (allowPrefix.has(lexicon[stem])) {
         // console.log('->', word, stem, lexicon[stem])
         setTag([t], lexicon[stem], world, false, '1-lexicon-prefix')
-        // fastTag(t, lexicon[stem], '1-lexicon-prefix')
         return true
       }
     }

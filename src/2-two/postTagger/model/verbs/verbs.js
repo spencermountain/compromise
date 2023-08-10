@@ -54,8 +54,6 @@ export default [
   { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
   // look good
   { match: `[(look|looks)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'looks-good' },
-  // needs to learn
-  { match: `[(need|needs)] to #Infinitive`, group: 0, tag: 'PresentTense', reason: 'need-to-learn' },
   // stops thinking
   { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-thinking' },
   // have read
@@ -85,5 +83,8 @@ export default [
   { match: '#PastTense and [%Adj|Past%]', group: 0, tag: 'PastTense', reason: 'dressed-and-left' },
   // melted and fallen
   { match: '[%Adj|Past%] and #PastTense', group: 0, tag: 'PastTense', reason: 'dressed-and-left' },
-
+  // is he stoked
+  { match: '#Copula #Pronoun [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'is-he-stoked' },
+  // to dream of
+  { match: 'to [%Noun|Verb%] #Preposition', group: 0, tag: 'Infinitive', reason: 'to-dream-of' },
 ]

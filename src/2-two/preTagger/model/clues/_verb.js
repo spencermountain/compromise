@@ -75,7 +75,9 @@ export default {
     him: v, //loves him
     us: v,//cost us
     her: v, //
+    his: v, //
     them: v, //
+    they: v, //
     it: v, //hope it
     himself: v,
     herself: v,
@@ -116,5 +118,6 @@ export default {
     more: v,//kill more
     here: v,// look here
     there: v,//
+    away: v,//float away
   },
 }

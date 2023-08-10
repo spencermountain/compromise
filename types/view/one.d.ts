@@ -95,6 +95,15 @@ declare class View {
   before: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** return the terms after each match */
   after: (match: string | View, group?: string | number, options?: matchOptions) => View
+  /** alias of .before() */
+  lookBehind: (match: string | View, group?: string | number, options?: matchOptions) => View
+  /** alias of .before() */
+  lookBefore: (match: string | View, group?: string | number, options?: matchOptions) => View
+  /** alias of .after() */
+  lookAhead: (match: string | View, group?: string | number, options?: matchOptions) => View
+  /** alias of .after() */
+  lookAfter: (match: string | View, group?: string | number, options?: matchOptions) => View
+
   /** add any immediately-preceding matches to the view*/
   growLeft: (match: string | View, group?: string | number, options?: matchOptions) => View
   /** add any immediately-following matches to the view*/

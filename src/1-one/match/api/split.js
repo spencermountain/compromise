@@ -50,16 +50,29 @@ methods.splitBefore = function (m, group) {
   const { splitAll } = this.methods.one.pointer
   let splits = getDoc(m, this, group).fullPointer
   let all = splitAll(this.fullPointer, splits)
+  // repair matches to favor [match, after]
+  // - instead of [before, match]
+  for (let i = 0; i < all.length; i += 1) {
+    // move a before to a preceding after
+    if (!all[i].after && all[i + 1] && all[i + 1].before) {
+      // ensure it's from the same original sentence
+      if (all[i].match && all[i].match[0] === all[i + 1].before[0]) {
+        all[i].after = all[i + 1].before
+        delete all[i + 1].before
+      }
+    }
+  }
+
   let res = []
   all.forEach(o => {
     res.push(o.passthrough)
     res.push(o.before)
+    // a, [x, b]
     if (o.match && o.after) {
-      // console.log(combine(o.match, o.after))
       res.push(combine(o.match, o.after))
     } else {
+      // a, [x], b
       res.push(o.match)
-      res.push(o.after)
     }
   })
   res = res.filter(p => p)

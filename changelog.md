@@ -15,8 +15,18 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - remove confidence numbers
 -->
 
-<!-- #### 14.8.1 [Unreleased]
+<!-- #### 14.10.0 [Unreleased]
+
+
 -->
+#### 14.10.0 [Aug 2023]
+- **[fix]** - verb conjugation fixes
+- **[fix]** - tagger fixes
+- **[change]** - align package.json with ESM module #1023
+- **[fix]** - .splitBefore() bugfix
+- **[fix]** - typescript+docs fixes #1023
+- **[fix]** - subtle changes to .text() and .isFull()
+- **[update]** - dependencies
 
 #### 14.9.0 [May 2023]
 - **[new]** - .verbs().toPastParticiple() method

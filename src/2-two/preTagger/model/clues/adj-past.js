@@ -54,6 +54,10 @@ const adjPast = {
     into: past,//pumped into
     us: past,//charged us
     them: past,//charged us
+    his: past,//shared his
+    her: past,//
+    their: past,//
+    our: past,//
     me: past,//
   },
 }

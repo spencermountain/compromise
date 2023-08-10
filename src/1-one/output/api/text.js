@@ -14,15 +14,16 @@ export default {
     } else if (fmt && isObject(fmt)) {
       opts = Object.assign({}, fmt)//todo: fixme
     }
-    if (opts.keepSpace === undefined && this.pointer) {
+    // is it a full document?
+    if (opts.keepSpace === undefined && !this.isFull()) {    // 
       opts.keepSpace = false
     }
-    if (opts.keepPunct === undefined && this.pointer) {
+    if (opts.keepEndPunct === undefined && this.pointer) {
       let ptr = this.pointer[0]
       if (ptr && ptr[1]) {
-        opts.keepPunct = false
+        opts.keepEndPunct = false
       } else {
-        opts.keepPunct = true
+        opts.keepEndPunct = true
       }
     }
     // set defaults

@@ -70,14 +70,13 @@ export default [
   // fine-artist
   { match: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
   // dance coach
-  { match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman)`, tag: 'Actor', reason: 'dance-coach' },
+  { match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`, tag: 'Actor', reason: 'dance-coach' },
   // chief design officer
   { match: `chief . officer`, tag: 'Actor', reason: 'chief-x-officer' },
   // chief of police
   { match: `chief of #Noun+`, tag: 'Actor', reason: 'chief-of-police' },
   // president of marketing
   { match: `senior? vice? president of #Noun+`, tag: 'Actor', reason: 'president-of' },
-
 
   // ==== Singular ====
   //the sun
@@ -126,5 +125,21 @@ export default [
   { match: 'i #Verb [me] #Noun', group: 0, tag: 'Possessive', reason: 'scottish-me' },
   // dance music
   { match: '[#PresentTense] (music|class|lesson|night|party|festival|league|ceremony)', group: 0, tag: 'Noun', reason: 'dance-music' },
+  // wit it
+  { match: '[wit] (me|it)', group: 0, tag: 'Presposition', reason: 'wit-me' },
+  //left-her-boots, shoved her hand
+  { match: '#PastTense #Possessive [#Verb]', group: 0, tag: 'Noun', notIf: '(saw|made)', reason: 'left-her-boots' },
+  //35 signs
+  { match: '#Value [%Plural|Verb%]', group: 0, tag: 'Plural', notIf: '(one|1|a|an)', reason: '35-signs' },
+  //had time
+  { match: 'had [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|come|become)', reason: 'had-time' },
+  //instant access
+  { match: '%Adj|Noun% %Noun|Verb%', tag: '#Adjective #Noun', notIf: '#ProperNoun #Noun', reason: 'instant-access' },
+  // a representative to 
+  { match: '#Determiner [%Adj|Noun%] #Conjunction', group: 0, tag: 'Noun', reason: 'a-rep-to' },
+  // near death experiences, ambitious sales targets
+  { match: '#Adjective #Noun [%Plural|Verb%]$', group: 0, tag: 'Plural', notIf: '#Pronoun', reason: 'near-death-experiences' },
+  // your guild colors
+  { match: '#Possessive #Noun [%Plural|Verb%]$', group: 0, tag: 'Plural', reason: 'your-guild-colors' },
 
 ]

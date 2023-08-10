@@ -18,24 +18,12 @@ const rules = [
   // { match: '#Adverb+ #Adjective', chunk: 'Adjective' },
 
   // === Verb ===
-  // quickly run
-  // { match: '#Adverb+ {Verb}', chunk: 'Verb' },
   // quickly and suddenly run
   { match: '#Adverb+ and #Adverb #Verb', chunk: 'Verb' },
-  // run quickly
-  // { match: '{Verb} #Adverb+', chunk: 'Verb' },
   // sitting near
-  { match: '#Gerund #Adjective', chunk: 'Verb' },
+  { match: '#Gerund #Adjective$', chunk: 'Verb' },
   // going to walk
   { match: '#Gerund to #Verb', chunk: 'Verb' },
-  // is no
-  // { match: '#Copula no', chunk: 'Verb' },
-  // had not
-  // { match: '#Verb #Negative', chunk: 'Verb' },
-  // not seen
-  // { match: '#Negative #Verb', chunk: 'Verb' },
-  // not really
-  // { match: '#Negative #Adverb ', chunk: 'Verb' },
   // come and have a drink
   { match: '#PresentTense and #PresentTense', chunk: 'Verb' },
   // really not
@@ -45,7 +33,7 @@ const rules = [
   // walk ourselves
   { match: '#Verb #Reflexive', chunk: 'Verb' },
   // tell him the story
-  { match: '#PresentTense [#Pronoun] #Determiner', group: 0, chunk: 'Verb' },
+  // { match: '#PresentTense [#Pronoun] #Determiner', group: 0, chunk: 'Verb' },
   // tries to walk
   { match: '#Verb [to] #Adverb? #Infinitive', group: 0, chunk: 'Verb' },
   // upon seeing

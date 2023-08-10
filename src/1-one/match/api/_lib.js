@@ -31,16 +31,3 @@ const isObject = val => {
 export const isView = val => val && isObject(val) && val.isView === true
 
 export const isNet = val => val && isObject(val) && val.isNet === true
-
-
-// is the pointer the full sentence?
-// export const isFull = function (ptr, document) {
-//   let [n, start, end] = ptr
-//   if (start !== 0) {
-//     return false
-//   }
-//   if (document[n] && document[n][end - 1] && !document[n][end]) {
-//     return true
-//   }
-//   return false
-// }

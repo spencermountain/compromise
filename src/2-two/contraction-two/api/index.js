@@ -18,7 +18,7 @@ const api = function (View) {
       this.docs.forEach(terms => {
         let isTitleCase = titleCase.test(terms[0].text)
         terms.forEach((t, i) => {
-          t.text = t.implicit
+          t.text = t.implicit || ''
           delete t.implicit
           //add whitespace
           if (i < terms.length - 1 && t.post === '') {

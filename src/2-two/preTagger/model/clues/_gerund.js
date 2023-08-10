@@ -55,6 +55,7 @@ export default {
     me: g, //
     her: g, //
     him: g, //
+    his: g, //
     them: g, //
     their: g, // fighting their
     it: g, //dumping it
@@ -63,5 +64,7 @@ export default {
     on: g, // landing on
     about: g, // talking about
     for: g, // paying for
+    up: g, //speeding up
+    down: g, //
   },
 }

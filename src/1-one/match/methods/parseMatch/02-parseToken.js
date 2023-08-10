@@ -45,6 +45,10 @@ const parseToken = function (w, opts) {
       obj.start = true
       w = stripStart(w)
     }
+    if (end(w) === '?') {
+      obj.optional = true
+      w = stripEnd(w)
+    }
     //capture group (this one can span multiple-terms)
     if (start(w) === '[' || end(w) === ']') {
       obj.group = null
@@ -72,10 +76,6 @@ const parseToken = function (w, opts) {
     }
     if (w !== '*' && end(w) === '*' && w !== '\\*') {
       obj.greedy = true
-      w = stripEnd(w)
-    }
-    if (end(w) === '?') {
-      obj.optional = true
       w = stripEnd(w)
     }
     if (start(w) === '!') {

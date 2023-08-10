@@ -44,7 +44,9 @@ txt = `5th day of q1 2002`
 // txt = 'four thirty'
 // txt = 'on april 22nd'
 txt = 'in basically one week from now'
+txt = 'go shopping with april'
 
+nlp.verbose('tagger')
 let doc = nlp(txt).debug()
 // console.log(doc.times().get())
 // doc.times().format('24h')

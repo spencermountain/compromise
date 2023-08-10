@@ -3,6 +3,7 @@ import person from './_person.js'
 // 'april o'neil'  -  'april 1st'
 
 const m = 'Month'
+const p = 'Person'
 const month = {
   beforeTags: {
     Date: m,
@@ -29,6 +30,8 @@ const month = {
     last: m,
     previous: m,
     following: m,
+    with: p,
+    // for: p,
   },
   afterWords: {
     sometime: m,

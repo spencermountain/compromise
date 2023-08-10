@@ -31,7 +31,6 @@ export default [
   'nuanced',
   'wounded',
   'retarded',
-  'aged',
   'naked',
   'buck naked',
   'fabled',
@@ -49,6 +48,14 @@ export default [
   'beloved',
   'hallowed',
   'crazed',
+  'infrared',
+  'grizzled',
+  'appalled',
+  'enamored',
+  'newlywed',
+  'famed',
+  'jaded',
+  'conceited',
 
   // -id
   'plaid',
@@ -383,7 +390,7 @@ export default [
   'abstract',
   'intact',
   'exact',
-  'perfect',
+  // 'perfect',
   'imperfect',
   'erect',
   'indirect',
@@ -474,7 +481,7 @@ export default [
   'apt',
   'adept',
   'nondescript',
-  'exempt',
+  // 'exempt',
   'abrupt',
 
   'inert',
@@ -742,7 +749,7 @@ export default [
   'abject',
   'adamant',
   'agile',
-  'articulate',
+  // 'articulate',
   'astute',
   'austere',
   'blithe',
@@ -795,8 +802,14 @@ export default [
   'demure',
   'docile',
   'watery',
-
   'succinct',
-
+  'major',
+  'minor',
+  'fast paced',
+  'chewy',
+  'drunk',
+  'greasy',
+  'pointy',
+  'testy',
 ]
 

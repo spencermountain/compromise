@@ -5,10 +5,7 @@ export default [
   { word: 'alot', out: ['a', 'lot'] },
   { word: 'brb', out: ['be', 'right', 'back'] },
   { word: 'cannot', out: ['can', 'not'] },
-  { word: 'cant', out: ['can', 'not'] },
-  { word: 'dont', out: ['do', 'not'] },
   { word: 'dun', out: ['do', 'not'] },
-  { word: 'wont', out: ['will', 'not'] },
   { word: "can't", out: ['can', 'not'] },
   { word: "shan't", out: ['should', 'not'] },
   { word: "won't", out: ['will', 'not'] },
@@ -33,18 +30,12 @@ export default [
   { word: 'wanna', out: ['want', 'to'] },
   { word: `c'mere`, out: ['come', 'here'] },
   { word: `c'mon`, out: ['come', 'on'] },
-  // apostrophe d
-  { word: 'howd', out: ['how', 'did'] },
-  { word: 'whatd', out: ['what', 'did'] },
-  { word: 'whend', out: ['when', 'did'] },
-  { word: 'whered', out: ['where', 'did'] },
   // shoulda, coulda
   { word: 'shoulda', out: ['should', 'have'] },
   { word: 'coulda', out: ['coulda', 'have'] },
   { word: 'woulda', out: ['woulda', 'have'] },
   { word: 'musta', out: ['must', 'have'] },
 
-  // { after: `cause`, out: ['because'] },
   { word: "tis", out: ['it', 'is'] },
   { word: "twas", out: ['it', 'was'] },
   { word: `y'know`, out: ['you', 'know'] },
@@ -62,4 +53,20 @@ export default [
   { before: 'qu', out: ['que'] },
   { before: 's', out: ['se'] },
   { before: 't', out: ['tu'] }, // t'aime
+
+  // missing apostrophes
+  { word: 'shouldnt', out: ['should', 'not'] },
+  { word: 'couldnt', out: ['could', 'not'] },
+  { word: 'wouldnt', out: ['would', 'not'] },
+  { word: 'hasnt', out: ['has', 'not'] },
+  { word: 'wasnt', out: ['was', 'not'] },
+  { word: 'isnt', out: ['is', 'not'] },
+  { word: 'cant', out: ['can', 'not'] },
+  { word: 'dont', out: ['do', 'not'] },
+  { word: 'wont', out: ['will', 'not'] },
+  // apostrophe d
+  { word: 'howd', out: ['how', 'did'] },
+  { word: 'whatd', out: ['what', 'did'] },
+  { word: 'whend', out: ['when', 'did'] },
+  { word: 'whered', out: ['where', 'did'] },
 ]

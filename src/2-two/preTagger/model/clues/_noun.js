@@ -78,6 +78,12 @@ export default {
     no: n,//no worries
     more: n,//more details
     one: n,//one flood
+    let: n,//let fear
+    her: n,//her boots
+    his: n,//
+    their: n,//
+    our: n,//
+    us: n,//served us drinks
   },
   afterWords: {
     of: n, //date of birth (preposition)
@@ -96,7 +102,10 @@ export default {
     wants: n,
     wanted: n,
     is: n,
+    did: n,
+    do: n,
     can: n,//parents can
     wise: n,//service-wise
+    // they: n,//snakes they
   },
 }

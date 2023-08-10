@@ -47,5 +47,7 @@ let matches = [
   { match: 'a [while]', group: 0, tag: 'Noun', reason: 'a-while' },
   // guess who
   { match: 'guess who', tag: '#Infinitive #QuestionWord', reason: 'guess-who' },
+  // swear words
+  { match: '[fucking] !#Verb', group: 0, tag: '#Gerund', reason: 'f-as-gerund' },
 ]
 export default matches

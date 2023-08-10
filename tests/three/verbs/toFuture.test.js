@@ -120,8 +120,8 @@ test('toFuture:', function (t) {
     [`appeared`, `will appear`],
     [`sparred`, `will spar`],
     [`speared`, `will spear`],
-    [`colored`, `will color`],
-    [`cured`, `will cure`],
+    [`they colored`, `they will color`],
+    [`it cured`, `it will cure`],
     [`roared`, `will roar`],
     [`withered`, `will wither`],
 

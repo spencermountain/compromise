@@ -74,4 +74,13 @@ export default {
   // 'make sure': 'Imperative',
   // 'stand back': 'Imperative'
   // 'subpar': 'Adjective'
+
+  // double-conjugations
+  'kneeled': 'PastTense',
+  'leaped': 'PastTense',
+  'msged': 'PastTense',
+  'bests': 'PresentTense',
+
+  // funny switches
+  'leaves': 'Plural|Verb'
 }

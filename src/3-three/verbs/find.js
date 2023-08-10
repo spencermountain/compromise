@@ -1,7 +1,7 @@
 const findVerbs = function (doc) {
   let m = doc.match('<Verb>')
   // want to see
-  m = m.not('(#Conjunction && !to)')
+  m = m.not('#Conjunction')
   // by walking
   m = m.not('#Preposition')
 
@@ -27,9 +27,13 @@ const findVerbs = function (doc) {
   m = m.splitBefore('(#PresentTense|#PastTense) [#Copula]$', 0)
   // what i can sell will be
   m = m.splitBefore('(#PresentTense|#PastTense) [will be]$', 0)
+  // directing had
+  m = m.splitBefore('(#PresentTense|#PastTense) [(had|has)]', 0)
 
   // 'allow yourself'
   m = m.not('#Reflexive$')
+  // sitting near
+  m = m.not('#Adjective')
 
   // pastTense-pastTense
   // Everyone he [met] [told] him
@@ -48,7 +52,6 @@ const findVerbs = function (doc) {
   m = m.if('#Verb')
   // the reason he will is ...
   // ensure it's not two verbs
-
   // held annually is called
   if (m.has('(#Verb && !#Auxiliary) #Adverb+? #Copula')) {
     m = m.splitBefore('#Copula')

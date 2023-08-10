@@ -6,6 +6,7 @@ import nlp from './src/three.js'
 
 nlp.verbose('tagger')
 let arr = [
+  'go shopping with april',
   // 'I left the window open for fresh air.',
   'The bridge is built on stable foundations.',
   'find it shocking that people still believe',

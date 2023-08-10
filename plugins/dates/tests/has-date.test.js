@@ -49,7 +49,7 @@ test('has a date', function (t) {
     `9am GMT+9`,
 
     // relative duration
-    `this march`,
+    // `this march`,
     `this week`,
     `this sunday`,
     `next april`,

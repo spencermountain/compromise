@@ -807,7 +807,7 @@ nlp.extend({
 | [Case](https://observablehq.com/@spencermountain/compromise-case)                     |        [Contractions](https://observablehq.com/@spencermountain/compromise-contractions)        |                  [Export](https://observablehq.com/@spencermountain/compromise-export) |
 | [Filesize](https://observablehq.com/@spencermountain/compromise-filesize)             |              [Insert](https://observablehq.com/@spencermountain/compromise-insert)              |                      [Hash](https://observablehq.com/@spencermountain/compromise-hash) |
 | [Internals](https://observablehq.com/@spencermountain/compromise-internals)           |                [Json](https://observablehq.com/@spencermountain/compromise-json)                |                      [Html](https://observablehq.com/@spencermountain/compromise-html) |
-| [Justification](https://observablehq.com/@spencermountain/compromise-justification)   |               [Lists](https://observablehq.com/@spencermountain/compromise-lists)               |              [Keypress](https://observablehq.com/@spencermountain/compromise-keypress) |
+| [Justification](https://observablehq.com/@spencermountain/compromise-justification)   |               [Character Offsets](https://observablehq.com/@spencermountain/compromise-offsets)                |              [Keypress](https://observablehq.com/@spencermountain/compromise-keypress) |
 | [Lexicon](https://observablehq.com/@spencermountain/compromise-lexicon)               |               [Loops](https://observablehq.com/@spencermountain/compromise-loops)               |                   [Ngrams](https://observablehq.com/@spencermountain/compromise-ngram) |
 | [Match-syntax](https://observablehq.com/@spencermountain/compromise-match-syntax)     |               [Match](https://observablehq.com/@spencermountain/compromise-match)               |                 [Numbers](https://observablehq.com/@spencermountain/compromise-values) |
 | [Performance](https://observablehq.com/@spencermountain/compromise-performance)       |                    [Nouns](https://observablehq.com/@spencermountain/nouns)                     |          [Paragraphs](https://observablehq.com/@spencermountain/compromise-paragraphs) |
@@ -820,7 +820,7 @@ nlp.extend({
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace)         |                    [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
 | [World data](https://observablehq.com/@spencermountain/compromise-world)              |       [Normalization](https://observablehq.com/@spencermountain/compromise-normalization)       |   [Sweep](https://observablehq.com/@spencermountain/compromise-sweep)         |
 | [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |          [Typescript](https://observablehq.com/@spencermountain/compromise-typescript)          | [Mutation](https://observablehq.com/@spencermountain/compromise-mutation)  |
-| [Root-forms](https://observablehq.com/@spencermountain/compromise-root) |  [Character Offsets](https://observablehq.com/@spencermountain/compromise-offsets)             |   |
+| [Root-forms](https://observablehq.com/@spencermountain/compromise-root) |  
 
 
 <div >

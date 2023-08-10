@@ -6,10 +6,7 @@ import nlp from './src/three.js'
 
 nlp.verbose('tagger')
 let arr = [
-  ' planning to dispose of the company',
-  'kept her secret hidden',
-  'He has a medium build',
-  'I left the window open for fresh air.',
+  // 'I left the window open for fresh air.',
   'The bridge is built on stable foundations.',
   'find it shocking that people still believe',
   'The old man stoops to pet the cat.',

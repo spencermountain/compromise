@@ -30,4 +30,6 @@ export default [
   { match: `#Adverb [(march|may)]`, group: 0, tag: 'Verb', reason: 'quickly-march' },
   //march quickly
   { match: `[(march|may)] #Adverb`, group: 0, tag: 'Verb', reason: 'march-quickly' },
+  //12 am
+  { match: `#Value (am|pm)`, tag: 'Time', reason: '2-am' },
 ]

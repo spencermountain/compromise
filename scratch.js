@@ -3,9 +3,17 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-
 nlp.verbose('tagger')
+nlp.extend({
+  mutate: world => {
+    world.methods.one.tokenize.isSentence = (str, abbrevs) => {
+      return
+    }
+  },
+})
 let arr = [
+  '12 a.m.',
+  'H.R. 49',
   'for January 2022',
   // 'I left the window open for fresh air.',
   'The bridge is built on stable foundations.',
@@ -331,5 +339,3 @@ console.log(doc.verbs().conjugate())
 // console.log(nlp.parseMatch('[<month>#Month] [<date>#Value] [<year>#Year?]'))
 // let m = doc.match('[<month>#Month] [<date>#Value] [<year>#Year]?')
 // console.log(m.groups())
-
-

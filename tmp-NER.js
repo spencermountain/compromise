@@ -18,7 +18,6 @@ let arr = [
   'firefox',
   'halliburton',
   'ikea',
-  'ivy league',
   'klm',
   'lexus',
   'manchester united',

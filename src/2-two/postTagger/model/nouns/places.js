@@ -14,6 +14,8 @@ export default [
   { match: '(river|gulf|lake) of? #ProperNoun+', tag: 'Place', reason: 'river-foo' },
   //District of Foo
   { match: '(district|region|province|municipality|territory|burough|state) of #ProperNoun', tag: 'Region', reason: 'district-of-Foo' },
+  //Univerisity of Foo
+  { match: 'University of #Place', tag: 'Organization', reason: 'university-of-Foo' },
   // in Foo California
   { match: 'in [#ProperNoun] #Place', group: 0, tag: 'Place', reason: 'propernoun-place' },
   // Address 

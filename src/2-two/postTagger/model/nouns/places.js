@@ -17,7 +17,7 @@ export default [
   // in Foo California
   { match: 'in [#ProperNoun] #Place', group: 0, tag: 'Place', reason: 'propernoun-place' },
   //University of Foo
-  { match: 'university of #Place', tag: 'Organization', reason: 'university-of-Foo' }
+  { match: 'university of #Place', tag: 'Organization', reason: 'university-of-Foo' },
   // Address 
   { match: '#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)', tag: 'Address', reason: 'address-st' },
 ]

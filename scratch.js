@@ -12,6 +12,7 @@ nlp.extend({
   },
 })
 let arr = [
+  'University of Germany',
   '12 a.m.',
   'H.R. 49',
   'for January 2022',

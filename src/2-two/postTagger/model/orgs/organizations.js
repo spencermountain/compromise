@@ -27,7 +27,8 @@ export default [
   // { match: `${orgMap} (stock|mergantile)+ exchange`, tag: 'Organization', reason: 'stock-exchange' },
   // // foo news service
   // { match: `${orgMap} (daily|evening|local)+ news service?`, tag: 'Organization', reason: 'foo-news' },
-
+  //University of Foo
+  { match: 'university of #Place', tag: 'Organization', reason: 'university-of-Foo' },
   //John & Joe's
   { match: '#Noun (&|n) #Noun', tag: 'Organization', reason: 'Noun-&-Noun' },
   // teachers union of Ontario

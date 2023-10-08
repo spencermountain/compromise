@@ -18,4 +18,6 @@ export default [
   { match: 'in [#ProperNoun] #Place', group: 0, tag: 'Place', reason: 'propernoun-place' },
   // Address 
   { match: '#Value #Noun (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave)', tag: 'Address', reason: 'address-st' },
+  // Sports Arenas and Complexs
+  { match: '(#Place+|#Place|#ProperNoun) (memorial|athletic|community|financial)? (sportsplex|stadium|sports centre|sports field|soccer complex|soccer centre|sports complex|civic centre|centre|arena|gardens|complex|coliseum|auditorium|place|building)', tag: 'Place', reason: 'sport-complex' },
 ]

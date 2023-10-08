@@ -32,4 +32,6 @@ export default [
   { match: `[(march|may)] #Adverb`, group: 0, tag: 'Verb', reason: 'march-quickly' },
   //12 am
   { match: `#Value (am|pm)`, tag: 'Time', reason: '2-am' },
+  // a holiday booked in May || book in May
+  { match: '(booked|book) (in|for) (march|may)', tag: 'Month', reason: 'book-in-month' },
 ]

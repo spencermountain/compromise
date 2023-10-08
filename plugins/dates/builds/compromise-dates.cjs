@@ -2955,6 +2955,7 @@
   var methods$5 = methods$4;
 
   // javascript setX methods like setDate() can't be used because of the local bias
+  //these methods wrap around them.
 
   const validate = (n) => {
     //handle number as a string
@@ -4588,6 +4589,8 @@
   var doSection = parseSection;
 
   // some opinionated-but-common-sense timezone abbreviations
+  // these timezone abbreviations are wholly made-up by me, Spencer Kelly, with no expertise in geography
+  // generated humbly from https://github.com/spencermountain/spacetime-informal
 
   const america$1 = 'America/';
   const asia$1 = 'Asia/';
@@ -8674,13 +8677,13 @@
     // @4pm
     [/^@[1-9]+(am|pm)$/, 'Time', '@5pm'],
     // 03/02
-    [/^[0-9]{2}\/[0-9]{2}/, 'Date', '03/02'],
+    [/^[0-9]{2}\/[0-9]{2}$/, 'Date', '03/02'],
     // iso-time
     // [/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/i, 'Time', 'iso-time-tag']
 
   ];
 
-  var version = '3.4.1';
+  var version = '3.4.2';
 
   // import matches from './compute/matches.js'
 

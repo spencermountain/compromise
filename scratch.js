@@ -3,14 +3,8 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-nlp.verbose('tagger')
-nlp.extend({
-  mutate: world => {
-    world.methods.one.tokenize.isSentence = (str, abbrevs) => {
-      return
-    }
-  },
-})
+// nlp.verbose('tagger')
+
 let arr = [
   'University of Germany',
   '12 a.m.',
@@ -315,12 +309,17 @@ let arr = [
   // 'cave',
   // 'what companies are doing is',
 ]
-let doc = nlp(arr[0]).debug()
+
+let doc = nlp('some terms here')
+
+console.log(doc.chunks().out('terms')) //
+
+// let doc = nlp(arr[0]).debug()
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())
 // doc.match('{sway/verb}').debug()
 // console.log(doc.verbs().toPresentTense().text())
-console.log(doc.verbs().conjugate())
+// console.log(doc.verbs().conjugate())
 // doc.verbs().toPastParticiple()
 // console.log(nlp('wore').verbs().conjugate())
 // doc.verbs().debug()

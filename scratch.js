@@ -3,9 +3,19 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
 let arr = [
+  'iron man',
+  'dmitry medvedev',
+  ' 1985 Perry Mason movies',
+  // 'diego maradona',
+  // 'dmitry medvedev',
+  // 'ebenezer scrooge',
+  // 'humphrey bogart',
+  'Becky will bring you the hard copy',
+  'emmeline pankhurst',
+  'Timpanogos Cave',
   'University of Germany',
   '12 a.m.',
   'H.R. 49',
@@ -310,11 +320,7 @@ let arr = [
   // 'what companies are doing is',
 ]
 
-let doc = nlp('some terms here')
-
-console.log(doc.chunks().out('terms')) //
-
-// let doc = nlp(arr[0]).debug()
+let doc = nlp(arr[0]).debug()
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())
 // doc.match('{sway/verb}').debug()

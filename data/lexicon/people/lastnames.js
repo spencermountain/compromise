@@ -238,6 +238,7 @@ export default [
   'giordano',
   'gjonaj',
   'gjoni',
+  'gorbachev',
   'golubev',
   'gomes',
   'gomez',

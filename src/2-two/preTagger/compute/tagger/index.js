@@ -7,15 +7,16 @@ import checkSuffix from './2nd-pass/02-suffix.js'
 import checkRegex from './2nd-pass/03-regex.js'
 import checkPrefix from './2nd-pass/04-prefix.js'
 import checkYear from './2nd-pass/05-year.js'
-import verbType from './3rd-pass/06-verb-type.js'
+import verbType from './3rd-pass/07-verb-type.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
-import nounFallback from './3rd-pass/04-fallback.js'
+import placeWords from './3rd-pass/04-placeWords.js'
+import nounFallback from './3rd-pass/05-fallback.js'
 import switches from './3rd-pass/06-switches.js'
-import imperative from './3rd-pass/07-imperative.js'
+import imperative from './3rd-pass/08-imperative.js'
 
 // is it all yelling-case?
 const ignoreCase = function (terms) {
@@ -75,6 +76,8 @@ const thirdPass = function (terms, model, world, isYelling) {
   for (let i = 0; i < terms.length; i += 1) {
     // Johnson LLC
     orgWords(terms, i, world, isYelling)
+    // Wawel Castle
+    placeWords(terms, i, world, isYelling)
     // verb-noun disambiguation, etc
     switches(terms, i, world)
     // give bare verbs more tags

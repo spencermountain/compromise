@@ -29,7 +29,7 @@ import passive from './verbs/passive.js'
 
 import misc from './_misc.js'
 
-import orgs from './orgs/organizations.js'
+import orgs from './nouns/organizations.js'
 import places from './nouns/places.js'
 import conjunctions from './conjunctions.js'
 import expressions from './expressions.js'
@@ -62,7 +62,7 @@ let matches = [].concat(
   orgs,
   places,
   conjunctions,
-  expressions,
+  expressions
 )
 export default {
   two: {

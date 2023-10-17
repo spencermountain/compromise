@@ -1,10 +1,10 @@
 const beside = {
-  there: true,//go there
-  this: true,//try this
-  it: true,//do it
+  there: true, //go there
+  this: true, //try this
+  it: true, //do it
   him: true,
   her: true,
-  us: true,//tell us
+  us: true, //tell us
 }
 
 // '[place] tea bags in hot water'

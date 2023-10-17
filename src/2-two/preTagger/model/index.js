@@ -10,6 +10,7 @@ import regexNormal from './regex/regex-normal.js'
 import regexText from './regex/regex-text.js'
 import regexNumbers from './regex/regex-numbers.js'
 import orgWords from './orgWords.js'
+import placeWords from './placeWords.js'
 import expandLexicon from './_expand/index.js'
 
 let model = {
@@ -36,8 +37,8 @@ let model = {
     uncountable: {},
 
     orgWords,
+    placeWords,
   },
-
 }
 model = expandLexicon(model)
 export default model

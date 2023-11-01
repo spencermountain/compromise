@@ -794,4 +794,6 @@ export default [
   'zhou',
   'zhu',
   'atchison',
+  'dickinson',
+
 ]

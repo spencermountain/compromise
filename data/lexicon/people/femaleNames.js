@@ -1758,6 +1758,7 @@ export default [
   'zola',
   'zora',
   'zsofia',
+  'becca',
   // 'grace',
   // 'lily',
   // 'scarlet',

@@ -6,6 +6,15 @@ import nlp from './src/three.js'
 nlp.verbose('tagger')
 
 let arr = [
+  'Ken Baxter',
+  'Artur Schmitt',
+  'Judith Dupont',
+  'Sergei Scherbakov',
+  'Sergei Smolin',
+  'François Lehideux',
+  'Matthias Lorenz',
+  'Abie Malan',
+  'Christoph Zürcher',
   'the Saint Lawrence River',
   'Brown Canyon',
   'iron man',

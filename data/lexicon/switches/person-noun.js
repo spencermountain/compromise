@@ -12,6 +12,7 @@ export default [
   'bill',
   'brandy',
   'brook',
+  'cam',
   'charity',
   'chin',
   'christian',

@@ -27,6 +27,7 @@ export default [
   'spike',
   'stew',
   'sue',
+  'skip',
   'wade',
   // 'hope',
   // 'trace',

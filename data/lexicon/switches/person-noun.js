@@ -96,5 +96,12 @@ export default [
   "hunter",
   "ward",
   "dean",
+  "gill",
+  "chambers",
+  "watts",
+  "banks",
+  "fields",
+  "miles",
+  "potter",
 ]
 

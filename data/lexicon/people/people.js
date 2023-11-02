@@ -230,6 +230,17 @@ export default [
   'francois',
   'giannis',
   'ilya',
-
+  "ferguson",
+  "bhatt",
+  "rashid",
+  "werner",
+  "newman",
+  "goodwin",
+  "lu",
+  "markov",
+  "husain",
+  "hammond",
+  "friedrich",
+  "hamid",
   // '',
 ]

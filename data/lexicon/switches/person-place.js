@@ -14,4 +14,5 @@ export default [
   'santiago',
   'sydney',
   'victoria',
+  "virginia",
 ]

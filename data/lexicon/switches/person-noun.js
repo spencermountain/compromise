@@ -36,6 +36,7 @@ export default [
   'gail',
   'gene',
   'grant',
+  "guy",
   'hall',
   'hazel',
   'hill',
@@ -81,6 +82,19 @@ export default [
   'wang',
   'ward',
   'venus',
-
+  "dj",
+  "paddy",
+  "herb",
+  "fanny",
+  "norm",
+  "bo",
+  "bud",
+  "finn",
+  "mat",
+  "mats",
+  "nat",
+  "hunter",
+  "ward",
+  "dean",
 ]
 

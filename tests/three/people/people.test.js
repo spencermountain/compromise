@@ -112,6 +112,20 @@ test('people positives:', function (t) {
     'wiz khalifa',
     'yoko onen',
     'yoko ono',
+    'Ken Baxter',
+    'Artur Schmitt',
+    'Judith Dupont',
+    'Sergei Scherbakov',
+    'Sergei Smolin',
+    'François Lehideux',
+    'Matthias Lorenz',
+    'Abie Malan',
+    'Christoph Zürcher',
+    'dmitry medvedev',
+    'emmeline pankhurst',
+    'diego maradona',
+    'dmitry medvedev',
+    'ebenezer scrooge',
   ]
   arr.forEach(str => {
     let doc = nlp(str)
@@ -156,6 +170,7 @@ test('people false-positives:', function (t) {
     `Vitamin D.`,
     `may`,
     `ACE`,
+    'Brown Canyon',
     // `gene`,
     // `Jennifer  antibiotics`,
     `rheumatoid factor, ENA, CCP antibody, ESR, CRP, etc.`,

@@ -36,7 +36,7 @@ export default [
   //walmart USA
   { match: '#Organization #Country', tag: 'Organization', reason: 'org-country' },
   //organization
-  { match: '#ProperNoun #Organization', tag: 'Organization', reason: 'titlecase-org' },
+  { match: '#ProperNoun #Organization', tag: 'Organization', notIf: '#FirstName', reason: 'titlecase-org' },
   //FitBit Inc
   { match: '#ProperNoun (ltd|co|inc|dept|assn|bros)', tag: 'Organization', reason: 'org-abbrv' },
   // the OCED

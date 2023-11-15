@@ -23,7 +23,7 @@ const isPlace = function (term, i, yelling) {
   if (!term) {
     return false
   }
-  if (term.tags.has('Organization')) {
+  if (term.tags.has('Organization') || term.tags.has('Possessive')) {
     return false
   }
   if (term.tags.has('ProperNoun') || term.tags.has('Place')) {

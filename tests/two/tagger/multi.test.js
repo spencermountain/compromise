@@ -43,3 +43,11 @@ test('user-lex-with-punctuation:', function (t) {
   t.equal(lexicon, lexicon, here + 'lexicon-unchanged')
   t.end()
 })
+
+// test('no tagging of multi-lexion:', function (t) {
+//   let arr = ['he man', 'bill gates', 'kid cudi', 'snow white', 'spider-man', 'doctor who']
+//   arr.forEach(str => {
+//     t.equal(nlp(str).has('#Place #Place'), true, here + str)
+//   })
+//   t.end()
+// })

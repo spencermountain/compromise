@@ -6,6 +6,7 @@ import nlp from './src/three.js'
 nlp.verbose('tagger')
 
 let arr = [
+  "john Lkjsdf's house",
   'the Saint Lawrence River',
   'i̇zmir',
   'kid cudi',

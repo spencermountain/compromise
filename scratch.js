@@ -6,7 +6,7 @@ import nlp from './src/three.js'
 nlp.verbose('tagger')
 
 let arr = [
-  'humphrey bogart',
+  'Timpanogos Cave',
   'Brown Canyon',
   'the Saint Lawrence River',
   ' 1985 Perry Mason movies',

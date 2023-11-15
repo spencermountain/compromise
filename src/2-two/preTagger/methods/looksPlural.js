@@ -1,30 +1,9 @@
 //similar to plural/singularize rules, but not the same
 const isPlural = {
-  e: [
-    'mice',
-    'louse',
-    'antennae',
-    'formulae',
-    'nebulae',
-    'vertebrae',
-    'vitae',
-  ],
-  i: [
-    'tia',
-    'octopi',
-    'viri',
-    'radii',
-    'nuclei',
-    'fungi',
-    'cacti',
-    'stimuli',
-  ],
-  n: [
-    'men',
-  ],
-  t: [
-    'feet'
-  ]
+  e: ['mice', 'louse', 'antennae', 'formulae', 'nebulae', 'vertebrae', 'vitae'],
+  i: ['tia', 'octopi', 'viri', 'radii', 'nuclei', 'fungi', 'cacti', 'stimuli'],
+  n: ['men'],
+  t: ['feet'],
 }
 // plural words as exceptions to suffix-rules
 const exceptions = new Set([
@@ -38,35 +17,40 @@ const exceptions = new Set([
 
 const notPlural = [
   'bus',
-  'mas',//christmas
+  'mas', //christmas
   'was',
   // 'las',
-  'ias',//alias
+  'ias', //alias
   'xas',
   'vas',
-  'cis',//probocis
+  'cis', //probocis
   'lis',
-  'nis',//tennis
+  'nis', //tennis
   'ois',
   'ris',
-  'sis',//thesis
-  'tis',//mantis, testis
+  'sis', //thesis
+  'tis', //mantis, testis
   'xis',
   'aus',
   'cus',
-  'eus',//nucleus
-  'fus',//doofus
-  'gus',//fungus
-  'ius',//radius
-  'lus',//stimulus
+  'eus', //nucleus
+  'fus', //doofus
+  'gus', //fungus
+  'ius', //radius
+  'lus', //stimulus
   'nus',
   'ous',
-  'pus',//octopus
-  'rus',//virus
-  'sus',//census
-  'tus',//status,cactus
+  'pus', //octopus
+  'rus', //virus
+  'sus', //census
+  'tus', //status,cactus
   'xus',
-  '\'s',
+  'los',
+  'aos', //chaos
+  'igos',
+  'ados', //barbados
+  'ogos',
+  "'s",
   'ss',
 ]
 

@@ -3,7 +3,12 @@ export default [
   //is foo Smith
   { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
   //pope francis
-  { match: '(sister|pope|brother|father|aunt|uncle|grandpa|grandfather|grandma) #ProperNoun', tag: 'Person', reason: 'lady-titlecase', safe: true },
+  {
+    match: '(sister|pope|brother|father|aunt|uncle|grandpa|grandfather|grandma) #ProperNoun',
+    tag: 'Person',
+    reason: 'lady-titlecase',
+    safe: true,
+  },
 
   // ==== Nickname ====
   // Dwayne 'the rock' Johnson
@@ -47,15 +52,28 @@ export default [
   // dick van dyke
   { match: '#ProperNoun (van|al|bin) #ProperNoun', tag: 'Person', reason: 'title-van-title', safe: true },
   //jose de Sucre
-  { match: '#ProperNoun (de|du) la? #ProperNoun', tag: 'Person', reason: 'title-de-title' },
+  { match: '#ProperNoun (de|du) la? #ProperNoun', tag: 'Person', notIf: '#Place', reason: 'title-de-title' },
   //Jani K. Smith
   { match: '#Singular #Acronym #LastName', tag: '#FirstName #Person .', reason: 'title-acro-noun', safe: true },
   //Foo Ford
   { match: '[#ProperNoun] #Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
   // john keith jones
-  { match: '#Person [#ProperNoun #ProperNoun]', group: 0, tag: 'Person', notIf: '#Possessive', reason: 'three-name-person', safe: true },
+  {
+    match: '#Person [#ProperNoun #ProperNoun]',
+    group: 0,
+    tag: 'Person',
+    notIf: '#Possessive',
+    reason: 'three-name-person',
+    safe: true,
+  },
   //John Foo
-  { match: '#FirstName #Acronym? [#ProperNoun]', group: 0, tag: 'LastName', notIf: '#Possessive', reason: 'firstname-titlecase' },
+  {
+    match: '#FirstName #Acronym? [#ProperNoun]',
+    group: 0,
+    tag: 'LastName',
+    notIf: '#Possessive',
+    reason: 'firstname-titlecase',
+  },
   // john stewart
   { match: '#FirstName [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
   //Joe K. Sombrero
@@ -66,13 +84,36 @@ export default [
   // baker jenna smith
   // { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam-smith' },
   // sergeant major Harold
-  { match: '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'seargeant-john' },
+  {
+    match:
+      '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #ProperNoun',
+    group: 0,
+    tag: 'Honorific',
+    reason: 'seargeant-john',
+  },
   // ==== Honorics ====
-  { match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', group: 0, tag: ['Honorific', 'Person'], reason: 'ambg-honorifics' },
+  {
+    match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person',
+    group: 0,
+    tag: ['Honorific', 'Person'],
+    reason: 'ambg-honorifics',
+  },
   // dr john foobar
-  { match: '#Honorific #FirstName [#Singular]', group: 0, tag: 'LastName', notIf: '#Possessive', reason: 'dr-john-foo', safe: true },
+  {
+    match: '#Honorific #FirstName [#Singular]',
+    group: 0,
+    tag: 'LastName',
+    notIf: '#Possessive',
+    reason: 'dr-john-foo',
+    safe: true,
+  },
   //his-excellency
-  { match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person', group: 0, tag: 'Honorific', reason: 'his-excellency' },
+  {
+    match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person',
+    group: 0,
+    tag: 'Honorific',
+    reason: 'his-excellency',
+  },
   // Lieutenant colonel
   { match: '#Honorific #Actor', tag: 'Honorific', reason: 'Lieutenant colonel' },
   // first lady, second admiral

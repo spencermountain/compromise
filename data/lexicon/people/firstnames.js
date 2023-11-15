@@ -65,7 +65,6 @@ export default [
   'darcy',
   'ilya',
   'werner',
-  'françois',
   'francois',
   'friedrich',
   'akira',

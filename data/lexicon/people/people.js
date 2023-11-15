@@ -140,7 +140,7 @@ export default [
   'doctor who',
   'emile zatopek',
   'florence nightingale',
-  'frédéric chopin',
+  'frederic chopin',
   'haile selassie',
   'harrison ford',
   'he man',

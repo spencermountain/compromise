@@ -6,7 +6,17 @@ import nlp from './src/three.js'
 nlp.verbose('tagger')
 
 let arr = [
-  'Timpanogos Cave',
+  'visiting Tojbs Kjeh Region',
+  'Browns Canyon',
+  'Carrizo Plain',
+  'Cedar Breaks',
+  'Chimney Rock',
+  'Florissant Fossil Beds',
+  'Clubar National Historical Park',
+  'Virgin Islands Coral Reef',
+  'Tsarskoe Selo State Museum',
+  // 'Misty Fjords',
+  // 'Timpanogos Cave',
   'Brown Canyon',
   'the Saint Lawrence River',
   ' 1985 Perry Mason movies',

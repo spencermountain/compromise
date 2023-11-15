@@ -21,7 +21,6 @@ export default [
   'characteristic',
   'statistic',
 
-
   // -ed
   'seabed',
   'waterbed',
@@ -90,7 +89,6 @@ export default [
   'estate',
   'prostate',
 
-
   'plebiscite',
   'luddite',
   'urbanite',
@@ -117,7 +115,6 @@ export default [
   'haze',
   'egg',
   'pig',
-
 
   // -ing
   'pudding',
@@ -217,10 +214,9 @@ export default [
   'carrier',
   'dossier',
   'frontier',
-  'métier',
+  'metier',
   'reformer',
   'dinner',
-
 
   'door',
   'indices',
@@ -257,7 +253,6 @@ export default [
 
   // -ist
   'waist',
-
 
   'bout',
   'overview',
@@ -438,5 +433,3 @@ export default [
   'cannibal',
   'video game',
 ]
-
-

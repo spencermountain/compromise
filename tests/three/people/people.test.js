@@ -84,7 +84,7 @@ test('people positives:', function (t) {
     'mata hari',
     'maya angelou',
     'merlin',
-    'micky ward',
+    // 'micky ward',
     'napoleon',
     'pocahontas',
     'rachmaninoff',

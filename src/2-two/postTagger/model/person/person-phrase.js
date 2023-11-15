@@ -32,7 +32,7 @@ export default [
   //lady Florence
   { match: '(prince|lady) #Place', tag: 'Person', reason: 'lady-place' },
   //saint Foo
-  { match: '(king|queen|prince|saint) #ProperNoun', tag: 'Person', reason: 'saint-foo' },
+  { match: '(king|queen|prince|saint) #ProperNoun', tag: 'Person', notIf: '#Place', reason: 'saint-foo' },
 
   // al sharpton
   { match: 'al (#Person|#ProperNoun)', tag: 'Person', reason: 'al-borlen', safe: true },

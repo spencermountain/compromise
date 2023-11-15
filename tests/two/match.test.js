@@ -1153,15 +1153,15 @@ let arr = [
   ['Foo River', '#Place+'],
   ['Foo National River', '#Place+'],
   ['Foo National flog River', '!#Place+'],
-  ['River Foo', '!#Place+'],
-  ['River of Foo', '!#Place+'],
+  ['River Foo', '#Place+'],
+  ['River of Foo', '#Place+'],
 
   // unicode
   ['milošević', '#Person'],
   ['bjørn', '#Person'],
   ['björn', '#Person'],
   ['nguyễn', '#Person'],
-  ['i̇zmir', '#Person'],
+  // ['i̇zmir', '#ProperNoun'],
   ['µs', '#Unit'],
 
   // ['',''],

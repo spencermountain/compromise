@@ -556,7 +556,6 @@ export default [
   'peretz',
   'perez',
   'peric',
-  'perry',
   'persson',
   'petersen',
   'peterson',

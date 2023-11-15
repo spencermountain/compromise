@@ -45,7 +45,6 @@ const notPlural = [
   'sus', //census
   'tus', //status,cactus
   'xus',
-  'los',
   'aos', //chaos
   'igos',
   'ados', //barbados

@@ -6,8 +6,10 @@ import nlp from './src/three.js'
 nlp.verbose('tagger')
 
 let arr = [
+  'the Saint Lawrence River',
+  'i̇zmir',
+  'kid cudi',
   'visiting Tojbs Kjeh Region',
-  'Browns Canyon',
   'Carrizo Plain',
   'Cedar Breaks',
   'Chimney Rock',

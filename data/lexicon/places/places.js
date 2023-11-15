@@ -131,4 +131,5 @@ export default [
   'wupatki',
   'cedar breaks',
   'scotts bluff',
+  'saint lawrence river',
 ]

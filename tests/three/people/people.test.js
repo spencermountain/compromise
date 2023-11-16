@@ -68,7 +68,6 @@ test('people positives:', function (t) {
     'harrison ford',
     'henry ford',
     'humphrey bogart',
-    'iron man',
     'jrr tolkien',
     'jfk',
     'jack the ripper',

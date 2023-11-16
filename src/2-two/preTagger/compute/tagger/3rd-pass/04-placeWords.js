@@ -2,38 +2,44 @@ const isTitleCase = str => /^\p{Lu}[\p{Ll}'’]/u.test(str)
 
 // words that can fit inside a place
 const placeCont = new Set([
-  'national',
-  'federal',
-  'state',
-  'provincial',
-  'municipal',
-  'local',
+  'athletic',
   'city',
-  'western',
+  'community',
   'eastern',
-  'northern',
-  'southern',
+  'federal',
+  'financial',
   'great',
   'historic',
   'historical',
+  'local',
   'memorial',
+  'municipal',
+  'national',
+  'northern',
+  'provincial',
+  'southern',
+  'state',
+  'western',
 ])
+// center of...
+const noBefore = new Set(['center', 'way', 'range', 'bar', 'bridge', 'field', 'pit'])
 
 const isPlace = function (term, i, yelling) {
   if (!term) {
     return false
   }
-  if (term.tags.has('Organization') || term.tags.has('Possessive')) {
+  let tags = term.tags
+  if (tags.has('Organization') || tags.has('Possessive')) {
     return false
   }
-  if (term.tags.has('ProperNoun') || term.tags.has('Place')) {
+  if (tags.has('ProperNoun') || tags.has('Place')) {
     return true
   }
   // allow anything titlecased to be an org
   if (!yelling && isTitleCase(term.text)) {
     // only tag a titlecased first-word, if it checks-out
     if (i === 0) {
-      return term.tags.has('Singular')
+      return tags.has('Singular')
     }
     return true
   }
@@ -50,12 +56,12 @@ const tagOrgs = function (terms, i, world, yelling) {
   if (placeWords[str] === true) {
     //loop backward - 'Foo River ...'
     for (let n = i - 1; n >= 0; n -= 1) {
+      // 'municipal ...'
       if (placeCont.has(terms[n].normal)) {
         continue
       }
       if (isPlace(terms[n], n, yelling)) {
         setTag(terms.slice(n, i + 1), 'Place', world, null, '3-[place-of-foo]')
-        // return true
         continue
       }
       break
@@ -63,9 +69,14 @@ const tagOrgs = function (terms, i, world, yelling) {
     //loop forward - 'River of Foo...'
     for (let n = i + 1; n < terms.length; n += 1) {
       if (isPlace(terms[n], n, yelling)) {
+        // 'center of x'
+        if (noBefore.has(terms[n].normal)) {
+          break
+        }
         setTag(terms.slice(i, n + 1), 'Place', world, null, '3-[foo-place]')
         return true
       }
+      // 'municipal ...'
       if (terms[n].normal === 'of' || placeCont.has(terms[n].normal)) {
         continue
       }

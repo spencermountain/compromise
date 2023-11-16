@@ -45,7 +45,7 @@ test('user-lex-with-punctuation:', function (t) {
 })
 
 // test('no tagging of multi-lexion:', function (t) {
-//   let arr = ['he man', 'bill gates', 'kid cudi', 'snow white', 'spider-man', 'doctor who']
+//   let arr = ['he man', 'bill gates', 'kid cudi', 'snow white', 'spider-man', 'doctor who','    'iron man']
 //   arr.forEach(str => {
 //     t.equal(nlp(str).has('#Place #Place'), true, here + str)
 //   })

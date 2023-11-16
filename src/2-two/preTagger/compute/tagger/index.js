@@ -33,11 +33,6 @@ const firstPass = function (docs, model, world) {
   docs.forEach(terms => {
     // check whitespace/punctuation
     colons(terms, 0, model, world)
-
-    // for (let i = 0; i < terms.length; i += 1) {
-    // hard-nosed, faith-based
-    // hyphens(terms, i, model, world)
-    // }
   })
 }
 

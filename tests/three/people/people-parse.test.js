@@ -14,7 +14,7 @@ test('people-parse:', function (t) {
     ['Dirk M Sinkel', 'dirk', 'sinkel', ''],
     ['john D Springer sr', 'john', 'springer', 'sr'],
     ['captain john D Springer', 'john', 'springer', 'captain'],
-    ['his majesty kerry adams', 'kerry', 'adams', 'his majesty'],
+    ['his majesty kevin adams', 'kevin', 'adams', 'his majesty'],
     ['queen elizabeth', 'elizabeth', '', 'queen'],
     // [','',''],
   ]

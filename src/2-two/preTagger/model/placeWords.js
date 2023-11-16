@@ -111,7 +111,7 @@ export default [
   'kingdom',
   'ward',
   'zone',
-  'range',
+  // 'range',
 
   //building/ complex
   'airport',
@@ -147,14 +147,14 @@ export default [
   'museum',
   'palace',
   'pillar',
-  'pit',
   'pits',
-  'place',
+  // 'pit',
+  // 'place',
+  // 'point',
+  // 'room',
   'plantation',
   'playhouse',
-  'point',
   'quarry',
-  'room',
   'ruins',
   'sportsfield',
   'sportsplex',
@@ -166,6 +166,9 @@ export default [
   'tower',
   'park',
   'parks',
+  'site',
+  'raceway',
+  'sportsplex',
 
   // 'sports centre',
   // 'sports field',
@@ -186,10 +189,6 @@ export default [
   'terrace',
   'avenue',
   'ave',
-
-  // misc
-  'site',
-  // '',
 ].reduce((h, str) => {
   h[str] = true
   return h

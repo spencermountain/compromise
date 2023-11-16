@@ -5,7 +5,7 @@ import postTag from './2-two/postTagger/plugin.js'
 import lazy from './2-two/lazy/plugin.js'
 import swap from './2-two/swap/plugin.js'
 
-nlp.plugin(preTag) //~103kb  
+nlp.plugin(preTag) //~103kb
 nlp.plugin(contractionTwo) //
 nlp.plugin(postTag) //~33kb
 nlp.plugin(lazy) //

@@ -6,7 +6,9 @@ import nlp from './src/three.js'
 nlp.verbose('tagger')
 
 let arr = [
-  '12 mg! of THC',
+  // 'Castner Range',
+  `john Lkjsdf's House`,
+  'centre of jardas al abid',
   "john Lkjsdf's house",
   'the Saint Lawrence River',
   'i̇zmir',
@@ -332,6 +334,7 @@ let arr = [
 ]
 
 let doc = nlp(arr[0]).debug()
+// console.log(doc.people().debug().json())
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())
 // doc.match('{sway/verb}').debug()

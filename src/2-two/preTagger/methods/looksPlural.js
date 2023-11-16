@@ -39,6 +39,7 @@ const notPlural = [
   'ius', //radius
   'lus', //stimulus
   'nus',
+  'das',
   'ous',
   'pus', //octopus
   'rus', //virus

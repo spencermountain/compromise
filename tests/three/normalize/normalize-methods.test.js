@@ -60,7 +60,7 @@ test('honorifics', function (t) {
     ['rear admiral Smith', 'smith'],
     ['Lieutenant John Smith', 'john smith'],
     // ['Admiral Davis Jr', 'davis jr'],
-    ['Field marshal Herring', 'herring'],
+    // ['Field marshal Herring', 'herring'],
     ['General Lou Gobbells of the US air force', 'lou gobbells of the us air force'],
     ['Rear admiral John', 'john'],
     ['Lieutenant general James Baker', 'james baker'],

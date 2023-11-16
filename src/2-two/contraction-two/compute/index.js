@@ -42,7 +42,7 @@ const byEnd = {
   s: (terms, i, world) => {
     // [bob's house] vs [bob's cool]
     if (isPossessive(terms, i)) {
-      return world.methods.one.setTag([terms[i]], 'Possessive', world, '2-contraction')
+      return world.methods.one.setTag([terms[i]], 'Possessive', world, null, '2-contraction')
     }
     return apostropheS(terms, i)
   },
@@ -54,9 +54,8 @@ const toDocs = function (words, view) {
   return doc.docs[0]
 }
 
-
 //really easy ones
-const contractionTwo = (view) => {
+const contractionTwo = view => {
   let { world, document } = view
   // each sentence
   document.forEach((terms, n) => {
@@ -68,7 +67,7 @@ const contractionTwo = (view) => {
       }
       let after = null
       if (byApostrophe.test(terms[i].normal) === true) {
-        [, after] = terms[i].normal.split(byApostrophe)
+        after = terms[i].normal.split(byApostrophe)[1]
       }
       let words = null
       // any known-ones, like 'dunno'?

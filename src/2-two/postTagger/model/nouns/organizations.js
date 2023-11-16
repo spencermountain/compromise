@@ -41,6 +41,16 @@ export default [
   { match: '#ProperNoun (ltd|co|inc|dept|assn|bros)', tag: 'Organization', reason: 'org-abbrv' },
   // the OCED
   { match: 'the [#Acronym]', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
+  // government of india
+  { match: 'government of the? [#Place+]', tag: 'Organization', reason: 'government-of-x' },
+  // school board
+  { match: '(health|school|commerce) board', tag: 'Organization', reason: 'school-board' },
+  // special comittee
+  {
+    match: '(nominating|special|conference|executive|steering|central|congressional) committee',
+    tag: 'Organization',
+    reason: 'special-comittee',
+  },
   // global trade union
   {
     match: '(world|global|international|national|#Demonym) #Organization',

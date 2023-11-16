@@ -145,6 +145,7 @@ export default [
   'memorial',
   'monument',
   'museum',
+  'gallery',
   'palace',
   'pillar',
   'pits',

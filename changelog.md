@@ -19,7 +19,18 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 
 -->
+
+#### 14.10.1 [Nov 2023]
+
+- **[fix]** - abbreviation checks for sentence-tokenizer #1061
+- **[change]** - improve person tagger #1059
+- **[change]** - add #FutureTense tag
+- **[fix]** - .out() runtime error #1056
+- **[fix]** - punctuation loss in .not() #1022
+- **[update]** - dependencies
+
 #### 14.10.0 [Aug 2023]
+
 - **[fix]** - verb conjugation fixes
 - **[fix]** - tagger fixes
 - **[change]** - align package.json with ESM module #1023
@@ -29,6 +40,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.9.0 [May 2023]
+
 - **[new]** - .verbs().toPastParticiple() method
 - **[new]** - `.normalize({ debullet: true })` #1004
 - **[change]** - typescript path changes (thanks @rotemdan !)
@@ -45,6 +57,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.8.2 [Feb 2023]
+
 - **[change]** - #Actor tagging - in advance of #565
 - **[change]** - .noun() lumping changes - in advance of #565
 - **[new]** - support japanese full-stop
@@ -52,12 +65,14 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.8.1 [Dec 2022]
+
 - **[fix]** - tagging fixes
 - **[change]** - allow #Plural acronyms
 - **[fix]** - allow root matches in fastOr
 - **[fix]** - more flexible PhrasalVerb tagging
 
 #### 14.8.0 [Dec 2022]
+
 - **[fix]** - tagging fixes
 - **[new]** - add Person .presumedMale(), .presumedFemale() methods
 - **[new]** - add Pronoun class, .refersTo()
@@ -69,11 +84,13 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.7.1 [Nov 2022]
+
 - **[fix]** - concat fix
 - **[change]** - tagging fixes
 - **[change]** - `{word/tag/sense}` sense-match syntax
 
 #### 14.7.0 [Nov 2022]
+
 - **[new]** - match term id
 - **[change]** - tag text by default on .concat('')
 - **[change]** - allow modifying term prePunctuation
@@ -87,6 +104,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - compromise-paragraphs plugin
 
 #### 14.6.0 [Oct 2022]
+
 - **[change]** - move internal conjugation methods
 - **[update]** - github scripts
 - **[change]** - fixes to .clauses() parser
@@ -101,16 +119,19 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.5.2 [Oct 2022]
+
 - **[fix]** - runtime error #965
 - **[fix]** - misc possessive tagging issues
 - **[update]** - dependencies
 
 #### 14.5.1 [Oct 2022]
+
 - **[fix]** - .remove() fixes
-- **[change]** - support  « angle quotes »
+- **[change]** - support « angle quotes »
 - **[update]** - dependencies
 
 #### 14.5.0 [August 2022]
+
 - **[fix]** - possible runtime error in setTag method
 - **[change]** - make #Honorific always a #Person #951
 - **[new]** - manually change conjugations/inflections from plugin #949
@@ -118,21 +139,26 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.4.5 [August 2022]
-- **[fix]** - fix logic for greedy-negative matches - #936 
+
+- **[fix]** - fix logic for greedy-negative matches - #936
 - **[fix]** - fix tagging for 3-digit year iso dates - #868
 - **[update]** - dependencies
 
 #### 14.4.4 [August 2022]
+
 - **[fix]** - support {root} matches without compromise/two
 
 #### 14.4.3 [August 2022]
+
 - **[fix]** - guard for toRoot methods in root match
 - **[update]** - compromise-stats
 
 #### 14.4.2 [July 2022]
+
 - **[fix]** - hotfix for sentence tokenization issue #935
 
 #### 14.4.1 [July 2022]
+
 - **[change]** - improvements to negative-optional match logic - `!foo?`
 - **[change]** - support short sentences embedded in quotes+parentheses
 - **[change]** - faster sentence tokenizer
@@ -142,6 +168,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.4.0 [July 2022]
+
 - **[change]** - support root matches like '{walk}' work without doing .compute('root')
 - **[change]** - split numbers+units '12km' as contraction - #919
 - **[new]** - `.lazy(txt, match)` fast-scan method [1](https://observablehq.com/@spencermountain/compromise-performance)
@@ -154,10 +181,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
   _plugin-releases_: dates, speed, de-compromise
 
 #### 14.3.1 [June 2022]
+
 - **[fix]** - missed caches in .sweep()
 - **[new]** - .out('hash') and `.json({hash:true})`
 
 #### 14.3.0 [June 2022]
+
 - **[fix]** - unwanted logging in compromise/one
 - **[fix]** - dependency export path for react-native builds #928
 - **[change]** - split hyphenated words in match syntax 'foo-bar'
@@ -165,18 +194,20 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
   _plugin-releases_: dates
 
 #### 14.2.1 [June 2022]
+
 - **[fix]** - double-contraction issue #925
 - **[fix]** - .not() memleak #926
 
 #### 14.2.0 [June 2022]
+
 - **[fix]** - speed improvements
 - **[fix]** - bug with fast-or possessive matches
 - **[fix]** - bug with slow-or end-matches
 - **[change]** - no-longer attempt 's contractions in compromise/one
-- **[new]** - flag novel tags in world.one.tagSet 
+- **[new]** - flag novel tags in world.one.tagSet
 - **[new]** - .sweep() and nlp.buildNet() methods
 - **[new]** - some typescript support in plugins #918
-- **[fix]** - better unicode support with Unicode property escapes 
+- **[fix]** - better unicode support with Unicode property escapes
 - **[fix]** - problems matching on cached documents
 - **[fix]** - typescript fixes
 - **[fix]** - suffix tagging issues
@@ -187,6 +218,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - some support for .numbers().units() again #919
 
 #### 14.1.2 [April 2022]
+
 - **[new]** - add .harden() .soften() undocumented methods
 - **[fix]** - support pre-parsed matches in .has() .if() and .not()
 - **[fix]** - contraction OR match issue
@@ -196,15 +228,18 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.1.1 [April 2022]
+
 - **[fix]** - main property in package.json #911
 
 #### 14.1.0 [April 2022]
+
 - **[fix]** - client-side export format for plugins
 - **[new]** - more adjective transformation methods
 - **[new]** - emoji + emoticon tagger
 - **[new]** - case-sensitive match option - `{caseSensitive:true}`
 
 ### 🚨 14.0.0 🚨 &nbsp; [March 2022]
+
 Major release - see [Release Notes](https://github.com/spencermountain/compromise/releases/tag/14.0.0) for full details
 
 - **[breaking]** - remove `.parent()` and `.parents()` chain - (use `.all()` instead)
@@ -212,11 +247,11 @@ Major release - see [Release Notes](https://github.com/spencermountain/compromis
 - **[breaking]** - remove '.get()' alias - use '.eq()'
 - **[breaking]** - remove `.json(0)` shorthand - use `.json()[0]`
 - **[breaking]** - remove `.tagger()` - use .compute('tagger')
-- **[breaking]** - remove `.export()` -> .load()  - use .json() -> nlp(json)
+- **[breaking]** - remove `.export()` -> .load() - use .json() -> nlp(json)
 - **[breaking]** - remove `nlp.clone()`
-- **[breaking]** - remove `.join()` *deprecated*
-- **[breaking]** - remove `.lists()`  *deprecated*
-- **[breaking]** - remove `.segment()` *deprecated*
+- **[breaking]** - remove `.join()` _deprecated_
+- **[breaking]** - remove `.lists()` _deprecated_
+- **[breaking]** - remove `.segment()` _deprecated_
 - **[breaking]** - remove `.sententences().toParticiple()` & `.verbs().toParticiple()`
 - **[breaking]** - remove `.nouns().toPossessive()` & `.nouns().hasPlural()`
 - **[breaking]** - remove array support in match methods - (use `.match().match()` instead)

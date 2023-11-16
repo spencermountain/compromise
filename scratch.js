@@ -6,6 +6,8 @@ import nlp from './src/three.js'
 nlp.verbose('tagger')
 
 let arr = [
+  'government of india',
+  'Waterloo Catholic District School Board',
   // 'the cineplex of Tokyo',
   // 'Castner Range',
   `john Lkjsdf's House`,

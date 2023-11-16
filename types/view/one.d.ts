@@ -160,6 +160,8 @@ declare class View {
   reverse: () => View
   /**re-arrange the order of the matches (in place) */
   sort: (method?: string | Function) => View
+  /**cleanup various aspects of the words*/
+  normalize: (options?:object) => View
 
   // Whitespace
   /** add this punctuation or whitespace before each match */

@@ -2,7 +2,6 @@ import test from 'tape'
 import nlp from '../../two/_lib.js'
 const here = '[one/sentence-split] '
 
-
 test('sentence tokenizer', function (t) {
   let arr = [
     [``, 0],
@@ -36,15 +35,19 @@ test('sentence tokenizer', function (t) {
     [`the doc said "no sir. i will not beg" and walked away. the end`, 2],
     [`the novel is called "Guards! Guards!".`, 1],
     [`start "the. one two. three" end`, 1],
-    [`start 'the. one two. three' end`, 3],//dont support single-quotes
+    [`start 'the. one two. three' end`, 3], //dont support single-quotes
     // mis-matched examples
-    ['i thought "no way! and he said "yes way".', 2],//
-    ['i thought (no way! and he said (yes)', 2],//
+    ['i thought "no way! and he said "yes way".', 2], //
+    ['i thought (no way! and he said (yes)', 2], //
     ['i thought (no way! and he said yes', 2],
     ['(no way! and he said yes', 2],
     ['"no way! and he\'s cool', 2],
     // japanese
     ['少年は店に向かった。 彼はパンを買った', 2],
+    // abbr with punctuation
+    [`12 mg. tumeric`, 1],
+    [`12 mg? tumeric`, 2],
+    [`12 mg! tumeric`, 2],
   ]
   arr.forEach(a => {
     let [str, len] = a

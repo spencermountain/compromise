@@ -13,7 +13,7 @@ export default [
   { match: 'portland [or]', group: 0, tag: 'Region', reason: 'portland-or' },
   //words removed from preTagger/placeWords
   {
-    match: '#ProperNoun+ (cliff|place|range|pit|place|point|room)',
+    match: '#ProperNoun+ (cliff|place|range|pit|place|point|room|grounds|ruins)',
     tag: 'Place',
     reason: 'foo-point',
   },

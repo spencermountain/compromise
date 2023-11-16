@@ -1,4 +1,5 @@
 const isTitleCase = str => /^\p{Lu}[\p{Ll}'’]/u.test(str)
+const isPossessive = /'s$/
 
 // words that can fit inside a place
 const placeCont = new Set([
@@ -22,14 +23,14 @@ const placeCont = new Set([
   'western',
 ])
 // center of...
-const noBefore = new Set(['center', 'way', 'range', 'bar', 'bridge', 'field', 'pit'])
+const noBefore = new Set(['center', 'centre', 'way', 'range', 'bar', 'bridge', 'field', 'pit'])
 
 const isPlace = function (term, i, yelling) {
   if (!term) {
     return false
   }
   let tags = term.tags
-  if (tags.has('Organization') || tags.has('Possessive')) {
+  if (tags.has('Organization') || tags.has('Possessive') || isPossessive.test(term.normal)) {
     return false
   }
   if (tags.has('ProperNoun') || tags.has('Place')) {
@@ -67,12 +68,12 @@ const tagOrgs = function (terms, i, world, yelling) {
       break
     }
     //loop forward - 'River of Foo...'
+    // 'center of x'
+    if (noBefore.has(str)) {
+      return false
+    }
     for (let n = i + 1; n < terms.length; n += 1) {
       if (isPlace(terms[n], n, yelling)) {
-        // 'center of x'
-        if (noBefore.has(terms[n].normal)) {
-          break
-        }
         setTag(terms.slice(i, n + 1), 'Place', world, null, '3-[foo-place]')
         return true
       }

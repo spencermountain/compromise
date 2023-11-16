@@ -13,6 +13,7 @@ const exceptions = new Set([
   // 'koalas',
   'israelis',
   'menus',
+  'logos',
 ])
 
 const notPlural = [

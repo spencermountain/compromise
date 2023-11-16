@@ -216,5 +216,6 @@ export default [
   'hammond',
   'hamid',
   'perry',
+  'mason',
   // '',
 ]

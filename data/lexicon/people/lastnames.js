@@ -831,7 +831,6 @@ export default [
   'morrison',
   'carr',
   'cunningham',
-  'berry',
   'lehmann',
   'freeman',
   'crawford',

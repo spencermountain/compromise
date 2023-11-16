@@ -5,7 +5,7 @@ export default {
   // 'he [walks]'
   PresentTense: {
     is: 'Verb',
-    not: ['PastTense'],
+    not: ['PastTense', 'FutureTense'],
   },
   // 'will [walk]'
   Infinitive: {
@@ -25,7 +25,12 @@ export default {
   // walked
   PastTense: {
     is: 'Verb',
-    not: ['PresentTense', 'Gerund'],
+    not: ['PresentTense', 'Gerund', 'FutureTense'],
+  },
+  // will walk
+  FutureTense: {
+    is: 'Verb',
+    not: ['PresentTense', 'PastTense'],
   },
   // is/was
   Copula: {

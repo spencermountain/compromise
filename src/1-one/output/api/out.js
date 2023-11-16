@@ -68,10 +68,10 @@ const out = function (method) {
   // some handy ad-hoc outputs
   if (method === 'terms') {
     let list = []
-    this.docs.forEach(s => {
-      let terms = s.terms.map(t => t.text)
-      terms = terms.filter(t => t)
-      list = list.concat(terms)
+    this.docs.forEach(terms => {
+      let words = terms.map(t => t.text)
+      words = words.filter(t => t)
+      list = list.concat(words)
     })
     return list
   }

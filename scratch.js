@@ -3,9 +3,38 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-
 nlp.verbose('tagger')
+
 let arr = [
+  'government of india',
+  'Waterloo Catholic District School Board',
+  // 'the cineplex of Tokyo',
+  // 'Castner Range',
+  `john Lkjsdf's House`,
+  'centre of jardas al abid',
+  "john Lkjsdf's house",
+  'the Saint Lawrence River',
+  'i̇zmir',
+  'kid cudi',
+  'visiting Tojbs Kjeh Region',
+  'Carrizo Plain',
+  'Cedar Breaks',
+  'Chimney Rock',
+  'Florissant Fossil Beds',
+  'Clubar National Historical Park',
+  'Virgin Islands Coral Reef',
+  'Tsarskoe Selo State Museum',
+  // 'Misty Fjords',
+  // 'Timpanogos Cave',
+  'Brown Canyon',
+  'the Saint Lawrence River',
+  ' 1985 Perry Mason movies',
+  'iron man',
+  'Becky will bring you the hard copy',
+  'Timpanogos Cave',
+  'University of Germany',
+  '12 a.m.',
+  'H.R. 49',
   'for January 2022',
   // 'I left the window open for fresh air.',
   'The bridge is built on stable foundations.',
@@ -306,12 +335,14 @@ let arr = [
   // 'cave',
   // 'what companies are doing is',
 ]
+
 let doc = nlp(arr[0]).debug()
+// console.log(doc.people().debug().json())
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())
 // doc.match('{sway/verb}').debug()
 // console.log(doc.verbs().toPresentTense().text())
-console.log(doc.verbs().conjugate())
+// console.log(doc.verbs().conjugate())
 // doc.verbs().toPastParticiple()
 // console.log(nlp('wore').verbs().conjugate())
 // doc.verbs().debug()
@@ -331,5 +362,3 @@ console.log(doc.verbs().conjugate())
 // console.log(nlp.parseMatch('[<month>#Month] [<date>#Value] [<year>#Year?]'))
 // let m = doc.match('[<month>#Month] [<date>#Value] [<year>#Year]?')
 // console.log(m.groups())
-
-

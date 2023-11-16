@@ -27,7 +27,8 @@ export default [
   // { match: `${orgMap} (stock|mergantile)+ exchange`, tag: 'Organization', reason: 'stock-exchange' },
   // // foo news service
   // { match: `${orgMap} (daily|evening|local)+ news service?`, tag: 'Organization', reason: 'foo-news' },
-
+  //University of Foo
+  { match: 'university of #Place', tag: 'Organization', reason: 'university-of-Foo' },
   //John & Joe's
   { match: '#Noun (&|n) #Noun', tag: 'Organization', reason: 'Noun-&-Noun' },
   // teachers union of Ontario
@@ -35,11 +36,21 @@ export default [
   //walmart USA
   { match: '#Organization #Country', tag: 'Organization', reason: 'org-country' },
   //organization
-  { match: '#ProperNoun #Organization', tag: 'Organization', reason: 'titlecase-org' },
+  { match: '#ProperNoun #Organization', tag: 'Organization', notIf: '#FirstName', reason: 'titlecase-org' },
   //FitBit Inc
   { match: '#ProperNoun (ltd|co|inc|dept|assn|bros)', tag: 'Organization', reason: 'org-abbrv' },
   // the OCED
   { match: 'the [#Acronym]', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
+  // government of india
+  { match: 'government of the? [#Place+]', tag: 'Organization', reason: 'government-of-x' },
+  // school board
+  { match: '(health|school|commerce) board', tag: 'Organization', reason: 'school-board' },
+  // special comittee
+  {
+    match: '(nominating|special|conference|executive|steering|central|congressional) committee',
+    tag: 'Organization',
+    reason: 'special-comittee',
+  },
   // global trade union
   {
     match: '(world|global|international|national|#Demonym) #Organization',

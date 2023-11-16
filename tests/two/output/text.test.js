@@ -69,6 +69,11 @@ test('text-implicit', function (t) {
   t.end()
 })
 
+test('text-punct', function (t) {
+  let doc = nlp('Stare down my double-barrel shotgun.').not('stare down my')
+  t.equal(doc.text(), 'double-barrel shotgun', 'text-punct')
+  t.end()
+})
 
 test('text-machine', function (t) {
   let doc = nlp("he's just a tiny baby")

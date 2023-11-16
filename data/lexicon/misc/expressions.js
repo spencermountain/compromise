@@ -122,7 +122,7 @@ export default [
   'shoo',
   'there now',
   'aye',
-  'cmon',//come on
+  'cmon', //come on
   'excuse me',
   'oh well',
   'oh hell',
@@ -140,5 +140,11 @@ export default [
   'omg',
   'aka',
   'holla',
-  'very well'
+  'very well',
+
+  'eureka',
+  'farewell',
+  'yea',
+  'nay',
+  'yah',
 ]

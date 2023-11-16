@@ -59,7 +59,7 @@ export default {
     not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
   },
   Acronym: {
-    not: ['Plural', 'RomanNumeral', 'Pronoun'],
+    not: ['Plural', 'RomanNumeral', 'Pronoun', 'Date'],
   },
   Negative: {
     not: ['Noun', 'Adjective', 'Value', 'Expression'],
@@ -73,8 +73,8 @@ export default {
   },
   // 'co-wrote'
   Prefix: {
-    not: ['Abbreviation', 'Acronym', 'ProperNoun']
+    not: ['Abbreviation', 'Acronym', 'ProperNoun'],
   },
   // hard-nosed, bone-headed
-  Hyphenated: {}
+  Hyphenated: {},
 }

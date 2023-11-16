@@ -3,6 +3,7 @@ export default [
   'alexandria',
   'austin',
   'darwin',
+  'diego',
   'hamilton',
   'houston',
   'jordan',
@@ -14,4 +15,5 @@ export default [
   'santiago',
   'sydney',
   'victoria',
+  'virginia',
 ]

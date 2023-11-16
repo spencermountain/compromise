@@ -8,5 +8,7 @@ export default [
   'earnest',
   'frank',
   // 'young',
-  'brown'
+  'brown',
+  'bella',
+  'woody'
 ]

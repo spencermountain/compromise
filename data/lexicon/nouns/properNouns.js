@@ -13,6 +13,7 @@ export default [
   'missy',
   'florence',
   'stevens',
+  'abid',
   // currencies
   'nis',
   'riel',

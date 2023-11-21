@@ -177,3 +177,17 @@ test('no negative OR false-matches:', function (t) {
   t.equal(doc.match(net).found, false, here + 'no negative OR')
   t.end()
 })
+
+test('buildNet reserved word safe:', function (t) {
+  let matches = [
+    { match: 'first' },
+    { match: 'constructor' },
+  ]
+  let net = nlp.buildNet(matches)
+  let doc = nlp(`constructor. second`)
+
+  let res = doc.sweep(net)
+  t.equal(res.view.text(), 'constructor.', here + 'buildNet reserved word safe')
+
+  t.end()
+})

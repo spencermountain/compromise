@@ -10,7 +10,7 @@ const getHooks = function (docCaches, hooks) {
     // remove duplicates
     let already = {}
     maybe = maybe.filter(m => {
-      if (already[m.match]) {
+      if (typeof already[m.match] === 'boolean') {
         return false
       }
       already[m.match] = true

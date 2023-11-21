@@ -10,12 +10,12 @@ const buildNet = function (matches, world) {
   matches.forEach(obj => {
     // add needs
     obj.needs.forEach(str => {
-      hooks[str] = hooks[str] || []
+      hooks[str] = Array.isArray(hooks[str]) ? hooks[str] : []
       hooks[str].push(obj)
     })
     // add wants
     obj.wants.forEach(str => {
-      hooks[str] = hooks[str] || []
+      hooks[str] = Array.isArray(hooks[str]) ? hooks[str] : []
       hooks[str].push(obj)
     })
   })
@@ -23,7 +23,7 @@ const buildNet = function (matches, world) {
   Object.keys(hooks).forEach(k => {
     let already = {}
     hooks[k] = hooks[k].filter(obj => {
-      if (already[obj.match]) {
+      if (typeof already[obj.match] === 'boolean') {
         return false
       }
       already[obj.match] = true

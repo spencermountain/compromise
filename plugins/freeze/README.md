@@ -4,7 +4,7 @@ experiment to create a new control-flow in the compromie tagger, where given tag
 
 This freezing should imply that the user approves the given tags, and does not want to see them be changed indirectly, in some subsequent tagging process.
 
-Freezing should only disable inconsistent tagging attempts, and allow any more-refined tags to be given.
+Freezing should only disable inconsistent tagging attempts, and allow any more-refined child tags to be given.
 
 ### Use-case 1: Manual use of _.freeze()_
 
@@ -40,6 +40,33 @@ nlp.addWords({ 'spot on': 'Adjective' }) // weaker
 
 ---
 
+### Freeze and the tag-tree
+
+Freeze behviour will guard current tags against any destructive tagging. It will allow any child tags, or non-tree tags to be set:
+
+```js
+nlp.addTags({
+  TvShow: {
+    is: 'Organization',
+    not: ['SportsTeam'],
+  },
+  Doctor: {
+    is: 'Person',
+    not: ['Athlete'],
+  },
+})
+
+let doc = nlp('i saw dr. who on ice.')
+let m = doc.match('dr who')
+m.tag('Person') //set it
+m.freeze() //prevent any loss of tags
+
+m.tag('TvShow') // ❌ - now does nothing
+m.tag('Doctor') // ✅ because consistent
+m.tag('Foobar') // ✅ because not in tree
+```
+
+<!--
 ### Use-case 3:
 
 ```js
@@ -50,16 +77,4 @@ let doc = nlp('i saw dr. who on ice.', { 'dr who': 'Person' })
 let m = doc.match('dr who')
 m.tag('TvShow') // does nothing
 ```
-
-### Use-case 4
-
-```js
-let doc = nlp('i saw dr. who on ice.')
-let m = doc.match('dr who')
-m.tag('Person')
-m.freeze() //prevent any loss of tags
-
-m.tag('TvShow') // x - now does nothing
-m.tag('Doctor') // works, because consistent
-m.tag('Foobar') // works, because not in tree
-```
+ -->

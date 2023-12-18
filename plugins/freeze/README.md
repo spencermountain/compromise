@@ -90,5 +90,6 @@ If term is frozen, all new tags should be evaluated before they are written. Thi
 - does this interfere with `.cache()`?
 - do we need a '@isFrozen' term-method? or `.isFrozen()` match?
 - can a frozen term still conjugate/inflect?
+- what if you freeze a term with no tags?
 
 If the concept works, it would be a low-overhead feature to add to the main compromise API, and live in compromise/two.

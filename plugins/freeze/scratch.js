@@ -2,7 +2,7 @@ import nlp from '../../src/three.js'
 import plg from './src/plugin.js'
 nlp.plugin(plg)
 
-let doc = nlp('one two three four.')
-doc.match('two three').freeze()
-doc.tag('Person')
+let doc = nlp.tokenize('John Frozen is nice')
+doc.match('frozen').freeze()
+doc.compute('tagger')
 doc.debug()

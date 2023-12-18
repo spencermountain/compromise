@@ -3,6 +3,10 @@ const unTag = function (terms, tag, tagSet) {
   tag = tag.trim().replace(/^#/, '')
   for (let i = 0; i < terms.length; i += 1) {
     let term = terms[i]
+    // don't untag anything if term is frozen
+    if (term.frozen === true) {
+      continue
+    }
     // support clearing all tags, with '*'
     if (tag === '*') {
       term.tags.clear()

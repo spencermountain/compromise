@@ -18,7 +18,7 @@ const tagTerm = function (term, tag, tagSet, isSafe) {
   if (tag === '.') {
     return null
   }
-  // don't overwrite tags, if term is frozen
+  // don't overwrite any tags, if term is frozen
   if (term.frozen === true) {
     isSafe = true
   }

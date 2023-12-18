@@ -23,3 +23,18 @@ test('cant tag frozen term', function (t) {
   t.equal(doc.match('four').has('#Person'), true, 'after has tag')
   t.end()
 })
+
+test('cant tag frozen term', function (t) {
+  let doc = nlp('a shoe in the closet')
+  let m = doc.match('shoe').tag('Noun')
+  m.freeze() // ☃️
+  m.tag('Verb') // ❌ (does nothing)
+  t.equal(m.has('#Verb'), false)
+  m.tag('Singular') // ✅ works
+  t.equal(m.has('#Singular'), true)
+
+  m.unfreeze() // 🏖️
+  m.tag('Verb') // ✅ works
+  t.equal(m.has('#Verb'), true)
+  t.end()
+})

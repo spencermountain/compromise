@@ -43,8 +43,6 @@ nlp.addWords({
 }, true) // stronger
 ```
 
----
-
 ### Freeze and the tag-tree
 
 Freeze behviour will guard current tags against any destructive tagging. It will allow any child tags, or non-tree tags to be set:
@@ -71,8 +69,6 @@ m.tag('Doctor') // ✅ because consistent
 m.tag('Foobar') // ✅ because not in tree
 ```
 
----
-
 ### Implementation
 
 API work can be detailed in a plugin, while the bulk of the changes will in `compromise/two` tagger. A frozen term will need to be respected in all various places where a tag can be changed:
@@ -94,6 +90,5 @@ If term is frozen, all new tags should be evaluated before they are written. Thi
 - does this interfere with `.cache()`?
 - do we need a '@isFrozen' term-method? or `.isFrozen()` match?
 - can a frozen term still conjugate/inflect?
--
 
 If the concept works, it would be a low-overhead feature to add to the main compromise API, and live in compromise/two.

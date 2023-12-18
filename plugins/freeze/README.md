@@ -21,11 +21,13 @@ m.tag('Verb') // ✅ works
 
 ### Use-case 2: implied use of _.freeze()_
 
-User has a strong subset of their lexicon they want to guarantee passes-through, while other lexicon items may defer to the tagger's interpretation:
+User has a strong subset of their lexicon they want to guarantee passes-through, while other lexicon items may defer to the tagger's interpretation.
+
+This can be achieved by adding a `frozen?:boolean` param to addWords:
 
 ```js
-nlp.frezeTerms({ 'dr who': 'Person' }) //stronger lexicon
 nlp.addWords({ 'shoe in': 'Noun' }) //normal ugc lex
+nlp.addWords({ 'dr who': 'Person' }, true) //stronger lexicon
 
 let doc = nlp('the dr who threw a shoe in the car.')
 doc.debug() // 'dr who' lasts, but 'shoe in' is replaced
@@ -34,8 +36,11 @@ doc.debug() // 'dr who' lasts, but 'shoe in' is replaced
 This may be especially helpful for multiple-word terms, which can be later mis-interpreted, when viewed independently:
 
 ```js
-nlp.frezeTerms({ 'spot on': 'Adjective' }) // stronger
 nlp.addWords({ 'spot on': 'Adjective' }) // weaker
+nlp.addWords({
+  'game over': 'Expression'
+  'drop dead fred': 'Film'
+}, true) // stronger
 ```
 
 ---
@@ -66,15 +71,29 @@ m.tag('Doctor') // ✅ because consistent
 m.tag('Foobar') // ✅ because not in tree
 ```
 
-<!--
-### Use-case 3:
+---
 
-```js
-// apply freezing on all user-tagged words
-nlp.freezeUserLex()
-let doc = nlp('i saw dr. who on ice.', { 'dr who': 'Person' })
+### Implementation
 
-let m = doc.match('dr who')
-m.tag('TvShow') // does nothing
-```
- -->
+API work can be detailed in a plugin, while the bulk of the changes will in `compromise/two` tagger. A frozen term will need to be respected in all various places where a tag can be changed:
+
+- from `.tag()` and `.unTag()`
+- tagging in `.sweep()`
+- misc suffix/prefix/regex taggers in `/two/compute`
+- retagging after contraction
+- retagging after .insert, or remove
+- retagging after .compute('tagger')
+- tagging after conjugation
+
+If term is frozen, all new tags should be evaluated before they are written. This should not slow down the tagger, assuming frozen terms are rare. This violation-check needs to be fast, and placed in-front.
+
+### Thoughts
+
+- may be helped with a vizualization of the tag-tree (as part of the plugin?)
+- we may want logging when a tag is skipped because it's frozen
+- does this interfere with `.cache()`?
+- do we need a '@isFrozen' term-method? or `.isFrozen()` match?
+- can a frozen term still conjugate/inflect?
+-
+
+If the concept works, it would be a low-overhead feature to add to the main compromise API, and live in compromise/two.

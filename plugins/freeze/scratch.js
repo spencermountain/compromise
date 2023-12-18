@@ -1,4 +1,4 @@
-import nlp from '../../../src/three.js'
+import nlp from '../../src/three.js'
 import plg from './src/plugin.js'
 nlp.plugin(plg)
 

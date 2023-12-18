@@ -1,7 +1,7 @@
 import test from 'tape'
 import nlp from './_lib.js'
 
-test('cant tag frozen term', function (t) {
+test('isFrozen() method', function (t) {
   let doc = nlp('the dr who is a a shoe in the closet')
   let m = doc.match('dr who').tag('Noun')
   m.freeze() // ☃️
@@ -19,7 +19,7 @@ test('cant tag frozen term', function (t) {
   m.freeze()
   doc.tag('Person')
   t.equal(doc.match('one').has('#Person'), true, 'not-frozen has tag')
-  t.equal(!doc.match('two three').has('#Person'), false, 'frozen has no tag')
+  t.equal(doc.match('two three').has('#Person'), false, 'frozen has no tag')
   t.equal(doc.match('four').has('#Person'), true, 'after has tag')
   t.end()
 })

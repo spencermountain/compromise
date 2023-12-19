@@ -4,10 +4,10 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-nlp.addWords({ 'ny times': 'Organization' }, true)
+// nlp.addWords({ 'ny times': 'Organization' }, true)
 
-let lex = nlp.world().model.one.lexicon
-console.log(nlp.world().model.one.frozenLex)
+// let lex = nlp.world().model.one.lexicon
+// console.log(nlp.world().model.one.frozenLex)
 // Object.keys(lex).forEach(k => {
 //   if (k.match(/ /)) {
 //     let doc = nlp(k)
@@ -23,11 +23,12 @@ console.log(nlp.world().model.one.frozenLex)
 // let str = 'houston astros'
 // let str = 'top notch'
 // let str = 'cold war'
-let str = 'tiger woods'
-nlp(str).debug()
-console.log(lex[str])
+// let str = 'tiger woods'
+// nlp(str).debug()
+// console.log(lex[str])
 
 let arr = [
+  'new york giants',
   'Waterloo Catholic District School Board',
   // 'the cineplex of Tokyo',
   // 'Castner Range',
@@ -357,7 +358,7 @@ let arr = [
   // 'what companies are doing is',
 ]
 
-// let doc = nlp(arr[0]).debug()
+let doc = nlp(arr[0]).debug()
 // console.log(doc.people().debug().json())
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())

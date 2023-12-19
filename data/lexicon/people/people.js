@@ -167,7 +167,7 @@ export default [
   'shia labeouf',
   'snoop dogg',
   'snow white',
-  'spider-man',
+  'spider man',
   'spiderman',
   'superman',
   'thor',

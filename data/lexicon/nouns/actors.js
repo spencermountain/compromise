@@ -101,7 +101,7 @@ export default [
   'clerk',
   'client',
   'clown',
-  'co-worker',
+  'coworker',
   'colleague',
   'colonel',
   'columnist',

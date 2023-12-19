@@ -2,24 +2,24 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 // let doc = nlp.tokenize('new york yankees')
-let doc = nlp('timor-leste')
+// let doc = nlp('portland trail blazers')
+let doc = nlp('new york giants')
 // doc.compute('lexicon')
 doc.debug()
 
 // nlp.addWords({ 'ny times': 'Organization' }, true)
 
 // let lex = nlp.world().model.one.lexicon
-// console.log(nlp.world().model.one.frozenLex)
 // Object.keys(lex).forEach(k => {
 //   if (k.match(/ /)) {
 //     let doc = nlp(k)
 //     let tag = typeof lex[k] === 'string' ? lex[k] : lex[k][0]
 //     tag = tag == 'FutureTense' ? 'Verb' : tag
 //     let m = doc.match('^#' + tag + '+$')
-//     if (m.text() !== k) {
+//     if (m.text() !== k && !doc.has('#PhrasalVerb')) {
 //       console.log(k, tag)
 //     }
 //   }

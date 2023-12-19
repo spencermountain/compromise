@@ -7,23 +7,24 @@ let misc = {
   'motel 6': 'Organization',
   g8: 'Organization',
   vh1: 'Organization',
+  '76ers': 'SportsTeam',
+  '49ers': 'SportsTeam',
 
-  'km2': 'Unit',
-  'm2': 'Unit',
-  'dm2': 'Unit',
-  'cm2': 'Unit',
-  'mm2': 'Unit',
-  'mile2': 'Unit',
-  'in2': 'Unit',
-  'yd2': 'Unit',
-  'ft2': 'Unit',
-  'm3': 'Unit',
-  'dm3': 'Unit',
-  'cm3': 'Unit',
-  'in3': 'Unit',
-  'ft3': 'Unit',
-  'yd3': 'Unit',
-
+  km2: 'Unit',
+  m2: 'Unit',
+  dm2: 'Unit',
+  cm2: 'Unit',
+  mm2: 'Unit',
+  mile2: 'Unit',
+  in2: 'Unit',
+  yd2: 'Unit',
+  ft2: 'Unit',
+  m3: 'Unit',
+  dm3: 'Unit',
+  cm3: 'Unit',
+  in3: 'Unit',
+  ft3: 'Unit',
+  yd3: 'Unit',
 
   // ampersands
   'at&t': 'Organization',
@@ -67,7 +68,6 @@ let misc = {
   closest: 'Superlative',
   much: 'Adverb',
   may: 'Modal',
-
 
   // irregular conjugations with two forms
   babysat: 'PastTense',

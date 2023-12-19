@@ -2,7 +2,12 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
+
+// let doc = nlp.tokenize('new york yankees')
+let doc = nlp('timor-leste')
+// doc.compute('lexicon')
+doc.debug()
 
 // nlp.addWords({ 'ny times': 'Organization' }, true)
 
@@ -28,7 +33,9 @@ import nlp from './src/three.js'
 // console.log(lex[str])
 
 let arr = [
-  'new york giants',
+  // 'new york mets',
+  'new york yankees',
+  'new york rangers',
   'Waterloo Catholic District School Board',
   // 'the cineplex of Tokyo',
   // 'Castner Range',
@@ -358,7 +365,7 @@ let arr = [
   // 'what companies are doing is',
 ]
 
-let doc = nlp(arr[0]).debug()
+// let doc = nlp(arr[0]).debug()
 // console.log(doc.people().debug().json())
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())

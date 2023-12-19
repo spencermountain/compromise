@@ -59,4 +59,14 @@ export default [
   },
   // schools
   { match: '#Noun+ (public|private) school', tag: 'School', reason: 'noun-public-school' },
+  // new york yankees
+  { match: '#Place+ #SportsTeam', tag: 'SportsTeam', reason: 'place-sportsteam' },
+  // 'manchester united'
+  {
+    match: '(dc|atlanta|minnesota|manchester|newcastle|sheffield) united',
+    tag: 'SportsTeam',
+    reason: 'united-sportsteam',
+  },
+  // 'toronto fc'
+  { match: '#Place+ fc', tag: 'SportsTeam', reason: 'fc-sportsteam' },
 ]

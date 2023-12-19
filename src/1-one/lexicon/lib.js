@@ -15,7 +15,7 @@ const addWords = function (words, isFrozen = false) {
   if (isFrozen === true) {
     let { lex, _multi } = methods.one.expandLexicon(words, world)
     Object.assign(model.one._multiCache, _multi)
-    Object.assign(model.one.freezeLex, lex)
+    Object.assign(model.one.frozenLex, lex)
     return
   }
   // add some words to our lexicon

@@ -7,14 +7,14 @@ const checkLexicon = function (terms, i, world) {
   const { model, methods } = world
   // const fastTag = methods.one.fastTag
   const setTag = methods.one.setTag
-  const { lexicon, freezeLex } = model.one
+  const { lexicon, frozenLex } = model.one
 
   // basic lexicon lookup
   let t = terms[i]
   let word = t.machine || t.normal
   // freeze lex
-  if (freezeLex[word] !== undefined && freezeLex.hasOwnProperty(word)) {
-    setTag([t], freezeLex[word], world, false, '1-freeze-lexicon')
+  if (frozenLex[word] !== undefined && frozenLex.hasOwnProperty(word)) {
+    setTag([t], frozenLex[word], world, false, '1-freeze-lexicon')
     t.frozen = true
     return true
   }

@@ -2,11 +2,32 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
+// nlp.verbose('tagger')
 
-nlp.verbose('tagger')
+nlp.addWords({ 'ny times': 'Organization' }, true)
+
+let lex = nlp.world().model.one.lexicon
+console.log(nlp.world().model.one.frozenLex)
+// Object.keys(lex).forEach(k => {
+//   if (k.match(/ /)) {
+//     let doc = nlp(k)
+//     let tag = typeof lex[k] === 'string' ? lex[k] : lex[k][0]
+//     tag = tag == 'FutureTense' ? 'Verb' : tag
+//     let m = doc.match('^#' + tag + '+$')
+//     if (m.text() !== k) {
+//       console.log(k, tag)
+//     }
+//   }
+// })
+
+// let str = 'houston astros'
+// let str = 'top notch'
+// let str = 'cold war'
+let str = 'tiger woods'
+nlp(str).debug()
+console.log(lex[str])
 
 let arr = [
-  'government of india',
   'Waterloo Catholic District School Board',
   // 'the cineplex of Tokyo',
   // 'Castner Range',
@@ -336,7 +357,7 @@ let arr = [
   // 'what companies are doing is',
 ]
 
-let doc = nlp(arr[0]).debug()
+// let doc = nlp(arr[0]).debug()
 // console.log(doc.people().debug().json())
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())

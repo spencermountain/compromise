@@ -6,7 +6,7 @@ const model = {
   one: {
     lexicon: {}, //setup blank lexicon
     _multiCache: {},
-    freezeLex: {}, //2nd lexicon
+    frozenLex: {}, //2nd lexicon
   },
 }
 

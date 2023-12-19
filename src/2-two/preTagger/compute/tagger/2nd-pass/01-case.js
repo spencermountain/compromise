@@ -1,9 +1,8 @@
 import fastTag from '../_fastTag.js'
-
 import fillTags from '../3rd-pass/_fillTags.js'
+
 const titleCase = /^\p{Lu}[\p{Ll}'’]/u
 const hasNumber = /[0-9]/
-
 const notProper = ['Date', 'Month', 'WeekDay', 'Unit', 'Expression']
 
 // roman numeral by regex
@@ -19,23 +18,6 @@ const nope = {
   dm: true,
   ml: true,
 }
-
-// 'Buy Our Affordable Cars!'
-// const isAllTitleCase = function (terms) {
-//   if (terms.length <= 3) {
-//     return false
-//   }
-//   let count = 0
-//   terms.forEach(term => {
-//     if (titleCase.test(term.text)) {
-//       count += 1
-//     }
-//   })
-//   if (count >= terms.length - 2) {
-//     return true
-//   }
-//   return false
-// }
 
 // if it's a unknown titlecase word, it's a propernoun
 const checkCase = function (terms, i, model) {
@@ -57,12 +39,8 @@ const checkCase = function (terms, i, model) {
     if (term.normal === 'the') {
       return null
     }
-    // ignore 'Buy Our Affordable Cars!'
-    // if (isAllTitleCase(terms)) {
-    //   return null
-    // }
     fillTags(terms, i, model)
-    if (!term.tags.has('Noun')) {
+    if (!term.tags.has('Noun') && !term.frozen) {
       term.tags.clear()
     }
     fastTag(term, 'ProperNoun', '2-titlecase')

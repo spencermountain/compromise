@@ -15,6 +15,9 @@ const setTag = function (term, tag, reason) {
   if (!tag || tag.length === 0) {
     return
   }
+  if (term.frozen === true) {
+    // console.log(term)
+  }
   // some logging for debugging
   const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
   if (env && env.DEBUG_TAGS) {

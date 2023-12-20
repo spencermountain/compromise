@@ -65,8 +65,12 @@ test('all multi-word items get tagged:', function (t) {
     if (!k.match(' ') || typeof tag !== 'string' || tag === 'FutureTense') {
       return
     }
-    if (!nlp(k).has('^#' + tag + '+$')) {
+    let doc = nlp(k)
+    if (!doc.has('^#' + tag + '+$')) {
       t.fail(here + `lex changed : '${k}'`)
+    }
+    if (doc.isFrozen().found) {
+      t.fail(here + ` '${k}' still frozen`)
     }
   })
   t.end()

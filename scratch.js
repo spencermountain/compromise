@@ -2,28 +2,11 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
-// let mult = nlp.world().model.one.frozenLex
-// console.log(mult['will want'])
-nlp(`tiger woods`).debug()
-// let doc = nlp.tokenize('new york yankees')
-// nlp.addWords({ 'new york yankees are cool and not bad': 'Foo' })
-// let doc = nlp('then they quickly walked out')
-// doc.compute('lexicon')
-// nlp.addWords({ 'sam who': 'Place' }, true)
-// let doc = nlp('Washington DC cool')
-// doc.debug()
-// console.log(doc.docs)
-
-// nlp.addWords({ 'ny times': 'Organization' }, true)
-
-// let str = 'houston astros'
-// let str = 'top notch'
-// let str = 'cold war'
-// let str = 'tiger woods'
-// nlp(str).debug()
-// console.log(lex[str])
+let doc = nlp('one two three')
+let m = doc.split('.')
+m = m.join('two', 'three')
 
 let arr = [
   // 'new york mets',

@@ -12,7 +12,7 @@ nlp.verbose('tagger')
 // let doc = nlp('then they quickly walked out')
 // doc.compute('lexicon')
 // nlp.addWords({ 'sam who': 'Place' }, true)
-let doc = nlp('It must be stamped out')
+let doc = nlp('Washington DC cool')
 doc.debug()
 // console.log(doc.docs)
 

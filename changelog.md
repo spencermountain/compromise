@@ -25,6 +25,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - tagging `.freeze()` and `.unfreeze()` feature
 - **[change]** - stronger deferal to internal lexicon
 - **[change]** - support any-length phrases in lexicon
+- **[fix]** - prevent missed overlapping lexicon phrases
 
 #### 14.10.1 [Nov 2023]
 

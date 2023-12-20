@@ -11,8 +11,13 @@ const multiWord = function (terms, start_i, world) {
   if (multi[word] !== undefined && terms[start_i + 1]) {
     let end = start_i + multi[word]
     for (let i = end; i > start_i; i -= 1) {
-      let words = terms.slice(start_i, i)
+      let words = terms.slice(start_i, i + 1)
+      if (words.length === 0) {
+        return false
+      }
       let str = words.map(term => term.machine || term.normal).join(' ')
+      // console.log(words)
+      // console.log(str)
       // lookup frozen lexicon
       if (frozenLex.hasOwnProperty(str) === true) {
         setTag(words, lexicon[str], world, false, '1-frozen-multi-lexicon')

@@ -1,16 +1,16 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
-let mult = nlp.world().model.one._multiCache
-console.log(mult.new)
+// let mult = nlp.world().model.one._multiCache
+// console.log(mult.new)
 
 // let doc = nlp.tokenize('new york yankees')
 // let doc = nlp('portland trail blazers')
-nlp.addWords({ 'new york yankees are cool and not bad': 'Foo' })
-let doc = nlp('the new york yankees are cool and smart')
+// nlp.addWords({ 'new york yankees are cool and not bad': 'Foo' })
+let doc = nlp('then they quickly walked out')
 // doc.compute('lexicon')
 doc.debug()
 

@@ -2,6 +2,7 @@ import nlp from './nlp.js' // 5kb
 import cache from './1-one/cache/plugin.js'
 import change from './1-one/change/plugin.js'
 import contractions from './1-one/contraction-one/plugin.js'
+import freeze from './1-one/freeze/plugin.js'
 import lexicon from './1-one/lexicon/plugin.js'
 import lookup from './1-one/lookup/plugin.js'
 import match from './1-one/match/plugin.js'
@@ -19,6 +20,7 @@ nlp.extend(match) //10kb
 nlp.extend(pointers) //2kb
 nlp.extend(tag) //2kb
 nlp.plugin(contractions) //~6kb
+nlp.extend(freeze) //
 nlp.extend(tokenize) //7kb
 nlp.plugin(cache) //~1kb
 nlp.extend(lookup) //7kb

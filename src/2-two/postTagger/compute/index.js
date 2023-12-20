@@ -15,7 +15,7 @@ const postTagger = function (view) {
   m.cache()
   m.sweep(net)
   view.uncache()
-  // view.unfreeze()
+  view.unfreeze()
   return view
 }
 

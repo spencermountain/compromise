@@ -246,6 +246,6 @@ export default [
   'yemen',
   'zambia',
   'zimbabwe',
-  `cote d'ivoire`,
+  `cote de ivoire`,
   // 'jordan', //... or a name?
 ]

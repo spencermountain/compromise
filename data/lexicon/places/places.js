@@ -109,6 +109,7 @@ export default [
   'browns canyon',
   'carrizo plain',
   'cedar breaks',
+  'cedar falls',
   'chichen itza',
   'chimney rock',
   'chiricahua',

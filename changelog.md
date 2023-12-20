@@ -15,10 +15,16 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - remove confidence numbers
 -->
 
-<!-- #### 14.10.0 [Unreleased]
+<!-- #### 14.11.0 [Unreleased]
 
 
 -->
+
+#### 14.11.0 [Unreleased]
+
+- **[new]** - tagging `.freeze()` and `.unfreeze()` feature
+- **[change]** - stronger deferal to internal lexicon
+- **[change]** - support any-length phrases in lexicon
 
 #### 14.10.1 [Nov 2023]
 

@@ -8,11 +8,12 @@ nlp.verbose('tagger')
 // console.log(mult.new)
 
 // let doc = nlp.tokenize('new york yankees')
-// let doc = nlp('portland trail blazers')
+let doc = nlp('houston astros')
 // nlp.addWords({ 'new york yankees are cool and not bad': 'Foo' })
-let doc = nlp('then they quickly walked out')
+// let doc = nlp('then they quickly walked out')
 // doc.compute('lexicon')
 doc.debug()
+console.log(doc.docs)
 
 // nlp.addWords({ 'ny times': 'Organization' }, true)
 

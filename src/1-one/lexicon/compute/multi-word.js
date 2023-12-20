@@ -12,12 +12,10 @@ const multiWord = function (terms, start_i, world) {
     let end = start_i + multi[word]
     for (let i = end; i > start_i; i -= 1) {
       let words = terms.slice(start_i, i + 1)
-      if (words.length === 0) {
+      if (words.length <= 1) {
         return false
       }
       let str = words.map(term => term.machine || term.normal).join(' ')
-      // console.log(words)
-      // console.log(str)
       // lookup frozen lexicon
       if (frozenLex.hasOwnProperty(str) === true) {
         setTag(words, lexicon[str], world, false, '1-frozen-multi-lexicon')
@@ -31,6 +29,8 @@ const multiWord = function (terms, start_i, world) {
         // special case for phrasal-verbs - 2nd word is a #Particle
         if (tag && tag.length === 2 && (tag[0] === 'PhrasalVerb' || tag[1] === 'PhrasalVerb')) {
           setTag([words[1]], 'Particle', world, false, '1-phrasal-particle')
+        } else {
+          words.forEach(term => (term.frozen = true))
         }
         return true
       }

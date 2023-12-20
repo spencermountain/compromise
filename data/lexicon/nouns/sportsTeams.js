@@ -29,7 +29,7 @@ export default [
   'kansas city royals',
   'los angeles dodgers',
   'san francisco giants',
-  'st. louis cardinals',
+  'st louis cardinals',
   'diamondbacks',
   'white sox',
   'astros',

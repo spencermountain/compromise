@@ -15,7 +15,7 @@ export default {
   'kansas city royals': 'SportsTeam',
   'los angeles dodgers': 'SportsTeam',
   'san francisco giants': 'SportsTeam',
-  'st. louis cardinals': 'SportsTeam',
+  'st louis cardinals': 'SportsTeam',
   'tampa bay rays': 'SportsTeam',
   'new york mets': 'SportsTeam',
   'new york yankees': 'SportsTeam',

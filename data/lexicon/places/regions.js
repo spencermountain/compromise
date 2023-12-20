@@ -222,5 +222,5 @@ export default [
   'khakassia',
   'chechnya',
   'chuvashia',
-  'crimea ',
+  'crimea',
 ]

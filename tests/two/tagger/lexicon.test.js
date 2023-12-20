@@ -45,6 +45,19 @@ test('allow orthagonal tags:', function (t) {
   t.end()
 })
 
+test('look for invalid lexicon items:', function (t) {
+  let lex = nlp.world().model.one.lexicon
+  Object.keys(lex).forEach(k => {
+    if (k.trim() !== k) {
+      t.fail(here + `'${k}' has whitespace`)
+    }
+    if (k.match(/[.,-]/) && lex[k] !== 'Emoticon') {
+      t.fail(here + `'${k}' has punctuation`)
+    }
+  })
+  t.end()
+})
+
 test('all multi-word items get tagged:', function (t) {
   let lex = nlp.world().model.one.lexicon
   Object.keys(lex).forEach(k => {

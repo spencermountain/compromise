@@ -6,7 +6,7 @@ nlp.verbose('tagger')
 
 // let mult = nlp.world().model.one.frozenLex
 // console.log(mult['will want'])
-nlp('come on. fierce').debug()
+nlp(`o'connor and oconnor`).debug()
 // let doc = nlp.tokenize('new york yankees')
 // nlp.addWords({ 'new york yankees are cool and not bad': 'Foo' })
 // let doc = nlp('then they quickly walked out')

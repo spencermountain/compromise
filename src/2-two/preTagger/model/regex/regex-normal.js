@@ -8,9 +8,9 @@ export default [
   [/^[PMCE]ST$/, 'Timezone', 'EST'],
 
   //names
-  [/^ma?c'.*/, 'LastName', "mc'neil"],
-  [/^o'[drlkn].*/, 'LastName', "o'connor"],
-  [/^ma?cd[aeiou]/, 'LastName', 'mcdonald'],
+  [/^ma?c'[a-z]{3}/, 'LastName', "mc'neil"],
+  [/^o'[a-z]{3}/, 'LastName', "o'connor"],
+  [/^ma?cd[aeiou][a-z]{3}/, 'LastName', 'mcdonald'],
 
   //slang things
   [/^(lol)+[sz]$/, 'Expression', 'lol'],

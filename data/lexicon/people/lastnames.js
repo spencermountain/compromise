@@ -797,8 +797,6 @@ export default [
 
   'stevens',
   'watson',
-  "o'brien",
-  "o'connor",
   'koch',
   'peters',
   'jacobs',

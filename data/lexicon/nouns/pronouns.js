@@ -14,7 +14,5 @@ export default [
   'thee',
   'il',
   'elle',
-  `'em`,
-  `he's`,
-  `she's`,
+  // `'em`,
 ]

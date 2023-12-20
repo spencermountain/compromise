@@ -1,5 +1,4 @@
 export default [
-  '-', //june - july
   'about',
   'across',
   'after',

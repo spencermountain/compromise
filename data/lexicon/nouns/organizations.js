@@ -273,14 +273,15 @@ export default [
   'ywca',
   // 'mercedes',
 
-  `applebee's`,
-  `arby's`,
-  `carl's jr`,
-  `l'oreal`,
-  `mac's milk`,
-  `mcdonald's`,
-  `quizno's`,
-  `sainsbury's`,
+  `applebees`,
+  `applebees`,
+  `arbys`,
+  `carls jr`,
+  `le oreal`, //l'oreal
+  `macs milk`,
+  `mcdonalds`,
+  `quiznos`,
+  `sainsburys`,
 
   //some bands
   'abba',
@@ -319,7 +320,7 @@ export default [
   'the supremes',
   'the who',
   'thin lizzy',
-  'u2',
+  // 'u2',
   'van halen',
   `destiny's child`,
 

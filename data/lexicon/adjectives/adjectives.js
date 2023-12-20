@@ -119,7 +119,7 @@ export default [
   'ample',
   'same',
   'supreme',
-  'part-time',
+  'part time',
   'profane',
   'humane',
   'insane',
@@ -232,8 +232,8 @@ export default [
   'lumbering',
   'nausiating',
   'preexisting',
-  'left-wing',
-  'right-wing',
+  'left wing',
+  'right wing',
   'mindblowing',
   'knowing',
   'appetizing',
@@ -248,7 +248,6 @@ export default [
   'stylish',
   'squeamish',
   'loutish',
-
 
   'mammoth',
   'north',
@@ -471,7 +470,6 @@ export default [
   'consequent',
   'congruent',
   'insolvent',
-
 
   'conjoint',
   'disjoint',
@@ -812,4 +810,3 @@ export default [
   'pointy',
   'testy',
 ]
-

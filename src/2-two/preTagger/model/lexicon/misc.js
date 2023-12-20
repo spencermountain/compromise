@@ -10,6 +10,11 @@ let misc = {
   '76ers': 'SportsTeam',
   '49ers': 'SportsTeam',
 
+  q1: 'Date',
+  q2: 'Date',
+  q3: 'Date',
+  q4: 'Date',
+
   km2: 'Unit',
   m2: 'Unit',
   dm2: 'Unit',
@@ -89,6 +94,8 @@ let misc = {
   neared: 'PastTense',
 
   no: ['Negative', 'Expression'],
+
+  // '-': 'Preposition', //june - july
 
   // there: 'There'
 }

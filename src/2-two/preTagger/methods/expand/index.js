@@ -16,7 +16,10 @@ const expand = function (words, world) {
     // cache multi-word terms
     let split = word.split(/ /)
     if (split.length > 1) {
-      _multi[split[0]] = true
+      // prefer longer ones
+      if (_multi[split[0]] === undefined || split.length > _multi[split[0]]) {
+        _multi[split[0]] = split.length
+      }
     }
     // do any clever-business, by it's tag
     if (fancyThings.hasOwnProperty(tag) === true) {

@@ -5,9 +5,9 @@ const here = '[one/lexicon] '
 test('addWords side-load:', function (t) {
   let lex = {
     bigg: 'Size',
-    'bigg apple': 'Town'
+    'bigg apple': 'Town',
   }
-  const _nlp = nlp//.fork()
+  const _nlp = nlp //.fork()
   let doc = _nlp('it was bigg')
   t.equal(doc.has('(#Size|#Town)'), false, here + 'none-on-init')
 
@@ -22,7 +22,7 @@ test('addWords side-load:', function (t) {
 
   lex = {
     bigg: undefined,
-    'bigg apple': undefined
+    'bigg apple': undefined,
   }
   doc = _nlp('it was bigg', lex)
   t.equal(doc.has('#Size'), false, here + 'lex-removed')
@@ -34,7 +34,7 @@ test('addWords side-load:', function (t) {
 
 test('lexicon compute:', function (t) {
   let words = {
-    'captain obvious': 'Captain'
+    'captain obvious': 'Captain',
   }
   let doc = nlp('it was captain obvious', words)
   let m = doc.match('#Captain+')
@@ -46,7 +46,7 @@ test('tricky lexicon:', function (t) {
   let lexicon = {
     'bed bath and beyond': 'Organization',
   }
-  const _nlp = nlp//.fork()
+  const _nlp = nlp //.fork()
   let r = _nlp('shopping at Bed Bath and Beyond, the store', lexicon)
   let str = r.match('#Organization+').out('normal')
   t.equal(str, 'bed bath and beyond', here + 'four-word')
@@ -63,13 +63,24 @@ test('tricky lexicon:', function (t) {
 
 test('apostrophe lexicon:', function (t) {
   let lex = {
-    'queen anne\'s lace': 'Flower',
-    'applebee\'s': 'Restaurant'
+    "queen anne's lace": 'Flower',
+    "applebee's": 'Restaurant',
   }
   let doc = nlp(`i went to applebee's for dinner`, lex)
   t.equal(doc.has(`#Restaurant`), true, here + 'lexicon w/ apostrophe')
 
   doc = nlp(`Queen Anne's lace`, lex)
   t.equal(doc.has(`#Flower`), true, here + 'multi lexicon w/ apostrophe')
+  t.end()
+})
+
+test('long lexicon:', function (t) {
+  nlp.addWords({ 'new york yankees are cool and not bad': 'Long' })
+  let doc = nlp('the new york yankees are cool and smart')
+  t.equal(doc.has('#Long'), false, here + 'missed-long')
+
+  doc = nlp('the new york yankees are cool and not bad')
+  t.equal(doc.has('#Long'), true, here + 'found-long')
+
   t.end()
 })

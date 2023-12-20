@@ -6,30 +6,17 @@ nlp.verbose('tagger')
 
 // let mult = nlp.world().model.one.frozenLex
 // console.log(mult['will want'])
-
+nlp('come on. fierce').debug()
 // let doc = nlp.tokenize('new york yankees')
 // nlp.addWords({ 'new york yankees are cool and not bad': 'Foo' })
 // let doc = nlp('then they quickly walked out')
 // doc.compute('lexicon')
 // nlp.addWords({ 'sam who': 'Place' }, true)
-let doc = nlp('Washington DC cool')
-doc.debug()
+// let doc = nlp('Washington DC cool')
+// doc.debug()
 // console.log(doc.docs)
 
 // nlp.addWords({ 'ny times': 'Organization' }, true)
-
-// let lex = nlp.world().model.one.lexicon
-// Object.keys(lex).forEach(k => {
-//   if (k.match(/ /)) {
-//     let doc = nlp(k)
-//     let tag = typeof lex[k] === 'string' ? lex[k] : lex[k][0]
-//     tag = tag == 'FutureTense' ? 'Verb' : tag
-//     let m = doc.match('^#' + tag + '+$')
-//     if (m.text() !== k && !doc.has('#PhrasalVerb')) {
-//       console.log(k, tag)
-//     }
-//   }
-// })
 
 // let str = 'houston astros'
 // let str = 'top notch'

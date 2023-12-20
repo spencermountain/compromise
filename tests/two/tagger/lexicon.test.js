@@ -45,3 +45,16 @@ test('allow orthagonal tags:', function (t) {
   t.end()
 })
 
+test('all multi-word items get tagged:', function (t) {
+  let lex = nlp.world().model.one.lexicon
+  Object.keys(lex).forEach(k => {
+    let tag = lex[k]
+    if (!k.match(' ') || typeof tag !== 'string' || tag === 'FutureTense') {
+      return
+    }
+    if (!nlp(k).has('^#' + tag + '+$')) {
+      t.fail(here + `lex changed : '${k}'`)
+    }
+  })
+  t.end()
+})

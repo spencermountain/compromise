@@ -169,7 +169,6 @@ export default [
   'come forth',
   'come forward',
   'come in',
-  'come on',
   'come off',
   'come up',
   'come out',
@@ -951,5 +950,5 @@ export default [
   'zip over',
   'zone out',
   'zonk out',
-  'grab hold'
+  'grab hold',
 ]

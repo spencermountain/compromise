@@ -74,7 +74,7 @@ export default {
       if (!lex[a[1]] && !already[a[1]]) {
         lex[a[1]] = a[0]
       }
-      _multi[a[1]] = true
+      _multi[a[1]] = 2
       let str = a[1] + ' ' + rest
       lex[str] = lex[str] || [a[0], 'PhrasalVerb']
     })

@@ -9,7 +9,7 @@ const multiWord = function (terms, start_i, world) {
 
   // found a word to scan-ahead on
   if (multi[word] !== undefined && terms[start_i + 1]) {
-    let end = start_i + multi[word]
+    let end = start_i + multi[word] - 1
     for (let i = end; i > start_i; i -= 1) {
       let words = terms.slice(start_i, i + 1)
       if (words.length <= 1) {
@@ -18,7 +18,7 @@ const multiWord = function (terms, start_i, world) {
       let str = words.map(term => term.machine || term.normal).join(' ')
       // lookup frozen lexicon
       if (frozenLex.hasOwnProperty(str) === true) {
-        setTag(words, lexicon[str], world, false, '1-frozen-multi-lexicon')
+        setTag(words, frozenLex[str], world, false, '1-frozen-multi-lexicon')
         words.forEach(term => (term.frozen = true))
         return true
       }

@@ -46,7 +46,7 @@ export default {
     let already = model.one.lexicon
     let all = methods.two.transform.verb.conjugate(word, model)
     Object.entries(all).forEach(a => {
-      if (!already[a[1]] && !lex[a[1]]) {
+      if (!already[a[1]] && !lex[a[1]] && a[0] !== 'FutureTense') {
         lex[a[1]] = a[0]
       }
     })

@@ -49,7 +49,6 @@ import determiners from './misc/determiners.js'
 import expressions from './misc/expressions.js'
 import prepositions from './misc/prepositions.js'
 
-
 import actorVerb from './switches/actor-verb.js'
 import adjGerund from './switches/adj-gerund.js'
 import adjNoun from './switches/adj-noun.js'
@@ -63,7 +62,6 @@ import personVerb from './switches/person-verb.js'
 import personPlace from './switches/person-place.js'
 import personAdj from './switches/person-adj.js'
 import unitNoun from './switches/unit-noun.js'
-
 
 //add-in the generic, flat word-lists
 const data = [
@@ -110,7 +108,7 @@ const data = [
   [prepositions, 'Preposition'],
   [comparables, 'Comparable'],
 
-  [infinitives, 'Infinitive'],//3kb
+  [infinitives, 'Infinitive'], //3kb
   [modals, 'Modal'],
   [verbs, 'Verb'],
   [participles, 'Participle'],
@@ -144,4 +142,4 @@ for (let i = 0; i < data.length; i++) {
 
 export default lex
 // console.log(Object.keys(lex).length);
-// console.log(lex[`become`])
+// console.log(lex[`will want`])

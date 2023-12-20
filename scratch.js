@@ -2,13 +2,13 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
-// let mult = nlp.world().model.one._multiCache
-// console.log(mult.new)
+// let mult = nlp.world().model.one.lexicon
+// console.log(mult['will want'])
 
 // let doc = nlp.tokenize('new york yankees')
-let doc = nlp("cote d'ivoire")
+let doc = nlp(' he will want to walk')
 // nlp.addWords({ 'new york yankees are cool and not bad': 'Foo' })
 // let doc = nlp('then they quickly walked out')
 // doc.compute('lexicon')

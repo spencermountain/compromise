@@ -14,6 +14,7 @@ export default [
   'florence',
   'stevens',
   'abid',
+  'mcgill',
   // currencies
   'nis',
   'riel',

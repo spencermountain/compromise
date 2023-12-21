@@ -7,23 +7,27 @@ const checkLexicon = function (terms, i, world) {
   const { model, methods } = world
   // const fastTag = methods.one.fastTag
   const setTag = methods.one.setTag
-  const lexicon = model.one.lexicon
+  const { lexicon, frozenLex } = model.one
 
   // basic lexicon lookup
   let t = terms[i]
   let word = t.machine || t.normal
+  // freeze lex
+  if (frozenLex[word] !== undefined && frozenLex.hasOwnProperty(word)) {
+    setTag([t], frozenLex[word], world, false, '1-freeze-lexicon')
+    t.frozen = true
+    return true
+  }
   // normal lexicon lookup
   if (lexicon[word] !== undefined && lexicon.hasOwnProperty(word)) {
-    let tag = lexicon[word]
-    setTag([t], tag, world, false, '1-lexicon')
+    setTag([t], lexicon[word], world, false, '1-lexicon')
     return true
   }
   // lookup aliases in the lexicon
   if (t.alias) {
     let found = t.alias.find(str => lexicon.hasOwnProperty(str))
     if (found) {
-      let tag = lexicon[found]
-      setTag([t], tag, world, false, '1-lexicon-alias')
+      setTag([t], lexicon[found], world, false, '1-lexicon-alias')
       return true
     }
   }

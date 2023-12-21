@@ -31,7 +31,7 @@ declare module nlp {
   /** connect new tags to tagset graph */
   export function addTags(tags: object): any
   /** add new words to internal lexicon */
-  export function addWords(words: Lexicon): any
+  export function addWords(words: Lexicon, isFrozen?:boolean): any
   /** turn a list of words into a searchable graph */
   export function buildTrie(words: string[]): object
   /** compile a set of match objects to a more optimized form */

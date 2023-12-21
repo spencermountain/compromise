@@ -61,16 +61,11 @@ const fns = {
   canBe: function (tag) {
     tag = tag.replace(/^#/, '')
     let tagSet = this.model.one.tagSet
-    // everything can be an unknown tag
-    if (!tagSet.hasOwnProperty(tag)) {
-      return this
-    }
-    let not = tagSet[tag].not || []
+    let canBe = this.methods.one.canBe
     let nope = []
     this.document.forEach((terms, n) => {
       terms.forEach((term, i) => {
-        let found = not.find(no => term.tags.has(no))
-        if (found) {
+        if (!canBe(term, tag, tagSet)) {
           nope.push([n, i, i + 1])
         }
       })

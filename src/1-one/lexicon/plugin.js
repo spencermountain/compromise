@@ -6,7 +6,8 @@ const model = {
   one: {
     lexicon: {}, //setup blank lexicon
     _multiCache: {},
-  }
+    frozenLex: {}, //2nd lexicon
+  },
 }
 
 export default {
@@ -14,5 +15,5 @@ export default {
   methods,
   compute,
   lib,
-  hooks: ['lexicon']
+  hooks: ['lexicon'],
 }

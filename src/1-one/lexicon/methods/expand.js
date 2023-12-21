@@ -13,7 +13,10 @@ const expand = function (words) {
     // cache multi-word terms
     let split = word.split(/ /)
     if (split.length > 1) {
-      _multi[split[0]] = true
+      // prefer longer ones
+      if (_multi[split[0]] === undefined || split.length > _multi[split[0]]) {
+        _multi[split[0]] = split.length
+      }
     }
     lex[word] = lex[word] || tag
   })

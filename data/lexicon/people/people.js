@@ -80,7 +80,7 @@ export default [
   'santigold',
   'timbaland',
   'yanni',
-  'will.i.am',
+  // 'will.i.am',
 
   //tricky female names
   'halle berry',
@@ -167,7 +167,7 @@ export default [
   'shia labeouf',
   'snoop dogg',
   'snow white',
-  'spider-man',
+  'spider man',
   'spiderman',
   'superman',
   'thor',

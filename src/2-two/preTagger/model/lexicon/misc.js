@@ -7,23 +7,29 @@ let misc = {
   'motel 6': 'Organization',
   g8: 'Organization',
   vh1: 'Organization',
+  '76ers': 'SportsTeam',
+  '49ers': 'SportsTeam',
 
-  'km2': 'Unit',
-  'm2': 'Unit',
-  'dm2': 'Unit',
-  'cm2': 'Unit',
-  'mm2': 'Unit',
-  'mile2': 'Unit',
-  'in2': 'Unit',
-  'yd2': 'Unit',
-  'ft2': 'Unit',
-  'm3': 'Unit',
-  'dm3': 'Unit',
-  'cm3': 'Unit',
-  'in3': 'Unit',
-  'ft3': 'Unit',
-  'yd3': 'Unit',
+  q1: 'Date',
+  q2: 'Date',
+  q3: 'Date',
+  q4: 'Date',
 
+  km2: 'Unit',
+  m2: 'Unit',
+  dm2: 'Unit',
+  cm2: 'Unit',
+  mm2: 'Unit',
+  mile2: 'Unit',
+  in2: 'Unit',
+  yd2: 'Unit',
+  ft2: 'Unit',
+  m3: 'Unit',
+  dm3: 'Unit',
+  cm3: 'Unit',
+  in3: 'Unit',
+  ft3: 'Unit',
+  yd3: 'Unit',
 
   // ampersands
   'at&t': 'Organization',
@@ -68,7 +74,6 @@ let misc = {
   much: 'Adverb',
   may: 'Modal',
 
-
   // irregular conjugations with two forms
   babysat: 'PastTense',
   blew: 'PastTense',
@@ -89,6 +94,8 @@ let misc = {
   neared: 'PastTense',
 
   no: ['Negative', 'Expression'],
+
+  // '-': 'Preposition', //june - july
 
   // there: 'There'
 }

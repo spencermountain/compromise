@@ -18,6 +18,10 @@ const tagTerm = function (term, tag, tagSet, isSafe) {
   if (tag === '.') {
     return null
   }
+  // don't overwrite any tags, if term is frozen
+  if (term.frozen === true) {
+    isSafe = true
+  }
   // for known tags, do logical dependencies first
   let known = tagSet[tag]
   if (known) {
@@ -68,9 +72,11 @@ const isArray = function (arr) {
 const log = (terms, tag, reason = '') => {
   const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
   const i = str => '\x1b[3m' + str + '\x1b[0m'
-  let word = terms.map(t => {
-    return t.text || '[' + t.implicit + ']'
-  }).join(' ')
+  let word = terms
+    .map(t => {
+      return t.text || '[' + t.implicit + ']'
+    })
+    .join(' ')
   if (typeof tag !== 'string' && tag.length > 2) {
     tag = tag.slice(0, 2).join(', #') + ' +' //truncate the list of tags
   }
@@ -94,7 +100,7 @@ const setTag = function (terms, tag, world = {}, isSafe, reason) {
     return
   }
   if (typeof tag !== 'string') {
-    console.warn(`compromise: Invalid tag '${tag}'`)// eslint-disable-line
+    console.warn(`compromise: Invalid tag '${tag}'`) // eslint-disable-line
     return
   }
   tag = tag.trim()

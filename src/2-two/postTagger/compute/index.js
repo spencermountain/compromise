@@ -15,11 +15,11 @@ const postTagger = function (view) {
   m.cache()
   m.sweep(net)
   view.uncache()
-  // view.cache()
+  view.unfreeze()
   return view
 }
 
 // helper function for compute('tagger')
-const tagger = (view) => view.compute(['lexicon', 'preTagger', 'postTagger'])
+const tagger = view => view.compute(['lexicon', 'preTagger', 'postTagger'])
 
 export default { postTagger, tagger }

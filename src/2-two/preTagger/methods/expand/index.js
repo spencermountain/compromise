@@ -1,4 +1,4 @@
-import fancyThings from './byTag.js'
+import byTag from './byTag.js'
 
 // derive clever things from our lexicon key-value pairs
 // this method runs as the pre-tagger plugin gets loaded
@@ -16,11 +16,14 @@ const expand = function (words, world) {
     // cache multi-word terms
     let split = word.split(/ /)
     if (split.length > 1) {
-      _multi[split[0]] = true
+      // prefer longer ones
+      if (_multi[split[0]] === undefined || split.length > _multi[split[0]]) {
+        _multi[split[0]] = split.length
+      }
     }
     // do any clever-business, by it's tag
-    if (fancyThings.hasOwnProperty(tag) === true) {
-      fancyThings[tag](word, lex, methods, model)
+    if (byTag.hasOwnProperty(tag) === true) {
+      byTag[tag](word, lex, methods, model)
     }
     lex[word] = lex[word] || tag
   })

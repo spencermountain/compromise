@@ -1,5 +1,4 @@
 export default [
-  '-', //june - july
   'about',
   'across',
   'after',
@@ -57,7 +56,7 @@ export default [
   'upon',
   'versus',
   'via',
-  'vis-a-vis',
+  'vis a vis',
   'w/o',
   'whereas',
   'with',

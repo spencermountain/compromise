@@ -39,6 +39,10 @@ const firstPass = function (docs, model, world) {
 // these methods don't care about word-neighbours
 const secondPass = function (terms, model, world, isYelling) {
   for (let i = 0; i < terms.length; i += 1) {
+    // skip frozen terms, for now
+    if (terms[i].frozen === true) {
+      continue
+    }
     // mark Noun|Verb on term metadata
     tagSwitch(terms, i, model)
     //  is it titlecased?
@@ -69,6 +73,10 @@ const thirdPass = function (terms, model, world, isYelling) {
     found = found || nounFallback(terms, i, model)
   }
   for (let i = 0; i < terms.length; i += 1) {
+    // skip these
+    if (terms[i].frozen === true) {
+      continue
+    }
     // Johnson LLC
     orgWords(terms, i, world, isYelling)
     // Wawel Castle

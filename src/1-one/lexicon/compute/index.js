@@ -18,5 +18,5 @@ const lexicon = function (view) {
 }
 
 export default {
-  lexicon
+  lexicon,
 }

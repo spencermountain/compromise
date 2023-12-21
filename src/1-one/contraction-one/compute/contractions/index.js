@@ -81,7 +81,7 @@ const thereHas = function (terms, i) {
 }
 
 //really easy ones
-const contractions = (view) => {
+const contractions = view => {
   let { world, document } = view
   const { model, methods } = world
   let list = model.one.contractions || []
@@ -93,7 +93,9 @@ const contractions = (view) => {
       let before = null
       let after = null
       if (byApostrophe.test(terms[i].normal) === true) {
-        [before, after] = terms[i].normal.split(byApostrophe)
+        let res = terms[i].normal.split(byApostrophe)
+        before = res[0]
+        after = res[1]
       }
       // any known-ones, like 'dunno'?
       let words = knownOnes(list, terms[i], before, after)
@@ -122,7 +124,7 @@ const contractions = (view) => {
         if (words) {
           words = toDocs(words, view)
           splice(document, [n, i], words)
-          methods.one.setTag(words, 'NumberRange', world)//add custom tag
+          methods.one.setTag(words, 'NumberRange', world) //add custom tag
           // is it a time-range, like '5-9pm'
           if (words[2] && words[2].tags.has('Time')) {
             methods.one.setTag([words[0]], 'Time', world, null, 'time-range')

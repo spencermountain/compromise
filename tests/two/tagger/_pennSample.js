@@ -2802,7 +2802,7 @@ export default [
   // },
   {
     text: 'I am GEORGE WALKER BUSH, son of the former president of the United States of America George Herbert Walker Bush, and currently serving as President of the United States of America.',
-    tags: 'PRP, VBP, NNP, NNP, NNP, NN, IN, DT, JJ, NNP, IN, DT, NNP, NNP, IN, NNP, NNP, NNP, NNP, NNP, CC, RB, VBG, IN, NNP, IN, DT, NNP, NNP, IN, NNP',
+    tags: 'PRP, VBP, NNP, NNP, NNP, NN, IN, DT, JJ, NNP, IN, DT, NNP, NNP, NN, NNP, NNP, NNP, NNP, NNP, CC, RB, VBG, IN, NNP, IN, DT, NNP, NNP, NN, NNP',
   },
   {
     text: 'Watch the airlift',
@@ -3606,7 +3606,7 @@ export default [
     tags: 'CC, MD, DT, NN, IN, DT, NN, VB, DT, NN',
   },
   {
-    text: 'Is normal bird food good?',//fine
+    text: 'Is normal bird food good?', //fine
     tags: 'VBZ, JJ, NN, NN, JJ',
   },
   {

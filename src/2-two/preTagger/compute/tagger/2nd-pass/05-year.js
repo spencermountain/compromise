@@ -26,7 +26,7 @@ const dateWords = new Set([
   'budget',
   'classic',
   'plan',
-  'may'
+  'may',
 ])
 
 const seemsGood = function (term) {

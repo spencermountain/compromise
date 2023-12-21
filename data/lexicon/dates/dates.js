@@ -1,5 +1,6 @@
 // uncontroversial date words
-export default ['today',
+export default [
+  'today',
   'tomorrow',
   'tmr',
   'tmrw',
@@ -8,10 +9,6 @@ export default ['today',
   'weekends',
   'week end',
   'ago',
-  'q1',
-  'q2',
-  'q3',
-  'q4',
   'someday',
-  'oneday'
+  'oneday',
 ]

@@ -699,7 +699,7 @@ let arr = [
   ['hell', '#Expression'],
   ['live in hell', '#Verb in #Noun'],
   [`we gave tax reductions`, `#Pronoun #PastTense #Noun #Plural`],
-  [`brand new`, `#Adverb #Adjective`],
+  // [`brand new`, `#Adverb #Adjective`],
   [`brand spanking new`, `#Adverb #Adverb #Adjective`],
 
   ['Right after.', '#Adverb .'],

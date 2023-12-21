@@ -1,10 +1,10 @@
 import lexData from './_data.js'
 import { unpack } from 'efrt'
 import misc from './misc.js'
+import frozenLex from './frozenLex.js'
 import emoticons from './emoticons.js'
 import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import irregularPlurals from '../irregulars/plurals.js'
-
 // unpack our lexicon of words
 // (found in ./lexicon/)
 
@@ -37,11 +37,11 @@ Object.keys(lexData).forEach(tag => {
   })
 })
 // add ':)'
-emoticons.forEach(str => lexicon[str] = 'Emoticon')
+emoticons.forEach(str => (lexicon[str] = 'Emoticon'))
 
 // misc cleanup
 delete lexicon['']
 delete lexicon[null]
 delete lexicon[' ']
 
-export { lexicon, switches }
+export { lexicon, switches, frozenLex }

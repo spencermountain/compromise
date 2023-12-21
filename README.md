@@ -453,6 +453,8 @@ doc.money().json()
 - **[.termList()](https://observablehq.com/@spencermountain/compromise-accessors)** - return a flat list of all Term objects in match
 - **[.cache({})](https://observablehq.com/@spencermountain/compromise-cache)** - freeze the current state of the document, for speed-purposes
 - **[.uncache()](https://observablehq.com/@spencermountain/compromise-cache)** - un-freezes the current state of the document, so it may be transformed
+- **[.freeze({})](https://observablehq.com/@spencermountain/compromise-freeze)** - prevent any tags from being removed, in these terms
+- **[.unfreeze({})](https://observablehq.com/@spencermountain/compromise-freeze)** - allow tags to change again, as default
 
 ##### Accessors
 
@@ -560,7 +562,7 @@ _(these methods are on the main `nlp` object)_
 - **[nlp.verbose(mode)](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - log our decision-making for debugging
 - **[nlp.version](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - current semver version of the library
 
-- **[nlp.addWords(obj)](https://observablehq.com/@spencermountain/compromise-plugin)** - add new words to the lexicon
+- **[nlp.addWords(obj, isFrozen?)](https://observablehq.com/@spencermountain/compromise-plugin)** - add new words to the lexicon
 - **[nlp.addTags(obj)](https://observablehq.com/@spencermountain/compromise-plugin)** - add new tags to the tagSet
 - **[nlp.typeahead(arr)](https://observablehq.com/@spencermountain/compromise-typeahead)** - add words to the auto-fill dictionary
 - **[nlp.buildTrie(arr)](https://observablehq.com/@spencermountain/compromise-lookup)** - compile a list of words into a fast lookup form
@@ -799,28 +801,27 @@ nlp.extend({
 
 ##### Documentation:
 
-| Concepts                                                                              |                                               API                                               |                                                                                Plugins |
-| ------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------: | 
-| [Accuracy](https://observablehq.com/@spencermountain/compromise-accuracy)             |           [Accessors](https://observablehq.com/@spencermountain/compromise-accessors)           |          [Adjectives](https://observablehq.com/@spencermountain/compromise-adjectives) |
-| [Caching](https://observablehq.com/@spencermountain/compromise-cache)                 | [Constructor-methods](https://observablehq.com/@spencermountain/compromise-constructor-methods) |                    [Dates](https://observablehq.com/@spencermountain/compromise-dates) |
-| [Case](https://observablehq.com/@spencermountain/compromise-case)                     |        [Contractions](https://observablehq.com/@spencermountain/compromise-contractions)        |                  [Export](https://observablehq.com/@spencermountain/compromise-export) |
-| [Filesize](https://observablehq.com/@spencermountain/compromise-filesize)             |              [Insert](https://observablehq.com/@spencermountain/compromise-insert)              |                      [Hash](https://observablehq.com/@spencermountain/compromise-hash) |
-| [Internals](https://observablehq.com/@spencermountain/compromise-internals)           |                [Json](https://observablehq.com/@spencermountain/compromise-json)                |                      [Html](https://observablehq.com/@spencermountain/compromise-html) |
-| [Justification](https://observablehq.com/@spencermountain/compromise-justification)   |               [Character Offsets](https://observablehq.com/@spencermountain/compromise-offsets)                |              [Keypress](https://observablehq.com/@spencermountain/compromise-keypress) |
-| [Lexicon](https://observablehq.com/@spencermountain/compromise-lexicon)               |               [Loops](https://observablehq.com/@spencermountain/compromise-loops)               |                   [Ngrams](https://observablehq.com/@spencermountain/compromise-ngram) |
-| [Match-syntax](https://observablehq.com/@spencermountain/compromise-match-syntax)     |               [Match](https://observablehq.com/@spencermountain/compromise-match)               |                 [Numbers](https://observablehq.com/@spencermountain/compromise-values) |
-| [Performance](https://observablehq.com/@spencermountain/compromise-performance)       |                    [Nouns](https://observablehq.com/@spencermountain/nouns)                     |          [Paragraphs](https://observablehq.com/@spencermountain/compromise-paragraphs) |
-| [Plugins](https://observablehq.com/@spencermountain/compromise-plugins)               |              [Output](https://observablehq.com/@spencermountain/compromise-output)              |                      [Scan](https://observablehq.com/@spencermountain/compromise-scan) |
-| [Projects](https://observablehq.com/@spencermountain/compromise-projects)             |          [Selections](https://observablehq.com/@spencermountain/compromise-selections)          |            [Sentences](https://observablehq.com/@spencermountain/compromise-sentences) |
-| [Tagger](https://observablehq.com/@spencermountain/compromise-tagger)                 |             [Sorting](https://observablehq.com/@spencermountain/compromise-sorting)             |            [Syllables](https://observablehq.com/@spencermountain/compromise-syllables) | 
-| [Tags](https://observablehq.com/@spencermountain/compromise-tags)                     |               [Split](https://observablehq.com/@spencermountain/compromise-split)               |            [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce) |                                                                                       |
-| [Tokenization](https://observablehq.com/@spencermountain/compromise-tokenization)     |                [Text](https://observablehq.com/@spencermountain/compromise-text)                |                  [Strict](https://observablehq.com/@spencermountain/compromise-strict) |
-| [Named-Entities](https://observablehq.com/@spencermountain/topics-named-entity-recognition)  |               [Utils](https://observablehq.com/@spencermountain/compromise-utils)               |            [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags) |
-| [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace)         |                    [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
-| [World data](https://observablehq.com/@spencermountain/compromise-world)              |       [Normalization](https://observablehq.com/@spencermountain/compromise-normalization)       |   [Sweep](https://observablehq.com/@spencermountain/compromise-sweep)         |
-| [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching) |          [Typescript](https://observablehq.com/@spencermountain/compromise-typescript)          | [Mutation](https://observablehq.com/@spencermountain/compromise-mutation)  |
-| [Root-forms](https://observablehq.com/@spencermountain/compromise-root) |  
-
+| Concepts                                                                                    |                                               API                                               |                                                                                Plugins |
+| ------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------: | --- |
+| [Accuracy](https://observablehq.com/@spencermountain/compromise-accuracy)                   |           [Accessors](https://observablehq.com/@spencermountain/compromise-accessors)           |          [Adjectives](https://observablehq.com/@spencermountain/compromise-adjectives) |
+| [Caching](https://observablehq.com/@spencermountain/compromise-cache)                       | [Constructor-methods](https://observablehq.com/@spencermountain/compromise-constructor-methods) |                    [Dates](https://observablehq.com/@spencermountain/compromise-dates) |
+| [Case](https://observablehq.com/@spencermountain/compromise-case)                           |        [Contractions](https://observablehq.com/@spencermountain/compromise-contractions)        |                  [Export](https://observablehq.com/@spencermountain/compromise-export) |
+| [Filesize](https://observablehq.com/@spencermountain/compromise-filesize)                   |              [Insert](https://observablehq.com/@spencermountain/compromise-insert)              |                      [Hash](https://observablehq.com/@spencermountain/compromise-hash) |
+| [Internals](https://observablehq.com/@spencermountain/compromise-internals)                 |                [Json](https://observablehq.com/@spencermountain/compromise-json)                |                      [Html](https://observablehq.com/@spencermountain/compromise-html) |
+| [Justification](https://observablehq.com/@spencermountain/compromise-justification)         |        [Character Offsets](https://observablehq.com/@spencermountain/compromise-offsets)        |              [Keypress](https://observablehq.com/@spencermountain/compromise-keypress) |
+| [Lexicon](https://observablehq.com/@spencermountain/compromise-lexicon)                     |               [Loops](https://observablehq.com/@spencermountain/compromise-loops)               |                   [Ngrams](https://observablehq.com/@spencermountain/compromise-ngram) |
+| [Match-syntax](https://observablehq.com/@spencermountain/compromise-match-syntax)           |               [Match](https://observablehq.com/@spencermountain/compromise-match)               |                 [Numbers](https://observablehq.com/@spencermountain/compromise-values) |
+| [Performance](https://observablehq.com/@spencermountain/compromise-performance)             |                    [Nouns](https://observablehq.com/@spencermountain/nouns)                     |          [Paragraphs](https://observablehq.com/@spencermountain/compromise-paragraphs) |
+| [Plugins](https://observablehq.com/@spencermountain/compromise-plugins)                     |              [Output](https://observablehq.com/@spencermountain/compromise-output)              |                      [Scan](https://observablehq.com/@spencermountain/compromise-scan) |
+| [Projects](https://observablehq.com/@spencermountain/compromise-projects)                   |          [Selections](https://observablehq.com/@spencermountain/compromise-selections)          |            [Sentences](https://observablehq.com/@spencermountain/compromise-sentences) |
+| [Tagger](https://observablehq.com/@spencermountain/compromise-tagger)                       |             [Sorting](https://observablehq.com/@spencermountain/compromise-sorting)             |            [Syllables](https://observablehq.com/@spencermountain/compromise-syllables) |
+| [Tags](https://observablehq.com/@spencermountain/compromise-tags)                           |               [Split](https://observablehq.com/@spencermountain/compromise-split)               |            [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce) |     |
+| [Tokenization](https://observablehq.com/@spencermountain/compromise-tokenization)           |                [Text](https://observablehq.com/@spencermountain/compromise-text)                |                  [Strict](https://observablehq.com/@spencermountain/compromise-strict) |
+| [Named-Entities](https://observablehq.com/@spencermountain/topics-named-entity-recognition) |               [Utils](https://observablehq.com/@spencermountain/compromise-utils)               |            [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags) |
+| [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace)               |                    [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
+| [World data](https://observablehq.com/@spencermountain/compromise-world)                    |       [Normalization](https://observablehq.com/@spencermountain/compromise-normalization)       |                    [Sweep](https://observablehq.com/@spencermountain/compromise-sweep) |
+| [Fuzzy-matching](https://observablehq.com/@spencermountain/compromise-fuzzy-matching)       |          [Typescript](https://observablehq.com/@spencermountain/compromise-typescript)          |              [Mutation](https://observablehq.com/@spencermountain/compromise-mutation) |
+| [Root-forms](https://observablehq.com/@spencermountain/compromise-root)                     |
 
 <div >
   <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>

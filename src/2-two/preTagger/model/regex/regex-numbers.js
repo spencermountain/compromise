@@ -1,5 +1,4 @@
 export default [
-
   [/^@1?[0-9](am|pm)$/i, 'Time', '3pm'],
   [/^@1?[0-9]:[0-9]{2}(am|pm)?$/i, 'Time', '3:30pm'],
   [/^'[0-9]{2}$/, 'Year'],
@@ -23,20 +22,11 @@ export default [
   [/^[0-9]{3}-[0-9]{4}$/, 'PhoneNumber', '421-0029'],
   [/^(\+?[0-9][ -])?[0-9]{3}[ -]?[0-9]{3}-[0-9]{4}$/, 'PhoneNumber', '1-800-'],
 
-
   //money
   //like $5.30
-  [
-    /^[-+]?\p{Currency_Symbol}[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?([kmb]|bn)?\+?$/u,
-    ['Money', 'Value'],
-    '$5.30',
-  ],
+  [/^[-+]?\p{Currency_Symbol}[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?([kmb]|bn)?\+?$/u, ['Money', 'Value'], '$5.30'],
   //like 5.30$
-  [
-    /^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?\p{Currency_Symbol}\+?$/u,
-    ['Money', 'Value'],
-    '5.30£',
-  ],
+  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?\p{Currency_Symbol}\+?$/u, ['Money', 'Value'], '5.30£'],
   //like
   [/^[-+]?[$£]?[0-9]([0-9,.])+(usd|eur|jpy|gbp|cad|aud|chf|cny|hkd|nzd|kr|rub)$/i, ['Money', 'Value'], '$400usd'],
 

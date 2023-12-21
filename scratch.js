@@ -2,11 +2,12 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
 let arr = [
-  'government of india',
+  // 'new york mets',
+  'new york yankees',
+  'new york rangers',
   'Waterloo Catholic District School Board',
   // 'the cineplex of Tokyo',
   // 'Castner Range',
@@ -336,7 +337,7 @@ let arr = [
   // 'what companies are doing is',
 ]
 
-let doc = nlp(arr[0]).debug()
+// let doc = nlp(arr[0]).debug()
 // console.log(doc.people().debug().json())
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())

@@ -4,7 +4,6 @@ export default [
   'aarav',
   'aaron',
   'abdallah',
-  'abdel rahman',
   'abdel',
   'abdoulaye',
   'abdul',

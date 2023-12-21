@@ -67,7 +67,7 @@ const isNoPeriodAcronym = function (term, model) {
 const isAcronym = function (terms, i, model) {
   let term = terms[i]
   //these are not acronyms
-  if (term.tags.has('RomanNumeral') || term.tags.has('Acronym')) {
+  if (term.tags.has('RomanNumeral') || term.tags.has('Acronym') || term.frozen) {
     return null
   }
   //non-period ones are harder

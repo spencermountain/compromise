@@ -4,9 +4,8 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp('one two three')
-let m = doc.split('.')
-m = m.join('two', 'three')
+nlp.addWords({ 'dr who': 'Person' })
+let doc = nlp('saw a dr. who said ').debug()
 
 let arr = [
   // 'new york mets',

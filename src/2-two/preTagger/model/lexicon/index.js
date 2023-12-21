@@ -1,6 +1,7 @@
 import lexData from './_data.js'
 import { unpack } from 'efrt'
 import misc from './misc.js'
+import frozenLex from './frozenLex.js'
 import emoticons from './emoticons.js'
 import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import irregularPlurals from '../irregulars/plurals.js'
@@ -43,4 +44,4 @@ delete lexicon['']
 delete lexicon[null]
 delete lexicon[' ']
 
-export { lexicon, switches }
+export { lexicon, switches, frozenLex }

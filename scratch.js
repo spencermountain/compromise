@@ -4,10 +4,6 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-nlp.addWords({ 'shoe in': 'Noun' }) //normal ugc lex
-nlp.addWords({ 'dr who': 'Person' }) //stronger lexicon
-let doc = nlp('the dr who threw a shoe in the car.').debug()
-
 let arr = [
   // 'new york mets',
   'new york yankees',

@@ -29,8 +29,6 @@ const multiWord = function (terms, start_i, world) {
         // special case for phrasal-verbs - 2nd word is a #Particle
         if (tag && tag.length === 2 && (tag[0] === 'PhrasalVerb' || tag[1] === 'PhrasalVerb')) {
           setTag([words[1]], 'Particle', world, false, '1-phrasal-particle')
-        } else {
-          words.forEach(term => (term.frozen = true))
         }
         return true
       }

@@ -43,6 +43,10 @@ let matches = [
   { match: '^[do] (you|we|they)', group: 0, tag: 'QuestionWord', reason: 'do-you' },
   // does he
   { match: '^[does] (he|she|it|#ProperNoun)', group: 0, tag: 'QuestionWord', reason: 'does-he' },
+  // the person who
+  { match: '#Determiner #Noun+ [who] #Verb', group: 0, tag: 'Preposition', reason: 'the-x-who' },
+  // the person which
+  { match: '#Determiner #Noun+ [which] #Verb', group: 0, tag: 'Preposition', reason: 'the-x-which' },
   // a while
   { match: 'a [while]', group: 0, tag: 'Noun', reason: 'a-while' },
   // guess who

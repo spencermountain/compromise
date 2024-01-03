@@ -28,7 +28,8 @@ const mainClause = function (s) {
     return m
   }
 
-  m = m.ifNo('(despite|during|before|through|throughout)')
+  // check for subordinating conjunctions -- must be at the beginning of the clause
+  m = m.ifNo('(^despite|^during|^before|^through|^throughout)')
   if (m.length === 1) {
     return m
   }

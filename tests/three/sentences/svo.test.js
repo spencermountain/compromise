@@ -30,7 +30,7 @@ test('svo parser', function (t) {
       'dropped significantly',
     ],
     [
-      'He collaborated with the university to develop comprehensive academic proposals across the entire campus, encompassing academic priorities in every department at the university and course structure typologies for each academic program.',
+      'He collaborated with the university to develop comprehensive academic proposals throughout the entire campus, encompassing academic priorities in every department at the university and course structure typologies for each academic program.',
       'he',
       'collaborated',
     ],

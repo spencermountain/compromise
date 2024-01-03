@@ -857,7 +857,7 @@ nlp.extend({
 ##### Comparisons
 
 - [Compromise and Spacy](https://observablehq.com/@spencermountain/compromise-and-spacy)
-- [Compromise and NLTK](https://observablehq.com/@spencermountain/compromise-and-NLTK)
+- [Compromise and NLTK](https://observablehq.com/@spencermountain/compromise-and-nltk)
 
 <!-- spacer -->
 <div align="center">

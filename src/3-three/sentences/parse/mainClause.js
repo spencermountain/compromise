@@ -33,6 +33,13 @@ const mainClause = function (s) {
   if (m.length === 1) {
     return m
   }
+
+  // check for clauses beginning with Gerund ("Taking ..., ...")
+  m = m.ifNo('^#Gerund')
+  if (m.length === 1) {
+    return m
+  }
+
   // did we go too far?
   if (m.length === 0) {
     m = s

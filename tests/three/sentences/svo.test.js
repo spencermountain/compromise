@@ -17,9 +17,29 @@ test('svo parser', function (t) {
     [`every year, we gather in Baltimore`, `we`, `gather`],
     [`if only i was awake, we could have eaten the breakfast`, `we`, `could have eaten`],
     ['Every night before I go to bed, I eat bananas.', 'i', 'eat'],
-    ['Diane decided to plant tomatoes in the back of the yard, where the sun blazed the longest during the day.', 'diane', 'decided to plant'],
+    [
+      'Diane decided to plant tomatoes in the back of the yard, where the sun blazed the longest during the day.',
+      'diane',
+      'decided to plant',
+    ],
     ['Once Adam smashed the spider, he ran into the bathroom', 'he', 'ran into'],
     [`We are introducing ourselves to the class.`, 'we', 'are introducing ourselves'],
+    [
+      'Throughout the day, as the sun gradually set, the temperature dropped significantly, creating a chilly evening.',
+      'the temperature',
+      'dropped significantly',
+    ],
+    [
+      'He collaborated with the university to develop comprehensive academic proposals across the entire campus, encompassing academic priorities in every department at the university and course structure typologies for each academic program.',
+      'he',
+      'collaborated',
+    ],
+    ['Despite Susan walking the dog, she was not wearing a coat.', 'she', 'was not wearing'],
+    [
+      'Taking diligent notes throughout the entire class, the students remained focused during the lecture.',
+      'the students',
+      'remained',
+    ],
 
     // ['every day the kitten tries to eat the mouse', 'the kitten', 'tries to eat'],
     // ['The boy who you saw at the store committed a robbery.', 'the boy', 'committed'],

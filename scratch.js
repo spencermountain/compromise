@@ -4,6 +4,7 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
+nlp('one two-three four five').debug()
 let arr = [
   // 'new york mets',
   'new york yankees',

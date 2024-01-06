@@ -4,7 +4,11 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-nlp('one two-three four five').debug()
+// nlp(`She'd done everything`).debug()
+// nlp(`He'd never let us`).debug()
+// nlp('john’s neat documents about georgia').debug()
+// nlp(`John's talks about Georgia`).debug()
+
 let arr = [
   // 'new york mets',
   'new york yankees',

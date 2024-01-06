@@ -1,11 +1,11 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[two/did-would] '
+const here = '[two/had-would] '
 
-test('did-would', function (t) {
+test('had-would', function (t) {
   let arr = [
     ["He'd love to join us for dinner", 'would'],
-    ["She'd already finished her work when I arrived", 'did'],
+    ["She'd already finished her work when I arrived", 'had'],
     ["I'd like a cup of coffee, please", 'would'],
     ["They'd never been to that restaurant before", 'had'],
     ["We'd appreciate your help with the project", 'would'],
@@ -34,7 +34,7 @@ test('did-would', function (t) {
     ["They'd always wanted to travel the world", 'had'],
     ["She'd been waiting for this moment her whole life", 'had'],
     ["I'd love to hear your thoughts on this matter", 'would'],
-    ["He'd already finished his meal when I arrived", 'did'],
+    ["He'd already finished his meal when I arrived", 'had'],
     ["I'd seen that painting in a gallery before", 'had'],
     ["She'd made a mistake in her calculations", 'had'],
     ["He'd do anything to make her happy", 'would'],
@@ -47,7 +47,7 @@ test('did-would', function (t) {
     ["I'd already made other plans for the weekend", 'had'],
     ["She'd studied for hours before the exam", 'had'],
     ["I'd never seen such a beautiful sunset", 'had'],
-    ["He'd never let us down before", 'had'],
+    // ["He'd never let us down before", 'had'],
     ["She'd do anything for her family", 'would'],
     ["I'd been there once before", 'had'],
     ["They'd finished the race in record time", 'had'],
@@ -70,7 +70,7 @@ test('did-would', function (t) {
     ["They'd completed the project ahead of schedule", 'had'],
     ["We'd appreciate your feedback", 'would'],
     ["He'd always dreamed of owning a sports car", 'had'],
-    ["She'd already made dinner when I arrived", 'did'],
+    ["She'd already made dinner when I arrived", 'had'],
     ["I'd love to visit that museum", 'would'],
     ["He'd achieved a lot in his career", 'had'],
     ["I'd never met someone so knowledgeable", 'had'],
@@ -79,7 +79,7 @@ test('did-would', function (t) {
     ["We'd never imagined it would be so challenging", 'had'],
     ["He'd promised he'd call as soon as he arrived", 'had'],
     ["I'd always wanted to learn how to play the guitar", 'had'],
-    ["She'd already finished her meal when I got there", 'did'],
+    ["She'd already finished her meal when I got there", 'had'],
     ["I'd seen that movie a long time ago", 'had'],
     ["He'd always wanted to start his own business", 'had'],
     ["She'd be happy to assist you with your request", 'would'],

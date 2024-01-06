@@ -1,13 +1,50 @@
 const hasContraction = /'/
 
+const hadWords = new Set([
+  'better', //had better
+  'done', //had done
+  'before', // he'd _ before
+  'it', // he'd _ it
+  'had', //she'd had -> she would have..
+])
+
+const wouldWords = new Set([
+  'have', // 'i'd have' -> i would have..
+  'be', //' she'd be'
+])
+
 //look for a past-tense verb
-const pickHad = (terms, i) => {
-  // you'd better go -> 'you had better go'
-  if (terms[i + 1] && terms[i + 1].normal == 'better') {
-    return true
+// You'd mentioned -> you had mentioned
+// You'd mention -> you would mention
+const hadOrWould = (terms, i) => {
+  // scan ahead
+  for (let o = i + 1; o < terms.length; o += 1) {
+    let t = terms[o]
+    // you'd better go
+    if (hadWords.has(t.normal)) {
+      return 'had'
+    }
+    // we'd have
+    if (wouldWords.has(t.normal)) {
+      return 'would'
+    }
+    // You'd mentioned -> you had mentioned
+    if (t.tags.has('PastTense') || t.switch === 'Adj|Past') {
+      return 'had'
+    }
+    // You'd mention -> you would mention
+    if (t.tags.has('PresentTense') || t.tags.has('Infinitive')) {
+      return 'would'
+    }
+    // i'd an issue
+    if (t.tags.has('#Determiner')) {
+      return 'had'
+    }
+    if (t.tags.has('Adjective')) {
+      return 'would'
+    }
   }
-  let after = terms.slice(i + 1, i + 3)
-  return after.some(t => t.tags.has('PastTense'))
+  return false
 }
 
 // he'd walked -> had
@@ -19,7 +56,7 @@ const _apostropheD = function (terms, i) {
   if (before === 'how' || before === 'what') {
     return [before, 'did']
   }
-  if (pickHad(terms, i) === true) {
+  if (hadOrWould(terms, i) === 'had') {
     return [before, 'had']
   }
   // had/would/did

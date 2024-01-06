@@ -4,7 +4,7 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-// nlp(`She'd done everything`).debug()
+nlp(`The company's expanding rapidly`).debug()
 // nlp(`He'd never let us`).debug()
 // nlp('john’s neat documents about georgia').debug()
 // nlp(`John's talks about Georgia`).debug()

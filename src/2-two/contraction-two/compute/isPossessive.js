@@ -7,9 +7,9 @@ const banList = {
 }
 
 const beforePossessive = {
-  in: true,//in sunday's
-  by: true,//by sunday's
-  for: true,//for sunday's
+  in: true, //in sunday's
+  by: true, //by sunday's
+  for: true, //for sunday's
 }
 
 const isPossessive = (terms, i) => {
@@ -48,6 +48,10 @@ const isPossessive = (terms, i) => {
     if (nextTerm.tags.has('Infinitive')) {
       return true
     }
+    //'jamaica's growing'
+    if (nextTerm.tags.has('Gerund')) {
+      return false
+    }
     //fix 'spencer's runs'
     if (nextTerm.tags.has('PresentTense')) {
       return true
@@ -65,7 +69,7 @@ const isPossessive = (terms, i) => {
     if (nextTerm.tags.has('Possessive')) {
       return false
     }
-    // the captain's John 
+    // the captain's John
     if (nextTerm.tags.has('ProperNoun') && !term.tags.has('ProperNoun')) {
       return false
     }

@@ -1,29 +1,47 @@
 const hasContraction = /'/
 
-const isHas = (terms, i) => {
-  //look for a past-tense verb
-  let after = terms.slice(i + 1, i + 3)
-  return after.some(t => t.tags.has('PastTense'))
+const hasWords = new Set([
+  'been', //the meeting's been ..
+])
+
+const isOrHas = (terms, i) => {
+  // scan ahead
+  for (let o = i + 1; o < terms.length; o += 1) {
+    let t = terms[o]
+
+    if (hasWords.has(t.normal)) {
+      return 'has'
+    }
+    // The plane's landed
+    if (t.tags.has('PastTense')) {
+      return 'has'
+    }
+    // the cat's sleeping
+    if (t.tags.has('Gerund')) {
+      return 'is'
+    }
+  }
+  return 'is'
 }
 
-// 's -> [possessive, 'has', or 'is']
+// 's -> [possessive, 'has', 'is', 'are', 'us']
 const apostropheS = function (terms, i) {
   // possessive, is/has
   let before = terms[i].normal.split(hasContraction)[0]
-  // spencer's got -> 'has'
-  if (isHas(terms, i)) {
-    return [before, 'has']
-  }
-  // let's
+  // let's - >[let, us]
   if (before === 'let') {
     return [before, 'us']
   }
-  // allow slang "there's" -> there are
+  // allow slang "there's cookies" -> there are
   if (before === 'there') {
-    let nextTerm = terms[i + 1]
-    if (nextTerm && nextTerm.tags.has('Plural')) {
+    let t = terms[i + 1]
+    if (t && t.tags.has('Plural')) {
       return [before, 'are']
     }
+  }
+  // spencer's got -> spencer has got
+  if (isOrHas(terms, i) === 'has') {
+    return [before, 'has']
   }
   return [before, 'is']
 }

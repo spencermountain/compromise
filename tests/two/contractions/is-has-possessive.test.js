@@ -182,6 +182,7 @@ test('is-has', function (t) {
     ["the rocket's red glare", '#Possessive'],
     ["the rocket's glare", '#Possessive'],
     ["the rocket's red", 'is'],
+    ["Everybody's waiting up to hear ", 'is'],
     ["this truck's close proximity", '#Possessive'],
     ["causing a patient's secondary rhinitis", '#Possessive'],
     ["Prince Ahmed's natural disposition", '#Possessive'],
@@ -191,6 +192,9 @@ test('is-has', function (t) {
     [`Toronto's loudest singing group `, '#Possessive'],
     [`Drake's rich album cover`, '#Possessive'],
     [`a role in Los Angeles's cultural identity`, '#Possessive'],
+    [`this artist's painting of his "Anatomy Lesson" `, '#Possessive'],
+    [`the Art Institute of Chicago's Building `, '#Possessive'],
+    [`it features Cody's chanting. `, '#Possessive'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

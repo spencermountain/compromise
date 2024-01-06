@@ -42,6 +42,21 @@ const isPossessive = (terms, i) => {
     }
     return false
   }
+  // the sun's setting vs the artist's painting
+  // gerund = is,  noun = possessive
+  // (we are doing some dupe-work of the switch classifier here)
+  if (nextTerm.switch == 'Noun|Gerund') {
+    let next2 = terms[i + 2]
+    // the artist's painting.
+    if (!next2) {
+      return true
+    }
+    // the artist's painting is..
+    if (next2.tags.has('Copula') || next2.tags.has('Preposition')) {
+      return true
+    }
+    return false
+  }
   //a gerund suggests 'is walking'
   if (nextTerm.tags.has('Verb')) {
     //fix 'jamie's bite'
@@ -56,10 +71,6 @@ const isPossessive = (terms, i) => {
     if (nextTerm.tags.has('PresentTense')) {
       return true
     }
-    return false
-  }
-  // the sun's setting
-  if (nextTerm.switch == 'Noun|Gerund') {
     return false
   }
 

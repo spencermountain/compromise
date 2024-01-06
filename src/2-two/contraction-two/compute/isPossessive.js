@@ -62,6 +62,7 @@ const isPossessive = (terms, i) => {
   if (nextTerm.switch == 'Noun|Gerund') {
     return false
   }
+
   //spencer's house
   if (nextTerm.tags.has('Noun')) {
     let nextStr = nextTerm.machine || nextTerm.normal
@@ -79,6 +80,7 @@ const isPossessive = (terms, i) => {
     }
     return true
   }
+
   // by sunday's final
   if (terms[i - 1] && beforePossessive[terms[i - 1].normal] === true) {
     return true

@@ -175,6 +175,22 @@ test('is-has', function (t) {
     ["The train's already left the station", 'has'],
     ["The weather's getting colder", 'is'],
     ["They're convinced he's innocent", 'is'],
+
+    ["the cell's natural", 'is'],
+    ["the cell's natural mechanisms", '#Possessive'],
+    ["the field's leading proponents", '#Possessive'],
+    ["the rocket's red glare", '#Possessive'],
+    ["the rocket's glare", '#Possessive'],
+    ["the rocket's red", 'is'],
+    ["this truck's close proximity", '#Possessive'],
+    ["causing a patient's secondary rhinitis", '#Possessive'],
+    ["Prince Ahmed's natural disposition", '#Possessive'],
+    ["that genre's stylistic achievements", '#Possessive'],
+    ["picking up on Jeramie's quick explanations", '#Possessive'],
+    [`This company's "Natural Soda"`, '#Possessive'],
+    [`Toronto's loudest singing group `, '#Possessive'],
+    [`Drake's rich album cover`, '#Possessive'],
+    [`a role in Los Angeles's cultural identity`, '#Possessive'],
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])

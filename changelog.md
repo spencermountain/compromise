@@ -20,6 +20,11 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 -->
 
+#### 14.11.1 [Jan 2024]
+
+- **[fix]** - missing words in html output
+- **[change]** - better #Possessive tagging
+
 #### 14.11.0 [Dec 2023]
 
 - **[new]** - tagging `.freeze()` and `.unfreeze()` feature

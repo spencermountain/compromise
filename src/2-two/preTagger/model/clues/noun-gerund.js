@@ -4,21 +4,39 @@ import gerund from './_gerund.js'
 // 'operating the crane', or 'operating room'
 const misc = {
   beforeTags: {
-    Copula: 'Gerund', PastTense: 'Gerund', PresentTense: 'Gerund', Infinitive: 'Gerund'
+    Copula: 'Gerund',
+    PastTense: 'Gerund',
+    PresentTense: 'Gerund',
+    Infinitive: 'Gerund',
   },
-  afterTags: {},
+  afterTags: {
+    Value: 'Gerund', //maintaining 500
+  },
   beforeWords: {
-    are: 'Gerund', were: 'Gerund', be: 'Gerund', no: 'Gerund', without: 'Gerund',
+    are: 'Gerund',
+    were: 'Gerund',
+    be: 'Gerund',
+    no: 'Gerund',
+    without: 'Gerund',
     //are you playing
-    you: 'Gerund', we: 'Gerund', they: 'Gerund', he: 'Gerund', she: 'Gerund',
+    you: 'Gerund',
+    we: 'Gerund',
+    they: 'Gerund',
+    he: 'Gerund',
+    she: 'Gerund',
     //stop us playing
-    us: 'Gerund', them: 'Gerund'
+    us: 'Gerund',
+    them: 'Gerund',
   },
   afterWords: {
     // offering the
-    the: 'Gerund', this: 'Gerund', that: 'Gerund',
+    the: 'Gerund',
+    this: 'Gerund',
+    that: 'Gerund',
     //got me thinking
-    me: 'Gerund', us: 'Gerund', them: 'Gerund',
+    me: 'Gerund',
+    us: 'Gerund',
+    them: 'Gerund',
   },
 }
 const clue = {

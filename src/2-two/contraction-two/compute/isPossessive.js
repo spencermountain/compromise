@@ -96,15 +96,30 @@ const isPossessive = (terms, i) => {
   if (terms[i - 1] && beforePossessive[terms[i - 1].normal] === true) {
     return true
   }
-  //rocket's red glare
-  let twoTerm = terms[i + 2]
-  if (twoTerm && twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun')) {
-    return true
-  }
-  //othwerwise, an adjective suggests 'is good'
-  if (nextTerm.tags.has('Adjective') || nextTerm.tags.has('Adverb') || nextTerm.tags.has('Verb')) {
+
+  // spencer's tired
+  if (nextTerm.tags.has('Adjective')) {
+    let twoTerm = terms[i + 2]
+    //the rocket's red
+    if (!twoTerm) {
+      return false
+    }
+    // rocket's red nozzle
+    if (twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun')) {
+      return true
+    }
+    // rocket's red glare
+    if (twoTerm.switch === 'Noun|Verb') {
+      return true
+    }
+    //othwerwise, an adjective suggests 'is good'
     return false
   }
+  // baby's first steps
+  if (nextTerm.tags.has('Value')) {
+    return true
+  }
+  // otherwise not possessive
   return false
 }
 export default isPossessive

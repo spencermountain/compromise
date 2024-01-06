@@ -119,7 +119,6 @@ test('is-has', function (t) {
     ["The company's success is remarkable", '#Possessive'],
     ["The computer's crashed again", 'has'],
     ["The concert's sold out", 'is'],
-    ["The concert's starting soon", '#Possessive'],
     ["The concert's starting soon", 'is'],
     ["The detective's intuition was sharp", '#Possessive'],
     ["The doctor's advice was helpful", '#Possessive'],

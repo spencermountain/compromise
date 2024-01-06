@@ -52,8 +52,12 @@ const isPossessive = (terms, i) => {
       return true
     }
     // the artist's painting is..
-    if (next2.tags.has('Copula') || next2.tags.has('Preposition')) {
+    if (next2.tags.has('Copula')) {
       return true
+    }
+    // the cat's sleeping on ..
+    if (next2.normal === 'on' || next2.normal === 'in') {
+      return false
     }
     return false
   }

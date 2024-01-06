@@ -4,13 +4,27 @@ const hasWords = new Set([
   'been', //the meeting's been ..
   'become', //my son's become
 ])
+const isWords = new Set([
+  'what', //it's what
+  'how', //it's how
+  'when',
+  'if', //it's if
+])
 
+// the big clue is the tense of the following verb
 const isOrHas = (terms, i) => {
+  // look at the contracted word for clues
+  // if (terms[i].tags.has('Actor')) {
+  //   return 'has'
+  // }
   // scan ahead
   for (let o = i + 1; o < terms.length; o += 1) {
     let t = terms[o]
     if (hasWords.has(t.normal)) {
       return 'has'
+    }
+    if (isWords.has(t.normal)) {
+      return 'is'
     }
     // The plane's landed
     if (t.tags.has('PastTense')) {

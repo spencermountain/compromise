@@ -2,13 +2,13 @@ const hasContraction = /'/
 
 const hasWords = new Set([
   'been', //the meeting's been ..
+  'become', //my son's become
 ])
 
 const isOrHas = (terms, i) => {
   // scan ahead
   for (let o = i + 1; o < terms.length; o += 1) {
     let t = terms[o]
-
     if (hasWords.has(t.normal)) {
       return 'has'
     }
@@ -18,6 +18,14 @@ const isOrHas = (terms, i) => {
     }
     // the cat's sleeping
     if (t.tags.has('Gerund')) {
+      return 'is'
+    }
+    // she's the one
+    if (t.tags.has('Determiner')) {
+      return 'is'
+    }
+    // the food's ready
+    if (t.tags.has('Adjective')) {
       return 'is'
     }
   }

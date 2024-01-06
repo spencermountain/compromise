@@ -2,9 +2,9 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
-nlp(`The company's expanding rapidly`).debug()
+nlp(`The sun's setting`).debug()
 // nlp(`He'd never let us`).debug()
 // nlp('john’s neat documents about georgia').debug()
 // nlp(`John's talks about Georgia`).debug()

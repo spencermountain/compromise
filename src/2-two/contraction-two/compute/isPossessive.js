@@ -58,6 +58,10 @@ const isPossessive = (terms, i) => {
     }
     return false
   }
+  // the sun's setting
+  if (nextTerm.switch == 'Noun|Gerund') {
+    return false
+  }
   //spencer's house
   if (nextTerm.tags.has('Noun')) {
     let nextStr = nextTerm.machine || nextTerm.normal

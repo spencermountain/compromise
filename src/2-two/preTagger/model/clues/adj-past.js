@@ -17,22 +17,22 @@ const adjPast = {
     Pronoun: past, //hooked me
     Determiner: past, //hooked the
     Adverb: past, //cooked perfectly
-    Comparative: past,//closed higher
-    Date: past,// alleged thursday
-    Gerund: past,//left dancing
+    Comparative: past, //closed higher
+    Date: past, // alleged thursday
+    Gerund: past, //left dancing
   },
   beforeWords: {
-    be: past,//be hooked vs be embarrassed
-    who: past,//who lost
-    get: 'Adjective',//get charged
+    be: past, //be hooked vs be embarrassed
+    who: past, //who lost
+    get: 'Adjective', //get charged
     had: past,
     has: past,
     have: past,
     been: past,
-    it: past,//it intoxicated him
-    as: past,//as requested
-    for: 'Adjective',//for discounted items
-    more: 'Adjective',//more broken promises
+    it: past, //it intoxicated him
+    as: past, //as requested
+    for: 'Adjective', //for discounted items
+    more: 'Adjective', //more broken promises
   },
   afterWords: {
     by: past, //damaged by
@@ -49,16 +49,17 @@ const adjPast = {
     as: past, //known as
     on: past, //focused on
     at: past, //recorded at
-    between: past,//settled between
-    to: past,//dedicated to
-    into: past,//pumped into
-    us: past,//charged us
-    them: past,//charged us
-    his: past,//shared his
-    her: past,//
-    their: past,//
-    our: past,//
-    me: past,//
+    between: past, //settled between
+    to: past, //dedicated to
+    into: past, //pumped into
+    us: past, //charged us
+    them: past, //charged us
+    his: past, //shared his
+    her: past, //
+    their: past, //
+    our: past, //
+    me: past, //
+    about: 'Adjective',
   },
 }
 

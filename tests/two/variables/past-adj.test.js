@@ -167,6 +167,8 @@ let arr = [
     "He was amazed about the abandoned building's mysterious past.",
     '#Pronoun #Copula #Adjective #Preposition #Determiner #Adjective #Possessive #Adjective #Noun',
   ],
+  ['He also developed software.', '#Pronoun #Adverb #Verb #Noun'],
+  ['Cheese is also aged', '#Noun #Copula #Adverb #Adjective'],
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {

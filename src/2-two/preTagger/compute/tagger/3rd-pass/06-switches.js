@@ -13,7 +13,7 @@ const checkWord = (term, obj) => {
     found = obj[str]
   }
   if (found && env.DEBUG_TAGS) {
-    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)//eslint-disable-line
+    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`) //eslint-disable-line
   }
   return found
 }
@@ -30,7 +30,7 @@ const checkTag = (term, obj = {}, tagSet) => {
   })
   let found = tags.find(tag => obj[tag])
   if (found && env.DEBUG_TAGS) {
-    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`)//eslint-disable-line
+    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`) //eslint-disable-line
   }
   found = obj[found]
   return found
@@ -40,13 +40,14 @@ const pickTag = function (terms, i, clues, model) {
   if (!clues) {
     return null
   }
+  const beforeIndex = terms[i - 1]?.text !== 'also' ? i - 1 : Math.max(0, i - 2)
   const tagSet = model.one.tagSet
   // look -> right word, first
   let tag = checkWord(terms[i + 1], clues.afterWords)
   // look <- left word, second
-  tag = tag || checkWord(terms[i - 1], clues.beforeWords)
-  // look <- left tag 
-  tag = tag || checkTag(terms[i - 1], clues.beforeTags, tagSet)
+  tag = tag || checkWord(terms[beforeIndex], clues.beforeWords)
+  // look <- left tag
+  tag = tag || checkTag(terms[beforeIndex], clues.beforeTags, tagSet)
   // look -> right tag
   tag = tag || checkTag(terms[i + 1], clues.afterTags, tagSet)
   // console.log(clues)
@@ -82,7 +83,7 @@ const doSwitches = function (terms, i, world) {
       // add plural/singular etc.
       fillTags(terms, i, model)
     } else if (env.DEBUG_TAGS) {
-      console.log(`\n -> X  - '${str}'  : (${form})  `)//eslint-disable-line
+      console.log(`\n -> X  - '${str}'  : (${form})  `) //eslint-disable-line
     }
   }
 }

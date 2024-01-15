@@ -3,7 +3,6 @@ import nlp from '../_lib.js'
 const here = '[two/past-adj] '
 
 let arr = [
-
   // == adjectives ==
   [`'cool'`, '#Adjective'],
   ['great', '#Adjective'],
@@ -156,6 +155,18 @@ let arr = [
   // ['it was fixed', '#Noun #Copula #PastTense'],
   ['it will be boxed', '#Noun #Verb #Verb #PastTense'],
   // ['i am gutted', '#Noun #PastTense #Adjective'],
+  // [
+  //   'She felt abandoned about the sudden change in plans',
+  //   '#Pronoun #PastTense #Adjective #Preposition #Determiner #Adjective #Noun #Preoposition #Noun',
+  // ],
+  [
+    'The puzzled detective was bewildered about the abandoned clues.',
+    '#Determiner #Adjective #Noun #Copula #Adjective #Preposition #Determiner #Adjective #Noun',
+  ],
+  [
+    "He was amazed about the abandoned building's mysterious past.",
+    '#Pronoun #Copula #Adjective #Preposition #Determiner #Adjective #Possessive #Adjective #Noun',
+  ],
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {

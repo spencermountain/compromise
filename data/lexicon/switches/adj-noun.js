@@ -1,8 +1,6 @@
 // the commercial market
 // watching the commercial
 export default [
-
-
   'academic',
   'adolescent',
   'adult',
@@ -95,6 +93,7 @@ export default [
   'mortal',
   'nagging',
   'novel',
+  'nuts',
   'offensive',
   'official',
   'opposite',
@@ -166,6 +165,4 @@ export default [
   'void',
   'watershed',
   'welcome',
-
-
 ]

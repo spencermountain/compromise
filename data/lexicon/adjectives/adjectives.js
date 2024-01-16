@@ -809,4 +809,5 @@ export default [
   'greasy',
   'pointy',
   'testy',
+  'sold out',
 ]

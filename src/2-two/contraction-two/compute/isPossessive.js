@@ -11,6 +11,8 @@ const beforePossessive = {
   by: true, //by sunday's
   for: true, //for sunday's
 }
+let adjLike = new Set(['too', 'also', 'enough', 'about'])
+let nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must', 'had', 'have'])
 
 const isPossessive = (terms, i) => {
   let term = terms[i]
@@ -81,6 +83,21 @@ const isPossessive = (terms, i) => {
     return false
   }
 
+  // john's nuts
+  if (nextTerm.switch === 'Adj|Noun') {
+    let twoTerm = terms[i + 2]
+    if (!twoTerm) {
+      return false //adj
+    }
+    // john's nuts were..
+    if (nounLike.has(twoTerm.normal)) {
+      return true
+    }
+    // john's nuts about..
+    if (adjLike.has(twoTerm.normal)) {
+      return false //adj
+    }
+  }
   //spencer's house
   if (nextTerm.tags.has('Noun')) {
     let nextStr = nextTerm.machine || nextTerm.normal

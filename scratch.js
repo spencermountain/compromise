@@ -2,11 +2,11 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 
-let doc = nlp(`The meeting's scheduled for 3 PM`).debug()
+let doc = nlp(`The concert's sold out`).debug()
 // let doc = nlp(`The sun's setting`).debug()
-console.log(doc.docs[0])
+// console.log(doc.docs[0])
 // nlp(`He'd never let us`).debug()
 // nlp('john’s neat documents about georgia').debug()
 // nlp(`John's talks about Georgia`).debug()

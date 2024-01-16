@@ -1164,6 +1164,7 @@ let arr = [
   // ['i̇zmir', '#ProperNoun'],
   ['µs', '#Unit'],
 
+  ['single-particle tracking using biotin', '#Adjective #Noun #Noun #Gerund #Noun'],
   // ['',''],
 ]
 test('match:', function (t) {

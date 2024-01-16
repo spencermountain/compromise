@@ -1,12 +1,12 @@
 const isClass = /^\../
 const isId = /^#./
 
-const escapeXml = (str) => {
+const escapeXml = str => {
   str = str.replace(/&/g, '&amp;')
   str = str.replace(/</g, '&lt;')
   str = str.replace(/>/g, '&gt;')
   str = str.replace(/"/g, '&quot;')
-  str = str.replace(/'/g, '&apos;');
+  str = str.replace(/'/g, '&apos;')
   return str
 }
 
@@ -64,7 +64,8 @@ const html = function (obj) {
       if (starts.hasOwnProperty(t.id)) {
         out += starts[t.id].join('')
       }
-      out += t.pre || '' + t.text || ''
+      out += t.pre || ''
+      out += t.text || ''
       if (ends.hasOwnProperty(t.id)) {
         out += ends[t.id].join('')
       }

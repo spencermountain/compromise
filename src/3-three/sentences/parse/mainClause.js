@@ -28,10 +28,18 @@ const mainClause = function (s) {
     return m
   }
 
-  m = m.ifNo('(despite|during|before|through|throughout)')
+  // check for subordinating conjunctions -- must be at the beginning of the clause
+  m = m.ifNo('(^despite|^during|^before|^through|^throughout)')
   if (m.length === 1) {
     return m
   }
+
+  // check for clauses beginning with Gerund ("Taking ..., ...")
+  m = m.ifNo('^#Gerund')
+  if (m.length === 1) {
+    return m
+  }
+
   // did we go too far?
   if (m.length === 0) {
     m = s

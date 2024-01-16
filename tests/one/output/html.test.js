@@ -18,6 +18,15 @@ test('html-match', function (t) {
   doc = nlp(`one match two.`)
   html = doc.html({ '.red': 'match+', '.blue': doc.match('two') })
   t.equal(html, `one <span class="red">match</span> <span class="blue">two</span>.`, here + 'html two classes')
+
+  doc = nlp(`if i can recall, my grey dog loves pizza crusts (they are really good).`)
+  html = doc.html({ '.red': 'my grey dog', '.blue': doc.match('loves') })
+  t.equal(
+    html,
+    `if i can recall, <span class="red">my grey dog</span> <span class="blue">loves</span> pizza crusts (they are really good).`,
+    here + 'html pre test'
+  )
+
   t.end()
 })
 
@@ -25,7 +34,7 @@ test('html-nest', function (t) {
   let doc = nlp(`one match two.`)
   let html = doc.html({
     i: 'match',
-    b: 'one match two'
+    b: 'one match two',
   })
   t.equal(html, `<b>one <i>match</i> two</b>.`, here + 'easy nest')
 

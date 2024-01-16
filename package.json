@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "14.11.0",
+  "version": "14.11.1",
   "module": "./src/three.js",
   "main": "./src/three.js",
   "unpkg": "./builds/compromise.js",
@@ -113,7 +113,7 @@
     "rollup-plugin-filesize-check": "^0.0.2",
     "shelljs": "0.8.5",
     "tap-dancer": "0.3.4",
-    "tape": "5.7.2"
+    "tape": "5.7.3"
   },
   "eslintIgnore": [
     "builds/*.js",

@@ -52,6 +52,10 @@ const isOrHas = (terms, i) => {
     }
     // The meeting's scheduled vs The plane's landed
     if (t.tags.has('PastTense')) {
+      // meeting's scheduled for
+      if (terms[o + 1] && terms[o + 1].normal === 'for') {
+        return 'is'
+      }
       return 'has'
     }
   }

@@ -49,7 +49,10 @@ const isPossessive = (terms, i) => {
     let next2 = terms[i + 2]
     // the artist's painting.
     if (!next2) {
-      return true
+      if (term.tags.has('Actor') || term.tags.has('ProperNoun')) {
+        return true
+      }
+      return false
     }
     // the artist's painting is..
     if (next2.tags.has('Copula')) {
@@ -110,6 +113,11 @@ const isPossessive = (terms, i) => {
     }
     // rocket's red nozzle
     if (twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun')) {
+      //project's behind schedule
+      let str = nextTerm.normal
+      if (str === 'above' || str === 'below' || str === 'behind') {
+        return false
+      }
       return true
     }
     // rocket's red glare

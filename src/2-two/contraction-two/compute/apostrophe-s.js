@@ -9,15 +9,13 @@ const isWords = new Set([
   'how', //it's how
   'when',
   'if', //it's if
+  'too',
 ])
+let adjLike = new Set(['too', 'also', 'enough'])
 
 // the big clue is the tense of the following verb
 const isOrHas = (terms, i) => {
-  // look at the contracted word for clues
-  // if (terms[i].tags.has('Actor')) {
-  //   return 'has'
-  // }
-  // scan ahead
+  // scan ahead for the next verb or adjective
   for (let o = i + 1; o < terms.length; o += 1) {
     let t = terms[o]
     if (hasWords.has(t.normal)) {
@@ -25,10 +23,6 @@ const isOrHas = (terms, i) => {
     }
     if (isWords.has(t.normal)) {
       return 'is'
-    }
-    // The plane's landed
-    if (t.tags.has('PastTense')) {
-      return 'has'
     }
     // the cat's sleeping
     if (t.tags.has('Gerund')) {
@@ -41,6 +35,24 @@ const isOrHas = (terms, i) => {
     // the food's ready
     if (t.tags.has('Adjective')) {
       return 'is'
+    }
+    // the car's parked
+    if (t.switch === 'Adj|Past') {
+      if (terms[o + 1]) {
+        // car's parked too ..
+        if (adjLike.has(terms[o + 1].normal)) {
+          return 'is'
+        }
+        // car's parked on ..
+        if (terms[o + 1].tags.has('Preposition')) {
+          return 'is'
+        }
+      }
+      // return 'is'
+    }
+    // The meeting's scheduled vs The plane's landed
+    if (t.tags.has('PastTense')) {
+      return 'has'
     }
   }
   return 'is'

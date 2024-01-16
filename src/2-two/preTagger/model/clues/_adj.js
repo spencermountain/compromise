@@ -61,6 +61,6 @@ export default {
     also: jj, //insulting too
     or: jj, //insulting or
     enough: jj, //cool enough
-    about: jj, //cool about
+    //about: jj, //cool about
   },
 }

@@ -3,10 +3,10 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
-
-let doc = nlp(`John smith and David Bowie`).debug()
+let doc = nlp(`john jacob and john. foobar`)
 let m = doc.split('.')
-m = m.joinIf('#Person', '#Person')
+
+m = m.joinIf('john', '.')
 m.debug()
 
 // let doc = nlp(`The sun's setting`).debug()

@@ -1,4 +1,4 @@
-import type { Lexicon, Plugin, matchOptions, Match, Net } from './misc.d.ts'
+import type { Lexicon, Plugin, matchOptions, Match, Net, ParsedMatch } from './misc.d.ts'
 import type View from './view/one.d.ts'
 
 /** parse a given text */
@@ -15,7 +15,7 @@ declare module nlp {
   /** mix-in a compromise plugin */
   export function extend(plugin: Plugin): any
   /** turn a match-string into json */
-  export function parseMatch(match: string, opts?: matchOptions): object[]
+  export function parseMatch(match: string, opts?: matchOptions): ParsedMatch
   /** grab library internals */
   export function world(): object
   /** grab library metadata */

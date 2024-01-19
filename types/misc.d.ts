@@ -90,3 +90,5 @@ export interface Net {
   always?: any,
   isNet: boolean
 }
+
+export type ParsedMatch = object[]

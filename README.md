@@ -494,6 +494,8 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.splitOn('')](https://observablehq.com/@spencermountain/compromise-split)** - return a Document with three parts for every match ('splitOn')
 - **[.splitBefore('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase before each matching segment
 - **[.splitAfter('')](https://observablehq.com/@spencermountain/compromise-split)** - partition a phrase after each matching segment
+- **[.join()](https://observablehq.com/@spencermountain/compromise-split)** - merge any neighbouring terms in each match
+- **[.joinIf(leftMatch, rightMatch)](https://observablehq.com/@spencermountain/compromise-split)** - merge any neighbouring terms under given conditions
 - **[.lookup([])](https://observablehq.com/@spencermountain/compromise-match)** - quick find for an array of string matches
 - **[.autoFill()](https://observablehq.com/@spencermountain/compromise-typeahead)** - create type-ahead assumptions on the document
 

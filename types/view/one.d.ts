@@ -1,4 +1,6 @@
-import type { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Term, Net } from '../misc.d.ts'
+import type { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Term, Net, ParsedMatch } from '../misc.d.ts'
+
+export type Matchable = string | View | Net | ParsedMatch
 
 declare class View {
   // Utils
@@ -81,46 +83,50 @@ declare class View {
 
   // Match
   /** return matching patterns in this doc */
-  match: (match: string | View | Net, group?: string | number, options?: matchOptions) => View
+  match: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** return only the first match */
-  matchOne: (match: string | View | Net, group?: string | number, options?: matchOptions) => View
+  matchOne: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** Return a boolean if this match exists */
-  has: (match: string | View | Net, group?: string | number, options?: matchOptions) => boolean
+  has: (match: Matchable, group?: string | number, options?: matchOptions) => boolean
   /** return each current phrase, only if it contains this match */
-  if: (match: string | View | Net, group?: string | number, options?: matchOptions) => View
+  if: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** Filter-out any current phrases that have this match */
-  ifNo: (match: string | View | Net, group?: string | number, options?: matchOptions) => View
+  ifNo: (match: Matchable, group?: string | number, options?: matchOptions) => View
 
   /** return the terms before each match */
-  before: (match: string | View, group?: string | number, options?: matchOptions) => View
+  before: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** return the terms after each match */
-  after: (match: string | View, group?: string | number, options?: matchOptions) => View
+  after: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** alias of .before() */
-  lookBehind: (match: string | View, group?: string | number, options?: matchOptions) => View
+  lookBehind: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** alias of .before() */
-  lookBefore: (match: string | View, group?: string | number, options?: matchOptions) => View
+  lookBefore: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** alias of .after() */
-  lookAhead: (match: string | View, group?: string | number, options?: matchOptions) => View
+  lookAhead: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** alias of .after() */
-  lookAfter: (match: string | View, group?: string | number, options?: matchOptions) => View
+  lookAfter: (match: Matchable, group?: string | number, options?: matchOptions) => View
 
   /** add any immediately-preceding matches to the view*/
-  growLeft: (match: string | View, group?: string | number, options?: matchOptions) => View
+  growLeft: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** add any immediately-following matches to the view*/
-  growRight: (match: string | View, group?: string | number, options?: matchOptions) => View
+  growRight: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** expand the view with any left-or-right matches*/
-  grow: (match: string | View, group?: string | number, options?: matchOptions) => View
+  grow: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** apply a sequence of match objects to the document */
   sweep: (match: Net, opts?: object) => { view: View, found: object[] }
 
   /** .split() [alias] */
-  splitOn: (match?: string, group?: string | number) => View
+  splitOn: (match?: Matchable, group?: string | number) => View
   /** separate everything after the match as a new phrase */
-  splitBefore: (match?: string, group?: string | number) => View
+  splitBefore: (match?: Matchable, group?: string | number) => View
   /** separate everything before the word, as a new phrase */
-  splitAfter: (match?: string, group?: string | number) => View
+  splitAfter: (match?: Matchable, group?: string | number) => View
   /** splitAfter() alias */
-  split: (match?: string, group?: string | number) => View
+  split: (match?: Matchable, group?: string | number) => View
+  // merge any neighbouring terms in the match
+  join: () => View
+  // merge any neighbouring terms that match conditions
+  joinIf: (leftMatch?: Matchable, rightMatch?: Matchable) => View
 
   // Case
   /** turn every letter of every term to lower-cse */
@@ -146,9 +152,9 @@ declare class View {
   /** insertAfter() alias */
   insert: (text: string | View) => View
   /** fully remove these terms from the document */
-  remove: (match: string | View) => View
+  remove: (match: Matchable) => View
   /** alias for .remove() */
-  delete: (match: string | View) => View
+  delete: (match: Matchable) => View
   /** search and replace match with new content */
   replace: (from: string | View, to?: string | Function, keep?: object) => View
   /** substitute-in new content */
@@ -201,19 +207,19 @@ declare class View {
 
   // ### Pointers
   /** return all matches without duplicates */
-  union: (match: string | View) => View
+  union: (match: Matchable) => View
   /** .union() alias */
-  and: (match: string | View) => View
+  and: (match: Matchable) => View
   /** return only duplicate matches */
-  intersection: (match: string | View) => View
+  intersection: (match: Matchable) => View
   /** return all results except for this */
-  not: (match: string | View, options?: any) => View
+  not: (match: Matchable, options?: any) => View
   /** .not() alias */
-  difference: (match: string | View, options?: any) => View
+  difference: (match: Matchable, options?: any) => View
   /** get everything that is not a match */
-  complement: (match: string | View) => View
+  complement: (match: Matchable) => View
   /** remove overlaps in matches */
-  settle: (match: string | View) => View
+  settle: (match: Matchable) => View
 
 
   // Tag

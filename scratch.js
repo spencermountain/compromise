@@ -2,8 +2,13 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
+nlp.plugin({
+  frozen: {
+    'sold out': 'Diagnostic',
+  },
+})
 let doc = nlp(`The concert's sold out`).debug()
 // let doc = nlp(`The sun's setting`).debug()
 // console.log(doc.docs[0])

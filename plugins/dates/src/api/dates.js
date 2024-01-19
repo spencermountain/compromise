@@ -2,9 +2,7 @@ import find from './find/index.js'
 import parseDates from './parse/index.js'
 import toJSON from './toJSON.js'
 
-
 const api = function (View) {
-
   class Dates extends View {
     constructor(document, pointer, groups, opts = {}) {
       super(document, pointer, groups)
@@ -14,7 +12,7 @@ const api = function (View) {
 
     get(n) {
       let all = []
-      this.forEach((m) => {
+      this.forEach(m => {
         parseDates(m, this.opts).forEach(res => {
           all.push(toJSON(res))
         })
@@ -28,7 +26,7 @@ const api = function (View) {
     json(opts = {}) {
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
-        if (opts && opts.dates !== true) {
+        if (opts && opts.dates !== false) {
           let parsed = parseDates(m, this.opts)
           json.dates = toJSON(parsed[0])
         }

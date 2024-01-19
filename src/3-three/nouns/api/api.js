@@ -20,7 +20,7 @@ const api = function (View) {
       let opts = typeof n === 'object' ? n : {}
       return this.getNth(n).map(m => {
         let json = m.toView().json(opts)[0] || {}
-        if (opts && opts.noun !== true) {
+        if (opts && opts.noun !== false) {
           json.noun = toJSON(m)
         }
         return json

@@ -31,7 +31,7 @@ const tagger = function (list, document, world) {
     }
     if (todo.tag !== undefined) {
       setTag(terms, todo.tag, world, todo.safe, `[post] '${reason}'`)
-      // quick and dirty plural tagger
+      // quick and dirty plural tagger 😕
       if (todo.tag === 'Noun' && looksPlural) {
         let term = terms[terms.length - 1]
         if (looksPlural(term.text)) {
@@ -40,13 +40,17 @@ const tagger = function (list, document, world) {
           setTag([term], 'Singular', world, todo.safe, 'quick-singular')
         }
       }
+      // allow freezing this match, too
+      if (todo.freeze === true) {
+        terms.forEach(term => (term.frozen = true))
+      }
     }
     if (todo.unTag !== undefined) {
       unTag(terms, todo.unTag, world, todo.safe, reason)
     }
     // allow setting chunks, too
     if (todo.chunk) {
-      terms.forEach(t => t.chunk = todo.chunk)
+      terms.forEach(t => (t.chunk = todo.chunk))
     }
   })
 }

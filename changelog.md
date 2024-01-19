@@ -21,7 +21,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** -  support for frozen lex in plugin object #1080
 - **[fix]** - toggling options in .json()
 - **[new]** - .join() and .joinIf() methods
-- **[change]** - internal typescript version
+- **[new]** - support freeze in sweep
+- **[change]** - internal typescript cleanup
 
 https://observablehq.com/@spencermountain/compromise-split
 -->

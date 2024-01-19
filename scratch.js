@@ -1,13 +1,14 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
+import nlp from './src/one.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
-let doc = nlp(`john jacob and john. foobar`)
-let m = doc.split('.')
 
-m = m.joinIf('john', '.')
-m.debug()
+let doc = nlp(`republic of leeland`)
+let net = nlp.buildNet([{ match: '. of leeland', tag: 'Organization', freeze: true }])
+doc.sweep(net)
+doc.match('republic of .').tag('Place')
+doc.debug()
 
 // let doc = nlp(`The sun's setting`).debug()
 // console.log(doc.docs[0])

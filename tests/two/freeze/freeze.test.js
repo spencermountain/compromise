@@ -47,3 +47,14 @@ test('catch sneeky tags', function (t) {
   t.equal(doc.has('#Person #Verb is nice'), true, here)
   t.end()
 })
+
+test('in plugin', function (t) {
+  nlp.plugin({
+    frozen: {
+      'slug life': 'Verb',
+    },
+  })
+  let doc = nlp(`The cool slug life is nice`)
+  t.equal(doc.match('#Verb+').has('slug life'), true, here + 'in plugin')
+  t.end()
+})

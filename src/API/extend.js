@@ -109,7 +109,7 @@ const extend = function (plugin, world, View, nlp) {
     nlp.addWords(plugin.words)
   }
   if (plugin.frozen) {
-    Object.assign(model.one.frozenLex, plugin.frozen)
+    nlp.addWords(plugin.frozen, true)
   }
   if (plugin.mutate) {
     plugin.mutate(world)

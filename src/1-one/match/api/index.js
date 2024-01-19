@@ -1,8 +1,9 @@
 import match from './match.js'
 import lookaround from './lookaround.js'
 import split from './split.js'
+import join from './join.js'
 
-const methods = Object.assign({}, match, lookaround, split)
+const methods = Object.assign({}, match, lookaround, split, join)
 // aliases
 methods.lookBehind = methods.before
 methods.lookBefore = methods.before

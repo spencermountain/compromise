@@ -2,18 +2,12 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
-nlp.plugin({
-  frozen: {
-    'slug life': 'Cool',
-  },
-})
-let doc = nlp(`The cool slug life`).debug()
-
-// let doc = nlp(`larry curly and moe`)
-// let m = doc.split('.')
-// m.debug()
+let doc = nlp(`John smith and David Bowie`).debug()
+let m = doc.split('.')
+m = m.joinIf('#Person', '#Person')
+m.debug()
 
 // let doc = nlp(`The sun's setting`).debug()
 // console.log(doc.docs[0])

@@ -40,3 +40,27 @@ test('ensure neighbours-only join:', function (t) {
 
   t.end()
 })
+
+test('join-all:', function (t) {
+  let str = `john jacob and john. john cool foo`
+  let doc = nlp(str)
+  t.equal(doc.length, 2, here + 'og split')
+  let m = doc.splitAfter('john .')
+  t.deepEqual(m.out('array'), ['john jacob', 'and john.', 'john cool', 'foo'], here + 'full join')
+
+  let res = m.join()
+  t.equal(res.length, 2, here + 'two again')
+  t.equal(res.text(), str, here + 'full again')
+
+  t.end()
+})
+
+test('join-all-miss:', function (t) {
+  let doc = nlp(`before but after. before after`)
+  let m = doc.split()
+  m = m.not('but')
+  let res = m.join()
+  t.deepEqual(res.out('array'), ['before', 'after.', 'before after'], here + 'full join')
+
+  t.end()
+})

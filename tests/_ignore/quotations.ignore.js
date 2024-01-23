@@ -3,7 +3,7 @@ import nlp from '../three/_lib.js'
 const here = '[three/quotations] '
 
 function testAllQuotes(a, t) {
-  const str = nlp(a[0]).quotations().out('normal')
+  const str = nlp(a[0]).quotations().out('root')
   t.equal(str, a[1], here + a[0])
 }
 
@@ -17,7 +17,7 @@ test('quotation test:', function (t) {
     [`“quote is here”`, `quote is here`],
   ]
   arr.forEach(function (a) {
-    const str = nlp(a[0]).quotations().text()
+    const str = nlp(a[0]).quotations().text('root')
     t.equal(str, a[1], here + a[0])
   })
   t.end()
@@ -58,7 +58,7 @@ test('Quotations - U+0027 to U+0027', function (t) {
   arr.forEach(a => testAllQuotes(a, t))
   t.end()
 })
-//
+
 test('Quotations - U+201C to U+201D', function (t) {
   let arr = [
     ['he is \u201Creally good\u201D', 'really good'],

@@ -6,9 +6,6 @@ import nlp from './src/three.js'
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()
-let doc = nlp(`...and my butt smells, and i like to kiss my own butt`)
-doc.match('@hasEllipses').debug()
-// let m = doc.clauses() //.debug()
 
 let arr = [
   // 'I left the window open for fresh air.',

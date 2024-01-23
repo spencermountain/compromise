@@ -28,6 +28,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - support freeze in sweep
 - **[change]** - internal typescript improvements
 - **[fix]** - tagging issues
+- **[change]** - @hasEllipses must be following the word
 - **[update]** - dependencies
 
 #### 14.11.1 [Jan 2024]

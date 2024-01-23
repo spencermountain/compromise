@@ -106,25 +106,8 @@ let arr = [
   // `The instructions for this game are confusing.`, //confusing/adjective
   // `The road signs in this town are confusing.`, //confusing/adjective
   // `I find the English language confusing sometimes.`, //confusing/adjective
-  ' But it resists yielding political ground',
-  ' face shocking revelations',
-  ' he imagines shocking',
-  `The company offers continuing professional development programs.`, //continuing/adjective
-  `The subway is always crowded during rush hour.`, //crowded/adjective
-  `The beach was crowded with tourists on a sunny day.`, //crowded/adjective
-  `The fox used cunning tactics to catch its prey.`, //cunning/adjective
-  `The thief used cunning methods to steal the valuable painting.`, //cunning/adjective
-  `With his cunning smile, he convinced them to trust him.`, //cunning/adjective
-  `The movie was filled with daring stunts and action.`, //daring/adjective
-  `The food at the restaurant was disappointing, it lacked flavor.`, //disappointing/adjective
-  `The concert was disappointing, the singer was off-key.`, //disappointing/adjective
-  `The weather on our vacation was disappointing, it rained every day.`, //disappointing/adjective
-  `He was so drunk that he couldn't walk straight.`, //drunk/adjective
-  `He acted foolishly while he was drunk.`, //drunk/adjective
-  `I don't like being around drunk people.`, //drunk/adjective
-  `I wake up early every morning.`, //early/adjective
-  `Her flight was delayed, arriving early evening.`, //early/adjective
-  `The bakery opens early in the morning.`, //early/adjective
+  // `The food at the restaurant was disappointing, it lacked flavor.`, //disappointing/adjective
+  // `He was so drunk that he.`, //drunk/adjective
   `The room is empty, there are no chairs or tables.`, //empty/adjective
   `The glass was empty, so I refilled it with water.`, //empty/adjective
   `Her warm smile and kind nature are truly endearing.`, //endearing/adjective

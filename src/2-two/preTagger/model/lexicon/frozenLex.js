@@ -99,6 +99,7 @@ export default {
   'taken part': 'Participle',
 
   'light bulb': 'Noun',
+  'rush hour': 'Noun',
   'fluid ounce': 'Unit',
   'the rolling stones': 'Organization',
 }

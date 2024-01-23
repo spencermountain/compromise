@@ -3,6 +3,7 @@ import adj from './_adj.js'
 // the boiled egg
 // boiled the water
 let past = 'PastTense'
+let jj = 'Adjective'
 
 const adjPast = {
   beforeTags: {
@@ -24,15 +25,16 @@ const adjPast = {
   beforeWords: {
     be: past, //be hooked vs be embarrassed
     who: past, //who lost
-    get: 'Adjective', //get charged
+    get: jj, //get charged
     had: past,
     has: past,
     have: past,
     been: past,
     it: past, //it intoxicated him
     as: past, //as requested
-    for: 'Adjective', //for discounted items
-    more: 'Adjective', //more broken promises
+    for: jj, //for discounted items
+    more: jj, //more broken promises
+    always: jj,
   },
   afterWords: {
     by: past, //damaged by
@@ -59,7 +61,7 @@ const adjPast = {
     their: past, //
     our: past, //
     me: past, //
-    about: 'Adjective',
+    about: jj,
   },
 }
 

@@ -1171,6 +1171,9 @@ let arr = [
   ['shocking lie', '#Adjective #Noun'],
   ['shocking lies', '#Adjective #Plural'],
   ['face shocking revelations', '#PresentTense #Adjective #Plural'],
+  ['The subway is always crowded during rush hour', 'the #Noun is always #Adjective during #Noun+'],
+  [`I wake up early every morning.`, 'i #PhrasalVerb+ #Adjective #Determiner #Noun'],
+  ['opens early in the morning', '#PresentTense #Adjective in the #Noun'],
   // ['',''],
 ]
 test('match:', function (t) {

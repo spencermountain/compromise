@@ -925,6 +925,7 @@ export default [
   'zip',
   'zone',
   'zoom',
+  'lie',
   // 'average',
   // 'fast',
   // 'try',

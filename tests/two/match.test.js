@@ -1165,6 +1165,12 @@ let arr = [
   ['µs', '#Unit'],
 
   ['single-particle tracking using biotin', '#Adjective #Noun #Noun #Gerund #Noun'],
+
+  ['a semiprofessional bodyworker', '#Determiner #Adjective #Noun'],
+  ['on stable foundations', 'on #Adjective #Noun'],
+  ['shocking lie', '#Adjective #Noun'],
+  ['shocking lies', '#Adjective #Plural'],
+  ['face shocking revelations', '#PresentTense #Adjective #Plural'],
   // ['',''],
 ]
 test('match:', function (t) {

@@ -1,60 +1,11 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
-
-let doc = nlp(`republic of leeland`)
-let net = nlp.buildNet([{ match: '. of leeland', tag: 'Organization', freeze: true }])
-doc.sweep(net)
-doc.match('republic of .').tag('Place')
-doc.debug()
-
-// let doc = nlp(`The sun's setting`).debug()
-// console.log(doc.docs[0])
-// nlp(`He'd never let us`).debug()
-// nlp('john’s neat documents about georgia').debug()
-// nlp(`John's talks about Georgia`).debug()
+nlp.verbose('tagger')
 
 let arr = [
-  // 'new york mets',
-  'new york yankees',
-  'new york rangers',
-  'Waterloo Catholic District School Board',
-  // 'the cineplex of Tokyo',
-  // 'Castner Range',
-  `john Lkjsdf's House`,
-  'centre of jardas al abid',
-  "john Lkjsdf's house",
-  'the Saint Lawrence River',
-  'i̇zmir',
-  'kid cudi',
-  'visiting Tojbs Kjeh Region',
-  'Carrizo Plain',
-  'Cedar Breaks',
-  'Chimney Rock',
-  'Florissant Fossil Beds',
-  'Clubar National Historical Park',
-  'Virgin Islands Coral Reef',
-  'Tsarskoe Selo State Museum',
-  // 'Misty Fjords',
-  // 'Timpanogos Cave',
-  'Brown Canyon',
-  'the Saint Lawrence River',
-  ' 1985 Perry Mason movies',
-  'iron man',
-  'Becky will bring you the hard copy',
-  'Timpanogos Cave',
-  'University of Germany',
-  '12 a.m.',
-  'H.R. 49',
-  'for January 2022',
   // 'I left the window open for fresh air.',
-  'The bridge is built on stable foundations.',
-  'find it shocking that people still believe',
-  'The old man stoops to pet the cat.',
-  'I dream of becoming a doctor',
-  ' Franchising can be a profitable business ',
   // 'Iran also stands accused of aiding terrorism ',
   // 'the belief that bees got a sweet substance ',
   // 'You have all devoted considerable time',
@@ -141,8 +92,8 @@ let arr = [
   // `I enjoy taking long walks in the park.`,//walk/noun
   // `There was a warning about heavy rain.`,//warning/noun
   // `She ordered a plate of buffalo wings at the restaurant.`,//wing/noun
-  'The boat floats on the water.',
-  'I caught a cold and have a runny nose.',
+  // 'The boat floats on the water.',
+  // 'I caught a cold and have a runny nose.',
   // adjectives
   // `He is always accommodating to his guests.`,//accommodating/adjective
   // `The company offers advanced training programs for employees.`,//advanced/adjective
@@ -150,10 +101,14 @@ let arr = [
   // `Learning a new language can be challenging.`,//challenging/adjective
   // `The book's characters are compelling and relatable.`,//compelling/adjective
   // `The artist's work is visually compelling and unique.`,//compelling/adjective
-  `The instructions for this game are confusing.`, //confusing/adjective
-  `The road signs in this town are confusing.`, //confusing/adjective
-  `The new computer program is confusing to use.`, //confusing/adjective
-  `I find the English language confusing sometimes.`, //confusing/adjective
+  // `The toilets are overflowing.`, //confusing/adjective
+  // `The toilet is overflowing.`, //confusing/adjective
+  // `The instructions for this game are confusing.`, //confusing/adjective
+  // `The road signs in this town are confusing.`, //confusing/adjective
+  // `I find the English language confusing sometimes.`, //confusing/adjective
+  ' But it resists yielding political ground',
+  ' face shocking revelations',
+  ' he imagines shocking',
   `The company offers continuing professional development programs.`, //continuing/adjective
   `The subway is always crowded during rush hour.`, //crowded/adjective
   `The beach was crowded with tourists on a sunny day.`, //crowded/adjective
@@ -349,7 +304,7 @@ let arr = [
   // 'what companies are doing is',
 ]
 
-// let doc = nlp(arr[0]).debug()
+let doc = nlp(arr[0]).debug()
 // console.log(doc.people().debug().json())
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())

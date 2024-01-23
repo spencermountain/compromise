@@ -22,7 +22,13 @@ export default [
   // my first thought
   { match: '#Possessive #Ordinal [#PastTense]', group: 0, tag: 'Noun', reason: 'first-thought' },
   //the nice swim
-  { match: '(the|this|those|these) #Adjective [%Verb|Noun%]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'the-adj-verb' },
+  {
+    match: '(the|this|those|these) #Adjective [%Verb|Noun%]',
+    group: 0,
+    tag: 'Noun',
+    notIf: '#Copula',
+    reason: 'the-adj-verb',
+  },
   // the truly nice swim
   { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'determiner4' },
   //the wait to vote
@@ -32,12 +38,23 @@ export default [
   //the threat of force
   { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', notIf: '#Gerund', reason: 'noun-of-noun' },
   // ended in ruins
-  { match: '#PastTense #Preposition [#PresentTense]', group: 0, notIf: '#Gerund', tag: 'Noun', reason: 'ended-in-ruins' },
+  {
+    match: '#PastTense #Preposition [#PresentTense]',
+    group: 0,
+    notIf: '#Gerund',
+    tag: 'Noun',
+    reason: 'ended-in-ruins',
+  },
   //'u' as pronoun
   { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },
   { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-pronoun-1' },
   //the western line
-  { match: '#Determiner [(western|eastern|northern|southern|central)] #Noun', group: 0, tag: 'Noun', reason: 'western-line' },
+  {
+    match: '#Determiner [(western|eastern|northern|southern|central)] #Noun',
+    group: 0,
+    tag: 'Noun',
+    reason: 'western-line',
+  },
   //air-flow
   { match: '(#Singular && @hasHyphen) #PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
   //is no walk
@@ -53,7 +70,13 @@ export default [
   // a comdominium, or simply condo
   { match: `a #Noun+ or #Adverb+? [#Verb]`, group: 0, tag: 'Noun', reason: 'noun-or-noun' },
   // walk the walk
-  { match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', group: 0, tag: 'Noun', notIf: '(seem|appear|include|#Gerund|#Copula)', reason: 'det-inf' },
+  {
+    match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]',
+    group: 0,
+    tag: 'Noun',
+    notIf: '(seem|appear|include|#Gerund|#Copula)',
+    reason: 'det-inf',
+  },
   // { match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula)', reason: 'det-pres' },
 
   // ==== Actor ====
@@ -66,11 +89,25 @@ export default [
   // co-founder
   { match: `co #Singular`, tag: 'Actor', reason: 'co-noun' },
   // co-founder
-  { match: `[#Noun+] #Actor`, group: 0, tag: 'Actor', notIf: '(#Honorific|#Pronoun|#Possessive)', reason: 'air-traffic-controller' },
+  {
+    match: `[#Noun+] #Actor`,
+    group: 0,
+    tag: 'Actor',
+    notIf: '(#Honorific|#Pronoun|#Possessive)',
+    reason: 'air-traffic-controller',
+  },
   // fine-artist
-  { match: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #Noun? #Actor`, tag: 'Actor', reason: 'fine-artist' },
+  {
+    match: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #Noun? #Actor`,
+    tag: 'Actor',
+    reason: 'fine-artist',
+  },
   // dance coach
-  { match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`, tag: 'Actor', reason: 'dance-coach' },
+  {
+    match: `#Noun+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`,
+    tag: 'Actor',
+    reason: 'dance-coach',
+  },
   // chief design officer
   { match: `chief . officer`, tag: 'Actor', reason: 'chief-x-officer' },
   // chief of police
@@ -109,7 +146,12 @@ export default [
   //the repairer said
   { match: '#Determiner [#Singular] said', group: 0, tag: 'Actor', reason: 'the-actor-said' },
   //the euro sense
-  { match: `#Determiner #Noun [${infNouns}] !(#Preposition|to|#Adverb)?`, group: 0, tag: 'Noun', reason: 'the-noun-sense' },
+  {
+    match: `#Determiner #Noun [${infNouns}] !(#Preposition|to|#Adverb)?`,
+    group: 0,
+    tag: 'Noun',
+    reason: 'the-noun-sense',
+  },
   // photographs of a computer are
   { match: '[#PresentTense] (of|by|for) (a|an|the) #Noun #Copula', group: 0, tag: 'Plural', reason: 'photographs-of' },
   // fight and win
@@ -124,7 +166,12 @@ export default [
   // scottish - i ate me sandwich
   { match: 'i #Verb [me] #Noun', group: 0, tag: 'Possessive', reason: 'scottish-me' },
   // dance music
-  { match: '[#PresentTense] (music|class|lesson|night|party|festival|league|ceremony)', group: 0, tag: 'Noun', reason: 'dance-music' },
+  {
+    match: '[#PresentTense] (music|class|lesson|night|party|festival|league|ceremony)',
+    group: 0,
+    tag: 'Noun',
+    reason: 'dance-music',
+  },
   // wit it
   { match: '[wit] (me|it)', group: 0, tag: 'Presposition', reason: 'wit-me' },
   //left-her-boots, shoved her hand
@@ -135,11 +182,16 @@ export default [
   { match: 'had [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|come|become)', reason: 'had-time' },
   //instant access
   { match: '%Adj|Noun% %Noun|Verb%', tag: '#Adjective #Noun', notIf: '#ProperNoun #Noun', reason: 'instant-access' },
-  // a representative to 
+  // a representative to
   { match: '#Determiner [%Adj|Noun%] #Conjunction', group: 0, tag: 'Noun', reason: 'a-rep-to' },
   // near death experiences, ambitious sales targets
-  { match: '#Adjective #Noun [%Plural|Verb%]$', group: 0, tag: 'Plural', notIf: '#Pronoun', reason: 'near-death-experiences' },
+  {
+    match: '#Adjective #Noun [%Plural|Verb%]$',
+    group: 0,
+    tag: 'Plural',
+    notIf: '#Pronoun',
+    reason: 'near-death-experiences',
+  },
   // your guild colors
   { match: '#Possessive #Noun [%Plural|Verb%]$', group: 0, tag: 'Plural', reason: 'your-guild-colors' },
-
 ]

@@ -36,4 +36,11 @@ export default [
   { match: '#Possessive [%Adj|Gerund%] #Noun', group: 0, tag: 'Adjective', reason: 'leading-manufacturer' },
   // meaning alluring
   { match: '%Noun|Gerund% %Adj|Gerund%', tag: 'Gerund #Adjective', reason: 'meaning-alluring' },
+
+  // face shocking revelations
+  {
+    match: '(face|embrace|reveal|stop|start|resume) %Adj|Gerund%',
+    tag: '#PresentTense #Adjective',
+    reason: 'face-shocking',
+  },
 ]

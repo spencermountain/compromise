@@ -9,7 +9,7 @@ let arr = [
   [`shocking quickly`, '#Gerund .'],
   [`shocking me`, '#Gerund .'],
   [`shocking his`, '#Gerund .'],
-  [`imagines shocking`, '. #Gerund'],
+  [`he imagines shocking`, '#Pronoun #PresentTense #Gerund'],
   [`quickly shocking`, '. #Gerund'],
   [`quietly shocking`, '. #Gerund'],
   [`shocking him`, '#Gerund .'],
@@ -42,7 +42,6 @@ let arr = [
   [`distressing us`, '#Gerund #Noun'],
   [`loving you`, '#Gerund #Noun'],
   [`promising to leave`, '#Gerund #Conjunction #Verb'],
-
 
   // === adjectives ===
   [`as disgusting as`, '#Preposition #Adjective #Preposition'],

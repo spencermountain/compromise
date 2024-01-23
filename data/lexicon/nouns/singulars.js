@@ -3,8 +3,6 @@
 // they are all inflected to add their plural form
 
 export default [
-  'light bulb',
-
   // -ic
   'medic',
   'ethic',
@@ -367,7 +365,7 @@ export default [
   'row',
   'drive thru',
   'hash brown',
-  'living room',
+  // 'living room',
   'seminar',
   'variety',
   'laboratory',

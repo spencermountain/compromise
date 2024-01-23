@@ -16,6 +16,7 @@ export default {
   'free market': 'Singular',
   'lay up': 'Singular',
   'living room': 'Singular',
+  'living rooms': 'Plural',
   'spin off': 'Singular',
   'appeal court': 'Uncountable',
   'cold war': 'Uncountable',
@@ -96,4 +97,8 @@ export default {
   'takes part': 'PresentTense',
   'taking part': 'Gerund',
   'taken part': 'Participle',
+
+  'light bulb': 'Noun',
+  'fluid ounce': 'Unit',
+  'the rolling stones': 'Organization',
 }

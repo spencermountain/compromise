@@ -430,4 +430,5 @@ export default [
   'brick',
   'cannibal',
   'video game',
+  'layer',
 ]

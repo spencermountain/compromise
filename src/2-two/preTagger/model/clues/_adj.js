@@ -36,6 +36,7 @@ export default {
     quite: jj,
     well: jj,
     very: jj,
+    truly: jj,
     how: jj, //how slow
     deeply: jj,
     hella: jj,

@@ -1,7 +1,6 @@
 // rallying the troops
 // her rallying cry
 export default [
-
   'absorbing',
   'accelerating',
   'accompanying',
@@ -291,7 +290,6 @@ export default [
   'yielding',
   'accommodating',
   'trifling',
-
+  'endearing',
   // prefixes
 ]
-

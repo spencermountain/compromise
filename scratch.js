@@ -107,20 +107,8 @@ let arr = [
   // `The road signs in this town are confusing.`, //confusing/adjective
   // `I find the English language confusing sometimes.`, //confusing/adjective
   // `The food at the restaurant was disappointing, it lacked flavor.`, //disappointing/adjective
-  // `He was so drunk that he.`, //drunk/adjective
-  `The room is empty, there are no chairs or tables.`, //empty/adjective
-  `The glass was empty, so I refilled it with water.`, //empty/adjective
-  `Her warm smile and kind nature are truly endearing.`, //endearing/adjective
-  `The character's quirky behavior makes them endearing to the audience.`, //endearing/adjective
-  `The ancient ruins are enduring symbols of history.`, //enduring/adjective
-  `She felt faint after running for an hour.`, //faint/adjective
-  `She has fair hair and blue eyes.`, //fair/adjective
-  `He always plays fair in sports.`, //fair/adjective
-  `The restaurant gave us free dessert after the meal.`, //free/adjective
-  `The pizza had a greasy layer on top.`, //greasy/adjective
-  `He wiped his hands on a greasy cloth.`, //greasy/adjective
-  `Her hair became greasy after not washing it.`, //greasy/adjective
-  `The mechanic had greasy hands from working on the car.`, //greasy/adjective
+  // `He always plays fair in sports.`, //fair/adjective
+  // `The restaurant gave us free dessert after the meal.`, //free/adjective
   `The holy book is sacred to believers.`, //holy/adjective
   `The holy man blessed the crowd with peace.`, //holy/adjective
   `The holy site is a place of worship.`, //holy/adjective

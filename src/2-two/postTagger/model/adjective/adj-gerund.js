@@ -43,4 +43,6 @@ export default [
     tag: '#PresentTense #Adjective',
     reason: 'face-shocking',
   },
+  // are enduring symbols
+  { match: '(are|were) [%Adj|Gerund%] #Plural', group: 0, tag: 'Adjective', reason: 'are-enduring-symbols' },
 ]

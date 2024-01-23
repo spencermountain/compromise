@@ -69,4 +69,6 @@ export default [
     notIf: '(associated|worn|baked|aged|armed|bound|fried|loaded|mixed|packed|pumped|filled|sealed)',
     reason: 'is-crowded-with',
   },
+  // is empty$
+  { match: '#Copula #Adverb? [%Adj|Present%]$', group: 0, tag: 'Adjective', reason: 'was-empty$' },
 ]

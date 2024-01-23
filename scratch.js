@@ -2,7 +2,10 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
+
+let doc = nlp('one two three four five. one three four')
+doc.before('three four').debug()
 
 let arr = [
   // 'I left the window open for fresh air.',
@@ -275,7 +278,7 @@ let arr = [
   // 'what companies are doing is',
 ]
 
-let doc = nlp(arr[0]).debug()
+// let doc = nlp(arr[0]).debug()
 // console.log(doc.people().debug().json())
 // let p = doc.pronouns().debug().refersTo().debug()
 // console.log(nlp('colored').debug().verbs().conjugate())

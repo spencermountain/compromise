@@ -315,7 +315,7 @@ export default [
   'the carpenters',
   'the guess who',
   'the hollies',
-  'the rolling stones',
+  // 'the rolling stones',
   'the smashing pumpkins',
   'the supremes',
   'the who',

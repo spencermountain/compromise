@@ -1,5 +1,4 @@
 export default [
-
   'abandon',
   'abet',
   'abide',
@@ -462,7 +461,6 @@ export default [
   'lend',
   'lengthen',
   'lessen',
-  'lie',
   'like',
   'linger',
   'liquefy',
@@ -626,7 +624,7 @@ export default [
   'retire',
   'retrieve',
   'retrofit',
-  'reup',//'re-up'
+  'reup', //'re-up'
   'revamp',
   'revel',
   'revere',
@@ -790,5 +788,5 @@ export default [
   'attain',
   'pound',
   'consume',
-  'befriend'
+  'befriend',
 ]

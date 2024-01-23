@@ -1,4 +1,3 @@
-
 const before = function (regs, group, opts) {
   const { indexN } = this.methods.one.pointer
   let pre = []
@@ -41,7 +40,7 @@ const growLeft = function (regs, group, opts) {
   if (typeof regs === 'string') {
     regs = this.world.methods.one.parseMatch(regs, opts, this.world)
   }
-  regs[regs.length - 1].end = true// ensure matches are beside us ←
+  regs[regs.length - 1].end = true // ensure matches are beside us ←
   let ptrs = this.fullPointer
   this.forEach((m, n) => {
     let more = m.before(regs, group)
@@ -58,7 +57,7 @@ const growRight = function (regs, group, opts) {
   if (typeof regs === 'string') {
     regs = this.world.methods.one.parseMatch(regs, opts, this.world)
   }
-  regs[0].start = true// ensure matches are beside us →
+  regs[0].start = true // ensure matches are beside us →
   let ptrs = this.fullPointer
   this.forEach((m, n) => {
     let more = m.after(regs, group)

@@ -12,10 +12,11 @@ export default {
     if (fmt && typeof fmt === 'string' && fmts.hasOwnProperty(fmt)) {
       opts = Object.assign({}, fmts[fmt])
     } else if (fmt && isObject(fmt)) {
-      opts = Object.assign({}, fmt)//todo: fixme
+      opts = Object.assign({}, fmt) //todo: fixme
     }
     // is it a full document?
-    if (opts.keepSpace === undefined && !this.isFull()) {    // 
+    if (opts.keepSpace === undefined && !this.isFull()) {
+      //
       opts.keepSpace = false
     }
     if (opts.keepEndPunct === undefined && this.pointer) {

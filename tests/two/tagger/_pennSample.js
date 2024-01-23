@@ -758,14 +758,6 @@ export default [
     tags: 'DT, VBZ, JJ, NN',
   },
   {
-    text: 'Zawahiri was associated with a faction of the Egyptian Islamic Jihad known as the Vanguards of Conquest.',
-    tags: 'NNP, VBD, VBN, IN, DT, NN, IN, DT, NNP, NNP, NNP, VBN, IN, DT, NNPS, IN, NNP',
-  },
-  // {
-  //   text: 'At one time, some thought he had been spotted in Iran.',
-  //   tags: 'IN, CD, NN, DT, VBD, PRP, VBD, VBN, VBN, IN, NNP',
-  // },
-  {
     text: 'In the case of the anthrax used in the mailings, there was an electrostatic charge.',
     tags: 'IN, DT, NN, IN, DT, NN, VBN, IN, DT, NNS, EX, VBD, DT, JJ, NN',
   },

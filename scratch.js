@@ -2,54 +2,13 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
-let doc = nlp(`The concert's sold out`).debug()
-// let doc = nlp(`The sun's setting`).debug()
-// console.log(doc.docs[0])
-// nlp(`He'd never let us`).debug()
-// nlp('john’s neat documents about georgia').debug()
-// nlp(`John's talks about Georgia`).debug()
+// let doc = nlp('one two three four five. one three four')
+// doc.before('three four').debug()
 
 let arr = [
-  // 'new york mets',
-  'new york yankees',
-  'new york rangers',
-  'Waterloo Catholic District School Board',
-  // 'the cineplex of Tokyo',
-  // 'Castner Range',
-  `john Lkjsdf's House`,
-  'centre of jardas al abid',
-  "john Lkjsdf's house",
-  'the Saint Lawrence River',
-  'i̇zmir',
-  'kid cudi',
-  'visiting Tojbs Kjeh Region',
-  'Carrizo Plain',
-  'Cedar Breaks',
-  'Chimney Rock',
-  'Florissant Fossil Beds',
-  'Clubar National Historical Park',
-  'Virgin Islands Coral Reef',
-  'Tsarskoe Selo State Museum',
-  // 'Misty Fjords',
-  // 'Timpanogos Cave',
-  'Brown Canyon',
-  'the Saint Lawrence River',
-  ' 1985 Perry Mason movies',
-  'iron man',
-  'Becky will bring you the hard copy',
-  'Timpanogos Cave',
-  'University of Germany',
-  '12 a.m.',
-  'H.R. 49',
-  'for January 2022',
   // 'I left the window open for fresh air.',
-  'The bridge is built on stable foundations.',
-  'find it shocking that people still believe',
-  'The old man stoops to pet the cat.',
-  'I dream of becoming a doctor',
-  ' Franchising can be a profitable business ',
   // 'Iran also stands accused of aiding terrorism ',
   // 'the belief that bees got a sweet substance ',
   // 'You have all devoted considerable time',
@@ -136,8 +95,8 @@ let arr = [
   // `I enjoy taking long walks in the park.`,//walk/noun
   // `There was a warning about heavy rain.`,//warning/noun
   // `She ordered a plate of buffalo wings at the restaurant.`,//wing/noun
-  'The boat floats on the water.',
-  'I caught a cold and have a runny nose.',
+  // 'The boat floats on the water.',
+  // 'I caught a cold and have a runny nose.',
   // adjectives
   // `He is always accommodating to his guests.`,//accommodating/adjective
   // `The company offers advanced training programs for employees.`,//advanced/adjective
@@ -145,39 +104,14 @@ let arr = [
   // `Learning a new language can be challenging.`,//challenging/adjective
   // `The book's characters are compelling and relatable.`,//compelling/adjective
   // `The artist's work is visually compelling and unique.`,//compelling/adjective
-  `The instructions for this game are confusing.`, //confusing/adjective
-  `The road signs in this town are confusing.`, //confusing/adjective
-  `The new computer program is confusing to use.`, //confusing/adjective
-  `I find the English language confusing sometimes.`, //confusing/adjective
-  `The company offers continuing professional development programs.`, //continuing/adjective
-  `The subway is always crowded during rush hour.`, //crowded/adjective
-  `The beach was crowded with tourists on a sunny day.`, //crowded/adjective
-  `The fox used cunning tactics to catch its prey.`, //cunning/adjective
-  `The thief used cunning methods to steal the valuable painting.`, //cunning/adjective
-  `With his cunning smile, he convinced them to trust him.`, //cunning/adjective
-  `The movie was filled with daring stunts and action.`, //daring/adjective
-  `The food at the restaurant was disappointing, it lacked flavor.`, //disappointing/adjective
-  `The concert was disappointing, the singer was off-key.`, //disappointing/adjective
-  `The weather on our vacation was disappointing, it rained every day.`, //disappointing/adjective
-  `He was so drunk that he couldn't walk straight.`, //drunk/adjective
-  `He acted foolishly while he was drunk.`, //drunk/adjective
-  `I don't like being around drunk people.`, //drunk/adjective
-  `I wake up early every morning.`, //early/adjective
-  `Her flight was delayed, arriving early evening.`, //early/adjective
-  `The bakery opens early in the morning.`, //early/adjective
-  `The room is empty, there are no chairs or tables.`, //empty/adjective
-  `The glass was empty, so I refilled it with water.`, //empty/adjective
-  `Her warm smile and kind nature are truly endearing.`, //endearing/adjective
-  `The character's quirky behavior makes them endearing to the audience.`, //endearing/adjective
-  `The ancient ruins are enduring symbols of history.`, //enduring/adjective
-  `She felt faint after running for an hour.`, //faint/adjective
-  `She has fair hair and blue eyes.`, //fair/adjective
-  `He always plays fair in sports.`, //fair/adjective
-  `The restaurant gave us free dessert after the meal.`, //free/adjective
-  `The pizza had a greasy layer on top.`, //greasy/adjective
-  `He wiped his hands on a greasy cloth.`, //greasy/adjective
-  `Her hair became greasy after not washing it.`, //greasy/adjective
-  `The mechanic had greasy hands from working on the car.`, //greasy/adjective
+  // `The toilets are overflowing.`, //confusing/adjective
+  // `The toilet is overflowing.`, //confusing/adjective
+  // `The instructions for this game are confusing.`, //confusing/adjective
+  // `The road signs in this town are confusing.`, //confusing/adjective
+  // `I find the English language confusing sometimes.`, //confusing/adjective
+  // `The food at the restaurant was disappointing, it lacked flavor.`, //disappointing/adjective
+  // `He always plays fair in sports.`, //fair/adjective
+  // `The restaurant gave us free dessert after the meal.`, //free/adjective
   `The holy book is sacred to believers.`, //holy/adjective
   `The holy man blessed the crowd with peace.`, //holy/adjective
   `The holy site is a place of worship.`, //holy/adjective

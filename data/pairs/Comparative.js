@@ -1,5 +1,4 @@
 export default [
-
   ['angry', 'angrier'],
   ['bad', 'worse'],
   ['bald', 'balder'],
@@ -134,7 +133,6 @@ export default [
   ['lame', 'lamer'],
   ['large', 'larger'],
   ['late', 'later'],
-  ['lay', 'layer'],
   ['lean', 'leaner'],
   ['lengthy', 'lengthier'],
   ['lesser', 'lesser'],
@@ -308,6 +306,4 @@ export default [
   ['dim', 'dimmer'],
   ['', ''],
   ['', ''],
-
-
 ]

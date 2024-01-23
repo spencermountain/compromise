@@ -36,7 +36,8 @@ export default {
     quite: jj,
     well: jj,
     very: jj,
-    how: jj,//how slow
+    truly: jj,
+    how: jj, //how slow
     deeply: jj,
     hella: jj,
     // always: jj,
@@ -49,18 +50,58 @@ export default {
     totally: jj,
     awfully: jj,
     rather: jj,
-    nothing: jj, //nothing secret, 
-    something: jj,//something wrong
+    nothing: jj, //nothing secret,
+    something: jj, //something wrong
     anything: jj,
-    not: jj,//not swell
-    me: jj,//called me swell
+    not: jj, //not swell
+    me: jj, //called me swell
     is: jj,
+
+    face: jj, //faces shocking revelations
+    faces: jj,
+    faced: jj,
+
+    look: jj,
+    looks: jj,
+    looked: jj,
+
+    reveal: jj,
+    reveals: jj,
+    revealed: jj,
+
+    sound: jj,
+    sounded: jj,
+    sounds: jj,
+    remains: jj,
+    remained: jj,
+    prove: jj, //would prove shocking
+    proves: jj,
+    proved: jj,
+
+    becomes: jj,
+    stays: jj,
+    tastes: jj,
+    taste: jj,
+    smells: jj,
+    smell: jj,
+    gets: jj, //gets shocking snowfall
+    grows: jj,
+    as: jj,
+    rings: jj,
+    radiates: jj,
+    conveys: jj,
+    convey: jj,
+    conveyed: jj,
+    of: jj,
+    // 'smacks of': jj,
+    // 'reeks of': jj,
   },
   afterWords: {
     too: jj, //insulting too
     also: jj, //insulting too
     or: jj, //insulting or
     enough: jj, //cool enough
+    as: jj, //as shocking as
     //about: jj, //cool about
   },
 }

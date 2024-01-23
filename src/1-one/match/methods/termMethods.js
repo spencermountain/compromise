@@ -11,7 +11,7 @@ const hasDash = / [-–—]{1,3} /
 /** search the term's 'post' punctuation  */
 const hasPost = (term, punct) => term.post.indexOf(punct) !== -1
 /** search the term's 'pre' punctuation  */
-const hasPre = (term, punct) => term.pre.indexOf(punct) !== -1
+// const hasPre = (term, punct) => term.pre.indexOf(punct) !== -1
 
 const methods = {
   /** does it have a quotation symbol?  */
@@ -25,7 +25,7 @@ const methods = {
   /** does it end with a question mark? */
   hasQuestionMark: term => hasPost(term, '?') || hasPost(term, '¿'),
   /** is there a ... at the end? */
-  hasEllipses: term => hasPost(term, '..') || hasPost(term, '…') || hasPre(term, '..') || hasPre(term, '…'),
+  hasEllipses: term => hasPost(term, '..') || hasPost(term, '…'),
   /** is there a semicolon after term word? */
   hasSemicolon: term => hasPost(term, ';'),
   /** is there a colon after term word? */

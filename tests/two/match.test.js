@@ -1165,6 +1165,17 @@ let arr = [
   ['µs', '#Unit'],
 
   ['single-particle tracking using biotin', '#Adjective #Noun #Noun #Gerund #Noun'],
+
+  ['a semiprofessional bodyworker', '#Determiner #Adjective #Noun'],
+  ['on stable foundations', 'on #Adjective #Noun'],
+  ['shocking lie', '#Adjective #Noun'],
+  ['shocking lies', '#Adjective #Plural'],
+  ['face shocking revelations', '#PresentTense #Adjective #Plural'],
+  ['The subway is always crowded during rush hour', 'the #Noun is always #Adjective during #Noun+'],
+  [`I wake up early every morning.`, 'i #PhrasalVerb+ #Adjective #Determiner #Noun'],
+  ['opens early in the morning', '#PresentTense #Adjective in the #Noun'],
+  ['ruins are enduring symbols of history', '#Plural are #Adjective #Plural of #Noun'],
+  ['She has fair hair and blue eyes.', '#Pronoun #Verb #Adjective #Noun and #Adjective #Plural'],
   // ['',''],
 ]
 test('match:', function (t) {

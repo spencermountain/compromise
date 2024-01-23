@@ -17,7 +17,7 @@ export default [
   'drawn',
   'dreamt',
   'driven',
-  'drunk',
+  // 'drunk',
   'eaten',
   'fallen',
   'flown',

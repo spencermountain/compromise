@@ -10,7 +10,7 @@ const byComma = function (doc) {
     if (m.growRight('. .').wordCount() === 1) {
       return false
     }
-    let more = m.grow(".") // grow by 1 word in either direction
+    let more = m.grow('.') // grow by 1 word in either direction
     more = more.ifNo('@hasComma @hasComma') //fun, cool...
     more = more.ifNo('@hasComma (and|or) .') //cool, and fun
     more = more.ifNo('(#City && @hasComma) #Country') //'toronto, canada'
@@ -70,13 +70,18 @@ const clauses = function (n) {
   found = found.splitBefore('as (though|if)')
   found = found.splitBefore('(til|until)')
 
+  // it is cool but it is ..
+  let m = found.match('#Verb .* [but] .* #Verb', 0)
+  if (m.found) {
+    found = found.splitBefore(m)
+  }
   // it is cool and it is ..
   // let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction')
   // found = found.splitBefore(conjunctions)
 
-  // // if it is this then that
-  // let condition = found.if('if .{2,9} then .').match('then')
-  // found = found.splitBefore(condition)
+  // if it is this then that
+  let condition = found.if('if .{2,9} then .').match('then')
+  found = found.splitBefore(condition)
 
   // // misc clause partitions
   // found = found.splitBefore('as well as .')
@@ -87,13 +92,11 @@ const clauses = function (n) {
   // found = found.splitAfter('@hasSemicolon')
   // found = found.splitAfter('@hasDash')
 
-  // // 
+  // //
   // found = found.splitBefore('which (were|are|will)')
 
   // // he said [...]
   // found = found.splitAfter('#Noun (said|say|says)')
-
-
 
   // passive voice verb - '.. which was robbed is empty'
   // let passive = found.match('#Noun (which|that) (was|is) #Adverb? #PastTense #Adverb?')

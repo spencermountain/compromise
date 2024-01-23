@@ -14,17 +14,16 @@ const parse = function (m, context = {}) {
   }
   let s = spacetime.now().time(res.result)
   return {
-    'time': res.result,
+    time: res.result,
     '24h': s.format('time-24'),
     hour: s.hour(),
-    minute: s.minute()
+    minute: s.minute(),
   }
 }
 
 const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc)
 
 const api = function (View) {
-
   class Times extends View {
     constructor(document, pointer, groups, opts) {
       super(document, pointer, groups)
@@ -59,7 +58,7 @@ const api = function (View) {
     json(opts = {}) {
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
-        if (opts && opts.times !== true) {
+        if (opts && opts.time !== false) {
           json.time = parse(m)
         }
         return json

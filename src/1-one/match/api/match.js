@@ -1,17 +1,4 @@
-import { fixPointers, isView, isNet } from './_lib.js'
-
-const parseRegs = function (regs, opts, world) {
-  const one = world.methods.one
-  if (typeof regs === 'number') {
-    regs = String(regs)
-  }
-  // support param as string
-  if (typeof regs === 'string') {
-    regs = one.killUnicode(regs, world)
-    regs = one.parseMatch(regs, opts, world)
-  }
-  return regs
-}
+import { fixPointers, isView, isNet, parseRegs } from './_lib.js'
 
 const match = function (regs, group, opts) {
   const one = this.methods.one
@@ -78,7 +65,7 @@ const ifFn = function (regs, group, opts) {
   // support a compiled set of matches
   if (isNet(regs)) {
     let m = this.sweep(regs, { tagger: false }).view.settle()
-    return this.if(m)//recurse with result
+    return this.if(m) //recurse with result
   }
   regs = parseRegs(regs, opts, this.world)
   let todo = { regs, group, justOne: true }

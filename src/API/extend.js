@@ -9,9 +9,6 @@ function mergeDeep(model, plugin) {
       if (isObject(plugin[key])) {
         if (!model[key]) Object.assign(model, { [key]: {} })
         mergeDeep(model[key], plugin[key]) //recursion
-        // } else if (isArray(plugin[key])) {
-        // console.log(key)
-        // console.log(model)
       } else {
         Object.assign(model, { [key]: plugin[key] })
       }
@@ -103,13 +100,16 @@ const extend = function (plugin, world, View, nlp) {
     plugin.api(View)
   }
   if (plugin.lib) {
-    Object.keys(plugin.lib).forEach(k => nlp[k] = plugin.lib[k])
+    Object.keys(plugin.lib).forEach(k => (nlp[k] = plugin.lib[k]))
   }
   if (plugin.tags) {
     nlp.addTags(plugin.tags)
   }
   if (plugin.words) {
     nlp.addWords(plugin.words)
+  }
+  if (plugin.frozen) {
+    nlp.addWords(plugin.frozen, true)
   }
   if (plugin.mutate) {
     plugin.mutate(world)

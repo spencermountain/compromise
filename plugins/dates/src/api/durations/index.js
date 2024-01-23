@@ -1,6 +1,5 @@
 import parse from './parse.js'
 
-
 const addDurations = function (View) {
   /** phrases like '2 months', or '2mins' */
   class Durations extends View {
@@ -12,7 +11,7 @@ const addDurations = function (View) {
     json(opts = {}) {
       return this.map(m => {
         let json = m.toView().json(opts)[0] || {}
-        if (opts && opts.times !== true) {
+        if (opts && opts.duration !== false) {
           json.duration = parse(m)
         }
         return json
@@ -21,7 +20,7 @@ const addDurations = function (View) {
     /** easy getter for the time */
     get(options) {
       let arr = []
-      this.forEach((doc) => {
+      this.forEach(doc => {
         let res = parse(doc)
         arr.push(res)
       })

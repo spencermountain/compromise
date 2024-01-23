@@ -6,7 +6,6 @@ export default [
   'adult',
   'alert',
   'alternative',
-  'animal',
   'antarctic',
   'arab',
   'arctic',

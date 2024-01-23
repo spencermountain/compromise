@@ -12,13 +12,13 @@ export default {
     Determiner: v, //flash the
     Adverb: v, //date quickly
     Possessive: v, //date his
-    Reflexive: v,//resolve yourself
+    Reflexive: v, //resolve yourself
     // Noun:true, //date spencer
     Preposition: v, //date around, dump onto, grumble about
     // Conjunction: v, // dip to, dip through
-    Cardinal: v,//cut 3 squares
-    Comparative: v,//feel greater
-    Superlative: v,//feel greatest
+    Cardinal: v, //cut 3 squares
+    Comparative: v, //feel greater
+    Superlative: v, //feel greatest
   },
   beforeWords: {
     i: v, //i date
@@ -73,7 +73,7 @@ export default {
     me: v, //date me
     you: v, //date you
     him: v, //loves him
-    us: v,//cost us
+    us: v, //cost us
     her: v, //
     his: v, //
     them: v, //
@@ -91,8 +91,8 @@ export default {
     a: v, //covers a
     an: v, //covers an
     // from: v, //ranges from
-    up: v,//serves up
-    down: v,//serves up
+    up: v, //serves up
+    down: v, //serves up
     by: v,
     // in: v, //bob in
     out: v,
@@ -102,22 +102,22 @@ export default {
     what: v, //look what
     // when: v,//starts when
     // for:true, //settled for
-    all: v,//shiver all night
+    all: v, //shiver all night
     // conjunctions
-    to: v,//dip to
-    because: v,//
-    although: v,//
-    after: v,
-    before: v,//
-    how: v,//
-    otherwise: v,//
-    together: v,//fit together
-    though: v,//
-    into: v,//
-    yet: v,//
-    more: v,//kill more
-    here: v,// look here
-    there: v,//
-    away: v,//float away
+    to: v, //dip to
+    because: v, //
+    although: v, //
+    // after: v,
+    // before: v,//
+    how: v, //
+    otherwise: v, //
+    together: v, //fit together
+    though: v, //
+    into: v, //
+    yet: v, //
+    more: v, //kill more
+    here: v, // look here
+    there: v, //
+    away: v, //float away
   },
 }

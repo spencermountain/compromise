@@ -24,9 +24,33 @@ export default [
   // must-win
   { match: `must && #Hyphenated .`, tag: 'Adjective', reason: 'must-win' },
   // the present
-  { match: `#Determiner [#Adjective]$`, tag: 'Noun', notIf: '(this|that|#Comparative|#Superlative)', reason: 'the-south' }, //are that crazy.
+  {
+    match: `#Determiner [#Adjective]$`,
+    tag: 'Noun',
+    notIf: '(this|that|#Comparative|#Superlative)',
+    reason: 'the-south',
+  }, //are that crazy.
   // company-wide
-  { match: `(#Noun && #Hyphenated) (#Adjective && #Hyphenated)`, tag: 'Adjective', notIf: '(this|that|#Comparative|#Superlative)', reason: 'company-wide' },
+  {
+    match: `(#Noun && #Hyphenated) (#Adjective && #Hyphenated)`,
+    tag: 'Adjective',
+    notIf: '(this|that|#Comparative|#Superlative)',
+    reason: 'company-wide',
+  },
   // the poor were
-  { match: `#Determiner [#Adjective] (#Copula|#Determiner)`, notIf: '(#Comparative|#Superlative)', group: 0, tag: 'Noun', reason: 'the-poor' },
+  {
+    match: `#Determiner [#Adjective] (#Copula|#Determiner)`,
+    notIf: '(#Comparative|#Superlative)',
+    group: 0,
+    tag: 'Noun',
+    reason: 'the-poor',
+  },
+  // professional bodybuilder
+  {
+    match: `[%Adj|Noun%] #Noun`,
+    notIf: '(#Pronoun|#ProperNoun)',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'stable-foundations',
+  },
 ]

@@ -20,6 +20,17 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 -->
 
+#### 14.11.2 [Jan 2024]
+
+- **[new]** - support for frozen lex in plugin object #1080
+- **[fix]** - toggling options in .json()
+- **[new]** - .join() and .joinIf() methods
+- **[new]** - support freeze in sweep
+- **[change]** - internal typescript improvements
+- **[fix]** - tagging issues
+- **[change]** - @hasEllipses must be following the word
+- **[update]** - dependencies
+
 #### 14.11.1 [Jan 2024]
 
 - **[fix]** - missing words in html output (thanks ryan!)

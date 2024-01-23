@@ -3,15 +3,11 @@ import nlp from './_lib.js'
 const here = '[three/api] '
 
 test('api:', function (t) {
-  let arr = [
-    `He's really good. we were walking. Tony Hawk's swimming pool will dry-up.`,
-    '',
-    '...........?',
-  ]
+  let arr = [`He's really good. we were walking. Tony Hawk's swimming pool will dry-up.`, '', '...........?']
   arr.forEach(str => {
     let doc = nlp(str)
     // lib
-    doc.forEach((s) => s)
+    doc.forEach(s => s)
     doc = doc.map(s => s)
     doc = doc.filter(s => s)
     doc.find(s => s)
@@ -95,6 +91,8 @@ test('api:', function (t) {
     doc.splitBefore('#Foo')
     doc.splitAfter('#Foo')
     doc.split('#Foo')
+    doc.joinIf('#Noun', '#Verb')
+    doc.join()
 
     // output
     doc.out()
@@ -130,7 +128,6 @@ test('api:', function (t) {
     doc.compute('typeahead')
     doc.autoFill()
 
-
     // Two
     doc.compute('contractionTwo')
     doc.contractions()
@@ -144,7 +141,6 @@ test('api:', function (t) {
     doc.compute('penn')
 
     doc.swap('rock', 'stone', '#Noun')
-
 
     // Three
     doc.compute('chunks')
@@ -230,7 +226,6 @@ test('api:', function (t) {
     doc.parentheses().strip()
     doc.possessives()
     doc.possessives().strip()
-
 
     t.ok(doc.json(), here + str)
   })

@@ -47,3 +47,32 @@ test('catch sneeky tags', function (t) {
   t.equal(doc.has('#Person #Verb is nice'), true, here)
   t.end()
 })
+
+test('in plugin', function (t) {
+  nlp.plugin({
+    frozen: {
+      'slug life': 'Verb',
+    },
+  })
+  let doc = nlp(`The cool slug life is nice`)
+  t.equal(doc.match('#Verb+').has('slug life'), true, here + 'in plugin')
+  t.end()
+})
+
+test('block-tag :', function (t) {
+  let doc = nlp(`republic of leeland`)
+  doc.match('republic of .').tag('Place').freeze()
+  doc.match('. of leeland').tag('Organization')
+  t.equal(doc.has('#Place{3}'), true, here + 'two-tag')
+  t.end()
+})
+
+test('freeze-in-sweep :', function (t) {
+  let doc = nlp(`republic of leeland`)
+  let net = nlp.buildNet([{ match: '. of leeland', tag: 'Organization', freeze: true }])
+  doc.sweep(net)
+  doc.match('republic of .').tag('Place') //should do nothing
+  t.equal(doc.has('#Place'), false, here + 'no-place')
+  t.equal(doc.has('#Organization{3}'), true, here + 'has-org')
+  t.end()
+})

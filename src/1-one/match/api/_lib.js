@@ -23,6 +23,20 @@ export const fixPointers = function (res, parent) {
   return { ptrs, byGroup }
 }
 
+// turn any matchable input intp a list of matches
+export const parseRegs = function (regs, opts, world) {
+  const one = world.methods.one
+  if (typeof regs === 'number') {
+    regs = String(regs)
+  }
+  // support param as string
+  if (typeof regs === 'string') {
+    regs = one.killUnicode(regs, world)
+    regs = one.parseMatch(regs, opts, world)
+  }
+  return regs
+}
+
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'
 }

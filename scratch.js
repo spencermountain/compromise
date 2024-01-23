@@ -6,11 +6,9 @@ import nlp from './src/three.js'
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()
-
-let m = nlp("i said, 'did you have to do that' and then left, like nothing happened (which it didn't).")
-  .clauses()
-  .debug()
-console.log(m.eq(1).text())
+let doc = nlp(`...and my butt smells, and i like to kiss my own butt`)
+doc.match('@hasEllipses').debug()
+// let m = doc.clauses() //.debug()
 
 let arr = [
   // 'I left the window open for fresh air.',

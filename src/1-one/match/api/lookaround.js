@@ -1,38 +1,19 @@
-import { fixPointers, parseRegs } from './_lib.js'
-
 const before = function (regs, group, opts) {
-  const one = this.methods.one
-
-  regs = parseRegs(regs, opts, this.world)
-  let todo = { regs, group }
-  let res = one.match(this.docs, todo, this._cache)
-  let { ptrs } = fixPointers(res, this.fullPointer)
-
-  let out = []
-  ptrs.forEach(ptr => {
-    //if match is not at the beginning, end
-    if (!ptr[1] || ptr[1] <= 0) {
-      return
+  const { indexN } = this.methods.one.pointer
+  let pre = []
+  let byN = indexN(this.fullPointer)
+  Object.keys(byN).forEach(k => {
+    // check only the earliest match in the sentence
+    let first = byN[k].sort((a, b) => (a[1] > b[1] ? 1 : -1))[0]
+    if (first[1] > 0) {
+      pre.push([first[0], 0, first[1]])
     }
-    out.push([ptr[0], 0, ptr[1]])
   })
-  return this.toView(out)
-  // const { indexN } = this.methods.one.pointer
-  // let pre = []
-  // let byN = indexN(this.fullPointer)
-  // Object.keys(byN).forEach(k => {
-  //   // check only the earliest match in the sentence
-  //   let first = byN[k].sort((a, b) => (a[1] > b[1] ? 1 : -1))[0]
-  //   if (first[1] > 0) {
-  //     pre.push([first[0], 0, first[1]])
-  //   }
-  // })
-  // console.log(byN)
-  // let preWords = this.toView(pre)
-  // if (!regs) {
-  //   return preWords
-  // }
-  // return preWords.match(regs, group, opts)
+  let preWords = this.toView(pre)
+  if (!regs) {
+    return preWords
+  }
+  return preWords.match(regs, group, opts)
 }
 
 const after = function (regs, group, opts) {

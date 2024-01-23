@@ -4,8 +4,13 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp('one two three four five. one three four')
-doc.before('three four').debug()
+// let doc = nlp('one two three four five. one three four')
+// doc.before('three four').debug()
+
+let m = nlp("i said, 'did you have to do that' and then left, like nothing happened (which it didn't).")
+  .clauses()
+  .debug()
+console.log(m.eq(1).text())
 
 let arr = [
   // 'I left the window open for fresh air.',

@@ -67,6 +67,7 @@ export interface Plugin {
   hooks?: string[],
   tags?: object,
   words?: object,
+  frozen?: {[key: string]: string},
   lib?: () => object,
   api?: (fn: (view: any) => {}) => void,  //should be View
   mutate?: (fn: (world: object) => {}) => void,

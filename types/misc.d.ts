@@ -83,6 +83,7 @@ export interface Match {
   unTag?: string | string[],
   group?: string | number,
   reason?: string,
+  freeze?: boolean
 }
 
 export interface Net {

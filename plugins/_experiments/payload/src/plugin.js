@@ -5,16 +5,6 @@ export default {
   },
 
   api: function (View) {
-    /** add data about our current matches */
-    View.prototype.addPayload = function (data) {
-      let db = this.world.model.one.db || {}
-      this.fullPointer.forEach(ptr => {
-        let n = ptr[0]
-        db[n] = db[n] || []
-        db[n].push(ptr, data)
-      })
-      return this
-    }
     /** return any data on our given matches */
     View.prototype.getPayloads = function () {
       let res = []
@@ -22,14 +12,26 @@ export default {
       this.fullPointer.forEach(ptr => {
         let n = ptr[0]
         if (db.hasOwnProperty(n)) {
-          let match = this.update(db[n][0])
-          res = res.concat({
-            match,
-            payload: db[n][1],
+          db[n].forEach(obj => {
+            res = res.concat({
+              match: this.update(obj.ptr),
+              val: obj.val,
+            })
           })
         }
       })
       return res
+    }
+
+    /** add data about our current matches */
+    View.prototype.addPayload = function (val) {
+      let db = this.world.model.one.db || {}
+      this.fullPointer.forEach(ptr => {
+        let n = ptr[0]
+        db[n] = db[n] || []
+        db[n].push({ ptr, val })
+      })
+      return this
     }
   },
 }

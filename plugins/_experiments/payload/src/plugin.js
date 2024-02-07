@@ -12,11 +12,15 @@ export default {
       this.fullPointer.forEach(ptr => {
         let n = ptr[0]
         if (db.hasOwnProperty(n)) {
+          // look at all vals for this sentence
           db[n].forEach(obj => {
-            res = res.concat({
-              match: this.update(obj.ptr),
-              val: obj.val,
-            })
+            let m = this.update([obj.ptr])
+            if (this.match(m).found) {
+              res = res.concat({
+                match: m,
+                val: obj.val,
+              })
+            }
           })
         }
       })

@@ -12,4 +12,5 @@ doc.people().forEach(m => {
     m.addPayload({ height: `5'8` })
   }
 })
-console.log(doc.getPayloads())
+// console.log(doc.getPayloads())
+console.log(doc.match('and tom .').debug().getPayloads())

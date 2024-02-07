@@ -42,10 +42,22 @@ test('split-doc-input', function (t) {
   t.end()
 })
 
-
 test('two-or-matches overlap', function (t) {
   let doc = nlp('one two three four five')
   let m = doc.match('(two|four) (three|five)')
   t.deepEqual(m.out('array'), ['two three', 'four five'], here + 'or-overlap')
+  t.end()
+})
+
+test('has==match', function (t) {
+  let doc = nlp('i saw John Lennon, and tom cruise.')
+  let m = doc.match('john lennon')
+  let start = doc.match('i saw john .')
+  let end = doc.match('and tom cruise')
+
+  t.equal(start.has(m), true, here + 'has-start')
+  t.equal(start.match(m).found, true, here + 'match-start')
+  t.equal(end.has(m), false, here + 'not-end')
+  t.equal(end.match(m).found, false, here + 'match:not-end')
   t.end()
 })

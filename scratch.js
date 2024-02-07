@@ -7,6 +7,24 @@ import nlp from './src/three.js'
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()
 
+nlp('this is (kinda) messy').not('this').parentheses().debug()
+
+// nlp('15-ounce (15-ounce)').debug()
+
+let doc = nlp('2 to 3 people')
+doc.match('#Value [to] #Value', 0).replaceWith('-')
+console.log(doc.text())
+
+// let doc = nlp('one foo two foo')
+// let m = doc.terms()
+// m = m.join().debug()
+
+// let doc = nlp("one two John Carreyrou three four Roger Moore")
+// let m = doc.terms()
+// let people = doc.people()
+// m = m.joinIf(people)
+// return m.out('array')
+
 let arr = [
   // 'I left the window open for fresh air.',
   // 'Iran also stands accused of aiding terrorism ',

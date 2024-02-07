@@ -15,7 +15,7 @@ export default {
           // look at all vals for this sentence
           db[n].forEach(obj => {
             let m = this.update([obj.ptr])
-            if (this.match(m).found) {
+            if (this.has(m)) {
               res = res.concat({
                 match: m,
                 val: obj.val,

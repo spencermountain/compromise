@@ -42,7 +42,7 @@ const has = function (regs, group, opts) {
   const one = this.methods.one
   // support view as input
   if (isView(regs)) {
-    let ptrs = regs.fullPointer // support a view object as input
+    let ptrs = this.intersection(regs).fullPointer
     return ptrs.length > 0
   }
   // support a compiled set of matches

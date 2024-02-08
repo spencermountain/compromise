@@ -317,7 +317,7 @@ let data = doc.json()
 
 It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
 
-<i>Infinite jest</i> is takes 3s.
+<i>Infinite jest</i> takes 3s.
 
 <div align="right">
   You can also parallelize, or stream text to it with <a href="https://github.com/spencermountain/compromise/tree/master/plugins/speed">compromise-speed</a>.
@@ -483,10 +483,10 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.has('')](https://observablehq.com/@spencermountain/compromise-match)** - Return a boolean if this match exists
 - **[.before('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms before a match, in each phrase
 - **[.after('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms after a match, in each phrase
-- **[.union()](https://observablehq.com/@spencermountain/compromise-pointers)** - return combined matches without duplicates
-- **[.intersection()](https://observablehq.com/@spencermountain/compromise-pointers)** - return only duplicate matches
-- **[.complement()](https://observablehq.com/@spencermountain/compromise-pointers)** - get everything not in another match
-- **[.settle()](https://observablehq.com/@spencermountain/compromise-pointers)** - remove overlaps from matches
+- **.union()** - return combined matches without duplicates
+- **.intersection()** - return only duplicate matches
+- **.complement()** - get everything not in another match
+- **.settle()** - remove overlaps from matches
 - **[.growRight('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms immediately after each match
 - **[.growLeft('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms immediately before each match
 - **[.grow('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms before or after each match
@@ -654,9 +654,9 @@ _(these methods are on the main `nlp` object)_
   - **[.fractions().toText()](https://observablehq.com/@spencermountain/compromise-values)** - '4/10' -> 'four tenths'
   - **[.fractions().toPercentage()](https://observablehq.com/@spencermountain/compromise-values)** - '4/10' -> '40%'
 - **[.percentages()](https://observablehq.com/@spencermountain/compromise-values)** - like '2.5%'
-  - **[.fractions().get()](https://observablehq.com/@spencermountain/compromise-values)** - return the percentage number / 100
-  - **[.fractions().json()](https://observablehq.com/@spencermountain/compromise-values)** - json overloaded with percentage information
-  - **[.fractions().toFraction()](https://observablehq.com/@spencermountain/compromise-values)** - '80%' -> '8/10'
+  - **[.percentages().get()](https://observablehq.com/@spencermountain/compromise-values)** - return the percentage number / 100
+  - **[.percentages().json()](https://observablehq.com/@spencermountain/compromise-values)** - json overloaded with percentage information
+  - **[.percentages().toFraction()](https://observablehq.com/@spencermountain/compromise-values)** - '80%' -> '8/10'
 
 ##### Sentences
 
@@ -675,13 +675,13 @@ _(these methods are on the main `nlp` object)_
 ##### Adjectives
 
 - **[.adjectives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quick'`
-- **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
-- **[.adjectives().conjugate()](https://observablehq.com/@spencermountain/compromise-selections)** - return all inflections of these adjectives
-- **[.adjectives().adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverbs describing this adjective
-- **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quicker'
-- **[.adjectives().toSuperlative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickest'
-- **[.adjectives().toAdverb()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickly'
-- **[.adjectives().toNoun()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickness'
+  - **[.adjectives().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adjective metadata
+  - **[.adjectives().conjugate()](https://observablehq.com/@spencermountain/compromise-selections)** - return all inflections of these adjectives
+  - **[.adjectives().adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverbs describing this adjective
+  - **[.adjectives().toComparative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quicker'
+  - **[.adjectives().toSuperlative()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickest'
+  - **[.adjectives().toAdverb()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickly'
+  - **[.adjectives().toNoun()](https://observablehq.com/@spencermountain/compromise-selections)** - 'quick' -> 'quickness'
 
 ##### Misc selections
 
@@ -700,22 +700,22 @@ _(these methods are on the main `nlp` object)_
 - **[.prepositions()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'of'`
 - **[.abbreviations()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'Mrs.'`
 - **[.people()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - names like 'John F. Kennedy'
-- **[.people().json()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - get person-name metadata
-- **[.people().parse()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - get person-name interpretation
+  - **[.people().json()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - get person-name metadata
+  - **[.people().parse()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - get person-name interpretation
 - **[.places()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Paris, France'
 - **[.organizations()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - like 'Google, Inc'
 - **[.topics()](https://observablehq.com/@spencermountain/topics-named-entity-recognition)** - `people()` + `places()` + `organizations()`
 - **[.adverbs()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'quickly'`
-- **[.adverbs().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverb metadata
+  - **[.adverbs().json()](https://observablehq.com/@spencermountain/compromise-selections)** - get adverb metadata
 - **[.acronyms()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'FBI'`
-- **[.acronyms().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove periods from acronyms
-- **[.acronyms().addPeriods()](https://observablehq.com/@spencermountain/compromise-selections)** - add periods to acronyms
+  - **[.acronyms().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove periods from acronyms
+  - **[.acronyms().addPeriods()](https://observablehq.com/@spencermountain/compromise-selections)** - add periods to acronyms
 - **[.parentheses()](https://observablehq.com/@spencermountain/compromise-selections)** - return anything inside (parentheses)
-- **[.parentheses().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove brackets
+  - **[.parentheses().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove brackets
 - **[.possessives()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `"Spencer's"`
-- **[.possessives().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - "Spencer's" -> "Spencer"
+  - **[.possessives().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - "Spencer's" -> "Spencer"
 - **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside paired quotation marks
-- **[.quotations().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove quotation marks
+  - **[.quotations().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove quotation marks
 
 <p>
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -804,7 +804,7 @@ nlp.extend({
 ##### Documentation:
 
 | Concepts                                                                                    |                                               API                                               |                                                                                Plugins |
-| ------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------: | --- |
+| ------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------: |
 | [Accuracy](https://observablehq.com/@spencermountain/compromise-accuracy)                   |           [Accessors](https://observablehq.com/@spencermountain/compromise-accessors)           |          [Adjectives](https://observablehq.com/@spencermountain/compromise-adjectives) |
 | [Caching](https://observablehq.com/@spencermountain/compromise-cache)                       | [Constructor-methods](https://observablehq.com/@spencermountain/compromise-constructor-methods) |                    [Dates](https://observablehq.com/@spencermountain/compromise-dates) |
 | [Case](https://observablehq.com/@spencermountain/compromise-case)                           |        [Contractions](https://observablehq.com/@spencermountain/compromise-contractions)        |                  [Export](https://observablehq.com/@spencermountain/compromise-export) |
@@ -817,7 +817,7 @@ nlp.extend({
 | [Plugins](https://observablehq.com/@spencermountain/compromise-plugins)                     |              [Output](https://observablehq.com/@spencermountain/compromise-output)              |                      [Scan](https://observablehq.com/@spencermountain/compromise-scan) |
 | [Projects](https://observablehq.com/@spencermountain/compromise-projects)                   |          [Selections](https://observablehq.com/@spencermountain/compromise-selections)          |            [Sentences](https://observablehq.com/@spencermountain/compromise-sentences) |
 | [Tagger](https://observablehq.com/@spencermountain/compromise-tagger)                       |             [Sorting](https://observablehq.com/@spencermountain/compromise-sorting)             |            [Syllables](https://observablehq.com/@spencermountain/compromise-syllables) |
-| [Tags](https://observablehq.com/@spencermountain/compromise-tags)                           |               [Split](https://observablehq.com/@spencermountain/compromise-split)               |            [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce) |     |
+| [Tags](https://observablehq.com/@spencermountain/compromise-tags)                           |               [Split](https://observablehq.com/@spencermountain/compromise-split)               |            [Pronounce](https://observablehq.com/@spencermountain/compromise-pronounce) |
 | [Tokenization](https://observablehq.com/@spencermountain/compromise-tokenization)           |                [Text](https://observablehq.com/@spencermountain/compromise-text)                |                  [Strict](https://observablehq.com/@spencermountain/compromise-strict) |
 | [Named-Entities](https://observablehq.com/@spencermountain/topics-named-entity-recognition) |               [Utils](https://observablehq.com/@spencermountain/compromise-utils)               |            [Penn-tags](https://observablehq.com/@spencermountain/compromise-penn-tags) |
 | [Whitespace](https://observablehq.com/@spencermountain/compromise-whitespace)               |                    [Verbs](https://observablehq.com/@spencermountain/verbs)                     | [Typeahead](https://observablehq.com/@spencermountain/compromise/compromise-typeahead) |
@@ -892,7 +892,7 @@ These are some helpful extensions:
   - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for duration
   - **[.durations().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with duration metadata
 - **[.times()](https://observablehq.com/@spencermountain/compromise-dates)** - `4:30pm` or `half past five`
-  - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
+  - **[.times().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
   - **[.times().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with time metadata
 
 ##### Stats

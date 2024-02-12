@@ -11,10 +11,10 @@ import nlp from './src/three.js'
 // doc.debug()
 // nlp('this is (kinda) messy').not('this').parentheses().debug()
 
-let doc = nlp('i saw the cat run up the stairs')
+let doc = nlp('i saw the blue cat run up the stairs')
 doc.debug('tags')
 doc.debug('chunks')
-doc.match('highlight').debug('highlight')
+doc.match('cat run').debug('highlight')
 // let doc = nlp('2 to 3 people')
 // doc.match('#Value [to] #Value', 0).replaceWith('-')
 // console.log(doc.text())

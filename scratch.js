@@ -4,7 +4,7 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-nlp('fifty five mg but not 23km').values().isUnit(['mg', 'dt']).debug()
+nlp('i stored 300gb on a 600 GB harddrive').values().isUnit(['gb', 'dt']).debug()
 // let doc = nlp('i saw John Lennon, and tom cruise.')
 // let m = doc.match('john lennon')
 // let end = doc.match('and tom cruise')

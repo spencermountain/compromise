@@ -9,9 +9,6 @@ import nlp from './src/three.js'
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()
 // doc.debug()
-let doc = nlp('this is (kinda) messy')
-let m = doc.not('this')
-m.parentheses().debug()
 
 // let doc = nlp('2 to 3 people')
 // doc.match('#Value [to] #Value', 0).replaceWith('-')

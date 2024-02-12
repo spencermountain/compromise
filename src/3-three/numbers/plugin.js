@@ -8,4 +8,14 @@ const api = function (View) {
 
 export default {
   api,
+
+  // add @greaterThan, @lessThan
+  mutate: world => {
+    let termMethods = world.methods.one.termMethods
+
+    termMethods.lessThan = function (term) {
+      console.log(term)
+      // return /[aeiou]/.test(term.text)
+    }
+  },
 }

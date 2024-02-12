@@ -107,6 +107,8 @@ export interface Numbers extends View {
   isOrdinal: () => View
   /** return only cardinal numbers */
   isCardinal: () => View
+  /** return only numbers with the given unit(s), like 'km' */
+  isUnit: (units: string | string[] | object) => View
   /** convert number to `5` or `5th` */
   toNumber: () => View
   /** add commas, or nicer formatting for numbers */

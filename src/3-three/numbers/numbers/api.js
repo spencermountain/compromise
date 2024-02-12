@@ -1,6 +1,7 @@
 import find from './find.js'
 import parse from './parse/index.js'
 import format from './format/index.js'
+import isUnit from './isUnit.js'
 
 const addMethod = function (View) {
   /**   */
@@ -13,7 +14,9 @@ const addMethod = function (View) {
       return this.getNth(n).map(parse)
     }
     get(n) {
-      return this.getNth(n).map(parse).map(o => o.num)
+      return this.getNth(n)
+        .map(parse)
+        .map(o => o.num)
     }
     json(n) {
       let opts = typeof n === 'object' ? n : {}
@@ -25,7 +28,7 @@ const addMethod = function (View) {
           num: parsed.num,
           suffix: parsed.suffix,
           hasComma: parsed.hasComma,
-          unit: parsed.unit
+          unit: parsed.unit,
         }
         return json
       }, [])
@@ -33,6 +36,10 @@ const addMethod = function (View) {
     /** any known measurement unit, for the number */
     units() {
       return this.growRight('#Unit').match('#Unit$')
+    }
+    /** return values that match a given unit */
+    isUnit(allowed) {
+      return isUnit(this, allowed)
     }
     /** return only ordinal numbers */
     isOrdinal() {
@@ -61,7 +68,7 @@ const addMethod = function (View) {
     /** add commas, or nicer formatting for numbers */
     toLocaleString() {
       let m = this
-      m.forEach((val) => {
+      m.forEach(val => {
         let obj = parse(val)
         if (obj.num === null) {
           return
@@ -139,28 +146,28 @@ const addMethod = function (View) {
 
     /** return only numbers that are == n */
     isEqual(n) {
-      return this.filter((val) => {
+      return this.filter(val => {
         let num = parse(val).num
         return num === n
       })
     }
     /** return only numbers that are > n*/
     greaterThan(n) {
-      return this.filter((val) => {
+      return this.filter(val => {
         let num = parse(val).num
         return num > n
       })
     }
     /** return only numbers that are < n*/
     lessThan(n) {
-      return this.filter((val) => {
+      return this.filter(val => {
         let num = parse(val).num
         return num < n
       })
     }
     /** return only numbers > min and < max */
     between(min, max) {
-      return this.filter((val) => {
+      return this.filter(val => {
         let num = parse(val).num
         return num > min && num < max
       })
@@ -174,7 +181,7 @@ const addMethod = function (View) {
         n = parse(n).num
       }
       let m = this
-      let res = m.map((val) => {
+      let res = m.map(val => {
         let obj = parse(val)
         obj.num = n
         if (obj.num === null) {
@@ -205,7 +212,7 @@ const addMethod = function (View) {
         n = parse(n).num
       }
       let m = this
-      let res = m.map((val) => {
+      let res = m.map(val => {
         let obj = parse(val)
         if (obj.num === null) {
           return val

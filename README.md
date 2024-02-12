@@ -636,6 +636,7 @@ _(these methods are on the main `nlp` object)_
   - **[.numbers().greaterThan(min)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers bigger than n
   - **[.numbers().lessThan(max)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers smaller than n
   - **[.numbers().between(min, max)](https://observablehq.com/@spencermountain/compromise-values)** - return numbers between min and max
+  - **[.numbers().isUnit(unit)](https://observablehq.com/@spencermountain/compromise-values)** - return only numbers in the given unit, like 'km'
   - **[.numbers().set(n)](https://observablehq.com/@spencermountain/compromise-values)** - set number to n
   - **[.numbers().add(n)](https://observablehq.com/@spencermountain/compromise-values)** - increase number by n
   - **[.numbers().subtract(n)](https://observablehq.com/@spencermountain/compromise-values)** - decrease number by n

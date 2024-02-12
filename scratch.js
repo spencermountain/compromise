@@ -4,11 +4,12 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp('i saw John Lennon, and tom cruise.')
-let m = doc.match('john lennon')
-let end = doc.match('and tom cruise')
-console.log(end.has(m))
-console.log(end.match(m).found)
+nlp('fifty five mg but not 23km').values().isUnit(['mg', 'dt']).debug()
+// let doc = nlp('i saw John Lennon, and tom cruise.')
+// let m = doc.match('john lennon')
+// let end = doc.match('and tom cruise')
+// console.log(end.has(m))
+// console.log(end.match(m).found)
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()

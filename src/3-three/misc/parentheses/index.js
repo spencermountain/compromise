@@ -1,7 +1,6 @@
 import { find, strip } from './fns.js'
 
 const api = function (View) {
-
   class Parentheses extends View {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)

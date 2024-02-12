@@ -17,3 +17,36 @@ test('parentheses test', function (t) {
   })
   t.end()
 })
+
+test('parentheses on mangled doc', function (t) {
+  let doc = nlp('this is (kinda) messy')
+  let m = doc.not('this')
+  let str = m.parentheses().text()
+  t.equal(str, 'kinda', here + '+not-before')
+
+  m = doc.not('kinda')
+  str = m.parentheses().text()
+  t.equal(str, '', here + '+not-self')
+
+  m = doc.not('messy')
+  str = m.parentheses().text()
+  t.equal(str, 'kinda', here + '+not-after')
+  t.end()
+})
+
+test('partial-parentheses', function (t) {
+  let doc = nlp('before (one two three) after')
+  let m = doc.not('two')
+  let str = m.parentheses().text()
+  t.equal(str, 'one three', here + '+not-inside')
+
+  m = doc.not('one')
+  str = m.parentheses().text()
+  t.equal(str, '', here + '+not-start')
+
+  m = doc.not('three')
+  str = m.parentheses().text()
+  t.equal(str, '', here + '+not-after')
+
+  t.end()
+})

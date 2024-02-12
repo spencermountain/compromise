@@ -4,7 +4,9 @@ const hasClosed = /\)/
 const findEnd = function (terms, i) {
   for (; i < terms.length; i += 1) {
     if (terms[i].post && hasClosed.test(terms[i].post)) {
-      return i
+      let [, index] = terms[i].index
+      index = index || 0
+      return index
     }
   }
   return null

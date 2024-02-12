@@ -13,4 +13,6 @@ doc.people().forEach(m => {
   }
 })
 // console.log(doc.getPayloads())
-console.log(doc.match('and tom .').debug().getPayloads())
+doc.debug('payload')
+// let m = doc.match('and tom .').debug('payload')
+// console.log(m.getPayloads())

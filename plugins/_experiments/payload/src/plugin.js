@@ -1,7 +1,10 @@
+import debug from './debug.js'
+
 export default {
   //establish payload db
   mutate: function (world) {
     world.model.one.db = {}
+    world.methods.one.debug.payload = debug
   },
 
   api: function (View) {

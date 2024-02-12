@@ -4,20 +4,17 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-nlp('i stored 300gb on a 600 GB harddrive').values().isUnit(['gb', 'dt']).debug()
-// let doc = nlp('i saw John Lennon, and tom cruise.')
-// let m = doc.match('john lennon')
-// let end = doc.match('and tom cruise')
-// console.log(end.has(m))
-// console.log(end.match(m).found)
+// nlp('i went on June 5th 1999 and then on April 7 2008').dates().isBefore('2000-02-01').debug()
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()
-
+// doc.debug()
 // nlp('this is (kinda) messy').not('this').parentheses().debug()
 
-// nlp('15-ounce (15-ounce)').debug()
-
+let doc = nlp('i saw the cat run up the stairs')
+doc.debug('tags')
+doc.debug('chunks')
+doc.match('highlight').debug('highlight')
 // let doc = nlp('2 to 3 people')
 // doc.match('#Value [to] #Value', 0).replaceWith('-')
 // console.log(doc.text())

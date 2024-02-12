@@ -1,6 +1,6 @@
-import { textFromTerms } from './lib/_text.js'
+import { textFromTerms } from './_text.js'
 import fmts from './_fmts.js'
-import hash from './lib/hash.js'
+import hash from '../methods/hash.js'
 
 const defaults = {
   text: true,

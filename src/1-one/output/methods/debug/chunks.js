@@ -21,5 +21,6 @@ const showChunks = function (view) {
     })
     console.log(out.join(' '), '\n')
   })
+  console.log('\n')
 }
 export default showChunks

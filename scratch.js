@@ -1,10 +1,10 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-// nlp('i went on June 5th 1999 and then on April 7 2008').dates().isBefore('2000-02-01').debug()
+nlp('i went on June 5th 1999 and then on April 7 2008').dates().isBefore('2000-02-01').debug()
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()

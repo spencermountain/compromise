@@ -41,7 +41,7 @@
     "compromise": ">=14.2.0"
   },
   "dependencies": {
-    "spacetime": "7.1.4",
+    "spacetime": "7.6.0",
     "spacetime-holiday": "0.3.0"
   },
   "license": "MIT"

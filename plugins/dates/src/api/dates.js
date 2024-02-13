@@ -34,6 +34,7 @@ const api = function (View) {
       }, [])
     }
 
+    /** replace date terms with a formatted date */
     format(fmt) {
       let found = this
       let res = found.map(m => {
@@ -52,6 +53,23 @@ const api = function (View) {
         return m
       })
       return new Dates(this.document, res.pointer, null, this.opts)
+    }
+
+    /** return only dates occuring before a given date  */
+    isBefore(iso) {
+      let tmp = this.fromText(iso)
+      let found = parseDates(tmp, this.opts)[0]
+      if (!found || !found.start || !found.start.d) {
+        return this.none() //return nothing
+      }
+      let pivot = found.start.d // our given date
+      return this.filter(m => {
+        let obj = parseDates(m, this.opts)[0] || {}
+        if (!obj.start || !obj.start.d) {
+          return false
+        }
+        return obj.start.d.isBefore(pivot)
+      })
     }
   }
 

@@ -5,49 +5,49 @@ const mapping = {
   // adverbs
   // 'Comparative': 'RBR',
   // 'Superlative': 'RBS',
-  'Adverb': 'RB',
+  Adverb: 'RB',
 
   // adjectives
-  'Comparative': 'JJR',
-  'Superlative': 'JJS',
-  'Adjective': 'JJ',
-  'TO': 'Conjunction',
+  Comparative: 'JJR',
+  Superlative: 'JJS',
+  Adjective: 'JJ',
+  TO: 'Conjunction',
 
   // verbs
-  'Modal': 'MD',
-  'Auxiliary': 'MD',
-  'Gerund': 'VBG', //throwing
-  'PastTense': 'VBD', //threw
-  'Participle': 'VBN', //thrown
-  'PresentTense': 'VBZ', //throws
-  'Infinitive': 'VB', //throw
-  'Particle': 'RP', //phrasal particle
-  'Verb': 'VB', // throw
+  Modal: 'MD',
+  Auxiliary: 'MD',
+  Gerund: 'VBG', //throwing
+  PastTense: 'VBD', //threw
+  Participle: 'VBN', //thrown
+  PresentTense: 'VBZ', //throws
+  Infinitive: 'VB', //throw
+  Particle: 'RP', //phrasal particle
+  Verb: 'VB', // throw
 
   // pronouns
-  'Pronoun': 'PRP',
+  Pronoun: 'PRP',
 
   // misc
-  'Cardinal': 'CD',
-  'Conjunction': 'CC',
-  'Determiner': 'DT',
-  'Preposition': 'IN',
+  Cardinal: 'CD',
+  Conjunction: 'CC',
+  Determiner: 'DT',
+  Preposition: 'IN',
   // 'Determiner': 'WDT',
   // 'Expression': 'FW',
-  'QuestionWord': 'WP',
-  'Expression': 'UH',
+  QuestionWord: 'WP',
+  Expression: 'UH',
 
   //nouns
-  'Possessive': 'POS',
-  'ProperNoun': 'NNP',
-  'Person': 'NNP',
-  'Place': 'NNP',
-  'Organization': 'NNP',
-  'Singular': 'NNP',
-  'Plural': 'NNS',
-  'Noun': 'NN',
+  Possessive: 'POS',
+  ProperNoun: 'NNP',
+  Person: 'NNP',
+  Place: 'NNP',
+  Organization: 'NNP',
+  Singular: 'NN',
+  Plural: 'NNS',
+  Noun: 'NN',
 
-  'There': 'EX', //'there'
+  There: 'EX', //'there'
   // 'Adverb':'WRB',
   // 'Noun':'PDT', //predeterminer
   // 'Noun':'SYM', //symbol
@@ -56,7 +56,7 @@ const mapping = {
   //  WDT 	Wh-determiner
   // 	WP 	Wh-pronoun
   // 	WP$ 	Possessive wh-pronoun
-  // 	WRB 	Wh-adverb 
+  // 	WRB 	Wh-adverb
 }
 
 const toPenn = function (term) {

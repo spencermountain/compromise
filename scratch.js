@@ -1,5 +1,5 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/one.js'
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
@@ -18,8 +18,14 @@ import nlp from './src/one.js'
 // doc.before('three four').debug()
 // doc.debug()
 
-let doc = nlp(`The pro-choice movement`).debug()
-// nlp('10-ounce (12-ounce)').debug()
+function CompromiseTagger(word) {
+  const doc = nlp(word)
+  doc.compute('penn')
+  const terms = doc.out('json')[0].terms[0]
+  return terms.penn
+}
+console.log(CompromiseTagger('bishop'))
+console.log(CompromiseTagger('doctor'))
 
 // let doc = nlp('one foo two foo')
 // let m = doc.terms()

@@ -1,7 +1,7 @@
 /* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+import nlp from './src/one.js'
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 // nlp.verbose('tagger')
 
 // let doc = nlp('one two three four')
@@ -10,17 +10,16 @@ nlp.plugin(plg)
 // a.difference(b).debug()
 
 // let doc = nlp('and between Sept and Oct 2008')
-let doc = nlp('only in 2018 and 2020')
-doc.dates().debug('dates')
+// let doc = nlp('only in 2018 and 2020')
+// doc.dates().debug('dates')
 // let m = doc.dates().isBefore('2009-01').debug('dates')
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()
 // doc.debug()
 
-// let doc = nlp('2 to 3 people')
-// doc.match('#Value [to] #Value', 0).replaceWith('-')
-// console.log(doc.text())
+let doc = nlp(`The pro-choice movement`).debug()
+// nlp('10-ounce (12-ounce)').debug()
 
 // let doc = nlp('one foo two foo')
 // let m = doc.terms()

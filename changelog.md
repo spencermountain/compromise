@@ -28,8 +28,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .has() inconsistency
 - **[new]** - support adding debug methods via plugins
 - **[change]** - remove deprecated .debug(object) support
+- **[fix]** - parentheses() match issue
 
 - **[new]** - `dates().isBefore()`, `dates().isBefore()`
+- **[new]** - `debug('dates')`
+
+- **[fix]** - .not() overlap detection
 - **[fix]** - join() issue
 - **[fix]** - .before() .after()
 

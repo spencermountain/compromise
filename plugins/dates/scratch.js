@@ -8,11 +8,9 @@ nlp.plugin(datePlugin)
 // nlp.verbose('tagger')
 // nlp.verbose('date')
 
-const fmt = (iso) => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
 // process.env.DEBUG_DATE = true
-
-
 
 // date issues:
 // 'the month before christmas' vs 'a month before christmas'
@@ -37,6 +35,7 @@ const context = {
 
 let txt = ` We will see him in mid-September`
 txt = `5th day of q1 2002`
+txt = 'between Sept and Oct 2008'
 // txt = `tomorrow at 5:45pm`
 // txt = 'aug. 3'
 // txt = 'lets meet 1 weeks from now '

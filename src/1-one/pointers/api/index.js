@@ -56,7 +56,7 @@ methods.not = function (m) {
 }
 methods.difference = methods.not
 
-// get opposite of a
+// get opposite of a match
 methods.complement = function () {
   let doc = this.all()
   let ptrs = getDifference(doc.fullPointer, this.fullPointer)
@@ -73,7 +73,6 @@ methods.settle = function () {
   ptrs = addIds(ptrs, this.document)
   return this.update(ptrs)
 }
-
 
 const addAPI = function (View) {
   // add set/intersection/union

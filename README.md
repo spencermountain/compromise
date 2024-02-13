@@ -483,10 +483,10 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 - **[.has('')](https://observablehq.com/@spencermountain/compromise-match)** - Return a boolean if this match exists
 - **[.before('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms before a match, in each phrase
 - **[.after('')](https://observablehq.com/@spencermountain/compromise-match)** - return all terms after a match, in each phrase
-- **.union()** - return combined matches without duplicates
-- **.intersection()** - return only duplicate matches
-- **.complement()** - get everything not in another match
-- **.settle()** - remove overlaps from matches
+- **[.union()](https://observablehq.com/@spencermountain/compromise-set)** - return combined matches without duplicates
+- **[.intersection()](https://observablehq.com/@spencermountain/compromise-set)** - return only duplicate matches
+- **[.complement()](https://observablehq.com/@spencermountain/compromise-set)** - get everything not in another match
+- **[.settle()](https://observablehq.com/@spencermountain/compromise-set)** - remove overlaps from matches
 - **[.growRight('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms immediately after each match
 - **[.growLeft('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms immediately before each match
 - **[.grow('')](https://observablehq.com/@spencermountain/compromise-match)** - add any matching terms before or after each match

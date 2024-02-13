@@ -4,7 +4,14 @@ import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-nlp('i went on June 5th 1999 and then on April 7 2008').dates().isBefore('2000-02-01').debug()
+// let doc = nlp('one two three four')
+// let a = doc.match('one .')
+// let b = doc.match('. three')
+// a.difference(b).debug()
+
+// let doc = nlp('and between Sept and Oct 2008, but then June 2010')
+// doc.dates().debug('dates')
+// let m = doc.dates().isBefore('2009-01').debug()
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()

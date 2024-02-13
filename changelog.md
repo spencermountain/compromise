@@ -30,8 +30,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - remove deprecated .debug(object) support
 - **[fix]** - parentheses() match issue
 
-- **[new]** - `dates().isBefore()`, `dates().isBefore()`
-- **[new]** - `debug('dates')`
+- **[new]** - `dates().isBefore()`, `dates().isBefore()` methods
+- **[new]** - `.debug('dates')` method
 
 - **[fix]** - .not() overlap detection
 - **[fix]** - join() issue

@@ -9,9 +9,10 @@ nlp.plugin(plg)
 // let b = doc.match('. three')
 // a.difference(b).debug()
 
-let doc = nlp('and between Sept and Oct 2008, but then June 2010')
+// let doc = nlp('and between Sept and Oct 2008')
+let doc = nlp('only in 2018 and 2020')
 doc.dates().debug('dates')
-// let m = doc.dates().isBefore('2009-01').debug()
+// let m = doc.dates().isBefore('2009-01').debug('dates')
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()

@@ -8900,6 +8900,7 @@
       world.model.two.regexText = world.model.two.regexText || [];
       world.model.two.regexText = world.model.two.regexText.concat(regex);
       // add our debug('dates') method
+      world.methods.one.debug = world.methods.one.debug || {};
       world.methods.one.debug.dates = debug$1;
     },
     hooks: ['dates'],

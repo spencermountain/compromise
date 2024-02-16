@@ -29,6 +29,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - support adding debug methods via plugins
 - **[change]** - remove deprecated .debug(object) support
 - **[fix]** - parentheses() match issue
+- **[fix]** - tokenization issue #1085
+
+date-plugin:
 
 - **[new]** - `dates().isBefore()`, `dates().isBefore()` methods
 - **[new]** - `.debug('dates')` method

@@ -17,16 +17,6 @@ import nlp from './src/three.js'
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()
 // doc.debug()
-
-function CompromiseTagger(word) {
-  const doc = nlp(word)
-  doc.compute('penn')
-  const terms = doc.out('json')[0].terms[0]
-  return terms.penn
-}
-console.log(CompromiseTagger('bishop'))
-console.log(CompromiseTagger('doctor'))
-
 // let doc = nlp('one foo two foo')
 // let m = doc.terms()
 // m = m.join().debug()

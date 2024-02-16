@@ -23,7 +23,7 @@
 
 This plugin provides a facilty for storing a retreiving more complex data than tags, for compromise documents and matches.
 
-### payload
+### Payload
 
 ```js
 import plg from 'compromise-payload'
@@ -40,6 +40,25 @@ doc.people().forEach(m => {
 })
 doc.getPayloads()
 // [...]
+```
+
+You can also pass a callback into `.addPayload()`:
+
+```js
+let doc = nlp('i saw John Lennon, and john smith and bob dylan')
+doc.people().addPayload(m => {
+  return { lastName: m.terms().last().text() }
+})
+```
+
+You can remove all, or selected payloads with `.clearPayload()`:
+
+```js
+doc.match('bob .').clearPayloads()
+doc.getPayloads().length // now 2
+
+doc.clearPayloads()
+doc.getPayloads().length // now 0
 ```
 
 MIT

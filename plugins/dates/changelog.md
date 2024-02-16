@@ -2,6 +2,13 @@
 - **[breaking]** - return array in .json().dates
 -->
 
+### 3.5.0 [Feb 2024]
+
+- **[new]** - `dates().isBefore()`, `dates().isBefore()` methods
+- **[new]** - `.dates().isSame()` method
+- **[new]** - `.debug('dates')` function
+- **[fix]** - tokenizer fixes
+
 ### 2.2.0 [April 2021]
 
 - **[new]** - start parsing or/and date combos

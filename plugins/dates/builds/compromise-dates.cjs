@@ -73,8 +73,14 @@
     if (m.found) {
       dates = dates.splitAfter(m);
     }
+    //1998 and 1999
+    m = dates.match('#Year [and] #Year', 0);
+    if (m.found) {
+      dates = dates.splitAfter(m);
+    }
     // cleanup any splits
     dates = dates.not('^and');
+    dates = dates.not('and$');
     return dates
   };
   var split$1 = split;
@@ -86,7 +92,7 @@
     // }
     let dates = doc.match('#Date+');
     // ignore only-durations like '20 minutes'
-    dates = dates.filter((m) => {
+    dates = dates.filter(m => {
       let isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$');
       // allow 'q4', etc
       if (isDuration === true && m.has('(#FinancialQuarter|quarter)')) {
@@ -314,10 +320,10 @@
 
   var data = {
     "9|s": "2/dili,2/jayapura",
-    "9|n": "2/chita,2/khandyga,2/pyongyang,2/seoul,2/tokyo,11/palau,japan,rok",
-    "9.5|s|04/03:03->10/02:02": "4/adelaide,4/broken_hill,4/south,4/yancowinna",
+    "9|n": "2/chita,2/khandyga,2/pyongyang,2/seoul,2/tokyo,2/yakutsk,11/palau,japan,rok",
+    "9.5|s|04/07:03->10/06:02": "4/adelaide,4/broken_hill,4/south,4/yancowinna",
     "9.5|s": "4/darwin,4/north",
-    "8|s|03/08:01->10/04:00": "12/casey",
+    "8|s|03/13:01->10/02:00": "12/casey",
     "8|s": "2/kuala_lumpur,2/makassar,2/singapore,4/perth,2/ujung_pandang,4/west,singapore",
     "8|n": "2/brunei,2/choibalsan,2/hong_kong,2/irkutsk,2/kuching,2/macau,2/manila,2/shanghai,2/taipei,2/ulaanbaatar,2/chongqing,2/chungking,2/harbin,2/macao,2/ulan_bator,hongkong,prc,roc",
     "8.75|s": "4/eucla",
@@ -328,83 +334,75 @@
     "6.5|n": "2/yangon,9/cocos,2/rangoon",
     "5|s": "12/mawson,9/kerguelen",
     "5|n": "2/aqtau,2/aqtobe,2/ashgabat,2/atyrau,2/dushanbe,2/karachi,2/oral,2/samarkand,2/tashkent,2/yekaterinburg,9/maldives,2/ashkhabad",
-    "5.75|n": "2/katmandu,2/kathmandu",
+    "5.75|n": "2/kathmandu,2/katmandu",
     "5.5|n": "2/kolkata,2/colombo,2/calcutta",
     "4|s": "9/reunion",
-    "4|n": "2/baku,2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk,8/volgograd,2/volgograd,9/mahe,9/mauritius",
-    "4.5|n|03/22:00->09/21:24": "2/tehran,iran",
+    "4|n": "2/baku,2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk,8/volgograd,9/mahe,9/mauritius,2/volgograd",
     "4.5|n": "2/kabul",
     "3|s": "12/syowa,9/antananarivo",
-    "3|n|03/27:03->10/30:04": "2/famagusta,2/nicosia,8/athens,8/bucharest,8/helsinki,8/kiev,8/mariehamn,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye,8/nicosia",
-    "3|n|03/27:02->10/30:03": "8/chisinau,8/tiraspol",
-    "3|n|03/27:00->10/29:24": "2/beirut",
-    "3|n|03/27:00->10/28:01": "2/gaza,2/hebron",
-    "3|n|03/25:02->10/30:02": "2/jerusalem,2/tel_aviv,israel",
-    "3|n|03/25:00->10/27:24": "2/damascus",
-    "3|n|02/25:00->10/28:01": "2/amman",
-    "3|n": "0/addis_ababa,0/asmara,0/asmera,0/dar_es_salaam,0/djibouti,0/juba,0/kampala,0/mogadishu,0/nairobi,2/aden,2/baghdad,2/bahrain,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,9/comoro,9/mayotte,2/istanbul,turkey,w-su",
-    "2|s|03/27:02->10/30:02": "12/troll",
+    "3|n|04/26:00->10/31:24": "0/cairo,egypt",
+    "3|n|04/20:02->10/26:02": "2/gaza,2/hebron",
+    "3|n|03/31:03->10/27:04": "2/famagusta,2/nicosia,8/athens,8/bucharest,8/helsinki,8/kyiv,8/mariehamn,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye,8/nicosia,8/kiev,eet",
+    "3|n|03/31:02->10/27:03": "8/chisinau,8/tiraspol",
+    "3|n|03/31:00->10/26:24": "2/beirut",
+    "3|n|03/29:02->10/27:02": "2/jerusalem,2/tel_aviv,israel",
+    "3|n": "0/addis_ababa,0/asmara,0/asmera,0/dar_es_salaam,0/djibouti,0/juba,0/kampala,0/mogadishu,0/nairobi,2/aden,2/amman,2/baghdad,2/bahrain,2/damascus,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,9/comoro,9/mayotte,2/istanbul,turkey,w-su",
+    "3.5|n": "2/tehran,iran",
+    "2|s|03/31:02->10/27:02": "12/troll",
     "2|s": "0/gaborone,0/harare,0/johannesburg,0/lubumbashi,0/lusaka,0/maputo,0/maseru,0/mbabane",
-    "2|n|03/27:02->10/30:03": "0/ceuta,arctic/longyearbyen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich,3/jan_mayen,poland",
-    "2|n": "0/blantyre,0/bujumbura,0/cairo,0/khartoum,0/kigali,0/tripoli,8/kaliningrad,egypt,libya",
+    "2|n|03/31:02->10/27:03": "0/ceuta,arctic/longyearbyen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich,3/jan_mayen,poland,cet,met",
+    "2|n": "0/blantyre,0/bujumbura,0/khartoum,0/kigali,0/tripoli,8/kaliningrad,libya",
     "1|s": "0/brazzaville,0/kinshasa,0/luanda,0/windhoek",
-    "1|n|03/27:03->05/08:02": "0/casablanca,0/el_aaiun",
-    "1|n|03/27:01->10/30:02": "3/canary,3/faroe,3/madeira,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london,3/faeroe,eire,8/belfast,gb-eire,gb,portugal",
+    "1|n|03/31:01->10/27:02": "3/canary,3/faroe,3/madeira,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london,3/faeroe,eire,8/belfast,gb-eire,gb,portugal,wet",
     "1|n": "0/algiers,0/bangui,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis",
     "14|n": "11/kiritimati",
-    "13|s|04/04:04->09/26:03": "11/apia",
-    "13|s|01/15:02->11/05:03": "11/tongatapu",
-    "13|n": "11/enderbury,11/fakaofo",
-    "12|s|04/03:03->09/25:02": "12/mcmurdo,11/auckland,12/south_pole,nz",
-    "12|s|01/17:03->11/14:02": "11/fiji",
+    "13|s": "11/apia,11/tongatapu",
+    "13|n": "11/enderbury,11/kanton,11/fakaofo",
+    "12|s|04/07:03->09/29:02": "12/mcmurdo,11/auckland,12/south_pole,nz",
+    "12|s": "11/fiji",
     "12|n": "2/anadyr,2/kamchatka,2/srednekolymsk,11/funafuti,11/kwajalein,11/majuro,11/nauru,11/tarawa,11/wake,11/wallis,kwajalein",
-    "12.75|s|04/03:03->04/03:02": "11/chatham,nz-chat",
-    "11|s|04/03:03->10/02:02": "12/macquarie",
+    "12.75|s|04/07:03->04/07:02": "11/chatham,nz-chat",
+    "11|s|04/07:03->10/06:02": "12/macquarie",
     "11|s": "11/bougainville",
     "11|n": "2/magadan,2/sakhalin,11/efate,11/guadalcanal,11/kosrae,11/noumea,11/pohnpei,11/ponape",
-    "11.5|n|04/03:03->10/02:02": "11/norfolk",
-    "10|s|04/03:03->10/02:02": "4/currie,4/hobart,4/melbourne,4/sydney,4/act,4/canberra,4/nsw,4/tasmania,4/victoria",
+    "11.5|n|04/07:03->10/06:02": "11/norfolk",
+    "10|s|04/07:03->10/06:02": "4/currie,4/hobart,4/melbourne,4/sydney,4/act,4/canberra,4/nsw,4/tasmania,4/victoria",
     "10|s": "12/dumontdurville,4/brisbane,4/lindeman,11/port_moresby,4/queensland",
-    "10|n": "2/ust-nera,2/vladivostok,2/yakutsk,11/guam,11/saipan,11/chuuk,11/truk,11/yap",
-    "10.5|s|04/03:01->10/02:02": "4/lord_howe,4/lhi",
-    "0|n|03/27:00->10/30:01": "1/scoresbysund,3/azores",
-    "0|n": "0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,1/danmarkshavn,3/reykjavik,3/st_helena,13/gmt,13/utc,0/timbuktu,13/greenwich,13/uct,13/universal,13/zulu,gmt-0,gmt+0,gmt0,greenwich,iceland,uct,universal,utc,zulu",
-    "-9|n|03/13:02->11/06:02": "1/adak,1/atka,us/aleutian",
+    "10|n": "2/ust-nera,2/vladivostok,11/guam,11/saipan,11/chuuk,11/truk,11/yap",
+    "10.5|s|04/07:01->10/06:02": "4/lord_howe,4/lhi",
+    "0|s|03/10:03->04/14:02": "0/casablanca,0/el_aaiun",
+    "0|n|03/31:00->10/27:01": "1/scoresbysund,3/azores",
+    "0|n": "0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,1/danmarkshavn,3/reykjavik,3/st_helena,13/gmt,13/utc,0/timbuktu,13/greenwich,13/uct,13/universal,13/zulu,gmt-0,gmt+0,gmt0,greenwich,iceland,uct,universal,utc,zulu,13/unknown,factory",
+    "-9|n|03/10:02->11/03:02": "1/adak,1/atka,us/aleutian",
     "-9|n": "11/gambier",
     "-9.5|n": "11/marquesas",
-    "-8|n|03/13:02->11/06:02": "1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat,us/alaska",
+    "-8|n|03/10:02->11/03:02": "1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat,us/alaska",
     "-8|n": "11/pitcairn",
-    "-7|n|03/13:02->11/06:02": "1/los_angeles,1/santa_isabel,1/tijuana,1/vancouver,1/ensenada,6/pacific,10/bajanorte,us/pacific-new,us/pacific",
-    "-7|n|03/08:02->11/01:01": "1/dawson,1/whitehorse,6/yukon",
-    "-7|n": "1/creston,1/dawson_creek,1/fort_nelson,1/hermosillo,1/phoenix,us/arizona",
-    "-6|s|04/02:22->09/03:22": "11/easter,7/easterisland",
-    "-6|n|04/03:02->10/30:02": "1/chihuahua,1/mazatlan,10/bajasur",
-    "-6|n|03/13:02->11/06:02": "1/boise,1/cambridge_bay,1/denver,1/edmonton,1/inuvik,1/ojinaga,1/yellowknife,1/shiprock,6/mountain,navajo,us/mountain",
-    "-6|n": "1/belize,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/regina,1/swift_current,1/tegucigalpa,11/galapagos,6/east-saskatchewan,6/saskatchewan",
+    "-7|n|03/10:02->11/03:02": "1/los_angeles,1/santa_isabel,1/tijuana,1/vancouver,1/ensenada,6/pacific,10/bajanorte,us/pacific-new,us/pacific",
+    "-7|n": "1/creston,1/dawson,1/dawson_creek,1/fort_nelson,1/hermosillo,1/mazatlan,1/phoenix,1/whitehorse,6/yukon,10/bajasur,us/arizona,mst",
+    "-6|s|04/06:22->09/07:22": "11/easter,7/easterisland",
+    "-6|n|04/07:02->10/27:02": "1/merida",
+    "-6|n|03/10:02->11/03:02": "1/boise,1/cambridge_bay,1/denver,1/edmonton,1/inuvik,1/north_dakota,1/ojinaga,1/ciudad_juarez,1/yellowknife,1/shiprock,6/mountain,navajo,us/mountain",
+    "-6|n": "1/bahia_banderas,1/belize,1/chihuahua,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/mexico_city,1/monterrey,1/regina,1/swift_current,1/tegucigalpa,11/galapagos,6/east-saskatchewan,6/saskatchewan,10/general",
     "-5|s": "1/lima,1/rio_branco,1/porto_acre,5/acre",
-    "-5|n|04/03:02->10/30:02": "1/bahia_banderas,1/merida,1/mexico_city,1/monterrey,10/general",
-    "-5|n|03/13:02->11/06:02": "1/chicago,1/matamoros,1/menominee,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,1/indiana/knox,1/indiana/tell_city,1/north_dakota/beulah,1/north_dakota/center,1/north_dakota/new_salem,1/knox_in,6/central,us/central,us/indiana-starke",
-    "-5|n|03/12:03->11/05:01": "1/north_dakota",
-    "-5|n": "1/bogota,1/cancun,1/cayman,1/coral_harbour,1/eirunepe,1/guayaquil,1/jamaica,1/panama,1/atikokan,jamaica",
-    "-4|s|05/13:23->08/13:01": "12/palmer",
-    "-4|s|04/02:24->09/04:00": "1/santiago,7/continental",
-    "-4|s|03/26:24->10/02:00": "1/asuncion",
-    "-4|s|02/16:24->11/03:00": "1/campo_grande,1/cuiaba",
-    "-4|s": "1/la_paz,1/manaus,5/west",
-    "-4|n|03/13:02->11/06:02": "1/detroit,1/grand_turk,1/indianapolis,1/iqaluit,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,1/indiana/marengo,1/indiana/petersburg,1/indiana/vevay,1/indiana/vincennes,1/indiana/winamac,1/kentucky/monticello,1/fort_wayne,1/indiana/indianapolis,1/kentucky/louisville,6/eastern,us/east-indiana,us/eastern,us/michigan",
-    "-4|n|03/13:00->11/06:01": "1/havana,cuba",
-    "-4|n|03/12:03->11/05:01": "1/indiana,1/kentucky",
+    "-5|n|03/10:02->11/03:02": "1/chicago,1/matamoros,1/menominee,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,1/indiana/knox,1/indiana/tell_city,1/north_dakota/beulah,1/north_dakota/center,1/north_dakota/new_salem,1/knox_in,6/central,us/central,us/indiana-starke",
+    "-5|n": "1/bogota,1/cancun,1/cayman,1/coral_harbour,1/eirunepe,1/guayaquil,1/jamaica,1/panama,1/atikokan,jamaica,est",
+    "-4|s|04/06:24->09/08:00": "1/santiago,7/continental",
+    "-4|s|03/23:24->10/06:00": "1/asuncion",
+    "-4|s": "1/campo_grande,1/cuiaba,1/la_paz,1/manaus,5/west",
+    "-4|n|03/10:02->11/03:02": "1/detroit,1/grand_turk,1/indiana,1/indianapolis,1/iqaluit,1/kentucky,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,1/indiana/marengo,1/indiana/petersburg,1/indiana/vevay,1/indiana/vincennes,1/indiana/winamac,1/kentucky/monticello,1/fort_wayne,1/indiana/indianapolis,1/kentucky/louisville,6/eastern,us/east-indiana,us/eastern,us/michigan",
+    "-4|n|03/10:00->11/03:01": "1/havana,cuba",
     "-4|n": "1/anguilla,1/antigua,1/aruba,1/barbados,1/blanc-sablon,1/boa_vista,1/caracas,1/curacao,1/dominica,1/grenada,1/guadeloupe,1/guyana,1/kralendijk,1/lower_princes,1/marigot,1/martinique,1/montserrat,1/port_of_spain,1/porto_velho,1/puerto_rico,1/santo_domingo,1/st_barthelemy,1/st_kitts,1/st_lucia,1/st_thomas,1/st_vincent,1/tortola,1/virgin",
-    "-3|s": "1/argentina,1/buenos_aires,1/catamarca,1/cordoba,1/fortaleza,1/jujuy,1/mendoza,1/montevideo,1/punta_arenas,1/sao_paulo,12/rothera,3/stanley,1/argentina/la_rioja,1/argentina/rio_gallegos,1/argentina/salta,1/argentina/san_juan,1/argentina/san_luis,1/argentina/tucuman,1/argentina/ushuaia,1/argentina/comodrivadavia,1/argentina/buenos_aires,1/argentina/catamarca,1/argentina/cordoba,1/argentina/jujuy,1/argentina/mendoza,1/argentina/rosario,1/rosario,5/east",
-    "-3|n|03/13:02->11/06:02": "1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic",
+    "-3|s": "1/argentina,1/buenos_aires,1/catamarca,1/cordoba,1/fortaleza,1/jujuy,1/mendoza,1/montevideo,1/punta_arenas,1/sao_paulo,12/palmer,12/rothera,3/stanley,1/argentina/la_rioja,1/argentina/rio_gallegos,1/argentina/salta,1/argentina/san_juan,1/argentina/san_luis,1/argentina/tucuman,1/argentina/ushuaia,1/argentina/comodrivadavia,1/argentina/buenos_aires,1/argentina/catamarca,1/argentina/cordoba,1/argentina/jujuy,1/argentina/mendoza,1/argentina/rosario,1/rosario,5/east",
+    "-3|n|03/10:02->11/03:02": "1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic",
     "-3|n": "1/araguaina,1/bahia,1/belem,1/cayenne,1/maceio,1/paramaribo,1/recife,1/santarem",
-    "-2|n|03/26:22->10/29:23": "1/nuuk,1/godthab",
-    "-2|n|03/13:02->11/06:02": "1/miquelon",
+    "-2|n|03/30:22->10/26:23": "1/nuuk,1/godthab",
+    "-2|n|03/10:02->11/03:02": "1/miquelon",
     "-2|n": "1/noronha,3/south_georgia,5/denoronha",
-    "-2.5|n|03/13:02->11/06:02": "1/st_johns,6/newfoundland",
+    "-2.5|n|03/10:02->11/03:02": "1/st_johns,6/newfoundland",
     "-1|n": "3/cape_verde",
     "-11|n": "11/midway,11/niue,11/pago_pago,11/samoa,us/samoa",
-    "-10|n": "11/honolulu,11/johnston,11/rarotonga,11/tahiti,us/hawaii"
+    "-10|n": "11/honolulu,11/johnston,11/rarotonga,11/tahiti,us/hawaii,hst"
   };
 
   //prefixes for iana names..
@@ -542,7 +540,7 @@
   };
   var parseOffset$4 = parseOffset$3;
 
-  const local = guessTz$1();
+  let local = guessTz$1();
 
   //add all the city names by themselves
   const cities = Object.keys(zones$1).reduce((h, k) => {
@@ -566,6 +564,11 @@
   // try our best to reconcile the timzone to this given string
   const lookupTz = (str, zones) => {
     if (!str) {
+      // guard if Intl response is unsupported (#397)
+      if (!zones.hasOwnProperty(local)) {
+        console.warn(`Unrecognized IANA id '${local}'. Setting fallback tz to UTC.`);
+        local = 'utc';
+      }
       return local
     }
     if (typeof str !== 'string') {
@@ -878,7 +881,7 @@
     }
   };
   //find the desired date by a increment/check while loop
-  const units$4 = {
+  const units$5 = {
     year: {
       valid: (n) => n > -4000 && n < 4000,
       walkTo: (s, n) => walk(s, n, 'getFullYear', 'year', null)
@@ -938,7 +941,7 @@
   };
 
   const walkTo = (s, wants) => {
-    let keys = Object.keys(units$4);
+    let keys = Object.keys(units$5);
     let old = s.clone();
     for (let i = 0; i < keys.length; i++) {
       let k = keys[i];
@@ -950,14 +953,14 @@
         n = parseInt(n, 10);
       }
       //make-sure it's valid
-      if (!units$4[k].valid(n)) {
+      if (!units$5[k].valid(n)) {
         s.epoch = null;
         if (s.silent === false) {
           console.warn('invalid ' + k + ': ' + n);
         }
         return
       }
-      units$4[k].walkTo(s, n);
+      units$5[k].walkTo(s, n);
     }
     return
   };
@@ -1029,7 +1032,7 @@
   function short$1() { return shortMonths }
   function long$1() { return longMonths }
   function mapping$3() { return buildMapping() }
-  function set$3(i18n) {
+  function set$5(i18n) {
     shortMonths = i18n.short || shortMonths;
     longMonths = i18n.long || longMonths;
   }
@@ -1039,7 +1042,7 @@
     if (!offset) {
       return s
     }
-
+    offset = offset.trim().toLowerCase();
     // according to ISO8601, tz could be hh:mm, hhmm or hh
     // so need few more steps before the calculation.
     let num = 0;
@@ -1094,10 +1097,10 @@
   // truncate any sub-millisecond values
   const parseMs = function (str = '') {
     str = String(str);
-    //js does not support sub-millisecond values 
+    //js does not support sub-millisecond values
     // so truncate these - 2021-11-02T19:55:30.087772
     if (str.length > 3) {
-      str = str.substr(0, 3);
+      str = str.substring(0, 3);
     } else if (str.length === 1) {
       // assume ms are zero-padded on the left
       // but maybe not on the right.
@@ -1115,19 +1118,20 @@
     //formal time format - 04:30.23
     let arr = str.match(/([0-9]{1,2}):([0-9]{1,2}):?([0-9]{1,2})?[:\.]?([0-9]{1,4})?/);
     if (arr !== null) {
+      let [, h, m, sec, ms] = arr;
       //validate it a little
-      let h = Number(arr[1]);
+      h = Number(h);
       if (h < 0 || h > 24) {
         return s.startOf('day')
       }
-      let m = Number(arr[2]); //don't accept '5:3pm'
+      m = Number(m); //don't accept '5:3pm'
       if (arr[2].length < 2 || m < 0 || m > 59) {
         return s.startOf('day')
       }
       s = s.hour(h);
       s = s.minute(m);
-      s = s.seconds(arr[3] || 0);
-      s = s.millisecond(parseMs(arr[4]));
+      s = s.seconds(sec || 0);
+      s = s.millisecond(parseMs(ms));
       //parse-out am/pm
       let ampm = str.match(/[\b0-9] ?(am|pm)\b/);
       if (ampm !== null && ampm[1]) {
@@ -1344,19 +1348,21 @@
     },
     // 'Sun Mar 14 15:09:48 +0000 2021'
     {
-      reg: /^([a-z]+) ([0-9]{1,2})( [0-9:]+)?( \+[0-9]{4})?( [0-9]{4})?$/i,
+      reg: /^([a-z]+) ([0-9]{1,2}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2})( \+[0-9]{4})?( [0-9]{4})?$/i,
       parse: (s, arr) => {
+        let [, month, date, time, tz, year] = arr;
         let obj = {
-          year: parseYear(arr[5], s._today),
-          month: parseMonth(arr[1]),
-          date: toCardinal(arr[2] || '')
+          year: parseYear(year, s._today),
+          month: parseMonth(month),
+          date: toCardinal(date || '')
         };
         if (validate$1(obj) === false) {
           s.epoch = null;
           return s
         }
         walkTo$1(s, obj);
-        s = parseTime$3(s, arr[3]);
+        s = parseOffset$2(s, tz);
+        s = parseTime$3(s, time);
         return s
       }
     }
@@ -1572,7 +1578,6 @@
     for (let i = 0; i < parsers.length; i++) {
       let m = input.match(parsers[i].reg);
       if (m) {
-        // console.log(parsers[i].reg)
         let res = parsers[i].parse(s, m, givenTz);
         if (res !== null && res.isValid()) {
           return res
@@ -1665,7 +1670,7 @@
 
   function short() { return shortDays }
   function long() { return longDays }
-  function set$2(i18n) {
+  function set$4(i18n) {
     shortDays = i18n.short || shortDays;
     longDays = i18n.long || longDays;
   }
@@ -1690,7 +1695,7 @@
     return titleCaseEnabled
   }
 
-  function set$1(val) {
+  function set$3(val) {
     titleCaseEnabled = val;
   }
 
@@ -1783,6 +1788,7 @@
     'millisecond-pad': (s) => zeroPad(s.millisecond(), 3),
 
     ampm: (s) => s.ampm(),
+    AMPM: (s) => s.ampm().toUpperCase(),
     quarter: (s) => 'Q' + s.quarter(),
     season: (s) => s.season(),
     era: (s) => s.era(),
@@ -1872,7 +1878,7 @@
       let out = format[str](s) || '';
       if (str !== 'json') {
         out = String(out);
-        if (str !== 'ampm') {
+        if (str.toLowerCase() !== 'ampm') {
           out = applyCaseFormat(out);
         }
       }
@@ -1885,7 +1891,7 @@
         fmt = fmt.toLowerCase().trim();
         if (format.hasOwnProperty(fmt)) {
           let out = String(format[fmt](s));
-          if (fmt !== 'ampm') {
+          if (fmt.toLowerCase() !== 'ampm') {
             return applyCaseFormat(out)
           }
           return out
@@ -2078,7 +2084,7 @@
   };
   var unixFmt$1 = unixFmt;
 
-  const units$3 = ['year', 'season', 'quarter', 'month', 'week', 'day', 'quarterHour', 'hour', 'minute'];
+  const units$4 = ['year', 'season', 'quarter', 'month', 'week', 'day', 'quarterHour', 'hour', 'minute'];
 
   const doUnit = function (s, k) {
     let start = s.clone().startOf(k);
@@ -2095,7 +2101,7 @@
       return doUnit(s, unit)
     }
     let obj = {};
-    units$3.forEach(k => {
+    units$4.forEach(k => {
       obj[k] = doUnit(s, k);
     });
     return obj
@@ -2191,6 +2197,10 @@
     tmp = a.add(obj.months, 'month');
     obj.months += diffOne$1(tmp, b, 'month');
 
+    // there's always 4 quarters in a year...
+    obj.quarters = obj.years * 4;
+    obj.quarters += parseInt((obj.months % 12) / 3, 10);
+
     // there's always atleast 52 weeks in a year..
     // (month * 4) isn't as close
     obj.weeks = obj.years * 52;
@@ -2263,16 +2273,16 @@
   S the number of seconds.
   */
 
-  const fmt = (n) => Math.abs(n) || 0;
+  const fmt$1 = (n) => Math.abs(n) || 0;
 
   const toISO = function (diff) {
     let iso = 'P';
-    iso += fmt(diff.years) + 'Y';
-    iso += fmt(diff.months) + 'M';
-    iso += fmt(diff.days) + 'DT';
-    iso += fmt(diff.hours) + 'H';
-    iso += fmt(diff.minutes) + 'M';
-    iso += fmt(diff.seconds) + 'S';
+    iso += fmt$1(diff.years) + 'Y';
+    iso += fmt$1(diff.months) + 'M';
+    iso += fmt$1(diff.days) + 'DT';
+    iso += fmt$1(diff.hours) + 'H';
+    iso += fmt$1(diff.minutes) + 'M';
+    iso += fmt$1(diff.seconds) + 'S';
     return iso
   };
   var toISO$1 = toISO;
@@ -2310,7 +2320,73 @@
     return diff
   }
 
+  let units$3 = {
+      second: 'second',
+      seconds: 'seconds',
+      minute: 'minute',
+      minutes: 'minutes',
+      hour: 'hour',
+      hours: 'hours',
+      day: 'day',
+      days: 'days',
+      month: 'month',
+      months: 'months',
+      year: 'year',
+      years: 'years',
+  };
+
+  function unitsString(unit) {
+      return units$3[unit] || '';
+  }
+
+  function set$2(i18n = {}) {
+      units$3 = {
+          second: i18n.second || units$3.second,
+          seconds: i18n.seconds || units$3.seconds,
+          minute: i18n.minute || units$3.minute,
+          minutes: i18n.minutes || units$3.minutes,
+          hour: i18n.hour || units$3.hour,
+          hours: i18n.hours || units$3.hours,
+          day: i18n.day || units$3.day,
+          days: i18n.days || units$3.days,
+          month: i18n.month || units$3.month,
+          months: i18n.months || units$3.months,
+          year: i18n.year || units$3.year,
+          years: i18n.years || units$3.years,
+      };
+  }
+
+  let past = 'past';
+  let future = 'future';
+  let present = 'present';
+  let now = 'now';
+  let almost = 'almost';
+  let over = 'over';
+  let pastDistance = (value) => `${value} ago`;
+  let futureDistance = (value) => `in ${value}`;
+
+  function pastDistanceString(value) { return pastDistance(value) }
+  function futureDistanceString(value) { return futureDistance(value) }
+  function pastString() { return past }
+  function futureString() { return future }
+  function presentString() { return present }
+  function nowString() { return now }
+  function almostString() { return almost }
+  function overString() { return over }
+
+  function set$1(i18n) {
+      pastDistance = i18n.pastDistance || pastDistance;
+      futureDistance = i18n.futureDistance || futureDistance;
+      past = i18n.past || past;
+      future = i18n.future || future;
+      present = i18n.present || present;
+      now = i18n.now || now;
+      almost = i18n.almost || almost;
+      over = i18n.over || over;
+  }
+
   //our conceptual 'break-points' for each unit
+
   const qualifiers = {
     months: {
       almost: 10,
@@ -2337,9 +2413,9 @@
   // Expects a plural unit arg
   function pluralize(value, unit) {
     if (value === 1) {
-      unit = unit.slice(0, -1);
+      return value + ' ' + unitsString(unit.slice(0, -1))
     }
-    return value + ' ' + unit
+    return value + ' ' + unitsString(unit)
   }
 
   const toSoft = function (diff) {
@@ -2366,12 +2442,13 @@
         const nextValue = Math.abs(diff[nextUnit]);
         if (nextValue > qualifiers[nextUnit].almost) {
           rounded = pluralize(value + 1, unit);
-          qualified = 'almost ' + rounded;
+          qualified = almostString() + ' ' + rounded;
         } else if (nextValue > qualifiers[nextUnit].over) {
-          qualified = 'over ' + englishValue;
+          qualified = overString() + ' ' + englishValue;
         }
       }
     });
+
     return { qualified, rounded, abbreviated, englishValues }
   };
   var soften = toSoft;
@@ -2386,16 +2463,16 @@
     if (isNow === true) {
       return {
         diff,
-        rounded: 'now',
-        qualified: 'now',
-        precise: 'now',
+        rounded: nowString(),
+        qualified: nowString(),
+        precise: nowString(),
         abbreviated: [],
         iso: 'P0Y0M0DT0H0M0S',
-        direction: 'present',
+        direction: presentString(),
       }
     }
     let precise;
-    let direction = 'future';
+    let direction = futureString();
 
     let { rounded, qualified, englishValues, abbreviated } = soften(diff);
 
@@ -2403,14 +2480,14 @@
     precise = englishValues.splice(0, 2).join(', ');
     //handle before/after logic
     if (start.isAfter(end) === true) {
-      rounded += ' ago';
-      qualified += ' ago';
-      precise += ' ago';
-      direction = 'past';
+      rounded = pastDistanceString(rounded);
+      qualified = pastDistanceString(qualified);
+      precise = pastDistanceString(precise);
+      direction = pastString();
     } else {
-      rounded = 'in ' + rounded;
-      qualified = 'in ' + qualified;
-      precise = 'in ' + precise;
+      rounded = futureDistanceString(rounded);
+      qualified = futureDistanceString(qualified);
+      precise = futureDistanceString(precise);
     }
     // https://en.wikipedia.org/wiki/ISO_8601#Durations
     // P[n]Y[n]M[n]DT[n]H[n]M[n]S 
@@ -2459,6 +2536,12 @@
   ];
 
   const units$2 = {
+    second: (s) => {
+      walkTo$1(s, {
+        millisecond: 0
+      });
+      return s
+    },
     minute: (s) => {
       walkTo$1(s, {
         second: 0,
@@ -2677,12 +2760,17 @@
     return dst.split('->')
   };
 
+  //iana codes are case-sensitive, technically
   const titleCase = str => {
     str = str[0].toUpperCase() + str.substr(1);
-    str = str.replace(/\/gmt/, '/GMT');
-    str = str.replace(/[\/_]([a-z])/gi, s => {
+    str = str.replace(/[\/_-]([a-z])/gi, s => {
       return s.toUpperCase()
     });
+    str = str.replace(/_(of|es)_/i, (s) => s.toLowerCase());
+    str = str.replace(/\/gmt/i, '/GMT');
+    str = str.replace(/\/Dumontdurville$/i, '/DumontDUrville');
+    str = str.replace(/\/Mcmurdo$/i, '/McMurdo');
+    str = str.replace(/\/Port-au-prince$/i, '/Port-au-Prince');
     return str
   };
 
@@ -3194,7 +3282,11 @@
     if (n <= 0) {
       n = 0;
     } else if (n >= 365) {
-      n = 364;
+      if (isLeapYear(s.year())) {
+        n = 365;
+      } else {
+        n = 364;
+      }
     }
     s = s.startOf('year');
     s = s.add(n, 'day');
@@ -3337,15 +3429,15 @@
     dayTime: function (str, goFwd) {
       if (str !== undefined) {
         const times = {
-          morning: '7:00am',
-          breakfast: '7:00am',
-          noon: '12:00am',
-          lunch: '12:00pm',
-          afternoon: '2:00pm',
-          evening: '6:00pm',
-          dinner: '6:00pm',
-          night: '11:00pm',
-          midnight: '23:59pm'
+          morning: '7:00',
+          breakfast: '7:00',
+          noon: '12:00',
+          lunch: '12:00',
+          afternoon: '14:00',
+          evening: '18:00',
+          dinner: '18:00',
+          night: '23:00',
+          midnight: '00:00'
         };
         let s = this.clone();
         str = str || '';
@@ -3497,9 +3589,10 @@
       tmp = clearMinutes(tmp);
       tmp = tmp.day('monday');
       //don't go into last-year
-      if (tmp.monthName() === 'december' && tmp.date() >= 28) {
+      if (tmp.month() === 11 && tmp.date() >= 25) {
         tmp = tmp.add(1, 'week');
       }
+
       // is first monday the 1st?
       let toAdd = 1;
       if (tmp.date() === 1) {
@@ -3514,6 +3607,7 @@
       //speed it up, if we can
       let i = 0;
       let skipWeeks = this.month() * 4;
+      // console.log(ms.week+ " "+ skipWeeks);
       tmp.epoch += ms.week * skipWeeks;
       i += skipWeeks;
       for (; i <= 52; i++) {
@@ -3574,7 +3668,7 @@
       if (this.hemisphere() === 'South') {
         hem = 'south';
       }
-      if (input !== undefined) {
+      if (input !== undefined) {    // setter
         let s = this.clone();
         for (let i = 0; i < seasons$1[hem].length; i++) {
           if (input === seasons$1[hem][i][0]) {
@@ -3591,7 +3685,7 @@
           return seasons$1[hem][i][0]
         }
       }
-      return 'winter'
+      return hem === 'north' ? 'winter' : 'summer'
     },
 
     //the year number
@@ -4105,25 +4199,37 @@
 
   const addMethods = SpaceTime => {
     const methods = {
-      i18n: data => {
+      i18n: function (data) {
         //change the day names
         if (isObject(data.days)) {
-          set$2(data.days);
+          set$4(data.days);
         }
         //change the month names
         if (isObject(data.months)) {
-          set$3(data.months);
+          set$5(data.months);
         }
 
-        // change the the display style of the month / day names
+        //change the display style of the month / day names
         if (isBoolean(data.useTitleCase)) {
-          set$1(data.useTitleCase);
+          set$3(data.useTitleCase);
         }
 
         //change am and pm strings
         if (isObject(data.ampm)) {
           set(data.ampm);
         }
+
+        //change distance strings
+        if(isObject(data.distance)){
+          set$1(data.distance);
+        }
+
+        //change units strings
+        if(isObject(data.units)){
+          set$2(data.units);
+        }
+
+        return this
       }
     };
 
@@ -4136,19 +4242,19 @@
   var i18nFns = addMethods;
 
   let timezones$1 = zones$1;
-  //fake timezone-support, for fakers (es5 class)
+  // fake timezone-support, for fakers (es5 class)
   const SpaceTime = function (input, tz, options = {}) {
-    //the holy moment
+    // the holy moment
     this.epoch = null;
-    //the shift for the given timezone
+    // the shift for the given timezone
     this.tz = findTz(tz, timezones$1);
-    //whether to output warnings to console
+    // whether to output warnings to console
     this.silent = typeof options.silent !== 'undefined' ? options.silent : true;
     // favour british interpretation of 02/02/2018, etc
     this.british = options.dmy || options.british;
 
-    //does the week start on sunday, or monday:
-    this._weekStart = 1; //default to monday
+    // does the week start on sunday, or monday:
+    this._weekStart = 1; // default to monday
     if (options.weekStart !== undefined) {
       this._weekStart = options.weekStart;
     }
@@ -4163,23 +4269,23 @@
     //   writable: true,
     //   value: parsers
     // })
-    //add getter/setters
+    // add getter/setters
     Object.defineProperty(this, 'd', {
-      //return a js date object
+      // return a js date object
       get: function () {
         let offset = quickOffset$1(this);
-        //every computer is somewhere- get this computer's built-in offset
+        // every computer is somewhere- get this computer's built-in offset
         let bias = new Date(this.epoch).getTimezoneOffset() || 0;
-        //movement
+        // movement
         let shift = bias + offset * 60; //in minutes
         shift = shift * 60 * 1000; //in ms
-        //remove this computer's offset
+        // remove this computer's offset
         let epoch = this.epoch + shift;
         let d = new Date(epoch);
         return d
       }
     });
-    //add this data on the object, to allow adding new timezones
+    // add this data on the object, to allow adding new timezones
     Object.defineProperty(this, 'timezones', {
       get: () => timezones$1,
       set: (obj) => {
@@ -4187,12 +4293,15 @@
         return obj
       }
     });
-    //parse the various formats
+    // parse the various formats
     let tmp = handleInput(this, input);
     this.epoch = tmp.epoch;
+    if (tmp.tz) {
+      this.tz = tmp.tz;
+    }
   };
 
-  //(add instance methods to prototype)
+  // (add instance methods to prototype)
   Object.keys(methods$5).forEach((k) => {
     SpaceTime.prototype[k] = methods$5[k];
   });
@@ -4222,7 +4331,7 @@
     return new Date(this.epoch)
   };
 
-  //append more methods
+  // append more methods
   queryFns(SpaceTime);
   addFns(SpaceTime);
   sameFns(SpaceTime);
@@ -4269,7 +4378,7 @@
   };
   var whereIts$1 = whereIts;
 
-  var version$1 = '7.1.4';
+  var version$1 = '7.6.0';
 
   const main = (input, tz, options) => new Spacetime(input, tz, options);
 
@@ -6445,10 +6554,10 @@
       console.log(`\n==== '${parts.doc.text()}' =====`); // eslint-disable-line
       Object.keys(parts).forEach(k => {
         if (k !== 'doc' && parts[k]) {
-          console.log(k, parts[k]);// eslint-disable-line
+          console.log(k, parts[k]); // eslint-disable-line
         }
       });
-      parts.doc.debug();// allow
+      parts.doc.debug(); // allow
     }
   };
 
@@ -7307,8 +7416,16 @@
   };
   var toJSON$1 = toJSON;
 
-  const api$3 = function (View) {
+  const quickDate = function (view, str) {
+    let tmp = view.fromText(str);
+    let found = parseDates(tmp, view.opts)[0];
+    if (!found || !found.start || !found.start.d) {
+      return null
+    }
+    return found.start.d
+  };
 
+  const api$3 = function (View) {
     class Dates extends View {
       constructor(document, pointer, groups, opts = {}) {
         super(document, pointer, groups);
@@ -7318,7 +7435,7 @@
 
       get(n) {
         let all = [];
-        this.forEach((m) => {
+        this.forEach(m => {
           parseDates(m, this.opts).forEach(res => {
             all.push(toJSON$1(res));
           });
@@ -7332,7 +7449,7 @@
       json(opts = {}) {
         return this.map(m => {
           let json = m.toView().json(opts)[0] || {};
-          if (opts && opts.dates !== true) {
+          if (opts && opts.dates !== false) {
             let parsed = parseDates(m, this.opts);
             json.dates = toJSON$1(parsed[0]);
           }
@@ -7340,6 +7457,7 @@
         }, [])
       }
 
+      /** replace date terms with a formatted date */
       format(fmt) {
         let found = this;
         let res = found.map(m => {
@@ -7358,6 +7476,31 @@
           return m
         });
         return new Dates(this.document, res.pointer, null, this.opts)
+      }
+
+      /** return only dates occuring before a given date  */
+      isBefore(iso) {
+        let pivot = quickDate(this, iso);
+        return this.filter(m => {
+          let obj = parseDates(m, this.opts)[0] || {};
+          return obj.start && obj.start.d && obj.start.d.isBefore(pivot)
+        })
+      }
+      /** return only dates occuring after a given date  */
+      isAfter(iso) {
+        let pivot = quickDate(this, iso);
+        return this.filter(m => {
+          let obj = parseDates(m, this.opts)[0] || {};
+          return obj.start && obj.start.d && obj.start.d.isAfter(pivot)
+        })
+      }
+      /** return only dates occuring after a given date  */
+      isSame(unit, iso) {
+        let pivot = quickDate(this, iso);
+        return this.filter(m => {
+          let obj = parseDates(m, this.opts)[0] || {};
+          return obj.start && obj.start.d && obj.start.d.isSame(pivot, unit)
+        })
       }
     }
 
@@ -7432,17 +7575,16 @@
     }
     let s = spacetime.now().time(res.result);
     return {
-      'time': res.result,
+      time: res.result,
       '24h': s.format('time-24'),
       hour: s.hour(),
-      minute: s.minute()
+      minute: s.minute(),
     }
   };
 
   const getNth = (doc, n) => (typeof n === 'number' ? doc.eq(n) : doc);
 
   const api$2 = function (View) {
-
     class Times extends View {
       constructor(document, pointer, groups, opts) {
         super(document, pointer, groups);
@@ -7477,7 +7619,7 @@
       json(opts = {}) {
         return this.map(m => {
           let json = m.toView().json(opts)[0] || {};
-          if (opts && opts.times !== true) {
+          if (opts && opts.time !== false) {
             json.time = parse$2(m);
           }
           return json
@@ -7577,7 +7719,7 @@
       json(opts = {}) {
         return this.map(m => {
           let json = m.toView().json(opts)[0] || {};
-          if (opts && opts.times !== true) {
+          if (opts && opts.duration !== false) {
             json.duration = parse$1(m);
           }
           return json
@@ -7586,7 +7728,7 @@
       /** easy getter for the time */
       get(options) {
         let arr = [];
-        this.forEach((doc) => {
+        this.forEach(doc => {
           let res = parse$1(doc);
           arr.push(res);
         });
@@ -7966,11 +8108,11 @@
     { match: 'in? #Value to #Value #Duration time?', tag: 'Date', reason: '6-to-8-years' },
     //two years old
     { match: '#Value #Duration old', unTag: 'Date', reason: 'val-years-old' },
-    // 
+    //
     { match: `${preps}? ${thisNext} ${seasons}`, tag: 'Date', reason: 'thisNext-season' },
-    // 
+    //
     { match: `the? ${sections} of ${seasons}`, tag: 'Date', reason: 'section-season' },
-    // 
+    //
     { match: `${seasons} ${preps}? #Cardinal`, tag: 'Date', reason: 'season-year' },
     //june the 5th
     { match: '#Date the? #Ordinal', tag: 'Date', reason: 'correction' },
@@ -8004,7 +8146,6 @@
     { match: '#Date [(am|pm)]', group: 0, tag: 'Time', reason: 'date-am' },
     // mid-august
     { match: `[${sections}] #Date`, group: 0, tag: 'Date', reason: 'mid-sept' },
-
 
     //june 5 to 7th
     { match: '#Month #Value to #Value of? #Year?', tag: 'Date', reason: 'june 5 to 7th' },
@@ -8046,19 +8187,34 @@
     //between x and y
     { match: '(between|from) #Date', tag: 'Date', reason: 'between x and y' },
     { match: '(to|until|upto) #Date', tag: 'Date', reason: 'between x and y2' },
-    { match: '#Date and #Date', tag: 'Date', reason: 'between x and y3' },
+    { match: 'between #Date+ and #Date+', tag: 'Date', reason: 'between x and y3' },
+    { match: '#Month and #Month #Year', tag: 'Date', reason: 'x and y4' },
     //day after next
     { match: 'the? #Date after next one?', tag: 'Date', reason: 'day after next' },
     //approximately...
     { match: '(about|approx|approximately|around) #Date', tag: 'Date', reason: 'approximately june' },
 
     // until june
-    { match: '(by|until|on|in|at|during|over|every|each|due) the? #Date', ifNo: '#PhrasalVerb', tag: 'Date', reason: 'until june' },
+    {
+      match: '(by|until|on|in|at|during|over|every|each|due) the? #Date',
+      ifNo: '#PhrasalVerb',
+      tag: 'Date',
+      reason: 'until june',
+    },
     // until last june
-    { match: '(by|until|after|before|during|on|in|following|since) (next|this|last)? #Date', ifNo: '#PhrasalVerb', tag: 'Date', reason: 'until last june' },
+    {
+      match: '(by|until|after|before|during|on|in|following|since) (next|this|last)? #Date',
+      ifNo: '#PhrasalVerb',
+      tag: 'Date',
+      reason: 'until last june',
+    },
 
     //next september
-    { match: 'this? (last|next|past|this|previous|current|upcoming|coming|the) #Date', tag: 'Date', reason: 'next september' },
+    {
+      match: 'this? (last|next|past|this|previous|current|upcoming|coming|the) #Date',
+      tag: 'Date',
+      reason: 'next september',
+    },
     //starting this june
     { match: '(starting|beginning|ending) #Date', tag: 'Date', reason: 'starting this june' },
     //start of june
@@ -8077,9 +8233,17 @@
     // 3 in the morning
     { match: '#Value (in|at) the? (morning|evening|night|nighttime)', tag: 'Time', reason: '3 in the morning' },
     // ten to seven
-    { match: '(5|10|15|20|five|ten|fifteen|quarter|twenty|half) (after|past) #Cardinal', tag: 'Time', reason: 'ten to seven' }, //add check for 1 to 1 etc.
+    {
+      match: '(5|10|15|20|five|ten|fifteen|quarter|twenty|half) (after|past) #Cardinal',
+      tag: 'Time',
+      reason: 'ten to seven',
+    }, //add check for 1 to 1 etc.
     // at 10 past
-    { match: '(at|by|before) (5|10|15|20|five|ten|fifteen|twenty|quarter|half) (after|past|to)', tag: 'Time', reason: 'at-20-past' },
+    {
+      match: '(at|by|before) (5|10|15|20|five|ten|fifteen|twenty|quarter|half) (after|past|to)',
+      tag: 'Time',
+      reason: 'at-20-past',
+    },
     // iso  (2020-03-02T00:00:00.000Z)
     // { match: '/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/', tag: 'Time', reason: 'iso-time-tag' },
     // tuesday at 4
@@ -8094,7 +8258,12 @@
     { match: '#Time [(sharp|on the dot)]', group: 0, tag: 'Time', reason: '4pm sharp' },
 
     // around four thirty
-    { match: '(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]', group: 0, tag: 'Time', reason: 'around four thirty' },
+    {
+      match: '(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]',
+      group: 0,
+      tag: 'Time',
+      reason: 'around four thirty',
+    },
     // four thirty am
     { match: '#Cardinal (thirty|fifteen) (am|pm)', tag: 'Time', reason: 'four thirty am' },
     // four thirty tomorrow
@@ -8102,9 +8271,12 @@
     //anytime around 3
     { match: '(anytime|sometime) (before|after|near) [#Cardinal]', group: 0, tag: 'Time', reason: 'antime-after-3' },
 
-
     //'two days before'/ 'nine weeks frow now'
-    { match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)', tag: 'DateShift', reason: 'nine weeks frow now' },
+    {
+      match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)',
+      tag: 'DateShift',
+      reason: 'nine weeks frow now',
+    },
     // in two weeks
     { match: 'in (around|about|maybe|perhaps)? #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
     { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
@@ -8162,8 +8334,6 @@
     { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
     // a month from now
     { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
-
-
   ];
   var matches$1 = matches;
 
@@ -8683,23 +8853,57 @@
 
   ];
 
-  var version = '3.4.2';
+  var version = '3.5.0';
 
-  // import matches from './compute/matches.js'
+  /* eslint-disable no-console */
+
+  const fmt = iso => (iso ? spacetime(iso).format('{nice-day} {year}') : '-');
+
+  // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
+  const reset = '\x1b[0m';
+
+  //cheaper than requiring chalk
+  const cli = {
+    magenta: str => '\x1b[35m' + str + reset,
+    cyan: str => '\x1b[36m' + str + reset,
+    yellow: str => '\x1b[33m' + str + reset,
+    dim: str => '\x1b[2m' + str + reset,
+    i: str => '\x1b[3m' + str + reset,
+  };
+
+  const debug = function (view) {
+    view.dates().forEach(m => {
+      let res = m.dates().get()[0];
+
+      console.log('\n────────');
+      m.debug('highlight');
+
+      let msg = '';
+      if (res && res.start) {
+        msg = '   ' + cli.magenta(fmt(res.start));
+      }
+      if (res && res.end) {
+        msg += cli.dim('   →   ') + cli.cyan(fmt(res.end));
+      }
+      console.log(msg + '\n');
+    });
+  };
+  var debug$1 = debug;
 
   var plugin = {
     tags,
     words,
     compute: compute$1,
     api: api$1,
-    mutate: (world) => {
+    mutate: world => {
+      // add our regexes
       world.model.two.regexText = world.model.two.regexText || [];
       world.model.two.regexText = world.model.two.regexText.concat(regex);
-      // net = net || methods.one.buildNet(matches, world)
-      // world.model.two.matches = world.model.two.matches.concat(matches)
+      // add our debug('dates') method
+      world.methods.one.debug.dates = debug$1;
     },
     hooks: ['dates'],
-    version
+    version,
   };
 
   return plugin;

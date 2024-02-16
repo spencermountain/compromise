@@ -15,10 +15,26 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - remove confidence numbers
 -->
 
-<!-- #### 14.11.0 [Unreleased]
-
-
+<!-- #### 14.13.0 [Unreleased]
+- **[fix]** - .not() overlap detection
+- **[fix]** - .before() .after()
 -->
+
+#### 14.12.0 [Feb 2024]
+
+- **[new]** - .payload() plugin
+- **[new]** - `.numbers().isUnit()` method #1089
+- **[change]** - update github workflow (thanks FDawgs!)
+- **[fix]** - README issues (thanks track0x1!)
+- **[fix]** - .has() inconsistency
+- **[new]** - support adding debug methods via plugins
+- **[change]** - remove deprecated .debug(object) support
+- **[fix]** - parentheses() match issue
+- **[fix]** - tokenization issue #1085
+- **[new]** - `dates().isBefore()`, `dates().isBefore()` methods
+- **[new]** - `.debug('dates')` method
+- **[fix]** - lazy join() issue
+- **[update]** - dependencies
 
 #### 14.11.2 [Jan 2024]
 

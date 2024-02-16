@@ -67,8 +67,14 @@ const split = function (dates) {
   if (m.found) {
     dates = dates.splitAfter(m)
   }
+  //1998 and 1999
+  m = dates.match('#Year [and] #Year', 0)
+  if (m.found) {
+    dates = dates.splitAfter(m)
+  }
   // cleanup any splits
   dates = dates.not('^and')
+  dates = dates.not('and$')
   return dates
 }
 export default split

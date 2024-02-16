@@ -4,8 +4,32 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
+let doc = nlp(`john jacob and john. foobar`)
+let m = doc.split('.')
+let res = m.joinIf('john', '.')
+res.debug()
+// let doc = nlp('one foo two foo')
+// let m = doc.terms()
+// m = m.join()
+// m.debug()
+
+// let doc = nlp('one two three four')
+// let a = doc.match('one .')
+// let b = doc.match('. three')
+// a.difference(b).debug()
+
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()
+// doc.debug()
+// let doc = nlp('one foo two foo')
+// let m = doc.terms()
+// m = m.join().debug()
+
+// let doc = nlp("one two John Carreyrou three four Roger Moore")
+// let m = doc.terms()
+// let people = doc.people()
+// m = m.joinIf(people)
+// return m.out('array')
 
 let arr = [
   // 'I left the window open for fresh air.',

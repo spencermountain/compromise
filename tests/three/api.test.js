@@ -161,6 +161,7 @@ test('api:', function (t) {
     doc.numbers().json()
     doc.numbers().isOrdinal()
     doc.numbers().isCardinal()
+    doc.numbers().isUnit()
     doc.numbers().toNumber()
     doc.numbers().toLocaleString()
     doc.numbers().toText()

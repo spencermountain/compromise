@@ -24,7 +24,7 @@ const hasHyphen = function (str, model) {
     return true
   }
   //number-letter '20-aug'
-  let reg2 = /^([0-9]{1,4})[-–—]([a-z\u00C0-\u00FF`"'/-]+$)/i
+  let reg2 = /^[('"]?([0-9]{1,4})[-–—]([a-z\u00C0-\u00FF`"'/-]+[)'"]?$)/i
   if (reg2.test(str) === true) {
     return true
   }

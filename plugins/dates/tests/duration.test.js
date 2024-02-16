@@ -49,15 +49,16 @@ const tests = [
   },
 ]
 
-test('day durations', (t) => {
-  tests.forEach((obj) => {
+test('day durations', t => {
+  tests.forEach(obj => {
     const context = {
       today: obj.today,
     }
     let today = obj.today.join('-')
-    obj.tests.forEach((a) => {
-      let json = nlp(a[0]).dates(context).json()[0] || {}
-      t.equal(json.dates.duration.days, a[1], `[${today}] ${a[0]}`)
+    obj.tests.forEach(a => {
+      let json = nlp(a[0]).dates(context).json()[0] || { dates: {} }
+      let duration = json.dates.duration || {}
+      t.equal(duration.days, a[1], `[${today}] ${a[0]}`)
     })
   })
   t.end()

@@ -41,5 +41,6 @@ const showTags = function (view) {
       console.log(str)
     })
   })
+  console.log('\n')
 }
 export default showTags

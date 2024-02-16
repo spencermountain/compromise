@@ -113,7 +113,7 @@
     "rollup-plugin-filesize-check": "^0.0.2",
     "shelljs": "0.8.5",
     "tap-dancer": "0.3.4",
-    "tape": "5.7.3"
+    "tape": "5.7.5"
   },
   "eslintIgnore": [
     "builds/*.js",

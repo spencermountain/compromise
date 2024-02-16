@@ -2,6 +2,15 @@ import find from './find/index.js'
 import parseDates from './parse/index.js'
 import toJSON from './toJSON.js'
 
+const quickDate = function (view, str) {
+  let tmp = view.fromText(str)
+  let found = parseDates(tmp, view.opts)[0]
+  if (!found || !found.start || !found.start.d) {
+    return null
+  }
+  return found.start.d
+}
+
 const api = function (View) {
   class Dates extends View {
     constructor(document, pointer, groups, opts = {}) {
@@ -34,6 +43,7 @@ const api = function (View) {
       }, [])
     }
 
+    /** replace date terms with a formatted date */
     format(fmt) {
       let found = this
       let res = found.map(m => {
@@ -52,6 +62,31 @@ const api = function (View) {
         return m
       })
       return new Dates(this.document, res.pointer, null, this.opts)
+    }
+
+    /** return only dates occuring before a given date  */
+    isBefore(iso) {
+      let pivot = quickDate(this, iso)
+      return this.filter(m => {
+        let obj = parseDates(m, this.opts)[0] || {}
+        return obj.start && obj.start.d && obj.start.d.isBefore(pivot)
+      })
+    }
+    /** return only dates occuring after a given date  */
+    isAfter(iso) {
+      let pivot = quickDate(this, iso)
+      return this.filter(m => {
+        let obj = parseDates(m, this.opts)[0] || {}
+        return obj.start && obj.start.d && obj.start.d.isAfter(pivot)
+      })
+    }
+    /** return only dates occuring after a given date  */
+    isSame(unit, iso) {
+      let pivot = quickDate(this, iso)
+      return this.filter(m => {
+        let obj = parseDates(m, this.opts)[0] || {}
+        return obj.start && obj.start.d && obj.start.d.isSame(pivot, unit)
+      })
     }
   }
 

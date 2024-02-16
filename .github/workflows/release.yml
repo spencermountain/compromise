@@ -7,6 +7,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
     # Note that these steps are *identical* to build-and-test (with the caveat
     # that build-and-test uses several versions of Node, and Release only uses
@@ -14,20 +17,14 @@ jobs:
     # delegate to the build- and-test workflow, but I haven't found a way to do
     # that yet.
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 16.x
-
-      - name: cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-10.x-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-10.x-
-            ${{ runner.os }}-npm-
+          cache: npm
 
       - name: install
         run: |
@@ -58,6 +55,6 @@ jobs:
       - name: publish
         run: |
           echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
-          npm publish
+          npm publish --access public --provenance
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -13,7 +13,7 @@ const logClientSide = function (view) {
       return { text, tags }
     })
     console.table(out, ['text', 'tags'])
-    console.groupEnd();
+    console.groupEnd()
   })
 }
 export default logClientSide

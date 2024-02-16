@@ -1,6 +1,7 @@
 // check if two pointers are perfectly consecutive
 const isNeighbour = function (ptrL, ptrR) {
-  if (!ptrL || !ptrR || ptrL.length !== ptrR.length) {
+  // validate
+  if (!ptrL || !ptrR) {
     return false
   }
   // same sentence
@@ -19,32 +20,24 @@ const mergeIf = function (doc, lMatch, rMatch) {
   rMatch = rMatch || '^.'
   let leftMatch = parseMatch(lMatch, {}, world)
   let rightMatch = parseMatch(rMatch, {}, world)
+  // ensure end-requirement to left-match, start-requiremnts to right match
+  leftMatch[leftMatch.length - 1].end = true
+  rightMatch[0].start = true
+  // let's get going.
   let ptrs = doc.fullPointer
-
-  // start looking for
-  let res = []
-  for (let i = 0; i < ptrs.length; i += 1) {
-    let ptrL = ptrs[i]
-    let ptrR = ptrs[i + 1]
-    // ensure two matches are neighbours
-    if (!ptrL || !ptrR || !isNeighbour(ptrL, ptrR)) {
-      res.push(ptrL)
-      continue
-    }
+  let res = [ptrs[0]]
+  for (let i = 1; i < ptrs.length; i += 1) {
+    let ptrL = res[res.length - 1]
+    let ptrR = ptrs[i]
     let left = doc.update([ptrL])
     let right = doc.update([ptrR])
-    // ensure both sides pass given criteria
-    if (left.has(leftMatch) && right.has(rightMatch)) {
-      // merge these two pointers
-      let ptr = [ptrL[0], ptrL[1], ptrR[2]]
-      // console.log('👍', left.text(), right.text())
-      // console.log(this.update([ptr]).text())
-      res.push(ptr)
-      ptrs[i + 1] = null
-      continue
+    // should we marge left+right?
+    if (isNeighbour(ptrL, ptrR) && left.has(leftMatch) && right.has(rightMatch)) {
+      // merge right ptr into existing result
+      res[res.length - 1] = [ptrL[0], ptrL[1], ptrR[2], ptrL[3], ptrR[4]]
+    } else {
+      res.push(ptrR)
     }
-    // keep this existing pointer
-    res.push(ptrL)
   }
   // return new pointers
   return doc.update(res)

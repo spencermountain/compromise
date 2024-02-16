@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import cli from './_color.js'
 
 const split = (txt, offset, index) => {
@@ -32,7 +33,8 @@ const showHighlight = function (doc) {
     json.forEach((obj, i) => {
       txt = spliceIn(txt, obj.offset, i)
     })
-    console.log(txt) // eslint-disable-line
+    console.log(txt)
   })
+  console.log('\n')
 }
 export default showHighlight

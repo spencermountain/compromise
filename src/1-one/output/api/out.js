@@ -1,6 +1,6 @@
-import debug from './debug/index.js'
+import debug from './debug.js'
 import wrap from './wrap.js'
-import hash from './lib/hash.js'
+import hash from '../methods/hash.js'
 
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'

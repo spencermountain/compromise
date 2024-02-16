@@ -9,10 +9,10 @@ const log = parts => {
     console.log(`\n==== '${parts.doc.text()}' =====`) // eslint-disable-line
     Object.keys(parts).forEach(k => {
       if (k !== 'doc' && parts[k]) {
-        console.log(k, parts[k])// eslint-disable-line
+        console.log(k, parts[k]) // eslint-disable-line
       }
     })
-    parts.doc.debug()// allow
+    parts.doc.debug() // allow
   }
 }
 

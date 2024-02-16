@@ -26,9 +26,9 @@ let arr = [
 
 test('day start', function (t) {
   const startTime = '5:30am'
-  arr.forEach((str) => {
+  arr.forEach(str => {
     let doc = nlp(str)
-    let date = doc.dates({ dayStart: startTime }).get()[0]
+    let date = doc.dates({ dayStart: startTime }).get()[0] || {}
     let have = spacetime(date.start).time()
     t.equal(have, startTime, '[start] ' + str)
   })
@@ -37,9 +37,9 @@ test('day start', function (t) {
 
 test('day end', function (t) {
   const endTime = '8:30pm'
-  arr.forEach((str) => {
+  arr.forEach(str => {
     let doc = nlp(str)
-    let date = doc.dates({ dayEnd: endTime }).get()[0]
+    let date = doc.dates({ dayEnd: endTime }).get()[0] || {}
     let have = spacetime(date.end).time()
     t.equal(have, endTime, '[end] ' + str)
   })

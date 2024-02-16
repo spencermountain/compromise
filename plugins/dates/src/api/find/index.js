@@ -7,7 +7,7 @@ const findDate = function (doc) {
   // }
   let dates = doc.match('#Date+')
   // ignore only-durations like '20 minutes'
-  dates = dates.filter((m) => {
+  dates = dates.filter(m => {
     let isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$')
     // allow 'q4', etc
     if (isDuration === true && m.has('(#FinancialQuarter|quarter)')) {

@@ -13,7 +13,7 @@ test('isBefore misc', function (t) {
 
   doc = nlp('only in 2018 and 2020')
   m = doc.dates().isBefore('2019')
-  t.deepEqual(m.out('array'), ['2018'], here + 'years')
+  t.deepEqual(m.out('array'), ['in 2018'], here + 'years')
 
   doc = nlp('saw him 2024/02/05 and 2024/03/09')
   m = doc.dates().isBefore('2025')

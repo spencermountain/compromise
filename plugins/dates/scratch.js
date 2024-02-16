@@ -2,10 +2,10 @@
 import nlp from '../../src/three.js'
 import spacetime from 'spacetime'
 
-// import datePlugin from './src/plugin.js'
-import datePlugin from './builds/compromise-dates.mjs'
+import datePlugin from './src/plugin.js'
+// import datePlugin from './builds/compromise-dates.mjs'
 nlp.plugin(datePlugin)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 // nlp.verbose('date')
 
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
@@ -35,7 +35,6 @@ const context = {
 
 let txt = ` We will see him in mid-September`
 txt = `5th day of q1 2002`
-txt = 'between Sept and Oct 2008'
 // txt = `tomorrow at 5:45pm`
 // txt = 'aug. 3'
 // txt = 'lets meet 1 weeks from now '
@@ -44,10 +43,14 @@ txt = 'between Sept and Oct 2008'
 // txt = 'on april 22nd'
 txt = 'in basically one week from now'
 txt = 'go shopping with april'
+txt = 'between Sept and Oct 2008'
+txt = 'only in 2018 and 2020'
+txt = '2024/02/05 and 2024/03/09'
 
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 let doc = nlp(txt).debug()
-// console.log(doc.times().get())
+// doc.debug('dates')
+console.log(doc.dates().get())
 // doc.times().format('24h')
 // doc.debug()
 

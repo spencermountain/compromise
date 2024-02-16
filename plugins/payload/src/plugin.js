@@ -4,6 +4,7 @@ export default {
   //establish payload db
   mutate: function (world) {
     world.model.one.db = {}
+    world.methods.one.debug = world.methods.one.debug || {}
     world.methods.one.debug.payload = debug
   },
 

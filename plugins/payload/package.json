@@ -30,11 +30,9 @@
     "build": "rollup -c --silent"
   },
   "peerDependencies": {
-    "compromise": ">=14.0.0"
+    "compromise": ">=14.12.0"
   },
-  "dependencies": {
-    "efrt": "^2.5.0"
-  },
+  "dependencies": {},
   "files": [
     "builds/",
     "src/",

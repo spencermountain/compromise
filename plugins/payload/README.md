@@ -29,7 +29,12 @@ This plugin provides a facilty for storing a retreiving more complex data than t
 import plg from 'compromise-payload'
 nlp.extend(plg)
 
-let doc = nlp('i saw John Lennon play the guitar')
+let doc = nlp('i saw John Lennon in Manchester, and Bob Dylan in Southhampton')
+
+// markup metadata
+doc.match('(john lennon|bob dylan)').addPayload({ instrument: 'guitar' })
+
+// add more
 doc.people().forEach(m => {
   if (m.has('lennon')) {
     m.addPayload({ height: `5'11` })
@@ -38,8 +43,16 @@ doc.people().forEach(m => {
     m.addPayload({ height: `5'8` })
   }
 })
+
+// retrieve specific payloads
+doc.match('john lennon').getPayloads()
+doc.match('bob dylabn').getPayloads()
+
+// retrieve them all
 doc.getPayloads()
-// [...]
+
+// inspect given payloads:
+doc.debug('payload')
 ```
 
 You can also pass a callback into `.addPayload()`:

@@ -49,6 +49,11 @@ test('payload-fn', function (t) {
   doc.match('(john|bob|dave) .').addPayload(m => {
     return { lastName: m.terms().last().text() }
   })
-  t.equal(doc.getPayloads().length, 2, '2-again')
+  t.equal(doc.getPayloads().length, 3, '3-now')
+
+  doc.match('(john lennon|bob dylan)').addPayload(() => {
+    return { instrument: 'guitar' }
+  })
+  t.equal(doc.getPayloads().length, 5, '5-now')
   t.end()
 })

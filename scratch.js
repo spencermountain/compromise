@@ -4,17 +4,14 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp('i saw John Lennon, and john smith and bob dylan')
-
 // let doc = nlp('one two three four')
 // let a = doc.match('one .')
 // let b = doc.match('. three')
 // a.difference(b).debug()
 
-// let doc = nlp('and between Sept and Oct 2008')
-// let doc = nlp('only in 2018 and 2020')
-// doc.dates().debug('dates')
-// let m = doc.dates().isBefore('2009-01').debug('dates')
+let doc = nlp('and between Sept and Oct 2008')
+doc.dates().debug('dates')
+doc.dates().isBefore('2009-01').debug('dates')
 
 // let doc = nlp('one two three four five. one three four')
 // doc.before('three four').debug()

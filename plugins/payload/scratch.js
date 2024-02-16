@@ -1,3 +1,5 @@
+/* eslint-disable no-console, no-unused-vars */
+
 import nlp from '../../src/three.js'
 // import plugin from './src/plugin.js'
 import plugin from './builds/compromise-payload.mjs'

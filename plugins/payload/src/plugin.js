@@ -16,10 +16,10 @@ export default {
         let n = ptr[0]
         if (db.hasOwnProperty(n)) {
           // look at all vals for this sentence
+          let seeking = this.update([ptr])
           db[n].forEach(obj => {
-            console.log(obj.ptr)
             let m = this.update([obj.ptr])
-            if (this.has(m)) {
+            if (seeking.has(m)) {
               res = res.concat({
                 match: m,
                 val: obj.val,
@@ -59,7 +59,7 @@ export default {
       res.forEach(obj => {
         let ptr = obj.match.fullPointer[0] || []
         let [n, start, end] = ptr
-        // db[n] = db[n] || []
+        db[n] = db[n] || []
         // remove it from our list of payloads
         db[n] = db[n].filter(r => {
           if (r.ptr[1] === start && r.ptr[2] === end) {

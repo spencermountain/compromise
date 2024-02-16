@@ -4,6 +4,8 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
+let doc = nlp('i saw John Lennon, and john smith and bob dylan')
+
 // let doc = nlp('one two three four')
 // let a = doc.match('one .')
 // let b = doc.match('. three')

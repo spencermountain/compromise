@@ -64,3 +64,11 @@ test('join-all-miss:', function (t) {
 
   t.end()
 })
+
+test('join-lazy:', function (t) {
+  let doc = nlp('one foo two foo')
+  let m = doc.terms()
+  m = m.join()
+  t.deepEqual(m.out('array'), ['one foo two foo'], here + 'lazy join')
+  t.end()
+})

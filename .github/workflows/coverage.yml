@@ -9,14 +9,18 @@ on:
 jobs:
   getCoverage:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+  
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
       - uses: actions/setup-node@v4
         with:
           node-version: '16'
           cache: npm
-          cache-dependency-path: package-lock.json
 
       - run: npm ci
       - run: npm i -g c8 codecov

@@ -4,10 +4,22 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp(`john jacob and john. foobar`)
-let m = doc.split('.')
-let res = m.joinIf('john', '.')
-res.debug()
+nlp.plugin({
+  frozen: {
+    ecg: 'Diagnostic',
+    'audiology assessment': 'Diagnostic',
+  },
+})
+
+const prependingText = 'For the upcoming visit, the patient will need an '
+let doc = nlp('ECG')
+doc.prepend(prependingText)
+doc.debug()
+
+// let doc = nlp(`john jacob and john. foobar`)
+// let m = doc.split('.')
+// let res = m.joinIf('john', '.')
+// res.debug()
 // let doc = nlp('one foo two foo')
 // let m = doc.terms()
 // m = m.join()

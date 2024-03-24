@@ -76,3 +76,17 @@ test('freeze-in-sweep :', function (t) {
   t.equal(doc.has('#Organization{3}'), true, here + 'has-org')
   t.end()
 })
+
+test('freeze-in-prepend :', function (t) {
+  nlp.plugin({
+    frozen: {
+      flq: 'Frozen',
+    },
+  })
+  const prependingText = 'For the upcoming visit, the patient will need an '
+  let doc = nlp('FLQ')
+  t.ok(doc.match('flq').has('#Frozen'), 'before-prepend')
+  doc.prepend(prependingText)
+  t.ok(doc.match('flq').has('#Frozen'), 'after-prepend')
+  t.end()
+})

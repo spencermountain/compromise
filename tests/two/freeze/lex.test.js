@@ -3,14 +3,15 @@ import nlp from '../_lib.js'
 const here = '[two/freeze-lex] '
 
 test('nonfrozen behaviour', function (t) {
-  nlp.addWords({ 'shoe in': 'Noun', 'dr who': 'Person' })
-  let doc = nlp('the dr who threw a shoe in the car.')
-  t.ok(doc.has('dr #Preposition threw a #Noun'), here + 'default')
+  nlp.addWords({ 'shoe in': 'Noun', 'mr who': 'Person' })
+  let doc = nlp('the mr who threw a shoe in the car.')
+  t.ok(doc.has('mr #Preposition threw a #Noun'), here + 'default')
   t.end()
 })
+
 test('frozen behaviour', function (t) {
-  nlp.addWords({ 'shoe in': 'Noun', 'dr who': 'Person' }, true)
-  let doc = nlp('the dr who threw a shoe in the car.')
+  nlp.addWords({ 'shoe in': 'Noun', 'mr who': 'Person' }, true)
+  let doc = nlp('the mr who threw a shoe in the car.')
   t.ok(doc.has('#Person #Person threw a #Noun #Noun the car'), here + 'frozen')
   t.end()
 })

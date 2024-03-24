@@ -28,6 +28,7 @@ export default {
 
   'bill gates': 'Person',
   'doctor who': 'Person',
+  'dr who': 'Person',
   'he man': 'Person',
   'iron man': 'Person',
   'kid cudi': 'Person',

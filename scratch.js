@@ -11,10 +11,12 @@ nlp.plugin({
   },
 })
 
-const prependingText = 'For the upcoming visit, the patient will need an '
+const prependingText = 'the patient will need an '
 let doc = nlp('ECG')
 doc.prepend(prependingText)
-doc.debug()
+doc.debug('freeze')
+
+// nlp('i play dr who').debug()
 
 // let doc = nlp(`john jacob and john. foobar`)
 // let m = doc.split('.')

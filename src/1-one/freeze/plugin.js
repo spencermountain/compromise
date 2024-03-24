@@ -1,9 +1,8 @@
+import compute from './compute.js'
+
 export default {
-  // lib: {
-  //   freeze: function (obj) {
-  //     this.world().model.two.freeze = obj
-  //   },
-  // },
+  // add .compute('freeze')
+  compute,
 
   mutate: world => {
     // add @isFrozen method

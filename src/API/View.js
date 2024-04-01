@@ -4,12 +4,12 @@ import api from './methods/index.js'
 class View {
   constructor(document, pointer, groups = {}) {
     // invisible props
-    [
+    ;[
       ['document', document],
       ['world', world],
       ['_groups', groups],
       ['_cache', null],
-      ['viewType', 'View']
+      ['viewType', 'View'],
     ].forEach(a => {
       Object.defineProperty(this, a[0], {
         value: a[1],
@@ -101,15 +101,16 @@ class View {
     let document = methods.one.tokenize.fromString(input, this.world)
     let doc = new View(document)
     doc.world = this.world
-    doc.compute(['normal', 'lexicon'])
+    doc.compute(['normal', 'freeze', 'lexicon'])
     if (this.world.compute.preTagger) {
       doc.compute('preTagger')
     }
+    doc.compute('unfreeze')
     return doc
   }
   clone() {
     // clone the whole document
-    let document = this.document.slice(0)    //node 17: structuredClone(document);
+    let document = this.document.slice(0) //node 17: structuredClone(document);
     document = document.map(terms => {
       return terms.map(term => {
         term = Object.assign({}, term)

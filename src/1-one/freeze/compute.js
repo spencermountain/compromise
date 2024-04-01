@@ -34,4 +34,13 @@ const freeze = function (view) {
     }
   })
 }
-export default { frozen: freeze }
+
+const unfreeze = function (view) {
+  view.docs.forEach(ts => {
+    ts.forEach(term => {
+      delete term.frozen
+    })
+  })
+  return view
+}
+export default { frozen: freeze, freeze, unfreeze }

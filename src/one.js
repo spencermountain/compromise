@@ -20,8 +20,8 @@ nlp.extend(match) //10kb
 nlp.extend(pointers) //2kb
 nlp.extend(tag) //2kb
 nlp.plugin(contractions) //~6kb
-nlp.extend(freeze) //
 nlp.extend(tokenize) //7kb
+nlp.extend(freeze) //
 nlp.plugin(cache) //~1kb
 nlp.extend(lookup) //7kb
 nlp.extend(typeahead) //1kb

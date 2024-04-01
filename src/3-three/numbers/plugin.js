@@ -14,7 +14,7 @@ export default {
     let termMethods = world.methods.one.termMethods
 
     termMethods.lessThan = function (term) {
-      console.log(term)
+      return false //TODO: implement
       // return /[aeiou]/.test(term.text)
     }
   },

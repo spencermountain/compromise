@@ -21,16 +21,13 @@ export default {
     }
     // reset all terms to allow  any desctructive tags
     View.prototype.unfreeze = function () {
-      this.docs.forEach(ts => {
-        ts.forEach(term => {
-          delete term.frozen
-        })
-      })
-      return this
+      this.compute('unfreeze')
     }
     // return all frozen terms
     View.prototype.isFrozen = function () {
       return this.match('@isFrozen+')
     }
   },
+  // run it in init
+  hooks: ['freeze'],
 }

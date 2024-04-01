@@ -4,7 +4,7 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp(`IEEE/WIC/ACM`).debug()
+var doc = nlp('Poincare\u0301')
 console.log(doc.docs[0])
 // console.log(nlp(`IEEE/WIC`).debug().docs[0][0])
 

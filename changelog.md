@@ -20,6 +20,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .before() .after()
 -->
 
+#### 14.13.0 [Apr 2024]
+
+- **[new]** - .compute('freeze')
+- **[new]** - .debug('freeze')
+- **[change]** - allow 3-slashes in a word
+
 #### 14.12.0 [Feb 2024]
 
 - **[new]** - .payload() plugin

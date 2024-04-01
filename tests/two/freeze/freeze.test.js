@@ -83,10 +83,10 @@ test('freeze-in-prepend :', function (t) {
       flq: 'Frozen',
     },
   })
-  const prependingText = 'For the upcoming visit, the patient will need an '
   let doc = nlp('FLQ')
   t.ok(doc.match('flq').has('#Frozen'), 'before-prepend')
-  doc.prepend(prependingText)
+  doc.compute('frozen')
+  doc.prepend('For the upcoming visit, the patient will need an ')
   t.ok(doc.match('flq').has('#Frozen'), 'after-prepend')
   t.end()
 })

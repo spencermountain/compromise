@@ -1,4 +1,5 @@
 import compute from './compute.js'
+import debug from './debug.js'
 
 export default {
   // add .compute('freeze')
@@ -7,6 +8,8 @@ export default {
   mutate: world => {
     // add @isFrozen method
     world.methods.one.termMethods.isFrozen = term => term.frozen === true
+    // adds `.debug('frozen')`
+    world.methods.one.debug.freeze = debug
   },
 
   api: function (View) {

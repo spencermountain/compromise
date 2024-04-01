@@ -4,13 +4,14 @@ import api from './methods/index.js'
 class View {
   constructor(document, pointer, groups = {}) {
     // invisible props
-    ;[
+    let props = [
       ['document', document],
       ['world', world],
       ['_groups', groups],
       ['_cache', null],
       ['viewType', 'View'],
-    ].forEach(a => {
+    ]
+    props.forEach(a => {
       Object.defineProperty(this, a[0], {
         value: a[1],
         writable: true,

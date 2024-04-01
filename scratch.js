@@ -2,21 +2,19 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose('tagger')
+// nlp.verbose('tagger')
 
-// nlp.plugin({
-//   frozen: {
-//     ecg: 'Diagnostic',
-//     'audiology assessment': 'Diagnostic',
-//   },
-// })
-
-// nlp.addWords({ 'shoe in': 'Noun', 'mr who': 'Person' }, true)
-// let doc = nlp('the mr who threw a shoe in the car.').debug()
-
+nlp.plugin({
+  frozen: {
+    flq: 'Frozen',
+  },
+})
+let doc = nlp('FLQ')
+doc.prepend('the patient will need an ')
+doc.compute('frozen')
+doc.debug('freeze')
 // lessThan
 
-nlp(`free market`).debug()
 // nlp(`IEEE/WIC/ACM`).debug()
 // console.log(nlp(`IEEE/WIC`).debug().docs[0][0])
 

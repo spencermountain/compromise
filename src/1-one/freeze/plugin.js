@@ -6,10 +6,12 @@ export default {
   compute,
 
   mutate: world => {
+    const methods = world.methods.one
     // add @isFrozen method
-    world.methods.one.termMethods.isFrozen = term => term.frozen === true
+    methods.termMethods.isFrozen = term => term.frozen === true
     // adds `.debug('frozen')`
-    world.methods.one.debug.freeze = debug
+    methods.debug.freeze = debug
+    methods.debug.frozen = debug
   },
 
   api: function (View) {

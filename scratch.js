@@ -6,13 +6,11 @@ import nlp from './src/three.js'
 
 nlp.plugin({
   frozen: {
-    flq: 'Frozen',
+    'mr plow': 'Frozen',
   },
 })
-let doc = nlp('FLQ')
-doc.prepend('the patient will need an ')
-doc.compute('frozen')
-doc.debug('freeze')
+let doc = nlp('that name again is Mr Plow..').debug()
+
 // lessThan
 
 // nlp(`IEEE/WIC/ACM`).debug()

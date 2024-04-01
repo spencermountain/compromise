@@ -76,10 +76,11 @@ const insert = function (input, view, prepend) {
   // shift our self pointer, if necessary
   view.ptrs = selfPtrs
   // try to tag them, too
-  doc.compute(['id', 'index', 'freeze', 'lexicon', 'unfreeze'])
+  doc.compute(['id', 'index', 'freeze', 'lexicon'])
   if (doc.world.compute.preTagger) {
     doc.compute('preTagger')
   }
+  doc.compute('unfreeze')
   return doc
 }
 

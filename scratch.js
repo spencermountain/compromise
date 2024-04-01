@@ -4,16 +4,8 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-nlp.plugin({
-  frozen: {
-    'mr plow': 'Frozen',
-  },
-})
-let doc = nlp('that name again is Mr Plow..').debug()
-
-// lessThan
-
-// nlp(`IEEE/WIC/ACM`).debug()
+let doc = nlp(`IEEE/WIC/ACM`).debug()
+console.log(doc.docs[0])
 // console.log(nlp(`IEEE/WIC`).debug().docs[0][0])
 
 // const prependingText = 'the patient will need an '

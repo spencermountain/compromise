@@ -3,7 +3,7 @@ const multiWord = function (terms, start_i, world) {
   const { model, methods } = world
   const setTag = methods.one.setTag
   const multi = model.one._multiCache || {}
-  const { lexicon, frozenLex } = model.one || {}
+  const { lexicon } = model.one || {}
   let t = terms[start_i]
   let word = t.machine || t.normal
 
@@ -16,12 +16,6 @@ const multiWord = function (terms, start_i, world) {
         return false
       }
       let str = words.map(term => term.machine || term.normal).join(' ')
-      // lookup frozen lexicon
-      if (frozenLex.hasOwnProperty(str) === true) {
-        setTag(words, frozenLex[str], world, false, '1-frozen-multi-lexicon')
-        words.forEach(term => (term.frozen = true))
-        return true
-      }
       // lookup regular lexicon
       if (lexicon.hasOwnProperty(str) === true) {
         let tag = lexicon[str]

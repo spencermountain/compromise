@@ -2,7 +2,7 @@ const dollarStub = /\$[0-9a-z]+/g
 const fns = {}
 
 const titleCase = function (str) {
-  return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase())
+  return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase())
 }
 
 // doc.replace('foo', (m)=>{})
@@ -20,7 +20,7 @@ const subDollarSign = function (input, main) {
     return input
   }
   let groups = main.groups()
-  input = input.replace(dollarStub, (a) => {
+  input = input.replace(dollarStub, a => {
     let num = a.replace(/\$/, '')
     if (groups.hasOwnProperty(num)) {
       return groups[num].text()
@@ -65,16 +65,17 @@ fns.replaceWith = function (input, keep = {}) {
     let tmp = main.docs[0]
     let term = tmp[tmp.length - 1]
     if (!term.tags.has('Possessive')) {
-      term.text += '\'s'
-      term.normal += '\'s'
+      term.text += "'s"
+      term.normal += "'s"
       term.tags.add('Possessive')
     }
   }
   // what should we return?
-  let m = main.toView(ptrs).compute(['index', 'lexicon'])
+  let m = main.toView(ptrs).compute(['index', 'freeze', 'lexicon'])
   if (m.world.compute.preTagger) {
     m.compute('preTagger')
   }
+  m.compute('unfreeze')
   // replace any old tags
   if (keep.tags) {
     m.terms().forEach((term, i) => {

@@ -4,10 +4,21 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp(`john jacob and john. foobar`)
-let m = doc.split('.')
-let res = m.joinIf('john', '.')
-res.debug()
+var doc = nlp('Poincare\u0301')
+console.log(doc.docs[0])
+// console.log(nlp(`IEEE/WIC`).debug().docs[0][0])
+
+// const prependingText = 'the patient will need an '
+// let doc = nlp('ECG')
+// doc.prepend(prependingText)
+// doc.debug('freeze')
+
+// nlp('i play dr who').debug()
+
+// let doc = nlp(`john jacob and john. foobar`)
+// let m = doc.split('.')
+// let res = m.joinIf('john', '.')
+// res.debug()
 // let doc = nlp('one foo two foo')
 // let m = doc.terms()
 // m = m.join()

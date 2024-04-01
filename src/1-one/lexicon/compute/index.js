@@ -5,6 +5,7 @@ import singleWord from './single-word.js'
 // rest of pre-tagger is in ./two/preTagger
 const lexicon = function (view) {
   const world = view.world
+  // loop through our terms
   view.docs.forEach(terms => {
     for (let i = 0; i < terms.length; i += 1) {
       if (terms[i].tags.size === 0) {

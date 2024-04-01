@@ -28,7 +28,7 @@ const reTag = function (terms, view, start, len) {
     end += 1
   }
   tmp.ptrs = [[0, start, end]]
-  tmp.compute(['lexicon', 'preTagger'])
+  tmp.compute(['freeze', 'lexicon', 'preTagger', 'unfreeze'])
   // don't for a reindex of the whole document
   reIndex(terms)
 }

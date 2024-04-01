@@ -10,12 +10,12 @@ export default {
   api,
 
   // add @greaterThan, @lessThan
-  mutate: world => {
-    let termMethods = world.methods.one.termMethods
+  // mutate: world => {
+  //   let termMethods = world.methods.one.termMethods
 
-    termMethods.lessThan = function (term) {
-      console.log(term)
-      // return /[aeiou]/.test(term.text)
-    }
-  },
+  //   termMethods.lessThan = function (term) {
+  //     return false //TODO: implement
+  //     // return /[aeiou]/.test(term.text)
+  //   }
+  // },
 }

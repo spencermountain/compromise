@@ -1,13 +1,17 @@
+import compute from './compute.js'
+import debug from './debug.js'
+
 export default {
-  // lib: {
-  //   freeze: function (obj) {
-  //     this.world().model.two.freeze = obj
-  //   },
-  // },
+  // add .compute('freeze')
+  compute,
 
   mutate: world => {
+    const methods = world.methods.one
     // add @isFrozen method
-    world.methods.one.termMethods.isFrozen = term => term.frozen === true
+    methods.termMethods.isFrozen = term => term.frozen === true
+    // adds `.debug('frozen')`
+    methods.debug.freeze = debug
+    methods.debug.frozen = debug
   },
 
   api: function (View) {
@@ -22,16 +26,13 @@ export default {
     }
     // reset all terms to allow  any desctructive tags
     View.prototype.unfreeze = function () {
-      this.docs.forEach(ts => {
-        ts.forEach(term => {
-          delete term.frozen
-        })
-      })
-      return this
+      this.compute('unfreeze')
     }
     // return all frozen terms
     View.prototype.isFrozen = function () {
       return this.match('@isFrozen+')
     }
   },
+  // run it in init
+  hooks: ['freeze'],
 }

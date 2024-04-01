@@ -35,12 +35,12 @@ test('slash match', function (t) {
   t.equal(doc.has('his'), true, here + 'slash with lots of spaces')
   t.equal(doc.has('her'), true, here + 'slash with lots of spaces')
 
-  // str = 'left   his/her/their  backpack '
-  // doc = nlp(str)
-  // t.equal(doc.has('his'), true, here + 'three-slash - his')
-  // t.equal(doc.has('her'), true, here + 'three-slash - her')
-  // t.equal(doc.has('their'), true, here + 'three-slash - their')
-  // t.equal(doc.has('his/her/their'), true, here + 'three-slash - his/her/their ')
+  str = 'left   his/her/their  backpack '
+  doc = nlp(str)
+  t.equal(doc.has('his'), true, here + 'three-slash - his')
+  t.equal(doc.has('her'), true, here + 'three-slash - her')
+  t.equal(doc.has('their'), true, here + 'three-slash - their')
+  t.equal(doc.has('his/her/their'), true, here + 'three-slash - his/her/their ')
 
   t.end()
 })

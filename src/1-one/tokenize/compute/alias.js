@@ -16,7 +16,7 @@ const addAliases = function (term, world) {
   if (hasSlash.test(str) && !hasDomain.test(str) && !isMath.test(str)) {
     let arr = str.split(hasSlash)
     // don't split urls and things
-    if (arr.length <= 2) {
+    if (arr.length <= 3) {
       arr.forEach(word => {
         word = word.trim()
         if (word !== '') {

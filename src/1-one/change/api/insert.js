@@ -3,17 +3,18 @@ import uuid from '../compute/uuid.js'
 // are we inserting inside a contraction?
 // expand it first
 const expand = function (m) {
-  if (m.has('@hasContraction') && typeof m.contractions === 'function') {//&& m.after('^.').has('@hasContraction')
+  if (m.has('@hasContraction') && typeof m.contractions === 'function') {
+    //&& m.after('^.').has('@hasContraction')
     let more = m.grow('@hasContraction')
     more.contractions().expand()
   }
 }
 
-const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]'
+const isArray = arr => Object.prototype.toString.call(arr) === '[object Array]'
 
 // set new ids for each terms
 const addIds = function (terms) {
-  terms = terms.map((term) => {
+  terms = terms.map(term => {
     term.id = uuid(term)
     return term
   })
@@ -75,10 +76,11 @@ const insert = function (input, view, prepend) {
   // shift our self pointer, if necessary
   view.ptrs = selfPtrs
   // try to tag them, too
-  doc.compute(['id', 'index', 'lexicon'])
+  doc.compute(['id', 'index', 'freeze', 'lexicon'])
   if (doc.world.compute.preTagger) {
     doc.compute('preTagger')
   }
+  doc.compute('unfreeze')
   return doc
 }
 
@@ -89,7 +91,6 @@ const fns = {
   insertBefore: function (input) {
     return insert(input, this, true)
   },
-
 }
 fns.append = fns.insertAfter
 fns.prepend = fns.insertBefore

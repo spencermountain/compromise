@@ -20,6 +20,6 @@ const postTagger = function (view) {
 }
 
 // helper function for compute('tagger')
-const tagger = view => view.compute(['lexicon', 'preTagger', 'postTagger'])
+const tagger = view => view.compute(['freeze', 'lexicon', 'preTagger', 'postTagger', 'unfreeze'])
 
 export default { postTagger, tagger }

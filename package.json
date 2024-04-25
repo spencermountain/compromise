@@ -34,6 +34,15 @@
       "import": "./src/three.js",
       "require": "./builds/three/compromise-three.cjs",
       "types": "./types/three.d.ts"
+    },
+    "./view/one": {
+      "types": "./types/view/one.d.ts"
+    },
+    "./view/two": {
+      "types": "./types/view/two.d.ts"
+    },
+    "./view/three": {
+      "types": "./types/view/three.d.ts"
     }
   },
   "typesVersions": {

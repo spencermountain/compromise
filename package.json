@@ -35,6 +35,9 @@
       "require": "./builds/three/compromise-three.cjs",
       "types": "./types/three.d.ts"
     },
+    "./misc": {
+      "types": "./types/misc.d.ts"
+    },
     "./view/one": {
       "types": "./types/view/one.d.ts"
     },

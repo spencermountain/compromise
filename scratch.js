@@ -4,7 +4,119 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp('john smith, judy cline').people().debug()
+let doc = nlp(` Maplewood
+Pinecrest
+Oakville
+Brookside
+Springdale
+Riverside
+Willowbrook
+Meadowview
+Cedar Falls
+Lakeview
+Sunset Hills
+Valley Springs
+Mountainview
+Greenfield
+Parkville
+Fairview
+Woodland Heights
+Harbor Town
+Highland Park
+Clearwater Junction
+Maple Grove
+Pine Ridge
+Oak Valley
+Brookhaven
+Spring Valley
+Riverdale
+Willow Springs
+Meadowbrook
+Cedar Ridge
+Lakeside
+Sunset Terrace
+Valley View
+Mountain Valley
+Green Hills
+Parkside
+Fair Oaks
+Woodland Hills
+Harbor Springs
+Highland Village
+Clear Creek
+Maple Ridge
+Pine Lake
+Oakwood
+Brookfield
+Spring Creek
+Riverbank
+Willow Creek
+Meadowland
+Cedar Creek
+Lake Shore
+Sunset Ridge
+Valley Ridge
+Mountain Top
+Green Valley
+Park View
+Fairbanks
+Woodland Park
+Harbor Point
+Highlands
+Clearview
+Maple Lane
+Pine Hill
+Oakdale
+Brooks Crossing
+Springhill
+Riverside Park
+Willow Grove
+Meadowlands
+Cedar Springs
+Lakeside Estates
+Sunset View
+Valley Heights
+Mountain Vista
+Green Acres
+Park Lane
+Fairmont
+Woodside
+Harbor Heights
+High Point
+Clearbrook
+Maple Falls
+Pinecrest Heights
+Oakridge
+Brookshire
+Springville
+Riverwood
+Willow Lake
+Meadow Heights
+Cedar Grove
+Lakeview Terrace
+Sunset Place
+Valley Park
+Mountain Meadow
+Greenfield Estates
+Park Place
+Fairfield
+Woodridge
+Harbor Village
+Hillcrest
+Clearview Heights
+
+`)
+  .ifNo('#Place')
+  .debug()
+
+// -bury
+// -ford
+// -ton
+// -shire
+
+// Dundas Harbour
+// hants county
+
 // console.log(nlp(`IEEE/WIC`).debug().docs[0][0])
 
 // const prependingText = 'the patient will need an '

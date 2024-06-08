@@ -9,6 +9,7 @@ const Plrl = 'Plural'
 const Actor = 'Actor'
 const Vb = 'Verb'
 const Noun = 'Noun'
+const Prop = 'ProperNoun'
 const Last = 'LastName'
 const Modal = 'Modal'
 const Place = 'Place'
@@ -59,9 +60,9 @@ export default [
     ian: Sing,
     zes: Pres,
     eld: Past,
-    ken: Prt,//awoken
-    ven: Prt,//woven
-    ten: Prt,//brighten
+    ken: Prt, //awoken
+    ven: Prt, //woven
+    ten: Prt, //brighten
     ect: Inf,
     ict: Inf,
     // ide: Inf,
@@ -70,6 +71,7 @@ export default [
     ful: Adj,
     bal: Adj,
     ton: Noun,
+    pur: Place,
   },
   {
     //4-letter
@@ -94,7 +96,7 @@ export default [
     enko: Last,
     ette: Sing,
     iary: Sing,
-    wner: Sing,//owner
+    wner: Sing, //owner
     fies: Pres,
     fore: Avb,
     gate: Inf,
@@ -146,11 +148,11 @@ export default [
     uist: Actor,
     gist: Actor,
     note: Sing,
-    cide: Sing,//homicide
-    ence: Sing,//absence
-    wide: Adj,//nationwide
+    cide: Sing, //homicide
+    ence: Sing, //absence
+    wide: Adj, //nationwide
     // side: Adj,//alongside
-    vide: Inf,//provide
+    vide: Inf, //provide
     ract: Inf,
     duce: Inf,
     pose: Inf,
@@ -161,13 +163,18 @@ export default [
     nary: Adj,
     ghty: Adj,
     uent: Adj,
-    erer: Actor,//caterer
+    erer: Actor, //caterer
     bury: Place,
     dorf: Noun,
     esty: Noun,
     wych: Place,
     dale: Place,
     folk: Place,
+    vale: Place,
+    abad: Place,
+    sham: Place,
+    wick: Place,
+    view: Place,
   },
   {
     //5-letter
@@ -222,7 +229,11 @@ export default [
     mouth: Place,
     ceter: Place,
     ville: Place,
-    worth: Noun
+    hurst: Place,
+    stead: Place,
+    endon: Place,
+    worth: Noun,
+    field: Prop,
   },
   {
     //6-letter
@@ -238,7 +249,10 @@ export default [
     master: Actor,
     writer: Actor,
     brough: Place,
-    cester: Place
+    cester: Place,
+    ington: Place,
+    cliffe: Place,
+    ingham: Place,
   },
   {
     //7-letter

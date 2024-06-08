@@ -25,6 +25,8 @@ export default [
     tag: 'Address',
     reason: 'address-st',
   },
+  // port dover
+  { match: '(port|mount) #ProperName', tag: 'Place', reason: 'port-name' },
   // Sports Arenas and Complexs
   // {
   //   match:

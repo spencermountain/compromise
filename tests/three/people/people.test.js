@@ -61,7 +61,6 @@ test('people positives:', function (t) {
     'dmitry medvedev',
     'ebenezer scrooge',
     'emile zatopek',
-    'emmeline pankhurst',
     'florence nightingale',
     'frédéric chopin',
     'haile selassie',

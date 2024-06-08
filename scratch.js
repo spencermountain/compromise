@@ -4,7 +4,7 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-let doc = nlp('my favorite time of the year').debug()
+let doc = nlp('john smith, judy cline').people().debug()
 // console.log(nlp(`IEEE/WIC`).debug().docs[0][0])
 
 // const prependingText = 'the patient will need an '

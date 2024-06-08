@@ -26,7 +26,12 @@ export default [
     reason: 'address-st',
   },
   // port dover
-  { match: '(port|mount) #ProperName', tag: 'Place', reason: 'port-name' },
+  { match: '(port|mount|mt) #ProperName', tag: 'Place', reason: 'port-name' },
+  // generic 'oak ridge' names
+  // { match: '(oak|maple|spruce|pine|cedar|willow|green|sunset|sunrise) #Place', tag: 'Place', reason: 'tree-name' },
+  // generic 'sunset view' names
+  // { match: '() #Place', tag: 'Place', reason: 'tree-name' },
+
   // Sports Arenas and Complexs
   // {
   //   match:

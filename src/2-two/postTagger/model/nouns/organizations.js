@@ -69,4 +69,11 @@ export default [
   },
   // 'toronto fc'
   { match: '#Place+ fc', tag: 'SportsTeam', reason: 'fc-sportsteam' },
+
+  // baltimore quilting club
+  {
+    match: '#Place+ #Noun{0,2} (club|society|group|team|committee|commission|association|guild|crew)',
+    tag: 'Organization',
+    reason: 'place-noun-society',
+  },
 ]

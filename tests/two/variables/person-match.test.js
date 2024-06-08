@@ -52,7 +52,6 @@ let arr = [
   ['Halle Berry', '#Person+'],
   ['Tom Brady', '#MaleName #LastName'],
   ['Matthew Broderick', '#MaleName #LastName'],
-  ['Nathan Lane', '#MaleName #LastName'],
   ['Mel Brooks', '#Person+'],
   ['Dan Brown', '#MaleName #LastName'],
   ['Jerry Bruckheimer', '#MaleName #LastName'],

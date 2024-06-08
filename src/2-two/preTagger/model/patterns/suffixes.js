@@ -232,8 +232,11 @@ export default [
     hurst: Place,
     stead: Place,
     endon: Place,
+    brook: Place,
+    shire: Place,
     worth: Noun,
     field: Prop,
+    ridge: Place,
   },
   {
     //6-letter
@@ -242,6 +245,7 @@ export default [
     cedent: Sing,
     ionary: Sing,
     cklist: Sing,
+    brooke: Place,
     keeper: Actor,
     logist: Actor,
     teenth: 'Value',
@@ -256,6 +260,7 @@ export default [
   },
   {
     //7-letter
+    chester: Place,
     logists: Actor,
     opoulos: Last,
     borough: Place,

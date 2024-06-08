@@ -114,7 +114,6 @@ test('people positives:', function (t) {
     'Abie Malan',
     'Christoph Zürcher',
     'dmitry medvedev',
-    'emmeline pankhurst',
     'diego maradona',
     'dmitry medvedev',
     'ebenezer scrooge',

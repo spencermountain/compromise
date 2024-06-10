@@ -1,13 +1,23 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-const text_1 = '90 hertz'
-const doc = nlp(text_1)
+const doc = nlp("I'll deal with that bug tomorrow")
 
-doc.values().toNumber().debug()
+const context = {
+  timezone: 'Canada/Eastern',
+  today: '2020-02-20',
+  punt: { weeks: 2 },
+  dayStart: '8:00am',
+  dayEnd: '5:30pm',
+}
+
+const datesViews = doc.dates(context)
+console.log(context)
+datesViews.json()
+console.log(context)
 
 // let doc = nlp(`   `).debug()
 

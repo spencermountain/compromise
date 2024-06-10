@@ -4,10 +4,10 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 
-const text_1 = 'There are twenty-four apples and 12000 oranges on the table.'
+const text_1 = '90 hertz'
 const doc = nlp(text_1)
 
-doc.values(0).toNumber().debug()
+doc.values().toNumber().debug()
 
 // let doc = nlp(`   `).debug()
 

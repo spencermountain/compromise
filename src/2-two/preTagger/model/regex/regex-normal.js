@@ -22,4 +22,7 @@ export default [
   [/^(m|k|cm|km)\/(s|h|hr)$/, 'Unit', '5 k/m'],
   // μg/g
   [/^(ug|ng|mg)\/(l|m3|ft3)$/, 'Unit', 'ug/L'],
+
+  // love/hate
+  [/[^:/]\/\p{Letter}/u, 'SlashedTerm', 'love/hate'],
 ]

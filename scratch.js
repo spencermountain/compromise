@@ -1,24 +1,13 @@
-/* eslint-disable no-console, no-unused-vars */
-import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
-nlp.plugin(plg)
+import nlp from './src/two.js'
+// import plg from './plugins/dates/src/plugin.js'
+// nlp.plugin(plg)
 // nlp.verbose('tagger')
-
-const doc = nlp("I'll deal with that bug tomorrow")
-
-const context = {
-  timezone: 'Canada/Eastern',
-  today: '2020-02-20',
-  punt: { weeks: 2 },
-  dayStart: '8:00am',
-  dayEnd: '5:30pm',
-}
-
-const datesViews = doc.dates(context)
-console.log(context)
-datesViews.json()
-console.log(context)
-
+//
+let str = 'left   his/her/their  backpack '
+// const doc = nlp('IEEE/WIC/ACM')
+const doc = nlp(str)
+console.log(doc.has('#SlashedTerm'))
+doc.debug()
 // let doc = nlp(`   `).debug()
 
 // -bury

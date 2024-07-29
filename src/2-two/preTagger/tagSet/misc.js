@@ -39,7 +39,7 @@ export default {
   },
   Abbreviation: {},
   Url: {
-    not: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email'],
+    not: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email', 'SlashedTerm'],
   },
   PhoneNumber: {
     not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email'],
@@ -53,7 +53,10 @@ export default {
     not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
   },
   Emoticon: {
-    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
+    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention', 'SlashedTerm'],
+  },
+  SlashedTerm: {
+    not: ['Emoticon', 'Url', 'Value']
   },
   Email: {
     not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],

@@ -121,7 +121,7 @@
     "eslint": "9.8.0",
     "eslint-plugin-regexp": "2.6.0",
     "nlp-corpus": "4.4.0",
-    "rollup": "3.28.0",
+    "rollup": "4.19.1",
     "rollup-plugin-filesize-check": "^0.0.2",
     "shelljs": "0.8.5",
     "tap-dancer": "0.3.4",

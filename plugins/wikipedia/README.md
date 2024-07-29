@@ -1,13 +1,13 @@
 <div align="center">
   <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
 
-  <div>Efficient Named-entity Recognition for <a href="https://github.com/spencermountain/compromise/">compromise</a></div> 
+  <div>Efficient Named-entity Recognition for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
 
   <!-- npm version -->
   <a href="https://npmjs.org/package/compromise-wikipedia">
     <img src="https://img.shields.io/npm/v/compromise-wikipedia.svg?style=flat-square" />
   </a>
-  
+
   <!-- file size -->
   <a href="https://unpkg.com/compromise-wikipedia/builds/compromise-wikipedia.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-wikipedia/builds/compromise-wikipedia.min.js" />
@@ -21,9 +21,11 @@
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-This plugin provides a highly-compressed list of ~38 thousand popular wikipedia articles, and efficiently scans a text for them.
+This experimental plugin provides a highly-compressed list of ~38 thousand popular wikipedia articles, and efficiently scans a text for them.
 
-The plugin is approximately 300kb, minified.
+The plugin is approximately 300kb, minified. It does not include wikipedia's redirects (which it should!).
+
+It is intended as a proof-of-concept, for compressing a large lexicon onto the client-side.
 
 ### Wikipedia
 ```js

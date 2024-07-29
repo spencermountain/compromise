@@ -1,13 +1,16 @@
-import nlp from './src/two.js'
+/* eslint-disable no-console, no-unused-vars */
+import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 //
-let str = 'left   his/her/their  backpack '
+let str = 'they left   his/her/their  backpack '
 // const doc = nlp('IEEE/WIC/ACM')
 const doc = nlp(str)
-console.log(doc.has('#SlashedTerm'))
+doc.slashes().split().debug()
 doc.debug()
+// console.log(doc.has('#SlashedTerm'))
+// doc.debug()
 // let doc = nlp(`   `).debug()
 
 // -bury

@@ -4,15 +4,12 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 // nlp.verbose('tagger')
 //
-let str = 'they left   his/her/their  backpack '
-// const doc = nlp('IEEE/WIC/ACM')
-const doc = nlp(str)
-doc.slashes().split().debug()
-doc.debug()
-// console.log(doc.has('#SlashedTerm'))
-// doc.debug()
-// let doc = nlp(`   `).debug()
+const text = 'Worst-case Ontario, you get caught.'
 
+const doc = nlp(text)
+
+doc.match('Ontario').replaceWith('scenario', { keepTags: true })
+doc.debug()
 // -bury
 // -ford
 // -ton

@@ -2,14 +2,11 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
 //
-const text = 'Worst-case Ontario, you get caught.'
-
-const doc = nlp(text)
-
-doc.match('Ontario').replaceWith('scenario', { keepTags: true })
-doc.debug()
+let doc = nlp(`£151 a`)
+// doc.match('(#Cardinal && #Expression)').tag('Value')
+doc.numbers().debug()
 // -bury
 // -ford
 // -ton

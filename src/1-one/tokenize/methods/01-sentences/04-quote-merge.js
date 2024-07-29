@@ -1,7 +1,7 @@
 /* eslint-disable regexp/no-dupe-characters-character-class */
 
 // merge embedded quotes into 1 sentence
-// like - 'he said "no!" and left.' 
+// like - 'he said "no!" and left.'
 const MAX_QUOTE = 280// ¯\_(ツ)_/¯
 
 // don't support single-quotes for multi-sentences

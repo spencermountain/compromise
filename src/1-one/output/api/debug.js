@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const isClientSide = () => typeof window !== 'undefined' && window.document
 
 //output some helpful stuff to the console

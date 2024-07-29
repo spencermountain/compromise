@@ -1,4 +1,5 @@
 /* eslint-disable regexp/no-dupe-characters-character-class */
+
 const pairs = {
   '\u0022': '\u0022', // 'StraightDoubleQuotes'
   '\uFF02': '\uFF02', // 'StraightDoubleQuotesWide'

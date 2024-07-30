@@ -17,7 +17,7 @@ class Unit {
       input.month = 'sep'
     }
     // set it to the beginning of the given unit
-    let d = spacetime(input, context.timezone, { today: today })
+    let d = spacetime(input, context.timezone, { today: today, dmy: context.dmy })
     Object.defineProperty(this, 'd', {
       enumerable: false,
       writable: true,

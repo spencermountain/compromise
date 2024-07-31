@@ -41,6 +41,7 @@ test('slash match', function (t) {
   t.equal(doc.has('her'), true, here + 'three-slash - her')
   t.equal(doc.has('their'), true, here + 'three-slash - their')
   t.equal(doc.has('his/her/their'), true, here + 'three-slash - his/her/their ')
+  // t.equal(doc.has('#SlashedTerm'), true, here + 'SlashedTerm tag')
 
   t.end()
 })

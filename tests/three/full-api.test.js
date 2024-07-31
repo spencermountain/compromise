@@ -98,7 +98,7 @@ test('constructor api', function (t) {
       try {
         fns[k]()
       } catch (e) {
-        t.fail(here + k)
+        t.fail(here + k + e)
       }
     }, k)
   })

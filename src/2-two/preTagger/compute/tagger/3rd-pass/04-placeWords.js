@@ -21,6 +21,15 @@ const placeCont = new Set([
   'southern',
   'state',
   'western',
+  'spring',
+  'pine',
+  'sunset',
+  'view',
+  'oak',
+  'maple',
+  'spruce',
+  'cedar',
+  'willow',
 ])
 // center of...
 const noBefore = new Set(['center', 'centre', 'way', 'range', 'bar', 'bridge', 'field', 'pit'])

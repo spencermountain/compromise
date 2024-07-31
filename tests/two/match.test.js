@@ -1176,7 +1176,13 @@ let arr = [
   ['opens early in the morning', '#PresentTense #Adjective in the #Noun'],
   ['ruins are enduring symbols of history', '#Plural are #Adjective #Plural of #Noun'],
   ['She has fair hair and blue eyes.', '#Pronoun #Verb #Adjective #Noun and #Adjective #Plural'],
-  // ['',''],
+
+  ['a love/hate affair', '#Determiner #SlashedTerm #Noun'],
+  ['4/3', '!#SlashedTerm'],
+  ['http://cool.com', '!#SlashedTerm'],
+  ['love / hate', '!#SlashedTerm'],
+  ['his/her backpack', '(#Pronoun && #SlashedTerm) #Noun'],
+  // ['', ''],
 ]
 test('match:', function (t) {
   let res = []

@@ -20,6 +20,19 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .before() .after()
 -->
 
+#### 14.14.0 [July 2024]
+- **[new]** - .slashes() and .slashes().split() methods #1100
+- **[fix]** - multiple contraction issue #1128
+- **[fix]** - toNumbers() return values #1113
+- **[fix]** - (plugins/wikipedia) - fix hard-coded path for #1116
+- **[fix]** - (plugins/dates) - limit values in `mm/dd` format
+- **[fix]** - (plugins/dates) params mutation #1109
+- **[change]** - split people names by commas #1111
+- **[change]** - typescript export update #1104
+- **[update]** - eslint config format
+- **[update]** - github actions
+- **[update]** - dependencies
+
 #### 14.13.0 [Apr 2024]
 
 - **[new]** - .compute('freeze')

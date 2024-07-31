@@ -52,18 +52,20 @@ const addMethod = function (View) {
 
     /** convert to numeric form like '8' or '8th' */
     toNumber() {
-      let m = this.if('#TextValue')
-      m.forEach(val => {
+      let res = this.map(val => {
+        if (!this.has('#TextValue')) {
+          return val
+        }
         let obj = parse(val)
         if (obj.num === null) {
-          return
+          return val
         }
         let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
         let str = format(obj, fmt)
         val.replaceWith(str, { tags: true })
-        val.tag('NumericValue')
+        return val.tag('NumericValue')
       })
-      return this
+      return new Numbers(res.document, res.pointer)
     }
     /** add commas, or nicer formatting for numbers */
     toLocaleString() {

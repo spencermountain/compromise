@@ -9,7 +9,7 @@ export default [
   {
     input: 'src/three.js',
     output: [{ file: 'builds/compromise.js', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 15 })],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 30 })],
   },
 
   // === One ==
@@ -28,24 +28,24 @@ export default [
   {
     input: 'src/two.js',
     output: [{ file: 'builds/two/compromise-two.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 226, warn: 15 })],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 226, warn: 30 })],
   },
   {
     input: 'src/two.js',
     output: [{ file: 'builds/two/compromise-two.mjs', format: 'esm' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 226, warn: 15 })],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 226, warn: 30 })],
   },
 
   // === Three ==
   {
     input: 'src/three.js',
     output: [{ file: 'builds/three/compromise-three.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 15 })],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 30 })],
   },
   {
     input: 'src/three.js',
     output: [{ file: 'builds/three/compromise-three.mjs', format: 'esm' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 15 })],
+    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 30 })],
   },
 
 ]

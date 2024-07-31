@@ -223,4 +223,14 @@ export default [
   'chechnya',
   'chuvashia',
   'crimea',
+
+  // malaysia
+  'penang',
+  'pahang',
+  'perak',
+  'sarawak',
+  'selangor',
+  'malacca',
+  'kedah',
+  'kelantan',
 ]

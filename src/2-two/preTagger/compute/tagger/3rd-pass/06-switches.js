@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 import fillTags from './_fillTags.js'
-const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env // eslint-disable-line
+const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
 import adhoc from './_adhoc.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
@@ -13,7 +14,7 @@ const checkWord = (term, obj) => {
     found = obj[str]
   }
   if (found && env.DEBUG_TAGS) {
-    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`) //eslint-disable-line
+    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)
   }
   return found
 }
@@ -30,7 +31,7 @@ const checkTag = (term, obj = {}, tagSet) => {
   })
   let found = tags.find(tag => obj[tag])
   if (found && env.DEBUG_TAGS) {
-    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`) //eslint-disable-line
+    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`)
   }
   found = obj[found]
   return found
@@ -83,7 +84,7 @@ const doSwitches = function (terms, i, world) {
       // add plural/singular etc.
       fillTags(terms, i, model)
     } else if (env.DEBUG_TAGS) {
-      console.log(`\n -> X  - '${str}'  : (${form})  `) //eslint-disable-line
+      console.log(`\n -> X  - '${str}'  : (${form})  `)
     }
   }
 }

@@ -68,7 +68,7 @@ and how hard it is to actually <b>parse</b> and <i>use</i>?
 
 <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
- <!-- 
+ <!--
   it is
   <a href="https://docs.compromise.cool/compromise-filesize">small,
   <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
@@ -136,7 +136,7 @@ doc.places().json()
 /*
 [{
   "text": "Milwaukee",
-  "terms": [{ 
+  "terms": [{
     "normal": "milwaukee",
     "syllables": ["mil", "wau", "kee"]
   }]
@@ -148,7 +148,7 @@ doc.places().json()
   <a href="https://docs.compromise.cool/compromise-json">json docs</a>
 </div>
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>  
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
 </div>
 
 <!-- spacer -->
@@ -292,11 +292,11 @@ import nlp from 'compromise/one'
 
 let doc = nlp("Wayne's World, party time")
 let data = doc.json()
-/* [{ 
+/* [{
   normal:"wayne's world party time",
-    terms:[{ text: "Wayne's", normal: "wayne" }, 
+    terms:[{ text: "Wayne's", normal: "wayne" },
       ...
-      ] 
+      ]
   }]
 */
 ```
@@ -717,6 +717,8 @@ _(these methods are on the main `nlp` object)_
   - **[.possessives().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - "Spencer's" -> "Spencer"
 - **[.quotations()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms inside paired quotation marks
   - **[.quotations().strip()](https://observablehq.com/@spencermountain/compromise-selections)** - remove quotation marks
+- **[.slashes()](https://observablehq.com/@spencermountain/compromise-selections)** - return any terms grouped by slashes
+  - **[.slashes().split()](https://observablehq.com/@spencermountain/compromise-selections)** - turn 'love/hate' into 'love hate'
 
 <p>
 <img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -990,7 +992,7 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
       </ul>
       <p></p>
     </details>
-  </p>  
+  </p>
   <p>
     <details>
       <summary>💃 Can it run on my arduino-watch?</summary>
@@ -1021,13 +1023,13 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
       <p></p>
       <ul>
         we do offer a <a href="https://observablehq.com/@spencermountain/compromise-filesize">tokenize-only</a> build, which has the POS-tagger pulled-out.
-        <br/> 
+        <br/>
         but otherwise, compromise isn't easily tree-shaken.
-        <br/> 
+        <br/>
         the tagging methods are competitive, and greedy, so it's not recommended to pull things out.
-        <br/> 
+        <br/>
         Note that without a full POS-tagging, the contraction-parser won't work perfectly. (<i>(spencer's cool)</i> vs. <i>(spencer's house)</i>)
-        <br/> 
+        <br/>
         It's recommended to run the library fully.
       </ul>
       <p></p>

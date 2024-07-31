@@ -10,3 +10,10 @@ codecov.yml
 plugins/phrases/data/
 learn/giga/result/
 .scratch.js
+.eslintrc
+.npmignore
+.github
+.gitignore
+LICENSE
+package-lock.json
+rollup.config.js

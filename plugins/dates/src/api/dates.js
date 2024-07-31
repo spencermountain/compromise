@@ -16,14 +16,17 @@ const api = function (View) {
     constructor(document, pointer, groups, opts = {}) {
       super(document, pointer, groups)
       this.viewType = 'Dates'
-      this.opts = opts
+      this.opts = Object.assign({}, opts)
     }
 
     get(n) {
       let all = []
       this.forEach(m => {
         parseDates(m, this.opts).forEach(res => {
-          all.push(toJSON(res))
+          let json = toJSON(res)
+          if (json.start) {
+            all.push(json)
+          }
         })
       })
       if (typeof n === 'number') {

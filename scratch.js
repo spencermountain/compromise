@@ -2,11 +2,21 @@
 import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose('tagger')
+nlp.verbose('tagger')
+//
+let doc = nlp(` Somebody's hat`)
+doc.debug()
 
-var doc = nlp('Poincare\u0301')
-console.log(doc.docs[0])
-// console.log(nlp(`IEEE/WIC`).debug().docs[0][0])
+
+// -bury
+// -ford
+// -ton
+// -shire
+
+// Dundas Harbour
+// hants county
+
+// console.log(nlp(`IEEE / WIC`).debug().docs[0][0])
 
 // const prependingText = 'the patient will need an '
 // let doc = nlp('ECG')
@@ -15,7 +25,7 @@ console.log(doc.docs[0])
 
 // nlp('i play dr who').debug()
 
-// let doc = nlp(`john jacob and john. foobar`)
+// let doc = nlp(`john jacob and john.foobar`)
 // let m = doc.split('.')
 // let res = m.joinIf('john', '.')
 // res.debug()

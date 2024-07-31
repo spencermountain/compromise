@@ -1,4 +1,3 @@
-/* eslint-disable */
 import nlp from '../../../src/three.js'
 import plg from './src/plugin.js'
 nlp.plugin(plg)

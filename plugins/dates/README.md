@@ -7,7 +7,7 @@
   <a href="https://npmjs.org/package/compromise-dates">
     <img src="https://img.shields.io/npm/v/compromise-dates.svg?style=flat-square" />
   </a>
-  
+
   <!-- file size -->
   <a href="https://unpkg.com/compromise-dates/builds/compromise-dates.min.js">
     <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/dates/builds/compromise-dates.min.js" />
@@ -215,6 +215,7 @@ const context = {
   punt: { weeks: 2 }, // the implied duration to use for 'after june 2nd'
   dayStart: '8:00am',
   dayEnd: '5:30pm',
+  dmy : false //assume british-format dates, when unclear
 }
 
 nlp('in two days').dates(context).get()
@@ -299,7 +300,14 @@ As expected, _first monday of January_ will always be in January.
 
 ### _British/American ambiguity:_
 
-by default, we use the same interpretation of dates as javascript does - we assume `01/02/2020` is Jan 2nd, (US-version) but allow `13/01/2020` to be Jan 13th (UK-version). This should be possible to configure in the near future.
+by default, we use the same interpretation of dates as javascript does - we assume `01/02/2020` is Jan 2nd, (US-version) but allow `13/01/2020` to be Jan 13th (UK-version).
+
+if you want to co-erce an interpretation of `02/03/1999`, you can set it with the `dmy:true` option:
+```js
+nlp('02/03/1999').dates().get() //February 3
+nlp('02/03/1999').dates({dmy:true}).get() // March 2
+```
+ISO dates, (like `1999-03-02`) are unaffected by the change.
 
 ### _Seasons:_
 

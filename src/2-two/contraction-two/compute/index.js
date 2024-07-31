@@ -63,7 +63,7 @@ const contractionTwo = view => {
     for (let i = terms.length - 1; i >= 0; i -= 1) {
       // is it already a contraction
       if (terms[i].implicit) {
-        return
+        continue
       }
       let after = null
       if (byApostrophe.test(terms[i].normal) === true) {

@@ -49,6 +49,8 @@ interface Three extends View {
   possessives: (n?: number) => Possessives
   /** return any terms inside 'quotation marks' */
   quotations: (n?: number) => Quotations
+  /** return any slashed terms like 'love/hate' */
+  slashes: (n?: number) => Slashes
   /** return words like "clean" */
   adjectives: (n?: number) => Adjectives
   /** return words like "quickly" */
@@ -242,6 +244,10 @@ export interface Possessives extends View {
 export interface Quotations extends View {
   /** remove leading and trailing quotation marks */
   strip: () => View
+}
+export interface Slashes extends View {
+  /** turn 'love/hate' into 'love hate' */
+  split: () => View
 }
 
 export interface Adjectives extends View {

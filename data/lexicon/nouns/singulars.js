@@ -431,4 +431,5 @@ export default [
   'cannibal',
   'video game',
   'layer',
+  'canton',
 ]

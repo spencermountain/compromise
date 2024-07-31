@@ -40,7 +40,7 @@ test('chunker', function (t) {
   ]
   arr.forEach(a => {
     let doc = nlp(a[0])
-    doc.chunks().forEach(chunk => {
+    doc.chunks().forEach(() => {
 
     })
   })

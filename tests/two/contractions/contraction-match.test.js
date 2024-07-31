@@ -105,4 +105,18 @@ test('contraction-no-skip', function (t) {
   t.end()
 })
 
+test('multiple-contractions', function (t) {
+  let doc = nlp(`everybody's creating, and they're going`)
+  t.ok(doc.has('everybody is') && doc.has('they are'), `everybody's + they're`)
 
+  doc = nlp(`spencer's walking to the store and she's mad`)
+  t.ok(doc.has('spencer is') && doc.has('she is'), `spencer's + she's`)
+
+  doc = nlp(`Somebody's going to see`)
+  t.equal(doc.has('somebody is'), true, `Somebody's going`)
+
+  doc = nlp(`Somebody's hat`)
+  t.equal(doc.has('somebody is'), false, `Somebody's hat`)
+
+  t.end()
+})

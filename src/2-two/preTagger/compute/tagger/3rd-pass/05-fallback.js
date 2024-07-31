@@ -8,7 +8,7 @@ const nounFallback = function (terms, i, model) {
     isEmpty = true
   } else if (tags.size === 1) {
     // weaker tags to ignore
-    if (tags.has('Hyphenated') || tags.has('HashTag') || tags.has('Prefix')) {
+    if (tags.has('Hyphenated') || tags.has('HashTag') || tags.has('Prefix') || tags.has('SlashedTerm')) {
       isEmpty = true
     }
   }

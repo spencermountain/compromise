@@ -31,7 +31,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - typescript export update #1104
 - **[update]** - eslint config format
 - **[update]** - github actions
-- **[update]** - deps
+- **[update]** - dependencies
 
 #### 14.13.0 [Apr 2024]
 

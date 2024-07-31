@@ -7376,7 +7376,10 @@
         let all = [];
         this.forEach(m => {
           parse$2(m, this.opts).forEach(res => {
-            all.push(toJSON(res));
+            let json = toJSON(res);
+            if (json.start) {
+              all.push(json);
+            }
           });
         });
         if (typeof n === 'number') {
@@ -8771,13 +8774,13 @@
     // @4pm
     [/^@[1-9]+(am|pm)$/, 'Time', '@5pm'],
     // 03/02
-    [/^(?:0[1-9]|1[0-2])\/(?:0[1-9]|[12]\d|3[01])$/, 'Date', '03/02'],
+    [/^(?:0[1-9]|[12]\d|3[01])\/(?:0[1-9]|[12]\d|3[01])$/, 'Date', '03/02'],
     // iso-time
     // [/^[0-9]{4}[:-][0-9]{2}[:-][0-9]{2}T[0-9]/i, 'Time', 'iso-time-tag']
 
   ];
 
-  var version = '3.5.0';
+  var version = '3.6.0';
 
   /* eslint-disable no-console */
 

@@ -4,7 +4,7 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 nlp.verbose('tagger')
 //
-let doc = nlp(`  everybody's creating, and they're `)
+let doc = nlp(` Somebody's hat`)
 doc.debug()
 
 

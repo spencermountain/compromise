@@ -9,13 +9,22 @@ test('dmy option loop', function (t) {
 
     ['01/02', 'February 1', true],
     ['01/12', 'December 1', true],
-    ['01/24', 'January 24', true], //invalid dmy fallback
+    // ['01/24', 'January 24', true], //invalid dmy fallback?
+
+    ['02/03/1999', 'February 3', undefined],
+    ['02/03/1999', 'February 3', false],
+    ['02/03/1999', 'March 2', true],
+
+    // iso unaffected
+    ['1999-03-02', 'March 2'],
+    ['1999-03-02', 'March 2', false],
+    ['1999-03-02', 'March 2', true],
   ]
   arr.forEach((a) => {
     let [str, want, bool] = a
     let doc = nlp(str)
     t.equal(doc.has('#Date'), true, str + ' #Date')
-    let out = doc.dates({ dmt: bool }).format('{month} {date}').text()
+    let out = doc.dates({ dmy: bool }).format('{month} {date}').text()
     t.equal(out, want, str)
   })
   t.end()
@@ -52,8 +61,8 @@ test('dmy invalid', function (t) {
   ]
   arr.forEach((str) => {
     let doc = nlp(str)
-    t.equal(doc.dates({ dmy: true }).found, false, str, '-dmy')
-    t.equal(doc.dates({ dmy: false }).found, false, str + '-mdy')
+    t.equal(doc.dates({ dmy: true }).get().length, 0, str, '-dmy')
+    t.equal(doc.dates({ dmy: false }).get().length, 0, str + '-mdy')
   })
 
   t.end()

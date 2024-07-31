@@ -44,6 +44,7 @@ txt = 'only in 2018 and 2020'
 txt = '2024/02/05 and 2024/03/09'
 txt = 'in 03/28'
 txt = 'in 28/28'
+txt = '24/24'
 
 // nlp.verbose('tagger')
 let doc = nlp(txt).debug()

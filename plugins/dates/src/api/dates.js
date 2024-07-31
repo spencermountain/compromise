@@ -23,7 +23,10 @@ const api = function (View) {
       let all = []
       this.forEach(m => {
         parseDates(m, this.opts).forEach(res => {
-          all.push(toJSON(res))
+          let json = toJSON(res)
+          if (json.start) {
+            all.push(json)
+          }
         })
       })
       if (typeof n === 'number') {

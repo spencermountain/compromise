@@ -2,6 +2,10 @@
 - **[breaking]** - return array in .json().dates
 -->
 
+### 3.6.0 [July 2024]
+- **[new]** - support `{dmy:true}` option #1131 (thanks Howard!)
+- **[update]** - dependencies
+
 ### 3.5.0 [Feb 2024]
 
 - **[new]** - `dates().isBefore()`, `dates().isBefore()` methods

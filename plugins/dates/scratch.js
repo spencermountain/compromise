@@ -1,12 +1,10 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/three.js'
 import spacetime from 'spacetime'
-
 import datePlugin from './src/plugin.js'
-// import datePlugin from './builds/compromise-dates.mjs'
 nlp.plugin(datePlugin)
-nlp.verbose('tagger')
-// nlp.verbose('date')
+// nlp.verbose('tagger')
+nlp.verbose('date')
 
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
@@ -25,10 +23,8 @@ const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '
 
 const context = {
   // today: '1999-04-17',
-  // today: [1999, 3, 12]
   // today: [2006, 8, 24],
   timezone: 'Asia/Shanghai',
-  // timezone: false
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
@@ -46,21 +42,23 @@ txt = 'go shopping with april'
 txt = 'between Sept and Oct 2008'
 txt = 'only in 2018 and 2020'
 txt = '2024/02/05 and 2024/03/09'
+txt = 'in 03/28'
+txt = 'in 28/28'
 
 // nlp.verbose('tagger')
 let doc = nlp(txt).debug()
 // doc.debug('dates')
-console.log(doc.dates().get())
+// console.log(doc.dates().get())
 // doc.times().format('24h')
 // doc.debug()
 
 // console.log(doc.times(context).json())
-// let found = doc.dates(context).json()
+let found = doc.dates(context).json()
 // console.log(found[0].dates)
-// found.forEach((o) => {
-//   console.log('start: ', fmt(o.dates.start))
-//   console.log('  end: ', fmt(o.dates.end))
-// })
+found.forEach((o) => {
+  console.log('start: ', fmt(o.dates.start))
+  console.log('  end: ', fmt(o.dates.end))
+})
 
 // let doc = nlp(txt).debug()
 // let m = doc.dates(context)

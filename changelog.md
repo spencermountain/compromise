@@ -22,7 +22,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 #### 14.14.0 [July 2024]
 - **[new]** - .slashes() and .slashes().split() methods #1100
-- **[fix]** - #1113 toNumbers() return values
+- **[fix]** - multiple contraction issue #1128
+- **[fix]** - toNumbers() return values #1113
 - **[fix]** - (plugins/wikipedia) - fix hard-coded path for #1116
 - **[fix]** - (plugins/dates) - limit values in `mm/dd` format
 - **[fix]** - (plugins/dates) params mutation #1109

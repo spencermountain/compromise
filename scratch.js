@@ -4,9 +4,10 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 nlp.verbose('tagger')
 //
-let doc = nlp(`£151 a`)
-// doc.match('(#Cardinal && #Expression)').tag('Value')
-doc.numbers().debug()
+let doc = nlp(`  everybody's creating, and they're `)
+doc.debug()
+
+
 // -bury
 // -ford
 // -ton
@@ -15,7 +16,7 @@ doc.numbers().debug()
 // Dundas Harbour
 // hants county
 
-// console.log(nlp(`IEEE/WIC`).debug().docs[0][0])
+// console.log(nlp(`IEEE / WIC`).debug().docs[0][0])
 
 // const prependingText = 'the patient will need an '
 // let doc = nlp('ECG')
@@ -24,7 +25,7 @@ doc.numbers().debug()
 
 // nlp('i play dr who').debug()
 
-// let doc = nlp(`john jacob and john. foobar`)
+// let doc = nlp(`john jacob and john.foobar`)
 // let m = doc.split('.')
 // let res = m.joinIf('john', '.')
 // res.debug()

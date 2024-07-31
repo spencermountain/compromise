@@ -88,7 +88,7 @@
     "coverage": "c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",
     "perf": "node ./scripts/perf/index.js",
     "flame": "clinic flame -- node ./scripts/perf/flame",
-    "lint": "eslint ./src/**/*",
+    "lint": "eslint src",
     "plugins:ci": "node ./scripts/plugins.js npm ci",
     "plugins:build": "node ./scripts/plugins.js npm run build"
   },

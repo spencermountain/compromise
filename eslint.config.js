@@ -2,7 +2,9 @@ import * as regexpPlugin from "eslint-plugin-regexp"
 
 export default [
   regexpPlugin.configs["flat/recommended"],
+
   {
+    // "ignorePatterns": ["**/builds/*"],
     "ignores": ["**/builds/*"],
     "rules": {
       "comma-dangle": [1, "only-multiline"],
@@ -31,7 +33,8 @@ export default [
       "regexp/prefer-d": 0,
       "regexp/prefer-w": 0,
       "regexp/prefer-range": 0,
-      "regexp/no-unused-capturing-group": 0
+      "regexp/no-unused-capturing-group": 0,
+      "eslint-comments/no-unused-disable": 0
     }
-  }
+  },
 ]

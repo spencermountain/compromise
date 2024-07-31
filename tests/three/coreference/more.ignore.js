@@ -219,16 +219,10 @@ test('more-coreference:', function (t) {
   arr.forEach(str => {
     let subj = str.match(/\(.*?\)/)[0].replace(/[()]/g, '').toLowerCase()
     let pronoun = str.match(/\[.*?\]/)[0].replace(/[[\]]/g, '').toLowerCase()
-    let msg = subj + ' → ' + pronoun
+    let msg = here + subj + ' → ' + pronoun
     let doc = nlp(str)
     let p = doc.pronouns().notIf('#Possessive').hasReference()
     t.equal(p.text('normal'), pronoun, msg)
 
   })
 })
-
-
-
-
-
-

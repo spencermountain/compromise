@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { intensifiers, negations } from './data/index.js'
 
 // HELPER FUNCTIONS
@@ -12,7 +11,7 @@ import { intensifiers, negations } from './data/index.js'
 * @author Scott Cram
 *
 * @param {Array} inputArr - The array to be labeled
-* 
+*
 * @returns {Object} labelReturnObj - Object consisting of labeling results, including:
 * @returns {Array} labelReturnObj.words - words from inputArr, less any exclamation marks
 * @returns {Array} labelReturnObj.labels - array of word types that act as labels for each element in labelReturnObj.words
@@ -78,8 +77,8 @@ function labelWordArray(inputArr) {
 * @param {string} splitWord - The word at which split
 *
 * @returns {Array} splitPoints - Array of numbers that, when used in pairs for Array.splice(), cane be used to split the array so that only once occurence of splitWord appears
-*  
-* 
+*
+*
 */
 
 function findArraySplitPoints(startingArr, splitWord) {
@@ -119,7 +118,7 @@ function findArraySplitPoints(startingArr, splitWord) {
 *
 * @param {Array} wordsArr - Array of words to be chunked
 * @param {Array} labelsArr - Array of labels to be chunked
-* 
+*
 * @returns {Object} chunks - Object consisting of chunking results, including:
 * @returns {Array} chunks.words - words from inputArr, less any exclamation marks
 * @returns {Array} chunks.labels - 2D array of word types
@@ -139,11 +138,11 @@ function chunkArrays(wordsArr, labelsArr) {
     wordsArr2d.push(wordsArr.slice(wordLocs[index], wordLocs[index + 1]));
     labelsArr2d.push(labelsArr.slice(wordLocs[index], wordLocs[index + 1]));
   }
-  // Go through each subarray, and only keep 
+  // Go through each subarray, and only keep
   // 1 closest preceeding negation, as well as
   // 1 closest preceeding intensifier
 
-  // Iterate through labelsArr2d to work with each subarray 
+  // Iterate through labelsArr2d to work with each subarray
   labelsArr2d.forEach(function (element, index) {
     // Create array to hold location of a
     // single 'negation' (index 0), a
@@ -170,18 +169,18 @@ function chunkArrays(wordsArr, labelsArr) {
 
 /**
 * Limit a value inside a certain range
-* 
+*
 *
 * Original version:
 * @author w3resource
-* @see {@link https://www.w3resource.com/javascript-exercises/JavaScript: Limit a value inside a certain range} 
+* @see {@link https://www.w3resource.com/javascript-exercises/JavaScript: Limit a value inside a certain range}
 *
 * @param {number} val - The value to be tested for range
 * @param {number} min - The minimum amount in the desired range
 * @param {number} max - The maximum amount in the desired range
 *
 * @returns {number} value - If the val input is within the range of min to max, val will be returned. If val is higher than max, then max will be returned. If val is lower than min, then min will be returned.
-* 
+*
 */
 function value_limit(val, min, max) {
   return val < min ? min : (val > max ? max : val);

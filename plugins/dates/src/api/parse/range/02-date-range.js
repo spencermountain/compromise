@@ -152,7 +152,12 @@ export default [
 
       const duration = unit.text('implicit')
       start = start.applyShift({ [duration]: min.numbers().get()[0] })
-      end = end.applyShift({ [duration]: max.numbers().get()[0] }).applyShift({ day: -1 })
+      end = end.applyShift({ [duration]: max.numbers().get()[0] })
+
+      // Ensure that the end date is inclusive
+      if (!['day', 'days'].includes(duration)) {
+        end = end.applyShift({ day: -1 }).applyShift({ [duration]: 1 })
+      }
 
       return {
         start: start,

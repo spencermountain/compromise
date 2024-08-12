@@ -37,3 +37,29 @@ test('future duration-ranges', function (t) {
   })
   t.end()
 })
+
+test('past duration-ranges', function (t) {
+  durArr.forEach(obj => {
+    obj.text.forEach(text => {
+      const doc = nlp(`${text} ago`)
+      const { duration, start, end } = doc.dates(context).get()[0]
+      t.deepEqual(duration, obj.duration, text)
+      t.ok(start < context.today, 'start date')
+      t.ok(end > start, 'end date')
+    })
+  })
+  t.end()
+})
+
+test('past duration-ranges', function (t) {
+  durArr.forEach(obj => {
+    obj.text.forEach(text => {
+      const doc = nlp(`${text} ago`)
+      const { duration, start, end } = doc.dates(context).get()[0]
+      t.deepEqual(duration, obj.duration, text)
+      t.ok(start < context.today, 'start date')
+      t.ok(end > start, 'end date')
+    })
+  })
+  t.end()
+})

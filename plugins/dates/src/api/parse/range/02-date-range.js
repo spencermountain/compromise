@@ -141,9 +141,9 @@ export default [
   },
 
   {
-    // 2 to 4 weeks
-    match: '[<min>#Value] to [<max>#Value] [<unit>(day|days|week|weeks|month|months|year|years)]',
-    desc: '2 to 4 weeks',
+    // in 2 to 4 weeks
+    match: '^in [<min>#Value] to [<max>#Value] [<unit>(day|days|week|weeks|month|months|year|years)]',
+    desc: 'in 2 to 4 weeks',
     parse: (m, context) => {
       const { min, max, unit } = m.groups()
 

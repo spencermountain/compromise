@@ -25,12 +25,14 @@ const context = {
   today: '2024-01-01',
 }
 
-test('duration-ranges', function (t) {
+test('future duration-ranges', function (t) {
   durArr.forEach(obj => {
     obj.text.forEach(text => {
-      const doc = nlp(text)
-      const duration = doc.dates(context).get()[0].duration
+      const doc = nlp(`in ${text}`)
+      const { duration, start, end } = doc.dates(context).get()[0]
       t.deepEqual(duration, obj.duration, text)
+      t.ok(start > context.today, 'start date')
+      t.ok(end > start, 'end date')
     })
   })
   t.end()

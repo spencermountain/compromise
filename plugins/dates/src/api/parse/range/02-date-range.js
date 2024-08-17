@@ -1,5 +1,6 @@
 import parseDate from '../one/index.js'
 import reverseMaybe from './_reverse.js'
+import Unit from '../one/units/Unit.js'
 
 export default [
   {
@@ -136,6 +137,58 @@ export default [
         return obj
       }
       return null
+    },
+  },
+
+  {
+    // in 2 to 4 weeks
+    match: '^in [<min>#Value] to [<max>#Value] [<unit>(day|days|week|weeks|month|months|year|years)]',
+    desc: 'in 2 to 4 weeks',
+    parse: (m, context) => {
+      const { min, max, unit } = m.groups()
+
+      let start = new Unit(context.today, null, context)
+      let end = start.clone()
+
+      const duration = unit.text('implicit')
+      start = start.applyShift({ [duration]: min.numbers().get()[0] })
+      end = end.applyShift({ [duration]: max.numbers().get()[0] })
+
+      // Ensure that the end date is inclusive
+      if (!['day', 'days'].includes(duration)) {
+        end = end.applyShift({ day: -1 }).applyShift({ [duration]: 1 })
+      }
+
+      return {
+        start: start,
+        end: end.end(),
+      }
+    },
+  },
+  {
+    // 2 to 4 weeks ago
+    match:
+      '[<min>#Value] to [<max>#Value] [<unit>(day|days|week|weeks|month|months|year|years)] (ago|before|earlier|prior)',
+    desc: '2 to 4 weeks ago',
+    parse: (m, context) => {
+      const { min, max, unit } = m.groups()
+
+      let start = new Unit(context.today, null, context)
+      let end = start.clone()
+
+      const duration = unit.text('implicit')
+      start = start.applyShift({ [duration]: -max.numbers().get()[0] })
+      end = end.applyShift({ [duration]: -min.numbers().get()[0] })
+
+      // Ensure that the end date is inclusive
+      if (!['day', 'days'].includes(duration)) {
+        end = end.applyShift({ day: 1 }).applyShift({ [duration]: -1 })
+      }
+
+      return {
+        start: start,
+        end: end.end(),
+      }
     },
   },
 ]

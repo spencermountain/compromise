@@ -1,10 +1,10 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
-nlp.verbose('tagger')
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
+// nlp.verbose('tagger')
 //
-let doc = nlp(` Somebody's hat`)
+let doc = nlp(`government of canada was `)
 doc.debug()
 
 

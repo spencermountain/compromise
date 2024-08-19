@@ -3,10 +3,11 @@ import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 // nlp.verbose('tagger')
-//
-let doc = nlp(`government of canada was `)
-doc.debug()
 
+
+const doc = nlp('one match match after')
+// doc.match('one .* after').debug() // works
+doc.match('[one match+ after]', 0).debug() //bad
 
 // -bury
 // -ford

@@ -71,7 +71,7 @@
   },
   "scripts": {
     "build": "npm run version && rollup -c --silent",
-    "watch": "node --watch scratch.js",
+    "watch": "node --watch ./scratch.js",
     "pack": "node ./scripts/pack.js",
     "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",

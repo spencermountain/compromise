@@ -43,7 +43,7 @@ let matches = [
   //for 4 months
   { match: 'for #Value #Duration', tag: 'Date', reason: 'for-x-duration' },
   //two days before
-  { match: '#Value #Duration #Conjunction', tag: 'Date', reason: 'val-duration-conjunction' },
+  { match: '#Value #Duration (before|ago|hence|back)', tag: 'Date', reason: 'val-duration-past' },
   //for four days
   { match: `${preps}? #Value #Duration`, tag: 'Date', reason: 'value-duration' },
   // 6-8 months

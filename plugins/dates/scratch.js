@@ -45,7 +45,8 @@ txt = '2024/02/05 and 2024/03/09'
 txt = 'in 03/28'
 txt = 'in 28/28'
 txt = '1 to 5 weeks ago'
-txt = 'in 1 to 5 weeks'
+txt = 'in 2-4 years from now'
+txt = 'in 1-2 weeks from now'
 
 // nlp.verbose('tagger')
 let doc = nlp(txt).debug()

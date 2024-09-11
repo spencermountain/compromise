@@ -44,7 +44,8 @@ txt = 'only in 2018 and 2020'
 txt = '2024/02/05 and 2024/03/09'
 txt = 'in 03/28'
 txt = 'in 28/28'
-txt = '24/24'
+txt = '1 to 5 weeks ago'
+txt = 'in 1 to 5 weeks'
 
 // nlp.verbose('tagger')
 let doc = nlp(txt).debug()
@@ -55,7 +56,7 @@ let doc = nlp(txt).debug()
 
 // console.log(doc.times(context).json())
 let found = doc.dates(context).json()
-// console.log(found[0].dates)
+console.log(found[0].dates)
 found.forEach((o) => {
   console.log('start: ', fmt(o.dates.start))
   console.log('  end: ', fmt(o.dates.end))

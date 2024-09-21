@@ -2,6 +2,15 @@ import type { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Te
 
 export type Matchable = string | View | Net | ParsedMatch
 
+export interface ReplaceWithProps  {
+  /** preserve the case of the original, ignoring the case of the replacement */
+  case?: boolean
+  /** preserve whether the original was a possessive */
+  possessives?: boolean
+  /** preserve all of the tags of the original, regardless of the tags of the replacement */
+  tags?: boolean
+}
+
 declare class View {
   // Utils
   /** is this document empty? */
@@ -158,7 +167,7 @@ declare class View {
   /** search and replace match with new content */
   replace: (from: string | View, to?: string | Function, keep?: object) => View
   /** substitute-in new content */
-  replaceWith: (to: string | Function, keep?: object) => View
+  replaceWith: (to: string | Function, keep?: ReplaceWithProps) => View
 
   /** remove any duplicate matches */
   unique: () => View

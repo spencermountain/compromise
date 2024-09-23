@@ -4,10 +4,14 @@ import plg from './plugins/dates/src/plugin.js'
 nlp.plugin(plg)
 // nlp.verbose('tagger')
 
+const text = `May 2015, 61138`;
 
-const doc = nlp('one match match after')
+const processed = nlp(text);
+const dateTimes = processed.dates().json(); // Error
+
+// const doc = nlp('one match match after')
 // doc.match('one .* after').debug() // works
-doc.match('[one match+ after]', 0).debug() //bad
+// doc.match('[one match+ after]', 0).debug() //bad
 
 // -bury
 // -ford

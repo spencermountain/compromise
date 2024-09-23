@@ -40,7 +40,9 @@ const api = function (View) {
         let json = m.toView().json(opts)[0] || {}
         if (opts && opts.dates !== false) {
           let parsed = parseDates(m, this.opts)
-          json.dates = toJSON(parsed[0])
+          if (parsed.length > 0) {
+            json.dates = toJSON(parsed[0])
+          }
         }
         return json
       }, [])

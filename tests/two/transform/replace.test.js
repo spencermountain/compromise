@@ -97,6 +97,10 @@ test('replace-with-function', function (t) {
   doc.replace('#Person', fn)
   t.equal(doc.text(), 'nancy and johnny', here + 'replace function')
 
+  doc = nlp('spencer and John')
+  doc.match('#Person').replaceWith(fn, { case: true })
+  t.equal(doc.text(), 'nancy and Johnny')
+
   doc = nlp('Thurs, Feb 2nd, 2016')
   doc.match('feb').replaceWith(m => {
     return m.text({ trim: true }) + '!'
@@ -107,6 +111,19 @@ test('replace-with-function', function (t) {
   doc.match('spencer').replaceWith((m) => m.text() + 's')
   doc.match('is').replaceWith(() => 'are')
   t.equal(doc.text(), 'Spencers are very cool.', here + 'replaceWith twice')
+  t.end()
+})
+
+test('replace-with-possessives', function (t) {
+  const fn = p => {
+    if (p.has('john')) {
+      return 'johnny'
+    }
+    return 'nancy'
+  }
+  let doc = nlp('spencer\'s house is cooler than John\'s house.')
+  doc.replace('#Person', fn, { case: true, possessives: true })
+  t.equal(doc.text(), 'nancy\'s house is cooler than Johnny\'s house.')
   t.end()
 })
 
@@ -177,6 +194,42 @@ test('replace is cloned', function (t) {
   t.equal(m.length, 1, 'match-unchanged')
   m.tag('NewTag')
   t.equal(m.match('#NewTag').length, 1, 'tags-are-cloned')
+
+  t.end()
+})
+
+test('replace-with-no-match', function (t) {
+  let doc = nlp('original')
+  doc.match('missing').replaceWith('unreached')
+  t.equal(doc.text(), 'original')
+
+  doc.match('missing').replaceWith('unreached', { tags: true, possessives: true, case: true })
+  t.equal(doc.text(), 'original')
+  t.end()
+})
+
+test('replace-with-phone-number', function (t) {
+  let doc = nlp('Phone: +1 (123) 456-7890')
+  doc.match('#PhoneNumber').replaceWith((p) => p.text().replace(/\d{3}/, '555'))
+  t.equal(doc.text(), 'Phone: +1 (555) 555-7890')
+
+  t.end()
+})
+
+test('replace-with-pre-post', function (t) {
+  let doc = nlp('`Target`')
+  doc.match('Target').replaceWith('Replacement')
+  t.equal(doc.text(), '`Replacement`')
+
+  doc = nlp('`John\'s`')
+  doc.match('John').replaceWith('Spencer', { possessives: true })
+  t.equal(doc.text(), '`Spencer\'s`')
+
+  doc = nlp('the `pit bull` played').match('#Noun+').replace('snake').all()
+  t.equal(doc.text(), 'the `snake` played')
+
+  doc = nlp('the `snake` played').match('#Noun+').replace('pit bull').all()
+  t.equal(doc.text(), 'the `pit bull` played')
 
   t.end()
 })

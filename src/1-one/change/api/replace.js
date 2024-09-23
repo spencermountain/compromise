@@ -1,15 +1,16 @@
 const dollarStub = /\$[0-9a-z]+/g
 const fns = {}
 
-const titleCase = function (str) {
-  return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase())
-}
+// case logic
+const isTitleCase = (str) => /^\p{Lu}[\p{Ll}'’]/u.test(str) || /^\p{Lu}$/u.test(str)
+const toTitleCase = (str) => str.replace(/^\p{Ll}/u, x => x.toUpperCase())
+const toLowerCase = (str) => str.replace(/^\p{Lu}/u, x => x.toLowerCase())
 
 // doc.replace('foo', (m)=>{})
-const replaceByFn = function (main, fn) {
+const replaceByFn = function (main, fn, keep) {
   main.forEach(m => {
     let out = fn(m)
-    m.replaceWith(out)
+    m.replaceWith(out, keep)
   })
   return main
 }
@@ -35,10 +36,12 @@ fns.replaceWith = function (input, keep = {}) {
   let main = this
   this.uncache()
   if (typeof input === 'function') {
-    return replaceByFn(main, input)
+    return replaceByFn(main, input, keep)
   }
   let terms = main.docs[0]
-  let isPossessive = keep.possessives && terms[terms.length - 1].tags.has('Possessive')
+  if (!terms) return main
+  let isOriginalPossessive = keep.possessives && terms[terms.length - 1].tags.has('Possessive')
+  let isOriginalTitleCase = keep.case && isTitleCase(terms[0].text)
   // support 'foo $0' replacements
   input = subDollarSign(input, main)
 
@@ -47,6 +50,8 @@ fns.replaceWith = function (input, keep = {}) {
   ptrs = ptrs.map(ptr => ptr.slice(0, 3))
   // original.freeze()
   let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
+  let originalPre = original.docs[0][0].pre
+  let originalPost = original.docs[0][original.docs[0].length - 1].post
   // slide this in
   if (typeof input === 'string') {
     input = this.fromText(input).compute('id')
@@ -61,7 +66,7 @@ fns.replaceWith = function (input, keep = {}) {
   main.delete(original) //science.
 
   // keep "John's"
-  if (isPossessive) {
+  if (isOriginalPossessive) {
     let tmp = main.docs[0]
     let term = tmp[tmp.length - 1]
     if (!term.tags.has('Possessive')) {
@@ -70,6 +75,11 @@ fns.replaceWith = function (input, keep = {}) {
       term.tags.add('Possessive')
     }
   }
+
+  // try to keep some pre-post punctuation
+  if (originalPre) main.docs[0][0].pre = originalPre
+  if (originalPost && !main.docs[0][main.docs[0].length - 1].post.trim()) main.docs[0][main.docs[0].length - 1].post = originalPost
+
   // what should we return?
   let m = main.toView(ptrs).compute(['index', 'freeze', 'lexicon'])
   if (m.world.compute.preTagger) {
@@ -82,15 +92,14 @@ fns.replaceWith = function (input, keep = {}) {
       term.tagSafe(oldTags[i])
     })
   }
-  // try to co-erce case, too
-  if (keep.case && m.docs[0] && m.docs[0][0] && m.docs[0][0].index[1] === 0) {
-    m.docs[0][0].text = titleCase(m.docs[0][0].text)
-  }
 
-  // try to keep some pre-post punctuation
-  // if (m.terms().length === 1 && main.terms().length === 1) {
-  //   console.log(original.docs)
-  // }
+  if (!m.docs[0] || !m.docs[0][0]) return m
+
+  // try to co-erce case, too
+  if (keep.case) {
+    let transformCase = isOriginalTitleCase ? toTitleCase : toLowerCase
+    m.docs[0][0].text = transformCase(m.docs[0][0].text)
+  }
 
   // console.log(input.docs[0])
   // let regs = input.docs[0].map(t => {

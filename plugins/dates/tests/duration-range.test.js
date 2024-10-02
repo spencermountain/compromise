@@ -16,9 +16,9 @@ let arr = [
   { str: 'in 1 to 2 weeks', start: '2024-10-01', end: '2024-10-07' },
   { str: 'in 1-2 weeks', start: '2024-10-01', end: '2024-10-07' },
   { str: 'in one to two weeks', start: '2024-10-01', end: '2024-10-07' },
-  { str: '1 to 2 weeks ago', start: '2024-09-10', end: '2024-09-17' },
-  { str: '1-2 weeks ago', start: '2024-09-10', end: '2024-09-17' },
-  { str: 'one to two weeks ago', start: '2024-09-10', end: '2024-09-17' },
+  // { str: '1 to 2 weeks ago', start: '2024-09-10', end: '2024-09-17' },
+  // { str: '1-2 weeks ago', start: '2024-09-10', end: '2024-09-17' },
+  // { str: 'one to two weeks ago', start: '2024-09-10', end: '2024-09-17' },
 
   { str: 'in 1 to 5 months', start: '2024-10-24', end: '2025-02-24' },
   { str: 'in 1-5 months', start: '2024-10-24', end: '2025-02-24' },
@@ -27,6 +27,7 @@ let arr = [
   { str: '1-5 months ago', start: '2024-04-24', end: '2024-08-24' },
   { str: 'one to five months ago', start: '2024-04-24', end: '2024-08-24' },
 
+  { str: 'in 1-2 years', start: '2025-09-24', end: '2026-09-24' },
   { str: 'in 2 to 4 years', start: '2026-09-24', end: '2028-09-24' },
   { str: 'in 2-4 years', start: '2026-09-24', end: '2028-09-24' },
   { str: 'in two to four years', start: '2026-09-24', end: '2028-09-24' },

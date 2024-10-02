@@ -1,6 +1,7 @@
 import parseDate from '../one/index.js'
 import reverseMaybe from './_reverse.js'
 import Unit from '../one/units/Unit.js'
+import { Year, Month, CalendarDate } from '../one/units/index.js'
 
 export default [
   {
@@ -142,22 +143,17 @@ export default [
 
   {
     // in 2 to 4 weeks
-    match: '^in [<min>#Value] to [<max>#Value] [<unit>(day|days|week|weeks|month|months|year|years)]',
+    match: '^in [<min>#Value] to [<max>#Value] [<unit>(days|weeks|months|years)]',
     desc: 'in 2 to 4 weeks',
     parse: (m, context) => {
       const { min, max, unit } = m.groups()
 
-      let start = new Unit(context.today, null, context)
+      let start = new CalendarDate(context.today, null, context)
       let end = start.clone()
 
       const duration = unit.text('implicit')
       start = start.applyShift({ [duration]: min.numbers().get()[0] })
       end = end.applyShift({ [duration]: max.numbers().get()[0] })
-
-      // Ensure that the end date is inclusive
-      if (!['day', 'days'].includes(duration)) {
-        end = end.applyShift({ day: -1 }).applyShift({ [duration]: 1 })
-      }
 
       return {
         start: start,

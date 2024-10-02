@@ -13,12 +13,12 @@ let arr = [
   { str: '2-4 days ago', start: '2024-09-20', end: '2024-09-22' },
   { str: 'two to four days ago', start: '2024-09-20', end: '2024-09-22' },
 
-  { str: 'in 1 to 2 weeks', start: '2024-10-01', end: '2024-10-07' },
-  { str: 'in 1-2 weeks', start: '2024-10-01', end: '2024-10-07' },
-  { str: 'in one to two weeks', start: '2024-10-01', end: '2024-10-07' },
-  // { str: '1 to 2 weeks ago', start: '2024-09-10', end: '2024-09-17' },
-  // { str: '1-2 weeks ago', start: '2024-09-10', end: '2024-09-17' },
-  // { str: 'one to two weeks ago', start: '2024-09-10', end: '2024-09-17' },
+  // { str: 'in 1 to 2 weeks', start: '2024-10-01', end: '2024-10-07' },
+  // { str: 'in 1-2 weeks', start: '2024-10-01', end: '2024-10-07' },
+  // { str: 'in one to two weeks', start: '2024-10-01', end: '2024-10-07' },
+  { str: '1 to 2 weeks ago', start: '2024-09-10', end: '2024-09-17' },
+  { str: '1-2 weeks ago', start: '2024-09-10', end: '2024-09-17' },
+  { str: 'one to two weeks ago', start: '2024-09-10', end: '2024-09-17' },
 
   { str: 'in 1 to 5 months', start: '2024-10-24', end: '2025-02-24' },
   { str: 'in 1-5 months', start: '2024-10-24', end: '2025-02-24' },

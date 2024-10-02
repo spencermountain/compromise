@@ -276,5 +276,7 @@ let matches = [
   { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
   // a month from now
   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
+  // 18th next month
+  { match: '#Value of? (this|next|last) #Date', tag: 'Date' },
 ]
 export default matches

@@ -536,6 +536,8 @@ const tests = [
     tests: [
       ['october 10th this year', [2016, october, 10]],
       ['november 10th this year', [2016, november, 10]],
+      ['november 10th next year', [2017, november, 10]],
+      ['november 10th of last year', [2015, november, 10]],
       ['november 10th 2017', [2017, november, 10]],
       ['november 10th 2022', [2022, november, 10]],
       ['november 10th 1998', [1998, november, 10]],
@@ -551,6 +553,9 @@ const tests = [
       // ['april fools next year', [2017, april, 1]],
       // ['next year in june', [2017, june, 1]],
       // ['next year after june', [2017, july, 1]],
+
+      ['10th of next month', [2016, november, 10]],
+      ['1st of the last month', [2016, september, 1]],
     ],
   },
   {

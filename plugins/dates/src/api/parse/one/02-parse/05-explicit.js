@@ -35,6 +35,47 @@ const parseExplicit = function (doc, context) {
     }
   }
 
+  // 'march 5th next year'
+  m = doc.match('[<month>#Month] [<date>#Value+]? of? the? [<rel>(this|next|last|current)] year')
+  if (m.found) {
+    let rel = m.groups('rel').text('reduced')
+    let year = impliedYear
+    if (rel === 'next') {
+      year += 1
+    } else if (rel === 'last') {
+      year -= 1
+    }
+    let obj = {
+      month: m.groups('month').text('reduced'),
+      date: m.groups('date').numbers(0).get()[0],
+      year,
+    }
+    let unit = new CalendarDate(obj, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
+    }
+  }
+
+  // '5th of next month'
+  m = doc.match('^the? [<date>#Value+]? of? [<rel>(this|next|last|current)] month')
+  if (m.found) {
+    let month = context.today.month()
+    let rel = m.groups('rel').text('reduced')
+    if (rel === 'next') {
+      month += 1
+    } else if (rel === 'last') {
+      month -= 1
+    }
+    let obj = {
+      month,
+      date: m.groups('date').numbers(0).get()[0],
+    }
+    let unit = new CalendarDate(obj, null, context)
+    if (unit.d.isValid() === true) {
+      return unit
+    }
+  }
+
   //no-years
   // 'fifth of june'
   m = doc.match('[<date>#Value] of? [<month>#Month]')
@@ -58,6 +99,7 @@ const parseExplicit = function (doc, context) {
       return unit
     }
   }
+
   // support 'december'
   if (doc.has('#Month')) {
     let obj = {
@@ -66,7 +108,7 @@ const parseExplicit = function (doc, context) {
       year: context.today.year(),
     }
     let unit = new Month(obj, null, context)
-    // assume 'feb' in the future
+    // assume 'february' is always in the future
     if (unit.d.month() < context.today.month()) {
       obj.year += 1
       unit = new Month(obj, null, context)

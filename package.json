@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "14.14.0",
+  "version": "14.14.1",
   "module": "./src/three.js",
   "main": "./src/three.js",
   "unpkg": "./builds/compromise.js",
@@ -116,14 +116,14 @@
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-terser": "0.4.4",
     "cross-env": "^7.0.3",
-    "eslint": "9.8.0",
+    "eslint": "9.12.0",
     "eslint-plugin-regexp": "2.6.0",
     "nlp-corpus": "4.4.0",
     "rollup": "4.19.1",
     "rollup-plugin-filesize-check": "1.2.0",
     "shelljs": "0.8.5",
     "tap-dancer": "0.3.4",
-    "tape": "5.8.1"
+    "tape": "5.9.0"
   },
   "eslintIgnore": [
     "builds/*.js",

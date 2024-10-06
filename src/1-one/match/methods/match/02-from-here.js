@@ -104,7 +104,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       continue
     }
     // ok, finally test the term-reg
-    // console.log('   - ' + state.terms[state.t].text)
     let hasMatch = matchTerm(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length)
     if (hasMatch === true) {
       let alive = simpleMatch(state)
@@ -113,8 +112,6 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
       }
       continue
     }
-    // console.log('=-=-=-= here -=-=-=-')
-
     //ok who cares, keep going
     if (reg.optional === true) {
       continue

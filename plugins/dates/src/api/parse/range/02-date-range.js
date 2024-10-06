@@ -1,9 +1,34 @@
 import parseDate from '../one/index.js'
 import reverseMaybe from './_reverse.js'
-import Unit from '../one/units/Unit.js'
-import { Year, Month, CalendarDate } from '../one/units/index.js'
+import { Month, CalendarDate } from '../one/units/index.js'
 
 export default [
+
+
+  {
+    // month-ranges have some folksy rules
+    match: 'between [<start>#Month] and [<end>#Month] [<year>#Year?]',
+    desc: 'between march and jan',
+    parse: (m, context) => {
+      let { start, end, year } = m.groups()
+      let y = year && year.found ? Number(year.text('reduced')) : context.today.year()
+      let obj = { month: start.text('reduced'), year: y }
+      let left = new Month(obj, null, context).start()
+      obj = { month: end.text('reduced'), year: y }
+      let right = new Month(obj, null, context).start()
+      if (left.d.isAfter(right.d)) {
+        return {
+          start: right,
+          end: left,
+        }
+      }
+      return {
+        start: left,
+        end: right,
+      }
+    },
+  },
+
   {
     // two explicit dates - 'between friday and sunday'
     match: 'between [<start>.+] and [<end>.+]',

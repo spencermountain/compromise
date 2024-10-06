@@ -70,6 +70,10 @@ const arr = [
   ['until feb 3 2024', '2020-01-21 to 2024-02-03'],
   ['first half of march', '2020-03-01 to 2020-03-16'],
   ['second half of march', '2020-03-16 to 2020-03-30 '],
+  ['between Sept and Oct', 'sept 2020 to oct 2020'],
+  ['between Sept and Oct 2008', 'sept 2008 to oct 2008'],
+  ['between Oct and Sept', 'sept 2020 to oct 2020'],
+  ['between Oct and Sept 2008', 'sept 2008 to oct 2008']
 ]
 
 test('date-variety', function (t) {

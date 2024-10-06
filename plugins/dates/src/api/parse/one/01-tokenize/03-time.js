@@ -66,7 +66,7 @@ const parseTime = function (doc, context) {
   time = time.not('^(at|by|for|before|this|after)')
   time = time.not('sharp')
   time = time.not('on the dot')
-  // time.debug()
+
   let s = spacetime.now(context.timezone)
   let now = s.clone()
   // check for known-times (like 'today')

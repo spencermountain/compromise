@@ -182,4 +182,24 @@ export default [
       }
     },
   },
+
+
+
+  {
+    // one month, no year - 'january 5 to 7'
+    match: '^until [<to>#Date+]',
+    desc: 'until christmas',
+    parse: (m, context) => {
+      let to = m.groups('to')
+      to = parseDate(to, context)
+      if (to) {
+        let start = new CalendarDate(context.today, null, context)
+        return {
+          start: start,
+          end: to.start(),
+        }
+      }
+      return null
+    },
+  },
 ]

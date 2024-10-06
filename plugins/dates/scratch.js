@@ -14,7 +14,6 @@ const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '
 // 'the month before christmas' vs 'a month before christmas'
 // middle september
 // end of september
-// first half of march
 // week of june 3rd
 // fridays in june
 // every saturday
@@ -48,6 +47,8 @@ txt = '1 to 5 weeks ago'
 txt = 'in 2-4 years from now'
 txt = 'in 1-2 weeks from now'
 txt = 'in 1 to 2 months'
+txt = `first half of march`
+txt = `until christmas`
 
 // nlp.verbose('tagger')
 let doc = nlp(txt).debug()

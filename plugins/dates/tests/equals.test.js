@@ -66,6 +66,8 @@ const arr = [
   [`tuesday at 1`, `tuesday at 1pm`],
   ['this fri, monday', 'fri jan 24 and mon jan 27'],
   ['next friday, this monday', 'fri jan 31 and mon jan 27'],
+  ['until christmas', '2020-01-21 to 2020-12-25'],
+  ['until feb 3 2024', '2020-01-21 to 2024-02-03'],
 ]
 
 test('date-variety', function (t) {

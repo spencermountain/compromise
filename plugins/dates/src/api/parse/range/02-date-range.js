@@ -186,7 +186,7 @@ export default [
 
 
   {
-    // one month, no year - 'january 5 to 7'
+    // implicit range
     match: '^until [<to>#Date+]',
     desc: 'until christmas',
     parse: (m, context) => {
@@ -200,6 +200,31 @@ export default [
         }
       }
       return null
+    },
+  },
+
+  {
+    // second half of march
+    match: '[<part>(1st|initial|2nd|latter)] half of [<month>#Month] [<year>#Year?]',
+    desc: 'second half of march',
+    parse: (m, context) => {
+      const { part, month, year } = m.groups()
+      let obj = {
+        month: month.text('reduced'),
+        date: 1, //assume 1st
+        year: year && year.found ? year.text('reduced') : context.today.year()
+      }
+      let unit = new Month(obj, null, context)
+      if (part.has('(1st|initial)')) {
+        return {
+          start: unit.start(),
+          end: unit.clone().middle(),
+        }
+      }
+      return {
+        start: unit.middle(),
+        end: unit.clone().end(),
+      }
     },
   },
 ]

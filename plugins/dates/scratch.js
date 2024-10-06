@@ -8,7 +8,7 @@ nlp.verbose('date')
 
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-// process.env.DEBUG_DATE = true
+process.env.DEBUG_DATE = true
 
 // date issues:
 // 'the month before christmas' vs 'a month before christmas'
@@ -48,7 +48,6 @@ txt = 'in 2-4 years from now'
 txt = 'in 1-2 weeks from now'
 txt = 'in 1 to 2 months'
 txt = `first half of march`
-txt = `until christmas`
 
 // nlp.verbose('tagger')
 let doc = nlp(txt).debug()

@@ -278,5 +278,7 @@ let matches = [
   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
   // 18th next month
   { match: '#Value of? (this|next|last) #Date', tag: 'Date' },
+  // first half of march
+  { match: '(first|initial|second|latter) half of #Month', tag: 'Date' },
 ]
 export default matches

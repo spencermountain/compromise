@@ -68,15 +68,17 @@ const arr = [
   ['next friday, this monday', 'fri jan 31 and mon jan 27'],
   ['until christmas', '2020-01-21 to 2020-12-25'],
   ['until feb 3 2024', '2020-01-21 to 2024-02-03'],
+  ['first half of march', '2020-03-01 to 2020-03-16'],
+  ['second half of march', '2020-03-16 to 2020-03-30 '],
 ]
 
 test('date-variety', function (t) {
   arr.forEach((a) => {
     let left = nlp(a[0]).dates(context).json()[0] || {}
     let right = nlp(a[1]).dates(context).json()[0] || {}
-    left.date = left.date || {}
-    right.date = right.date || {}
-    t.equal(left.date.start, right.date.start, a[0])
+    left.dates = left.dates || {}
+    right.dates = right.dates || {}
+    t.equal(left.dates.start, right.dates.start, a[0] + ' -> ' + a[1])
   })
   t.end()
 })

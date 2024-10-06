@@ -2,6 +2,14 @@
 - **[breaking]** - return array in .json().dates
 -->
 
+### 3.7.0 [July 2024]
+- **[new]** - date features:
+* * `'until christmas'`
+* * `'in-the-morning'`
+* * `'sept to oct 2008'`
+* * improved `'2-4 weeks'` logic
+* * fix `'2 days before'` tagging
+
 ### 3.6.0 [July 2024]
 - **[new]** - support `{dmy:true}` option #1131 (thanks Howard!)
 - **[update]** - dependencies

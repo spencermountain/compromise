@@ -39,7 +39,7 @@ const arr = [
   [`in the morning`, 'tomorrow at 8:00pm'],
   [`tomorrow evening`, 'Jan 22 6pm'],
   [`aug-20`, '20-aug'],
-  [`in a few years`, `in 3 years`],
+  [`in a few years`, `in 2 years`],
   [`in a couple years`, `in 2 years`],
   [`2 weeks back`, `2 weeks ago`],
   [`last q1`, `q1 2019`],

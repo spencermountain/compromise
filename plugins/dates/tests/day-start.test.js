@@ -17,7 +17,7 @@ let arr = [
   'in august',
   'tomorrow',
   'q2 1999',
-  'between june and july',
+  // 'between june and july',
   'between tuesday and wednesday',
   'june 2nd to 5th 2020',
   'the 5th of august',

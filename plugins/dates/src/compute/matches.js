@@ -43,7 +43,7 @@ let matches = [
   //for 4 months
   { match: 'for #Value #Duration', tag: 'Date', reason: 'for-x-duration' },
   //two days before
-  { match: '#Value #Duration #Conjunction', tag: 'Date', reason: 'val-duration-conjunction' },
+  { match: '#Value #Duration (before|ago|hence|back)', tag: 'Date', reason: 'val-duration-past' },
   //for four days
   { match: `${preps}? #Value #Duration`, tag: 'Date', reason: 'value-duration' },
   // 6-8 months
@@ -276,5 +276,9 @@ let matches = [
   { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
   // a month from now
   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
+  // 18th next month
+  { match: '#Value of? (this|next|last) #Date', tag: 'Date' },
+  // first half of march
+  { match: '(first|initial|second|latter) half of #Month', tag: 'Date' },
 ]
 export default matches

@@ -1,7 +1,34 @@
 import parseDate from '../one/index.js'
 import reverseMaybe from './_reverse.js'
+import { Month, CalendarDate } from '../one/units/index.js'
 
 export default [
+
+
+  {
+    // month-ranges have some folksy rules
+    match: 'between [<start>#Month] and [<end>#Month] [<year>#Year?]',
+    desc: 'between march and jan',
+    parse: (m, context) => {
+      let { start, end, year } = m.groups()
+      let y = year && year.found ? Number(year.text('reduced')) : context.today.year()
+      let obj = { month: start.text('reduced'), year: y }
+      let left = new Month(obj, null, context).start()
+      obj = { month: end.text('reduced'), year: y }
+      let right = new Month(obj, null, context).start()
+      if (left.d.isAfter(right.d)) {
+        return {
+          start: right,
+          end: left,
+        }
+      }
+      return {
+        start: left,
+        end: right,
+      }
+    },
+  },
+
   {
     // two explicit dates - 'between friday and sunday'
     match: 'between [<start>.+] and [<end>.+]',
@@ -136,6 +163,93 @@ export default [
         return obj
       }
       return null
+    },
+  },
+
+  {
+    // in 2 to 4 weeks
+    match: '^in [<min>#Value] to [<max>#Value] [<unit>(days|weeks|months|years)]',
+    desc: 'in 2 to 4 weeks',
+    parse: (m, context) => {
+      const { min, max, unit } = m.groups()
+
+      let start = new CalendarDate(context.today, null, context)
+      let end = start.clone()
+
+      const duration = unit.text('implicit')
+      start = start.applyShift({ [duration]: min.numbers().get()[0] })
+      end = end.applyShift({ [duration]: max.numbers().get()[0] })
+
+      return {
+        start: start,
+        end: end.end(),
+      }
+    },
+  },
+  {
+    // 2 to 4 weeks ago
+    match:
+      '[<min>#Value] to [<max>#Value] [<unit>(days|weeks|months|years)] (ago|before|earlier|prior)',
+    desc: '2 to 4 weeks ago',
+    parse: (m, context) => {
+      const { min, max, unit } = m.groups()
+
+      let start = new CalendarDate(context.today, null, context)
+      let end = start.clone()
+
+      const duration = unit.text('implicit')
+      start = start.applyShift({ [duration]: -max.numbers().get()[0] })
+      end = end.applyShift({ [duration]: -min.numbers().get()[0] })
+
+      return {
+        start: start,
+        end: end.end(),
+      }
+    },
+  },
+
+
+
+  {
+    // implicit range
+    match: '^until [<to>#Date+]',
+    desc: 'until christmas',
+    parse: (m, context) => {
+      let to = m.groups('to')
+      to = parseDate(to, context)
+      if (to) {
+        let start = new CalendarDate(context.today, null, context)
+        return {
+          start: start,
+          end: to.start(),
+        }
+      }
+      return null
+    },
+  },
+
+  {
+    // second half of march
+    match: '[<part>(1st|initial|2nd|latter)] half of [<month>#Month] [<year>#Year?]',
+    desc: 'second half of march',
+    parse: (m, context) => {
+      const { part, month, year } = m.groups()
+      let obj = {
+        month: month.text('reduced'),
+        date: 1, //assume 1st
+        year: year && year.found ? year.text('reduced') : context.today.year()
+      }
+      let unit = new Month(obj, null, context)
+      if (part.has('(1st|initial)')) {
+        return {
+          start: unit.start(),
+          end: unit.clone().middle(),
+        }
+      }
+      return {
+        start: unit.middle(),
+        end: unit.clone().end(),
+      }
     },
   },
 ]

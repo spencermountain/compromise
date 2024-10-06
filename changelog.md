@@ -20,6 +20,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .before() .after()
 -->
 
+#### 14.14.1 [July 2024]
+- **[update]** - compromise-dates 3.7.0
+- **[fix]** - runtime error in number parser #1145
+- **[update]** - dependencies
+
+
 #### 14.14.0 [July 2024]
 - **[new]** - .slashes() and .slashes().split() methods #1100
 - **[fix]** - multiple contraction issue #1128

@@ -85,10 +85,6 @@
   };
 
   const findDate = function (doc) {
-    // if (doc.world.isVerbose() === 'date') {
-    //   doc.debug()
-    //   console.log('          ---')
-    // }
     let dates = doc.match('#Date+');
     // ignore only-durations like '20 minutes'
     dates = dates.filter(m => {
@@ -210,6 +206,14 @@
       let unit = parseUnit(m);
       result[unit] = 0.5;
     }
+
+    // a couple years
+    m = shift.match('a (few|couple) [#Duration]', 0);
+    if (m.found) {
+      let unit = parseUnit(m);
+      result[unit] = m.has('few') ? 3 : 2;
+    }
+
     // finally, remove it from our text
     m = doc.match('#DateShift+');
     return { result, m }
@@ -4469,13 +4473,12 @@
     time = time.not('^(at|by|for|before|this|after)');
     time = time.not('sharp');
     time = time.not('on the dot');
-    // time.debug()
+
     let s = main.now(context.timezone);
     let now = s.clone();
     // check for known-times (like 'today')
-    let timeStr = time.not('in the').text('reduced');
+    let timeStr = time.not('in? the').text('reduced');
     timeStr = timeStr.replace(/^@/, '');//@4pm
-    // console.log(timeStr)
     if (hardCoded.hasOwnProperty(timeStr)) {
       return { result: hardCoded[timeStr], m: time }
     }
@@ -5402,6 +5405,11 @@
       this.d = this.d.startOf('month');
       return this
     }
+    middle() {
+      this.d = this.d.add(15, 'days');
+      this.d = this.d.startOf('day');
+      return this
+    }
   }
 
   class AnyQuarter extends Unit {
@@ -6292,6 +6300,47 @@
       }
     }
 
+    // 'march 5th next year'
+    m = doc.match('[<month>#Month] [<date>#Value+]? of? the? [<rel>(this|next|last|current)] year');
+    if (m.found) {
+      let rel = m.groups('rel').text('reduced');
+      let year = impliedYear;
+      if (rel === 'next') {
+        year += 1;
+      } else if (rel === 'last') {
+        year -= 1;
+      }
+      let obj = {
+        month: m.groups('month').text('reduced'),
+        date: m.groups('date').numbers(0).get()[0],
+        year,
+      };
+      let unit = new CalendarDate(obj, null, context);
+      if (unit.d.isValid() === true) {
+        return unit
+      }
+    }
+
+    // '5th of next month'
+    m = doc.match('^the? [<date>#Value+]? of? [<rel>(this|next|last|current)] month');
+    if (m.found) {
+      let month = context.today.month();
+      let rel = m.groups('rel').text('reduced');
+      if (rel === 'next') {
+        month += 1;
+      } else if (rel === 'last') {
+        month -= 1;
+      }
+      let obj = {
+        month,
+        date: m.groups('date').numbers(0).get()[0],
+      };
+      let unit = new CalendarDate(obj, null, context);
+      if (unit.d.isValid() === true) {
+        return unit
+      }
+    }
+
     //no-years
     // 'fifth of june'
     m = doc.match('[<date>#Value] of? [<month>#Month]');
@@ -6315,6 +6364,7 @@
         return unit
       }
     }
+
     // support 'december'
     if (doc.has('#Month')) {
       let obj = {
@@ -6323,7 +6373,7 @@
         year: context.today.year(),
       };
       let unit = new Month(obj, null, context);
-      // assume 'feb' in the future
+      // assume 'february' is always in the future
       if (unit.d.month() < context.today.month()) {
         obj.year += 1;
         unit = new Month(obj, null, context);
@@ -6372,7 +6422,6 @@
         return unit
       }
     }
-
     let str = doc.text('reduced');
     if (!str) {
       return new Moment(context.today, null, context)
@@ -6498,6 +6547,7 @@
   const env$1 = typeof process === 'undefined' || !process.env ? self.env || {} : process.env;
   const log$1 = parts => {
     if (env$1.DEBUG_DATE) {
+      // console.log(parts)// eslint-disable-line
       console.log(`\n==== '${parts.doc.text()}' =====`); // eslint-disable-line
       Object.keys(parts).forEach(k => {
         if (k !== 'doc' && parts[k]) {
@@ -6927,6 +6977,32 @@
   ];
 
   var doDateRange = [
+
+
+    {
+      // month-ranges have some folksy rules
+      match: 'between [<start>#Month] and [<end>#Month] [<year>#Year?]',
+      desc: 'between march and jan',
+      parse: (m, context) => {
+        let { start, end, year } = m.groups();
+        let y = year && year.found ? Number(year.text('reduced')) : context.today.year();
+        let obj = { month: start.text('reduced'), year: y };
+        let left = new Month(obj, null, context).start();
+        obj = { month: end.text('reduced'), year: y };
+        let right = new Month(obj, null, context).start();
+        if (left.d.isAfter(right.d)) {
+          return {
+            start: right,
+            end: left,
+          }
+        }
+        return {
+          start: left,
+          end: right,
+        }
+      },
+    },
+
     {
       // two explicit dates - 'between friday and sunday'
       match: 'between [<start>.+] and [<end>.+]',
@@ -7061,6 +7137,93 @@
           return obj
         }
         return null
+      },
+    },
+
+    {
+      // in 2 to 4 weeks
+      match: '^in [<min>#Value] to [<max>#Value] [<unit>(days|weeks|months|years)]',
+      desc: 'in 2 to 4 weeks',
+      parse: (m, context) => {
+        const { min, max, unit } = m.groups();
+
+        let start = new CalendarDate(context.today, null, context);
+        let end = start.clone();
+
+        const duration = unit.text('implicit');
+        start = start.applyShift({ [duration]: min.numbers().get()[0] });
+        end = end.applyShift({ [duration]: max.numbers().get()[0] });
+
+        return {
+          start: start,
+          end: end.end(),
+        }
+      },
+    },
+    {
+      // 2 to 4 weeks ago
+      match:
+        '[<min>#Value] to [<max>#Value] [<unit>(days|weeks|months|years)] (ago|before|earlier|prior)',
+      desc: '2 to 4 weeks ago',
+      parse: (m, context) => {
+        const { min, max, unit } = m.groups();
+
+        let start = new CalendarDate(context.today, null, context);
+        let end = start.clone();
+
+        const duration = unit.text('implicit');
+        start = start.applyShift({ [duration]: -max.numbers().get()[0] });
+        end = end.applyShift({ [duration]: -min.numbers().get()[0] });
+
+        return {
+          start: start,
+          end: end.end(),
+        }
+      },
+    },
+
+
+
+    {
+      // implicit range
+      match: '^until [<to>#Date+]',
+      desc: 'until christmas',
+      parse: (m, context) => {
+        let to = m.groups('to');
+        to = parseDate(to, context);
+        if (to) {
+          let start = new CalendarDate(context.today, null, context);
+          return {
+            start: start,
+            end: to.start(),
+          }
+        }
+        return null
+      },
+    },
+
+    {
+      // second half of march
+      match: '[<part>(1st|initial|2nd|latter)] half of [<month>#Month] [<year>#Year?]',
+      desc: 'second half of march',
+      parse: (m, context) => {
+        const { part, month, year } = m.groups();
+        let obj = {
+          month: month.text('reduced'),
+          date: 1, //assume 1st
+          year: year && year.found ? year.text('reduced') : context.today.year()
+        };
+        let unit = new Month(obj, null, context);
+        if (part.has('(1st|initial)')) {
+          return {
+            start: unit.start(),
+            end: unit.clone().middle(),
+          }
+        }
+        return {
+          start: unit.middle(),
+          end: unit.clone().end(),
+        }
       },
     },
   ];
@@ -7327,14 +7490,6 @@
     return diff
   };
 
-  // const getRange = function (diff) {
-  //   if (diff.years) {
-  //     return 'decade'
-  //   }
-  //   // console.log(diff)
-  //   return null
-  // }
-
   const toJSON = function (range) {
     if (!range.start) {
       return {
@@ -7393,7 +7548,9 @@
           let json = m.toView().json(opts)[0] || {};
           if (opts && opts.dates !== false) {
             let parsed = parse$2(m, this.opts);
-            json.dates = toJSON(parsed[0]);
+            if (parsed.length > 0) {
+              json.dates = toJSON(parsed[0]);
+            }
           }
           return json
         }, [])
@@ -8031,7 +8188,7 @@
     //for 4 months
     { match: 'for #Value #Duration', tag: 'Date', reason: 'for-x-duration' },
     //two days before
-    { match: '#Value #Duration #Conjunction', tag: 'Date', reason: 'val-duration-conjunction' },
+    { match: '#Value #Duration (before|ago|hence|back)', tag: 'Date', reason: 'val-duration-past' },
     //for four days
     { match: `${preps}? #Value #Duration`, tag: 'Date', reason: 'value-duration' },
     // 6-8 months
@@ -8264,6 +8421,10 @@
     { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
     // a month from now
     { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
+    // 18th next month
+    { match: '#Value of? (this|next|last) #Date', tag: 'Date' },
+    // first half of march
+    { match: '(first|initial|second|latter) half of #Month', tag: 'Date' },
   ];
 
   let net = null;
@@ -8780,7 +8941,7 @@
 
   ];
 
-  var version = '3.6.0';
+  var version = '3.7.0';
 
   /* eslint-disable no-console */
 

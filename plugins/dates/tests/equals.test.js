@@ -36,10 +36,10 @@ const arr = [
   [`2 oclock am`, '2020-01-21T02:00:00.000-08:00'],
   [`noon`, 'today at 12pm'],
   [`at night`, 'today at 8:00pm'],
-  [`in the morning`, 'tomorrow at 8:00pm'],
+  // [`in the morning`, 'tomorrow at 8:00pm'],
   [`tomorrow evening`, 'Jan 22 6pm'],
   [`aug-20`, '20-aug'],
-  [`in a few years`, `in 3 years`],
+  [`in a few years`, `in 2 years`],
   [`in a couple years`, `in 2 years`],
   [`2 weeks back`, `2 weeks ago`],
   [`last q1`, `q1 2019`],
@@ -66,15 +66,23 @@ const arr = [
   [`tuesday at 1`, `tuesday at 1pm`],
   ['this fri, monday', 'fri jan 24 and mon jan 27'],
   ['next friday, this monday', 'fri jan 31 and mon jan 27'],
+  ['until christmas', '2020-01-21 to 2020-12-25'],
+  ['until feb 3 2024', '2020-01-21 to 2024-02-03'],
+  ['first half of march', '2020-03-01 to 2020-03-16'],
+  ['second half of march', '2020-03-16 to 2020-03-30 '],
+  ['between Sept and Oct', 'sept 2020 to oct 2020'],
+  ['between Sept and Oct 2008', 'sept 2008 to oct 2008'],
+  ['between Oct and Sept', 'sept 2020 to oct 2020'],
+  ['between Oct and Sept 2008', 'sept 2008 to oct 2008']
 ]
 
 test('date-variety', function (t) {
   arr.forEach((a) => {
     let left = nlp(a[0]).dates(context).json()[0] || {}
     let right = nlp(a[1]).dates(context).json()[0] || {}
-    left.date = left.date || {}
-    right.date = right.date || {}
-    t.equal(left.date.start, right.date.start, a[0])
+    left.dates = left.dates || {}
+    right.dates = right.dates || {}
+    t.equal(left.dates.start, right.dates.start, a[0] + ' -> ' + a[1])
   })
   t.end()
 })

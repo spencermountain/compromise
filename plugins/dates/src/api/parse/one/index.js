@@ -6,6 +6,7 @@ import transform from './03-transform/index.js'
 const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
 const log = parts => {
   if (env.DEBUG_DATE) {
+    // console.log(parts)// eslint-disable-line
     console.log(`\n==== '${parts.doc.text()}' =====`) // eslint-disable-line
     Object.keys(parts).forEach(k => {
       if (k !== 'doc' && parts[k]) {

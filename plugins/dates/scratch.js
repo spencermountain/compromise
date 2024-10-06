@@ -8,18 +8,16 @@ nlp.verbose('date')
 
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-// process.env.DEBUG_DATE = true
+process.env.DEBUG_DATE = true
 
 // date issues:
 // 'the month before christmas' vs 'a month before christmas'
 // middle september
 // end of september
-// first half of march
 // week of june 3rd
 // fridays in june
 // every saturday
 // now
-// until christmas
 
 const context = {
   // today: '1999-04-17',
@@ -39,15 +37,20 @@ txt = `5th day of q1 2002`
 // txt = 'on april 22nd'
 txt = 'in basically one week from now'
 txt = 'go shopping with april'
-txt = 'between Sept and Oct 2008'
-txt = 'only in 2018 and 2020'
-txt = '2024/02/05 and 2024/03/09'
-txt = 'in 03/28'
-txt = 'in 28/28'
-txt = '24/24'
+txt = 'between Oct and Sept 2008'
+// txt = 'sept 2008 to oct 2008'
+// txt = 'only in 2018 and 2020'
+// txt = '2024/02/05 and 2024/03/09'
+// txt = 'in 03/28'
+// txt = 'in 28/28'
+// txt = '1 to 5 weeks ago'
+// txt = 'in 2-4 years from now'
+// txt = 'in 1-2 weeks from now'
+// txt = 'in 1 to 2 months'
+// txt = `end of september`
 
 // nlp.verbose('tagger')
-let doc = nlp(txt).debug()
+let doc = nlp(txt)
 // doc.debug('dates')
 // console.log(doc.dates().get())
 // doc.times().format('24h')
@@ -55,7 +58,7 @@ let doc = nlp(txt).debug()
 
 // console.log(doc.times(context).json())
 let found = doc.dates(context).json()
-// console.log(found[0].dates)
+console.log(found[0].dates)
 found.forEach((o) => {
   console.log('start: ', fmt(o.dates.start))
   console.log('  end: ', fmt(o.dates.end))

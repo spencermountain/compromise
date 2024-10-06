@@ -1,12 +1,28 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
-nlp.verbose('tagger')
-//
-let doc = nlp(` Somebody's hat`)
-doc.debug()
+import plg from './plugins/dates/src/plugin.js'
+nlp.plugin(plg)
+// nlp.verbose('tagger')
 
+
+
+const context = {
+  today: '2024-09-24'
+}
+
+let text = 'first half of march'
+// let text = 'in 2-3 years'
+// let text = 'March 28 next year'
+// let text = 'June next year'
+const doc1 = nlp(text).debug()
+const dates1 = doc1.dates(context).get()[0]
+console.log(text)
+console.log(dates1)
+
+
+// const doc = nlp('one match match after')
+// doc.match('one .* after').debug() // works
+// doc.match('[one match+ after]', 0).debug() //bad
 
 // -bury
 // -ford

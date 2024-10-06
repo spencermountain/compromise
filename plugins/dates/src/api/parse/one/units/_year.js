@@ -32,6 +32,11 @@ class Month extends Unit {
     this.d = this.d.startOf('month')
     return this
   }
+  middle() {
+    this.d = this.d.add(15, 'days')
+    this.d = this.d.startOf('day')
+    return this
+  }
 }
 
 class AnyQuarter extends Unit {

@@ -73,6 +73,14 @@ const parseShift = function (doc) {
     let unit = parseUnit(m)
     result[unit] = 0.5
   }
+
+  // a couple years
+  m = shift.match('a (few|couple) [#Duration]', 0)
+  if (m.found) {
+    let unit = parseUnit(m)
+    result[unit] = m.has('few') ? 3 : 2
+  }
+
   // finally, remove it from our text
   m = doc.match('#DateShift+')
   return { result, m }

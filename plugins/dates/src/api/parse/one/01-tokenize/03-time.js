@@ -72,7 +72,6 @@ const parseTime = function (doc, context) {
   // check for known-times (like 'today')
   let timeStr = time.not('in? the').text('reduced')
   timeStr = timeStr.replace(/^@/, '')//@4pm
-
   if (hardCoded.hasOwnProperty(timeStr)) {
     return { result: hardCoded[timeStr], m: time }
   }

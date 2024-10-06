@@ -18,7 +18,6 @@ process.env.DEBUG_DATE = true
 // fridays in june
 // every saturday
 // now
-// until christmas
 
 const context = {
   // today: '1999-04-17',
@@ -47,8 +46,7 @@ txt = '1 to 5 weeks ago'
 txt = 'in 2-4 years from now'
 txt = 'in 1-2 weeks from now'
 txt = 'in 1 to 2 months'
-txt = `in a couple years`
-txt = `in the morning`
+txt = `end of september`
 
 // nlp.verbose('tagger')
 let doc = nlp(txt).debug()

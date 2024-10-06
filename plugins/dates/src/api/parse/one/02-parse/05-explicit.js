@@ -157,7 +157,6 @@ const parseExplicit = function (doc, context) {
       return unit
     }
   }
-
   let str = doc.text('reduced')
   if (!str) {
     return new Moment(context.today, null, context)

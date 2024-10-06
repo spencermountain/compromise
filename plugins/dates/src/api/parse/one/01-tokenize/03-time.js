@@ -70,9 +70,9 @@ const parseTime = function (doc, context) {
   let s = spacetime.now(context.timezone)
   let now = s.clone()
   // check for known-times (like 'today')
-  let timeStr = time.not('in the').text('reduced')
+  let timeStr = time.not('in? the').text('reduced')
   timeStr = timeStr.replace(/^@/, '')//@4pm
-  // console.log(timeStr)
+
   if (hardCoded.hasOwnProperty(timeStr)) {
     return { result: hardCoded[timeStr], m: time }
   }

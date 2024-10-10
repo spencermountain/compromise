@@ -5,19 +5,25 @@ nlp.plugin(plg)
 // nlp.verbose('tagger')
 
 
+const text = 'to the window'
 
-const context = {
-  today: '2024-09-24'
-}
+// Throws an error, capturing group at beginning, replacing with an empty string
+const doc1 = nlp(text)
+doc1.match('[to] the window', 0).replaceWith('by')
+doc1.debug()
+doc1.match('[by]', 0).debug().replaceWith('')
 
-let text = 'first half of march'
-// let text = 'in 2-3 years'
-// let text = 'March 28 next year'
-// let text = 'June next year'
-const doc1 = nlp(text).debug()
-const dates1 = doc1.dates(context).get()[0]
-console.log(text)
-console.log(dates1)
+// Works, capturing group at beginning, replacing with a non-empty string
+const doc2 = nlp(text)
+doc2.match('[to] the window', 0).replaceWith('near')
+doc2.match('[near]', 0).replaceWith('by')
+console.log('doc2', doc2.text())
+
+// Works, capture group at end, replacing with an empty string
+const doc3 = nlp(text)
+doc3.match('to the [window]', 0).replaceWith('wall')
+doc3.match('[wall]', 0).replaceWith('')
+console.log('doc3', doc3.text())
 
 
 // const doc = nlp('one match match after')

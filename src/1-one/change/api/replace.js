@@ -76,9 +76,17 @@ fns.replaceWith = function (input, keep = {}) {
     }
   }
 
-  // try to keep some pre-post punctuation
-  if (originalPre) main.docs[0][0].pre = originalPre
-  if (originalPost && !main.docs[0][main.docs[0].length - 1].post.trim()) main.docs[0][main.docs[0].length - 1].post = originalPost
+  // try to keep some pre-punctuation
+  if (originalPre) {
+    main.docs[0][0].pre = originalPre
+  }
+  // try to keep any post-punctuation
+  if (originalPost && main.docs[0]) {
+    let lastOne = main.docs[0][main.docs[0].length - 1]
+    if (!lastOne.post.trim()) {
+      lastOne.post = originalPost
+    }
+  }
 
   // what should we return?
   let m = main.toView(ptrs).compute(['index', 'freeze', 'lexicon'])

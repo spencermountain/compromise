@@ -77,7 +77,7 @@ fns.replaceWith = function (input, keep = {}) {
   }
 
   // try to keep some pre-punctuation
-  if (originalPre) {
+  if (originalPre && main.docs[0]) {
     main.docs[0][0].pre = originalPre
   }
   // try to keep any post-punctuation

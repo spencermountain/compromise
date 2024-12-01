@@ -7,11 +7,11 @@ import nlp from './src/three.js'
 // nlp('Will is an employee').debug()
 
 
-
-const text = '- to the window'
-
-// Throws an error, capturing group at beginning, replacing with an empty string
-const doc1 = nlp(text).debug()
-doc1.match('[to] the window', 0).replaceWith('by')
-doc1.match('[by]', 0).replaceWith('')
-doc1.all().debug()
+let txt = ''
+txt = `i sent the documents up the hill`
+txt = `he would up stage his friend`
+txt = `he couldn't off gas`
+txt = `he got up over the hill`
+txt = 'piled up over'
+// text = ``
+nlp(txt).debug()

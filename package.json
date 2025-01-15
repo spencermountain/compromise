@@ -59,18 +59,6 @@
         "types": "./types/three.d.cts",
         "default": "./builds/three/compromise-three.cjs"
       }
-    },
-    "./misc": {
-      "types": "./types/misc.d.ts"
-    },
-    "./view/one": {
-      "types": "./types/view/one.d.ts"
-    },
-    "./view/two": {
-      "types": "./types/view/two.d.ts"
-    },
-    "./view/three": {
-      "types": "./types/view/three.d.ts"
     }
   },
   "repository": {

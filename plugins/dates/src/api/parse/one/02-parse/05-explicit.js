@@ -50,6 +50,13 @@ const parseExplicit = function (doc, context) {
       date: m.groups('date').numbers(0).get()[0],
       year,
     }
+    if (obj.date === undefined) {
+      obj.date = 1
+      let unit = new Month(obj, null, context)
+      if (unit.d.isValid() === true) {
+        return unit
+      }
+    }
     let unit = new CalendarDate(obj, null, context)
     if (unit.d.isValid() === true) {
       return unit

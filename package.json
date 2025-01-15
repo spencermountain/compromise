@@ -11,29 +11,29 @@
   "types": "./types/three.d.ts",
   "exports": {
     ".": {
+      "types": "./types/three.d.ts",
       "import": "./src/three.js",
-      "require": "./builds/three/compromise-three.cjs",
-      "types": "./types/three.d.ts"
+      "default": "./builds/three/compromise-three.cjs"
     },
     "./tokenize": {
+      "types": "./types/one.d.ts",
       "import": "./src/one.js",
-      "require": "./builds/one/compromise-one.cjs",
-      "types": "./types/one.d.ts"
+      "default": "./builds/one/compromise-one.cjs"
     },
     "./one": {
+      "types": "./types/one.d.ts",
       "import": "./src/one.js",
-      "require": "./builds/one/compromise-one.cjs",
-      "types": "./types/one.d.ts"
+      "default": "./builds/one/compromise-one.cjs"
     },
     "./two": {
+      "types": "./types/two.d.ts",
       "import": "./src/two.js",
-      "require": "./builds/two/compromise-two.cjs",
-      "types": "./types/two.d.ts"
+      "default": "./builds/two/compromise-two.cjs"
     },
     "./three": {
+      "types": "./types/three.d.ts",
       "import": "./src/three.js",
-      "require": "./builds/three/compromise-three.cjs",
-      "types": "./types/three.d.ts"
+      "default": "./builds/three/compromise-three.cjs"
     },
     "./misc": {
       "types": "./types/misc.d.ts"

@@ -34,6 +34,16 @@ let arr = [
   { str: '2 to 4 years ago', start: '2020-09-24', end: '2022-09-24' },
   { str: '2-4 years ago', start: '2020-09-24', end: '2022-09-24' },
   { str: 'two to four years ago', start: '2020-09-24', end: '2022-09-24' },
+  { str: 'in 3 to 6 days', start: '2024-09-27', end: '2024-09-30' },
+  { str: 'in 3-6 days', start: '2024-09-27', end: '2024-09-30' },
+  { str: 'in three to six days', start: '2024-09-27', end: '2024-09-30' },
+  { str: '3 to 6 days ago', start: '2024-09-18', end: '2024-09-21' },
+  { str: '3-6 days ago', start: '2024-09-18', end: '2024-09-21' },
+  { str: 'three to six days ago', start: '2024-09-18', end: '2024-09-21' },
+  { str: 'in 3-5 years', start: '2027-09-24', end: '2029-09-24' },
+  { str: 'in three to five years', start: '2027-09-24', end: '2029-09-24' },
+  { str: '3 to 5 years ago', start: '2019-09-24', end: '2021-09-24' },
+  { str: 'three to five years ago', start: '2019-09-24', end: '2021-09-24' },
 ]
 
 

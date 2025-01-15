@@ -2,6 +2,10 @@
 - **[breaking]** - return array in .json().dates
 -->
 
+### 3.7.1 [Jan 2025]
+* * fix `#Month (next|last|this) year` #1162
+- **[update]** - dependencies
+
 ### 3.7.0 [July 2024]
 - **[new]** - date features:
 * * `'until christmas'`

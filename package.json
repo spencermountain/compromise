@@ -11,54 +11,54 @@
   "types": "./types/three.d.ts",
   "exports": {
     ".": {
-      "import": "./src/three.js",
-      "require": "./builds/three/compromise-three.cjs",
-      "types": "./types/three.d.ts"
+      "import": {
+        "types": "./types/three.d.ts",
+        "default": "./src/three.js"
+      },
+      "require": {
+        "types": "./types/three.d.cts",
+        "default": "./builds/three/compromise-three.cjs"
+      }
     },
     "./tokenize": {
-      "import": "./src/one.js",
-      "require": "./builds/one/compromise-one.cjs",
-      "types": "./types/one.d.ts"
+      "import": {
+        "types": "./types/one.d.ts",
+        "default": "./src/one.js"
+      },
+      "require": {
+        "types": "./types/one.d.cts",
+        "default": "./builds/one/compromise-one.cjs"
+      }
     },
     "./one": {
-      "import": "./src/one.js",
-      "require": "./builds/one/compromise-one.cjs",
-      "types": "./types/one.d.ts"
+      "import": {
+        "types": "./types/one.d.ts",
+        "default": "./src/one.js"
+      },
+      "require": {
+        "types": "./types/one.d.cts",
+        "default": "./builds/one/compromise-one.cjs"
+      }
     },
     "./two": {
-      "import": "./src/two.js",
-      "require": "./builds/two/compromise-two.cjs",
-      "types": "./types/two.d.ts"
+      "import": {
+        "types": "./types/two.d.ts",
+        "default": "./src/two.js"
+      },
+      "require": {
+        "types": "./types/two.d.cts",
+        "default": "./builds/two/compromise-two.cjs"
+      }
     },
     "./three": {
-      "import": "./src/three.js",
-      "require": "./builds/three/compromise-three.cjs",
-      "types": "./types/three.d.ts"
-    },
-    "./misc": {
-      "types": "./types/misc.d.ts"
-    },
-    "./view/one": {
-      "types": "./types/view/one.d.ts"
-    },
-    "./view/two": {
-      "types": "./types/view/two.d.ts"
-    },
-    "./view/three": {
-      "types": "./types/view/three.d.ts"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "one": [
-        "./types/one.d.ts"
-      ],
-      "two": [
-        "./types/two.d.ts"
-      ],
-      "three": [
-        "./types/three.d.ts"
-      ]
+      "import": {
+        "types": "./types/three.d.ts",
+        "default": "./src/three.js"
+      },
+      "require": {
+        "types": "./types/three.d.cts",
+        "default": "./builds/three/compromise-three.cjs"
+      }
     }
   },
   "repository": {
@@ -94,7 +94,11 @@
   "files": [
     "builds/",
     "types/",
-    "src/"
+    "src/",
+    "tokenize/",
+    "one/",
+    "two/",
+    "three/"
   ],
   "keywords": [
     "nlp"

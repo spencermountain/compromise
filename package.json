@@ -11,29 +11,54 @@
   "types": "./types/three.d.ts",
   "exports": {
     ".": {
-      "types": "./types/three.d.ts",
-      "import": "./src/three.js",
-      "default": "./builds/three/compromise-three.cjs"
+      "import": {
+        "types": "./types/three.d.ts",
+        "default": "./src/three.js"
+      },
+      "require": {
+        "types": "./types/three.d.cts",
+        "default": "./builds/three/compromise-three.cjs"
+      }
     },
     "./tokenize": {
-      "types": "./types/one.d.ts",
-      "import": "./src/one.js",
-      "default": "./builds/one/compromise-one.cjs"
+      "import": {
+        "types": "./types/one.d.ts",
+        "default": "./src/one.js"
+      },
+      "require": {
+        "types": "./types/one.d.cts",
+        "default": "./builds/one/compromise-one.cjs"
+      }
     },
     "./one": {
-      "types": "./types/one.d.ts",
-      "import": "./src/one.js",
-      "default": "./builds/one/compromise-one.cjs"
+      "import": {
+        "types": "./types/one.d.ts",
+        "default": "./src/one.js"
+      },
+      "require": {
+        "types": "./types/one.d.cts",
+        "default": "./builds/one/compromise-one.cjs"
+      }
     },
     "./two": {
-      "types": "./types/two.d.ts",
-      "import": "./src/two.js",
-      "default": "./builds/two/compromise-two.cjs"
+      "import": {
+        "types": "./types/two.d.ts",
+        "default": "./src/two.js"
+      },
+      "require": {
+        "types": "./types/two.d.cts",
+        "default": "./builds/two/compromise-two.cjs"
+      }
     },
     "./three": {
-      "types": "./types/three.d.ts",
-      "import": "./src/three.js",
-      "default": "./builds/three/compromise-three.cjs"
+      "import": {
+        "types": "./types/three.d.ts",
+        "default": "./src/three.js"
+      },
+      "require": {
+        "types": "./types/three.d.cts",
+        "default": "./builds/three/compromise-three.cjs"
+      }
     },
     "./misc": {
       "types": "./types/misc.d.ts"
@@ -46,19 +71,6 @@
     },
     "./view/three": {
       "types": "./types/view/three.d.ts"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "one": [
-        "./types/one.d.ts"
-      ],
-      "two": [
-        "./types/two.d.ts"
-      ],
-      "three": [
-        "./types/three.d.ts"
-      ]
     }
   },
   "repository": {
@@ -94,7 +106,11 @@
   "files": [
     "builds/",
     "types/",
-    "src/"
+    "src/",
+    "tokenize/",
+    "one/",
+    "two/",
+    "three/"
   ],
   "keywords": [
     "nlp"

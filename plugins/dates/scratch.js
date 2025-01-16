@@ -20,9 +20,9 @@ process.env.DEBUG_DATE = true
 // now
 
 const context = {
-  // today: '1999-04-17',
+  today: '1999-04-17',
   // today: [2006, 8, 24],
-  timezone: 'Asia/Shanghai',
+  // timezone: 'Asia/Shanghai',
   // dayStart: '8:00am',
   // dayEnd: '8:00pm',
 }
@@ -38,6 +38,7 @@ txt = `5th day of q1 2002`
 txt = 'in basically one week from now'
 txt = 'go shopping with april'
 txt = 'between Oct and Sept 2008'
+txt = '6:30pm'
 // txt = 'sept 2008 to oct 2008'
 // txt = 'only in 2018 and 2020'
 // txt = '2024/02/05 and 2024/03/09'

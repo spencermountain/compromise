@@ -20,6 +20,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .before() .after()
 -->
 
+#### 14.14.4 [Jan 2025]
+- **[fix]** - TypeScript & esm resolution #1165
+
 #### 14.14.3 [Dec 2024]
 - **[fix]** - another runtime error in punctuation replace #1150
 - **[update]** - dependencies

@@ -1,6 +1,6 @@
 {
 	"name": "compromise-three",
-	"version": "14.14.3",
+	"version": "14.14.4",
 	"description": "",
 	"type": "module",
 	"module": "./../src/three.js",

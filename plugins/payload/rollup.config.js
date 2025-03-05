@@ -3,6 +3,7 @@ import sizeCheck from 'rollup-plugin-filesize-check'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 const opts = { keep_classnames: true, module: true }
+const umdOpts = { ...opts, module: false }
 
 export default [
   {
@@ -13,7 +14,7 @@ export default [
   {
     input: 'src/plugin.js',
     output: [{ file: 'builds/compromise-payload.min.js', format: 'umd', name: 'compromisePayload' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 387, warn: 15 })],
+    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 387, warn: 15 })],
   },
   {
     input: 'src/plugin.js',

@@ -129,13 +129,13 @@
     "suffix-thumb": "5.0.2"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "15.3.0",
+    "@rollup/plugin-node-resolve": "16.0.0",
     "@rollup/plugin-terser": "0.4.4",
     "cross-env": "^7.0.3",
     "eslint": "9.16.0",
     "eslint-plugin-regexp": "2.7.0",
     "nlp-corpus": "4.4.0",
-    "rollup": "4.28.0",
+    "rollup": "4.34.8",
     "rollup-plugin-filesize-check": "1.2.0",
     "shelljs": "0.8.5",
     "tap-dancer": "0.3.4",

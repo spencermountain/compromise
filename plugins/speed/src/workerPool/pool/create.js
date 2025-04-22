@@ -4,9 +4,9 @@ import { Worker } from 'worker_threads'
 const dir = path.dirname(fileURLToPath(import.meta.url))
 
 const makePool = function (count, reg) {
-  let workers = []
+  const workers = []
   for (let i = 0; i < count; i += 1) {
-    let info = {
+    const info = {
       workerData: {
         workerIndex: i,
         workerCount: count,

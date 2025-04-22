@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 
 test('dmy option loop', function (t) {
-  let arr = [
+  const arr = [
     ['01/02', 'January 2', false],
     ['01/12', 'January 12', false],
     ['01/24', 'January 24', false],
@@ -21,10 +21,10 @@ test('dmy option loop', function (t) {
     ['1999-03-02', 'March 2', true],
   ]
   arr.forEach((a) => {
-    let [str, want, bool] = a
-    let doc = nlp(str)
+    const [str, want, bool] = a
+    const doc = nlp(str)
     t.equal(doc.has('#Date'), true, str + ' #Date')
-    let out = doc.dates({ dmy: bool }).format('{month} {date}').text()
+    const out = doc.dates({ dmy: bool }).format('{month} {date}').text()
     t.equal(out, want, str)
   })
   t.end()
@@ -41,14 +41,14 @@ test('dmy option falsy', function (t) {
 })
 
 test('dmy option true', function (t) {
-  let out = nlp('03/04').dates({ dmy: true }).format('{month} {date}').text()
+  const out = nlp('03/04').dates({ dmy: true }).format('{month} {date}').text()
   t.equal('April 3', out, 'WITH dmy option')
 
   t.end()
 })
 
 test('dmy invalid', function (t) {
-  let arr = [
+  const arr = [
     '24/24',
     '124/2',
     '2/232',
@@ -60,7 +60,7 @@ test('dmy invalid', function (t) {
     '2.3/2',
   ]
   arr.forEach((str) => {
-    let doc = nlp(str)
+    const doc = nlp(str)
     t.equal(doc.dates({ dmy: true }).get().length, 0, str, '-dmy')
     t.equal(doc.dates({ dmy: false }).get().length, 0, str + '-mdy')
   })

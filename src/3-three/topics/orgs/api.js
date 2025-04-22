@@ -1,7 +1,7 @@
 
 const api = function (View) {
   View.prototype.organizations = function (n) {
-    let m = this.match('#Organization+')
+    const m = this.match('#Organization+')
     return m.getNth(n)
   }
 }

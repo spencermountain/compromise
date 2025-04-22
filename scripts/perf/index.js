@@ -9,7 +9,7 @@ if (!process.version.match(/^v16\./)) {
   console.warn('Warn: Expecting node v16.x - got ' + process.version)
 }
 
-let docs = [
+const docs = [
   'nlp-corpus-1.json',
   'nlp-corpus-2.json',
   'nlp-corpus-3.json',
@@ -39,13 +39,13 @@ const growth = (baseline, current) => {
 }
 
   ; (async () => {
-    let p = new Pool()
-    let texts = await fetchAll(docs.map(file => `https://unpkg.com/nlp-corpus@3.3.0/builds/${file}`))
+    const p = new Pool()
+    const texts = await fetchAll(docs.map(file => `https://unpkg.com/nlp-corpus@3.3.0/builds/${file}`))
     console.log(`\n\n  running ${texts.length} texts on ${p.count()} workers`)
-    let nums = []
+    const nums = []
     for (let i = 0; i < texts.length; i += 1) {
       console.log(`    text #${i + 1} - 🕰`)
-      let num = await p.do(texts[i])
+      const num = await p.do(texts[i])
       nums.push(num)
     }
     let sum = nums.reduce((h, n) => h + n, 0)

@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-toPastParticiple] '
 
 test('toPastParticiple:', function (t) {
-  let arr = [
+  const arr = [
     [`I eat breakfast every morning.`, `I have eaten breakfast every morning.`],
     [`She reads a book before bed.`, `She has read a book before bed.`],
     [`He teaches math to high school students.`, `He has taught math to high school students.`],
@@ -238,7 +238,7 @@ test('toPastParticiple:', function (t) {
     ['i relate', 'i have related'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.verbs().toPastParticiple()
     t.equal(doc.text(), a[1], here + ' ' + a[0])
   })
@@ -247,7 +247,7 @@ test('toPastParticiple:', function (t) {
 
 
 test('past vs past-participle:', function (t) {
-  let arr = [
+  const arr = [
     ['arise', 'arose', 'arisen'],
     ['awake', 'awoke', 'awoken'],
     // ['bear', 'bore', 'born'],
@@ -341,9 +341,9 @@ test('past vs past-participle:', function (t) {
     ['write', 'wrote', 'written'],
   ]
   arr.forEach(a => {
-    let [present, past, participle] = a
-    let doc = nlp(present).tag('#Infinitive')
-    let obj = doc.verbs().conjugate()[0] || {}
+    const [present, past, participle] = a
+    const doc = nlp(present).tag('#Infinitive')
+    const obj = doc.verbs().conjugate()[0] || {}
     t.equal(obj.PastTense, past, here + ' ' + a[0])
 
     let prt = obj.Participle || obj.PastTense || ''

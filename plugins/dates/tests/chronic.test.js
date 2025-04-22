@@ -30,7 +30,7 @@ const mk = function (y, m, d, h, sec, mil) {
 }
 
 test('chronic-tests-one', (t) => {
-  let arr = [
+  const arr = [
     ['2012-08-02T13:00:00', mk(2012, 8, 2, 13)],
     ['aug 3', mk(2007, 8, 3, 12)],
     ['aug. 3', mk(2007, 8, 3, 12)],
@@ -142,22 +142,22 @@ test('chronic-tests-one', (t) => {
     // ['2012-06', mk(2012, 6, 1)],
     // ['2013/12', mk(2013, 12, 1, 0)],
   ]
-  let context = {
+  const context = {
     today: [2006, 8, 24],
   }
   arr.forEach(a => {
-    let found = nlp(a[0]).dates(context).json()[0] || {}
-    let have = fmt((found.dates || {}).start)
+    const found = nlp(a[0]).dates(context).json()[0] || {}
+    const have = fmt((found.dates || {}).start)
     t.equal(have, a[1], a[0])
   })
   t.end()
 })
 
 test('chronic-tests-two', (t) => {
-  let context = {
+  const context = {
     today: [2006, 7, 16],
   }
-  let arr = [
+  const arr = [
     // ['9am on Saturday', mk(2006, 8, 19, 9)],
     ['on Tuesday', mk(2006, 8, 22, 12)],
     ['1:00:00 PM', mk(2006, 8, 16, 13)],
@@ -386,8 +386,8 @@ test('chronic-tests-two', (t) => {
     ['Thursday December 30th 2005', mk(2005, 12, 30, 12), 'thurs tests'],
   ]
   arr.forEach(a => {
-    let found = nlp(a[0]).dates(context).json()[0] || {}
-    let have = fmt(found.dates.start)
+    const found = nlp(a[0]).dates(context).json()[0] || {}
+    const have = fmt(found.dates.start)
     t.equal(have, a[1], a[3] || a[0])
   })
   t.end()

@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-forms] '
 
 test('verb form names', function (t) {
-  let forms = {
+  const forms = {
     // simple
     'simple-present': [
       'we walk home.',
@@ -125,8 +125,8 @@ test('verb form names', function (t) {
   }
   Object.keys(forms).forEach(form => {
     forms[form].forEach(str => {
-      let doc = nlp(str)
-      let json = doc.verbs().json()[0] || { verb: {} }
+      const doc = nlp(str)
+      const json = doc.verbs().json()[0] || { verb: {} }
       const grammar = json.verb.grammar || {}
       t.equal(grammar.form, form, here + `''${str}`)
     })

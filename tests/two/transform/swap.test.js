@@ -63,7 +63,7 @@ test('swap-noun', function (t) {
 })
 
 test('swap-adverb', function (t) {
-  let doc = nlp('suddenly and heatedly').compute('root')
+  const doc = nlp('suddenly and heatedly').compute('root')
   doc.swap('heated', 'warm')
   doc.swap('sudden', 'immediate')
   t.equal(doc.text(), 'immediately and warmly', here + 'swap-adverb')

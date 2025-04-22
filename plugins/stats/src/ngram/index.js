@@ -7,7 +7,7 @@ import sort from './sort.js'
 const addMethod = function (View) {
   /** list all repeating sub-phrases, by word-count */
   View.prototype.ngrams = function (obj) {
-    let list = tokenize(this)
+    const list = tokenize(this)
     let arr = getGrams(list, obj || {})
     arr = sort(arr)
     return arr
@@ -50,7 +50,7 @@ const addMethod = function (View) {
 
   /** list all repeating sub-phrases, using the first word */
   View.prototype.startgrams = function (obj) {
-    let list = tokenize(this)
+    const list = tokenize(this)
     let arr = startGrams(list, obj || {})
     arr = sort(arr)
     return arr
@@ -59,7 +59,7 @@ const addMethod = function (View) {
 
   /** list all repeating sub-phrases, connected to the last word of each phrase */
   View.prototype.endgrams = function (obj) {
-    let list = tokenize(this)
+    const list = tokenize(this)
     let arr = endGrams(list, obj || {})
     arr = sort(arr)
     return arr
@@ -68,12 +68,12 @@ const addMethod = function (View) {
 
   /** list all repeating sub-phrases, connected to the last word of each phrase */
   View.prototype.edgegrams = function (obj) {
-    let list = tokenize(this)
-    let start = startGrams(list, obj || {})
-    let end = endGrams(list, obj || {})
+    const list = tokenize(this)
+    const start = startGrams(list, obj || {})
+    const end = endGrams(list, obj || {})
     // combine them together
-    let all = start.concat(end)
-    let combine = all.reduce((h, a) => {
+    const all = start.concat(end)
+    const combine = all.reduce((h, a) => {
       if (h[a.normal]) {
         h[a.normal].count += a.count
       } else {

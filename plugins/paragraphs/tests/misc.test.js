@@ -5,7 +5,7 @@ const here = '[paragraph/misc] '
 
 
 test('paragraph-basic', function (t) {
-  let str = `What's with these homies dissin' my girl? Why do they gotta front? 
+  const str = `What's with these homies dissin' my girl? Why do they gotta front? 
 
 What did we ever do to these guys that made them so violent?
 
@@ -14,16 +14,16 @@ Woo-hoo, and I know you're mine.
 Woo-hoo, and that's for all time
   `
 
-  let doc = nlp(str).paragraphs()
+  const doc = nlp(str).paragraphs()
 
   t.equal(doc.length, 3, 'three-paragraphs')
 
-  let m = doc.eq(0)
+  const m = doc.eq(0)
   t.equal(m.sentences().length, 2, 'two sentences in first paragraph')
 
   t.equal(doc.json().length, 3, 'three-json objects')
 
-  let one = doc.filter(p => {
+  const one = doc.filter(p => {
     return p.has('these guys')
   })
   t.equal(one.length, 1, 'filter-one')
@@ -35,17 +35,17 @@ Woo-hoo, and that's for all time
 
 
 test('paragraph-tests', function (t) {
-  let txt = `What's with these homies dissin' my girl? Why do they gotta front? What did we ever do to these guys that made them so violent?
+  const txt = `What's with these homies dissin' my girl? Why do they gotta front? What did we ever do to these guys that made them so violent?
 
 Second paragraph! Oh yeah! my friends`
 
-  let doc = nlp(txt)
-  let res = doc.paragraphs()
+  const doc = nlp(txt)
+  const res = doc.paragraphs()
   t.equal(res.found, true, here + 'found')
   t.equal(res.length, 2, here + 'length')
 
   // match
-  let m = res.match('^what did')
+  const m = res.match('^what did')
   t.equal(m.length, 1, here + 'match')
   t.equal(m.growRight('. .').text(), 'What did we ever', here + 'match-text')
 
@@ -58,7 +58,7 @@ Second paragraph! Oh yeah! my friends`
   t.ok(res.terms(), here + 'terms')
   res.forEach(p => p.toUpperCase())
   t.equal(res.length, 2, here + 'forEach')
-  let r = res.map(p => p.toLowerCase())
+  const r = res.map(p => p.toLowerCase())
   t.equal(r.length, 2, here + 'map')
 
   t.end()

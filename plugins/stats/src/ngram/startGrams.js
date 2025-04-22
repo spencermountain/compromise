@@ -4,13 +4,13 @@ const defaults = {
 }
 
 const oneSize = function (list, size) {
-  let grams = {}
+  const grams = {}
   // count each instance
   list.forEach(terms => {
     for (let i = 0; i <= terms.length; i += 1) {
-      let slice = terms.slice(0, i)
+      const slice = terms.slice(0, i)
       if (slice.length === size) {
-        let str = slice.join(' ')
+        const str = slice.join(' ')
         if (grams.hasOwnProperty(str)) {
           grams[str].count += 1
         } else {
@@ -23,7 +23,7 @@ const oneSize = function (list, size) {
     }
   })
   // turn them into an array
-  let arr = Object.keys(grams).map(k => {
+  const arr = Object.keys(grams).map(k => {
     grams[k].normal = k
     return grams[k]
   })
@@ -36,8 +36,8 @@ const startGrams = function (list, options) {
     options.min = options.size
     options.max = options.size
   }
-  let max = options.max || defaults.max
-  let min = options.min || defaults.min
+  const max = options.max || defaults.max
+  const min = options.min || defaults.min
   let arr = []
   for (let size = min; size <= max; size++) {
     arr = arr.concat(oneSize(list, size))

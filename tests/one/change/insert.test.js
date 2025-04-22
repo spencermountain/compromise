@@ -64,8 +64,8 @@ test('titlecase change in insertBefore :', function (t) {
 })
 
 test('insert document :', function (t) {
-  let doc = nlp(`one two three`)
-  let b = nlp('four')
+  const doc = nlp(`one two three`)
+  const b = nlp('four')
   doc.append(b)
   t.equal(doc.text(), 'one two three four', here + 'doc appent')
   t.end()
@@ -87,26 +87,26 @@ test('punctuation edge-cases :', function (t) {
 })
 
 test('prepend shift-self :', function (t) {
-  let doc = nlp('no self no')
-  let m = doc.match('self')
-  let res = m.prepend('before')
+  const doc = nlp('no self no')
+  const m = doc.match('self')
+  const res = m.prepend('before')
   t.equal(res.text(), 'before self', here + 'res has both')
   t.equal(m.text(), 'before self', here + 'self is before+self')
   t.end()
 })
 
 test('append shift-self :', function (t) {
-  let doc = nlp('self')
-  let m = doc.match('.')
-  let res = m.append('after')
+  const doc = nlp('self')
+  const m = doc.match('.')
+  const res = m.append('after')
   t.equal(res.text(), 'self after', here + 'res has both')
   t.equal(m.text(), 'self after', here + 'self is self+after')
   t.end()
 })
 
 test('insert-multi :', function (t) {
-  let doc = nlp('the boy and the girl. girl girl')
-  let m = doc.match('(boy|girl)')
+  const doc = nlp('the boy and the girl. girl girl')
+  const m = doc.match('(boy|girl)')
   m.insertAfter('cat')
   t.equal(doc.eq(0).text(), 'the boy cat and the girl cat.', here + 'insert multi')
   t.equal(doc.eq(1).text(), 'girl cat girl cat', here + 'insert consecutive')
@@ -115,7 +115,7 @@ test('insert-multi :', function (t) {
 
 test('insert doc :', function (t) {
   const doc = nlp('walk the plank')
-  let doc2 = nlp('foo bar')
+  const doc2 = nlp('foo bar')
   doc.insertAfter(doc2.docs)
   t.equal(doc.text(), 'walk the plank foo bar', here + 'insert doc')
   t.equal(doc.match('plank foo').found, true, here + 'insert found')

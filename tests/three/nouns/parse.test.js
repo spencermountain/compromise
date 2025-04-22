@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/noun-parse] '
 
 test('noun-parts:', function (t) {
-  let arr = [
+  const arr = [
     {
       str: `the team's captain`,
       adjectives: [],
@@ -23,10 +23,10 @@ test('noun-parts:', function (t) {
   ]
   arr.forEach(obj => {
     let { str, adjectives, root, determiner, number } = obj
-    let n = nlp(str).nouns()
+    const n = nlp(str).nouns()
     str = "'" + str.split(/ /).slice(0, 5).join(' ') + "'"
-    let o = nlp('')
-    let parse = n.parse()[0] || { number: o, adjectives: o, determiner: o, root: o }
+    const o = nlp('')
+    const parse = n.parse()[0] || { number: o, adjectives: o, determiner: o, root: o }
 
     t.equal(parse.number.text(), number, here + `${str} [number]`)
     // adjectives

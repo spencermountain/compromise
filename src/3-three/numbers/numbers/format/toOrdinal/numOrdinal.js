@@ -4,12 +4,12 @@ import toString from '../../_toString.js'
  * turn a number like 5 into an ordinal like 5th
  */
 const numOrdinal = function (obj) {
-  let num = obj.num
+  const num = obj.num
   if (!num && num !== 0) {
     return null
   }
   //the teens are all 'th'
-  let tens = num % 100
+  const tens = num % 100
   if (tens > 10 && tens < 20) {
     return String(num) + 'th'
   }
@@ -21,7 +21,7 @@ const numOrdinal = function (obj) {
     3: 'rd',
   }
   let str = toString(num)
-  let last = str.slice(str.length - 1, str.length)
+  const last = str.slice(str.length - 1, str.length)
   if (mapping[last]) {
     str += mapping[last]
   } else {

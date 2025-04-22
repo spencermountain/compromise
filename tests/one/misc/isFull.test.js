@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/isFull] '
 
 test('isFull :', function (t) {
-  let doc = nlp('one two three. four five. six seven eight. nine')
+  const doc = nlp('one two three. four five. six seven eight. nine')
   t.equal(doc.isFull(), true, here + 'full')
 
   let m = doc.match('four five')
@@ -29,14 +29,14 @@ test('isFull :', function (t) {
 })
 
 test('isFull-split', function (t) {
-  let doc = nlp('one two foo three. four foo five')
-  let a = doc.splitOn('foo')
+  const doc = nlp('one two foo three. four foo five')
+  const a = doc.splitOn('foo')
   t.equal(a.isFull(), true, 'spliton')
 
-  let b = doc.splitBefore('foo')
+  const b = doc.splitBefore('foo')
   t.equal(b.isFull(), true, 'splitbefore')
 
-  let c = doc.splitAfter('foo')
+  const c = doc.splitAfter('foo')
   t.equal(c.isFull(), true, 'splitafter')
   t.end()
 })

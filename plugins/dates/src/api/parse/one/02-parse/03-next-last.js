@@ -21,28 +21,28 @@ const mapping = {
   hr: Hour,
 }
 
-let matchStr = `^(${Object.keys(mapping).join('|')})$`
+const matchStr = `^(${Object.keys(mapping).join('|')})$`
 
 // when a unit of time is spoken of as 'this month' - instead of 'february'
 const nextLast = function (doc, context) {
   //this month, last quarter, next year
   let m = doc.match(matchStr)
   if (m.found === true) {
-    let str = m.text('reduced')
+    const str = m.text('reduced')
     if (mapping.hasOwnProperty(str)) {
-      let Model = mapping[str]
+      const Model = mapping[str]
       if (!Model) {
         return null
       }
-      let unit = new Model(null, str, context)
+      const unit = new Model(null, str, context)
       return unit
     }
   }
   //'next friday, last thursday'
   m = doc.match('^#WeekDay$')
   if (m.found === true) {
-    let str = m.text('reduced')
-    let unit = new WeekDay(str, null, context)
+    const str = m.text('reduced')
+    const unit = new WeekDay(str, null, context)
     return unit
   }
 

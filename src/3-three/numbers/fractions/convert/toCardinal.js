@@ -4,8 +4,8 @@ const toCardinal = function (obj) {
   if (!obj.numerator || !obj.denominator) {
     return ''
   }
-  let a = toText({ num: obj.numerator })
-  let b = toText({ num: obj.denominator })
+  const a = toText({ num: obj.numerator })
+  const b = toText({ num: obj.denominator })
   return `${a} out of ${b}`
 }
 export default toCardinal

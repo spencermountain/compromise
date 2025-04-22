@@ -63,10 +63,10 @@ const words = [
 
 test('test length', function (t) {
   words.forEach(sep => {
-    let str = sep.replace(/ /g, '')
-    let doc = nlp(str)
-    let have = doc.syllables()[0]
-    let want = sep.split(/ /g)
+    const str = sep.replace(/ /g, '')
+    const doc = nlp(str)
+    const have = doc.syllables()[0]
+    const want = sep.split(/ /g)
     t.equal(have.length, want.length, str)
   })
   t.end()

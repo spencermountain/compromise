@@ -1,13 +1,13 @@
 const toText = function (term) {
-  let pre = term.pre || ''
-  let post = term.post || ''
+  const pre = term.pre || ''
+  const post = term.post || ''
   return pre + term.text + post
 }
 
 const findStarts = function (doc, obj) {
-  let starts = {}
+  const starts = {}
   Object.keys(obj).forEach(reg => {
-    let m = doc.match(reg)
+    const m = doc.match(reg)
     m.fullPointer.forEach(a => {
       starts[a[3]] = { fn: obj[reg], end: a[2] }
     })
@@ -17,15 +17,15 @@ const findStarts = function (doc, obj) {
 
 const wrap = function (doc, obj) {
   // index ids to highlight
-  let starts = findStarts(doc, obj)
+  const starts = findStarts(doc, obj)
   let text = ''
   doc.docs.forEach((terms, n) => {
     for (let i = 0; i < terms.length; i += 1) {
-      let t = terms[i]
+      const t = terms[i]
       // do a span tag
       if (starts.hasOwnProperty(t.id)) {
-        let { fn, end } = starts[t.id]
-        let m = doc.update([[n, i, end]])
+        const { fn, end } = starts[t.id]
+        const m = doc.update([[n, i, end]])
         text += terms[i].pre || ''
         text += fn(m)
         i = end - 1

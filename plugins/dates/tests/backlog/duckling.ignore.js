@@ -35,7 +35,7 @@ const mk = function (y, m, d, h, sec, mil) {
   return fmt(s)
 }
 
-let arr = [
+const arr = [
   [mk([2013, 2, 15, 0, 0, 0]), ['2/15', 'on 2/15', '2 / 15', '2-15', '2 - 15']],
   [mk([1974, 10, 31, 0, 0, 0]), ['10/31/1974', '10/31/74', '10-31-74', '10.31.1974', '31/Oct/1974', '31st Oct 1974']],
   [mk([2013, 4, 25, 16, 0, 0]), ['4/25 at 4:00pm', '4/25 at 16h00', '4/25 at 16h']],
@@ -919,10 +919,10 @@ let arr = [
 test('duckling-tests', (t) => {
   arr.forEach((a) => {
     a[1].forEach((str) => {
-      let context = {
+      const context = {
         today: [2013, 2, 12],
       }
-      let found = nlp(str).dates(context).json()[0] || {}
+      const found = nlp(str).dates(context).json()[0] || {}
       found.dates = found.dates || {}
       t.ok(fmt(found.dates.start), str)
       // t.equal(fmt(found.date.start), a[0], str)

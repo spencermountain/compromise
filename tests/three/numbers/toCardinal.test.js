@@ -4,7 +4,7 @@ const here = '[three/number-Cardinal] '
 
 //tests 'borrowed' from Travis Savo's lib 💝 https://github.com/TSavo/english2number-js
 const cardinal = function (str) {
-  let json = nlp(str).values().json()[0] || { number: {} }
+  const json = nlp(str).values().json()[0] || { number: {} }
   return json.number.num
 }
 

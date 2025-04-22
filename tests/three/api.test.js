@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 const here = '[three/api] '
 
 test('api:', function (t) {
-  let arr = [`He's really good. we were walking. Tony Hawk's swimming pool will dry-up.`, '', '...........?']
+  const arr = [`He's really good. we were walking. Tony Hawk's swimming pool will dry-up.`, '', '...........?']
   arr.forEach(str => {
     let doc = nlp(str)
     // lib

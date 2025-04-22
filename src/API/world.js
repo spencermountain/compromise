@@ -1,16 +1,16 @@
-let methods = {
+const methods = {
   one: {},
   two: {},
   three: {},
   four: {},
 }
 
-let model = {
+const model = {
   one: {},
   two: {},
   three: {},
 }
-let compute = {}
-let hooks = []
+const compute = {}
+const hooks = []
 
 export default { methods, model, compute, hooks }

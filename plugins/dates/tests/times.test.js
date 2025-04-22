@@ -4,11 +4,11 @@ import nlp from './_lib.js'
 const here = ' [dates/times] '
 
 test('times of start and end', function (t) {
-  let context = {
+  const context = {
     timezone: 'Asia/Shanghai',
     today: '2018-01-19T10:05:00',
   }
-  let arr = [
+  const arr = [
     ['tuesday at 4', '4:00pm'],
     ['tuesday from 4 to 5pm', '4:00pm', '5:00pm'],
     // ['tuesday from 4 to 5am', '4:00am'],
@@ -71,9 +71,9 @@ test('times of start and end', function (t) {
     // [`june 4 at ten past 8`, '8:10pm'],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
-    let dates = doc.dates(context).get()[0] || {}
-    let start = spacetime(dates.start)
+    const doc = nlp(a[0])
+    const dates = doc.dates(context).get()[0] || {}
+    const start = spacetime(dates.start)
     t.equal(start.time(), a[1], '[time] ' + a[0])
     if (a[2]) {
       t.equal(spacetime(dates.end).time(), a[2], '[end] ' + a[0])

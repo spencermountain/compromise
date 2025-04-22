@@ -3,8 +3,8 @@ export const doesOverlap = function (a, b) {
   if (a[0] !== b[0]) {
     return false
   }
-  let [, startA, endA] = a
-  let [, startB, endB] = b
+  const [, startA, endA] = a
+  const [, startB, endB] = b
   // [a,a,a,-,-,-,]
   // [-,-,b,b,b,-,]
   if (startA <= startB && endA > startB) {
@@ -35,7 +35,7 @@ export const getExtent = function (ptrs) {
 
 // collect pointers by sentence number
 export const indexN = function (ptrs) {
-  let byN = {}
+  const byN = {}
   ptrs.forEach(ref => {
     byN[ref[0]] = byN[ref[0]] || []
     byN[ref[0]].push(ref)
@@ -45,7 +45,7 @@ export const indexN = function (ptrs) {
 
 // remove exact duplicates
 export const uniquePtrs = function (arr) {
-  let obj = {}
+  const obj = {}
   for (let i = 0; i < arr.length; i += 1) {
     obj[arr[i].join(',')] = arr[i]
   }

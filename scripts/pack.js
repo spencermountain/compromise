@@ -12,7 +12,7 @@ const steps = [
     label: 'lexicon',
     path: './src/2-two/preTagger/model/lexicon/_data.js',
     compress: function () {
-      let packed = {}
+      const packed = {}
       //turn them into a series of flat-arrays
       Object.keys(lexicon).forEach(word => {
         let tags = lexicon[word]
@@ -35,17 +35,17 @@ const steps = [
     label: 'pairs',
     path: './src/2-two/preTagger/model/models/_data.js',
     compress: function () {
-      let begin = new Date()
+      const begin = new Date()
       Object.keys(models).forEach(k => {
         console.log('     - ' + k)
-        let opts = {}
+        const opts = {}
         if (k === 'AdjToNoun') {
           opts.reverse = false
         }
         const model = learn(models[k], opts)
         models[k] = compress(model)
       })
-      let end = new Date()
+      const end = new Date()
       console.log((end.getTime() - begin.getTime()) / 1000)
       return models
     },
@@ -75,6 +75,6 @@ steps.forEach(obj => {
 
   //get filesize
   const stats = fs.statSync(obj.path)
-  let size = (stats.size / 1000.0).toFixed(1)
+  const size = (stats.size / 1000.0).toFixed(1)
   console.log(`       - ${obj.label} is  ` + size + 'k\n')
 })

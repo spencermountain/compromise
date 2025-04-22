@@ -1,6 +1,6 @@
 // put n new words where 1 word was
 const insertContraction = function (document, point, words) {
-  let [n, w] = point
+  const [n, w] = point
   if (!words || words.length === 0) {
     return
   }

@@ -28,13 +28,13 @@ test('bestTag', function (t) {
 })
 
 test('bestTag-unknown', function (t) {
-  let str = 'john smith'
-  let m = nlp(str)
+  const str = 'john smith'
+  const m = nlp(str)
   m.tag('Foo Bar')
   m.compute('tagRank')
-  let have = m.json()[0].terms.map(term => term.tagRank[0])
-  let want = ['Foo', 'Bar']
-  let msg = str + ' - [' + have.join(', ') + ']'
+  const have = m.json()[0].terms.map(term => term.tagRank[0])
+  const want = ['Foo', 'Bar']
+  const msg = str + ' - [' + have.join(', ') + ']'
   t.deepEqual(have, want, here + msg)
   t.end()
 })

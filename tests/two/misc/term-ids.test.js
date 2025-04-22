@@ -6,9 +6,9 @@ let txt = `The hours have passed like stones being pushed up a mountain. For all
 
 test('term-id validation', function (t) {
   txt = txt.repeat(4)
-  let doc = nlp(txt)
-  let badTerm = []
-  let already = {}
+  const doc = nlp(txt)
+  const badTerm = []
+  const already = {}
   let words = 0
   // ensure they all have ids
   doc.docs.forEach(terms => {
@@ -28,7 +28,7 @@ test('term-id validation', function (t) {
   //   console.log('dupe terms:', badTerm)
   // }
   t.equal(badTerm.length, 0, here + 'terms have unique-ids')
-  let terms = doc.terms()
+  const terms = doc.terms()
   t.equal(terms.length, words, here + 'right term count')
 
   t.equal(terms.ptrs.length, words, here + 'right pointer count')
@@ -39,7 +39,7 @@ test('term-id validation', function (t) {
   const text = (txt + '\n').repeat(50)
   const doc = nlp(text)
   let m = doc.terms()
-  let max = m.length
+  const max = m.length
   m = m.not('#Pronoun')
   m = m.not('#Preposition')
   m = m.not('#Conjunction')

@@ -3,7 +3,7 @@ export const relPointer = function (ptrs, parent) {
     return ptrs
   }
   ptrs.forEach(ptr => {
-    let n = ptr[0]
+    const n = ptr[0]
     if (parent[n]) {
       ptr[0] = parent[n][0] //n
       ptr[1] += parent[n][1] //start
@@ -15,7 +15,8 @@ export const relPointer = function (ptrs, parent) {
 
 // make match-result relative to whole document
 export const fixPointers = function (res, parent) {
-  let { ptrs, byGroup } = res
+  let { ptrs } = res
+  const { byGroup } = res
   ptrs = relPointer(ptrs, parent)
   Object.keys(byGroup).forEach(k => {
     byGroup[k] = relPointer(byGroup[k], parent)

@@ -71,7 +71,7 @@ const clauses = function (n) {
   found = found.splitBefore('(til|until)')
 
   // it is cool but it is ..
-  let m = found.match('#Verb .* [but] .* #Verb', 0)
+  const m = found.match('#Verb .* [but] .* #Verb', 0)
   if (m.found) {
     found = found.splitBefore(m)
   }
@@ -80,7 +80,7 @@ const clauses = function (n) {
   // found = found.splitBefore(conjunctions)
 
   // if it is this then that
-  let condition = found.if('if .{2,9} then .').match('then')
+  const condition = found.if('if .{2,9} then .').match('then')
   found = found.splitBefore(condition)
 
   // // misc clause partitions

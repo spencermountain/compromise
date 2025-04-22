@@ -15,7 +15,7 @@ const transform = function (unit, context, parts) {
   }
   // 2 days after..
   if (parts.shift) {
-    let shift = parts.shift
+    const shift = parts.shift
     unit.applyShift(shift)
     // allow shift to change our unit size
     if (shift.hour || shift.minute) {

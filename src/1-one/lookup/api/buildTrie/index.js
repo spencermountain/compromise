@@ -3,7 +3,7 @@
 
 const tokenize = function (phrase, world) {
   const { methods, model } = world
-  let terms = methods.one.tokenize.splitTerms(phrase, model).map(t => methods.one.tokenize.splitWhitespace(t, model))
+  const terms = methods.one.tokenize.splitTerms(phrase, model).map(t => methods.one.tokenize.splitWhitespace(t, model))
   return terms.map(term => term.text.toLowerCase())
 }
 
@@ -11,18 +11,18 @@ const tokenize = function (phrase, world) {
 const buildTrie = function (phrases, world) {
 
   // const tokenize=methods.one.
-  let goNext = [{}]
-  let endAs = [null]
-  let failTo = [0]
+  const goNext = [{}]
+  const endAs = [null]
+  const failTo = [0]
 
-  let xs = []
+  const xs = []
   let n = 0
   phrases.forEach(function (phrase) {
     let curr = 0
     // let wordsB = phrase.split(/ /g).filter(w => w)
-    let words = tokenize(phrase, world)
+    const words = tokenize(phrase, world)
     for (let i = 0; i < words.length; i++) {
-      let word = words[i]
+      const word = words[i]
       if (goNext[curr] && goNext[curr].hasOwnProperty(word)) {
         curr = goNext[curr][word]
       } else {
@@ -36,19 +36,19 @@ const buildTrie = function (phrases, world) {
     endAs[curr] = [words.length]
   })
   // f(s) = 0 for all states of depth 1 (the ones from which the 0 state can transition to)
-  for (let word in goNext[0]) {
+  for (const word in goNext[0]) {
     n = goNext[0][word]
     failTo[n] = 0
     xs.push(n)
   }
 
   while (xs.length) {
-    let r = xs.shift()
+    const r = xs.shift()
     // for each symbol a such that g(r, a) = s
-    let keys = Object.keys(goNext[r])
+    const keys = Object.keys(goNext[r])
     for (let i = 0; i < keys.length; i += 1) {
-      let word = keys[i]
-      let s = goNext[r][word]
+      const word = keys[i]
+      const s = goNext[r][word]
       xs.push(s)
       // set state = f(r)
       n = failTo[r]
@@ -56,7 +56,7 @@ const buildTrie = function (phrases, world) {
         n = failTo[n]
       }
       if (goNext.hasOwnProperty(n)) {
-        let fs = goNext[n][word]
+        const fs = goNext[n][word]
         failTo[s] = fs
         if (endAs[fs]) {
           endAs[s] = endAs[s] || []

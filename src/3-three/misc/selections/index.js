@@ -23,7 +23,7 @@ const selections = [
 ]
 
 // aliases
-let aliases = [
+const aliases = [
   ['emojis', 'emoji'],
   ['atmentions', 'atMentions'],
 ]
@@ -32,7 +32,7 @@ const addMethods = function (View) {
   // add a list of new helper methods
   selections.forEach(a => {
     View.prototype[a[0]] = function (n) {
-      let m = this.match(a[1])
+      const m = this.match(a[1])
       return typeof n === 'number' ? m.get(n) : m
     }
   })

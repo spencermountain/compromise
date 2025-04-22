@@ -11,7 +11,7 @@ console.log(` -- ok, ready --`)
 
 const doMatch = function (match) {
   docs.forEach(doc => {
-    let m = doc.match(match)
+    const m = doc.match(match)
     if (m.found) {
       m.debug({ highlight: true, tags: false })
     }

@@ -6,12 +6,12 @@ const newLine = /((?:\r?\n|\r)+)/ // Match different new-line formats
 
 // Start with a regex:
 const basicSplit = function (text) {
-  let all = []
+  const all = []
   //first, split by newline
-  let lines = text.split(newLine)
+  const lines = text.split(newLine)
   for (let i = 0; i < lines.length; i++) {
     //split by period, question-mark, and exclamation-mark
-    let arr = lines[i].split(initSplit)
+    const arr = lines[i].split(initSplit)
     for (let o = 0; o < arr.length; o++) {
       // merge 'foo' + '.'
       if (arr[o + 1] && splitsOnly.test(arr[o + 1]) === true) {

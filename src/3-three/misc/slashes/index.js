@@ -9,8 +9,8 @@ const api = function (View) {
     }
     split() {
       return this.map((m) => {
-        let str = m.text()
-        let arr = str.split(hasSlash)
+        const str = m.text()
+        const arr = str.split(hasSlash)
         m = m.replaceWith(arr.join(' '))
         return m.growRight('(' + arr.join('|') + ')+')
       })

@@ -77,8 +77,8 @@ test('unique:', function (t) {
 })
 
 test('custom-sort:', function (t) {
-  let doc = nlp('Eeny, meeny, miny, moe')
-  let terms = doc.terms()
+  const doc = nlp('Eeny, meeny, miny, moe')
+  const terms = doc.terms()
   terms.sort((a, b) => {
     a = a.text('normal')
     b = b.text('normal')
@@ -90,7 +90,7 @@ test('custom-sort:', function (t) {
     }
     return 0
   })
-  let arr = terms.map(d => d.text('normal'))
+  const arr = terms.map(d => d.text('normal'))
   t.deepEqual(arr, ['meeny', 'eeny', 'miny', 'moe'], here + 'custom sort output')
   t.end()
 })

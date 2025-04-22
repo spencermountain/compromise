@@ -3,8 +3,8 @@ import nlp from '../_lib.js'
 const here = '[one/pointer] '
 
 test('basic pointer getters', function (t) {
-  let txt = `one two three. four five six.`
-  let arr = [
+  const txt = `one two three. four five six.`
+  const arr = [
     // empty pointers mean full doc
     // [null, txt],
     // [undefined, txt],
@@ -24,7 +24,7 @@ test('basic pointer getters', function (t) {
     [[120], ``],
   ]
   arr.forEach(a => {
-    let doc = nlp(txt).update([a[0]])
+    const doc = nlp(txt).update([a[0]])
     t.equal(doc.text() + '|', a[1] + '|', here + JSON.stringify(a[0]))
 
     t.equal(doc.found, Boolean(doc.text()), here + a[0])
@@ -88,8 +88,8 @@ test('replace w/ pointer endId', function (t) {
 
 
 test('remove w/ pointer endId', function (t) {
-  let doc = nlp('one two three match four five six')
-  let m = doc.match('match .')
+  const doc = nlp('one two three match four five six')
+  const m = doc.match('match .')
   doc.remove('four')
   t.equal(m.text(), 'match five six', here + 'full-match fallback')
   t.equal(m.text(), 'match five six', here + 'full-match fallback 2nd')

@@ -19,7 +19,7 @@ test('parentheses test', function (t) {
 })
 
 test('dirty-parentheses', function (t) {
-  let doc = nlp('this is (kinda) messy')
+  const doc = nlp('this is (kinda) messy')
   let m = doc.not('this')
   let str = m.parentheses().text()
   t.equal(str, 'kinda', here + '+not-before')
@@ -35,7 +35,7 @@ test('dirty-parentheses', function (t) {
 })
 
 test('partial-parentheses', function (t) {
-  let doc = nlp('before (one two three) after')
+  const doc = nlp('before (one two three) after')
   let m = doc.not('two')
   let str = m.parentheses().text()
   t.equal(str, '', here + '+not-inside')

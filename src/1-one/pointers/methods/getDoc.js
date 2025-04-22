@@ -5,14 +5,14 @@ const blindSweep = function (id, doc, n) {
   for (let i = 0; i < max; i += 1) {
     // look up a sentence
     if (doc[n - i]) {
-      let index = doc[n - i].findIndex(term => term.id === id)
+      const index = doc[n - i].findIndex(term => term.id === id)
       if (index !== -1) {
         return [n - i, index]
       }
     }
     // look down a sentence
     if (doc[n + i]) {
-      let index = doc[n + i].findIndex(term => term.id === id)
+      const index = doc[n + i].findIndex(term => term.id === id)
       if (index !== -1) {
         return [n + i, index]
       }
@@ -22,10 +22,10 @@ const blindSweep = function (id, doc, n) {
 }
 
 const repairEnding = function (ptr, document) {
-  let [n, start, , , endId] = ptr
-  let terms = document[n]
+  const [n, start, , , endId] = ptr
+  const terms = document[n]
   // look for end-id
-  let newEnd = terms.findIndex(t => t.id === endId)
+  const newEnd = terms.findIndex(t => t.id === endId)
   if (newEnd === -1) {
     // if end-term wasn't found, so go all the way to the end
     ptr[2] = document[n].length
@@ -43,6 +43,7 @@ const getDoc = function (ptrs, document) {
     if (!ptr) {
       return
     }
+    // eslint-disable-next-line prefer-const
     let [n, start, end, id, endId] = ptr //parsePointer(ptr)
     let terms = document[n] || []
     if (start === undefined) {
@@ -53,12 +54,12 @@ const getDoc = function (ptrs, document) {
     }
     if (id && (!terms[start] || terms[start].id !== id)) {
       // console.log('  repairing pointer...')
-      let wild = blindSweep(id, document, n)
+      const wild = blindSweep(id, document, n)
       if (wild !== null) {
-        let len = end - start
+        const len = end - start
         terms = document[wild[0]].slice(wild[1], wild[1] + len)
         // actually change the pointer
-        let startId = terms[0] ? terms[0].id : null
+        const startId = terms[0] ? terms[0].id : null
         ptrs[i] = [wild[0], wild[1], wild[1] + len, startId]
       }
     } else {

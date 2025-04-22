@@ -2,20 +2,20 @@ import { doesOverlap, getExtent, indexN, uniquePtrs } from './_lib.js'
 
 // a union is a + b, minus duplicates
 const getUnion = function (a, b) {
-  let both = a.concat(b)
-  let byN = indexN(both)
+  const both = a.concat(b)
+  const byN = indexN(both)
   let res = []
   both.forEach(ptr => {
-    let [n] = ptr
+    const [n] = ptr
     if (byN[n].length === 1) {
       // we're alone on this sentence, so we're good
       res.push(ptr)
       return
     }
     // there may be overlaps
-    let hmm = byN[n].filter(m => doesOverlap(ptr, m))
+    const hmm = byN[n].filter(m => doesOverlap(ptr, m))
     hmm.push(ptr)
-    let range = getExtent(hmm)
+    const range = getExtent(hmm)
     res.push(range)
   })
   res = uniquePtrs(res)

@@ -4,7 +4,7 @@ const here = '[three/coreference] '
 
 // https://github.com/google-research-datasets/gap-coreference
 test('basic-coreference:', function (t) {
-  let arr = [
+  const arr = [
     // one-sentence
     [
       `spencer is not working because he is unemployed`,
@@ -439,12 +439,12 @@ test('basic-coreference:', function (t) {
     ],
   ]
   arr.forEach(a => {
-    let [text, refs] = a
-    let doc = nlp(text)
-    let pronouns = doc.pronouns().hasReference()
+    const [text, refs] = a
+    const doc = nlp(text)
+    const pronouns = doc.pronouns().hasReference()
     t.equal(Object.keys(refs).length, pronouns.length, here + `[count] '${text}'`)
     Object.keys(refs).forEach(k => {
-      let m = pronouns.if(k).refersTo()
+      const m = pronouns.if(k).refersTo()
       t.equal(m.text('normal'), refs[k], here + ` [${k}] - ${refs[k]}`)
     })
   })

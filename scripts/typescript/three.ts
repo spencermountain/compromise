@@ -1,7 +1,7 @@
 // import nlp from '../../src/three.js'
 import nlp from '../../types/three'
 
-let doc = nlp('okay cool')
+const doc = nlp('okay cool')
 
 // ### Chunker
 doc.compute('chunks')

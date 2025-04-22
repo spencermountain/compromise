@@ -1,8 +1,8 @@
 
 // add all conjugations of this verb
 const addVerbs = function (token, world) {
-  let { all } = world.methods.two.transform.verb || {}
-  let str = token.root
+  const { all } = world.methods.two.transform.verb || {}
+  const str = token.root
   if (!all) {
     return []
   }
@@ -11,7 +11,7 @@ const addVerbs = function (token, world) {
 
 // add all inflections of this noun
 const addNoun = function (token, world) {
-  let { all } = world.methods.two.transform.noun || {}
+  const { all } = world.methods.two.transform.noun || {}
   if (!all) {
     return [token.root]
   }
@@ -20,7 +20,7 @@ const addNoun = function (token, world) {
 
 // add all inflections of this adjective
 const addAdjective = function (token, world) {
-  let { all } = world.methods.two.transform.adjective || {}
+  const { all } = world.methods.two.transform.adjective || {}
   if (!all) {
     return [token.root]
   }

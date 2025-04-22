@@ -4,8 +4,8 @@ const here = '[three/adjectives] '
 
 test('adjectives misc', function (t) {
 
-  let doc = nlp('he is so clear')
-  let json = doc.adjectives().json()
+  const doc = nlp('he is so clear')
+  const json = doc.adjectives().json()
   t.equal(json.length, 1, here + 'adj')
   t.equal(json[0].adjective.adverb, 'clearly', here + 'adv')
   t.equal(json[0].adjective.noun, 'clarity', here + 'noun')
@@ -18,7 +18,7 @@ test('adjectives misc', function (t) {
 
 test('pessimistic conjugation', function (t) {
 
-  let res = nlp('hairy').adjectives().conjugate()[0] || {}
+  const res = nlp('hairy').adjectives().conjugate()[0] || {}
   t.equal(res.Comparative, 'hairier', here + 'comp')
   t.equal(res.Superlative, 'hairiest', here + 'sup')
   // t.ok(!res.Adverb, here + 'no advb')

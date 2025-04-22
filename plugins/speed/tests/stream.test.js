@@ -9,10 +9,10 @@ nlp.plugin(streamFile)
 import { fileURLToPath } from 'url'
 const dir = path.dirname(fileURLToPath(import.meta.url))
 
-let file = path.join(dir, `./files/freshPrince.txt`)
+const file = path.join(dir, `./files/freshPrince.txt`)
 
 test('stream the whole document', function (t) {
-  let want = fs.readFileSync(file).toString()
+  const want = fs.readFileSync(file).toString()
   nlp.streamFile(file, (s) => {
     return s.match('.')
   }).then(doc => {

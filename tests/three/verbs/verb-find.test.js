@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-find] '
 
 test('verb-splitter:', function (t) {
-  let arr = [
+  const arr = [
     [`poodles like being pampered`, ['like', 'being pampered']],
     [`i can help fix the tire`, ['can help', 'fix']],
     [`i will help out the team`, ['will help out']],
@@ -52,8 +52,8 @@ test('verb-splitter:', function (t) {
     // [``, ['']],
   ]
   arr.forEach(a => {
-    let [str, vbs] = a
-    let verbs = nlp(str).verbs().out('array')
+    const [str, vbs] = a
+    const verbs = nlp(str).verbs().out('array')
     t.deepEqual(verbs, vbs, here + str)
   })
   t.end()

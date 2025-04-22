@@ -3,10 +3,10 @@ import nlp from '../three/_lib.js'
 const here = '[three/toQuestion] '
 
 test('simple chanage-punct', function (t) {
-  let statement = `I can't believe it's a law firm.`
-  let question = `I can't believe it's a law firm?`
-  let excl = `I can't believe it's a law firm!`
-  let doc = nlp(statement)
+  const statement = `I can't believe it's a law firm.`
+  const question = `I can't believe it's a law firm?`
+  const excl = `I can't believe it's a law firm!`
+  const doc = nlp(statement)
 
   doc.sentences().toExclamation()
   t.equal(doc.text(), excl, here + 'statement -> excl')

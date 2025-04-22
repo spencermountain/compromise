@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/had-would] '
 
 test('had-would', function (t) {
-  let arr = [
+  const arr = [
     ["He'd love to join us for dinner", 'would'],
     ["She'd already finished her work when I arrived", 'had'],
     ["I'd like a cup of coffee, please", 'would'],
@@ -103,7 +103,7 @@ test('had-would', function (t) {
   ]
 
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     t.equal(doc.has(a[1]), true, here + a[0])
   })
   t.end()

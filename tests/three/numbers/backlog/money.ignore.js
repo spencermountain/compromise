@@ -81,7 +81,7 @@ test('money-transform:', function (t) {
 })
 
 test('money-has:', function (t) {
-  let tests = [
+  const tests = [
     ['$7', true],
     ['$7.0', true],
     ['$7.00', true],
@@ -100,15 +100,15 @@ test('money-has:', function (t) {
     ['sixty USD', true],
   ]
   tests.forEach(function (a) {
-    let r = nlp(a[0])
-    let m = r.match('#Money')
+    const r = nlp(a[0])
+    const m = r.match('#Money')
     t.equal(m.found, a[1], here + "money-has: '" + a[0] + "'")
   })
   t.end()
 })
 
 test('money-parse:', function (t) {
-  let arr = [
+  const arr = [
     ['i paid $5.32 for a pizza slice', 5.32],
     ['i paid $12 for a pizza slice', 12],
     ['it was $12.00', 12],
@@ -136,8 +136,8 @@ test('money-parse:', function (t) {
     // ['200 dirham', 2],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
-    let amount = doc.money().get()
+    const doc = nlp(a[0])
+    const amount = doc.money().get()
     t.equal(amount.length, 1, here + `'${a[0]}' has 1 money result`)
     t.equal(amount[0], a[1], here + a[0])
   })
@@ -145,7 +145,7 @@ test('money-parse:', function (t) {
 })
 
 test('money false-positive:', function (t) {
-  let arr = [
+  const arr = [
     'i paid nothing for a pizza slice',
     'i paid no money for a pizza slice',
     'im a millionaire',
@@ -157,8 +157,8 @@ test('money false-positive:', function (t) {
     'money penny',
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
-    let m = doc.money()
+    const doc = nlp(a[0])
+    const m = doc.money()
     t.equal(m.found, false, here + `not money - '${a}'`)
   })
   t.end()

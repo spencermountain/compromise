@@ -3,8 +3,8 @@ import parseDates from './parse/index.js'
 import toJSON from './toJSON.js'
 
 const quickDate = function (view, str) {
-  let tmp = view.fromText(str)
-  let found = parseDates(tmp, view.opts)[0]
+  const tmp = view.fromText(str)
+  const found = parseDates(tmp, view.opts)[0]
   if (!found || !found.start || !found.start.d) {
     return null
   }
@@ -20,10 +20,10 @@ const api = function (View) {
     }
 
     get(n) {
-      let all = []
+      const all = []
       this.forEach(m => {
         parseDates(m, this.opts).forEach(res => {
-          let json = toJSON(res)
+          const json = toJSON(res)
           if (json.start) {
             all.push(json)
           }
@@ -37,9 +37,9 @@ const api = function (View) {
 
     json(opts = {}) {
       return this.map(m => {
-        let json = m.toView().json(opts)[0] || {}
+        const json = m.toView().json(opts)[0] || {}
         if (opts && opts.dates !== false) {
-          let parsed = parseDates(m, this.opts)
+          const parsed = parseDates(m, this.opts)
           if (parsed.length > 0) {
             json.dates = toJSON(parsed[0])
           }
@@ -50,14 +50,14 @@ const api = function (View) {
 
     /** replace date terms with a formatted date */
     format(fmt) {
-      let found = this
-      let res = found.map(m => {
-        let obj = parseDates(m, this.opts)[0] || {}
+      const found = this
+      const res = found.map(m => {
+        const obj = parseDates(m, this.opts)[0] || {}
         if (obj.start) {
-          let start = obj.start.d
+          const start = obj.start.d
           let str = start.format(fmt)
           if (obj.end) {
-            let end = obj.end.d
+            const end = obj.end.d
             if (start.isSame(end, 'day') === false) {
               str += ' to ' + end.format(fmt)
             }
@@ -71,32 +71,32 @@ const api = function (View) {
 
     /** return only dates occuring before a given date  */
     isBefore(iso) {
-      let pivot = quickDate(this, iso)
+      const pivot = quickDate(this, iso)
       return this.filter(m => {
-        let obj = parseDates(m, this.opts)[0] || {}
+        const obj = parseDates(m, this.opts)[0] || {}
         return obj.start && obj.start.d && obj.start.d.isBefore(pivot)
       })
     }
     /** return only dates occuring after a given date  */
     isAfter(iso) {
-      let pivot = quickDate(this, iso)
+      const pivot = quickDate(this, iso)
       return this.filter(m => {
-        let obj = parseDates(m, this.opts)[0] || {}
+        const obj = parseDates(m, this.opts)[0] || {}
         return obj.start && obj.start.d && obj.start.d.isAfter(pivot)
       })
     }
     /** return only dates occuring after a given date  */
     isSame(unit, iso) {
-      let pivot = quickDate(this, iso)
+      const pivot = quickDate(this, iso)
       return this.filter(m => {
-        let obj = parseDates(m, this.opts)[0] || {}
+        const obj = parseDates(m, this.opts)[0] || {}
         return obj.start && obj.start.d && obj.start.d.isSame(pivot, unit)
       })
     }
   }
 
   View.prototype.dates = function (opts) {
-    let m = find(this)
+    const m = find(this)
     return new Dates(this.document, m.pointer, null, opts)
   }
 }

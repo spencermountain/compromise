@@ -23,7 +23,7 @@ const tagTerm = function (term, tag, tagSet, isSafe) {
     isSafe = true
   }
   // for known tags, do logical dependencies first
-  let known = tagSet[tag]
+  const known = tagSet[tag]
   if (known) {
     // first, we remove any conflicting tags
     if (known.not && known.not.length > 0) {
@@ -54,7 +54,7 @@ const tagTerm = function (term, tag, tagSet, isSafe) {
 
 // support '#Noun . #Adjective' syntax
 const multiTag = function (terms, tagString, tagSet, isSafe) {
-  let tags = tagString.split(isMulti)
+  const tags = tagString.split(isMulti)
   terms.forEach((term, i) => {
     let tag = tags[i]
     if (tag) {
@@ -72,7 +72,7 @@ const isArray = function (arr) {
 const log = (terms, tag, reason = '') => {
   const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
   const i = str => '\x1b[3m' + str + '\x1b[0m'
-  let word = terms
+  const word = terms
     .map(t => {
       return t.text || '[' + t.implicit + ']'
     })

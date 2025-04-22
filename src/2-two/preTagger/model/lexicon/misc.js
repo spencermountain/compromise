@@ -1,6 +1,6 @@
 const prp = ['Possessive', 'Pronoun']
 //words that can't be compressed, for whatever reason
-let misc = {
+const misc = {
   // numbers
   '20th century fox': 'Organization',
   '7 eleven': 'Organization',

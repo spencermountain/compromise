@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 
 test('units', function (t) {
-  let arr = [
+  const arr = [
     ['2020', 'year'],
     ['jan 1 to dec 31', 'year'],
     ['jan 1 2020 to dec 31 2020', 'year'],
@@ -24,8 +24,8 @@ test('units', function (t) {
     // ['3:30pm-5pm', 'time'],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
-    let found = doc.dates({ today: a[0] }).get()[0]
+    const doc = nlp(a[0])
+    const found = doc.dates({ today: a[0] }).get()[0]
     if (!found) {
       console.log(a[0])//eslint-disable-line
     }

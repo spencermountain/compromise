@@ -26,7 +26,7 @@ const minMap = {
 
 // choose ambiguous ampm
 const ampmChooser = function (s) {
-  let early = s.time('6:00am')
+  const early = s.time('6:00am')
   if (s.isBefore(early)) {
     return s.ampm('pm')
   }
@@ -36,7 +36,7 @@ const ampmChooser = function (s) {
 // parse 'twenty past 2'
 const halfPast = function (m, s) {
   let hour = m.match('#Cardinal$')
-  let punt = m.not(hour).match('(half|quarter|25|20|15|10|5)')
+  const punt = m.not(hour).match('(half|quarter|25|20|15|10|5)')
   // get the mins, and the hour
   hour = hour.text('reduced')
   let mins = punt.text('reduced')
@@ -44,7 +44,7 @@ const halfPast = function (m, s) {
   if (minMap.hasOwnProperty(mins)) {
     mins = minMap[mins]
   }
-  let behind = m.has('to')
+  const behind = m.has('to')
   // apply it
   s = s.hour(hour)
   s = s.startOf('hour')
@@ -68,7 +68,7 @@ const parseTime = function (doc, context) {
   time = time.not('on the dot')
 
   let s = spacetime.now(context.timezone)
-  let now = s.clone()
+  const now = s.clone()
   // check for known-times (like 'today')
   let timeStr = time.not('in? the').text('reduced')
   timeStr = timeStr.replace(/^@/, '')//@4pm
@@ -81,7 +81,7 @@ const parseTime = function (doc, context) {
     s = s.hour(m.text('reduced'))
     s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
-      let ampm = m.match('(am|pm)')
+      const ampm = m.match('(am|pm)')
       if (ampm.found) {
         s = s.ampm(ampm.text('reduced'))
       } else {
@@ -132,7 +132,7 @@ const parseTime = function (doc, context) {
   // '4 in the evening'
   m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|evening|night|nighttime)]')
   if (m.found) {
-    let str = m.groups('time').text('normal')
+    const str = m.groups('time').text('normal')
     if (/^[0-9]{1,2}$/.test(str)) {
       s = s.hour(str) //3 in the morning
       s = s.startOf('hour')
@@ -140,7 +140,7 @@ const parseTime = function (doc, context) {
       s = s.time(str) // 3:30 in the morning
     }
     if (s.isValid() && !s.isEqual(now)) {
-      let desc = m.groups('desc').text('reduced')
+      const desc = m.groups('desc').text('reduced')
       if (desc === 'evening' || desc === 'night') {
         s = s.ampm('pm')
       }
@@ -151,8 +151,8 @@ const parseTime = function (doc, context) {
   // 'this morning at 4'
   m = time.match('this? [<desc>(morning|evening|tonight)] at [<time>(#Cardinal|#Time)]')
   if (m.found) {
-    let g = m.groups()
-    let str = g.time.text('reduced')
+    const g = m.groups()
+    const str = g.time.text('reduced')
     if (/^[0-9]{1,2}$/.test(str)) {
       s = s.hour(str) //3
       s = s.startOf('hour')
@@ -160,7 +160,7 @@ const parseTime = function (doc, context) {
       s = s.time(str) // 3:30
     }
     if (s.isValid() && !s.isEqual(now)) {
-      let desc = g.desc.text('reduced')
+      const desc = g.desc.text('reduced')
       if (desc === 'morning') {
         s = s.ampm('am')
       }
@@ -174,7 +174,7 @@ const parseTime = function (doc, context) {
   // 'at 4' -> '4'
   m = time.match('^#Cardinal$')
   if (m.found) {
-    let str = m.text('reduced')
+    const str = m.text('reduced')
     s = s.hour(str)
     s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
@@ -187,7 +187,7 @@ const parseTime = function (doc, context) {
   }
 
   // parse random a time like '4:54pm'
-  let str = time.text('reduced')
+  const str = time.text('reduced')
   s = s.time(str)
   if (s.isValid() && !s.isEqual(now)) {
     // choose ambiguous ampm

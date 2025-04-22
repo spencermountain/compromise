@@ -8,8 +8,8 @@ const nounToSingular = function (m, parsed) {
   const { methods, model } = m.world
   const { toSingular } = methods.two.transform.noun
   // inflect the root noun
-  let str = parsed.root.text('normal')
-  let single = toSingular(str, model)
+  const str = parsed.root.text('normal')
+  const single = toSingular(str, model)
   m.replace(parsed.root, single, keep).tag('Singular', 'toPlural')
   // should we change the determiner/article?
   // m.debug()

@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-toFuture] '
 
 test('toFuture:', function (t) {
-  let arr = [
+  const arr = [
     // known forms:
     ['he walked', 'he will walk'],
     ['i walked', 'i will walk'],
@@ -216,7 +216,7 @@ test('toFuture:', function (t) {
     [`we will have started seeing`, `we will have started seeing`],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.verbs().toFutureTense()
     t.equal(doc.text(), a[1], here + ' ' + a[0])
   })

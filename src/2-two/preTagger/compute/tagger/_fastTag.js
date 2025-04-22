@@ -2,7 +2,7 @@
 const log = (term, tag, reason = '') => {
   const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
   const i = str => '\x1b[3m' + str + '\x1b[0m'
-  let word = term.text || '[' + term.implicit + ']'
+  const word = term.text || '[' + term.implicit + ']'
   if (typeof tag !== 'string' && tag.length > 2) {
     tag = tag.slice(0, 2).join(', #') + ' +' //truncate the list of tags
   }

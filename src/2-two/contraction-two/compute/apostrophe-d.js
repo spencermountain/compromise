@@ -19,7 +19,7 @@ const wouldWords = new Set([
 const hadOrWould = (terms, i) => {
   // scan ahead
   for (let o = i + 1; o < terms.length; o += 1) {
-    let t = terms[o]
+    const t = terms[o]
     // you'd better go
     if (hadWords.has(t.normal)) {
       return 'had'
@@ -51,7 +51,7 @@ const hadOrWould = (terms, i) => {
 // how'd -> did
 // he'd go -> would
 const _apostropheD = function (terms, i) {
-  let before = terms[i].normal.split(hasContraction)[0]
+  const before = terms[i].normal.split(hasContraction)[0]
   // what'd, how'd
   if (before === 'how' || before === 'what') {
     return [before, 'did']

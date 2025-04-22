@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/misc-conjugate] '
 
 test('copula-form', function (t) {
-  let m = nlp('john is nice').sentences()
+  const m = nlp('john is nice').sentences()
 
   m.toPastTense()
   t.equal(m.out(), 'john was nice', here + 'toPast-1')
@@ -32,7 +32,7 @@ test('copula-form', function (t) {
 
 //
 test('conjugate-form', function (t) {
-  let m = nlp('john walks quickly').sentences()
+  const m = nlp('john walks quickly').sentences()
 
   m.toPastTense()
   t.equal(m.out(), 'john walked quickly', here + 'toPast-1')
@@ -60,7 +60,7 @@ test('conjugate-form', function (t) {
 })
 
 test('particle-form', function (t) {
-  let m = nlp('the stool falls over').sentences()
+  const m = nlp('the stool falls over').sentences()
 
   m.toPastTense()
   t.equal(m.out(), 'the stool fell over', here + 'toPast-1')
@@ -88,7 +88,7 @@ test('particle-form', function (t) {
 })
 
 test('contraction past-tense', function (t) {
-  let arr = [
+  const arr = [
     [`I'm going to the shops`, `I was going to the shops`],
     [`I'll go to the shops`, `I went to the shops`],
     [`We're looking`, `We were looking`],
@@ -98,35 +98,35 @@ test('contraction past-tense', function (t) {
     [`We'll look`, `We looked`],
   ]
   arr.forEach((a) => {
-    let str = nlp(a[0]).sentences().toPastTense().out()
+    const str = nlp(a[0]).sentences().toPastTense().out()
     t.equal(str, a[1], here + 'past-tense ' + a.join(' - '))
   })
   t.end()
 })
 
 test('contraction future-tense', function (t) {
-  let arr = [
+  const arr = [
     [`I'm going to the shops`, `I will be going to the shops`],
     [`I'll go to the shops`, `I'll go to the shops`],
     // [`I'm going to the shops`, `I will be going to the shops`],
     // [`I'll go to the shops`, `I will be going to the shops`],
   ]
   arr.forEach((a) => {
-    let str = nlp(a[0]).sentences().toFutureTense().out()
+    const str = nlp(a[0]).sentences().toFutureTense().out()
     t.equal(str, a[1], here + 'future-tense ' + a.join(' - '))
   })
   t.end()
 })
 
 test('contraction present-tense', function (t) {
-  let arr = [
+  const arr = [
     [`I'm going to the shops`, `I'm going to the shops`],
     [`I'm looking for a bug`, `I'm looking for a bug`],
     [`I'll go to the shops`, `I go to the shops`],
     [`I'll look for a bug`, `I look for a bug`],
   ]
   arr.forEach((a) => {
-    let str = nlp(a[0]).sentences().toPresentTense().out()
+    const str = nlp(a[0]).sentences().toPresentTense().out()
     t.equal(str, a[1], here + 'present-tense ' + a.join(' - '))
   })
   t.end()

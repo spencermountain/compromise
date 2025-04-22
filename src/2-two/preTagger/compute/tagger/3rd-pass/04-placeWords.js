@@ -38,7 +38,7 @@ const isPlace = function (term, i, yelling) {
   if (!term) {
     return false
   }
-  let tags = term.tags
+  const tags = term.tags
   if (tags.has('Organization') || tags.has('Possessive') || isPossessive.test(term.normal)) {
     return false
   }
@@ -59,8 +59,8 @@ const isPlace = function (term, i, yelling) {
 const tagOrgs = function (terms, i, world, yelling) {
   const placeWords = world.model.two.placeWords
   const setTag = world.methods.one.setTag
-  let term = terms[i]
-  let str = term.machine || term.normal
+  const term = terms[i]
+  const str = term.machine || term.normal
 
   // 'river', delta, street, etc
   if (placeWords[str] === true) {

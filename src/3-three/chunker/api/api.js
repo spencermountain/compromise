@@ -27,7 +27,7 @@ const api = function (View) {
     }
     // overloaded - keep Sentences class
     update(pointer) {
-      let m = new Chunks(this.document, pointer)
+      const m = new Chunks(this.document, pointer)
       m._cache = this._cache // share this full thing
       return m
     }

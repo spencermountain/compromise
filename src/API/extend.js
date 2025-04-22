@@ -29,7 +29,7 @@ function mergeQuick(model, plugin) {
 }
 
 const addIrregulars = function (model, conj) {
-  let m = model.two.models || {}
+  const m = model.two.models || {}
   Object.keys(conj).forEach(k => {
     // verb forms
     if (conj[k].pastTense) {

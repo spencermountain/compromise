@@ -16,7 +16,7 @@ The team began to decline in the standings in the late 1970s which continued thr
 The Toronto Marlboros won the Memorial Cup seven times, more than any other team in the Cup's history. The Marlies also won 10 OHA championships in 17 final appearances.
 `
 
-let arr = [
+const arr = [
   `Toronto Aeros`,
   `Toronto Arenas`,
   `Toronto Aura Lee`,
@@ -61,9 +61,9 @@ let arr = [
 ]
 
 test('lookup-long', function (t) {
-  let trie = nlp.buildTrie(arr)
-  let doc = nlp(text)
-  let res = doc.lookup(trie)
+  const trie = nlp.buildTrie(arr)
+  const doc = nlp(text)
+  const res = doc.lookup(trie)
   t.equal(res.length, 11, here + 'found all')
 
   let m = res.if('maple leafs')

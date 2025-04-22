@@ -41,7 +41,7 @@ test('start-end parentheses', function (t) {
 
 
 test('case-sensitivity', function (t) {
-  let doc = nlp('i NEED it')
+  const doc = nlp('i NEED it')
   let m = doc.match('NEED')
   t.equal(m.found, true, here + 'who-cares-case')
 
@@ -76,7 +76,7 @@ test('regex-case-sensitivity', function (t) {
 })
 
 test('regex tokenization', function (t) {
-  let arr = [
+  const arr = [
     ['this/isoneword', 1],
     ['this/isone/word', 1],
     ['thisis(one)word', 1],
@@ -110,7 +110,7 @@ test('regex tokenization', function (t) {
     // ['/snooze sleep/ /up to/ [<snooze_to>#Date+]?', 3], //known issue
   ]
   arr.forEach(a => {
-    let regs = nlp.parseMatch(a[0])
+    const regs = nlp.parseMatch(a[0])
     // let regs = parse(a[0])
     t.equals(regs.length, a[1], here + a[0])
   })

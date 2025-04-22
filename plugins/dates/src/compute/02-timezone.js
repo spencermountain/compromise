@@ -95,9 +95,9 @@ const zones = [
 
 const tagTz = function (doc) {
   // 4pm PST
-  let m = doc.match('#Time [#Acronym]', 0)
+  const m = doc.match('#Time [#Acronym]', 0)
   if (m.found) {
-    let str = m.text('reduced')
+    const str = m.text('reduced')
     if (zones[str] === true) {
       m.tag('Timezone', 'tz-abbr')
     }

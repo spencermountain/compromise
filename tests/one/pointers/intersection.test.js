@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/pointer-intersection] '
 
 test('pointer-intersection-basic :', function (t) {
-  let doc = nlp('ooh. one two three four five six seven eight nine ten')
+  const doc = nlp('ooh. one two three four five six seven eight nine ten')
   // [a,a,a,a,-,-,]
   // [-,-,b,b,b,-,]
   let start = doc.update([[1, 0, 4]])
@@ -32,7 +32,7 @@ test('pointer-intersection-basic :', function (t) {
 })
 
 test('pointer-intersection-match :', function (t) {
-  let doc = nlp('one match two three. four five match six')
+  const doc = nlp('one match two three. four five match six')
 
   let res = doc.intersection('match')
   t.deepEqual(res.out('array'), ['match', 'match'], here + 'intersection-match')
@@ -46,16 +46,16 @@ test('pointer-intersection-match :', function (t) {
 })
 
 test('intersection-match :', function (t) {
-  let doc = nlp('the boy and the girl')
-  let res = doc.intersection('(boy|girl)').out('array')
+  const doc = nlp('the boy and the girl')
+  const res = doc.intersection('(boy|girl)').out('array')
   t.deepEqual(res, ['boy', 'girl'], 'only-intersection')
   t.end()
 })
 
 test('intersection-doc :', function (t) {
-  let doc = nlp('the boy and the girl')
-  let m = doc.match('(boy|girl)')
-  let res = doc.intersection(m).out('array')
+  const doc = nlp('the boy and the girl')
+  const m = doc.match('(boy|girl)')
+  const res = doc.intersection(m).out('array')
   t.deepEqual(res, ['boy', 'girl'], 'only-intersection-doc')
   t.end()
 })

@@ -1,6 +1,6 @@
 //is this sentence asking a question?
 const isQuestion = function (doc) {
-  let clauses = doc.clauses()
+  const clauses = doc.clauses()
 
   // Has ellipsis at the end means it's probably not a question
   // e.g., Is this just fantasy...
@@ -61,8 +61,8 @@ const findQuestions = function (view) {
   const hasQ = /\?/
   const { document } = view
   return view.filter(m => {
-    let terms = m.docs[0] || []
-    let lastTerm = terms[terms.length - 1]
+    const terms = m.docs[0] || []
+    const lastTerm = terms[terms.length - 1]
     // is it not a full sentence?
     if (!lastTerm || document[lastTerm.index[0]].length !== terms.length) {
       return false

@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/svo] '
 
 test('svo parser', function (t) {
-  let arr = [
+  const arr = [
     ['My dog loves pizza crusts.', 'my dog', 'loves'],
     ['My grey dog loves pizza crusts.', 'my grey dog', 'loves'],
     ['if i can recall, my grey dog loves pizza crusts.', 'my grey dog', 'loves'],
@@ -48,8 +48,8 @@ test('svo parser', function (t) {
     // ['The store that the boy robbed is on the corner.', 'the store', 'is'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
-    let obj = doc.sentences().json()[0]
+    const doc = nlp(a[0])
+    const obj = doc.sentences().json()[0]
     t.equal(obj.sentence.subject, a[1], here + 'subject: ' + a[1])
     t.equal(obj.sentence.verb, a[2], here + 'verb: ' + a[2])
   })

@@ -24,8 +24,8 @@ const isOrg = function (term, i, yelling) {
 const tagOrgs = function (terms, i, world, yelling) {
   const orgWords = world.model.two.orgWords
   const setTag = world.methods.one.setTag
-  let term = terms[i]
-  let str = term.machine || term.normal
+  const term = terms[i]
+  const str = term.machine || term.normal
   if (orgWords[str] === true && isOrg(terms[i - 1], i - 1, yelling)) {
     setTag([terms[i]], 'Organization', world, null, '3-[org-word]')
     // loop backwards, tag organization-like things

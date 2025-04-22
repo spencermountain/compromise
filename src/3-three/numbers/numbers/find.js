@@ -39,16 +39,16 @@ const findNumbers = function (doc) {
     }
 
     //"72 82"
-    let double = m.match('#Cardinal #Cardinal')
+    const double = m.match('#Cardinal #Cardinal')
     if (double.found && !m.has('(point|decimal|#Fraction)')) {
       //not 'two hundred'
       if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
         // two fifty five
-        let noMultiple = m.has(`(${ones}) (${tens})`)
+        const noMultiple = m.has(`(${ones}) (${tens})`)
         // twenty one
-        let tensVal = double.has('(' + tens + ') #Cardinal')
+        const tensVal = double.has('(' + tens + ') #Cardinal')
         // hundredOne
-        let multVal = double.has('#Multiple #Value')
+        const multVal = double.has('#Multiple #Value')
         //one proper way, 'twenty one', or 'hundred one'
         if (!noMultiple && !tensVal && !multVal) {
           // double = double.firstTerm()

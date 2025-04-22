@@ -1,5 +1,5 @@
 const anyIntersection = function (setA, setB) {
-  for (let elem of setB) {
+  for (const elem of setB) {
     if (setA.has(elem)) {
       return true
     }
@@ -9,7 +9,7 @@ const anyIntersection = function (setA, setB) {
 // check words/tags against our cache
 const failFast = function (regs, cache) {
   for (let i = 0; i < regs.length; i += 1) {
-    let reg = regs[i]
+    const reg = regs[i]
     if (reg.optional === true || reg.negative === true || reg.fuzzy === true) {
       continue
     }

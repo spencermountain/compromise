@@ -4,7 +4,7 @@ import getDoc from './getDoc.js'
 
 // flat list of terms from nested document
 const termList = function (docs) {
-  let arr = []
+  const arr = []
   for (let i = 0; i < docs.length; i += 1) {
     for (let t = 0; t < docs[i].length; t += 1) {
       arr.push(docs[i][t])

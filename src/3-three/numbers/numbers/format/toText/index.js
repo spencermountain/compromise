@@ -7,10 +7,10 @@ import { sequence, ones_mapping, tens_mapping } from './data.js'
 //turn number into an array of magnitudes, like [[5, million], [2, hundred]]
 const breakdown_magnitudes = function (num) {
   let working = num
-  let have = []
+  const have = []
   sequence.forEach(a => {
     if (num >= a[0]) {
-      let howmany = Math.floor(working / a[0])
+      const howmany = Math.floor(working / a[0])
       working -= howmany * a[0]
       if (howmany) {
         have.push({
@@ -25,7 +25,7 @@ const breakdown_magnitudes = function (num) {
 
 //turn numbers from 100-0 into their text
 const breakdown_hundred = function (num) {
-  let arr = []
+  const arr = []
   if (num > 100) {
     return arr //something bad happened..
   }
@@ -45,15 +45,15 @@ const breakdown_hundred = function (num) {
 /** print-out 'point eight nine'*/
 const handle_decimal = num => {
   const names = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
-  let arr = []
+  const arr = []
   //parse it out like a string, because js math is such shit
-  let str = toString(num)
-  let decimal = str.match(/\.([0-9]+)/)
+  const str = toString(num)
+  const decimal = str.match(/\.([0-9]+)/)
   if (!decimal || !decimal[0]) {
     return arr
   }
   arr.push('point')
-  let decimals = decimal[0].split('')
+  const decimals = decimal[0].split('')
   for (let i = 0; i < decimals.length; i++) {
     arr.push(names[decimals[i]])
   }
@@ -79,7 +79,7 @@ const toText = function (obj) {
     num = Math.abs(num)
   }
   //break-down into units, counts
-  let units = breakdown_magnitudes(num)
+  const units = breakdown_magnitudes(num)
   //build-up the string from its components
   for (let i = 0; i < units.length; i++) {
     let unit_name = units[i].unit

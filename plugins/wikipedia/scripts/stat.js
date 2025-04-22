@@ -10,8 +10,8 @@ const file = `./files/${lang}.${project}-pageviews.json`
 const round = n => Math.round(n * 10) / 10
 
 const fileSize = (pathStr) => {
-  let kb = fs.statSync(pathStr).size / 1024
-  let num = round(kb / 1000)
+  const kb = fs.statSync(pathStr).size / 1024
+  const num = round(kb / 1000)
   return num.toLocaleString() + 'mb'
 }
 

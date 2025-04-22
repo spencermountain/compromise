@@ -19,8 +19,8 @@ const plugin = function (View) {
     }
     json(n) {
       return this.getNth(n).map(p => {
-        let json = p.toView().json(n)[0]
-        let parsed = parse(p)
+        const json = p.toView().json(n)[0]
+        const parsed = parse(p)
         json.fraction = parsed
         return json
       }, [])
@@ -28,7 +28,7 @@ const plugin = function (View) {
     // become 0.5
     toDecimal(n) {
       this.getNth(n).forEach(m => {
-        let { decimal } = parse(m)
+        const { decimal } = parse(m)
         m = m.replaceWith(String(decimal), true)
         m.tag('NumericValue')
         m.unTag('Fraction')
@@ -37,9 +37,9 @@ const plugin = function (View) {
     }
     toFraction(n) {
       this.getNth(n).forEach(m => {
-        let obj = parse(m)
+        const obj = parse(m)
         if (obj && typeof obj.numerator === 'number' && typeof obj.denominator === 'number') {
-          let str = `${obj.numerator}/${obj.denominator}`
+          const str = `${obj.numerator}/${obj.denominator}`
           this.replace(m, str)
         }
       })
@@ -47,7 +47,7 @@ const plugin = function (View) {
     }
     toOrdinal(n) {
       this.getNth(n).forEach(m => {
-        let obj = parse(m)
+        const obj = parse(m)
         let str = toOrdinal(obj)
         if (m.after('^#Noun').found) {
           str += ' of' // three fifths of dentists
@@ -58,15 +58,15 @@ const plugin = function (View) {
     }
     toCardinal(n) {
       this.getNth(n).forEach(m => {
-        let obj = parse(m)
-        let str = toCardinal(obj)
+        const obj = parse(m)
+        const str = toCardinal(obj)
         m.replaceWith(str)
       })
       return this
     }
     toPercentage(n) {
       this.getNth(n).forEach(m => {
-        let { decimal } = parse(m)
+        const { decimal } = parse(m)
         let percent = decimal * 100
         percent = Math.round(percent * 100) / 100 // round it
         m.replaceWith(`${percent}%`)

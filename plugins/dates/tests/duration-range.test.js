@@ -5,7 +5,7 @@ const context = {
   today: '2024-09-24',
 }
 
-let arr = [
+const arr = [
   { str: 'in 2 to 4 days', start: '2024-09-26', end: '2024-09-28' },
   { str: 'in 2-4 days', start: '2024-09-26', end: '2024-09-28' },
   { str: 'in two to four days', start: '2024-09-26', end: '2024-09-28' },

@@ -7,7 +7,7 @@ const context = {
 }
 
 test('date-parse :', function (t) {
-  let arr = [
+  const arr = [
     ['june 5th 1999', '1999-06-05T00:00:00.000Z'],
     ['june 5th 1999', '1999-06-05T00:00:00.000Z'],
     ['january 1st 1644', '1644-01-01T00:00:00.000Z'],
@@ -56,7 +56,7 @@ test('date-parse :', function (t) {
     // ['august to may 1996', '1996-05-01T00:00:00.000Z'],
   ]
   arr.forEach(function (a) {
-    let json = nlp(a[0]).dates(context).json()[0] || {}
+    const json = nlp(a[0]).dates(context).json()[0] || {}
     t.equal(json.dates.start, a[1], a[0])
   })
   t.end()

@@ -1,7 +1,7 @@
 // cheat- add the document's pointer to the terms
 const index = function (view) {
   // console.log('reindex')
-  let document = view.document
+  const document = view.document
   for (let n = 0; n < document.length; n += 1) {
     for (let i = 0; i < document[n].length; i += 1) {
       document[n][i].index = [n, i]

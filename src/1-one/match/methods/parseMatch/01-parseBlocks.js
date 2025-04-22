@@ -20,7 +20,7 @@ const cleanUp = function (arr) {
 
 const parseBlocks = function (txt) {
   // parse by /regex/ first
-  let arr = txt.split(bySlashes)
+  const arr = txt.split(bySlashes)
   let res = []
   // parse by (blocks), next
   arr.forEach(str => {

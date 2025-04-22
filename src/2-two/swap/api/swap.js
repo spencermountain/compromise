@@ -11,8 +11,8 @@ const swapNoun = function (m, lemma) {
 
 const swapAdverb = function (m, lemma) {
   const { toAdverb } = m.methods.two.transform.adjective
-  let str = lemma
-  let adv = toAdverb(str)
+  const str = lemma
+  const adv = toAdverb(str)
   if (adv) {
     m.replaceWith(adv)
   }

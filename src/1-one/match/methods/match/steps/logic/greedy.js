@@ -5,14 +5,14 @@ import doesMatch from '../../term/doesMatch.js'
 // matches.  ditto for end-greedy matches: we need an earlier non-
 // ending match to succceed until we get to the actual end.
 const getGreedy = function (state, endReg) {
-  let reg = Object.assign({}, state.regs[state.r], { start: false, end: false })
-  let start = state.t
+  const reg = Object.assign({}, state.regs[state.r], { start: false, end: false })
+  const start = state.t
   for (; state.t < state.terms.length; state.t += 1) {
     //stop for next-reg match
     if (endReg && doesMatch(state.terms[state.t], endReg, state.start_i + state.t, state.phrase_length)) {
       return state.t
     }
-    let count = state.t - start + 1
+    const count = state.t - start + 1
     // is it max-length now?
     if (reg.max !== undefined && count === reg.max) {
       return state.t
@@ -49,7 +49,7 @@ const greedyTo = function (state, nextReg) {
 const isEndGreedy = function (reg, state) {
   if (reg.end === true && reg.greedy === true) {
     if (state.start_i + state.t < state.phrase_length - 1) {
-      let tmpReg = Object.assign({}, reg, { end: false })
+      const tmpReg = Object.assign({}, reg, { end: false })
       if (doesMatch(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length) === true) {
         // console.log(`endGreedy ${state.terms[state.t].normal}`)
         return true

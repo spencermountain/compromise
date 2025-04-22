@@ -84,7 +84,7 @@ const textFromDoc = function (docs, opts) {
       text = text.replace(trimStart, '')
     }
     // remove ending periods
-    let last = docs[docs.length - 1]
+    const last = docs[docs.length - 1]
     if (!last[last.length - 1].tags.has('Emoticon')) {
       text = text.replace(trimEnd, '')
     }

@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 
 test('payload-misc', function (t) {
-  let doc = nlp('i saw John Lennon, and tom cruise.')
+  const doc = nlp('i saw John Lennon, and tom cruise.')
 
   doc.match('(john lennon|tom cruise|johnny carson)').forEach(m => {
     if (m.has('john lennon')) {
@@ -15,10 +15,10 @@ test('payload-misc', function (t) {
 
   t.equal(doc.getPayloads().length, 2, 'full-doc-2')
 
-  let end = doc.match('and tom .')
+  const end = doc.match('and tom .')
   t.equal(end.getPayloads().length, 1, 'end-1')
 
-  let tom = doc.match('tom')
+  const tom = doc.match('tom')
   t.equal(tom.getPayloads().length, 1, 'tom-0')
 
   tom.clearPayloads()
@@ -30,7 +30,7 @@ test('payload-misc', function (t) {
 })
 
 test('payload-fn', function (t) {
-  let doc = nlp('i saw John Lennon, and john smith and bob dylan')
+  const doc = nlp('i saw John Lennon, and john smith and bob dylan')
   doc.match('(john|bob|dave) .').addPayload(m => {
     return m.text().match(/john/i) ? { isjohn: true } : null
   })

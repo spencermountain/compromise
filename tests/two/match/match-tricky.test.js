@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/match-tricky] '
 
 test('fancy match', function (t) {
-  let arr = [
+  const arr = [
     //misc
     ['doug is good', '', 0],
     ['doug is good', '.', 3],
@@ -117,7 +117,7 @@ test('fancy match', function (t) {
 })
 
 test('consecutive greedy cases', function (t) {
-  let doc = nlp('one two')
+  const doc = nlp('one two')
   let m = doc.match('#Value #Value')
   t.equal(m.length, 1, here + 'consecutive-found one')
   t.equal(m.eq(0).text(), 'one two', here + 'consecutive-found both')

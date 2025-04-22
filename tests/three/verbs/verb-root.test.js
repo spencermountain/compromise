@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-root] '
 
 test('verb-root', function (t) {
-  let arr = [
+  const arr = [
     ['beg', 'He begged his parents for a new toy.'],
     ['beg', 'She begged her boss for a raise.'],
     ['bow', 'She bowed to the queen with respect.'],
@@ -54,8 +54,8 @@ test('verb-root', function (t) {
   ]
 
   arr.forEach(a => {
-    let [word, str] = a
-    let doc = nlp(str)
+    const [word, str] = a
+    const doc = nlp(str)
     t.equal(doc.has(`{${word}/verb}`), true, here + str)
   })
   t.end()

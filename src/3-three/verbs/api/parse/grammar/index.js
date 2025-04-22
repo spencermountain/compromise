@@ -30,7 +30,7 @@ const cleanUp = function (vb, res) {
 // 'learned [to code]'
 const isInfinitive = function (vb) {
   if (vb.has('#Infinitive')) {
-    let m = vb.growLeft('to')
+    const m = vb.growLeft('to')
     if (m.has('^to #Infinitive')) {
       return true
     }
@@ -39,11 +39,11 @@ const isInfinitive = function (vb) {
 }
 
 const getGrammar = function (vb, res) {
-  let grammar = {}
+  const grammar = {}
   // make it easy to classify, first
   vb = cleanUp(vb, res)
   for (let i = 0; i < forms.length; i += 1) {
-    let todo = forms[i]
+    const todo = forms[i]
     if (vb.has(todo.match) === true) {
       grammar.form = todo.name
       Object.assign(grammar, todo.data)

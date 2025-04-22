@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/keep-cache] '
 
 test('keep cache', function (t) {
-  let doc = nlp('one two three. four five six. seven eight nine.')
+  const doc = nlp('one two three. four five six. seven eight nine.')
   doc.cache()
 
   // eq
@@ -43,8 +43,8 @@ test('keep cache', function (t) {
 
 
 test('cache in match', function (t) {
-  let doc = nlp('one two three four')
-  let m = doc.match('one two three')
+  const doc = nlp('one two three four')
+  const m = doc.match('one two three')
   m.tag('. #Person .')
   t.equal(doc._cache, null, here + 'invalidate parent cache')
   t.end()
@@ -52,7 +52,7 @@ test('cache in match', function (t) {
 
 
 test('remove cache', function (t) {
-  let doc = nlp('one two three. four five six. seven eight nine.')
+  const doc = nlp('one two three. four five six. seven eight nine.')
   doc.cache()
 
   // tag
@@ -83,28 +83,28 @@ test('remove cache', function (t) {
 })
 
 test('cache in loops', function (t) {
-  let doc = nlp('one two match. three match four. match five six.')
+  const doc = nlp('one two match. three match four. match five six.')
   doc.cache()
   doc.map((m, i) => {
-    let cache = m._cache || []
+    const cache = m._cache || []
     t.ok(cache[0] && cache[0].has('match'), `map ${i}`)
   })
 
   doc.cache()
   doc.forEach((m, i) => {
-    let cache = m._cache || []
+    const cache = m._cache || []
     t.ok(cache[0] && cache[0].has('match'), `foreach ${i}`)
   })
 
   doc.cache()
   doc.filter((m, i) => {
-    let cache = m._cache || []
+    const cache = m._cache || []
     t.ok(cache[0] && cache[0].has('match'), `filter ${i}`)
   })
 
   doc.cache()
   doc.some((m, i) => {
-    let cache = m._cache || []
+    const cache = m._cache || []
     t.ok(cache[0] && cache[0].has('match'), `some ${i}`)
   })
   t.end()

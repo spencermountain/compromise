@@ -1,7 +1,7 @@
 // filter-down list of maybe-matches
 const localTrim = function (maybeList, docCache) {
   return maybeList.map((list, n) => {
-    let haves = docCache[n]
+    const haves = docCache[n]
     // ensure all stated-needs of the match are met
     list = list.filter(obj => {
       return obj.needs.every(need => haves.has(need))
@@ -19,7 +19,7 @@ const localTrim = function (maybeList, docCache) {
         return true
       }
       // ensure there's one cache-hit
-      let found = obj.wants.filter(str => haves.has(str)).length
+      const found = obj.wants.filter(str => haves.has(str)).length
       return found >= obj.minWant
     })
     return list

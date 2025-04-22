@@ -4,7 +4,8 @@ import parseFraction from '../../fractions/parse.js'
 const parseNumeric = function (str, m) {
   str = str.replace(/,/g, '')
   //parse a numeric-number
-  let arr = str.split(/([0-9.,]*)/)
+  const arr = str.split(/([0-9.,]*)/)
+  // eslint-disable-next-line prefer-const
   let [prefix, num] = arr
   let suffix = arr.slice(2).join('')
   if (num !== '' && m.length < 2) {
@@ -43,12 +44,12 @@ const parseNumber = function (m) {
   }
   let str = m.text('reduced')
   // reach for '12 litres'
-  let unit = m.growRight('#Unit').match('#Unit$').text('machine')
+  const unit = m.growRight('#Unit').match('#Unit$').text('machine')
   // is it in '3,123' format?
-  let hasComma = /[0-9],[0-9]/.test(m.text('text'))
+  const hasComma = /[0-9],[0-9]/.test(m.text('text'))
   // parse a numeric-number like '$4.00'
   if (m.terms().length === 1 && !m.has('#Multiple')) {
-    let res = parseNumeric(str, m)
+    const res = parseNumeric(str, m)
     if (res !== null) {
       res.hasComma = hasComma
       res.unit = unit

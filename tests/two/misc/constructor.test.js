@@ -28,7 +28,7 @@ test('tokenize() runs without pos-tagging', function (t) {
 test('tokenize() does not crash on long string with many sentences', function (t) {
   let text = 'The quick brown fox jumped over the lazy dog.\n'
   text += 'Hi!\n'.repeat(100000)
-  let _doc = nlp.tokenize(text) // eslint-disable-line
+  const _doc = nlp.tokenize(text) // eslint-disable-line
   t.ok(true, here + 'repeated hi')
   t.end()
 })
@@ -36,14 +36,14 @@ test('tokenize() does not crash on long string with many sentences', function (t
 test('tokenize() does not crash on long string with few sentences', function (t) {
   let text = 'The quick brown fox jumped over the lazy dog.\n'
   text += '--\n'.repeat(100000)
-  let _doc = nlp.tokenize(text) // eslint-disable-line
+  const _doc = nlp.tokenize(text) // eslint-disable-line
   t.ok(true, here + 'repeated dashes')
   t.end()
 })
 
 test('parseMatch() results are symmetric', function (t) {
   const doc = nlp(`Why doesnt ross, the largest friend, simply eat the other 5?`)
-  let matches = [
+  const matches = [
     '#MaleName the #Adjective friend',
     '^why',
     '#Value$',
@@ -55,7 +55,7 @@ test('parseMatch() results are symmetric', function (t) {
     'tornado alley #Hoover',
   ]
   matches.forEach(str => {
-    let regs = nlp.parseMatch(str)
+    const regs = nlp.parseMatch(str)
     let a = doc.match(regs).json()
     let b = doc.match(str).json()
     a = JSON.stringify(a)

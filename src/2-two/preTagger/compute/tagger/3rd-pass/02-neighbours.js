@@ -6,7 +6,7 @@ const lookAtWord = function (term, words) {
     return null
   }
   // look at prev word <-
-  let found = words.find(a => term.normal === a[0])
+  const found = words.find(a => term.normal === a[0])
   if (found) {
     return found[1]
   }
@@ -17,7 +17,7 @@ const lookAtTag = function (term, tags) {
   if (!term) {
     return null
   }
-  let found = tags.find(a => term.tags.has(a[0]))
+  const found = tags.find(a => term.tags.has(a[0]))
   if (found) {
     return found[1]
   }
@@ -27,7 +27,7 @@ const lookAtTag = function (term, tags) {
 // look at neighbours for hints on unknown words
 const neighbours = function (terms, i, model) {
   const { leftTags, leftWords, rightWords, rightTags } = model.two.neighbours
-  let term = terms[i]
+  const term = terms[i]
   if (term.tags.size === 0) {
     let tag = null
     // look left <-

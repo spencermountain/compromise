@@ -53,7 +53,7 @@ test('avoid contraction messes', function (t) {
 
   doc = nlp('Tony-is').contract()
   t.equal(doc.has('is'), true, here + 'avoid-contraction 4')
-  let str = `Tony
+  const str = `Tony
 is`
   doc = nlp(str).contract()
   t.equal(doc.has('is'), true, here + 'avoid-contraction 5')

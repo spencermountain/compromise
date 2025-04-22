@@ -17,7 +17,7 @@ const getDoc = (reg, view, group) => {
 }
 
 const addIds = function (ptr, view) {
-  let [n, start, end] = ptr
+  const [n, start, end] = ptr
   if (view.document[n] && view.document[n][start]) {
     ptr[3] = ptr[3] || view.document[n][start].id
     if (view.document[n][end - 1]) {
@@ -31,8 +31,8 @@ const methods = {}
 // [before], [match], [after]
 methods.splitOn = function (m, group) {
   const { splitAll } = this.methods.one.pointer
-  let splits = getDoc(m, this, group).fullPointer
-  let all = splitAll(this.fullPointer, splits)
+  const splits = getDoc(m, this, group).fullPointer
+  const all = splitAll(this.fullPointer, splits)
   let res = []
   all.forEach(o => {
     res.push(o.passthrough)
@@ -48,8 +48,8 @@ methods.splitOn = function (m, group) {
 // [before], [match after]
 methods.splitBefore = function (m, group) {
   const { splitAll } = this.methods.one.pointer
-  let splits = getDoc(m, this, group).fullPointer
-  let all = splitAll(this.fullPointer, splits)
+  const splits = getDoc(m, this, group).fullPointer
+  const all = splitAll(this.fullPointer, splits)
   // repair matches to favor [match, after]
   // - instead of [before, match]
   for (let i = 0; i < all.length; i += 1) {
@@ -83,8 +83,8 @@ methods.splitBefore = function (m, group) {
 // [before match], [after]
 methods.splitAfter = function (m, group) {
   const { splitAll } = this.methods.one.pointer
-  let splits = getDoc(m, this, group).fullPointer
-  let all = splitAll(this.fullPointer, splits)
+  const splits = getDoc(m, this, group).fullPointer
+  const all = splitAll(this.fullPointer, splits)
   let res = []
   all.forEach(o => {
     res.push(o.passthrough)

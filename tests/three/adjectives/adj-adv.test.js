@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/verb-toPresent] '
 
-let arr = [
+const arr = [
   ['accidentally', 'accidental'],
   ['accordingly', null],
   ['admirably', 'admirable'],
@@ -273,15 +273,15 @@ let arr = [
 
 test('toAdjective:', function (t) {
   arr.forEach(a => {
-    let doc = nlp(a[0]).compute('root')
-    let json = doc.adverbs().json()[0] || { terms: [{}] }
+    const doc = nlp(a[0]).compute('root')
+    const json = doc.adverbs().json()[0] || { terms: [{}] }
     t.equal(json.terms[0].root || null, a[1], here + '[ToAdjective] ' + a[0])
   })
   t.end()
 })
 
 test('toAdverb:', function (t) {
-  let toAdverb = nlp().methods.two.transform.adjective.toAdverb
+  const toAdverb = nlp().methods.two.transform.adjective.toAdverb
   arr.forEach(a => {
     if (a[1]) {
       t.equal(toAdverb(a[1]), a[0], here + ` [ToAdverb] ${a[1]}`)

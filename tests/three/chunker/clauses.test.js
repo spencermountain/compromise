@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/clauses] '
 
 test('clauses-count', function (t) {
-  let arr = [
+  const arr = [
     ['In fact, you are the most beautiful', 2],
     ['And this July, we will begin to bring our troops home.', 2],
     ['And keep ya cup, we drink whole bottles', 2],
@@ -45,7 +45,7 @@ test('clauses-count', function (t) {
 })
 
 test('clauses', function (t) {
-  let arr = [
+  const arr = [
     // ['string', ['expected clauses', 'in an array']]
     ['fun, cool, etc...', ['fun, cool, etc...']],
     ['cool, and fun', ['cool, and fun']],

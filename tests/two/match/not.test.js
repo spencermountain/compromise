@@ -50,8 +50,8 @@ test('not-from-array :', function (t) {
 })
 
 test('not-from-match :', function (t) {
-  let doc = nlp(`nooooo one two for sure`)
-  let m = doc.match('one two')
+  const doc = nlp(`nooooo one two for sure`)
+  const m = doc.match('one two')
   let res = m.not('one')
   t.equal(res.text(), 'two', 'not first, so second')
   res = m.not('two')

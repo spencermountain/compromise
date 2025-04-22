@@ -5,7 +5,7 @@ const utils = {
   },
   /** return individual terms*/
   terms: function (n) {
-    let m = this.match('.')
+    const m = this.match('.')
     // this is a bit faster than .match('.') 
     // let ptrs = []
     // this.docs.forEach((terms) => {
@@ -24,7 +24,7 @@ const utils = {
       return this.update(this._groups[group] || [])
     }
     // return an object of Views
-    let res = {}
+    const res = {}
     Object.keys(this._groups).forEach(k => {
       res[k] = this.update(this._groups[k])
     })
@@ -48,7 +48,7 @@ const utils = {
   },
   /** */
   last: function () {
-    let n = this.fullPointer.length - 1
+    const n = this.fullPointer.length - 1
     return this.eq(n)
   },
 
@@ -75,7 +75,7 @@ const utils = {
   },
   /**  */
   fullSentences: function () {
-    let ptrs = this.fullPointer.map(a => [a[0]]) //lazy!
+    const ptrs = this.fullPointer.map(a => [a[0]]) //lazy!
     return this.update(ptrs).toView()
   },
   /** return a view of no parts of the document */
@@ -88,8 +88,8 @@ const utils = {
     if (!b || !b.isView) {
       return false
     }
-    let aPtr = this.fullPointer
-    let bPtr = b.fullPointer
+    const aPtr = this.fullPointer
+    const bPtr = b.fullPointer
     if (!aPtr.length === bPtr.length) {
       return false
     }
@@ -113,7 +113,7 @@ const utils = {
 
   // is the pointer the full sentence?
   isFull: function () {
-    let ptrs = this.pointer
+    const ptrs = this.pointer
     if (!ptrs) {
       return true
     }

@@ -12,7 +12,7 @@ const units = {
 }
 
 const applyCounter = function (unit, counter = {}) {
-  let Unit = units[counter.unit]
+  const Unit = units[counter.unit]
   if (!Unit) {
     return unit
   }
@@ -35,7 +35,7 @@ const applyCounter = function (unit, counter = {}) {
     // support 'nth week', eg.
     d = d.add(counter.num, counter.unit)
   }
-  let u = new Unit(d, null, unit.context)
+  const u = new Unit(d, null, unit.context)
   if (u.d.isValid() === true) {
     return u
   }

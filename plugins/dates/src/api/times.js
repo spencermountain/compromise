@@ -8,11 +8,11 @@ const find = function (doc) {
 
 const parse = function (m, context = {}) {
   m = normalize(m)
-  let res = parseTime(m, context)
+  const res = parseTime(m, context)
   if (!res.result) {
     return { time: null, '24h': null }
   }
-  let s = spacetime.now().time(res.result)
+  const s = spacetime.now().time(res.result)
   return {
     time: res.result,
     '24h': s.format('time-24'),
@@ -32,11 +32,11 @@ const api = function (View) {
     }
 
     format(fmt) {
-      let found = this
-      let res = found.map(m => {
-        let obj = parse(m) || {}
+      const found = this
+      const res = found.map(m => {
+        const obj = parse(m) || {}
         if (obj.time) {
-          let s = spacetime.now().time(obj.time)
+          const s = spacetime.now().time(obj.time)
           let str = obj.time
           if (fmt === '24h') {
             str = s.format('time-24')
@@ -57,7 +57,7 @@ const api = function (View) {
 
     json(opts = {}) {
       return this.map(m => {
-        let json = m.toView().json(opts)[0] || {}
+        const json = m.toView().json(opts)[0] || {}
         if (opts && opts.time !== false) {
           json.time = parse(m)
         }

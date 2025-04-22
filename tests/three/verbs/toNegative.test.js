@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-toNegative] '
 
 test('inline verb negate:', function (t) {
-  let arr = [
+  const arr = [
 
     [`he is nice`, 'he is not nice'],
     [`she was nice`, 'she was not nice'],
@@ -117,9 +117,9 @@ test('inline verb negate:', function (t) {
     ['there is no hope', 'there is no hope'],
   ]
   arr.forEach(function (a) {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.verbs().toNegative()
-    let str = doc.text('normal')
+    const str = doc.text('normal')
     t.equal(str, a[1], here + a[1] + ' --- ' + str)
   })
   t.end()

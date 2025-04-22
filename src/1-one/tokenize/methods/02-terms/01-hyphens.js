@@ -1,5 +1,5 @@
 const hasHyphen = function (str, model) {
-  let parts = str.split(/[-–—]/)
+  const parts = str.split(/[-–—]/)
   if (parts.length <= 1) {
     return false
   }
@@ -19,12 +19,12 @@ const hasHyphen = function (str, model) {
     return false
   }
   //letter-number 'aug-20'
-  let reg = /^([a-z\u00C0-\u00FF`"'/]+)[-–—]([a-z0-9\u00C0-\u00FF].*)/i
+  const reg = /^([a-z\u00C0-\u00FF`"'/]+)[-–—]([a-z0-9\u00C0-\u00FF].*)/i
   if (reg.test(str) === true) {
     return true
   }
   //number-letter '20-aug'
-  let reg2 = /^[('"]?([0-9]{1,4})[-–—]([a-z\u00C0-\u00FF`"'/-]+[)'"]?$)/i
+  const reg2 = /^[('"]?([0-9]{1,4})[-–—]([a-z\u00C0-\u00FF`"'/-]+[)'"]?$)/i
   if (reg2.test(str) === true) {
     return true
   }
@@ -32,11 +32,11 @@ const hasHyphen = function (str, model) {
 }
 
 const splitHyphens = function (word) {
-  let arr = []
+  const arr = []
   //support multiple-hyphenated-terms
   const hyphens = word.split(/[-–—]/)
   let whichDash = '-'
-  let found = word.match(/[-–—]/)
+  const found = word.match(/[-–—]/)
   if (found && found[0]) {
     whichDash = found
   }

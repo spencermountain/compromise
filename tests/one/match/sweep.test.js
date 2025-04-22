@@ -3,19 +3,19 @@ import nlp from '../_lib.js'
 const here = '[one/sweep] '
 
 test('sweep-basic:', function (t) {
-  let matches = [
+  const matches = [
     { match: '2nd quarter of? 2022', tag: 'TimePeriod' },
     { match: '(from|by|before) now', tag: 'FooBar' },
   ]
-  let net = nlp.buildNet(matches)
+  const net = nlp.buildNet(matches)
 
-  let doc = nlp(`so good by now. woo hoo before now. in the 2nd quarter 2022`)
-  let { view, found } = doc.sweep(net)
+  const doc = nlp(`so good by now. woo hoo before now. in the 2nd quarter 2022`)
+  const { view, found } = doc.sweep(net)
 
   t.equal(view.length, 3, here + 'view has three')
   t.equal(found.length, 3, here + 'found three')
 
-  let m = view.match('#TimePeriod')
+  const m = view.match('#TimePeriod')
   t.equal(m.text(), '2nd quarter 2022', here + 'tag sweep')
 
   t.equal(found[0].view.text(), 'by now', here + 'found view')
@@ -25,17 +25,17 @@ test('sweep-basic:', function (t) {
 
 
 test('match-net-basic:', function (t) {
-  let matches = [
+  const matches = [
     { match: 'john c .', tag: 'Actor' },
     { match: 'john foo', tag: 'FooBar' },
     { match: 'john . reilly', tag: 'SecondTag' },
   ]
-  let net = nlp.buildNet(matches)
+  const net = nlp.buildNet(matches)
 
   let doc = nlp(`he was john c reilly. oh yeah`)
 
   // return after the first match
-  let { view, found } = doc.sweep(net, { tagger: false, matchOne: true })
+  const { view, found } = doc.sweep(net, { tagger: false, matchOne: true })
   t.equal(view.length, 1, here + 'matchOne')
   found[0] = found[0] || {}
   t.equal(found[0].match, 'john c .', here + 'matchOne-first')
@@ -81,7 +81,7 @@ test('un-cacheable-match:', function (t) {
 })
 
 test('cache-checks:', function (t) {
-  let net = nlp.buildNet([
+  const net = nlp.buildNet([
     { match: '(will && @isTitleCase) smith', tag: 'Celebrity' }
   ])
   let m = nlp('Will Smith').sweep(net).view
@@ -95,10 +95,10 @@ test('cache-checks:', function (t) {
 
 
 test('multi-fast-OR:', function (t) {
-  let net = nlp.buildNet([
+  const net = nlp.buildNet([
     { match: '(one|two|three) (a|b|c)', tag: 'Found' }
   ])
-  let allForms = [
+  const allForms = [
     'one a',
     'one b',
     'one c',
@@ -107,14 +107,14 @@ test('multi-fast-OR:', function (t) {
     'three c',
   ]
   allForms.forEach(reg => {
-    let m = nlp(reg).sweep(net).view
+    const m = nlp(reg).sweep(net).view
     t.equal(m.has('#Found'), true, here + reg)
   })
   t.end()
 })
 
 test('slow-OR-checks:', function (t) {
-  let net = nlp.buildNet([
+  const net = nlp.buildNet([
     { match: '(foo|one two)', tag: 'Found' }
   ])
   let m = nlp('foo').sweep(net).view
@@ -130,11 +130,11 @@ test('slow-OR-checks:', function (t) {
 })
 
 test('sweep partial document:', function (t) {
-  let matches = [
+  const matches = [
     { match: 'remove .' },
     { match: 'daffy duck' },
   ]
-  let net = nlp.buildNet(matches)
+  const net = nlp.buildNet(matches)
   let doc = nlp(`before here. remove this. after here`)
   doc = doc.not('remove this')
   let m = doc.match(net)
@@ -149,14 +149,14 @@ test('sweep partial document:', function (t) {
 })
 
 test('sweep absolute indexes:', function (t) {
-  let matches = [
+  const matches = [
     { match: 'third' },
   ]
-  let net = nlp.buildNet(matches)
+  const net = nlp.buildNet(matches)
   let doc = nlp(`first. second. third`)
   doc = doc.reverse()
 
-  let res = doc.sweep(net)
+  const res = doc.sweep(net)
   res.view.soften()
   t.equal(res.view.text(), 'third', here + 'abs index in res')
 
@@ -168,10 +168,10 @@ test('sweep absolute indexes:', function (t) {
 })
 
 test('no negative OR false-matches:', function (t) {
-  let txt = 'and us not making appointments'
-  let reg = '!(was|us|me) not making appointments'
-  let doc = nlp(txt)
-  let net = nlp.buildNet([
+  const txt = 'and us not making appointments'
+  const reg = '!(was|us|me) not making appointments'
+  const doc = nlp(txt)
+  const net = nlp.buildNet([
     { match: reg }
   ])
   t.equal(doc.match(net).found, false, here + 'no negative OR')
@@ -179,14 +179,14 @@ test('no negative OR false-matches:', function (t) {
 })
 
 test('buildNet reserved word safe:', function (t) {
-  let matches = [
+  const matches = [
     { match: 'first' },
     { match: 'constructor' },
   ]
-  let net = nlp.buildNet(matches)
-  let doc = nlp(`constructor. second`)
+  const net = nlp.buildNet(matches)
+  const doc = nlp(`constructor. second`)
 
-  let res = doc.sweep(net)
+  const res = doc.sweep(net)
   t.equal(res.view.text(), 'constructor.', here + 'buildNet reserved word safe')
 
   t.end()

@@ -29,7 +29,7 @@ const parseOffset = function (tz) {
   // 'GMT-5' (not opposite)
   m = tz.match(gmtOffset)
   if (m !== null) {
-    let num = Number(m[1]) * -1
+    const num = Number(m[1]) * -1
     return toIana(num)
   }
   // '+5'
@@ -44,13 +44,13 @@ const parseTimezone = function (doc) {
   let m = doc.match('#Timezone+')
   //remove prepositions
   m = m.not('(in|for|by|near|at)')
-  let str = m.text('reduced')
+  const str = m.text('reduced')
 
   // check our list of informal tz names
   if (informal.hasOwnProperty(str)) {
     return { result: informal[str], m }
   }
-  let tz = parseOffset(str)
+  const tz = parseOffset(str)
   if (tz) {
     return { result: tz, m }
   }

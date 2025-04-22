@@ -30,9 +30,9 @@ const setPluralSingular = function (term) {
 
 // try to guess the tense of a naked verb
 const setTense = function (term) {
-  let tags = term.tags
+  const tags = term.tags
   if (tags.has('Verb') && tags.size === 1) {
-    let guess = getTense(term.normal)
+    const guess = getTense(term.normal)
     if (guess) {
       fastTag(term, guess, '3-verb-tense-guess')
     }
@@ -41,12 +41,12 @@ const setTense = function (term) {
 
 //add deduced parent tags to our terms
 const fillTags = function (terms, i, model) {
-  let term = terms[i]
+  const term = terms[i]
   //there is probably just one tag, but we'll allow more
-  let tags = Array.from(term.tags)
+  const tags = Array.from(term.tags)
   for (let k = 0; k < tags.length; k += 1) {
     if (model.one.tagSet[tags[k]]) {
-      let toAdd = model.one.tagSet[tags[k]].parents
+      const toAdd = model.one.tagSet[tags[k]].parents
       fastTag(term, toAdd, ` -inferred by #${tags[k]}`)
     }
   }

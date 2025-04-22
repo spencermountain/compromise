@@ -2,13 +2,13 @@ import test from 'tape'
 import nlp from '../_lib.js'
 
 test('test first generated-date', function (t) {
-  let context = {
+  const context = {
     timezone: 'Asia/Kolkata',
     today: '2021-02-16',
     dayStart: '8:00am',
     max_repeat: 5,
   }
-  let arr = [
+  const arr = [
     ['any monday', '2021-02-22T08:00:00.000+05:30'],
     ['every monday in march', '2021-03-01T08:00:00.000+05:30'],
     ['every tuesday in march', '2021-03-02T08:00:00.000+05:30'],
@@ -18,8 +18,8 @@ test('test first generated-date', function (t) {
     ['every thursday at 2pm', '2021-02-18T14:00:00.000+05:30'],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
-    let dates = doc.dates(context).get()[0]
+    const doc = nlp(a[0])
+    const dates = doc.dates(context).get()[0]
     dates.repeat = dates.repeat || {}
     dates.repeat.generated = dates.repeat.generated || []
     t.equal(dates.repeat.generated[0].start, a[1], a[0])
@@ -28,12 +28,12 @@ test('test first generated-date', function (t) {
 })
 
 test('count generated dates', function (t) {
-  let context = {
+  const context = {
     timezone: 'Asia/Kolkata',
     today: '2000-01-01',
     max_repeat: 65,
   }
-  let arr = [
+  const arr = [
     ['every day in march', 31],
     ['every monday in march', 4],
     ['every hour in June 5th', 24],
@@ -48,8 +48,8 @@ test('count generated dates', function (t) {
     // ['any year in june', 0],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
-    let dates = doc.dates(context).get()[0]
+    const doc = nlp(a[0])
+    const dates = doc.dates(context).get()[0]
     dates.repeat = dates.repeat || {}
     dates.repeat.generated = dates.repeat.generated || []
     t.equal(dates.repeat.generated.length, a[1], a[0])

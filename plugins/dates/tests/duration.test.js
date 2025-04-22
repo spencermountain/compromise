@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 // const relaxed = 14
 
-let february = 1
+const february = 1
 //number of days between start+end
 const tests = [
   {
@@ -54,10 +54,10 @@ test('day durations', t => {
     const context = {
       today: obj.today,
     }
-    let today = obj.today.join('-')
+    const today = obj.today.join('-')
     obj.tests.forEach(a => {
-      let json = nlp(a[0]).dates(context).json()[0] || { dates: {} }
-      let duration = json.dates.duration || {}
+      const json = nlp(a[0]).dates(context).json()[0] || { dates: {} }
+      const duration = json.dates.duration || {}
       t.equal(duration.days, a[1], `[${today}] ${a[0]}`)
     })
   })

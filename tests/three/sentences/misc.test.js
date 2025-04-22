@@ -9,8 +9,8 @@ test('misc sentences', function (t) {
   doc = nlp(`john, bill, and joe. Here we go. Must be three now.`)
   t.equal(doc.sentences().length, 3, here + 'found three sentences')
 
-  let d = nlp(`i am good`)
-  let s = d.sentences()
+  const d = nlp(`i am good`)
+  const s = d.sentences()
   s.replace('am', 'was')
   t.equal(d.text(), 'i was good', here + 'tricky map replace bug')
 
@@ -18,8 +18,8 @@ test('misc sentences', function (t) {
 })
 
 test('full sentence', function (t) {
-  let doc = nlp(`john, bill, and joe. Here we go. Must be three now.`)
-  let m = doc.match('we')
+  const doc = nlp(`john, bill, and joe. Here we go. Must be three now.`)
+  const m = doc.match('we')
   t.equal(m.sentences().text(), 'Here we go.', here + 'found full sentence')
   t.end()
 })
@@ -36,7 +36,7 @@ test('sentence prepend', function (t) {
 })
 
 test('sentence filters', function (t) {
-  let doc = nlp('He is cool? I think not. Yipeee!').sentences()
+  const doc = nlp('He is cool? I think not. Yipeee!').sentences()
 
   t.equal(doc.isExclamation().length, 1, here + 'has-exclamation')
   t.equal(doc.isQuestion().length, 1, here + 'has-question')

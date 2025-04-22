@@ -32,7 +32,7 @@ const closesQuote = function (str) {
   if (!str) {
     return false
   }
-  let m = str.match(closeQuote)
+  const m = str.match(closeQuote)
   if (m !== null && m.length === 1) {
     return true
   }
@@ -42,11 +42,11 @@ const closesQuote = function (str) {
 // allow micro-sentences when inside a quotation, like:
 // the doc said "no sir. i will not beg" and walked away.
 const quoteMerge = function (splits) {
-  let arr = []
+  const arr = []
   for (let i = 0; i < splits.length; i += 1) {
-    let split = splits[i]
+    const split = splits[i]
     // do we have an open-quote and not a closed one?
-    let m = split.match(openQuote)
+    const m = split.match(openQuote)
     if (m !== null && m.length === 1) {
 
       // look at the next sentence for a closing quote,
@@ -59,7 +59,7 @@ const quoteMerge = function (splits) {
       }
       // look at n+2 for a closing quote,
       if (closesQuote(splits[i + 2])) {
-        let toAdd = splits[i + 1] + splits[i + 2]// merge them all
+        const toAdd = splits[i + 1] + splits[i + 2]// merge them all
         //make sure it's not too-long
         if (toAdd.length < MAX_QUOTE) {
           splits[i] += toAdd

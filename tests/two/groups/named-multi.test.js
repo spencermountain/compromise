@@ -11,7 +11,7 @@ test('two named matches', function (t) {
   t.equal(res.size && res.size.text(), 'big', here + 'obj-size')
   t.equal(res.animal && res.animal.text(), 'dog', here + 'obj-animal')
 
-  let doc = nlp.tokenize('june the 5th')
+  const doc = nlp.tokenize('june the 5th')
   m = doc.match('[<month>june] the [<date>5th]')
   t.equal(m.groups('month').text(), 'june', here + 'one-month')
   t.equal(m.groups('date').text(), '5th', here + 'one-date')
@@ -22,18 +22,18 @@ test('two named matches', function (t) {
 })
 
 test('two named - two results', function (t) {
-  let doc = nlp('june the 5th and july the 7th')
-  let m = doc.match('[<month>#Month] the [<date>#Value]')
+  const doc = nlp('june the 5th and july the 7th')
+  const m = doc.match('[<month>#Month] the [<date>#Value]')
   //by object
-  let res = m.groups()
+  const res = m.groups()
   t.equal(res.date.length, 2, here + '2-obj-results-date')
   t.equal(res.month.length, 2, here + '2-obj-results-month')
   t.equal(res.date.eq(0).text(), '5th', here + 'obj-date')
   t.equal(res.month.eq(0).text(), 'june', here + 'obj-month')
 
-  let months = m.groups('month')
+  const months = m.groups('month')
   t.equal(months.length, 2, here + 'found two months')
-  let dates = m.groups('date')
+  const dates = m.groups('date')
   t.equal(dates.length, 2, here + 'found two dates')
 
   t.equal(months.eq(0).text(), 'june', here + 'one-month')
@@ -46,19 +46,19 @@ test('two named - two results', function (t) {
 })
 
 test('one named - three results', function (t) {
-  let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
-  let m = doc.match('[<month>#Month]')
+  const doc = nlp('june the 5th, july the 7th, and sept the 12th.')
+  const m = doc.match('[<month>#Month]')
   //by object
   t.equal(m.groups('month').length, 3, here + '3 months, one sentence')
   t.end()
 })
 
 test('absolute pointers', function (t) {
-  let doc = nlp('i gave him two fourths of a slice')
+  const doc = nlp('i gave him two fourths of a slice')
   let m = doc.match('#Value+')
   m = m.match('#Value+')
   m = m.match('[<num>two] [<dem>fourths]')
-  let { num, dem } = m.groups()
+  const { num, dem } = m.groups()
   t.equal(num.text(), 'two', here + 'num')
   t.equal(dem.text(), 'fourths', here + 'den')
   t.end()

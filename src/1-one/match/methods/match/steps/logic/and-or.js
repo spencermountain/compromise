@@ -5,28 +5,28 @@ const isArray = function (arr) {
 }
 
 export const doOrBlock = function (state, skipN = 0) {
-  let block = state.regs[state.r]
+  const block = state.regs[state.r]
   let wasFound = false
   // do each multiword sequence
   for (let c = 0; c < block.choices.length; c += 1) {
     // try to match this list of tokens
-    let regs = block.choices[c]
+    const regs = block.choices[c]
     if (!isArray(regs)) {
       return false
     }
     wasFound = regs.every((cr, w_index) => {
       let extra = 0
-      let t = state.t + w_index + skipN + extra
+      const t = state.t + w_index + skipN + extra
       if (state.terms[t] === undefined) {
         return false
       }
-      let foundBlock = doesMatch(state.terms[t], cr, t + state.start_i, state.phrase_length)
+      const foundBlock = doesMatch(state.terms[t], cr, t + state.start_i, state.phrase_length)
       // this can be greedy - '(foo+ bar)'
       if (foundBlock === true && cr.greedy === true) {
         for (let i = 1; i < state.terms.length; i += 1) {
-          let term = state.terms[t + i]
+          const term = state.terms[t + i]
           if (term) {
-            let keepGoing = doesMatch(term, cr, state.start_i + i, state.phrase_length)
+            const keepGoing = doesMatch(term, cr, state.start_i + i, state.phrase_length)
             if (keepGoing === true) {
               extra += 1
             } else {
@@ -53,11 +53,11 @@ export const doOrBlock = function (state, skipN = 0) {
 const doAndBlock = function (state) {
   let longest = 0
   // all blocks must match, and we return the greediest match
-  let reg = state.regs[state.r]
-  let allDidMatch = reg.choices.every(block => {
+  const reg = state.regs[state.r]
+  const allDidMatch = reg.choices.every(block => {
     //  for multi-word blocks, all must match
-    let allWords = block.every((cr, w_index) => {
-      let tryTerm = state.t + w_index
+    const allWords = block.every((cr, w_index) => {
+      const tryTerm = state.t + w_index
       if (state.terms[tryTerm] === undefined) {
         return false
       }

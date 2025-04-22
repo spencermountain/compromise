@@ -16,7 +16,7 @@ test('full-sentence-issue', function (t) {
 })
 
 test('test overloading', function (t) {
-  let doc = nlp(`the 7 days since december were gross`)
+  const doc = nlp(`the 7 days since december were gross`)
 
   let m = doc.verbs()
   t.ok(m.json(), 'overload-verb')
@@ -46,8 +46,8 @@ test('test overloading', function (t) {
 })
 
 test('drop back to View', function (t) {
-  let doc = nlp(`John Smith and Jack were walking`)
-  let vb = doc.verbs()
+  const doc = nlp(`John Smith and Jack were walking`)
+  const vb = doc.verbs()
   // ====== drop class ----
   let m = vb.match('.')
   t.equal(m.viewType, 'View', here + 'match-to-view')
@@ -77,8 +77,8 @@ test('drop back to View', function (t) {
 })
 
 test('retain class', function (t) {
-  let doc = nlp(`John Smith and Jack were walking`)
-  let vb = doc.verbs()
+  const doc = nlp(`John Smith and Jack were walking`)
+  const vb = doc.verbs()
   // ====== keep class ---
   let m = vb.update([])
   t.equal(m.viewType, 'Verbs', here + 'update-keeps-class')
@@ -132,8 +132,8 @@ test('replacement with a contraction', function (t) {
 })
 
 test('json extended options:', function (t) {
-  let doc = nlp(`Hey everybody, I'm lookin' for Amanda Hugginkiss`)
-  let json = doc.people().json({ offset: true })
+  const doc = nlp(`Hey everybody, I'm lookin' for Amanda Hugginkiss`)
+  const json = doc.people().json({ offset: true })
   t.ok(json[0].offset, here + 'exteded json methods')
   t.end()
 })
@@ -149,11 +149,11 @@ test('tag-multiples:', function (t) {
 
 // -----
 test('root-text vs match-text', function (t) {
-  let str = `  paper, scissors, rock. I run with scissors.`
-  let doc = nlp(str).match('*').all()
+  const str = `  paper, scissors, rock. I run with scissors.`
+  const doc = nlp(str).match('*').all()
   t.equal(doc.text(), str, 'perfect-root-text')
 
-  let m = doc.match('scissors')
+  const m = doc.match('scissors')
   t.equal(m.text(), 'scissors, scissors', 'match-text')
   t.end()
 })

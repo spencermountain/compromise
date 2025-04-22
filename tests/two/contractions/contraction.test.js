@@ -50,7 +50,7 @@ test('contractions v possessive', function (t) {
 })
 
 test('match contractions/possessives', function (t) {
-  let doc = nlp(`i think it's spencer's`)
+  const doc = nlp(`i think it's spencer's`)
   t.equal(doc.has('it'), true, here + 'has it')
   t.equal(doc.has('spencer'), true, here + 'has spencer')
   t.equal(doc.has(`spencer's`), true, here + "has spencer's")
@@ -119,21 +119,21 @@ test('number-range with spaces', function (t) {
 })
 
 test('french-contraction', function (t) {
-  let doc = nlp(`oh j'aime ca`)
+  const doc = nlp(`oh j'aime ca`)
   t.equal(doc.has('aime'), true, here + 'has verb')
   t.equal(doc.has('je'), true, here + 'has je')
   t.end()
 })
 
 test('replace-contraction', function (t) {
-  let doc = nlp(`i'd walked`)
+  const doc = nlp(`i'd walked`)
   doc.replace('had', 'foo')
   t.equal(doc.text(), `i foo walked`, here + 'replace-contraction')
   t.end()
 })
 
 test('remove-contraction', function (t) {
-  let doc = nlp(`i'd walked`)
+  const doc = nlp(`i'd walked`)
   doc.remove('had')
   t.equal(doc.text(), `i walked`, here + 'remove-contraction')
   t.end()
@@ -153,7 +153,7 @@ test('insert-contraction', function (t) {
 })
 
 test('insert does not trigger contractions', function (t) {
-  let doc = nlp(`we've walked`)
+  const doc = nlp(`we've walked`)
   doc.insertAfter('cool')
   t.equal(doc.text(), `we've walked cool`, here + 'insert-no-contraction')
   t.end()
@@ -172,8 +172,8 @@ test('split-contraction', function (t) {
   // m = doc.splitBefore('had')
   // t.deepEqual(m.out('array'), ['i', 'had walked'], here + 'splitBefore-contraction')
 
-  let doc = nlp(`i've walked`)
-  let m = doc.splitAfter('walked')
+  const doc = nlp(`i've walked`)
+  const m = doc.splitAfter('walked')
   t.deepEqual(m.out('array'), [`i've walked`], here + 'split-contraction-miss-1')
 
   // doc = nlp(`i'd walked`)

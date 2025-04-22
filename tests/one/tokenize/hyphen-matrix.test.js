@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/hyphen-matrix] '
 
 test('hyphen-input', (t) => {
-  let doc = nlp(`before follow-up after`)
+  const doc = nlp(`before follow-up after`)
   t.equal(doc.has('follow-up'), true, here + 'hyphen -> follow-up')
   t.equal(doc.has('follow up'), true, here + 'hyphen -> follow up')
   t.equal(doc.has('followup'), false, here + 'hyphen -> followup')//would be nice
@@ -11,7 +11,7 @@ test('hyphen-input', (t) => {
 })
 
 test('no-hyphen-input', (t) => {
-  let doc = nlp(`before follow up after`)
+  const doc = nlp(`before follow up after`)
   t.equal(doc.has('follow-up'), true, here + 'no-hyphen -> follow-up')
   t.equal(doc.has('follow up'), true, here + 'no-hyphen ->follow up')
   t.equal(doc.has('followup'), false, here + 'no-hyphen ->followup')
@@ -19,7 +19,7 @@ test('no-hyphen-input', (t) => {
 })
 
 test('compound-hyphen-input', (t) => {
-  let doc = nlp(`before followup after`)
+  const doc = nlp(`before followup after`)
   t.equal(doc.has('follow-up'), false, here + 'compound -> follow-up')//maybe?
   t.equal(doc.has('follow up'), false, here + 'compound -> follow up')
   t.equal(doc.has('followup'), true, here + 'compound -> followup')
@@ -30,7 +30,7 @@ test('compound-hyphen-input', (t) => {
 // ==================
 
 test('hyphen-skipping', (t) => {
-  let doc = nlp(`before super-cool after`)
+  const doc = nlp(`before super-cool after`)
   t.equal(doc.has('before super'), true, here + '[hyphen] before')
   t.equal(doc.has('before super cool'), true, here + '[hyphen] before-mid')
   t.equal(doc.has('cool after'), true, here + '[hyphen] after')
@@ -44,7 +44,7 @@ test('hyphen-skipping', (t) => {
 
 
 test('match-dash', function (t) {
-  let arr = [
+  const arr = [
     're-purpose',
     'co-opting',
     'mis-information',

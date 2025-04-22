@@ -2,7 +2,7 @@
 
 const splitOn = function (terms, i) {
   const isNum = /^[0-9]+$/
-  let term = terms[i]
+  const term = terms[i]
   // early on, these may not be dates yet:
   if (!term) {
     return false
@@ -17,7 +17,7 @@ const splitOn = function (terms, i) {
     return false
   }
   if (terms[i - 1]) {
-    let lastTerm = terms[i - 1]
+    const lastTerm = terms[i - 1]
     // thursday, june
     if (lastTerm.tags.has('Date') || maybeDate.has(lastTerm.normal)) {
       return false
@@ -28,7 +28,7 @@ const splitOn = function (terms, i) {
     }
   }
   // don't split numbers, yet
-  let str = term.normal
+  const str = term.normal
   if (str.length === 1 || str.length === 2 || str.length === 4) {
     if (isNum.test(str)) {
       return false
@@ -40,7 +40,7 @@ const splitOn = function (terms, i) {
 // kind-of a dirty sentence chunker
 const quickSplit = function (document) {
   const splitHere = /[,:;]/
-  let arr = []
+  const arr = []
   document.forEach(terms => {
     let start = 0
     terms.forEach((term, i) => {

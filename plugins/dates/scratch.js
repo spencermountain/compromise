@@ -51,14 +51,14 @@ txt = '6:30pm'
 // txt = `end of september`
 
 // nlp.verbose('tagger')
-let doc = nlp(txt)
+const doc = nlp(txt)
 // doc.debug('dates')
 // console.log(doc.dates().get())
 // doc.times().format('24h')
 // doc.debug()
 
 // console.log(doc.times(context).json())
-let found = doc.dates(context).json()
+const found = doc.dates(context).json()
 console.log(found[0].dates)
 found.forEach((o) => {
   console.log('start: ', fmt(o.dates.start))

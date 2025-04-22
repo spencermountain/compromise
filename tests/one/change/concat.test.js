@@ -4,7 +4,7 @@ const here = '[one/concat] '
 
 test('concat misc :', function (t) {
   let found = nlp('')
-  let docs = [
+  const docs = [
     nlp('We Sell All Brands'),
     nlp('all we are'),
     nlp('see, we drop our prices'),
@@ -27,7 +27,7 @@ test('concat tag :', function (t) {
   t.equal(doc.has('cool times'), true, here + 'tagged - 1')
 
   doc = nlp('the start and the end. another one')
-  let b = nlp('cool times. oh yeah')
+  const b = nlp('cool times. oh yeah')
   doc.concat(b)
   t.equal(doc.has('cool times'), true, here + 'tagged - 2')
   t.end()
@@ -56,7 +56,7 @@ test('concat pointers :', function (t) {
   doc = nlp('before text. middle. after text.')
   a = doc.slice(0, 2)
   b = doc.slice(2)
-  let both = a.concat(b)
+  const both = a.concat(b)
   t.equal(both.length, 3, here + 'pointer-both')
   t.equal(doc.length, 3, here + 'pointer-non-mutable')
   t.end()
@@ -64,14 +64,14 @@ test('concat pointers :', function (t) {
 
 test('concat doc :', function (t) {
   const doc = nlp('walk the plank')
-  let doc2 = nlp('foo bar')
+  const doc2 = nlp('foo bar')
   doc.concat(doc2)
   t.equal(doc.text(), 'walk the plank foo bar', here + 'concat doc')
   t.equal(doc.match('plank foo').found, false, here + 'concat is two sentences')
 
 
-  let a = nlp('before text. middle.')
-  let b = nlp('after text.')
+  const a = nlp('before text. middle.')
+  const b = nlp('after text.')
   a.concat(b)
   t.equal(a.length, 3, here + 'have 3 mutable')
   t.end()

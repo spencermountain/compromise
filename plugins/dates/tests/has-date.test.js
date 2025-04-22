@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 
 test('has a date', function (t) {
-  let arr = [
+  const arr = [
     'July 13 through 15',
     `this minute`,
     '1 hour ago',

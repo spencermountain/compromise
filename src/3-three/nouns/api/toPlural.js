@@ -18,8 +18,8 @@ const nounToPlural = function (m, parsed) {
   const { methods, model } = m.world
   const { toPlural } = methods.two.transform.noun
   // inflect the root noun
-  let str = parsed.root.text({ keepPunct: false })
-  let plural = toPlural(str, model)
+  const str = parsed.root.text({ keepPunct: false })
+  const plural = toPlural(str, model)
   m.match(parsed.root).replaceWith(plural, keep).tag('Plural', 'toPlural')
   // should we change the determiner/article?
   if (parsed.determiner.has('(a|an)')) {
@@ -28,7 +28,7 @@ const nounToPlural = function (m, parsed) {
     m.remove(parsed.determiner)
   }
   // should we change the following copula?
-  let copula = parsed.root.after('not? #Adverb+? [#Copula]', 0)
+  const copula = parsed.root.after('not? #Adverb+? [#Copula]', 0)
   if (copula.found) {
     if (copula.has('is')) {
       m.replace(copula, 'are')

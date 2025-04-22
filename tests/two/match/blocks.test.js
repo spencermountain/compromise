@@ -40,7 +40,7 @@ test('single OR block', function (t) {
 })
 
 test('not block', function (t) {
-  let doc = nlp('before two words after')
+  const doc = nlp('before two words after')
   let m = doc.match(`before (#Value words) after`)
   t.equal(m.text(), 'before two words after', here + 'normally matches')
 

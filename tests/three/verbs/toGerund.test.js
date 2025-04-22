@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/gerund]'
 
 test('verb-to-gerund:', function (t) {
-  let arr = [
+  const arr = [
     ['we walk', 'we are walking'],
     ['we sing', 'we are singing'],
     ['we win', 'we are winning'],
@@ -33,7 +33,7 @@ test('verb-to-gerund:', function (t) {
   arr.forEach(function (a) {
     const doc = nlp(a[0])
     doc.verbs().toGerund()
-    let str = doc.out('normal')
+    const str = doc.out('normal')
     t.equal(str, a[1], here + a[0] + ' -> ' + str)
   })
   t.end()
@@ -41,7 +41,7 @@ test('verb-to-gerund:', function (t) {
 
 
 test('verb-to-gerund:', function (t) {
-  let arr = [
+  const arr = [
     ['be', 'being'],
     ['try', 'trying'],
     ['make', 'making'],
@@ -195,7 +195,7 @@ test('verb-to-gerund:', function (t) {
   ]
   arr.forEach(function (a) {
     const doc = nlp(a[0]).tag('#Infinitive')
-    let res = doc.verbs().conjugate()[0] || {}
+    const res = doc.verbs().conjugate()[0] || {}
     t.equal(res.Gerund, a[1], here + a[0] + ' -> ' + res.Gerund)
   })
   t.end()

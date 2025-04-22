@@ -25,7 +25,7 @@ const handleStart = function (terms, regs, n) {
 // ok, here we go.
 const runMatch = function (docs, todo, cache) {
   cache = cache || []
-  let { regs, group, justOne } = todo
+  const { regs, group, justOne } = todo
   let results = []
   if (!regs || regs.length === 0) {
     return { ptrs: [], byGroup: {} }
@@ -33,7 +33,7 @@ const runMatch = function (docs, todo, cache) {
 
   const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
   docs: for (let n = 0; n < docs.length; n += 1) {
-    let terms = docs[n]
+    const terms = docs[n]
     // let index = terms[0].index || []
     // can we skip this sentence?
     if (cache[n] && failFast(regs, cache[n])) {
@@ -41,7 +41,7 @@ const runMatch = function (docs, todo, cache) {
     }
     // ^start regs only run once, per phrase
     if (regs[0].start === true) {
-      let foundStart = handleStart(terms, regs, n, group)
+      const foundStart = handleStart(terms, regs, n, group)
       if (foundStart) {
         results.push(foundStart)
       }
@@ -49,7 +49,7 @@ const runMatch = function (docs, todo, cache) {
     }
     //ok, try starting the match now from every term
     for (let i = 0; i < terms.length; i += 1) {
-      let slice = terms.slice(i)
+      const slice = terms.slice(i)
       // ensure it's long-enough
       if (slice.length < minLength) {
         break
@@ -65,7 +65,7 @@ const runMatch = function (docs, todo, cache) {
           break docs
         }
         // skip ahead, over these results
-        let end = res.pointer[2]
+        const end = res.pointer[2]
         if (Math.abs(end - 1) > i) {
           i = Math.abs(end - 1)
         }
@@ -75,7 +75,7 @@ const runMatch = function (docs, todo, cache) {
   // ensure any end-results ($) match until the last term
   if (regs[regs.length - 1].end === true) {
     results = results.filter(res => {
-      let n = res.pointer[0]
+      const n = res.pointer[0]
       return docs[n].length === res.pointer[2]
     })
   }
@@ -86,7 +86,7 @@ const runMatch = function (docs, todo, cache) {
   results = getGroup(results, group)
   // add ids to pointers
   results.ptrs.forEach(ptr => {
-    let [n, start, end] = ptr
+    const [n, start, end] = ptr
     ptr[3] = docs[n][start].id//start-id
     ptr[4] = docs[n][end - 1].id//end-id
   })

@@ -14,16 +14,16 @@ docs = docs.map(str => nlp(str))
 console.log(` -- ok, ready --`)
 
 // qa
-let already = {}
+const already = {}
 matches.forEach(todo => {
-  let regs = nlp.parseMatch(todo.match)
+  const regs = nlp.parseMatch(todo.match)
   if (!todo.tag || !todo.reason || !todo.match || regs.length === 0 || already[todo.reason]) {
     console.log('Issue: ', todo) // eslint-disable-line
   }
   already[todo.reason] = true
 })
 
-let counts = {}
+const counts = {}
 docs.forEach(doc => {
   matches.forEach(todo => {
     if (doc.has(todo.match)) {
@@ -33,7 +33,7 @@ docs.forEach(doc => {
   })
 })
 
-let ranked = matches
+const ranked = matches
   .map(todo => todo.reason)
   .sort((a, b) => {
     counts[a] = counts[a] || 0

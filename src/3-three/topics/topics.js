@@ -1,7 +1,7 @@
 
 //combine them with .topics() method
 const find = function (n) {
-  let r = this.clauses()
+  const r = this.clauses()
   // Find people, places, and organizations
   let m = r.people()
   m = m.concat(r.places())

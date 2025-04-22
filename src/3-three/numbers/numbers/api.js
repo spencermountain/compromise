@@ -19,10 +19,10 @@ const addMethod = function (View) {
         .map(o => o.num)
     }
     json(n) {
-      let opts = typeof n === 'object' ? n : {}
+      const opts = typeof n === 'object' ? n : {}
       return this.getNth(n).map(p => {
-        let json = p.toView().json(opts)[0]
-        let parsed = parse(p)
+        const json = p.toView().json(opts)[0]
+        const parsed = parse(p)
         json.number = {
           prefix: parsed.prefix,
           num: parsed.num,
@@ -52,16 +52,16 @@ const addMethod = function (View) {
 
     /** convert to numeric form like '8' or '8th' */
     toNumber() {
-      let res = this.map(val => {
+      const res = this.map(val => {
         if (!this.has('#TextValue')) {
           return val
         }
-        let obj = parse(val)
+        const obj = parse(val)
         if (obj.num === null) {
           return val
         }
-        let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
-        let str = format(obj, fmt)
+        const fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
+        const str = format(obj, fmt)
         val.replaceWith(str, { tags: true })
         return val.tag('NumericValue')
       })
@@ -69,17 +69,17 @@ const addMethod = function (View) {
     }
     /** add commas, or nicer formatting for numbers */
     toLocaleString() {
-      let m = this
+      const m = this
       m.forEach(val => {
-        let obj = parse(val)
+        const obj = parse(val)
         if (obj.num === null) {
           return
         }
         let num = obj.num.toLocaleString()
         // support ordinal ending, too
         if (val.has('#Ordinal')) {
-          let str = format(obj, 'Ordinal')
-          let end = str.match(/[a-z]+$/)
+          const str = format(obj, 'Ordinal')
+          const end = str.match(/[a-z]+$/)
           if (end) {
             num += end[0] || ''
           }
@@ -90,17 +90,17 @@ const addMethod = function (View) {
     }
     /** convert to numeric form like 'eight' or 'eighth' */
     toText() {
-      let m = this
-      let res = m.map(val => {
+      const m = this
+      const res = m.map(val => {
         if (val.has('#TextValue')) {
           return val
         }
-        let obj = parse(val)
+        const obj = parse(val)
         if (obj.num === null) {
           return val
         }
-        let fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
-        let str = format(obj, fmt)
+        const fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
+        const str = format(obj, fmt)
         val.replaceWith(str, { tags: true })
         val.tag('TextValue')
         return val
@@ -109,17 +109,17 @@ const addMethod = function (View) {
     }
     /** convert ordinal to cardinal form, like 'eight', or '8' */
     toCardinal() {
-      let m = this
-      let res = m.map(val => {
+      const m = this
+      const res = m.map(val => {
         if (!val.has('#Ordinal')) {
           return val
         }
-        let obj = parse(val)
+        const obj = parse(val)
         if (obj.num === null) {
           return val
         }
-        let fmt = val.has('#TextValue') ? 'TextCardinal' : 'Cardinal'
-        let str = format(obj, fmt)
+        const fmt = val.has('#TextValue') ? 'TextCardinal' : 'Cardinal'
+        const str = format(obj, fmt)
         val.replaceWith(str, { tags: true })
         val.tag('Cardinal')
         return val
@@ -128,17 +128,17 @@ const addMethod = function (View) {
     }
     /** convert cardinal to ordinal form, like 'eighth', or '8th' */
     toOrdinal() {
-      let m = this
-      let res = m.map(val => {
+      const m = this
+      const res = m.map(val => {
         if (val.has('#Ordinal')) {
           return val
         }
-        let obj = parse(val)
+        const obj = parse(val)
         if (obj.num === null) {
           return val
         }
-        let fmt = val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal'
-        let str = format(obj, fmt)
+        const fmt = val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal'
+        const str = format(obj, fmt)
         val.replaceWith(str, { tags: true })
         val.tag('Ordinal')
         return val
@@ -149,28 +149,28 @@ const addMethod = function (View) {
     /** return only numbers that are == n */
     isEqual(n) {
       return this.filter(val => {
-        let num = parse(val).num
+        const num = parse(val).num
         return num === n
       })
     }
     /** return only numbers that are > n*/
     greaterThan(n) {
       return this.filter(val => {
-        let num = parse(val).num
+        const num = parse(val).num
         return num > n
       })
     }
     /** return only numbers that are < n*/
     lessThan(n) {
       return this.filter(val => {
-        let num = parse(val).num
+        const num = parse(val).num
         return num < n
       })
     }
     /** return only numbers > min and < max */
     between(min, max) {
       return this.filter(val => {
-        let num = parse(val).num
+        const num = parse(val).num
         return num > min && num < max
       })
     }
@@ -182,9 +182,9 @@ const addMethod = function (View) {
       if (typeof n === 'string') {
         n = parse(n).num
       }
-      let m = this
-      let res = m.map(val => {
-        let obj = parse(val)
+      const m = this
+      const res = m.map(val => {
+        const obj = parse(val)
         obj.num = n
         if (obj.num === null) {
           return val
@@ -213,9 +213,9 @@ const addMethod = function (View) {
       if (typeof n === 'string') {
         n = parse(n).num
       }
-      let m = this
-      let res = m.map(val => {
-        let obj = parse(val)
+      const m = this
+      const res = m.map(val => {
+        const obj = parse(val)
         if (obj.num === null) {
           return val
         }
@@ -224,7 +224,7 @@ const addMethod = function (View) {
         if (obj.isText) {
           fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         }
-        let str = format(obj, fmt)
+        const str = format(obj, fmt)
         val.replaceWith(str, { tags: true })
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
@@ -246,7 +246,7 @@ const addMethod = function (View) {
     }
     // overloaded - keep Numbers class
     update(pointer) {
-      let m = new Numbers(this.document, pointer)
+      const m = new Numbers(this.document, pointer)
       m._cache = this._cache // share this full thing
       return m
     }

@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 const here = '[three/acronym] '
 
 test('acronyms', function (t) {
-  let doc = nlp(`mr. and Mrs. Smith are in the FBI and the c.i.a.`)
+  const doc = nlp(`mr. and Mrs. Smith are in the FBI and the c.i.a.`)
   doc.acronyms().strip()
   t.equal(doc.text(), 'mr. and Mrs. Smith are in the FBI and the cia', here + 'no-periods')
 
@@ -14,7 +14,7 @@ test('acronyms', function (t) {
 })
 
 test('acronyms-more', function (t) {
-  let doc = nlp('i work for the F.B.I. in Kansas.')
+  const doc = nlp('i work for the F.B.I. in Kansas.')
   doc.acronyms().strip()
   t.equal(doc.text(), 'i work for the FBI in Kansas.', here + 'strip-period')
 

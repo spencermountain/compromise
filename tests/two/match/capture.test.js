@@ -28,18 +28,18 @@ test('match-capture-group', function (t) {
 })
 
 test('optional capture', function (t) {
-  let yup = nlp('hello world').match('hello [<found>world?]')
+  const yup = nlp('hello world').match('hello [<found>world?]')
   t.equal(yup.found, true, here + 'found yes')
   t.equal(yup.groups('found').found, true, here + 'group found yes')
-  let yup2 = nlp('hello world').match('hello [<found>world]?')
+  const yup2 = nlp('hello world').match('hello [<found>world]?')
   t.equal(yup2.found, true, here + 'found yes2')
   t.equal(yup.groups('found').found, true, here + 'group found yes')
 
-  let outside = nlp('hello nope').match('hello [<found>world]?')
+  const outside = nlp('hello nope').match('hello [<found>world]?')
   t.equal(outside.found, true, here + 'still found optional')
   t.equal(outside.groups('found').found, false, here + 'group found no')
 
-  let inside = nlp('hello nope').match('hello [<found>world?]')
+  const inside = nlp('hello nope').match('hello [<found>world?]')
   t.equal(inside.found, true, here + 'still found optional')
   t.equal(inside.groups('found').found, false, here + 'group found no2')
 
@@ -65,7 +65,7 @@ test('tricky capture', function (t) {
 
 
 test('optional capture', function (t) {
-  let doc = nlp('sept 4 1998')
+  const doc = nlp('sept 4 1998')
   let m = doc.match('[<month>#Month] [<date>#Value] [<year>#Year]?')
   t.equal(m.groups('year').found, true, here + '[]?')
   m = doc.match('[<month>#Month] [<date>#Value] [<year>#Year?]')

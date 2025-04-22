@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-toInfinitive] '
 
 test('toInfinitive-phrase:', function (t) {
-  let arr = [
+  const arr = [
     ['he walked', 'he walk'],
     ['i walked', 'i walk'],
     ['we walked', 'we walk'],
@@ -469,7 +469,7 @@ test('toInfinitive-phrase:', function (t) {
     // ["was wondering about the results", `To have wondered about the results`],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.verbs().toInfinitive()
     t.equal(doc.text(), a[1], here + ' ' + a[0])
   })
@@ -477,7 +477,7 @@ test('toInfinitive-phrase:', function (t) {
 })
 
 test('toInfinitive-coerced:', function (t) {
-  let arr = [
+  const arr = [
     ['smoked', 'smoke'],
     ['detailed', 'detail'],
     ['tailored', 'tailor'],
@@ -488,7 +488,7 @@ test('toInfinitive-coerced:', function (t) {
     ['stunned', 'stun'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0]).tag('PastTense')
+    const doc = nlp(a[0]).tag('PastTense')
     doc.verbs().toInfinitive()
     t.equal(doc.text(), a[1], here + ' ' + a[0])
   })

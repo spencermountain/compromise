@@ -28,9 +28,9 @@ const tryFull = function (doc, context) {
   if (!doc.found) {
     return res
   }
-  let unit = parseDate(doc, context)
+  const unit = parseDate(doc, context)
   if (unit) {
-    let end = unit.clone().end()
+    const end = unit.clone().end()
     res = {
       start: unit,
       end: end,
@@ -44,8 +44,8 @@ const tryRanges = function (doc, context) {
 
   // try each template in order
   for (let i = 0; i < ranges.length; i += 1) {
-    let fmt = ranges[i]
-    let m = doc.match(fmt.match)
+    const fmt = ranges[i]
+    const m = doc.match(fmt.match)
     if (m.found) {
       log(`  ---[${fmt.desc}]---`)
       let res = fmt.parse(m, context)
@@ -64,7 +64,7 @@ const tryRanges = function (doc, context) {
 // loop thru each range template
 const parseRanges = function (m, context) {
   // parse-out 'every week ..'
-  let repeats = repeating(m, context) || {}
+  const repeats = repeating(m, context) || {}
   // try picking-apart ranges
   let found = tryRanges(m, context)
   if (!found) {

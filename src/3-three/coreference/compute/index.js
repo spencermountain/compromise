@@ -6,7 +6,7 @@ import { prevSentence } from './lib.js'
 const addReference = function (pron, m) {
   if (m && m.found) {
     // add reference on the pronoun
-    let term = pron.docs[0][0]//pronouns are 1 word only
+    const term = pron.docs[0][0]//pronouns are 1 word only
     term.reference = m.ptrs[0]
   }
 }
@@ -34,7 +34,7 @@ const stepBack = function (m, cb) {
 }
 
 const coreference = function (view) {
-  let pronouns = view.pronouns().if('(he|him|his|she|her|hers|they|their|theirs|it|its)')
+  const pronouns = view.pronouns().if('(he|him|his|she|her|hers|they|their|theirs|it|its)')
   pronouns.forEach(pron => {
     let res = null
     // connect pronoun to its reference

@@ -3,9 +3,9 @@ import nlp from '../_lib.js'
 const here = '[three/sentence] '
 
 test('get full sentence:', function (t) {
-  let doc = nlp('one two foo four five. i saw foo house. I ate a sandwhich. Foo was nice')
+  const doc = nlp('one two foo four five. i saw foo house. I ate a sandwhich. Foo was nice')
 
-  let m = doc.match('foo')
+  const m = doc.match('foo')
 
   let str = m.eq(0).sentences().text()
   t.equal(str, doc.sentences(0).text(), here + 'first-full-sentence')
@@ -20,10 +20,10 @@ test('get full sentence:', function (t) {
 })
 
 test('get multiple-copies of one sentence:', function (t) {
-  let doc = nlp('John Smith was cool. I am missing. Cindy Lauper and Carl Sagan here. I am also missing.')
-  let m = doc.match('#Person+')
-  let matches = m.sentences()
-  let arr = matches.out('array')
+  const doc = nlp('John Smith was cool. I am missing. Cindy Lauper and Carl Sagan here. I am also missing.')
+  const m = doc.match('#Person+')
+  const matches = m.sentences()
+  const arr = matches.out('array')
   t.equal(arr.length, 3, here + 'two sentences into three results')
   t.equal(arr[0], 'John Smith was cool.', here + 'one person sentence #1')
   t.equal(arr[1], 'Cindy Lauper and Carl Sagan here.', here + 'two person sentence #1')
@@ -32,7 +32,7 @@ test('get multiple-copies of one sentence:', function (t) {
 })
 
 test('sentence append:', function (t) {
-  let doc = nlp('"Good bye," he said.')
+  const doc = nlp('"Good bye," he said.')
   doc.sentences().forEach((match) => {
     match.append('and left')
   })

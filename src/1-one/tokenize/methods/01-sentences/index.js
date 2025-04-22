@@ -19,7 +19,7 @@ const splitSentences = function (text, world) {
   // cleanup unicode-spaces
   text = text.replace('\xa0', ' ')
   // First do a greedy-split..
-  let splits = simpleSplit(text)
+  const splits = simpleSplit(text)
   // Filter-out the crap ones
   let sentences = simpleMerge(splits)
   //detection of non-sentence chunks:
@@ -35,7 +35,7 @@ const splitSentences = function (text, world) {
   //move whitespace to the ends of sentences, when possible
   //['hello',' world'] -> ['hello ','world']
   for (let i = 1; i < sentences.length; i += 1) {
-    let ws = sentences[i].match(startWhitespace)
+    const ws = sentences[i].match(startWhitespace)
     if (ws !== null) {
       sentences[i - 1] += ws[0]
       sentences[i] = sentences[i].replace(startWhitespace, '')

@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/normalize-preset] '
 
 test('normalize - light', function (t) {
-  let arr = [
+  const arr = [
     [' so... you like donuts? have all the donuts in the world!!!', 'so you like donuts? have all the donuts in the world!'],
     ['This is a test. ', 'This is a test.'],
     ['This is a test?!', 'This is a test?'],
@@ -22,7 +22,7 @@ test('normalize - light', function (t) {
 })
 
 test('normalize - medium', function (t) {
-  let arr = [
+  const arr = [
     [' so... you like DONUTS? have all the donuts in the WORLD!!!', 'so you like donuts? have all the donuts in the world!'],
     ['This is a test?!', 'this is a test?'],
     ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],
@@ -36,7 +36,7 @@ test('normalize - medium', function (t) {
 })
 
 test('normalize - heavy', function (t) {
-  let arr = [
+  const arr = [
     [' so... you like DONUTS? have all the donuts in the WORLD!!!', 'so you like donut? have all the donut in the world!'],
     ['This is a test?!', 'this be a test?'],
     ['Björk, the singer-songwriter...', 'bjork the singer songwriter'],

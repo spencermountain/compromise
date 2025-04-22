@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 
 test('date-chunk :', function (t) {
-  let arr = [
+  const arr = [
     ['remember to buy eggs tomorrow', 'tomorrow'],
     ['i should buy eggs for the kids on sunday', 'on sunday'],
     ['please tell john to walk the dogs each night', 'each night'],

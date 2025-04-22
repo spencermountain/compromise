@@ -34,7 +34,7 @@ import places from './nouns/places.js'
 import conjunctions from './conjunctions.js'
 import expressions from './expressions.js'
 
-let matches = [].concat(
+const matches = [].concat(
   // order matters top-matches can get overwritten
   passive,
   adj,

@@ -14,7 +14,7 @@ const getRoot = function (m) {
 }
 
 const parseNoun = function (m) {
-  let root = getRoot(m)
+  const root = getRoot(m)
   return {
     determiner: m.match('#Determiner').eq(0),
     adjectives: m.match('#Adjective'),

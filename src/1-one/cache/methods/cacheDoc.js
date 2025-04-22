@@ -1,6 +1,6 @@
 const createCache = function (document) {
-  let cache = document.map(terms => {
-    let items = new Set()
+  const cache = document.map(terms => {
+    const items = new Set()
     terms.forEach(term => {
       // add words
       if (term.normal !== '') {
@@ -24,7 +24,7 @@ const createCache = function (document) {
       if (term.alias) {
         term.alias.forEach(str => items.add(str))
       }
-      let tags = Array.from(term.tags)
+      const tags = Array.from(term.tags)
       for (let t = 0; t < tags.length; t += 1) {
         items.add('#' + tags[t])
       }

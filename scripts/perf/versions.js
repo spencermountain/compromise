@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import fetch from './_fetch'
 
-let versions = [
+const versions = [
   // '13.0.0',// feb 2020
   // '13.1.0',
   // '13.1.1',
@@ -23,7 +23,7 @@ let versions = [
   '13.10.2',
 ]
 
-let matches = [
+const matches = [
   'out of range',
   '#Person #Person',
   '. of the world',
@@ -38,35 +38,35 @@ let matches = [
   'the .+',
   'keep a #Noun',
 ]
-let nlps = versions.map(version => {
+const nlps = versions.map(version => {
   return require('compromise' + version)
 })
 nlps.push(require('../../types'))
 
 const testOne = function (nlp, texts) {
-  let begin = new Date()
+  const begin = new Date()
   texts.forEach(txt => {
-    let doc = nlp(txt)
+    const doc = nlp(txt)
     matches.forEach(reg => {
       doc.match(reg).text()
       doc.json()
     })
   })
-  let end = new Date()
+  const end = new Date()
   return (end.getTime() - begin.getTime()) / 1000
 }
 
 ;(async () => {
-  let texts = []
+  const texts = []
   for (let i = 1; i < 5; i += 1) {
-    let text = await fetch(`https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-${i}.json`)
+    const text = await fetch(`https://unpkg.com/nlp-corpus@3.3.0/builds/nlp-corpus-${i}.json`)
     texts.push(text.join('\n'))
   }
 
   console.log(`\n\n\n === got ${texts.length} texts, and ${nlps.length} versions\n`)
   for (let i = 0; i < nlps.length; i += 1) {
     console.log('\n' + nlps[i].version + ':')
-    let time = testOne(nlps[i], texts)
+    const time = testOne(nlps[i], texts)
     console.log(`         ${time}s`)
   }
 })()

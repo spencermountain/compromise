@@ -19,7 +19,7 @@ test('set today context', function (t) {
 
 //ensure dateRange renders as local time
 test('today is always today', (t) => {
-  let arr=[
+  const arr=[
     'Europe/Paris',
     'Europe/London',
     'Etc/UTC',
@@ -34,11 +34,11 @@ test('today is always today', (t) => {
     null,
   ]
   arr.forEach((tz) => {
-    let context = {
+    const context = {
       timezone: tz,
       today: [2016, 11, 3],
     }
-    let json = nlp('buy eggs today').dates(context).json()[0] || {}
+    const json = nlp('buy eggs today').dates(context).json()[0] || {}
     let start = json.dates.start
     start = spacetime(start)
     t.equal(start.format('iso-short'), '2016-12-03', 'today: ' + tz)

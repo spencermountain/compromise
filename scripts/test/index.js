@@ -2,7 +2,7 @@
 const sh = require('shelljs')
 
 // if given, run just one test:
-let arg = process.argv[2]
+const arg = process.argv[2]
 if (arg) {
   let code = 0
   console.log(arg + ':')

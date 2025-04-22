@@ -42,7 +42,7 @@ test('tagset-change-isA', function (t) {
   _nlp.addWords({
     lkjj: 'Foo',
   })
-  let doc = _nlp('he is lkjj')
+  const doc = _nlp('he is lkjj')
   t.equal(doc.match('#Foo').out('normal'), 'lkjj', here + 'init-there')
   doc.match('lkjj').tag('#Doctor')
 
@@ -61,7 +61,7 @@ test('tagset-remove-downward', function (t) {
       is: 'Doctor',
     },
   })
-  let doc = _nlp('george is a person.')
+  const doc = _nlp('george is a person.')
   doc.match('george').tag('Surgeon')
 
   t.ok(doc.has('#Surgeon'), here + 'Surgeon-tag-there')
@@ -85,7 +85,7 @@ test('tagset-remove-half-downward', function (t) {
       is: 'Doctor',
     },
   })
-  let doc = _nlp('george is a person.')
+  const doc = _nlp('george is a person.')
   doc.match('george').tag('Surgeon')
 
   //remove one just under the top..
@@ -102,8 +102,8 @@ test('tagset-tree', function (t) {
     Two: {},
     Three: { is: 'Two' },
   })
-  let doc = _nlp(`have fun in toronto`, { toronto: 'Three' })
-  let m = doc.match('toronto')
+  const doc = _nlp(`have fun in toronto`, { toronto: 'Three' })
+  const m = doc.match('toronto')
   t.ok(m.has('#Three'), 'three')
   t.ok(m.has('#Two'), 'two')
   t.equal(m.has('#One'), false, 'no one')

@@ -2,6 +2,10 @@ const isObject = function (item) {
   return item && typeof item === 'object' && !Array.isArray(item)
 }
 
+const isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}
+
 // recursive merge of objects
 function mergeDeep(model, plugin) {
   if (isObject(plugin)) {
@@ -77,6 +81,11 @@ const addIrregulars = function (model, conj) {
 }
 
 const extend = function (plugin, world, View, nlp) {
+  // support array of plugins
+  if (isArray(plugin)) {
+    plugin.forEach(p => extend(p, world, View, nlp))
+    return
+  }
   const { methods, model, compute, hooks } = world
   if (plugin.methods) {
     mergeQuick(methods, plugin.methods)

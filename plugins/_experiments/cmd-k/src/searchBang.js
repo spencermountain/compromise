@@ -15,7 +15,9 @@ const searchBang = {
 
   /** add some tags */
   tags: {
-    SearchBang: {},
+    SearchBang: {
+      color: 'red'
+    },
   },
 
   /** add words to the stronger, more adamant lexicon */

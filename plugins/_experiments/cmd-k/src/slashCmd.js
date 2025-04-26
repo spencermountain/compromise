@@ -10,7 +10,9 @@ const slashCmd = {
 
   /** add some tags */
   tags: {
-    SlashCmd: {},
+    SlashCmd: {
+      color: 'yellow'
+    },
   },
 
 

@@ -16,7 +16,7 @@ const api = function (View) {
     /** i've -> 'i have' */
     expand() {
       this.docs.forEach(terms => {
-        let isTitleCase = titleCase.test(terms[0].text)
+        const isTitleCase = titleCase.test(terms[0].text)
         terms.forEach((t, i) => {
           t.text = t.implicit || ''
           delete t.implicit
@@ -38,7 +38,7 @@ const api = function (View) {
   }
   // add fn to View
   View.prototype.contractions = function () {
-    let m = this.match('@hasContraction+')
+    const m = this.match('@hasContraction+')
     return new Contractions(this.document, m.pointer)
   }
   View.prototype.contract = contract

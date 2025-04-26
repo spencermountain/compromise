@@ -5,7 +5,7 @@ import conjugate from '../../methods/transform/verbs/conjugate/index.js'
 import { toSuperlative, toComparative } from '../../methods/transform/adjectives/inflect.js'
 import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
 import models from '../models/index.js'
-let tmpModel = {
+const tmpModel = {
   one: { lexicon: {} },
   two: { models }
 }
@@ -45,7 +45,7 @@ const switchDefaults = {
 const expandLexicon = function (words, model) {
   // do clever tricks to grow the words
   const world = { model, methods }
-  let { lex, _multi } = methods.two.expandLexicon(words, world)
+  const { lex, _multi } = methods.two.expandLexicon(words, world)
   // store multiple-word terms in a cache
   Object.assign(model.one.lexicon, lex)
   Object.assign(model.one._multiCache, _multi)
@@ -64,7 +64,7 @@ const addUncountables = function (words, model) {
 }
 
 const expandVerb = function (str, words, doPresent) {
-  let obj = conjugate(str, tmpModel)
+  const obj = conjugate(str, tmpModel)
   words[obj.PastTense] = words[obj.PastTense] || 'PastTense'
   words[obj.Gerund] = words[obj.Gerund] || 'Gerund'
   if (doPresent === true) {
@@ -74,20 +74,20 @@ const expandVerb = function (str, words, doPresent) {
 }
 
 const expandAdjective = function (str, words, model) {
-  let sup = toSuperlative(str, model)
+  const sup = toSuperlative(str, model)
   words[sup] = words[sup] || 'Superlative'
-  let comp = toComparative(str, model)
+  const comp = toComparative(str, model)
   words[comp] = words[comp] || 'Comparative'
 }
 
 const expandNoun = function (str, words, model) {
-  let plur = toPlural(str, model)
+  const plur = toPlural(str, model)
   words[plur] = words[plur] || 'Plural'
 }
 
 // harvest ambiguous words for any conjugations
 const expandVariable = function (switchWords, model) {
-  let words = {}
+  const words = {}
   const lex = model.one.lexicon
   //add first tag as an assumption for each variable word
   Object.keys(switchWords).forEach(w => {
@@ -106,7 +106,7 @@ const expandVariable = function (switchWords, model) {
     }
     // add infinitives for gerunds
     if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
-      let inf = toInfinitive(w, tmpModel, 'Gerund')
+      const inf = toInfinitive(w, tmpModel, 'Gerund')
       if (!lex[inf]) {
         words[inf] = 'Infinitive' //expand it later
       }
@@ -116,7 +116,7 @@ const expandVariable = function (switchWords, model) {
       expandNoun(w, lex, model)
     }
     if (name === 'Adj|Past') {
-      let inf = toInfinitive(w, tmpModel, 'PastTense')
+      const inf = toInfinitive(w, tmpModel, 'PastTense')
       if (!lex[inf]) {
         words[inf] = 'Infinitive' //expand it later
       }

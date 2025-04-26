@@ -1,8 +1,8 @@
 import { noop, getTense, getSubject } from '../lib.js'
 
 const haveHas = function (vb, parsed) {
-  let subj = getSubject(vb, parsed)
-  let m = subj.subject
+  const subj = getSubject(vb, parsed)
+  const m = subj.subject
   if (m.has('(i|we|you)')) {
     return 'have'
   }
@@ -27,14 +27,14 @@ const simple = (vb, parsed) => {
   }
   let str = root.text({ keepPunct: false })
   str = toInfinitive(str, vb.model, getTense(root))
-  let all = conjugate(str, vb.model)
+  const all = conjugate(str, vb.model)
   // 'driven' || 'drove'
   str = all.Participle || all.PastTense
 
   if (str) {
     vb = vb.replace(root, str)
     // 'have/had/has eaten'
-    let have = haveHas(vb, parsed)
+    const have = haveHas(vb, parsed)
     vb.prepend(have).match(have).tag('Auxiliary')
     vb.remove(auxiliary)
   }

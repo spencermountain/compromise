@@ -60,8 +60,8 @@ test('freeze:', function (t) {
   t.end()
 })
 test('runtime error:', function (t) {
-  let txt = ` for three out of every four and the first four . `
-  let doc = nlp(txt)
+  const txt = ` for three out of every four and the first four . `
+  const doc = nlp(txt)
   doc.numbers().toNumber()
   t.ok(true, here + 'doesnt throw')
   t.end()

@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 // const here = '[three/chunks] '
 
 test('chunker', function (t) {
-  let arr = [
+  const arr = [
 
     ["Record your successes and keep going."],
     ["With a million jobs at stake, I refused to let that happen."],
@@ -39,7 +39,7 @@ test('chunker', function (t) {
     ["You can now eat chimney sundaes in Toronto", ''],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.chunks().forEach(() => {
 
     })

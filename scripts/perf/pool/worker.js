@@ -5,7 +5,7 @@ import nlp from './_lib.js'
 // nlp.plugin(plg)
 
 
-let matches = [
+const matches = [
   'out of range',
   '#Person #Person',
   '. of the world',
@@ -22,7 +22,7 @@ let matches = [
 ]
 
 const doit = async function (txt) {
-  let doc = nlp(txt)
+  const doc = nlp(txt)
   // doc.compute('root')
   matches.forEach(reg => {
     doc.match(reg).text()
@@ -31,10 +31,10 @@ const doit = async function (txt) {
 }
 
 parentPort.on('message', async msg => {
-  let begin = new Date()
+  const begin = new Date()
   doit(msg)
-  let end = new Date()
-  let delta = (end.getTime() - begin.getTime()) / 1000
+  const end = new Date()
+  const delta = (end.getTime() - begin.getTime()) / 1000
   parentPort.postMessage(delta)
 })
 

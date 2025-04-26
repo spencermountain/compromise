@@ -8,7 +8,7 @@ test('map-stuff', function (t) {
   // })
   // t.equal(doc.text(), 'or', 'replace-with')
 
-  let doc = nlp('one two three. three four five.').map(d => {
+  const doc = nlp('one two three. three four five.').map(d => {
     return d.match('three')
   })
   t.equal(doc.eq(0).text(), 'three', here + 'match-one')
@@ -18,7 +18,7 @@ test('map-stuff', function (t) {
 })
 
 test('foreach-stuff', function (t) {
-  let doc = nlp('one two three. three four five.').forEach(p => {
+  const doc = nlp('one two three. three four five.').forEach(p => {
     p.toUpperCase()
   })
   t.equal(doc.out('text'), 'ONE TWO THREE. THREE FOUR FIVE.', here + 'foreach-uppercase')
@@ -66,10 +66,10 @@ test('some-stuff', function (t) {
 })
 
 test('map array return', function (t) {
-  let doc = nlp('Larry, Curly, and Moe')
+  const doc = nlp('Larry, Curly, and Moe')
   let people = doc.match('!and') // (any one noun)
   people = people.sort('alpha')
-  let arr = people.map(d => d.text('normal'))
+  const arr = people.map(d => d.text('normal'))
   t.deepEqual(arr, ['curly', 'larry', 'moe'], here + 'got array in response')
   t.end()
 })

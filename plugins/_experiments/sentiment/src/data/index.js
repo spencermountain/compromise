@@ -9,7 +9,7 @@ const pattern_en = unpack(pattern_en_packed);
 // 
 // Wait...you can add to a const? Yes!
 // Ref: https://stackoverflow.com/a/23436563
-let arrayInfo = ["i1.0", "p0.0", "s0.0"];
+const arrayInfo = ["i1.0", "p0.0", "s0.0"];
 pattern_en['13th'] = arrayInfo;
 pattern_en['20th'] = arrayInfo;
 pattern_en['21st'] = arrayInfo;

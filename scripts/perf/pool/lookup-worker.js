@@ -3,7 +3,7 @@ import { parentPort } from 'worker_threads'
 // const nlp = require('../../src')
 import nlp from './_lib.js'
 
-let matches = [
+const matches = [
   `Toronto Aeros`,
   `Toronto Arenas`,
   `Toronto Aura Lee`,
@@ -50,7 +50,7 @@ let matches = [
 const trie = nlp.buildTrie(matches)
 
 const doit = async function (txt) {
-  let doc = nlp(txt)
+  const doc = nlp(txt)
   let count = 0
   // matches.forEach(reg => {
   //   count += doc.match(reg).length
@@ -61,10 +61,10 @@ const doit = async function (txt) {
 }
 
 parentPort.on('message', async msg => {
-  let begin = new Date()
+  const begin = new Date()
   doit(msg)
-  let end = new Date()
-  let delta = (end.getTime() - begin.getTime()) / 1000
+  const end = new Date()
+  const delta = (end.getTime() - begin.getTime()) / 1000
   parentPort.postMessage(delta)
 })
 

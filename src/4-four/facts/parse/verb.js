@@ -1,5 +1,5 @@
 const parseVerb = function (chunk) {
-  let obj = chunk.verbs().json()[0].verb
+  const obj = chunk.verbs().json()[0].verb
   return {
     chunk: 'Verb',
     ptr: obj.ptr = chunk.ptrs[0],

@@ -7,7 +7,7 @@ const byWord = {
 const easyMode = function (document) {
   for (let n = 0; n < document.length; n += 1) {
     for (let t = 0; t < document[n].length; t += 1) {
-      let term = document[n][t]
+      const term = document[n][t]
 
       if (byWord.hasOwnProperty(term.normal) === true) {
         term.chunk = byWord[term.normal]

@@ -3,8 +3,8 @@ import nlp from '../_lib.js'
 const here = '[one/lookaround] '
 
 test('before-basic:', function (t) {
-  let doc = nlp('one two match three match four')
-  let m = doc.match('match')
+  const doc = nlp('one two match three match four')
+  const m = doc.match('match')
 
   let res = m.before()
   t.equal(res.text(), 'one two', here + 'empty')
@@ -22,7 +22,7 @@ test('before-basic:', function (t) {
 })
 
 test('after-basic:', function (t) {
-  let doc = nlp('one two match three match four five')
+  const doc = nlp('one two match three match four five')
   let m = doc.match('match')
 
   let res = m.after()
@@ -39,9 +39,9 @@ test('after-basic:', function (t) {
 })
 
 test('after-concat:', function (t) {
-  let doc = nlp('one two three match four five')
-  let m = doc.match('match')
-  let res = m.concat(m.after())
+  const doc = nlp('one two three match four five')
+  const m = doc.match('match')
+  const res = m.concat(m.after())
   t.equal(res.text(), 'match four five', here + 'concat')
   t.end()
 })
@@ -55,7 +55,7 @@ test('grow-right:', function (t) {
   doc = nlp('one match. one match two. one match two two.')
   m = doc.match('match')
   more = m.growRight('two+')
-  let arr = ['match.', 'match two.', 'match two two.']
+  const arr = ['match.', 'match two.', 'match two two.']
   t.deepEqual(more.out('array'), arr, here + 'grow-right-multi')
   t.end()
 })
@@ -69,13 +69,13 @@ test('grow-left:', function (t) {
   doc = nlp('match. one match two. one one match one.')
   m = doc.match('match')
   more = m.growLeft('one+')
-  let arr = ['match.', 'one match', 'one one match']
+  const arr = ['match.', 'one match', 'one one match']
   t.deepEqual(more.out('array'), arr, here + 'grow-left-multi')
   t.end()
 })
 
 test('grow', function (t) {
-  let doc = nlp('one two three match four five')
+  const doc = nlp('one two three match four five')
   let m = doc.match('match')
   let more = m.grow('(three|two)')
   t.equal(more.text(), 'three match', here + 'grow-both')
@@ -93,25 +93,25 @@ test('grow', function (t) {
 })
 
 test('grow-around', function (t) {
-  let doc = nlp(`i have gone`)
-  let h = doc.match('have')
-  let right = h.growRight('.')
+  const doc = nlp(`i have gone`)
+  const h = doc.match('have')
+  const right = h.growRight('.')
   t.equal(right.text(), 'have gone', here + 'grow-right-dot')
-  let left = h.growLeft('.')
+  const left = h.growLeft('.')
   t.equal(left.text(), 'i have', here + 'grow-left-dot')
-  let both = h.grow('.')
+  const both = h.grow('.')
   t.equal(both.text(), 'i have gone', here + 'grow-both-dot')
   t.end()
 })
 
 test('grow-contraction', function (t) {
-  let doc = nlp(`i've gone`)
-  let h = doc.match('have')
-  let right = h.growRight('.')
+  const doc = nlp(`i've gone`)
+  const h = doc.match('have')
+  const right = h.growRight('.')
   t.equal(right.text(), 'gone', here + 'grow-right-contraction')
-  let left = h.growLeft('.')
+  const left = h.growLeft('.')
   t.equal(left.text(), 'i\'ve', here + 'grow-left-contraction')
-  let both = h.grow('.')
+  const both = h.grow('.')
   t.equal(both.text(), 'i\'ve gone', here + 'grow-both-contraction')
   t.end()
 })

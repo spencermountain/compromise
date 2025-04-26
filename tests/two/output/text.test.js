@@ -3,13 +3,13 @@ import nlp from '../_lib.js'
 const here = '[one/text] '
 
 test('text-formats', function (t) {
-  let doc = nlp(`Toronto's citizens LOVE toronto! they come here for food.`)
+  const doc = nlp(`Toronto's citizens LOVE toronto! they come here for food.`)
   t.equal(doc.text('normal'), `toronto's citizens love toronto! they come here for food.`, here + 'normal')
   t.end()
 })
 
 test('text(normal):', function (t) {
-  let arr = [
+  const arr = [
     ['he is good', 'he is good'],
     ['Jack and Jill went up the hill.', 'jack and jill went up the hill.'],
     // ['Mr. Clinton did so.', 'mr clinton did so.'],
@@ -33,14 +33,14 @@ test('text(normal):', function (t) {
 
 test('text-text', function (t) {
   const str = `My dog LOVES pizza, and grapes!!`
-  let doc = nlp(str)
+  const doc = nlp(str)
   t.equal(doc.json({ text: true })[0].text, str, here + 'json(text)')
   t.equal(doc.text('text'), str, here + 'text(text): ')
   t.end()
 })
 
 test('text-normal', function (t) {
-  let doc = nlp(`My dog LOVES pizza, and grapes!!`)
+  const doc = nlp(`My dog LOVES pizza, and grapes!!`)
   const want = 'my dog loves pizza and grapes!'
   t.equal(doc.json({ normal: true })[0].normal, want, 'json(normal)')
   t.equal(doc.text('normal'), want, 'text(normal): ')
@@ -62,7 +62,7 @@ test('text-reduced', function (t) {
 })
 
 test('text-implicit', function (t) {
-  let doc = nlp(`My dog isn't good, he's the best!`)
+  const doc = nlp(`My dog isn't good, he's the best!`)
   const want = 'My dog is not good, he is the best!'
   t.equal(doc.json({ implicit: true })[0].implicit, want, 'json(implicit)')
   t.equal(doc.text('implicit'), want, 'text(implicit): ')
@@ -70,19 +70,19 @@ test('text-implicit', function (t) {
 })
 
 test('text-punct', function (t) {
-  let doc = nlp('Stare down my double-barrel shotgun.').not('stare down my')
+  const doc = nlp('Stare down my double-barrel shotgun.').not('stare down my')
   t.equal(doc.text(), 'double-barrel shotgun', 'text-punct')
   t.end()
 })
 
 test('text-machine', function (t) {
-  let doc = nlp("he's just a tiny baby")
+  const doc = nlp("he's just a tiny baby")
   t.equal(doc.text('machine'), 'he is just a tiny baby', here + 'machine contraction')
   t.end()
 })
 
 test('text-root', function (t) {
-  let doc = nlp(`My dog LOVES pizza, and grapes...`)
+  const doc = nlp(`My dog LOVES pizza, and grapes...`)
   doc.compute('root')
   const want = 'my dog love pizza and grape'
   t.equal(doc.json({ root: true })[0].root, want, here + 'json(root)')

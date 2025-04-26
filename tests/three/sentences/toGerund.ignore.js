@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/sentence-toGerund] '
 
 test('sentence-toGerund', function (t) {
-  let arr = [
+  const arr = [
     ['she is cool', 'she is being cool'],
     ['she was cool', 'she was being cool'],
     ['she is being cool', 'she is being cool'],
@@ -22,7 +22,7 @@ test('sentence-toGerund', function (t) {
 
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0]).sentences()
+    const doc = nlp(a[0]).sentences()
     doc.toGerund()
     t.equal(doc.out(), a[1], here + '[toGerund] ' + a[0])
   })

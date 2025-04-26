@@ -8,15 +8,15 @@ const freeze = function (view) {
   view.docs.forEach(terms => {
     for (let i = 0; i < terms.length; i += 1) {
       // basic lexicon lookup
-      let t = terms[i]
-      let word = t.machine || t.normal
+      const t = terms[i]
+      const word = t.machine || t.normal
 
       // test a multi-word
       if (multi[word] !== undefined && terms[i + 1]) {
-        let end = i + multi[word] - 1
+        const end = i + multi[word] - 1
         for (let k = end; k > i; k -= 1) {
-          let words = terms.slice(i, k + 1)
-          let str = words.map(term => term.machine || term.normal).join(' ')
+          const words = terms.slice(i, k + 1)
+          const str = words.map(term => term.machine || term.normal).join(' ')
           // lookup frozen lexicon
           if (frozenLex.hasOwnProperty(str) === true) {
             setTag(words, frozenLex[str], world, false, '1-frozen-multi-lexicon')

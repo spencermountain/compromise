@@ -4,7 +4,7 @@ import durations from './durations.js'
 import holidays from './holidays.js'
 import times from './times.js'
 
-let lex = {
+const lex = {
   'a couple': 'Value',
   thur: 'WeekDay',
   thurs: 'WeekDay',

@@ -33,8 +33,8 @@ const parseIntervals = function (doc, context) {
   // 'every week'
   let m = doc.match('[<logic>(every|any|each)] [<skip>other?] [<unit>#Duration] (starting|beginning|commencing)?')
   if (m.found) {
-    let repeat = { interval: {} }
-    let unit = m.groups('unit').text('reduced')
+    const repeat = { interval: {} }
+    const unit = m.groups('unit').text('reduced')
     repeat.interval[unit] = 1
     repeat.choose = parseLogic(m)
     // 'every other week'
@@ -48,10 +48,10 @@ const parseIntervals = function (doc, context) {
   // 'every two weeks'
   m = doc.match('[<logic>(every|any|each)] [<num>#Value] [<unit>#Duration] (starting|beginning|commencing)?')
   if (m.found) {
-    let repeat = { interval: {} }
-    let units = m.groups('unit')
+    const repeat = { interval: {} }
+    const units = m.groups('unit')
     units.nouns().toSingular()
-    let unit = units.text('reduced')
+    const unit = units.text('reduced')
     repeat.interval[unit] = m.groups('num').numbers().get()[0]
     repeat.choose = parseLogic(m)
     doc = doc.remove(m)
@@ -61,7 +61,7 @@ const parseIntervals = function (doc, context) {
   // 'every friday'
   m = doc.match('[<logic>(every|any|each|a)] [<skip>other?] [<day>#WeekDay+] (starting|beginning|commencing)?')
   if (m.found) {
-    let repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
+    const repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
     let str = m.groups('day').text('reduced')
     str = dayNames[str] //normalize it
     if (str) {
@@ -77,8 +77,8 @@ const parseIntervals = function (doc, context) {
     '[<logic>(every|any|each|a)] [<day>(weekday|week day|weekend|weekend day)] (starting|beginning|commencing)?'
   )
   if (m.found) {
-    let repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
-    let day = m.groups('day')
+    const repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
+    const day = m.groups('day')
     if (day.has('(weekday|week day)')) {
       repeat.filter.weekDays = {
         monday: true,
@@ -103,7 +103,7 @@ const parseIntervals = function (doc, context) {
     '[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays)] (at|near|after)? [<time>#Time+?]'
   )
   if (m.found) {
-    let repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
+    const repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
     let str = m.groups('day').text('reduced')
     str = str.replace(/s$/, '')
     str = dayNames[str] //normalize it
@@ -111,7 +111,7 @@ const parseIntervals = function (doc, context) {
       repeat.filter.weekDays[str] = true
       repeat.choose = 'OR'
       doc = doc.remove(m)
-      let time = m.groups('time')
+      const time = m.groups('time')
       if (time.found) {
         repeat.time = parseTime(time, context)
       }

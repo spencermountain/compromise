@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-subjects]'
 
 test('get verb subject', function (t) {
-  let arr = [
+  const arr = [
     ['i am walking', 'i', 'am walking'],
     ['we are walking', 'we', 'are walking'],
     ['he let his dog walk', 'he', 'let'],
@@ -106,8 +106,8 @@ test('get verb subject', function (t) {
 
   ]
   arr.forEach(a => {
-    let [str, subject, verb] = a
-    let vb = nlp(str).verbs().if(verb).first()
+    const [str, subject, verb] = a
+    const vb = nlp(str).verbs().if(verb).first()
     t.equal(vb.text(), verb, here + `[vb] '${a[0]}'`)
     t.equal(vb.subjects().text(), subject, here + `[subj] '${a[0]}'`)
   })

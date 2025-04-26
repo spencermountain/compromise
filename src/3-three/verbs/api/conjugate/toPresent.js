@@ -58,17 +58,17 @@ const forms = {
   // he walks -> he walked
   'simple-present': (vb, parsed) => {
     const { conjugate } = vb.methods.two.transform.verb
-    let { root } = parsed
+    const { root } = parsed
     // is it *only* a infinitive? - 'we buy' etc
     if (root.has('#Infinitive')) {
-      let subj = getSubject(vb, parsed)
-      let m = subj.subject
+      const subj = getSubject(vb, parsed)
+      const m = subj.subject
       if (isPlural(vb, parsed) || m.has('i')) {
         // keep it infinitive
         return vb
       }
-      let str = root.text('normal')
-      let pres = conjugate(str, vb.model).PresentTense
+      const str = root.text('normal')
+      const pres = conjugate(str, vb.model).PresentTense
       if (str !== pres) {
         vb.replace(root, pres, keep)
       }
@@ -84,7 +84,7 @@ const forms = {
     const { root, auxiliary } = parsed
     // handle 'will be'
     if (auxiliary.has('will') && root.has('be')) {
-      let str = isAreAm(vb, parsed)
+      const str = isAreAm(vb, parsed)
       vb.replace(root, str)
       vb = vb.remove('will')
       vb.replace('not ' + str, str + ' not')
@@ -99,7 +99,7 @@ const forms = {
   'present-progressive': noop,
   // was walking -> is walking
   'past-progressive': (vb, parsed) => {
-    let str = isAreAm(vb, parsed)
+    const str = isAreAm(vb, parsed)
     return vb.replace('(were|was)', str, keep)
   },
   // will be walking -> is walking
@@ -119,8 +119,8 @@ const forms = {
   // had walked -> has walked
   'past-perfect': (vb, parsed) => {
     // not 'we has walked'
-    let subj = getSubject(vb, parsed)
-    let m = subj.subject
+    const subj = getSubject(vb, parsed)
+    const m = subj.subject
     if (isPlural(vb, parsed) || m.has('i')) {
       vb = toInf(vb, parsed)// we walk
       vb.remove('had')
@@ -149,7 +149,7 @@ const forms = {
   // was walked -> is walked
   // had been walked -> is walked
   'passive-past': (vb, parsed) => {
-    let str = isAreAm(vb, parsed)
+    const str = isAreAm(vb, parsed)
     if (vb.has('(had|have|has)') && vb.has('been')) {
       vb.replace('(had|have|has)', str, keep)
       vb.replace('been', 'being')
@@ -184,7 +184,7 @@ const forms = {
   'auxiliary-past': (vb, parsed) => {
     // 'did provide' -> 'does provide'
     if (parsed.auxiliary.has('did')) {
-      let str = doDoes(vb, parsed)
+      const str = doDoes(vb, parsed)
       vb.replace(parsed.auxiliary, str)
       return vb
     }

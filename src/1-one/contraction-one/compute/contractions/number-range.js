@@ -3,7 +3,7 @@ const timeRange = /^([0-9]{1,2}(:[0-9][0-9])?(am|pm)?) ?[-–—] ?([0-9]{1,2}(:
 const phoneNum = /^[0-9]{3}-[0-9]{4}$/
 
 const numberRange = function (terms, i) {
-  let term = terms[i]
+  const term = terms[i]
   let parts = term.text.match(isRange)
   if (parts !== null) {
     // 123-1234 is a phone number, not a number-range

@@ -20,7 +20,7 @@ const isPlural = function (m, root) {
     return false
   }
   // word-reg fallback
-  let str = root.text('normal')
+  const str = root.text('normal')
   // ends with a brutal s fallback
   return str.length > 3 && str.endsWith('s') && !str.endsWith('ss')
 }

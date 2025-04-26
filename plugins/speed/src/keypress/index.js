@@ -1,12 +1,12 @@
-let sentenceCache = {}
+const sentenceCache = {}
 
 /** memoize tagger per-sentence */
 const keyPress = function (text, lex, opts = {}) {
   const nlp = this
   const splitSentences = this.methods().one.tokenize.splitSentences
-  let arr = splitSentences(text, this.world())
+  const arr = splitSentences(text, this.world())
 
-  let list = []
+  const list = []
   arr.forEach(str => {
     //do we already have it parsed?
     if (sentenceCache.hasOwnProperty(str) === true) {
@@ -19,7 +19,7 @@ const keyPress = function (text, lex, opts = {}) {
       if (opts.verbose) {
         console.log(`parsing: '${str}'\n`)//eslint-disable-line
       }
-      let json = nlp(str, lex).json(0)
+      const json = nlp(str, lex).json(0)
       //cache it
       sentenceCache[str] = {
         data: json,

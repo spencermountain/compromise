@@ -6,12 +6,12 @@ import fs from 'fs'
 import plg from './src/plugin.js'
 nlp.plugin(plg)
 
-let file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`
+const file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`
 // file = `/Users/spencer/mountain/compromise/plugins/speed/tests/files/freshPrince.txt`
-let begin = new Date()
-let txt = fs.readFileSync(file).toString()
+const begin = new Date()
+const txt = fs.readFileSync(file).toString()
 
-let net = nlp.buildNet([
+const net = nlp.buildNet([
   { match: 'every single #Noun' },
   { match: 'not (a|one) #Noun' },
 ])

@@ -3,7 +3,7 @@ import fillTag from './_fillTags.js'
 
 const nounFallback = function (terms, i, model) {
   let isEmpty = false
-  let tags = terms[i].tags
+  const tags = terms[i].tags
   if (tags.size === 0) {
     isEmpty = true
   } else if (tags.size === 1) {

@@ -2,7 +2,7 @@ const api = function (View) {
   /** */
   View.prototype.syllables = function () {
     this.compute('syllables')
-    let all = []
+    const all = []
     this.docs.forEach(terms => {
       let some = []
       terms.forEach(term => {
@@ -17,7 +17,7 @@ const api = function (View) {
   /** */
   View.prototype.soundsLike = function () {
     this.compute('soundsLike')
-    let all = []
+    const all = []
     this.docs.forEach(terms => {
       let some = []
       terms.forEach(term => {

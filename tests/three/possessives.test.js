@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 const here = '[three/possessives] '
 
 test('possessives misc', function (t) {
-  let doc = nlp(`in Sunday's final`)
+  const doc = nlp(`in Sunday's final`)
   t.equal(doc.has('#Possessive'), true, here + 'misc')
   t.end()
 })

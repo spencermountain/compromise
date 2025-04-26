@@ -5,7 +5,7 @@ const isArray = arr => Object.prototype.toString.call(arr) === '[object Array]'
 // turn anything into {foo:true} format
 const coerceToObject = function (input) {
   if (typeof input === 'string' || typeof input === 'number') {
-    let tmp = {}
+    const tmp = {}
     tmp[input] = true
     return tmp
   }
@@ -22,7 +22,7 @@ const coerceToObject = function (input) {
 const isUnit = function (doc, input = {}) {
   input = coerceToObject(input)
   return doc.filter(p => {
-    let { unit } = parse(p)
+    const { unit } = parse(p)
     if (unit && input[unit] === true) {
       return true
     }

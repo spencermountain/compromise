@@ -11,9 +11,9 @@ const doRegs = function (str, regs) {
 }
 // suffix-regexes, indexed by last-character
 const doEndsWith = function (str = '', byEnd) {
-  let char = str[str.length - 1]
+  const char = str[str.length - 1]
   if (byEnd.hasOwnProperty(char) === true) {
-    let regs = byEnd[char] || []
+    const regs = byEnd[char] || []
     for (let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {
         return regs[r]
@@ -25,9 +25,9 @@ const doEndsWith = function (str = '', byEnd) {
 
 const checkRegex = function (terms, i, model, world) {
   const setTag = world.methods.one.setTag
-  let { regexText, regexNormal, regexNumbers, endsWith } = model.two
-  let term = terms[i]
-  let normal = term.machine || term.normal
+  const { regexText, regexNormal, regexNumbers, endsWith } = model.two
+  const term = terms[i]
+  const normal = term.machine || term.normal
   let text = term.text
   // keep dangling apostrophe?
   if (hasApostrophe.test(term.post) && !hasApostrophe.test(term.pre)) {

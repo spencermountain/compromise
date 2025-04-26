@@ -2,8 +2,8 @@ import adj from './_adj.js'
 
 // the boiled egg
 // boiled the water
-let past = 'PastTense'
-let jj = 'Adjective'
+const past = 'PastTense'
+const jj = 'Adjective'
 
 const adjPast = {
   beforeTags: {

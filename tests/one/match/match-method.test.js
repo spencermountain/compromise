@@ -39,7 +39,7 @@ test('match @functions', function (t) {
 })
 
 test('pre-parse match', function (t) {
-  let doc = nlp('the weight of the world. foo')
+  const doc = nlp('the weight of the world. foo')
   let reg = 'weight of the? world'
   reg = nlp.parseMatch(reg)
   t.equal(doc.match(reg).found, true, here + 'match')
@@ -52,8 +52,8 @@ test('pre-parse match', function (t) {
 })
 
 test('pre-parse lookaround', function (t) {
-  let doc = nlp(`before match after`)
-  let m = doc.match('match')
+  const doc = nlp(`before match after`)
+  const m = doc.match('match')
 
   let reg = nlp.parseMatch('before')
   t.equal(m.before(reg).text(), 'before', here + 'before')
@@ -73,8 +73,8 @@ test('pre-parse lookaround', function (t) {
 })
 
 test('pre-parse split', function (t) {
-  let doc = nlp(`before match after`)
-  let reg = nlp.parseMatch('match')
+  const doc = nlp(`before match after`)
+  const reg = nlp.parseMatch('match')
   let m = doc.splitOn(reg)
   t.deepEqual(m.out('array'), ['before', 'match', 'after'], here + 'splitOn')
 

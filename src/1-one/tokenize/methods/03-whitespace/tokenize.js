@@ -8,11 +8,11 @@ const chillin = /[sn]['’]$/
 
 const normalizePunctuation = function (str, model) {
   // quick lookup for allowed pre/post punctuation
-  let { prePunctuation, postPunctuation, emoticons } = model.one
+  const { prePunctuation, postPunctuation, emoticons } = model.one
   let original = str
   let pre = ''
   let post = ''
-  let chars = Array.from(str)
+  const chars = Array.from(str)
 
   // punctuation-only words, like '<3'
   if (emoticons.hasOwnProperty(str.trim())) {
@@ -22,7 +22,7 @@ const normalizePunctuation = function (str, model) {
   // pop any punctuation off of the start
   let len = chars.length
   for (let i = 0; i < len; i += 1) {
-    let c = chars[0]
+    const c = chars[0]
     // keep any declared chars
     if (prePunctuation[c] === true) {
       continue//keep it
@@ -46,7 +46,7 @@ const normalizePunctuation = function (str, model) {
   // pop any punctuation off of the end
   len = chars.length
   for (let i = 0; i < len; i += 1) {
-    let c = chars[chars.length - 1]
+    const c = chars[chars.length - 1]
     // keep any declared chars
     if (postPunctuation[c] === true) {
       continue//keep it

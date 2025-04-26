@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/whitespace] '
 
 test('whitespace-out', function (t) {
-  let str = 'one, two three. One, two, four?'
+  const str = 'one, two three. One, two, four?'
   const doc = nlp(str)
 
   t.equal(doc.out(), str, here + 'original-okay')
@@ -26,7 +26,7 @@ test('whitespace-out', function (t) {
 })
 
 test('pre/post concat', function (t) {
-  let doc = nlp(`Getting ready for whacking day? What's whacking day?`)
+  const doc = nlp(`Getting ready for whacking day? What's whacking day?`)
   doc.post(' ', true)
   t.equal(doc.text(), `Getting ready for whacking day?  What's whacking day? `, here + 'concat')
   doc.trim()

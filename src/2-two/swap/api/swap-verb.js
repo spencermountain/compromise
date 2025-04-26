@@ -1,6 +1,6 @@
 const matchVerb = function (m, lemma) {
   const conjugate = m.methods.two.transform.verb.conjugate
-  let all = conjugate(lemma, m.model)
+  const all = conjugate(lemma, m.model)
   if (m.has('#Gerund')) {
     return all.Gerund
   }

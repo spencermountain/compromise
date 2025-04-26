@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 import spacetime from 'spacetime'
 
 test('week-logic', function (t) {
-  let tests = [
+  const tests = [
     {
       today: '2021-03-01', //on monday
       tests: [
@@ -110,15 +110,15 @@ test('week-logic', function (t) {
     },
   ]
   tests.forEach((obj) => {
-    let ctx = { today: obj.today }
-    let today = spacetime(obj.today)
+    const ctx = { today: obj.today }
+    const today = spacetime(obj.today)
     obj.tests.forEach((a) => {
-      let dates = nlp(a[0]).dates(ctx).get()
+      const dates = nlp(a[0]).dates(ctx).get()
       t.equal(dates.length, 1, '[one date] ' + a[0])
-      let s = spacetime(dates[0].start)
+      const s = spacetime(dates[0].start)
       t.equal(s.format('day').toLowerCase(), a[1], '[day] ' + a[0])
       // compare isos
-      let want = today.add(a[2], 'day')
+      const want = today.add(a[2], 'day')
       t.equal(want.format('iso-short'), s.format('iso-short'), `[${a[2]} days] '${a[0]}'`)
     })
   })

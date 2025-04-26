@@ -18,7 +18,7 @@ test('value-lumper-splitter:', function (t) {
 })
 
 test('value-basic:', function (t) {
-  let r = nlp('third month of 2019')
+  const r = nlp('third month of 2019')
   r.values().toNumber()
   t.equal(r.out(), '3rd month of 2019', here + 'toNumber')
 
@@ -42,7 +42,7 @@ test('value-basic:', function (t) {
 })
 
 test('value-to_ordinal:', function (t) {
-  let arr = [
+  const arr = [
     [11, '11th'],
     [5, '5th'],
     [22, '22nd'],
@@ -58,7 +58,7 @@ test('value-to_ordinal:', function (t) {
 })
 
 test('value-number:', function (t) {
-  let arr = [
+  const arr = [
     ['five hundred feet', 500],
     ['fifty square feet', 50],
     ['90 hertz', 90],

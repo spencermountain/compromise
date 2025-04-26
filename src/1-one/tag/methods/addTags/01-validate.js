@@ -47,7 +47,7 @@ const validate = function (tags, already) {
   // not links are bi-directional
   // add any incoming not tags
   Object.keys(tags).forEach(k => {
-    let nots = tags[k].not || []
+    const nots = tags[k].not || []
     nots.forEach(no => {
       if (tags[no] && tags[no].not) {
         tags[no].not.push(k)

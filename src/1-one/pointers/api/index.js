@@ -20,7 +20,7 @@ const getDoc = (m, view) => {
 // 'harden' our json pointers, again
 const addIds = function (ptrs, docs) {
   return ptrs.map(ptr => {
-    let [n, start] = ptr
+    const [n, start] = ptr
     if (docs[n] && docs[n][start]) {
       ptr[3] = docs[n][start].id
     }
@@ -58,7 +58,7 @@ methods.difference = methods.not
 
 // get opposite of a match
 methods.complement = function () {
-  let doc = this.all()
+  const doc = this.all()
   let ptrs = getDifference(doc.fullPointer, this.fullPointer)
   ptrs = addIds(ptrs, this.document)
   return this.toView(ptrs)

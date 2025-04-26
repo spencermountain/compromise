@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/noun-isPlural] '
 
 test('isPlural:', function (t) {
-  let arr = [
+  const arr = [
     ['octopus', false],
     ['tree', false],
     ['trees', true],

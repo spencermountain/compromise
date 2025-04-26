@@ -4,7 +4,7 @@ const setContraction = function (m, suffix) {
   if (!m.found) {
     return
   }
-  let terms = m.termList()
+  const terms = m.termList()
   //avoid any problematic punctuation
   for (let i = 0; i < terms.length - 1; i++) {
     const t = terms[i]
@@ -29,7 +29,7 @@ const setContraction = function (m, suffix) {
 
 /** turn 'i am' into i'm */
 const contract = function () {
-  let doc = this.not('@hasContraction')
+  const doc = this.not('@hasContraction')
   // we are -> we're
   let m = doc.match('(we|they|you) are')
   setContraction(m, `'re`)

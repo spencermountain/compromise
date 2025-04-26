@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 
 test('no dates', function (t) {
-  let arr = [
+  const arr = [
     'laughing out loud',
     '1 adult',
     'we are separated',

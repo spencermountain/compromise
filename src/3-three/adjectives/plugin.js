@@ -2,7 +2,7 @@
 // guard against superlative+comparative forms
 const toRoot = function (adj) {
   const { fromComparative, fromSuperlative } = adj.methods.two.transform.adjective
-  let str = adj.text('normal')
+  const str = adj.text('normal')
   if (adj.has('#Comparative')) {
     return fromComparative(str, adj.model)
   }
@@ -23,8 +23,8 @@ const api = function (View) {
       const { toAdverb, toNoun, toSuperlative, toComparative } = this.methods.two.transform.adjective
       opts.normal = true
       return this.map(m => {
-        let json = m.toView().json(opts)[0] || {}
-        let str = toRoot(m)
+        const json = m.toView().json(opts)[0] || {}
+        const str = toRoot(m)
         json.adjective = {
           adverb: toAdverb(str, this.model),
           noun: toNoun(str, this.model),
@@ -40,7 +40,7 @@ const api = function (View) {
     conjugate(n) {
       const { toComparative, toSuperlative, toNoun, toAdverb } = this.methods.two.transform.adjective
       return this.getNth(n).map(adj => {
-        let root = toRoot(adj)
+        const root = toRoot(adj)
         return {
           Adjective: root,
           Comparative: toComparative(root, this.model),
@@ -53,32 +53,32 @@ const api = function (View) {
     toComparative(n) {
       const { toComparative } = this.methods.two.transform.adjective
       return this.getNth(n).map(adj => {
-        let root = toRoot(adj)
-        let str = toComparative(root, this.model)
+        const root = toRoot(adj)
+        const str = toComparative(root, this.model)
         return adj.replaceWith(str)
       })
     }
     toSuperlative(n) {
       const { toSuperlative } = this.methods.two.transform.adjective
       return this.getNth(n).map(adj => {
-        let root = toRoot(adj)
-        let str = toSuperlative(root, this.model)
+        const root = toRoot(adj)
+        const str = toSuperlative(root, this.model)
         return adj.replaceWith(str)
       })
     }
     toAdverb(n) {
       const { toAdverb } = this.methods.two.transform.adjective
       return this.getNth(n).map(adj => {
-        let root = toRoot(adj)
-        let str = toAdverb(root, this.model)
+        const root = toRoot(adj)
+        const str = toAdverb(root, this.model)
         return adj.replaceWith(str)
       })
     }
     toNoun(n) {
       const { toNoun } = this.methods.two.transform.adjective
       return this.getNth(n).map(adj => {
-        let root = toRoot(adj)
-        let str = toNoun(root, this.model)
+        const root = toRoot(adj)
+        const str = toNoun(root, this.model)
         return adj.replaceWith(str)
       })
     }

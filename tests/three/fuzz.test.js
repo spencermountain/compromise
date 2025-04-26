@@ -44,7 +44,7 @@ const isArray = function (arr) {
 
 
 const goodIds = function (doc) {
-  let all = {}
+  const all = {}
   doc.docs.forEach(terms => {
     terms.forEach(term => {
       if (!term.id || all[term.id] === true) {
@@ -58,7 +58,7 @@ const goodIds = function (doc) {
 
 
 test('try all json methods', function (t) {
-  let str = `
+  const str = `
   
   .
   ...
@@ -73,11 +73,11 @@ URGENT: ➔➔*.
 ................................................................................................................
 ................................................................................................................+
 -0.0#  .`
-  let doc = nlp(str)
+  const doc = nlp(str)
   subsets.forEach(sub => {
     t.ok(doc[sub], here + sub)
     let m = doc[sub]()
-    let arr = m.json()
+    const arr = m.json()
     m.tag('H*a--ar.d')
     m.tag('prototype')
     m.tag('null')

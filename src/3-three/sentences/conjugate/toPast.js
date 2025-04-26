@@ -1,7 +1,7 @@
 const toPast = function (s) {
   let verbs = s.verbs()
   // translate the first verb, no-stress
-  let first = verbs.eq(0)
+  const first = verbs.eq(0)
   // already past
   if (first.has('#PastTense')) {
     return s
@@ -19,7 +19,7 @@ const toPast = function (s) {
     verbs = verbs.notIf('#Gerund')
 
     //run-on infinitive-list - 'to walk, sit and eat'
-    let list = s.match('to #Verb+ #Conjunction #Verb').terms()
+    const list = s.match('to #Verb+ #Conjunction #Verb').terms()
     verbs = verbs.not(list)
 
     // otherwise, I guess so?

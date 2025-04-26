@@ -4,13 +4,13 @@ import { yellow } from 'colorette'
 import sh from 'shelljs'
 const file = `./files/pageviews.tsv`
 
-let date = new Date()
+const date = new Date()
 const month = `${date.getMonth() + 1}`.padStart(2, '0')
 const year = date.getFullYear()
 
 // create the filename for the last dump
 const getDate = () => {
-  let d = new Date()
+  const d = new Date()
   d.setDate(d.getDate() - 10) // do yesterday
   const m = `${d.getMonth() + 1}`.padStart(2, '0')
   const str = `${d.getDate()}`.padStart(2, '0')

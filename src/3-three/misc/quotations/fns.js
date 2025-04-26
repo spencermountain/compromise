@@ -41,15 +41,15 @@ const findEnd = function (terms, i) {
 }
 
 const find = function (doc) {
-  let ptrs = []
+  const ptrs = []
   doc.docs.forEach(terms => {
-    let isOpen = false
+    const isOpen = false
     for (let i = 0; i < terms.length; i += 1) {
-      let term = terms[i]
+      const term = terms[i]
       if (!isOpen && term.pre && hasOpen.test(term.pre)) {
-        let end = findEnd(terms, i)
+        const end = findEnd(terms, i)
         if (end !== null) {
-          let [n, start] = terms[i].index
+          const [n, start] = terms[i].index
           ptrs.push([n, start, end + 1, terms[i].id])
           i = end
         }
@@ -62,7 +62,7 @@ const find = function (doc) {
 const strip = function (m) {
   m.docs.forEach(terms => {
     terms[0].pre = terms[0].pre.replace(hasOpen, '')
-    let lastTerm = terms[terms.length - 1]
+    const lastTerm = terms[terms.length - 1]
     lastTerm.post = lastTerm.post.replace(hasClosed, '')
   })
 }

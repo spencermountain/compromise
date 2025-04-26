@@ -38,7 +38,7 @@ const useHad = new Set([
 //    he would been
 
 const _apostropheD = function (terms, i) {
-  let before = terms[i].normal.split(hasContraction)[0]
+  const before = terms[i].normal.split(hasContraction)[0]
 
   // what'd, how'd
   if (alwaysDid.has(before)) {

@@ -3,7 +3,7 @@ import { getGreedy } from './logic/greedy.js'
 // keep 'foo+' or 'foo*' going..
 const greedyMatch = function (state) {
   const { regs, phrase_length } = state
-  let reg = regs[state.r]
+  const reg = regs[state.r]
   state.t = getGreedy(state, regs[state.r + 1])
   if (state.t === null) {
     return null //greedy was too short

@@ -25,7 +25,7 @@ test('persistent-lexicon-change', function (t) {
 })
 
 test('apostrophe lexicon:', function (t) {
-  let lex = {
+  const lex = {
     'queen anne\'s lace': 'Flower',
     'applebee\'s': 'Restaurant'
   }

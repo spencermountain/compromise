@@ -44,8 +44,8 @@ const api = function (View) {
         let subj = ''
         let verb = ''
         let obj = ''
-        let mods = []
-        let txt = this.doc.update([fact.ptr]).text()
+        const mods = []
+        const txt = this.doc.update([fact.ptr]).text()
         if (fact.subj) {
           subj = fact.subj.root
         }

@@ -27,7 +27,7 @@ export default [
       "no-shadow": 2,
       "no-unmodified-loop-condition": 1,
       "no-use-before-define": 1,
-      "prefer-const": 0,
+      "prefer-const": 1,
       "radix": 1,
       "no-unused-vars": 1,
       "regexp/prefer-d": 0,

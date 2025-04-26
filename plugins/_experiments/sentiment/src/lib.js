@@ -20,7 +20,7 @@ function labelWordArray(inputArr) {
   // Return error array if inputArr has no elements
   if (inputArr.length === 0) { return { 'error': 'input array has no elements' } }
   // Initialize variables
-  let labelReturnObj = { 'words': [], 'labels': [] };
+  const labelReturnObj = { 'words': [], 'labels': [] };
   let wordsArr = inputArr;
   let labelsArr = [];
   // Classify each word in Array as
@@ -83,7 +83,7 @@ function labelWordArray(inputArr) {
 
 function findArraySplitPoints(startingArr, splitWord) {
   // Count how many times the splitWord occurs in startingArr
-  let howManySplitWords = startingArr.reduce(function (accumulator, currentValue) {
+  const howManySplitWords = startingArr.reduce(function (accumulator, currentValue) {
     if (currentValue.match(splitWord) !== null) { accumulator++ }
     return accumulator;
   }, 0);
@@ -95,7 +95,7 @@ function findArraySplitPoints(startingArr, splitWord) {
   // locate splice points for array
   let startArrCount = 0;
   let splitWordCount = 1;	// We can now assume at least 1 occurence of splitWord
-  let splitPoints = [startArrCount];
+  const splitPoints = [startArrCount];
   startingArr.forEach(function (element, index) {
     if ((element.match(splitWord) !== null) && (splitWordCount < howManySplitWords)) {
       splitPoints.push(index + 1);
@@ -125,12 +125,12 @@ function findArraySplitPoints(startingArr, splitWord) {
 */
 function chunkArrays(wordsArr, labelsArr) {
   // Initialize variables
-  let wordsArr2d = [];
-  let labelsArr2d = [];
-  let chunkReturnObj = { 'word_chunks': wordsArr2d, 'label_chunks': labelsArr2d };
+  const wordsArr2d = [];
+  const labelsArr2d = [];
+  const chunkReturnObj = { 'word_chunks': wordsArr2d, 'label_chunks': labelsArr2d };
   // Find points where 'opinion'/'opinion!' can be split up in array,
   // and store them in wordLocs (word locations)
-  let wordLocs = findArraySplitPoints(labelsArr, 'opinion');
+  const wordLocs = findArraySplitPoints(labelsArr, 'opinion');
   // Use parameters stored in wordLocs array to
   // create 2d arrays, grouping a 'opinion' with any
   // preceeding negations and/or intensifiers.
@@ -148,7 +148,7 @@ function chunkArrays(wordsArr, labelsArr) {
     // single 'negation' (index 0), a
     // single 'intensifier' (index 1), and
     // 'opinion'/'opinion!'
-    let tempLocArr = [];
+    const tempLocArr = [];
     // Get values of last occurences of each type of words
     tempLocArr.push(element.lastIndexOf('negation'));
     tempLocArr.push(element.lastIndexOf('intensifier'));

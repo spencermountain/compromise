@@ -11,13 +11,13 @@ const isWords = new Set([
   'if', //it's if
   'too',
 ])
-let adjLike = new Set(['too', 'also', 'enough'])
+const adjLike = new Set(['too', 'also', 'enough'])
 
 // the big clue is the tense of the following verb
 const isOrHas = (terms, i) => {
   // scan ahead for the next verb or adjective
   for (let o = i + 1; o < terms.length; o += 1) {
-    let t = terms[o]
+    const t = terms[o]
     if (hasWords.has(t.normal)) {
       return 'has'
     }
@@ -65,14 +65,14 @@ const isOrHas = (terms, i) => {
 // 's -> [possessive, 'has', 'is', 'are', 'us']
 const apostropheS = function (terms, i) {
   // possessive, is/has
-  let before = terms[i].normal.split(hasContraction)[0]
+  const before = terms[i].normal.split(hasContraction)[0]
   // let's - >[let, us]
   if (before === 'let') {
     return [before, 'us']
   }
   // allow slang "there's cookies" -> there are
   if (before === 'there') {
-    let t = terms[i + 1]
+    const t = terms[i + 1]
     if (t && t.tags.has('Plural')) {
       return [before, 'are']
     }

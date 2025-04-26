@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/inline] '
 
 test('inline tagging linear:', function (t) {
-  let r = nlp('one two three four')
+  const r = nlp('one two three four')
 
   r.match('one two three').tag('. #Person .')
   let found = r.match('#Person').out('normal')

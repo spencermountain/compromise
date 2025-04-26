@@ -2,26 +2,26 @@ import * as fs from 'fs';
 
 const streamFile = function (path, fn, opts = {}) {
   const nlp = this
-  let world = nlp.world()
+  const world = nlp.world()
   const splitSentences = nlp.methods().one.tokenize.splitSentences
   const s = fs.createReadStream(path, opts);
 
   let txt = ''
-  let res = []
+  const res = []
 
   const doIt = (str) => {
-    let doc = nlp(str)
-    let m = fn(doc)
+    const doc = nlp(str)
+    const m = fn(doc)
     if (m && m.found) {
       m.docs.forEach(l => res.push(l))
     }
   }
 
   const quickSplit = function (str) {
-    let end = txt.substring(str.length - 300)
-    let arr = splitSentences(end, world)
-    let last = arr[arr.length - 1]
-    let main = str.substr(0, str.length - last.length)
+    const end = txt.substring(str.length - 300)
+    const arr = splitSentences(end, world)
+    const last = arr[arr.length - 1]
+    const main = str.substr(0, str.length - last.length)
     return [main, last]
   }
 
@@ -29,14 +29,14 @@ const streamFile = function (path, fn, opts = {}) {
   return new Promise((resolve, reject) => {
     s.on('data', function (chunk) {
       txt += chunk;
-      let [main, end] = quickSplit(txt, world)
+      const [main, end] = quickSplit(txt, world)
       doIt(main)
       txt = end
     });
     s.on('end', function () {
       doIt(txt)// do dangling one
       // construct document of only results
-      let doc = nlp('')
+      const doc = nlp('')
       doc.document = res
       resolve(doc)
     });

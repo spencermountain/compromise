@@ -13,9 +13,9 @@ const api = function (View) {
     // fix the pointers
     // collect all found results into a View
     found = found.map(o => {
-      let ptr = o.pointer
-      let term = docs[ptr[0]][ptr[1]]
-      let len = ptr[2] - ptr[1]
+      const ptr = o.pointer
+      const term = docs[ptr[0]][ptr[1]]
+      const len = ptr[2] - ptr[1]
       if (term.index) {
         o.pointer = [
           term.index[0],
@@ -25,7 +25,7 @@ const api = function (View) {
       }
       return o
     })
-    let ptrs = found.map(o => o.pointer)
+    const ptrs = found.map(o => o.pointer)
     // cleanup results a bit
     found = found.map(obj => {
       obj.view = this.update([obj.pointer])

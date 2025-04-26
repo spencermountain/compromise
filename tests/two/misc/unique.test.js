@@ -3,17 +3,17 @@ import nlp from '../_lib.js'
 const here = '[two/unique] '
 
 test('term-unique', function (t) {
-  let doc = nlp(`him and her and him`)
-  let m = doc.terms().unique()
+  const doc = nlp(`him and her and him`)
+  const m = doc.terms().unique()
   t.equal(m.text(), 'him and her', here + 'terms-unique')
   t.equal(doc.text(), `him and her and him`, here + 'original-has-duplicates')
   t.end()
 })
 
 test('sentence-unique', function (t) {
-  let str = `him and her. in toronto. him and her. him.`
-  let doc = nlp(str)
-  let uniq = doc.unique()
+  const str = `him and her. in toronto. him and her. him.`
+  const doc = nlp(str)
+  const uniq = doc.unique()
   t.equal(uniq.text(), 'him and her. in toronto. him.', here + 'remove dup sentences')
   t.equal(doc.text(), str, here + 'keep dup sentences')
   t.end()

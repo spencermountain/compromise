@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const h = '[two/contraction-match] '
 
 test('half-contraction', function (t) {
-  let doc = nlp(`before gonna after`)
+  const doc = nlp(`before gonna after`)
 
   let found = doc.has('gonna')
   t.equal(found, true, h + 'full-text')
@@ -22,7 +22,7 @@ test('half-contraction', function (t) {
 
 
 test('partial-contraction', function (t) {
-  let doc = nlp(`we've walked`)
+  const doc = nlp(`we've walked`)
   let m = doc.match('we')
   t.equal(m.text('implicit'), 'we', h + 'one-half')
 
@@ -58,8 +58,8 @@ test('partial-contraction', function (t) {
 
 
 test('contraction-skip', function (t) {
-  let str = `We've matched`
-  let doc = nlp(str)
+  const str = `We've matched`
+  const doc = nlp(str)
 
   let m = doc.match(`we have matched`)
   t.equal(m.text(), str, h + 'both-words')
@@ -87,7 +87,7 @@ test('contraction-skip', function (t) {
 
 
 test('contraction-no-skip', function (t) {
-  let doc = nlp(`We won't match`)
+  const doc = nlp(`We won't match`)
   let m = doc.match(`we will match`)
   t.equal(m.found, false, h + 'half-contraction')
 

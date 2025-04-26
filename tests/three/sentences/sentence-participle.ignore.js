@@ -35,7 +35,7 @@ test('toPast finds participle form', function (t) {
 })
 
 test('toParticiple', function (t) {
-  let arr = [
+  const arr = [
     ['i drive', 'i have driven'],
     ['we smoke', 'we have smoked'],
     // ['i will go', 'i will have gone'], //hmm
@@ -44,7 +44,7 @@ test('toParticiple', function (t) {
     ['i really travel to india', 'i really have traveled to india'],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     // doc.sentences().toParticiple()
     doc.sentences().toPastTense()
     t.equal(doc.text(), a[1], here + a[0])
@@ -53,7 +53,7 @@ test('toParticiple', function (t) {
 })
 
 test('modal-present-to-past', function (t) {
-  let arr = [
+  const arr = [
     ['he may drive', 'he may have driven'],
     ['he should smoke', 'he should have smoked'],
     ['i could go', 'i could have gone'],
@@ -62,7 +62,7 @@ test('modal-present-to-past', function (t) {
     ['i really may travel', 'i really may have traveled'],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.sentences().toPastTense()
     t.equal(doc.text(), a[1], here + a[0])
   })

@@ -14,7 +14,7 @@ const sentimentComp = {
       //console.log('addSummary: ', addSummary);
       // Ensure that inputStr is text
       let inputStr = this.text();
-      let isInputValid = typeof inputStr === 'string';
+      const isInputValid = typeof inputStr === 'string';
       if ((isInputValid === false) || (inputStr === '')) {
         return { 'error': 'Input must be a string containing text.' };
       }
@@ -22,9 +22,9 @@ const sentimentComp = {
       // SET DEFAULTS
       //
       // Create default return object with scores of 0
-      let returnObj = { 'polarity': 0, 'subjectivity': 0 };
+      const returnObj = { 'polarity': 0, 'subjectivity': 0 };
       // Create default empty summary array
-      let summaryArr = [];
+      const summaryArr = [];
 
       // INPUT STRING PROCESSING
       // 
@@ -37,10 +37,10 @@ const sentimentComp = {
       let emoticonValArr = emoticonArr.map(function (element) { return parseFloat(emoticons[element]) }) || [];
       //console.log('emoticonValArr: ', emoticonValArr);
       // From inputText, get all the emojis which have scores
-      let emojisOnlyArr = inputStr.match(emoji_object_regex) || [];
+      const emojisOnlyArr = inputStr.match(emoji_object_regex) || [];
       //console.log('emojisOnlyArr: ', emojisOnlyArr);
       // Get all the values of the emojis in emojisOnlyArr
-      let emojiValArr = emojisOnlyArr.map(function (element) { return parseFloat(emojis[element]) }) || [];
+      const emojiValArr = emojisOnlyArr.map(function (element) { return parseFloat(emojis[element]) }) || [];
       //console.log('emojiValArr: ', emojiValArr);
       // Add emojisOnlyArr into emoticonArr
       emoticonArr = emoticonArr.concat(emojisOnlyArr);
@@ -56,12 +56,12 @@ const sentimentComp = {
       inputStr = inputStr.replace(emoticon_regex, '').replace(emoji_regex, ' ').replace(/\s+/g, ' ').replace(/!{2,}/g, '!').replace(/['’]/g, '').trim().toLowerCase();
       //console.log('inputStr: ', inputStr);
       // From inputStr, create array containing only words listed in pattern_en or exclamation marks
-      let wordArr = (inputStr.match(/\w+|!/g)).filter(function (element) {
+      const wordArr = (inputStr.match(/\w+|!/g)).filter(function (element) {
         return (pattern_en_keys.includes(element) || element.includes('!'));
       });
       //console.log('wordArr: ', wordArr);
       // Create array of labels of types of words in wordArr
-      let labelInfoObj = labelWordArray(wordArr);
+      const labelInfoObj = labelWordArray(wordArr);
       //console.log('labelInfoObj: ', labelInfoObj);
       // If wordArr is now empty,
       // return an object with polarity and subjectivity of 0,
@@ -72,7 +72,7 @@ const sentimentComp = {
           returnObj.mood = averageArray(emoticonValArr);
           // If addSummary is true, add scored_icons
           if (addSummary === true) {
-            let summaryObj = {};
+            const summaryObj = {};
             summaryObj.scored_icons = emoticonArr;
             summaryObj.mood = emoticonValArr;
             summaryArr.push(summaryObj);
@@ -87,34 +87,34 @@ const sentimentComp = {
       // 'opinion'/ 'opinion!', and the closest
       // preceeding negation and intensifiers,
       // if included
-      let chunkInfoObj = chunkArrays(labelInfoObj.words, labelInfoObj.labels);
+      const chunkInfoObj = chunkArrays(labelInfoObj.words, labelInfoObj.labels);
       //console.log('chunkInfoObj', chunkInfoObj);
-      let wordArr2d = chunkInfoObj.word_chunks;
-      let labelArr2d = chunkInfoObj.label_chunks;
+      const wordArr2d = chunkInfoObj.word_chunks;
+      const labelArr2d = chunkInfoObj.label_chunks;
 
       // VALUE CALCULATION
       // 
       // Create polarityArr and subjectivityArr arrays
       // to hold individual calculation results before
       // averaging them at the end.
-      let polarityValArr = [];
-      let subjectivityValArr = [];
+      const polarityValArr = [];
+      const subjectivityValArr = [];
       // Iterate through arrays to calculate polarity and subjectivity
       for (let index = 0; index < labelArr2d.length; index++) {
         // Prepare this iteration's summary object
-        let summaryObject = {};
+        const summaryObject = {};
         // Add scored_words index
         summaryObject.scored_words = wordArr2d[index];
         // If 'opinion!' exists, add '!' to scored_words array
         if (labelArr2d[index].indexOf('opinion!') > -1) { summaryObject.scored_words.push('!'); }
         // If a 'negation' exists, set value of multiplier
         // to -0.5, otherwise, set it to 1
-        let negationMultiplier = labelArr2d[index].indexOf('negation') > -1 ? -0.5 : 1;
+        const negationMultiplier = labelArr2d[index].indexOf('negation') > -1 ? -0.5 : 1;
         // If an 'intensifier' exists, calculate value,
         // otherwise, default to 1
         let intensityMultiplier = 1;
         // Get index of location of intensifier for this index
-        let intensifierIndex = labelArr2d[index].indexOf('intensifier');
+        const intensifierIndex = labelArr2d[index].indexOf('intensifier');
         // If an intensifier exists...
         if (intensifierIndex > -1) {
           // ...get corresponding intensity score
@@ -125,11 +125,11 @@ const sentimentComp = {
           if (negationMultiplier === -0.5) { intensityMultiplier = 1 / intensityMultiplier }
         }
         // Find 'opinion' or 'opinion!' in current array
-        let opinionLoc = Math.max(labelArr2d[index].indexOf('opinion'), labelArr2d[index].indexOf('opinion!'));
+        const opinionLoc = Math.max(labelArr2d[index].indexOf('opinion'), labelArr2d[index].indexOf('opinion!'));
         // If 'opinion!' is the current array,
         // set exclamationMultiplier to 1.25,
         // otherwise set it at 1
-        let exclamationMultiplier = labelArr2d[index].indexOf('opinion!') > -1 ? 1.25 : 1;
+        const exclamationMultiplier = labelArr2d[index].indexOf('opinion!') > -1 ? 1.25 : 1;
         // Use location of 'opinion' in current array to
         // get polarity and subjectivity values, and
         // then multiply them by the appropriate multipliers
@@ -151,15 +151,15 @@ const sentimentComp = {
       //console.log('subjectivityValArr', subjectivityValArr);
       //console.log('summaryArr', summaryArr);
       // Average values in arrays to get respective scores
-      let polarityScore = averageArray(polarityValArr);
-      let subjectivityScore = averageArray(subjectivityValArr);
+      const polarityScore = averageArray(polarityValArr);
+      const subjectivityScore = averageArray(subjectivityValArr);
       returnObj.polarity = polarityScore;
       returnObj.subjectivity = subjectivityScore;
       if (addMood === true) {
         returnObj.mood = averageArray(emoticonValArr);
         // If addSummary is true, add scored_icons
         if (addSummary === true) {
-          let summaryObj = {};
+          const summaryObj = {};
           summaryObj.scored_icons = emoticonArr;
           summaryObj.mood = emoticonValArr;
           summaryArr.push(summaryObj);

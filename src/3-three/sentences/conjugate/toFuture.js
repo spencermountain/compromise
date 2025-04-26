@@ -1,7 +1,7 @@
 const toFuture = function (s) {
   let verbs = s.verbs()
   // translate the first verb, no-stress
-  let first = verbs.eq(0)
+  const first = verbs.eq(0)
   first.toFutureTense()
   s = s.fullSentence()
   verbs = s.verbs()//re-do it
@@ -10,7 +10,7 @@ const toFuture = function (s) {
   if (verbs.length > 1) {
     verbs = verbs.slice(1)
     // which following-verbs should we also change?
-    let toChange = verbs.filter((vb) => {
+    const toChange = verbs.filter((vb) => {
       // remove any sorta infinitive - 'to engage'
       if (vb.lookBehind('to$').found) {
         return false

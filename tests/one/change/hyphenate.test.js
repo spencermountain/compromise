@@ -53,8 +53,8 @@ test('hyphenate', function (t) {
 })
 
 test('hasHyphen', function (t) {
-  let doc = nlp(`super-cool and hunky-dory. Connected with-a-dash.`)
-  let arr = doc.match('@hasHyphen+ .').out('array')
+  const doc = nlp(`super-cool and hunky-dory. Connected with-a-dash.`)
+  const arr = doc.match('@hasHyphen+ .').out('array')
   t.equal(arr.length, 3, here + 'three found')
   t.equal(arr[0], 'super-cool', here + 'first found')
   t.equal(arr[1], 'hunky-dory.', here + 'second found')

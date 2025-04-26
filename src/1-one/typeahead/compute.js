@@ -5,15 +5,15 @@ const typeahead = function (view) {
   if (docs.length === 0 || Object.keys(prefixes).length === 0) {
     return
   }
-  let lastPhrase = docs[docs.length - 1] || []
-  let lastTerm = lastPhrase[lastPhrase.length - 1]
+  const lastPhrase = docs[docs.length - 1] || []
+  const lastTerm = lastPhrase[lastPhrase.length - 1]
   // if we've already put whitespace, end.
   if (lastTerm.post) {
     return
   }
   // if we found something
   if (prefixes.hasOwnProperty(lastTerm.normal)) {
-    let found = prefixes[lastTerm.normal]
+    const found = prefixes[lastTerm.normal]
     // add full-word as an implicit result
     lastTerm.implicit = found
     lastTerm.machine = found

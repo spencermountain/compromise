@@ -31,7 +31,7 @@ test('html-match', function (t) {
 })
 
 test('html-nest', function (t) {
-  let doc = nlp(`one match two.`)
+  const doc = nlp(`one match two.`)
   let html = doc.html({
     i: 'match',
     b: 'one match two',
@@ -54,8 +54,8 @@ test('html-nest', function (t) {
 })
 
 test('html-implicit', function (t) {
-  let doc = nlp(`he's cool`)
-  let out = doc.html({ '.foo': '#Verb' })
+  const doc = nlp(`he's cool`)
+  const out = doc.html({ '.foo': '#Verb' })
   t.equal(out, `he's cool`, here + 'implict')
   t.end()
 })

@@ -3,8 +3,8 @@
 /* eslint-disable no-multi-assign */
 
 // https://github.com/jbt/tiny-hashes/
-let k = [],
-  i = 0
+const k = []
+let i = 0
 for (; i < 64; ) {
   k[i] = 0 | (Math.sin(++i % Math.PI) * 4294967296)
 }
@@ -13,10 +13,11 @@ const md5 = function (s) {
   let b,
     c,
     d,
-    h = [(b = 0x67452301), (c = 0xefcdab89), ~b, ~c],
-    words = [],
     j = decodeURI(encodeURI(s)) + '\x80',
     a = j.length
+
+  const h = [(b = 0x67452301), (c = 0xefcdab89), ~b, ~c],
+    words = []
 
   s = (--a / 4 + 2) | 15
 

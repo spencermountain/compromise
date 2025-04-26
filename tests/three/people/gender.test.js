@@ -5,7 +5,7 @@ const here = '[three/gender] '
 test('people-gender:', function (t) {
   const m = 'male'
   const f = 'female'
-  let arr = [
+  const arr = [
     // by firstname
     ['john turner', m],
     ['dr James Smith', m],
@@ -23,8 +23,8 @@ test('people-gender:', function (t) {
     ['kris and amy washed her car', null], //ambig
   ]
   arr.forEach(a => {
-    let [str, want] = a
-    let res = nlp(str).people().json()[0] || {}
+    const [str, want] = a
+    const res = nlp(str).people().json()[0] || {}
     t.equal((res.person || {}).presumed_gender, want, here + 'gender - ' + str)
   })
   t.end()

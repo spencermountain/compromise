@@ -13,7 +13,7 @@ const addWords = function (words, isFrozen = false) {
   })
   // these words go into a seperate lexicon
   if (isFrozen === true) {
-    let { lex, _multi } = methods.one.expandLexicon(words, world)
+    const { lex, _multi } = methods.one.expandLexicon(words, world)
     Object.assign(model.one._multiCache, _multi)
     Object.assign(model.one.frozenLex, lex)
     return
@@ -21,12 +21,12 @@ const addWords = function (words, isFrozen = false) {
   // add some words to our lexicon
   if (methods.two.expandLexicon) {
     // do fancy ./two version
-    let { lex, _multi } = methods.two.expandLexicon(words, world)
+    const { lex, _multi } = methods.two.expandLexicon(words, world)
     Object.assign(model.one.lexicon, lex)
     Object.assign(model.one._multiCache, _multi)
   }
   // do basic ./one version
-  let { lex, _multi } = methods.one.expandLexicon(words, world)
+  const { lex, _multi } = methods.one.expandLexicon(words, world)
   Object.assign(model.one.lexicon, lex)
   Object.assign(model.one._multiCache, _multi)
 }

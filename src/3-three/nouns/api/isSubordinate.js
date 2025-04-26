@@ -42,7 +42,7 @@ const isSubordinate = function (m) {
   if (m.before('#Preposition$').found) {
     return true
   }
-  let leadIn = m.before()
+  const leadIn = m.before()
   if (!leadIn.found) {
     return false
   }

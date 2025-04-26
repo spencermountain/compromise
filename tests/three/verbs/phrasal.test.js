@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/phrasal]'
 
 test('phrasal-verbs:', function (t) {
-  let arr = [
+  const arr = [
     [`he is really good`, ['he', 'is', 'really', 'good']],
     [`he is upset about it`, ['he', 'is', 'upset', 'about', 'it']],
     [`he will mess about with it`, ['he', 'will', 'mess about', 'with', 'it']],

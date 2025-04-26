@@ -10,9 +10,9 @@ const sortByKids = function (tags, tagSet) {
       return -1
     }
     let kids = tagSet[a].children || []
-    let aKids = kids.length
+    const aKids = kids.length
     kids = tagSet[b].children || []
-    let bKids = kids.length
+    const bKids = kids.length
     return aKids - bKids
   })
   return tags
@@ -23,7 +23,7 @@ const tagRank = function (view) {
   const tagSet = world.model.one.tagSet
   document.forEach(terms => {
     terms.forEach(term => {
-      let tags = Array.from(term.tags)
+      const tags = Array.from(term.tags)
       term.tagRank = sortByKids(tags, tagSet)
     })
   })

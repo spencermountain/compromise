@@ -23,9 +23,9 @@ const api = function (View) {
       return this.getNth(n).map(parseVerb)
     }
     json(opts, n) {
-      let m = this.getNth(n)
-      let arr = m.map(vb => {
-        let json = vb.toView().json(opts)[0] || {}
+      const m = this.getNth(n)
+      const arr = m.map(vb => {
+        const json = vb.toView().json(opts)[0] || {}
         json.verb = toJSON(vb)
         return json
       }, [])
@@ -33,7 +33,7 @@ const api = function (View) {
     }
     subjects(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
+        const parsed = parseVerb(vb)
         return getSubject(vb, parsed).subject
       })
     }
@@ -55,15 +55,15 @@ const api = function (View) {
     }
     toInfinitive(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
-        let info = getGrammar(vb, parsed)
+        const parsed = parseVerb(vb)
+        const info = getGrammar(vb, parsed)
         return toInf(vb, parsed, info.form)
       })
     }
     toPresentTense(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
-        let info = getGrammar(vb, parsed)
+        const parsed = parseVerb(vb)
+        const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
           return vb
         }
@@ -72,8 +72,8 @@ const api = function (View) {
     }
     toPastTense(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
-        let info = getGrammar(vb, parsed)
+        const parsed = parseVerb(vb)
+        const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
           return vb
         }
@@ -82,8 +82,8 @@ const api = function (View) {
     }
     toFutureTense(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
-        let info = getGrammar(vb, parsed)
+        const parsed = parseVerb(vb)
+        const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
           return vb
         }
@@ -92,8 +92,8 @@ const api = function (View) {
     }
     toGerund(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
-        let info = getGrammar(vb, parsed)
+        const parsed = parseVerb(vb)
+        const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
           return vb
         }
@@ -102,8 +102,8 @@ const api = function (View) {
     }
     toPastParticiple(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
-        let info = getGrammar(vb, parsed)
+        const parsed = parseVerb(vb)
+        const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
           return vb
         }
@@ -113,15 +113,15 @@ const api = function (View) {
     conjugate(n) {
       const { conjugate, toInfinitive } = this.world.methods.two.transform.verb
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
-        let info = getGrammar(vb, parsed)
+        const parsed = parseVerb(vb)
+        const info = getGrammar(vb, parsed)
         // allow imperatives like 'go!' to be conjugated here (only)
         if (info.form === 'imperative') {
           info.form = 'simple-present'
         }
         let inf = parsed.root.text('normal')
         if (!parsed.root.has('#Infinitive')) {
-          let tense = getTense(parsed.root)
+          const tense = getTense(parsed.root)
           inf = toInfinitive(inf, vb.model, tense) || inf
         }
         return conjugate(inf, vb.model)
@@ -138,7 +138,7 @@ const api = function (View) {
     }
     /** remove 'not' from these verbs */
     toPositive() {
-      let m = this.match('do not #Verb')
+      const m = this.match('do not #Verb')
       if (m.found) {
         m.remove('do not')
       }
@@ -146,14 +146,14 @@ const api = function (View) {
     }
     toNegative(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parseVerb(vb)
-        let info = getGrammar(vb, parsed)
+        const parsed = parseVerb(vb)
+        const info = getGrammar(vb, parsed)
         return toNegative(vb, parsed, info.form)
       })
     }
     // overloaded - keep Verb class
     update(pointer) {
-      let m = new Verbs(this.document, pointer)
+      const m = new Verbs(this.document, pointer)
       m._cache = this._cache // share this full thing
       return m
     }

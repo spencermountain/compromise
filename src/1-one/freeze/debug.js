@@ -7,7 +7,7 @@ const debug = function (view) {
     console.log(blue('\n  ┌─────────'))
     terms.forEach(t => {
       let str = `  ${dim('│')}  `
-      let txt = t.implicit || t.text || '-'
+      const txt = t.implicit || t.text || '-'
       if (t.frozen === true) {
         str += `${blue(txt)} ❄️`
       } else {

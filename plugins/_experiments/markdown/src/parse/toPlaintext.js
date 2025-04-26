@@ -20,7 +20,7 @@ const skipText = {
 }
 
 const toPlaintext = function (tree) {
-  let texts = []
+  const texts = []
   let current = ''
   let startId = null
   visit(tree, null, (node) => {

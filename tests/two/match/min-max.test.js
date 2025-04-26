@@ -25,7 +25,7 @@ test('match min-max', function (t) {
 })
 
 test('min-max with 0', function (t) {
-  let arr = [
+  const arr = [
     ['he got a car for christmas', 'a car'],
     ['a car', 'a car'],
     ['a really cool car', 'a really cool car'],
@@ -39,12 +39,12 @@ test('min-max with 0', function (t) {
     ['he got a clever nice cool warm hat for christmas', ''],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
-    let m = doc.match('a .{0,3} car')
+    const doc = nlp(a[0])
+    const m = doc.match('a .{0,3} car')
     t.equal(m.text(), a[1], here + a[0])
   })
 
-  let doc = nlp('got a car')
+  const doc = nlp('got a car')
   let m = doc.match('a .{0,3}? car')
   t.equal(m.text(), 'a car', here + 'with-question-mark')
 

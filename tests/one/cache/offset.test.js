@@ -40,8 +40,8 @@ test('offset-punctuation', function (t) {
 })
 
 test('offset-terms', function (t) {
-  let doc = nlp(`hello world`).compute('offset')
-  let obj = doc.json({ offset: true, terms: true })[0] || { offset: {} }
+  const doc = nlp(`hello world`).compute('offset')
+  const obj = doc.json({ offset: true, terms: true })[0] || { offset: {} }
 
   t.equal(obj.offset.start, 0, here + '6 doc-start')
   t.equal(obj.offset.length, 11, here + '6 doc-length')
@@ -56,8 +56,8 @@ test('offset-terms', function (t) {
 })
 
 test('offset-terms-whitespace', function (t) {
-  let doc = nlp(` hello world`).compute('offset')
-  let obj = doc.json({ offset: true, terms: true })[0] || { offset: {} }
+  const doc = nlp(` hello world`).compute('offset')
+  const obj = doc.json({ offset: true, terms: true })[0] || { offset: {} }
 
   t.equal(obj.offset.start, 1, here + '7 doc-start')
   t.equal(obj.offset.length, 11, here + '7 doc-length')
@@ -72,8 +72,8 @@ test('offset-terms-whitespace', function (t) {
 })
 
 test('offset-terms-punctuation', function (t) {
-  let doc = nlp(`"hello world`).compute('offset')
-  let obj = doc.json({ offset: true, terms: true })[0] || { offset: {} }
+  const doc = nlp(`"hello world`).compute('offset')
+  const obj = doc.json({ offset: true, terms: true })[0] || { offset: {} }
 
   t.equal(obj.offset.start, 1, here + '8 doc-start')
   t.equal(obj.offset.length, 12, here + '8 doc-length')

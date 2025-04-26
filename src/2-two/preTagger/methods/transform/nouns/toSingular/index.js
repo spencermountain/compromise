@@ -8,7 +8,7 @@ const invertObj = function (obj) {
 
 const toSingular = function (str, model) {
   const { irregularPlurals } = model.two
-  let invert = invertObj(irregularPlurals) //(not very efficient)
+  const invert = invertObj(irregularPlurals) //(not very efficient)
   // check irregulars list
   if (invert.hasOwnProperty(str)) {
     return invert[str]

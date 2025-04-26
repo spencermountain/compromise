@@ -17,7 +17,7 @@ const cli = {
 
 const debug = function (view) {
   view.dates().forEach(m => {
-    let res = m.dates().get()[0]
+    const res = m.dates().get()[0]
 
     console.log('\n────────')
     m.debug('highlight')

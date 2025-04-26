@@ -19,7 +19,7 @@ test('normalize question mark', function (t) {
 })
 
 test('hyphenated', function (t) {
-  let doc = nlp('and check this out! a walk-in microwave.')
+  const doc = nlp('and check this out! a walk-in microwave.')
   doc.hyphenated().deHyphenate()
   t.equal(doc.text(), 'and check this out! a walk in microwave.', here + 'dehyphenate')
   t.end()
@@ -43,14 +43,14 @@ test('normalize quotes ', function (t) {
 })
 
 test('toParentheses', function (t) {
-  let doc = nlp(`you could still go to McGill, the Harvard of Canada!`)
+  const doc = nlp(`you could still go to McGill, the Harvard of Canada!`)
   doc.match('the harvard of #Place').toParentheses()
   t.equal(doc.text(), 'you could still go to McGill, (the Harvard of Canada)!', here + 'toparentheses')
   t.end()
 })
 
 test('toQuotation', function (t) {
-  let doc = nlp(`you could still go to McGill, the Harvard of Canada!`)
+  const doc = nlp(`you could still go to McGill, the Harvard of Canada!`)
   doc.match('harvard of #Place').toQuotation()
   t.equal(doc.text(), 'you could still go to McGill, the "Harvard of Canada"!', here + 'toparentheses')
   t.end()

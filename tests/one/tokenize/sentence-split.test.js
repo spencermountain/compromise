@@ -3,7 +3,7 @@ import nlp from '../../two/_lib.js'
 const here = '[one/sentence-split] '
 
 test('sentence tokenizer', function (t) {
-  let arr = [
+  const arr = [
     [``, 0],
     [`1`, 1],
     [`&`, 1],
@@ -50,7 +50,7 @@ test('sentence tokenizer', function (t) {
     [`12 mg! tumeric`, 2],
   ]
   arr.forEach(a => {
-    let [str, len] = a
+    const [str, len] = a
     t.equal(nlp(str).length, len, here + `"${str}"`)
   })
   t.end()
@@ -90,7 +90,7 @@ test('em-dash, en-dash', function (t) {
 })
 
 test('emoji-only sentence', function (t) {
-  let doc = nlp('good night! 💋')
+  const doc = nlp('good night! 💋')
   t.equal(doc.length, 2, here + 'boemojith sentence')
   t.end()
 })

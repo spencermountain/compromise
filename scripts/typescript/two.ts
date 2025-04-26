@@ -1,7 +1,7 @@
 // import nlp from '../../src/three.js'
 import nlp from '../../types/two'
 
-let doc = nlp('okay cool')
+const doc = nlp('okay cool')
 
 // ### Pre-tagger
 doc.compute('preTagger')

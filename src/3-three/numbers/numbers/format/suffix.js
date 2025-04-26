@@ -22,7 +22,7 @@ const suffixes = {
 }
 
 const addSuffix = function (obj) {
-  let res = {
+  const res = {
     suffix: '',
     prefix: obj.prefix,
   }

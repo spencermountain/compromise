@@ -8,12 +8,12 @@ const isObject = val => {
 
 // sort by frequency
 const topk = function (arr) {
-  let obj = {}
+  const obj = {}
   arr.forEach(a => {
     obj[a] = obj[a] || 0
     obj[a] += 1
   })
-  let res = Object.keys(obj).map(k => {
+  const res = Object.keys(obj).map(k => {
     return { normal: k, count: obj[k] }
   })
   return res.sort((a, b) => (a.count > b.count ? -1 : 0))
@@ -51,7 +51,7 @@ const out = function (method) {
     return this.json({ offset: true })
   }
   if (method === 'array') {
-    let arr = this.docs.map(terms => {
+    const arr = this.docs.map(terms => {
       return terms
         .reduce((str, t) => {
           return str + t.pre + t.text + t.post

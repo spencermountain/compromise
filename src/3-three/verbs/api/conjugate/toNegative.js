@@ -3,7 +3,7 @@ const keep = { tags: true }
 
 // do/does not walk 
 const doesNot = function (vb, parsed) {
-  let does = doDoes(vb, parsed)
+  const does = doDoes(vb, parsed)
   vb.prepend(does + ' not')
   return vb
 }
@@ -79,7 +79,7 @@ const forms = {
     // was walked, were walked
     // was being walked
     // had been walked, have been eaten
-    let m = vb.match('(was|were|had|have)')
+    const m = vb.match('(was|were|had|have)')
     if (m.found) {
       m.append('not')
     }
@@ -92,7 +92,7 @@ const forms = {
       return vb
     }
     // he did walk
-    let m = vb.match('(did|does|do)')
+    const m = vb.match('(did|does|do)')
     if (m.found) {
       m.append('not')
     }

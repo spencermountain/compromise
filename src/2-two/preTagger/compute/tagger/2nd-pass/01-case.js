@@ -21,11 +21,11 @@ const nope = {
 
 // if it's a unknown titlecase word, it's a propernoun
 const checkCase = function (terms, i, model) {
-  let term = terms[i]
+  const term = terms[i]
   // assume terms are already indexed
   term.index = term.index || [0, 0]
-  let index = term.index[1]
-  let str = term.text || '' //need case info
+  const index = term.index[1]
+  const str = term.text || '' //need case info
   // titlecase and not first word of sentence
   if (index !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
     // skip Dates and stuff

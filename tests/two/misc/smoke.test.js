@@ -6,8 +6,8 @@ const here = '[two/smoke] '
 test('garbage-inputs', function (t) {
   const garbage = ['', '  ', null, '\n\n', []] //{}
   garbage.forEach(function (g, i) {
-    let num = nlp(g).length
-    let msg = typeof g + ' text input #' + i + '  ' + g
+    const num = nlp(g).length
+    const msg = typeof g + ' text input #' + i + '  ' + g
     t.equal(num, 0, here + msg)
   })
   let str = nlp(2).out()
@@ -43,7 +43,7 @@ test('test-regex-safety', function (t) {
 test('only-punctuation', function (t) {
   const garbage = ['.', ' - ', '...', '?', '&', '?,', '\n. \n', '🎵', '\n🇵🇷\n', '🇵🇷.', `🇷 %`]
   garbage.forEach(function (str) {
-    let doc = nlp(str)
+    const doc = nlp(str)
     t.equal(doc.text(), str, here + "text-'" + str + "'")
   })
   t.end()

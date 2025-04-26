@@ -1,8 +1,8 @@
 import splitAll from './split.js'
 
 const subtract = function (refs, not) {
-  let res = []
-  let found = splitAll(refs, not)
+  const res = []
+  const found = splitAll(refs, not)
   found.forEach(o => {
     if (o.passthrough) {
       res.push(o.passthrough)

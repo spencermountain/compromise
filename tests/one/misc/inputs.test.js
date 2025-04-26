@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/inputs] '
 
 test('doc-as-input :', function (t) {
-  let txt = `yeah. one two. match three.`
+  const txt = `yeah. one two. match three.`
   let a = nlp(txt)
   let b = nlp(a)
   t.equal(b.text(), txt, here + 'doc as input')
@@ -44,18 +44,18 @@ test('json-input :', function (t) {
   t.equal(nlp(json).text(), 'one two. three four, five', here + 'two sentence json input')
 
   // ensure tags passthrough
-  let doc = nlp('one two match three')
+  const doc = nlp('one two match three')
   doc.match('match').tag('Foo')
   json = doc.json()
-  let b = nlp(json)
+  const b = nlp(json)
   t.equal(b.has('#Foo'), true, here + 'tag-from-json')
 
   t.end()
 })
 
 test('pre-tokenized-input :', function (t) {
-  let input = [['one', 'two', 'three'], ['four']]
-  let doc = nlp(input)
+  const input = [['one', 'two', 'three'], ['four']]
+  const doc = nlp(input)
   t.equal(doc.eq(0).text(), 'one two three', here + 'first-sentence')
   t.equal(doc.eq(1).text(), 'four', here + '2nd-sentence')
   t.end()

@@ -48,8 +48,8 @@ test('verb-parts:', function (t) {
   ]
   tests.forEach(function (a) {
     const arr = nlp(a[0]).verbs().json()
-    let json = (arr[0] || {}).verb || {}
-    let adverbs = json.preAdverbs.concat(json.postAdverbs).join(' ')
+    const json = (arr[0] || {}).verb || {}
+    const adverbs = json.preAdverbs.concat(json.postAdverbs).join(' ')
     t.equal(arr.length, 1, '#verbs - ' + arr.length + '  ' + a[0])
     // t.equal(json.negative || '', a[1], "neg-test - '" + a[0] + "'")
     t.equal(json.auxiliary, a[2], here + "aux- - '" + a[0] + "'")

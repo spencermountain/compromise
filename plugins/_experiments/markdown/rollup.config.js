@@ -4,6 +4,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 
 const opts = { keep_classnames: true, module: true }
+const umdOpts = { ...opts, module: false }
 
 export default [
   // {
@@ -14,7 +15,7 @@ export default [
   {
     input: 'src/plugin.js',
     output: [{ file: 'builds/compromise-markup.min.js', format: 'umd', name: 'compromiseMarkup' }],
-    plugins: [commonjs(), nodeResolve(), terser(opts), sizeCheck({ expect: 5, warn: 15 })],
+    plugins: [commonjs(), nodeResolve(), terser(umdOpts), sizeCheck({ expect: 5, warn: 15 })],
   },
   // {
   //   input: 'src/plugin.js',

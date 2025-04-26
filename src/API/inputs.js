@@ -35,7 +35,7 @@ const preTokenized = function (arr) {
 
 const inputs = function (input, View, world) {
   const { methods } = world
-  let doc = new View([])
+  const doc = new View([])
   doc.world = world
   // support a number
   if (typeof input === 'number') {
@@ -47,7 +47,7 @@ const inputs = function (input, View, world) {
   }
   // parse a string
   if (typeof input === 'string') {
-    let document = methods.one.tokenize.fromString(input, world)
+    const document = methods.one.tokenize.fromString(input, world)
     return new View(document)
   }
   // handle compromise View
@@ -58,11 +58,11 @@ const inputs = function (input, View, world) {
   if (isArray(input)) {
     // pre-tokenized array-of-arrays 
     if (isArray(input[0])) {
-      let document = preTokenized(input)
+      const document = preTokenized(input)
       return new View(document)
     }
     // handle json output
-    let document = fromJson(input)
+    const document = fromJson(input)
     return new View(document)
   }
   return doc

@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 const here = '[two/match] '
 
-let arr = [
+const arr = [
   ['toronto', '#City'],
   ['mexico', '#Country'],
   ['Jamaica', '#Country'],
@@ -1185,14 +1185,14 @@ let arr = [
   // ['', ''],
 ]
 test('match:', function (t) {
-  let res = []
+  const res = []
   arr.forEach(function (a) {
-    let [str, match] = a
-    let doc = nlp(str).compute('tagRank')
+    const [str, match] = a
+    const doc = nlp(str).compute('tagRank')
     // doc.tagger().tagger()
-    let tags = doc.json()[0].terms.map(term => term.tagRank[0])
-    let msg = `'${(str + "' ").padEnd(20, ' ')}  - '${tags.join(', ')}'`
-    let m = doc.match(match)
+    const tags = doc.json()[0].terms.map(term => term.tagRank[0])
+    const msg = `'${(str + "' ").padEnd(20, ' ')}  - '${tags.join(', ')}'`
+    const m = doc.match(match)
 
     if (m.text() !== doc.text()) {
       res.push(a[0])

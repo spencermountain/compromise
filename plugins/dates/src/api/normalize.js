@@ -2,14 +2,14 @@
 const normalize = function (doc) {
   doc = doc.clone()
   // 'four thirty' -> 4:30
-  let m = doc.match('#Time+').match('[<hour>#Cardinal] [<min>(thirty|fifteen)]')
+  const m = doc.match('#Time+').match('[<hour>#Cardinal] [<min>(thirty|fifteen)]')
   if (m.found) {
-    let hour = m.groups('hour')
-    let min = m.groups('min')
-    let num = hour.values().get()[0]
+    const hour = m.groups('hour')
+    const min = m.groups('min')
+    const num = hour.values().get()[0]
     if (num > 0 && num <= 12) {
-      let mins = min.values().get()[0]
-      let str = `${num}:${mins}`
+      const mins = min.values().get()[0]
+      const str = `${num}:${mins}`
       m.replaceWith(str)
     }
   }
@@ -19,7 +19,7 @@ const normalize = function (doc) {
   } else {
     // doc.numbers().normalize()
     // convert 'two' to 2
-    let num = doc.numbers()
+    const num = doc.numbers()
     num.toNumber()
     num.toCardinal(false)
   }

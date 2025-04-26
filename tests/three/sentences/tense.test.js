@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/sentence-conjugate] '
 
 test('sentence-change-tense:', function (t) {
-  let arr = [
+  const arr = [
     ['john walks quickly', 'john walked quickly', 'john will walk quickly'],
     ['he is quick', 'he was quick', 'he will be quick'],
     ['the stool falls over', 'the stool fell over', 'the stool will fall over'],
@@ -92,7 +92,7 @@ test('sentence-change-tense:', function (t) {
     // ['this isn\'t one sentence. This doesn\'t make two now.', 'this was not one sentence. This didn\'t make two now.', 'this won\'t be one sentence. This won\'t make two now.']
   ]
   arr.forEach(function (a) {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
 
     doc.sentences().toPastTense()
     let str = doc.out('text')

@@ -2,14 +2,14 @@
 const byNeighbour = function (document) {
   for (let n = 0; n < document.length; n += 1) {
     for (let t = 0; t < document[n].length; t += 1) {
-      let term = document[n][t]
+      const term = document[n][t]
       if (term.chunk) {
         continue
       }
       // based on next-term
-      let onRight = document[n][t + 1]
+      const onRight = document[n][t + 1]
       // based on last-term
-      let onLeft = document[n][t - 1]
+      const onLeft = document[n][t - 1]
 
       //'is cool' vs 'the cool dog'
       if (term.tags.has('Adjective')) {

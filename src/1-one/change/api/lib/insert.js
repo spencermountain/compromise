@@ -8,7 +8,7 @@ const spliceArr = (parent, index, child) => {
   // tag them as dirty
   child.forEach(term => term.dirty = true)
   if (parent) {
-    let args = [index, 0].concat(child)
+    const args = [index, 0].concat(child)
     Array.prototype.splice.apply(parent, args)
   }
   return parent
@@ -18,7 +18,7 @@ const spliceArr = (parent, index, child) => {
 const endSpace = function (terms) {
   const hasSpace = / $/
   const hasDash = /[-–—]/
-  let lastTerm = terms[terms.length - 1]
+  const lastTerm = terms[terms.length - 1]
   if (lastTerm && !hasSpace.test(lastTerm.post) && !hasDash.test(lastTerm.post)) {
     lastTerm.post += ' '
   }
@@ -27,14 +27,14 @@ const endSpace = function (terms) {
 // sentence-ending punctuation should move in append
 const movePunct = (source, end, needle) => {
   const juicy = /[-.?!,;:)–—'"]/g
-  let wasLast = source[end - 1]
+  const wasLast = source[end - 1]
   if (!wasLast) {
     return
   }
-  let post = wasLast.post
+  const post = wasLast.post
   if (juicy.test(post)) {
-    let punct = post.match(juicy).join('') //not perfect
-    let last = needle[needle.length - 1]
+    const punct = post.match(juicy).join('') //not perfect
+    const last = needle[needle.length - 1]
     last.post = punct + last.post
     // remove it, from source
     wasLast.post = wasLast.post.replace(juicy, '')
@@ -43,7 +43,7 @@ const movePunct = (source, end, needle) => {
 
 
 const moveTitleCase = function (home, start, needle) {
-  let from = home[start]
+  const from = home[start]
   // should we bother?
   if (start !== 0 || !isTitleCase(from.text)) {
     return
@@ -51,7 +51,7 @@ const moveTitleCase = function (home, start, needle) {
   // titlecase new first term
   needle[0].text = toTitleCase(needle[0].text)
   // should we un-titlecase the old word?
-  let old = home[start]
+  const old = home[start]
   if (old.tags.has('ProperNoun') || old.tags.has('Acronym')) {
     return
   }
@@ -62,7 +62,7 @@ const moveTitleCase = function (home, start, needle) {
 
 // put these words before the others
 const cleanPrepend = function (home, ptr, needle, document) {
-  let [n, start, end] = ptr
+  const [n, start, end] = ptr
   // introduce spaces appropriately
   if (start === 0) {
     // at start - need space in insert
@@ -81,8 +81,8 @@ const cleanPrepend = function (home, ptr, needle, document) {
 }
 
 const cleanAppend = function (home, ptr, needle, document) {
-  let [n, , end] = ptr
-  let total = (document[n] || []).length
+  const [n, , end] = ptr
+  const total = (document[n] || []).length
   if (end < total) {
     // are we in the middle?
     // add trailing space on self

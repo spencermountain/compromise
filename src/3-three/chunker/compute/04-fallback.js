@@ -1,7 +1,7 @@
 const setChunk = function (term, chunk) {
   const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
   if (env.DEBUG_CHUNKS) {
-    let str = (term.normal + "'").padEnd(8)
+    const str = (term.normal + "'").padEnd(8)
     console.log(`  | '${str}  →  \x1b[34m${chunk.padEnd(12)}\x1b[0m \x1b[2m -fallback- \x1b[0m`) // eslint-disable-line
   }
   term.chunk = chunk
@@ -11,7 +11,7 @@ const setChunk = function (term, chunk) {
 const fallback = function (document) {
   for (let n = 0; n < document.length; n += 1) {
     for (let t = 0; t < document[n].length; t += 1) {
-      let term = document[n][t]
+      const term = document[n][t]
       if (term.chunk === undefined) {
         // conjunctions stand alone
         if (term.tags.has('Conjunction')) {

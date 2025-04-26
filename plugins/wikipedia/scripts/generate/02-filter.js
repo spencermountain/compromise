@@ -60,13 +60,13 @@ const ignorePage = function (title) {
 const toList = function () {
   let final = []
   let nope = 0
-  let arr = fs.readFileSync(tsvOut).toString().split(/\n/)
+  const arr = fs.readFileSync(tsvOut).toString().split(/\n/)
   for (let i = 0; i < arr.length; i += 1) {
-    let a = arr[i].split(' ')
+    const a = arr[i].split(' ')
     let title = a[1]
     if (title !== undefined && a[4] !== '1') {
       title = toName(title)
-      let num = Number(a[4])
+      const num = Number(a[4])
       // another filter
       if (ignorePage(title) === true) {
         continue
@@ -97,8 +97,8 @@ const toList = function () {
 const round = n => Math.round(n * 10) / 10
 
 const fileSize = (pathStr) => {
-  let kb = fs.statSync(pathStr).size / 1024
-  let num = round(kb / 1000)
+  const kb = fs.statSync(pathStr).size / 1024
+  const num = round(kb / 1000)
   return num.toLocaleString() + 'mb'
 }
 

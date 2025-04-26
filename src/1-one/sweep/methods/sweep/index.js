@@ -6,7 +6,7 @@ import runMatch from './04-runMatch.js'
 
 const tooSmall = function (maybeList, document) {
   return maybeList.map((arr, i) => {
-    let termCount = document[i].length
+    const termCount = document[i].length
     arr = arr.filter(o => {
       return termCount >= o.minWords
     })
@@ -16,7 +16,7 @@ const tooSmall = function (maybeList, document) {
 
 const sweep = function (document, net, methods, opts = {}) {
   // find suitable matches to attempt, on each sentence
-  let docCache = methods.one.cacheDoc(document)
+  const docCache = methods.one.cacheDoc(document)
   // collect possible matches for this document
   let maybeList = getHooks(docCache, net.hooks)
   // ensure all defined needs are met for each match
@@ -29,7 +29,7 @@ const sweep = function (document, net, methods, opts = {}) {
   maybeList = tooSmall(maybeList, document)
 
   // now actually run the matches
-  let results = runMatch(maybeList, document, docCache, methods, opts)
+  const results = runMatch(maybeList, document, docCache, methods, opts)
   // console.dir(results, { depth: 5 })
   return results
 }

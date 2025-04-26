@@ -1,13 +1,13 @@
 import corpus from 'nlp-corpus'
 import nlp from '../../src/three.js'
 
-let start = 80000
-let list = corpus.all().slice(start, start + 1000)
+const start = 80000
+const list = corpus.all().slice(start, start + 1000)
 list.forEach(str => {
-  let doc = nlp(str)
-  let out = {}
+  const doc = nlp(str)
+  const out = {}
   doc.pronouns().forEach(p => {
-    let n = p.refersTo()
+    const n = p.refersTo()
     if (n.found) {
       out[p.text('normal')] = n.text('normal')
     }

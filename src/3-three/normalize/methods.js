@@ -43,10 +43,10 @@ export default {
       term.post = term.post.replace(/\?!+/g, '?')
     })
     // trim end
-    let docs = doc.docs
-    let terms = docs[docs.length - 1]
+    const docs = doc.docs
+    const terms = docs[docs.length - 1]
     if (terms && terms.length > 0) {
-      let lastTerm = terms[terms.length - 1]
+      const lastTerm = terms[terms.length - 1]
       lastTerm.post = lastTerm.post.replace(/ /g, '')
     }
   },

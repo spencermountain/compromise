@@ -1,8 +1,8 @@
 // generate all the possible prefixes up-front
 const getPrefixes = function (arr, opts, world) {
   let index = {}
-  let collisions = []
-  let existing = world.prefixes || {}
+  const collisions = []
+  const existing = world.prefixes || {}
   arr.forEach((str) => {
     str = str.toLowerCase().trim()
     let max = str.length
@@ -10,7 +10,7 @@ const getPrefixes = function (arr, opts, world) {
       max = opts.max
     }
     for (let size = opts.min; size < max; size += 1) {
-      let prefix = str.substring(0, size)
+      const prefix = str.substring(0, size)
       // ensure prefix is not a word
       if (opts.safe && world.model.one.lexicon.hasOwnProperty(prefix)) {
         continue

@@ -26,8 +26,8 @@ const arr = [
 
 test('no-match:', function (t) {
   arr.forEach(function (a) {
-    let doc = nlp(a[0])
-    let msg = `'${(a[0] + "' ").padEnd(20, '.')}  - '${a[1]}'`
+    const doc = nlp(a[0])
+    const msg = `'${(a[0] + "' ").padEnd(20, '.')}  - '${a[1]}'`
     t.equal(doc.has(a[1]), false, here + msg)
   })
   t.end()

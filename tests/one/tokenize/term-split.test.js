@@ -4,7 +4,7 @@ const here = '[one/term-split] '
 
 
 test('term tokenizer', function (t) {
-  let arr = [
+  const arr = [
     [``, 0],
     [`1`, 1],
     [`&`, 1],
@@ -20,7 +20,7 @@ test('term tokenizer', function (t) {
     [`he did. ( but barely )`, 4],
   ]
   arr.forEach(a => {
-    let [str, len] = a
+    const [str, len] = a
     t.equal(nlp(str).terms().length, len, here + `"${str}"`)
   })
   t.end()

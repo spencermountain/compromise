@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/freeze-lex] '
 
 test('internal freezeLex', function (t) {
-  let arr = [
+  const arr = [
     ['tiger woods', 'Person'],
     ['houston astros', 'SportsTeam'],
     ['top notch', 'Adjective'],
@@ -80,8 +80,8 @@ test('internal freezeLex', function (t) {
     ['taken part', 'Participle'],
   ]
   arr.forEach(a => {
-    let [str, tag] = a
-    let doc = nlp(str)
+    const [str, tag] = a
+    const doc = nlp(str)
     t.equal(doc.has('^#' + tag + '+$'), true, here + str)
   })
   t.end()

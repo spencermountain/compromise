@@ -5,7 +5,7 @@ import spacetime from 'spacetime'
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
 test('this monday', function (t) {
-  let arr = [
+  const arr = [
     ['2020-12-7', '2020-12-07'], //mon (itself)
     ['2020-12-8', '2020-12-14'], //tues
     ['2020-12-9', '2020-12-14'], //wed
@@ -15,8 +15,8 @@ test('this monday', function (t) {
     ['2020-12-13', '2020-12-14'], //sun
   ]
   arr.forEach((a) => {
-    let doc = nlp('this monday')
-    let found = doc.dates({ today: a[0] }).json()[0]
+    const doc = nlp('this monday')
+    const found = doc.dates({ today: a[0] }).json()[0]
     t.equal(fmt(found.dates.start), a[1], 'monday-start')
     t.equal(fmt(found.dates.end), a[1], 'monday-end')
   })

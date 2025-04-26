@@ -58,7 +58,7 @@ test('have contractions', function (t) {
 })
 
 test('repeated contract-expand', function (t) {
-  let r = nlp(`i'm good`)
+  const r = nlp(`i'm good`)
   r.contractions().expand()
 
   r.contractions().expand().expand().expand()
@@ -67,9 +67,9 @@ test('repeated contract-expand', function (t) {
 })
 
 test('contracted', function (t) {
-  let r = nlp(`I'll go to Toronto. I will see.`)
-  let m = r.contractions()
-  let str = m.out('text')
+  const r = nlp(`I'll go to Toronto. I will see.`)
+  const m = r.contractions()
+  const str = m.out('text')
   t.equal(str, `I'll`, here + 'contracted')
 
   t.equal(m.length, 1, here + 'no-expanded')

@@ -3,7 +3,7 @@ const addTags = function (tags) {
   const { model, methods } = this.world()
   const tagSet = model.one.tagSet
   const fn = methods.one.addTags
-  let res = fn(tags, tagSet)
+  const res = fn(tags, tagSet)
   model.one.tagSet = res
   return this
 }

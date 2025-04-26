@@ -32,8 +32,8 @@ test('edgegram-sizes:', function (t) {
 })
 
 test('edgegram:', function (t) {
-  let doc = nlp('my birthday is June 5th my birthday')
-  let arr = doc.edgegrams()
+  const doc = nlp('my birthday is June 5th my birthday')
+  const arr = doc.edgegrams()
   t.equal(arr[0].normal, 'my birthday', 'combine edges')
   t.equal(arr[0].count, 2, 'found both edges')
   t.end()

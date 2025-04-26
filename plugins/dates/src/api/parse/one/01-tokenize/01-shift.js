@@ -30,7 +30,7 @@ const parseUnit = function (m) {
 
 //turn '5 weeks before' to {weeks:5}
 const parseShift = function (doc) {
-  let result = {}
+  const result = {}
   let m = doc.none()
   let shift = doc.match('#DateShift+')
   if (shift.found === false) {
@@ -39,9 +39,9 @@ const parseShift = function (doc) {
 
   // '5 weeks'
   shift.match('#Cardinal #Duration').forEach((ts) => {
-    let num = ts.match('#Cardinal').numbers().get()[0]
+    const num = ts.match('#Cardinal').numbers().get()[0]
     if (num && typeof num === 'number') {
-      let unit = parseUnit(ts)
+      const unit = parseUnit(ts)
       if (knownUnits[unit] === true) {
         result[unit] = num
       }
@@ -57,9 +57,9 @@ const parseShift = function (doc) {
   // supoprt '1 day after tomorrow'
   m = shift.match('[<unit>#Duration] [<dir>(after|before)]')
   if (m.found) {
-    let unit = m.groups('unit').text('reduced')
+    const unit = m.groups('unit').text('reduced')
     // unit = unit.replace(/s$/, '')
-    let dir = m.groups('dir').text('reduced')
+    const dir = m.groups('dir').text('reduced')
     if (dir === 'after') {
       result[unit] = 1
     } else if (dir === 'before') {
@@ -70,14 +70,14 @@ const parseShift = function (doc) {
   // in half an hour
   m = shift.match('half (a|an) [#Duration]', 0)
   if (m.found) {
-    let unit = parseUnit(m)
+    const unit = parseUnit(m)
     result[unit] = 0.5
   }
 
   // a couple years
   m = shift.match('a (few|couple) [#Duration]', 0)
   if (m.found) {
-    let unit = parseUnit(m)
+    const unit = parseUnit(m)
     result[unit] = m.has('few') ? 3 : 2
   }
 

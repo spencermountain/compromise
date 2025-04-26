@@ -16,8 +16,8 @@ const tagger = function (list, document, world) {
     if (!todo.tag && !todo.chunk && !todo.unTag) {
       return
     }
-    let reason = todo.reason || todo.match
-    let terms = getDoc([todo.pointer], document)[0]
+    const reason = todo.reason || todo.match
+    const terms = getDoc([todo.pointer], document)[0]
     // handle 'safe' tag
     if (todo.safe === true) {
       // check for conflicting tags
@@ -33,7 +33,7 @@ const tagger = function (list, document, world) {
       setTag(terms, todo.tag, world, todo.safe, `[post] '${reason}'`)
       // quick and dirty plural tagger 😕
       if (todo.tag === 'Noun' && looksPlural) {
-        let term = terms[terms.length - 1]
+        const term = terms[terms.length - 1]
         if (looksPlural(term.text)) {
           setTag([term], 'Plural', world, todo.safe, 'quick-plural')
         } else {

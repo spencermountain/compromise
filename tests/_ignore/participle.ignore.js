@@ -3,7 +3,7 @@ import nlp from '../three/_lib.js'
 const here = '[three/participle] '
 
 test('toParticiple', function (t) {
-  let arr = [
+  const arr = [
     ['i drive', 'i have driven'],
     ['we smoke', 'we have smoked'],
     // ['i will go', 'i will have gone'], //still future-tense?
@@ -12,7 +12,7 @@ test('toParticiple', function (t) {
     ['i really travel to india', 'i really have traveled to india'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     // doc.verbs().toParticiple()
     doc.verbs().toPast()
     t.equal(doc.text(), a[1], here + a[0])
@@ -21,7 +21,7 @@ test('toParticiple', function (t) {
 })
 
 test('participle -> past', function (t) {
-  let arr = [
+  const arr = [
     ['i am being driven', 'i have been driven'],
     ['i should be driven', 'i should have been driven'],
     ['i should go', 'i should have gone'],
@@ -31,7 +31,7 @@ test('participle -> past', function (t) {
     ['i will have gone', 'i had gone'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.verbs().toPastTense()
     t.equal(doc.text(), a[1], here + a[0])
   })
@@ -39,7 +39,7 @@ test('participle -> past', function (t) {
 })
 
 test('participle -> future', function (t) {
-  let arr = [
+  const arr = [
     // ['i am being driven', 'i will have been driven'],
     // ['i should be driven', 'i should have been driven'],
     // ['i should go', 'i should have gone'],
@@ -49,7 +49,7 @@ test('participle -> future', function (t) {
     ['i will have gone', 'i will have gone'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.verbs().toFutureTense()
     t.equal(doc.text(), a[1], here + a[0])
   })

@@ -6,7 +6,7 @@ const parse = function (input, world) {
   const { splitSentences, splitTerms, splitWhitespace } = methods.one.tokenize
   input = input || ''
   // split into sentences
-  let sentences = splitSentences(input, world)
+  const sentences = splitSentences(input, world)
   // split into word objects
   input = sentences.map((txt) => {
     let terms = splitTerms(txt, model)

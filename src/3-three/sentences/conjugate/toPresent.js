@@ -1,7 +1,7 @@
 const toPresent = function (s) {
   let verbs = s.verbs()
   // translate the first verb, no-stress
-  let first = verbs.eq(0)
+  const first = verbs.eq(0)
   // already present
   // if (first.has('#PresentTense')) {
   //   return s

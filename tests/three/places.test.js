@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 const here = '[three/places] '
 
 test('known-regions:', function (t) {
-  let arr = [
+  const arr = [
     ['i want to go to Ohio to see George Harrison', 'ohio'],
     ['we are visiting Gloucestershire, before we leave', 'gloucestershire'],
     ['manitoba is nice this time of year', 'manitoba'],
@@ -16,7 +16,7 @@ test('known-regions:', function (t) {
 })
 
 test('places-find:', function (t) {
-  let arr = [
+  const arr = [
     ['live in the Rekcjd Province', 'rekcjd province'],
     ['live in the Lekfjs District', 'lekfjs district'],
     ['visiting Tojbs Kjeh Region', 'tojbs kjeh region'],
@@ -43,7 +43,7 @@ test('mixed continents-places:', function (t) {
 })
 
 test('national-monuments:', function (t) {
-  let list = [
+  const list = [
     "St. Peter's Basilica",
     'Palace of Versailles',
     'Lincoln Memorial',
@@ -123,7 +123,7 @@ test('national-monuments:', function (t) {
   ]
 
   list.forEach(str => {
-    let doc = nlp(str)
+    const doc = nlp(str)
     t.ok(doc.places().found, str)
   })
   t.end()

@@ -3,7 +3,7 @@ const clean = function (str) {
   str = str || ''
   str = str.toLowerCase()
   str = str.trim()
-  let original = str
+  const original = str
   //punctuation
   str = str.replace(/[,;.!?]+$/, '')
   //coerce Unicode ellipses

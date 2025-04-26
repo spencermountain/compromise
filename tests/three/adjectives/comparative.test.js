@@ -20,7 +20,7 @@ test('toComparative misc', function (t) {
 
 
 test('.toComparative():', function (t) {
-  let arr = [
+  const arr = [
     ["high", "higher"],
     ["great", "greater"],
     ["further", "further"],
@@ -383,7 +383,7 @@ test('.toComparative():', function (t) {
 
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0]).tag('Adjective')
+    const doc = nlp(a[0]).tag('Adjective')
     doc.adjectives().toComparative()
     t.equal(doc.text(), a[1], here + a[0])
   })

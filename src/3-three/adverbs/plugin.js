@@ -1,6 +1,6 @@
 // guard against superlative+comparative forms
 const toRoot = function (adj) {
-  let str = adj.compute('root').text('root')
+  const str = adj.compute('root').text('root')
   return str
 }
 
@@ -14,7 +14,7 @@ const api = function (View) {
     }
     conjugate(n) {
       return this.getNth(n).map(adv => {
-        let adj = toRoot(adv)
+        const adj = toRoot(adv)
         return {
           Adverb: adv.text('normal'),
           Adjective: adj,
@@ -25,7 +25,7 @@ const api = function (View) {
       const fromAdverb = this.methods.two.transform.adjective.fromAdverb
       opts.normal = true
       return this.map(m => {
-        let json = m.toView().json(opts)[0] || {}
+        const json = m.toView().json(opts)[0] || {}
         json.adverb = {
           adjective: fromAdverb(json.normal)
         }

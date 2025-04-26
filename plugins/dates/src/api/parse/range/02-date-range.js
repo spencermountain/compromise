@@ -10,12 +10,12 @@ export default [
     match: 'between [<start>#Month] and [<end>#Month] [<year>#Year?]',
     desc: 'between march and jan',
     parse: (m, context) => {
-      let { start, end, year } = m.groups()
-      let y = year && year.found ? Number(year.text('reduced')) : context.today.year()
+      const { start, end, year } = m.groups()
+      const y = year && year.found ? Number(year.text('reduced')) : context.today.year()
       let obj = { month: start.text('reduced'), year: y }
-      let left = new Month(obj, null, context).start()
+      const left = new Month(obj, null, context).start()
       obj = { month: end.text('reduced'), year: y }
-      let right = new Month(obj, null, context).start()
+      const right = new Month(obj, null, context).start()
       if (left.d.isAfter(right.d)) {
         return {
           start: right,
@@ -54,7 +54,7 @@ export default [
     match: '[<from>#Month #Value] (to|through|thru) [<to>#Month #Value] [<year>#Year?]',
     desc: 'june 5 to june 7',
     parse: (m, context) => {
-      let res = m.groups()
+      const res = m.groups()
       let start = res.from
       if (res.year) {
         start = start.append(res.year)
@@ -71,7 +71,7 @@ export default [
           if (start.d.isAfter(end.d)) {
             end.d = end.d.add(1, 'year')
           }
-          let obj = {
+          const obj = {
             start: start,
             end: end.end(),
           }
@@ -86,8 +86,8 @@ export default [
     match: '[<month>#Month] [<from>#Value] (to|through|thru) [<to>#Value] of? [<year>#Year]',
     desc: 'january 5 to 7 1998',
     parse: (m, context) => {
-      let { month, from, to, year } = m.groups()
-      let year2 = year.clone()
+      const { month, from, to, year } = m.groups()
+      const year2 = year.clone()
       let start = from.prepend(month).append(year)
       start = parseDate(start, context)
       if (start) {
@@ -109,8 +109,8 @@ export default [
       let to = m.groups('to')
       to = parseDate(to, context)
       if (to) {
-        let fromDate = m.groups('from')
-        let from = to.clone()
+        const fromDate = m.groups('from')
+        const from = to.clone()
         from.d = from.d.date(fromDate.text('implicit'))
         return {
           start: from,
@@ -129,8 +129,8 @@ export default [
       let from = m.groups('from')
       from = parseDate(from, context)
       if (from) {
-        let toDate = m.groups('to')
-        let to = from.clone()
+        const toDate = m.groups('to')
+        const to = from.clone()
         to.d = to.d.date(toDate.text('implicit'))
         return {
           start: from,
@@ -147,7 +147,7 @@ export default [
     desc: 'january to may 2020',
     parse: (m, context) => {
       let from = m.groups('from')
-      let year = m.groups('year').numbers().get()[0]
+      const year = m.groups('year').numbers().get()[0]
       let to = m.groups('to')
       from = parseDate(from, context)
       to = parseDate(to, context)
@@ -218,7 +218,7 @@ export default [
       let to = m.groups('to')
       to = parseDate(to, context)
       if (to) {
-        let start = new CalendarDate(context.today, null, context)
+        const start = new CalendarDate(context.today, null, context)
         return {
           start: start,
           end: to.start(),
@@ -234,12 +234,12 @@ export default [
     desc: 'second half of march',
     parse: (m, context) => {
       const { part, month, year } = m.groups()
-      let obj = {
+      const obj = {
         month: month.text('reduced'),
         date: 1, //assume 1st
         year: year && year.found ? year.text('reduced') : context.today.year()
       }
-      let unit = new Month(obj, null, context)
+      const unit = new Month(obj, null, context)
       if (part.has('(1st|initial)')) {
         return {
           start: unit.start(),

@@ -43,15 +43,15 @@ const softMapping = {
 }
 
 test('pennTreebank-test:', function (t) {
-  let all = []
+  const all = []
   penn.forEach((sentence, index) => {
     sentence.tags = sentence.tags.split(', ')
 
-    let doc = nlp(sentence.text)
+    const doc = nlp(sentence.text)
     let perfect = true
     let msg = `'` + sentence.text.substring(0, 55) + `..   -  `
 
-    let terms = doc.json()[0].terms
+    const terms = doc.json()[0].terms
     if (doc.length !== 1) {
       perfect = false
       msg = 'one sentence #' + index
@@ -67,7 +67,7 @@ test('pennTreebank-test:', function (t) {
     for (let i = 0; i < sentence.tags.length; i++) {
       const want = softMapping[sentence.tags[i]]
       terms[i] = terms[i] || { tags: [] }
-      let found = terms[i].tags.some(tag => tag === want)
+      const found = terms[i].tags.some(tag => tag === want)
       if (!found) {
         perfect = false
         msg += `'${terms[i].text}' no #${want}`

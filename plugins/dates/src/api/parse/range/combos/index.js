@@ -8,11 +8,11 @@ export default [
     match: '^during? #Month+ (or|and) #Month [<year>#Year]?',
     desc: 'march or june',
     parse: (m, context) => {
-      let before = m.match('^during? [#Month]', 0)
+      const before = m.match('^during? [#Month]', 0)
       m = m.not('(or|and)')
-      let start = parseDate(before, context)
+      const start = parseDate(before, context)
       if (start) {
-        let result = [
+        const result = [
           {
             start: start,
             end: start.clone().end(),
@@ -20,10 +20,10 @@ export default [
           },
         ]
         // add more run-on numbers?
-        let more = m.not(before)
+        const more = m.not(before)
         if (more.found) {
           more.match('#Month').forEach((month) => {
-            let s = parseDate(month, context)
+            const s = parseDate(month, context)
             // s.d = s.d.month(month.text('reduced'))
             result.push({
               start: s,
@@ -52,10 +52,10 @@ export default [
     desc: 'jan 5 or 8',
     parse: (m, context) => {
       m = m.not('(or|and)')
-      let before = m.match('^#Month #Value')
-      let start = parseDate(before, context)
+      const before = m.match('^#Month #Value')
+      const start = parseDate(before, context)
       if (start) {
-        let result = [
+        const result = [
           {
             start: start,
             end: start.clone().end(),
@@ -63,10 +63,10 @@ export default [
           },
         ]
         // add more run-on numbers?
-        let more = m.not(before)
+        const more = m.not(before)
         if (more.found) {
           more.match('#Value').forEach((v) => {
-            let s = start.clone()
+            const s = start.clone()
             s.d = s.d.date(v.text('reduced'))
             result.push({
               start: s,
@@ -85,17 +85,17 @@ export default [
     match: '^#Month+ #Value #Value+$',
     desc: 'jan 5 8',
     parse: (m, context) => {
-      let month = m.match('#Month')
-      let year = m.match('#Year')
+      const month = m.match('#Month')
+      const year = m.match('#Year')
       m = m.not('#Year')
-      let results = []
+      const results = []
       m.match('#Value').forEach((val) => {
         val = val.clone()
-        let d = val.prepend(month.text())
+        const d = val.prepend(month.text())
         if (year.found) {
           d.append(year)
         }
-        let start = parseDate(d, context)
+        const start = parseDate(d, context)
         if (start) {
           results.push({
             start: start,
@@ -112,16 +112,16 @@ export default [
     match: '^#Value+ (or|and)? #Value of #Month #Year?$',
     desc: '5 or 8 of Jan',
     parse: (m, context) => {
-      let month = m.match('#Month')
-      let year = m.match('#Year')
+      const month = m.match('#Month')
+      const year = m.match('#Year')
       m = m.not('#Year')
-      let results = []
+      const results = []
       m.match('#Value').forEach((val) => {
-        let d = val.append(month)
+        const d = val.append(month)
         if (year.found) {
           d.append(year)
         }
-        let start = parseDate(d, context)
+        const start = parseDate(d, context)
         if (start) {
           results.push({
             start: start,
@@ -139,10 +139,10 @@ export default [
     match: '^!(between|from|during)? [<from>#Date+] (and|or) [<to>#Date+]$',
     desc: 'A or B',
     parse: (m, context) => {
-      let fromDoc = m.groups('from')
-      let toDoc = m.groups('to')
-      let from = parseDate(fromDoc, context)
-      let to = parseDate(toDoc, context)
+      const fromDoc = m.groups('from')
+      const toDoc = m.groups('to')
+      const from = parseDate(fromDoc, context)
+      const to = parseDate(toDoc, context)
       if (from && to) {
         return [
           {

@@ -3,20 +3,21 @@ import { nodeResolve } from '@rollup/plugin-node-resolve'
 import sizeCheck from 'rollup-plugin-filesize-check'
 
 const opts = { keep_classnames: true, module: true }
+const umdOpts = { ...opts, module: false }
 
 export default [
   // === Main ==
   {
     input: 'src/three.js',
     output: [{ file: 'builds/compromise.js', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 30 })],
+    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 277, warn: 30 })],
   },
 
   // === One ==
   {
     input: 'src/one.js',
     output: [{ file: 'builds/one/compromise-one.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 69, warn: 15 })],
+    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 69, warn: 15 })],
   },
   {
     input: 'src/one.js',
@@ -28,7 +29,7 @@ export default [
   {
     input: 'src/two.js',
     output: [{ file: 'builds/two/compromise-two.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 226, warn: 30 })],
+    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 226, warn: 30 })],
   },
   {
     input: 'src/two.js',
@@ -40,7 +41,7 @@ export default [
   {
     input: 'src/three.js',
     output: [{ file: 'builds/three/compromise-three.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 30 })],
+    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 277, warn: 30 })],
   },
   {
     input: 'src/three.js',

@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 const here = '[four/facts]'
 
-let arr = [
+const arr = [
   {
     txt: 'the beautiful girl walked slowly toward the store',
     facts: [{
@@ -74,13 +74,13 @@ let arr = [
 
 test('facts', function (t) {
   arr.forEach(obj => {
-    let all = nlp(obj.txt).facts().json()
+    const all = nlp(obj.txt).facts().json()
 
     t.equal(all.length, obj.facts.length, here + ` [facts] ${obj.txt}`)
 
     obj.facts.forEach((want, i) => {
-      let mine = all[i]
-      let msg = `${here} #${i}`
+      const mine = all[i]
+      const msg = `${here} #${i}`
 
       // subject
       if (want.subj) {

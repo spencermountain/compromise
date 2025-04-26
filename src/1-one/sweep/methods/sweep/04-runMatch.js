@@ -1,12 +1,12 @@
 // finally,
 // actually run these match-statements on the terms
 const runMatch = function (maybeList, document, docCache, methods, opts) {
-  let results = []
+  const results = []
   for (let n = 0; n < maybeList.length; n += 1) {
     for (let i = 0; i < maybeList[n].length; i += 1) {
-      let m = maybeList[n][i]
+      const m = maybeList[n][i]
       // ok, actually do the work.
-      let res = methods.one.match([document[n]], m)
+      const res = methods.one.match([document[n]], m)
       // found something.
       if (res.ptrs.length > 0) {
         res.ptrs.forEach(ptr => {
@@ -31,7 +31,7 @@ const runMatch = function (maybeList, document, docCache, methods, opts) {
           //     }
           //   }
           // }
-          let todo = Object.assign({}, m, { pointer: ptr })
+          const todo = Object.assign({}, m, { pointer: ptr })
           if (m.unTag !== undefined) {
             todo.unTag = m.unTag
           }

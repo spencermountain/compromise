@@ -4,21 +4,21 @@ const multiWord = function (terms, start_i, world) {
   const setTag = methods.one.setTag
   const multi = model.one._multiCache || {}
   const { lexicon } = model.one || {}
-  let t = terms[start_i]
-  let word = t.machine || t.normal
+  const t = terms[start_i]
+  const word = t.machine || t.normal
 
   // found a word to scan-ahead on
   if (multi[word] !== undefined && terms[start_i + 1]) {
-    let end = start_i + multi[word] - 1
+    const end = start_i + multi[word] - 1
     for (let i = end; i > start_i; i -= 1) {
-      let words = terms.slice(start_i, i + 1)
+      const words = terms.slice(start_i, i + 1)
       if (words.length <= 1) {
         return false
       }
-      let str = words.map(term => term.machine || term.normal).join(' ')
+      const str = words.map(term => term.machine || term.normal).join(' ')
       // lookup regular lexicon
       if (lexicon.hasOwnProperty(str) === true) {
-        let tag = lexicon[str]
+        const tag = lexicon[str]
         setTag(words, tag, world, false, '1-multi-lexicon')
         // special case for phrasal-verbs - 2nd word is a #Particle
         if (tag && tag.length === 2 && (tag[0] === 'PhrasalVerb' || tag[1] === 'PhrasalVerb')) {

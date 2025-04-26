@@ -17,9 +17,9 @@ console.log('\n 🥗  - running types-test..\n')
 tape('misc functions', function (t) {
   let doc = nlp('John and Joe walked to the store')
   let m = doc.filter(s => s.found)
-  let b = doc.map(s => s)
+  const b = doc.map(s => s)
   doc.forEach((s) => s)
-  let o = doc.find(s => s.found)
+  const o = doc.find(s => s.found)
   m = doc.some(s => s.found)
   m = doc.random()
   m = doc.all()
@@ -36,9 +36,9 @@ tape('misc functions', function (t) {
   m = doc.toView([])
   m = doc.fromText('')
   m = doc.clone()
-  let obj = doc.groups()
+  const obj = doc.groups()
   let arr = doc.termList()
-  let c = doc.wordCount()
+  const c = doc.wordCount()
   doc.fullPointer
   doc.docs
   doc.pointer
@@ -87,7 +87,7 @@ tape('misc functions', function (t) {
   // match
   m = doc.matchOne('#Foo')
   m = doc.match('#Foo')
-  let bool = doc.has('#Foo')
+  const bool = doc.has('#Foo')
   m = doc.if('#Foo')
   m = doc.ifNo('#Foo')
   m = doc.before('#Foo')
@@ -101,7 +101,7 @@ tape('misc functions', function (t) {
   m = doc.split('#Foo')
 
   // output
-  let res = doc.out()
+  const res = doc.out()
   let txt = doc.text()
   txt = doc.text('normal')
   txt = doc.text('machine')
@@ -135,13 +135,13 @@ tape('misc functions', function (t) {
   doc.autoFill()
 
   // sweep
-  let matches = [
+  const matches = [
     { match: '2nd quarter of? 2022', tag: 'TimePeriod' },
     { match: '(from|by|before) now', tag: 'FooBar' },
   ]
-  let net = nlp.buildNet(matches)
+  const net = nlp.buildNet(matches)
   doc = nlp(`so good by now. woo hoo before now. in the 2nd quarter 2022`)
-  let sr = doc.sweep(net)
+  const sr = doc.sweep(net)
 
   // lazy
   doc = nlp.lazy('hello', 'foo')
@@ -208,7 +208,7 @@ tape('misc functions', function (t) {
   // verbs
   // arr = doc.verbs().parse()
   arr = doc.verbs().json()
-  let sj = doc.verbs().subjects()
+  const sj = doc.verbs().subjects()
   let vb = doc.verbs().isSingular()
   vb = doc.verbs().isPlural()
   vb = doc.verbs().isImperative()
@@ -243,28 +243,28 @@ tape('misc functions', function (t) {
 })
 
 tape('plugin-date', function (t) {
-  let doc = nlp<DatesMethods>('foo bar baz')
-  let a = doc.dates()
-  let b = doc.times()
-  let c = doc.durations()
+  const doc = nlp<DatesMethods>('foo bar baz')
+  const a = doc.dates()
+  const b = doc.times()
+  const c = doc.durations()
 
   let m = doc.dates().match('foo')
   m = doc.dates().format('foo')
-  let arr = doc.dates().get()
+  const arr = doc.dates().get()
   // doc.dates().floob()
   // doc.floob()
   t.end()
 })
 
 tape('plugin-speech', function (t) {
-  let doc = nlp<SpeechMethods>('foo bar baz')
+  const doc = nlp<SpeechMethods>('foo bar baz')
   let arr = doc.syllables()
   arr = doc.soundsLike()
   t.end()
 })
 
 tape('plugin-speed', function (t) {
-  let doc = nlp<SpeedMethods>('foo bar')
+  const doc = nlp<SpeedMethods>('foo bar')
   // nlp.workerPool()
   doc.match('foo')
   t.end()
@@ -280,13 +280,13 @@ tape('plugin-stats', function (t) {
   arr = doc.startgrams()
   arr = doc.endgrams()
   arr = doc.edgegrams()
-  let res = doc.tfidf()
+  const res = doc.tfidf()
   t.end()
 })
 
 tape('plugin-wikipedia', function (t) {
-  let doc = nlp<WikiMethods>('foo bar baz. foo')
-  let wp = doc.wikipedia()
+  const doc = nlp<WikiMethods>('foo bar baz. foo')
+  const wp = doc.wikipedia()
   t.end()
 })
 

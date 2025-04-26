@@ -8,7 +8,7 @@ const checkWord = (term, obj) => {
   if (!term || !obj) {
     return null
   }
-  let str = term.normal || term.implicit
+  const str = term.normal || term.implicit
   let found = null
   if (obj.hasOwnProperty(str)) {
     found = obj[str]
@@ -24,9 +24,9 @@ const checkTag = (term, obj = {}, tagSet) => {
     return null
   }
   // rough sort, so 'Noun' is after ProperNoun, etc
-  let tags = Array.from(term.tags).sort((a, b) => {
-    let numA = tagSet[a] ? tagSet[a].parents.length : 0
-    let numB = tagSet[b] ? tagSet[b].parents.length : 0
+  const tags = Array.from(term.tags).sort((a, b) => {
+    const numA = tagSet[a] ? tagSet[a].parents.length : 0
+    const numB = tagSet[b] ? tagSet[b].parents.length : 0
     return numA > numB ? -1 : 1
   })
   let found = tags.find(tag => obj[tag])
@@ -67,7 +67,7 @@ const doSwitches = function (terms, i, world) {
     str = str.replace(prefix, '') // could use some guards, here
   }
   if (term.switch) {
-    let form = term.switch
+    const form = term.switch
     // skip propernouns, acronyms, etc
     if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb')) {
       return

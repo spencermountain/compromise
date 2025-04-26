@@ -3,8 +3,8 @@ import { getGroup } from '../_lib.js'
 
 const orBlock = function (state) {
   const { regs } = state
-  let reg = regs[state.r]
-  let skipNum = doOrBlock(state)
+  const reg = regs[state.r]
+  const skipNum = doOrBlock(state)
   // did we find a match?
   if (skipNum) {
     // handle 'not' logic
@@ -18,7 +18,7 @@ const orBlock = function (state) {
     }
     // ensure we're at the end
     if (reg.end === true) {
-      let end = state.phrase_length
+      const end = state.phrase_length
       if (state.t + state.start_i + skipNum !== end) {
         return null
       }

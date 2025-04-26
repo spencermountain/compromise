@@ -6,18 +6,18 @@ const yellow = str => `\x1b[2m\x1b[33m\x1b[3m ${str} ${reset}`
 const bgGreen = str => `\x1b[42m\x1b[30m •${str}• ${reset}`
 const dim = str => `\x1b[2m\x1b[3m ${str} ${reset}`
 const red = str => `\x1b[2m\x1b[31m\x1b[3m ${str} ${reset}`
-let ml = `    \x1b[32m\x1b[2m│${reset}`
+const ml = `    \x1b[32m\x1b[2m│${reset}`
 
 const debug = function (vb) {
-  let parse = parseVerb(vb)
-  let root = bgGreen(parse.root.text())
-  let aux = dim(parse.auxiliary.text())
+  const parse = parseVerb(vb)
+  const root = bgGreen(parse.root.text())
+  const aux = dim(parse.auxiliary.text())
   let not = ''
   if (parse.negative.found) {
     not = dim('[' + parse.negative.text() + ']')
   }
-  let rb1 = yellow(parse.adverbs.pre.text())
-  let rb2 = yellow(parse.adverbs.post.text())
+  const rb1 = yellow(parse.adverbs.pre.text())
+  const rb2 = yellow(parse.adverbs.post.text())
   // line 1
   console.log(`\n`)
   let line = `${ml} ${rb1.padStart(25)} ${rb2.padStart(40)}`

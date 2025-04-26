@@ -94,14 +94,14 @@ const thirdPass = function (terms, model, world, isYelling) {
 
 const preTagger = function (view) {
   const { methods, model, world } = view
-  let docs = view.docs
+  const docs = view.docs
   // try some early stuff
   firstPass(docs, model, world)
   // roughly split sentences up by clause
-  let document = methods.two.quickSplit(docs)
+  const document = methods.two.quickSplit(docs)
   // start with all terms
   for (let n = 0; n < document.length; n += 1) {
-    let terms = document[n]
+    const terms = document[n]
     // is it all upper-case?
     const isYelling = ignoreCase(terms)
     // guess by the letters

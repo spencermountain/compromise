@@ -16,7 +16,7 @@ test('root misc', function (t) {
 })
 
 test('root text', function (t) {
-  let arr = [
+  const arr = [
     // [`I've seen worse`,`i see worse`],
     [`try and pass`, `try and pass`],
     [`so I guess`, `so i guess`],
@@ -49,7 +49,7 @@ test('root text', function (t) {
     // [`yours`,``],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0]).compute('root')
+    const doc = nlp(a[0]).compute('root')
     t.equal(doc.text('root'), a[1], here + a[0])
   })
 
@@ -58,9 +58,9 @@ test('root text', function (t) {
 
 
 test('lookup root', function (t) {
-  let txt = `i've exercised four to five days per week.`
-  let doc = nlp(txt).compute('root')
-  let res = doc.lookup(['john lennon', 'exercise', 'four to five'], { form: 'root' })
+  const txt = `i've exercised four to five days per week.`
+  const doc = nlp(txt).compute('root')
+  const res = doc.lookup(['john lennon', 'exercise', 'four to five'], { form: 'root' })
   t.deepEqual(res.out('array'), ['exercised', 'four to five'], here + 'found root form')
   t.end()
 })
@@ -109,7 +109,7 @@ test('root match', function (t) {
 })
 
 test('sense match', function (t) {
-  let doc = nlp('the stool was brown')
+  const doc = nlp('the stool was brown')
   doc.docs[0][1].sense = 'chair'
   t.equal(doc.has('{stool}'), true, here + '{stool}')
   t.equal(doc.has('{stool/Noun}'), true, here + '{stool/Noun}')

@@ -15,7 +15,7 @@ class Pool {
     }
   }
   do(msg) {
-    let ps = this.workers.map(w => {
+    const ps = this.workers.map(w => {
       return new Promise(resolve => {
         w.on('message', res => {
           w.removeAllListeners('message')

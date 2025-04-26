@@ -37,10 +37,10 @@ const arr = [
 
 test('multi-dates', function (t) {
   arr.forEach((a) => {
-    let found = nlp(a[0]).dates(context).get()
+    const found = nlp(a[0]).dates(context).get()
     t.equal(found.length, a[1].length, '[length] ' + a[0])
     a[1].forEach((str, i) => {
-      let one = nlp(str).dates(context).get()[0]
+      const one = nlp(str).dates(context).get()[0]
       t.equal((found[i] || {}).start, one.start, `[combo: ${str}] '${a[0]}'`)
     })
   })

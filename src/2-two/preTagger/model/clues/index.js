@@ -29,7 +29,7 @@ const clues = {
 }
 
 const copy = (obj, more) => {
-  let res = Object.keys(obj).reduce((h, k) => {
+  const res = Object.keys(obj).reduce((h, k) => {
     h[k] = obj[k] === 'Infinitive' ? 'PresentTense' : 'Plural'
     return h
   }, {})

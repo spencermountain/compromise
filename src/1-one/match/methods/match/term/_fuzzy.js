@@ -3,7 +3,7 @@
 // https://github.com/tad-lispy/node-damerau-levenshtein/blob/master/index.js
 // count steps (insertions, deletions, substitutions, or transpositions)
 const editDistance = function (strA, strB) {
-  let aLength = strA.length,
+  const aLength = strA.length,
     bLength = strB.length
   // fail-fast
   if (aLength === 0) {
@@ -13,12 +13,12 @@ const editDistance = function (strA, strB) {
     return aLength
   }
   // If the limit is not defined it will be calculate from this and that args.
-  let limit = (bLength > aLength ? bLength : aLength) + 1
+  const limit = (bLength > aLength ? bLength : aLength) + 1
   if (Math.abs(aLength - bLength) > (limit || 100)) {
     return limit || 100
   }
   // init the array
-  let matrix = []
+  const matrix = []
   for (let i = 0; i < limit; i++) {
     matrix[i] = [i]
     matrix[i].length = limit
@@ -42,7 +42,7 @@ const editDistance = function (strA, strB) {
       if ((t = matrix[i][j - 1] + 1) < min) min = t // Insertion.
       if ((t = matrix[i - 1][j - 1] + cost) < min) min = t // Substitution.
       // Update matrix.
-      let shouldUpdate =
+      const shouldUpdate =
         i > 1 && j > 1 && a_index === strB[j - 2] && strA[i - 2] === b_index && (t = matrix[i - 2][j - 2] + cost) < min
       if (shouldUpdate) {
         matrix[i][j] = t
@@ -64,9 +64,9 @@ const fuzzyMatch = function (strA, strB, minLength = 3) {
     return 0
   }
   const steps = editDistance(strA, strB)
-  let length = Math.max(strA.length, strB.length)
-  let relative = length === 0 ? 0 : steps / length
-  let similarity = 1 - relative
+  const length = Math.max(strA.length, strB.length)
+  const relative = length === 0 ? 0 : steps / length
+  const similarity = 1 - relative
   return similarity
 }
 export default fuzzyMatch

@@ -5,7 +5,7 @@ import spacetime from 'spacetime'
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
 test('this month', function (t) {
-  let arr = [
+  const arr = [
     [2020, 11, 1],
     [2020, 11, 8],
     [2020, 11, 11],
@@ -15,8 +15,8 @@ test('this month', function (t) {
     [2020, 11, 31],
   ]
   arr.forEach((a) => {
-    let doc = nlp('this month')
-    let found = doc.dates({ today: a }).json()[0] || {}
+    const doc = nlp('this month')
+    const found = doc.dates({ today: a }).json()[0] || {}
     t.equal(fmt((found.dates || {}).start), '2020-12-01', 'this-start')
     t.equal(fmt((found.dates || {}).end), '2020-12-31', 'this-end')
   })
@@ -24,7 +24,7 @@ test('this month', function (t) {
 })
 
 test('next month', function (t) {
-  let arr = [
+  const arr = [
     [2020, 11, 1],
     [2020, 11, 8],
     [2020, 11, 11],
@@ -34,8 +34,8 @@ test('next month', function (t) {
     [2020, 11, 31],
   ]
   arr.forEach((a) => {
-    let doc = nlp('next month')
-    let found = doc.dates({ today: a }).json()[0] || {}
+    const doc = nlp('next month')
+    const found = doc.dates({ today: a }).json()[0] || {}
     t.equal(fmt((found.dates || {}).start), '2021-01-01', 'next-start')
     t.equal(fmt((found.dates || {}).end), '2021-01-31', 'next-end')
   })
@@ -43,7 +43,7 @@ test('next month', function (t) {
 })
 
 test('last month', function (t) {
-  let arr = [
+  const arr = [
     [2020, 11, 1],
     [2020, 11, 8],
     [2020, 11, 11],
@@ -53,8 +53,8 @@ test('last month', function (t) {
     [2020, 11, 31],
   ]
   arr.forEach((a) => {
-    let doc = nlp('last month')
-    let found = doc.dates({ today: a }).json()[0] || {}
+    const doc = nlp('last month')
+    const found = doc.dates({ today: a }).json()[0] || {}
     t.equal(fmt((found.dates || {}).start), '2020-11-01', 'last-start')
     t.equal(fmt((found.dates || {}).end), '2020-11-30', 'last-end')
   })
@@ -62,7 +62,7 @@ test('last month', function (t) {
 })
 
 test('this december', function (t) {
-  let arr = [
+  const arr = [
     [2020, 1, 1],
     [2020, 2, 8],
     [2020, 3, 11],
@@ -95,7 +95,7 @@ test('this december', function (t) {
 })
 
 test('this september', function (t) {
-  let doc = nlp('this september')
+  const doc = nlp('this september')
   let found = doc.dates({ today: [2019, 7, 4] }).json()[0] || {}
   t.equal(fmt((found.dates || {}).start), '2019-09-01', 'this sept - before')
 

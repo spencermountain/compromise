@@ -4,7 +4,7 @@ import words from './data.js'
 const parseDecimals = function (arr) {
   let str = '0.'
   for (let i = 0; i < arr.length; i++) {
-    let w = arr[i]
+    const w = arr[i]
     if (words.ones.hasOwnProperty(w) === true) {
       str += words.ones[w]
     } else if (words.teens.hasOwnProperty(w) === true) {

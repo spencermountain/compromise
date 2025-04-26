@@ -20,7 +20,7 @@ export default {
       opts.keepSpace = false
     }
     if (opts.keepEndPunct === undefined && this.pointer) {
-      let ptr = this.pointer[0]
+      const ptr = this.pointer[0]
       if (ptr && ptr[1]) {
         opts.keepEndPunct = false
       } else {

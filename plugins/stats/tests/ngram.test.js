@@ -34,7 +34,7 @@ test('contractions-support:', function (t) {
 })
 
 test('ngrams-options:', function (t) {
-  let doc = nlp('one two three four five, one two three four five, one two three four five')
+  const doc = nlp('one two three four five, one two three four five, one two three four five')
   let arr = doc.ngrams({
     max: 5,
   })

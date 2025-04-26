@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/imperative] '
 
 test('isImperative:', function (t) {
-  let arr = [
+  const arr = [
     ['do speak', true],
     ['do not walk', true],
     ['please do not speak', true],
@@ -96,14 +96,14 @@ test('isImperative:', function (t) {
   ]
   arr.forEach(function (a) {
     const doc = nlp(a[0])
-    let m = doc.verbs().isImperative()
+    const m = doc.verbs().isImperative()
     t.equal(m.found, a[1], `${here} ${a[0]}`)
   })
   t.end()
 })
 
 test('imperative keeps tense:', function (t) {
-  let arr = [
+  const arr = [
     'do speak',
     'do not walk',
     'please do not speak',

@@ -3,19 +3,19 @@ import parseText from '../numbers/parse/toNumber/index.js'
 
 // just using .toNumber() again may risk an infinite-loop
 const parseNumber = function (m) {
-  let str = m.text('reduced')
+  const str = m.text('reduced')
   return parseText(str)
 }
 
-let mapping = {
+const mapping = {
   half: 2,
   halve: 2,
   quarter: 4,
 }
 
 const slashForm = function (m) {
-  let str = m.text('reduced')
-  let found = str.match(/^([-+]?[0-9]+)\/([-+]?[0-9]+)(st|nd|rd|th)?s?$/)
+  const str = m.text('reduced')
+  const found = str.match(/^([-+]?[0-9]+)\/([-+]?[0-9]+)(st|nd|rd|th)?s?$/)
   if (found && found[1] && found[0]) {
     return {
       numerator: Number(found[1]),
@@ -27,7 +27,7 @@ const slashForm = function (m) {
 
 // parse '4 out of 4'
 const nOutOfN = function (m) {
-  let found = m.match('[<num>#Value+] out of every? [<den>#Value+]')
+  const found = m.match('[<num>#Value+] out of every? [<den>#Value+]')
   if (found.found !== true) {
     return null
   }
@@ -51,7 +51,7 @@ const nOutOfN = function (m) {
 
 // parse 'five thirds'
 const nOrinalth = function (m) {
-  let found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
+  const found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
   if (found.found !== true) {
     return null
   }
@@ -91,14 +91,14 @@ const nOrinalth = function (m) {
 
 // implied 1 in '100th of a', 'fifth of a'
 const oneNth = function (m) {
-  let found = m.match('^#Ordinal$')
+  const found = m.match('^#Ordinal$')
   if (found.found !== true) {
     return null
   }
   // ensure it's '100th of a '
   if (m.lookAhead('^of .')) {
     // let num = found.numbers().get()[0]
-    let num = parseNumber(found)
+    const num = parseNumber(found)
     return {
       numerator: 1,
       denominator: num,
@@ -109,7 +109,7 @@ const oneNth = function (m) {
 
 // 'half'
 const named = function (m) {
-  let str = m.text('reduced')
+  const str = m.text('reduced')
   if (mapping.hasOwnProperty(str)) {
     return { numerator: 1, denominator: mapping[str] }
   }
@@ -117,7 +117,7 @@ const named = function (m) {
 }
 
 const round = n => {
-  let rounded = Math.round(n * 1000) / 1000
+  const rounded = Math.round(n * 1000) / 1000
   // don't round 1 millionth down into 0
   if (rounded === 0 && n !== 0) {
     return n
@@ -127,7 +127,7 @@ const round = n => {
 
 const parseFraction = function (m) {
   m = m.clone()
-  let res = named(m) || slashForm(m) || nOutOfN(m) || nOrinalth(m) || oneNth(m) || null
+  const res = named(m) || slashForm(m) || nOutOfN(m) || nOrinalth(m) || oneNth(m) || null
   if (res !== null) {
     // do the math
     if (res.numerator && res.denominator) {

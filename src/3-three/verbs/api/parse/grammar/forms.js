@@ -9,7 +9,7 @@ const plural = { plural: true }
 const singular = { plural: false }
 
 const getData = function (tags) {
-  let data = {}
+  const data = {}
   tags.forEach(o => {
     Object.assign(data, o)
   })
@@ -169,7 +169,7 @@ const verbForms = {
   ],
 }
 
-let list = []
+const list = []
 Object.keys(verbForms).map(k => {
   verbForms[k].forEach(a => {
     list.push({

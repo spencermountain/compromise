@@ -34,11 +34,11 @@ const doFastOrMode = function (tokens) {
         return token
       }
       // are they all straight-up words? then optimize them.
-      let shouldPack = token.choices.every(block => {
+      const shouldPack = token.choices.every(block => {
         if (block.length !== 1) {
           return false
         }
-        let reg = block[0]
+        const reg = block[0]
         // ~fuzzy~ words need more care
         if (reg.fuzzy === true) {
           return false

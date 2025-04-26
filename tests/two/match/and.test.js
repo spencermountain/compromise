@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/and] '
 
 test('and-match', function (t) {
-  let doc = nlp('june and july cool')
+  const doc = nlp('june and july cool')
   let m = doc.match('(#Date && july)')
   t.equal(m.out(), 'july', here + 'found july')
 
@@ -17,7 +17,7 @@ test('and-match', function (t) {
 })
 
 test('and-match-more', function (t) {
-  let doc = nlp('toronto and montreal. Sydney and Paris.')
+  const doc = nlp('toronto and montreal. Sydney and Paris.')
   let m = doc.match('(#ProperNoun && .)')
   t.equal(m.length, 4, here + 'found all four')
 
@@ -37,7 +37,7 @@ test('and-match-more', function (t) {
 })
 
 test('and-match-multi', function (t) {
-  let doc = nlp('toronto and montreal. Sydney and Paris.')
+  const doc = nlp('toronto and montreal. Sydney and Paris.')
   let m = doc.match('(#ProperNoun and && toronto .)')
   t.equal(m.out(), 'toronto and', here + 'found one multi')
 

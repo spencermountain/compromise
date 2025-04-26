@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[two/gerund] '
 
-let arr = [
+const arr = [
   // === gerunds ===
   [`chillin'`, '#Gerund'],
   ['singing', '#Gerund'],
@@ -110,11 +110,11 @@ let arr = [
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {
-    let [str, match] = a
-    let doc = nlp(str).compute('tagRank')
-    let tags = doc.json()[0].terms.map(term => term.tagRank[0])
-    let m = doc.match(match)
-    let msg = `'${(str + "' ").padEnd(20, ' ')}  - '${tags.join(', ')}'`
+    const [str, match] = a
+    const doc = nlp(str).compute('tagRank')
+    const tags = doc.json()[0].terms.map(term => term.tagRank[0])
+    const m = doc.match(match)
+    const msg = `'${(str + "' ").padEnd(20, ' ')}  - '${tags.join(', ')}'`
     t.equal(m.text(), doc.text(), here + msg)
   })
   t.end()

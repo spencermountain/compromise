@@ -19,7 +19,7 @@ const log = parts => {
 
 const parseDate = function (doc, context) {
   //parse-out any sections
-  let parts = tokenize(doc, context)
+  const parts = tokenize(doc, context)
   doc = parts.doc
   // logger
   log(parts)
@@ -28,7 +28,7 @@ const parseDate = function (doc, context) {
   if (parts.tz) {
     context = Object.assign({}, context, { timezone: parts.tz })
     // set timezone on any 'today' value, too
-    let iso = context.today.format('iso-short')
+    const iso = context.today.format('iso-short')
     context.today = context.today.goto(context.timezone).set(iso)
   }
   // decide on a root date object

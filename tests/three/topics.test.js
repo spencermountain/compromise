@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 const here = '[three/topics] '
 
 test('topics:', function (t) {
-  let list = [
+  const list = [
     ['Tony Hawk lives in Toronto. Tony Hawk is cool.', 'tony hawk'],
     ['I live Toronto. I think Toronto is cool.', 'toronto'],
     ['The EACD united in 1972. EACD must follow regulations.', 'eacd'],
@@ -37,15 +37,15 @@ test('topics-false-positives:', function (t) {
 })
 
 test('topics-basic', function (t) {
-  let doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
-  let arr = doc.topics().out('array')
+  const doc = nlp('i went to Gloop University in Paris, France, with John H. Smith')
+  const arr = doc.topics().out('array')
   // t.deepEqual(arr, ['Gloop University', 'Paris, France,', 'John H. Smith'], here + 'found all three')
   t.equal(arr.length, 3, here + 'found all three')
   t.end()
 })
 
 test('misc entities', function (t) {
-  let doc = nlp('The Children are right to laugh at you, Ralph')
+  const doc = nlp('The Children are right to laugh at you, Ralph')
   let m = doc.people()
   t.equal(m.length, 1, here + 'one person')
 

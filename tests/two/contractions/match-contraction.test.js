@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/match-contraction] '
 
 test('match-contractions', function (t) {
-  let doc = nlp(`i haven't done it`)
+  const doc = nlp(`i haven't done it`)
   let m = doc.match(`have not done`)
   t.equal(m.text(), `haven't done`, here + 'full-text')
 
@@ -26,7 +26,7 @@ test('match-contractions', function (t) {
 })
 
 test('false-positive-contractions', function (t) {
-  let doc = nlp(`i have done it`)
+  const doc = nlp(`i have done it`)
   let m = doc.match(`have not done`)
   t.equal(m.text(), ``, here + 'have not done')
 
@@ -54,7 +54,7 @@ test('false-positive-contractions', function (t) {
 })
 
 test('i am contraction', function (t) {
-  let doc = nlp(`so i'm glad`)
+  const doc = nlp(`so i'm glad`)
   let m = doc.match(`i am`)
   t.equal(m.text(), `i'm`, here + 'i am')
 
@@ -73,7 +73,7 @@ test('i am contraction', function (t) {
 })
 
 test('contraction-optional', function (t) {
-  let doc = nlp(`so i'm glad`)
+  const doc = nlp(`so i'm glad`)
   let m = doc.match(`i am?`)
   t.equal(m.text(), `i'm`, here + 'i am?')
 
@@ -94,14 +94,14 @@ test('contraction-optional', function (t) {
 
 
 test('lookup contraction', function (t) {
-  let arr = [
+  const arr = [
     'foobar',
     'marines',
     'afghanistan',
     'foo',
   ]
-  let trie = nlp.buildTrie(arr)
-  let res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
+  const trie = nlp.buildTrie(arr)
+  const res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
   t.equal(res.has('marines'), true, 'post-contraction found first one')
   t.equal(res.has('afghanistan'), true, 'post-contraction found second one')
   t.end()

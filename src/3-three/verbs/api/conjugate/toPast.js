@@ -20,7 +20,7 @@ const fns = {
     }
     let str = root.text({ keepPunct: false })
     str = toInfinitive(str, vb.model, getTense(root))
-    let all = conjugate(str, vb.model)
+    const all = conjugate(str, vb.model)
     // 'driven' || 'drove'
     str = all.PastTense
     // all.Participle || all.PastTense

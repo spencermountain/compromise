@@ -214,6 +214,8 @@ export interface Verbs extends View {
   toFutureTense: () => View
   /** 'walks' → 'walking' */
   toGerund: () => View
+  /** 'walks' → 'has walked' */
+  toPastParticiple: () => View
 
   /** return all forms of these verbs */
   conjugate: () => object[]

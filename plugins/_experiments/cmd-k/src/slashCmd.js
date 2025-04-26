@@ -1,4 +1,8 @@
 
+// slashCmds are / followed by a word
+// they're a way to add custom commands
+// "/me writes some bugs"
+
 const slashCmd = {
   /** add a method */
   api: (View) => {
@@ -11,6 +15,7 @@ const slashCmd = {
   /** add some tags */
   tags: {
     SlashCmd: {
+      notA: ['Noun', 'Verb', 'Adjective'],
       color: 'yellow'
     },
   },
@@ -19,7 +24,7 @@ const slashCmd = {
   /** post-process tagger */
   compute: {
     tagSlashCmds: (doc) => {
-      doc.match([{ pre: '/' }]).tag('#SlashCmd')
+      doc.match([{ pre: '/' }]).not('#Number').tag('#SlashCmd')
     }
   },
 

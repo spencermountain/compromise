@@ -1,3 +1,7 @@
+// searchbang is a ! followed by a word
+// it's a search engine shortcut
+// !g is google, etc
+
 
 const instaBangs = [
   'g',
@@ -16,6 +20,7 @@ const searchBang = {
   /** add some tags */
   tags: {
     SearchBang: {
+      notA: ['Noun', 'Verb', 'Adjective'],
       color: 'red'
     },
   },

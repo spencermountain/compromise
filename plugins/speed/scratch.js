@@ -6,7 +6,7 @@ import fs from 'fs'
 import plg from './src/plugin.js'
 nlp.plugin(plg)
 
-const file = `/Users/spencer/data/infinite-jest/infinite-jest.txt`
+const file = `/Users/spencer/Desktop/infinite-jest.txt`
 // file = `/Users/spencer/mountain/compromise/plugins/speed/tests/files/freshPrince.txt`
 const begin = new Date()
 const txt = fs.readFileSync(file).toString()

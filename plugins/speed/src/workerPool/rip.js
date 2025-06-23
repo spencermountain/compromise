@@ -1,7 +1,3 @@
-import nlp from '../../../../src/three.js'
-const world = nlp.world()
-const splitSentences = nlp.methods().one.tokenize.splitSentences
-
 const fastSplit = function (str, numChunks = 1) {
   const size = Math.ceil(str.length / numChunks)
   const chunks = new Array(numChunks)
@@ -11,7 +7,10 @@ const fastSplit = function (str, numChunks = 1) {
   return chunks
 }
 
-const pluckStarts = function (arr) {
+const pluckStarts = function (arr, nlp) {
+  const world = nlp.world()
+  const splitSentences = nlp.methods().one.tokenize.splitSentences
+
   for (let i = 1; i < arr.length; i += 1) {
     const top = arr[i].substr(0, 200)
     const first = splitSentences(top, world)[0]
@@ -24,9 +23,9 @@ const pluckStarts = function (arr) {
 }
 
 // split a text quickly, then repair splits by sentence
-const rip = function (txt, parts = 1) {
+const rip = function (txt, nlp, parts = 1) {
   let arr = fastSplit(txt, parts)
-  arr = pluckStarts(arr)
+  arr = pluckStarts(arr, nlp)
   return arr
 }
 export default rip

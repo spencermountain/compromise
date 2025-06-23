@@ -11,7 +11,7 @@ const workerPool = function (txt, reg) {
   }
 
   const workers = makePool(workerCount, reg)
-  const parts = rip(txt, workerCount)
+  const parts = rip(txt, nlp, workerCount)
   // console.log(parts.length)
   const results = []
   const isRunning = workers.map(_ => true)// eslint-disable-line

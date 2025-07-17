@@ -11,9 +11,14 @@
   "types": "./index.d.ts",
   "exports": {
     ".": {
-      "import": "./src/plugin.js",
-      "require": "./builds/compromise-dates.cjs",
-      "types": "./index.d.ts"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./builds/compromise-dates.cjs"
+      }
     }
   },
   "repository": {

@@ -40,16 +40,11 @@ let txt = 'toes'
 // console.log(doc.text('root'))
 
 
-
-
-// Date example
-let text = `10/10/2025
-
-two
-
-Three:`
-
-let doc = nlp(text)
-doc.debug()
+// Underscore example
+let text = `
+To the window, to the wall below.
+_________________________________________________`;
+let doc = nlp(text);
+console.log(doc.debug());
 
 // console.log(doc.docs)

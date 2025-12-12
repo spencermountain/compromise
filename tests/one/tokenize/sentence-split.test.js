@@ -117,8 +117,14 @@ Three:`
 two
 
 Three:`
+
   doc = nlp(three)
   t.equal(doc.length, 3, here + 'third newline sentence')
+  let four = `
+To the window, to the wall below.
+_________________________________________________`
+  doc = nlp(four)
+  t.equal(doc.length, 1, here + 'underscore sentence')
   t.end()
 })
 

@@ -95,6 +95,33 @@ test('emoji-only sentence', function (t) {
   t.end()
 })
 
+
+test('newline-seperated sentence', function (t) {
+  let one = `1
+
+two
+
+Three:`
+  let doc = nlp(one)
+  t.equal(doc.length, 3, here + 'first newline ')
+  let two = `10/10/2025
+
+two
+
+Three:`
+  doc = nlp(two)
+  t.equal(doc.length, 3, here + 'second newline sentence')
+
+  let three = `One
+
+two
+
+Three:`
+  doc = nlp(three)
+  t.equal(doc.length, 3, here + 'third newline sentence')
+  t.end()
+})
+
 test('nested quotes', function (t) {
   let doc = nlp(`The hero was stunned by the scary monster. The glowing girl said "Hey! Leave him alone!".`)
   t.equal(doc.length, 2, here + 'nested quote sentence')

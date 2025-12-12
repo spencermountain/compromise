@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 
 test('date-tag :', function (t) {
-  let arr = [
+  const arr = [
     'yesterday',
     'today',
     'tomorrow',

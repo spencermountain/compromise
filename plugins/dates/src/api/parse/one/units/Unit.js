@@ -17,7 +17,7 @@ class Unit {
       input.month = 'sep'
     }
     // set it to the beginning of the given unit
-    let d = spacetime(input, context.timezone, { today: today, dmy: context.dmy })
+    const d = spacetime(input, context.timezone, { today: today, dmy: context.dmy })
     Object.defineProperty(this, 'd', {
       enumerable: false,
       writable: true,
@@ -31,7 +31,7 @@ class Unit {
   }
   // make a new one
   clone() {
-    let d = new Unit(this.d, this.unit, this.context)
+    const d = new Unit(this.d, this.unit, this.context)
     d.setTime = this.setTime
     return d
   }
@@ -52,20 +52,20 @@ class Unit {
   }
   applyTime(str) {
     if (str) {
-      let justHour = /^[0-9]{1,2}$/
+      const justHour = /^[0-9]{1,2}$/
       if (justHour.test(str)) {
         this.d = this.d.hour(str)
       } else {
         this.d = this.d.time(str)
       }
       // wiggle the best am/pm
-      let amPM = /[ap]m/.test(str)
+      const amPM = /[ap]m/.test(str)
       if (!amPM) {
-        let tooEarly = this.d.time('6:00am')
+        const tooEarly = this.d.time('6:00am')
         if (this.d.isBefore(tooEarly)) {
           this.d = this.d.ampm('pm')
         }
-        let tooLate = this.d.time('10:00pm')
+        const tooLate = this.d.time('10:00pm')
         if (this.d.isAfter(tooLate)) {
           this.d = this.d.ampm('am')
         }
@@ -78,7 +78,7 @@ class Unit {
   }
   applyWeekDay(day) {
     if (day) {
-      let epoch = this.d.epoch
+      const epoch = this.d.epoch
       this.d = this.d.day(day)
       if (this.d.epoch < epoch) {
         this.d = this.d.add(1, 'week')
@@ -124,7 +124,7 @@ class Unit {
     this.d = this.d.endOf(this.unit)
     if (this.context.dayEnd) {
       this.d = this.d.startOf('day')
-      let dayEnd = this.d.time(this.context.dayEnd)
+      const dayEnd = this.d.time(this.context.dayEnd)
       if (dayEnd.isAfter(this.d)) {
         this.d = dayEnd
         return this
@@ -133,15 +133,15 @@ class Unit {
     return this
   }
   middle() {
-    let diff = this.d.diff(this.d.endOf(this.unit))
-    let minutes = Math.round(diff.minutes / 2)
+    const diff = this.d.diff(this.d.endOf(this.unit))
+    const minutes = Math.round(diff.minutes / 2)
     this.d = this.d.add(minutes, 'minutes')
     return this
   }
   // move it to 3/4s through
   beforeEnd() {
-    let diff = this.d.startOf(this.unit).diff(this.d.endOf(this.unit))
-    let mins = Math.round(diff.minutes / 4)
+    const diff = this.d.startOf(this.unit).diff(this.d.endOf(this.unit))
+    const mins = Math.round(diff.minutes / 4)
     this.d = this.d.endOf(this.unit)
     this.d = this.d.minus(mins, 'minutes')
     if (this.context.dayStart) {

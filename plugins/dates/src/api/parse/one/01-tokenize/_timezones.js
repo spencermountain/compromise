@@ -250,8 +250,8 @@ const informal = {
 }
 
 //add the official iana zonefile names
-let iana = spacetime().timezones
-let formal = Object.keys(iana).reduce((h, k) => {
+const iana = spacetime().timezones
+const formal = Object.keys(iana).reduce((h, k) => {
   h[k] = k
   return h
 }, {})

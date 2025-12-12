@@ -2,12 +2,12 @@ import pluckOutTerm from './lib/remove.js'
 
 const fixPointers = function (ptrs, gonePtrs) {
   ptrs = ptrs.map(ptr => {
-    let [n] = ptr
+    const [n] = ptr
     if (!gonePtrs[n]) {
       return ptr
     }
     gonePtrs[n].forEach(no => {
-      let len = no[2] - no[1]
+      const len = no[2] - no[1]
       // does it effect our pointer?
       if (ptr[1] <= no[1] && ptr[2] >= no[2]) {
         ptr[2] -= len
@@ -55,19 +55,19 @@ const methods = {
       self = this
       not = this.match(reg)
     }
-    let isFull = !self.ptrs
+    const isFull = !self.ptrs
     // is it part of a contraction?
     if (not.has('@hasContraction') && not.contractions) {
-      let more = not.grow('@hasContraction')
+      const more = not.grow('@hasContraction')
       more.contractions().expand()
     }
 
     let ptrs = self.fullPointer
-    let nots = not.fullPointer.reverse()
+    const nots = not.fullPointer.reverse()
     // remove them from the actual document)
-    let document = pluckOutTerm(this.document, nots)
+    const document = pluckOutTerm(this.document, nots)
     // repair our pointers
-    let gonePtrs = indexN(nots)
+    const gonePtrs = indexN(nots)
     ptrs = fixPointers(ptrs, gonePtrs)
     // clean up our original inputs
     self.ptrs = ptrs
@@ -81,7 +81,7 @@ const methods = {
       this.ptrs = []
       return self.none()
     }
-    let res = self.toView(ptrs) //return new document
+    const res = self.toView(ptrs) //return new document
     return res
   },
 }

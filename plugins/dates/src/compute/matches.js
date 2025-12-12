@@ -5,7 +5,7 @@ const seasons = '(spring|summer|winter|fall|autumn)'
 const knownDate = '(yesterday|today|tomorrow)'
 
 // { match: '', tag: '', reason:'' },
-let matches = [
+const matches = [
   // in the evening
   { match: 'in the (night|evening|morning|afternoon|day|daytime)', tag: 'Time', reason: 'in-the-night' },
   // 8 pm

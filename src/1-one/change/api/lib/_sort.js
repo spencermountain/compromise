@@ -11,8 +11,8 @@ const alpha = (a, b) => {
 
 /** count the # of characters of each match */
 const length = (a, b) => {
-  let left = a.normal.trim().length
-  let right = b.normal.trim().length
+  const left = a.normal.trim().length
+  const right = b.normal.trim().length
   if (left < right) {
     return 1
   }
@@ -46,15 +46,15 @@ const sequential = (a, b) => {
 
 /** sort by # of duplicates in the document*/
 const byFreq = function (arr) {
-  let counts = {}
+  const counts = {}
   arr.forEach(o => {
     counts[o.normal] = counts[o.normal] || 0
     counts[o.normal] += 1
   })
   // sort by freq
   arr.sort((a, b) => {
-    let left = counts[a.normal]
-    let right = counts[b.normal]
+    const left = counts[a.normal]
+    const right = counts[b.normal]
     if (left < right) {
       return 1
     }

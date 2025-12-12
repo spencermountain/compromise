@@ -18,13 +18,13 @@ const customSort = function (view, fn) {
 
 /** re-arrange the order of the matches (in place) */
 const sort = function (input) {
-  let { docs, pointer } = this
+  const { docs, pointer } = this
   this.uncache()
   if (typeof input === 'function') {
     return customSort(this, input)
   }
   input = input || 'alpha'
-  let ptrs = pointer || docs.map((_d, n) => [n])
+  const ptrs = pointer || docs.map((_d, n) => [n])
   let arr = docs.map((terms, n) => {
     return {
       index: n,
@@ -67,9 +67,9 @@ const reverse = function () {
 
 /** remove any duplicate matches */
 const unique = function () {
-  let already = new Set()
-  let res = this.filter(m => {
-    let txt = m.text('machine')
+  const already = new Set()
+  const res = this.filter(m => {
+    const txt = m.text('machine')
     if (already.has(txt)) {
       return false
     }

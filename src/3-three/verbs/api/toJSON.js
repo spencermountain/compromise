@@ -19,12 +19,12 @@ const toText = function (m) {
 
 const toInf = function (root) {
   const { toInfinitive } = root.methods.two.transform.verb
-  let str = root.text('normal')
+  const str = root.text('normal')
   return toInfinitive(str, root.model, getTense(root))
 }
 
 const toJSON = function (vb) {
-  let parsed = parseVerb(vb)
+  const parsed = parseVerb(vb)
   vb = vb.clone().toView()
   const info = getGrammar(vb, parsed)
   return {

@@ -3,7 +3,7 @@ const shouldSkip = function (last) {
   if (last.length <= 1) {
     return false
   }
-  let obj = last.parse()[0] || {}
+  const obj = last.parse()[0] || {}
   return obj.isSubordinate
 }
 
@@ -39,11 +39,11 @@ const lastNoun = function (vb) {
   // try to drop any mid-sentence clauses
   before = noSubClause(before)
   // parse-out our preceding nouns
-  let nouns = before.nouns()
+  const nouns = before.nouns()
   // look for any dead-ringers
   let last = nouns.last()
   // i/she/he/they are very strong
-  let pronoun = last.match('(i|he|she|we|you|they)')
+  const pronoun = last.match('(i|he|she|we|you|they)')
   if (pronoun.found) {
     return pronoun.nouns()
   }
@@ -88,7 +88,7 @@ const isPlural = function (subj, vb) {
 }
 
 const getSubject = function (vb) {
-  let subj = lastNoun(vb)
+  const subj = lastNoun(vb)
   return {
     subject: subj,
     plural: isPlural(subj, vb),

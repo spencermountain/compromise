@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/number-prefix] '
 
 test('prefix:', function (t) {
-  let doc = nlp('it was almost $400')
+  const doc = nlp('it was almost $400')
   doc.values().toText()
   t.equals(doc.text(), 'it was almost four hundred dollars', here + '$400')
 
@@ -11,7 +11,7 @@ test('prefix:', function (t) {
 })
 
 test('suffix:', function (t) {
-  let doc = nlp('it was 400USD')
+  const doc = nlp('it was 400USD')
   doc.values().toText()
   t.equals(doc.text(), 'it was four hundred usd', here + '400usd')
 

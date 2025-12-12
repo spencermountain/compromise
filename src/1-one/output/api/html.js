@@ -28,11 +28,11 @@ const toTag = function (k) {
 }
 
 const getIndex = function (doc, obj) {
-  let starts = {}
-  let ends = {}
+  const starts = {}
+  const ends = {}
   Object.keys(obj).forEach(k => {
     let res = obj[k]
-    let tag = toTag(k)
+    const tag = toTag(k)
     if (typeof res === 'string') {
       res = doc.match(res)
     }
@@ -41,10 +41,10 @@ const getIndex = function (doc, obj) {
       if (terms.every(t => t.implicit)) {
         return
       }
-      let a = terms[0].id
+      const a = terms[0].id
       starts[a] = starts[a] || []
       starts[a].push(tag.start)
-      let b = terms[terms.length - 1].id
+      const b = terms[terms.length - 1].id
       ends[b] = ends[b] || []
       ends[b].push(tag.end)
     })
@@ -54,12 +54,12 @@ const getIndex = function (doc, obj) {
 
 const html = function (obj) {
   // index ids to highlight
-  let { starts, ends } = getIndex(this, obj)
+  const { starts, ends } = getIndex(this, obj)
   // create the text output
   let out = ''
   this.docs.forEach(terms => {
     for (let i = 0; i < terms.length; i += 1) {
-      let t = terms[i]
+      const t = terms[i]
       // do a span tag
       if (starts.hasOwnProperty(t.id)) {
         out += starts[t.id].join('')

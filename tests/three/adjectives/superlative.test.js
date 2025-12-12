@@ -20,7 +20,7 @@ test('toSuperlative misc', function (t) {
 
 
 test('.toSuperlative():', function (t) {
-  let arr = [
+  const arr = [
     ["great", "greatest"],
     ["low", "lowest"],
     ["near", "nearest"],
@@ -75,7 +75,7 @@ test('.toSuperlative():', function (t) {
 
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.adjectives().toSuperlative()
     t.equal(doc.text(), a[1], here + a[0])
   })

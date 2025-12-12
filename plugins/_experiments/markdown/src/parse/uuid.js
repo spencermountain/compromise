@@ -56,7 +56,7 @@ const toId = function (n) {
   // id += tx
 
   // 1 digit random number
-  let r = parseInt(Math.random() * 36, 10)
+  const r = parseInt(Math.random() * 36, 10)
   id += (r).toString(36)
 
   return id.toUpperCase()

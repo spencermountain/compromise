@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/cache] '
 
 test('no sneaky cache', function (t) {
-  let doc = nlp('one two three four')
+  const doc = nlp('one two three four')
   t.equal(doc._cache, null, here + 'no-cache')
   doc.match('one two three').tag('#Person')
   t.equal(doc.match('#Person').found, true, here + 'doc is live')
@@ -11,7 +11,7 @@ test('no sneaky cache', function (t) {
 })
 
 test('invalidate cach on tag', function (t) {
-  let doc = nlp(`chilly`)
+  const doc = nlp(`chilly`)
   doc.tag('Noun')
   let res = doc.match('#Noun')
   t.equal(res.found, true, here + 'match skipped cache')
@@ -21,8 +21,8 @@ test('invalidate cach on tag', function (t) {
 })
 
 test('applied cache is sneaky', function (t) {
-  let doc = nlp('one two three four').cache()
-  let m = doc.match('one two three')
+  const doc = nlp('one two three four').cache()
+  const m = doc.match('one two three')
   m.tag('#Person')//oh neat
   t.equal(m.match('#Person').found, true, here + 'm is updated')
   t.equal(doc.match('#Person').found, false, here + 'parent is out-of-date')
@@ -30,7 +30,7 @@ test('applied cache is sneaky', function (t) {
 })
 
 test('cache term forms', function (t) {
-  let doc = nlp(`spencer's city/town`)
+  const doc = nlp(`spencer's city/town`)
   doc.cache()
 
   let m = doc.matchOne('spencer')
@@ -47,7 +47,7 @@ test('cache term forms', function (t) {
 
 
 test('cache if method', function (t) {
-  let doc = nlp('blah blah. foo foo. blah to your town')
+  const doc = nlp('blah blah. foo foo. blah to your town')
   doc.cache()
 
   let m = doc.if('to your town')

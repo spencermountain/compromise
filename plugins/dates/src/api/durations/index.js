@@ -10,7 +10,7 @@ const addDurations = function (View) {
     /** overload the original json with duration information */
     json(opts = {}) {
       return this.map(m => {
-        let json = m.toView().json(opts)[0] || {}
+        const json = m.toView().json(opts)[0] || {}
         if (opts && opts.duration !== false) {
           json.duration = parse(m)
         }
@@ -19,9 +19,9 @@ const addDurations = function (View) {
     }
     /** easy getter for the time */
     get(options) {
-      let arr = []
+      const arr = []
       this.forEach(doc => {
-        let res = parse(doc)
+        const res = parse(doc)
         arr.push(res)
       })
       if (typeof options === 'number') {

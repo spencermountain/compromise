@@ -8,8 +8,8 @@ nlp.extend(plugin)
 // let doc = nlp(txt)
 // console.log(doc.ngrams())
 
-let doc = nlp('one two three. one two foo.')
-let res = doc.ngrams({ min: 3 })
+const doc = nlp('one two three. one two foo.')
+const res = doc.ngrams({ min: 3 })
 /*[
   { size: 3, count: 1, normal: 'one two three' },
   { size: 3, count: 1, normal: 'one two foo' }

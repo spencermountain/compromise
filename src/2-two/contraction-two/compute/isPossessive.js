@@ -11,11 +11,11 @@ const beforePossessive = {
   by: true, //by sunday's
   for: true, //for sunday's
 }
-let adjLike = new Set(['too', 'also', 'enough', 'about'])
-let nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must', 'had', 'have'])
+const adjLike = new Set(['too', 'also', 'enough', 'about'])
+const nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must', 'had', 'have'])
 
 const isPossessive = (terms, i) => {
-  let term = terms[i]
+  const term = terms[i]
   // these can't be possessive
   if (banList.hasOwnProperty(term.machine || term.normal)) {
     return false
@@ -33,7 +33,7 @@ const isPossessive = (terms, i) => {
     return false
   }
   //if end of sentence, it is possessive - "was spencer's"
-  let nextTerm = terms[i + 1]
+  const nextTerm = terms[i + 1]
   if (!nextTerm) {
     return true
   }
@@ -48,7 +48,7 @@ const isPossessive = (terms, i) => {
   // gerund = is,  noun = possessive
   // (we are doing some dupe-work of the switch classifier here)
   if (nextTerm.switch == 'Noun|Gerund') {
-    let next2 = terms[i + 2]
+    const next2 = terms[i + 2]
     // the artist's painting.
     if (!next2) {
       if (term.tags.has('Actor') || term.tags.has('ProperNoun')) {
@@ -85,7 +85,7 @@ const isPossessive = (terms, i) => {
 
   // john's nuts
   if (nextTerm.switch === 'Adj|Noun') {
-    let twoTerm = terms[i + 2]
+    const twoTerm = terms[i + 2]
     if (!twoTerm) {
       return false //adj
     }
@@ -100,7 +100,7 @@ const isPossessive = (terms, i) => {
   }
   //spencer's house
   if (nextTerm.tags.has('Noun')) {
-    let nextStr = nextTerm.machine || nextTerm.normal
+    const nextStr = nextTerm.machine || nextTerm.normal
     // 'spencer's here'
     if (nextStr === 'here' || nextStr === 'there' || nextStr === 'everywhere') {
       return false
@@ -123,7 +123,7 @@ const isPossessive = (terms, i) => {
 
   // spencer's tired
   if (nextTerm.tags.has('Adjective')) {
-    let twoTerm = terms[i + 2]
+    const twoTerm = terms[i + 2]
     //the rocket's red
     if (!twoTerm) {
       return false
@@ -131,7 +131,7 @@ const isPossessive = (terms, i) => {
     // rocket's red nozzle
     if (twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun')) {
       //project's behind schedule
-      let str = nextTerm.normal
+      const str = nextTerm.normal
       if (str === 'above' || str === 'below' || str === 'behind') {
         return false
       }

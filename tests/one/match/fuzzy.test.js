@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/fuzzy] '
 
 test('fuzzy matches', function (t) {
-  let doc = nlp('i went on a talk')
+  const doc = nlp('i went on a talk')
   let m = doc.match('. ~walk~', null, { fuzzy: 0.7 })
   t.equal(m.text(), 'a talk', here + 'fuzzy-simple')
 
@@ -34,7 +34,7 @@ test('fuzzy matches', function (t) {
   m = doc.match('i ~ewnt~ on a [~atlk~]', 0, { fuzzy: 0.73 })
   t.equal(m.text(), 'talk', here + 'fuzzy-group')
 
-  let reg = nlp.parseMatch('a (~football~|~walk~|climb)', { fuzzy: 0.7 })
+  const reg = nlp.parseMatch('a (~football~|~walk~|climb)', { fuzzy: 0.7 })
   m = nlp('a foobtall').match(reg)
   t.equal(m.text(), 'a foobtall', here + 'fuzzy-parsematch')
 
@@ -42,7 +42,7 @@ test('fuzzy matches', function (t) {
 })
 
 test('fuzzy groupmatches', function (t) {
-  let doc = nlp('i went on a talk')
+  const doc = nlp('i went on a talk')
 
   let m = doc.match('i ~ewnt~ on a [~atlk~]', 0, { fuzzy: 0.74 })
   t.equal(m.text(), 'talk', here + 'fuzzy-group-1')
@@ -50,7 +50,7 @@ test('fuzzy groupmatches', function (t) {
   m = doc.match('i ~ewnt~ on a [<word>~atlk~]', 'word', { fuzzy: 0.74 })
   t.equal(m.text(), 'talk', here + 'fuzzy-group-2')
 
-  let reg = nlp.parseMatch('a [~(football|walk|climb)~]', { fuzzy: 0.7 })
+  const reg = nlp.parseMatch('a [~(football|walk|climb)~]', { fuzzy: 0.7 })
   m = nlp('a foobtall').match(reg, 0)
   t.equal(m.text(), 'foobtall', here + 'fuzzy-named-group')
   t.end()

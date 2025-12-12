@@ -6,8 +6,8 @@ self.addEventListener(
   function (e) {
     // importScripts('https://unpkg.com/compromise@next')
     importScripts('../../builds/compromise.js')
-    let doc = self.nlp(e.data)
-    let m = doc.places()
+    const doc = self.nlp(e.data)
+    const m = doc.places()
     self.postMessage(m.json({ count: true, unique: true }))
   },
   false

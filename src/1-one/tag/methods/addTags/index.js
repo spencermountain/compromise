@@ -6,7 +6,7 @@ import validate from './01-validate.js'
 const compute = function (allTags) {
   // setup graph-lib format
   const flatList = Object.keys(allTags).map(k => {
-    let o = allTags[k]
+    const o = allTags[k]
     const props = { not: new Set(o.not), also: o.also, is: o.is, novel: o.novel }
     return { id: k, parent: o.is, props, children: [] }
   })
@@ -29,7 +29,7 @@ const addTags = function (tags, already) {
   }
   tags = validate(tags, already)
 
-  let allTags = Object.assign({}, already, tags)
+  const allTags = Object.assign({}, already, tags)
   // do some basic setting-up
   // 'fill-down' parent logic
   const nodes = compute(allTags)

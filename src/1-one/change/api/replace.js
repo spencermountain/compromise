@@ -9,7 +9,7 @@ const toLowerCase = (str) => str.replace(/^\p{Lu}/u, x => x.toLowerCase())
 // doc.replace('foo', (m)=>{})
 const replaceByFn = function (main, fn, keep) {
   main.forEach(m => {
-    let out = fn(m)
+    const out = fn(m)
     m.replaceWith(out, keep)
   })
   return main
@@ -20,9 +20,9 @@ const subDollarSign = function (input, main) {
   if (typeof input !== 'string') {
     return input
   }
-  let groups = main.groups()
+  const groups = main.groups()
   input = input.replace(dollarStub, a => {
-    let num = a.replace(/\$/, '')
+    const num = a.replace(/\$/, '')
     if (groups.hasOwnProperty(num)) {
       return groups[num].text()
     }
@@ -33,25 +33,25 @@ const subDollarSign = function (input, main) {
 
 fns.replaceWith = function (input, keep = {}) {
   let ptrs = this.fullPointer
-  let main = this
+  const main = this
   this.uncache()
   if (typeof input === 'function') {
     return replaceByFn(main, input, keep)
   }
-  let terms = main.docs[0]
+  const terms = main.docs[0]
   if (!terms) return main
-  let isOriginalPossessive = keep.possessives && terms[terms.length - 1].tags.has('Possessive')
-  let isOriginalTitleCase = keep.case && isTitleCase(terms[0].text)
+  const isOriginalPossessive = keep.possessives && terms[terms.length - 1].tags.has('Possessive')
+  const isOriginalTitleCase = keep.case && isTitleCase(terms[0].text)
   // support 'foo $0' replacements
   input = subDollarSign(input, main)
 
-  let original = this.update(ptrs)
+  const original = this.update(ptrs)
   // soften-up pointer
   ptrs = ptrs.map(ptr => ptr.slice(0, 3))
   // original.freeze()
-  let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
-  let originalPre = original.docs[0][0].pre
-  let originalPost = original.docs[0][original.docs[0].length - 1].post
+  const oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
+  const originalPre = original.docs[0][0].pre
+  const originalPost = original.docs[0][original.docs[0].length - 1].post
   // slide this in
   if (typeof input === 'string') {
     input = this.fromText(input).compute('id')
@@ -59,7 +59,7 @@ fns.replaceWith = function (input, keep = {}) {
   main.insertAfter(input)
   // are we replacing part of a contraction?
   if (original.has('@hasContraction') && main.contractions) {
-    let more = main.grow('@hasContraction+')
+    const more = main.grow('@hasContraction+')
     more.contractions().expand()
   }
   // delete the original terms
@@ -67,8 +67,8 @@ fns.replaceWith = function (input, keep = {}) {
 
   // keep "John's"
   if (isOriginalPossessive) {
-    let tmp = main.docs[0]
-    let term = tmp[tmp.length - 1]
+    const tmp = main.docs[0]
+    const term = tmp[tmp.length - 1]
     if (!term.tags.has('Possessive')) {
       term.text += "'s"
       term.normal += "'s"
@@ -82,14 +82,14 @@ fns.replaceWith = function (input, keep = {}) {
   }
   // try to keep any post-punctuation
   if (originalPost && main.docs[0]) {
-    let lastOne = main.docs[0][main.docs[0].length - 1]
+    const lastOne = main.docs[0][main.docs[0].length - 1]
     if (!lastOne.post.trim()) {
       lastOne.post = originalPost
     }
   }
 
   // what should we return?
-  let m = main.toView(ptrs).compute(['index', 'freeze', 'lexicon'])
+  const m = main.toView(ptrs).compute(['index', 'freeze', 'lexicon'])
   if (m.world.compute.preTagger) {
     m.compute('preTagger')
   }
@@ -105,7 +105,7 @@ fns.replaceWith = function (input, keep = {}) {
 
   // try to co-erce case, too
   if (keep.case) {
-    let transformCase = isOriginalTitleCase ? toTitleCase : toLowerCase
+    const transformCase = isOriginalTitleCase ? toTitleCase : toLowerCase
     m.docs[0][0].text = transformCase(m.docs[0][0].text)
   }
 
@@ -123,7 +123,7 @@ fns.replace = function (match, input, keep) {
   if (match && !input) {
     return this.replaceWith(match, keep)
   }
-  let m = this.match(match)
+  const m = this.match(match)
   if (!m.found) {
     return this
   }

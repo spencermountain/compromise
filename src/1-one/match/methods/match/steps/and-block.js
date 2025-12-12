@@ -4,9 +4,9 @@ import { getGroup } from '../_lib.js'
 // '(foo && #Noun)' - require all matches on the term
 const andBlock = function (state) {
   const { regs } = state
-  let reg = regs[state.r]
+  const reg = regs[state.r]
 
-  let skipNum = doAndBlock(state)
+  const skipNum = doAndBlock(state)
   if (skipNum) {
     // handle 'not' logic
     if (reg.negative === true) {
@@ -18,7 +18,7 @@ const andBlock = function (state) {
     }
     // ensure we're at the end
     if (reg.end === true) {
-      let end = state.phrase_length - 1
+      const end = state.phrase_length - 1
       if (state.t + state.start_i !== end) {
         return null
       }

@@ -20,7 +20,7 @@ const apostropheT = function (terms, i) {
       return ['have']
     }
     // we aint -> are not,   she aint -> is not
-    let noun = lastNoun(terms, i)
+    const noun = lastNoun(terms, i)
     if (noun) {
       // plural/singular pronouns
       if (noun.normal === 'we' || noun.normal === 'they') {
@@ -36,7 +36,7 @@ const apostropheT = function (terms, i) {
     }
     return ['is', 'not']
   }
-  let before = terms[i].normal.replace(/n't/, '')
+  const before = terms[i].normal.replace(/n't/, '')
   return [before, 'not']
 }
 

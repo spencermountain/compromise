@@ -16,10 +16,10 @@ const addMethod = function (View) {
       return this.getNth(n).map(parse)
     }
     json(n) {
-      let opts = typeof n === 'object' ? n : {}
+      const opts = typeof n === 'object' ? n : {}
       return this.getNth(n).map(p => {
-        let json = p.toView().json(opts)[0]
-        let parsed = parse(p)
+        const json = p.toView().json(opts)[0]
+        const parsed = parse(p)
         json.person = {
           firstName: parsed.firstName.text('normal'),
           lastName: parsed.lastName.text('normal'),
@@ -42,7 +42,7 @@ const addMethod = function (View) {
     }
     // overloaded - keep People class
     update(pointer) {
-      let m = new People(this.document, pointer)
+      const m = new People(this.document, pointer)
       m._cache = this._cache // share this full thing
       return m
     }

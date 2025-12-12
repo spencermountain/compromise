@@ -7,7 +7,7 @@ import places from './abbreviations/places.js'
 import units from './abbreviations/units.js'
 
 // add our abbreviation list to our lexicon
-let list = [
+const list = [
   [misc],
   [units, 'Unit'],
   [nouns, 'Noun'],
@@ -17,9 +17,9 @@ let list = [
   [places, 'Place'],
 ]
 // create key-val for sentence-tokenizer
-let abbreviations = {}
+const abbreviations = {}
 // add them to a future lexicon
-let lexicon = {}
+const lexicon = {}
 
 list.forEach(a => {
   a[0].forEach(w => {

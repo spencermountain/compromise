@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 const here = '[date/durations]'
 
 test('durations vs dates', function (t) {
-  let arr = [
+  const arr = [
     `30mins tuesday`,
     `30 minutes on tuesday`,
     `30 minutes on january 2nd`,
@@ -11,9 +11,9 @@ test('durations vs dates', function (t) {
     `january 1st 2020 for 30 mins`,
   ]
   arr.forEach((str) => {
-    let doc = nlp(str)
-    let dates = doc.dates().get()[0] || {}
-    let durations = doc.durations().get()[0] || {}
+    const doc = nlp(str)
+    const dates = doc.dates().get()[0] || {}
+    const durations = doc.durations().get()[0] || {}
     t.ok(dates.start, `[date] ${str}`)
     t.equal(durations.minute, 30, `[duration] ${str}`)
   })
@@ -36,15 +36,15 @@ test('in 4 mins', function (t) {
 })
 
 test('durations json', function (t) {
-  let doc = nlp('blah blah two hours and 8 mins foobar')
-  let json = doc.durations().json()[0] || { duration: {} }
+  const doc = nlp('blah blah two hours and 8 mins foobar')
+  const json = doc.durations().json()[0] || { duration: {} }
   t.equal(json.duration.hour, 2, '2 hours')
   t.equal(json.duration.minute, 8, '8 minute')
   t.end()
 })
 
 test('one-word durations', function (t) {
-  let arr = [
+  const arr = [
     // ['20m', { minute: 20 }],
     ['20min', { minute: 20 }],
     ['20mins', { minute: 20 }],
@@ -54,8 +54,8 @@ test('one-word durations', function (t) {
     ['1 sec', { second: 1 }],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])//.tag('Duration')
-    let found = doc.durations().get()[0]
+    const doc = nlp(a[0])//.tag('Duration')
+    const found = doc.durations().get()[0]
     t.deepEqual(found, a[1], here + a[0])
   })
   t.end()

@@ -3,9 +3,9 @@ import nlp from '../_lib.js'
 const here = '[two/named-match] '
 
 test('named-match-overlap', function (t) {
-  let doc = nlp('june the 5th, july the 7th, and sept the 12th.')
+  const doc = nlp('june the 5th, july the 7th, and sept the 12th.')
 
-  let m = doc.match('[<month>#Month]')
+  const m = doc.match('[<month>#Month]')
 
   t.equal(m.length, 3, here + 'Should have 3 results')
 
@@ -15,7 +15,7 @@ test('named-match-overlap', function (t) {
 })
 
 test('named-match-or:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<0>(#Adverb)]', 'dog'],
     ['the dog played again', 'the [<target>(#Noun|#Verb)] played [<another>(#Adverb)]', 'dog'],
     ['the dog played', 'the [<target>(#Noun|#Verb)] played', 'dog'],
@@ -33,7 +33,7 @@ test('named-match-or:', function (t) {
 })
 
 test('named-match-auto:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', 'the [#Noun] played', 'dog'],
     ['the dog played', 'the [dog] played', 'dog'],
     ['the big dog played', 'the [big dog] played', 'big dog'],
@@ -56,7 +56,7 @@ test('named-match-auto:', function (t) {
 })
 
 test('named-match-auto-multi:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', 'the [#Noun] [played]', 'dog'],
     // ['the dog played lots', 'the [dog] played [<0>lots]', 'dog lots'],
     ['the big dog played', 'the [big dog] [played]', 'big dog'],
@@ -89,7 +89,7 @@ test('named-match-group', function (t) {
 })
 
 test('named-match-to-json:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', 'the [<target>#Noun] played', 'dog', ['dog']],
     ['the dog played', 'the [<target>dog] played', 'dog', ['dog']],
     ['the big dog played', 'the [<target>big dog] played', 'big dog', ['big dog']],
@@ -131,7 +131,7 @@ test('named-match-overlap', function (t) {
 })
 
 test('named-object-match-quick:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', [{ word: 'the' }, { tag: 'Noun', group: 'target' }, { word: 'played' }], 'dog'],
     ['the dog played', [{ word: 'dog', group: 'target' }], 'dog'],
     ['the dog played', [{ tag: 'Verb', group: 'target' }], 'played'],
@@ -148,7 +148,7 @@ test('named-object-match-quick:', function (t) {
 })
 
 test('named-object-match:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', [{ word: 'the' }, { tag: 'Noun', group: 'target' }, { word: 'played' }], 'dog'],
     ['the dog played', [{ word: 'dog', group: 'target' }], 'dog'],
     ['the dog played', [{ tag: 'Verb', group: 'target' }], 'played'],
@@ -165,7 +165,7 @@ test('named-object-match:', function (t) {
 })
 
 test('named-object-match-target:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', [{ word: 'the' }, { tag: 'Noun', group: 'target' }, { word: 'played' }], 'dog'],
     ['the dog played', [{ word: 'dog', group: 'target' }], 'dog'],
     ['the dog played', [{ tag: 'Verb', group: 'target' }], 'played'],
@@ -186,7 +186,7 @@ test('named-object-match-target:', function (t) {
 })
 
 test('named-match:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', 'the [<target>#Noun] played', 'dog'],
     ['the dog played', 'the [<target>dog] played', 'dog'],
     ['the big dog played', 'the [<target>big dog] played', 'big dog'],
@@ -205,7 +205,7 @@ test('named-match:', function (t) {
 })
 
 test('named-match-target:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', 'the [<target>#Noun] played', 'dog'],
     ['the dog played', 'the [<target>dog] played', 'dog'],
     ['the big dog played', 'the [<target>big dog] played', 'big dog'],
@@ -226,7 +226,7 @@ test('named-match-target:', function (t) {
 })
 
 test('named-match-number:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', 'the [<0>#Noun] played', 'dog'],
     ['the dog played', 'the [<0>dog] played', 'dog'],
     ['the big dog played', 'the [<0>big dog] played', 'big dog'],

@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/noun-toPlural] '
 
 test('toPlural:', function (t) {
-  let arr = [
+  const arr = [
     ['activity', 'activities'],
     ['aircraft', 'aircraft'],
     ['airplane', 'airplanes'],
@@ -322,7 +322,7 @@ test('toPlural:', function (t) {
 })
 
 test('toPlural - longer:', function (t) {
-  let arr = [
+  const arr = [
     [`we commended him for his hamburger`, `we commended him for his hamburgers`],
     [`everything i say, he liked`, `everything i say, he liked`],
     [`the tornado in Barrie swept through downtown`, `the tornados in Barrie swept through downtown`],
@@ -340,7 +340,7 @@ test('toPlural - longer:', function (t) {
     [`my finger was green afterwards`, `my fingers were green afterwards`],
   ]
   arr.forEach(function (a) {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.compute('chunks')
     doc.nouns().toPlural()
     t.equal(doc.text(), a[1], here + '[toPlural] ' + a[0])

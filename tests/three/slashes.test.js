@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 const here = '[three/slashes] '
 
 test('slashes.split', function (t) {
-  let doc = nlp(`i saw him/her yesterday at 2pm.`)
+  const doc = nlp(`i saw him/her yesterday at 2pm.`)
   t.equal(doc.has('#SlashedTerm'), true, here + 'has slash-tag')
   let m = doc.slashes()
   t.equal(m.length, 1, here + '1 slash')
@@ -17,7 +17,7 @@ test('slashes.split', function (t) {
 })
 
 test('three-slashes.split', function (t) {
-  let doc = nlp(`before. one two/three/four five. after`)
+  const doc = nlp(`before. one two/three/four five. after`)
   t.equal(doc.has('#SlashedTerm'), true, here + 'has slash-tag')
   let m = doc.slashes()
   t.equal(m.length, 1, here + '1 slash')

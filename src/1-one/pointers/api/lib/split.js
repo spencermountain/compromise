@@ -2,13 +2,13 @@ import { indexN } from './_lib.js'
 
 // split a pointer, by match pointer
 const pivotBy = function (full, m) {
-  let [n, start] = full
-  let mStart = m[1]
-  let mEnd = m[2]
-  let res = {}
+  const [n, start] = full
+  const mStart = m[1]
+  const mEnd = m[2]
+  const res = {}
   // is there space before the match?
   if (start < mStart) {
-    let end = mStart < full[2] ? mStart : full[2] // find closest end-point
+    const end = mStart < full[2] ? mStart : full[2] // find closest end-point
     res.before = [n, start, end] //before segment
   }
   res.match = m
@@ -24,10 +24,10 @@ const doesMatch = function (full, m) {
 }
 
 const splitAll = function (full, m) {
-  let byN = indexN(m)
-  let res = []
+  const byN = indexN(m)
+  const res = []
   full.forEach(ptr => {
-    let [n] = ptr
+    const [n] = ptr
     let matches = byN[n] || []
     matches = matches.filter(p => doesMatch(ptr, p))
     if (matches.length === 0) {
@@ -39,7 +39,7 @@ const splitAll = function (full, m) {
     // start splitting our left-to-right
     let carry = ptr
     matches.forEach((p, i) => {
-      let found = pivotBy(carry, p)
+      const found = pivotBy(carry, p)
       // last one
       if (!matches[i + 1]) {
         res.push(found)

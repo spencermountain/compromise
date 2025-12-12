@@ -122,7 +122,7 @@ console.log("Awesome.🎉 I love it! 🤗😍:-D", nlp("Awesome.🎉 I love it! 
 // {polarity: 0.8125, subjectivity: 0.8, mood: 0.8053333333333333}
 console.log("-----");
 console.log("You can even use mood score to detect cynicism, by noting when the polarity (text) is negative and mood (emoticons/smileys) is positive (or vice-versa):");
-let sentimentVal = nlp("The movie wasn't that good.😉 ;-)").sentiment(true);
+const sentimentVal = nlp("The movie wasn't that good.😉 ;-)").sentiment(true);
 console.log("The movie wasn't that good.😉 ;-)", sentimentVal);
 // Expected result:
 // {polarity: -0.35, subjectivity: 0.6, mood: 0.35650000000000004}

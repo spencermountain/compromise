@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/confidence] '
 
 test('confidence', function (t) {
-  let arr = [
+  const arr = [
     ['', 1],
     ['asdfasdf', 0.1],
     ['google', 1],
@@ -16,11 +16,11 @@ test('confidence', function (t) {
     // [ 'State govt gives HR panel office space',null]
   ]
   arr.forEach(a => {
-    let [str, score] = a
+    const [str, score] = a
     t.equal(nlp(str).confidence(), score, here + str)
   })
 
-  let json = nlp('errerum esto lominae').json({ confidence: true })[0]
+  const json = nlp('errerum esto lominae').json({ confidence: true })[0]
   t.equal(json.confidence, 0.1, 'confidence in json')
   t.end()
 })

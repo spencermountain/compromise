@@ -5,10 +5,10 @@ const byPunctuation = function (terms, i, model, world) {
   // breaking: foobar
   if (i === 0 && terms.length >= 3) {
     const hasColon = /:/
-    let post = terms[0].post
+    const post = terms[0].post
     if (post.match(hasColon)) {
       // phone: 555-2938
-      let nextTerm = terms[1]
+      const nextTerm = terms[1]
       if (nextTerm.tags.has('Value') || nextTerm.tags.has('Email') || nextTerm.tags.has('PhoneNumber')) {
         return
       }

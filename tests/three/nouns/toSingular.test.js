@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/noun-toSingular] '
 
 test('toSingular:', function (t) {
-  let arr = [
+  const arr = [
     // ["Joneses", "Jones"],
 
     ['agents', 'agent'],
@@ -242,7 +242,7 @@ test('toSingular:', function (t) {
 })
 
 test('toSingular - longer:', function (t) {
-  let arr = [
+  const arr = [
     [`my fingers looked green afterwards`, `my finger looked green afterwards`],
     [`other person`, 'other person'],
     [`other people`, 'other person'],
@@ -250,7 +250,7 @@ test('toSingular - longer:', function (t) {
     // [`the women's room`, 'the women\'s room'],
   ]
   arr.forEach(function (a) {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.compute('chunks')
     doc.nouns().toSingular()
     t.equal(doc.text(), a[1], here + '[longer] ' + a[0])

@@ -39,7 +39,7 @@ const honorifics = {
 }
 
 const predictGender = function (parsed, person) {
-  let { firstName, honorific } = parsed
+  const { firstName, honorific } = parsed
   // use first-name as signal-signal
   if (firstName.has('#FemaleName')) {
     return f
@@ -63,15 +63,15 @@ const predictGender = function (parsed, person) {
     }
   }
   // offer used-pronouns as a signal
-  let after = person.after()
+  const after = person.after()
   if (!after.has('#Person') && after.has('#Pronoun')) {
-    let pro = after.match('#Pronoun')
+    const pro = after.match('#Pronoun')
     // manual use of gender-neutral
     if (pro.has('(they|their)')) {
       return null
     }
-    let hasMasc = pro.has('(he|his)')
-    let hasFem = pro.has('(she|her|hers)')
+    const hasMasc = pro.has('(he|his)')
+    const hasFem = pro.has('(she|her|hers)')
     if (hasMasc && !hasFem) {
       return m
     }

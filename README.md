@@ -546,7 +546,6 @@ _(match methods use the [match-syntax](https://docs.compromise.cool/compromise-m
 
 - **[.sort('method')](https://observablehq.com/@spencermountain/compromise-sorting)** - re-arrange the order of the matches (in place)
 - **[.reverse()](https://observablehq.com/@spencermountain/compromise-sorting)** - reverse the order of the matches, but not the words
-- **[.normalize({})](https://observablehq.com/@spencermountain/compromise-normalization)** - clean-up the text in various ways
 - **[.unique()](https://observablehq.com/@spencermountain/compromise-sorting)** - remove any duplicate matches
 
 ##### Lib
@@ -585,6 +584,8 @@ _(these methods are on the main `nlp` object)_
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ### compromise/three:
+
+- **[.normalize({})](https://observablehq.com/@spencermountain/compromise-normalization)** - clean-up the text in various ways
 
 ##### Nouns
 

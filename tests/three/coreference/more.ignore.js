@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/more-coreference] '
 
-let arr = [
+const arr = [
   `(Sarah) walked into the room. [She] immediately noticed the mess on the floor.`,
   `(Michael and Emily) went to the movies. [They] bought tickets for the latest blockbuster.`,
   `(Lisa) finished her presentation. [She] received a round of applause from the audience.`,
@@ -217,11 +217,11 @@ let arr = [
 
 test('more-coreference:', function (t) {
   arr.forEach(str => {
-    let subj = str.match(/\(.*?\)/)[0].replace(/[()]/g, '').toLowerCase()
-    let pronoun = str.match(/\[.*?\]/)[0].replace(/[[\]]/g, '').toLowerCase()
-    let msg = here + subj + ' → ' + pronoun
-    let doc = nlp(str)
-    let p = doc.pronouns().notIf('#Possessive').hasReference()
+    const subj = str.match(/\(.*?\)/)[0].replace(/[()]/g, '').toLowerCase()
+    const pronoun = str.match(/\[.*?\]/)[0].replace(/[[\]]/g, '').toLowerCase()
+    const msg = here + subj + ' → ' + pronoun
+    const doc = nlp(str)
+    const p = doc.pronouns().notIf('#Possessive').hasReference()
     t.equal(p.text('normal'), pronoun, msg)
 
   })

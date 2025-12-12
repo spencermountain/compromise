@@ -10,7 +10,7 @@ const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
 // run tagger on our new implicit terms
 const reTag = function (terms, view, start, len) {
-  let tmp = view.update()
+  const tmp = view.update()
   tmp.document = [terms]
   // offer to re-tag neighbours, too
   let end = start + len
@@ -42,7 +42,7 @@ const byStart = {
 // pull-apart known contractions from model
 const knownOnes = function (list, term, before, after) {
   for (let i = 0; i < list.length; i += 1) {
-    let o = list[i]
+    const o = list[i]
     // look for word-word match (cannot-> [can, not])
     if (o.word === term.normal) {
       return o.out
@@ -61,7 +61,7 @@ const knownOnes = function (list, term, before, after) {
 }
 
 const toDocs = function (words, view) {
-  let doc = view.fromText(words.join(' '))
+  const doc = view.fromText(words.join(' '))
   doc.compute(['id', 'alias'])
   return doc.docs[0]
 }
@@ -82,9 +82,9 @@ const thereHas = function (terms, i) {
 
 //really easy ones
 const contractions = view => {
-  let { world, document } = view
+  const { world, document } = view
   const { model, methods } = world
-  let list = model.one.contractions || []
+  const list = model.one.contractions || []
   // let units = new Set(model.one.units || [])
   // each sentence
   document.forEach((terms, n) => {
@@ -93,7 +93,7 @@ const contractions = view => {
       let before = null
       let after = null
       if (byApostrophe.test(terms[i].normal) === true) {
-        let res = terms[i].normal.split(byApostrophe)
+        const res = terms[i].normal.split(byApostrophe)
         before = res[0]
         after = res[1]
       }

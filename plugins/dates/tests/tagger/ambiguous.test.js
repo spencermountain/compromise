@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 
 test('negative-ambiguous-dates', t => {
-  let noDates = [
+  const noDates = [
     'march quickly',
     'quickly march',
     'march to the end',
@@ -32,14 +32,14 @@ test('negative-ambiguous-dates', t => {
     // "remember all of today's laundary",
   ]
   noDates.forEach(str => {
-    let found = nlp(str).dates().found
+    const found = nlp(str).dates().found
     t.equal(found, false, str)
   })
   t.end()
 })
 
 test('positive-ambiguous-dates', t => {
-  let yesDates = [
+  const yesDates = [
     'go south in march',
     'march in march',
     'this march, go swimming',
@@ -50,14 +50,14 @@ test('positive-ambiguous-dates', t => {
     'buy a turkey march 3rd',
   ]
   yesDates.forEach(str => {
-    let found = nlp(str).dates().found
+    const found = nlp(str).dates().found
     t.equal(found, true, str)
   })
   t.end()
 })
 
 test('date-tagger', function (t) {
-  let arr = [
+  const arr = [
     ['june 2009', ['Month', 'Year']],
     ['june 5th 2009', ['Month', 'Date', 'Year']],
     ['q2 2009', ['Date', 'Year']],
@@ -69,10 +69,10 @@ test('date-tagger', function (t) {
     ['ash wednesday', ['Holiday', 'Holiday']],
   ]
   arr.forEach(function (a) {
-    let terms = nlp(a[0]).json()[0].terms
+    const terms = nlp(a[0]).json()[0].terms
     terms.forEach((term, i) => {
-      let tag = a[1][i]
-      let found = term.tags.some(tg => tg === tag)
+      const tag = a[1][i]
+      const found = term.tags.some(tg => tg === tag)
       t.equal(found, true, term.text + ' ' + tag)
     })
   })

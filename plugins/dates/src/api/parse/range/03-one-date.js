@@ -35,14 +35,14 @@ export default [
     desc: 'before june',
     parse: (m, context) => {
       m = m.group(0)
-      let unit = parseDate(m, context)
+      const unit = parseDate(m, context)
       if (unit) {
         let start = new Unit(context.today, null, context)
         if (start.d.isAfter(unit.d)) {
           start = unit.clone().applyShift({ weeks: -2 })
         }
         // end the night before
-        let end = unit.clone().applyShift({ day: -1 })
+        const end = unit.clone().applyShift({ day: -1 })
         return {
           start: start,
           end: end.end(),
@@ -58,7 +58,7 @@ export default [
     desc: 'in june',
     parse: (m, context) => {
       m = m.group(0)
-      let unit = parseDate(m, context)
+      const unit = parseDate(m, context)
       if (unit) {
         return { start: unit, end: unit.clone().end(), unit: unit.unit }
       }
@@ -88,9 +88,9 @@ export default [
     desc: 'middle of',
     parse: (m, context) => {
       m = m.group(0)
-      let unit = parseDate(m, context)
-      let start = unit.clone().middle()
-      let end = unit.beforeEnd()
+      const unit = parseDate(m, context)
+      const start = unit.clone().middle()
+      const end = unit.beforeEnd()
       if (unit) {
         return {
           start: start,
@@ -105,10 +105,10 @@ export default [
     match: '.+ after #Time+$',
     desc: 'tuesday after 5pm',
     parse: (m, context) => {
-      let unit = parseDate(m, context)
+      const unit = parseDate(m, context)
       if (unit) {
-        let start = unit.clone()
-        let end = unit.end()
+        const start = unit.clone()
+        const end = unit.end()
         return {
           start: start,
           end: end,
@@ -123,10 +123,10 @@ export default [
     match: '.+ before #Time+$',
     desc: 'tuesday before noon',
     parse: (m, context) => {
-      let unit = parseDate(m, context)
+      const unit = parseDate(m, context)
       if (unit) {
-        let end = unit.clone()
-        let start = unit.start()
+        const end = unit.clone()
+        const start = unit.start()
         if (unit) {
           return {
             start: start,

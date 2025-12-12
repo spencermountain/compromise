@@ -16,9 +16,9 @@ const chunkType = function (chunk) {
 }
 
 const doWord = function (w) {
-  let term = w.docs[0][0]
-  let offset = term.offset
-  let node = {
+  const term = w.docs[0][0]
+  const offset = term.offset
+  const node = {
     type: 'word',
     children: [],
     position: {
@@ -44,8 +44,8 @@ const doWord = function (w) {
 }
 
 const doChunk = function (chunk) {
-  let type = chunkType(chunk)
-  let node = {
+  const type = chunkType(chunk)
+  const node = {
     type: type,
     children: chunk.terms().map(doWord),
     // position: {}
@@ -55,7 +55,7 @@ const doChunk = function (chunk) {
 
 
 const doSentence = function (s) {
-  let node = {
+  const node = {
     type: 'sentence',
     children: s.chunks().map(doChunk, []),
     position: {}
@@ -65,7 +65,7 @@ const doSentence = function (s) {
 
 const toAst = function (doc) {
   doc.compute(['chunks', 'offset', 'lines'])
-  let root = {
+  const root = {
     type: 'root',
     children: doc.sentences().map(doSentence),
     position: {}

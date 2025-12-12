@@ -15,14 +15,14 @@ const tagString = function (tags, model) {
 }
 
 const showTags = function (view) {
-  let { docs, model } = view
+  const { docs, model } = view
   if (docs.length === 0) {
     console.log(cli.blue('\n     ──────'))
   }
   docs.forEach(terms => {
     console.log(cli.blue('\n  ┌─────────'))
     terms.forEach(t => {
-      let tags = [...(t.tags || [])]
+      const tags = [...(t.tags || [])]
       let text = t.text || '-'
       if (t.sense) {
         text = `{${t.normal}/${t.sense}}`
@@ -33,11 +33,11 @@ const showTags = function (view) {
       text = cli.yellow(text)
       let word = "'" + text + "'"
       if (t.reference) {
-        let str = view.update([t.reference]).text('normal')
+        const str = view.update([t.reference]).text('normal')
         word += ` - ${cli.dim(cli.i('[' + str + ']'))}`
       }
       word = word.padEnd(18)
-      let str = cli.blue('  │ ') + cli.i(word) + '  - ' + tagString(tags, model)
+      const str = cli.blue('  │ ') + cli.i(word) + '  - ' + tagString(tags, model)
       console.log(str)
     })
   })

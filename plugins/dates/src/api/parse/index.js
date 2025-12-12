@@ -15,7 +15,7 @@ const parse = function (doc, context) {
 
   doc = normalize(doc)
 
-  let res = parseRange(doc, context)
+  const res = parseRange(doc, context)
   return res
 }
 export default parse

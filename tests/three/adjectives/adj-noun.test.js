@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/adj-noun] '
 
-let arr = [
+const arr = [
   ['abject', 'abjection'],
   ['abstemious', 'abstemiousness'],
   ['abundant', 'abundance'],
@@ -449,10 +449,10 @@ let arr = [
 test('toNoun:', function (t) {
   // let { toNoun } = nlp().methods.two.transform.adjective
   arr.forEach(a => {
-    let [adj, noun] = a
+    const [adj, noun] = a
     // t.ok(nlp(noun).has('#Noun'), here + noun)
     // t.ok(nlp(adj).has('#Adjective'), here + adj)
-    let res = nlp(adj).tag('Adjective').adjectives().conjugate()[0] || {}
+    const res = nlp(adj).tag('Adjective').adjectives().conjugate()[0] || {}
     // let res = toNoun(adj)
     t.equal(res.Noun, noun, here + ` [${adj}, ${noun}]`)
   })

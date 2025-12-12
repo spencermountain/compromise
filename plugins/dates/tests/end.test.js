@@ -4,18 +4,18 @@ import spacetime from 'spacetime'
 //single-date tests
 
 //yep,
-let january = 0
-let february = 1
-let march = 2
-let april = 3
-let may = 4
-let june = 5
-let july = 6
-let august = 7
-let september = 8
-let october = 9
-let november = 10
-let december = 11
+const january = 0
+const february = 1
+const march = 2
+const april = 3
+const may = 4
+const june = 5
+const july = 6
+const august = 7
+const september = 8
+const october = 9
+const november = 10
+const december = 11
 
 const tests = [
   {
@@ -76,10 +76,10 @@ test('end dates', (t) => {
       today: tests[k].today,
       timezone: 'Canada/Pacific',
     }
-    let today = tests[k].today.join('-')
+    const today = tests[k].today.join('-')
     tests[k].tests.forEach((a) => {
-      let want = spacetime(a[1], context.timezone).endOf('day').iso()
-      let json = nlp(a[0]).dates(context).json()[0] || { dates: {} }
+      const want = spacetime(a[1], context.timezone).endOf('day').iso()
+      const json = nlp(a[0]).dates(context).json()[0] || { dates: {} }
       t.equal(json.dates.end, want, `[${today}] ${a[0]}`)
     })
   })

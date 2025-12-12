@@ -2,10 +2,10 @@ import rules from './_rules.js'
 const addE = /([xsz]|ch|sh)$/
 
 const trySuffix = function (str) {
-  let c = str[str.length - 1]
+  const c = str[str.length - 1]
   if (rules.hasOwnProperty(c) === true) {
     for (let i = 0; i < rules[c].length; i += 1) {
-      let reg = rules[c][i][0]
+      const reg = rules[c][i][0]
       if (reg.test(str) === true) {
         return str.replace(reg, rules[c][i][1])
       }
@@ -17,7 +17,7 @@ const trySuffix = function (str) {
  * assume the given string is singular
  */
 const pluralize = function (str = '', model) {
-  let { irregularPlurals, uncountable } = model.two
+  const { irregularPlurals, uncountable } = model.two
   // is it a word without a plural form?
   if (uncountable.hasOwnProperty(str)) {
     return str
@@ -27,7 +27,7 @@ const pluralize = function (str = '', model) {
     return irregularPlurals[str]
   }
   //we have some rules to try-out
-  let plural = trySuffix(str)
+  const plural = trySuffix(str)
   if (plural !== null) {
     return plural
   }

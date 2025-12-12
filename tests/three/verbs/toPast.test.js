@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-toPast] '
 
 test('toPast:', function (t) {
-  let arr = [
+  const arr = [
     // copula-based
     ['he is nice', 'he was nice'],
     ['he is really it', 'he was really it'],
@@ -276,7 +276,7 @@ test('toPast:', function (t) {
 
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.verbs().toPastTense()
     t.equal(doc.text(), a[1], here + ' ' + a[0])
   })

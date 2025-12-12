@@ -24,37 +24,37 @@ const cleanup = function (doc) {
 const tokenize = function (doc, context) {
   // parse 'two weeks after'
   let res = doShift(doc)
-  let shift = res.result
+  const shift = res.result
   doc = doc.not(res.m)
 
   // parse 'nth week of june'
   res = doCounter(doc)
-  let counter = res.result
+  const counter = res.result
   doc = doc.not(res.m)
 
   // parse 'eastern time'
   res = doTimezone(doc)
-  let tz = res.result
+  const tz = res.result
   doc = doc.not(res.m)
 
   // parse '2pm'
   res = doTime(doc, context)
-  let time = res.result
+  const time = res.result
   doc = doc.not(res.m)
 
   // parse 'tuesday'
   res = doWeekday(doc, context)
-  let weekDay = res.result
+  const weekDay = res.result
   doc = doc.not(res.m)
 
   // parse 'start of x'
   res = doSection(doc, context)
-  let section = res.result
+  const section = res.result
   doc = doc.not(res.m)
 
   // parse 'next x'
   res = doRelative(doc)
-  let rel = res.result
+  const rel = res.result
   doc = doc.not(res.m)
 
   // cleanup remaining doc object

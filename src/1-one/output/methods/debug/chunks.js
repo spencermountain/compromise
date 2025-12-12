@@ -2,10 +2,10 @@
 import cli from './_color.js'
 
 const showChunks = function (view) {
-  let { docs } = view
+  const { docs } = view
   console.log('')
   docs.forEach(terms => {
-    let out = []
+    const out = []
     terms.forEach(term => {
       if (term.chunk === 'Noun') {
         out.push(cli.blue(term.implicit || term.normal))

@@ -17,7 +17,7 @@ const getTokenNeeds = function (reg) {
 }
 
 const getNeeds = function (regs) {
-  let needs = []
+  const needs = []
   regs.forEach(reg => {
     needs.push(getTokenNeeds(reg))
     // support AND (foo && tag)
@@ -33,7 +33,7 @@ const getNeeds = function (regs) {
 }
 
 const getWants = function (regs) {
-  let wants = []
+  const wants = []
   let count = 0
   regs.forEach(reg => {
     if (reg.operator === 'or' && !reg.optional && !reg.negative) {
@@ -47,7 +47,7 @@ const getWants = function (regs) {
       if (reg.choices) {
         reg.choices.forEach(rs => {
           rs.forEach(r => {
-            let n = getTokenNeeds(r)
+            const n = getTokenNeeds(r)
             if (n) {
               wants.push(n)
             }
@@ -73,7 +73,7 @@ const parse = function (matches, world) {
     }
     // cache any requirements up-front 
     obj.needs = getNeeds(obj.regs)
-    let { wants, count } = getWants(obj.regs)
+    const { wants, count } = getWants(obj.regs)
     obj.wants = wants
     obj.minWant = count
     // get rid of tiny sentences

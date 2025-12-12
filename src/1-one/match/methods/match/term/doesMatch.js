@@ -40,7 +40,7 @@ const doesMatch = function (term, reg, index, length) {
       if (reg.word === term.root) {
         return true
       }
-      let score = fuzzy(reg.word, term.normal)
+      const score = fuzzy(reg.word, term.normal)
       if (score >= reg.min) {
         return true
       }
@@ -100,7 +100,7 @@ const doesMatch = function (term, reg, index, length) {
     if (reg.pos && !term.tags.has(reg.pos)) {
       return null
     }
-    let str = term.root || term.implicit || term.machine || term.normal
+    const str = term.root || term.implicit || term.machine || term.normal
     return reg.fastOr.has(str) || reg.fastOr.has(term.text)
   }
   //support slower (one|two)
@@ -117,7 +117,7 @@ const doesMatch = function (term, reg, index, length) {
 }
 // wrap result for !negative match logic
 wrapMatch = function (t, reg, index, length) {
-  let result = doesMatch(t, reg, index, length)
+  const result = doesMatch(t, reg, index, length)
   if (reg.negative === true) {
     return !result
   }

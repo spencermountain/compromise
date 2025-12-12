@@ -3,8 +3,8 @@ import nlp from '../_lib.js'
 const here = '[two/freeze]'
 
 test('isFrozen() method', function (t) {
-  let doc = nlp('the dr who is a a shoe in the closet')
-  let m = doc.match('dr who').tag('Noun')
+  const doc = nlp('the dr who is a a shoe in the closet')
+  const m = doc.match('dr who').tag('Noun')
   m.freeze() // ☃️
   t.equal(doc.isFrozen().text(), 'dr who', here)
   doc.match('who').unfreeze()
@@ -15,8 +15,8 @@ test('isFrozen() method', function (t) {
 })
 
 test('cant tag frozen term', function (t) {
-  let doc = nlp('one two three four.')
-  let m = doc.match('two three')
+  const doc = nlp('one two three four.')
+  const m = doc.match('two three')
   m.freeze()
   doc.tag('Person')
   t.equal(doc.match('one').has('#Person'), true, 'not-frozen has tag', here)
@@ -26,8 +26,8 @@ test('cant tag frozen term', function (t) {
 })
 
 test('cant tag frozen term', function (t) {
-  let doc = nlp('a shoe in the closet')
-  let m = doc.match('shoe').tag('Noun')
+  const doc = nlp('a shoe in the closet')
+  const m = doc.match('shoe').tag('Noun')
   m.freeze() // ☃️
   m.tag('Verb') // ❌ (does nothing)
   t.equal(m.has('#Verb'), false, here)
@@ -41,7 +41,7 @@ test('cant tag frozen term', function (t) {
 })
 
 test('catch sneeky tags', function (t) {
-  let doc = nlp.tokenize('John Ginger is nice')
+  const doc = nlp.tokenize('John Ginger is nice')
   doc.match('ginger').tag('Verb').freeze()
   doc.compute('tagger')
   t.equal(doc.has('#Person #Verb is nice'), true, here)
@@ -54,13 +54,13 @@ test('in plugin', function (t) {
       'slug life': 'Verb',
     },
   })
-  let doc = nlp(`The cool slug life is nice`)
+  const doc = nlp(`The cool slug life is nice`)
   t.equal(doc.match('#Verb+').has('slug life'), true, here + 'in plugin')
   t.end()
 })
 
 test('block-tag :', function (t) {
-  let doc = nlp(`republic of leeland`)
+  const doc = nlp(`republic of leeland`)
   doc.match('republic of .').tag('Place').freeze()
   doc.match('. of leeland').tag('Organization')
   t.equal(doc.has('#Place{3}'), true, here + 'two-tag')
@@ -68,8 +68,8 @@ test('block-tag :', function (t) {
 })
 
 test('freeze-in-sweep :', function (t) {
-  let doc = nlp(`republic of leeland`)
-  let net = nlp.buildNet([{ match: '. of leeland', tag: 'Organization', freeze: true }])
+  const doc = nlp(`republic of leeland`)
+  const net = nlp.buildNet([{ match: '. of leeland', tag: 'Organization', freeze: true }])
   doc.sweep(net)
   doc.match('republic of .').tag('Place') //should do nothing
   t.equal(doc.has('#Place'), false, here + 'no-place')
@@ -83,7 +83,7 @@ test('freeze-in-prepend :', function (t) {
       flq: 'Frozen',
     },
   })
-  let doc = nlp('FLQ')
+  const doc = nlp('FLQ')
   t.ok(doc.match('flq').has('#Frozen'), 'before-prepend')
   doc.compute('frozen')
   doc.prepend('For the upcoming visit, the patient will need an ')

@@ -1,7 +1,7 @@
 // import nlp from '../../src/three.js'
 import nlp from '../../types/one'
 
-let doc = nlp('okay cool')
+const doc = nlp('okay cool')
 
 // ### Lib
 nlp.tokenize('adf')

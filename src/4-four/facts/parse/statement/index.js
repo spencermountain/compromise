@@ -18,13 +18,13 @@ const factType = function (vb) {
 
 
 const getFacts = function (s) {
-  let facts = []
+  const facts = []
   let fact = { type: null }
   let prop = null
-  let chunks = s.chunks()
+  const chunks = s.chunks()
   chunks.forEach(chunk => {
     if (chunk.isNoun().found) {
-      let nounObj = parseNoun(chunk)
+      const nounObj = parseNoun(chunk)
       // before our action, we are the subject
       if (!fact.action) {
         fact.subject = nounObj

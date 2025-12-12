@@ -15,8 +15,8 @@ test('true-positive', function (t) {
 })
 
 test('true-negative', function (t) {
-  let doc = nlp('i learned the csss grid layout')
-  let res = doc.wikipedia().json()
+  const doc = nlp('i learned the csss grid layout')
+  const res = doc.wikipedia().json()
   t.equal(res.length, 0, 'found 0 results')
   t.end()
 })

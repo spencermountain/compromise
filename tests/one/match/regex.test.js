@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/regex] '
 
 test('prefix/infix/suffix basic', function (t) {
-  let r = nlp('it is funny and weird')
+  const r = nlp('it is funny and weird')
   let m = r.match('/nny$/')
   t.equal(m.out('normal'), 'funny', here + 'suffix-match')
   m = r.match('/^fu/')
@@ -38,7 +38,7 @@ test('prefix/infix/suffix basic', function (t) {
 })
 
 test('regex-match:', function (t) {
-  let doc = nlp('it is waaaay cool')
+  const doc = nlp('it is waaaay cool')
   let m = doc.match('/aaa/')
   t.equal(m.out('normal'), 'waaaay', here + 'basic-match')
 

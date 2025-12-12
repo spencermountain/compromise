@@ -5,7 +5,7 @@ const keep = { tags: true }
 const toInf = function (vb, parsed) {
   const { toInfinitive } = vb.methods.two.transform.verb
   const { root, auxiliary } = parsed
-  let aux = auxiliary.terms().harden()
+  const aux = auxiliary.terms().harden()
   let str = root.text('normal')
   str = toInfinitive(str, vb.model, getTense(root))
   if (str) {
@@ -21,7 +21,7 @@ const toInf = function (vb, parsed) {
     if (!vb.has('not')) {
       vb.prepend('not')
     }
-    let does = doDoes(vb, parsed)
+    const does = doDoes(vb, parsed)
     vb.prepend(does)
   }
   vb.fullSentence().compute(['freeze', 'lexicon', 'preTagger', 'postTagger', 'unfreeze', 'chunks'])

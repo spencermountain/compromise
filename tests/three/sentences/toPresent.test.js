@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/sentence-toPresent] '
 
 test('sentence-toPresent', function (t) {
-  let arr = [
+  const arr = [
 
     [`And Venus Williams owned a ranch outside Green Valley;`, `And Venus Williams owns a ranch outside Green Valley;`],
     // [`I will be out in plenty of time for tomorrow's semi; I trust Uncle Charles.`, `I am out in plenty of time for tomorrow's semi; I trust Uncle Charles.`],
@@ -21,7 +21,7 @@ test('sentence-toPresent', function (t) {
     [`It was on the shelf that held his digital equalizer.`, `It is on the shelf that holds his digital equalizer.`],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0]).sentences()
+    const doc = nlp(a[0]).sentences()
     doc.toPresentTense()
     t.equal(doc.out(), a[1], here + '[toPresent] ' + a[0])
   })

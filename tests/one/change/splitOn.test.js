@@ -3,8 +3,8 @@ import nlp from '../_lib.js'
 const here = '[one/splitOn] '
 
 test('one split, one sentence', function (t) {
-  let doc = nlp('before before match, after after.')
-  let m = doc.splitOn('@hasComma')
+  const doc = nlp('before before match, after after.')
+  const m = doc.splitOn('@hasComma')
   t.equal(m.length, 3, here + 'found 3')
   t.equal(m.eq(0).out('normal'), 'before before', here + 'found before')
   t.equal(m.eq(1).out('normal'), 'match', here + 'found match')
@@ -13,8 +13,8 @@ test('one split, one sentence', function (t) {
 })
 
 test('multi split, one sentence', function (t) {
-  let doc = nlp('before before match, then a match, after after.')
-  let m = doc.splitOn('@hasComma')
+  const doc = nlp('before before match, then a match, after after.')
+  const m = doc.splitOn('@hasComma')
   t.equal(m.length, 5, here + 'found 5')
   t.equal(m.eq(0).out('normal'), 'before before', here + 'found before')
   t.equal(m.eq(1).out('normal'), 'match', here + 'found match')
@@ -25,8 +25,8 @@ test('multi split, one sentence', function (t) {
 })
 
 test('one split, multi sentence', function (t) {
-  let doc = nlp('before before match, after after. then over here')
-  let m = doc.splitOn('match')
+  const doc = nlp('before before match, after after. then over here')
+  const m = doc.splitOn('match')
   t.equal(m.length, 4, here + 'found 4')
   t.equal(m.eq(0).out('normal'), 'before before', here + 'found before')
   t.equal(m.eq(1).out('normal'), 'match', here + 'found match')
@@ -36,8 +36,8 @@ test('one split, multi sentence', function (t) {
 })
 
 test('multi split, multi sentence', function (t) {
-  let doc = nlp('before before match1, match2 after after. then a match3 over here')
-  let m = doc.splitOn('/^match/')
+  const doc = nlp('before before match1, match2 after after. then a match3 over here')
+  const m = doc.splitOn('/^match/')
   t.equal(m.length, 7, here + 'found 7')
   t.equal(m.eq(0).out('normal'), 'before before', here + 'found before')
   t.equal(m.eq(1).out('normal'), 'match1', here + 'found match1')
@@ -50,8 +50,8 @@ test('multi split, multi sentence', function (t) {
 })
 
 test('greedy split', function (t) {
-  let doc = nlp('match match middle middle match. then over here')
-  let m = doc.splitOn('match+')
+  const doc = nlp('match match middle middle match. then over here')
+  const m = doc.splitOn('match+')
   t.equal(m.length, 4, here + 'found 4')
   t.equal(m.eq(0).out('normal'), 'match match', here + 'found two')
   t.equal(m.eq(1).out('normal'), 'middle middle', here + 'found middles')
@@ -61,8 +61,8 @@ test('greedy split', function (t) {
 })
 
 test('split skip sentence', function (t) {
-  let doc = nlp('before match. nothing found here. two match after')
-  let m = doc.splitOn('match')
+  const doc = nlp('before match. nothing found here. two match after')
+  const m = doc.splitOn('match')
   t.equal(m.length, 6, here + 'found 6')
   t.equal(m.eq(0).out('normal'), 'before', here + 'found before')
   t.equal(m.eq(1).out('normal'), 'match', here + 'found match')
@@ -74,8 +74,8 @@ test('split skip sentence', function (t) {
 })
 
 test('no match split', function (t) {
-  let doc = nlp('nothing found here. none here either')
-  let m = doc.splitOn('match')
+  const doc = nlp('nothing found here. none here either')
+  const m = doc.splitOn('match')
   t.equal(m.length, 2, here + 'found 2')
   t.equal(m.eq(0).text(), 'nothing found here.', here + 'not found 1')
   t.equal(m.eq(1).text(), 'none here either', here + 'not found 2')
@@ -96,7 +96,7 @@ test('splitOn multi', function (t) {
 })
 
 test('tricky-splitafter', function (t) {
-  let str = `one two three`
+  const str = `one two three`
   let m = nlp(str).match('.')
 
   m = m.splitAfter('foo')

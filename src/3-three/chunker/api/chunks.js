@@ -1,9 +1,9 @@
 // split terms into Nounphrase, verbphrase, etc groups
 const chunks = function (doc) {
-  let all = []
+  const all = []
   let lastOne = null
   // first, split by comma, etc
-  let m = doc.clauses()
+  const m = doc.clauses()
   // loop through each clause
   m.docs.forEach(terms => {
     terms.forEach(term => {
@@ -18,7 +18,7 @@ const chunks = function (doc) {
     })
     lastOne = null
   })
-  let parts = doc.update(all)
+  const parts = doc.update(all)
   return parts
 }
 export default chunks

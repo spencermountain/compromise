@@ -5,7 +5,7 @@ const methods = {
       return this.docs[0][0].pre
     }
     this.docs.forEach(terms => {
-      let term = terms[0]
+      const term = terms[0]
       if (concat === true) {
         term.pre += str
       } else {
@@ -18,11 +18,11 @@ const methods = {
   /** add this punctuation or whitespace after each match: */
   post: function (str, concat) {
     if (str === undefined) {
-      let last = this.docs[this.docs.length - 1]
+      const last = this.docs[this.docs.length - 1]
       return last[last.length - 1].post
     }
     this.docs.forEach(terms => {
-      let term = terms[terms.length - 1]
+      const term = terms[terms.length - 1]
       if (concat === true) {
         term.post += str
       } else {
@@ -37,11 +37,11 @@ const methods = {
     if (!this.found) {
       return this
     }
-    let docs = this.docs
-    let start = docs[0][0]
+    const docs = this.docs
+    const start = docs[0][0]
     start.pre = start.pre.trimStart()
-    let last = docs[docs.length - 1]
-    let end = last[last.length - 1]
+    const last = docs[docs.length - 1]
+    const end = last[last.length - 1]
     end.post = end.post.trimEnd()
     return this
   },
@@ -82,7 +82,7 @@ const methods = {
     end = end || `"`
     this.docs.forEach(terms => {
       terms[0].pre = start + terms[0].pre
-      let last = terms[terms.length - 1]
+      const last = terms[terms.length - 1]
       last.post = end + last.post
     })
     return this
@@ -94,7 +94,7 @@ const methods = {
     end = end || `)`
     this.docs.forEach(terms => {
       terms[0].pre = start + terms[0].pre
-      let last = terms[terms.length - 1]
+      const last = terms[terms.length - 1]
       last.post = end + last.post
     })
     return this

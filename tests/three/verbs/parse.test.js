@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-parse] '
 
 test('verb-parts:', function (t) {
-  let arr = [
+  const arr = [
     {
       str: `john had barely ever helped out very quickly`,
       preAdverb: 'barely ever',
@@ -107,10 +107,10 @@ test('verb-parts:', function (t) {
   ]
   arr.forEach(obj => {
     let { str, preAdverb, aux, root, postAdverb, particle } = obj
-    let vb = nlp(str).verbs()
+    const vb = nlp(str).verbs()
     str = "'" + str.split(/ /).slice(0, 5).join(' ') + "'"
     t.equal(vb.length, 1, here + `1 verb - '${str}'`)
-    let parse = vb.parse()[0]
+    const parse = vb.parse()[0]
     if (!parse) {
       t.ok(false, here + ' [no-verb] ' + str)
       return

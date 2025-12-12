@@ -13,8 +13,8 @@ const ends_with_ee = /ee$/
 
 //method is nested because it's called recursively
 const doWord = function (w) {
-  let all = []
-  let chars = w.split('')
+  const all = []
+  const chars = w.split('')
   let before = ''
   let after = ''
   let current = ''
@@ -62,7 +62,7 @@ const doWord = function (w) {
   return all
 }
 
-let syllables = function (str) {
+const syllables = function (str) {
   let all = []
   if (!str) {
     return all

@@ -38,15 +38,15 @@ test('adjusted lexicon:', function (t) {
 })
 
 test('allow orthagonal tags:', function (t) {
-  let doc = nlp('i was farming', { farming: 'Foo' })
-  let m = doc.match('farming')
+  const doc = nlp('i was farming', { farming: 'Foo' })
+  const m = doc.match('farming')
   t.equal(m.has('#Foo'), true, here + 'has new tag')
   t.equal(m.has('#Gerund'), true, here + 'has normal tag')
   t.end()
 })
 
 test('look for invalid lexicon items:', function (t) {
-  let lex = nlp.world().model.one.lexicon
+  const lex = nlp.world().model.one.lexicon
   Object.keys(lex).forEach(k => {
     if (k.trim() !== k) {
       t.fail(here + `'${k}' has whitespace`)
@@ -59,13 +59,13 @@ test('look for invalid lexicon items:', function (t) {
 })
 
 test('all multi-word items get tagged:', function (t) {
-  let lex = nlp.world().model.one.lexicon
+  const lex = nlp.world().model.one.lexicon
   Object.keys(lex).forEach(k => {
-    let tag = lex[k]
+    const tag = lex[k]
     if (!k.match(' ') || typeof tag !== 'string' || tag === 'FutureTense') {
       return
     }
-    let doc = nlp(k)
+    const doc = nlp(k)
     if (!doc.has('^#' + tag + '+$')) {
       t.fail(here + `lex changed : '${k}'`)
     }

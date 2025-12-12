@@ -4,7 +4,7 @@ const here = '[one/term-punctuation] '
 
 
 test('term punctuation', function (t) {
-  let arr = [
+  const arr = [
     [`yeah??`, 'yeah'],
     [`#canada`, 'canada'],
     [`@canada`, 'canada'],
@@ -23,14 +23,14 @@ test('term punctuation', function (t) {
     // [`_word_`, 'word'],
   ]
   arr.forEach(a => {
-    let [txt, match] = a
+    const [txt, match] = a
     t.equal(nlp(txt).has(match), true, here + `"${txt}"`)
   })
   t.end()
 })
 
 test('modify existing punctuation', function (t) {
-  let world = nlp.world()
+  const world = nlp.world()
 
   let term = nlp('=cool=').docs[0][0]
   t.equal(term.normal, 'cool', here + 'before')

@@ -1,10 +1,10 @@
 const idf = function (view, opts = {}) {
   let counts = {}
   let total = 0
-  let form = opts.form || 'root'
+  const form = opts.form || 'root'
   view.docs.forEach(terms => {
     terms.forEach(term => {
-      let str = term[form] || term.implicit || term.normal
+      const str = term[form] || term.implicit || term.normal
       if (str) {
         counts[str] = counts[str] || 0
         counts[str] += 1
@@ -19,7 +19,7 @@ const idf = function (view, opts = {}) {
       return h
     }
     // IDF = (Total number of documents) / (total number of documents containing the keyword)
-    let num = Math.log10(total / a[1])
+    const num = Math.log10(total / a[1])
     //force between 0-1
     // num = num / max
     // num = Math.round(num * 1000) / 1000 // round to 2 digits

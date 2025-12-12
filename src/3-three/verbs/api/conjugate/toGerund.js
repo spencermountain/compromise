@@ -13,10 +13,10 @@ const toGerund = function (vb, parsed) {
   // conjugate '-ing' verb
   let str = root.text('normal')
   str = toInfinitive(str, vb.model, getTense(root))
-  let gerund = conjugate(str, vb.model).Gerund
+  const gerund = conjugate(str, vb.model).Gerund
   // 'are walking', 'is walking'
   if (gerund) {
-    let aux = isAreAm(vb, parsed)
+    const aux = isAreAm(vb, parsed)
     vb.replace(root, gerund, keep)
     vb.remove(auxiliary)
     vb.prepend(aux)//.match(aux)

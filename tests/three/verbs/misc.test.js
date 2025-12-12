@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-misc] '
 
 test('verbs.json', function (t) {
-  let json = nlp('She has called twice, not the tv').verbs().json()
+  const json = nlp('She has called twice, not the tv').verbs().json()
   t.equal(json.length, 1, here + 'one verb')
   t.equal(json[0].verb.negative, false, here + 'not negative')
   t.equal(json[0].verb.root, 'called', here + 'got main verb')
@@ -59,15 +59,15 @@ test('support punctuation', function (t) {
 })
 
 test('adverbs method', function (t) {
-  let doc = nlp('i may really go! It is cool.')
-  let advb = doc.verbs().adverbs()
+  const doc = nlp('i may really go! It is cool.')
+  const advb = doc.verbs().adverbs()
   t.equal(advb.text(), 'really', 'found adverb')
   t.end()
 })
 
 test('conjugate stable', function (t) {
-  let doc = nlp('we fished')
-  let res = doc.verbs().conjugate()[0]
+  const doc = nlp('we fished')
+  const res = doc.verbs().conjugate()[0]
   t.equal(res.Infinitive, 'fish', here + 'Infinitive conj')
   t.equal(res.PastTense, 'fished', here + 'PastTense conj')
   t.equal(res.PresentTense, 'fishes', here + 'PresentTense conj')

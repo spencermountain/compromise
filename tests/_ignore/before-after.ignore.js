@@ -31,7 +31,7 @@ test('before-match:', function (t) {
   // t.equal(r.out('normal'), '', 'before-any');
 
   r = nlp('one two three four. No, not here. He said two days a week.').before('two')
-  let arr = r.out('array')
+  const arr = r.out('array')
   t.equal(arr[0], 'one', here + 'before-twice-1')
   t.equal(arr[1], 'He said', here + 'before-twice-2')
 
@@ -55,7 +55,7 @@ test('after-match:', function (t) {
   t.equal(r.out('normal'), 'two three four', here + 'after-any')
 
   r = nlp('one two three four. No, not here. He said two days a week.').after('two')
-  let arr = r.out('array')
+  const arr = r.out('array')
   t.equal(arr[0], 'three four.', here + 'after-twice-1')
   t.equal(arr[1], 'days a week.', here + 'after-twice-2')
 

@@ -6,7 +6,7 @@ nlp.extend(plugin)
 
 const n = 30000
 console.log(` -- processing ${n.toLocaleString()} sentences-`)
-let docs = corpus.all().slice(30000, n + 30000)
+const docs = corpus.all().slice(30000, n + 30000)
 
 const percent = (part, total) => {
   let num = (part / total) * 100;
@@ -18,8 +18,8 @@ let found = {}
 let matches = 0
 
 docs.forEach(str => {
-  let doc = nlp(str)
-  let res = doc.wikipedia().json({ normal: true })
+  const doc = nlp(str)
+  const res = doc.wikipedia().json({ normal: true })
   res.forEach(o => {
     if (o.normal === 'discovery' || o.normal === 'a level') {
       console.log(str)

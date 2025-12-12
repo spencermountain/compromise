@@ -6,7 +6,7 @@ import matches from './matches.js'
 let net = null
 
 const doMatches = function (view) {
-  let { world } = view
+  const { world } = view
   net = net || world.methods.one.buildNet(matches, world)
   view.sweep(net)
 }

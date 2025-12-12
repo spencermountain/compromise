@@ -8,7 +8,7 @@ const fns = {
     if (!this.found || !input) {
       return this
     }
-    let terms = this.termList()
+    const terms = this.termList()
     if (terms.length === 0) {
       return this
     }
@@ -37,7 +37,7 @@ const fns = {
     if (!this.found || !input) {
       return this
     }
-    let terms = this.termList()
+    const terms = this.termList()
     if (terms.length === 0) {
       return this
     }
@@ -46,7 +46,7 @@ const fns = {
     if (verbose === true) {
       console.log(' -  ', input, reason || '')
     }
-    let tagSet = model.one.tagSet
+    const tagSet = model.one.tagSet
     if (isArray(input)) {
       input.forEach(tag => methods.one.unTag(terms, tag, tagSet))
     } else {
@@ -60,9 +60,9 @@ const fns = {
   /** return only the terms that can be this tag  */
   canBe: function (tag) {
     tag = tag.replace(/^#/, '')
-    let tagSet = this.model.one.tagSet
-    let canBe = this.methods.one.canBe
-    let nope = []
+    const tagSet = this.model.one.tagSet
+    const canBe = this.methods.one.canBe
+    const nope = []
     this.document.forEach((terms, n) => {
       terms.forEach((term, i) => {
         if (!canBe(term, tag, tagSet)) {
@@ -70,7 +70,7 @@ const fns = {
         }
       })
     })
-    let noDoc = this.update(nope)
+    const noDoc = this.update(nope)
     return this.difference(noDoc)
   },
 }

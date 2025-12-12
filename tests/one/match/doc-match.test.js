@@ -3,9 +3,9 @@ import nlp from '../_lib.js'
 const here = ' [one/doc-match]'
 
 test('doc-as-input', function (t) {
-  let doc = nlp('if so, he is the best, that i see. he is the greatest')
-  let m = doc.match('he is the .')
-  let found = doc.match(m)
+  const doc = nlp('if so, he is the best, that i see. he is the greatest')
+  const m = doc.match('he is the .')
+  const found = doc.match(m)
   t.equal(found.length, 2, here + 'found both phrases')
   t.equal(found.eq(0).text('reduced'), 'he is the best', here + 'found first match')
   t.equal(found.eq(1).text('reduced'), 'he is the greatest', here + 'found second match')
@@ -13,7 +13,7 @@ test('doc-as-input', function (t) {
 })
 
 test('doc-sibling-as-input', function (t) {
-  let doc = nlp('he is the best, that i see. he is the greatest')
+  const doc = nlp('he is the best, that i see. he is the greatest')
   let childA = doc.if('greatest')
   let childB = doc.match('he is')
   // union/intersection/difference
@@ -32,10 +32,10 @@ test('doc-sibling-as-input', function (t) {
 })
 
 test('split-doc-input', function (t) {
-  let doc = nlp('he is the best, that i see. he is the greatest')
-  let childA = doc.if('greatest')
-  let childB = doc.match('he is')
-  let found = childA.splitAfter(childB)
+  const doc = nlp('he is the best, that i see. he is the greatest')
+  const childA = doc.if('greatest')
+  const childB = doc.match('he is')
+  const found = childA.splitAfter(childB)
   t.equal(found.length, 2, 'split from sibling')
   t.equal(found.eq(0).text('reduced'), 'he is', here + 'found first match')
   t.equal(found.eq(1).text('reduced'), 'the greatest', here + 'found second match')
@@ -43,17 +43,17 @@ test('split-doc-input', function (t) {
 })
 
 test('two-or-matches overlap', function (t) {
-  let doc = nlp('one two three four five')
-  let m = doc.match('(two|four) (three|five)')
+  const doc = nlp('one two three four five')
+  const m = doc.match('(two|four) (three|five)')
   t.deepEqual(m.out('array'), ['two three', 'four five'], here + 'or-overlap')
   t.end()
 })
 
 test('has==match', function (t) {
-  let doc = nlp('i saw John Lennon, and tom cruise.')
-  let m = doc.match('john lennon')
-  let start = doc.match('i saw john .')
-  let end = doc.match('and tom cruise')
+  const doc = nlp('i saw John Lennon, and tom cruise.')
+  const m = doc.match('john lennon')
+  const start = doc.match('i saw john .')
+  const end = doc.match('and tom cruise')
 
   t.equal(start.has(m), true, here + 'has-start')
   t.equal(start.match(m).found, true, here + 'match-start')

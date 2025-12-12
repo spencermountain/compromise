@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 
 test('soundsLike-tests', function (t) {
-  let arr = [
+  const arr = [
     ['phil collins', 'fil kolins'],
     ['Philadelphia freedom', 'filatelfia fretom'],
     ['Shine on me', 'shine on me'],
@@ -13,8 +13,8 @@ test('soundsLike-tests', function (t) {
     // ['But the times have changed', 'but the times hafe kshanjet'],
   ]
   arr.forEach((a) => {
-    let doc = nlp(a[0])
-    let str = doc.soundsLike({})[0].join(' ')
+    const doc = nlp(a[0])
+    const str = doc.soundsLike({})[0].join(' ')
     t.equal(str, a[1], a[0])
   })
   t.end()

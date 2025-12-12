@@ -9,24 +9,24 @@ import fs from 'fs'
 
     // const txt = await wtf.fetch('Julius and Ethel Rosenberg').then(d => d.text())
     // const txt = corpus.all().slice(0, 10000).join('\n')
-    let txt = fs.readFileSync('/Users/spencer/data/infinite-jest/infinite-jest.txt').toString()
+    const txt = fs.readFileSync('/Users/spencer/data/infinite-jest/infinite-jest.txt').toString()
     // txt = txt.substring(39390, 80000)
     //get filesize
     const bytes = Buffer.byteLength(txt)
     const size = Math.ceil(bytes / 1024)
     console.log(` ${size}kb`)
 
-    let words = txt.split(' ')
+    const words = txt.split(' ')
     console.log(words.length.toLocaleString(), 'words')
 
 
-    let begin = new Date()
-    let doc = nlp(txt)
+    const begin = new Date()
+    const doc = nlp(txt)
     let m = doc.match('#Verb #Preposition').out('topk')
     m = m.slice(0, 4000).filter(o => o.count > 2)
     console.log(JSON.stringify(m, null, 2))
 
-    let end = new Date()
+    const end = new Date()
     console.log((end.getTime() - begin.getTime()) / 1000, 'seconds')
   })()
 

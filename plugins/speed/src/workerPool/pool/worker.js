@@ -2,9 +2,9 @@ import { workerData, parentPort } from 'worker_threads'
 // import nlp from 'compromise'
 import nlp from '../../../../../src/three.js'
 
-let { workerIndex, reg } = workerData
+const { workerIndex, reg } = workerData
 
-let status = {
+const status = {
   workerIndex,
   running: false,
   queue: []
@@ -20,10 +20,10 @@ const go = function () {
   status.running = true
   // console.log(`${workerIndex} running`)
   while (status.queue.length > 0) {
-    let txt = status.queue.pop()//.join('')
+    const txt = status.queue.pop()//.join('')
     status.queue = []
-    let doc = nlp(txt)
-    let m = doc.match(reg)
+    const doc = nlp(txt)
+    const m = doc.match(reg)
     if (m.found) {
       parentPort.postMessage({
         type: 'match',

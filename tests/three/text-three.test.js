@@ -2,11 +2,11 @@ import test from 'tape'
 import nlp from './_lib.js'
 const here = '[three/text] '
 import penn from '../two/tagger/_pennSample.js'
-let txt = penn.map(o => o.text).join(' ')
+const txt = penn.map(o => o.text).join(' ')
 
 test('text-in-text-out', function (t) {
-  let doc = nlp(txt)
-  let methods = [
+  const doc = nlp(txt)
+  const methods = [
     'terms',
     'all',
     'clauses',
@@ -27,7 +27,7 @@ test('text-in-text-out', function (t) {
 
 
 test('wordcount-split', function (t) {
-  let doc = nlp(txt)
+  const doc = nlp(txt)
   let m = doc.splitBefore('#Noun+')
   t.equal(m.wordCount(), doc.wordCount(), 'splitBefore-wordcount')
   m = doc.splitOn('#Noun+')

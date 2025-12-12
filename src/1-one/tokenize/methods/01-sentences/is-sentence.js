@@ -22,9 +22,9 @@ const isSentence = function (str, abbrevs) {
   if (hasEllipse.test(str) === true) {
     return false
   }
-  let txt = str.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '')
-  let words = txt.split(' ')
-  let lastWord = words[words.length - 1].toLowerCase()
+  const txt = str.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '')
+  const words = txt.split(' ')
+  const lastWord = words[words.length - 1].toLowerCase()
   // check for 'Mr.' (and not mr?)
   if (abbrevs.hasOwnProperty(lastWord) === true && hasPeriod.test(str) === true) {
     return false

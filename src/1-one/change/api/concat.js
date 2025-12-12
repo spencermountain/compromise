@@ -4,8 +4,8 @@ const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]
 const combineDocs = function (homeDocs, inputDocs) {
   if (homeDocs.length > 0) {
     // add a space
-    let end = homeDocs[homeDocs.length - 1]
-    let last = end[end.length - 1]
+    const end = homeDocs[homeDocs.length - 1]
+    const last = end[end.length - 1]
     if (/ /.test(last.post) === false) {
       last.post += ' '
     }
@@ -17,11 +17,11 @@ const combineDocs = function (homeDocs, inputDocs) {
 const combineViews = function (home, input) {
   // is it a view from the same document?
   if (home.document === input.document) {
-    let ptrs = home.fullPointer.concat(input.fullPointer)
+    const ptrs = home.fullPointer.concat(input.fullPointer)
     return home.toView(ptrs).compute('index')
   }
   // update n of new pointer, to end of our pointer
-  let ptrs = input.fullPointer
+  const ptrs = input.fullPointer
   ptrs.forEach(a => {
     a[0] += home.document.length
   })
@@ -34,14 +34,14 @@ export default {
   concat: function (input) {
     // parse and splice-in new terms
     if (typeof input === 'string') {
-      let more = this.fromText(input)
+      const more = this.fromText(input)
       // easy concat
       if (!this.found || !this.ptrs) {
         this.document = this.document.concat(more.document)
       } else {
         // if we are in the middle, this is actually a splice operation
-        let ptrs = this.fullPointer
-        let at = ptrs[ptrs.length - 1][0]
+        const ptrs = this.fullPointer
+        const at = ptrs[ptrs.length - 1][0]
         this.document.splice(at, 0, ...more.document)
       }
       // put the docs
@@ -53,7 +53,7 @@ export default {
     }
     // assume it's an array of terms
     if (isArray(input)) {
-      let docs = combineDocs(this.document, input)
+      const docs = combineDocs(this.document, input)
       this.document = docs
       return this.all()
     }

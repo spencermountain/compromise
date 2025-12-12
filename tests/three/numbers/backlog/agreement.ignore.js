@@ -17,7 +17,7 @@ test('misc agreement', function (t) {
 })
 
 test('ordinal agreement', function (t) {
-  let doc = nlp('seventeen beers')
+  const doc = nlp('seventeen beers')
   doc.values().toOrdinal()
   t.equal(doc.text(), 'seventeenth beer', here + 'ord-agreement')
 

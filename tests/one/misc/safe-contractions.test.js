@@ -4,7 +4,7 @@ const here = '[one/safe-contractions] '
 
 
 test('safe-apostrophe-s', function (t) {
-  let arr = [
+  const arr = [
     // yes
     // [`She's got me`, 4],
     [`Let’s not`, 3],
@@ -29,7 +29,7 @@ test('safe-apostrophe-s', function (t) {
     // ['',]
   ]
   arr.forEach(a => {
-    let terms = nlp(a[0]).terms()
+    const terms = nlp(a[0]).terms()
     t.equal(terms.length, a[1], here + a[0])
   })
   t.end()
@@ -37,7 +37,7 @@ test('safe-apostrophe-s', function (t) {
 
 
 test('safe-apostrophe-d', function (t) {
-  let arr = [
+  const arr = [
     // [`she'd say`, 'she would say'],
     [`she'd go`, 'she would go'],
     [`we'd go`, 'we would go'],
@@ -45,7 +45,7 @@ test('safe-apostrophe-d', function (t) {
     // [`i'd phoned`, `i had phoned`],
   ]
   arr.forEach(a => {
-    let str = nlp(a[0]).text('machine')
+    const str = nlp(a[0]).text('machine')
     t.equal(str, a[1], here + a[0])
   })
   t.end()
@@ -53,7 +53,7 @@ test('safe-apostrophe-d', function (t) {
 
 
 test('theres', function (t) {
-  let arr = [
+  const arr = [
     [`there's a`, 'there is'],
     [`there's no going back`, 'there is'],
     [`there's no honor`, 'there is'],
@@ -70,7 +70,7 @@ test('theres', function (t) {
     [`There's hardly been any progress`, 'there has'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     t.ok(doc.has(a[1]), a[0])
   })
   t.end()

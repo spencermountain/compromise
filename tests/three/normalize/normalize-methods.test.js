@@ -88,7 +88,7 @@ test('honorifics', function (t) {
 })
 
 test('hyphen-whitespace:', function (t) {
-  let doc = nlp(`the so-called “fascist  dictator”`)
+  const doc = nlp(`the so-called “fascist  dictator”`)
   doc.normalize({ whitespace: true, punctuation: false })
   t.equal(doc.text(), `the so called “fascist dictator”`, here + 'keep hyphen')
   t.end()

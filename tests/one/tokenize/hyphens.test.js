@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/hyphens] '
 
 test('nums-punctuation', function (t) {
-  let doc = nlp('10-ounce (12-ounce)')
+  const doc = nlp('10-ounce (12-ounce)')
   t.equal(doc.terms().length, 4, here + 'w/ brackets')
 
   // doc = nlp('2-for-1')
@@ -69,7 +69,7 @@ test('independence', function (t) {
   t.equal(doc.has('counter argument'), true, here + 'counter two words')
 
   doc = nlp(`additional non-urgent appointment.`)
-  let m = doc.match(`additional non? urgent? appointment`)
+  const m = doc.match(`additional non? urgent? appointment`)
   t.equal(m.found, true, here + 'non-urgent')
   t.equal(doc.has('additional non'), true, here + 'additional non')
   // t.equal(doc.has('additional nonurgent'), true, here + 'additional nonurgent')

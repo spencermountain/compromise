@@ -3,7 +3,7 @@
 const tagTimeRange = function (m, reason) {
   if (m.found) {
     m.tag('Date', reason)
-    let nums = m.numbers().lessThan(31).ifNo('#Year')
+    const nums = m.numbers().lessThan(31).ifNo('#Year')
     nums.tag('#Time', reason)
   }
 }
@@ -11,11 +11,11 @@ const tagTimeRange = function (m, reason) {
 //
 const timeTagger = function (doc) {
 
-  let date = doc.if('#Date')
+  const date = doc.if('#Date')
   if (date.found) {
     // ==time-ranges=
     //   --number-ranges--
-    let range = date.if('#NumberRange')
+    const range = date.if('#NumberRange')
     if (range.found) {
       // 3-4 on tuesday
       let m = range.match('[#NumberRange+] (on|by|at)? #WeekDay', 0)

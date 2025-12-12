@@ -62,7 +62,7 @@ const splitWords = function (str, model) {
   //greedy merge whitespace+arr to the right
   let carry = ''
   for (let i = 0; i < arr.length; i++) {
-    let word = arr[i]
+    const word = arr[i]
     //if it's more than a whitespace
     if (wordlike.test(word) === true && notWord.hasOwnProperty(word) === false && isBoundary.test(word) === false) {
       //put whitespace on end of previous term, if possible

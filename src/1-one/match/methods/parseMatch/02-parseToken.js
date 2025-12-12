@@ -32,7 +32,7 @@ const stripBoth = function (str) {
 }
 //
 const parseToken = function (w, opts) {
-  let obj = {}
+  const obj = {}
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {
     //end-flag
@@ -146,7 +146,7 @@ const parseToken = function (w, opts) {
       }
       //remove '(' and ')'
       obj.choices[0] = stripStart(obj.choices[0])
-      let last = obj.choices.length - 1
+      const last = obj.choices.length - 1
       obj.choices[last] = stripEnd(obj.choices[last])
       // clean up the results
       obj.choices = obj.choices.map(s => s.trim())
@@ -164,7 +164,7 @@ const parseToken = function (w, opts) {
       // obj.sense = w
       obj.root = w
       if (/\//.test(w)) {
-        let split = obj.root.split(/\//)
+        const split = obj.root.split(/\//)
         obj.root = split[0]
         obj.pos = split[1]
         if (obj.pos === 'adj') {

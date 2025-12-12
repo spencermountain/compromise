@@ -11,8 +11,8 @@ const tagYear = (m, reason) => {
     return
   }
   m.forEach((p) => {
-    let str = p.text('reduced')
-    let num = parseInt(str, 10)
+    const str = p.text('reduced')
+    const num = parseInt(str, 10)
     if (num && num > 1000 && num < 3000) {
       p.tag('Year', reason)
     }
@@ -24,8 +24,8 @@ const tagYearSafe = (m, reason) => {
     return
   }
   m.forEach((p) => {
-    let str = p.text('reduced')
-    let num = parseInt(str, 10)
+    const str = p.text('reduced')
+    const num = parseInt(str, 10)
     if (num && num > 1900 && num < 2030) {
       p.tag('Year', reason)
     }
@@ -44,7 +44,7 @@ const tagDates = function (doc) {
 
 
   //year/cardinal tagging
-  let cardinal = doc.if('#Cardinal')
+  const cardinal = doc.if('#Cardinal')
   if (cardinal.found === true) {
     let v = cardinal.match(`#Date #Value [#Cardinal]`, 0)
     tagYear(v, 'date-value-year')
@@ -78,13 +78,13 @@ const tagDates = function (doc) {
     // re-tag this part
     cardinal.match(`${sections} of #Year`).tag('Date')
     //between 1999 and 1998
-    let m = cardinal.match('between [#Cardinal] and [#Cardinal]')
+    const m = cardinal.match('between [#Cardinal] and [#Cardinal]')
     tagYear(m.groups('0'), 'between-year-and-year-1')
     tagYear(m.groups('1'), 'between-year-and-year-2')
   }
 
   //'2020' bare input
-  let m = doc.match('^/^20[012][0-9]$/$')
+  const m = doc.match('^/^20[012][0-9]$/$')
   tagYearSafe(m, '2020-ish')
 
   return doc

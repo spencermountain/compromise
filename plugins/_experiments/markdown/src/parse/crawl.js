@@ -1,10 +1,10 @@
 // [a, b, a1, b1]
 const breadthFirst = (root, fn) => {
-  let list = []
-  let queue = [root]
+  const list = []
+  const queue = [root]
   while (queue.length > 0) {
     // get first
-    let node = queue.shift()
+    const node = queue.shift()
     if (fn) {
       fn(node)
     }
@@ -24,11 +24,11 @@ const breadthFirst = (root, fn) => {
 
 // [a, a1, b, b1]
 const depthFirst = (root, fn) => {
-  let list = []
-  let queue = [root]
+  const list = []
+  const queue = [root]
   while (queue.length > 0) {
     // get first
-    let node = queue.pop()
+    const node = queue.pop()
     // add to list
     list.push(node)
     // add kids to queue

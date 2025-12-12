@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/people-parse] '
 
 test('people-parse:', function (t) {
-  let arr = [
+  const arr = [
     ['john turner', 'john', 'turner', ''],
     ['dr James Smith', 'james', 'smith', 'dr'],
     ['Corey', 'corey', '', ''],
@@ -19,8 +19,8 @@ test('people-parse:', function (t) {
     // [','',''],
   ]
   arr.forEach(a => {
-    let [str, first, last, hon] = a
-    let res = nlp(str).people().parse()[0] || {}
+    const [str, first, last, hon] = a
+    const res = nlp(str).people().parse()[0] || {}
     t.equal(res.firstName && res.firstName.text('normal'), first, here + 'first - ' + str)
     t.equal(res.lastName && res.lastName.text('normal'), last, here + 'last - ' + str)
     t.equal(res.honorific && res.honorific.text('normal'), hon, here + 'honorific - ' + str)

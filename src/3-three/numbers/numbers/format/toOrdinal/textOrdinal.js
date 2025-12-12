@@ -23,9 +23,9 @@ const irregulars = {
  * convert a javascript number to 'twentieth' format
  * */
 const textOrdinal = obj => {
-  let words = textValue(obj).split(' ')
+  const words = textValue(obj).split(' ')
   //convert the last number to an ordinal
-  let last = words[words.length - 1]
+  const last = words[words.length - 1]
   if (irregulars.hasOwnProperty(last)) {
     words[words.length - 1] = irregulars[last]
   } else {

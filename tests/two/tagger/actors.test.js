@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[two/actors] '
 
-let arr = [
+const arr = [
   'accountant',
   'air traffic controller',
   'architect',
@@ -311,7 +311,7 @@ let arr = [
 //after we change pos, untag propernoun
 test('tag-actors', function (t) {
   arr.forEach(str => {
-    let m = nlp(str).match('#Actor+')
+    const m = nlp(str).match('#Actor+')
     t.equal(m.text(), str, here + str)
   })
   t.end()

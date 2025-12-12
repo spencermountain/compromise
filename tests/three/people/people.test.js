@@ -36,7 +36,7 @@ test('people:', function (t) {
   t.equal(doc.people(1).out('normal'), 'dwayne the rock johnson', here + 'nickname-2b')
 
   doc = nlp('i work with Tina Fey and Jake Gyllenhal.')
-  let m = doc.people()
+  const m = doc.people()
   t.equal(m.eq(0).text(), 'Tina Fey', here + 'tina')
   t.equal(m.eq(1).text(), 'Jake Gyllenhal', here + 'jake')
 
@@ -44,7 +44,7 @@ test('people:', function (t) {
 })
 
 test('people positives:', function (t) {
-  let arr = [
+  const arr = [
     'avril lavigne',
     'ayn rand',
     'benazir bhutto',
@@ -126,15 +126,15 @@ test('people positives:', function (t) {
     // 'doctor who',
   ]
   arr.forEach(str => {
-    let doc = nlp(str)
-    let people = doc.people().text()
+    const doc = nlp(str)
+    const people = doc.people().text()
     t.equal(people, str, here + str)
   })
   t.end()
 })
 
 test('people false-positives:', function (t) {
-  let arr = [
+  const arr = [
     `op assessment`,
     `may`,
     `liberty`,
@@ -175,8 +175,8 @@ test('people false-positives:', function (t) {
     `in our X-ray Uro-radiology`,
   ]
   arr.forEach(str => {
-    let doc = nlp(str)
-    let people = doc.people().out('array')
+    const doc = nlp(str)
+    const people = doc.people().out('array')
     t.deepEqual(people, [], here + str)
   })
 

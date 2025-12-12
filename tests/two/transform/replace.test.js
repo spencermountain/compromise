@@ -22,7 +22,7 @@ test('replace-basic :', function (t) {
 })
 
 test('match-replace :', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', 'the dog', 'the cat', 'the cat played'],
     ['the dog played', 'the #Noun', 'the cat', 'the cat played'],
     ['the dog played', 'the (dog|hamster|pet-snake)', 'the cat', 'the cat played'],
@@ -64,22 +64,22 @@ test('replace-keep some punctuation', function (t) {
   t.equal(doc.match('#Cool+').text(), '2 weeks', here + 'replace-keep-tags')
 
   doc = nlp('first sentence. I am trying it out.')
-  let m = doc.match('trying').tag('HashTag')
+  const m = doc.match('trying').tag('HashTag')
   m.replaceWith('working', { tags: true })
   t.equal(doc.match('#HashTag+').text(), 'working', here + 'replacewith-keep-tags')
   t.end()
 })
 
 test('replace over implict', function (t) {
-  let doc = nlp("i'm good")
+  const doc = nlp("i'm good")
   doc.match('am').replaceWith('was')
   t.equal(doc.text(), 'i was good', here + 'replace over implicit')
   t.end()
 })
 
 test('replace-with-Doc', function (t) {
-  let b = nlp('sneaks').tag('Cool')
-  let doc = nlp(`john walks quickly`)
+  const b = nlp('sneaks').tag('Cool')
+  const doc = nlp(`john walks quickly`)
   doc.match('walks').replaceWith(b, { tags: true })
   t.equal(doc.text(), 'john sneaks quickly', here + 'doc-replace')
   t.equal(doc.has('#Cool'), true, here + 'doc-replace tags')
@@ -121,7 +121,7 @@ test('replace-with-possessives', function (t) {
     }
     return 'nancy'
   }
-  let doc = nlp('spencer\'s house is cooler than John\'s house.')
+  const doc = nlp('spencer\'s house is cooler than John\'s house.')
   doc.replace('#Person', fn, { case: true, possessives: true })
   t.equal(doc.text(), 'nancy\'s house is cooler than Johnny\'s house.')
   t.end()
@@ -130,7 +130,7 @@ test('replace-with-possessives', function (t) {
 test('replace-tags-param', function (t) {
   let doc = nlp('Spencer is very cool.')
   doc.match('spencer').replaceWith('jogging')
-  let m = doc.match('jogging')
+  const m = doc.match('jogging')
   t.equal(m.has('#Person'), false, here + 'tags not-kept - default')
 
   doc = nlp('Spencer is very cool.')
@@ -182,13 +182,13 @@ test('replace-repair', function (t) {
 })
 
 test('replace is cloned', function (t) {
-  let doc = nlp('before match after. second sentence here.')
-  let m = doc.match('match')
+  const doc = nlp('before match after. second sentence here.')
+  const m = doc.match('match')
   doc.match('sentence').replace(m)
   t.equal(doc.text(), 'before match after. second match here.', here + 'replaced-text')
 
-  let id = m.docs[0][0].id
-  let foundIds = doc.termList().filter(term => term.id === id)
+  const id = m.docs[0][0].id
+  const foundIds = doc.termList().filter(term => term.id === id)
   t.equal(foundIds.length, 1, 'id-different')
 
   t.equal(m.length, 1, 'match-unchanged')
@@ -199,7 +199,7 @@ test('replace is cloned', function (t) {
 })
 
 test('replace-with-no-match', function (t) {
-  let doc = nlp('original')
+  const doc = nlp('original')
   doc.match('missing').replaceWith('unreached')
   t.equal(doc.text(), 'original')
 
@@ -209,7 +209,7 @@ test('replace-with-no-match', function (t) {
 })
 
 test('replace-with-phone-number', function (t) {
-  let doc = nlp('Phone: +1 (123) 456-7890')
+  const doc = nlp('Phone: +1 (123) 456-7890')
   doc.match('#PhoneNumber').replaceWith((p) => p.text().replace(/\d{3}/, '555'))
   t.equal(doc.text(), 'Phone: +1 (555) 555-7890')
 

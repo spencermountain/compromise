@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/split] '
 
 test('splitAfter', function (t) {
-  let arr = [
+  const arr = [
     ['doug and nancy', 'and', ['doug and', 'nancy']],
     ['doug and also nancy', 'and also', ['doug and also', 'nancy']],
     ['doug and definetly nancy', 'and definetly', ['doug and definetly', 'nancy']],
@@ -29,7 +29,7 @@ test('splitAfter', function (t) {
 })
 
 test('splitOn', function (t) {
-  let arr = [
+  const arr = [
     ['doug and nancy', 'and', ['doug', 'and', 'nancy']],
     ['doug and also nancy', 'and also', ['doug', 'and also', 'nancy']],
     ['doug and definetly nancy', 'and definetly', ['doug', 'and definetly', 'nancy']],
@@ -51,7 +51,7 @@ test('splitOn', function (t) {
 })
 
 test('splitBefore', function (t) {
-  let arr = [
+  const arr = [
     ['doug and nancy', 'and', ['doug', 'and nancy']],
     ['doug and also nancy', 'and also', ['doug', 'and also nancy']],
     ['doug and definetly nancy', 'and definetly', ['doug', 'and definetly nancy']],
@@ -76,8 +76,8 @@ test('splitBefore', function (t) {
 })
 
 test('multi splitBefore, multi sentence', function (t) {
-  let doc = nlp('before before match1, match2 after after. then a match3 over here. none found')
-  let m = doc.splitBefore('/^match/')
+  const doc = nlp('before before match1, match2 after after. then a match3 over here. none found')
+  const m = doc.splitBefore('/^match/')
   t.equal(m.length, 6, here + 'found 6')
   t.equal(m.eq(0).out('normal'), 'before before', here + 'found before')
   t.equal(m.eq(1).out('normal'), 'match1', here + 'found match1')
@@ -89,8 +89,8 @@ test('multi splitBefore, multi sentence', function (t) {
 })
 
 test('multi splitAfter, multi sentence', function (t) {
-  let doc = nlp('before before match1 match2 after after. then a match3 over here. none found')
-  let m = doc.splitAfter('/^match/')
+  const doc = nlp('before before match1 match2 after after. then a match3 over here. none found')
+  const m = doc.splitAfter('/^match/')
   t.equal(m.length, 6, 'found 6')
   t.equal(m.eq(0).out('normal'), 'before before match1', here + 'found match1')
   t.equal(m.eq(1).out('normal'), 'match2', here + 'found match2')
@@ -102,7 +102,7 @@ test('multi splitAfter, multi sentence', function (t) {
 })
 
 test('split group', function (t) {
-  let doc = nlp('one two match three four')
+  const doc = nlp('one two match three four')
   let m = doc.splitBefore('two match three')
   t.deepEqual(m.out('array'), ['one', 'two match three four'], here + 'match without group')
 

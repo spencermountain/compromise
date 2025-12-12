@@ -3,7 +3,7 @@ import nlp from './_lib.js'
 // const spacetime = require('spacetime')
 
 test('date-tokenizer', function (t) {
-  let arr = [
+  const arr = [
     ['june 5th, june 10th', 2],
     ['monday, wednesday', 2],
     ['monday, wednesday, friday', 3],
@@ -34,7 +34,7 @@ test('date-tokenizer', function (t) {
     ['15 march 16 july', 2],
   ]
   arr.forEach((a) => {
-    let dates = nlp(a[0]).dates()
+    const dates = nlp(a[0]).dates()
     t.equal(dates.length, a[1], a[0])
   })
 

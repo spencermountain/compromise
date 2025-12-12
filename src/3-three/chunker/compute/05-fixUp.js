@@ -1,10 +1,10 @@
 const fixUp = function (docs) {
-  let byChunk = []
+  const byChunk = []
   let current = null
   docs.forEach(terms => {
     // ensure an adjective chunk is preceded by a copula
     for (let i = 0; i < terms.length; i += 1) {
-      let term = terms[i]
+      const term = terms[i]
       if (current && term.chunk === current) {
         byChunk[byChunk.length - 1].terms.push(term)
       } else {

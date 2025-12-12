@@ -50,7 +50,7 @@ test('remove-logic :', function (t) {
 })
 
 test('remove-dangling :', function (t) {
-  let doc = nlp(`one two three. four five six`)
+  const doc = nlp(`one two three. four five six`)
   doc.eq(0).remove()
   t.equal(doc.length, 1, 'one-sentence')
   t.equal(doc.text(), 'four five six', 'full-sentence')
@@ -85,7 +85,7 @@ test('remove-match:', function (t) {
 
 test('remove-until-empty:', function (t) {
   let doc = nlp(`extra. match.`)
-  let m = doc.match('match')
+  const m = doc.match('match')
   doc.remove('extra')
   doc.remove(m)
   t.equal(doc.text(), '', here + 'remove empty')
@@ -117,8 +117,8 @@ test('clone-safe:', function (t) {
 })
 
 test('clone-partial :', function (t) {
-  let doc = nlp(`one two three. four two five`)
-  let m = doc.eq(1).clone()
+  const doc = nlp(`one two three. four two five`)
+  const m = doc.eq(1).clone()
   m.remove('two')
   t.equal(m.match('four five').found, true, here + 'match-over del')
   t.equal(doc.match('four five').found, false, here + 'og no match-over del')
@@ -127,7 +127,7 @@ test('clone-partial :', function (t) {
 
 
 test('remove full-sentence', function (t) {
-  let doc = nlp(`extra. one two.`)
+  const doc = nlp(`extra. one two.`)
   doc.remove('extra')
   t.equal(doc.length, 1, here + '1 left')
   t.equal(doc.text(), 'one two.', here + 'kept 2nd sentence')
@@ -135,8 +135,8 @@ test('remove full-sentence', function (t) {
 })
 
 test('remove doc by index :', function (t) {
-  let doc = nlp(`one extra two match three`)
-  let m = doc.match('match')
+  const doc = nlp(`one extra two match three`)
+  const m = doc.match('match')
   doc.remove('extra')
   doc.remove(m)
   t.equal(doc.text(), 'one two three', here + 'pointer index')
@@ -146,7 +146,7 @@ test('remove doc by index :', function (t) {
 
 
 test('remove-everything-basic', function (t) {
-  let doc = nlp(`2pm`)
+  const doc = nlp(`2pm`)
   doc.remove('.')
   t.equal(doc.text(), '', here + 'empty-text')
   t.equal(doc.length, 0, here + '0-length')
@@ -158,10 +158,10 @@ test('remove-everything-basic', function (t) {
 })
 
 test('remove-reset-some-pointers', function (t) {
-  let doc = nlp('one match two three')
-  let m = doc.match('match two')
-  let dangle = m.match('. .')
-  let b = m.remove('two')
+  const doc = nlp('one match two three')
+  const m = doc.match('match two')
+  const dangle = m.match('. .')
+  const b = m.remove('two')
   t.equal(m.text(), 'match', 'self updated')
   t.equal(b.text(), 'match', 'returned view updated')
   t.equal(doc.text(), 'one match three', 'document view okay')
@@ -171,7 +171,7 @@ test('remove-reset-some-pointers', function (t) {
 })
 
 test('remove-everything-nested', function (t) {
-  let doc = nlp(`see term. term. term after.`)
+  const doc = nlp(`see term. term. term after.`)
   t.equal(doc.length, 3, here + 'start-3')
 
   doc.remove('term')
@@ -195,7 +195,7 @@ test('remove-quality-check', function (t) {
   doc.remove('match')
   t.equal(doc.text(), 'one two. one two. one two.', here + 'remove all sides')
 
-  let str = 'match. match match. match match match.'
+  const str = 'match. match match. match match match.'
   doc = nlp(str)
   doc.remove('foobar')
   t.equal(doc.text(), str, here + 'remove nothing')
@@ -203,7 +203,7 @@ test('remove-quality-check', function (t) {
   t.equal(doc.text(), '', here + 'remove everything')
 
   doc = nlp('before match after. before match match after. before match match match after.')
-  let before = doc.match('before')
+  const before = doc.match('before')
   // let after = doc.clone().match('after')
   doc.remove('match+')
   t.equal(doc.text(), 'before after. before after. before after.', here + 'remove multi-length')
@@ -235,7 +235,7 @@ test('remove-bug-2', function (t) {
 
   doc = nlp('two three')
   arr = doc.splitAfter('two')
-  let m = doc.match('three')
+  const m = doc.match('three')
   m.remove()
   t.deepEqual(m.json(), [], here + 'self is gone')
   t.deepEqual(arr.out('array'), ['two'], here + 'remove self')
@@ -246,7 +246,7 @@ test('remove-bug-2', function (t) {
 
 
 test('remove-bug-3', function (t) {
-  let txt = `
+  const txt = `
 Header: 
 single
 
@@ -254,8 +254,8 @@ Header:
 first
 second
 `
-  let doc = nlp(txt)
-  let m = doc.match('Header')
+  const doc = nlp(txt)
+  const m = doc.match('Header')
   doc.remove(m)
   t.deepEqual(doc.out('array'), ['single', 'first', 'second'], here + 'multi-remove issue')
   t.end()
@@ -302,10 +302,10 @@ test('remove-keep-splits', function (t) {
 
 
 test('double-self becomes empty', function (t) {
-  let txt = `zero foo. one match foo. two foo.`
-  let doc = nlp(txt)
+  const txt = `zero foo. one match foo. two foo.`
+  const doc = nlp(txt)
   doc.harden()
-  let m = doc.eq(1)
+  const m = doc.eq(1)
   m.remove()
   t.equal(m.found, false, here + 'remove self is empty')
 
@@ -313,7 +313,7 @@ test('double-self becomes empty', function (t) {
 })
 
 test('double-remove', function (t) {
-  let txt = `zero foo. one match foo. two foo.`
+  const txt = `zero foo. one match foo. two foo.`
   let doc = nlp(txt)
   doc.remove('match') // first removal
   doc.remove('zero foo') //second removal
@@ -332,7 +332,7 @@ test('full-to-full', function (t) {
 - A some text
 - B some text
 - C some text`
-  let doc = nlp(text)
+  const doc = nlp(text)
   doc.remove('Remove me 1')
   doc.match('text').prepend('prefix')
 

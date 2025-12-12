@@ -6,7 +6,7 @@ const buildNet = function (matches, world) {
   matches = parse(matches, world)
 
   // collect by wants and needs
-  let hooks = {}
+  const hooks = {}
   matches.forEach(obj => {
     // add needs
     obj.needs.forEach(str => {
@@ -21,7 +21,7 @@ const buildNet = function (matches, world) {
   })
   // remove duplicates
   Object.keys(hooks).forEach(k => {
-    let already = {}
+    const already = {}
     hooks[k] = hooks[k].filter(obj => {
       if (typeof already[obj.match] === 'boolean') {
         return false
@@ -32,7 +32,7 @@ const buildNet = function (matches, world) {
   })
 
   // keep all un-cacheable matches (those with no needs) 
-  let always = matches.filter(o => o.needs.length === 0 && o.wants.length === 0)
+  const always = matches.filter(o => o.needs.length === 0 && o.wants.length === 0)
   return {
     hooks,
     always

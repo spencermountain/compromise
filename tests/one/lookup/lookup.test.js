@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/lookup] '
 
 test('lookup-basic', function (t) {
-  let doc = nlp('one two three four five. no here results.')
+  const doc = nlp('one two three four five. no here results.')
   let trie = nlp.buildTrie(['one', 'onety'])
   let res = doc.lookup(trie).json()
   t.equal(res.length, 1, 'one results')
@@ -35,7 +35,7 @@ test('lookup-basic', function (t) {
 
 
 test('lookup-tricky', function (t) {
-  let doc = nlp('one two three four five. no here results.')
+  const doc = nlp('one two three four five. no here results.')
   let res = doc.lookup(['zero one two'])
   t.equal(res.found, false, here + 'left-miss')
 
@@ -55,14 +55,14 @@ test('lookup-tricky', function (t) {
 })
 
 test('lookup-dupes', function (t) {
-  let trie = nlp.buildTrie([`Toronto`, `Toronto Rangers`])
-  let res = nlp('toronto rangers').lookup(trie)
+  const trie = nlp.buildTrie([`Toronto`, `Toronto Rangers`])
+  const res = nlp('toronto rangers').lookup(trie)
   t.equal(res.length, 1, here + 'no-sub-matches')
   t.end()
 })
 
 test('lookup-repeat', function (t) {
-  let trie = nlp.buildTrie([
+  const trie = nlp.buildTrie([
     `Toronto`,
     `Toronto Toronto`,
     `Toronto Rangers`,
@@ -106,7 +106,7 @@ test('lookup-fallback', function (t) {
 
 
 test('lookup-input', function (t) {
-  let doc = nlp('captain of the football team.')
+  const doc = nlp('captain of the football team.')
   let res = doc.lookup('')
   t.equal(res.text(), '', here + 'none-input')
 
@@ -122,7 +122,7 @@ test('lookup-input', function (t) {
 })
 
 test('lookup-reserved', function (t) {
-  let arr = [
+  const arr = [
     "Brian Vollmer",
     "Brian Wansink",
     "Brice Marden",
@@ -134,22 +134,22 @@ test('lookup-reserved', function (t) {
     "Bridgewater State University",
     "Bridie",
   ]
-  let trie = nlp.buildTrie(arr)
-  let res = nlp('before Bridge Constructor Portal after').lookup(trie)
+  const trie = nlp.buildTrie(arr)
+  const res = nlp('before Bridge Constructor Portal after').lookup(trie)
   t.equal(res.found, true, 'found-reserved-word')
   t.end()
 })
 
 
 test('lookup no-contractions', function (t) {
-  let arr = [
+  const arr = [
     'foobar',
     'marines',
     'afghanistan',
     'foo',
   ]
-  let trie = nlp.buildTrie(arr)
-  let res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
+  const trie = nlp.buildTrie(arr)
+  const res = nlp(`so we're adding 3201 Marines to our forces in Afghanistan.`).lookup(trie)
   t.equal(res.has('marines'), true, 'no-contraction got first one')
   t.equal(res.has('afghanistan'), true, 'no-contraction got first one')
   t.end()
@@ -168,7 +168,7 @@ test('lookup array', function (t) {
   t.equal(m.length, 1, 'end of line lookup')
 
   doc = nlp('one two three four')
-  let res = doc.lookup(['two three four', 'one', 'blah', 'three four five'])
+  const res = doc.lookup(['two three four', 'one', 'blah', 'three four five'])
   t.equal(res.length, 2, 'found arr single, multi')
 
   t.end()

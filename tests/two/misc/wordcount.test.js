@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/wordcount] '
 
 test('==WordCount==', function (t) {
-  let arr = [
+  const arr = [
     ['he is good', 3],
     ['jack and jill went up the hill.', 7],
     ['Mr. Clinton did so.', 4],
@@ -23,7 +23,7 @@ test('==WordCount==', function (t) {
 })
 
 test('match-wordcount', function (t) {
-  let doc = nlp("he is cool. she is nice. it isn't here.")
+  const doc = nlp("he is cool. she is nice. it isn't here.")
   t.equal(doc.eq(1).wordCount(), 3, here + 'middle-sentence')
   t.equal(doc.match('(he|she)').wordCount(), 2, here + 'he/she match')
   t.equal(doc.match('is').wordCount(), 3, here + 'is-contraction match')

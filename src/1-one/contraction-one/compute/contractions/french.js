@@ -4,7 +4,7 @@ const isMasculine = /(age|isme|acle|ege|oire)$/
 // l'amour
 const preL = (terms, i) => {
   // le/la
-  let after = terms[i].normal.split(hasContraction)[1]
+  const after = terms[i].normal.split(hasContraction)[1]
   // quick french gender disambig (rough)
   if (after && after.endsWith('e')) {
     return ['la', after]
@@ -14,7 +14,7 @@ const preL = (terms, i) => {
 
 // d'amerique
 const preD = (terms, i) => {
-  let after = terms[i].normal.split(hasContraction)[1]
+  const after = terms[i].normal.split(hasContraction)[1]
   // quick guess for noun-agreement (rough)
   if (after && isFeminine.test(after) && !isMasculine.test(after)) {
     return ['du', after]
@@ -26,7 +26,7 @@ const preD = (terms, i) => {
 
 // j'aime
 const preJ = (terms, i) => {
-  let after = terms[i].normal.split(hasContraction)[1]
+  const after = terms[i].normal.split(hasContraction)[1]
   return ['je', after]
 }
 

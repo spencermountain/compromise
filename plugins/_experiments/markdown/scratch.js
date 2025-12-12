@@ -38,5 +38,5 @@ md = `| cool | also | here  |   |   |
 md = `ok **cool** after.
 
 below`
-let doc = nlp.fromMarkdown(md)
+const doc = nlp.fromMarkdown(md)
 console.log(doc)

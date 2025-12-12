@@ -5,7 +5,7 @@ import uuid from '../compute/uuid.js'
 const expand = function (m) {
   if (m.has('@hasContraction') && typeof m.contractions === 'function') {
     //&& m.after('^.').has('@hasContraction')
-    let more = m.grow('@hasContraction')
+    const more = m.grow('@hasContraction')
     more.contractions().expand()
   }
 }
@@ -42,13 +42,13 @@ const insert = function (input, view, prepend) {
   const { document, world } = view
   view.uncache()
   // insert words at end of each doc
-  let ptrs = view.fullPointer
-  let selfPtrs = view.fullPointer
+  const ptrs = view.fullPointer
+  const selfPtrs = view.fullPointer
   view.forEach((m, i) => {
-    let ptr = m.fullPointer[0]
-    let [n] = ptr
+    const ptr = m.fullPointer[0]
+    const [n] = ptr
     // add-in the words
-    let home = document[n]
+    const home = document[n]
     let terms = getTerms(input, world)
     // are we inserting nothing?
     if (terms.length === 0) {
@@ -72,7 +72,7 @@ const insert = function (input, view, prepend) {
     ptr[2] += terms.length
     ptrs[i] = ptr
   })
-  let doc = view.toView(ptrs)
+  const doc = view.toView(ptrs)
   // shift our self pointer, if necessary
   view.ptrs = selfPtrs
   // try to tag them, too

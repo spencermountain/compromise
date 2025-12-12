@@ -10,13 +10,13 @@ const model = './_model.js'
 const round = n => Math.round(n * 10) / 10
 
 const fileSize = (pathStr) => {
-  let kb = fs.statSync(pathStr).size / 1024
-  let num = round(kb / 1000)
+  const kb = fs.statSync(pathStr).size / 1024
+  const num = round(kb / 1000)
   return num.toLocaleString() + 'mb'
 }
 
 const compress = function () {
-  let arr = JSON.parse(fs.readFileSync(output))
+  const arr = JSON.parse(fs.readFileSync(output))
   console.log(yellow('\ncompressing', arr.length.toLocaleString(), 'articles'))
   const smol = pack(arr)
   fs.writeFileSync(model, `export default \`` + smol + '`')

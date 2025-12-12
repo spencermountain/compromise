@@ -20,6 +20,14 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .before() .after()
 -->
 
+#### 14.14.5 [Dec 2025]
+- **[fix]** - update types #1181 
+- **[update]** - add nelissa and gert #1180 
+- **[fix]** - sentence tokenization issues #1194 and #1193
+- **[update]** - prefer const to let
+- **[new]** - experimental cmd-k plugin
+- **[update]** - dependencies
+
 #### 14.14.4 [Jan 2025]
 - **[fix]** - TypeScript & esm resolution #1165
 

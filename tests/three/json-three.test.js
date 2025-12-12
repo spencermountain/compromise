@@ -4,8 +4,8 @@ const here = '[three/json] '
 
 
 test('view-json', function (t) {
-  let doc = nlp('i walk and swim gracefully')
-  let json = doc.json({ normal: true })
+  const doc = nlp('i walk and swim gracefully')
+  const json = doc.json({ normal: true })
   t.ok((json[0] || {}).normal, here + 'view-opts')
   // json = doc.json(0)
   // t.ok(json.length, 1, here + 'view-num')
@@ -13,7 +13,7 @@ test('view-json', function (t) {
 })
 
 test('verbs-json', function (t) {
-  let doc = nlp('i walk and swim gracefully')
+  const doc = nlp('i walk and swim gracefully')
   let json = doc.verbs().json({ normal: true })
   t.ok((json[0] || {}).normal, here + 'verbs-opts')
   json = doc.verbs().json(0)
@@ -22,7 +22,7 @@ test('verbs-json', function (t) {
 })
 
 test('nouns-json', function (t) {
-  let doc = nlp('i eat carrots and cabbage')
+  const doc = nlp('i eat carrots and cabbage')
   let json = doc.nouns().json({ normal: true })
   t.ok((json[0] || {}).normal, here + 'nouns-opts')
   json = doc.nouns().json(0)
@@ -31,7 +31,7 @@ test('nouns-json', function (t) {
 })
 
 test('sentences-json', function (t) {
-  let doc = nlp('i eat. i swim')
+  const doc = nlp('i eat. i swim')
   let json = doc.sentences().json({ normal: true })
   t.ok((json[0] || {}).normal, here + 'sentences-opts')
   json = doc.sentences().json(0)
@@ -40,7 +40,7 @@ test('sentences-json', function (t) {
 })
 
 test('numbers-json', function (t) {
-  let doc = nlp('4 books, 12 authors')
+  const doc = nlp('4 books, 12 authors')
   let json = doc.numbers().json({ normal: true })
   t.ok((json[0] || {}).normal, here + 'numbers-opts')
   json = doc.numbers().json(0)
@@ -49,7 +49,7 @@ test('numbers-json', function (t) {
 })
 
 test('people-json', function (t) {
-  let doc = nlp('john and jim eat candy')
+  const doc = nlp('john and jim eat candy')
   let json = doc.people().json({ normal: true })
   t.ok((json[0] || {}).normal, here + 'person-opts')
 
@@ -59,8 +59,8 @@ test('people-json', function (t) {
 })
 
 test('places-json', function (t) {
-  let doc = nlp('i saw paris and london')
-  let json = doc.places().json({ normal: true })
+  const doc = nlp('i saw paris and london')
+  const json = doc.places().json({ normal: true })
   t.ok((json[0] || {}).normal, here + 'places-opts')
 
   // json = doc.places().json(0)

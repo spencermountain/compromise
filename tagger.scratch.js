@@ -2,7 +2,7 @@
 import nlp from './src/four.js'
 
 
-let arr = [
+const arr = [
   //  %Plural|Verb% %Noun|Verb%
   // `[Shares] [finish] [lower] on [sustained] selling`,
   // `forward: appartment pricing`,
@@ -282,5 +282,5 @@ let arr = [
 ]
 
 nlp.verbose('tagger')
-let str = arr[0]
+const str = arr[0]
 nlp(str).debug()

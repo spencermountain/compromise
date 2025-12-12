@@ -3,8 +3,8 @@ import nlp from '../_lib.js'
 const here = '[one/freeze] '
 
 test('freeze-match :', function (t) {
-  let doc = nlp(`yeah. one extra two match here three`)
-  let m = doc.match('match here')
+  const doc = nlp(`yeah. one extra two match here three`)
+  const m = doc.match('match here')
   // m.freeze()
   doc.remove('extra')
   t.equal(m.text(), 'match here', here + 'match')
@@ -12,8 +12,8 @@ test('freeze-match :', function (t) {
 })
 
 test('freeze-remove-before :', function (t) {
-  let doc = nlp(`yeah. one extra two match here three`)
-  let m = doc.match('match here')
+  const doc = nlp(`yeah. one extra two match here three`)
+  const m = doc.match('match here')
   // m.freeze()
   doc.remove('extra')
   doc.remove(m)
@@ -22,8 +22,8 @@ test('freeze-remove-before :', function (t) {
 })
 
 test('freeze-remove-after :', function (t) {
-  let doc = nlp(`yeah. one two match here extra three`)
-  let m = doc.match('match here')
+  const doc = nlp(`yeah. one two match here extra three`)
+  const m = doc.match('match here')
   // m.freeze()
   doc.remove('extra')
   doc.remove(m)
@@ -32,8 +32,8 @@ test('freeze-remove-after :', function (t) {
 })
 
 test('freeze-destroy-match :', function (t) {
-  let doc = nlp(`yeah. one two match extra here three`)
-  let m = doc.match('match extra here')
+  const doc = nlp(`yeah. one two match extra here three`)
+  const m = doc.match('match extra here')
   // m.freeze()
   doc.remove('extra')
   t.equal(m.text(), 'match here', here + 'broken-match')
@@ -45,8 +45,8 @@ test('freeze-destroy-match :', function (t) {
 })
 
 test('freeze-change-multi :', function (t) {
-  let doc = nlp(`extra extra match extra. extra one match two extra. match one`)
-  let m = doc.match('match')
+  const doc = nlp(`extra extra match extra. extra one match two extra. match one`)
+  const m = doc.match('match')
   // m.freeze()
   doc.remove('extra')
   t.equal(doc.text(), 'match. one match two. match one', here + 'before remove')
@@ -56,28 +56,28 @@ test('freeze-change-multi :', function (t) {
 })
 
 test('freeze-split :', function (t) {
-  let doc = nlp(`e before and m and after`)
-  let m = doc.match('m')
+  const doc = nlp(`e before and m and after`)
+  const m = doc.match('m')
   // m.freeze()
   doc.remove('e')
-  let res = doc.splitOn(m)
+  const res = doc.splitOn(m)
   t.deepEqual(res.out('array'), ['before and', 'm', 'and after'], here + 'freeze split')
   t.end()
 })
 
 test('freeze-sentence-remove :', function (t) {
-  let doc = nlp(`extra. match`)
-  let m = doc.match('match')
+  const doc = nlp(`extra. match`)
+  const m = doc.match('match')
   doc.remove('extra')
   t.equal(doc.match(m).text(), 'match', here + 'remove-sentence')
   t.end()
 })
 
 test('repair-grandchild :', function (t) {
-  let doc = nlp('before. one match yes match no. match nope')
-  let m1 = doc.match('match yes match')
-  let m2 = m1.match('match yes')
-  let m3 = m2.match('yes')
+  const doc = nlp('before. one match yes match no. match nope')
+  const m1 = doc.match('match yes match')
+  const m2 = m1.match('match yes')
+  const m3 = m2.match('yes')
   doc.replace('one', 'so many more words')
   t.equal(m3.text(), 'yes', 'grandchild repaired')
   t.end()
@@ -85,7 +85,7 @@ test('repair-grandchild :', function (t) {
 
 test('freeze-misc :', function (t) {
   let doc = nlp('before. one match yes match no. match nope')
-  let m = doc.match('match yes')
+  const m = doc.match('match yes')
   doc.prepend('match yes')
   doc.replace('one', 'oh yeah')
   doc.replace('oh yeah', 'foo')

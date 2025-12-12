@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[one/pointer-union] '
 
 test('pointer-union-basic :', function (t) {
-  let doc = nlp('ooh. one two three four five six seven eight nine ten')
+  const doc = nlp('ooh. one two three four five six seven eight nine ten')
 
   // start + end overlap
   let start = doc.update([[1, 0, 2]])
@@ -40,7 +40,7 @@ test('pointer-union-basic :', function (t) {
 })
 
 test('pointer-union-match :', function (t) {
-  let doc = nlp('one match two three. four five match six')
+  const doc = nlp('one match two three. four five match six')
 
   let m = doc.match('. two')
   let res = doc.match('match .').union(m)
@@ -58,9 +58,9 @@ test('pointer-union-match :', function (t) {
 })
 
 test('settle :', function (t) {
-  let doc = nlp('one two three four')
-  let a = doc.match('two three')
-  let b = doc.match('three four')
+  const doc = nlp('one two three four')
+  const a = doc.match('two three')
+  const b = doc.match('three four')
   let res = a.concat(b)
   t.equal(res.length, 2, here + 'has both')
   res = res.settle()
@@ -70,9 +70,9 @@ test('settle :', function (t) {
 })
 
 test('settle-fancy :', function (t) {
-  let doc = nlp('one match two three. match five. six match. ')
-  let a = doc.match('match .')
-  let b = doc.match('five')
+  const doc = nlp('one match two three. match five. six match. ')
+  const a = doc.match('match .')
+  const b = doc.match('five')
   // let c = doc.match('six')
   let res = a.concat(b) //.concat(c)
   res = res.settle()
@@ -82,7 +82,7 @@ test('settle-fancy :', function (t) {
 })
 
 test('settle-neighbour :', function (t) {
-  let doc = nlp('one two three four five')
+  const doc = nlp('one two three four five')
   let res = doc.match('(two|four) (three|five)')
   res = res.settle()
   t.deepEqual(res.out('array'), ['two three', 'four five'], here + 'neighbour')

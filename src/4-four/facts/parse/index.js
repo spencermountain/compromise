@@ -21,7 +21,7 @@ const chunkType = function (chunk) {
 }
 
 const getParts = function (s) {
-  let parts = []
+  const parts = []
   let res = {}
   let pivot = null
 
@@ -60,7 +60,7 @@ const getParts = function (s) {
     },
     // "however"
     Pivot: (chunk) => {
-      let p = parsePivot(chunk)
+      const p = parsePivot(chunk)
       pivot = p.root
       if (res.obj && p.breakPoint) {
         parts.push(res)
@@ -70,10 +70,10 @@ const getParts = function (s) {
   }
 
   // handle each svp chunk
-  let chunks = s.chunks()
+  const chunks = s.chunks()
   // chunks.debug()
   chunks.forEach(chunk => {
-    let type = chunkType(chunk)
+    const type = chunkType(chunk)
     if (!type) {
       // console.log(' ! ' + chunk.text())
       return

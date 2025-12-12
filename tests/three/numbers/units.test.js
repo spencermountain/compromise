@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/number-units] '
 
 test('units-parse:', function (t) {
-  let arr = [
+  const arr = [
     ['33km', 33, 'km'],
     ['33 km', 33, 'km'],
     ['40,000 ft', 40000, 'ft'],
@@ -29,9 +29,9 @@ test('units-parse:', function (t) {
     ['500 ccs', 500, ''],
   ]
   arr.forEach(a => {
-    let [str, num, unit] = a
-    let doc = nlp(str)
-    let m = doc.numbers()
+    const [str, num, unit] = a
+    const doc = nlp(str)
+    const m = doc.numbers()
     t.equal(m.get()[0], num, here + ' [num] ' + str)
     t.equal(m.units().text('root'), unit, here + ' [unit] ' + str)
     // t.equal(doc.has(String(num)), true, here + '[has-num] ' + str)

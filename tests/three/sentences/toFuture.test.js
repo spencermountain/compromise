@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/sentence-toFuture] '
 
 test('sentence-toFuture', function (t) {
-  let arr = [
+  const arr = [
     ['she is cool', 'she will be cool'],
     ['she was cool', 'she will be cool'],
     ['she will be cool', 'she will be cool'],
@@ -22,7 +22,7 @@ test('sentence-toFuture', function (t) {
 
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0]).sentences()
+    const doc = nlp(a[0]).sentences()
     doc.toFutureTense()
     t.equal(doc.out(), a[1], here + '[toFuture] ' + a[0])
     // doc.toPresentTense()

@@ -15,9 +15,9 @@ const grammar = function (vb) {
 }
 
 const parse = function (s) {
-  let clauses = s.clauses()
-  let main = findMain(clauses)
-  let chunks = main.chunks()
+  const clauses = s.clauses()
+  const main = findMain(clauses)
+  const chunks = main.chunks()
   let subj = s.none()
   let verb = s.none()
   let pred = s.none()

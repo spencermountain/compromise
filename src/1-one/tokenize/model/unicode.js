@@ -2,7 +2,7 @@
 //approximate visual (not semantic or phonetic) relationship between unicode and ascii characters
 //http://en.wikipedia.org/wiki/List_of_Unicode_characters
 //https://docs.google.com/spreadsheet/ccc?key=0Ah46z755j7cVdFRDM1A2YVpwa1ZYWlpJM2pQZ003M0E
-let compact = {
+const compact = {
   '!': '¡',
   '?': '¿Ɂ',
   '"': '“”"❝❞',
@@ -37,7 +37,7 @@ let compact = {
   z: 'ŹźŻżŽžƵƶȤȥɀΖ',
 }
 //decompress data into two hashes
-let unicode = {}
+const unicode = {}
 Object.keys(compact).forEach(function (k) {
   compact[k].split('').forEach(function (s) {
     unicode[s] = k

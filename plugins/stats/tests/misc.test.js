@@ -15,9 +15,9 @@ test('misc ngrams', function (t) {
   t.equal(doc.trigrams().length, 1, 'found 1 trigrams')
 
   doc = nlp('i am in houston texas. i am a good person. so i think he is a good person.')
-  let arr = doc.endgrams({ size: 2 }) || []
+  const arr = doc.endgrams({ size: 2 }) || []
   t.equal(arr.length, 2, 'found 2 endgrams of size-2')
-  let first = arr[0] || {}
+  const first = arr[0] || {}
   t.equal(first.normal, 'good person', 'found good person')
   t.equal(first.count, 2, 'found 2 good person results')
   t.end()

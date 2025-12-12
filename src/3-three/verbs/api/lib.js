@@ -3,8 +3,8 @@ import getSubject from './parse/getSubject.js'
 const noop = vb => vb
 
 const isPlural = (vb, parsed) => {
-  let subj = getSubject(vb, parsed)
-  let m = subj.subject
+  const subj = getSubject(vb, parsed)
+  const m = subj.subject
   if (m.has('i') || m.has('we')) {
     return true
   }
@@ -12,7 +12,7 @@ const isPlural = (vb, parsed) => {
 }
 
 const wasWere = (vb, parsed) => {
-  let { subject, plural } = getSubject(vb, parsed)
+  const { subject, plural } = getSubject(vb, parsed)
   if (plural || subject.has('we')) {
     return 'were'
   }
@@ -26,7 +26,7 @@ const isAreAm = function (vb, parsed) {
     return 'are'
   }
   // 'i was' -> i am
-  let { subject, plural } = getSubject(vb, parsed)
+  const { subject, plural } = getSubject(vb, parsed)
   if (subject.has('i')) {
     return 'am'
   }
@@ -39,8 +39,8 @@ const isAreAm = function (vb, parsed) {
 
 
 const doDoes = function (vb, parsed) {
-  let subj = getSubject(vb, parsed)
-  let m = subj.subject
+  const subj = getSubject(vb, parsed)
+  const m = subj.subject
   if (m.has('i') || m.has('we')) {
     return 'do'
   }

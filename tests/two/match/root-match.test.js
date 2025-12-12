@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/root-match] '
 
 test('root-verb', function (t) {
-  let arr = [
+  const arr = [
     ['She dances gracefully.', '{dance}'],
     ['They have been studying for hours.', '{study}'],
     ['The cat slept on the sofa.', '{sleep}'],
@@ -177,8 +177,8 @@ test('root-verb', function (t) {
   ]
 
   arr.forEach(a => {
-    let [str, m] = a
-    let doc = nlp(str)
+    const [str, m] = a
+    const doc = nlp(str)
     t.equal(doc.has(m), true, here + str)
   })
   t.end()

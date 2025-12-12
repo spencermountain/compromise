@@ -8,7 +8,7 @@ const api = function (View) {
     hasReference() {
       this.compute('coreference')
       return this.filter(m => {
-        let term = m.docs[0][0]
+        const term = m.docs[0][0]
         return term.reference
       })
     }
@@ -21,7 +21,7 @@ const api = function (View) {
         if (!m.found) {
           return m.none()
         }
-        let term = m.docs[0][0]
+        const term = m.docs[0][0]
         if (term.reference) {
           return m.update([term.reference])
         }
@@ -30,7 +30,7 @@ const api = function (View) {
     }
     // overloaded - keep Numbers class
     update(pointer) {
-      let m = new Pronouns(this.document, pointer)
+      const m = new Pronouns(this.document, pointer)
       m._cache = this._cache // share this full thing
       return m
     }

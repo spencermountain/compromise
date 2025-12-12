@@ -3,8 +3,8 @@ import nlp from '../_lib.js'
 const here = '[two/untag] '
 
 test('tag inference:', function (t) {
-  let m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase')
-  let term = m.docs[0][0]
+  const m = nlp('aasdf2').unTag('Noun').unTag('NounPhrase')
+  const term = m.docs[0][0]
   t.equal(term.tags.size, 0, here + 'aasdf2 has no tags')
   //give it a specific tag-
   m.tag('SportsTeam')
@@ -20,9 +20,9 @@ test('tag inference:', function (t) {
 })
 
 test('untag inference:', function (t) {
-  let m = nlp('aasdf')
+  const m = nlp('aasdf')
   m.tag('FemaleName')
-  let term = m.docs[0][0]
+  const term = m.docs[0][0]
   t.equal(term.tags.has('FemaleName'), true, here + 'aasdf first has FemaleName')
   t.equal(term.tags.has('Person'), true, here + 'aasdf first has person')
   t.equal(term.tags.has('Noun'), true, here + 'aasdf first has noun')
@@ -69,7 +69,7 @@ test('untag wildcard', function (t) {
 })
 
 test('tagset conflict:', function (t) {
-  let doc = nlp('april 5th')
+  const doc = nlp('april 5th')
   doc.match('april').tag('Person')
   t.equal(doc.has('#Month'), false, here + 'no-month')
   t.equal(doc.firstTerm().has('#Date'), false, here + 'no-date')

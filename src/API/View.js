@@ -4,7 +4,7 @@ import api from './methods/index.js'
 class View {
   constructor(document, pointer, groups = {}) {
     // invisible props
-    let props = [
+    const props = [
       ['document', document],
       ['world', world],
       ['_groups', groups],
@@ -52,11 +52,12 @@ class View {
   }
   // return a more-hackable pointer
   get fullPointer() {
-    let { docs, ptrs, document } = this
+    const { docs, ptrs, document } = this
     // compute a proper pointer, from docs
-    let pointers = ptrs || docs.map((_d, n) => [n])
+    const pointers = ptrs || docs.map((_d, n) => [n])
     // do we need to repair it, first?
     return pointers.map(a => {
+      // eslint-disable-next-line prefer-const
       let [n, start, end, id, endId] = a
       start = start || 0
       end = end || (document[n] || []).length
@@ -72,13 +73,13 @@ class View {
   }
   // create a new View, from this one
   update(pointer) {
-    let m = new View(this.document, pointer)
+    const m = new View(this.document, pointer)
     // send the cache down, too?
     if (this._cache && pointer && pointer.length > 0) {
       // only keep cache if it's a full-sentence
-      let cache = []
+      const cache = []
       pointer.forEach((ptr, i) => {
-        let [n, start, end] = ptr
+        const [n, start, end] = ptr
         if (ptr.length === 1) {
           cache[i] = this._cache[n]
         } else if (start === 0 && this.document[n].length === end) {
@@ -99,8 +100,8 @@ class View {
   fromText(input) {
     const { methods } = this
     //assume ./01-tokenize is installed
-    let document = methods.one.tokenize.fromString(input, this.world)
-    let doc = new View(document)
+    const document = methods.one.tokenize.fromString(input, this.world)
+    const doc = new View(document)
     doc.world = this.world
     doc.compute(['normal', 'freeze', 'lexicon'])
     if (this.world.compute.preTagger) {
@@ -120,7 +121,7 @@ class View {
       })
     })
     // clone only sub-document ?
-    let m = this.update(this.pointer)
+    const m = this.update(this.pointer)
     m.document = document
     m._cache = this._cache //clone this too?
     return m

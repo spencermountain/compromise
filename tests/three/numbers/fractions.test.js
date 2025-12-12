@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/fractions] '
 
 test('numerator-denominator parsing', function (t) {
-  let arr = [
+  const arr = [
     ['1/2', 1, 2],
     ['seven out of ten apples', 7, 10],
     ['i gave him one third of a slice', 1, 3],
@@ -17,7 +17,7 @@ test('numerator-denominator parsing', function (t) {
     ['3/8s', 3, 8],
   ]
   arr.forEach(a => {
-    let res = nlp(a[0]).fractions().json()[0] || {}
+    const res = nlp(a[0]).fractions().json()[0] || {}
     t.equal((res.fraction || {}).numerator, a[1], here + 'numerator - ' + a[0])
     t.equal((res.fraction || {}).denominator, a[2], here + 'denominator - ' + a[0])
   })
@@ -25,13 +25,13 @@ test('numerator-denominator parsing', function (t) {
 })
 
 test('fraction-normalize:', function (t) {
-  let arr = [
+  const arr = [
     ['in 3/8ths of a minute', 'in 3/8 of a minute'],
     ['apparently, 3 out of four cats do think so', 'apparently, 3/4 cats do think so'],
     ['two thirds of a cake', '2/3 of a cake'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.fractions().toFraction()
     t.equal(doc.text(), a[1], here + a[1])
   })
@@ -39,7 +39,7 @@ test('fraction-normalize:', function (t) {
 })
 
 test('parse fractions:', function (t) {
-  let arr = [
+  const arr = [
     ['1000th of a parsec', '0.001 of a parsec', 0.001],
     // complex denominators
     // ['one fifty fourths', '0.018', 0.018],
@@ -48,16 +48,16 @@ test('parse fractions:', function (t) {
     // ['six thirty seconds of an inch', '0.187 of an inch', 0.187],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
-    let m = doc.fractions()
-    let found = m.get()[0] || {}
+    const doc = nlp(a[0])
+    const m = doc.fractions()
+    const found = m.get()[0] || {}
     t.equal(found.decimal, a[2], here + 'parse- ' + a[0])
   })
   t.end()
 })
 
 test('numbers with fractions:', function (t) {
-  let arr = [
+  const arr = [
     ['one and a half', '1.5', 1.5],
     ['two halves', '1', 1],
     ['one thousandth of a parsec', '0.001 of a parsec', 0.001],
@@ -74,9 +74,9 @@ test('numbers with fractions:', function (t) {
   ]
 
   arr.forEach(a => {
-    let doc = nlp(a[0])
-    let m = doc.numbers()
-    let found = m.get()[0] || null
+    const doc = nlp(a[0])
+    const m = doc.numbers()
+    const found = m.get()[0] || null
     t.equal(found, a[2], here + a[0])
     // t.equal(doc.fractions().toDecimal().text(), a[1], 'toDecimal(): ' + a[1])
   })
@@ -85,15 +85,15 @@ test('numbers with fractions:', function (t) {
 
 test('fully-ambiguous fractions', function (t) {
   // shouldn't mangle the 'second'
-  let arr = [
+  const arr = [
     ['three fifths of an inch', 3, 5],
     ['thirty fifths of an inch', 30, 5],
     ['thirty five fifths of an inch', 35, 5],
     ['three hundred tenths of an inch', 300, 10],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
-    let found = doc.fractions().get()[0] || {}
+    const doc = nlp(a[0])
+    const found = doc.fractions().get()[0] || {}
     t.equal(found.numerator, a[1], here + 'numerator: ' + a[0])
     t.equal(found.denominator, a[2], here + 'denominator: ' + a[0])
   })
@@ -102,7 +102,7 @@ test('fully-ambiguous fractions', function (t) {
 
 test('seconds-edge-case', function (t) {
   // shouldn't mangle the 'second'
-  let arr = [
+  const arr = [
     ['one fifth of a book', '1/5 of a book'],
     ['thirty seconds', 'thirty seconds'],
     // ['one thirty second of an inch', '1/32 of an inch'],
@@ -110,7 +110,7 @@ test('seconds-edge-case', function (t) {
   ]
 
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.fractions().toFraction()
     t.equal(doc.text(), a[1], here + a[1])
   })
@@ -118,7 +118,7 @@ test('seconds-edge-case', function (t) {
 })
 
 test('do-math:', function (t) {
-  let arr = nlp('1/2').fractions().get()
+  const arr = nlp('1/2').fractions().get()
   t.equal((arr[0] || {}).decimal, 0.5, here + 'do-math')
 
   // arr = nlp('1 1/2').fractions().json()

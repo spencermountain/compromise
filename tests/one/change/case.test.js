@@ -4,7 +4,7 @@ const here = '[one/case] '
 
 test('sanity-check case:', function (t) {
   let str = 'John xoo, John fredman'
-  let r = nlp(str)
+  const r = nlp(str)
   str = r.toUpperCase().out('text')
   t.equal(str, 'JOHN XOO, JOHN FREDMAN', here + 'uppercase')
 
@@ -17,7 +17,7 @@ test('sanity-check case:', function (t) {
 })
 
 test('camel case:', function (t) {
-  let doc = nlp('and check this out! a walk-in microwave.')
+  const doc = nlp('and check this out! a walk-in microwave.')
   doc.match('walk in').toCamelCase()
   t.equal(doc.text(), 'and check this out! a walkIn microwave.', here + 'hyphenated-camelcase')
   t.end()

@@ -42,7 +42,7 @@ test('custom-tags-persist', function (t) {
 })
 
 test('untag-soft', function (t) {
-  let doc = nlp('$5.32')
+  const doc = nlp('$5.32')
   t.equal(doc.has('#Money'), true, here + 'had-money')
   doc.unTag('#Money')
   t.equal(doc.has('#Money'), false, here + 'has-no-money')

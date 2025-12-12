@@ -8,7 +8,7 @@ console.log('\n 🎗️  - running smoke-test..\n') // eslint-disable-line
 
 //'sanity-test' the builds
 test('main build', function (t) {
-  let doc = main('John and Joe walked to the store')
+  const doc = main('John and Joe walked to the store')
   t.equal(doc.people().json().length, 2, 'found-people')
   t.equal(doc.verbs().json().length, 1, 'found-verbs')
   t.equal(doc.match('joe walked .').found, true, 'match-statement')
@@ -28,7 +28,7 @@ test('main build', function (t) {
 // })
 
 test('tokenize build', function (t) {
-  let doc = one('John and Joe walked to the store')
+  const doc = one('John and Joe walked to the store')
   t.equal(doc.match('joe walked .').found, true, 'match-statement')
   t.equal(doc.match('joe walked .').found, true, 'match-statement')
   t.equal(doc.has('#Person'), false, 'no sneaky tags')

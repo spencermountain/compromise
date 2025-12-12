@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/sentence-toPast] '
 
 test('sentence-toPast', function (t) {
-  let arr = [
+  const arr = [
     ['she is cool', 'she was cool'],
     ['she was cool', 'she was cool'],
     ['she will be cool', 'she was cool'],
@@ -23,7 +23,7 @@ test('sentence-toPast', function (t) {
 
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0]).sentences()
+    const doc = nlp(a[0]).sentences()
     doc.toPastTense()
     t.equal(doc.out(), a[1], here + '[toPast] ' + a[0])
     // doc.toPresentTense()

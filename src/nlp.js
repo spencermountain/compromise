@@ -5,13 +5,13 @@ import extend from './API/extend.js'
 import { verbose } from './API/_lib.js'
 import handleInputs from './API/inputs.js'
 
-let world = Object.assign({}, tmpWrld)
+const world = Object.assign({}, tmpWrld)
 
 const nlp = function (input, lex) {
   if (lex) {
     nlp.addWords(lex)
   }
-  let doc = handleInputs(input, View, world)
+  const doc = handleInputs(input, View, world)
   if (input) {
     doc.compute(world.hooks)
   }
@@ -30,7 +30,7 @@ nlp.tokenize = function (input, lex) {
     nlp.addWords(lex)
   }
   // run the tokenizer
-  let doc = handleInputs(input, View, world)
+  const doc = handleInputs(input, View, world)
   // give contractions a shot, at least
   if (compute.contractions) {
     doc.compute(['alias', 'normal', 'machine', 'contractions']) //run it if we've got it

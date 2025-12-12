@@ -1296,6 +1296,7 @@ export default [
   'nehir',
   'nel',
   'nela',
+  'nelisa',
   'nell',
   'nellie',
   'nena',

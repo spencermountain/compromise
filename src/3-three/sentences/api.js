@@ -14,8 +14,8 @@ const api = function (View) {
     }
     json(opts = {}) {
       return this.map(m => {
-        let json = m.toView().json(opts)[0] || {}
-        let { subj, verb, pred, grammar } = parse(m)
+        const json = m.toView().json(opts)[0] || {}
+        const { subj, verb, pred, grammar } = parse(m)
         json.sentence = {
           subject: subj.text('normal'),
           verb: verb.text('normal'),
@@ -27,38 +27,38 @@ const api = function (View) {
     }
     toPastTense(n) {
       return this.getNth(n).map(s => {
-        let parsed = parse(s)
+        const parsed = parse(s)
         return toPast(s, parsed)
       })
     }
     toPresentTense(n) {
       return this.getNth(n).map(s => {
-        let parsed = parse(s)
+        const parsed = parse(s)
         return toPresent(s, parsed)
       })
     }
     toFutureTense(n) {
       return this.getNth(n).map(s => {
-        let parsed = parse(s)
+        const parsed = parse(s)
         s = toFuture(s, parsed)
         return s
       })
     }
     toInfinitive(n) {
       return this.getNth(n).map(s => {
-        let parsed = parse(s)
+        const parsed = parse(s)
         return toInfinitive(s, parsed)
       })
     }
     toNegative(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parse(vb)
+        const parsed = parse(vb)
         return toNegative(vb, parsed)
       })
     }
     toPositive(n) {
       return this.getNth(n).map(vb => {
-        let parsed = parse(vb)
+        const parsed = parse(vb)
         return toPositive(vb, parsed)
       })
     }
@@ -66,16 +66,16 @@ const api = function (View) {
       return this.questions(n)
     }
     isExclamation(n) {
-      let res = this.filter(s => s.lastTerm().has('@hasExclamation'))
+      const res = this.filter(s => s.lastTerm().has('@hasExclamation'))
       return res.getNth(n)
     }
     isStatement(n) {
-      let res = this.filter(s => !s.isExclamation().found && !s.isQuestion().found)
+      const res = this.filter(s => !s.isExclamation().found && !s.isQuestion().found)
       return res.getNth(n)
     }
     // overloaded - keep Sentences class
     update(pointer) {
-      let m = new Sentences(this.document, pointer)
+      const m = new Sentences(this.document, pointer)
       m._cache = this._cache // share this full thing
       return m
     }
@@ -92,7 +92,7 @@ const api = function (View) {
       return new Sentences(this.document, m.pointer)
     },
     questions: function (n) {
-      let m = isQuestion(this)
+      const m = isQuestion(this)
       return m.getNth(n)
     },
   }

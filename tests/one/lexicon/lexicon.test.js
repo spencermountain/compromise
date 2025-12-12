@@ -33,17 +33,17 @@ test('addWords side-load:', function (t) {
 })
 
 test('lexicon compute:', function (t) {
-  let words = {
+  const words = {
     'captain obvious': 'Captain',
   }
-  let doc = nlp('it was captain obvious', words)
-  let m = doc.match('#Captain+')
+  const doc = nlp('it was captain obvious', words)
+  const m = doc.match('#Captain+')
   t.equal(m.text(), 'captain obvious', here + 'multi-word')
   t.end()
 })
 
 test('tricky lexicon:', function (t) {
-  let lexicon = {
+  const lexicon = {
     'bed bath and beyond': 'Organization',
   }
   const _nlp = nlp //.fork()
@@ -62,7 +62,7 @@ test('tricky lexicon:', function (t) {
 })
 
 test('apostrophe lexicon:', function (t) {
-  let lex = {
+  const lex = {
     "queen anne's lace": 'Flower',
     "applebee's": 'Restaurant',
   }

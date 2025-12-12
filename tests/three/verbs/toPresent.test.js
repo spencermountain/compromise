@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/verb-toPresent] '
 
 test('toPresent:', function (t) {
-  let arr = [
+  const arr = [
     // known forms:
     ['he walked', 'he walks'],
     ['i walked', 'i walk'],
@@ -255,7 +255,7 @@ test('toPresent:', function (t) {
     // [`he's good`, 'he was good'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     doc.verbs().toPresentTense()
     t.equal(doc.text(), a[1], here + ' ' + a[0])
   })
@@ -263,7 +263,7 @@ test('toPresent:', function (t) {
 })
 
 test('conjugate:', function (t) {
-  let arr = [
+  const arr = [
 
     ['abolish', 'abolishes'],
     ['absorb', 'absorbs'],
@@ -549,8 +549,8 @@ test('conjugate:', function (t) {
     // ['express', 'expresses'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0]).tag('Verb')
-    let res = doc.verbs().conjugate()[0] || {}
+    const doc = nlp(a[0]).tag('Verb')
+    const res = doc.verbs().conjugate()[0] || {}
     t.equal(res.PresentTense, a[1], here + ' ' + a[0])
   })
   t.end()

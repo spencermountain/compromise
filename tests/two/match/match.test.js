@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/match] '
 
 test('term-match :', function (t) {
-  let arr = [
+  const arr = [
     ['quick', 'quick', true],
     ['Quick', 'Quick', true],
     ['quick', 's', false],
@@ -21,7 +21,7 @@ test('term-match :', function (t) {
 })
 
 test('sentence-match:', function (t) {
-  let arr = [
+  const arr = [
     ['the dog played', 'the dog', 'the dog'],
     ['the dog played', 'the dog played', 'the dog played'],
     ['the dog played', 'the #Noun', 'the dog'],
@@ -104,7 +104,7 @@ test('reduced matches', function (t) {
 })
 
 test('slashes-basic', function (t) {
-  let doc = nlp(`spencer is/was trying.`)
+  const doc = nlp(`spencer is/was trying.`)
   t.equal(doc.terms().length, 3, 'three terms')
   t.equal(doc.match('#Person #Verb trying').found, true, 'verb trying')
   // t.equal(doc.match('#Person is trying').found, true, 'is trying')

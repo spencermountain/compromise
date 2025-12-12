@@ -17,7 +17,7 @@ const reIndex = function (terms) {
 
 // run tagger on our new implicit terms
 const reTag = function (terms, view, start, len) {
-  let tmp = view.update()
+  const tmp = view.update()
   tmp.document = [terms]
   // offer to re-tag neighbours, too
   let end = start + len
@@ -49,14 +49,14 @@ const byEnd = {
 }
 
 const toDocs = function (words, view) {
-  let doc = view.fromText(words.join(' '))
+  const doc = view.fromText(words.join(' '))
   doc.compute('id')
   return doc.docs[0]
 }
 
 //really easy ones
 const contractionTwo = view => {
-  let { world, document } = view
+  const { world, document } = view
   // each sentence
   document.forEach((terms, n) => {
     // loop through terms backwards

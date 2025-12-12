@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/number-parse] '
 
 test('parse numbers', function (t) {
-  let arr = [
+  const arr = [
     ['seven hundred', 700],
     ['a hundred and seventy', 170],
     ['9 hundred', 900],

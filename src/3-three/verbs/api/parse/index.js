@@ -2,7 +2,7 @@ import getRoot from './root.js'
 import getAdverbs from './adverbs.js'
 
 const getAuxiliary = function (vb, root) {
-  let parts = vb.splitBefore(root)
+  const parts = vb.splitBefore(root)
   if (parts.length <= 1) {
     return vb.none()
   }
@@ -23,7 +23,7 @@ const getPhrasal = function (root) {
       particle: root.none()
     }
   }
-  let particle = root.match('#Particle$')
+  const particle = root.match('#Particle$')
   return {
     verb: root.not(particle),
     particle: particle,
@@ -31,10 +31,10 @@ const getPhrasal = function (root) {
 }
 
 const parseVerb = function (view) {
-  let vb = view.clone()
+  const vb = view.clone()
   vb.contractions().expand()
   const root = getRoot(vb)
-  let res = {
+  const res = {
     root: root,
     prefix: vb.match('#Prefix'),
     adverbs: getAdverbs(vb, root),

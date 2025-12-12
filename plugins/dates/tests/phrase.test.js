@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 
 test('date-phrase tests:', function (t) {
-  let arr = [
+  const arr = [
     [`remind me to buy eggs`, `buy`, `egg`, ``],
     [`please remind me to buy eggs`, `buy`, `egg`, ``],
     [`i really should buy some eggs`, `buy`, `egg`, ``],
@@ -146,7 +146,7 @@ test('date-phrase tests:', function (t) {
     //   .out('reduced')
     // t.equal(noun, a[2], a[0])
 
-    let date = doc.match('#Date+').first().out('reduced')
+    const date = doc.match('#Date+').first().out('reduced')
     t.equal(date, a[3], a[0])
   })
   t.end()

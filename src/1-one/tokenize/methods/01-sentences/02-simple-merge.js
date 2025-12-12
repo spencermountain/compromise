@@ -2,9 +2,9 @@ const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i
 const hasSomething = /\S/
 
 const notEmpty = function (splits) {
-  let chunks = []
+  const chunks = []
   for (let i = 0; i < splits.length; i++) {
-    let s = splits[i]
+    const s = splits[i]
     if (s === undefined || s === '') {
       continue
     }

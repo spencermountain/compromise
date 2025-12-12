@@ -1,1 +1,1 @@
-export default '0.1.1'
+export default '0.1.2'

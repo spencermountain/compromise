@@ -22,8 +22,8 @@ const conjugate = function (inf, model) {
       PresentTense: 'is',
     }
   }
-  let [str, particle] = parse(inf)
-  let found = {
+  const [str, particle] = parse(inf)
+  const found = {
     Infinitive: str,
     PastTense: convert(str, toPast),
     PresentTense: convert(str, toPresent),
@@ -35,7 +35,7 @@ const conjugate = function (inf, model) {
   let pastPrt = convert(str, toParticiple)
   if (pastPrt !== inf && pastPrt !== found.PastTense) {
     // ensure it's a known participle
-    let lex = model.one.lexicon || {}
+    const lex = model.one.lexicon || {}
     if (lex[pastPrt] === 'Participle' || lex[pastPrt] === 'Adjective') {
       // one exception
       if (inf === 'play') {

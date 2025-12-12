@@ -51,7 +51,7 @@ test('ifNo:', function (t) {
 
 test('if view:', function (t) {
   let doc = nlp('one match two. Two match three match. four nope.')
-  let found = doc.match('match+')
+  const found = doc.match('match+')
   doc = doc.if(found)
   t.equal(doc.text(), 'one match two. Two match three match.', 'if-multi')
   t.end()

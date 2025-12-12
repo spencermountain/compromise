@@ -1,7 +1,7 @@
 // somewhat-intellegent response to end-before-start situations
 const reverseMaybe = function (obj) {
-  let start = obj.start
-  let end = obj.end
+  const start = obj.start
+  const end = obj.end
   if (start.d.isAfter(end.d)) {
     // wednesday to sunday -> move end up a week
     if (start.isWeekDay && end.isWeekDay) {
@@ -9,7 +9,7 @@ const reverseMaybe = function (obj) {
       return obj
     }
     // else, reverse them
-    let tmp = start
+    const tmp = start
     obj.start = end
     obj.end = tmp
   }

@@ -7,7 +7,7 @@ import nlp from '../../../src/three.js'
 console.timeEnd('load')
 
 console.time('parse')
-let doc = nlp(txt)
+const doc = nlp(txt)
 console.timeEnd('parse')
 
 console.time('match')

@@ -11,13 +11,13 @@ import irregularPlurals from '../irregulars/plurals.js'
 // more clever things are done on the data later
 //  - once the plugin is applied
 const hasSwitch = /\|/
-let lexicon = misc
-let switches = {}
+const lexicon = misc
+const switches = {}
 
 const tmpModel = { two: { irregularPlurals, uncountable: {} } }
 
 Object.keys(lexData).forEach(tag => {
-  let wordsObj = unpack(lexData[tag])
+  const wordsObj = unpack(lexData[tag])
   // POS tag, or something fancier?
   if (!hasSwitch.test(tag)) {
     // set them as simple word key-value lookup
@@ -31,7 +31,7 @@ Object.keys(lexData).forEach(tag => {
     switches[w] = tag
     // pluralize Noun|Verb switches
     if (tag === 'Noun|Verb') {
-      let plural = toPlural(w, tmpModel)
+      const plural = toPlural(w, tmpModel)
       switches[plural] = 'Plural|Verb'
     }
   })

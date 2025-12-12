@@ -14,7 +14,7 @@ const here = '[three/noun-find] '
 // NPN: degrees of freedom; [no example]; energy of adsorption
 
 test('noun-phrases', function (t) {
-  let arr = [
+  const arr = [
     ['he was the mayor of chicago', ['he', 'the mayor of chicago']],
     ['he was the captain of the football team', ['he', 'the captain of the football team']],
     ['he was the Knight of the Round Table', ['he', 'the Knight of the Round Table']],

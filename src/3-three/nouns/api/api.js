@@ -17,9 +17,9 @@ const api = function (View) {
     }
 
     json(n) {
-      let opts = typeof n === 'object' ? n : {}
+      const opts = typeof n === 'object' ? n : {}
       return this.getNth(n).map(m => {
-        let json = m.toView().json(opts)[0] || {}
+        const json = m.toView().json(opts)[0] || {}
         if (opts && opts.noun !== false) {
           json.noun = toJSON(m)
         }
@@ -29,9 +29,9 @@ const api = function (View) {
     conjugate(n) {
       const methods = this.world.methods.two.transform.noun
       return this.getNth(n).map(m => {
-        let parsed = parseNoun(m)
-        let root = parsed.root.compute('root').text('root')
-        let res = {
+        const parsed = parseNoun(m)
+        const root = parsed.root.compute('root').text('root')
+        const res = {
           Singular: root,
         }
         if (hasPlural(parsed.root)) {
@@ -45,19 +45,19 @@ const api = function (View) {
       }, [])
     }
     isPlural(n) {
-      let res = this.filter(m => parseNoun(m).isPlural)
+      const res = this.filter(m => parseNoun(m).isPlural)
       return res.getNth(n)
     }
 
     isSingular(n) {
-      let res = this.filter(m => !parseNoun(m).isPlural)
+      const res = this.filter(m => !parseNoun(m).isPlural)
       return res.getNth(n)
     }
 
     adjectives(n) {
       let res = this.update([])
       this.forEach(m => {
-        let adj = parseNoun(m).adjectives
+        const adj = parseNoun(m).adjectives
         if (adj.found) {
           res = res.concat(adj)
         }
@@ -74,13 +74,13 @@ const api = function (View) {
 
     toSingular(n) {
       return this.getNth(n).map(m => {
-        let res = parseNoun(m)
+        const res = parseNoun(m)
         return toSingular(m, res)
       })
     }
     // create a new View, from this one
     update(pointer) {
-      let m = new Nouns(this.document, pointer)
+      const m = new Nouns(this.document, pointer)
       m._cache = this._cache // share this full thing
       return m
     }

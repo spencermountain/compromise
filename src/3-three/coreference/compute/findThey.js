@@ -2,7 +2,7 @@ import { findChained } from './lib.js'
 
 // find best reference for 'they' & 'their'
 const getThey = function (s) {
-  let nouns = s.nouns()
+  const nouns = s.nouns()
 
   // 'the bananas'
   let things = nouns.isPlural().notIf('#Pronoun')
@@ -10,7 +10,7 @@ const getThey = function (s) {
     return things.last()
   }
   // re-use existing pronoun reference
-  let chain = findChained('(they|their|theirs)', s)
+  const chain = findChained('(they|their|theirs)', s)
   if (chain.found) {
     return chain
   }

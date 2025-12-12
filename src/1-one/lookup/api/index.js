@@ -15,7 +15,7 @@ export default function (View) {
     if (typeof input === 'string') {
       input = [input]
     }
-    let trie = isObject(input) ? input : build(input, this.world)
+    const trie = isObject(input) ? input : build(input, this.world)
     let res = scan(this, trie, opts)
     res = res.settle()
     return res

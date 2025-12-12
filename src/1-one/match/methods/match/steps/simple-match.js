@@ -6,7 +6,7 @@ import contractionSkip from './contraction-skip.js'
 
 // '[foo]' should also be logged as a group
 const setGroup = function (state, startAt) {
-  let reg = state.regs[state.r]
+  const reg = state.regs[state.r]
   // Get or create capture group
   const g = getGroup(state, startAt)
   // Update group - add greedy or increment length
@@ -20,9 +20,9 @@ const setGroup = function (state, startAt) {
 // when a reg matches a term
 const simpleMatch = function (state) {
   const { regs } = state
-  let reg = regs[state.r]
-  let term = state.terms[state.t]
-  let startAt = state.t
+  const reg = regs[state.r]
+  const term = state.terms[state.t]
+  const startAt = state.t
   // if it's a negative optional match... :0
   if (reg.optional && regs[state.r + 1] && reg.negative) {
     return true
@@ -46,7 +46,7 @@ const simpleMatch = function (state) {
   }
   // keep 'foo+' going...
   if (reg.greedy === true) {
-    let alive = greedyMatch(state)
+    const alive = greedyMatch(state)
     if (!alive) {
       return null
     }

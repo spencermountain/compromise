@@ -9,9 +9,9 @@ const prefixLoop = function (str = '', prefixes = []) {
     max = len - 3
   }
   for (let i = max; i > 2; i -= 1) {
-    let prefix = str.substring(0, i)
+    const prefix = str.substring(0, i)
     if (prefixes[prefix.length].hasOwnProperty(prefix) === true) {
-      let tag = prefixes[prefix.length][prefix]
+      const tag = prefixes[prefix.length][prefix]
       return tag
     }
   }
@@ -20,9 +20,9 @@ const prefixLoop = function (str = '', prefixes = []) {
 
 // give 'overwork' the same tag as 'work'
 const checkPrefix = function (terms, i, model) {
-  let term = terms[i]
+  const term = terms[i]
   if (term.tags.size === 0) {
-    let tag = prefixLoop(term.normal, model.two.prefixPatterns)
+    const tag = prefixLoop(term.normal, model.two.prefixPatterns)
     if (tag !== null) {
       // console.log(term.normal, '->', tag)
       fastTag(term, tag, '2-prefix')

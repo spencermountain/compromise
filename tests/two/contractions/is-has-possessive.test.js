@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/is-has] '
 
 test('is-has', function (t) {
-  let arr = [
+  const arr = [
     ["Artist's creative process is unique to each individual", '#Possessive'],
     ["Athlete's dedication often leads to success", '#Possessive'],
     ["Baby's first steps are always memorable", '#Possessive'],
@@ -197,7 +197,7 @@ test('is-has', function (t) {
     [`it features Cody's chanting. `, '#Possessive'],
   ]
   arr.forEach(a => {
-    let doc = nlp(a[0])
+    const doc = nlp(a[0])
     t.equal(doc.has(a[1]), true, here + ' (' + a[1] + ')  ' + a[0])
   })
   t.end()

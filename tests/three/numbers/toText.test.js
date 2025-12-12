@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/number-toText] '
 
 test('to_text:', function (t) {
-  let arr = [
+  const arr = [
     // [-5, 'negative five'],
     [5, 'five'],
     [15, 'fifteen'],

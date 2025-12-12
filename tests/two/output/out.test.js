@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[two/out] '
 
 test('out-tags', function (t) {
-  let out = nlp(`he's cool.`).out('tags')
+  const out = nlp(`he's cool.`).out('tags')
   t.equal(out.length, 1, 'one sentence')
   t.equal(out[0].he.indexOf('Pronoun') !== -1, true, here + 'has he:Pronoun')
   t.equal(out[0].is.indexOf('Copula') !== -1, true, here + 'has is:Copula')
@@ -12,8 +12,8 @@ test('out-tags', function (t) {
 })
 
 test('out-topk', function (t) {
-  let doc = nlp(`What'd I say? Monorail. and it called? Monorail.`)
-  let out = doc.out('freq')
+  const doc = nlp(`What'd I say? Monorail. and it called? Monorail.`)
+  const out = doc.out('freq')
   // t.equal(out.length, 3, here + 'three results')
   t.equal(out[0].normal, 'monorail.', here + 'top-result is most-frequent')
   t.equal(out[0].count, 2, here + 'got count')
@@ -21,7 +21,7 @@ test('out-topk', function (t) {
 })
 
 test('out-array', function (t) {
-  let arr = nlp('1-2').terms().out('array')
+  const arr = nlp('1-2').terms().out('array')
   t.equal(arr.length, 1, here + 'one result')
   t.equal(arr[0], '1-2', here + 'got contraction text')
   t.end()

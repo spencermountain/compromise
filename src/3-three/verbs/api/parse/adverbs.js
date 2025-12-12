@@ -1,6 +1,6 @@
 // split adverbs as before/after the root
 const getAdverbs = function (vb, root) {
-  let res = {
+  const res = {
     pre: vb.none(),
     post: vb.none(),
   }
@@ -8,7 +8,7 @@ const getAdverbs = function (vb, root) {
     return res
   }
   // pivot on the main verb
-  let parts = vb.splitOn(root)
+  const parts = vb.splitOn(root)
   if (parts.length === 3) {
     return {
       pre: parts.eq(0).adverbs(),

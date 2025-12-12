@@ -3,8 +3,8 @@ import nlp from '../_lib.js'
 const here = '[two/fancy-match] '
 
 test('matchOne', function (t) {
-  let doc = nlp('one two three four five. one three four')
-  let arr = doc.matchOne('three four').out('array')
+  const doc = nlp('one two three four five. one three four')
+  const arr = doc.matchOne('three four').out('array')
   t.equal(arr.length, 1, 'one-match')
   t.equal(arr[0], 'three four', 'found-match')
   t.end()
@@ -48,7 +48,7 @@ test('greedy-capture', function (t) {
 })
 
 test('match-posessive', function (t) {
-  let doc = nlp(`spencer's house`)
+  const doc = nlp(`spencer's house`)
   let m = doc.match('spencer')
   t.equal(m.found, true, here + 'possessive normal')
 
@@ -61,27 +61,27 @@ test('match-posessive', function (t) {
 })
 
 test('match-doc', function (t) {
-  let doc = nlp('the boy and the girl.')
-  let m = doc.match('(boy|girl)')
-  let arr = doc.match(m).out('array')
+  const doc = nlp('the boy and the girl.')
+  const m = doc.match('(boy|girl)')
+  const arr = doc.match(m).out('array')
   t.deepEqual(arr, ['boy', 'girl.'], here + 'match-doc')
   t.end()
 })
 
 test('match-doc-freeze', function (t) {
-  let doc = nlp('the boy and the girl.')
-  let m = doc.match('(boy|girl)')
+  const doc = nlp('the boy and the girl.')
+  const m = doc.match('(boy|girl)')
   doc.prepend('ooh baby')
-  let arr = doc.match(m).out('array')
+  const arr = doc.match(m).out('array')
   t.deepEqual(arr, ['boy', 'girl.'], here + 'match-doc-2')
   t.end()
 })
 
 test('match-term-id', function (t) {
-  let doc = nlp('one two three')
-  let two = doc.match('two')
-  let id = two.json()[0].terms[0].id
-  let m = doc.match([{ id: id }])
+  const doc = nlp('one two three')
+  const two = doc.match('two')
+  const id = two.json()[0].terms[0].id
+  const m = doc.match([{ id: id }])
   t.ok(m.has('^two$'), here + 'match-id')
   t.end()
 })

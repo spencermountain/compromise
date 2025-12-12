@@ -18,19 +18,19 @@ const mergeIf = function (doc, lMatch, rMatch) {
   const parseMatch = world.methods.one.parseMatch
   lMatch = lMatch || '.$' //defaults
   rMatch = rMatch || '^.'
-  let leftMatch = parseMatch(lMatch, {}, world)
-  let rightMatch = parseMatch(rMatch, {}, world)
+  const leftMatch = parseMatch(lMatch, {}, world)
+  const rightMatch = parseMatch(rMatch, {}, world)
   // ensure end-requirement to left-match, start-requiremnts to right match
   leftMatch[leftMatch.length - 1].end = true
   rightMatch[0].start = true
   // let's get going.
-  let ptrs = doc.fullPointer
-  let res = [ptrs[0]]
+  const ptrs = doc.fullPointer
+  const res = [ptrs[0]]
   for (let i = 1; i < ptrs.length; i += 1) {
-    let ptrL = res[res.length - 1]
-    let ptrR = ptrs[i]
-    let left = doc.update([ptrL])
-    let right = doc.update([ptrR])
+    const ptrL = res[res.length - 1]
+    const ptrR = ptrs[i]
+    const left = doc.update([ptrL])
+    const right = doc.update([ptrR])
     // should we marge left+right?
     if (isNeighbour(ptrL, ptrR) && left.has(leftMatch) && right.has(rightMatch)) {
       // merge right ptr into existing result

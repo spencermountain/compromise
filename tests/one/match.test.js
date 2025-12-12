@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from './_lib.js'
 const here = '[one/match] '
 
-let arr = [
+const arr = [
   ['toronto', 'toronto'],
   ['mexico', '.'],
   ['mexico', '.?'],
@@ -22,9 +22,9 @@ let arr = [
 ]
 test('match:', function (t) {
   arr.forEach(function (a) {
-    let doc = nlp(a[0])
-    let msg = `'${(a[0] + "' ").padEnd(20, '.')}  - '${a[1]}'`
-    let m = doc.match(a[1])
+    const doc = nlp(a[0])
+    const msg = `'${(a[0] + "' ").padEnd(20, '.')}  - '${a[1]}'`
+    const m = doc.match(a[1])
     t.equal(m.text(), doc.text(), here + msg)
   })
   t.end()

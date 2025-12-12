@@ -1,6 +1,6 @@
 
 const concatArr = function (views, fn) {
-  let arr = []
+  const arr = []
   views.forEach(m => {
     arr.push(m[fn]())
   })
@@ -18,7 +18,7 @@ const concatStr = function (views, cb) {
 const concatDoc = function (views, cb) {
   let ptrs = []
   views.forEach(m => {
-    let res = cb(m)
+    const res = cb(m)
     if (res.found) {
       ptrs = ptrs.concat(res.ptrs)
     }
@@ -64,7 +64,7 @@ const api = function (View) {
       return concatDoc(this.views, (view) => view.terms())
     }
     filter(fn) {
-      let res = this.views.filter(p => {
+      const res = this.views.filter(p => {
         return p.some(fn)
       })
       return this.update(res)
@@ -76,7 +76,7 @@ const api = function (View) {
       return this
     }
     map(fn) {
-      let res = this.views.map(view => {
+      const res = this.views.map(view => {
         return fn(view)
       })
       return this.update(res)
@@ -86,15 +86,15 @@ const api = function (View) {
       return this.views.some(view => view.has(reg))
     }
     if(reg) {
-      let views = this.views.filter(view => view.has(reg))
+      const views = this.views.filter(view => view.has(reg))
       return this.update(views)
     }
     ifNo(reg) {
-      let views = this.views.filter(view => !view.has(reg))
+      const views = this.views.filter(view => !view.has(reg))
       return this.update(views)
     }
     eq(num) {
-      let p = this.views[num]
+      const p = this.views[num]
       if (p) {
         return this.update([p])
       }
@@ -115,7 +115,7 @@ const api = function (View) {
 
     // overloaded - keep Paragraphs class
     update(views) {
-      let m = new Paragraphs(views)
+      const m = new Paragraphs(views)
       return m
     }
   }
@@ -123,10 +123,10 @@ const api = function (View) {
   /** */
   View.prototype.paragraphs = function () {
     const hasTwoNewline = /\n\n/
-    let all = []
+    const all = []
     let run = []
     this.all().forEach(s => {
-      let end = s.lastTerm()
+      const end = s.lastTerm()
       run.push(s.ptrs[0])
       if (hasTwoNewline.test(end.post())) {
         all.push(run)
@@ -136,7 +136,7 @@ const api = function (View) {
     if (run.length) {
       all.push(run)
     }
-    let views = all.map(ptr => {
+    const views = all.map(ptr => {
       return this.update(ptr)
     })
     return new Paragraphs(views)

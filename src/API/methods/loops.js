@@ -1,19 +1,19 @@
 // wrappers for loops in javascript arrays
 
 const forEach = function (cb) {
-  let ptrs = this.fullPointer
+  const ptrs = this.fullPointer
   ptrs.forEach((ptr, i) => {
-    let view = this.update([ptr])
+    const view = this.update([ptr])
     cb(view, i)
   })
   return this
 }
 
 const map = function (cb, empty) {
-  let ptrs = this.fullPointer
-  let res = ptrs.map((ptr, i) => {
-    let view = this.update([ptr])
-    let out = cb(view, i)
+  const ptrs = this.fullPointer
+  const res = ptrs.map((ptr, i) => {
+    const view = this.update([ptr])
+    const out = cb(view, i)
     // if we returned nothing, return a view
     if (out === undefined) {
       return this.none()
@@ -46,26 +46,26 @@ const map = function (cb, empty) {
 const filter = function (cb) {
   let ptrs = this.fullPointer
   ptrs = ptrs.filter((ptr, i) => {
-    let view = this.update([ptr])
+    const view = this.update([ptr])
     return cb(view, i)
   })
-  let res = this.update(ptrs)
+  const res = this.update(ptrs)
   return res
 }
 
 const find = function (cb) {
-  let ptrs = this.fullPointer
-  let found = ptrs.find((ptr, i) => {
-    let view = this.update([ptr])
+  const ptrs = this.fullPointer
+  const found = ptrs.find((ptr, i) => {
+    const view = this.update([ptr])
     return cb(view, i)
   })
   return this.update([found])
 }
 
 const some = function (cb) {
-  let ptrs = this.fullPointer
+  const ptrs = this.fullPointer
   return ptrs.some((ptr, i) => {
-    let view = this.update([ptr])
+    const view = this.update([ptr])
     return cb(view, i)
   })
 }

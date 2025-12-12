@@ -12,14 +12,14 @@ export default {
     /** return any data on our given matches */
     View.prototype.getPayloads = function () {
       let res = []
-      let db = this.world.model.one.db || {}
+      const db = this.world.model.one.db || {}
       this.fullPointer.forEach(ptr => {
-        let n = ptr[0]
+        const n = ptr[0]
         if (db.hasOwnProperty(n)) {
           // look at all vals for this sentence
-          let seeking = this.update([ptr])
+          const seeking = this.update([ptr])
           db[n].forEach(obj => {
-            let m = this.update([obj.ptr])
+            const m = this.update([obj.ptr])
             if (seeking.has(m)) {
               res = res.concat({
                 match: m,
@@ -34,14 +34,14 @@ export default {
 
     /** add data about our current matches */
     View.prototype.addPayload = function (val) {
-      let db = this.world.model.one.db || {}
+      const db = this.world.model.one.db || {}
       this.fullPointer.forEach(ptr => {
-        let n = ptr[0]
+        const n = ptr[0]
         db[n] = db[n] || []
         if (typeof val === 'function') {
           //push in whatever the callback wants
-          let m = this.update([ptr])
-          let res = val(m)
+          const m = this.update([ptr])
+          const res = val(m)
           if (res !== null && res !== undefined) {
             db[n].push({ ptr, val: res })
           }
@@ -54,12 +54,12 @@ export default {
 
     /** remove all payloads in selection */
     View.prototype.clearPayloads = function () {
-      let db = this.world.model.one.db || {}
+      const db = this.world.model.one.db || {}
       // get each payload
-      let res = this.getPayloads()
+      const res = this.getPayloads()
       res.forEach(obj => {
-        let ptr = obj.match.fullPointer[0] || []
-        let [n, start, end] = ptr
+        const ptr = obj.match.fullPointer[0] || []
+        const [n, start, end] = ptr
         db[n] = db[n] || []
         // remove it from our list of payloads
         db[n] = db[n].filter(r => {

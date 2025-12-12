@@ -7,7 +7,7 @@ const defaults = {
   terms: true,
 }
 
-let opts = { case: 'none', unicode: 'some', form: 'machine', punctuation: 'some' }
+const opts = { case: 'none', unicode: 'some', form: 'machine', punctuation: 'some' }
 
 const merge = function (a, b) {
   return Object.assign({}, a, b)
@@ -24,7 +24,7 @@ const fns = {
   hash: terms => hash(textFromTerms(terms, { keepPunct: true }, false)),
 
   offset: terms => {
-    let len = fns.text(terms).length
+    const len = fns.text(terms).length
     return {
       index: terms[0].offset.index,
       start: terms[0].offset.start,
@@ -33,7 +33,7 @@ const fns = {
   },
   terms: terms => {
     return terms.map(t => {
-      let term = Object.assign({}, t)
+      const term = Object.assign({}, t)
       term.tags = Array.from(t.tags)
       return term
     })
@@ -58,7 +58,7 @@ const toJSON = function (view, option) {
     view.compute('offset')
   }
   return view.docs.map((terms, i) => {
-    let res = {}
+    const res = {}
     Object.keys(option).forEach(k => {
       if (option[k] && fns[k]) {
         res[k] = fns[k](terms, view, i)
@@ -71,7 +71,7 @@ const toJSON = function (view, option) {
 const methods = {
   /** return data */
   json: function (n) {
-    let res = toJSON(this, n)
+    const res = toJSON(this, n)
     if (typeof n === 'number') {
       return res[n]
     }

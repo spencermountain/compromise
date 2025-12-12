@@ -5,10 +5,10 @@ import { getGroup } from '../_lib.js'
 // its logic is 'greedy until', where it's looking for the next token
 // '.+ foo' means we check for 'foo', indefinetly
 const doAstrix = function (state) {
-  let { regs } = state
-  let reg = regs[state.r]
+  const { regs } = state
+  const reg = regs[state.r]
 
-  let skipto = greedyTo(state, regs[state.r + 1])
+  const skipto = greedyTo(state, regs[state.r + 1])
   //maybe we couldn't find it
   if (skipto === null || skipto === 0) {
     return null

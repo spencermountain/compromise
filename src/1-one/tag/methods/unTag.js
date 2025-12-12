@@ -2,7 +2,7 @@
 const unTag = function (terms, tag, tagSet) {
   tag = tag.trim().replace(/^#/, '')
   for (let i = 0; i < terms.length; i += 1) {
-    let term = terms[i]
+    const term = terms[i]
     // don't untag anything if term is frozen
     if (term.frozen === true) {
       continue
@@ -13,7 +13,7 @@ const unTag = function (terms, tag, tagSet) {
       continue
     }
     // for known tags, do logical dependencies first
-    let known = tagSet[tag]
+    const known = tagSet[tag]
     // removing #Verb should also remove #PastTense
     if (known && known.children.length > 0) {
       for (let o = 0; o < known.children.length; o += 1) {

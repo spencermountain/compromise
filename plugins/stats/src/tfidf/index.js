@@ -4,7 +4,7 @@ import idf from './idf.js'
 import unpack from './unpack.js'
 
 const model = unpack(pcked)
-let keys = Object.keys(model)
+const keys = Object.keys(model)
 const max = model[keys[keys.length - 1]] * 1.1
 // console.log(Object.keys(model).length.toLocaleString())
 // console.log(model.sway)
@@ -16,10 +16,10 @@ const addMethods = function (View) {
       mod = model
     }
     // term frequency
-    let counts = tf(this, opts)
+    const counts = tf(this, opts)
     let freqs = Object.entries(counts)
     freqs = freqs.map(a => {
-      let [w, count] = a
+      const [w, count] = a
       // tfidf = tf * idf
       let tfidf = count * (model[w] || max)
       // round it 2 decimals

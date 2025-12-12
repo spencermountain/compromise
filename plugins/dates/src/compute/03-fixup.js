@@ -4,12 +4,12 @@ const fixUp = function (doc) {
   //fixups
   if (doc.has('#Date')) {
     //first day by monday
-    let oops = doc.match('#Date+ by #Date+')
+    const oops = doc.match('#Date+ by #Date+')
     if (oops.found && !oops.has('^due')) {
       oops.match('^#Date+').unTag('Date', 'by-monday')
     }
 
-    let d = doc.match('#Date+')
+    const d = doc.match('#Date+')
 
     //between june
     if (d.has('^between') && !d.has('and .')) {

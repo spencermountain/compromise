@@ -3,7 +3,7 @@ import nlp from '../_lib.js'
 const here = '[three/number-percent] '
 
 test('percent-basic:', function (t) {
-  let m = nlp('it is 33%').percentages()
+  const m = nlp('it is 33%').percentages()
   t.equal(m.out('normal'), '33%', 'match-33%')
 
   //parse number
@@ -45,7 +45,7 @@ test('percent-conversion:', function (t) {
 })
 
 test('percent-tag:', function (t) {
-  let tests = [
+  const tests = [
     ['7%', true],
     ['7.0%', true],
     ['2.22%', true],
@@ -58,7 +58,7 @@ test('percent-tag:', function (t) {
     ['99%3', false],
   ]
   tests.forEach(function (a) {
-    let r = nlp(a[0])
+    const r = nlp(a[0])
     t.equal(r.percentages().found, a[1], here + "Percent-has: '" + a[0] + "'")
   })
   t.end()

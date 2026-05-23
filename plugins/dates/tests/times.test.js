@@ -297,7 +297,7 @@ test('times of start and end', function (t) {
     ['twenty after 3', '3:20pm'],
     ['eleven thirty am', '11:30am'],
     ['eleven thirty pm', '11:30pm'],
-    ['seven fifteen am', '3:00pm'],
+    ['seven fifteen am', '7:15am'],
     ['one thirty pm', '1:30pm'],
     ['9 in the morning', '9:00am'],
     ['11 at night', '11:00pm'],

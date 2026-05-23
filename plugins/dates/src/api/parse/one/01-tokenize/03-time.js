@@ -185,6 +185,25 @@ const parseTime = function (doc, context) {
       return { result: s.time(), m }
     }
   }
+  // support seperated number times like '10 30 pm'
+  m = time.match('#Time+ (am|pm)?').match('[<hour>#Cardinal] [<minute>#Cardinal] [<ampm>(am|pm)]?')
+  if (m.found) {
+    const hour = m.groups('hour')
+    const minute = m.groups('minute')
+    let hourNum = hour.numbers().get()[0]
+    let minuteNum = minute.numbers().get()[0]
+    if (hourNum < 24 && minuteNum < 60) {
+      s = s.hour(hour.text('reduced'))
+      s = s.minute(minute.text('reduced'))
+      if (m.groups('ampm').found) {
+        s = s.ampm(m.groups('ampm').text('reduced'))
+      } else {
+        s = ampmChooser(s)
+      }
+      return { result: s.time(), m }
+    }
+    return { result: null, m: doc.none() }
+  }
 
   // parse random a time like '4:54pm'
   const str = time.text('reduced')

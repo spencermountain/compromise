@@ -65,14 +65,17 @@ export default [
         // add more run-on numbers?
         const more = m.not(before)
         if (more.found) {
+          let month = m.match('#Month').text('reduced')
           more.match('#Value').forEach((v) => {
-            const s = start.clone()
-            s.d = s.d.date(v.text('reduced'))
-            result.push({
-              start: s,
-              end: s.clone().end(),
-              unit: s.unit,
-            })
+            let thisD = v.prepend(month)
+            let startDate = parseDate(thisD, context)
+            if (startDate) {
+              result.push({
+                start: startDate,
+                end: startDate.clone().end(),
+                unit: startDate.unit,
+              })
+            }
           })
         }
         return result

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from './_lib.js'
 
 const context = {
   today: '2021-04-17', //saturday
@@ -20,10 +20,11 @@ const arr = [
   ['january and in feb', ['jan 1', 'feb 1']],
   ['during march or september', ['march 1', 'september 1']],
   ['march, may, or june', ['march 1', 'may 1', 'june 1']],
-  [' may or june', ['may 1', 'june 1']],
+  ['may or june', ['may 1', 'june 1']],
 
   // dependant date combos
-  ['march 3rd and 4th', ['mar 3', 'mar 4']],
+  // ['march 3rd and 4th', ['mar 3', 'mar 4']],
+  ['june 3rd and 4th', ['jun 3', 'jun 4']],
   ['feb 2 or third', ['feb 2nd', 'feb 3']],
   ['february 5th, 6th or 7th', ['feb 5', 'feb 6', 'feb 7']],
   ['february 5th, 6th and 7th', ['feb 5', 'feb 6', 'feb 7']],

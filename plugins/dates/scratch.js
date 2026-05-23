@@ -8,7 +8,7 @@ nlp.plugin(datePlugin)
 
 // const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-// process.env.DEBUG_DATE = true
+process.env.DEBUG_DATE = true
 
 // date issues:
 // 'the month before christmas' vs 'a month before christmas'
@@ -39,8 +39,8 @@ txt = 'in basically one week from now'
 txt = 'go shopping with april'
 txt = 'between Oct and Sept 2008'
 txt = '6:30pm'
+txt = 'eleven thirty pm' // becomes 11 30 pm
 txt = '28th of September to 5th of October 2008'
-txt = 'eleven thirty pm'
 // txt = 'August 10 to 22, 2012'
 // txt = 'sept 2008 to oct 2008'
 // txt = 'only in 2018 and 2020'

@@ -4,11 +4,11 @@ import spacetime from 'spacetime'
 import datePlugin from './src/plugin.js'
 nlp.plugin(datePlugin)
 // nlp.verbose('tagger')
-nlp.verbose('date')
+// nlp.verbose('date')
 
-const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
+// const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-process.env.DEBUG_DATE = true
+// process.env.DEBUG_DATE = true
 
 // date issues:
 // 'the month before christmas' vs 'a month before christmas'
@@ -39,6 +39,8 @@ txt = 'in basically one week from now'
 txt = 'go shopping with april'
 txt = 'between Oct and Sept 2008'
 txt = '6:30pm'
+txt = 'March 7th-11th 1987'
+// txt = 'August 10 to 22, 2012'
 // txt = 'sept 2008 to oct 2008'
 // txt = 'only in 2018 and 2020'
 // txt = '2024/02/05 and 2024/03/09'
@@ -59,11 +61,11 @@ const doc = nlp(txt)
 
 // console.log(doc.times(context).json())
 const found = doc.dates(context).json()
-console.log(found[0].dates)
-found.forEach((o) => {
-  console.log('start: ', fmt(o.dates.start))
-  console.log('  end: ', fmt(o.dates.end))
-})
+// console.log(found[0].dates)
+// found.forEach((o) => {
+//   console.log('start: ', fmt(o.dates.start))
+//   console.log('  end: ', fmt(o.dates.end))
+// })
 
 // let doc = nlp(txt).debug()
 // let m = doc.dates(context)

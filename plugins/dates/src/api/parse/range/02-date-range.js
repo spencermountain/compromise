@@ -88,7 +88,7 @@ export default [
     parse: (m, context) => {
       const { month, from, to, year } = m.groups()
       const year2 = year.clone()
-      let start = from.prepend(month).append(year)
+      let start = from.clone().prepend(month).append(year)
       start = parseDate(start, context)
       if (start) {
         let end = to.prepend(month).append(year2)

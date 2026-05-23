@@ -41,10 +41,8 @@ let txt = 'toes'
 
 
 // Underscore example
-let text = `
-To the window, to the wall below.
-_________________________________________________`;
+let text = `one thirty am`;
 let doc = nlp(text);
-console.log(doc.debug());
+console.log(doc.numbers().toNumber().debug());
 
 // console.log(doc.docs)

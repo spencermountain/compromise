@@ -2,6 +2,13 @@
 - **[breaking]** - return array in .json().dates
 -->
 
+### 3.8.0 [May 2026]
+- **[fix]** - 'one thirty am' is not '130 am'
+- **[fix]** - 'in 2-4 years from now'
+- **[fix]** - '28th of September to 5th of October 2008'
+- **[change]** - more tests
+- **[update]** - dependencies
+
 ### 3.7.1 [Jan 2025]
 * * fix `#Month (next|last|this) year` #1162
 - **[update]** - dependencies

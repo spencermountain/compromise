@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 22.x, 24.x]
+        node-version: [18.x, 22.x, 26.x]
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
@@ -49,6 +49,3 @@ jobs:
           npm run test:three
           npm run testb
           npm run test:plugins
-          # npm run perf
-          # npm run test:types
-          # npm run test:stress

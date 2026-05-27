@@ -66,6 +66,10 @@ const findNumbers = function (doc) {
         m = m.splitAfter('#Ordinal')
       }
     }
+    // one thirty am != 130
+    if (m.has('#Time')) {
+      m = m.splitOn('#Time')
+    }
     //fifth five
     m = m.splitBefore('#Ordinal [#Cardinal]', 0)
     //five 2017 (support '5 hundred', and 'twenty 5'

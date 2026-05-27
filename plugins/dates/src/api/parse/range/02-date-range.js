@@ -82,13 +82,40 @@ export default [
     },
   },
   {
+    // two day-of-month dates - '28th of September to 5th of October 2008'
+    match:
+      '[<from>#Value] of? [<fromMonth>#Month] (to|through|thru) [<to>#Value] of? [<toMonth>#Month] [<year>#Year?]',
+    desc: '28th of September to 5th of October 2008',
+    parse: (m, context) => {
+      const { from, fromMonth, to, toMonth, year } = m.groups()
+      let start = from.clone().append(fromMonth)
+      let end = to.clone().append(toMonth)
+      if (year && year.found) {
+        start = start.append(year)
+        end = end.append(year)
+      }
+      start = parseDate(start, context)
+      end = parseDate(end, context)
+      if (start && end) {
+        if (start.d.isAfter(end.d)) {
+          end.d = end.d.add(1, 'year')
+        }
+        return {
+          start: start,
+          end: end.end(),
+        }
+      }
+      return null
+    },
+  },
+  {
     // one month, one year, first form - 'january 5 to 7 1998'
     match: '[<month>#Month] [<from>#Value] (to|through|thru) [<to>#Value] of? [<year>#Year]',
     desc: 'january 5 to 7 1998',
     parse: (m, context) => {
       const { month, from, to, year } = m.groups()
       const year2 = year.clone()
-      let start = from.prepend(month).append(year)
+      let start = from.clone().prepend(month).append(year)
       start = parseDate(start, context)
       if (start) {
         let end = to.prepend(month).append(year2)

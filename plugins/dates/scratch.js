@@ -4,7 +4,7 @@ import spacetime from 'spacetime'
 import datePlugin from './src/plugin.js'
 nlp.plugin(datePlugin)
 // nlp.verbose('tagger')
-nlp.verbose('date')
+// nlp.verbose('date')
 
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
@@ -28,17 +28,16 @@ const context = {
 }
 
 let txt = ` We will see him in mid-September`
-txt = `5th day of q1 2002`
+// txt = `5th day of q1 2002`
 // txt = `tomorrow at 5:45pm`
 // txt = 'aug. 3'
 // txt = 'lets meet 1 weeks from now '
 // txt = 'on april fools 2020 '
 // txt = 'four thirty'
 // txt = 'on april 22nd'
-txt = 'in basically one week from now'
-txt = 'go shopping with april'
-txt = 'between Oct and Sept 2008'
-txt = '6:30pm'
+// txt = 'in basically one week from now'
+// txt = 'go shopping with april'
+// txt = 'August 10 to 22, 2012'
 // txt = 'sept 2008 to oct 2008'
 // txt = 'only in 2018 and 2020'
 // txt = '2024/02/05 and 2024/03/09'
@@ -49,17 +48,18 @@ txt = '6:30pm'
 // txt = 'in 1-2 weeks from now'
 // txt = 'in 1 to 2 months'
 // txt = `end of september`
+txt = `march 3rd and 7th`
 
 // nlp.verbose('tagger')
 const doc = nlp(txt)
 // doc.debug('dates')
 // console.log(doc.dates().get())
 // doc.times().format('24h')
-// doc.debug()
+doc.debug()
 
 // console.log(doc.times(context).json())
 const found = doc.dates(context).json()
-console.log(found[0].dates)
+console.log(found)
 found.forEach((o) => {
   console.log('start: ', fmt(o.dates.start))
   console.log('  end: ', fmt(o.dates.end))

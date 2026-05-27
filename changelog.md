@@ -20,6 +20,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .before() .after()
 -->
 
+#### 14.15.1 [May 2026]
+- **[fix]** - better textual time parsing - "one thirty am"
+- **[fix]** - ignore postinstall scripts 
+- **[update]** - github action for publish providence
+- **[update]** - dependencies + audit fixes
+
 #### 14.15.0 [Feb 2026]
 - **[update]** - support for Typescript 7 #1198
 - **[update]** - dependencies

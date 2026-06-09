@@ -24,6 +24,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: 
           node-version: 'lts/*'
+          package-manager-cache: false
           registry-url: 'https://registry.npmjs.org'
 
       - name: install

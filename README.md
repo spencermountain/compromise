@@ -429,6 +429,20 @@ doc.money().json()
 
 <img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+## 🤖 For AI agents & LLMs
+
+Plain-text, copy-paste docs that render without JavaScript live in this repo:
+
+- **[AGENTS.md](./AGENTS.md)** — start here: mental model, rules, and gotchas
+- **[docs/concepts.md](./docs/concepts.md)** — the document/View/Term model, mutability, build tiers
+- **[docs/match-syntax.md](./docs/match-syntax.md)** — the `.match()` mini-language
+- **[docs/tags.md](./docs/tags.md)** — the complete, valid part-of-speech tagset
+- **[docs/api.md](./docs/api.md)** — every method, signature, and description
+- **[docs/recipes.md](./docs/recipes.md)** — solutions to common tasks
+- **[llms-full.txt](./docs/llms-full.txt)** — all of the above in one fetchable file
+
+<img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
 ## API
 
 ### Compromise/one
@@ -612,7 +626,7 @@ _(these methods are on the main `nlp` object)_
   - **[.verbs().toPresentTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'walks'`
   - **[.verbs().toFutureTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'will walk'`
   - **[.verbs().toInfinitive()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walk'`
-  - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walking'`
+  - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'is walking'`
   - **[.verbs().toPastParticiple()](https://observablehq.com/@spencermountain/verbs)** - `'drive' → 'had driven'`
   - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all conjugations of these verbs
   - **[.verbs().isNegative()](https://observablehq.com/@spencermountain/verbs)** - return verbs with 'not', 'never' or 'no'

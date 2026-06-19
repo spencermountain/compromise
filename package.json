@@ -132,20 +132,14 @@
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rollup/plugin-terser": "1.0.0",
     "cross-env": "10.1.0",
-    "eslint": "10.4.0",
+    "eslint": "10.5.0",
     "eslint-plugin-regexp": "3.1.0",
     "nlp-corpus": "4.4.0",
-    "rollup": "4.60.4",
+    "rollup": "4.62.0",
     "rollup-plugin-filesize-check": "1.2.0",
     "shelljs": "0.10.0",
     "tap-dancer": "0.3.4",
-    "tape": "5.9.0"
+    "tape": "5.10.1"
   },
-  "eslintIgnore": [
-    "builds/*.js",
-    "*.ts",
-    "_old/**",
-    "_tests/**"
-  ],
   "license": "MIT"
 }

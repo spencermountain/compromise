@@ -40,9 +40,16 @@ let txt = 'toes'
 // console.log(doc.text('root'))
 
 
-// Underscore example
-let text = `one thirty am`;
-let doc = nlp(text);
-console.log(doc.numbers().toNumber().debug());
+delete Object.prototype.polluted;
 
-// console.log(doc.docs)
+nlp.extend({
+  model: {
+    ['__proto__']: {
+      polluted: 'yes'
+    }
+  }
+});
+
+console.log(({}).polluted);
+
+// delete Object.prototype.polluted;

@@ -41,10 +41,8 @@ const emoji_object_regex = new RegExp((RegExpEscape(Object.keys(emojis).join(' '
 //console.log('emoji_object_regex: ', emoji_object_regex);
 
 // Create emoji regex object that matches all emojis
-// Ref:
-// How to strip emojis from string in JavaScript
-// https://edvins.io/how-to-strip-emojis-from-string-in-java-script
-const emoji_regex = new RegExp("([✀-➿-‑-⛿]|��|��|��)", 'g');
+// Ref: https://edvins.io/how-to-strip-emojis-from-string-in-javascript
+const emoji_regex = /([\u2700-\u27BF\uE000-\uF8FF\u2011-\u26FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDD10-\uDDFF])/g
 //console.log('emoji_regex: ', emoji_regex);
 
 export { emoji_object_regex, emoji_regex, emoticon_regex, emoticons, emojis }

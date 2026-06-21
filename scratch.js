@@ -12,7 +12,8 @@ import plg from './plugins/dates/src/plugin.js'
 // console.log(nlp('Mary joined Google today').debug().redact().text())
 
 
-nlp('I live at 4 main st.').debug()
+let doc = nlp('I live at 4 main street. I work at the bank.').debug()
+console.log(doc.out('spec'))
 // nlp('Call John Smith at (800) 555-0000.').debug().redact().debug()
 // nlp('i met her').debug()
 

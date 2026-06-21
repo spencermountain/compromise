@@ -178,6 +178,7 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.honorifics(n?)`** — return terms like `'Dr.'`
 - **`.abbreviations(n?)`** — return terms like `'st.'`
 - **`.phoneNumbers(n?)`** — return terms like `'(939) 555-0113'`
+- **`.addresses(n?)`** — return terms like `'23 Park Avenue'`
 - **`.acronyms(n?)`** — return terms like `'FBI'`
 - **`.parentheses(n?)`** — return anything inside (parentheses)
 - **`.possessives(n?)`** — return terms like "Spencer's"

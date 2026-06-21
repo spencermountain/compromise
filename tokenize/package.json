@@ -21,5 +21,5 @@
 	},
 	"author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
 	"license": "MIT",
-	"sideEffects": true
+	"sideEffects": false
 }

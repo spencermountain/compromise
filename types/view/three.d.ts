@@ -39,6 +39,8 @@ interface Three extends View {
   abbreviations: (n?: number) => View
   /** return terms like `'(939) 555-0113'` */
   phoneNumbers: (n?: number) => View
+  /** return terms like `'23 Park Avenue'` */
+  addresses: (n?: number) => View
 
   // Subsets
   /** return terms like `'FBI'` */

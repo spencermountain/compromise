@@ -6,6 +6,13 @@ const phoneNumbers = function (n) {
   return m
 }
 
+/** return anything tagged as an address */
+const addresses = function (n) {
+  let m = this.match('#Address+')
+  m = m.getNth(n)
+  return m
+}
+
 // setup easy helper methods
 const selections = [
   ['hyphenated', '@hasHyphen .'],
@@ -37,6 +44,7 @@ const addMethods = function (View) {
     }
   })
   View.prototype.phoneNumbers = phoneNumbers
+  View.prototype.addresses = addresses
   // add aliases
   aliases.forEach(a => {
     View.prototype[a[0]] = View.prototype[a[1]]

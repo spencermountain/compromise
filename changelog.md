@@ -20,6 +20,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - .before() .after()
 -->
 
+#### 14.16.0 [June 2026]
+- **[new]** - apply redaction to #Organization, #Address, etc tags in .redact() method
+- **[new]** - .addresses() method
+- **[new]** - .out('spec') format
+- **[update]** - dependencies
+
 #### 14.15.1 [May 2026]
 - **[fix]** - better textual time parsing - "one thirty am"
 - **[fix]** - ignore postinstall scripts 

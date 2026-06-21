@@ -28,6 +28,7 @@ doc.prepositions()
 doc.honorifics()
 doc.abbreviations()
 doc.phoneNumbers()
+doc.addresses()
 
 doc.acronyms()
 doc.acronyms().strip()

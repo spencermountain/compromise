@@ -705,6 +705,7 @@ _(these methods are on the main `nlp` object)_
 - **[.chunks()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences noun-phrases and verb-phrases
 - **[.hyphenated()](https://observablehq.com/@spencermountain/compromise-selections)** - all terms connected with a hyphen or dash like `'wash-out'`
 - **[.phoneNumbers()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'(939) 555-0113'`
+- **[.addresses()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'23 Park Avenue'`
 - **[.hashTags()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'#nlp'`
 - **[.emails()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'hi@compromise.cool'`
 - **[.emoticons()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `:)`

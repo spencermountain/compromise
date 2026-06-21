@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/verb-trip-ups] '
+const here = '[three/verb-smoke-test] '
 
 // Verbs that the tagger should recognise, in sentence-fragments designed to trip it up.
 // Many of these words double as nouns ('run', 'walk', 'plays'), so the tagger has to lean on

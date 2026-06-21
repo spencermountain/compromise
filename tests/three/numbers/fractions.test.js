@@ -132,6 +132,19 @@ test('do-math:', function (t) {
   t.end()
 })
 
+// test('fraction-toText:', function (t) {
+//   const arr = [
+//     ['1/2', 'one half'],
+//     ['two thirds', 'two thirds'],
+//   ]
+//   arr.forEach(a => {
+//     const doc = nlp(a[0])
+//     doc.fractions().toText()
+//     t.equal(doc.text(), a[1], here + a[0])
+//   })
+//   t.end()
+// })
+
 test('fraction ordinal/cardinal:', function (t) {
   let doc = nlp('three fifths of an inch')
   doc.fractions().toCardinal()

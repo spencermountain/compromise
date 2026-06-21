@@ -5,21 +5,19 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 
 
-
+// already tested for
 nlp('simon says run').debug()
 
+// redact misses google
 console.log(nlp('Mary joined Google today').redact().text())
 
-
+// paris has trailing period
 console.log(nlp('I went to Paris.').places().out('array'))
 
-
-
+// missing methods
 nlp('it cost $2.50').money().currency()   // ❌ TypeError
 nlp('two thirds').fractions().toText()    // ❌ TypeError
 nlp('80%').percentages().toFraction()     // ❌ TypeError
-console.log(nlp('$4.09CAD').money().currency())
-
-console.log(nlp('1/2').fractions().toText())
-
-console.log(nlp('80%').percentages().toFraction())
+nlp('$4.09CAD').money().currency()
+nlp('1/2').fractions().toText()
+nlp('80%').percentages().toFraction()

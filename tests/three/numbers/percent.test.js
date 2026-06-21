@@ -44,6 +44,13 @@ test('percent-conversion:', function (t) {
   t.end()
 })
 
+// test('percent-toFraction:', function (t) {
+//   const doc = nlp('80%')
+//   doc.percentages().toFraction()
+//   t.equal(doc.text(), '8/10', here + '80% to fraction')
+//   t.end()
+// })
+
 test('percent-tag:', function (t) {
   const tests = [
     ['7%', true],

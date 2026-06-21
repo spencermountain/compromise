@@ -98,7 +98,7 @@ nlp.verbose(true)  // log the tagger's decision-making
   entry is `src/three.js`.
 - Tests: `npm test` (tape). Build: `npm run build` (rollup). Lint: `npm run lint`.
 - Regenerate the machine docs after changing types or the tagset: `node ./scripts/docs.js`
-  (writes `docs/tags.md`, `docs/api.md`, `docs/llms-full.txt`). The other docs are hand-written.
+  (writes `docs/tags.md`, `docs/api.md`, `llms-full.txt`). The other docs are hand-written.
 
 
 ==============================================================================

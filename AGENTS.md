@@ -14,6 +14,7 @@ the published docs at observablehq.com are interactive notebooks and do not rend
 | [docs/api.md](docs/api.md) | every method, signature, and one-line description |
 | [docs/recipes.md](docs/recipes.md) | copy-paste solutions to common tasks |
 | [llms-full.txt](docs/llms-full.txt) | all of the above concatenated into one file |
+| [docs/SKILL.md](docs/SKILL.md) | example skill for using compromise in a coding agent |
 
 ## 30-second mental model
 

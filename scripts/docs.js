@@ -224,7 +224,7 @@ Docs below are plain markdown (the published observablehq.com notebooks do not r
 - [Recipes](docs/recipes.md): copy-paste solutions to common tasks
 
 ## Optional
-- [Full text](llms-full.txt): every doc above concatenated into one file
+- [Full text](docs/llms-full.txt): every doc above concatenated into one file
 - [README](README.md): the human-facing overview
 `
 }
@@ -249,5 +249,5 @@ if (!fs.existsSync(path.join(root, 'docs'))) fs.mkdirSync(path.join(root, 'docs'
 write('docs/tags.md', generateTags())
 write('docs/api.md', generateApi())
 write('llms.txt', generateLlms())
-write('llms-full.txt', generateLlmsFull())
+write('docs/llms-full.txt', generateLlmsFull())
 console.log('done.')

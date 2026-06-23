@@ -269,12 +269,6 @@ const addMethod = function (View) {
     m = m.getNth(n)
     return new Numbers(this.document, m.pointer)
   }
-  View.prototype.money = function (n) {
-    let m = find(this)
-    m = m.filter(v => v.has('#Money') || v.after('^#Currency'))
-    m = m.getNth(n)
-    return new Numbers(this.document, m.pointer)
-  }
   // alias
   View.prototype.values = View.prototype.numbers
 }

@@ -24,6 +24,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - apply redaction to #Organization, #Address, etc tags in .redact() method
 - **[new]** - .addresses() method
 - **[new]** - .out('spec') format
+- **[fix]** - tokenize phone-numbers with parentheses
 - **[update]** - dependencies
 
 #### 14.15.1 [May 2026]

@@ -4,15 +4,19 @@ const here = '[one/punctuation-match] '
 
 test('punctuation-match :', function (t) {
   let regs = [{ word: 'may' }, { pre: '(' }]
-  let m = nlp('may, (2019) foo').match(regs)
-  t.equal(m.text(), 'may, (2019)', here + '(pre')
+  let m = nlp('may, (cool) foo').match(regs)
+  t.equal(m.text(), 'may, (cool)', here + '(pre')
 
   regs = [{ word: 'may' }, { post: ')' }]
-  m = nlp('may, (2019) foo').match(regs)
-  t.equal(m.text(), 'may, (2019)', here + 'post)')
+  m = nlp('may, (cool) foo').match(regs)
+  t.equal(m.text(), 'may, (cool)', here + 'post)')
+
+  regs = [{ word: 'may' }, { post: ')' }]
+  m = nlp('may, (cool) foo').match(regs)
+  t.equal(m.text(), 'may, (cool)', here + 'post)')
 
   regs = [{ post: ',' }]
-  m = nlp('may, (2019) foo').match(regs)
+  m = nlp('may, (cool) foo').match(regs)
   t.equal(m.text(), 'may,', here + 'post,')
   t.end()
 })

@@ -1,6 +1,6 @@
 export default [
   //web tags
-  [/^[\w.]+@[\w.]+\.[a-z]{2,3}$/, 'Email'],
+  [/^[\w.+]+@[\w.]+\.[a-z]{2,3}$/, 'Email'],
   [/^(https?:\/\/|www\.)+\w+\.[a-z]{2,3}/, 'Url', 'http..'],
   [/^[a-z0-9./].+\.(com|net|gov|org|ly|edu|info|biz|dev|ru|jp|de|in|uk|br|io|ai)/, 'Url', '.com'],
 

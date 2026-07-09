@@ -1,6 +1,6 @@
 
 import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
+// import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
 // nlp.plugin(plg)
 
@@ -20,9 +20,14 @@ import plg from './plugins/dates/src/plugin.js'
 // paris has trailing period
 // console.log(nlp('I went to Paris.').places().out('array'))
 
+let doc = nlp('the -5 runner.')
+doc.debug()//.redact()
+// console.log(doc.text())
+// nlp('the bill comes to fifty dollars.').debug()
+
 // missing methods
-let out = nlp('it cost 2.50 yuan').debug().money().json()
-console.log(out)
+// let out = nlp('it cost 2.50 yuan').debug().money().json()
+// console.log(out)
 // nlp('two thirds').fractions().toText()   
 // nlp('80%').percentages().toFraction()    
 // nlp('$4.09CAD').money().currency()

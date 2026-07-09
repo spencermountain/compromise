@@ -83,7 +83,7 @@ export default {
     his: n, //
     their: n, //
     our: n, //
-    us: n, //served us drinks
+    // us: n, //served us drinks
     sheer: n,
 
     monthly: n,

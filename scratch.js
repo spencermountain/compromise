@@ -3,6 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
 // nlp.plugin(plg)
+nlp.verbose(true)
 
 
 // already tested for
@@ -20,10 +21,8 @@ import nlp from './src/three.js'
 // paris has trailing period
 // console.log(nlp('I went to Paris.').places().out('array'))
 
-let doc = nlp('it costs 6 dollars and 5 cents')
-let res = doc.money().parse()
-console.log(doc.money().get(0))
-
+let doc = nlp(`come dance with me`)
+doc.debug()
 // missing methods
 // let out = nlp('it cost 2.50 yuan').debug().money().json()
 // console.log(out)

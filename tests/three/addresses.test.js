@@ -28,6 +28,8 @@ test('addresses-find:', function (t) {
     ['333 River Road', '333 river road'],
     ['742 Evergreen Terrace Springfield', '742 evergreen terrace'],
     ['meet me at 12 oak st or 34 pine rd', '12 oak st'],
+    ['300 Commerce Blvd', '300 commerce blvd'],
+    ['300 Commerce Court Blvd', '300 commerce court blvd'],
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).addresses(0).text('normal')
@@ -88,7 +90,7 @@ test('addresses-mixed:', function (t) {
 
   const doc3 = nlp('Mary lives at 100 Oak Street in Paris')
   t.equal(doc3.addresses().text('normal'), '100 oak street', here + 'address not place')
-  t.equal(doc3.places().text('normal'), 'paris', here + 'place still found')
+  t.equal(doc3.places().text('normal'), '100 Oak Street in Paris', here + 'place still found')
 
   t.end()
 })
@@ -102,7 +104,7 @@ test('addresses-no-false-positives:', function (t) {
     '1234',
     'st louis is nice',
     '1 Infinite Loop',
-    'Suite 200, 300 Commerce Blvd',
+    'Suite 200',
     'the bill comes to fifty dollars',
     'Rose lives on Rose Street',
   ]

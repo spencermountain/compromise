@@ -83,6 +83,15 @@ export default [
   'gay village',
   'orange county',
   'sunderland',
+  'main st',
+  'main street',
+  'boardwalk',
+  'financial district',
+  'shopping district',
+  'old town',
+  'little italy',
+  'koreatown',
+  'japantown',
 
   // places with their own timezones
   'tahiti',

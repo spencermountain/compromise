@@ -11,7 +11,7 @@ export default [
   },
   // ==== PhoneNumber ====
   //1 800 ...
-  { match: '1 #Value #PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },
+  { match: '(1|+1) #Value #PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },
   //(454) 232-9873
   { match: '#NumericValue #PhoneNumber', tag: 'PhoneNumber', reason: '(800) PhoneNumber' },
 

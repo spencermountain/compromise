@@ -17,13 +17,11 @@ import nlp from './src/three.js'
 // console.log(doc.out('spec'))
 // nlp('Call John Smith at (800) 555-0000.').debug().redact().debug()
 // nlp('i met her').debug()
+nlp('Mary lives at 100 Oak Street in Paris').debug()
 
 // paris has trailing period
 // console.log(nlp('I went to Paris.').places().out('array'))
 
-let doc = nlp(`I ate turkey for dinner.`)
-doc.debug()
-// doc.redact().debug()
 // missing methods
 // let out = nlp('it cost 2.50 yuan').debug().money().json()
 // console.log(out)

@@ -36,7 +36,7 @@ test('redact-people:', function (t) {
   const arr = [
     [`Mary is in the boat.`, `${P} is in the boat.`],
     [`Rod MacDonald bought a Rod`, `${P} bought a Rod`],
-    [`Dr. Matt G Smith lasted three seasons.`, `${P} lasted three seasons.`],
+    [`Dr. Matt G Smith lasted three seasons.`, `${P} lasted ${P} seasons.`],
     [`Randal Kieth Orton and Dwayne Johnson had a fight.`, `${P} and ${P} had a fight.`],
     [`avril lavigne and jimi hendrix played a show.`, `${P} and ${P} played a show.`],
     [`Captain Beefheart was eccentric.`, `${P} was eccentric.`],

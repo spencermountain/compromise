@@ -12,10 +12,11 @@ export default [
   // portland oregon
   { match: 'portland [or]', group: 0, tag: 'Region', reason: 'portland-or' },
   // i ate turkey
-  { match: '(eat|ate|eating|roast|roasted|thanksgiving) [turkey]', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'food-turkey' },
+  { match: '(eat|ate|eating|roast|roasted|thanksgiving|with) [turkey]', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'food-turkey' },
   { match: '[turkey] (roast|dinner|sandwich|burger)', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'turkey-food' },
-  // 
+  // ankara turkey
   { match: '#Place [turkey]', group: 0, tag: 'Country', reason: 'ankara turkey' },
+  { match: '(in|near|nearby|to|from) [turkey]', group: 0, tag: 'Country', reason: 'near turkey' },
   //words removed from preTagger/placeWords
   {
     match: '#ProperNoun+ (cliff|place|range|pit|place|point|room|grounds|ruins)',
@@ -32,6 +33,8 @@ export default [
   },
   // port dover
   { match: '(port|mount|mt) #ProperName', tag: 'Place', reason: 'port-name' },
+  // 4th st in portland
+  { match: '#Address in #Place', tag: 'Place', reason: 'address-place' },
   // generic 'oak ridge' names
   // { match: '(oak|maple|spruce|pine|cedar|willow|green|sunset|sunrise) #Place', tag: 'Place', reason: 'tree-name' },
   // generic 'sunset view' names

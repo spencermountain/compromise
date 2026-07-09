@@ -20,10 +20,9 @@ import nlp from './src/three.js'
 // paris has trailing period
 // console.log(nlp('I went to Paris.').places().out('array'))
 
-let doc = nlp('the -5 runner.')
-doc.debug()//.redact()
-// console.log(doc.text())
-// nlp('the bill comes to fifty dollars.').debug()
+let doc = nlp('it costs 6 dollars and 5 cents')
+let res = doc.money().parse()
+console.log(doc.money().get(0))
 
 // missing methods
 // let out = nlp('it cost 2.50 yuan').debug().money().json()

@@ -1,13 +1,22 @@
+import symbols from './currencies.js'
+
 const find = function (doc) {
-  let nums = doc.numbers()
-  nums = nums.filter(v => v.has('#Money') || v.after('^#Currency'))
-  return nums
+  return doc.match('#Money+ #Currency? (#Money+ #Currency?)?')
 }
+
 
 const parse = function (m) {
   m = m.clone()
-  const currency = m.match('#Currency').text('normal')
+  let currency = m.match('#Currency').nouns().toSingular().text('normal')
   const num = m.match('#Money').numbers().get()[0]
+  if (!currency) {
+    // look for currency in symbol
+    let str = m.text()
+    const found = symbols.find(([sym]) => str.includes(sym))
+    if (found) {
+      currency = found[1]
+    }
+  }
   return {
     currency,
     num,
@@ -26,7 +35,7 @@ const plugin = function (View) {
       return this.getNth(n).map(parse)
     }
     get(n) {
-      return this.getNth(n).map(parse)
+      return this.getNth(n).map(parse).map(p => p.num)
     }
     json(n) {
       return this.getNth(n).map(p => {

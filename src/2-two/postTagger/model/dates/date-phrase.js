@@ -24,7 +24,7 @@ export default [
 
   // === timezones ===
   // china standard time
-  { match: `(#Place|#Demonmym|#Time) (standard|daylight|central|mountain)? time`, tag: 'Timezone', reason: 'std-time' },
+  { match: `(#Place|#Demonmym) (standard|daylight|central|mountain)? time`, tag: 'Timezone', reason: 'std-time' },
   // eastern time
   {
     match: `(eastern|mountain|pacific|central|atlantic) (standard|daylight|summer)? time`,

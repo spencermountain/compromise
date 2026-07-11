@@ -24,7 +24,8 @@ const api = function (View) {
       this.forEach(m => {
         parseDates(m, this.opts).forEach(res => {
           const json = toJSON(res)
-          if (json.start) {
+          // keep repeating-dates, like 'every tuesday', too
+          if (json.start || json.repeat) {
             all.push(json)
           }
         })

@@ -1,9 +1,12 @@
 // chop things up into bite-size pieces
 const split = function (dates) {
   let m = null
-  // don't split anything if it looks like a range
-  if (dates.has('^(between|within) #Date')) {
-    return dates
+  // don't split a range - but only exempt that phrase, not the whole document
+  const ranges = dates.filter(d => d.has('^(between|within) #Date'))
+  if (ranges.found) {
+    let rest = dates.filter(d => !d.has('^(between|within) #Date'))
+    rest = split(rest)
+    return ranges.concat(rest)
   }
 
   if (dates.has('#Month')) {

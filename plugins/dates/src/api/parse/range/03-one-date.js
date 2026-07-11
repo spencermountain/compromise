@@ -37,8 +37,17 @@ export default [
       m = m.group(0)
       const unit = parseDate(m, context)
       if (unit) {
+        // 'before 5pm' - from the start of the day, until the time
+        if (unit.unit === 'millisecond' || unit.unit === 'hour' || unit.unit === 'minute') {
+          const dayStart = new Unit(context.today, null, context).start()
+          return {
+            start: dayStart,
+            end: unit,
+            unit: 'time',
+          }
+        }
         let start = new Unit(context.today, null, context)
-        if (start.d.isAfter(unit.d)) {
+        if (start.d.isBefore(unit.d) === false) {
           start = unit.clone().applyShift({ weeks: -2 })
         }
         // end the night before
@@ -89,9 +98,9 @@ export default [
     parse: (m, context) => {
       m = m.group(0)
       const unit = parseDate(m, context)
-      const start = unit.clone().middle()
-      const end = unit.beforeEnd()
       if (unit) {
+        const start = unit.clone().middle()
+        const end = unit.beforeEnd()
         return {
           start: start,
           end: end,

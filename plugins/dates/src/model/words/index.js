@@ -1,4 +1,4 @@
-import timezones from './timezones.js'
+import timezones, { unsafeToTag } from './timezones.js'
 import dates from './dates.js'
 import durations from './durations.js'
 import holidays from './holidays.js'
@@ -14,7 +14,9 @@ const add = function (arr, tag) {
     lex[str] = tag
   })
 }
-add(Object.keys(timezones), 'Timezone')
+// tag most timezone words - the ambiguous ones need context, and stay out of the lexicon
+const skipTz = new Set(unsafeToTag)
+add(Object.keys(timezones).filter(str => !skipTz.has(str)), 'Timezone')
 add(dates, 'Date')
 add(durations, 'Duration')
 add(holidays, 'Holiday')

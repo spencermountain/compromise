@@ -3,7 +3,7 @@ import parseTime from '../../one/01-tokenize/03-time.js'
 const dayNames = {
   mon: 'monday',
   tue: 'tuesday',
-  tues: 'wednesday',
+  tues: 'tuesday',
   wed: 'wednesday',
   thu: 'thursday',
   fri: 'friday',
@@ -98,6 +98,25 @@ const parseIntervals = function (doc, context) {
     return { repeat: repeat }
   }
 
+  // 'weekends in july'
+  m = doc.match('(weekends|weekdays)')
+  if (m.found) {
+    const repeat = { interval: { day: 1 }, filter: { weekDays: {} }, choose: 'AND' }
+    if (m.has('weekends')) {
+      repeat.filter.weekDays = { saturday: true, sunday: true }
+    } else {
+      repeat.filter.weekDays = {
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true,
+      }
+    }
+    doc = doc.remove(m)
+    return { repeat: repeat }
+  }
+
   // mondays
   m = doc.match(
     '[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays)] (at|near|after)? [<time>#Time+?]'
@@ -110,11 +129,11 @@ const parseIntervals = function (doc, context) {
     if (str) {
       repeat.filter.weekDays[str] = true
       repeat.choose = 'OR'
-      doc = doc.remove(m)
       const time = m.groups('time')
       if (time.found) {
-        repeat.time = parseTime(time, context)
+        repeat.time = parseTime(time, context).result
       }
+      doc = doc.remove(m)
       return { repeat: repeat }
     }
   }

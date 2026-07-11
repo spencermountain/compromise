@@ -8,9 +8,6 @@ class Week extends Unit {
       this.d = this.d.startOf('week')
     }
   }
-  clone() {
-    return new Week(this.d, this.unit, this.context)
-  }
   middle() {
     this.d = this.d.add(2, 'days') //wednesday
     return this
@@ -36,18 +33,21 @@ class WeekEnd extends Unit {
     this.d = this.d.day('saturday').startOf('day')
     return this
   }
-  // end() {
-  //   this.d = this.d.day('sunday').endOf('day')
-  //   return this
-  // }
+  end() {
+    this.d = this.d.day('saturday').add(1, 'day').endOf('day')
+    if (this.context.dayEnd) {
+      this.d = this.d.time(this.context.dayEnd)
+    }
+    return this
+  }
   next() {
     this.d = this.d.add(1, this.unit)
-    this.d = this.d.startOf('weekend')
+    this.d = this.d.startOf('day')
     return this
   }
   last() {
     this.d = this.d.minus(1, this.unit)
-    this.d = this.d.startOf('weekend')
+    this.d = this.d.startOf('day')
     return this
   }
 }

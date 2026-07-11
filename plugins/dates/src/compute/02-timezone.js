@@ -1,106 +1,29 @@
-// timezone abbreviations
-// (from spencermountain/timezone-soft)
-const zones = [
-  'act',
-  'aft',
-  'akst',
-  'anat',
-  'art',
-  'azot',
-  'azt',
-  'bnt',
-  'bot',
-  'bt',
-  'cast',
-  'cat',
-  'cct',
-  'chast',
-  'chut',
-  'ckt',
-  'cvt',
-  'cxt',
-  'davt',
-  'eat',
-  'ect',
-  'fjt',
-  'fkst',
-  'fnt',
-  'gamt',
-  'get',
-  'gft',
-  'gilt',
-  'gyt',
-  'hast',
-  'hncu',
-  'hneg',
-  'hnnomx',
-  'hnog',
-  'hnpm',
-  'hnpmx',
-  'hntn',
-  'hovt',
-  'iot',
-  'irkt',
-  'jst',
-  'kgt',
-  'kost',
-  'lint',
-  'magt',
-  'mart',
-  'mawt',
-  'mmt',
-  'nct',
-  'nft',
-  'novt',
-  'npt',
-  'nrt',
-  'nut',
-  'nzst',
-  'omst',
-  'pet',
-  'pett',
-  'phot',
-  'phst',
-  'pont',
-  'pwt',
-  'ret',
-  'sakt',
-  'samt',
-  'sbt',
-  'sct',
-  'sret',
-  'srt',
-  'syot',
-  'taht',
-  'tft',
-  'tjt',
-  'tkt',
-  'tlt',
-  'tmt',
-  'tot',
-  'tvt',
-  'ulat',
-  'vut',
-  'wakt',
-  'wat',
-  'wet',
-  'wft',
-  'wit',
-  'wst',
-  'yekt',
-].reduce((h, str) => {
-  h[str] = true
+import informal from '../model/words/timezones.js'
+
+// abbreviations we can resolve later ('jst', 'nzst'..) -
+// only tagged in an unambiguous context, like '4pm jst'
+const zones = Object.keys(informal).reduce((h, str) => {
+  if (/^[a-z]{2,6}$/.test(str)) {
+    h[str] = true
+  }
   return h
 }, {})
 
 const tagTz = function (doc) {
-  // 4pm PST
-  const m = doc.match('#Time [#Acronym]', 0)
+  // 4pm PST - only tagged if we know the abbreviation
+  const m = doc.match('#Time [(#Acronym|#Abbreviation|#Noun)]', 0)
   if (m.found) {
-    const str = m.text('reduced')
-    if (zones[str] === true) {
-      m.tag('Timezone', 'tz-abbr')
-    }
+    m.forEach(match => {
+      const str = match.text('reduced')
+      if (zones[str] === true) {
+        match.tag('Timezone', 'tz-abbr')
+      }
+    })
+  }
+  // 'utc-5' - the offset splits into its own term
+  const off = doc.match('(utc|gmt) #Cardinal')
+  if (off.found) {
+    off.tag('Timezone', 'tz-offset')
   }
 }
 export default tagTz

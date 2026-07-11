@@ -13,15 +13,15 @@ export default [
       const { start, end, year } = m.groups()
       const y = year && year.found ? Number(year.text('reduced')) : context.today.year()
       let obj = { month: start.text('reduced'), year: y }
-      const left = new Month(obj, null, context).start()
+      let left = new Month(obj, null, context).start()
       obj = { month: end.text('reduced'), year: y }
-      const right = new Month(obj, null, context).start()
+      let right = new Month(obj, null, context).start()
       if (left.d.isAfter(right.d)) {
-        return {
-          start: right,
-          end: left,
-        }
+        const tmp = left
+        left = right
+        right = tmp
       }
+      // 'between' is exclusive - end where the last month starts
       return {
         start: left,
         end: right,
@@ -34,16 +34,24 @@ export default [
     match: 'between [<start>.+] and [<end>.+]',
     desc: 'between friday and sunday',
     parse: (m, context) => {
-      let start = m.groups('start')
-      start = parseDate(start, context)
-      let end = m.groups('end')
-      end = parseDate(end, context)
+      const startM = m.groups('start')
+      let start = parseDate(startM, context)
+      const endM = m.groups('end')
+      let end = parseDate(endM, context)
+      // 'between june 2nd and 5th' - inherit the month
+      if (start && !end && endM.has('^#Value$') && startM.has('#Month')) {
+        end = start.clone()
+        end.d = end.d.date(endM.numbers().get()[0])
+      }
       if (start && end) {
-        end = end.before()
-        return {
+        let obj = {
           start: start,
           end: end,
         }
+        obj = reverseMaybe(obj)
+        // 'between' is exclusive of the end-date
+        obj.end = obj.end.before()
+        return obj
       }
       return null
     },
@@ -120,9 +128,11 @@ export default [
       if (start) {
         let end = to.prepend(month).append(year2)
         end = parseDate(end, context)
-        return {
-          start: start,
-          end: end.end(),
+        if (end) {
+          return {
+            start: start,
+            end: end.end(),
+          }
         }
       }
       return null
@@ -178,9 +188,9 @@ export default [
       let to = m.groups('to')
       from = parseDate(from, context)
       to = parseDate(to, context)
-      from.d = from.d.year(year)
-      to.d = to.d.year(year)
       if (from && to) {
+        from.d = from.d.year(year)
+        to.d = to.d.year(year)
         let obj = {
           start: from,
           end: to.end(),

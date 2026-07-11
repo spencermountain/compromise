@@ -26,7 +26,7 @@ const tagYearSafe = (m, reason) => {
   m.forEach((p) => {
     const str = p.text('reduced')
     const num = parseInt(str, 10)
-    if (num && num > 1900 && num < 2030) {
+    if (num && num > 1900 && num < 2060) {
       p.tag('Year', reason)
     }
   })
@@ -75,6 +75,16 @@ const tagDates = function (doc) {
     //it was 1998
     v = cardinal.match('it (is|was) [#Cardinal]', 0)
     tagYearSafe(v, 'in-year-5')
+    //'june of 98' - a two-digit year
+    v = cardinal.match('(#Month|#Season) of? [#Cardinal]', 0)
+    if (v.found) {
+      v.forEach((p) => {
+        const num = parseInt(p.text('reduced'), 10)
+        if (num >= 32 && num < 100) {
+          p.tag('Year', 'two-digit-year')
+        }
+      })
+    }
     // re-tag this part
     cardinal.match(`${sections} of #Year`).tag('Date')
     //between 1999 and 1998
@@ -84,7 +94,7 @@ const tagDates = function (doc) {
   }
 
   //'2020' bare input
-  const m = doc.match('^/^20[012][0-9]$/$')
+  const m = doc.match('^/^20[0-5][0-9]$/$')
   tagYearSafe(m, '2020-ish')
 
   return doc

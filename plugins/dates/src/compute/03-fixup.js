@@ -15,8 +15,8 @@ const fixUp = function (doc) {
     if (d.has('^between') && !d.has('and .')) {
       d.unTag('Date', here)
     }
-    // log the hours
-    if (d.has('(minutes|seconds|weeks|hours|days|months)') && !d.has('#Value #Duration')) {
+    // log the hours - but keep 'a couple of weeks'
+    if (d.has('(minutes|seconds|weeks|hours|days|months)') && !d.has('#Value #Duration') && !d.has('(few|couple)')) {
       d.match('(minutes|seconds|weeks|hours|days|months)').unTag('Date', 'log-hours')
     }
     // about thanksgiving

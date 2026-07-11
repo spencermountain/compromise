@@ -1,9 +1,9 @@
 import spacetime from 'spacetime'
 
 class Unit {
-  constructor(input, unit, context) {
+  constructor(input, unit, context, setTime) {
     this.unit = unit || 'day'
-    this.setTime = false
+    this.setTime = setTime || false
     context = context || {}
     let today = {}
     if (context.today) {
@@ -29,11 +29,13 @@ class Unit {
       value: context,
     })
   }
-  // make a new one
+  // make a new one - keep the subclass, and exact state, without re-running the constructor
   clone() {
-    const d = new Unit(this.d, this.unit, this.context)
-    d.setTime = this.setTime
-    return d
+    const copy = Object.create(Object.getPrototypeOf(this))
+    Object.assign(copy, this)
+    Object.defineProperty(copy, 'd', { enumerable: false, writable: true, value: this.d })
+    Object.defineProperty(copy, 'context', { enumerable: false, writable: true, value: this.context })
+    return copy
   }
   log() {
     console.log('--')//eslint-disable-line

@@ -28,7 +28,7 @@ const findDate = function (doc) {
   }
   // '20 minutes june 5th'
   m = dates.match('[#Cardinal #Duration] #Date', 0) //but allow '20 minutes ago'
-  if (m.found && !dates.has('#Cardinal #Duration] (ago|from|before|after|back)')) {
+  if (m.found && !dates.has('#Cardinal #Duration (ago|from|before|after|back|hence)')) {
     dates = dates.not(m)
   }
   // for 20 minutes

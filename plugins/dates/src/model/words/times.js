@@ -11,7 +11,6 @@ export default [
   'midday',
   'eod',
   'oclock',
-  'oclock',
   'at night',
   // 'now',
   // 'night',

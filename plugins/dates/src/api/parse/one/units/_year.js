@@ -33,7 +33,8 @@ class Month extends Unit {
     return this
   }
   middle() {
-    this.d = this.d.add(15, 'days')
+    const half = Math.floor(this.d.daysInMonth() / 2)
+    this.d = this.d.add(half, 'days')
     this.d = this.d.startOf('day')
     return this
   }
@@ -47,11 +48,6 @@ class AnyQuarter extends Unit {
     if (this.d.isValid()) {
       this.d = this.d.startOf(this.unit)
     }
-  }
-  last() {
-    this.d = this.d.minus(1, 'quarter')
-    this.d = this.d.startOf(this.unit)
-    return this
   }
 }
 

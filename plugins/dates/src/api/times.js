@@ -7,7 +7,7 @@ const find = function (doc) {
 }
 
 const parse = function (m, context = {}) {
-  m = normalize(m)
+  m = normalize(m, { times: true })
   const res = parseTime(m, context)
   if (!res.result) {
     return { time: null, '24h': null }
@@ -52,7 +52,14 @@ const api = function (View) {
     }
 
     get(n) {
-      return getNth(this, n).map(parse)
+      const arr = []
+      this.forEach(m => {
+        arr.push(parse(m))
+      })
+      if (typeof n === 'number') {
+        return arr[n]
+      }
+      return arr
     }
 
     json(opts = {}) {

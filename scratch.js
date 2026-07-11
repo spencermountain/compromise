@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose(true)
+nlp.verbose(true)
 
 
 // already tested for
@@ -16,12 +16,14 @@ import nlp from './src/three.js'
 // let doc = nlp('I live at 4 main street. I work at the bank.').debug()
 // console.log(doc.out('spec'))
 // nlp('Call John Smith at (800) 555-0000.').debug().redact().debug()
-// nlp('i met her').debug()
-nlp('Mary lives at 100 Oak Street in Paris').debug()
 
 // paris has trailing period
 // console.log(nlp('I went to Paris.').places().out('array'))
+// nlp('i met her').debug()
+nlp("3pm central time").debug()
 
+
+// nlp("june of '98" ).debug()
 // missing methods
 // let out = nlp('it cost 2.50 yuan').debug().money().json()
 // console.log(out)

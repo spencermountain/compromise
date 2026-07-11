@@ -2,25 +2,36 @@
 - **[breaking]** - return array in .json().dates
 -->
 
-### Unreleased
-- **[new]** - repeating dates return a `repeat` object - `'every tuesday'`, `'weekends in july'`
-- **[new]** - `unit` field in `.dates().get()` results - `'day'`, `'week'`, `'time'`..
-- **[new]** - the `punt` option now works - `'after june'` returns a 2-week range by default
-- **[new]** - nth-weekday support - `'the second monday of february'`
-- **[new]** - two-digit years - `"june of '98"`, `'may 97'`
-- **[new]** - `'quarter to five'`-style times
-- **[fix]** - holidays with an explicit year - `'easter 2026'` no longer returns next-year's easter
-- **[fix]** - overnight ranges cross midnight - `'10pm to 2am'`, and explicit `'2am'` is not rewritten to pm
-- **[fix]** - `'between friday and sunday'` no longer returns a reversed range with a negative duration
+### 3.9.0 [July 2026]
+- **[new]** - repeating dates return a `repeat` object - `'every tuesday'`, `'mondays at 5pm'`, `'weekends in july'`
+- **[new]** - `unit` field in `.dates().get()` 
+- **[new]** - nth-weekday support - `'the second monday of february'`, `'last friday in june'`
+- **[new]** - support two-digit years - `"june of '98"`, `"summer of '69"`, `'may 97'`
+- **[new]** - `'quarter to five'`, `'at ten to 4'`-style times
+- **[new]** - multi-part shifts - `'2 years, 4 months, and 5 days ago'`, `'a week and a half before'`
+- **[new]** - `'the saturday after next'`, `'week after next'`, `'weekend after next'`
+- **[new]** - `'due eod'` - end-of-day support
+- **[fix]** - holidays with an explicit year - `'easter 2026'` 
+- **[fix]** - asking for `'christmas'` on christmas-day no longer returns next year's
+- **[fix]** - overnight ranges cross midnight - `'10pm to 2am'`, 
+- **[fix]** - explicit `'2am'` is not rewritten to pm
+- **[fix]** - `'between friday and sunday'` no longer returns a reversed range
+- **[fix]** - `'between june 2nd and 5th'` no longer loses its end-date
 - **[fix]** - `'end of the month'`, `'in a couple of weeks'` no longer return the current date
-- **[fix]** - `'half an hour'` is 30 minutes, not one hour; `'a few'` is 3, not 2
-- **[fix]** - `'hence'` means the future; `'day after next'` works
+- **[fix]** - `'half an hour'` is 30 minutes, not one hour;
+- **[fix]** - `'a few'` is 3, not 2;
+- **[fix]** - `'hence'` means the future;
+- **[fix]** - `'day after next'` is not tomorrow;
 - **[fix]** - `'the 5th of next month'` wraps the year in december
-- **[fix]** - timezones: `GMT+9` means utc+9, `utc-5` works, `cst` is America/Chicago, unknown zones no longer kill the parse, `jst`/`sgt`/`nzst` etc resolve
+- **[fix]** - `'2nd weekend of june'` is the 2nd weekend, not the 3rd;
+- **[fix]** - `'the soldiers march tomorrow'` no longer returns a date in march
 - **[fix]** - bare years up to 2059 are recognized
-- **[fix]** - `.times().get()` returns an array (or a bare object for `.get(0)`), like `.dates()`
-- **[change]** - `index.d.ts` rewritten to match the real API; `index.d.cts` is now published
-- **[change]** - the two timezone tables and two normalize steps are unified
+- **[fix]** - `GMT+9` means utc+9
+- **[fix]** - `jst`/`sgt`/`nzst`/`akst` etc now resolve to spelled-out timezones
+- **[fix]** - `'now pst'` keeps the time-of-day, instead of resetting to midnight
+- **[fix]** - `.times().get()` returns an array
+- **[fix]** - typescript types
+- **[change]** - holiday-name spellings 
 
 ### 3.8.0 [May 2026]
 - **[fix]** - 'one thirty am' is not '130 am'

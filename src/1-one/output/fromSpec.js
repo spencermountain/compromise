@@ -6,7 +6,21 @@ const parseLine = function (line = '') {
   tags = tags.split(',').map(tag => tag.trim())
   let lastTag = tags[tags.length - 1]
   tags[tags.length - 1] = lastTag.replace(/}$/, '')
+  tags = tags.map(tag => tag.split('|').map(t => t.trim()))
   return { text, tags }
+}
+
+// make a match syntax looping through the arrays of tags
+const toMatchString = function (tags, aliases) {
+  return tags.map(arr => {
+    arr = arr.map(str => {
+      return '#' + (aliases[str] || str)
+    })
+    if (arr.length > 1) {
+      return `(${arr.join(' && ')})`
+    }
+    return arr[0]
+  }).join(' ')
 }
 
 // parse the adhoc output of out('spec')
@@ -18,8 +32,13 @@ const fromSpec = function (spec) {
   return this.tokenize(cleanText).compute(world.hooks)
 }
 
+// rebuild spec-formatted tag list
+const toTagList = function (tags) {
+  return tags.map(arr => arr.join('|')).join(',')
+}
+
 // compare the tagged text output of out('spec')
-const testSpec = function (spec) {
+const testSpec = function (spec, verbose, throwError = false) {
   let world = this.world()
   let aliases = {}
   // expand tag aliases
@@ -31,16 +50,21 @@ const testSpec = function (spec) {
   })
   let cleanText = spec.split('\n').map(line => {
     let { text, tags } = parseLine(line)
-    tags = tags.map(tag => aliases[tag] || tag)
+    // parse it
     let doc = this.tokenize(text).compute(world.hooks)
-    let match = tags.map(tag => '#' + tag).join(' ')
-    if (doc.has(match)) {
-      console.log(`✅ ${text} {${tags.join(', ')}}`)
-    } else {
-      console.log(`❌ ${text} {${tags.join(', ')}}`)
+    // make compromise-compatible match string
+    let matchStr = toMatchString(tags, aliases)
+    let didMatch = doc.has(matchStr)
+    if (verbose !== false) {
+      let char = didMatch ? '✅' : '❌'
+      console.log(`${char} ${text} {${toTagList(tags)}}`) //eslint-disable-line no-console
     }
-    return text
+    if (didMatch === false && throwError === true) {
+      throw new Error(`❌ ${text} {${toTagList(tags)}}`)
+    }
+    return text // return it anyways
   }).join('\n')
+  // return it anyways
   return this.tokenize(cleanText).compute(world.hooks)
 }
 

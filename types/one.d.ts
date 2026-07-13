@@ -40,6 +40,8 @@ declare namespace nlp {
   export function typeahead(words: Lexicon): any
   /** parse the tagged text output of out('spec') */
   export function fromSpec(spec: string): View
+  /** test the given tagging of a spec-formatted output */
+  export function testSpec(spec: string): View
   /** export internal methods for plugins */
   export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
 }

@@ -22,9 +22,11 @@ import plg from './plugins/dates/src/plugin.js'
 // nlp('i met her').debug()
 // nlp("i water the plants").debug()
 // nlp("go fast").debug()
-nlp("i live at 123 main street").redact({ places: false }).debug()
+// nlp("i live at 123 main street").redact({ places: false }).debug()
 // nlp("Amazon and Apple compete fiercely").redact({ places: false }).debug()
-
+const str = 'Rod L. MacDonald bought a lightening rod'
+const doc = nlp(str).redact().debug()
+// doc.redact({ places: false }).addresses().debug()
 
 // nlp("june of '98" ).debug()
 // missing methods

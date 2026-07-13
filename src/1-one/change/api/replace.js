@@ -57,7 +57,7 @@ fns.replaceWith = function (input, keep = {}) {
   // soften-up pointer
   ptrs = ptrs.map(ptr => ptr.slice(0, 3))
   // original.freeze()
-  const oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
+  let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
   const originalPre = original.docs[0][0].pre
   const originalPost = original.docs[0][original.docs[0].length - 1].post
   // slide this in
@@ -95,7 +95,6 @@ fns.replaceWith = function (input, keep = {}) {
       lastOne.post = originalPost
     }
   }
-
   // what should we return?
   const m = main.toView(ptrs).compute(['index', 'freeze', 'lexicon'])
   if (m.world.compute.preTagger) {
@@ -104,17 +103,11 @@ fns.replaceWith = function (input, keep = {}) {
   m.compute('unfreeze')
   // replace any old tags
   if (keep.tags) {
+    // truncate old tags to only touch new terms
+    oldTags = oldTags.slice(0, input.wordCount())
     m.terms().forEach((term, i) => {
       term.tagSafe(oldTags[i])
     })
-  }
-
-  if (!m.docs[0] || !m.docs[0][0]) return m
-
-  // try to co-erce case, too
-  if (keep.case) {
-    const transformCase = isOriginalTitleCase ? toTitleCase : toLowerCase
-    m.docs[0][0].text = transformCase(m.docs[0][0].text)
   }
   return m
 }

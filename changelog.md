@@ -8,11 +8,6 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 
 
-<!-- #### 14.13.0 [Unreleased]
-- **[fix]** - .not() overlap detection
-- **[fix]** - .before() .after()
--->
-
 #### 14.16.0 [June 2026]
 - **[new]** - apply redaction to #Organization, #Address, etc tags in .redact() method
 - **[new]** - .addresses() method

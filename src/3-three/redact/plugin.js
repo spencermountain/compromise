@@ -17,47 +17,55 @@ const defaults = {
   pronouns: false,
 }
 
+// replace text with blockStr but keep tags
+const redactMatch = function (m, keep = true) {
+  m = m.notIf('#Redacted')
+  m.replaceWith(blockStr, keep)
+  m.tag('Redacted')
+  return m
+}
+
 const redact = function (opts = {}, keep = true) {
   opts = Object.assign({}, defaults, opts)
   if (opts.people !== false) {
-    this.people().replaceWith(blockStr, keep)
+    redactMatch(this.people(), keep)
   }
   if (opts.places !== false) {
-    this.places().replaceWith(blockStr, keep)
+    redactMatch(this.places(), keep)
   }
   if (opts.organizations !== false) {
-    this.organizations().replaceWith(blockStr, keep)
+    redactMatch(this.organizations(), keep)
   }
   if (opts.emails !== false) {
-    this.emails().replaceWith(blockStr, keep)
+    redactMatch(this.emails(), keep)
   }
   if (opts.money !== false) {
-    this.money().replaceWith(blockStr, keep)
+    redactMatch(this.money(), keep)
   }
   if (opts.percentages !== false) {
-    this.percentages().replaceWith(blockStr, keep)
+    redactMatch(this.percentages(), keep)
   }
   if (opts.fractions !== false) {
-    this.fractions().replaceWith(blockStr, keep)
+    redactMatch(this.fractions(), keep)
   }
   if (opts.phoneNumbers !== false) {
-    this.phoneNumbers().replaceWith(blockStr, keep)
+    redactMatch(this.phoneNumbers(), keep)
   }
   if (opts.atMentions !== false) {
-    this.atMentions().replaceWith(blockStr, keep)
+    redactMatch(this.atMentions(), keep)
   }
   if (opts.acronyms !== false) {
-    this.acronyms().replaceWith(blockStr, keep)
+    redactMatch(this.acronyms(), keep)
   }
   // off by default
   if (opts.properNouns !== false) {
-    this.properNouns().replaceWith(blockStr, keep)
+    redactMatch(this.properNouns(), keep)
   }
   if (opts.dates !== false) {
-    this.dates().replaceWith(blockStr, keep)
+    redactMatch(this.dates(), keep)
   }
   if (opts.pronouns !== false) {
-    this.pronouns().replaceWith(blockStr, keep)
+    redactMatch(this.pronouns(), keep)
   }
   return this
 }

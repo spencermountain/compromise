@@ -265,7 +265,7 @@ const addMethod = function (View) {
   }
   View.prototype.percentages = function (n) {
     let m = find(this)
-    m = m.filter(v => v.has('#Percent') || v.after('^percent'))
+    m = m.filter(v => v.has('#Percent'))
     m = m.getNth(n)
     return new Numbers(this.document, m.pointer)
   }

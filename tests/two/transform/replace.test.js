@@ -211,7 +211,7 @@ test('replace-with-no-match', function (t) {
 test('replace-with-phone-number', function (t) {
   const doc = nlp('Phone: +1 (123) 456-7890')
   doc.match('#PhoneNumber').replaceWith((p) => p.text().replace(/\d{3}/, '555'))
-  t.equal(doc.text(), 'Phone: +1 (555) 555-7890')
+  t.equal(doc.text(), 'Phone: +1 (555) 555-7890', 'replace-with-phone-number')
 
   t.end()
 })

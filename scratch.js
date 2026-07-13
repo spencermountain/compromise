@@ -20,9 +20,10 @@ nlp.verbose(true)
 // paris has trailing period
 // console.log(nlp('I went to Paris.').places().out('array'))
 // nlp('i met her').debug()
-nlp("We met a cat yesterday").debug()
 // nlp("i water the plants").debug()
-// nlp("it plays music").debug()
+// nlp("go fast").debug()
+nlp("i live at 123 main street").redact({ addresses: false }).debug()
+// nlp("Amazon and Apple compete fiercely").redact({ addresses: false }).debug()
 
 
 // nlp("june of '98" ).debug()

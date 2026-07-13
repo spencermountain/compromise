@@ -167,7 +167,7 @@ export default [
   { match: 'i #Verb [me] #Noun', group: 0, tag: 'Possessive', reason: 'scottish-me' },
   // dance music
   {
-    match: '[#PresentTense] (music|class|lesson|night|party|festival|league|ceremony)',
+    match: '[#Infinitive] (music|class|lesson|night|party|festival|league|ceremony)',
     group: 0,
     tag: 'Noun',
     reason: 'dance-music',

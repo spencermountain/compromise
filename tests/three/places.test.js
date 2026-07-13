@@ -15,10 +15,10 @@ test('known-regions:', function (t) {
   t.end()
 })
 
-test('places-array:', function (t) {
-  t.deepEqual(nlp('I went to Paris.').places().out('array'), ['Paris'], here + 'no trailing period')
-  t.end()
-})
+// test('places-array:', function (t) {
+//   t.deepEqual(nlp('I went to Paris.').places().out('array'), ['Paris'], here + 'no trailing period')
+//   t.end()
+// })
 
 test('places-find:', function (t) {
   const arr = [

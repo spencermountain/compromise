@@ -6,14 +6,7 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
-<!-- #### [planned breaking]
-- fix doc.json(0) inconsistency
-- fix text() options
-- deprecate #Participle for #PastParticiple
-- run chunker only when necessary
-- cleanup verb+noun metadata in json()
-- remove confidence numbers
--->
+
 
 <!-- #### 14.13.0 [Unreleased]
 - **[fix]** - .not() overlap detection

@@ -1,8 +1,8 @@
 
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
+import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
-// nlp.plugin(plg)
+nlp.plugin(plg)
 nlp.verbose(true)
 
 
@@ -20,7 +20,9 @@ nlp.verbose(true)
 // paris has trailing period
 // console.log(nlp('I went to Paris.').places().out('array'))
 // nlp('i met her').debug()
-nlp("3pm central time").debug()
+nlp("We met a cat yesterday").debug()
+// nlp("i water the plants").debug()
+// nlp("it plays music").debug()
 
 
 // nlp("june of '98" ).debug()

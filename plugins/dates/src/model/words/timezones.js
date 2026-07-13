@@ -264,76 +264,6 @@ const informal = {
   pgt: pac + 'Bougainville',
 }
 
-// resolvable, but too ambiguous to add to the tagging lexicon -
-// these are only recognized as timezones by their context (like '4pm sgt')
-const unsafeToTag = [
-  'ireland',
-  'trt',
-  'etc',
-  'eat',
-  'cat',
-  'wat',
-  'wet',
-  'sast',
-  'central',
-  'mountain',
-  'pacific',
-  'eastern',
-  'ast',
-  'nst',
-  'ndt',
-  'brt',
-  'brasília',
-  'brasilia',
-  'art',
-  'amt',
-  'easst',
-  'vet',
-  'pyt',
-  'pyst',
-  'bot',
-  'cot',
-  'pet',
-  'ist',
-  'irst',
-  'irdt',
-  'iranian',
-  'pkt',
-  'ict',
-  'south east asia',
-  'jst',
-  'almt',
-  'gst',
-  'uae',
-  'hkt',
-  'wib',
-  'wita',
-  'idt',
-  'israeli',
-  'krat',
-  'myt',
-  'sgt',
-  'uzt',
-  'vlat',
-  'mvt',
-  'mut',
-  'nzst',
-  'nzdt',
-  'akst',
-  'akdt',
-  'irkt',
-  'mht',
-  'sst',
-  'chst',
-  'pgt',
-  'russian',
-  'south african',
-  'southern africa',
-  'australia central',
-  'australia east',
-  'australia west',
-  'australia central west',
-]
 
 //add the official iana zonefile names, like 'canada/eastern'
 const iana = spacetime().timezones
@@ -342,5 +272,4 @@ const formal = Object.keys(iana).reduce((h, k) => {
   return h
 }, {})
 
-export { unsafeToTag }
 export default Object.assign({}, informal, formal)

@@ -29,12 +29,27 @@ const slotForTerm = function (term, tagSet) {
   return rootOf(primary, tagSet)
 }
 
+const makeAliases = function (tagSet) {
+  const aliases = {}
+  for (const tag in tagSet) {
+    const entry = tagSet[tag]
+    if (entry.alias) {
+      aliases[tag] = entry.alias
+    }
+  }
+  return aliases
+}
+
 // one line per sentence: '<text> {Tag,Tag,…}'
 const toSpec = function (doc, world) {
   const tagSet = world.model.one.tagSet
+  const aliases = makeAliases(tagSet)
   return doc.docs.map(terms => {
     const text = terms.reduce((str, t) => str + t.pre + t.text + t.post, '').trim()
-    const tags = terms.map(t => slotForTerm(t, tagSet)).join(',')
+    const tags = terms.map(t => {
+      let tag = slotForTerm(t, tagSet)
+      return aliases[tag] || tag
+    }).join(',')
     return `${text} {${tags}}`
   }).join('\n')
 }

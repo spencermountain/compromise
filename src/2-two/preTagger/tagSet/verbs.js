@@ -1,31 +1,37 @@
 export default {
   Verb: {
     not: ['Noun', 'Adjective', 'Adverb', 'Value', 'Expression'],
+    alias: 'Vb'
   },
   // 'he [walks]'
   PresentTense: {
     is: 'Verb',
     not: ['PastTense', 'FutureTense'],
+    alias: 'Pres'
   },
   // 'will [walk]'
   Infinitive: {
     is: 'PresentTense',
     not: ['Gerund'],
+    alias: 'Inf'
   },
   // '[walk] now!'
   Imperative: {
     is: 'Verb',
     not: ['PastTense', 'Gerund', 'Copula'],
+    alias: 'Imp'
   },
   // walking
   Gerund: {
     is: 'PresentTense',
     not: ['Copula'],
+    alias: 'Ger'
   },
   // walked
   PastTense: {
     is: 'Verb',
     not: ['PresentTense', 'Gerund', 'FutureTense'],
+    alias: 'Past'
   },
   // will walk
   FutureTense: {

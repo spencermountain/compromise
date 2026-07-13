@@ -1,6 +1,7 @@
 export default {
   Value: {
     not: ['Verb', 'Adjective', 'Adverb'],
+    alias: 'Val'
   },
   Ordinal: {
     is: 'Value',

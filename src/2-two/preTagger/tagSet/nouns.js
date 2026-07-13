@@ -3,6 +3,7 @@ const entity = ['Person', 'Place', 'Organization']
 export default {
   Noun: {
     not: ['Verb', 'Adjective', 'Adverb', 'Value', 'Determiner'],
+    alias: 'Noun'
   },
   Singular: {
     is: 'Noun',
@@ -62,6 +63,7 @@ export default {
   Organization: {
     is: 'ProperNoun',
     not: ['Person', 'Place'],
+    alias: 'Org'
   },
   SportsTeam: {
     is: 'Organization',
@@ -109,6 +111,7 @@ export default {
   // [spencer's] hat
   Possessive: {
     is: 'Noun',
+    alias: 'Poss'
   },
   // 'yourself'
   Reflexive: {

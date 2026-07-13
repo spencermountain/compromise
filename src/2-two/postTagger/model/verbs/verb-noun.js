@@ -174,4 +174,6 @@ export default [
   { match: '[#Noun] me', group: 0, tag: 'Verb', reason: 'kills-me' },
   // removes wrinkles
   { match: '%Plural|Verb% %Plural|Verb%', tag: '#PresentTense #Plural', reason: 'removes-wrinkles' },
+  // i water the plants
+  { match: 'i [#Noun] the #Noun', group: 0, tag: 'Infinitive', reason: 'i-water-the-plants' },
 ]

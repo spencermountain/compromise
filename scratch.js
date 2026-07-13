@@ -20,11 +20,8 @@ import plg from './plugins/dates/src/plugin.js'
 // paris has trailing period
 // console.log(nlp('I went to Paris.').places().out('array'))
 // nlp('i met her').debug()
-// nlp("i water the plants").debug()
+nlp("i water the plants").debug()
 // nlp("go fast").debug()
-// nlp("i live at 123 main street").redact({ places: false }).debug()
-nlp("Amazon and Apple.com compete fiercely").redact({ places: false }).debug()
-// console.log(doc.percentages().json())
 
 // let spec = `100 % SCAM {Value,Value,Acronym}
 // good dog {Adjective,Noun}`

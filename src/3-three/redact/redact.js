@@ -2,15 +2,16 @@ const blockStr = '██████████'
 
 const defaults = {
   people: true,
-  emails: true,
-  phoneNumbers: true,
   places: true,
   organizations: true,
-  atMentions: true,
   acronyms: true,
   money: true,
   percentages: true,
   fractions: true,
+  emails: true,
+  phoneNumbers: true,
+  atMentions: true,
+  urls: true,
   // off by default
   properNouns: false,
   dates: false,
@@ -57,6 +58,9 @@ const redact = function (opts = {}, keep = true) {
   }
   if (opts.acronyms !== false) {
     redactMatch(this.acronyms(), keep)
+  }
+  if (opts.urls !== false) {
+    redactMatch(this.urls(), keep)
   }
   // off by default
   if (opts.properNouns !== false) {

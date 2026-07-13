@@ -95,7 +95,7 @@ test('redact-organizations:', function (t) {
     [`the FBI opened an investigation.`, `the ${blockStr} opened an investigation.`],
     [`HSBC reported earnings.`, `${blockStr} reported earnings.`],
     [`He interned at the New York Times.`, `He interned at the ${blockStr}.`],
-    [`Amazon and Apple compete fiercely.`, `${blockStr} and ${blockStr} compete fiercely.`],
+    [`Amazon Inc and Apple.com compete fiercely.`, `${blockStr} and ${blockStr} compete fiercely.`],
   ]
   arr.forEach(a => {
     t.equal(redact(a[0]) + '|', a[1] + '|', here + 'org - ' + a[0])

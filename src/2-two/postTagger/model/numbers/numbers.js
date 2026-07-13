@@ -49,5 +49,7 @@ export default [
   // 5 square miles
   { match: '#Value [(square|cubic)] #Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
   //twelve percent
-  { match: '#Cardinal percent', tag: 'Percent', reason: 'value-percent' },
+  { match: '#Cardinal percent', tag: '#Percent #Unit', reason: 'value-percent' },
+  // ambiguous units
+  { match: '#Value [(gb|pa|ft|foot|feet|m)]', group: 0, tag: 'Unit', reason: 'ambiguous-unit' },
 ]

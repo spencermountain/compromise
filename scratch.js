@@ -3,31 +3,12 @@ import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
 // nlp.plugin(plg)
-// nlp.verbose(true)
+nlp.verbose(true)
 
 
 // already tested for
-// nlp('simon says run').debug()
-
-// redact misses google
-// console.log(nlp('Mary joined Google today').debug().redact().text())
-
-
-// let doc = nlp('I live at 4 main street. I work at the bank.').debug()
-// console.log(doc.out('spec'))
-// nlp('Call John Smith at (800) 555-0000.').debug().redact().debug()
-
-// paris has trailing period
-// console.log(nlp('I went to Paris.').places().out('array'))
-// nlp('i met her').debug()
-nlp("i water the plants").debug()
-// nlp("go fast").debug()
-
-// let spec = `100 % SCAM {Value,Value,Acronym}
-// good dog {Adjective,Noun}`
-// nlp.fromSpec(spec).debug()
-// doc.redact({ places: false }).addresses().debug()
-
+let doc = nlp('a 600 GB harddrive').debug()
+doc.numbers().debug()
 // nlp("june of '98" ).debug()
 // missing methods
 // let out = nlp('it cost 2.50 yuan').debug().money().json()

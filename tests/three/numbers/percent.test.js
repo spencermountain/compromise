@@ -35,7 +35,7 @@ test('percent-conversion:', function (t) {
 
   str = 'around 100% of the budget'
   r = nlp(str).values().toText().all()
-  t.equal(r.out(), 'around one hundred percent of the budget', here + 'to text')
+  t.equal(r.out(), 'around one hundred percent of the budget', here + '%to text')
 
   str = 'around 100 percent of the budget'
   r = nlp(str).values().toText().all()

@@ -83,7 +83,6 @@ export default [
   'nitrate',
   'substrate',
   'acetate',
-  'us state',
   'estate',
   'prostate',
 

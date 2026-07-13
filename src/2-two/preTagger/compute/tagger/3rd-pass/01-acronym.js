@@ -19,6 +19,7 @@ const places = {
   us: true,
   dc: true,
   gb: true,
+  uk: true,
 }
 
 // just uppercase acronyms, no periods - 'UNOCHA'
@@ -32,6 +33,9 @@ const isNoPeriodAcronym = function (term, model) {
     } else {
       return false
     }
+  } else if (places.hasOwnProperty(term.normal) === true) {
+    // NY, US, UK, etc.
+    return true
   }
   // long capitalized words are not usually either
   if (str.length > 5) {

@@ -12,7 +12,7 @@ export default [
   // do it again
   { match: '^[#Infinitive] it (please|now|again|plz)', notIf, group: 0, tag: 'Imperative', reason: 'do-it-please' },
   // go quickly.
-  { match: '^[#Infinitive] (#Adjective|#Adverb)$', group: 0, tag: 'Imperative', notIf: '(so|such|rather|enough)', reason: 'go-quickly' },
+  { match: '^[#Infinitive] (#Adjective|#Adverb|hard|high|fast|slow)$', group: 0, tag: 'Imperative', notIf: '(so|such|rather|enough)', reason: 'go-quickly' },
   // turn down the noise
   { match: '^[#Infinitive] (up|down|over) #Determiner', group: 0, tag: 'Imperative', reason: 'turn-down' },
   // eat my shorts

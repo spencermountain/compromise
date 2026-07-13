@@ -1,10 +1,11 @@
+const blockStr = '██████████'
+
 const defaults = {
   people: true,
   emails: true,
   phoneNumbers: true,
   places: true,
   organizations: true,
-  addresses: true,
   atMentions: true,
   acronyms: true,
   money: true,
@@ -16,53 +17,48 @@ const defaults = {
   pronouns: false,
 }
 
-const redact = function (opts = {}) {
+const redact = function (opts = {}, keep = true) {
   opts = Object.assign({}, defaults, opts)
   if (opts.people !== false) {
-    this.people().replaceWith('██████████')
+    this.people().replaceWith(blockStr, keep)
   }
   if (opts.places !== false) {
-    this.places().replaceWith('██████████')
+    this.places().replaceWith(blockStr, keep)
   }
   if (opts.organizations !== false) {
-    this.organizations().replaceWith('██████████')
-  }
-  if (opts.addresses !== false) {
-    this.addresses().replaceWith('██████████')
+    this.organizations().replaceWith(blockStr, keep)
   }
   if (opts.emails !== false) {
-    this.emails().replaceWith('██████████')
+    this.emails().replaceWith(blockStr, keep)
   }
   if (opts.money !== false) {
-    this.money().replaceWith('██████████')
+    this.money().replaceWith(blockStr, keep)
   }
   if (opts.percentages !== false) {
-    this.percentages().replaceWith('██████████')
+    this.percentages().replaceWith(blockStr, keep)
   }
   if (opts.fractions !== false) {
-    this.fractions().replaceWith('██████████')
+    this.fractions().replaceWith(blockStr, keep)
   }
   if (opts.phoneNumbers !== false) {
-    this.phoneNumbers().replaceWith('███████')
+    this.phoneNumbers().replaceWith(blockStr, keep)
   }
   if (opts.atMentions !== false) {
-    this.atMentions().replaceWith('██████████')
+    this.atMentions().replaceWith(blockStr, keep)
   }
   if (opts.acronyms !== false) {
-    this.acronyms().replaceWith('██████████')
+    this.acronyms().replaceWith(blockStr, keep)
   }
-
   // off by default
   if (opts.properNouns !== false) {
-    this.properNouns().replaceWith('██████████')
+    this.properNouns().replaceWith(blockStr, keep)
   }
   if (opts.dates !== false) {
-    this.dates().replaceWith('██████████')
+    this.dates().replaceWith(blockStr, keep)
   }
   if (opts.pronouns !== false) {
-    this.pronouns().replaceWith('██████████')
+    this.pronouns().replaceWith(blockStr, keep)
   }
-
   return this
 }
 

@@ -2,8 +2,8 @@
 import nlp from './src/three.js'
 import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
-nlp.plugin(plg)
-nlp.verbose(true)
+// nlp.plugin(plg)
+// nlp.verbose(true)
 
 
 // already tested for
@@ -22,8 +22,8 @@ nlp.verbose(true)
 // nlp('i met her').debug()
 // nlp("i water the plants").debug()
 // nlp("go fast").debug()
-nlp("i live at 123 main street").redact({ addresses: false }).debug()
-// nlp("Amazon and Apple compete fiercely").redact({ addresses: false }).debug()
+nlp("i live at 123 main street").redact({ places: false }).debug()
+// nlp("Amazon and Apple compete fiercely").redact({ places: false }).debug()
 
 
 // nlp("june of '98" ).debug()

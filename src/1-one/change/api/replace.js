@@ -33,6 +33,14 @@ const subDollarSign = function (input, main) {
 
 fns.replaceWith = function (input, keep = {}) {
   let ptrs = this.fullPointer
+  // support keep-all option
+  if (keep === true) {
+    keep = {
+      tags: true,
+      case: true,
+      possessives: true,
+    }
+  }
   const main = this
   this.uncache()
   if (typeof input === 'function') {
@@ -108,14 +116,6 @@ fns.replaceWith = function (input, keep = {}) {
     const transformCase = isOriginalTitleCase ? toTitleCase : toLowerCase
     m.docs[0][0].text = transformCase(m.docs[0][0].text)
   }
-
-  // console.log(input.docs[0])
-  // let regs = input.docs[0].map(t => {
-  //   return { id: t.id, optional: true }
-  // })
-  // m.after('(a|hoy)').debug()
-  // m.growRight('(a|hoy)').debug()
-  // console.log(m)
   return m
 }
 

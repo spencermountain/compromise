@@ -151,7 +151,7 @@ test('addresses-redact-overlap:', function (t) {
   const str = 'spencer from 234 Main st at 423-3242 and spencer@gmail.com.'
   const doc = nlp(str)
   t.equal(doc.addresses().text('normal'), '234 main st', here + 'redact sample address')
-  t.equal(doc.redact({ addresses: false }).addresses().text('normal'), '234 main st', here + 'skip address redact')
+  t.equal(doc.redact({ places: false }).addresses().text('normal'), '234 main st', here + 'skip address redact')
   t.end()
 })
 

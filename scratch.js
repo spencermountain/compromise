@@ -24,8 +24,12 @@ import plg from './plugins/dates/src/plugin.js'
 // nlp("go fast").debug()
 // nlp("i live at 123 main street").redact({ places: false }).debug()
 // nlp("Amazon and Apple compete fiercely").redact({ places: false }).debug()
-const str = 'Rod L. MacDonald bought a lightening rod'
-const doc = nlp(str).redact().debug()
+nlp("Dr. Matt G Smith lasted three seasons").redact({ places: false }).debug()
+// console.log(doc.percentages().json())
+
+// let spec = `100 % SCAM {Value,Value,Acronym}
+// good dog {Adjective,Noun}`
+// nlp.fromSpec(spec).debug()
 // doc.redact({ places: false }).addresses().debug()
 
 // nlp("june of '98" ).debug()

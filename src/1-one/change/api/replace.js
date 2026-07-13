@@ -109,6 +109,14 @@ fns.replaceWith = function (input, keep = {}) {
       term.tagSafe(oldTags[i])
     })
   }
+
+  if (!m.docs[0] || !m.docs[0][0]) return m
+
+  // try to co-erce case, too
+  if (keep.case) {
+    const transformCase = isOriginalTitleCase ? toTitleCase : toLowerCase
+    m.docs[0][0].text = transformCase(m.docs[0][0].text)
+  }
   return m
 }
 

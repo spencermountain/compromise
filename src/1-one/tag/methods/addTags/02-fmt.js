@@ -15,7 +15,7 @@ const getColor = function (node) {
 const fmt = function (nodes) {
   const res = {}
   nodes.forEach(node => {
-    const { not, also, is, novel, alias } = node.props
+    const { not, also, is, novel } = node.props
     let parents = node._cache.parents
     if (also) {
       parents = parents.concat(also)
@@ -28,7 +28,7 @@ const fmt = function (nodes) {
       parents,
       children: node._cache.children,
       color: getColor(node),
-      alias,
+      alias: node.alias,
     }
   })
   // lastly, add all children of all nots

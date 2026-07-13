@@ -11,5 +11,5 @@ import nlp from './src/three.js'
 // On July 13, the City of Toronto will {open} a new 1.5 km multi-use trail that will connect the Don Valley Trail to the Humber River and the Don River.`)
 // console.log(doc.out('spec'))
 
-let spec = `Hikers {and} cyclists. {Noun,Conj,Noun}`
+let spec = `Hikers {and} cyclists hunted. {Noun,Conj,Noun,Past}`
 nlp.testSpec(spec)//.debug()

@@ -24,7 +24,6 @@ const testSpec = function (spec) {
   let aliases = {}
   // expand tag aliases
   let tags = world.model.one.tagSet
-  console.log(tags.MaleName)
   Object.keys(tags).forEach(k => {
     if (tags[k].alias) {
       aliases[tags[k].alias] = k

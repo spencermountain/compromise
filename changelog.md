@@ -18,6 +18,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - .money() selector and methods
 - **[fix]** - tokenize phone-numbers with parentheses
 - **[fix]** - replaceWith keep-tag issue
+- **[fix]** - phone numbers with parentheses
 - **[fix]** - preposition-conjunction tagging
 - **[fix]** - ambiguous timezones 'today in EST'
 - **[update]** - dependencies

@@ -147,18 +147,29 @@ test('do-math:', function (t) {
   t.end()
 })
 
-// test('fraction-toText:', function (t) {
-//   const arr = [
-//     ['1/2', 'one half'],
-//     ['two thirds', 'two thirds'],
-//   ]
-//   arr.forEach(a => {
-//     const doc = nlp(a[0])
-//     doc.fractions().toText()
-//     t.equal(doc.text(), a[1], here + a[0])
-//   })
-//   t.end()
-// })
+test('fraction-toText:', function (t) {
+  const arr = [
+    ['1/2', 'one half'],
+    ['two thirds', 'two thirds'],
+    ['4/10', 'four tenths'],
+    ['3/5', 'three fifths'],
+    ['3/8', 'three eighths'],
+    ['3/2', 'three halfs'],
+    ['1/100', 'one one hundredth'],
+    ['4/100', 'four one hundredths'],
+    ['4/3', 'four thirds'],
+    ['4/25', 'four twenty fifths'],
+    ['1/20', 'one twentieth'],
+    ['2/10 of farmers', 'two tenths of farmers'],
+    ['i ate 7/10 of a pie', 'i ate seven tenths of a pie'],
+  ]
+  arr.forEach(a => {
+    const doc = nlp(a[0])
+    doc.fractions().toText()
+    t.equal(doc.text(), a[1], here + a[0])
+  })
+  t.end()
+})
 
 test('fraction ordinal/cardinal:', function (t) {
   let doc = nlp('three fifths of an inch')

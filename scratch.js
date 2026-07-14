@@ -1,9 +1,9 @@
 
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
+import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
-// nlp.plugin(plg)
-nlp.verbose(true)
+nlp.plugin(plg)
+// nlp.verbose(true)
 
 let arr = [
   // 'to' before a noun-phrase is a preposition - tagged Conjunction
@@ -29,4 +29,6 @@ let arr = [
   // garden-path: 'houses' is the verb - tagged Noun|Plural
   'the complex houses married and single soldiers. {Det,Adj,Vb,Adj,Conj,Adj,Noun}'
 ]
-let doc = nlp.fromSpec(arr[0]).debug()
+// let doc = nlp.fromSpec(arr[0]).debug()
+
+nlp('today in EST').debug()

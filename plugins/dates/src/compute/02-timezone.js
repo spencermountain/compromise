@@ -25,5 +25,10 @@ const tagTz = function (doc) {
   if (off.found) {
     off.tag('Timezone', 'tz-offset')
   }
+  // ambiguous timezones 'today in EST'
+  const inTz = doc.match('#Date in (est|met|ast)')
+  if (inTz.found) {
+    inTz.tag('#Date #Date Timezone', 'in-est')
+  }
 }
 export default tagTz

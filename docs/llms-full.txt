@@ -1,4 +1,4 @@
-# compromise 14.15.1 — full documentation for LLMs
+# compromise 14.16.0 — full documentation for LLMs
 # https://github.com/spencermountain/compromise
 # This file concatenates every in-repo doc into one fetchable text.
 
@@ -24,6 +24,7 @@ the published docs at observablehq.com are interactive notebooks and do not rend
 | [docs/api.md](docs/api.md) | every method, signature, and one-line description |
 | [docs/recipes.md](docs/recipes.md) | copy-paste solutions to common tasks |
 | [llms-full.txt](docs/llms-full.txt) | all of the above concatenated into one file |
+| [docs/SKILL.md](docs/SKILL.md) | example skill for using compromise in a coding agent |
 
 ## 30-second mental model
 
@@ -419,7 +420,7 @@ See [concepts.md](concepts.md) for the document model and [api.md](api.md) for e
 
 # Compromise Tags (Part-of-Speech tagset)
 
-Every term is assigned one or more of these **88 tags**. Use them in match-patterns with a `#` prefix, e.g. `doc.match('#Person')`.
+Every term is assigned one or more of these **89 tags**. Use them in match-patterns with a `#` prefix, e.g. `doc.match('#Person')`.
 
 Tags are a hierarchy: tagging a term `#FirstName` also makes it a `#Person` and a `#Noun`. Tagging a term one thing may remove conflicting tags (a term can't be both `#Singular` and `#Plural`).
 
@@ -539,6 +540,7 @@ Tags are a hierarchy: tagging a term `#FirstName` also makes it a `#Person` and 
 | `#PhoneNumber` | — | (555) 123-4567 |
 | `#Prefix` | — | co- |
 | `#QuestionWord` | — | who |
+| `#Redacted` | — |  |
 | `#SlashedTerm` | — | love/hate |
 | `#There` | — | there |
 | `#Url` | — | compromise.cool |

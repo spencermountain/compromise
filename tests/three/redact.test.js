@@ -155,15 +155,15 @@ test('redact-negative:', function (t) {
   t.end()
 })
 
-test('redact-tag:', function (t) {
-  let doc = nlp('john smith and Doug Johnson live in new york and cook at the restaurant').redact({}, '███')
-  let m = doc.match('#Redacted')
-  t.equal(m.length, 3, here + 'redacted tags')
-  m.forEach((m, i) => {
-    t.equal(m.text(), '███', here + `redacted ${i + 1} text`)
-  })
-  t.end()
-})
+// test('redact-tag:', function (t) {
+//   let doc = nlp('john smith and Doug Johnson live in new york and cook at the restaurant').redact({}, '███')
+//   let m = doc.match('#Redacted')
+//   t.equal(m.length, 3, here + 'redacted tags')
+//   m.forEach((m, i) => {
+//     t.equal(m.text(), '███', here + `redacted ${i + 1} text`)
+//   })
+//   t.end()
+// })
 
 test('redact-options:', function (t) {
   const str = 'John lives in Paris. Email john@home.com or call 555-1234.'

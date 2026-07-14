@@ -31,6 +31,8 @@ let arr = [
 ]
 // let doc = nlp.fromSpec(arr[0]).debug()
 
-nlp('john smith and Doug Johnson live in new york and cook at the restaurant').redact().debug()
+let doc = nlp('john smith and Doug Johnson live in new york and cook at the restaurant')
+doc.debug()
+// doc.redact().debug()
 // nlp('john smith and Sally Morris lives in new york').redact().debug()
 

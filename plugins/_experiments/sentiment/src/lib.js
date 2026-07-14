@@ -183,7 +183,13 @@ function chunkArrays(wordsArr, labelsArr) {
 *
 */
 function value_limit(val, min, max) {
-  return val < min ? min : (val > max ? max : val);
+  if (val < min) {
+    return min;
+  }
+  if (val > max) {
+    return max;
+  }
+  return val;
 }
 
 // Average all values in inputArr together

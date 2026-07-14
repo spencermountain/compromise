@@ -112,7 +112,6 @@ doc.dates().get()[0]
 | _eastern time_                      |  <sup>_informal zone support_</sup>   |               '' |               '' |
 | _est_                               |      <sup>_TZ shorthands_</sup>       |               '' |               '' |
 | _peru time_                         |                                       |               '' |               '' |
-| _..in beirut_                       |       <sup>_by location_</sup>        |               '' |               '' |
 | _GMT+9_                             |    <sup>_by UTC/GMT offset_</sup>     |               '' |               '' |
 | _-4h_                               |                  ''                   |               '' |               '' |
 | _Canada/Eastern_                    |        <sup>_IANA codes_</sup>        |               '' |               '' |
@@ -140,7 +139,7 @@ doc.dates().get()[0]
 | _middle of q2 last year_            | <sup>_rough-center calculation_</sup> |               '' |               '' |
 | <br/>**`date-ranges:`**             |                                       |
 | _between june and july_             |     <sup>_explicit ranges_</sup>      |               '' |               '' |
-| _from today to next haloween_       |                                       |               '' |               '' |
+| _from today to next halloween_      |                                       |               '' |               '' |
 | _aug 1 - aug 31_                    |       <sup>_dash-ranges_</sup>        |               '' |               '' |
 | _22-23 February_                    |                                       |               '' |               '' |
 | _today to next friday_              |                                       |               '' |               '' |
@@ -177,7 +176,6 @@ doc.dates().get()[0]
 | _not this Saturday, but the Saturday after_ |   self-reference logic   |   ''    |  ''   |
 | _3 years ago tomorrow_                      |    folksy short-hand     |   ''    |  ''   |
 | _2100_                                      |  military time formats   |   ''    |  ''   |
-| _may 97_                                    |   'bare' 2-digit years   |   ''    |  ''   |
 
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -198,7 +196,7 @@ doc.dates().get()[0]
   - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for duration
   - **[.durations().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with duration metadata
 - **[.times()](https://observablehq.com/@spencermountain/compromise-dates)** - `4:30pm` or `half past five`
-  - **[.durations().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
+  - **[.times().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
   - **[.times().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with time metadata
 
 <!-- spacer -->
@@ -210,7 +208,7 @@ doc.dates().get()[0]
 
 ```js
 const context = {
-  timezone: 'Canada/Eastern', //the default timezone is 'ETC/UTC'
+  timezone: 'Canada/Eastern', //the default is your local timezone
   today: '2020-02-20', //the implicit, or reference day/year
   punt: { weeks: 2 }, // the implied duration to use for 'after june 2nd'
   dayStart: '8:00am',
@@ -329,7 +327,9 @@ compromise will tag anything that looks like a date, but not validate the dates 
 
 ### _Inclusive/exclusive ranges:_
 
-_'between january and march'_ will include all of march. This is usually pretty-ambiguous normally.
+_'between january and march'_ is **exclusive** - it ends where march begins.
+_'january to march'_ is **inclusive** - it ends with the last day of march.
+This is usually pretty-ambiguous normally.
 
 ### _Date greediness:_
 
@@ -357,7 +357,7 @@ nlp.extend(function (Doc, world) {
 ### _Misc:_
 
 - _'thursday the 16th'_ - will set to the 16th, even if it's not thursday
-- _'in a few hours/years'_ - in 2 hours/years
+- _'in a few hours/years'_ - in 3 hours/years, _'a couple of'_ - in 2
 - _'jan 5th 2008 to Jan 6th the following year'_ - date-range explicit references
 - assume _'half past 5'_ is 5pm
 

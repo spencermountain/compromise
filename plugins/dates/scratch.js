@@ -8,7 +8,7 @@ nlp.plugin(datePlugin)
 
 const fmt = iso => (iso ? spacetime(iso).format('{day-short} {nice} {year}') : '-')
 
-process.env.DEBUG_DATE = true
+// process.env.DEBUG_DATE = true
 
 // date issues:
 // 'the month before christmas' vs 'a month before christmas'
@@ -48,22 +48,22 @@ let txt = ` We will see him in mid-September`
 // txt = 'in 1-2 weeks from now'
 // txt = 'in 1 to 2 months'
 // txt = `end of september`
-txt = `march 3rd and 7th`
+txt = `august 1st 2019`
 
 // nlp.verbose('tagger')
 const doc = nlp(txt)
 // doc.debug('dates')
 // console.log(doc.dates().get())
 // doc.times().format('24h')
-doc.debug()
+// doc.debug()
 
 // console.log(doc.times(context).json())
 const found = doc.dates(context).json()
 console.log(found)
-found.forEach((o) => {
-  console.log('start: ', fmt(o.dates.start))
-  console.log('  end: ', fmt(o.dates.end))
-})
+// found.forEach((o) => {
+//   console.log('start: ', fmt(o.dates.start))
+//   console.log('  end: ', fmt(o.dates.end))
+// })
 
 // let doc = nlp(txt).debug()
 // let m = doc.dates(context)

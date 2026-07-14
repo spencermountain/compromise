@@ -1,0 +1,19 @@
+# compromise
+
+> A rule-based natural-language-processing library for English. Tokenizes text, tags parts-of-speech,
+> and finds & transforms parts of the text. Runs offline in node and the browser, no dependencies.
+> Not an LLM/neural model. Current version 14.16.0.
+
+Docs below are plain markdown (the published observablehq.com notebooks do not render as readable text).
+
+## Docs
+- [AGENTS.md](AGENTS.md): start here — mental model, rules, and the mistakes to avoid
+- [Concepts](docs/concepts.md): document/View/Term model, mutability, build tiers
+- [Match syntax](docs/match-syntax.md): the .match() mini-language
+- [Tags](docs/tags.md): the complete, valid part-of-speech tagset
+- [API](docs/api.md): every method, signature, and description
+- [Recipes](docs/recipes.md): copy-paste solutions to common tasks
+
+## Optional
+- [Full text](docs/llms-full.txt): every doc above concatenated into one file
+- [README](README.md): the human-facing overview

@@ -1,0 +1,1081 @@
+# compromise 14.16.0 — full documentation for LLMs
+# https://github.com/spencermountain/compromise
+# This file concatenates every in-repo doc into one fetchable text.
+
+
+
+==============================================================================
+# FILE: AGENTS.md
+==============================================================================
+
+# AGENTS.md — using compromise
+
+Guidance for AI coding agents (and humans) writing code with **compromise**, a rule-based English
+NLP library. This file is the map; the linked docs are the territory. Prefer them over guessing —
+the published docs at observablehq.com are interactive notebooks and do not render as readable text.
+
+## Read these first
+
+| File | What's in it |
+|---|---|
+| [docs/concepts.md](docs/concepts.md) | the document/View/Term model, **mutability**, build tiers — the mental model |
+| [docs/match-syntax.md](docs/match-syntax.md) | the `.match()` mini-language (`#Tag`, `[capture]`, `(a\|b)`, `~fuzzy~`, `{root}`, …) |
+| [docs/tags.md](docs/tags.md) | the complete, valid part-of-speech tagset |
+| [docs/api.md](docs/api.md) | every method, signature, and one-line description |
+| [docs/recipes.md](docs/recipes.md) | copy-paste solutions to common tasks |
+| [llms-full.txt](docs/llms-full.txt) | all of the above concatenated into one file |
+| [docs/SKILL.md](docs/SKILL.md) | example skill for using compromise in a coding agent |
+
+## 30-second mental model
+
+```js
+import nlp from 'compromise'
+
+let doc = nlp('she sells seashells by the seashore.')  // parse → a View of the whole document
+doc.verbs().toPastTense()                               // select verbs, transform them (mutates doc)
+doc.text()                                              // 'she sold seashells by the seashore.'
+```
+
+- `nlp(text)` returns a **View**. Almost every method returns a View, so calls **chain**.
+- **Find** with `.match()`, `.has()`, `.if()`, or named selections like `.people()`, `.numbers()`.
+- **Transform** with `.toPastTense()`, `.replace()`, `.tag()`, `.normalize()`, etc.
+- **Output** with `.text()`, `.json()`, `.out('array')`, `.debug()`.
+
+## Rules that prevent most mistakes
+
+1. **Transforms mutate the document in place.** The View they return is the *selection*, not the
+   whole doc. Read the final result from the original variable:
+   ```js
+   let doc = nlp('I walk to work')
+   doc.verbs().toPastTense()
+   doc.text()                       // ✅ 'I walked to work'
+   // ❌ nlp('I walk to work').verbs().toPastTense().text()  →  'walked work' (selection only)
+   ```
+   Use `.clone()` to transform a copy without touching the original.
+
+2. **Only real tags work.** A `#Tag` that isn't in [docs/tags.md](docs/tags.md) matches **nothing,
+   silently**. Frequent inventions that are NOT tags: `#Name`, `#Location`, `#Subject`, `#Object`,
+   `#Adj`, `#Time` (it's `#Date`/`#Time`… check the list). When in doubt, grep [docs/tags.md](docs/tags.md).
+
+3. **The match-syntax is not regex.** It matches whole words/terms. `+ * ? . ^ $` mean term-level
+   things; for character-level patterns use a `/regex/` token. See [docs/match-syntax.md](docs/match-syntax.md).
+
+4. **Sentences are the ceiling.** Matches don't cross sentence boundaries. Use the
+   [paragraphs plugin](plugins/paragraphs) for multi-sentence matching.
+
+5. **`compromise` is the full build.** Import `compromise` (or `compromise/three`) to get
+   `.people()`, `.numbers()`, `.verbs()`, etc. `compromise/two` has tags but no named selections;
+   `compromise/tokenize` (`/one`) has no tags at all.
+
+## Not supported (don't try)
+
+- Nested match groups: `'(modern (major|minor))? general'` — chain `.match()` calls instead.
+- A grammar/dependency parse tree — transforms are heuristic.
+- Slash-joined matching — `nlp('eats/shoots/leaves')` splits on the slash.
+
+## Plugins & extension
+
+```js
+nlp.plugin({
+  words: { kermit: 'FirstName' },         // add lexicon entries
+  tags:  { Muppet: { isA: 'Person' } },   // extend the tagset graph
+  api:   (View) => { View.prototype.myMethod = function () { return this } },
+})
+```
+Or the lightweight forms: `nlp(text, { kermit: 'FirstName' })` and `nlp.addWords({...})`.
+Official plugins live in [`plugins/`](plugins) (dates, stats, syllables, wikipedia, paragraphs).
+
+## Debugging a wrong result
+
+```js
+doc.debug()        // prints how every word was tagged — start here
+doc.json()         // full structured data
+nlp.verbose(true)  // log the tagger's decision-making
+```
+
+## Repo / contributor notes
+
+- Source is layered `src/1-one` → `src/4-four` (tokenize → tags → selections → sense). The default
+  entry is `src/three.js`.
+- Tests: `npm test` (tape). Build: `npm run build` (rollup). Lint: `npm run lint`.
+- Regenerate the machine docs after changing types or the tagset: `node ./scripts/docs.js`
+  (writes `docs/tags.md`, `docs/api.md`, `llms-full.txt`). The other docs are hand-written.
+
+
+==============================================================================
+# FILE: docs/concepts.md
+==============================================================================
+
+# Compromise — core concepts
+
+A 5-minute mental model. Read this before writing compromise code.
+
+## What it is
+
+`compromise` is a rule-based NLP library for English. It tokenizes text, tags each word with
+its part-of-speech, and lets you **find** and **transform** parts of the text. It is fast,
+runs offline in the browser or node, has no dependencies, and makes "good-enough" decisions —
+it is not a neural/LLM model and does not call out to one.
+
+```js
+import nlp from 'compromise'
+
+let doc = nlp('she sells seashells by the seashore.')
+doc.verbs().toPastTense()
+doc.text()
+// 'she sold seashells by the seashore.'
+```
+
+## The three objects
+
+| Object | What it is |
+|---|---|
+| **Document** | the whole parsed text, held internally as `Term[][]` (sentences of terms). |
+| **View** | a *selection* of terms within a document — the thing every method returns. `nlp(text)` returns a View of the whole document; `.match('#Verb')` returns a smaller View. A View still knows about its whole document (`.all()` zooms back out). |
+| **Term** | a single tokenized word, with `.text`, `.pre`/`.post` (surrounding whitespace/punctuation), `.normal`, and a `Set` of `tags`. |
+
+Almost every method is called on a View and returns a new View, so calls chain:
+
+```js
+nlp(text).match('#Person+').first().text()
+```
+
+## Mutability — the #1 gotcha
+
+A View points at the underlying document. **Transform methods mutate that shared document in
+place**, even though they also return a View:
+
+```js
+let doc = nlp('I walk to work')
+doc.verbs().toPastTense()       // mutates doc, even though we didn't reassign
+doc.text()                      // 'I walked to work'  ← doc changed
+```
+
+- Read-only methods (`.match`, `.if`, `.found`, `.text`, `.json`, `.has`, accessors) do **not** change the document.
+- Transform methods (`.toPastTense`, `.replace`, `.remove`, `.tag`, `.normalize`, case/whitespace methods …) **do**.
+- To work on a copy without touching the original, call **`.clone()`** first:
+
+```js
+let past = doc.clone().verbs().toPastTense().text()   // doc is untouched
+```
+
+## Sentences are the top-level unit
+
+Matching does **not** cross sentence boundaries by default.
+
+```js
+nlp("that's it. Back to Winnipeg!").has('it back')   // false
+```
+
+For multi-sentence / paragraph matching use the [`compromise-paragraphs`](https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs) plugin.
+
+## Build tiers (`one` / `two` / `three`)
+
+The default import is the full library. Smaller builds exist for size/speed:
+
+| Import | Includes | Use when |
+|---|---|---|
+| `compromise` (= `compromise/three`) | tokenize + tags + **all selections** (`.nouns()`, `.verbs()`, `.people()`, `.numbers()` …) | **default — what you almost always want** |
+| `compromise/two` | tokenize + POS tags + contractions | you only need tags + `.match()`, not the named selections |
+| `compromise/one` (= `compromise/tokenize`) | tokenize only, **no tags** | you only need words/sentences split up; `#Tag` patterns won't work |
+
+```js
+import nlp from 'compromise'          // full (recommended)
+import nlp from 'compromise/two'      // tags, no selections
+import nlp from 'compromise/tokenize' // tokens only
+```
+
+There is no meaningful tree-shaking beyond these tiers — the tagger is greedy and competitive,
+so pulling individual pieces out is not recommended. Run the full library unless size is critical.
+
+## Getting data out
+
+```js
+doc.text()            // a string
+doc.out('array')      // array of strings, one per match
+doc.json()            // rich data: terms, tags, offsets, etc.
+doc.debug()           // pretty-print the tagging to the console (great for debugging)
+```
+
+## Customising
+
+Three escalating ways to teach compromise new things — see [recipes.md](recipes.md) and
+[the `.extend()` section of the README](../README.md):
+
+1. **A lexicon object** at parse time: `nlp(text, { kermit: 'FirstName' })`
+2. **`nlp.addWords({...})` / `nlp.addTags({...})`** globally.
+3. **`nlp.plugin({...})`** / **`nlp.extend({...})`** — add words, tags, new methods, and post-processing.
+
+## Known limitations
+
+- **No nested match syntax** — `'(modern (major|minor))? general'` is not supported. Chain successive `.match()` calls instead.
+- **No inter-sentence matching** without the paragraphs plugin (see above).
+- **Slashes split into separate words** — `nlp('eats/shoots/leaves').has('koala leaves')` is `false`.
+- **No dependency/parse tree** — transformations are heuristic, not grammar-tree based.
+
+## See also
+
+- [match-syntax.md](match-syntax.md) — the match mini-language
+- [tags.md](tags.md) — the full tagset
+- [api.md](api.md) — every method
+- [recipes.md](recipes.md) — copy-paste task examples
+
+
+==============================================================================
+# FILE: docs/match-syntax.md
+==============================================================================
+
+# Compromise match-syntax
+
+The mini-language used by `.match()`, `.has()`, `.if()`, `.before()`, `.replace()`, and friends.
+It is **not** regular expressions — it matches whole *terms* (words), not characters.
+
+Every example below is real, verified output.
+
+```js
+nlp('the cat sat down').match('#Determiner #Noun').text()
+// 'the cat'
+```
+
+## Quick reference
+
+| Token | Means | Example pattern | Matches |
+|---|---|---|---|
+| `word` | exact word (case-insensitive, lemma-aware) | `sat` | "sat" |
+| `#Tag` | a part-of-speech [tag](tags.md) | `#Person` | "John" |
+| `.` | exactly one of any term | `the . sat` | "the cat sat" |
+| `*` | zero or more of any term (greedy) | `the * sat` | "the cat quickly sat" |
+| `(a\|b)` | one of these options (OR) | `(cat\|dog)` | "cat" or "dog" |
+| `(a && #Tag)` | term matches **both** conditions (AND) | `(cool && #Adjective)` | "cool" (only if tagged Adjective) |
+| `word?` | optional term (zero or one) | `the big? cat` | "the cat" *and* "the big cat" |
+| `+` | one or more of the previous (greedy) | `#Adjective+` | "big red" |
+| `term{m,n}` | between m and n of the previous | `.{2,3}` | 2–3 of any term |
+| `term{n}` | exactly n | `.{2}` | exactly 2 terms |
+| `!` | negate — term is anything *except* this | `the !#Verb` | "the cat" (not "the runs") |
+| `[ ]` | capture group (see below) | `[#Person+]` | captures the people |
+| `[<name> ]` | **named** capture group | `[<who>#Person+]` | group named "who" |
+| `^` | must be first term in the sentence | `^the` | leading "the" |
+| `$` | must be last term in the sentence | `sat$` | trailing "sat" |
+| `~word~` | fuzzy match (typos / near-spellings) | `~organization~` | "organisation" |
+| `{root}` | match by root/lemma form | `{walk}` | "walk", "walks", "walked", "walking" |
+| `{root/pos}` | root form, restricted to a part-of-speech | `{walk/verb}` | "walks" as a verb (not the noun) |
+| `<Chunk>` | a noun-phrase/verb-phrase chunk | `<Noun>` | "the cat" |
+| `@method` | a term-method predicate | `@isTitleCase` | title-cased terms |
+
+Flags combine: `#Noun+?` (optional, greedy nouns), `^[<x>.]` (capture the first term), etc.
+
+## Details and examples
+
+### Exact words
+
+```js
+nlp('we walked to work').has('walked')          // true
+nlp('we walked to work').match('walk').text()   // '' — exact word, not lemma
+```
+Use `{walk}` (root form) if you want all conjugations — see below.
+
+### Tags — `#Tag`
+
+The most useful token. Match by part-of-speech instead of literal word. The full, valid tag
+list is in [tags.md](tags.md). Tags are hierarchical: `#FirstName` is also a `#Person` is also a `#Noun`.
+
+```js
+nlp('the cat sat').match('#Noun').text()                  // 'cat'
+nlp('John Smith left').match('[<who>#Person+]').groups('who').text()  // 'john smith'
+```
+
+> ⚠️ Invalid tag names match **nothing silently**. `#Name`, `#Subject`, `#Adj`, `#Place` are easy
+> mistakes — check [tags.md](tags.md). (`#Place` *is* valid; `#Location` is not.)
+
+### Wildcards — `.` and `*`
+
+- `.` is exactly one term. `*` is any number of terms (including zero) and is greedy.
+
+```js
+nlp('the cat sat').match('the . sat').text()            // 'the cat sat'
+nlp('the cat quickly sat').match('the * sat').text()    // 'the cat quickly sat'
+```
+
+### Options — `(a|b)` and `(a && b)`
+
+```js
+nlp('i like red and blue').match('(red|blue)').out('array')   // ['red','blue']
+nlp('a cool cat').match('(cool && #Adjective)').text()        // 'cool'
+nlp('a nice gift today').match('(#Noun && gift)').text()      // 'gift'
+```
+`&&` requires the term to satisfy **all** conditions — useful to disambiguate one word from another
+part-of-speech (match "gift" only where it is tagged a `#Noun`).
+
+### Optional — `?`
+
+```js
+nlp('the car').match('the big? car').text()         // 'the car'
+nlp('the big car').match('the big? car').text()     // 'the big car'
+```
+
+### Repetition — `+`, `*`, `{m,n}`
+
+```js
+nlp('the big red car').match('#Adjective+').text()  // 'big red'
+nlp('a b c d').match('.{2,3}').text()               // 'a b c'
+```
+- `{n}` exactly n, `{m,n}` m-to-n, `{m,}` m-or-more, `{,n}` up-to-n.
+
+### Negation — `!`
+
+```js
+nlp('the cat sat').match('the !#Verb').text()   // 'the cat'  (cat is not a Verb)
+```
+
+### Anchors — `^` and `$`
+
+Anchored to the **sentence**, not the document.
+
+```js
+nlp('the cat sat').match('^the').text()   // 'the'
+nlp('the cat sat').match('sat$').text()   // 'sat'
+```
+
+### Capture groups — `[ ]` and `[<name> ]`
+
+A capture group marks the part of the match you want to pull out with `.groups()`. Without a name,
+groups are positional; with `<name>`, retrieve by name. Groups can span multiple terms.
+
+```js
+let doc = nlp('john smith and mary jones')
+doc.match('[<first>#FirstName] [<last>#LastName]').groups('last').text()  // 'jones' (per match)
+
+// also works as the 2nd argument to .match():
+nlp('the price of milk').match('price of [.]', 0).text()  // 'milk'
+```
+
+### Fuzzy — `~word~`
+
+Matches near-spellings / typos using string distance (default threshold ~0.85). Pass a custom
+threshold via the options argument: `doc.match('~color~', null, { fuzzy: 0.7 })`.
+
+```js
+nlp('the organisation').match('~organization~').text()   // 'organisation'
+nlp('hi spencar').match('~spencer~').text()              // 'spencar'
+```
+
+### Root / lemma — `{root}` and `{root/pos}`
+
+Match every inflected form of a word by its dictionary root.
+
+```js
+nlp('he walked away').match('{walk}').text()    // 'walked'
+nlp('she is running').match('{run}').text()     // 'running'
+```
+Add a part-of-speech to disambiguate: `{walk/verb}`, `{object/noun}`.
+
+```js
+nlp('he walks home').match('{walk/verb}').text()      // 'walks'
+nlp('the object is heavy').match('{object/noun}').text()  // 'object'
+```
+
+### Chunks — `<Noun>` / `<Verb>`
+
+Match a whole noun-phrase or verb-phrase chunk (greedy by default).
+
+```js
+nlp('the cat sat down').match('<Noun>').text()   // 'the cat'
+```
+
+### Term methods — `@method`
+
+Apply a built-in term predicate. Common ones: `@isTitleCase`, `@isUpperCase`, `@hasComma`,
+`@hasHyphen`, `@hasContraction`, `@hasQuote`.
+
+```js
+nlp('Hello World now').match('@isTitleCase').out('array')   // ['Hello','World']
+```
+
+## Matching against an array (fast path)
+
+For a long list of literal words, `.lookup()` is far faster than many `.match()` calls:
+
+```js
+nlp('i saw mary and john').lookup(['mary', 'john']).out('array')   // ['mary','john']
+```
+
+## Pre-compiling matches
+
+`nlp.parseMatch(str)` turns a pattern into reusable JSON; `nlp.buildNet([...])` compiles many
+patterns into one fast net for `.sweep()`. Use these in hot loops.
+
+## What is NOT supported
+
+- **Nested groups**: `'(modern (major|minor))? general'` — flatten or chain `.match()` calls.
+- **Cross-sentence matching** — use the paragraphs plugin.
+- **Character-level regex inside a term** — use a real `/regex/` token instead:
+  `nlp('color colour').match('/colou?r/').out('array')`.
+
+See [concepts.md](concepts.md) for the document model and [api.md](api.md) for every method.
+
+
+==============================================================================
+# FILE: docs/tags.md
+==============================================================================
+
+# Compromise Tags (Part-of-Speech tagset)
+
+Every term is assigned one or more of these **89 tags**. Use them in match-patterns with a `#` prefix, e.g. `doc.match('#Person')`.
+
+Tags are a hierarchy: tagging a term `#FirstName` also makes it a `#Person` and a `#Noun`. Tagging a term one thing may remove conflicting tags (a term can't be both `#Singular` and `#Plural`).
+
+> ⚠️ Only the tags listed here are valid. `#Name`, `#Subject`, `#Object`, `#Adj` etc. are **not** real tags and silently match nothing.
+
+## Nouns
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Activity` | `#Noun` | swimming |
+| `#Actor` | `#Noun` | swimmer |
+| `#AtMention` | `#Noun` | @nlp |
+| `#City` | `#Noun`, `#Singular`, `#Place`, `#ProperNoun` | Toronto |
+| `#Company` | `#Noun`, `#ProperNoun`, `#Organization` | Google |
+| `#Country` | `#Noun`, `#Singular`, `#Place`, `#ProperNoun` | Canada |
+| `#Currency` | `#Noun` | $ |
+| `#Demonym` | `#Noun`, `#ProperNoun` | Canadian |
+| `#FemaleName` | `#Noun`, `#Singular`, `#Person`, `#FirstName`, `#ProperNoun` | mary |
+| `#FirstName` | `#Noun`, `#Singular`, `#Person`, `#ProperNoun` | john |
+| `#Honorific` | `#Noun`, `#Singular`, `#Person`, `#ProperNoun` | dr. |
+| `#LastName` | `#Noun`, `#Singular`, `#Person`, `#ProperNoun` | smith |
+| `#MaleName` | `#Noun`, `#Singular`, `#Person`, `#FirstName`, `#ProperNoun` | john |
+| `#Noun` | — | cat |
+| `#Organization` | `#Noun`, `#ProperNoun` | Google |
+| `#Person` | `#Noun`, `#Singular`, `#ProperNoun` | John Smith |
+| `#Place` | `#Noun`, `#Singular` | Paris |
+| `#Plural` | `#Noun` | cats |
+| `#Possessive` | `#Noun` | spencer's |
+| `#Pronoun` | `#Noun` | he |
+| `#ProperNoun` | `#Noun` | Tesla |
+| `#Reflexive` | `#Noun`, `#Pronoun` | yourself |
+| `#Region` | `#Noun`, `#Singular`, `#Place`, `#ProperNoun` | California |
+| `#School` | `#Noun`, `#ProperNoun`, `#Organization` | UCLA |
+| `#Singular` | `#Noun` | cat |
+| `#SportsTeam` | `#Noun`, `#ProperNoun`, `#Organization` | the Leafs |
+| `#Uncountable` | `#Noun` | gravity |
+| `#Unit` | `#Noun` | km |
+
+## Verbs
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Auxiliary` | `#Verb` | will have |
+| `#Copula` | `#Verb` | is |
+| `#FutureTense` | `#Verb` | will walk |
+| `#Gerund` | `#Verb`, `#PresentTense` | walking |
+| `#Imperative` | `#Verb` | eat! |
+| `#Infinitive` | `#Verb`, `#PresentTense` | walk |
+| `#Modal` | `#Verb` | could |
+| `#Negative` | — | not |
+| `#Participle` | `#Verb`, `#PastTense` | awoken |
+| `#Particle` | `#Verb`, `#PhrasalVerb` | out |
+| `#Passive` | `#Verb` | was walked |
+| `#PastTense` | `#Verb` | walked |
+| `#PhrasalVerb` | `#Verb` | walk out |
+| `#PresentTense` | `#Verb` | walks |
+| `#Verb` | — | walk |
+
+## Adjectives
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Adjective` | — | quick |
+| `#Comparable` | `#Adjective` | quick |
+| `#Comparative` | `#Adjective` | quicker |
+| `#Superlative` | `#Adjective` | quickest |
+
+## Values & Dates
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Cardinal` | `#Value` | five |
+| `#Date` | — | monday |
+| `#Duration` | `#Date`, `#Noun` | 2 weeks |
+| `#FinancialQuarter` | `#Date` | q2 |
+| `#Fraction` | `#Value` | 2/3 |
+| `#Holiday` | `#Date`, `#Noun` | easter |
+| `#Money` | `#Value`, `#Cardinal` | $5 |
+| `#Month` | `#Date`, `#Noun` | march |
+| `#Multiple` | `#Value`, `#TextValue` | million |
+| `#NumericValue` | `#Value` | 5 |
+| `#Ordinal` | `#Value` | fifth |
+| `#Percent` | `#Value` | 5% |
+| `#RomanNumeral` | `#Value`, `#Cardinal` | xviii |
+| `#Season` | `#Date` | summer |
+| `#TextValue` | `#Value` | five |
+| `#Time` | `#Date` | 4:30pm |
+| `#Timezone` | `#Date`, `#Noun` | EST |
+| `#Value` | — | 5 |
+| `#WeekDay` | `#Date`, `#Noun` | monday |
+| `#Year` | `#Date` | 1992 |
+
+## Closed-class
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Adverb` | — | quickly |
+| `#Conjunction` | — | and |
+| `#Determiner` | — | the |
+| `#Hyphenated` | — | bone-headed |
+| `#Preposition` | — | of |
+
+## Other
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Abbreviation` | — | mrs. |
+| `#Acronym` | — | FBI |
+| `#Address` | — | 4 main st. |
+| `#Condition` | — | if |
+| `#Email` | — | hi@compromise.cool |
+| `#Emoji` | — | 💋 |
+| `#Emoticon` | — | :) |
+| `#Expression` | — | hi |
+| `#HashTag` | — | #nlp |
+| `#NumberRange` | — |  |
+| `#PhoneNumber` | — | (555) 123-4567 |
+| `#Prefix` | — | co- |
+| `#QuestionWord` | — | who |
+| `#Redacted` | — |  |
+| `#SlashedTerm` | — | love/hate |
+| `#There` | — | there |
+| `#Url` | — | compromise.cool |
+
+
+
+==============================================================================
+# FILE: docs/api.md
+==============================================================================
+
+# Compromise API Reference
+
+Every method returns a new **View** (a sub-selection of the document) unless noted, so calls chain: `nlp(text).match('#Verb').toPastTense().text()`. Methods are grouped by what they do.
+
+Method availability depends on the [build tier](concepts.md): `compromise/one` (tokenize), `compromise/two` (+tags & contractions), and the default `compromise` / `compromise/three` (+ all selections below).
+
+## Core methods
+
+_(available on every View)_
+
+- **`.case`** _[getter]_ — preserve the case of the original, ignoring the case of the replacement
+- **`.possessives`** _[getter]_ — preserve whether the original was a possessive
+- **`.tags`** _[getter]_ — preserve all of the tags of the original, regardless of the tags of the replacement
+
+### Utils
+
+- **`.found`** _[getter]_ — is this document empty?
+- **`.docs`** _[getter]_ — get a list of term objects for this view
+- **`.document`** _[getter]_ — get the full parsed text
+- **`.pointer`** _[getter]_ — the indexes for the current view
+- **`.fullPointer`** _[getter]_ — explicit indexes for the current view
+- **`.methods`** _[getter]_ — access internal library methods
+- **`.model`** _[getter]_ — access internal library data
+- **`.hooks`** _[getter]_ — which compute methods run by default
+- **`.isView`** _[getter]_ — helper for detecting a compromise object
+- **`.length`** _[getter]_ — count the # of characters of each match
+- **`.update(pointer)`** — create a new view, from this document
+- **`.toView(pointer)`** — turn a Verb or Noun view into a normal one
+- **`.fromText(text)`** — create a new document
+- **`.termList()`** — .docs [alias]
+- **`.compute(method)`** — run a named operation on the document
+- **`.clone(shallow?)`** — deep-copy the document, so that no references remain
+
+### Loops
+
+- **`.forEach(fn)`** — run a function on each phrase, as an individual document
+- **`.map(fn, emptyResult?)`** — run each phrase through a function, and create a new document
+- **`.filter(fn)`** — return only the phrases that return true
+- **`.find(fn)`** — return a document with only the first phrase that matches
+- **`.some(fn)`** — return true or false if there is one matching phrase
+- **`.random(n?)`** — sample a subset of the results
+
+### Accessors
+
+- **`.terms(n?)`** — split-up results by each individual term
+- **`.groups(name?)`** — grab a specific named capture group
+- **`.eq(n)`** — use only the nth result
+- **`.first(n?)`** — use only the first result(s)
+- **`.last(n?)`** — use only the last result(s)
+- **`.firstTerms()`** — get the first word in each match
+- **`.lastTerms()`** — get the end word in each match
+- **`.slice(start, end?)`** — grab a subset of the results
+- **`.all()`** — return the whole original document ('zoom out')
+- **`.fullSentences()`** — return the full original sentence for each match
+- **`.none()`** — return an empty view
+- **`.isDoc(view?)`** — are these two views of the same document?
+- **`.wordCount()`** — count the # of terms in each match
+
+### Match
+
+- **`.match(match, group?, options?)`** — return matching patterns in this doc
+- **`.matchOne(match, group?, options?)`** — return only the first match
+- **`.has(match, group?, options?)`** — Return a boolean if this match exists
+- **`.if(match, group?, options?)`** — return each current phrase, only if it contains this match
+- **`.ifNo(match, group?, options?)`** — Filter-out any current phrases that have this match
+- **`.before(match, group?, options?)`** — return the terms before each match
+- **`.after(match, group?, options?)`** — return the terms after each match
+- **`.lookBehind(match, group?, options?)`** — alias of .before()
+- **`.lookBefore(match, group?, options?)`** — alias of .before()
+- **`.lookAhead(match, group?, options?)`** — alias of .after()
+- **`.lookAfter(match, group?, options?)`** — alias of .after()
+- **`.growLeft(match, group?, options?)`** — add any immediately-preceding matches to the view
+- **`.growRight(match, group?, options?)`** — add any immediately-following matches to the view
+- **`.grow(match, group?, options?)`** — expand the view with any left-or-right matches
+- **`.sweep(match, opts?)`** — apply a sequence of match objects to the document
+- **`.splitOn(match?, group?)`** — .split() [alias]
+- **`.splitBefore(match?, group?)`** — separate everything after the match as a new phrase
+- **`.splitAfter(match?, group?)`** — separate everything before the word, as a new phrase
+- **`.split(match?, group?)`** — splitAfter() alias
+
+### Case
+
+- **`.toLowerCase()`** — turn every letter of every term to lower-cse
+- **`.toUpperCase()`** — turn every letter of every term to upper case
+- **`.toTitleCase()`** — upper-case the first letter of each term
+- **`.toCamelCase()`** — remove whitespace and title-case each term
+
+### Insert
+
+- **`.concat(input)`** — add these new things to the end
+- **`.insertBefore(input)`** — add these words before each match
+- **`.prepend(input)`** — insertBefore() alias
+- **`.insertAfter(text)`** — add these words after each match
+- **`.append(text)`** — insertAfter() alias
+- **`.insert(text)`** — insertAfter() alias
+- **`.remove(match)`** — fully remove these terms from the document
+- **`.delete(match)`** — alias for .remove()
+- **`.replace(from, to?, keep?)`** — search and replace match with new content
+- **`.replaceWith(to, keep?)`** — substitute-in new content
+- **`.unique()`** — remove any duplicate matches
+- **`.reverse()`** — reverse the order of the matches, but not the words
+- **`.sort(method?)`** — re-arrange the order of the matches (in place)
+- **`.normalize(options?)`** — cleanup various aspects of the words
+
+### Whitespace
+
+- **`.pre(str?, concat?)`** — add this punctuation or whitespace before each match
+- **`.post(str?, concat?)`** — add this punctuation or whitespace after each match
+- **`.trim()`** — remove start and end whitespace
+- **`.hyphenate()`** — connect words with hyphen, and remove whitespace
+- **`.dehyphenate()`** — remove hyphens between words, and set whitespace
+- **`.deHyphenate()`** — alias for .dehyphenate()
+- **`.toQuotations(start?, end?)`** — add quotation marks around selections
+- **`.toQuotation(start?, end?)`** — alias for toQuotations()
+- **`.toParentheses(start?, end?)`** — add parentheses around selections
+
+### Output
+
+- **`.text(options?)`** — return the document as text
+- **`.json(options?)`** — pull out desired metadata from the document
+- **`.debug()`** — pretty-print the current document and its tags
+- **`.out(format?)`** — some named output formats
+- **`.html(toHighlight)`** — produce an html string
+- **`.wrap(matches)`** — produce an html string
+
+### Pointers
+
+- **`.union(match)`** — return all matches without duplicates
+- **`.and(match)`** — .union() alias
+- **`.intersection(match)`** — return only duplicate matches
+- **`.not(match, options?)`** — return all results except for this
+- **`.difference(match, options?)`** — .not() alias
+- **`.complement(match)`** — get everything that is not a match
+- **`.settle(match)`** — remove overlaps in matches
+
+### Tag
+
+- **`.tag(tag, reason?)`** — Give all terms the given tag
+- **`.tagSafe(tag, reason?)`** — Only apply tag to terms if it is consistent with current tags
+- **`.unTag(tag, reason?)`** — Remove this term from the given terms
+- **`.canBe(tag)`** — return only the terms that can be this tag
+
+### Cache
+
+- **`.cache(options?)`** — freeze the current state of the document, for speed-purposes
+- **`.uncache(options?)`** — un-freezes the current state of the document, so it may be transformed
+- **`.freeze()`** — prevent current tags from being removed
+- **`.unfreeze()`** — allow current tags to be changed [default]
+- **`.lookup(trie, opts?)`** — quick find for an array of string matches
+- **`.autoFill()`** — assume any type-ahead prefixes
+- **`.contractions(n?)`** — return any multi-word terms, like "didn't"
+- **`.contract()`** — contract words that can combine, like "did not"
+- **`.confidence()`** — Average measure of tag confidence
+- **`.swap(fromLemma, toLemma, guardTag?)`** — smart-replace root forms
+- **`.expand()`** — turn "i've" into "i have"
+
+## Selections (compromise/three)
+
+These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastTense()`.
+
+### Selection methods on any View
+
+- **`.clauses(n?)`** — split-up results into multi-term phrases
+- **`.chunks()`** — split-up noun-phrase and verb-phrases
+- **`.normalize(options?)`** — clean-up the document, in various ways
+- **`.redact(opts?, blockStr?, keepTags?)`** — remove any people, places, and organizations
+- **`.hyphenated(n?)`** — return all terms connected with a hyphen or dash like `'wash-out'`
+- **`.hashTags(n?)`** — return terms like `'#nlp'`
+- **`.emails(n?)`** — return terms like `'hi@compromise.cool'`
+- **`.emoji(n?)`** — return terms like `💋`
+- **`.emoticons(n?)`** — return  terms like `:)`
+- **`.atMentions(n?)`** — return terms like `'@nlp_compromise'`
+- **`.urls(n?)`** — return terms like `'compromise.cool'`
+- **`.pronouns(n?)`** — return terms like `'he'`
+- **`.conjunctions(n?)`** — return terms like `'but'`
+- **`.prepositions(n?)`** — return terms like `'of'`
+- **`.honorifics(n?)`** — return terms like `'Dr.'`
+- **`.abbreviations(n?)`** — return terms like `'st.'`
+- **`.phoneNumbers(n?)`** — return terms like `'(939) 555-0113'`
+- **`.addresses(n?)`** — return terms like `'23 Park Avenue'`
+- **`.acronyms(n?)`** — return terms like `'FBI'`
+- **`.parentheses(n?)`** — return anything inside (parentheses)
+- **`.possessives(n?)`** — return terms like "Spencer's"
+- **`.quotations(n?)`** — return any terms inside 'quotation marks'
+- **`.slashes(n?)`** — return any slashed terms like 'love/hate'
+- **`.adjectives(n?)`** — return words like "clean"
+- **`.adverbs(n?)`** — return words like "quickly"
+- **`.nouns(n?, opts?)`** — return noun phrases in the view
+- **`.numbers(n?, opts?)`** — return any numbers in the view
+- **`.percentages(n?, opts?)`** — return any percentages in the view
+- **`.money(n?, opts?)`** — return any money in the view
+- **`.fractions(n?, opts?)`** — return any fractions in the view
+- **`.sentences(n?, opts?)`** — return full sentences in the view
+- **`.questions(n?, opts?)`** — find full sentences of any questions in the view
+- **`.verbs(n?)`** — return any subsequent terms tagged as a Verb
+- **`.people(n?)`** — return person names like `'John A. Smith'`
+- **`.places(n?)`** — return location names like `'Paris, France'`
+- **`.organizations(n?)`** — return companies and org names like `'Google Inc.'`
+- **`.topics(n?)`** — return people, places, and organizations
+
+### `.nouns()` →
+
+- **`.parse(n?)`** — grab the parsed noun-phrase
+- **`.isPlural()`** — return only plural nouns
+- **`.adjectives()`** — get any adjectives describing this noun
+- **`.toPlural(setArticle?)`** — 'football captain' → 'football captains'
+- **`.toSingular(setArticle?)`** — 'turnovers' → 'turnover'
+
+### `.numbers()` →
+
+- **`.parse(n?)`** — grab the parsed number
+- **`.get(n?)`** — grab the parsed number
+- **`.isOrdinal()`** — return only ordinal numbers
+- **`.isCardinal()`** — return only cardinal numbers
+- **`.isUnit(units)`** — return only numbers with the given unit(s), like 'km'
+- **`.toNumber()`** — convert number to `5` or `5th`
+- **`.toLocaleString()`** — add commas, or nicer formatting for numbers
+- **`.toText()`** — convert number to `five` or `fifth`
+- **`.toCardinal()`** — convert number to `five` or `5`
+- **`.toOrdinal()`** — convert number to `fifth` or `5th`
+- **`.isEqual()`** — return numbers with this value
+- **`.greaterThan(min)`** — return numbers bigger than n
+- **`.lessThan(max)`** — return numbers smaller than n
+- **`.between(min, max)`** — return numbers between min and max
+- **`.set(n)`** — set number to n
+- **`.add(n)`** — increase number by n
+- **`.subtract(n)`** — decrease number by n
+- **`.increment()`** — increase number by 1
+- **`.decrement()`** — decrease number by 1
+
+### `.fractions()` →
+
+- **`.parse(n?)`** — grab the parsed number
+- **`.get(n?)`** — grab the parsed number
+- **`.toDecimal()`** — convert '1/4' to `0.25`
+- **`.toFraction()`** — convert 'one fourth' to `1/4`
+- **`.toOrdinal()`** — convert '1/4' to '1/4th'
+- **`.toCardinal()`** — convert '1/4th' to '1/4'
+- **`.toPercentage()`** — convert '1/4' to `25%`
+
+### `.sentences()` →
+
+- **`.parse(n?)`** — grab the parsed sentence
+- **`.toPastTense()`** — 'will go' → 'went'
+- **`.toPresentTense()`** — 'walked' → 'walks'
+- **`.toFutureTense()`** — 'walked' → 'will walk'
+- **`.toInfinitive()`** — 'walks' → 'walk'
+- **`.toNegative()`** — 'he is cool' → 'he is not cool'
+- **`.toPositive()`** — 'he isn't cool' -> 'he is cool'
+- **`.isQuestion()`** — keep only questions
+- **`.isExclamation()`** — keep only sentences with an exclamation-mark
+- **`.isStatement()`** — remove questions, and exclamations
+
+### `.people()` →
+
+- **`.parse()`** — get first/last/middle names
+
+### `.verbs()` →
+
+- **`.parse(n?)`** — grab the parsed verb-phrase
+- **`.subjects()`** — grab what [doing] the verb
+- **`.adverbs()`** — return the adverbs describing this verb
+- **`.isSingular()`** — return only singular nouns
+- **`.isPlural()`** — return only plural nouns
+- **`.isImperative()`** — only verbs that are instructions
+- **`.toInfinitive()`** — 'walks' → 'walk'
+- **`.toPresentTense()`** — 'walked' → 'walks'
+- **`.toPastTense()`** — 'will go' → 'went'
+- **`.toFutureTense()`** — 'walked' → 'will walk'
+- **`.toGerund()`** — 'walks' → 'walking'
+- **`.toPastParticiple()`** — 'walks' → 'has walked'
+- **`.conjugate()`** — return all forms of these verbs
+- **`.isNegative()`** — return verbs with 'not'
+- **`.isPositive()`** — only verbs without 'not'
+- **`.toPositive()`** — "didn't study" → 'studied'
+- **`.toNegative()`** — 'went' → 'did not go'
+
+### `.acronyms()` →
+
+- **`.strip()`** — 'F.B.I.' -> 'FBI'
+- **`.addPeriods()`** — 'FBI' -> 'F.B.I.'
+
+### `.parentheses()` →
+
+- **`.strip()`** — remove ( and ) punctuation
+
+### `.possessives()` →
+
+- **`.strip()`** — "spencer's" -> "spencer"
+
+### `.quotations()` →
+
+- **`.strip()`** — remove leading and trailing quotation marks
+
+### `.slashes()` →
+
+- **`.split()`** — turn 'love/hate' into 'love hate'
+
+### `.adjectives()` →
+
+- **`.adverbs()`** — get the words describing this adjective
+- **`.conjugate()`** — return all forms of these
+- **`.toComparative(n?)`** — 'quick' -> 'quicker'
+- **`.toSuperlative(n?)`** — 'quick' -> 'quickest'
+- **`.toAdverb(n?)`** — 'quick' -> 'quickly'
+- **`.toNoun(n?)`** — 'quick' -> 'quickness'
+
+## Constructor methods (`nlp.*`)
+
+_(called on the imported `nlp` object, not a View)_
+
+- **`nlp.tokenize(text, lexicon?)`** — interpret text without tagging
+- **`nlp.lazy(text, match?)`** — scan through text with minimal analysis
+- **`nlp.plugin(plugin)`** — mix in a compromise-plugin
+- **`nlp.extend(plugin)`** — mix-in a compromise plugin
+- **`nlp.parseMatch(match, opts?)`** — turn a match-string into json
+- **`nlp.world()`** — grab library internals
+- **`nlp.model()`** — grab library metadata
+- **`nlp.methods()`** — grab exposed library methods
+- **`nlp.hooks()`** — which compute functions run automatically
+- **`nlp.verbose(toLog?)`** — log our decision-making for debugging
+- **`nlp.version`** — current semver version of the library
+- **`nlp.addTags(tags)`** — connect new tags to tagset graph
+- **`nlp.addWords(words, isFrozen?)`** — add new words to internal lexicon
+- **`nlp.buildTrie(words)`** — turn a list of words into a searchable graph
+- **`nlp.buildNet(matches)`** — compile a set of match objects to a more optimized form
+- **`nlp.typeahead(words)`** — add words to the autoFill dictionary
+
+
+==============================================================================
+# FILE: docs/recipes.md
+==============================================================================
+
+# Compromise recipes
+
+Copy-paste solutions for common tasks. Every snippet is real, verified output.
+Read [concepts.md](concepts.md) first if you haven't — especially the **mutability** rule,
+which trips up most of these.
+
+```js
+import nlp from 'compromise'
+```
+
+## The mutability rule (read this)
+
+Transform methods change the underlying document **in place**, and the View they return is the
+*selection*, not the whole document. So read the result from the original `doc`:
+
+```js
+let doc = nlp('I walk to work')
+doc.verbs().toPastTense()        // mutates doc; the returned view is just "walked"
+doc.text()                       // 'I walked to work'   ✅ read from doc
+
+// ⚠️ common mistake — .text() here is only the matched selection:
+nlp('I walk to work').verbs().toPastTense().text()   // 'walked work'  (not the whole sentence)
+```
+
+To transform a copy and leave the original alone, use `.clone()`:
+
+```js
+let doc = nlp('I walk')
+let past = doc.clone().verbs().toPastTense().text()   // 'walked'
+doc.text()                                            // 'I walk'  (untouched)
+```
+
+## Extract named entities (people, places, orgs)
+
+```js
+let doc = nlp('Mary met Dr. John Smith in Paris.')
+doc.people().out('array')        // ['Mary', 'Dr. John Smith']
+doc.places().out('array')        // ['Paris.']
+nlp('Google and Mary went to Paris.').topics().out('array')  // ['Google', 'Paris.', 'Mary']
+```
+`.topics()` = people + places + organizations.
+
+## Change verb tense
+
+```js
+let doc = nlp('I walk to work')
+doc.verbs().toPastTense();   doc.text()   // 'I walked to work'
+doc.verbs().toFutureTense(); doc.text()   // 'I will walk to work'
+```
+Tense methods also exist on `.sentences()` for whole-sentence rewrites.
+
+## Find & replace
+
+```js
+let doc = nlp('I love cats')
+doc.replace('cats', 'dogs')      // search-and-replace by pattern
+doc.text()                       // 'I love dogs'
+
+// replace whatever a selection matched:
+let d2 = nlp('the cat sat')
+d2.match('#Noun').replaceWith('dog')
+d2.text()                        // 'the dog sat'
+```
+
+## Redact / anonymise PII
+
+```js
+let doc = nlp('Mary called John')
+doc.people().replaceWith('███')
+doc.text()                       // '███ called ███'
+```
+There is also a built-in `.redact()` that removes **people, places, emails, and phone numbers** at
+once. Note it does **not** currently redact organizations — remove those yourself with
+`doc.organizations().replaceWith('███')` if you need to.
+
+## Pluralize / singularize nouns
+
+```js
+let doc = nlp('one good dog')
+doc.nouns().toPlural();   doc.text()   // 'one good dogs'
+
+let d2 = nlp('three turnovers')
+d2.nouns().toSingular();  d2.text()    // 'three turnover'
+```
+
+## Work with numbers
+
+```js
+nlp('it cost twelve dollars').numbers().get()           // [12]
+nlp('five hundred').numbers().toNumber().text()         // '500'   (words → digits)
+nlp('it is 5 km').numbers().toText().text()             // 'five'  (digits → words)
+```
+Numbers also support `.greaterThan()`, `.lessThan()`, `.between()`, `.add()`, `.subtract()`.
+Money and fractions have their own selections (`.money()`, `.fractions()`, `.percentages()`).
+
+## Match a pattern and pull out a piece
+
+```js
+let doc = nlp('the price of milk is high')
+doc.match('price of [<thing>.]').groups('thing').text()   // 'milk'
+```
+See [match-syntax.md](match-syntax.md) for the full pattern language and capture groups.
+
+## Test whether text contains something (chat-bot style)
+
+```js
+nlp('the deal is closed').has('#Determiner #Noun')   // true
+nlp('I love cats').has('love #Plural')               // true
+```
+`.has()` returns a boolean and never mutates — ideal for routing/intent checks.
+
+## Filter sentences
+
+```js
+nlp('I am here. Are you ok?').questions().out('array')        // ['Are you ok?']
+nlp('I like cats. Dogs are loud.').sentences().if('#Plural').out('array')
+// ['I like cats.', 'Dogs are loud.']   — keep only sentences containing a plural
+```
+
+## Negate a sentence
+
+```js
+let doc = nlp('he is happy')
+doc.sentences().toNegative()
+doc.text()                       // 'he is not happy'
+```
+
+## Expand contractions
+
+```js
+let doc = nlp("she isn't here")
+doc.contractions().expand()
+doc.text()                       // 'she is not here'
+```
+
+## Normalize messy text
+
+```js
+nlp('I  LOVE   Café!!').normalize().text()   // 'I LOVE Cafe!'
+```
+`.normalize({ ... })` takes options for whitespace, case, unicode, punctuation, contractions, etc.
+
+## Get structured data out
+
+```js
+nlp('big cats').json()[0].terms.map(t => t.text)   // ['big', 'cats']
+nlp('hi there').json({ offset: true })[0].offset   // { index: 0, start: 0, length: 8 }
+```
+`.json()` accepts flags to include `offset`, `tags`, `normal`, `reduced`, and more — see [api.md](api.md).
+
+## Teach it new words
+
+At parse time, with a lexicon object:
+
+```js
+nlp('kermit waved', { kermit: 'FirstName' }).people().out('array')   // ['kermit']
+```
+
+Globally, with `nlp.addWords()` (use a valid [tag](tags.md)):
+
+```js
+nlp.addWords({ frodo: 'FirstName', gandalf: 'FirstName' })
+nlp('frodo met gandalf').people().out('array')   // ['frodo', 'gandalf']
+```
+
+## Write a plugin (add your own method)
+
+```js
+nlp.plugin({
+  // add words to the lexicon
+  words: { kermit: 'FirstName' },
+  // add new tags to the tagset graph
+  tags: { Muppet: { isA: 'Person' } },
+  // add new chainable methods
+  api: (View) => {
+    View.prototype.exclaim = function () {
+      return this.post('!')   // add '!' after each match
+    }
+  },
+})
+
+let doc = nlp('hello there')
+doc.match('there').exclaim()
+doc.text()                       // 'hello there!'
+```
+
+See [concepts.md](concepts.md) for `.extend()` and the full plugin shape, and the
+[`plugins/`](../plugins) folder for real examples (dates, stats, wikipedia, …).
+
+## When `.match()` returns nothing
+
+1. Check the tag is real — [tags.md](tags.md). `#Name`, `#Location`, `#Adj` are not tags.
+2. Remember matches don't cross sentence boundaries.
+3. Use `doc.debug()` to print how each word was actually tagged.
+4. Exact words match the literal word; use `{root}` to match all conjugations.

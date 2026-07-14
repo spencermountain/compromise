@@ -6,19 +6,22 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
-<!-- #### [planned breaking]
-- fix doc.json(0) inconsistency
-- fix text() options
-- deprecate #Participle for #PastParticiple
-- run chunker only when necessary
-- cleanup verb+noun metadata in json()
-- remove confidence numbers
--->
 
-<!-- #### 14.13.0 [Unreleased]
-- **[fix]** - .not() overlap detection
-- **[fix]** - .before() .after()
--->
+
+#### 14.16.0 [July 2026]
+- **[new]** - apply redaction to #Organization, #Address, #Url etc tags in .redact() method
+- **[new]** - apply #Redacted tag
+- **[change]** - .redact() method now untags specific tags when redacting
+- **[new]** - .addresses() method
+- **[new]** - .out('spec') format and .fromSpec() and .testSpec() methods
+- **[new]** - .percentages().toText() method
+- **[change]** - .money() selector and methods
+- **[fix]** - tokenize phone-numbers with parentheses
+- **[fix]** - replaceWith keep-tag issue
+- **[fix]** - phone numbers with parentheses
+- **[fix]** - preposition-conjunction tagging
+- **[fix]** - ambiguous timezones 'today in EST'
+- **[update]** - dependencies
 
 #### 14.15.1 [May 2026]
 - **[fix]** - better textual time parsing - "one thirty am"

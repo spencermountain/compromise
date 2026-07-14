@@ -26,8 +26,14 @@ const matches = [
   { match: '#Month #Value (and|or|to)? #Value+', tag: 'Date', reason: 'value-to-value' },
   //march the 12th
   { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
-  // march to april
-  { match: '[(march|may)] to? #Date', group: 0, tag: 'Month', reason: 'march-to' },
+  // march to april - but not 'the soldiers march tomorrow'
+  { match: '[(march|may)] (to|through|thru|until|and|or) #Date', group: 0, tag: 'Month', reason: 'march-to' },
+  // march 2020
+  { match: '[(march|may)] of? #Year', group: 0, tag: 'Month', reason: 'march-year' },
+  // march 5th
+  { match: '[(march|may)] the? (#Value && !#Year)', group: 0, tag: 'Month', reason: 'march-value' },
+  // 'the soldiers march tomorrow' - not a month
+  { match: '[(march|may)] (today|tomorrow|tonight|yesterday)', group: 0, unTag: 'Date', reason: 'march-tomorrow' },
   // 'march'
   { match: '^(march|may)$', tag: 'Month', reason: 'single-march' },
   //March or June
@@ -107,6 +113,10 @@ const matches = [
   { match: '#Date (after|before|during|on|in) #Value', tag: 'Date', reason: 'tomorrow before 3' },
   //a year and a half
   { match: '#Value (year|month|week|day) and a half', tag: 'Date', reason: 'a year and a half' },
+  //a year and a half ago
+  { match: '(#Value|a|an) #Duration and a half (before|after|ago|hence|back|from)', tag: 'DateShift', reason: 'year-and-a-half-ago' },
+  //in a year and a half
+  { match: 'in (#Value|a|an) #Duration and a half', tag: 'DateShift', reason: 'in-year-and-a-half' },
   //5 and a half years
   { match: '#Value and a half (years|months|weeks|days)', tag: 'Date', reason: '5 and a half years' },
   //on the fifth
@@ -174,12 +184,25 @@ const matches = [
   // { match: '/^[0-9]{2}/[0-9]{2}/', tag: 'Date', unTag: 'Value', reason: '03/02' },
   // 3 in the morning
   { match: '#Value (in|at) the? (morning|evening|night|nighttime)', tag: 'Time', reason: '3 in the morning' },
-  // ten to seven
+  // ten past seven
   {
     match: '(5|10|15|20|five|ten|fifteen|quarter|twenty|half) (after|past) #Cardinal',
     tag: 'Time',
-    reason: 'ten to seven',
+    reason: 'ten-past-seven',
   }, //add check for 1 to 1 etc.
+  // quarter to seven
+  {
+    match: '(quarter|half) to #Cardinal',
+    tag: 'Time',
+    reason: 'quarter-to-seven',
+  },
+  // at ten to seven
+  {
+    match: '(at|by|before|around) [(5|10|15|20|five|ten|fifteen|twenty) to #Cardinal]',
+    group: 0,
+    tag: 'Time',
+    reason: 'at-ten-to-seven',
+  },
   // at 10 past
   {
     match: '(at|by|before) (5|10|15|20|five|ten|fifteen|twenty|quarter|half) (after|past|to)',
@@ -228,8 +251,19 @@ const matches = [
   { match: '(a|an) #Duration ago', tag: 'DateShift', reason: 'a month ago' },
   // in half an hour
   { match: 'in half (a|an) #Duration', tag: 'DateShift', reason: 'in half an hour' },
+  // half an hour ago
+  { match: 'half (a|an) #Duration (ago|back|hence)', tag: 'DateShift', reason: 'half an hour ago' },
+  // 'couple of weeks' - the unit can lose its Duration tag in this context
+  {
+    match: 'a (few|couple) of? [(second|seconds|minute|minutes|hour|hours|day|days|week|weeks|month|months|year|years)]',
+    group: 0,
+    tag: 'Duration',
+    reason: 'couple-of-units',
+  },
   // in a few weeks
   { match: 'in a (few|couple) of? #Duration', tag: 'DateShift', reason: 'in a few weeks' },
+  // a few weeks ago
+  { match: 'a (few|couple) of? #Duration (ago|back|hence|from)', tag: 'DateShift', reason: 'a few weeks ago' },
   //two weeks and three days before
   // { match: '#Cardinal #Duration and? #DateShift', tag: 'DateShift', reason: 'three days before' },
   // { match: '#DateShift and #Cardinal #Duration', tag: 'DateShift', reason: 'date-shift' },

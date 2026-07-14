@@ -61,12 +61,17 @@ const tryRanges = function (doc, context) {
   return null
 }
 
+// 'quarter to five' is a time, not a range
+const isClockTime = function (doc) {
+  return doc.has('^(at|by|before|around)? (quarter|half|five|ten|fifteen|twenty|5|10|15|20|25) (to|past|after) #Cardinal$')
+}
+
 // loop thru each range template
 const parseRanges = function (m, context) {
   // parse-out 'every week ..'
   const repeats = repeating(m, context) || {}
   // try picking-apart ranges
-  let found = tryRanges(m, context)
+  let found = isClockTime(m) ? null : tryRanges(m, context)
   if (!found) {
     found = [tryFull(m, context)]
   }
@@ -75,7 +80,9 @@ const parseRanges = function (m, context) {
   // ensure start is not after end
   found.forEach((res) => {
     if (res.start && res.end && res.start.d.epoch > res.end.d.epoch) {
-      res.start = res.start.start()
+      const tmp = res.start
+      res.start = res.end
+      res.end = tmp
     }
   })
   return found

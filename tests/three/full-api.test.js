@@ -73,6 +73,7 @@ test('constructor api', function (t) {
     clauses: () => { nlp('All right, Colossus, you’re free to go, but stay away from Death Mountain').clauses().data() },
     hyphenated: () => { nlp('foo').hyphenated() },
     phoneNumbers: () => { nlp('Moe Sizlak. That’s right. I’m a surgeon. (800) 555-0000.').phoneNumbers().json() },
+    addresses: () => { nlp('i met her at 23 Park Avenue').addresses().json() },
     hashTags: () => { nlp('oh, but where is the #anykey').hashTags().json() },
     emails: () => { nlp('foo').emails() },
     emoticons: () => { nlp('foo').emoticons() },

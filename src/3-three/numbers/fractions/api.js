@@ -64,6 +64,17 @@ const plugin = function (View) {
       })
       return this
     }
+    // spell it out - '1/2' -> 'one half'
+    toText(n) {
+      this.getNth(n).forEach(m => {
+        const obj = parse(m)
+        const str = toOrdinal(obj)
+        if (str) {
+          m.replaceWith(str)
+        }
+      })
+      return this
+    }
     toPercentage(n) {
       this.getNth(n).forEach(m => {
         const { decimal } = parse(m)

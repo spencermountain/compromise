@@ -31,13 +31,17 @@ declare namespace nlp {
   /** connect new tags to tagset graph */
   export function addTags(tags: object): any
   /** add new words to internal lexicon */
-  export function addWords(words: Lexicon, isFrozen?:boolean): any
+  export function addWords(words: Lexicon, isFrozen?: boolean): any
   /** turn a list of words into a searchable graph */
   export function buildTrie(words: string[]): object
   /** compile a set of match objects to a more optimized form */
   export function buildNet(matches: Match[]): Net
   /** add words to the autoFill dictionary */
   export function typeahead(words: Lexicon): any
+  /** parse the tagged text output of out('spec') */
+  export function fromSpec(spec: string): View
+  /** test the given tagging of a spec-formatted output - returns a doc of only the failing lines */
+  export function testSpec(spec: string, verbose?: boolean, throwError?: boolean): View
   /** export internal methods for plugins */
   export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
 }

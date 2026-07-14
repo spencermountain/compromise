@@ -11,7 +11,7 @@ export default [
   },
   // ==== PhoneNumber ====
   //1 800 ...
-  { match: '1 #Value #PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },
+  { match: '(1|+1) #Value #PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },
   //(454) 232-9873
   { match: '#NumericValue #PhoneNumber', tag: 'PhoneNumber', reason: '(800) PhoneNumber' },
 
@@ -44,12 +44,12 @@ export default [
   { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
   // thousand and two
   { match: `#Multiple+ and #Value`, tag: 'Value', reason: 'magnitude-and-value' },
-  // ambiguous units like 'gb'
-  // { match: '#Value square? [(kb|mb|gb|tb|ml|pt|qt|tbl|tbsp|km|cm|mm|mi|ft|yd|kg|hg|mg|oz|lb|mph|pa|miles|yard|yards|pound|pounds)]', group: 0, tag: 'Unit', reason: '12-gb' },
   // 5 miles per hour
   { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', group: 0, tag: 'Unit', reason: '12-miles-per-second' },
   // 5 square miles
   { match: '#Value [(square|cubic)] #Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
-  // 5) The expenses
-  // { match: '^[#Value] (#Determiner|#Gerund)', group: 0, tag: 'Expression', unTag: 'Value', reason: 'numbered-list' },
+  //twelve percent
+  { match: '#Cardinal percent', tag: '#Percent #Unit', reason: 'value-percent' },
+  // ambiguous units
+  { match: '#Value [(gb|pa|ft|foot|feet|m)]', group: 0, tag: 'Unit', reason: 'ambiguous-unit' },
 ]

@@ -11,6 +11,7 @@ export default {
   // 'Canada'
   ProperNoun: {
     is: 'Noun',
+    alias: 'Prop'
   },
   Person: {
     is: 'Singular',
@@ -36,6 +37,7 @@ export default {
   Honorific: {
     is: 'Person',
     not: ['FirstName', 'LastName', 'Value'],
+    alias: 'Hon'
   },
   Place: {
     is: 'Singular',
@@ -58,10 +60,12 @@ export default {
   },
   Address: {
     // is: 'Place',
+    alias: 'Addr'
   },
   Organization: {
     is: 'ProperNoun',
     not: ['Person', 'Place'],
+    alias: 'Org'
   },
   SportsTeam: {
     is: 'Organization',
@@ -109,6 +113,7 @@ export default {
   // [spencer's] hat
   Possessive: {
     is: 'Noun',
+    alias: 'Poss'
   },
   // 'yourself'
   Reflexive: {

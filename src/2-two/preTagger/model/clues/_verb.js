@@ -32,6 +32,7 @@ export default {
     had: v,
     would: v,
     could: v,
+    come: v,
     should: v,
     do: v,
     did: v,
@@ -67,6 +68,15 @@ export default {
     // un: v,
     // over: v,
     // under: v,
+    now: v, //now dance
+    go: v, //go dance
+    said: v, //he said run
+    says: v, //simon says run
+    say: v, //they say run
+    who: v, //who runs faster
+    what: v, //what runs faster
+    // most: v, //most run faster
+    // some: v, //some run faster
   },
   afterWords: {
     the: v, //echo the
@@ -119,5 +129,6 @@ export default {
     here: v, // look here
     there: v, //
     away: v, //float away
+    now: v, //dance now
   },
 }

@@ -8,7 +8,7 @@ const compute = function (allTags) {
   const flatList = Object.keys(allTags).map(k => {
     const o = allTags[k]
     const props = { not: new Set(o.not), also: o.also, is: o.is, novel: o.novel }
-    return { id: k, parent: o.is, props, children: [] }
+    return { id: k, parent: o.is, props, children: [], alias: o.alias }
   })
   const graph = grad(flatList).cache().fillDown()
   return graph.out('array')

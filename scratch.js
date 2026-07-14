@@ -1,48 +1,38 @@
 
 import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
+import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
-// nlp.plugin(plg)
+nlp.plugin(plg)
+// nlp.verbose(true)
 
+let arr = [
+  // 'to' before a noun-phrase is a preposition - tagged Conjunction
+  'she walked to the store. {Noun,Vb,Prep,Det,Noun}',
+  // bare sentence-initial imperative is not tagged Imperative ('please close' is)
+  'go home! {Vb|Imp,Noun}',
+  // will+verb never receives the FutureTense tag
+  'she will walk home. {Noun,Vb|Fut,Vb,Noun}',
+  // locative 'there' is an adverb - tagged Noun|Uncountable
+  'i walked there. {Noun,Vb,Adv}',
+  // subject-aux inversion: 'did' is an auxiliary here - tagged plain PastTense
+  'where did she go? {QuestionWord,Vb|Aux,Noun,Vb}',
+  // a standalone demonstrative is a pronoun - tagged Determiner
+  'who is that? {QuestionWord,Vb,Noun|Pronoun}',
+  // a gerund subject loses its Gerund tag - tagged plain Noun|Singular
+  'running is fun. {Noun|Ger,Vb,Adj}',
+  // 'unless' gets the Condition tag, but 'if' stays a plain Conjunction
+  'if it rains, we will stay home. {Condition,Noun,Vb,Noun,Vb,Vb,Noun}',
+  // garden-path: 'man' is the verb - tagged Noun
+  'the old man the boat. {Det,Adj,Vb,Det,Noun}',
+  // garden-path: 'time' is the subject, 'flies' the verb - reversed
+  'time flies like an arrow. {Noun,Vb,Prep,Det,Noun}',
+  // garden-path: 'houses' is the verb - tagged Noun|Plural
+  'the complex houses married and single soldiers. {Det,Adj,Vb,Adj,Conj,Adj,Noun}'
+]
+// let doc = nlp.fromSpec(arr[0]).debug()
 
-let txt = 'toes'
-// txt = 'rooms'
-// txt = 'students'
-// txt = 'trees'
-// txt = 'eyed'
-// txt = 'sized'
-// txt = 'faced'
-// txt = 'admitted'
-// txt = 'substances'
-// txt = 'crocodiles'
-// txt = 'affairs'
-// txt = 'buddies'
-// txt = 'residents'
-// txt = 'girls'
-// txt = 'hills'
-// txt = 'commitments'
-// txt = 'units'
-// txt = 'banks'
-// txt = 'toys'
-// txt = 'lights'
-// txt = 'grounds'
-// txt = 'albertans'
-// txt = 'towers'
+let doc = nlp('john smith and Doug Johnson live in new york and cook at the restaurant')
+doc.debug()
+// doc.redact().debug()
+// nlp('john smith and Sally Morris lives in new york').redact().debug()
 
-// txt = `i sent the documents up the hill`
-// txt = `he would up stage his friend`
-// txt = `he couldn't off gas`
-// txt = `he got up over the hill`
-// txt = 'piled up over'
-// text = ``
-// let doc = nlp(txt).debug()
-// doc.compute('root')
-// console.log(doc.text('root'))
-
-
-// Underscore example
-let text = `one thirty am`;
-let doc = nlp(text);
-console.log(doc.numbers().toNumber().debug());
-
-// console.log(doc.docs)

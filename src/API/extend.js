@@ -6,10 +6,16 @@ const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
+const isUnsafeKey = key => key === '__proto__' || key === 'constructor' || key === 'prototype'
+
 // recursive merge of objects
 function mergeDeep(model, plugin) {
   if (isObject(plugin)) {
     for (const key in plugin) {
+      // prevent prototype pollution
+      if (isUnsafeKey(key)) {
+        continue
+      }
       if (isObject(plugin[key])) {
         if (!model[key]) Object.assign(model, { [key]: {} })
         mergeDeep(model[key], plugin[key]) //recursion
@@ -26,6 +32,7 @@ function mergeDeep(model, plugin) {
 // vroom
 function mergeQuick(model, plugin) {
   for (const key in plugin) {
+    if (isUnsafeKey(key)) continue
     model[key] = model[key] || {}
     Object.assign(model[key], plugin[key])
   }

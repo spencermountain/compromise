@@ -1,7 +1,7 @@
 {
 	"name": "compromise-one",
-	"version": "14.14.4",
-	"description": "",
+	"version": "0.0.0",
+	"description": "This is a stub package.json for old bundlers",
 	"type": "module",
 	"module": "./../src/one.js",
 	"main": "./../src/one.js",
@@ -21,5 +21,5 @@
 	},
 	"author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
 	"license": "MIT",
-	"sideEffects": true
+	"sideEffects": false
 }

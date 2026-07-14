@@ -6,7 +6,7 @@ const doc = nlp('okay cool')
 // ### Lib
 nlp.tokenize('adf')
 nlp.plugin({})
-nlp.parseMatch()
+nlp.parseMatch('')
 
 nlp.world()
 nlp.model()
@@ -91,7 +91,7 @@ doc.text()
 doc.wrap({})
 
 // ### Match
-nlp.parseMatch()
+nlp.parseMatch('')
 
 doc.match('')
 doc.matchOne('')
@@ -148,6 +148,8 @@ doc.lookup({})
 
 // ### Typeahead
 nlp.typeahead({})
+nlp.fromSpec('')
+nlp.testSpec('')
 doc.compute('typeahead')
 doc.autoFill()
 

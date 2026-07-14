@@ -5,6 +5,7 @@ const isLetter = /\p{Letter}/u
 const isNumber = /[\p{Number}\p{Currency_Symbol}]/u
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const chillin = /[sn]['’]$/
+const isFullNumber = /^[(+\-]?\d+(th|st|nd|rd)?[)+\-]?$/
 
 const normalizePunctuation = function (str, model) {
   // quick lookup for allowed pre/post punctuation
@@ -28,7 +29,7 @@ const normalizePunctuation = function (str, model) {
       continue//keep it
     }
     // keep '+' or '-' only before a number
-    if ((c === '+' || c === '-') && isNumber.test(chars[1])) {
+    if ((c === '+' || c === '-' || c === '(') && isFullNumber.test(str.trim())) {
       break//done
     }
     // '97 - year short-form
@@ -62,6 +63,10 @@ const normalizePunctuation = function (str, model) {
     //  keep s-apostrophe - "flanders'" or "chillin'"
     if (c === "'" && chillin.test(original) === true) {
       continue//keep it
+    }
+    // keep '+' or ')' only for a number like (800) or 500+
+    if ((c === '+' || c === ')') && isFullNumber.test(str.trim())) {
+      break//done
     }
     // punctuation
     post = chars.pop() + post//keep going

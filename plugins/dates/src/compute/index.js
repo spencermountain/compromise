@@ -3,11 +3,15 @@ import time from './01-time-range.js'
 import timezone from './02-timezone.js'
 import fixup from './03-fixup.js'
 import matches from './matches.js'
-let net = null
+const nets = new WeakMap()
 
 const doMatches = function (view) {
   const { world } = view
-  net = net || world.methods.one.buildNet(matches, world)
+  let net = nets.get(world)
+  if (!net) {
+    net = world.methods.one.buildNet(matches, world)
+    nets.set(world, net)
+  }
   view.sweep(net)
 }
 
@@ -22,10 +26,13 @@ const compute = function (view) {
   fixup(view)
   view.uncache()
 
-  // sorry, one more
-  view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before')
-  view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks')
-  view.match('#Time [(sharp|on the dot)]').tag('Time', '4pm sharp')
+  // sorry, one more - twice, to chain '2 years, 4 months and 5 days ago'
+  if (view.has('#DateShift')) {
+    for (let i = 0; i < 2; i += 1) {
+      view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before')
+      view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks')
+    }
+  }
   // view.match('in #Adverb #DateShift').tag('Date', 'in-around-2-weeks')
 
   return view

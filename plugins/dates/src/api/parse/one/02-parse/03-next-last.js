@@ -4,7 +4,7 @@ const mapping = {
   hour: Hour,
   evening: Hour,
   second: Moment,
-  milliscond: Moment,
+  millisecond: Moment,
   instant: Moment,
   minute: Minute,
   week: Week,
@@ -31,9 +31,6 @@ const nextLast = function (doc, context) {
     const str = m.text('reduced')
     if (mapping.hasOwnProperty(str)) {
       const Model = mapping[str]
-      if (!Model) {
-        return null
-      }
       const unit = new Model(null, str, context)
       return unit
     }

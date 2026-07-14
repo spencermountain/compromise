@@ -1,6 +1,7 @@
 export default {
   Value: {
     not: ['Verb', 'Adjective', 'Adverb'],
+    alias: 'Val'
   },
   Ordinal: {
     is: 'Value',
@@ -28,6 +29,7 @@ export default {
   NumericValue: {
     is: 'Value',
     not: ['TextValue'],
+    alias: 'Numeric'
   },
   Money: {
     is: 'Cardinal',

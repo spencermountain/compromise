@@ -1,4 +1,13 @@
-import { Day, Moment } from '../units/index.js'
+import { Day, Moment, Week, WeekEnd, AnyMonth, Year, WeekDay } from '../units/index.js'
+
+// for 'week after next' - the base unit that 'next' refers to
+const afterNext = {
+  day: Day,
+  week: Week,
+  weekend: WeekEnd,
+  month: AnyMonth,
+  year: Year,
+}
 
 const knownWord = {
   today: (context) => {
@@ -56,9 +65,22 @@ const today = function (doc, context, parts) {
   if (knownWord.hasOwnProperty(str) === true) {
     return knownWord[str](context)
   }
-  // day after next
-  if (str === 'next' && parts.shift && Object.keys(parts.shift).length > 0) {
-    return knownWord.tomorrow(context)
+  // 'the saturday after next'
+  if (str === 'after next' && parts.weekDay) {
+    const wd = new WeekDay(parts.weekDay, null, context)
+    parts.weekDay = null
+    return wd.next()
+  }
+  // day after next / week before last
+  if ((str === 'next' || str === 'last') && parts.shift && Object.keys(parts.shift).length > 0) {
+    const keys = Object.keys(parts.shift)
+    // 'week after next' → start from next week, the shift then adds one more
+    if (keys.length === 1 && Math.abs(parts.shift[keys[0]]) === 1 && afterNext.hasOwnProperty(keys[0])) {
+      const Model = afterNext[keys[0]]
+      const base = new Model(context.today, null, context)
+      return str === 'next' ? base.next() : base.last()
+    }
+    return str === 'next' ? knownWord.tomorrow(context) : knownWord.yesterday(context)
   }
   return unit
 }

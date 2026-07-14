@@ -67,7 +67,9 @@ const parseTime = function (doc, context) {
   time = time.not('sharp')
   time = time.not('on the dot')
 
-  let s = spacetime.now(context.timezone)
+  let s = spacetime(context.today || null, context.timezone)
+  // sentinel-millisecond, so a no-op parse won't equal `now` below
+  s = s.millisecond(123)
   const now = s.clone()
   // check for known-times (like 'today')
   let timeStr = time.not('in? the').text('reduced')
@@ -202,7 +204,7 @@ const parseTime = function (doc, context) {
       }
       return { result: s.time(), m }
     }
-    return { result: null, m: doc.none() }
+    // fall-through to the generic parser, below
   }
 
   // parse random a time like '4:54pm'

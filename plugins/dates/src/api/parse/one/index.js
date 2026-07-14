@@ -27,9 +27,10 @@ const parseDate = function (doc, context) {
   //apply our given timezone
   if (parts.tz) {
     context = Object.assign({}, context, { timezone: parts.tz })
-    // set timezone on any 'today' value, too
+    // move 'today' to the same wall-clock date + time in the new zone
     const iso = context.today.format('iso-short')
-    context.today = context.today.goto(context.timezone).set(iso)
+    const time = context.today.format('time-24')
+    context.today = context.today.goto(context.timezone).set(iso).time(time)
   }
   // decide on a root date object
   let unit = parse(doc, context, parts)

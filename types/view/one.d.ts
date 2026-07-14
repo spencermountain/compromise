@@ -2,7 +2,7 @@ import type { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Te
 
 export type Matchable = string | View | Net | ParsedMatch
 
-export interface ReplaceWithProps  {
+export interface ReplaceWithProps {
   /** preserve the case of the original, ignoring the case of the replacement */
   case?: boolean
   /** preserve whether the original was a possessive */
@@ -167,7 +167,7 @@ declare class View {
   /** search and replace match with new content */
   replace: (from: string | View, to?: string | Function, keep?: object) => View
   /** substitute-in new content */
-  replaceWith: (to: string | Function, keep?: ReplaceWithProps) => View
+  replaceWith: (to: string | Function, keep?: ReplaceWithProps | boolean) => View
 
   /** remove any duplicate matches */
   unique: () => View
@@ -176,7 +176,7 @@ declare class View {
   /**re-arrange the order of the matches (in place) */
   sort: (method?: string | Function) => View
   /**cleanup various aspects of the words*/
-  normalize: (options?:object) => View
+  normalize: (options?: object) => View
 
   // Whitespace
   /** add this punctuation or whitespace before each match */
@@ -246,7 +246,7 @@ declare class View {
   cache: (options?: object) => View
   /** un-freezes the current state of the document, so it may be transformed */
   uncache: (options?: object) => View
-  
+
   /** prevent current tags from being removed */
   freeze: () => View
   /** allow current tags to be changed [default] */

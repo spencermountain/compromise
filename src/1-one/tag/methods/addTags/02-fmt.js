@@ -27,7 +27,8 @@ const fmt = function (nodes) {
       also,
       parents,
       children: node._cache.children,
-      color: getColor(node)
+      color: getColor(node),
+      alias: node.alias,
     }
   })
   // lastly, add all children of all nots

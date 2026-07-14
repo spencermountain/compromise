@@ -429,6 +429,20 @@ doc.money().json()
 
 <img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+## 🤖 For AI agents & LLMs
+
+Plain-text, copy-paste docs that render without JavaScript live in this repo:
+
+- **[AGENTS.md](./AGENTS.md)** — start here: mental model, rules, and gotchas
+- **[docs/concepts.md](./docs/concepts.md)** — the document/View/Term model, mutability, build tiers
+- **[docs/match-syntax.md](./docs/match-syntax.md)** — the `.match()` mini-language
+- **[docs/tags.md](./docs/tags.md)** — the complete, valid part-of-speech tagset
+- **[docs/api.md](./docs/api.md)** — every method, signature, and description
+- **[docs/recipes.md](./docs/recipes.md)** — solutions to common tasks
+- **[llms-full.txt](./docs/llms-full.txt)** — all of the above in one fetchable file
+
+<img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
 ## API
 
 ### Compromise/one
@@ -566,6 +580,8 @@ _(these methods are on the main `nlp` object)_
 - **[nlp.addWords(obj, isFrozen?)](https://observablehq.com/@spencermountain/compromise-plugin)** - add new words to the lexicon
 - **[nlp.addTags(obj)](https://observablehq.com/@spencermountain/compromise-plugin)** - add new tags to the tagSet
 - **[nlp.typeahead(arr)](https://observablehq.com/@spencermountain/compromise-typeahead)** - add words to the auto-fill dictionary
+- **[nlp.fromSpec(spec)](https://observablehq.com/@spencermountain/compromise-from-spec)** - parse a .out('spec') output back into a document
+- **[nlp.testSpec(spec, verbose?, throwError?)](https://observablehq.com/@spencermountain/compromise-test-spec)** - test tags against a spec-formatted output
 - **[nlp.buildTrie(arr)](https://observablehq.com/@spencermountain/compromise-lookup)** - compile a list of words into a fast lookup form
 - **[nlp.buildNet(arr)](https://observablehq.com/@spencermountain/compromise-sweep)** - compile a list of matches into a fast match form
 
@@ -612,7 +628,7 @@ _(these methods are on the main `nlp` object)_
   - **[.verbs().toPresentTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'walks'`
   - **[.verbs().toFutureTense()](https://observablehq.com/@spencermountain/verbs)** - `'walked' → 'will walk'`
   - **[.verbs().toInfinitive()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walk'`
-  - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'walking'`
+  - **[.verbs().toGerund()](https://observablehq.com/@spencermountain/verbs)** - `'walks' → 'is walking'`
   - **[.verbs().toPastParticiple()](https://observablehq.com/@spencermountain/verbs)** - `'drive' → 'had driven'`
   - **[.verbs().conjugate()](https://observablehq.com/@spencermountain/verbs)** - return all conjugations of these verbs
   - **[.verbs().isNegative()](https://observablehq.com/@spencermountain/verbs)** - return verbs with 'not', 'never' or 'no'
@@ -691,6 +707,7 @@ _(these methods are on the main `nlp` object)_
 - **[.chunks()](https://observablehq.com/@spencermountain/compromise-selections)** - split-up sentences noun-phrases and verb-phrases
 - **[.hyphenated()](https://observablehq.com/@spencermountain/compromise-selections)** - all terms connected with a hyphen or dash like `'wash-out'`
 - **[.phoneNumbers()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'(939) 555-0113'`
+- **[.addresses()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'23 Park Avenue'`
 - **[.hashTags()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'#nlp'`
 - **[.emails()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `'hi@compromise.cool'`
 - **[.emoticons()](https://observablehq.com/@spencermountain/compromise-selections)** - things like `:)`

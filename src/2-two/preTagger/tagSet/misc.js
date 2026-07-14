@@ -3,6 +3,7 @@ const anything = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Value', 'QuestionWord'
 export default {
   Adjective: {
     not: ['Noun', 'Verb', 'Adverb', 'Value'],
+    alias: 'Adj'
   },
   Comparable: {
     is: 'Adjective',
@@ -17,16 +18,20 @@ export default {
   NumberRange: {},
   Adverb: {
     not: ['Noun', 'Verb', 'Adjective', 'Value'],
+    alias: 'Adv'
   },
 
   Determiner: {
     not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Conjunction'], //allow 'a' to be a Determiner/Value
+    alias: 'Det'
   },
   Conjunction: {
     not: anything,
+    alias: 'Conj'
   },
   Preposition: {
     not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Determiner'],
+    alias: 'Prep'
   },
   QuestionWord: {
     not: ['Determiner'],
@@ -36,8 +41,11 @@ export default {
   },
   Expression: {
     not: ['Noun', 'Adjective', 'Verb', 'Adverb'],
+    alias: 'Expr'
   },
-  Abbreviation: {},
+  Abbreviation: {
+    alias: 'Abbr'
+  },
   Url: {
     not: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email', 'SlashedTerm'],
   },

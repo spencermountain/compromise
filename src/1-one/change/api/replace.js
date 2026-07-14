@@ -33,6 +33,14 @@ const subDollarSign = function (input, main) {
 
 fns.replaceWith = function (input, keep = {}) {
   let ptrs = this.fullPointer
+  // support keep-all option
+  if (keep === true) {
+    keep = {
+      tags: true,
+      case: true,
+      possessives: true,
+    }
+  }
   const main = this
   this.uncache()
   if (typeof input === 'function') {
@@ -49,7 +57,7 @@ fns.replaceWith = function (input, keep = {}) {
   // soften-up pointer
   ptrs = ptrs.map(ptr => ptr.slice(0, 3))
   // original.freeze()
-  const oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
+  let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
   const originalPre = original.docs[0][0].pre
   const originalPost = original.docs[0][original.docs[0].length - 1].post
   // slide this in
@@ -87,7 +95,6 @@ fns.replaceWith = function (input, keep = {}) {
       lastOne.post = originalPost
     }
   }
-
   // what should we return?
   const m = main.toView(ptrs).compute(['index', 'freeze', 'lexicon'])
   if (m.world.compute.preTagger) {
@@ -96,6 +103,8 @@ fns.replaceWith = function (input, keep = {}) {
   m.compute('unfreeze')
   // replace any old tags
   if (keep.tags) {
+    // truncate old tags to only touch new terms
+    oldTags = oldTags.slice(0, input.wordCount())
     m.terms().forEach((term, i) => {
       term.tagSafe(oldTags[i])
     })
@@ -108,14 +117,6 @@ fns.replaceWith = function (input, keep = {}) {
     const transformCase = isOriginalTitleCase ? toTitleCase : toLowerCase
     m.docs[0][0].text = transformCase(m.docs[0][0].text)
   }
-
-  // console.log(input.docs[0])
-  // let regs = input.docs[0].map(t => {
-  //   return { id: t.id, optional: true }
-  // })
-  // m.after('(a|hoy)').debug()
-  // m.growRight('(a|hoy)').debug()
-  // console.log(m)
   return m
 }
 

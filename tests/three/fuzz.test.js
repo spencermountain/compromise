@@ -30,6 +30,7 @@ const subsets = [
   'prepositions',
   'sentences',
   'phoneNumbers',
+  'addresses',
   'places',
   'organizations',
   'topics',

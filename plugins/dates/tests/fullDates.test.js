@@ -325,7 +325,7 @@ const tests = [
       ['next quarter', 'Jan 1st 2017 to Mar 31st 2017'],
       ['first week of december', 'Nov 28 2016 to Dec 4 2016'],
       ['second week of january 2017', 'Jan 2 2017 to Jan 8 2017'],
-      ['canadian thanksgiving 2016', 'Oct 9 2016'],
+      ['canadian thanksgiving 2016', 'Oct 10 2016'],
       ['this year', 'jan 1 2016 to dec 31 2016'],
       ['next year', 'jan 1 2017 to dec 31 2017'],
       ['last year', 'jan 1 2015 to dec 31 2015'],

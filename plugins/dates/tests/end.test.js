@@ -121,7 +121,7 @@ const tests = [
       ['on last friday', [2016, february, 5]],
       ['on this monday', [2016, february, 15]],
       ['on next wednesday', [2016, february, 17]],
-      ['between tuesday and thursday', [2016, february, 10]],
+      ['between tuesday and thursday', [2016, february, 17]],
     ],
   },
   {

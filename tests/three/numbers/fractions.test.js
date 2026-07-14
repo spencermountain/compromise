@@ -117,6 +117,21 @@ test('seconds-edge-case', function (t) {
   t.end()
 })
 
+test('fraction toText:', function (t) {
+  const arr = [
+    ['4/10', 'four tenths'],
+    ['3/5', 'three fifths'],
+    ['1/2', 'one half'],
+    ['1/5', 'one fifth'],
+  ]
+  arr.forEach(a => {
+    const doc = nlp(a[0])
+    doc.fractions().toText()
+    t.equal(doc.text(), a[1], here + 'toText - ' + a[0])
+  })
+  t.end()
+})
+
 test('do-math:', function (t) {
   const arr = nlp('1/2').fractions().get()
   t.equal((arr[0] || {}).decimal, 0.5, here + 'do-math')
@@ -129,6 +144,30 @@ test('do-math:', function (t) {
   // t.equal(arr[0].decimal, 0.5)
   // t.equal(arr.length, 2)
 
+  t.end()
+})
+
+test('fraction-toText:', function (t) {
+  const arr = [
+    ['1/2', 'one half'],
+    ['two thirds', 'two thirds'],
+    ['4/10', 'four tenths'],
+    ['3/5', 'three fifths'],
+    ['3/8', 'three eighths'],
+    ['3/2', 'three halfs'],
+    ['1/100', 'one one hundredth'],
+    ['4/100', 'four one hundredths'],
+    ['4/3', 'four thirds'],
+    ['4/25', 'four twenty fifths'],
+    ['1/20', 'one twentieth'],
+    ['2/10 of farmers', 'two tenths of farmers'],
+    ['i ate 7/10 of a pie', 'i ate seven tenths of a pie'],
+  ]
+  arr.forEach(a => {
+    const doc = nlp(a[0])
+    doc.fractions().toText()
+    t.equal(doc.text(), a[1], here + a[0])
+  })
   t.end()
 })
 

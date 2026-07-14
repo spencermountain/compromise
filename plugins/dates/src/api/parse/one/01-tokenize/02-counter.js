@@ -11,8 +11,25 @@ const oneBased = {
 }
 
 const getCounter = function (doc) {
+  // '2nd monday of' / 'last friday in'
+  let m = doc.match('[<num>(#Value|first|initial|last|final)] [<day>#WeekDay] (of|in)')
+  if (m.found) {
+    const obj = m.groups()
+    const day = obj.day.text('reduced')
+    const str = obj.num.text('reduced')
+    const result = { unit: 'weekday', day }
+    if (/^(last|final)$/.test(str)) {
+      result.dir = 'last'
+    } else if (/^(first|initial)$/.test(str)) {
+      result.num = 0
+    } else {
+      const num = obj.num.numbers().get()[0]
+      result.num = (Number(num) || 1) - 1 //0-based
+    }
+    return { result, m }
+  }
   // 7th week of
-  let m = doc.match('[<num>#Value] [<unit>#Duration+] (of|in)')
+  m = doc.match('[<num>#Value] [<unit>#Duration+] (of|in)')
   if (m.found) {
     const obj = m.groups()
     const num = obj.num.numbers().get()[0]

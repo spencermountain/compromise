@@ -2761,8 +2761,8 @@ export default [
     tags: 'NN, VBZ, NNP, CD, IN, DT, NN',
   },
   {
-    text: 'The game is already 100 % functional.',
-    tags: 'DT, NN, VBZ, RB, CD, NN, JJ',
+    text: 'The game is already 100% functional.',
+    tags: 'DT, NN, VBZ, RB, CD, JJ',
   },
   {
     text: 'I am Lady Kingel and I hail from the United Legit Gaming Guilds of Guild Wars.',
@@ -3818,8 +3818,8 @@ export default [
     tags: 'NNP, RB, VBZ, IN, DT, NN, IN, NNS',
   },
   {
-    text: '100 % SCAM.',
-    tags: 'CD, NN, NN',
+    text: '100% SCAM.',
+    tags: 'CD, NN',
   },
   {
     text: 'Then the environment.',
@@ -5332,8 +5332,8 @@ export default [
     tags: 'UH',
   },
   {
-    text: 'I think 90 percent of the tenants are smokers!',
-    tags: 'PRP, VBP, CD, NN, IN, DT, NNS, VBP, NNS',
+    text: 'I think 90% of the tenants are smokers!',
+    tags: 'PRP, VBP, CD, IN, DT, NNS, VBP, NNS',
   },
   {
     text: 'Chicken salad salad is great too.',
@@ -5741,7 +5741,7 @@ export default [
     tags: 'NN, JJ',
   },
   {
-    text: 'THIS STORY IS 100 % TRUE.',
+    text: 'THIS STORY IS 100 CD TRUE.',
     tags: 'DT, NN, VBZ, CD, NN, JJ',
   },
   {

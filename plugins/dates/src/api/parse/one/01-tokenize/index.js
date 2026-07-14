@@ -8,15 +8,20 @@ import doWeekday from './07-weekday.js'
 
 
 const cleanup = function (doc) {
-  // 'the fifth week ..'
-  doc = doc.not('[^the] !#Value', 0) // keep 'the 17th'
-  // 
+  // strip a leading 'the', but keep 'the 17th'
+  if (doc.has('^the !#Value')) {
+    doc = doc.not('^the')
+  }
+  //
   doc = doc.not('#Preposition$')
   doc = doc.not('#Conjunction$')
   doc = doc.not('sharp')
   doc = doc.not('on the dot')
-  doc = doc.not('^(on|of)')
-  doc = doc.not('(next|last|this)$')
+  doc = doc.not('^(on|of|due)')
+  // keep a bare 'next' or 'last' - the leftover of 'day after next'
+  if (!doc.has('^(next|last)$') && !doc.has('^after (next|last)$')) {
+    doc = doc.not('(next|last|this)$')
+  }
   return doc
 }
 

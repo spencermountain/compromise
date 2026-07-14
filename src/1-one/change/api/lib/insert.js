@@ -104,4 +104,4 @@ const cleanAppend = function (home, ptr, needle, document) {
   ptr[4] = needle[needle.length - 1].id
 }
 
-export { cleanPrepend, cleanAppend, spliceArr }
+export { cleanPrepend, cleanAppend }

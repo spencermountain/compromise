@@ -1,5 +1,14 @@
 import { Day, CalendarDate, Month, Moment } from '../units/index.js'
 
+// "'98" becomes 1998
+const fixYear = function (str) {
+  const num = Number(str)
+  if (num && num < 100) {
+    return num > 31 ? 1900 + num : 2000 + num
+  }
+  return str
+}
+
 // parse things like 'june 5th 2019'
 // most of this is done in spacetime
 const parseExplicit = function (doc, context) {
@@ -14,7 +23,7 @@ const parseExplicit = function (doc, context) {
     const obj = {
       month: m.groups('month').text('reduced'),
       date: m.groups('date').text('reduced'),
-      year: m.groups('year').text() || impliedYear,
+      year: fixYear(m.groups('year').text()) || impliedYear,
     }
     const unit = new CalendarDate(obj, null, context)
     if (unit.d.isValid() === true) {
@@ -27,7 +36,7 @@ const parseExplicit = function (doc, context) {
   if (m.found) {
     const obj = {
       month: m.groups('month').text('reduced'),
-      year: m.groups('year').text('reduced') || impliedYear,
+      year: fixYear(m.groups('year').text('reduced')) || impliedYear,
     }
     const unit = new Month(obj, null, context)
     if (unit.d.isValid() === true) {
@@ -67,14 +76,24 @@ const parseExplicit = function (doc, context) {
   m = doc.match('^the? [<date>#Value+]? of? [<rel>(this|next|last|current)] month')
   if (m.found) {
     let month = context.today.month()
+    let year = context.today.year()
     const rel = m.groups('rel').text('reduced')
     if (rel === 'next') {
       month += 1
+      if (month > 11) {
+        month = 0
+        year += 1
+      }
     } else if (rel === 'last') {
       month -= 1
+      if (month < 0) {
+        month = 11
+        year -= 1
+      }
     }
     const obj = {
       month,
+      year,
       date: m.groups('date').numbers(0).get()[0],
     }
     const unit = new CalendarDate(obj, null, context)

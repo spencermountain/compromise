@@ -97,7 +97,7 @@ const arr = [
   // ['Douglas who really is good', '#Person #Pronoun #Adverb #Copula #Adjective'],
 
   ['at some point', '#Preposition #Determiner #Noun'],
-  ['to a point', '#Conjunction #Determiner #Noun'],
+  ['to a point', '. #Determiner #Noun'],
   ['well, no.', '#Expression #Expression'],
 
   // infinitive-noun

@@ -35,7 +35,7 @@ test('percent-conversion:', function (t) {
 
   str = 'around 100% of the budget'
   r = nlp(str).values().toText().all()
-  t.equal(r.out(), 'around one hundred percent of the budget', here + 'to text')
+  t.equal(r.out(), 'around one hundred percent of the budget', here + '%to text')
 
   str = 'around 100 percent of the budget'
   r = nlp(str).values().toText().all()
@@ -43,6 +43,13 @@ test('percent-conversion:', function (t) {
 
   t.end()
 })
+
+// test('percent-toFraction:', function (t) {
+//   const doc = nlp('80%')
+//   doc.percentages().toFraction()
+//   t.equal(doc.text(), '8/10', here + '80% to fraction')
+//   t.end()
+// })
 
 test('percent-tag:', function (t) {
   const tests = [

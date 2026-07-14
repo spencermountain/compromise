@@ -1,5 +1,4 @@
 import parseDate from '../one/index.js'
-import reverseMaybe from './_reverse.js'
 
 const moveToPM = function (obj) {
   const start = obj.start
@@ -8,6 +7,14 @@ const moveToPM = function (obj) {
     if (end.d.hour() < 10) {
       end.d = end.d.ampm('pm')
     }
+  }
+  return obj
+}
+
+// '10pm to 2am' crosses midnight
+const rollMidnight = function (obj) {
+  if (obj.start.d.isAfter(obj.end.d)) {
+    obj.end.d = obj.end.d.add(1, 'day')
   }
   return obj
 }
@@ -24,18 +31,16 @@ export default [
       if (end) {
         const start = end.clone()
         start.applyTime(from.text('implicit'))
-        if (start) {
-          let obj = {
-            start: start,
-            end: end,
-            unit: 'time',
-          }
-          if (/(am|pm)/.test(to) === false) {
-            obj = moveToPM(obj)
-          }
-          obj = reverseMaybe(obj)
-          return obj
+        let obj = {
+          start: start,
+          end: end,
+          unit: 'time',
         }
+        if (/(am|pm)/.test(to.text()) === false) {
+          obj = moveToPM(obj)
+        }
+        obj = rollMidnight(obj)
+        return obj
       }
       return null
     },
@@ -54,18 +59,16 @@ export default [
         main.applyTime(a.text('implicit'))
         const end = main.clone()
         end.applyTime(b.text('implicit'))
-        if (end) {
-          let obj = {
-            start: main,
-            end: end,
-            unit: 'time',
-          }
-          if (/(am|pm)/.test(b.text()) === false) {
-            obj = moveToPM(obj)
-          }
-          obj = reverseMaybe(obj)
-          return obj
+        let obj = {
+          start: main,
+          end: end,
+          unit: 'time',
         }
+        if (/(am|pm)/.test(b.text()) === false) {
+          obj = moveToPM(obj)
+        }
+        obj = rollMidnight(obj)
+        return obj
       }
       return null
     },
@@ -73,26 +76,28 @@ export default [
   {
     // 'january 5th 3pm to 4pm'
     match: '[<from>#Date+] (to|until|upto|through|thru|and) [<to>#Time+]',
-    desc: 'january from 3pm to 4pm',
+    desc: 'january 5th 3pm to 4pm',
     parse: (m, context) => {
       let from = m.groups('from')
       const to = m.groups('to')
+      // not 'quarter to five' - that's a time, not a range
+      if (from.has('^(at|by|before|around)? (quarter|half|five|ten|fifteen|twenty|5|10|15|20|25)$')) {
+        return null
+      }
       from = parseDate(from, context)
       if (from) {
         const end = from.clone()
         end.applyTime(to.text('implicit'))
-        if (end) {
-          let obj = {
-            start: from,
-            end: end,
-            unit: 'time',
-          }
-          if (/(am|pm)/.test(to.text()) === false) {
-            obj = moveToPM(obj)
-          }
-          obj = reverseMaybe(obj)
-          return obj
+        let obj = {
+          start: from,
+          end: end,
+          unit: 'time',
         }
+        if (/(am|pm)/.test(to.text()) === false) {
+          obj = moveToPM(obj)
+        }
+        obj = rollMidnight(obj)
+        return obj
       }
       return null
     },

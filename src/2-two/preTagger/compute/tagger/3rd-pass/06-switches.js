@@ -51,7 +51,6 @@ const pickTag = function (terms, i, clues, model) {
   tag = tag || checkTag(terms[beforeIndex], clues.beforeTags, tagSet)
   // look -> right tag
   tag = tag || checkTag(terms[i + 1], clues.afterTags, tagSet)
-  // console.log(clues)
   return tag
 }
 

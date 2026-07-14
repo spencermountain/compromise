@@ -20,6 +20,8 @@ export default [
   { match: '#Noun #Copula not? [that] #Adjective', group: 0, tag: 'Adverb', reason: 'that-adj' },
 
   // ==== Prepositions ====
+  //to the store - a determiner/possessive/pronoun opens a noun-phrase, so this 'to' is never an infinitive-marker
+  { match: '[to] (#Determiner|#Possessive|#Pronoun)', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'to-the-store' },
   //all students
   { match: '#Verb #Adverb? #Noun [(that|which)]', group: 0, tag: 'Preposition', reason: 'that-prep' },
   //work, which has been done.

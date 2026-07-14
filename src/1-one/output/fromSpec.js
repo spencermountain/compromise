@@ -28,12 +28,13 @@ const toMatchString = function (tags, aliases) {
 }
 
 // parse the adhoc output of out('spec')
+// note: this(text), not this.tokenize().compute(hooks) - tokenize already
+// splits contractions, so re-running hooks would split them twice
 const fromSpec = function (spec) {
-  let world = this.world()
   let cleanText = spec.split('\n').filter(line => line.trim()).map(line => {
     return parseLine(line).text
   }).join('\n')
-  return this.tokenize(cleanText).compute(world.hooks)
+  return this(cleanText)
 }
 
 // rebuild spec-formatted tag list
@@ -55,7 +56,7 @@ const testSpec = function (spec, verbose = true, throwError = false) {
   let failingLines = spec.split('\n').filter(line => line.trim()).map(line => {
     let { text, tags } = parseLine(line)
     // parse it
-    let doc = this.tokenize(text).compute(world.hooks)
+    let doc = this(text)
     // make compromise-compatible match string
     let matchStr = toMatchString(tags, aliases)
     let didMatch = doc.has(matchStr)
@@ -69,7 +70,7 @@ const testSpec = function (spec, verbose = true, throwError = false) {
     return didMatch ? null : text
   }).filter(Boolean).join('\n')
   // return a doc of only the failing lines - empty means everything passed
-  return this.tokenize(failingLines).compute(world.hooks)
+  return this(failingLines)
 }
 
 export { fromSpec, testSpec }

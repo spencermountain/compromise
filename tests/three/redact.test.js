@@ -154,3 +154,25 @@ test('redact-negative:', function (t) {
   })
   t.end()
 })
+
+test('redact-options:', function (t) {
+  const str = 'John lives in Paris. Email john@home.com or call 555-1234.'
+  t.equal(
+    redact(str, { people: false }) + '|',
+    `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`,
+    here + 'skip people'
+  )
+  // new blockStr
+  t.equal(
+    redact(str, { people: false }, '********') + '|',
+    `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`,
+    here + 'new blockStr'
+  )
+  // keep tags
+  t.equal(
+    redact(str, { people: false }, true) + '|',
+    `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`,
+    here + 'keep tags'
+  )
+  t.end()
+})

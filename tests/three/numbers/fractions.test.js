@@ -117,6 +117,21 @@ test('seconds-edge-case', function (t) {
   t.end()
 })
 
+test('fraction toText:', function (t) {
+  const arr = [
+    ['4/10', 'four tenths'],
+    ['3/5', 'three fifths'],
+    ['1/2', 'one half'],
+    ['1/5', 'one fifth'],
+  ]
+  arr.forEach(a => {
+    const doc = nlp(a[0])
+    doc.fractions().toText()
+    t.equal(doc.text(), a[1], here + 'toText - ' + a[0])
+  })
+  t.end()
+})
+
 test('do-math:', function (t) {
   const arr = nlp('1/2').fractions().get()
   t.equal((arr[0] || {}).decimal, 0.5, here + 'do-math')

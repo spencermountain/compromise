@@ -1,5 +1,5 @@
 // the 'spec' output format - a clean sentence + an ordered list of top-level tags
-// designed to round-trip between compromise and LLMs (see design/spec-format.md)
+// designed to round-trip between compromise and LLMs (see docs/spec-format.md)
 
 // roots that describe a token's shape, not its part-of-speech - never picked over a real POS
 const attributeTags = new Set(['Hyphenated', 'Prefix', 'SlashedTerm'])

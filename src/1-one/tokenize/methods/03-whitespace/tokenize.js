@@ -5,7 +5,7 @@ const isLetter = /\p{Letter}/u
 const isNumber = /[\p{Number}\p{Currency_Symbol}]/u
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const chillin = /[sn]['’]$/
-const isFullNumber = /^[\(\+\-]?\d+?(th|st|nd|rd|th)?[\)\+\-]?$/
+const isFullNumber = /^[(+\-]?\d+(th|st|nd|rd)?[)+\-]?$/
 
 const normalizePunctuation = function (str, model) {
   // quick lookup for allowed pre/post punctuation

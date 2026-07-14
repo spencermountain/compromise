@@ -42,7 +42,7 @@ const out = function (method) {
   if (method === 'hash' || method === 'md5') {
     return hash(this.text())
   }
-  // tagged-sentence format for LLMs (see design/spec-format.md)
+  // tagged-sentence format for LLMs (see docs/spec-format.md)
   if (method === 'spec') {
     return toSpec(this, this.world)
   }

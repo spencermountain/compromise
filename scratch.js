@@ -13,11 +13,3 @@ import nlp from './src/three.js'
 
 // let spec = `Hikers {and} cyclists hunted. {Noun|Plural,Conj,Noun,Past}`
 // nlp.testSpec(spec)//.debug()
-
-
-let tagSet = nlp.world().model.one.tagSet
-Object.keys(tagSet).forEach(key => {
-  if (tagSet[key].alias) {
-    console.log(key, '-', tagSet[key].alias || '')
-  }
-})

@@ -164,7 +164,7 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.clauses(n?)`** — split-up results into multi-term phrases
 - **`.chunks()`** — split-up noun-phrase and verb-phrases
 - **`.normalize(options?)`** — clean-up the document, in various ways
-- **`.redact(opts?)`** — remove any people, places, and organizations
+- **`.redact(opts?, blockStr?, keepTags?)`** — remove any people, places, and organizations
 - **`.hyphenated(n?)`** — return all terms connected with a hyphen or dash like `'wash-out'`
 - **`.hashTags(n?)`** — return terms like `'#nlp'`
 - **`.emails(n?)`** — return terms like `'hi@compromise.cool'`

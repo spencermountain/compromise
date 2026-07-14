@@ -11,12 +11,15 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 #### 14.16.0 [June 2026]
 - **[new]** - apply redaction to #Organization, #Address, #Url etc tags in .redact() method
 - **[new]** - apply #Redacted tag
+- **[change]** - .redact() method now untags specific tags when redacting
 - **[new]** - .addresses() method
-- **[new]** - .out('spec') format
+- **[new]** - .out('spec') format and .fromSpec() and .testSpec() methods
+- **[new]** - .percentages().toText() method
 - **[change]** - .money() selector and methods
 - **[fix]** - tokenize phone-numbers with parentheses
 - **[fix]** - replaceWith keep-tag issue
 - **[fix]** - preposition-conjunction tagging
+- **[fix]** - ambiguous timezones 'today in EST'
 - **[update]** - dependencies
 
 #### 14.15.1 [May 2026]

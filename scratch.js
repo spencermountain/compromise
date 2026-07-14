@@ -31,4 +31,4 @@ let arr = [
 ]
 // let doc = nlp.fromSpec(arr[0]).debug()
 
-nlp('today in EST').debug()
+nlp('john smith and Sally Morris lives in new york').redact().debug()

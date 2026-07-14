@@ -11,7 +11,7 @@ interface Three extends View {
   normalize: (options?: string | object) => View
 
   /** remove any people, places, and organizations */
-  redact: (opts?: object) => View
+  redact: (opts?: object, blockStr?: string, keepTags?: boolean) => View
 
   /** return all terms connected with a hyphen or dash like `'wash-out'`*/
   hyphenated: (n?: number) => View

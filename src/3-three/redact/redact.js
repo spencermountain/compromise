@@ -1,5 +1,3 @@
-const blockStr = '██████████'
-
 const defaults = {
   people: true,
   places: true,
@@ -19,61 +17,69 @@ const defaults = {
   pronouns: false,
 }
 
+// remove these specific tags when redacting, which may leak information
+const hideTags = {
+  people: ['MaleName', 'FemaleName', 'FirstName', 'LastName'],
+  places: ['City', 'State', 'Country', 'Region'],
+  organizations: ['SportsTeam', 'Company', 'School'],
+}
+hideTags.pronouns = [...hideTags.people, ...hideTags.places, ...hideTags.organizations]
+
 // replace text with blockStr but keep tags
-const redactMatch = function (m, keep = true) {
+const redactMatch = function (m, blockStr, keep = true) {
   m = m.notIf('#Redacted')
   m.replaceWith(blockStr, keep)
   m.tag('Redacted')
   return m
 }
 
-const redact = function (opts = {}, keep = true) {
+const redact = function (opts = {}, blockStr = '██████████', keep = true) {
   opts = Object.assign({}, defaults, opts)
   if (opts.people !== false) {
-    redactMatch(this.people(), keep)
+    redactMatch(this.people(), blockStr, keep).unTag(hideTags.people)
   }
   if (opts.places !== false) {
-    redactMatch(this.places(), keep)
+    redactMatch(this.places(), blockStr, keep).unTag(hideTags.places)
   }
   if (opts.organizations !== false) {
-    redactMatch(this.organizations(), keep)
+    redactMatch(this.organizations(), blockStr, keep).unTag(hideTags.organizations)
   }
   if (opts.emails !== false) {
-    redactMatch(this.emails(), keep)
+    redactMatch(this.emails(), blockStr, keep)
   }
   if (opts.money !== false) {
-    redactMatch(this.money(), keep)
+    redactMatch(this.money(), blockStr, keep)
   }
   if (opts.percentages !== false) {
-    redactMatch(this.percentages(), keep)
+    redactMatch(this.percentages(), blockStr, keep)
   }
   if (opts.fractions !== false) {
-    redactMatch(this.fractions(), keep)
+    redactMatch(this.fractions(), blockStr, keep)
   }
   if (opts.phoneNumbers !== false) {
-    redactMatch(this.phoneNumbers(), keep)
+    redactMatch(this.phoneNumbers(), blockStr, keep)
   }
   if (opts.atMentions !== false) {
-    redactMatch(this.atMentions(), keep)
+    redactMatch(this.atMentions(), blockStr, keep)
   }
   if (opts.acronyms !== false) {
-    redactMatch(this.acronyms(), keep)
+    redactMatch(this.acronyms(), blockStr, keep)
   }
   if (opts.urls !== false) {
-    redactMatch(this.urls(), keep)
+    redactMatch(this.urls(), blockStr, keep)
   }
   // off by default
   if (opts.properNouns !== false) {
-    redactMatch(this.properNouns(), keep)
+    redactMatch(this.properNouns(), blockStr, keep)
   }
   if (opts.dates !== false) {
-    redactMatch(this.dates(), keep)
+    redactMatch(this.dates(), blockStr, keep)
   }
   if (opts.numbers !== false) {
-    redactMatch(this.numbers(), keep)
+    redactMatch(this.numbers(), blockStr, keep)
   }
   if (opts.pronouns !== false) {
-    redactMatch(this.pronouns(), keep)
+    redactMatch(this.pronouns(), blockStr, keep).unTag(hideTags.pronouns)
   }
   return this
 }

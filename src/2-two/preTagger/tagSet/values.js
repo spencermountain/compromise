@@ -29,6 +29,7 @@ export default {
   NumericValue: {
     is: 'Value',
     not: ['TextValue'],
+    alias: 'Numeric'
   },
   Money: {
     is: 'Cardinal',

@@ -41,8 +41,11 @@ export default {
   },
   Expression: {
     not: ['Noun', 'Adjective', 'Verb', 'Adverb'],
+    alias: 'Expr'
   },
-  Abbreviation: {},
+  Abbreviation: {
+    alias: 'Abbr'
+  },
   Url: {
     not: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email', 'SlashedTerm'],
   },

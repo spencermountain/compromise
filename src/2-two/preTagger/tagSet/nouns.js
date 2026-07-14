@@ -3,7 +3,6 @@ const entity = ['Person', 'Place', 'Organization']
 export default {
   Noun: {
     not: ['Verb', 'Adjective', 'Adverb', 'Value', 'Determiner'],
-    alias: 'Noun'
   },
   Singular: {
     is: 'Noun',
@@ -12,6 +11,7 @@ export default {
   // 'Canada'
   ProperNoun: {
     is: 'Noun',
+    alias: 'Prop'
   },
   Person: {
     is: 'Singular',
@@ -37,6 +37,7 @@ export default {
   Honorific: {
     is: 'Person',
     not: ['FirstName', 'LastName', 'Value'],
+    alias: 'Hon'
   },
   Place: {
     is: 'Singular',
@@ -59,6 +60,7 @@ export default {
   },
   Address: {
     // is: 'Place',
+    alias: 'Addr'
   },
   Organization: {
     is: 'ProperNoun',

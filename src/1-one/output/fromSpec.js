@@ -38,7 +38,7 @@ const toTagList = function (tags) {
 }
 
 // compare the tagged text output of out('spec')
-const testSpec = function (spec, verbose, throwError = false) {
+const testSpec = function (spec, verbose = true, throwError = false) {
   let world = this.world()
   let aliases = {}
   // expand tag aliases
@@ -48,7 +48,7 @@ const testSpec = function (spec, verbose, throwError = false) {
       aliases[tags[k].alias] = k
     }
   })
-  let cleanText = spec.split('\n').map(line => {
+  let onlyFailing = spec.split('\n').map(line => {
     let { text, tags } = parseLine(line)
     // parse it
     let doc = this.tokenize(text).compute(world.hooks)
@@ -62,8 +62,8 @@ const testSpec = function (spec, verbose, throwError = false) {
     if (didMatch === false && throwError === true) {
       throw new Error(`❌ ${text} {${toTagList(tags)}}`)
     }
-    return text // return it anyways
-  }).join('\n')
+    return didMatch ? text : null // return it anyways
+  }).filter(Boolean).join('\n')
   // return it anyways
   return this.tokenize(cleanText).compute(world.hooks)
 }

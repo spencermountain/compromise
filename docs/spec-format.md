@@ -5,7 +5,7 @@ round-trip between **compromise** and **LLMs**.
 
 ```js
 nlp("The dog is nice.").out('spec')
-// → "The dog is nice. {Determiner,Noun,Verb,Adjective}"
+// → "The dog is nice. {Det,Noun,Verb,Adj}"
 ```
 
 ## Why it exists
@@ -29,7 +29,7 @@ real tag name.
 One line per sentence:
 
 ```
-<sentence text> {<tag>,<tag>,…}
+<sentence text> {<tag>,<tag>,<tag|tag>,…}
 ```
 
 - The sentence is reproduced exactly (internal whitespace and punctuation preserved),
@@ -38,8 +38,9 @@ One line per sentence:
 - Tags are **comma-separated with no spaces**, wrapped in `{ }`.
 - A document of N sentences produces N lines, joined by `\n`.
 - Newlines are to be removed from the sentence text.
+- A tag can be a single tag or several tags separated by a pipe (`|`).
 
-## The core rule: one tag per term
+## Alignment
 
 There is **one tag-slot per compromise term, in document order.** This is the entire
 alignment contract. Punctuation is not a term — it lives in the sentence text only and
@@ -58,26 +59,46 @@ authority for both sides of the format:
 So `The dog don't bark.` is five terms — `The` / `dog` / `don't` / `""` / `bark` — and
 therefore five tags.
 
-### The invariant
-
-> **`count(tags) === count(terms)`**
-
-This single integer comparison is the correctness check. A line whose tag-count does
-not equal the term-count (after the sentence is re-tokenized by compromise) is
-malformed. There is no silent drift — a mismatch is always a detectable bug, which is
-what makes tagging issues easy to debug.
-
 ## The tag vocabulary (closed)
+Terms and compromise have many tags, which are part of a tree. This format is meant to simplify this nest of tags, and choose one a parent tag that best represents the term.
 
-Each slot is exactly one **top-level tag**. There are 27, and nothing outside this set
-is ever legal:
+These are the most-common top-level tags:
+* Noun 
+* Vb (Verb)
+* Adj (Adjective)
+* Adv (Adverb)
+* Prep (Preposition)
+* Conj (Conjunction)
+* Det (Determiner)
+* Val (Value)
+* Date
 
-```
-Abbreviation Acronym Address Adjective Adverb Condition Conjunction Date
-Determiner Email Emoji Emoticon Expression HashTag Hyphenated Negative
-Noun NumberRange PhoneNumber Prefix Preposition QuestionWord SlashedTerm
-There Url Value Verb
-```
+These are other top-level tags you may
+* HashTag
+* Email
+* Negative
+* Url
+* PhoneNumber
+* Expr (Expression)
+* Emoji
+
+These are not top-level tags, but you may see them as extra tags in the output:
+* Abbr (Abbreviation)
+* Numeric (NumericValue)
+* Phrasal (PhrasalVerb)
+* Aux (Auxiliary)
+* Fut (FutureTense)
+* Past (PastTense)
+* Imp (Imperative)
+* Pres (PresentTense)
+* Ger (Gerund)
+* Inf (Infinitive)
+* Addr (Address)
+* Poss (Possessive)
+* Prop (ProperNoun)
+* Org (Organization)
+* Hon (Honorific)
+
 
 Plus one reserved value: `-` for a term compromise could not tag (empty tag-set).
 

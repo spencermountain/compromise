@@ -1,4 +1,4 @@
-export const relPointer = function (ptrs, parent) {
+const relPointer = function (ptrs, parent) {
   if (!parent) {
     return ptrs
   }

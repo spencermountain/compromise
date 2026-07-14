@@ -580,6 +580,8 @@ _(these methods are on the main `nlp` object)_
 - **[nlp.addWords(obj, isFrozen?)](https://observablehq.com/@spencermountain/compromise-plugin)** - add new words to the lexicon
 - **[nlp.addTags(obj)](https://observablehq.com/@spencermountain/compromise-plugin)** - add new tags to the tagSet
 - **[nlp.typeahead(arr)](https://observablehq.com/@spencermountain/compromise-typeahead)** - add words to the auto-fill dictionary
+- **[nlp.fromSpec(spec)](https://observablehq.com/@spencermountain/compromise-from-spec)** - parse a .out('spec') output back into a document
+- **[nlp.testSpec(spec, verbose?, throwError?)](https://observablehq.com/@spencermountain/compromise-test-spec)** - test tags against a spec-formatted output
 - **[nlp.buildTrie(arr)](https://observablehq.com/@spencermountain/compromise-lookup)** - compile a list of words into a fast lookup form
 - **[nlp.buildNet(arr)](https://observablehq.com/@spencermountain/compromise-sweep)** - compile a list of matches into a fast match form
 

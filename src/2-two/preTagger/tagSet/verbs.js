@@ -37,6 +37,7 @@ export default {
   FutureTense: {
     is: 'Verb',
     not: ['PresentTense', 'PastTense'],
+    alias: 'Fut'
   },
   // is/was
   Copula: {
@@ -55,10 +56,12 @@ export default {
   Auxiliary: {
     is: 'Verb',
     not: ['PastTense', 'PresentTense', 'Gerund', 'Conjunction'],
+    alias: 'Aux'
   },
   // 'walk out'
   PhrasalVerb: {
     is: 'Verb',
+    alias: 'Phrasal'
   },
   // 'walk [out]'
   Particle: {

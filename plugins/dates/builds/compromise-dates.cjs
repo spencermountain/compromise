@@ -870,76 +870,6 @@
     pgt: pac + 'Bougainville',
   };
 
-  // resolvable, but too ambiguous to add to the tagging lexicon -
-  // these are only recognized as timezones by their context (like '4pm sgt')
-  const unsafeToTag = [
-    'ireland',
-    'trt',
-    'etc',
-    'eat',
-    'cat',
-    'wat',
-    'wet',
-    'sast',
-    'central',
-    'mountain',
-    'pacific',
-    'eastern',
-    'ast',
-    'nst',
-    'ndt',
-    'brt',
-    'brasília',
-    'brasilia',
-    'art',
-    'amt',
-    'easst',
-    'vet',
-    'pyt',
-    'pyst',
-    'bot',
-    'cot',
-    'pet',
-    'ist',
-    'irst',
-    'irdt',
-    'iranian',
-    'pkt',
-    'ict',
-    'south east asia',
-    'jst',
-    'almt',
-    'gst',
-    'uae',
-    'hkt',
-    'wib',
-    'wita',
-    'idt',
-    'israeli',
-    'krat',
-    'myt',
-    'sgt',
-    'uzt',
-    'vlat',
-    'mvt',
-    'mut',
-    'nzst',
-    'nzdt',
-    'akst',
-    'akdt',
-    'irkt',
-    'mht',
-    'sst',
-    'chst',
-    'pgt',
-    'russian',
-    'south african',
-    'southern africa',
-    'australia central',
-    'australia east',
-    'australia west',
-    'australia central west',
-  ];
 
   //add the official iana zonefile names, like 'canada/eastern'
   const iana = ft().timezones;
@@ -947,6 +877,7 @@
     h[k] = k;
     return h
   }, {});
+
   var timezones = Object.assign({}, informal, formal);
 
   const isOffset = /^[-+]?[0-9]{1,2}h(rs)?$/i;
@@ -4300,6 +4231,11 @@
     if (off.found) {
       off.tag('Timezone', 'tz-offset');
     }
+    // ambiguous timezones 'today in EST'
+    const inTz = doc.match('#Date in (est|met|ast)');
+    if (inTz.found) {
+      inTz.tag('#Date #Date Timezone', 'in-est');
+    }
   };
 
   const here = 'fix-tagger';
@@ -4716,6 +4652,95 @@
     },
   };
 
+  // resolvable, but too ambiguous to add to the tagging lexicon -
+  // these are only recognized as timezones by their context (like '4pm sgt')
+  var falsePositives = [
+    'akdt',
+    'akst',
+    'almt',
+    'amt',
+    'art',
+    'ast',
+    'australia central west',
+    'australia central',
+    'australia east',
+    'australia west',
+    'bot',
+    'brasilia',
+    'brasília',
+    'brt',
+    'cat',
+    'central',
+    'chst',
+    'cot',
+    'cuba',
+    'easst',
+    'eastern',
+    'eat',
+    'egypt',
+    'est',
+    'etc',
+    'gb',
+    'greenwich',
+    'gst',
+    'hkt',
+    'iceland',
+    'ict',
+    'idt',
+    'iran',
+    'iranian',
+    'irdt',
+    'ireland',
+    'irkt',
+    'irst',
+    'israel',
+    'israeli',
+    'ist',
+    'jamaica',
+    'japan',
+    'jst',
+    'krat',
+    'libya',
+    'met',
+    'mht',
+    'mountain',
+    'mut',
+    'mvt',
+    'myt',
+    'ndt',
+    'nst',
+    'nzdt',
+    'nzst',
+    'pacific',
+    'pet',
+    'pgt',
+    'pkt',
+    'poland',
+    'portugal',
+    'pyst',
+    'pyt',
+    'russian',
+    'sast',
+    'sgt',
+    'singapore',
+    'south african',
+    'south east asia',
+    'southern africa',
+    'sst',
+    'summer',
+    'trt',
+    'turkey',
+    'uae',
+    'universal',
+    'uzt',
+    'vet',
+    'vlat',
+    'wat',
+    'wet',
+    'wib',
+    'wita',
+  ];
+
   var dates = [
     'weekday',
 
@@ -4959,7 +4984,7 @@
     });
   };
   // tag most timezone words - the ambiguous ones need context, and stay out of the lexicon
-  const skipTz = new Set(unsafeToTag);
+  const skipTz = new Set(falsePositives);
   add(Object.keys(timezones).filter(str => !skipTz.has(str)), 'Timezone');
   add(dates, 'Date');
   add(durations, 'Duration');
@@ -4986,7 +5011,7 @@
 
   ];
 
-  var version = '3.8.0';
+  var version = '3.8.1';
 
   /* eslint-disable no-console */
 

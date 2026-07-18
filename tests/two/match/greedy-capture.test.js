@@ -43,6 +43,32 @@ test('issue-654: greedy capture', function (t) {
   t.end()
 })
 
+/*
+ * a capture group spanning a wildcard must keep the tokens
+ * on both sides of the '.*'
+ * https://github.com/spencermountain/compromise/issues/1139
+ */
+test('issue-1139: capture group spanning a wildcard', function (t) {
+  let m
+
+  m = nlp('one two three after').match('[one .* after]', 0)
+  t.equal(m.out('normal'), 'one two three after', here + 'literal + wildcard + trailing literal')
+
+  m = nlp('one two three four after').match('[one .* after]', 0)
+  t.equal(m.out('normal'), 'one two three four after', here + 'wider wildcard span')
+
+  m = nlp('one two three after').match('[one .*]', 0)
+  t.equal(m.out('normal'), 'one two three after', here + 'leading literal + trailing wildcard')
+
+  m = nlp('one two three after').match('[.* after]', 0)
+  t.equal(m.out('normal'), 'one two three after', here + 'wildcard + trailing literal')
+
+  m = nlp('one two three after').match('one [.* after]', 0)
+  t.equal(m.out('normal'), 'two three after', here + 'group starts at the wildcard')
+
+  t.end()
+})
+
 test('test greedy min/max', function (t) {
   let doc = nlp('hello John, Lisa, Fred').match('#FirstName{3,6}')
   t.equal(doc.text(), 'John, Lisa, Fred', 'min met')

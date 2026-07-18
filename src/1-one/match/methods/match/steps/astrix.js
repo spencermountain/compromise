@@ -25,7 +25,9 @@ const doAstrix = function (state) {
   // set the group result
   if (state.hasGroup === true) {
     const g = getGroup(state, state.t)
-    g.length = skipto - state.t
+    // accumulate onto any tokens already captured before the wildcard,
+    // so '[one .* after]' keeps its leading (and trailing) tokens
+    g.length += skipto - state.t
   }
   state.t = skipto
   // log(`✓ |greedy|`)

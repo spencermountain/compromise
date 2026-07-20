@@ -8,11 +8,14 @@ const getGreedy = function (state, endReg) {
   const reg = Object.assign({}, state.regs[state.r], { start: false, end: false })
   const start = state.t
   for (; state.t < state.terms.length; state.t += 1) {
-    //stop for next-reg match
-    if (endReg && doesMatch(state.terms[state.t], endReg, state.start_i + state.t, state.phrase_length)) {
-      return state.t
-    }
+    // the number of terms we've matched, if we stop here
     const count = state.t - start + 1
+    //stop for next-reg match - unless we're still under our min
+    if (endReg && doesMatch(state.terms[state.t], endReg, state.start_i + state.t, state.phrase_length)) {
+      if (reg.min === undefined || count >= reg.min) {
+        return state.t
+      }
+    }
     // is it max-length now?
     if (reg.max !== undefined && count === reg.max) {
       return state.t
@@ -25,6 +28,10 @@ const getGreedy = function (state, endReg) {
       }
       return state.t
     }
+  }
+  // we ran out of terms - did we reach our min?
+  if (reg.min !== undefined && state.t - start + 1 < reg.min) {
+    return null
   }
   return state.t
 }

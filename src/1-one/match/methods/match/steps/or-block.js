@@ -26,7 +26,16 @@ const orBlock = function (state) {
     state.t += skipNum
     // log(`✓ |found-or|`)
     return true
-  } else if (!reg.optional) {
+  }
+  // we didn't find it - for a negative-block, that's good news
+  if (reg.negative === true) {
+    // a '!(a b)?' can pass-through without consuming anything
+    if (!reg.optional) {
+      state.t += 1
+    }
+    return true
+  }
+  if (!reg.optional) {
     return null //die
   }
   return true

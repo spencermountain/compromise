@@ -53,3 +53,25 @@ test('min-max with 0', function (t) {
 
   t.end()
 })
+
+test('min-max counts only greedy terms', function (t) {
+  // preceding tokens should not count toward the greedy minimum
+  let doc = nlp('hello1 one hello2').match('hello1 #Value{2,3}')
+  t.equal(doc.out(), '', here + 'min-unmet-after-token')
+
+  doc = nlp('hello1 one two hello2').match('hello1 #Value{2,3}')
+  t.equal(doc.out(), 'hello1 one two', here + 'min-met-after-token')
+
+  // stopping early for the next-reg should still respect the minimum
+  doc = nlp('one hello2').match('#Value{2,3} hello2')
+  t.equal(doc.out(), '', here + 'min-unmet-before-next-reg')
+
+  doc = nlp('one two hello2').match('#Value{2,3} hello2')
+  t.equal(doc.out(), 'one two hello2', here + 'min-met-before-next-reg')
+
+  // running out of terms should still respect the minimum
+  doc = nlp('hello1 one').match('hello1 #Value{2,3}')
+  t.equal(doc.out(), '', here + 'min-unmet-at-end')
+
+  t.end()
+})

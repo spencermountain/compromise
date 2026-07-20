@@ -3,7 +3,7 @@ import doesMatch from '../../term/doesMatch.js'
 const negGreedy = function (state, reg, nextReg) {
   let skip = 0
   for (let t = state.t; t < state.terms.length; t += 1) {
-    let found = doesMatch(state.terms[t], reg, state.start_i + state.t, state.phrase_length)
+    let found = doesMatch(state.terms[t], reg, state.start_i + t, state.phrase_length)
     // we don't want a match, here
     if (found) {
       break//stop going
@@ -11,7 +11,7 @@ const negGreedy = function (state, reg, nextReg) {
     // are we doing 'greedy-to'?
     // - "!foo+ after"  should stop at 'after'
     if (nextReg) {
-      found = doesMatch(state.terms[t], nextReg, state.start_i + state.t, state.phrase_length)
+      found = doesMatch(state.terms[t], nextReg, state.start_i + t, state.phrase_length)
       if (found) {
         break
       }

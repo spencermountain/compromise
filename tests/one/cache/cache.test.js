@@ -57,3 +57,10 @@ test('cache if method', function (t) {
   t.equal(m.length, 2, here + 'ifNo')
   t.end()
 })
+test('cache fail-fast or', function (t) {
+  const doc = nlp('one two three').cache()
+  t.equal(doc.match('(two|ten)').text(), 'two', here + 'fastOr-hit')
+  t.equal(doc.match('(four|five)').found, false, here + 'fastOr-miss')
+  t.equal(doc.match('(one|seven) two').text(), 'one two', here + 'fastOr-then-word')
+  t.end()
+})

@@ -4,48 +4,64 @@ const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
-export const doOrBlock = function (state, skipN = 0) {
-  const block = state.regs[state.r]
-  let wasFound = false
-  // do each multiword sequence
-  for (let c = 0; c < block.choices.length; c += 1) {
-    // try to match this list of tokens
-    const regs = block.choices[c]
-    if (!isArray(regs)) {
-      return false
+// try to match a list of tokens, starting at state.t + skipN
+// returns the number of terms it consumed, or 0 for no-match
+const tryChoice = function (state, regs, skipN) {
+  let len = 0
+  for (let w = 0; w < regs.length; w += 1) {
+    const cr = regs[w]
+    const t = state.t + skipN + len
+    if (state.terms[t] === undefined) {
+      return 0
     }
-    wasFound = regs.every((cr, w_index) => {
-      let extra = 0
-      const t = state.t + w_index + skipN + extra
-      if (state.terms[t] === undefined) {
-        return false
-      }
-      const foundBlock = doesMatch(state.terms[t], cr, t + state.start_i, state.phrase_length)
-      // this can be greedy - '(foo+ bar)'
-      if (foundBlock === true && cr.greedy === true) {
-        for (let i = 1; i < state.terms.length; i += 1) {
-          const term = state.terms[t + i]
-          if (term) {
-            const keepGoing = doesMatch(term, cr, state.start_i + i, state.phrase_length)
-            if (keepGoing === true) {
-              extra += 1
-            } else {
-              break
-            }
-          }
+    if (doesMatch(state.terms[t], cr, state.start_i + t, state.phrase_length) !== true) {
+      return 0
+    }
+    len += 1
+    // this can be greedy - '(foo+ bar)'
+    if (cr.greedy === true) {
+      // like getGreedy, anchors should not apply to the repeated terms
+      const gr = Object.assign({}, cr, { start: false, end: false })
+      for (let i = t + 1; i < state.terms.length; i += 1) {
+        if (doesMatch(state.terms[i], gr, state.start_i + i, state.phrase_length) !== true) {
+          break
         }
+        len += 1
       }
-      skipN += extra
-      return foundBlock
-    })
-    if (wasFound) {
-      skipN += regs.length
-      break
     }
   }
-  // we found a match -  is it greedy though?
-  if (wasFound && block.greedy === true) {
-    return doOrBlock(state, skipN) // try it again!
+  return len
+}
+
+// match the first choice that works - '(a b|c)'
+const tryChoices = function (state, skipN) {
+  const block = state.regs[state.r]
+  for (let c = 0; c < block.choices.length; c += 1) {
+    const regs = block.choices[c]
+    if (!isArray(regs)) {
+      return 0
+    }
+    const len = tryChoice(state, regs, skipN)
+    if (len > 0) {
+      return len
+    }
+  }
+  return 0
+}
+
+export const doOrBlock = function (state) {
+  const block = state.regs[state.r]
+  let skipN = tryChoices(state, 0)
+  if (skipN === 0) {
+    return 0
+  }
+  // greedy or-block - keep matching choices - '(a b|c)+'
+  if (block.greedy === true) {
+    let more = tryChoices(state, skipN)
+    while (more > 0) {
+      skipN += more
+      more = tryChoices(state, skipN)
+    }
   }
   return skipN
 }
@@ -61,7 +77,7 @@ const doAndBlock = function (state) {
       if (state.terms[tryTerm] === undefined) {
         return false
       }
-      return doesMatch(state.terms[tryTerm], cr, tryTerm, state.phrase_length)
+      return doesMatch(state.terms[tryTerm], cr, state.start_i + tryTerm, state.phrase_length)
     })
     if (allWords === true && block.length > longest) {
       longest = block.length

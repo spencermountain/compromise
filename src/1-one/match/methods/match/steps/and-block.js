@@ -18,15 +18,24 @@ const andBlock = function (state) {
     }
     // ensure we're at the end
     if (reg.end === true) {
-      const end = state.phrase_length - 1
-      if (state.t + state.start_i !== end) {
+      const end = state.phrase_length
+      if (state.t + state.start_i + skipNum !== end) {
         return null
       }
     }
     state.t += skipNum
     // log(`✓ |found-and|`)
     return true
-  } else if (!reg.optional) {
+  }
+  // we didn't find it - for a negative-block, that's good news
+  if (reg.negative === true) {
+    // a '!(a && b)?' can pass-through without consuming anything
+    if (!reg.optional) {
+      state.t += 1
+    }
+    return true
+  }
+  if (!reg.optional) {
     return null //die
   }
   return true

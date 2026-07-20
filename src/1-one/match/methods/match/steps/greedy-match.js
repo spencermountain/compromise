@@ -4,12 +4,9 @@ import { getGreedy } from './logic/greedy.js'
 const greedyMatch = function (state) {
   const { regs, phrase_length } = state
   const reg = regs[state.r]
+  // foo{2,4} min-lengths are enforced inside getGreedy
   state.t = getGreedy(state, regs[state.r + 1])
   if (state.t === null) {
-    return null //greedy was too short
-  }
-  // foo{2,4} - has a greed-minimum
-  if (reg.min && reg.min > state.t) {
     return null //greedy was too short
   }
   // 'foo+$' - if also an end-anchor, ensure we really reached the end

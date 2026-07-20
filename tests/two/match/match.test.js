@@ -123,3 +123,12 @@ test('slashes-basic', function (t) {
 // 3b. doc.has('is') == false  (find none)
 //   t.end()
 // })
+
+test('slashes-alias-words', function (t) {
+  const doc = nlp(`the one/two thing`)
+  t.equal(doc.match('one').found, true, 'alias-first')
+  t.equal(doc.match('two').found, true, 'alias-second')
+  // array-properties should not match
+  t.equal(doc.match('length').found, false, 'alias-no-array-props')
+  t.end()
+})

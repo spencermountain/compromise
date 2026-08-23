@@ -43,6 +43,31 @@ One line per sentence:
   them (e.g. `Noun|Plural`).
 - Literal `{` `}` characters in the sentence are fine - parsers split on the **last**
   `{` in the line.
+- An optional `#` **comment** may follow the tag block. It is free text, ignored on
+  ingest (see below).
+
+## Comments
+
+A line may end with a `#` comment, after the tag block:
+
+```
+The dog is nice. {Det,Noun,Vb,Adj}     # the copula keeps its Vb slot
+We'll see well-known cases. {Noun,Vb,Vb,Adv,Adj,Noun}  # contraction + hyphenate
+```
+
+- The comment is **optional**, and never produced by `out('spec')` - it exists so that
+  hand-written or LLM-written specs can carry notes.
+- Both `.fromSpec()` and `.testSpec()` strip it before parsing, so it affects neither
+  the text nor the tags. A failing line reported by `.testSpec()` comes back without it.
+- A line holds **at most one tag block and one comment, and the last of each wins.**
+  The tag block is the last `{…}` on the line; the comment is a `#` directly after its
+  closing `}` (with only spaces or tabs between), running to the end of the line.
+- So a `#` anywhere *before* the tag block is sentence text, not a comment - both
+  `#hiking is fun {HashTag,Vb,Adj}` and `the {cool} #hiking dog {Det,Adj,HashTag,Noun}`
+  parse as written.
+- A comment cannot contain `{` `}` - a brace inside it would be read as the tag block.
+- A line with no tag block is not comment-stripped, so `no braces here # note` stays
+  ordinary text - the same preamble line it was before.
 
 ## Alignment
 
@@ -192,12 +217,16 @@ nlp.testSpec(spec, false, true)  // throw on a failing line
 ```
 
 Both accept aliases or full tag-names, and are forgiving about LLM-style mess: blank
-lines, a trailing newline, and preamble lines without a `{}` block won't throw.
+lines, a trailing newline, `#` comments, and preamble lines without a `{}` block won't
+throw.
 Parsers split each line on the **last** `{`, so braces inside the sentence are safe:
 
 ```js
 const [text, tagBlock] = line.split(/\{(?=[^{]*$)/)
-const tags = tagBlock.replace(/\}$/, '').split(',')
+const tags = tagBlock
+  .replace(/\}[ \t]*#.*$/, '}') // drop a trailing '# comment'
+  .replace(/\}$/, '')
+  .split(',')
 // re-tokenize `text` into terms, assert terms.length === tags.length,
 // then assign tags[i] to term[i].
 ```

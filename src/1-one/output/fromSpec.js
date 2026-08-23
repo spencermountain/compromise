@@ -1,4 +1,5 @@
 const lastBrace = /\{(?=[^{]*$)/ // split on the last { only
+const comment = /\}[ \t]*#.*$/ // an optional '# comment' after the last {tags} block
 
 // parse the spec output
 const parseLine = function (line = '') {
@@ -6,6 +7,7 @@ const parseLine = function (line = '') {
   if (tags === undefined) {
     return { text, tags: [] } // no {tags} block on this line
   }
+  tags = tags.replace(comment, '}') // drop the comment - only ever one, always last
   tags = tags.split(',').map(tag => tag.trim())
   let lastTag = tags[tags.length - 1]
   tags[tags.length - 1] = lastTag.replace(/\}$/, '')

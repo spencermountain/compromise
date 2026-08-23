@@ -160,3 +160,70 @@ test('testSpec messy input', function (t) {
   t.equal(res.text().trim(), 'Here is a preamble:', here + 'tagless preamble line counts as failing')
   t.end()
 })
+
+test('spec comments are ignored on ingest', function (t) {
+  const doc = nlp.fromSpec('The dog is nice. {Det,Noun,Vb,Adj} # a note about this line')
+  t.equal(doc.text().trim(), 'The dog is nice.', here + 'comment not part of the text')
+  t.equal(doc.has('#Determiner #Noun #Verb #Adjective'), true, here + 'tags still parsed')
+
+  // commented and un-commented specs produce the same doc
+  const spec = 'The dog is nice. {Det,Noun,Vb,Adj}\nThe cat slept. {Det,Noun,Vb}'
+  const commented = ['The dog is nice. {Det,Noun,Vb,Adj} # first', 'The cat slept. {Det,Noun,Vb} # second'].join('\n')
+  t.equal(nlp.fromSpec(commented).out('spec'), spec, here + 'comments round-trip away')
+
+  // a comment on some lines only
+  const mixed = 'one fish. {Val,Noun} # numbered\ntwo fish. {Val,Noun}'
+  t.equal(nlp.fromSpec(mixed).length, 2, here + 'mixed commented/plain lines')
+  t.end()
+})
+
+test('spec comment whitespace forms', function (t) {
+  const forms = [
+    'the dog barked {Det,Noun,Vb} # spaced comment',
+    'the dog barked {Det,Noun,Vb}#no-space',
+    'the dog barked {Det,Noun,Vb}\t# tabbed',
+    'the dog barked {Det,Noun,Vb} #',
+    'the dog barked {Det,Noun,Vb} # trailing space   ',
+  ]
+  forms.forEach(str => {
+    t.equal(nlp.fromSpec(str).text().trim(), 'the dog barked', here + 'text clean: ' + str)
+    t.equal(nlp.testSpec(str, false).found, false, here + 'tags still pass: ' + str)
+  })
+  t.end()
+})
+
+test('spec comments vs braces and hashtags', function (t) {
+  // literal braces in the sentence, plus a comment
+  const doc = nlp.fromSpec('the {cool} dog barked {Det,Adj,Noun,Vb} # nice one')
+  t.equal(doc.text().trim(), 'the {cool} dog barked', here + 'braces in text survive a comment')
+
+  // the tag-block is the last {} on the line - a '#' before it is text, not a comment
+  const doc2 = nlp.fromSpec('the {cool} #hiking dog {Det,Adj,HashTag,Noun}')
+  t.equal(doc2.text().trim(), 'the {cool} #hiking dog', here + 'braces then a hashtag, no comment')
+  t.equal(nlp.testSpec('the {cool} #hiking dog {Det,Adj,HashTag,Noun}', false).found, false, here + 'tags read from the last {}')
+
+  // a '#' before the tag-block is sentence text, not a comment
+  const doc3 = nlp.fromSpec('#hiking is fun {HashTag,Vb,Adj}')
+  t.equal(doc3.text().trim(), '#hiking is fun', here + 'hashtag in text kept')
+  t.equal(nlp.testSpec('#hiking is fun {HashTag,Vb,Adj} # and so is this', false).found, false, here + 'hashtag + comment')
+
+  // a line with no {} block is not comment-stripped
+  const doc4 = nlp.fromSpec('no braces here # not a comment')
+  t.equal(doc4.text().trim(), 'no braces here # not a comment', here + 'comment needs a tag-block')
+  t.end()
+})
+
+test('testSpec ignores comments', function (t) {
+  t.equal(nlp.testSpec('The dog is nice. {Det,Noun,Vb,Adj} # should pass', false).found, false, here + 'comment does not break a pass')
+
+  const res = nlp.testSpec('the cat slept {Vb,Vb,Vb} # wrong on purpose', false)
+  t.equal(res.text().trim(), 'the cat slept', here + 'failing line reported without its comment')
+
+  t.throws(() => {
+    nlp.testSpec('the cat slept {Vb,Vb,Vb} # explain why', false, true)
+  }, here + 'throwError still throws')
+  t.doesNotThrow(() => {
+    nlp.testSpec('the cat slept {Det,Noun,Vb} # explain why', false, true)
+  }, here + 'throwError silent when passing')
+  t.end()
+})

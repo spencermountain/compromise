@@ -2,8 +2,8 @@ const MAX_LEN = 250// ¯\_(ツ)_/¯
 
 // support unicode variants?
 // https://stackoverflow.com/questions/13535172/list-of-all-unicodes-open-close-brackets
-const hasOpen = /\(/g
-const hasClosed = /\)/g
+const hasOpen = /[(\uFF08]/g
+const hasClosed = /[)\uFF09]/g
 const mergeParens = function (splits) {
   const arr = []
   for (let i = 0; i < splits.length; i += 1) {

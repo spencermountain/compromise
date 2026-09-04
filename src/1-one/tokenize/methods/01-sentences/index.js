@@ -17,7 +17,7 @@ const splitSentences = function (text, world) {
     return []
   }
   // cleanup unicode-spaces
-  text = text.replace('\xa0', ' ')
+  text = text.replace(/\xa0/g, ' ')
   // First do a greedy-split..
   const splits = simpleSplit(text)
   // Filter-out the crap ones

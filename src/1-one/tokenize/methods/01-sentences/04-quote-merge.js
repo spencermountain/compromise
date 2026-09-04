@@ -24,6 +24,8 @@ const pairs = {
   '\u301D': '\u301E', // 'PrimeDoubleQuotes'
   // '\u0060': '\u00B4', // 'PrimeSingleQuotes'
   '\u301F': '\u301E', // 'LowPrimeDoubleQuotesReversed'
+  '\u300C': '\u300D', // 'CornerBrackets' 「」
+  '\u300E': '\u300F', // 'WhiteCornerBrackets' 『』
 }
 const openQuote = RegExp('[' + Object.keys(pairs).join('') + ']', 'g')
 const closeQuote = RegExp('[' + Object.values(pairs).join('') + ']', 'g')
@@ -48,6 +50,12 @@ const quoteMerge = function (splits) {
     // do we have an open-quote and not a closed one?
     const m = split.match(openQuote)
     if (m !== null && m.length === 1) {
+      // is the quote already closed in this chunk? - '“Yes!” said Tom. “No!” said Ann.'
+      const closed = split.match(closeQuote)
+      if (closed !== null && closed[0] !== m[0]) {
+        arr.push(split)
+        continue
+      }
 
       // look at the next sentence for a closing quote,
       if (closesQuote(splits[i + 1]) && splits[i + 1].length < MAX_QUOTE) {

@@ -304,6 +304,7 @@ export default [
   'pink floyd',
   // 'r.e.m.',
   'radiohead',
+  'u2',
   'red hot chili peppers',
   'sex pistols',
   'soundgarden',
@@ -350,4 +351,6 @@ export default [
   'smirnoff',
   'wikileaks',
   'wikipedia',
+  '23andme',
+  '4chan'
 ]

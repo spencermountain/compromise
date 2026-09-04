@@ -58,7 +58,7 @@ const isQuestion = function (doc) {
 }
 
 const findQuestions = function (view) {
-  const hasQ = /\?/
+  const hasQ = /[?\uFF1F]/
   const { document } = view
   return view.filter(m => {
     const terms = m.docs[0] || []

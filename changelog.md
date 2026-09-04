@@ -8,6 +8,13 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 
 
+#### [unreleased]
+- **[new]** - split japanese/chinese sentences on 。！？ without whitespace, respecting 「」（）brackets
+- **[fix]** - sentence-split for korean, and cjk text with ascii periods
+- **[fix]** - fullwidth ？ in .questions()
+- **[fix]** - '“Yes!” said Tom. “No!” said Ann.' merged into one sentence
+- **[fix]** - replace all non-breaking spaces, not only the first
+
 #### 14.16.0 [July 2026]
 - **[new]** - apply redaction to #Organization, #Address, #Url etc tags in .redact() method
 - **[new]** - apply #Redacted tag

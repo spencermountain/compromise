@@ -36,6 +36,7 @@ test('sentence tokenizer', function (t) {
     [`the novel is called "Guards! Guards!".`, 1],
     [`start "the. one two. three" end`, 1],
     [`start 'the. one two. three' end`, 3], //dont support single-quotes
+    [`“Yes!” said Tom. “No!” said Ann.`, 2],
     // mis-matched examples
     ['i thought "no way! and he said "yes way".', 2], //
     ['i thought (no way! and he said (yes)', 2], //
@@ -143,5 +144,47 @@ test('nested quotes', function (t) {
 
   doc = nlp(`Foo bar. Before "quote here? and quote here? also here!". After`)
   t.equal(doc.length, 3, here + '1 quotes with 3 sentences')
+  t.end()
+})
+
+test('cjk sentence-split', function (t) {
+  const arr = [
+    // no whitespace after 。
+    ['今日は良い天気です。明日は雨が降るでしょう。', 2],
+    // fullwidth ？ ！ and halfwidth ｡
+    ['元気ですか？はい、元気です！', 2],
+    ['元気ですか？ はい。', 2],
+    ['本当？！すごい。', 2],
+    ['ﾃｷｼﾞ｡ﾃｽﾄ｡', 2],
+    // mixed with english
+    ['東京に行きました。That was fun. 楽しかった。', 3],
+    // 。」 inside a sentence
+    ['彼は「行きません。」と言った。それで終わりだ。', 2],
+    ['「はい。」「いいえ。」', 2],
+    ['「はい。」 「いいえ。」', 2],
+    ['「はい！すごい。」と言った。', 1],
+    ['東京（日本の首都。人口が多い）は大きい。', 1],
+    ['東京（日本の首都）は大きい。人口が多い。', 2],
+    // not a sentence boundary
+    ['そうですね…わかりました。', 1],
+    ['ver 2.0。次。', 2],
+    ['3.5 million。', 1],
+    // newline, ideographic space
+    ['一行目です。\n二行目です。', 2],
+    ['今日は良い天気です。　明日は雨です。', 2],
+    // chinese
+    ['今天天气很好。明天会下雨。', 2],
+    ['他说：“你好。”然后走了。', 1],
+    // korean, and kanji with an ascii period
+    ['안녕하세요. 만나서 반갑습니다.', 2],
+    ['東京. 大阪.', 2],
+  ]
+  arr.forEach(a => {
+    const [str, len] = a
+    t.equal(nlp(str).length, len, here + `"${str}"`)
+  })
+  const doc = nlp('元気ですか？はい、元気です！')
+  t.deepEqual(doc.sentences().out('array'), ['元気ですか？', 'はい、元気です！'], here + 'cjk sentence text')
+  t.equal(doc.text(), '元気ですか？はい、元気です！', here + 'cjk roundtrip')
   t.end()
 })

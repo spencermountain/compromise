@@ -1,7 +1,8 @@
 // split by periods, question marks, unicode ⁇, etc
-const initSplit = /([.!?\u203D\u2E18\u203C\u2047-\u2049\u3002]+\s)/g
+// also ।॥ (devanagari), ؟ (arabic), ۔ (urdu), ։ (armenian), ።፧ (ethiopic), ။ (burmese), ។ (khmer)
+const initSplit = /([.!?\u203D\u2E18\u203C\u2047-\u2049\u0964\u0965\u061F\u06D4\u0589\u1362\u1367\u104B\u17D4\u3002]+\s)/g
 // merge these back into prev sentence
-const splitsOnly = /^[.!?\u203D\u2E18\u203C\u2047-\u2049\u3002]+\s$/
+const splitsOnly = /^[.!?\u203D\u2E18\u203C\u2047-\u2049\u0964\u0965\u061F\u06D4\u0589\u1362\u1367\u104B\u17D4\u3002]+\s$/
 const newLine = /((?:\r?\n|\r)+)/ // Match different new-line formats
 
 // CJK full-stops 。！？｡ are never used in numbers or abbreviations,
@@ -11,7 +12,7 @@ const newLine = /((?:\r?\n|\r)+)/ // Match different new-line formats
 //  - '「行きません。」と言った' stays together,  '「はい。」「いいえ。」' splits
 const hasCjkStop = /[\u3002\uFF01\uFF1F\uFF61]/
 const cjkStops = '\\u3002\\uFF01\\uFF1F\\uFF61' // 。！？｡
-const allStops = '.!?\\u203D\\u2E18\\u203C\\u2047-\\u2049' + cjkStops
+const allStops = '.!?\\u203D\\u2E18\\u203C\\u2047-\\u2049' + '\u0964\u0965\u061F\u06D4\u0589\u1362\u1367\u104B\u17D4' + cjkStops
 const openers = '\\u300C\\u300E\\uFF08\\u3010\\u3014\\u300A\\u3008\\u201C' // 「『（【〔《〈“
 const closers = '\\u300D\\u300F\\uFF09\\u3011\\u3015\\u300B\\u3009\\u201D' // 」』）】〕》〉”
 const initSplitCjk = new RegExp(

@@ -35,3 +35,10 @@ test('zero-width-chars', function (t) {
   t.equal(doc.text('root'), 'before after', here + 'root text removes 0-width-char')
   t.end()
 })
+
+test('fullwidth-ascii', function (t) {
+  t.equal(nlp('ＡＢＣ').has('abc'), true, here + 'fullwidth match')
+  t.equal(nlp('Ｈｅｌｌｏ ２０２４').out('normal'), 'hello 2024', here + 'fullwidth normal')
+  t.equal(nlp('Ｈｅｌｌｏ ２０２４').text(), 'Ｈｅｌｌｏ ２０２４', here + 'fullwidth text unchanged')
+  t.end()
+})

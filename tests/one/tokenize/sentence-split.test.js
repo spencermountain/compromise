@@ -184,7 +184,26 @@ test('cjk sentence-split', function (t) {
     t.equal(nlp(str).length, len, here + `"${str}"`)
   })
   const doc = nlp('元気ですか？はい、元気です！')
-  t.deepEqual(doc.sentences().out('array'), ['元気ですか？', 'はい、元気です！'], here + 'cjk sentence text')
+  t.deepEqual(doc.fullSentences().out('array'), ['元気ですか？', 'はい、元気です！'], here + 'cjk sentence text')
   t.equal(doc.text(), '元気ですか？はい、元気です！', here + 'cjk roundtrip')
+  t.end()
+})
+
+test('other-script full-stops', function (t) {
+  const arr = [
+    ['यह एक वाक्य है। यह दूसरा है।', 2], // hindi
+    ['पहला॥ दूसरा॥', 2], // double danda
+    ['میں ٹھیک ہوں۔ آپ کیسے ہیں؟', 2], // urdu
+    ['كيف حالك؟ أنا بخير.', 2], // arabic
+    ['Ես լավ եմ։ Դու ինչպես ես։', 2], // armenian
+    ['ሰላም። እንደምን ነህ።', 2], // amharic
+    ['မင်္ဂလာပါ။ နေကောင်းလား။', 2], // burmese
+    ['សួស្តី។ អ្នកសុខសប្បាយទេ។', 2], // khmer
+    ['東京に行きました。यह दूसरा है। ok.', 3], // mixed
+  ]
+  arr.forEach(a => {
+    const [str, len] = a
+    t.equal(nlp(str).length, len, here + `"${str}"`)
+  })
   t.end()
 })

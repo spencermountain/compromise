@@ -12,6 +12,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - split japanese/chinese sentences on 。！？ without whitespace, respecting 「」（）brackets
 - **[fix]** - sentence-split for korean, and cjk text with ascii periods
 - **[fix]** - fullwidth ？ in .questions()
+- **[new]** - sentence-split on ।॥ ؟ ۔ ։ ። ။ ។ full-stops (hindi, arabic, urdu, armenian, amharic, burmese, khmer)
+- **[new]** - normalize fullwidth ascii - 'Ｈｅｌｌｏ ２０２４'
 - **[fix]** - '“Yes!” said Tom. “No!” said Ann.' merged into one sentence
 - **[fix]** - replace all non-breaking spaces, not only the first
 

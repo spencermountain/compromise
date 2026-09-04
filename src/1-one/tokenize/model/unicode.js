@@ -43,4 +43,8 @@ Object.keys(compact).forEach(function (k) {
     unicode[s] = k
   })
 })
+// fullwidth ascii - 'Ｈｅｌｌｏ ２０２４' to 'Hello 2024'
+for (let i = 0x21; i <= 0x7E; i += 1) {
+  unicode[String.fromCharCode(i + 0xFEE0)] = String.fromCharCode(i)
+}
 export default unicode

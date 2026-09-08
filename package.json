@@ -131,7 +131,7 @@
   "dependencies": {
     "efrt": "2.7.0",
     "grad-school": "0.0.5",
-    "suffix-thumb": "5.0.2"
+    "suffix-thumb": "5.0.3"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "16.0.3",

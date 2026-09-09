@@ -10,13 +10,13 @@
   };
 
   const oneSize$2 = function (list, size) {
-    let grams = {};
+    const grams = {};
     // count each instance
     list.forEach(terms => {
       for (let i = 0; i < terms.length; i += 1) {
-        let slice = terms.slice(i, i + size);
+        const slice = terms.slice(i, i + size);
         if (slice.length === size) {
-          let str = slice.join(' ');
+          const str = slice.join(' ');
           if (grams.hasOwnProperty(str)) {
             grams[str].count += 1;
           } else {
@@ -29,7 +29,7 @@
       }
     });
     // turn them into an array
-    let arr = Object.keys(grams).map(k => {
+    const arr = Object.keys(grams).map(k => {
       grams[k].normal = k;
       return grams[k]
     });
@@ -42,15 +42,14 @@
       options.min = options.size;
       options.max = options.size;
     }
-    let max = options.max || defaults$2.max;
-    let min = options.min || defaults$2.min;
+    const max = options.max || defaults$2.max;
+    const min = options.min || defaults$2.min;
     let arr = [];
     for (let size = min; size <= max; size += 1) {
       arr = arr.concat(oneSize$2(list, size));
     }
     return arr
   };
-  var getGrams = allGrams;
 
   const defaults$1 = {
     max: 4,
@@ -58,13 +57,13 @@
   };
 
   const oneSize$1 = function (list, size) {
-    let grams = {};
+    const grams = {};
     // count each instance
     list.forEach(terms => {
       for (let i = 0; i <= terms.length; i += 1) {
-        let slice = terms.slice(0, i);
+        const slice = terms.slice(0, i);
         if (slice.length === size) {
-          let str = slice.join(' ');
+          const str = slice.join(' ');
           if (grams.hasOwnProperty(str)) {
             grams[str].count += 1;
           } else {
@@ -77,7 +76,7 @@
       }
     });
     // turn them into an array
-    let arr = Object.keys(grams).map(k => {
+    const arr = Object.keys(grams).map(k => {
       grams[k].normal = k;
       return grams[k]
     });
@@ -90,15 +89,14 @@
       options.min = options.size;
       options.max = options.size;
     }
-    let max = options.max || defaults$1.max;
-    let min = options.min || defaults$1.min;
+    const max = options.max || defaults$1.max;
+    const min = options.min || defaults$1.min;
     let arr = [];
     for (let size = min; size <= max; size++) {
       arr = arr.concat(oneSize$1(list, size));
     }
     return arr
   };
-  var startGrams$1 = startGrams;
 
   const defaults = {
     max: 4,
@@ -106,14 +104,14 @@
   };
 
   const oneSize = function (list, size) {
-    let grams = {};
+    const grams = {};
     // count each instance
     list.forEach(terms => {
-      let len = terms.length;
+      const len = terms.length;
       for (let i = 0; i <= terms.length; i += 1) {
-        let slice = terms.slice(len - i, len);
+        const slice = terms.slice(len - i, len);
         if (slice.length === size) {
-          let str = slice.join(' ');
+          const str = slice.join(' ');
           if (grams.hasOwnProperty(str)) {
             grams[str].count += 1;
           } else {
@@ -126,7 +124,7 @@
       }
     });
     // turn them into an array
-    let arr = Object.keys(grams).map(k => {
+    const arr = Object.keys(grams).map(k => {
       grams[k].normal = k;
       return grams[k]
     });
@@ -139,24 +137,22 @@
       options.min = options.size;
       options.max = options.size;
     }
-    let max = options.max || defaults.max;
-    let min = options.min || defaults.min;
+    const max = options.max || defaults.max;
+    const min = options.min || defaults.min;
     let arr = [];
     for (let size = min; size <= max; size++) {
       arr = arr.concat(oneSize(list, size));
     }
     return arr
   };
-  var endGrams$1 = endGrams;
 
   // tokenize by term
   const tokenize = function (doc) {
-    let list = doc.json({ text: false }).map(o => {
+    const list = doc.json({ text: false }).map(o => {
       return o.terms.map(t => t.normal)
     });
     return list
   };
-  var tokenize$1 = tokenize;
 
   const sort = function (arr) {
     arr = arr.sort((a, b) => {
@@ -178,14 +174,13 @@
     });
     return arr
   };
-  var sort$1 = sort;
 
   const addMethod = function (View) {
     /** list all repeating sub-phrases, by word-count */
     View.prototype.ngrams = function (obj) {
-      let list = tokenize$1(this);
-      let arr = getGrams(list, obj || {});
-      arr = sort$1(arr);
+      const list = tokenize(this);
+      let arr = allGrams(list, obj || {});
+      arr = sort(arr);
       return arr
     };
     View.prototype.nGrams = View.prototype.ngrams;
@@ -193,8 +188,8 @@
 
     /** n-grams with one word */
     View.prototype.unigrams = function (n) {
-      let arr = getGrams(tokenize$1(this), { max: 1, min: 1 });
-      arr = sort$1(arr);
+      let arr = allGrams(tokenize(this), { max: 1, min: 1 });
+      arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];
       }
@@ -204,8 +199,8 @@
 
     /** n-grams with two words */
     View.prototype.bigrams = function (n) {
-      let arr = getGrams(tokenize$1(this), { max: 2, min: 2 });
-      arr = sort$1(arr);
+      let arr = allGrams(tokenize(this), { max: 2, min: 2 });
+      arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];
       }
@@ -215,8 +210,8 @@
 
     /** n-grams with three words */
     View.prototype.trigrams = function (n) {
-      let arr = getGrams(tokenize$1(this), { max: 3, min: 3 });
-      arr = sort$1(arr);
+      let arr = allGrams(tokenize(this), { max: 3, min: 3 });
+      arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];
       }
@@ -226,30 +221,30 @@
 
     /** list all repeating sub-phrases, using the first word */
     View.prototype.startgrams = function (obj) {
-      let list = tokenize$1(this);
-      let arr = startGrams$1(list, obj || {});
-      arr = sort$1(arr);
+      const list = tokenize(this);
+      let arr = startGrams(list, obj || {});
+      arr = sort(arr);
       return arr
     };
     View.prototype.startGrams = View.prototype.startgrams;
 
     /** list all repeating sub-phrases, connected to the last word of each phrase */
     View.prototype.endgrams = function (obj) {
-      let list = tokenize$1(this);
-      let arr = endGrams$1(list, obj || {});
-      arr = sort$1(arr);
+      const list = tokenize(this);
+      let arr = endGrams(list, obj || {});
+      arr = sort(arr);
       return arr
     };
     View.prototype.endGrams = View.prototype.endgrams;
 
     /** list all repeating sub-phrases, connected to the last word of each phrase */
     View.prototype.edgegrams = function (obj) {
-      let list = tokenize$1(this);
-      let start = startGrams$1(list, obj || {});
-      let end = endGrams$1(list, obj || {});
+      const list = tokenize(this);
+      const start = startGrams(list, obj || {});
+      const end = endGrams(list, obj || {});
       // combine them together
-      let all = start.concat(end);
-      let combine = all.reduce((h, a) => {
+      const all = start.concat(end);
+      const combine = all.reduce((h, a) => {
         if (h[a.normal]) {
           h[a.normal].count += a.count;
         } else {
@@ -258,12 +253,11 @@
         return h
       }, {});
       let arr = Object.keys(combine).map(k => combine[k]);
-      arr = sort$1(arr);
+      arr = sort(arr);
       return arr
     };
     View.prototype.edgeGrams = View.prototype.edgegrams;
   };
-  var ngram = addMethod;
 
   var pcked = {
     "1.292": "true¦the",
@@ -759,11 +753,11 @@
   };
 
   const tf = function (view, opts = {}) {
-    let counts = {};
-    let form = opts.form || 'root';
+    const counts = {};
+    const form = opts.form || 'root';
     view.docs.forEach(terms => {
       terms.forEach(term => {
-        let str = term[form] || term.implicit || term.normal;
+        const str = term[form] || term.implicit || term.normal;
         if (str) {
           counts[str] = counts[str] || 0;
           counts[str] += 1;
@@ -772,15 +766,14 @@
     });
     return counts
   };
-  var tf$1 = tf;
 
   const idf = function (view, opts = {}) {
     let counts = {};
     let total = 0;
-    let form = opts.form || 'root';
+    const form = opts.form || 'root';
     view.docs.forEach(terms => {
       terms.forEach(term => {
-        let str = term[form] || term.implicit || term.normal;
+        const str = term[form] || term.implicit || term.normal;
         if (str) {
           counts[str] = counts[str] || 0;
           counts[str] += 1;
@@ -795,7 +788,7 @@
         return h
       }
       // IDF = (Total number of documents) / (total number of documents containing the keyword)
-      let num = Math.log10(total / a[1]);
+      const num = Math.log10(total / a[1]);
       //force between 0-1
       // num = num / max
       // num = Math.round(num * 1000) / 1000 // round to 2 digits
@@ -804,7 +797,6 @@
     }, {});
     return counts
   };
-  var idf$1 = idf;
 
   const BASE = 36;
   const seq = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -869,7 +861,6 @@
     //remove from main node list
     t.nodes = t.nodes.slice(t.symCount, t.nodes.length);
   };
-  var parseSymbols = symbols;
 
   // References are either absolute (symbol) or relative (1 - based)
   const indexFromRef = function (trie, ref, index) {
@@ -910,7 +901,7 @@
   };
 
   //PackedTrie - Trie traversal of the Trie packed-string representation.
-  const unpack$3 = function (str) {
+  const unpack$1 = function (str) {
     const trie = {
       nodes: str.split(';'),
       syms: [],
@@ -918,14 +909,12 @@
     };
     //process symbols, if they have them
     if (str.match(':')) {
-      parseSymbols(trie);
+      symbols(trie);
     }
     return toArray(trie)
   };
 
-  var traverse = unpack$3;
-
-  const unpack$1 = function (str) {
+  const unpack = function (str) {
     if (!str) {
       return {}
     }
@@ -937,7 +926,7 @@
     }, {});
     const all = {};
     Object.keys(obj).forEach(function (cat) {
-      const arr = traverse(obj[cat]);
+      const arr = unpack$1(obj[cat]);
       //special case, for botched-boolean
       if (cat === 'true') {
         cat = true;
@@ -958,23 +947,20 @@
     return all
   };
 
-  var unpack$2 = unpack$1;
-
   const unzip = function (model) {
-    let all = {};
+    const all = {};
     Object.keys(model).forEach(k => {
-      model[k] = unpack$2(model[k]);
-      let num = Number(k);
+      model[k] = unpack(model[k]);
+      const num = Number(k);
       Object.keys(model[k]).forEach(w => {
         all[w] = num;
       });
     });
     return all
   };
-  var unpack = unzip;
 
-  const model = unpack(pcked);
-  let keys = Object.keys(model);
+  const model = unzip(pcked);
+  const keys = Object.keys(model);
   const max = model[keys[keys.length - 1]] * 1.1;
   // console.log(Object.keys(model).length.toLocaleString())
   // console.log(model.sway)
@@ -983,10 +969,10 @@
 
     View.prototype.tfidf = function (opts = {}, mod) {
       // term frequency
-      let counts = tf$1(this, opts);
+      const counts = tf(this, opts);
       let freqs = Object.entries(counts);
       freqs = freqs.map(a => {
-        let [w, count] = a;
+        const [w, count] = a;
         // tfidf = tf * idf
         let tfidf = count * (model[w] || max);
         // round it 2 decimals
@@ -1005,9 +991,8 @@
       })
     };
 
-    View.prototype.buildIDF = idf$1;
+    View.prototype.buildIDF = idf;
   };
-  var tfidf = addMethods;
 
   const compute = {
     // this is just the same thing
@@ -1025,15 +1010,14 @@
       });
     }
   };
-  var compute$1 = compute;
 
   const api = function (View) {
-    ngram(View);
-    tfidf(View);
+    addMethod(View);
+    addMethods(View);
   };
 
   var plugin = {
-    compute: compute$1,
+    compute,
     api
   };
 

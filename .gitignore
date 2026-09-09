@@ -1,4 +1,5 @@
 node_modules/
+.pnpm-store/
 coverage/
 .DS_Store
 .env
@@ -16,4 +17,7 @@ learn/giga/result/
 .gitignore
 LICENSE
 package-lock.json
+yarn.lock
+bun.lock
+bun.lockb
 rollup.config.js

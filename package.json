@@ -82,26 +82,25 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "build": "npm run version && npm run docs && rollup -c --silent",
+    "build": "node ./scripts/version.js && node ./scripts/docs.js && rollup -c --silent",
     "watch": "node --watch ./scratch.js",
     "pack": "node ./scripts/pack.js",
     "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
-    "testb": "npm run test:smoke && cross-env TESTENV=prod npm run test",
+    "testb": "tape \"./scripts/test/smoke.test.js\" | tap-dancer && cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "test:one": "tape \"./tests/one/**/*.test.js\" | tap-dancer",
     "test:two": "tape \"./tests/two/**/*.test.js\" | tap-dancer",
     "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
-    "test:plugins": "tape \"./plugins/**/tests/**/*.test.js\" | tap-dancer",
+    "test:plugins": "tape \"./plugins/*/tests/**/*.test.js\" | tap-dancer",
     "stress": "node scripts/test/stress.js",
     "debug": "node ./scripts/debug.js",
     "match": "node ./scripts/match.js",
-    "coverage": "c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",
+    "coverage": "c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' tape \"./tests/**/*.test.js\" | tap-dancer",
     "bench": "node ./scripts/bench/index.js",
     "lint": "eslint src",
     "docs": "node ./scripts/docs.js",
-    "plugins:install": "node ./scripts/plugins.js --all npm install --ignore-scripts --no-audit --no-fund",
-    "plugins:build": "node ./scripts/plugins.js npm run build"
+    "plugins:build": "node ./scripts/plugins.js --pm run build"
   },
   "files": [
     "builds/",

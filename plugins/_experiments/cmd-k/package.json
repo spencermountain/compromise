@@ -27,7 +27,7 @@
     "watch": "node --watch ./scratch.js",
     "perf": "node ./scripts/perf.js",
     "version": "node ./scripts/version.js",
-    "build": "npm run version && rollup -c --silent"
+    "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
     "builds/",

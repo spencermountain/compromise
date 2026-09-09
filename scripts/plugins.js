@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-// Run arbitrary (but typically npm) commands for each plugin
-// Example: "node ./plugins.js npm install"
+// Run arbitrary commands for each plugin using the caller's package manager.
+// Example: "node ./plugins.js --pm run build"
 import sh from 'shelljs'
 import path from 'path'
 
@@ -11,6 +11,12 @@ const args = process.argv.slice(2)
 const includeExperiments = args[0] === '--all'
 if (includeExperiments) {
   args.shift()
+}
+if (args[0] === '--pm') {
+  args.shift()
+  const requested = (process.env.npm_config_user_agent || '').split('/')[0]
+  const supported = ['npm', 'pnpm', 'yarn', 'bun']
+  args.unshift(supported.includes(requested) ? requested : 'npm')
 }
 const command = args.join(' ')
 

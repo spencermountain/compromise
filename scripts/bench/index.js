@@ -31,17 +31,23 @@ const SENTENCES = [
 
 const CORPUS = Array(4).fill(SENTENCES).flat().join(' ')
 const TRANSFORM_TEXT = SENTENCES.slice(0, 12).join(' ')
-const SAMPLE_COUNT = 15
-const TRIM_COUNT = 3
-const TARGET_SAMPLE_MS = 250
+const MIN_SAMPLE_COUNT = 30
+const MAX_SAMPLE_COUNT = 48
+const SAMPLE_STEP = 6
+const STABILITY_WINDOW = 30
+const STABILITY_BLOCKS = 3
+const STABILITY_THRESHOLD_PERCENT = 3
+const TRIM_PERCENT = 20
+const WARMUP_ROUNDS = 3
+const TARGET_SAMPLE_MS = 200
 const EQUAL_THRESHOLD_PERCENT = 4
 const DEFAULT_MAX_SLOWDOWN_PERCENT = 10
 const MAX_ITERATIONS = 16384
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const resultsFile = path.join(scriptDir, 'results.jsonl')
 
-// npm consumes `--quiet` itself, exposing it to lifecycle scripts as loglevel=warn.
-// Supporting argv too makes `node scripts/bench/index.js --quiet` behave identically.
+// Some package managers consume `--quiet` themselves and expose only their
+// lifecycle log level. Supporting argv keeps direct execution identical.
 const isQuiet =
   process.argv.includes('--quiet') ||
   process.env.npm_config_quiet === 'true' ||
@@ -50,9 +56,16 @@ const isQuiet =
 
 let sink = 0
 
+const median = values => {
+  const sorted = values.slice().sort((a, b) => a - b)
+  const middle = Math.floor(sorted.length / 2)
+  return sorted.length % 2 === 0 ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle]
+}
+
 const trimmedMean = values => {
   const sorted = values.slice().sort((a, b) => a - b)
-  const kept = sorted.slice(TRIM_COUNT, sorted.length - TRIM_COUNT)
+  const trimCount = Math.floor((sorted.length * TRIM_PERCENT) / 100)
+  const kept = sorted.slice(trimCount, sorted.length - trimCount)
   return kept.reduce((sum, value) => sum + value, 0) / kept.length
 }
 
@@ -77,17 +90,6 @@ const iterationCount = run => {
   }
   const estimated = Math.ceil((iterations * TARGET_SAMPLE_MS) / Math.max(elapsed, 0.01))
   return Math.max(1, Math.min(MAX_ITERATIONS, estimated))
-}
-
-const benchmark = test => {
-  // Warm up parsing, tagger caches, and the JavaScript optimizer before sampling.
-  runBatch(test.run, 2)
-  const iterations = iterationCount(test.run)
-  const samples = []
-  for (let i = 0; i < SAMPLE_COUNT; i += 1) {
-    samples.push(runBatch(test.run, iterations) / iterations)
-  }
-  return trimmedMean(samples)
 }
 
 const matchDoc = nlp(CORPUS)
@@ -158,6 +160,65 @@ const tests = [
   },
 ]
 
+const rotated = (values, offset) => values.slice(offset).concat(values.slice(0, offset))
+
+const scoreFromSamples = sampleSets => {
+  const suiteMilliseconds = sampleSets.reduce((sum, samples) => sum + trimmedMean(samples), 0)
+  return 1000 / suiteMilliseconds
+}
+
+const stabilitySpread = sampleSets => {
+  const sampleCount = Math.min(...sampleSets.map(samples => samples.length))
+  const start = sampleCount - STABILITY_WINDOW
+  const blockSize = STABILITY_WINDOW / STABILITY_BLOCKS
+  const scores = []
+
+  for (let block = 0; block < STABILITY_BLOCKS; block += 1) {
+    const from = start + (block * blockSize)
+    const to = from + blockSize
+    const suiteMilliseconds = sampleSets.reduce((sum, samples) => sum + median(samples.slice(from, to)), 0)
+    scores.push(1000 / suiteMilliseconds)
+  }
+
+  return ((Math.max(...scores) - Math.min(...scores)) / median(scores)) * 100
+}
+
+const benchmarkSuite = suite => {
+  const prepared = suite.map(test => ({ ...test, iterations: iterationCount(test.run) }))
+
+  // Warm every feature repeatedly before recording anything. Rotating the order
+  // distributes CPU boost, heat, and background interruptions across the suite.
+  for (let round = 0; round < WARMUP_ROUNDS; round += 1) {
+    rotated(prepared, round % prepared.length).forEach(test => runBatch(test.run, test.iterations))
+  }
+
+  const sampleSets = prepared.map(() => [])
+  let sampleCount = 0
+  let spread = Infinity
+
+  while (sampleCount < MAX_SAMPLE_COUNT) {
+    const order = rotated(prepared, sampleCount % prepared.length)
+    order.forEach(test => {
+      const index = prepared.indexOf(test)
+      sampleSets[index].push(runBatch(test.run, test.iterations) / test.iterations)
+    })
+    sampleCount += 1
+
+    const mayStop = sampleCount >= MIN_SAMPLE_COUNT && (sampleCount - MIN_SAMPLE_COUNT) % SAMPLE_STEP === 0
+    if (mayStop) {
+      spread = stabilitySpread(sampleSets)
+      if (spread <= STABILITY_THRESHOLD_PERCENT) {
+        break
+      }
+    }
+  }
+
+  return {
+    score: scoreFromSamples(sampleSets),
+    stable: spread <= STABILITY_THRESHOLD_PERCENT,
+  }
+}
+
 const previousResult = () => {
   if (process.env.BENCH_BASELINE_SCORE !== undefined) {
     const score = Number(process.env.BENCH_BASELINE_SCORE)
@@ -227,27 +288,35 @@ const main = () => {
   console.log(`\n${bold(cyan(`compromise v${nlp.version}`))}`)
   console.log(dim('running benchmark…'))
 
-  const suiteMilliseconds = tests.reduce((sum, test) => sum + benchmark(test), 0)
-  const score = 1000 / suiteMilliseconds
+  const measurement = benchmarkSuite(tests)
   const result = {
     timestamp: new Date().toISOString(),
     libraryVersion: nlp.version,
-    score: Number(score.toFixed(4)),
+    score: Number(measurement.score.toFixed(4)),
   }
 
   console.log(`\n${bold(result.score.toFixed(2))} ${dim('runs/sec')}`)
-  console.log(comparisonText(previous, result))
 
-  if (isQuiet) {
-    console.log(dim('not saved (--quiet)'))
+  if (!measurement.stable) {
+    console.log(yellow('◆ system too busy — try again'))
+    console.log(dim('not saved (unstable run)'))
+    if (process.env.BENCH_BASELINE_SCORE !== undefined || process.env.CI === 'true') {
+      process.exitCode = 1
+    }
   } else {
-    fs.appendFileSync(resultsFile, `${JSON.stringify(result)}\n`, 'utf8')
-    console.log(dim(`saved to ${path.relative(process.cwd(), resultsFile)}`))
-  }
+    console.log(comparisonText(previous, result))
 
-  if (previous && percentChange(previous, result) <= -allowedSlowdown) {
-    console.error(red(`✖ performance regression exceeds ${allowedSlowdown}%`))
-    process.exitCode = 1
+    if (isQuiet) {
+      console.log(dim('not saved (--quiet)'))
+    } else {
+      fs.appendFileSync(resultsFile, `${JSON.stringify(result)}\n`, 'utf8')
+      console.log(dim(`saved to ${path.relative(process.cwd(), resultsFile)}`))
+    }
+
+    if (previous && percentChange(previous, result) <= -allowedSlowdown) {
+      console.error(red(`✖ performance regression exceeds ${allowedSlowdown}%`))
+      process.exitCode = 1
+    }
   }
 
   // Keep the accumulated benchmark work observably live.

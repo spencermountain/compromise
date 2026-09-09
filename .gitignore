@@ -6,13 +6,13 @@ coverage/
 .vscode
 .clinic
 coverage.lcov
+scripts/bench/results.jsonl
 codecov.yml
 plugins/phrases/data/
 learn/giga/result/
 .scratch.js
 .eslintrc
 .npmignore
-.github
 .gitignore
 LICENSE
 package-lock.json

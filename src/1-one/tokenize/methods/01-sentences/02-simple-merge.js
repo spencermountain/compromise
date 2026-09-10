@@ -1,4 +1,5 @@
-const hasLetter = /[a-z0-9\u00C0-\u00FF\u00a9\u00ae\u2000-\u3300\ud000-\udfff]/i
+// a letter, number, or symbol/emoji in any script - otherwise it's only punctuation
+const hasLetter = /[\p{L}\p{N}\p{So}]/u
 const hasSomething = /\S/
 
 const notEmpty = function (splits) {

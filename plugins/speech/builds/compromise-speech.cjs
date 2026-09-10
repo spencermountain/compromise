@@ -86,46 +86,44 @@
       return s //.charAt(0) + s.substr(1, s.length).replace(/[aeiou]/g, '');
     },
   };
-  var m = transformations;
 
   //a js version of the metaphone (#1) algorithm
+  //adapted from the work of Chris Umbel
+  // https://github.com/NaturalNode/natural/blob/master/lib/natural/phonetics/metaphone.js
+
 
   const metaphone = function (s) {
-    s = m.dedup(s);
-    s = m.dropInitialLetters(s);
-    s = m.dropBafterMAtEnd(s);
-    s = m.changeCK(s);
-    s = m.cchange(s);
-    s = m.dchange(s);
-    s = m.dropG(s);
-    s = m.changeG(s);
-    s = m.dropH(s);
-    s = m.changePH(s);
-    s = m.changeQ(s);
-    s = m.changeS(s);
-    s = m.changeX(s);
-    s = m.changeT(s);
-    s = m.dropT(s);
-    s = m.changeV(s);
-    s = m.changeWH(s);
-    s = m.dropW(s);
-    s = m.dropY(s);
-    s = m.changeZ(s);
-    s = m.dropVowels(s);
+    s = transformations.dedup(s);
+    s = transformations.dropInitialLetters(s);
+    s = transformations.dropBafterMAtEnd(s);
+    s = transformations.changeCK(s);
+    s = transformations.cchange(s);
+    s = transformations.dchange(s);
+    s = transformations.dropG(s);
+    s = transformations.changeG(s);
+    s = transformations.dropH(s);
+    s = transformations.changePH(s);
+    s = transformations.changeQ(s);
+    s = transformations.changeS(s);
+    s = transformations.changeX(s);
+    s = transformations.changeT(s);
+    s = transformations.dropT(s);
+    s = transformations.changeV(s);
+    s = transformations.changeWH(s);
+    s = transformations.dropW(s);
+    s = transformations.dropY(s);
+    s = transformations.changeZ(s);
+    s = transformations.dropVowels(s);
     return s.trim()
   };
-
-  var metaphone$1 = metaphone;
 
   const soundsLike = function (view) {
     view.docs.forEach(terms => {
       terms.forEach(term => {
-        term.soundsLike = metaphone$1(term.normal || term.text);
+        term.soundsLike = metaphone(term.normal || term.text);
       });
     });
   };
-
-  var soundsLike$1 = soundsLike;
 
   const starts_with_single_vowel_combos = /^(eu)/i;
   const joining_consonant_vowel = /^[^aeiou]e([^d]|$)/;
@@ -161,9 +159,9 @@
     // if (arr.length > 2) {
     //   return arr;
     // }
-    let l = arr.length;
+    const l = arr.length;
     if (l > 1) {
-      let suffix = arr[l - 2] + arr[l - 1];
+      const suffix = arr[l - 2] + arr[l - 1];
       for (let i = 0; i < ones.length; i++) {
         if (suffix.match(ones[i])) {
           arr[l - 2] = arr[l - 2] + arr[l - 1];
@@ -175,14 +173,14 @@
     // since the open syllable detection is overzealous,
     // sometimes need to rejoin incorrect splits
     if (arr.length > 1) {
-      let first_is_open =
+      const first_is_open =
         (arr[0].length === 1 || arr[0].match(starts_with_consonant_vowel$1)) &&
         arr[0].match(ends_with_vowel$1);
-      let second_is_joining = arr[1].match(joining_consonant_vowel);
+      const second_is_joining = arr[1].match(joining_consonant_vowel);
 
       if (first_is_open && second_is_joining) {
-        let possible_combination = arr[0] + arr[1];
-        let probably_separate_syllables =
+        const possible_combination = arr[0] + arr[1];
+        const probably_separate_syllables =
           possible_combination.match(cvcv_same_consonant) ||
           possible_combination.match(cvcv_same_vowel) ||
           possible_combination.match(cvcv_known_consonants);
@@ -195,16 +193,16 @@
     }
 
     if (arr.length > 1) {
-      let second_to_last_is_open =
+      const second_to_last_is_open =
         arr[arr.length - 2].match(starts_with_consonant_vowel$1) &&
         arr[arr.length - 2].match(ends_with_vowel$1);
-      let last_is_joining =
+      const last_is_joining =
         arr[arr.length - 1].match(joining_consonant_vowel) &&
         ones.every(re => !arr[arr.length - 1].match(re));
 
       if (second_to_last_is_open && last_is_joining) {
-        let possible_combination = arr[arr.length - 2] + arr[arr.length - 1];
-        let probably_separate_syllables =
+        const possible_combination = arr[arr.length - 2] + arr[arr.length - 1];
+        const probably_separate_syllables =
           possible_combination.match(cvcv_same_consonant) ||
           possible_combination.match(cvcv_same_vowel) ||
           possible_combination.match(cvcv_known_consonants);
@@ -217,7 +215,7 @@
     }
 
     if (arr.length > 1) {
-      let single = arr[0] + arr[1];
+      const single = arr[0] + arr[1];
       if (single.match(starts_with_single_vowel_combos)) {
         arr[0] = single;
         arr.splice(1, 1);
@@ -233,7 +231,6 @@
 
     return arr
   };
-  var postProcess = postprocess;
 
   //chop a string into pronounced syllables
 
@@ -249,8 +246,8 @@
 
   //method is nested because it's called recursively
   const doWord = function (w) {
-    let all = [];
-    let chars = w.split('');
+    const all = [];
+    const chars = w.split('');
     let before = '';
     let after = '';
     let current = '';
@@ -298,7 +295,7 @@
     return all
   };
 
-  let syllables$2 = function (str) {
+  const syllables$1 = function (str) {
     let all = [];
     if (!str) {
       return all
@@ -309,7 +306,7 @@
     });
 
     // str.split(whitespace_dash).forEach(doWord)
-    all = postProcess(all);
+    all = postprocess(all);
 
     //for words like 'tree' and 'free'
     if (all.length === 0) {
@@ -321,32 +318,26 @@
     return all
   };
 
-  // console.log(syllables('civilised'))
-
-  var getSyllables = syllables$2;
-
   // const defaultObj = { normal: true, text: true, terms: false }
 
   const syllables = function (view) {
     view.docs.forEach(terms => {
       terms.forEach(term => {
-        term.syllables = getSyllables(term.normal || term.text);
+        term.syllables = syllables$1(term.normal || term.text);
       });
     });
   };
 
-  var syllables$1 = syllables;
-
   var compute = {
-    soundsLike: soundsLike$1,
-    syllables: syllables$1
+    soundsLike,
+    syllables
   };
 
   const api = function (View) {
     /** */
     View.prototype.syllables = function () {
       this.compute('syllables');
-      let all = [];
+      const all = [];
       this.docs.forEach(terms => {
         let some = [];
         terms.forEach(term => {
@@ -361,7 +352,7 @@
     /** */
     View.prototype.soundsLike = function () {
       this.compute('soundsLike');
-      let all = [];
+      const all = [];
       this.docs.forEach(terms => {
         let some = [];
         terms.forEach(term => {
@@ -374,10 +365,9 @@
       return all
     };
   };
-  var api$1 = api;
 
   var plugin = {
-    api: api$1,
+    api,
     compute
   };
 

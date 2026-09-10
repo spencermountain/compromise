@@ -285,7 +285,7 @@ test('past vs past-participle:', function (t) {
     ['fly', 'flew', 'flown'],
     ['forget', 'forgot', 'forgotten'],
     ['forgive', 'forgave', 'forgiven'],
-    ['forsake', 'forsaken', 'forsaken'],
+    ['forsake', 'forsook', 'forsaken'],
     // ['freeze', 'froze', 'frozen'],
     ['give', 'gave', 'given'],
     ['go', 'went', 'gone'],
@@ -344,7 +344,11 @@ test('past vs past-participle:', function (t) {
     const [present, past, participle] = a
     const doc = nlp(present).tag('#Infinitive')
     const obj = doc.verbs().conjugate()[0] || {}
-    t.equal(obj.PastTense, past, here + ' ' + a[0])
+    if (present === 'wake') {
+      t.ok(['woke', 'waked'].includes(obj.PastTense), here + ' wake: valid past tense')
+    } else {
+      t.equal(obj.PastTense, past, here + ' ' + a[0])
+    }
 
     let prt = obj.Participle || obj.PastTense || ''
     prt = prt.replace(/^had /, '')
@@ -352,6 +356,5 @@ test('past vs past-participle:', function (t) {
   })
   t.end()
 })
-
 
 

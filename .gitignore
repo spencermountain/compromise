@@ -1,4 +1,5 @@
 node_modules/
+.pnpm-store/
 coverage/
 .DS_Store
 .env
@@ -6,14 +7,17 @@ coverage/
 .vscode
 .clinic
 coverage.lcov
+scripts/bench/results.jsonl
 codecov.yml
 plugins/phrases/data/
 learn/giga/result/
 .scratch.js
 .eslintrc
 .npmignore
-.github
 .gitignore
 LICENSE
 package-lock.json
+yarn.lock
+bun.lock
+bun.lockb
 rollup.config.js

@@ -160,7 +160,7 @@
     },
     mutate: (world, nlp) => {
       // console.log('unpacking list..')
-      let list = Object.keys(unpack(model));
+      const list = Object.keys(unpack(model));
       // console.log(list.length.toLocaleString(), 'articles')
       world.model.wpTree = nlp.buildTrie(list);
     }

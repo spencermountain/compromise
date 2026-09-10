@@ -79,7 +79,7 @@ test('verb form names', function (t) {
       'a plate had been broken.',
       'a plate had been smashed.',
       'My car had been stolen!',
-      'All the cookies have been eaten.',
+      'All the cookies had been eaten.',
       'The movie ET was directed by Spielberg.',
       'The house was cleaned yesterday.', // Simple past
       'The house was being cleaned last week.', // Past continuous

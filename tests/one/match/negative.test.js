@@ -148,3 +148,19 @@ test('negative greedy-to', function (t) {
   t.equal(m.text(), '', 'greedy-no-after')
   t.end()
 })
+
+test('negative multi-word blocks', function (t) {
+  // '!(a b)' should match a term that doesn't start the sequence
+  let doc = nlp.tokenize('x y')
+  t.equal(doc.match('!(a b) y').text(), 'x y', here + 'or-block-pass')
+
+  // ...but die where the sequence is found
+  doc = nlp.tokenize('a b y')
+  t.equal(doc.match('^!(a b) y').found, false, here + 'or-block-die')
+
+  // negative and-blocks, too
+  doc = nlp.tokenize('x y')
+  t.equal(doc.match('!(a && b) y').text(), 'x y', here + 'and-block-pass')
+
+  t.end()
+})

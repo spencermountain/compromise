@@ -48,3 +48,19 @@ test('and-match-multi', function (t) {
   t.equal(m.out(), 'toronto and montreal.', here + 'use longest match 2')
   t.end()
 })
+
+test('and-block anchors', function (t) {
+  // $ inside an and-block, matched mid-sentence
+  let doc = nlp('he is cool')
+  t.equal(doc.match('(cool$ && #Adjective)').out(), 'cool', here + 'end-anchor-inside')
+  t.equal(doc.match('(is$ && #Copula)').out(), '', here + 'end-anchor-not-at-end')
+
+  // $ after a multi-word and-block
+  doc = nlp('hi spencer kelly')
+  t.equal(doc.match('(spencer kelly && #Noun #Noun)$').out(), 'spencer kelly', here + 'multi-word-end')
+
+  doc = nlp('spencer kelly is here')
+  t.equal(doc.match('(spencer kelly && #Noun #Noun)$').out(), '', here + 'multi-word-not-at-end')
+
+  t.end()
+})

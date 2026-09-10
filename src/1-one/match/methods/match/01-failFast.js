@@ -21,9 +21,9 @@ const failFast = function (regs, cache) {
     if (reg.tag !== undefined && cache.has('#' + reg.tag) === false) {
       return true
     }
-    // perform a speedup for fast-or
-    if (reg.fastOr && anyIntersection(reg.fastOr, cache) === false) {
-      return false
+    // are all of the fast-or words missing?
+    if (reg.fastOr !== undefined && anyIntersection(reg.fastOr, cache) === false) {
+      return true
     }
   }
   return false

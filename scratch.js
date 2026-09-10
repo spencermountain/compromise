@@ -1,9 +1,9 @@
 
 import nlp from './src/three.js'
-import plg from './plugins/dates/src/plugin.js'
+// import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
-nlp.plugin(plg)
-// nlp.verbose(true)
+// nlp.plugin(plg)
+nlp.verbose(true)
 
 let arr = [
   // 'to' before a noun-phrase is a preposition - tagged Conjunction
@@ -31,8 +31,15 @@ let arr = [
 ]
 // let doc = nlp.fromSpec(arr[0]).debug()
 
-let doc = nlp('john smith and Doug Johnson live in new york and cook at the restaurant')
-doc.debug()
+// let doc = nlp('john smith and Doug Johnson live in new york and cook at the restaurant')
+// doc.debug()
 // doc.redact().debug()
 // nlp('john smith and Sally Morris lives in new york').redact().debug()
 
+console.log(nlp('left').tag('Verb').verbs().conjugate())
+
+// let doc = nlp('tree has blown').debug()
+// doc = nlp('tree has grown').debug()
+// let doc = nlp('The tree grows tall').debug()
+// doc.verbs().toPastParticiple().debug()
+// doc.debug()

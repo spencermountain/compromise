@@ -1,0 +1,5 @@
+packages:
+  - plugins/*
+  - plugins/_experiments/*
+
+linkWorkspacePackages: true

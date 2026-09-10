@@ -11,7 +11,7 @@ const foundOptional = function (state) {
     // but does the next reg match the next term??
     // only skip if it doesn't
     const nextTerm = state.terms[state.t + 1]
-    if (!nextTerm || !matchTerm(nextTerm, regs[state.r + 1], state.start_i + state.t, state.phrase_length)) {
+    if (!nextTerm || !matchTerm(nextTerm, regs[state.r + 1], state.start_i + state.t + 1, state.phrase_length)) {
       state.r += 1
     }
   }

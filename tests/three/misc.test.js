@@ -158,3 +158,11 @@ test('root-text vs match-text', function (t) {
   t.end()
 })
 
+
+test('fullwidth question-mark', function (t) {
+  const doc = nlp('元気ですか？はい、元気です！')
+  t.equal(doc.length, 2, here + 'two cjk sentences')
+  t.equal(doc.questions().length, 1, here + 'fullwidth ？ question')
+  t.equal(doc.questions().text(), '元気ですか？', here + 'question text')
+  t.end()
+})

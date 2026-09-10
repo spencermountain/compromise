@@ -7,6 +7,17 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 
+#### 14.17.0 [Sept 2026]
+- **[change]** - remove redundant re-tagging #1218
+- **[change]** - split japanese/chinese sentences on 。！？ without trailing whitespace
+- **[change]** - support fullwidth ？ in .questions()
+- **[change]** - i18n sentence-split chars like ।॥ ؟ ۔ ։ ። ။ ។ full-stops
+- **[change]** - use pnpm for github actions
+- **[new]** - normalize fullwidth ascii - 'Ｈｅｌｌｏ ２０２４'
+- **[new]** - support comments in spec-output fmt
+- **[fix]** - replace all non-breaking spaces, not only the first
+- **[fix]** - unicode non-breaking spaces in input #1220
+- **[fix]** - cleanup of match-logic code
 
 #### 14.16.0 [July 2026]
 - **[new]** - apply redaction to #Organization, #Address, #Url etc tags in .redact() method

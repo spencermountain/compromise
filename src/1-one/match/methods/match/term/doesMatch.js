@@ -31,10 +31,6 @@ const doesMatch = function (term, reg, index, length) {
     if (term.machine !== null && term.machine === reg.word) {
       return true
     }
-    // term aliases for slashes and things
-    if (term.alias !== undefined && term.alias.hasOwnProperty(reg.word)) {
-      return true
-    }
     // support ~ fuzzy match
     if (reg.fuzzy === true) {
       if (reg.word === term.root) {

@@ -143,7 +143,7 @@ export default [
   'gifted',
   'gratified',
   'grilled',
-  'grown',
+  // 'grown',
   'guarded',
   'guided',
   'hammered',

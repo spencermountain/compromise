@@ -11,12 +11,11 @@ import fixUp from './05-fixUp.js'
 */
 
 const findChunks = function (view) {
-  const { document, world } = view
-  easyMode(document)
-  byNeighbour(document)
-  matcher(view, document, world)
-  // matcher(view, document, world) //run it 2nd time
-  fallback(document, world)
-  fixUp(document, world)
+  const { docs, world } = view
+  easyMode(docs)
+  byNeighbour(docs)
+  matcher(view, docs, world)
+  fallback(docs, world)
+  fixUp(docs, world)
 }
 export default { chunks: findChunks }

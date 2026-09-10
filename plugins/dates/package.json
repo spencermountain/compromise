@@ -1,7 +1,7 @@
 {
   "name": "compromise-dates",
   "description": "plugin for nlp-compromise",
-  "version": "3.8.0",
+  "version": "3.8.1",
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-dates.min.js",
@@ -32,7 +32,7 @@
     "watch": "node --watch ./scratch.js",
     "perf": "node ./scripts/perf.js",
     "version": "node ./scripts/version.js",
-    "build": "npm run version && rollup -c --silent"
+    "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
     "builds/",

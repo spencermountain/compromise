@@ -302,7 +302,6 @@ export default [
   'motley crue',
   'new kids on the block',
   'pink floyd',
-  // 'r.e.m.',
   'radiohead',
   'red hot chili peppers',
   'sex pistols',
@@ -320,7 +319,6 @@ export default [
   'the supremes',
   'the who',
   'thin lizzy',
-  // 'u2',
   'van halen',
   `destiny's child`,
 

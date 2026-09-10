@@ -1,51 +1,84 @@
-name: Build and test
+name: Pull request
 
-on: [pull_request]
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pull-request-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 jobs:
-  build-and-test:
-    runs-on: ${{ matrix.os }}
-    permissions:
-      contents: read
-
-    strategy:
-      matrix:
-        node-version: [20.x, 26.x]
-        os: [macos-latest, ubuntu-latest, windows-latest]
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Check out repository
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
+          fetch-depth: 0
           persist-credentials: false
 
-      - name: use node.js ${{ matrix.node-version }}
+      - name: Set up pnpm
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          version: 11.5.0
+          install: false
+
+      - name: Set up Node.js
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-          check-latest: true
+          node-version: 24
+          cache: pnpm
 
-      - name: install
-        run: |
-          npm ci
-          npm run plugins:ci
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: static checks
-        run: |
-          npm i --no-save eslint 
-          npm run lint
+      - name: Test TypeScript declarations
+        run: pnpm test:types
 
-      - name: build
+      - name: Lint and test source
         run: |
-          npm run build
-          npm run plugins:build
+          pnpm lint
+          pnpm test
+          pnpm test:plugins
 
-      - name: test
+      - name: Build and test packages
         run: |
-          npm run test:smoke
-          npm run test
-          npm run test:one
-          npm run test:two
-          npm run test:three
-          npm run testb
-          npm run test:plugins
+          pnpm build
+          pnpm plugins:build
+          pnpm testb
+
+      - name: Compare bundle sizes with latest npm release
+        run: pnpm test:filesize
+
+      - name: Benchmark base commit
+        id: baseline
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          BASE_DIR="${RUNNER_TEMP}/compromise-base"
+          git worktree add --detach "${BASE_DIR}" "${BASE_SHA}"
+          mkdir -p "${BASE_DIR}/scripts/bench"
+          cp scripts/bench/index.js "${BASE_DIR}/scripts/bench/index.js"
+          cd "${BASE_DIR}"
+          pnpm install --prod --no-frozen-lockfile --ignore-workspace
+          node ./scripts/bench/index.js
+          BASELINE_SCORE=$(node -e "const fs=require('fs');const rows=fs.readFileSync('scripts/bench/results.jsonl','utf8').trim().split('\n');process.stdout.write(String(JSON.parse(rows.at(-1)).score))")
+          echo "score=${BASELINE_SCORE}" >> "${GITHUB_OUTPUT}"
+
+      - name: Check for performance regressions
+        env:
+          BENCH_BASELINE_SCORE: ${{ steps.baseline.outputs.score }}
+          BENCH_MAX_SLOWDOWN_PERCENT: 10
+        run: pnpm bench --quiet
+
+      - name: Clean up benchmark worktree
+        if: always()
+        run: |
+          if [ -d "${RUNNER_TEMP}/compromise-base" ]; then
+            git worktree remove --force "${RUNNER_TEMP}/compromise-base"
+          fi

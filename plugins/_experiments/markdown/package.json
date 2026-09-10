@@ -47,6 +47,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^24.0.1"
+    "@rollup/plugin-commonjs": "^29.0.3"
   }
 }

@@ -21,3 +21,19 @@ test('or-match-basic', function (t) {
 //   t.equal(m.out(), 'toronto and montreal', 'whitespace-or')
 //   t.end()
 // })
+
+test('or-block skip counter', function (t) {
+  // a failed greedy choice must not shift where the other choices are tried
+  let doc = nlp('a a d').match('(a+ c|a a d)')
+  t.equal(doc.out(), 'a a d', here + 'no-skip-pollution')
+
+  // a failed or-block should never match anything
+  doc = nlp('a a d').match('(a+ c)')
+  t.equal(doc.out(), '', here + 'no-partial-match')
+
+  // anchors on a greedy choice apply to its first term only
+  doc = nlp('a a b').match('(^a+ b|nope)')
+  t.equal(doc.out(), 'a a b', here + 'anchored-greedy-choice')
+
+  t.end()
+})

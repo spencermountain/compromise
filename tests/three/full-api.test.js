@@ -105,3 +105,9 @@ test('constructor api', function (t) {
   })
   t.end()
 })
+
+test('normalize fullwidth-ascii', function (t) {
+  const doc = nlp('Ｈｅｌｌｏ ２０２４').normalize({ unicode: true })
+  t.equal(doc.text(), 'Hello 2024', '[three/normalize] fullwidth ascii')
+  t.end()
+})

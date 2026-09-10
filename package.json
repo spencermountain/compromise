@@ -2,7 +2,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
   "name": "compromise",
   "description": "modest natural language processing",
-  "version": "14.16.0",
+  "version": "14.17.0",
   "module": "./src/three.js",
   "main": "./src/three.js",
   "unpkg": "./builds/compromise.js",
@@ -82,27 +82,27 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "build": "npm run version && npm run docs && rollup -c --silent",
+    "build": "node ./scripts/version.js && node ./scripts/docs.js && rollup -c --silent",
     "watch": "node --watch ./scratch.js",
     "pack": "node ./scripts/pack.js",
     "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
-    "testb": "npm run test:smoke && cross-env TESTENV=prod npm run test",
+    "testb": "tape \"./scripts/test/smoke.test.js\" | tap-dancer && cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "test:one": "tape \"./tests/one/**/*.test.js\" | tap-dancer",
     "test:two": "tape \"./tests/two/**/*.test.js\" | tap-dancer",
     "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
+    "test:types": "tsc --project tsconfig.json",
+    "test:filesize": "node ./scripts/filesize.js",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
-    "test:plugins": "tape \"./plugins/**/tests/**/*.test.js\" | tap-dancer",
+    "test:plugins": "tape \"./plugins/*/tests/**/*.test.js\" | tap-dancer",
     "stress": "node scripts/test/stress.js",
     "debug": "node ./scripts/debug.js",
     "match": "node ./scripts/match.js",
-    "coverage": "c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' npm run test",
-    "perf": "node ./scripts/perf/index.js",
-    "flame": "clinic flame -- node ./scripts/perf/flame",
+    "coverage": "c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' tape \"./tests/**/*.test.js\" | tap-dancer",
+    "bench": "node ./scripts/bench/index.js",
     "lint": "eslint src",
     "docs": "node ./scripts/docs.js",
-    "plugins:ci": "node ./scripts/plugins.js npm ci",
-    "plugins:build": "node ./scripts/plugins.js npm run build"
+    "plugins:build": "node ./scripts/plugins.js --pm run build"
   },
   "files": [
     "builds/",
@@ -136,15 +136,17 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rollup/plugin-terser": "1.0.0",
+    "@types/node": "^26.5.0",
     "cross-env": "10.1.0",
-    "eslint": "10.5.0",
-    "eslint-plugin-regexp": "3.1.0",
+    "eslint": "10.10.0",
+    "eslint-plugin-regexp": "3.3.0",
     "nlp-corpus": "4.4.0",
-    "rollup": "4.62.0",
+    "rollup": "4.63.1",
     "rollup-plugin-filesize-check": "1.2.0",
     "shelljs": "0.10.0",
     "tap-dancer": "0.3.4",
-    "tape": "5.10.1"
+    "tape": "5.10.2",
+    "typescript": "5.9.3"
   },
   "license": "MIT"
 }

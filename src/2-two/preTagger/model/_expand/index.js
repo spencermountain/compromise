@@ -117,7 +117,8 @@ const expandVariable = function (switchWords, model) {
     }
     if (name === 'Adj|Past') {
       const inf = toInfinitive(w, tmpModel, 'PastTense')
-      if (!lex[inf]) {
+      // An unchanged guess is not evidence that an adjective is an infinitive.
+      if (inf !== w && !lex[inf]) {
         words[inf] = 'Infinitive' //expand it later
       }
     }

@@ -45,6 +45,7 @@ jobs:
           pnpm test
           pnpm build
           pnpm test:smoke
+          pnpm test:filesize
 
       - name: Publish package
         run: pnpm publish --access public --provenance

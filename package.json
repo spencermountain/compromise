@@ -92,6 +92,7 @@
     "test:two": "tape \"./tests/two/**/*.test.js\" | tap-dancer",
     "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
     "test:types": "tsc --project tsconfig.json",
+    "test:filesize": "node ./scripts/filesize.js",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "tape \"./plugins/*/tests/**/*.test.js\" | tap-dancer",
     "stress": "node scripts/test/stress.js",
@@ -135,6 +136,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rollup/plugin-terser": "1.0.0",
+    "@types/node": "^26.5.0",
     "cross-env": "10.1.0",
     "eslint": "10.10.0",
     "eslint-plugin-regexp": "3.3.0",

@@ -2264,6 +2264,7 @@ export default [
   ['postulating', 'postulate'],
   ['comprehending', 'comprehend'],
   ['equilibrating', 'equilibrate'],
+  ['egging', 'egg'],
   ['misinterpreting', 'misinterpret'],
   ['recasting', 'recast'],
   ['rehearsing', 'rehearse'],

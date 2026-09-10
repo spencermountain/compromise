@@ -36,8 +36,7 @@ let arr = [
 // doc.redact().debug()
 // nlp('john smith and Sally Morris lives in new york').redact().debug()
 
-console.log(nlp('blow').verbs().conjugate())
-console.log(nlp('grow').verbs().conjugate())
+console.log(nlp('left').tag('Verb').verbs().conjugate())
 
 // let doc = nlp('tree has blown').debug()
 // doc = nlp('tree has grown').debug()

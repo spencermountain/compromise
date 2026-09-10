@@ -789,11 +789,16 @@ test('conjugation:', function (t) {
     const forms = ['Infinitive', 'PastTense', 'PresentTense']//'Gerund'
     for (let i = 0; i < forms.length; i++) {
       const from = forms[i]
-      const inf = nlp(o[from]).tag('Verb').verbs().conjugate()[0] || {}
+      const doc = nlp(o[from])
+      // coerce 'ice', 'left' into verb
+      if (!doc.has('#Verb')) {
+        doc.tag(from)
+      }
+      let inf = doc.verbs().conjugate()[0] || {}
       test_conjugation(inf, o, 'Infinitive', from)
       test_conjugation(inf, o, 'PastTense', from)
       test_conjugation(inf, o, 'PresentTense', from)
-      // test_conjugation(inf, o, 'Gerund', from)
+      test_conjugation(inf, o, 'Gerund', from)
     }
   })
   t.end()

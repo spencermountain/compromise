@@ -6,7 +6,7 @@ const postTagger = function (view) {
   const { model, methods } = world
   net = net || methods.one.buildNet(model.two.matches, world)
   // perform these matches on a comma-seperated document
-  const document = methods.two.quickSplit(view.document)
+  const document = methods.two.quickSplit(view.docs)
   const ptrs = document.map(terms => {
     const t = terms[0]
     return [t.index[0], t.index[1], t.index[1] + terms.length]

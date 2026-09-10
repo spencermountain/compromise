@@ -37,6 +37,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Test TypeScript declarations
+        run: pnpm test:types
+
       - name: Lint and test source
         run: |
           pnpm lint

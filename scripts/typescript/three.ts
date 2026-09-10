@@ -1,5 +1,4 @@
-// import nlp from '../../src/three.js'
-import nlp from '../../types/three'
+import nlp from 'compromise/three'
 
 const doc = nlp('okay cool')
 

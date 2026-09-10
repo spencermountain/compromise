@@ -91,6 +91,7 @@
     "test:one": "tape \"./tests/one/**/*.test.js\" | tap-dancer",
     "test:two": "tape \"./tests/two/**/*.test.js\" | tap-dancer",
     "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
+    "test:types": "tsc --project tsconfig.json",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "tape \"./plugins/*/tests/**/*.test.js\" | tap-dancer",
     "stress": "node scripts/test/stress.js",
@@ -142,7 +143,8 @@
     "rollup-plugin-filesize-check": "1.2.0",
     "shelljs": "0.10.0",
     "tap-dancer": "0.3.4",
-    "tape": "5.10.2"
+    "tape": "5.10.2",
+    "typescript": "5.9.3"
   },
   "license": "MIT"
 }

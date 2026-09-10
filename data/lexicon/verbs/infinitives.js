@@ -365,7 +365,7 @@ export default [
   'forget',
   'forgive',
   'forsake',
-  'forsee',
+  'foresee',
   'freeze',
   'freshen',
   'frighten',

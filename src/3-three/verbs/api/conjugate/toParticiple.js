@@ -104,7 +104,7 @@ const forms = {
   // 'gerund-phrase': noop,
 }
 
-const toPast = function (vb, parsed, form) {
+const toParticiple = function (vb, parsed, form) {
   // console.log(form)
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)
@@ -117,4 +117,4 @@ const toPast = function (vb, parsed, form) {
   // do nothing, then
   return vb
 }
-export default toPast
+export default toParticiple

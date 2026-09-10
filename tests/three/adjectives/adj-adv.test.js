@@ -85,7 +85,6 @@ const arr = [
   ['flawlessly', 'flawless'],
   ['fleetingly', 'fleeting'],
   ['foolishly', 'foolish'],
-  ['forsakenly', 'forsaken'],
   ['fragrantly', 'fragrant'],
   ['frivolously', 'frivolous'],
   ['fully', 'full'],

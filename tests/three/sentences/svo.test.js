@@ -40,6 +40,13 @@ test('svo parser', function (t) {
       'the students',
       'remained',
     ],
+    [
+      'She led a diverse advisory committee throughout the process that included membership from schools, city planning departments, state engineering departments, transit agencies, and AARP.',
+      'she',
+      'led',
+    ],
+    ['He bought the car that the dealer, the bank, and the broker all recommended.', 'he', 'bought'],
+    ['I ate dinner before I went to bed.', 'i', 'ate'],
 
     // ['every day the kitten tries to eat the mouse', 'the kitten', 'tries to eat'],
     // ['The boy who you saw at the store committed a robbery.', 'the boy', 'committed'],

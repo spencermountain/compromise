@@ -2,6 +2,21 @@
 const subordinate = `(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once)`
 const relative = `(that|which|whichever|who|whoever|whom|whose|whomever)`
 
+// a subordinator or relative pronoun only makes the clause secondary when it
+// introduces the clause - after the verb it belongs to a nested clause instead
+const dropIntroducedBy = function (m, pattern) {
+  // parse the pattern once here, instead of once per clause
+  const reg = m.world.methods.one.parseMatch(pattern, {}, m.world)
+  return m.filter(c => {
+    const found = c.matchOne(reg)
+    if (!found.found) {
+      return true
+    }
+    const verb = c.matchOne('#Verb')
+    return verb.found && verb.fullPointer[0][1] <= found.fullPointer[0][1]
+  })
+}
+
 //try to remove secondary clauses
 const mainClause = function (s) {
   let m = s
@@ -14,7 +29,7 @@ const mainClause = function (s) {
     return m
   }
   // this is a signal for subordinate-clauses
-  m = m.ifNo(subordinate)
+  m = dropIntroducedBy(m, subordinate)
   m = m.ifNo('^even (if|though)')
   m = m.ifNo('^so that')
   m = m.ifNo('^rather than')
@@ -23,7 +38,7 @@ const mainClause = function (s) {
     return m
   }
   // relative clauses
-  m = m.ifNo(relative)
+  m = dropIntroducedBy(m, relative)
   if (m.length === 1) {
     return m
   }

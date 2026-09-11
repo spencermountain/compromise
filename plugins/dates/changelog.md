@@ -12,6 +12,8 @@
 - **[new]** - `'the saturday after next'`, `'week after next'`, `'weekend after next'`
 - **[new]** - `'due eod'` - end-of-day support
 - **[change]** - holiday-name spellings 
+- **[change]** - `'a few'` is 3, not 2;
+- **[change]** - bare years up to 2059 are recognized
 - **[fix]** - holidays with an explicit year - `'easter 2026'` 
 - **[fix]** - asking for `'christmas'` on christmas-day no longer returns next year's
 - **[fix]** - overnight ranges cross midnight - `'10pm to 2am'`, 
@@ -20,13 +22,11 @@
 - **[fix]** - `'between june 2nd and 5th'` no longer loses its end-date
 - **[fix]** - `'end of the month'`, `'in a couple of weeks'` no longer return the current date
 - **[fix]** - `'half an hour'` is 30 minutes, not one hour;
-- **[fix]** - `'a few'` is 3, not 2;
 - **[fix]** - `'hence'` means the future;
 - **[fix]** - `'day after next'` is not tomorrow;
 - **[fix]** - `'the 5th of next month'` wraps the year in december
 - **[fix]** - `'2nd weekend of june'` is the 2nd weekend, not the 3rd;
 - **[fix]** - `'the soldiers march tomorrow'` no longer returns a date in march
-- **[fix]** - bare years up to 2059 are recognized
 - **[fix]** - `GMT+9` means utc+9
 - **[fix]** - `jst`/`sgt`/`nzst`/`akst` etc now resolve to spelled-out timezones
 - **[fix]** - `'now pst'` keeps the time-of-day, instead of resetting to midnight

@@ -11,6 +11,7 @@
 - **[new]** - multi-part shifts - `'2 years, 4 months, and 5 days ago'`, `'a week and a half before'`
 - **[new]** - `'the saturday after next'`, `'week after next'`, `'weekend after next'`
 - **[new]** - `'due eod'` - end-of-day support
+- **[change]** - holiday-name spellings 
 - **[fix]** - holidays with an explicit year - `'easter 2026'` 
 - **[fix]** - asking for `'christmas'` on christmas-day no longer returns next year's
 - **[fix]** - overnight ranges cross midnight - `'10pm to 2am'`, 
@@ -31,7 +32,7 @@
 - **[fix]** - `'now pst'` keeps the time-of-day, instead of resetting to midnight
 - **[fix]** - `.times().get()` returns an array
 - **[fix]** - typescript types
-- **[change]** - holiday-name spellings 
+- **[fix]** - spacetime regex vulnerability
 
 ### 3.8.0 [May 2026]
 - **[fix]** - 'one thirty am' is not '130 am'

@@ -48,6 +48,10 @@ test('svo parser', function (t) {
     ['He bought the car that the dealer, the bank, and the broker all recommended.', 'he', 'bought'],
     ['I ate dinner before I went to bed.', 'i', 'ate'],
     ['The man who called yesterday is my uncle.', 'the man', 'is'],
+    ['To win the race, you must train every day.', 'you', 'must train'],
+    ['Had I known, I would have left earlier.', 'i', 'would have left'],
+    ['In case you forget, we will remind you.', 'we', 'will remind'],
+
 
     // ['every day the kitten tries to eat the mouse', 'the kitten', 'tries to eat'],
     ['The boy who you saw at the store committed a robbery.', 'the boy', 'committed'],
@@ -60,6 +64,18 @@ test('svo parser', function (t) {
     const obj = doc.sentences().json()[0]
     t.equal(obj.sentence.subject, a[1], here + 'subject: ' + a[1])
     t.equal(obj.sentence.verb, a[2], here + 'verb: ' + a[2])
+  })
+  t.end()
+})
+
+test('svo main clause after a preposition', function (t) {
+  const arr = [
+    ['Since 2010 we have lived here, and we love it.', 'have lived'],
+    ['Once upon a time there lived a king, and he was rich.', 'lived'],
+  ]
+  arr.forEach(a => {
+    const obj = nlp(a[0]).sentences().json()[0]
+    t.equal(obj.sentence.verb, a[1], here + 'verb: ' + a[1])
   })
   t.end()
 })

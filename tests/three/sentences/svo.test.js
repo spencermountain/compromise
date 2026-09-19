@@ -47,13 +47,15 @@ test('svo parser', function (t) {
     ],
     ['He bought the car that the dealer, the bank, and the broker all recommended.', 'he', 'bought'],
     ['I ate dinner before I went to bed.', 'i', 'ate'],
+    ['The man who called yesterday is my uncle.', 'the man', 'is'],
     ['To win the race, you must train every day.', 'you', 'must train'],
     ['Had I known, I would have left earlier.', 'i', 'would have left'],
     ['In case you forget, we will remind you.', 'we', 'will remind'],
 
+
     // ['every day the kitten tries to eat the mouse', 'the kitten', 'tries to eat'],
-    // ['The boy who you saw at the store committed a robbery.', 'the boy', 'committed'],
-    // ['After dripping mustard all over his chest, the man who was wearing a red shirt wished that he had instead chosen ketchup for his hotdog.', 'the man', 'wished'],
+    ['The boy who you saw at the store committed a robbery.', 'the boy', 'committed'],
+    ['After dripping mustard all over his chest, the man who was wearing a red shirt wished that he had instead chosen ketchup for his hotdog.', 'the man', 'wished'],
     // ["please tell me you'll address the issue", 'you', 'will address'],
     // ['The store that the boy robbed is on the corner.', 'the store', 'is'],
   ]

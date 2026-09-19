@@ -1,6 +1,22 @@
 // if a clause starts with these, it's not a main clause
-const subordinate = `(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once)`
+// followed by a number, 'since' or 'once' is a preposition or an adverb ('since 2010', 'once upon a time')
+const subordinate = `(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once) !(#Value|upon|then|now)`
 const relative = `(that|which|whichever|who|whoever|whom|whose|whomever)`
+
+// a subordinator or relative pronoun only makes the clause secondary when it
+// introduces the clause - after the verb it belongs to a nested clause instead
+const dropIntroducedBy = function (m, pattern) {
+  // parse the pattern once here, instead of once per clause
+  const reg = m.world.methods.one.parseMatch(pattern, {}, m.world)
+  return m.filter(c => {
+    const found = c.matchOne(reg)
+    if (!found.found) {
+      return true
+    }
+    const verb = c.matchOne('#Verb')
+    return verb.found && verb.fullPointer[0][1] <= found.fullPointer[0][1]
+  })
+}
 
 //try to remove secondary clauses
 const mainClause = function (s) {
@@ -14,16 +30,17 @@ const mainClause = function (s) {
     return m
   }
   // this is a signal for subordinate-clauses
-  m = m.ifNo(subordinate)
+  m = dropIntroducedBy(m, subordinate)
   m = m.ifNo('^even (if|though)')
   m = m.ifNo('^so that')
   m = m.ifNo('^rather than')
   m = m.ifNo('^provided that')
+  m = m.ifNo('^in case')
   if (m.length === 1) {
     return m
   }
   // relative clauses
-  m = m.ifNo(relative)
+  m = dropIntroducedBy(m, relative)
   if (m.length === 1) {
     return m
   }
@@ -36,6 +53,13 @@ const mainClause = function (s) {
 
   // check for clauses beginning with Gerund ("Taking ..., ...")
   m = m.ifNo('^#Gerund')
+  if (m.length === 1) {
+    return m
+  }
+
+  // an infinitive or an inverted condition ('To win ...', 'Had I known ...')
+  m = m.ifNo('^to #Infinitive')
+  m = m.ifNo('^#Condition')
   if (m.length === 1) {
     return m
   }

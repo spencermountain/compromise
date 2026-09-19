@@ -74,4 +74,27 @@ doc.clearPayloads()
 doc.getPayloads().length // now 0
 ```
 
+### Limitations
+
+Payloads are saved by sentence number and term position, in one store that every document from the same `nlp` shares. That means:
+
+- **Removing a sentence breaks the payloads that come after it.** They move to the wrong sentence, and the last one can go missing. Add payloads after you remove sentences, or add them again. Changing words inside a sentence is fine.
+
+```js
+let doc = nlp('One is red. Two is blue. Three is green.')
+doc.match('(red|blue|green)').forEach(m => m.addPayload({ color: m.text() }))
+doc.remove('two is blue')
+doc.getPayloads().map(p => [p.match.text(), p.val.color])
+// [['red', 'red'], ['Three is green', 'blue']]
+```
+
+- **A new document can see payloads from an older one** at the same sentence and term positions. Call `.clearPayloads()` on a document when you are done with it.
+
+```js
+nlp('the red car').match('car').addPayload({ kind: 'vehicle' })
+nlp('a blue bike').getPayloads().length // 1, from the first document
+```
+
+See [#1188](https://github.com/spencermountain/compromise/issues/1188).
+
 MIT

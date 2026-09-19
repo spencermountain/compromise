@@ -9,6 +9,16 @@
   "type": "module",
   "sideEffects": false,
   "types": "./types/three.d.ts",
+  "typesVersions": {
+    "*": {
+      "misc": [
+        "types/misc.d.ts"
+      ],
+      "view/*": [
+        "types/view/*.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "import": {
@@ -61,16 +71,36 @@
       }
     },
     "./misc": {
-      "types": "./types/misc.d.ts"
+      "import": {
+        "types": "./types/misc.d.ts"
+      },
+      "require": {
+        "types": "./types/misc.d.cts"
+      }
     },
     "./view/one": {
-      "types": "./types/view/one.d.ts"
+      "import": {
+        "types": "./types/view/one.d.ts"
+      },
+      "require": {
+        "types": "./types/view/one.d.cts"
+      }
     },
     "./view/two": {
-      "types": "./types/view/two.d.ts"
+      "import": {
+        "types": "./types/view/two.d.ts"
+      },
+      "require": {
+        "types": "./types/view/two.d.cts"
+      }
     },
     "./view/three": {
-      "types": "./types/view/three.d.ts"
+      "import": {
+        "types": "./types/view/three.d.ts"
+      },
+      "require": {
+        "types": "./types/view/three.d.cts"
+      }
     }
   },
   "repository": {
@@ -91,7 +121,7 @@
     "test:one": "tape \"./tests/one/**/*.test.js\" | tap-dancer",
     "test:two": "tape \"./tests/two/**/*.test.js\" | tap-dancer",
     "test:three": "tape \"./tests/three/**/*.test.js\" | tap-dancer",
-    "test:types": "tsc --project tsconfig.json",
+    "test:types": "tsc --project tsconfig.json && tsc --project tsconfig.json --module Node16 --moduleResolution Node16",
     "test:filesize": "node ./scripts/filesize.js",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "tape \"./plugins/*/tests/**/*.test.js\" | tap-dancer",

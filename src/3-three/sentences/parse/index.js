@@ -21,12 +21,24 @@ const parse = function (s) {
   let subj = s.none()
   let verb = s.none()
   let pred = s.none()
+  // a relative clause right after the subject has a verb of its own
+  // ('the boy who you saw at the store committed a robbery')
+  const relative =
+    chunks.length > 2 &&
+    !chunks.eq(0).has('<Verb>') &&
+    chunks.eq(1).has('^(who|whom|whose|which|that)$') &&
+    chunks.filter(ch => ch.has('<Verb>')).length > 1
+  let skipped = false
   chunks.forEach((ch, i) => {
     if (i === 0 && !ch.has('<Verb>')) {
       subj = ch
       return
     }
     if (!verb.found && ch.has('<Verb>')) {
+      if (relative && !skipped) {
+        skipped = true
+        return
+      }
       verb = ch
       return
     }

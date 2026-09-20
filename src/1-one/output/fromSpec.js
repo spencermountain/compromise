@@ -3,6 +3,7 @@ const comment = /\}[ \t]*#.*$/ // an optional '# comment' after the last {tags} 
 
 // parse the spec output
 const parseLine = function (line = '') {
+  // eslint-disable-next-line prefer-const
   let [text, tags] = line.split(lastBrace)
   if (tags === undefined) {
     return { text, tags: [] } // no {tags} block on this line

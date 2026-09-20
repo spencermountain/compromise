@@ -1,6 +1,8 @@
+import * as regexpPlugin from 'eslint-plugin-regexp'
 const ok = 'readonly'
 
 export default [
+  regexpPlugin.configs['flat/recommended'],
   { ignores: ['**/builds/*'] },
   {
     languageOptions: {
@@ -25,7 +27,7 @@ export default [
         fetch: ok,
         URL: ok,
         Event: ok,
-      }
+      },
     },
     // custom rules setup
     rules: {
@@ -54,8 +56,12 @@ export default [
       'no-shadow': 'error',
       'no-unmodified-loop-condition': 'warn',
       'no-use-before-define': 'warn',
-      'prefer-const': 'off',
+      'prefer-const': 'warn',
       radix: 'warn',
+      // regex
+      'regexp/prefer-d': 'off',
+      'regexp/prefer-range': 'off',
+      'regexp/no-unused-capturing-group': 'off',
     },
   },
 ]

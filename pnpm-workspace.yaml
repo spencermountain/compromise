@@ -3,3 +3,6 @@ packages:
   - plugins/_experiments/*
 
 linkWorkspacePackages: true
+
+minimumReleaseAgeExclude:
+  - tap-dancer@0.4.0

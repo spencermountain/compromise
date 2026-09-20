@@ -57,7 +57,7 @@ class View {
     const pointers = ptrs || docs.map((_d, n) => [n])
     // do we need to repair it, first?
     return pointers.map(a => {
-      // eslint-disable-next-line prefer-const
+       
       let [n, start, end, id, endId] = a
       start = start || 0
       end = end || (document[n] || []).length

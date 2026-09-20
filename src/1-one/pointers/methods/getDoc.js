@@ -43,7 +43,7 @@ const getDoc = function (ptrs, document) {
     if (!ptr) {
       return
     }
-    // eslint-disable-next-line prefer-const
+     
     let [n, start, end, id, endId] = ptr //parsePointer(ptr)
     let terms = document[n] || []
     if (start === undefined) {

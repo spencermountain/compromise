@@ -11,7 +11,7 @@ const parse = function (m) {
   const num = m.match('#Money').numbers().get()[0]
   if (!currency) {
     // look for currency in symbol
-    let str = m.text()
+    const str = m.text()
     const found = symbols.find(([sym]) => str.includes(sym))
     if (found) {
       currency = found[1]

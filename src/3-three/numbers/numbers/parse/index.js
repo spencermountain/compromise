@@ -5,7 +5,7 @@ const parseNumeric = function (str, m) {
   str = str.replace(/,/g, '')
   //parse a numeric-number
   const arr = str.split(/([0-9.,]*)/)
-  // eslint-disable-next-line prefer-const
+   
   let [prefix, num] = arr
   let suffix = arr.slice(2).join('')
   if (num !== '' && m.length < 2) {

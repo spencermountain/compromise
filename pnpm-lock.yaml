@@ -121,11 +121,11 @@ importers:
         specifier: '>=14.2.0'
         version: link:../..
       spacetime:
-        specifier: ^7.12.1
-        version: 7.13.0
+        specifier: ^7.14.0
+        version: 7.14.0
       spacetime-holiday:
         specifier: 0.3.0
-        version: 0.3.0(spacetime@7.13.0)
+        version: 0.3.0(spacetime@7.14.0)
 
   plugins/paragraphs:
     dependencies:
@@ -1573,8 +1573,8 @@ packages:
     peerDependencies:
       spacetime: '>=6.3.0'
 
-  spacetime@7.13.0:
-    resolution: {integrity: sha512-QWF8VpjsRTDZ+/k6CntPjRoVpOMTc5tjEUJ5bNFrFp1aYpL6x1nKdpohuGtv8g7EfUnOIZgL4QD04py5CZTcAQ==}
+  spacetime@7.14.0:
+    resolution: {integrity: sha512-a5Yi7UZpU9PDdFQA17VCzvVU89MIhcAMHVli0BbG+JgMcvl25Sf4ifmtosK9mVbtM9NTjVbDq4dstlrMUMYJ0g==}
 
   split@1.0.1:
     resolution: {integrity: sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==}
@@ -3454,11 +3454,11 @@ snapshots:
 
   space-separated-tokens@2.0.2: {}
 
-  spacetime-holiday@0.3.0(spacetime@7.13.0):
+  spacetime-holiday@0.3.0(spacetime@7.14.0):
     dependencies:
-      spacetime: 7.13.0
+      spacetime: 7.14.0
 
-  spacetime@7.13.0: {}
+  spacetime@7.14.0: {}
 
   split@1.0.1:
     dependencies:

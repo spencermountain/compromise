@@ -1,5 +1,5 @@
 {
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "name": "compromise",
   "description": "modest natural language processing",
   "version": "14.17.0",
@@ -107,7 +107,8 @@
     "type": "git",
     "url": "git://github.com/spencermountain/compromise.git"
   },
-  "homepage": "https://github.com/spencermountain/compromise",
+  "homepage": "https://compromise.cool",
+  "bugs": "https://github.com/spencermountain/compromise/issues",
   "engines": {
     "node": ">=12.0.0"
   },

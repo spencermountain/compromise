@@ -41,7 +41,12 @@ const pickTag = function (terms, i, clues, model) {
   if (!clues) {
     return null
   }
-  const beforeIndex = terms[i - 1]?.text !== 'also' ? i - 1 : Math.max(0, i - 2)
+  let beforeIndex = i - 1
+  const previousTerm = terms[beforeIndex]
+  // Skip 'also' when looking for clues in the preceding term.
+  if (previousTerm && previousTerm.text === 'also') {
+    beforeIndex = Math.max(0, i - 2)
+  }
   const tagSet = model.one.tagSet
   // look -> right word, first
   let tag = checkWord(terms[i + 1], clues.afterWords)

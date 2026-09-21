@@ -2,51 +2,34 @@ import terser from '@rollup/plugin-terser'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import sizeCheck from 'rollup-plugin-filesize-check'
 
-const opts = { keep_classnames: true, module: true }
-const umdOpts = { ...opts, module: false }
+const createBuild = (tier, output) => ({
+  input: `src/${tier}.js`,
+  plugins: [nodeResolve()],
+  output: output.map(options => ({
+    ...options,
+    // Terser infers module mode from the output format.
+    // Size limits are enforced by scripts/filesize.js in CI.
+    plugins: [terser({ keep_classnames: true }), sizeCheck()],
+  })),
+})
 
 export default [
-  // === Main ==
-  {
-    input: 'src/three.js',
-    output: [{ file: 'builds/compromise.js', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 277, warn: 30 })],
-  },
-
   // === One ==
-  {
-    input: 'src/one.js',
-    output: [{ file: 'builds/one/compromise-one.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 69, warn: 15 })],
-  },
-  {
-    input: 'src/one.js',
-    output: [{ file: 'builds/one/compromise-one.mjs', format: 'esm' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 69, warn: 15 })],
-  },
+  createBuild('one', [
+    { file: 'builds/one/compromise-one.cjs', format: 'umd', name: 'nlp' },
+    { file: 'builds/one/compromise-one.mjs', format: 'esm' },
+  ]),
 
   // === Two ==
-  {
-    input: 'src/two.js',
-    output: [{ file: 'builds/two/compromise-two.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 226, warn: 30 })],
-  },
-  {
-    input: 'src/two.js',
-    output: [{ file: 'builds/two/compromise-two.mjs', format: 'esm' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 226, warn: 30 })],
-  },
+  createBuild('two', [
+    { file: 'builds/two/compromise-two.cjs', format: 'umd', name: 'nlp' },
+    { file: 'builds/two/compromise-two.mjs', format: 'esm' },
+  ]),
 
   // === Three ==
-  {
-    input: 'src/three.js',
-    output: [{ file: 'builds/three/compromise-three.cjs', format: 'umd', name: 'nlp' }],
-    plugins: [nodeResolve(), terser(umdOpts), sizeCheck({ expect: 277, warn: 30 })],
-  },
-  {
-    input: 'src/three.js',
-    output: [{ file: 'builds/three/compromise-three.mjs', format: 'esm' }],
-    plugins: [nodeResolve(), terser(opts), sizeCheck({ expect: 277, warn: 30 })],
-  },
-
+  createBuild('three', [
+    { file: 'builds/compromise.js', format: 'umd', name: 'nlp' },
+    { file: 'builds/three/compromise-three.cjs', format: 'umd', name: 'nlp' },
+    { file: 'builds/three/compromise-three.mjs', format: 'esm' },
+  ]),
 ]

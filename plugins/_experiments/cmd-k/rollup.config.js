@@ -7,19 +7,19 @@ export default {
   plugins: [nodeResolve()],
   output: [
     {
-      file: 'builds/compromise-wikipedia.cjs',
+      file: 'builds/compromise-cmd-k.cjs',
       format: 'umd',
-      name: 'compromiseWikipedia',
+      name: 'compromiseCmdK',
       plugins: [sizeCheck()],
     },
     {
-      file: 'builds/compromise-wikipedia.min.js',
+      file: 'builds/compromise-cmd-k.min.js',
       format: 'umd',
-      name: 'compromiseWikipedia',
+      name: 'compromiseCmdK',
       plugins: [terser({ keep_classnames: true }), sizeCheck()],
     },
     {
-      file: 'builds/compromise-wikipedia.mjs',
+      file: 'builds/compromise-cmd-k.mjs',
       format: 'esm',
       plugins: [terser({ keep_classnames: true }), sizeCheck()],
     },

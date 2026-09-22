@@ -1,37 +1,41 @@
 import * as regexpPlugin from 'eslint-plugin-regexp'
-const ok = 'readonly'
 
 export default [
+  { ignores: ['**/builds/*', '**/scratch.js', '**/rollup.config.js'] },
   regexpPlugin.configs['flat/recommended'],
-  { ignores: ['**/builds/*'] },
   {
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
         // Node globals
-        console: ok,
-        process: ok,
-        Buffer: ok,
-        setTimeout: ok,
-        clearTimeout: ok,
-        setInterval: ok,
-        clearInterval: ok,
-        __dirname: ok,
-        __filename: ok,
+        console: 'readonly',
+        process: 'readonly',
+        Buffer: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
         // client-side globals
-        self: ok,
-        window: ok,
-        document: ok,
-        navigator: ok,
-        fetch: ok,
-        URL: ok,
-        Event: ok,
-      },
+        self: 'readonly',
+        window: 'readonly',
+        document: 'readonly',
+        fetch: 'readonly',
+        URL: 'readonly',
+        Event: 'readonly',
+      }
     },
     // custom rules setup
     rules: {
-      'no-unused-vars': 'warn',
+      'no-unused-vars': [
+        'warn',
+        {
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
+        },
+      ],
       'no-empty': 'warn',
       'no-undef': 'error',
       'no-unreachable': 'error',
@@ -45,23 +49,24 @@ export default [
       'consistent-return': 'warn',
       'no-nested-ternary': 'warn',
       'no-bitwise': 'warn',
-      'no-console': 'warn',
       'no-duplicate-imports': 'warn',
       'no-eval': 'error',
       'no-implied-eval': 'error',
-      'no-mixed-operators': 'error',
       'no-multi-assign': 'error',
       'no-self-compare': 'warn',
       'no-sequences': 'warn',
+      radix: 'warn',
       'no-shadow': 'error',
       'no-unmodified-loop-condition': 'warn',
       'no-use-before-define': 'warn',
+      'no-irregular-whitespace': 'warn',
+      'no-console': 'warn',
+      'no-mixed-operators': 'off',
+      'no-prototype-builtins': 'off',
       'prefer-const': 'warn',
-      radix: 'warn',
-      // regex
       'regexp/prefer-d': 'off',
       'regexp/prefer-range': 'off',
       'regexp/no-unused-capturing-group': 'off',
     },
-  },
+  }
 ]

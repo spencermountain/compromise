@@ -1,25 +1,25 @@
 {
-	"name": "compromise-one",
-	"version": "0.0.0",
-	"description": "This is a stub package.json for old bundlers",
-	"type": "module",
-	"module": "./../src/one.js",
-	"main": "./../src/one.js",
-	"types": "./../types/one.d.ts",
-	"exports": {
-		"./package.json": "./package.json",
-		".": {
-			"import": {
-				"types": "./../types/one/one.d.ts",
-				"default": "./../src/one.js"
-			},
-			"require": {
-				"types": "./../types/one.d.cts",
-				"default": "./../builds/one/compromise-one.cjs"
-			}
-		}
-	},
-	"author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-	"license": "MIT",
-	"sideEffects": false
+  "name": "compromise-one",
+  "version": "0.0.0",
+  "description": "This is a stub package.json for old bundlers",
+  "type": "module",
+  "module": "./../src/one.js",
+  "main": "./../src/one.js",
+  "types": "./../types/one.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./../types/one/one.d.ts",
+        "default": "./../src/one.js"
+      },
+      "require": {
+        "types": "./../types/one.d.cts",
+        "default": "./../builds/one/compromise-one.cjs"
+      }
+    }
+  },
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
+  "license": "MIT",
+  "sideEffects": false
 }

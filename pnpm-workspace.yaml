@@ -4,5 +4,11 @@ packages:
 
 linkWorkspacePackages: true
 
-minimumReleaseAgeExclude:
-  - tap-dancer@0.4.0
+catalog:
+  '@rollup/plugin-commonjs': '29.0.3'
+  '@rollup/plugin-node-resolve': '16.0.3'
+  'rollup': '4.63.4'
+  'rollup-plugin-filesize-check': '1.2.0'
+  'tap-dancer': '0.4.0'
+  'tape': '5.10.2'
+  '@rollup/plugin-terser': '1.0.0'

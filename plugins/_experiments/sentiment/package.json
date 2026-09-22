@@ -2,7 +2,7 @@
   "name": "compromise-sentiment",
   "description": "plugin for nlp-compromise",
   "version": "0.0.0",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-sentiment.min.js",
   "module": "./builds/compromise-sentiment.mjs",
@@ -14,10 +14,7 @@
       "import": "./src/plugin.js"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
-  },
+  "repository": "github:spencermountain/compromise",
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/sentiment",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
@@ -25,9 +22,6 @@
     "watch": "node --watch ./scratch.js",
     "build": "rollup -c --silent"
   },
-  "eslintIgnore": [
-    "builds/*.js"
-  ],
   "files": [
     "builds/",
     "src/",

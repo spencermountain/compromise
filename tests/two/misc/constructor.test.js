@@ -28,7 +28,7 @@ test('tokenize() runs without pos-tagging', function (t) {
 test('tokenize() does not crash on long string with many sentences', function (t) {
   let text = 'The quick brown fox jumped over the lazy dog.\n'
   text += 'Hi!\n'.repeat(100000)
-  const _doc = nlp.tokenize(text) // eslint-disable-line
+  nlp.tokenize(text)
   t.ok(true, here + 'repeated hi')
   t.end()
 })
@@ -36,7 +36,7 @@ test('tokenize() does not crash on long string with many sentences', function (t
 test('tokenize() does not crash on long string with few sentences', function (t) {
   let text = 'The quick brown fox jumped over the lazy dog.\n'
   text += '--\n'.repeat(100000)
-  const _doc = nlp.tokenize(text) // eslint-disable-line
+  nlp.tokenize(text)
   t.ok(true, here + 'repeated dashes')
   t.end()
 })

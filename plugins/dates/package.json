@@ -2,7 +2,7 @@
   "name": "compromise-dates",
   "description": "plugin for nlp-compromise",
   "version": "3.9.0",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-dates.min.js",
   "module": "./builds/compromise-dates.mjs",
@@ -21,10 +21,7 @@
       }
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
-  },
+  "repository": "github:spencermountain/compromise",
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",

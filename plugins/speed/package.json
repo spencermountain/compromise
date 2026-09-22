@@ -2,7 +2,7 @@
   "name": "compromise-speed",
   "description": "plugin for nlp-compromise",
   "version": "0.1.2",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-speed.min.js",
   "module": "./builds/compromise-speed.mjs",
@@ -16,10 +16,7 @@
       "types": "./index.d.ts"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
-  },
+  "repository": "github:spencermountain/compromise",
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/speed",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",

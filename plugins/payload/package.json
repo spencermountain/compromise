@@ -2,7 +2,7 @@
   "name": "compromise-payload",
   "description": "plugin for nlp-compromise",
   "version": "0.0.3",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-payload.min.js",
   "type": "module",
@@ -15,10 +15,7 @@
       "types": "./index.d.ts"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
-  },
+  "repository": "github:spencermountain/compromise",
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/payload",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",

@@ -2,7 +2,7 @@
   "name": "compromise-wikipedia",
   "description": "plugin for nlp-compromise",
   "version": "0.1.1",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "main": "./src/plugin.js",
   "unpkg": "./builds/compromise-wikipedia.min.js",
   "type": "module",
@@ -15,10 +15,7 @@
       "types": "./index.d.ts"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
-  },
+  "repository": "github:spencermountain/compromise",
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/wikipedia",
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",

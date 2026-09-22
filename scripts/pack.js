@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import fs from 'fs'
+import fs from 'node:fs'
 import { pack } from 'efrt'
 import { compress, learn } from 'suffix-thumb'
 // import { compress, learn } from '/Users/spencer/mountain/suffix-thumb/src/index.js'

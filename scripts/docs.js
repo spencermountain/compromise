@@ -9,9 +9,9 @@
 //
 // the curated docs (AGENTS.md, docs/match-syntax.md, docs/recipes.md, docs/concepts.md)
 // are hand-written - this script does not touch them, it only stitches them into llms-full.txt
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import nlp from '../src/three.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -50,7 +50,7 @@ const generateTags = function () {
     for (const name of groups[bucket]) {
       const t = tagSet[name]
       const parents = (t.parents || []).filter(p => p !== name)
-      const isAlso = parents.length ? parents.map(p => `\`#${p}\``).join(', ') : '—'
+      const isAlso = parents.length > 0 ? parents.map(p => `\`#${p}\``).join(', ') : '—'
       const eg = examples[name] || ''
       md += `| \`#${name}\` | ${isAlso} | ${eg} |\n`
     }
@@ -89,7 +89,7 @@ const parseDts = function (file) {
   let section = ''
   let pendingDoc = ''
   const memberRe = /^\s*([a-zA-Z][a-zA-Z0-9]*)(\??):\s*(.+?)\s*$/
-  for (let line of lines) {
+  for (const line of lines) {
     // section headers, written as `// Match` or `// ### Pointers`
     const sec = line.match(/^\s*\/\/\s*#*\s*([A-Z][A-Za-z ]+)\s*$/)
     if (sec && !line.includes('alias') && !line.includes('support') && !line.includes('use ')) {
@@ -105,7 +105,7 @@ const parseDts = function (file) {
     const m = line.match(memberRe)
     if (m && pendingDoc) {
       const name = m[1]
-      let sig = m[3].replace(/,$/, '')
+      const sig = m[3].replace(/,$/, '')
       // turn `(a: T) => View` into `(a)` for readability
       let args = ''
       const arrow = sig.match(/^\((.*)\)\s*=>/)
@@ -160,7 +160,7 @@ const generateApi = function () {
   let cm
   while ((cm = classRe.exec(three))) {
     const members = parseBlock(cm[2])
-    if (!members.length) continue
+    if (members.length === 0) continue
     md += `\n### \`.${cm[1].toLowerCase()}()\` →\n\n`
     for (const m of members) md += `- **\`${m.call}\`** — ${m.doc}\n`
   }
@@ -187,7 +187,7 @@ const parseBlock = function (str, isCtor) {
     if (!m && isCtor) m = line.match(/^\s*export const ([a-zA-Z][a-zA-Z0-9]*)\s*(:)/) // e.g. version
     if (m && pendingDoc) {
       const name = m[1]
-      let rest = m[3] || m[2] || ''
+      const rest = m[3] || m[2] || ''
       const arrow = rest.match(/^\((.*?)\)\s*=>/) || rest.match(/^\((.*)\)/)
       let call
       if (arrow) {

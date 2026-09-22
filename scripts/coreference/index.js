@@ -12,7 +12,7 @@ list.forEach(str => {
       out[p.text('normal')] = n.text('normal')
     }
   })
-  if (Object.keys(out).length) {
+  if (Object.keys(out).length > 0) {
     // console.log(JSON.stringify([str, out], null, 2) + ',\n')
   }
 })

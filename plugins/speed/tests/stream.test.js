@@ -1,12 +1,12 @@
 import test from 'tape'
 import nlp from './_lib.js'
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import { streamFile } from '../src/plugin.js'
 nlp.plugin(streamFile)
 
 
-import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'node:url'
 const dir = path.dirname(fileURLToPath(import.meta.url))
 
 const file = path.join(dir, `./files/freshPrince.txt`)

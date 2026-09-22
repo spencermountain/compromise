@@ -1,6 +1,6 @@
 /* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/three.js'
-import fs from 'fs'
+import fs from 'node:fs'
 
 
 import plg from './src/plugin.js'

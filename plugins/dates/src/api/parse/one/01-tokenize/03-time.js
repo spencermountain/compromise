@@ -192,8 +192,8 @@ const parseTime = function (doc, context) {
   if (m.found) {
     const hour = m.groups('hour')
     const minute = m.groups('minute')
-    let hourNum = hour.numbers().get()[0]
-    let minuteNum = minute.numbers().get()[0]
+    const hourNum = hour.numbers().get()[0]
+    const minuteNum = minute.numbers().get()[0]
     if (hourNum < 24 && minuteNum < 60) {
       s = s.hour(hour.text('reduced'))
       s = s.minute(minute.text('reduced'))

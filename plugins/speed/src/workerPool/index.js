@@ -1,6 +1,6 @@
 import rip from './rip.js'
 import makePool from './pool/create.js'
-import os from 'os'
+import os from 'node:os'
 const cpuCount = os.cpus().length
 const workerCount = cpuCount
 

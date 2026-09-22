@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 
 const streamFile = function (path, fn, opts = {}) {
   const nlp = this

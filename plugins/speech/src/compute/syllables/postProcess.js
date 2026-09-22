@@ -89,14 +89,14 @@ const postprocess = function (arr) {
 
   if (arr.length > 1) {
     const single = arr[0] + arr[1]
-    if (single.match(starts_with_single_vowel_combos)) {
+    if (starts_with_single_vowel_combos.test(single)) {
       arr[0] = single
       arr.splice(1, 1)
     }
   }
 
   if (arr.length > 1) {
-    if (arr[arr.length - 1].match(only_one_or_more_c)) {
+    if (only_one_or_more_c.test(arr[arr.length - 1])) {
       arr[arr.length - 2] = arr[arr.length - 2] + arr[arr.length - 1]
       arr.splice(arr.length - 1, 1)
     }

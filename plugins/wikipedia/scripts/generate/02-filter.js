@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import fs from 'fs'
+import fs from 'node:fs'
 import sh from 'shelljs'
 import { blue, yellow } from 'colorette'
 import nlp from '../../../../src/two.js'

@@ -32,7 +32,7 @@ const oneSize = function (list, size) {
 
 const startGrams = function (list, options) {
   // support {size:2} syntax
-  if (options.size) {
+  if (options.size > 0) {
     options.min = options.size
     options.max = options.size
   }

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { pack } from 'efrt'
-import fs from 'fs'
+import fs from 'node:fs'
 import conf from '../../config.js'
 import { blue, yellow } from 'colorette'
 const { lang, project } = conf

@@ -25,8 +25,8 @@ const doWord = function (w) {
     let candidate = before + chars[i]
 
     //it's a consonant that comes after a vowel
-    if (before.match(ends_with_vowel) && !current.match(ends_with_vowel)) {
-      if (after.match(starts_with_e_then_specials)) {
+    if (ends_with_vowel.test(before) && !ends_with_vowel.test(current)) {
+      if (starts_with_e_then_specials.test(after)) {
         candidate += 'e'
         after = after.replace(starts_with_e, '')
       }
@@ -35,7 +35,7 @@ const doWord = function (w) {
     }
 
     //unblended vowels ('noisy' vowel combinations)
-    if (candidate.match(ends_with_noisy_vowel_combos)) {
+    if (ends_with_noisy_vowel_combos.test(candidate)) {
       //'io' is noisy, not in 'ion'
       all.push(before)
       all.push(current)
@@ -43,13 +43,13 @@ const doWord = function (w) {
     }
 
     // if candidate is followed by a CV, assume consecutive open syllables
-    if (candidate.match(ends_with_vowel) && after.match(starts_with_consonant_vowel)) {
+    if (ends_with_vowel.test(candidate) && starts_with_consonant_vowel.test(after)) {
       all.push(candidate)
       return all.concat(doWord(after))
     }
   }
   //if still running, end last syllable
-  if (w.match(aiouy) || w.match(ends_with_ee)) {
+  if (aiouy.test(w) || ends_with_ee.test(w)) {
     //allow silent trailing e
     all.push(w)
   } else if (w) {

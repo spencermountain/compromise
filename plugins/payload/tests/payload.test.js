@@ -32,7 +32,7 @@ test('payload-misc', function (t) {
 test('payload-fn', function (t) {
   const doc = nlp('i saw John Lennon, and john smith and bob dylan')
   doc.match('(john|bob|dave) .').addPayload(m => {
-    return m.text().match(/john/i) ? { isjohn: true } : null
+    return /john/i.test(m.text()) ? { isjohn: true } : null
   })
   t.equal(doc.getPayloads().length, 2, 'now-2')
   t.equal(doc.match('john .').getPayloads().length, 2, 'double-match-still-2')

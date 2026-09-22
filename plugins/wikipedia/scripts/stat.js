@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import sh from 'shelljs'
-import fs from 'fs'
+import fs from 'node:fs'
 
 import conf from '../config.js'
 const { lang, project } = conf

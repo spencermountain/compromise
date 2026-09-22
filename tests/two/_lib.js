@@ -1,4 +1,4 @@
- 
+/* eslint-disable no-console */
 import build from '../../builds/two/compromise-two.mjs'
 import src from '../../src/two.js'
 let nlp = src

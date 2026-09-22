@@ -51,7 +51,7 @@ test('look for invalid lexicon items:', function (t) {
     if (k.trim() !== k) {
       t.fail(here + `'${k}' has whitespace`)
     }
-    if (k.match(/[.,-]/) && lex[k] !== 'Emoticon') {
+    if (/[.,-]/.test(k) && lex[k] !== 'Emoticon') {
       t.fail(here + `'${k}' has punctuation`)
     }
   })

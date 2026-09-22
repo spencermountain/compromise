@@ -48,16 +48,16 @@ test('pennTreebank-test:', function (t) {
     sentence.tags = sentence.tags.split(', ')
 
     const doc = nlp(sentence.text)
-    let perfect = true
+    let isPerfect = true
     let msg = `'` + sentence.text.substring(0, 55) + `..   -  `
 
     const terms = doc.json()[0].terms
     if (doc.length !== 1) {
-      perfect = false
+      isPerfect = false
       msg = 'one sentence #' + index
     }
     if (terms.length !== sentence.tags.length) {
-      perfect = false
+      isPerfect = false
       msg = 'tokenize: '
       msg += sentence.text.substring(0, 100)
     }
@@ -69,15 +69,15 @@ test('pennTreebank-test:', function (t) {
       terms[i] = terms[i] || { tags: [] }
       const found = terms[i].tags.some(tag => tag === want)
       if (!found) {
-        perfect = false
+        isPerfect = false
         msg += `'${terms[i].text}' no #${want}`
         break
       }
     }
-    if (!perfect) {
+    if (!isPerfect) {
       all.push(sentence.text)
     }
-    t.ok(perfect, here + msg)
+    t.ok(isPerfect, here + msg)
   })
   t.end()
   // console.log(all)

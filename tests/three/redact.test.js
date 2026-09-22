@@ -8,7 +8,10 @@ const redact = (str, opts) => nlp(str).redact(opts).text()
 
 test('redact:', function (t) {
   const arr = [
-    [`spencer from 234 Main st at 423-3242 and spencer@gmail.com.`, `${blockStr} from ${blockStr} at ${blockStr} and ${blockStr}.`],
+    [
+      `spencer from 234 Main st at 423-3242 and spencer@gmail.com.`,
+      `${blockStr} from ${blockStr} at ${blockStr} and ${blockStr}.`,
+    ],
     [`in Toronto, Canada!`, `in ${blockStr}!`],
     [`with Dr. Miller and his pal Joe`, `with ${blockStr} and his pal ${blockStr}`],
     [`Mary joined Google today`, `${blockStr} joined ${blockStr} today`],
@@ -73,9 +76,15 @@ test('redact-contact:', function (t) {
     [`my email is alice+tag@example.com`, `my email is ${blockStr}`],
     [`call 423-3242 after noon`, `call ${blockStr} after noon`],
     [`Phone: +1 (555) 555-7890`, `Phone: ${blockStr}`],
-    [`Moe Sizlak. That's right. I'm a surgeon. (800) 555-0000.`, `${blockStr}. That's right. I'm a surgeon. ${blockStr}.`],
+    [
+      `Moe Sizlak. That's right. I'm a surgeon. (800) 555-0000.`,
+      `${blockStr}. That's right. I'm a surgeon. ${blockStr}.`,
+    ],
     [`fax 905-555-0100 or email hr@corp.net`, `fax ${blockStr} or email ${blockStr}`],
-    [`reach us at info@site.org, (212) 555-1212, or 800-555-9999`, `reach us at ${blockStr}, ${blockStr}, or ${blockStr}`],
+    [
+      `reach us at info@site.org, (212) 555-1212, or 800-555-9999`,
+      `reach us at ${blockStr}, ${blockStr}, or ${blockStr}`,
+    ],
   ]
   arr.forEach(a => {
     t.equal(redact(a[0]) + '|', a[1] + '|', here + a[0])
@@ -89,7 +98,10 @@ test('redact-organizations:', function (t) {
     [`She works at Microsoft.`, `She works at ${blockStr}.`],
     [`NASA launched the rocket.`, `${blockStr} launched the rocket.`],
     [`Johnson & Johnson recalled the product.`, `${blockStr} recalled the product.`],
-    [`spencer and danny are in Paris for Google Inc and IBM`, `${blockStr} and ${blockStr} are in ${blockStr} for ${blockStr} and ${blockStr}`],
+    [
+      `spencer and danny are in Paris for Google Inc and IBM`,
+      `${blockStr} and ${blockStr} are in ${blockStr} for ${blockStr} and ${blockStr}`,
+    ],
     [`Capital One hired a new CEO.`, `${blockStr} hired a new CEO.`],
     [`the bill comes to fifty dollars.`, `the bill comes to ${blockStr}.`],
     [`the FBI opened an investigation.`, `the ${blockStr} opened an investigation.`],
@@ -167,22 +179,16 @@ test('redact-negative:', function (t) {
 
 test('redact-options:', function (t) {
   const str = 'John lives in Paris. Email john@home.com or call 555-1234.'
-  t.equal(
-    redact(str, { people: false }) + '|',
-    `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`,
-    here + 'skip people'
-  )
+  let have = redact(str, { people: false }) + '|'
+  let want = `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`
+  t.equal(have, want, here + 'skip people')
   // new blockStr
-  t.equal(
-    redact(str, { people: false }, '********') + '|',
-    `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`,
-    here + 'new blockStr'
-  )
+  have = redact(str, { people: false }, '********') + '|'
+  want = `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`
+  t.equal(have, want, here + 'new blockStr')
   // keep tags
-  t.equal(
-    redact(str, { people: false }, true) + '|',
-    `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`,
-    here + 'keep tags'
-  )
+  have = redact(str, { people: false }, true) + '|'
+  want = `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`
+  t.equal(have, want, here + 'keep tags')
   t.end()
 })

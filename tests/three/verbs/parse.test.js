@@ -106,6 +106,7 @@ test('verb-parts:', function (t) {
     },
   ]
   arr.forEach(obj => {
+    // eslint-disable-next-line
     let { str, preAdverb, aux, root, postAdverb, particle } = obj
     const vb = nlp(str).verbs()
     str = "'" + str.split(/ /).slice(0, 5).join(' ') + "'"

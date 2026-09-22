@@ -8,7 +8,7 @@ test('two named matches', function (t) {
   t.equal(m.groups('animal').text(), 'dog', here + 'one-animal')
   t.equal(m.groups('asdf').text(), '', here + 'one-blank')
   let res = m.groups()
-  t.equal(res.size && res.size.text(), 'big', here + 'obj-size')
+  t.equal(res.size > 0 && res.size.text(), 'big', here + 'obj-size')
   t.equal(res.animal && res.animal.text(), 'dog', here + 'obj-animal')
 
   const doc = nlp.tokenize('june the 5th')

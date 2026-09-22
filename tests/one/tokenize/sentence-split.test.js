@@ -98,14 +98,14 @@ test('emoji-only sentence', function (t) {
 
 
 test('newline-seperated sentence', function (t) {
-  let one = `1
+  const one = `1
 
 two
 
 Three:`
   let doc = nlp(one)
   t.equal(doc.length, 3, here + 'first newline ')
-  let two = `10/10/2025
+  const two = `10/10/2025
 
 two
 
@@ -113,7 +113,7 @@ Three:`
   doc = nlp(two)
   t.equal(doc.length, 3, here + 'second newline sentence')
 
-  let three = `One
+  const three = `One
 
 two
 
@@ -121,7 +121,7 @@ Three:`
 
   doc = nlp(three)
   t.equal(doc.length, 3, here + 'third newline sentence')
-  let four = `
+  const four = `
 To the window, to the wall below.
 _________________________________________________`
   doc = nlp(four)

@@ -806,7 +806,7 @@ test('conjugation:', function (t) {
       if (!doc.has('#Verb')) {
         doc.tag(from)
       }
-      let inf = doc.verbs().conjugate()[0] || {}
+      const inf = doc.verbs().conjugate()[0] || {}
       test_conjugation(inf, o, 'Infinitive', from)
       test_conjugation(inf, o, 'PastTense', from)
       test_conjugation(inf, o, 'PresentTense', from)

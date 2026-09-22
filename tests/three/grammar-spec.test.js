@@ -12,7 +12,7 @@ const check = function (t, lines, msg) {
 }
 
 test('grammar-spec verb tenses + auxiliaries', function (t) {
-  let arr = [
+  const arr = [
     'she walked home. {Noun,Vb|Past,Noun}',
     'she walks quickly. {Noun,Vb|Pres,Adv}',
     'she has walked home. {Noun,Vb|Aux,Vb|Past,Noun}',
@@ -25,7 +25,7 @@ test('grammar-spec verb tenses + auxiliaries', function (t) {
 })
 
 test('grammar-spec copulas + adjectives', function (t) {
-  let arr = [
+  const arr = [
     'the sky is blue. {Det,Noun,Vb|Copula,Adj}',
     'the biggest dog won. {Det,Adj|Superlative,Noun,Vb|Past}',
     'she is taller than him. {Noun,Vb|Copula,Adj|Comparative,Prep,Noun|Pronoun}',
@@ -37,7 +37,7 @@ test('grammar-spec copulas + adjectives', function (t) {
 
 test('grammar-spec negation + contractions', function (t) {
   // contractions split into two terms - the implicit term is matchable too
-  let arr = [
+  const arr = [
     'she did not walk. {Noun,Vb|Aux,Negative,Vb|Inf}',
     `she didn't walk. {Noun|Pronoun,Vb|Aux,Negative,Vb|Inf}`,
     'he cannot swim. {Noun|Pronoun,Vb,Negative,Vb|Inf}',
@@ -48,7 +48,7 @@ test('grammar-spec negation + contractions', function (t) {
 })
 
 test('grammar-spec questions', function (t) {
-  let arr = [
+  const arr = [
     'where did she go? {QuestionWord,Vb,Noun|Pronoun,Vb}',
     'who is that? {QuestionWord,Vb|Copula,Det}',
     'is he going? {Vb|Copula,Noun|Pronoun,Vb|Ger}',
@@ -58,7 +58,7 @@ test('grammar-spec questions', function (t) {
 })
 
 test('grammar-spec imperatives', function (t) {
-  let arr = [
+  const arr = [
     'please close the door. {Expr,Vb|Imp,Det,Noun}',
     'record the record. {Vb|Imp,Det,Noun}',
   ]
@@ -67,7 +67,7 @@ test('grammar-spec imperatives', function (t) {
 })
 
 test('grammar-spec noun inflection', function (t) {
-  let arr = [
+  const arr = [
     'the dogs barked. {Det,Noun|Plural,Vb|Past}',
     `the dog's tail wagged. {Det,Noun|Poss,Noun,Vb|Past}`,
     `spencer's house is nice. {Noun|Poss,Noun,Vb|Copula,Adj}`,
@@ -78,7 +78,7 @@ test('grammar-spec noun inflection', function (t) {
 })
 
 test('grammar-spec proper nouns', function (t) {
-  let arr = [
+  const arr = [
     'Dr. Smith arrived in Toronto. {Noun|Hon,Noun|Prop,Vb|Past,Prep,Noun|Prop}',
     'Google hired spencer in May. {Noun|Org,Vb|Past,Noun,Prep,Date}',
     'the FBI met NASA. {Det,Noun|Acronym,Vb|Past,Noun|Acronym}',
@@ -88,7 +88,7 @@ test('grammar-spec proper nouns', function (t) {
 })
 
 test('grammar-spec phrases + clauses', function (t) {
-  let arr = [
+  const arr = [
     'she gave up quickly. {Noun,Vb|Phrasal,Vb|Particle,Adv}',
     'she walked to the store. {Noun,Vb,Prep,Det,Noun}',
     'give it to her. {Vb,Noun|Pronoun,Prep,Noun|Pronoun}',
@@ -102,7 +102,7 @@ test('grammar-spec phrases + clauses', function (t) {
 })
 
 test('grammar-spec values + dates', function (t) {
-  let arr = [
+  const arr = [
     'i bought two tickets for $50 on friday. {Noun|Pronoun,Vb|Past,Val,Noun|Plural,Prep,Val,Prep,Date}',
     'the meeting is at 5pm on june 5th. {Det,Noun,Vb,Prep,Date,Prep,Date,Date}',
   ]
@@ -112,7 +112,7 @@ test('grammar-spec values + dates', function (t) {
 
 test('grammar-spec noun-verb ambiguity', function (t) {
   // same word, both jobs - the tagger disambiguates from context
-  let arr = [
+  const arr = [
     'she saw a saw. {Noun,Vb|Past,Det,Noun}',
     'i run a run club. {Noun,Vb,Det,Noun,Noun}',
     'fruit flies like a banana. {Noun,Noun,Vb,Det,Noun}',

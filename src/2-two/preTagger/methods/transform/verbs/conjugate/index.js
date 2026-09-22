@@ -19,6 +19,7 @@ const conjugate = function (inf, model) {
       Infinitive: inf,
       Gerund: 'being',
       PastTense: 'was',
+      Participle: 'been',
       PresentTense: 'is',
     }
   }
@@ -58,4 +59,3 @@ export default conjugate
 
 // console.log(toPresent.rules.y)
 // console.log(convert('buy', toPresent))
-

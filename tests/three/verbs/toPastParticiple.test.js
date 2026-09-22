@@ -4,6 +4,11 @@ const here = '[three/verb-toPastParticiple] '
 
 test('toPastParticiple:', function (t) {
   const arr = [
+    ['I am', 'I have been'],
+    ['He is', 'He has been'],
+    ['They are', 'They have been'],
+    ['I was', 'I have been'],
+    ['They were', 'They have been'],
     [`I eat breakfast every morning.`, `I have eaten breakfast every morning.`],
     [`She reads a book before bed.`, `She has read a book before bed.`],
     [`He teaches math to high school students.`, `He has taught math to high school students.`],
@@ -250,6 +255,7 @@ test('past vs past-participle:', function (t) {
   const arr = [
     ['arise', 'arose', 'arisen'],
     ['awake', 'awoke', 'awoken'],
+    ['be', 'was', 'been'],
     // ['bear', 'bore', 'born'],
     ['beat', 'beat', 'beaten'],
     // ['become', 'became', 'become'],
@@ -356,5 +362,4 @@ test('past vs past-participle:', function (t) {
   })
   t.end()
 })
-
 

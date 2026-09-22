@@ -183,11 +183,11 @@ test('redact-options:', function (t) {
   let want = `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`
   t.equal(have, want, here + 'skip people')
   // new blockStr
-  have = redact(str, { people: false }, '********') + '|'
+  have = redact(str, { people: false }) + '|'
   want = `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`
   t.equal(have, want, here + 'new blockStr')
   // keep tags
-  have = redact(str, { people: false }, true) + '|'
+  have = redact(str, { people: false }) + '|'
   want = `John lives in ${blockStr}. Email ${blockStr} or call ${blockStr}.|`
   t.equal(have, want, here + 'keep tags')
   t.end()

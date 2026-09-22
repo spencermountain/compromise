@@ -22,6 +22,7 @@ test('noun-parts:', function (t) {
     },
   ]
   arr.forEach(obj => {
+    // eslint-disable-next-line
     let { str, adjectives, root, determiner, number } = obj
     const n = nlp(str).nouns()
     str = "'" + str.split(/ /).slice(0, 5).join(' ') + "'"

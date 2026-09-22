@@ -15,33 +15,32 @@ test('! negative match syntax :', function (t) {
   m = doc.match('one !foo? two three')
   t.equal(m.text(), 'one two three', here + 'optional-not-missing')
 
-
-  doc = nlp("before bar")
-  m = doc.match("before !foo?")
+  doc = nlp('before bar')
+  m = doc.match('before !foo?')
   t.equal(m.text(), 'before bar', here + 'optional-not-end')
 
-  doc = nlp("before")
-  m = doc.match("before !foo?")
+  doc = nlp('before')
+  m = doc.match('before !foo?')
   t.equal(m.text(), 'before', here + 'optional-not-end-missing')
 
-  m = "i will !foo .{0,9}? send"
-  doc = nlp("i will then send him")
+  m = 'i will !foo .{0,9}? send'
+  doc = nlp('i will then send him')
   t.equal(doc.has(m), true, here + 'neg1')
 
-  doc = nlp("before bar after")
-  m = doc.match("before !foo? after")
+  doc = nlp('before bar after')
+  m = doc.match('before !foo? after')
   t.equal(m.text(), 'before bar after', here + 'optional-not-found')
 
-  m = "i will !foo? send"
-  doc = nlp("I will then send him")
+  m = 'i will !foo? send'
+  doc = nlp('I will then send him')
   t.equal(doc.has(m), true, here + 'neg4')
 
-  m = "i will !foo{0,9}? send"
-  doc = nlp("I will then send him")
+  m = 'i will !foo{0,9}? send'
+  doc = nlp('I will then send him')
   t.equal(doc.has(m), true, here + 'neg5')
 
-  m = "i will !."
-  doc = nlp("I will then send him") //never negative anything
+  m = 'i will !.'
+  doc = nlp('I will then send him') //never negative anything
   t.equal(doc.has(m), false, here + 'neg-anything')
 
   // m = "i will !not? .{0,9}? send"
@@ -77,9 +76,9 @@ test('negative optional logic', function (t) {
   t.end()
 })
 
-test('negative greedy-max', function (t) {
-  const check = (doc) => doc.has('before !(not|no|maybe|perhaps){0,3} after')
+const check = doc => doc.has('before !(not|no|maybe|perhaps){0,3} after')
 
+test('negative greedy-max', function (t) {
   let doc = nlp('before after')
   t.equal(check(doc), true, 'no middle')
 
@@ -136,7 +135,6 @@ test('negative greedy-end', function (t) {
   t.equal(m.text(), 'before one two', 'greedy-two-stop')
   t.end()
 })
-
 
 test('negative greedy-to', function (t) {
   let doc = nlp('before one after end')

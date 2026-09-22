@@ -2,7 +2,6 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/money] '
 
-
 test('money-text:', function (t) {
   const arr = [
     // spelled-out words
@@ -17,7 +16,6 @@ test('money-text:', function (t) {
     ['he owes me ₹2000', '₹2000'],
     ['roughly ₩10000', '₩10000'],
     ['it costs 6 dollars and 5 cents', '6 dollars and 5 cents'],
-
   ]
   arr.forEach(a => {
     t.equal(nlp(a[0]).money().text(), a[1], here + a[0])
@@ -32,9 +30,9 @@ test('money-number:', function (t) {
     ['it was 3 euros', 3],
     ['it was 20 yuan', 20],
     ['we spent 1,000 dollars', 1000],
-    ['it cost $2.50', 2.50],
+    ['it cost $2.50', 2.5],
     ['the book was €20', 20],
-    ['she paid £15.50', 15.50],
+    ['she paid £15.50', 15.5],
     ['a coffee for ¥500', 500],
     ['he owes me ₹2000', 2000],
     ['roughly ₩10000', 10000],

@@ -29,7 +29,7 @@ const repairEnding = function (ptr, document) {
   if (newEnd === -1) {
     // if end-term wasn't found, so go all the way to the end
     ptr[2] = document[n].length
-    ptr[4] = terms.length ? terms[terms.length - 1].id : null
+    ptr[4] = terms.length > 0 ? terms[terms.length - 1].id : null
   } else {
     ptr[2] = newEnd // repair ending pointer
   }

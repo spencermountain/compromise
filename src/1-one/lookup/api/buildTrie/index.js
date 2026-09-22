@@ -42,7 +42,7 @@ const buildTrie = function (phrases, world) {
     xs.push(n)
   }
 
-  while (xs.length) {
+  while (xs.length > 0) {
     const r = xs.shift()
     // for each symbol a such that g(r, a) = s
     const keys = Object.keys(goNext[r])

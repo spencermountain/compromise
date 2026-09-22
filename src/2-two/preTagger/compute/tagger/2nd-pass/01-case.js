@@ -33,7 +33,7 @@ const checkCase = function (terms, i, model) {
       return null
     }
     // first word in a quotation?
-    if (term.pre.match(/["']$/)) {
+    if (/["']$/.test(term.pre)) {
       return null
     }
     if (term.normal === 'the') {

@@ -81,7 +81,7 @@ const getParts = function (s) {
     process[type](chunk)
   })
   // add remainder
-  if (Object.keys(res).length) {
+  if (Object.keys(res).length > 0) {
     parts.push(res)
   }
   return parts

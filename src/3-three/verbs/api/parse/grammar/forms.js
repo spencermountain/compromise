@@ -91,6 +91,7 @@ const verbForms = {
 
   // === Progressive-perfect ===
   'present-perfect-progressive': [
+    ['^(has|have) been going to be #Gerund$', [past, prog]],
     // he has been walking
     ['^(has|have) been #Gerund$', [past, prog]], //present?
   ],
@@ -145,6 +146,7 @@ const verbForms = {
 
   // ==== Auxiliary ===
   'auxiliary-future': [
+    ['^(is|are|am|was|were) going to be #Gerund$', [future, prog]],
     // going to drink
     ['(is|are|am|was) going to (#Infinitive|#PresentTense)', [future]],
   ],

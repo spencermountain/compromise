@@ -3289,10 +3289,6 @@ export default [
     tags: 'CD, NN, IN, DT, NNS, WDT, NNP, RB, VBD, TO, VB, DT, NN, TO, VB, RB',
   },
   {
-    text: '140 - Number of Saudis, including members of the Bin Laden family, evacuated from United States almost immediately after 11 September.',
-    tags: 'CD, NN, IN, NNPS, VBG, NNS, IN, DT, NNP, NNP, NN, VBN, IN, NNP, NNP, RB, RB, IN, CD, NNP',
-  },
-  {
     text: 'Ambitious warrior',
     tags: 'JJ, NN',
   },

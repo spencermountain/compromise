@@ -103,10 +103,9 @@ const forms = {
     return vb.replace('(were|was)', str, keep)
   },
   // will be walking -> is walking
-  'future-progressive': vb => {
-    vb.match('will').insertBefore('is')
-    vb.remove('be')
-    return vb.remove('will')
+  'future-progressive': (vb, parsed) => {
+    vb.replace('will', isAreAm(vb, parsed), keep)
+    return vb.remove('be')
   },
 
   // has walked ->  (?)

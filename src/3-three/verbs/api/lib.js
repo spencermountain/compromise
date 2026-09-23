@@ -30,7 +30,7 @@ const isAreAm = function (vb, parsed) {
   if (subject.has('i')) {
     return 'am'
   }
-  if (subject.has('we') || plural) {
+  if (subject.has('(we|you)') || plural) {
     return 'are'
   }
   // 'he was' -> he is

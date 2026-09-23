@@ -14,6 +14,9 @@ const postTagger = function (view) {
   const m = view.update(ptrs)
   m.sweep(net)
   view.uncache()
+  // This context crosses the comma boundary used by quickSplit above.
+  view.match('(#Noun && @hasComma) [including] #Adjective? #Noun', 0)
+    .tag('Preposition', 'including-list')
   view.unfreeze()
   return view
 }

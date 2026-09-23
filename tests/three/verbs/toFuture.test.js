@@ -58,16 +58,16 @@ test('toFuture:', function (t) {
     ['i was walked', 'i will be walked'],
     ['soldiers were walked', 'soldiers will be walked'],
 
-    ['i am being walked', 'i will be walked'],
-    ['we are being walked', 'we will be walked'],
-    ['he was being walked', 'he will be walked'],
-    // ['had been walked', 'will be walked'], //?
+    ['i am being walked', 'i will be being walked'],
+    ['we are being walked', 'we will be being walked'],
+    ['he was being walked', 'he will be being walked'],
+    // ['had been walked', 'will have been walked'], //?
     // ['has been walked', 'will be walked'], //?
-    ['have been walked', 'will be walked'],
+    ['have been walked', 'will have been walked'],
     ['were walked', 'will be walked'],
-    ['was being walked', 'will be walked'],
+    ['was being walked', 'will be being walked'],
     // // // ['has been walked', 'had been walked'],
-    ['had been walked', 'will be walked'],
+    ['had been walked', 'will have been walked'],
     // // ['will have been walked', 'has been walked'],
     ['will be walked', 'will be walked'],
 

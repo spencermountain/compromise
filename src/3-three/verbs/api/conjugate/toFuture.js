@@ -35,6 +35,24 @@ const progressive = (vb, parsed) => {
   return vb
 }
 
+// Change the finite auxiliary without dropping passive or progressive aspect.
+const passive = (vb, parsed) => {
+  const finite = vb.match('(is|are|am|was|were|has|have|had)').first()
+  if (!finite.found) {
+    return vb
+  }
+  const perfect = finite.has('(has|have|had)')
+  finite.replaceWith('will')
+  const next = vb.match('(being|been)').first()
+  if (next.found) {
+    next.insertBefore(perfect ? 'have' : 'be')
+  } else {
+    vb.match(parsed.root).insertBefore('be')
+  }
+  vb.match('(will|have|be)').tag('Auxiliary')
+  return vb
+}
+
 const forms = {
   // walk ->
   'infinitive': simple,
@@ -73,25 +91,14 @@ const forms = {
   // was walked ->
   // was being walked ->
   // had been walked ->
-  'passive-past': vb => {
+  'passive-past': (vb, parsed) => {
     if (vb.has('got')) {
       return vb.replace('got', 'will get')
     }
-    if (vb.has('(was|were)')) {
-      vb.replace('(was|were)', 'will be')
-      return vb.remove('being')
-    }
-    if (vb.has('(have|has|had) been')) {
-      return vb.replace('(have|has|had) been', 'will be')
-    }
-    return vb
+    return passive(vb, parsed)
   },
   // is being walked  ->
-  'passive-present': vb => {
-    vb.replace('being', 'will be')
-    vb.remove('(is|are|am)')
-    return vb
-  },
+  'passive-present': passive,
   // will be walked ->
   'passive-future': noop,
   // would be walked ->

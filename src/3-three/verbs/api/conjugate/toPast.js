@@ -87,8 +87,8 @@ const forms = {
   'past-progressive': noop,
   // he will be walking
   'future-progressive': (vb, parsed) => {
-    vb.match(parsed.root).insertBefore('was')
-    vb.remove('(will|be)')
+    vb.replace('will', wasWere(vb, parsed), keep)
+    vb.remove('be')
     return vb
   },
 
@@ -126,6 +126,7 @@ const forms = {
   // is being walked  -> 'was being walked'
   'passive-present': (vb, parsed) => {
     vb.replace('(is|are|am)', wasWere(vb, parsed), keep)
+    vb.replace('has', 'had', keep)
     return vb
   },
   // will be walked -> had been walked
@@ -156,8 +157,8 @@ const forms = {
   'past-conditional': noop,
 
   // is going to drink -> was going to drink
-  'auxiliary-future': vb => {
-    vb.replace('(is|are|am)', 'was', keep)
+  'auxiliary-future': (vb, parsed) => {
+    vb.replace('(is|are|am)', wasWere(vb, parsed), keep)
     return vb
   },
   // used to walk
@@ -178,8 +179,11 @@ const forms = {
       // otherwise, 
       //  walk -> have walked
       //  drive -> have driven
-      fns.simple(vb, parsed)
-      vb.match('#Modal').insertAfter('have').tag('Auxiliary')
+      const { conjugate, toInfinitive } = vb.methods.two.transform.verb
+      const root = toInfinitive(parsed.root.text('normal'), vb.model, getTense(parsed.root))
+      const conjugations = conjugate(root, vb.model)
+      vb.match(parsed.root).replaceWith('have ' + (conjugations.Participle || conjugations.PastTense))
+      vb.match('have').tag('Auxiliary')
     }
     return vb
   },

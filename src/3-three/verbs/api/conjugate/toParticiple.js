@@ -31,6 +31,14 @@ const simple = (vb, parsed) => {
   // 'driven' || 'drove'
   str = all.Participle || all.PastTense
 
+  // Replace emphatic do in place, retaining intervening adverbs and negation.
+  if (auxiliary.has('(do|does|did)')) {
+    const have = haveHas(vb, parsed)
+    vb.replace(root, str)
+    vb.replace('(do|does|did)', have).match(have).tag('Auxiliary')
+    return vb
+  }
+
   if (str) {
     vb = vb.replace(root, str)
     // 'have/had/has eaten'
@@ -61,6 +69,18 @@ const passive = (vb, parsed) => {
   return vb
 }
 
+const progressive = (vb, parsed) => {
+  const have = haveHas(vb, parsed)
+  vb.replace('(is|are|am|was|were|will)', have)
+  if (vb.has('be')) {
+    vb.replace('be', 'been')
+  } else {
+    vb.match(parsed.root).insertBefore('been')
+  }
+  vb.match('(have|has|been)').tag('Auxiliary')
+  return vb
+}
+
 const forms = {
   // walk -> walked
   'infinitive': simple,
@@ -72,11 +92,11 @@ const forms = {
   'simple-future': (vb, parsed) => vb.replace('will', haveHas(vb, parsed)),
 
   // he is walking
-  // 'present-progressive': noop,
+  'present-progressive': progressive,
   // he was walking
-  // 'past-progressive': noop,
+  'past-progressive': progressive,
   // he will be walking
-  // 'future-progressive': noop,
+  'future-progressive': progressive,
 
   // has walked -> had walked (?)
   'present-perfect': noop,
@@ -115,7 +135,13 @@ const forms = {
   'past-conditional': noop,
 
   // is going to drink -> was going to drink
-  // 'auxiliary-future': noop,
+  'auxiliary-future': (vb, parsed) => {
+    const have = haveHas(vb, parsed)
+    vb.replace('(is|are|am|was|were)', have)
+    vb.match('going').insertBefore('been')
+    vb.match('(have|has|been|going|to|be)').tag('Auxiliary')
+    return vb
+  },
   // used to walk
   // 'auxiliary-past': noop,
   // we do walk -> we did walk
@@ -124,7 +150,7 @@ const forms = {
   // must walk -> 'must have walked'
   // 'modal-infinitive': noop,
   // must have walked
-  // 'modal-past': noop,
+  'modal-past': noop,
   // wanted to walk
   // 'want-infinitive': noop,
   // started looking

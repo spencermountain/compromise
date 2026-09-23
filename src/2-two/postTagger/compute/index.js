@@ -14,6 +14,9 @@ const postTagger = function (view) {
   const m = view.update(ptrs)
   m.sweep(net)
   view.uncache()
+  // Resolve subjects after date rules distinguish modal 'may' from the month.
+  m.match('^[(this|that|these|those)] #Adverb+? (#Copula|#Modal)', 0)
+    .tag('Pronoun', 'demonstrative-subject')
   // The spelling of 'read' does not distinguish infinitive from participle.
   view.match('(has|have|had) (#Adverb|not)+? [read]', 0)
     .tag('Participle', 'perfect-read')
@@ -42,6 +45,10 @@ const postTagger = function (view) {
   // This context crosses the comma boundary used by quickSplit above.
   view.match('(#Noun && @hasComma) [including] all? #Determiner? #Cardinal+? #Adverb+? #Adjective+? #Noun', 0)
     .tag('Preposition', 'including-list')
+  // A trailing polite request marker can sit beyond the comma split.
+  view.if('@hasComma please$')
+    .match('^(can|could|will|would) you [#Infinitive] .+? please$', 0)
+    .tag('Imperative', 'would-you-comma-please')
   view.unfreeze()
   return view
 }

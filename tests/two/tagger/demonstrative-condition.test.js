@@ -33,3 +33,16 @@ test('if keeps its conditional and conjunction tags', function (t) {
   t.equal(nlp('unless it rains, we will go.').match('unless').has('#Condition'), true, 'unless unchanged')
   t.end()
 })
+
+test('standalone demonstrative subjects and objects', t => {
+  for (const str of ['this is good', 'those are mine', 'these will work', 'that really is nice', 'I like this', 'take that']) {
+    const word = nlp(str).match('(this|that|these|those)')
+    t.equal(word.has('#Pronoun'), true, str + ' pronoun')
+    t.equal(word.has('#Determiner'), false, str + ' not determiner')
+  }
+  for (const str of ['this book is good', 'those books are mine', 'I like this book', 'take that box', 'this May was cold']) {
+    t.equal(nlp(str).match('(this|that|these|those)').has('#Determiner'), true, str)
+  }
+  t.equal(nlp('she said that he left').match('that').has('#Conjunction'), true, 'embedded conjunction')
+  t.end()
+})

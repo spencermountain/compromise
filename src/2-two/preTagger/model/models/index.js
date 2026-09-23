@@ -1,8 +1,5 @@
 import data from './_data.js'
 import { reverse, uncompress } from 'suffix-thumb'
-// import { reverse, uncompress } from '/Users/spencer/mountain/suffix-thumb'
-// const uncompress = function () { }
-// const reverse = function () { }
 const fromPast = uncompress(data.PastTense)
 const fromPresent = uncompress(data.PresentTense)
 const fromGerund = uncompress(data.Gerund)

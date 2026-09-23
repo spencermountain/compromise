@@ -67,7 +67,10 @@ test('pennTreebank-test:', function (t) {
     for (let i = 0; i < sentence.tags.length; i++) {
       const want = softMapping[sentence.tags[i]]
       terms[i] = terms[i] || { tags: [] }
-      const found = terms[i].tags.some(tag => tag === want)
+      // Penn's DT includes standalone demonstratives, which compromise now
+      // distinguishes as pronouns. Keep ordinary determiners strict.
+      const demonstrative = sentence.tags[i] === 'DT' && /^(this|that|these|those)(['’]s)?$/i.test(terms[i].text)
+      const found = terms[i].tags.some(tag => tag === want || (demonstrative && tag === 'Pronoun'))
       if (!found) {
         isPerfect = false
         msg += `'${terms[i].text}' no #${want}`

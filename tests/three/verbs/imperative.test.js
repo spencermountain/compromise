@@ -165,6 +165,9 @@ test('modal questions require an explicit request marker', function (t) {
     ['please could you open the door?', 'open'],
     ['could you open the door please?', 'open'],
     ['could you help please?', 'help'],
+    ['could you help me, please?', 'help'],
+    ['could you help, please?', 'help'],
+    ['would you open the door, please?', 'open'],
   ]
   requests.forEach(([str, verb]) => {
     const doc = nlp(str)

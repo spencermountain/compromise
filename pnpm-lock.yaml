@@ -48,8 +48,8 @@ importers:
         specifier: 0.0.7
         version: 0.0.7
       suffix-thumb:
-        specifier: 5.0.3
-        version: 5.0.3
+        specifier: 6.0.0
+        version: 6.0.0
     devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: 'catalog:'
@@ -1569,8 +1569,9 @@ packages:
     resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
     engines: {node: '>=6'}
 
-  suffix-thumb@5.0.3:
-    resolution: {integrity: sha512-d77avV91FwJkDA0juRQ19XjE1lE1cNCVIWS0ZRicXqdMN28yjO5LltzEkZBNAWS7qHpn37c1fU4PkIJ/rjJQEA==}
+  suffix-thumb@6.0.0:
+    resolution: {integrity: sha512-HsCTMLaupbob5ZG//ZW6PSj446tHT5kSJ1qXS5F/qO2Nt13uAn6ZLPhJQ/H6bN/jVQCb+pcqe2psEwy4Mp5+Vw==}
+    engines: {node: '>=18'}
 
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
@@ -3034,7 +3035,7 @@ snapshots:
 
   strip-final-newline@2.0.0: {}
 
-  suffix-thumb@5.0.3: {}
+  suffix-thumb@6.0.0: {}
 
   supports-preserve-symlinks-flag@1.0.0: {}
 

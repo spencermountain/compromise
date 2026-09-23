@@ -5,6 +5,8 @@ const matches = [
   { match: '#Noun [(who|whom)]', group: 0, tag: 'Determiner', reason: 'captain-who' },
   // who is that? / what are these? - no following noun to determine
   { match: '^#QuestionWord #Adverb+? #Copula #Adverb+? [(this|that|these|those)] #Adverb+?$', group: 0, tag: 'Pronoun', reason: 'who-is-that' },
+  // I like this
+  { match: '#Verb [(this|that|these|those)]$', group: 0, tag: 'Pronoun', reason: 'demonstrative-object' },
 
   // ==== Conditions ====
   // had he survived,

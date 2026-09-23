@@ -21,3 +21,4 @@ minimumReleaseAgeExclude:
   - tap-dancer@0.4.2
   - efrt@2.8.0
   - grad-school@0.0.7
+  - suffix-thumb@6.0.0

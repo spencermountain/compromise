@@ -143,7 +143,7 @@
   "dependencies": {
     "efrt": "catalog:",
     "grad-school": "0.0.7",
-    "suffix-thumb": "5.0.3"
+    "suffix-thumb": "6.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "catalog:",

@@ -28,10 +28,12 @@ export default [
   { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
   // may be
   { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
-  // subject to
-  { match: `[(subject|subjects|subjected)] to`, group: 0, tag: 'Verb', reason: 'subject to' },
-  // subject to
-  { match: `[home] to`, group: 0, tag: 'PresentTense', reason: 'home to' },
+  // predicative noun/adjective, not the verbs 'home' and 'subject'
+  { match: '(#Pronoun|#Plural|#Modal) #Adverb+? [home] to', group: 0, tag: 'Infinitive', reason: 'birds-home-to' },
+  { match: '(#Copula|be|been|being) #Adverb+? [home] to', group: 0, tag: 'Noun', reason: 'is-home-to' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? [subject] to', group: 0, tag: 'Adjective', reason: 'is-subject-to' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? (home|subject) [to]', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'predicative-to' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? (home|subject) to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'predicative-to-noun' },
 
   // === misc==
   // side with
@@ -51,7 +53,7 @@ export default [
   // have read
   { match: `have [#PresentTense]`, group: 0, tag: 'PastTense', notIf: '(come|gotten)', reason: 'have-read' },
   // does that work
-  { match: `(does|will|#Modal) that [work]`, group: 0, tag: 'PastTense', reason: 'does-that-work' },
+  { match: `(does|will|#Modal) that [work]`, group: 0, tag: 'Infinitive', reason: 'does-that-work' },
   // sounds fun
   { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
   // look good
@@ -59,7 +61,7 @@ export default [
   // stops thinking
   { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-thinking' },
   // have read
-  { match: `(have|had) read`, tag: 'Modal #PastTense', reason: 'read-read' },
+  { match: `(has|have|had) read`, tag: 'Auxiliary Participle', reason: 'read-read' },
   //were under cooked
   {
     match: `(is|was|were) [(under|over) #PastTense]`,

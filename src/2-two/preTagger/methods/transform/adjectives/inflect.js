@@ -1,5 +1,4 @@
 import { convert } from 'suffix-thumb'
-// import toAdverb from './adverbs/toAdverb.js'
 
 
 const toSuperlative = function (adj, model) {

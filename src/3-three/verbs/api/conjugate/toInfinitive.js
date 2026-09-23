@@ -17,7 +17,8 @@ const toInf = function (vb, parsed) {
   }
   // there is no real way to do this
   // 'i not walk'?  'i walk not'?
-  if (parsed.negative.found) {
+  // 'never' negates the infinitive on its own - 'i never walk'
+  if (parsed.negative.found && !vb.has('never')) {
     if (!vb.has('not')) {
       vb.prepend('not')
     }

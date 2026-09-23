@@ -79,10 +79,9 @@ const addMethod = function (View) {
         // support ordinal ending, too
         if (val.has('#Ordinal')) {
           const str = format(obj, 'Ordinal')
-          const end = str.match(/[a-z]+$/)
-          if (end) {
-            num += end[0] || ''
-          }
+          let end = str.length
+          while (end > 0 && /[a-z]/.test(str[end - 1])) end--
+          num += str.slice(end)
         }
         val.replaceWith(num, { tags: true })
       })

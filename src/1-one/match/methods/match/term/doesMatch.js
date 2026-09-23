@@ -72,6 +72,15 @@ const doesMatch = function (term, reg, index, length) {
     if (reg.use) {
       str = term[reg.use]
     }
+    if (reg.regex.global || reg.regex.sticky) {
+      const lastIndex = reg.regex.lastIndex
+      try {
+        reg.regex.lastIndex = 0
+        return reg.regex.test(str)
+      } finally {
+        reg.regex.lastIndex = lastIndex
+      }
+    }
     return reg.regex.test(str)
   }
   //support <chunk>

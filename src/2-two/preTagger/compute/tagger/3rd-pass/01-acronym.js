@@ -3,9 +3,9 @@ import fastTag from '../_fastTag.js'
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
 const isUpperCase = /^[A-Z-]+$/
 const upperThenS = /^[A-Z]+s$/
-const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
-const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
-const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/
+const periodAcronym = /^([A-Z]\.)+[A-Z]?,?$/
+const noPeriodAcronym = /^[A-Z]{2,}('s|,)?$/
+const lowerCaseAcronym = /^([a-z]\.)+[a-z]\.?$/
 
 const oneLetterWord = {
   I: true,

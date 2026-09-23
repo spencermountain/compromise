@@ -7,8 +7,8 @@ const suffixes = {
   e: [
     [/(kn|l|w)ife$/i, '$1ives'],
     [/(hive)$/i, '$1s'],
-    [/([m|l])ouse$/i, '$1ice'],
-    [/([m|l])ice$/i, '$1ice'],
+    [/([ml])ouse$/i, '$1ice'],
+    [/([ml])ice$/i, '$1ice'],
   ],
   f: [
     [/^(dwar|handkerchie|hoo|scar|whar)f$/i, '$1ves'],

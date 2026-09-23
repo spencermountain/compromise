@@ -17,3 +17,6 @@ plugins/phrases/data/
 yarn.lock
 bun.lock
 bun.lockb
+/one
+/two
+/three

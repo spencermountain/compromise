@@ -1,20 +1,98 @@
 # Regex audit — 2026-09-20
 
+## Follow-up: remaining warnings and generated boundaries
+
+Completed the first four follow-up improvements:
+
+1. Investigated all eight remaining lint warnings. Malformed match patterns,
+   punctuation repair on crafted document terms, and punctuation-only tokenizer
+   fallback showed quadratic runtime. Direct output and sentence helpers also
+   reproduced it with rejecting suffixes. The ordinal formatting warning was
+   not reproduced as a public slowdown: its usual input is a formatted number
+   with a short suffix. Its trailing scan was still made linear defensively.
+2. Replaced punctuation `Array.shift()`/`pop()` processing with code-point cursor
+   scans and final slices. Retained special handling for emoticons, acronyms,
+   retained punctuation, and punctuation-only input.
+3. Removed audit checks of copied replacement regexes. The suffix equivalence
+   check now uses the actual exported model rule, and the other checks exercise
+   public APIs or exported rules. The audit now has 17 checks rather than 21.
+4. Added generated boundary coverage: 1,044 address contexts, 600 Unicode
+   punctuation contexts, 35 normalization cases, and 75 match-block combinations.
+   These verify original-text preservation, complete address selection, cleanup
+   stability, Unicode code-point preservation, and group boundaries.
+
+The parenthesized-block scanner preserves the previous delimiter behavior;
+50,000 generated patterns matched the previous implementation. Punctuation and
+sentence helpers also agreed with their previous versions on 30,000 generated
+Unicode strings. These comparisons were run during development; the committed
+tests use independent expected outputs and invariants.
+
+Representative single-call measurements at n=16,000 (milliseconds, local Node
+v26.2.0; diagnostic measurements, not portable performance guarantees):
+
+| Path | Before | After |
+|---|---:|---:|
+| Match parser, rejected flag run | 286.92 | 0.53 |
+| Match parser, unclosed parentheses | 102.83 | 0.31 |
+| Removal, spaces followed by a non-punctuation character | 117.41 | 1.41 |
+| Removal, commas followed by a non-punctuation character | 165.08 | 1.72 |
+| Punctuation-only tokenizer fallback | 124.62 | 1.62 |
+| Output helper, rejecting punctuation suffix | 153.56 | 0.09 |
+| Sentence helper, rejecting ellipsis suffix | 353.74 | 0.22 |
+
+Validation: **14,844 core assertions passed**, **6,615 plugin assertions passed**,
+**17 audit checks passed**, and **source lint has zero errors or warnings**.
+The final expanded stress worker also passed separately. Bounded child-process
+checks cover 100,000-character inputs and verify output where applicable.
+`node scripts/test/regex-audit.mjs --bench` reruns the measurements; timeout or
+worker failure makes the audit fail.
+
+## Resolution — 2026-09-23
+
+All seven finding groups below have been addressed. The original observations
+are retained as the audit record; their suggested fixes are now implemented.
+
+- Sentence splitting scans punctuation runs once, preserving CJK quote/bracket
+  behavior. It agreed with the previous splitter on 50,000 generated inputs.
+- The suffix rule and trailing punctuation cleanup avoid quadratic retries.
+- Email/URL recognition shares patterns with tokenization so address hyphens
+  survive. Long TLDs, short hosts, paths, ports, and hyphenated domains work;
+  bare-domain TLD prefixes and repeated schemes no longer match. Existing
+  permissive recognition of `http:example.com` and underscore email domains
+  remains supported.
+- Capture names stop at the first closing angle bracket; malformed names raise
+  an explicit SyntaxError. Global/sticky compiled patterns preserve caller state
+  and start each term at offset zero.
+- Acronym rules are whole-token anchored. Prefix hyphens, timezone case, and
+  plural character classes are corrected. The hyphen fallback only applies to
+  unknown terms, preserving lexical nouns and implicit unit forms.
+- Core tests: **14,809 passed**; plugin tests: **6,615 passed**. The standalone
+  audit passes all **21 checks**, including the original 13 failures.
+- Added 99 core assertions, including a timeout-bounded 100,000-character stress
+  worker. At n=16,000, punctuation and suffix examples now take approximately
+  **3.2 ms** and **1.3 ms**, respectively, on this machine.
+- Enabled `regexp/no-super-linear-move`: lint has **0 errors and 8 warnings**.
+  The remaining warnings concern other existing patterns, not the confirmed
+  defects fixed here; they are not evidence of eight additional public failures.
+
+## Original findings
+
 Inspected core and plugin source, inventoried 346 regex literals (292 core,
 49 regular plugins, 5 experimental plugins) and 10 `RegExp` constructor sites
 across 576 JavaScript files. Generated builds, dependencies, and external
 dependency implementations were excluded. This is a static review plus targeted
 behavior/performance testing, not exhaustive validation of every linguistic rule.
 
-No production changes were made. Reproduce the findings with:
+At the time of the original audit, no production changes had been made. Run the
+updated regression checks and benchmark with:
 
 ```sh
 node scripts/test/regex-audit.mjs --bench
 ```
 
-The standalone script exits 1 while its intended-behavior assertions fail. It is
-deliberately outside the existing `*.test.js` suites. Model-only tests are labeled
-below; they should not be mistaken for confirmed public API failures.
+The standalone script exits 1 if a regression or benchmark worker failure occurs.
+The core regression cases also run in `tests/two/regex-audit.test.js`. Model-only
+findings are labeled below; they should not be mistaken for public API failures.
 
 Validation on Node v26.2.0:
 

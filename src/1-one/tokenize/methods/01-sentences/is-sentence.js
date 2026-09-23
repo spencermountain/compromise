@@ -1,5 +1,5 @@
 const isAcronym = /[ .][A-Z]\.? *$/i //asci - 'n.s.a.'
-const hasEllipse = /(?:\u2026|\.{2,}) *$/ // '...'
+const hasEllipse = /(?:\u2026|\.{2}) *$/ // '...'
 const hasLetter = /\p{L}/u
 const hasPeriod = /\. *$/
 const leadInit = /^[A-Z]\. $/ // "W. Kensington"

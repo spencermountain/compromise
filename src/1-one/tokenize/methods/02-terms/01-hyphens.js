@@ -1,6 +1,11 @@
+import { isWebToken } from '../web.js'
+
 const hasHyphen = function (str, model) {
   const parts = str.split(/[-–—]/)
   if (parts.length <= 1) {
+    return false
+  }
+  if (isWebToken(str)) {
     return false
   }
   const { prefixes, suffixes } = model.one

@@ -10,30 +10,31 @@ const isFullNumber = /^[(+\-]?\d+(th|st|nd|rd)?[)+\-]?$/
 const normalizePunctuation = function (str, model) {
   // quick lookup for allowed pre/post punctuation
   const { prePunctuation, postPunctuation, emoticons } = model.one
-  let original = str
+  const original = str
   let pre = ''
   let post = ''
   const chars = Array.from(str)
+  let start = 0
+  let end = chars.length
 
   // punctuation-only words, like '<3'
   if (emoticons.hasOwnProperty(str.trim())) {
     return { str: str.trim(), pre, post: ' ' } //not great
   }
 
-  // pop any punctuation off of the start
-  let len = chars.length
-  for (let i = 0; i < len; i += 1) {
-    const c = chars[0]
+  // Locate the first retained code point without shifting the array.
+  while (start < end) {
+    const c = chars[start]
     // keep any declared chars
     if (prePunctuation[c] === true) {
-      continue//keep it
+      break//keep it
     }
     // keep '+' or '-' only before a number
     if ((c === '+' || c === '-' || c === '(') && isFullNumber.test(str.trim())) {
       break//done
     }
     // '97 - year short-form
-    if (c === "'" && c.length === 3 && isNumber.test(chars[1])) {
+    if (c === "'" && c.length === 3 && isNumber.test(chars[start + 1])) {
       break//done
     }
     // start of word
@@ -41,16 +42,15 @@ const normalizePunctuation = function (str, model) {
       break //done
     }
     // punctuation
-    pre += chars.shift()//keep going
+    start++
   }
 
-  // pop any punctuation off of the end
-  len = chars.length
-  for (let i = 0; i < len; i += 1) {
-    const c = chars[chars.length - 1]
+  // Locate the last retained code point.
+  while (end > start) {
+    const c = chars[end - 1]
     // keep any declared chars
     if (postPunctuation[c] === true) {
-      continue//keep it
+      break//keep it
     }
     // start of word
     if (isLetter.test(c) || isNumber.test(c)) {
@@ -58,28 +58,29 @@ const normalizePunctuation = function (str, model) {
     }
     // F.B.I.
     if (c === '.' && hasAcronym.test(original) === true) {
-      continue//keep it
+      break//keep it
     }
     //  keep s-apostrophe - "flanders'" or "chillin'"
     if (c === "'" && chillin.test(original) === true) {
-      continue//keep it
+      break//keep it
     }
     // keep '+' or ')' only for a number like (800) or 500+
     if ((c === '+' || c === ')') && isFullNumber.test(str.trim())) {
       break//done
     }
     // punctuation
-    post = chars.pop() + post//keep going
+    end--
   }
-  str = chars.join('')
+  pre = chars.slice(0, start).join('')
+  post = chars.slice(end).join('')
+  str = chars.slice(start, end).join('')
   //we went too far..
   if (str === '') {
     // do a very mild parse, and hope for the best.
-    original = original.replace(/ *$/, after => {
-      post = after || ''
-      return ''
-    })
-    str = original
+    let last = original.length
+    while (last > 0 && original[last - 1] === ' ') last--
+    post = original.slice(last)
+    str = original.slice(0, last)
     pre = ''
   }
   return { str, pre, post }

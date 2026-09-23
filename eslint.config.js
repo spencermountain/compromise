@@ -64,6 +64,7 @@ export default [
       'no-mixed-operators': 'off',
       'no-prototype-builtins': 'off',
       'prefer-const': 'warn',
+      'regexp/no-super-linear-move': 'warn',
       'regexp/prefer-d': 'off',
       'regexp/prefer-range': 'off',
       'regexp/no-unused-capturing-group': 'off',

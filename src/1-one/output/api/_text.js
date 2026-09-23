@@ -1,4 +1,10 @@
-const trimEnd = /[,:;)\]*.?~!\u0022\uFF02\u201D\u2019\u00BB\u203A\u2032\u2033\u2034\u301E\u00B4—-]+$/
+// Walk the trailing punctuation run once, rather than retrying at every offset.
+const endPunctuation = /[,:;)\]*.?~!\u0022\uFF02\u201D\u2019\u00BB\u203A\u2032\u2033\u2034\u301E\u00B4—-]/
+const trimEnd = str => {
+  let end = str.length
+  while (end > 0 && endPunctuation.test(str[end - 1])) end--
+  return str.slice(0, end)
+}
 const trimStart =
   /^[(['"*~\uFF02\u201C\u2018\u201F\u201B\u201E\u2E42\u201A\u00AB\u2039\u2035\u2036\u2037\u301D\u0060\u301F]+/
 
@@ -38,7 +44,7 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       if (post === '-') {
         post = ' '
       } else {
-        post = post.replace(trimEnd, '')
+        post = trimEnd(post)
       }
     }
     // grab the correct word format
@@ -86,7 +92,7 @@ const textFromDoc = function (docs, opts) {
     // remove ending periods
     const last = docs[docs.length - 1]
     if (!last[last.length - 1].tags.has('Emoticon')) {
-      text = text.replace(trimEnd, '')
+      text = trimEnd(text)
     }
     // kill end quotations
     if (text.endsWith(`'`) && !text.endsWith(`s'`)) {

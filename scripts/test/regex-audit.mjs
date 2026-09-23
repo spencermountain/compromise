@@ -1,12 +1,13 @@
-// Standalone audit: assertions describe intended behavior and currently expose bugs.
+// Standalone regression checks and optional performance measurements.
 // node scripts/test/regex-audit.mjs [--bench]
-// This is deliberately outside the *.test.js suite until fixes land.
+// Core regressions also run in tests/two/regex-audit.test.js.
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import nlp from '../../src/three.js'
 import regexNormal from '../../src/2-two/preTagger/model/regex/regex-normal.js'
 import pluralRules from '../../src/2-two/preTagger/methods/transform/nouns/toPlural/_rules.js'
+import endings from '../../src/2-two/preTagger/model/patterns/endsWith.js'
 
 const root = fileURLToPath(new URL('../../', import.meta.url))
 let failed = 0
@@ -47,15 +48,10 @@ check('timezone model rule accepts normalized lowercase',
   () => regexNormal.find(([, tag]) => tag === 'Timezone')[0].test('est'), true)
 check('mouse plural rule does not match a pipe', () => pluralRules.e[2][0].test('|ouse'), false)
 
-// Exercise proposed local rewrites without modifying the implementation.
-check('candidate: capture stops at first closing angle bracket',
-  () => /^<\s*([^\s>]+)\s*>/.exec('<name>/foo>bar/')[1], 'name')
-check('candidate: literal hyphen', () => /^(un|de|re)-[a-z\u00C0-\u00FF]{2}/.test('un-vite'), true)
-check('candidate: case-insensitive timezone', () => /^[PMCE]ST$/i.test('est'), true)
-check('candidate: plural character class excludes pipe', () => /([ml])ouse$/i.test('|ouse'), false)
-check('candidate: linear suffix rewrite agrees on 18,662 generated inputs', () => {
+// Compare the actual model rule with the previous behavior on generated inputs.
+check('suffix rule agrees with the original on 18,662 generated inputs', () => {
   const before = /[aeiou].*ist$/
-  const after = /[aeiou][^aeiou\r\n\u2028\u2029]*ist$/
+  const after = endings.t.find(([regex]) => regex.source.endsWith('ist$'))[0]
   let level = ['']
   for (let length = 0; length <= 5; length++) {
     for (const prefix of level) {
@@ -71,14 +67,28 @@ check('candidate: linear suffix rewrite agrees on 18,662 generated inputs', () =
 if (process.argv.includes('--bench')) {
   // Run each size in a separate process with a timeout; no hanging stress test.
   // Measurements are diagnostic, not hardware-dependent pass/fail thresholds.
-  for (const kind of ['punctuation', 'suffix']) {
+  const benchmarks = [
+    ['punctuation', "'!'.repeat(n)", 'nlp(input)'],
+    ['suffix', "'a'.repeat(n) + 't'", 'nlp(input)'],
+    ['parser-flags', "'!'.repeat(n) + 'x'", 'nlp.parseMatch(input)'],
+    ['parser-parens', "'('.repeat(n) + 'x'", 'nlp.parseMatch(input)'],
+    ['tokenizer-fallback', "' '.repeat(n) + '!'", 'nlp(input)'],
+    ['remove-spaces', "' '.repeat(n) + 'x'", "const doc = nlp('one two'); doc.docs[0][0].post = input; doc.remove('two')"],
+    ['remove-commas', "','.repeat(n) + 'x'", "const doc = nlp('one two'); doc.docs[0][0].post = input; doc.remove('two')"],
+    ['output-helper', "','.repeat(n) + 'x'", "textFromTerms([{text: 'word', post: input, tags: new Set()}], {keepPunct: false})"],
+    ['ellipse-helper', "'a' + '.'.repeat(n) + 'xx'", 'isSentence(input, {})'],
+  ]
+  for (const [kind, input, action] of benchmarks) {
     for (const size of [4000, 8000, 16000]) {
       const code = `
         import nlp from './src/three.js';
+        import {textFromTerms} from './src/1-one/output/api/_text.js';
+        import isSentence from './src/1-one/tokenize/methods/01-sentences/is-sentence.js';
         nlp('warm up');
-        const input = ${kind === 'punctuation' ? "'!'" : "'a'"}.repeat(${size})${kind === 'suffix' ? "+ 't'" : ''};
+        const n = ${size};
+        const input = ${input};
         const start = performance.now();
-        nlp(input);
+        ${action};
         console.log((performance.now() - start).toFixed(2));
       `
       const result = spawnSync(process.execPath, ['--input-type=module', '-e', code], {
@@ -86,8 +96,9 @@ if (process.argv.includes('--bench')) {
       })
       console.log(`BENCH ${kind} n=${size}: ${result.error?.code || result.stdout.trim()} ms`)
       if (result.stderr) console.log(result.stderr.trim())
+      if (result.error || result.status !== 0) failed++
     }
   }
 }
-console.log(`\n${passed} passed; ${failed} failed (known audit findings).`)
+console.log(`\n${passed} passed; ${failed} failed.`)
 process.exitCode = failed ? 1 : 0

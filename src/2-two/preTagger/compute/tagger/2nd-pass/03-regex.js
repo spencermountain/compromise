@@ -34,6 +34,11 @@ const checkRegex = function (terms, i, model, world) {
     text += term.post.trim()
   }
   let arr = doRegs(text, regexText) || doRegs(normal, regexNormal)
+  // Try the preserved hyphen for unknown prefixed words, without overriding
+  // lexicon nouns such as re-enactment or implicit unit forms such as km/h.
+  if (!arr && term.tags.size === 0 && normal !== term.normal) {
+    arr = doRegs(term.normal, regexNormal)
+  }
   // hide a bunch of number regexes behind this one
   if (!arr && /[0-9]/.test(normal)) {
     arr = doRegs(normal, regexNumbers)

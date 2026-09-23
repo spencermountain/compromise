@@ -1,3 +1,19 @@
+// Remove only the first qualifying run, matching String.replace without /g.
+const removeRunBefore = (str, run, following) => {
+  let i = 0
+  while (i < str.length) {
+    if (!run.includes(str[i])) {
+      i++
+      continue
+    }
+    const start = i
+    while (i < str.length && run.includes(str[i])) i++
+    if (i < str.length && following.includes(str[i])) {
+      return str.slice(0, start) + str.slice(i)
+    }
+  }
+  return str
+}
 
 // transfer sentence-ending punctuation
 const repairPunct = function (terms, len) {
@@ -6,9 +22,9 @@ const repairPunct = function (terms, len) {
   const to = terms[last - len]
   if (to && from) {
     to.post += from.post //this isn't perfect.
-    to.post = to.post.replace(/ +([.?!,;:])/, '$1')
+    to.post = removeRunBefore(to.post, ' ', '.?!,;:')
     // don't allow any silly punctuation outcomes like ',!'
-    to.post = to.post.replace(/[,;:]+([.?!])/, '$1')
+    to.post = removeRunBefore(to.post, ',;:', '.?!')
   }
 }
 

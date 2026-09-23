@@ -2,6 +2,19 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[one/sweep] '
 
+test('sweep retains distinct actions for identical patterns', t => {
+  const net = nlp.buildNet([
+    { match: '[one] and [two]', group: 0, tag: 'First' },
+    { match: '[one] and [two]', group: 1, tag: 'Second' },
+  ])
+  const doc = nlp('one and two')
+  const result = doc.sweep(net)
+  t.equal(result.found.length, 2, 'both rules survive hook deduplication')
+  t.equal(doc.match('#First').text(), 'one', 'first capture')
+  t.equal(doc.match('#Second').text(), 'two', 'second capture')
+  t.end()
+})
+
 test('sweep-basic:', function (t) {
   const matches = [
     { match: '2nd quarter of? 2022', tag: 'TimePeriod' },

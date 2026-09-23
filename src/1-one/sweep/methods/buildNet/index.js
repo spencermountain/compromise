@@ -21,12 +21,12 @@ const buildNet = function (matches, world) {
   })
   // remove duplicates
   Object.keys(hooks).forEach(k => {
-    const already = {}
+    const already = new Set()
     hooks[k] = hooks[k].filter(obj => {
-      if (typeof already[obj.match] === 'boolean') {
+      if (already.has(obj)) {
         return false
       }
-      already[obj.match] = true
+      already.add(obj)
       return true
     })
   })

@@ -1083,7 +1083,7 @@ const arr = [
   [`Cass Gilbert designed`, `#Person+ #Verb`],
   [`Sherwood Anderson told him`, `#Person+ #Verb him`],
   ['how very rich Prince Ahmed was', `how #Adverb #Adjective #Person+ was`],
-  [`for the poor, this is the largest tax`, `for the #Noun #Determiner is #Determiner #Adjective #Noun`],
+  [`for the poor, this is the largest tax`, `for the #Noun #Pronoun is #Determiner #Adjective #Noun`],
   [`a red-headed man`, `#Determiner #Adjective+ #Noun`],
   ['Marc Singer is back', `#Person+ is back`],
   [`bought a warhol`, `#Verb a !#Person`],

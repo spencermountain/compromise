@@ -14,6 +14,15 @@ const postTagger = function (view) {
   const m = view.update(ptrs)
   m.sweep(net)
   view.uncache()
+  // Inversion also occurs in questions. Use the punctuation of the whole
+  // comma-delimited clause, not just the short matched verb phrase.
+  const declarative = m.ifNo('@hasQuestionMark')
+  declarative.match('^[had] #Noun+ (#Adverb|not)+? #PastTense', 0)
+    .tag('Condition', 'had-he')
+  declarative.match('^[were] #Noun+ to #Infinitive', 0)
+    .tag('Condition', 'were-he')
+  m.if('@hasQuestionMark').match('^[had] #Noun+ (#Adverb|not)+? #PastTense', 0)
+    .tag('Auxiliary', 'had-question')
   // Resolve subjects after date rules distinguish modal 'may' from the month.
   m.match('^[(this|that|these|those)] #Adverb+? (#Verb && !#Gerund && !#Participle)', 0)
     .tag('Pronoun', 'demonstrative-subject')

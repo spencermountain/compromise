@@ -16,10 +16,12 @@ export default [
   {
     match: `#Verb [${noLy}] !#Noun?`,
     group: 0,
-    notIf: '(#Copula|get|got|getting|become|became|becoming|feel|feels|feeling|#Determiner|#Preposition)',
+    notIf: '(#Copula|be|been|being|get|got|getting|become|became|becoming|feel|feels|feeling|#Determiner|#Preposition)',
     tag: 'Adverb',
     reason: 'shops-direct',
   },
+  // Bare 'be' may still be Infinitive rather than Copula in commands.
+  { match: '(be|been|being) (#Adverb|not)+? [(late|early)]', group: 0, tag: 'Adjective', reason: 'be-late' },
   // studies a lot
   { match: `[#Plural] a lot`, tag: 'PresentTense', reason: 'studies-a-lot' },
 ]

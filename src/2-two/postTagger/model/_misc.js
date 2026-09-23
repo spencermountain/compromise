@@ -8,12 +8,6 @@ const matches = [
   // I like this
   { match: '#Verb [(this|that|these|those)] #Adverb+? (yesterday|today|tonight|tomorrow)?$', group: 0, tag: 'Pronoun', reason: 'demonstrative-object' },
 
-  // ==== Conditions ====
-  // had he survived,
-  { match: '^[had] #Noun+ #PastTense', group: 0, tag: 'Condition', reason: 'had-he' },
-  // were he to survive
-  { match: '[were] #Noun+ to #Infinitive', group: 0, tag: 'Condition', reason: 'were-he' },
-
   // some sort of
   { match: 'some sort of', tag: 'Adjective Noun Conjunction', reason: 'some-sort-of' },
   // some of

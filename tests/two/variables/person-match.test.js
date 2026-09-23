@@ -11,7 +11,7 @@ const arr = [
   ['John, you', '#FirstName #Pronoun'],
   ['John you', '#MaleName #Pronoun'],
   ['you John you', '#Pronoun #Person #Pronoun'],
-  ['boyfriend to Jane', '#Noun #Conjunction #Person'],
+  ['boyfriend to Jane', '#Noun #Preposition #Person'],
   ['boyfriend of Jane', '#Noun . #Person'],
 
   // famous people names

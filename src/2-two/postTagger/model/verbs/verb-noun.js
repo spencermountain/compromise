@@ -1,4 +1,7 @@
 export default [
+  // Common intransitive predicates after a singular subject. Keep arbitrary
+  // plural/verb switches conservative: 'the dog treats' is a noun phrase.
+  { match: '^(#Determiner|#Possessive) #Adjective+? #Singular #Adverb+? [(runs|walks|barks|swims|sleeps)] #Adverb+?$', group: 0, tag: 'PresentTense', reason: 'singular-subject-predicate' },
   // with heads and arms rolling around
   { match: '#Preposition #Plural and [%Plural|Verb%] #Gerund', group: 0, tag: 'Plural', reason: 'coordinated-plurals' },
   // do the dance

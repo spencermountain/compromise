@@ -22,6 +22,10 @@ export default [
   // ==== Prepositions ====
   //to the store - a determiner/possessive/pronoun opens a noun-phrase, so this 'to' is never an infinitive-marker
   { match: '[to] (#Determiner|#Possessive|#Pronoun)', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'to-the-store' },
+  // bare noun phrases and names: to lunch / to Paris
+  { match: '[to] (#Noun && !#Verb)', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'to-noun' },
+  // intensifiers do not change the head of a prepositional phrase
+  { match: '(well|just|right|directly) [(above|below|under|over)] (#Determiner|#Possessive|#Pronoun|#ProperNoun)', group: 0, tag: 'Preposition', reason: 'well-above' },
   //all students
   { match: '#Verb #Adverb? #Noun [(that|which)]', group: 0, tag: 'Preposition', reason: 'that-prep' },
   //work, which has been done.

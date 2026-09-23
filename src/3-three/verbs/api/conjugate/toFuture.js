@@ -10,6 +10,11 @@ const simple = (vb, parsed) => {
   }
   let str = root.text('normal')
   str = toInfinitive(str, vb.model, getTense(root))
+  if (str === 'be' && parsed.negative.has('not')) {
+    vb.replace(root, 'will')
+    vb.match(parsed.negative).insertAfter('be')
+    return vb
+  }
   if (str) {
     vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('Verb')

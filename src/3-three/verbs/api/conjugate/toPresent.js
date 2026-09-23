@@ -149,10 +149,13 @@ const forms = {
   },
   // is being walked  ->
   'passive-present': noop,
-  // will be walked -> is being walked
-  'passive-future': vb => {
-    vb.replace('will', 'is')
-    return vb.replace('be', 'being')
+  // Change the finite auxiliary without introducing or removing aspect.
+  'passive-future': (vb, parsed) => {
+    if (parsed.auxiliary.has('have')) {
+      return toPerfectAuxiliary(vb, haveHas(vb, parsed))
+    }
+    vb.replace('will', isAreAm(vb, parsed))
+    return vb.remove('be')
   },
 
   // would be walked ->
@@ -165,6 +168,8 @@ const forms = {
 
   // is going to drink -> is drinking
   'auxiliary-future': (vb, parsed) => {
+    const copula = isAreAm(vb, parsed)
+    vb.replace('(was|were)', copula)
     if (parsed.root.has('#Gerund') && vb.has('going to be')) {
       vb.remove('going to be')
       return vb

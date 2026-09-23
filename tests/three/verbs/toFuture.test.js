@@ -17,14 +17,14 @@ test('toFuture:', function (t) {
     ['the eyes closed', 'the eyes will close'],
 
     // copula forms
-    ['i am not cool', 'i will be not cool'],
-    ['i was not cool', 'i will be not cool'],
+    ['i am not cool', 'i will not be cool'],
+    ['i was not cool', 'i will not be cool'],
     ['i will not be cool', 'i will not be cool'],
-    ['he is not cool', 'he will be not cool'],
-    ['he was not cool', 'he will be not cool'],
+    ['he is not cool', 'he will not be cool'],
+    ['he was not cool', 'he will not be cool'],
     ['he will not be cool', 'he will not be cool'],
-    ['they are not cool', 'they will be not cool'],
-    ['they were not cool', 'they will be not cool'],
+    ['they are not cool', 'they will not be cool'],
+    ['they were not cool', 'they will not be cool'],
     ['they will not be cool', 'they will not be cool'],
 
     ['their colloseum will open', 'their colloseum will open'],

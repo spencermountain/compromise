@@ -1,6 +1,9 @@
 export default [
   // off-white is a colour, not the particle in 'is off'
   { match: '(off && #Hyphenated) white', tag: 'Adjective', reason: 'off-white' },
+  // Restore the copula when the colour is written without a hyphen.
+  { match: '[(is|are|am|was|were)] off white$', group: 0, unTag: 'PhrasalVerb', tag: 'Copula', reason: 'off-white-copula' },
+  { match: '(is|are|am|was|were) [off white]$', group: 0, tag: 'Adjective', reason: 'off-white-predicate' },
   // all fell apart
   { match: '[(all|both)] #Determiner #Noun', group: 0, tag: 'Noun', reason: 'all-noun' },
   //sometimes not-adverbs

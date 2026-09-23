@@ -148,7 +148,7 @@ const verbForms = {
   'auxiliary-future': [
     ['^(is|are|am|was|were) going to be #Gerund$', [future, prog]],
     // going to drink
-    ['(is|are|am|was) going to (#Infinitive|#PresentTense)', [future]],
+    ['(is|are|am|was|were) going to (#Infinitive|#PresentTense)', [future]],
   ],
   'auxiliary-past': [
     // he did walk

@@ -36,6 +36,10 @@ const fns = {
   },
 
   both: function (vb, parsed) {
+    if (parsed.root.has('be')) {
+      vb.replace('will', wasWere(vb, parsed))
+      return vb.remove('be')
+    }
     // 'he did not walk'
     if (parsed.negative.found) {
       vb.replace('will', 'did')
@@ -134,9 +138,8 @@ const forms = {
       vb.remove('(will|be)')
     }
     // will have been walked -> had been walked
-    if (parsed.auxiliary.has('will have been')) {
-      vb.replace('have', 'had', keep)
-      vb.remove('will')
+    if (parsed.auxiliary.has('have') && parsed.auxiliary.has('been')) {
+      return toPerfectAuxiliary(vb, 'had')
     }
     return vb
   },

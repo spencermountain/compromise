@@ -77,7 +77,7 @@ test('toPresent:', function (t) {
     // // ['has been walked', 'had been walked'],
     ['had been walked', 'has been walked'],
     // ['will have been walked', 'has been walked'],
-    ['will be walked', 'is being walked'],
+    ['will be walked', 'is walked'],
     ['he used to walk', 'he is walking'],
     ['he did walk', 'he does walk'],
     ['he must walk', 'he must walk'],

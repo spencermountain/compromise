@@ -3,7 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // import plg from './plugins/_experiments/cmd-k/src/plugin.js'
 // nlp.plugin(plg)
-nlp.verbose(true)
+// nlp.verbose(true)
 
 let arr = [
   // 'to' before a noun-phrase is a preposition - tagged Conjunction
@@ -36,8 +36,10 @@ let arr = [
 // doc.redact().debug()
 // nlp('john smith and Sally Morris lives in new york').redact().debug()
 
-console.log(nlp('left').tag('Verb').verbs().conjugate())
-
+let doc = nlp('she bit her tongue instead of criticizing her prom date')
+doc.debug()
+doc.sentences().toPastTense()
+doc.debug()
 // let doc = nlp('tree has blown').debug()
 // doc = nlp('tree has grown').debug()
 // let doc = nlp('The tree grows tall').debug()

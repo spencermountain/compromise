@@ -4,12 +4,42 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@rollup/plugin-node-resolve':
+      specifier: 16.0.3
+      version: 16.0.3
+    '@rollup/plugin-terser':
+      specifier: 1.0.0
+      version: 1.0.0
+    cross-env:
+      specifier: 10.1.0
+      version: 10.1.0
+    efrt:
+      specifier: 2.7.0
+      version: 2.7.0
+    nlp-corpus:
+      specifier: 4.4.0
+      version: 4.4.0
+    rollup:
+      specifier: 4.63.4
+      version: 4.63.4
+    rollup-plugin-filesize-check:
+      specifier: 2.0.1
+      version: 2.0.1
+    tap-dancer:
+      specifier: 0.4.2
+      version: 0.4.2
+    tape:
+      specifier: 5.10.2
+      version: 5.10.2
+
 importers:
 
   .:
     dependencies:
       efrt:
-        specifier: 2.7.0
+        specifier: 'catalog:'
         version: 2.7.0
       grad-school:
         specifier: 0.0.5
@@ -19,16 +49,16 @@ importers:
         version: 5.0.3
     devDependencies:
       '@rollup/plugin-node-resolve':
-        specifier: 16.0.3
+        specifier: 'catalog:'
         version: 16.0.3(rollup@4.63.4)
       '@rollup/plugin-terser':
-        specifier: 1.0.0
+        specifier: 'catalog:'
         version: 1.0.0(rollup@4.63.4)
       '@types/node':
         specifier: ^26.6.2
         version: 26.6.2
       cross-env:
-        specifier: 10.1.0
+        specifier: 'catalog:'
         version: 10.1.0
       eslint:
         specifier: 10.11.0
@@ -37,22 +67,22 @@ importers:
         specifier: 3.3.1
         version: 3.3.1(eslint@10.11.0)
       nlp-corpus:
-        specifier: 4.4.0
+        specifier: 'catalog:'
         version: 4.4.0
       rollup:
-        specifier: 4.63.4
+        specifier: 'catalog:'
         version: 4.63.4
       rollup-plugin-filesize-check:
-        specifier: 2.0.0
-        version: 2.0.0(rollup@4.63.4)
+        specifier: 'catalog:'
+        version: 2.0.1(rollup@4.63.4)
       shelljs:
         specifier: 0.10.0
         version: 0.10.0
       tap-dancer:
-        specifier: 0.4.0
-        version: 0.4.0
+        specifier: 'catalog:'
+        version: 0.4.2
       tape:
-        specifier: 5.10.2
+        specifier: 'catalog:'
         version: 5.10.2
       typescript:
         specifier: 7.0.2
@@ -61,7 +91,7 @@ importers:
   plugins/dates:
     dependencies:
       compromise:
-        specifier: '>=14.2.0'
+        specifier: workspace:*
         version: link:../..
       spacetime:
         specifier: ^7.14.0
@@ -69,59 +99,211 @@ importers:
       spacetime-holiday:
         specifier: 0.3.0
         version: 0.3.0(spacetime@7.14.0)
+    devDependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: 'catalog:'
+        version: 16.0.3(rollup@4.63.4)
+      '@rollup/plugin-terser':
+        specifier: 'catalog:'
+        version: 1.0.0(rollup@4.63.4)
+      cross-env:
+        specifier: 'catalog:'
+        version: 10.1.0
+      rollup:
+        specifier: 'catalog:'
+        version: 4.63.4
+      rollup-plugin-filesize-check:
+        specifier: 'catalog:'
+        version: 2.0.1(rollup@4.63.4)
+      tap-dancer:
+        specifier: 'catalog:'
+        version: 0.4.2
+      tape:
+        specifier: 'catalog:'
+        version: 5.10.2
 
   plugins/paragraphs:
     dependencies:
       compromise:
-        specifier: '>=14.0.0'
+        specifier: workspace:*
         version: link:../..
+    devDependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: 'catalog:'
+        version: 16.0.3(rollup@4.63.4)
+      '@rollup/plugin-terser':
+        specifier: 'catalog:'
+        version: 1.0.0(rollup@4.63.4)
+      cross-env:
+        specifier: 'catalog:'
+        version: 10.1.0
+      rollup:
+        specifier: 'catalog:'
+        version: 4.63.4
+      rollup-plugin-filesize-check:
+        specifier: 'catalog:'
+        version: 2.0.1(rollup@4.63.4)
+      tap-dancer:
+        specifier: 'catalog:'
+        version: 0.4.2
+      tape:
+        specifier: 'catalog:'
+        version: 5.10.2
 
   plugins/payload:
     dependencies:
       compromise:
-        specifier: '>=14.2.0'
+        specifier: workspace:*
         version: link:../..
+    devDependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: 'catalog:'
+        version: 16.0.3(rollup@4.63.4)
+      '@rollup/plugin-terser':
+        specifier: 'catalog:'
+        version: 1.0.0(rollup@4.63.4)
+      cross-env:
+        specifier: 'catalog:'
+        version: 10.1.0
+      rollup:
+        specifier: 'catalog:'
+        version: 4.63.4
+      rollup-plugin-filesize-check:
+        specifier: 'catalog:'
+        version: 2.0.1(rollup@4.63.4)
+      tap-dancer:
+        specifier: 'catalog:'
+        version: 0.4.2
+      tape:
+        specifier: 'catalog:'
+        version: 5.10.2
 
   plugins/speech:
     dependencies:
       compromise:
-        specifier: '>=14.0.0'
+        specifier: workspace:*
         version: link:../..
+    devDependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: 'catalog:'
+        version: 16.0.3(rollup@4.63.4)
+      '@rollup/plugin-terser':
+        specifier: 'catalog:'
+        version: 1.0.0(rollup@4.63.4)
+      cross-env:
+        specifier: 'catalog:'
+        version: 10.1.0
+      rollup:
+        specifier: 'catalog:'
+        version: 4.63.4
+      rollup-plugin-filesize-check:
+        specifier: 'catalog:'
+        version: 2.0.1(rollup@4.63.4)
+      tap-dancer:
+        specifier: 'catalog:'
+        version: 0.4.2
+      tape:
+        specifier: 'catalog:'
+        version: 5.10.2
 
   plugins/speed:
     dependencies:
       compromise:
-        specifier: '>=14.0.0'
+        specifier: workspace:*
         version: link:../..
     devDependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: 'catalog:'
+        version: 16.0.3(rollup@4.63.4)
+      '@rollup/plugin-terser':
+        specifier: 'catalog:'
+        version: 1.0.0(rollup@4.63.4)
+      cross-env:
+        specifier: 'catalog:'
+        version: 10.1.0
       nlp-corpus:
-        specifier: ^4.4.0
+        specifier: 'catalog:'
         version: 4.4.0
+      rollup:
+        specifier: 'catalog:'
+        version: 4.63.4
+      rollup-plugin-filesize-check:
+        specifier: 'catalog:'
+        version: 2.0.1(rollup@4.63.4)
+      tap-dancer:
+        specifier: 'catalog:'
+        version: 0.4.2
+      tape:
+        specifier: 'catalog:'
+        version: 5.10.2
 
   plugins/stats:
     dependencies:
       compromise:
-        specifier: '>=14.0.0'
+        specifier: workspace:*
         version: link:../..
       efrt:
-        specifier: ^2.5.0
+        specifier: 'catalog:'
         version: 2.7.0
+    devDependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: 'catalog:'
+        version: 16.0.3(rollup@4.63.4)
+      '@rollup/plugin-terser':
+        specifier: 'catalog:'
+        version: 1.0.0(rollup@4.63.4)
+      cross-env:
+        specifier: 'catalog:'
+        version: 10.1.0
+      rollup:
+        specifier: 'catalog:'
+        version: 4.63.4
+      rollup-plugin-filesize-check:
+        specifier: 'catalog:'
+        version: 2.0.1(rollup@4.63.4)
+      tap-dancer:
+        specifier: 'catalog:'
+        version: 0.4.2
+      tape:
+        specifier: 'catalog:'
+        version: 5.10.2
 
   plugins/wikipedia:
     dependencies:
       compromise:
-        specifier: '>=14.0.0'
+        specifier: workspace:*
         version: link:../..
       efrt:
-        specifier: ^2.5.0
+        specifier: 'catalog:'
         version: 2.7.0
     devDependencies:
+      '@rollup/plugin-node-resolve':
+        specifier: 'catalog:'
+        version: 16.0.3(rollup@4.63.4)
+      '@rollup/plugin-terser':
+        specifier: 'catalog:'
+        version: 1.0.0(rollup@4.63.4)
       colorette:
         specifier: 2.0.16
         version: 2.0.16
+      cross-env:
+        specifier: 'catalog:'
+        version: 10.1.0
       node-wget-promise:
         specifier: 0.1.6
         version: 0.1.6
+      rollup:
+        specifier: 'catalog:'
+        version: 4.63.4
+      rollup-plugin-filesize-check:
+        specifier: 'catalog:'
+        version: 2.0.1(rollup@4.63.4)
+      tap-dancer:
+        specifier: 'catalog:'
+        version: 0.4.2
+      tape:
+        specifier: 'catalog:'
+        version: 5.10.2
 
 packages:
 
@@ -544,11 +726,6 @@ packages:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
-
-  acorn@8.17.0:
-    resolution: {integrity: sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
 
   acorn@8.18.0:
     resolution: {integrity: sha512-lGq+9yr1/GuAWaVYIHRjvvySG5/4VfKIvC8EWxStPdcDh/Ka7FG3twP6v4d5BkravUilhIAsG4Qj83t02LWUPQ==}
@@ -1213,10 +1390,6 @@ packages:
     resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
     engines: {node: '>=8.6'}
 
-  picomatch@4.0.3:
-    resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
-    engines: {node: '>=12'}
-
   picomatch@4.0.4:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
@@ -1270,8 +1443,8 @@ packages:
     resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  rollup-plugin-filesize-check@2.0.0:
-    resolution: {integrity: sha512-vHnj25AKScXFaf/IKlqeSYZru6nPqNlOvKhwnYN1NSiaISFYOsucNEu146wprOMTSxwpXvgavQ/rSfNajPGYLg==}
+  rollup-plugin-filesize-check@2.0.1:
+    resolution: {integrity: sha512-B8iv8MMXwZs9/5axHCmowUEhMWrUrLoJ+FjC7j4m2bKI7yh3OiZy7mos/FTNT1T6MtHulRaufNf9+zAXMYwkLQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       rollup: '>=2.78.0'
@@ -1397,9 +1570,9 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  tap-dancer@0.4.0:
-    resolution: {integrity: sha512-njF4CU+QyafCf9osgXFp/6tkOsWrH6nwOGyqGkhT1d8T26iB/AiTVtOb+aVeAE7WNkID5raStAcrQqvj0JXWfQ==}
-    engines: {node: 20 || >=22}
+  tap-dancer@0.4.2:
+    resolution: {integrity: sha512-fc+aXvCColauoRlS1QMJtQqCHWFw+0Ck2KVCbvycDs6DdWHa8V2V0yhsfBp4TyrJsfUksDAGfw1/Ukf+rEyjQA==}
+    engines: {node: '>=18'}
     hasBin: true
 
   tap-parser@18.3.4:
@@ -1797,8 +1970,6 @@ snapshots:
   acorn-jsx@5.3.2(acorn@8.18.0):
     dependencies:
       acorn: 8.18.0
-
-  acorn@8.17.0: {}
 
   acorn@8.18.0: {}
 
@@ -2618,8 +2789,6 @@ snapshots:
 
   picomatch@2.3.2: {}
 
-  picomatch@4.0.3: {}
-
   picomatch@4.0.4: {}
 
   possible-typed-array-names@1.1.0: {}
@@ -2681,9 +2850,8 @@ snapshots:
 
   reusify@1.1.0: {}
 
-  rollup-plugin-filesize-check@2.0.0(rollup@4.63.4):
+  rollup-plugin-filesize-check@2.0.1(rollup@4.63.4):
     dependencies:
-      picomatch: 4.0.3
       rollup: 4.63.4
 
   rollup@4.63.4:
@@ -2864,7 +3032,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  tap-dancer@0.4.0:
+  tap-dancer@0.4.2:
     dependencies:
       tap-parser: 18.3.4
 
@@ -2909,7 +3077,7 @@ snapshots:
   terser@5.48.0:
     dependencies:
       '@jridgewell/source-map': 0.3.11
-      acorn: 8.17.0
+      acorn: 8.18.0
       commander: 2.20.3
       source-map-support: 0.5.21
 

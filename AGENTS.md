@@ -87,8 +87,7 @@ nlp.verbose(true)  // log the tagger's decision-making
 
 - Source is layered `src/1-one` → `src/4-four` (tokenize → tags → selections → sense). The default
   entry is `src/three.js`.
-- pnpm is used for repository development: `pnpm install`, `pnpm test`, `pnpm build`, and
-  `pnpm lint`. The package scripts themselves avoid package-manager-specific commands, so npm,
-  Yarn, and Bun remain usable too.
+- pnpm is used for repository development. See [docs/workspace.md](docs/workspace.md) for
+  shared dependencies, plugin peers, and workspace build/test commands.
 - Regenerate the machine docs after changing types or the tagset: `node ./scripts/docs.js`
   (writes `docs/tags.md`, `docs/api.md`, `llms-full.txt`). The other docs are hand-written.

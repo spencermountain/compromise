@@ -48,9 +48,9 @@ jobs:
 
       - name: Build and test packages
         run: |
-          pnpm build
-          pnpm plugins:build
+          pnpm build:all
           pnpm testb
+          pnpm test:plugins:build
 
       - name: Compare bundle sizes with latest npm release
         run: pnpm test:filesize
@@ -65,7 +65,7 @@ jobs:
           mkdir -p "${BASE_DIR}/scripts/bench"
           cp scripts/bench/index.js "${BASE_DIR}/scripts/bench/index.js"
           cd "${BASE_DIR}"
-          pnpm install --prod --no-frozen-lockfile --ignore-workspace
+          pnpm install --prod --no-frozen-lockfile --filter compromise
           node ./scripts/bench/index.js
           BASELINE_SCORE=$(node -e "const fs=require('fs');const rows=fs.readFileSync('scripts/bench/results.jsonl','utf8').trim().split('\n');process.stdout.write(String(JSON.parse(rows.at(-1)).score))")
           echo "score=${BASELINE_SCORE}" >> "${GITHUB_OUTPUT}"

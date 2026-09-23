@@ -1,17 +1,26 @@
 {
   "name": "compromise-speed",
   "version": "0.1.2",
-  "description": "plugin for nlp-compromise",
+  "description": "Streaming, parallel parsing, and performance helpers for compromise",
   "license": "MIT",
-  "repository": "github:spencermountain/compromise",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/speed"
+  },
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/speed",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/plugin.js",
-      "require": "./builds/compromise-speed.cjs",
-      "types": "./index.d.ts"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./builds/compromise-speed.cjs"
+      }
     }
   },
   "main": "./src/plugin.js",
@@ -19,22 +28,30 @@
   "types": "./index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "version": "node ./scripts/version.js",
     "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
     "index.d.ts",
+    "index.d.cts",
     "builds/",
     "src/"
   ],
   "devDependencies": {
-    "nlp-corpus": "^4.4.0"
+    "nlp-corpus": "catalog:",
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
   },
   "peerDependencies": {
-    "compromise": ">=14.0.0"
+    "compromise": "workspace:*"
   },
   "unpkg": "./builds/compromise-speed.min.js"
 }

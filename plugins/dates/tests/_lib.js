@@ -1,5 +1,5 @@
 import build from '../../../builds/three/compromise-three.mjs'
-import src from '../../../src/three.js'
+import src from 'compromise'
 import plgBuild from '../builds/compromise-dates.mjs'
 import plg from '../src/plugin.js'
 let nlp;

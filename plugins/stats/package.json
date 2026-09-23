@@ -1,17 +1,26 @@
 {
   "name": "compromise-stats",
   "version": "0.1.1",
-  "description": "plugin for nlp-compromise",
+  "description": "N-grams and text statistics for compromise",
   "license": "MIT",
-  "repository": "github:spencermountain/compromise",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/stats"
+  },
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/stats",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/plugin.js",
-      "require": "./builds/compromise-stats.cjs",
-      "types": "./index.d.ts"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./builds/compromise-stats.cjs"
+      }
     }
   },
   "main": "./src/plugin.js",
@@ -19,25 +28,32 @@
   "types": "./index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "generate": "node ./scripts/generate.js",
-    "stat": "node ./scripts/stat.js",
-    "perf": "node ./scripts/perf.js",
     "build": "rollup -c --silent"
   },
   "files": [
     "index.d.ts",
+    "index.d.cts",
     "builds/",
     "src/"
   ],
   "dependencies": {
-    "efrt": "^2.5.0"
+    "efrt": "catalog:"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
+  },
   "peerDependencies": {
-    "compromise": ">=14.0.0"
+    "compromise": "workspace:*"
   },
   "unpkg": "./builds/compromise-stats.min.js"
 }

@@ -1,9 +1,13 @@
 {
   "name": "compromise-dates",
   "version": "3.9.0",
-  "description": "plugin for nlp-compromise",
+  "description": "Date and time extraction for compromise",
   "license": "MIT",
-  "repository": "github:spencermountain/compromise",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/dates"
+  },
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
@@ -24,8 +28,8 @@
   "types": "./index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "perf": "node ./scripts/perf.js",
     "version": "node ./scripts/version.js",
@@ -42,7 +46,16 @@
     "spacetime-holiday": "0.3.0"
   },
   "peerDependencies": {
-    "compromise": ">=14.2.0"
+    "compromise": "workspace:*"
   },
-  "unpkg": "./builds/compromise-dates.min.js"
+  "unpkg": "./builds/compromise-dates.min.js",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
+  }
 }

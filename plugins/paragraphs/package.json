@@ -1,17 +1,26 @@
 {
   "name": "compromise-paragraphs",
   "version": "0.1.0",
-  "description": "plugin for nlp-compromise",
+  "description": "Paragraph selection and manipulation for compromise",
   "license": "MIT",
-  "repository": "github:spencermountain/compromise",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/paragraphs"
+  },
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/plugin.js",
-      "require": "./builds/compromise-paragraphs.cjs",
-      "types": "./index.d.ts"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./builds/compromise-paragraphs.cjs"
+      }
     }
   },
   "main": "./src/plugin.js",
@@ -19,18 +28,28 @@
   "types": "./index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "build": "rollup -c --silent"
   },
   "files": [
+    "index.d.ts",
+    "index.d.cts",
     "builds/",
     "src/"
   ],
-  "devDependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
+  },
   "peerDependencies": {
-    "compromise": ">=14.0.0"
+    "compromise": "workspace:*"
   },
   "unpkg": "./builds/compromise-paragraphs.min.js"
 }

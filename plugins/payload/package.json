@@ -1,37 +1,54 @@
 {
   "name": "compromise-payload",
   "version": "0.0.3",
-  "description": "plugin for nlp-compromise",
+  "description": "Attach custom data to text matches in compromise",
   "license": "MIT",
-  "repository": "github:spencermountain/compromise",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/payload"
+  },
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/payload",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./src/plugin.js",
-      "require": "./builds/compromise-payload.cjs",
-      "types": "./index.d.ts"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./builds/compromise-payload.cjs"
+      }
     }
   },
   "main": "./src/plugin.js",
   "types": "./index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "build": "rollup -c --silent"
   },
   "files": [
     "index.d.ts",
+    "index.d.cts",
     "builds/",
     "src/"
   ],
-  "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
+  },
   "peerDependencies": {
-    "compromise": ">=14.2.0"
+    "compromise": "workspace:*"
   },
   "unpkg": "./builds/compromise-payload.min.js"
 }

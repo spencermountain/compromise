@@ -1,8 +1,7 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp, { streamFile } from './_lib.js'
 import fs from 'node:fs'
 import path from 'node:path'
-import { streamFile } from '../src/plugin.js'
 nlp.plugin(streamFile)
 
 

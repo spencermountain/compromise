@@ -1,16 +1,20 @@
 packages:
   - plugins/*
 
+# Shared versions for the root library and maintained plugins.
+catalog:
+  '@rollup/plugin-node-resolve': '16.0.3'
+  '@rollup/plugin-terser': '1.0.0'
+  'rollup': '4.63.4'
+  'rollup-plugin-filesize-check': '2.0.1'
+  'tap-dancer': '0.4.2'
+  'tape': '5.10.2'
+  'cross-env': '10.1.0'
+  'nlp-corpus': '4.4.0'
+  'efrt': '2.7.0'
+
 linkWorkspacePackages: true
 
-catalog:
-  '@rollup/plugin-commonjs': '29.0.3'
-  '@rollup/plugin-node-resolve': '16.0.3'
-  'rollup': '4.63.4'
-  'rollup-plugin-filesize-check': '1.2.0'
-  'tap-dancer': '0.4.0'
-  'tape': '5.10.2'
-  '@rollup/plugin-terser': '1.0.0'
-
 minimumReleaseAgeExclude:
-  - rollup-plugin-filesize-check@2.0.0
+  - rollup-plugin-filesize-check@2.0.1
+  - tap-dancer@0.4.2

@@ -1,5 +1,5 @@
 import build from '../../../builds/one/compromise-one.mjs'
-import src from '../../../src/one.js'
+import src from 'compromise/one'
 import plgBuild from '../builds/compromise-wikipedia.mjs'
 import plg from '../src/plugin.js'
 let nlp;

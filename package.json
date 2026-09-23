@@ -111,7 +111,7 @@
     "test:types": "tsc --project tsconfig.json && tsc --project tsconfig.json --module Node16 --moduleResolution Node16",
     "test:filesize": "node ./scripts/filesize.js",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
-    "test:plugins": "tape \"./plugins/*/tests/**/*.test.js\" | tap-dancer",
+    "test:plugins": "pnpm --filter \"./plugins/*\" run test",
     "stress": "node scripts/test/stress.js",
     "debug": "node ./scripts/debug.js",
     "match": "node ./scripts/match.js",
@@ -119,7 +119,10 @@
     "bench": "node ./scripts/bench/index.js",
     "lint": "eslint src",
     "docs": "node ./scripts/docs.js",
-    "plugins:build": "node ./scripts/plugins.js --pm run build"
+    "plugins:build": "pnpm --filter \"./plugins/*\" run build",
+    "test:plugins:build": "pnpm --filter \"./plugins/*\" run testb",
+    "build:all": "pnpm run build && pnpm run plugins:build",
+    "test:all": "pnpm run test && pnpm run test:plugins"
   },
   "files": [
     "AGENTS.md",
@@ -138,23 +141,23 @@
     "nlp"
   ],
   "dependencies": {
-    "efrt": "2.7.0",
+    "efrt": "catalog:",
     "grad-school": "0.0.5",
     "suffix-thumb": "5.0.3"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "16.0.3",
-    "@rollup/plugin-terser": "1.0.0",
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
     "@types/node": "^26.6.2",
-    "cross-env": "10.1.0",
+    "cross-env": "catalog:",
     "eslint": "10.11.0",
     "eslint-plugin-regexp": "3.3.1",
-    "nlp-corpus": "4.4.0",
-    "rollup": "4.63.4",
-    "rollup-plugin-filesize-check": "2.0.0",
+    "nlp-corpus": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
     "shelljs": "0.10.0",
-    "tap-dancer": "0.4.0",
-    "tape": "5.10.2",
+    "tap-dancer": "catalog:",
+    "tape": "catalog:",
     "typescript": "7.0.2"
   },
   "unpkg": "./builds/compromise.js",
@@ -170,10 +173,10 @@
   },
   "prettier": {
     "trailingComma": "es5",
-    "tabWidth": 2,
     "semi": false,
     "singleQuote": true,
     "printWidth": 120,
     "arrowParens": "avoid"
-  }
+  },
+  "packageManager": "pnpm@11.5.0"
 }

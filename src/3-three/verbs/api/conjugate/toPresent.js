@@ -9,7 +9,8 @@ const simple = (vb, parsed) => {
   let str = root.text('normal')
   str = toInfinitive(str, vb.model, getTense(root))
   // 'i walk' vs 'he walks'
-  if (isPlural(vb, parsed) === false) {
+  const plural = isPlural(vb, parsed)
+  if (plural === false) {
     str = conjugate(str, vb.model).PresentTense
   }
   // handle copula
@@ -18,6 +19,7 @@ const simple = (vb, parsed) => {
   }
   if (str) {
     vb = vb.replace(root, str, keep)
+    if (!plural) vb.not('#Particle').unTag('Infinitive')
     vb.not('#Particle').tag('PresentTense')
   }
   // vb.replace('not ' + str, str + ' not')
@@ -70,7 +72,7 @@ const forms = {
       const str = root.text('normal')
       const pres = conjugate(str, vb.model).PresentTense
       if (str !== pres) {
-        vb.replace(root, pres, keep)
+        vb.replace(root, pres, keep).not('#Particle').unTag('Infinitive').tag('PresentTense')
       }
     } else {
       return simple(vb, parsed)

@@ -1,4 +1,5 @@
 import find from '../find.js'
+import coordinate from './conjugate/coordinate.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
 import toInf from './conjugate/toInfinitive.js'
@@ -54,7 +55,7 @@ const api = function (View) {
       return this.getNth(n).filter(vb => vb.has('#Imperative'))
     }
     toInfinitive(n) {
-      return this.getNth(n).map(vb => {
+      return coordinate(this.getNth(n), 'infinitive', vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
@@ -64,7 +65,7 @@ const api = function (View) {
       })
     }
     toPresentTense(n) {
-      return this.getNth(n).map(vb => {
+      return coordinate(this.getNth(n), 'present', vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
@@ -74,7 +75,7 @@ const api = function (View) {
       })
     }
     toPastTense(n) {
-      return this.getNth(n).map(vb => {
+      return coordinate(this.getNth(n), 'past', vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
@@ -84,7 +85,7 @@ const api = function (View) {
       })
     }
     toFutureTense(n) {
-      return this.getNth(n).map(vb => {
+      return coordinate(this.getNth(n), 'future', vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
@@ -94,7 +95,7 @@ const api = function (View) {
       })
     }
     toGerund(n) {
-      return this.getNth(n).map(vb => {
+      return coordinate(this.getNth(n), 'gerund', vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {
@@ -104,7 +105,7 @@ const api = function (View) {
       })
     }
     toPastParticiple(n) {
-      return this.getNth(n).map(vb => {
+      return coordinate(this.getNth(n), 'participle', vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
         if (info.isInfinitive) {

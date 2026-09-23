@@ -14,6 +14,12 @@ const postTagger = function (view) {
   const m = view.update(ptrs)
   m.sweep(net)
   view.uncache()
+  // Resolve coordination after the sweep: an ambiguous adjective may have
+  // become a participle during that pass ('being watched and recorded').
+  view.match('being #Adverb+? [%Adj|Past%] (and|or) #Adverb+? (#PastTense|#Participle)', 0)
+    .tag('PastTense', 'coordinated-passive')
+  view.match('(has|have|had) (#Adverb|not)+? #PastTense (and|or) #Adverb+? [drunk]', 0)
+    .tag('Participle', 'coordinated-drunk')
   // This context crosses the comma boundary used by quickSplit above.
   view.match('(#Noun && @hasComma) [including] all? #Determiner? #Cardinal+? #Adverb+? #Adjective+? #Noun', 0)
     .tag('Preposition', 'including-list')

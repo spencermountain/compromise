@@ -47,6 +47,23 @@ words to delete: lexical `had` in `will have had tea` must survive.
 
 ## Complement boundaries and regression tests
 
+Adjacent coordinated roots can share an auxiliary: `has eaten and slept` becomes
+`will have eaten and slept`, and `is eating and sleeping` becomes `was eating and
+sleeping`. The private coordination helper snapshots compatible roots before any
+edits, converts the leading phrase once, and inflects its dependents without
+adding auxiliary words. Shared negation stays on the leading phrase. Sentence
+converters include these dependents when converting their first verb phrase.
+
+This applies to perfect, progressive, passive, modal, and simple future phrases
+joined by `and` or `or`, with optional adverbs. A new subject, explicit auxiliary,
+intervening object, or comma ends the group. Only selected verbs are changed;
+`verbs(0)` does not implicitly select later coordinated verbs. Simple finite
+coordination and prospective going-to phrases retain their existing handling.
+
+`tests/three/verbs/coordinate-conversion.test.js` checks direct conversions,
+repetition, fresh parses, and past→future paths for constructions whose aspect
+and voice are preserved by both routes.
+
 Prepositional gerunds, including passive/perfect chains such as `by being watched`
 and `without having been told`, are excluded from verb selection. Coordinated
 non-finite chains are excluded too; a new subject or finite verb ends the chain.

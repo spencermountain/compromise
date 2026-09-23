@@ -1,4 +1,4 @@
-import { noop, getTense, wasWere, noWill } from '../lib.js'
+import { noop, getTense, wasWere, noWill, toPerfectAuxiliary } from '../lib.js'
 const keep = { tags: true }
 
 const fns = {
@@ -48,7 +48,7 @@ const fns = {
   },
 
   hasHad: vb => {
-    vb.replace('has', 'had', keep)
+    vb.replace('(has|have)', 'had', keep)
     return vb
   },
 
@@ -97,14 +97,7 @@ const forms = {
   // had walked
   'past-perfect': noop,
   // will have walked -> had walked
-  'future-perfect': (vb, parsed) => {
-    vb.match(parsed.root).insertBefore('had')
-    if (vb.has('will')) {
-      vb = noWill(vb)
-    }
-    vb.remove('have')
-    return vb
-  },
+  'future-perfect': vb => toPerfectAuxiliary(vb, 'had'),
 
   // has been walking -> had been
   'present-perfect-progressive': fns.hasHad,
@@ -126,7 +119,7 @@ const forms = {
   // is being walked  -> 'was being walked'
   'passive-present': (vb, parsed) => {
     vb.replace('(is|are|am)', wasWere(vb, parsed), keep)
-    vb.replace('has', 'had', keep)
+    vb.replace('(has|have)', 'had', keep)
     return vb
   },
   // will be walked -> had been walked

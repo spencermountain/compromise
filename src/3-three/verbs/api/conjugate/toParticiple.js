@@ -1,21 +1,4 @@
-import { noop, getTense, getSubject } from '../lib.js'
-
-const haveHas = function (vb, parsed) {
-  const subj = getSubject(vb, parsed)
-  const m = subj.subject
-  if (m.has('(i|we|you)')) {
-    return 'have'
-  }
-  // the dog has
-  if (subj.plural === false) {
-    return 'has'
-  }
-  // spencer has
-  if (m.has('he') || m.has('she') || m.has('#Person')) {
-    return 'has'
-  }
-  return 'have'
-}
+import { noop, getTense, haveHas, toPerfectAuxiliary } from '../lib.js'
 
 // walk-> has walked
 const simple = (vb, parsed) => {
@@ -89,7 +72,13 @@ const forms = {
   // he walked
   // 'simple-past': noop,
   // he will walk -> he walked
-  'simple-future': (vb, parsed) => vb.replace('will', haveHas(vb, parsed)),
+  'simple-future': (vb, parsed) => {
+    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
+    const root = toInfinitive(parsed.root.text('normal'), vb.model, getTense(parsed.root))
+    const conjugations = conjugate(root, vb.model)
+    vb.replace(parsed.root, conjugations.Participle || conjugations.PastTense)
+    return vb.replace('will', haveHas(vb, parsed))
+  },
 
   // he is walking
   'present-progressive': progressive,
@@ -103,7 +92,7 @@ const forms = {
   // had walked
   'past-perfect': noop,
   // will have walked -> had walked
-  'future-perfect': (vb, parsed) => vb.replace('will have', haveHas(vb, parsed)),
+  'future-perfect': (vb, parsed) => toPerfectAuxiliary(vb, haveHas(vb, parsed)),
 
   // has been walking -> had been
   'present-perfect-progressive': noop,
@@ -148,7 +137,14 @@ const forms = {
   // 'auxiliary-present': noop,
 
   // must walk -> 'must have walked'
-  // 'modal-infinitive': noop,
+  'modal-infinitive': (vb, parsed) => {
+    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
+    const root = toInfinitive(parsed.root.text('normal'), vb.model, getTense(parsed.root))
+    const conjugations = conjugate(root, vb.model)
+    vb.match(parsed.root).replaceWith('have ' + (conjugations.Participle || conjugations.PastTense))
+    vb.match('have').tag('Auxiliary')
+    return vb
+  },
   // must have walked
   'modal-past': noop,
   // wanted to walk

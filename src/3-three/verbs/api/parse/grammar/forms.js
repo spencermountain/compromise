@@ -107,23 +107,23 @@ const verbForms = {
   // ==== Passive ===
   'passive-past': [
     ['^(was|were) being? (#PastTense|#Participle)$', [past, passive]],
-    ['^(had|have) been being? (#PastTense|#Participle)$', [past, passive]],
+    ['^had been being? (#PastTense|#Participle)$', [past, passive]],
     // got walked, was walked, were walked
     ['(got|were|was) #Passive', [past, passive]],
     // was being walked
     ['^(was|were) being #Passive', [past, passive]],
-    // had been walked, have been eaten
-    ['^(had|have) been #Passive', [past, passive]],
+    // had been walked
+    ['^had been #Passive', [past, passive]],
   ],
   'passive-present': [
     ['^(is|are|am) being? (#PastTense|#Participle)$', [present, passive]],
-    ['^has been being? (#PastTense|#Participle)$', [present, passive]],
+    ['^(has|have) been being? (#PastTense|#Participle)$', [present, passive]],
     // is walked, are stolen
     ['^(is|are|am) #Passive', [present, passive]],
     // is being walked
     ['^(is|are|am) being #Passive', [present, passive]],
-    // has been cleaned
-    ['^has been #Passive', [present, passive]],
+    // has/have been cleaned
+    ['^(has|have) been #Passive', [present, passive]],
   ],
   'passive-future': [
     ['^will have been being? (#PastTense|#Participle)$', [future, passive, conditional]],
@@ -164,7 +164,7 @@ const verbForms = {
   // === modals ===
   'modal-past': [
     // he could have walked
-    ['^(could|must|should|shall) have #PastTense$', [past]],
+    ['^#Modal have #PastTense$', [past]],
   ],
   'modal-infinitive': [
     // he can walk

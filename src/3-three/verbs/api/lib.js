@@ -41,13 +41,37 @@ const isAreAm = function (vb, parsed) {
 const doDoes = function (vb, parsed) {
   const subj = getSubject(vb, parsed)
   const m = subj.subject
-  if (m.has('i') || m.has('we')) {
+  if (m.has('(i|we|you)')) {
     return 'do'
   }
   if (subj.plural) {
     return 'do'
   }
   return 'does'
+}
+
+const haveHas = function (vb, parsed) {
+  const subj = getSubject(vb, parsed)
+  const m = subj.subject
+  if (m.has('(i|we|you)')) {
+    return 'have'
+  }
+  // the dog has
+  if (subj.plural === false) {
+    return 'has'
+  }
+  // spencer has
+  if (m.has('he') || m.has('she') || m.has('#Person')) {
+    return 'has'
+  }
+  return 'have'
+}
+
+// Replace the finite future auxiliary in place, preserving negation and adverbs.
+const toPerfectAuxiliary = (vb, auxiliary) => {
+  vb.remove('have')
+  vb.replace('will', auxiliary)
+  return vb
 }
 
 const getTense = function (m) {
@@ -90,4 +114,4 @@ const noWill = (vb) => {
   return vb.remove('will')
 }
 
-export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense, wasWere, noWill }
+export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense, wasWere, noWill, haveHas, toPerfectAuxiliary }

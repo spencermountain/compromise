@@ -1,4 +1,4 @@
-import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense } from '../lib.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense, haveHas, toPerfectAuxiliary } from '../lib.js'
 const keep = { tags: true }
 
 // walk->walked
@@ -28,10 +28,7 @@ const toGerund = (vb, parsed) => {
   const root = parsed.root
   let str = root.text('normal')
   str = toInfinitive(str, vb.model, getTense(root))
-  // 'i walk' vs 'he walks'
-  if (isPlural(vb, parsed) === false) {
-    str = conjugate(str, vb.model).Gerund
-  }
+  str = conjugate(str, vb.model).Gerund
   if (str) {
     vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('Gerund')
@@ -88,6 +85,8 @@ const forms = {
       vb.replace(root, str)
       vb = vb.remove('will')
       vb.replace('not ' + str, str + ' not')
+    } else if (parsed.negative.found) {
+      vb.replace('will', doDoes(vb, parsed)).match('(do|does)').tag('Auxiliary')
     } else {
       simple(vb, parsed)
       vb = vb.remove('will')
@@ -129,20 +128,14 @@ const forms = {
     return vb
   },
   // will have walked -> has walked
-  'future-perfect': vb => {
-    vb.match('will').insertBefore('has')
-    return vb.remove('have').remove('will')
-  },
+  'future-perfect': (vb, parsed) => toPerfectAuxiliary(vb, haveHas(vb, parsed)),
 
   // has been walking
   'present-perfect-progressive': noop,
   // had been walking
-  'past-perfect-progressive': vb => vb.replace('had', 'has', keep),
+  'past-perfect-progressive': (vb, parsed) => vb.replace('had', haveHas(vb, parsed), keep),
   // will have been -> has been
-  'future-perfect-progressive': vb => {
-    vb.match('will').insertBefore('has')
-    return vb.remove('have').remove('will')
-  },
+  'future-perfect-progressive': (vb, parsed) => toPerfectAuxiliary(vb, haveHas(vb, parsed)),
 
   // got walked -> is walked
   // was walked -> is walked
@@ -150,9 +143,7 @@ const forms = {
   'passive-past': (vb, parsed) => {
     const str = isAreAm(vb, parsed)
     if (vb.has('(had|have|has)') && vb.has('been')) {
-      vb.replace('(had|have|has)', str, keep)
-      vb.replace('been', 'being')
-      return vb
+      return vb.replace('(had|have|has)', haveHas(vb, parsed), keep)
     }
     return vb.replace('(got|was|were)', str)
   },
@@ -174,6 +165,10 @@ const forms = {
 
   // is going to drink -> is drinking
   'auxiliary-future': (vb, parsed) => {
+    if (parsed.root.has('#Gerund') && vb.has('going to be')) {
+      vb.remove('going to be')
+      return vb
+    }
     toGerund(vb, parsed)
     vb.remove('(going|to)')
     return vb

@@ -25,6 +25,11 @@ words to delete: lexical `had` in `will have had tea` must survive.
   subject. This retains aspect and voice without separately conjugating the
   auxiliary and lexical verb. Positive simple questions retain do-support;
   expanded negation follows the subject, while contracted negation precedes it.
+- Object wh-prefixes, including noun phrases and prepositional phrases, remain
+  before the inverted auxiliary. Subject wh-phrases stay on the ordinary path.
+  Inverted main predicates and other selected clauses are converted separately;
+  a partial main selection is left intact. Returned selections preserve the
+  same boundaries after reconstruction changes term IDs and auxiliary length.
 
 - Present, past, and future conversions retain perfect/progressive aspect and
   passive voice, subject to the compatibility cases below.

@@ -142,7 +142,7 @@
   ],
   "dependencies": {
     "efrt": "catalog:",
-    "grad-school": "0.0.5",
+    "grad-school": "0.0.7",
     "suffix-thumb": "5.0.3"
   },
   "devDependencies": {

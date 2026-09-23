@@ -14,6 +14,15 @@ const postTagger = function (view) {
   const m = view.update(ptrs)
   m.sweep(net)
   view.uncache()
+  // The spelling of 'read' does not distinguish infinitive from participle.
+  view.match('(has|have|had) (#Adverb|not)+? [read]', 0)
+    .tag('Participle', 'perfect-read')
+  // An object wh-noun precedes a new subject in an embedded question; it is
+  // not another predicate ('which books he had read').
+  view.match('(which|what|whose) [%Noun|Verb%] #Pronoun', 0)
+    .tag('Noun', 'embedded-wh-object')
+  view.match('(which|what|whose) [%Plural|Verb%] #Pronoun', 0)
+    .tag('Plural', 'embedded-wh-plural')
   // A lowercase ambiguous word after two named subjects is a predicate, not
   // another surname ('Alice and Bob walk'). Preserve title-cased surnames.
   view.match('#Person and #Person [%Noun|Verb%]$', 0)

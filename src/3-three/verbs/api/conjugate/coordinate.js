@@ -1,4 +1,4 @@
-import question, { isInverted } from './question.js'
+import question, { isInverted, questionSelection } from './question.js'
 import parseVerb from '../parse/index.js'
 import getGrammar from '../parse/grammar/index.js'
 import readAuxiliary from '../parse/auxiliary.js'
@@ -94,8 +94,25 @@ const coordinate = function (verbs, target, convert) {
   return sentences.map(sentence => {
     const index = sentence.fullPointer[0][0]
     const selected = verbs.filter(vb => vb.fullPointer[0][0] === index)
-    const result = question(sentence, target, selected)
-    return result ? result.verbs() : coordinateNormal(selected, target, convert)
+    const required = questionSelection(sentence)
+    if (!required) return coordinateNormal(selected, target, convert)
+    const outside = selected.not(required)
+    const inside = selected.not(outside).harden()
+    const others = coordinateNormal(outside, target, convert)
+    if (!inside.found) return others
+    const complete = !required.terms().not(inside.terms()).not('#Negative').found
+    // Question reconstruction changes term IDs. Track other selected phrases
+    // from the sentence end, since the unchanged trailing clauses keep their
+    // lengths even when the main auxiliary chain grows or shrinks.
+    const end = sentence.fullPointer[0][2]
+    const trailing = others.fullPointer.map(ptr => [ptr[0], end - ptr[1], end - ptr[2]])
+    const result = question(sentence, target, inside)
+    if (complete) {
+      const newEnd = result.fullPointer[0][2]
+      const remaining = result.update(trailing.map(ptr => [ptr[0], newEnd - ptr[1], newEnd - ptr[2]]))
+      return questionSelection(result).concat(remaining).settle()
+    }
+    return inside.concat(others).settle()
   })
 }
 export default coordinate

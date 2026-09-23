@@ -12,10 +12,12 @@ catalog:
   'tape': '5.10.2'
   'cross-env': '10.1.0'
   'nlp-corpus': '4.4.0'
-  'efrt': '2.7.0'
+  'efrt': '2.8.0'
 
 linkWorkspacePackages: true
 
 minimumReleaseAgeExclude:
   - rollup-plugin-filesize-check@2.0.1
   - tap-dancer@0.4.2
+  - efrt@2.8.0
+  - grad-school@0.0.7

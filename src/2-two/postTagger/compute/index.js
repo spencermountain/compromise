@@ -15,8 +15,18 @@ const postTagger = function (view) {
   m.sweep(net)
   view.uncache()
   // Resolve subjects after date rules distinguish modal 'may' from the month.
-  m.match('^[(this|that|these|those)] #Adverb+? (#Copula|#Modal)', 0)
+  m.match('^[(this|that|these|those)] #Adverb+? (#Verb && !#Gerund && !#Participle)', 0)
     .tag('Pronoun', 'demonstrative-subject')
+  m.match('(do|does|did|#Modal) [(this|that|these|those)] #Adverb+? #Infinitive', 0)
+    .tag('Pronoun', 'demonstrative-question')
+  // Embedded clauses after verbs of belief/knowledge: 'I know that works'.
+  // Singular demonstratives disambiguate a final plural/verb switch; plural
+  // objects such as 'I know those works' must keep their noun reading.
+  const embedding = '(know|knows|knew|hope|hopes|hoped|think|thinks|thought|believe|believes|believed|expect|expects|expected)'
+  m.match(`${embedding} (this|that) [%Plural|Verb%] #Adverb+?$`, 0)
+    .tag('PresentTense', 'embedded-demonstrative-verb')
+  m.match(`${embedding} [(this|that|these|those)] #Adverb+? (#Verb && !#Gerund && !#Participle)`, 0)
+    .tag('Pronoun', 'embedded-demonstrative-subject')
   // The spelling of 'read' does not distinguish infinitive from participle.
   view.match('(has|have|had) (#Adverb|not)+? [read]', 0)
     .tag('Participle', 'perfect-read')
@@ -47,7 +57,7 @@ const postTagger = function (view) {
     .tag('Preposition', 'including-list')
   // A trailing polite request marker can sit beyond the comma split.
   view.if('@hasComma please$')
-    .match('^(can|could|will|would) you [#Infinitive] .+? please$', 0)
+    .match('^(can|could|will|would) you (#Adverb|not)+? [#Infinitive] .+? please$', 0)
     .tag('Imperative', 'would-you-comma-please')
   view.unfreeze()
   return view

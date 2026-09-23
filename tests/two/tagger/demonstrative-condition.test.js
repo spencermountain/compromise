@@ -35,12 +35,12 @@ test('if keeps its conditional and conjunction tags', function (t) {
 })
 
 test('standalone demonstrative subjects and objects', t => {
-  for (const str of ['this is good', 'those are mine', 'these will work', 'that really is nice', 'I like this', 'take that']) {
+  for (const str of ['this is good', 'those are mine', 'these will work', 'that really is nice', 'I like this', 'take that', 'this works', 'those look nice', 'I saw those yesterday', 'can this work?']) {
     const word = nlp(str).match('(this|that|these|those)')
     t.equal(word.has('#Pronoun'), true, str + ' pronoun')
     t.equal(word.has('#Determiner'), false, str + ' not determiner')
   }
-  for (const str of ['this book is good', 'those books are mine', 'I like this book', 'take that box', 'this May was cold']) {
+  for (const str of ['this book is good', 'those books are mine', 'I like this book', 'take that box', 'this May was cold', 'I enjoyed this morning', 'this running water is cold', 'this broken chair is old']) {
     t.equal(nlp(str).match('(this|that|these|those)').has('#Determiner'), true, str)
   }
   t.equal(nlp('she said that he left').match('that').has('#Conjunction'), true, 'embedded conjunction')

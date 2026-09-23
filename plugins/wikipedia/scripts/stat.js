@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import sh from 'shelljs'
+import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 
 import conf from '../config.js'
@@ -19,8 +19,8 @@ console.log('article count ( lines):')
 
 //raw: 40,043,607
 //filtered: 1,049,500
-const { stdout } = sh.exec(`wc -l ${file}`, { silent: true })
-const lines = Number(stdout.split(/\W/)[1]).toLocaleString()
+const stdout = execFileSync('wc', ['-l', file], { encoding: 'utf8' })
+const lines = Number(stdout.trim().split(/\s+/)[0]).toLocaleString()
 
 console.log('lines', lines)
 console.log('size', fileSize(file))

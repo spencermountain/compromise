@@ -35,15 +35,15 @@ export default [
   { match: '^[(go|come)] home', group: 0, tag: 'Imperative', reason: 'go-home' },
   // A modal question alone may ask about ability or knowledge. Require an
   // explicit request marker before treating it as an imperative.
-  { match: '^(can|could|will|would) you please [#Infinitive]', group: 0, tag: 'Imperative', reason: 'would-you-please' },
-  { match: '^please (can|could|will|would) you [#Infinitive]', group: 0, tag: 'Imperative', reason: 'please-would-you' },
-  { match: '^(can|could|will|would) you [#Infinitive] .+? please$', group: 0, tag: 'Imperative', reason: 'would-you-please-end' },
+  { match: '^(can|could|will|would) you (#Adverb|not)+? please (#Adverb|not)+? [#Infinitive]', group: 0, tag: 'Imperative', reason: 'would-you-please' },
+  { match: '^please (can|could|will|would) you (#Adverb|not)+? [#Infinitive]', group: 0, tag: 'Imperative', reason: 'please-would-you' },
+  { match: '^(can|could|will|would) you (#Adverb|not)+? [#Infinitive] .+? please$', group: 0, tag: 'Imperative', reason: 'would-you-please-end' },
   // never say
   { match: '^never [#Infinitive]', group: 0, tag: 'Imperative', reason: 'never-stop' },
   // come have a drink
   { match: '^come #Infinitive', tag: 'Imperative', notIf: 'on', reason: 'come-have' },
   // come and have a drink
-  { match: '^come and? #Infinitive', tag: 'Imperative . Imperative', notIf: '#PhrasalVerb', reason: 'come-and-have' },
+  { match: '^come and #Infinitive', tag: 'Imperative . Imperative', reason: 'come-and-have' },
   // stay away
   { match: '^[stay] (out|away|back)', group: 0, tag: 'Imperative', reason: 'stay-away' },
   // stay cool

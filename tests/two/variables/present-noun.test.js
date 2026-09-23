@@ -134,7 +134,7 @@ const arr = [
   ['side with traitors', '#Verb with #Plural'],
 
   //determiner-corrections
-  ['this rocks dude', '#Determiner #Verb #Noun'],
+  ['this rocks dude', '#Pronoun #Verb #Noun'],
   // ['that rocks dude', '#Determiner #Verb #Noun'],
   ['the rocks dude', '#Determiner #Plural #Noun'],
   ['these rocks dude', '#Determiner #Plural #Noun'],

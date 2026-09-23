@@ -6,11 +6,11 @@ const matches = [
   // who is that? / what are these? - no following noun to determine
   { match: '^#QuestionWord #Adverb+? #Copula #Adverb+? [(this|that|these|those)] #Adverb+?$', group: 0, tag: 'Pronoun', reason: 'who-is-that' },
   // I like this
-  { match: '#Verb [(this|that|these|those)]$', group: 0, tag: 'Pronoun', reason: 'demonstrative-object' },
+  { match: '#Verb [(this|that|these|those)] #Adverb+? (yesterday|today|tonight|tomorrow)?$', group: 0, tag: 'Pronoun', reason: 'demonstrative-object' },
 
   // ==== Conditions ====
   // had he survived,
-  { match: '[had] #Noun+ #PastTense', group: 0, tag: 'Condition', reason: 'had-he' },
+  { match: '^[had] #Noun+ #PastTense', group: 0, tag: 'Condition', reason: 'had-he' },
   // were he to survive
   { match: '[were] #Noun+ to #Infinitive', group: 0, tag: 'Condition', reason: 'were-he' },
 

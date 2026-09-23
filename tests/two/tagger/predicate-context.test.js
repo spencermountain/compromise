@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 
 test('work takes the base form in modal and do-support questions', t => {
-  for (const str of ['does that work?', 'will that work?', 'could that work?']) {
+  for (const str of ['does that work?', 'will that work?', 'could that work?', 'can this work?', 'do these work?', 'will those work?']) {
     const word = nlp(str).match('work')
     t.equal(word.has('#Infinitive'), true, str)
     t.equal(word.has('#PastTense'), false, str + ' not past')
@@ -47,5 +47,47 @@ test('predicative home and subject before to', t => {
   ]) {
     t.equal(nlp(str).match(word).has('#Verb'), true, str + ' keeps verb')
   }
+  t.end()
+})
+
+
+test('home distinguishes residents from an infinitive of purpose', t => {
+  for (const str of ['she is home to rest', 'he is home to work', 'she will be home to rest']) {
+    const doc = nlp(str)
+    t.equal(doc.match('(rest|work)').has('#Infinitive'), true, str + ' purpose')
+    t.equal(doc.match('to').has('#Preposition'), false, str + ' infinitival to')
+  }
+  for (const str of ['the island is home to birds', 'the island is home to wildlife', 'the island is home to rare birds']) {
+    t.equal(nlp(str).match('to').has('#Preposition'), true, str + ' residents')
+  }
+  t.end()
+})
+
+test('been does not turn adjective suffixes into verbs', t => {
+  for (const [str, word] of [
+    ['the house has been green for years', 'green'],
+    ['the light has been red for minutes', 'red'],
+  ]) {
+    const doc = nlp(str)
+    t.equal(doc.match(word).has('#Adjective'), true, str)
+    t.equal(doc.match(word).has('#Verb'), false, str + ' not verb')
+  }
+  for (const [str, word] of [
+    ['it has been broken', 'broken'], ['it has been smoked', 'smoked'],
+    ['she has been seen', 'seen'],
+  ]) {
+    t.equal(nlp(str).match(word).has('#PastTense'), true, str + ' still a verb')
+  }
+  t.end()
+})
+
+test('pretty preserves adjective-noun complements', t => {
+  const doc = nlp('that is pretty furniture')
+  t.equal(doc.match('pretty').has('#Adjective'), true, 'pretty adjective')
+  t.equal(doc.match('furniture').has('#Noun'), true, 'furniture noun')
+  t.equal(doc.match('furniture').has('#Adjective'), false, 'furniture not adjective')
+  const adverb = nlp('she is pretty good')
+  t.equal(adverb.match('pretty').has('#Adverb'), true, 'pretty intensifier')
+  t.equal(adverb.match('good').has('#Adjective'), true, 'good adjective')
   t.end()
 })

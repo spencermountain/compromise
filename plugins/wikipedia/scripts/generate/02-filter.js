@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import fs from 'node:fs'
-import sh from 'shelljs'
+import { execFileSync, spawnSync } from 'node:child_process'
 import { blue, yellow } from 'colorette'
 import nlp from '../../../../src/two.js'
 import nos from './_no-list.js'
@@ -103,7 +103,7 @@ const fileSize = (pathStr) => {
 }
 
 const getLines = function (fpath) {
-  const { stdout } = sh.exec(`wc -l ${fpath}`, { silent: true })
+  const stdout = execFileSync('wc', ['-l', fpath], { encoding: 'utf8' })
   const arr = stdout.split(/\W/).filter(s => s)
   const lines = Number(arr[0]).toLocaleString()
   console.log('   ', blue(lines))
@@ -117,7 +117,21 @@ const filterIt = function () {
 
   console.log(yellow('\n--running grep filter--'))
   //filter-it down to our project only
-  sh.exec(`grep '^${lang}.${project} .* desktop ' ${file} > ${tsvOut}`)
+  const fd = fs.openSync(tsvOut, 'w')
+  try {
+    const result = spawnSync('grep', [`^${lang}.${project} .* desktop `, file], {
+      stdio: ['ignore', fd, 'inherit'],
+    })
+    if (result.error) {
+      throw result.error
+    }
+    // grep exits with 1 when no lines match.
+    if (result.status !== 0 && result.status !== 1) {
+      throw new Error(`grep failed: ${result.signal || result.status}`)
+    }
+  } finally {
+    fs.closeSync(fd)
+  }
 
   console.log(yellow('\n--running regex filters--'))
   console.log('  min pageview: ', min_pageviews)

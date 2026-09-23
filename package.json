@@ -66,28 +66,12 @@
         "types": "./types/misc.d.cts"
       }
     },
-    "./view/one": {
+    "./view/*": {
       "import": {
-        "types": "./types/view/one.d.ts"
+        "types": "./types/view/*.d.ts"
       },
       "require": {
-        "types": "./types/view/one.d.cts"
-      }
-    },
-    "./view/two": {
-      "import": {
-        "types": "./types/view/two.d.ts"
-      },
-      "require": {
-        "types": "./types/view/two.d.cts"
-      }
-    },
-    "./view/three": {
-      "import": {
-        "types": "./types/view/three.d.ts"
-      },
-      "require": {
-        "types": "./types/view/three.d.cts"
+        "types": "./types/view/*.d.cts"
       }
     }
   },
@@ -115,7 +99,6 @@
     "stress": "node scripts/test/stress.js",
     "debug": "node ./scripts/debug.js",
     "match": "node ./scripts/match.js",
-    "coverage": "c8 -r lcov -n 'src/**/*' -n 'plugins/**/*' tape \"./tests/**/*.test.js\" | tap-dancer",
     "bench": "node ./scripts/bench/index.js",
     "lint": "eslint src",
     "docs": "node ./scripts/docs.js",
@@ -155,7 +138,6 @@
     "nlp-corpus": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
-    "shelljs": "0.10.0",
     "tap-dancer": "catalog:",
     "tape": "catalog:",
     "typescript": "7.0.2"

@@ -1142,7 +1142,7 @@ const arr = [
   [`ambitious sales targets`, `#Adjective #Noun #Plural`],
   ["she's really hot", 'she is #Adverb #Adjective'],
   ["she's really engaged", 'she is #Adverb .'],
-  ['Hope this helps.', '#Imperative #Determiner #PresentTense'],
+  ['Hope this helps.', '#Infinitive #Pronoun #PresentTense'],
   ['a chicken that plays tic-tac-toe.', 'a #Noun that #PresentTense #Noun+'],
   ['the ocean looked absolutely amazing', 'the #Noun #PastTense #Adverb #Adjective'],
   ['get close', '#Imperative #Adjective'],

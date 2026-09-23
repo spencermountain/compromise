@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import wget from 'node-wget-promise'
 import { yellow } from 'colorette'
-import sh from 'shelljs'
+import { execFileSync } from 'node:child_process'
 const file = `./files/pageviews.tsv`
 
 const date = new Date()
@@ -26,11 +26,8 @@ const getIt = async function () {
   })
   // unzip
   console.log(yellow(`\n--- unzipping pageviews data  (~4 mins) --`))
-  sh.exec(`bzip2 -d  ${file}.bz2`)
+  execFileSync('bzip2', ['-d', file + '.bz2'], { stdio: 'inherit' })
   console.log(yellow(`\n finished unzipping pageviews`))
-
-  // sh.exec(`rm  ${file}.bz2`)
-
 }
 
 export default getIt

@@ -1,8 +1,9 @@
 export default [
   //sometimes adverbs - 'pretty good','well above'
   {
-    match: '#Copula (pretty|dead|full|well|sure) (#Adjective|#Noun)',
-    tag: '#Copula #Adverb #Adjective',
+    match: '#Copula [(pretty|dead|full|well|sure)] #Adjective',
+    group: 0,
+    tag: 'Adverb',
     reason: 'sometimes-adverb',
   },
   //i better ..
@@ -32,8 +33,11 @@ export default [
   { match: '(#Pronoun|#Plural|#Modal) #Adverb+? [home] to', group: 0, tag: 'Infinitive', reason: 'birds-home-to' },
   { match: '(#Copula|be|been|being) #Adverb+? [home] to', group: 0, tag: 'Noun', reason: 'is-home-to' },
   { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? [subject] to', group: 0, tag: 'Adjective', reason: 'is-subject-to' },
-  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? (home|subject) [to]', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'predicative-to' },
-  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? (home|subject) to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'predicative-to-noun' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject [to]', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'predicative-to' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'predicative-to-noun' },
+
+  // Home can introduce a resident noun phrase or an infinitive of purpose.
+  { match: '(#Copula|be|been|being) #Adverb+? home [to] #Adjective+? #Noun', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'home-to-noun' },
 
   // === misc==
   // side with
@@ -43,9 +47,9 @@ export default [
   //were being run
   { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
   //had been broken
-  { match: `(had|has|have) [been /en$/]`, group: 0, tag: 'Auxiliary Participle', reason: 'had-been-broken' },
+  { match: `(had|has|have) [been (#PastTense && /en$/)]`, group: 0, tag: 'Auxiliary Participle', reason: 'had-been-broken' },
   //had been smoked
-  { match: `(had|has|have) [been /ed$/]`, group: 0, tag: 'Auxiliary PastTense', reason: 'had-been-smoked' },
+  { match: `(had|has|have) [been (#PastTense && /ed$/)]`, group: 0, tag: 'Auxiliary PastTense', reason: 'had-been-smoked' },
   //were being run
   { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
   //had to walk
@@ -53,7 +57,7 @@ export default [
   // have read
   { match: `have [#PresentTense]`, group: 0, tag: 'PastTense', notIf: '(come|gotten)', reason: 'have-read' },
   // does that work
-  { match: `(does|will|#Modal) that [work]`, group: 0, tag: 'Infinitive', reason: 'does-that-work' },
+  { match: `(do|does|did|#Modal) (this|that|these|those) [work]`, group: 0, tag: 'Infinitive', reason: 'does-that-work' },
   // sounds fun
   { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
   // look good

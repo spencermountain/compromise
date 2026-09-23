@@ -21,9 +21,6 @@
     <a href="https://npmjs.org/package/compromise">
     <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
   </a>
-  <a href="https://codecov.io/gh/spencermountain/compromise">
-    <img src="https://codecov.io/gh/spencermountain/compromise/branch/master/graph/badge.svg" />
-  </a>
   <a href="https://bundlephobia.com/result?p=compromise">
     <img src="https://img.shields.io/bundlephobia/min/compromise"/>
   </a>

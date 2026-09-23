@@ -1,7 +1,9 @@
 import terser from '@rollup/plugin-terser'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import sizeCheck from 'rollup-plugin-filesize-check'
-// Terser infers module mode from the output format.
+
+const terserOpts = { keep_classnames: true, compress: { passes: 2 } }
+
 // Size limits are enforced by scripts/filesize.js in CI.
 export default [
   // === One ==
@@ -14,7 +16,7 @@ export default [
         format: 'umd',
         name: 'nlp',
         plugins: [
-          terser({ keep_classnames: true }),
+          terser(terserOpts),
           sizeCheck({
             expect: 92,
             warn: 5, // acceptable (+/-)
@@ -25,7 +27,7 @@ export default [
       {
         file: 'builds/one/compromise-one.mjs',
         format: 'esm',
-        plugins: [terser({ keep_classnames: true })],
+        plugins: [terser(terserOpts)],
       },
     ],
   },
@@ -40,7 +42,7 @@ export default [
         format: 'umd',
         name: 'nlp',
         plugins: [
-          terser({ keep_classnames: true }),
+          terser(terserOpts),
           sizeCheck({
             expect: 293,
             warn: 5, // acceptable (+/-)
@@ -51,7 +53,7 @@ export default [
       {
         file: 'builds/two/compromise-two.mjs',
         format: 'esm',
-        plugins: [terser({ keep_classnames: true })],
+        plugins: [terser(terserOpts)],
       },
     ],
   },
@@ -65,16 +67,14 @@ export default [
         file: 'builds/compromise.js',
         format: 'umd',
         name: 'nlp',
-        plugins: [
-          terser({ keep_classnames: true }),
-        ],
+        plugins: [terser(terserOpts)],
       },
       {
         file: 'builds/three/compromise-three.cjs',
         format: 'umd',
         name: 'nlp',
         plugins: [
-          terser({ keep_classnames: true }),
+          terser(terserOpts),
           sizeCheck({
             expect: 363,
             warn: 5, // acceptable (+/-)
@@ -85,7 +85,7 @@ export default [
       {
         file: 'builds/three/compromise-three.mjs',
         format: 'esm',
-        plugins: [terser({ keep_classnames: true })],
+        plugins: [terser(terserOpts)],
       },
     ],
   },

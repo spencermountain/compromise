@@ -1,5 +1,4 @@
-import grad from 'grad-school'
-// import { fromArray, cache, fillDown, toArray } from 'grad-school/core'
+import { fromArray, cache, fillDown, toArray } from 'grad-school/core'
 import fmt from './02-fmt.js'
 import validate from './01-validate.js'
 
@@ -11,8 +10,10 @@ const compute = function (allTags) {
     const props = { not: new Set(o.not), also: o.also, is: o.is, novel: o.novel }
     return { id: k, parent: o.is, props, children: [], alias: o.alias }
   })
-  const graph = grad(flatList).cache().fillDown()
-  return graph.out('array')
+  const graph = fromArray(flatList)
+  cache(graph)
+  fillDown(graph)
+  return toArray(graph)
 }
 
 const fromUser = function (tags) {

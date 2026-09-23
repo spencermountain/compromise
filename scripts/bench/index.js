@@ -45,6 +45,7 @@ const DEFAULT_MAX_SLOWDOWN_PERCENT = 10
 const MAX_ITERATIONS = 16384
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const resultsFile = path.join(scriptDir, 'results.jsonl')
+const noSave = process.argv.includes('--no-save')
 
 // Some package managers consume `--quiet` themselves and expose only their
 // lifecycle log level. Supporting argv keeps direct execution identical.
@@ -306,8 +307,8 @@ const main = () => {
   } else {
     console.log(comparisonText(previous, result))
 
-    if (isQuiet) {
-      console.log(dim('not saved (--quiet)'))
+    if (noSave || isQuiet) {
+      console.log(dim(`not saved (${noSave ? '--no-save' : '--quiet'})`))
     } else {
       fs.appendFileSync(resultsFile, `${JSON.stringify(result)}\n`, 'utf8')
       console.log(dim(`saved to ${path.relative(process.cwd(), resultsFile)}`))

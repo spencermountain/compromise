@@ -11,8 +11,11 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - manage plugins with pnpm workspace
 - **[change]** - improved regex edge-cases 
 - **[change]** - improved verb conjugation
+- **[change]** - improved tagging
 - **[update]** - efrt, grad-school dependencies
 - **[fix]** - verb conjugation regression #1226
+- **[fix]** - types paths
+- **[fix]** - possibly-unsafe regexes
 
 #### 14.17.0 [Sept 2026]
 - **[change]** - remove redundant re-tagging #1218

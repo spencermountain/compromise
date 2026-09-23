@@ -31,6 +31,7 @@ converted into ordinary versions for consumers.
 | `pnpm test:plugins:build` | Plugin build tests (run `pnpm build:all` first) |
 | `pnpm test:types` | Root TypeScript declarations |
 | `pnpm lint` | Root source lint |
+| `pnpm bench --no-save` | Run benchmarks and compare against saved history without saving a result |
 
 For one plugin, use `pnpm --filter compromise-dates test` or
 `pnpm --filter compromise-dates build`. Plugin source tests import the linked

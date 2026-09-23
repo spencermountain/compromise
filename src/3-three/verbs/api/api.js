@@ -57,6 +57,9 @@ const api = function (View) {
       return this.getNth(n).map(vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
+        if (info.isInfinitive) {
+          return vb
+        }
         return toInf(vb, parsed, info.form)
       })
     }

@@ -93,7 +93,11 @@ const forms = {
     const have = haveHas(vb, parsed)
     vb.replace('(is|are|am|was|were)', have)
     vb.match('going').insertBefore('been')
-    vb.match('(have|has|been|going|to|be)').tag('Auxiliary')
+    vb.match('(have|has|been|be)').tag('Auxiliary')
+    // The new perfect head governs 'going'; its infinitival complement must
+    // remain separate on subsequent conversions, just as on a fresh parse.
+    vb.match('going').unTag('Auxiliary').tag('Gerund')
+    vb.match('to').unTag('Auxiliary').tag('Conjunction')
     return vb
   },
 

@@ -1,5 +1,8 @@
 // these are some of our heaviest-used matches
 export default [
+  // ought not to walk: retain the infinitival marker inside the modal phrase.
+  { match: 'ought (#Adverb|not)+? [to] (#Adverb|not)+? #Verb', group: 0, tag: 'Auxiliary', reason: 'ought-to' },
+  { match: 'ought (#Adverb|not)+? to (#Adverb|not)+? [be] (#Adverb|not)+? #Verb', group: 0, tag: 'Auxiliary', reason: 'ought-to-be' },
   // ==== Auxiliary ====
   // have been
   { match: `will (#Adverb|not)+? [have] (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'will-have-vb' },

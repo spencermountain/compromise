@@ -28,6 +28,9 @@ test('shared auxiliary converter preserves roots and modifier positions', t => {
         t.equal(doc.text(), expected[i], selection + '.' + method + ': ' + input)
         doc[selection]()[method]()
         t.equal(doc.text(), expected[i], 'repeated: ' + selection + '.' + method + ': ' + input)
+        const fresh = nlp(expected[i])
+        fresh[selection]()[method]()
+        t.equal(fresh.text(), expected[i], 'fresh: ' + selection + '.' + method + ': ' + input)
       }
     })
   })

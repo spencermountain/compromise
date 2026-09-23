@@ -17,7 +17,7 @@ test('plural-verbs:', function (t) {
 
   r = nlp('lkjsdf does eat bugs')
   str = r.verbs().isPlural().out('normal')
-  t.equal(str, 'does eat', here + 'does plural')
+  t.equal(str, '', here + 'does singular')
 
   r = nlp('lkjsdf is cool')
   str = r.verbs().isPlural().out('normal')

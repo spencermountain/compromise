@@ -6,9 +6,15 @@ const findVerbs = function (doc) {
   m = m.not('#Preposition')
   // Gerunds governed by a preposition are non-finite: 'by swimming'.
   let gerunds = doc.match('#Preposition (#Adverb|#Negative)+? [#Gerund]', 0)
+  // Auxiliary 'being/having' may no longer carry the Gerund tag. Protect the
+  // complete non-finite chain, not just its first word.
+  const passive = '(being|having) (#Adverb|#Negative|#Auxiliary)+? (#PastTense|#Participle|#Gerund)'
+  let chains = doc.match('#Preposition (#Adverb|#Negative)+? [' + passive + ']', 0)
+  gerunds = gerunds.concat(chains)
   // Extend through coordination, but stop at a finite verb or a new subject.
   while (gerunds.found) {
-    const next = gerunds.growRight('(and|or) (#Adverb|#Negative)+? #Gerund')
+    chains = gerunds.growRight('(and|or) (#Adverb|#Negative)+? ' + passive)
+    const next = chains.growRight('(and|or) (#Adverb|#Negative)+? #Gerund')
     if (next.wordCount() === gerunds.wordCount()) {
       break
     }

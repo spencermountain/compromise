@@ -1,7 +1,7 @@
 # Auxiliary conversion internals
 
 The public verb methods and the shapes returned by `.parse()` and `.json()` are
-unchanged. Passive, perfect, modal perfect, and nested going-to constructions
+unchanged. Passive, progressive, perfect, modal perfect, and nested going-to constructions
 use a private pipeline:
 
 1. `src/3-three/verbs/api/parse/auxiliary.js` reads the auxiliary words, finite
@@ -35,7 +35,32 @@ words to delete: lexical `had` in `will have had tea` must survive.
   `is going to have eaten` remains unchanged.
 - Negation and adverbs retain their order. Newly inserted active-perfect future
   auxiliaries retain the established `will have really ...` placement; passive
-  auxiliaries retain `will really have been ...` placement.
+  auxiliaries retain `will really have been ...` placement. Plain progressives put
+  the new `be` after negation: `is not walking` → `will not be walking`.
+- `.toGerund()` preserves passive voice: `will not be driven` →
+  `is not being driven`. Already-progressive phrases remain unchanged, including
+  perfect progressives. Negative copulas use `is not being`, not `is being not`.
+- `.toInfinitive()` retains the existing finite do-support convention for
+  negative lexical verbs (`does not walk`). Negative copulas instead use the
+  agreeing present copula (`was not happy` → `is not happy`). Positive forms
+  continue to produce the bare verb.
+
+## Complement boundaries and regression tests
+
+Prepositional gerunds, including passive/perfect chains such as `by being watched`
+and `without having been told`, are excluded from verb selection. Coordinated
+non-finite chains are excluded too; a new subject or finite verb ends the chain.
+Infinitival complements beginning with `to` are protected during conversions,
+including `.toInfinitive()`, even when `have` or `be` is tagged as an auxiliary.
+The marker in `ought not to` is part of the modal phrase instead.
+
+Perfect conversion of a simple going-to phrase restores `going` as a gerund and
+`to` as its complement marker, so repeated conversion of `has been going to have
+a car` cannot conjugate the lexical `have` separately.
+
+`tests/three/verbs/conversion-boundaries.test.js` checks explicit expected outputs,
+repeated conversions on the same document, and conversions after parsing the
+expected text afresh. Both paths matter: retained tags can hide a parsing error.
 
 ## Compatibility cases
 
@@ -47,9 +72,8 @@ These are deliberately retained, not new grammatical recommendations:
 - `.toPastParticiple()` leaves active future-perfect-progressive phrases unchanged.
 - `got driven` retains `got` in past and becomes `will get driven` in future.
 
-Simple verbs, modal/conditional tense changes, and non-perfect progressives still
+Simple verbs and modal/conditional tense changes still
 use their existing handlers. This includes the established simple/progressive
 going-to conversions (`is going to swim` → `has been going to swim` for perfect).
-Verb-selection rules are outside this refactor.
 Extend the private model and its explicit-output test matrix before moving those
 families into the shared converter.

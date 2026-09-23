@@ -6,6 +6,10 @@ import { getTense, haveHas, isAreAm, wasWere } from '../lib.js'
 const plan = function (chain, target, vb, parsed) {
   const { finite, passive, progressive, words } = chain
   let perfect = chain.perfect
+  if (target === 'gerund') {
+    if (progressive) return words
+    return [isAreAm(vb, parsed), 'being']
+  }
   if (chain.modal || chain.prospective) {
     if (target === 'participle') {
       if (perfect) return words
@@ -36,6 +40,7 @@ const plan = function (chain, target, vb, parsed) {
   if (finite === 'got' && target === 'future') return ['will', 'get']
 
   const tail = words.slice(finite === 'will' ? 2 : 1)
+  if (!passive && progressive && perfect && !chain.perfect) tail.unshift('been')
   if (passive) {
     // Rebuild only the auxiliary layers; the lexical participle is unchanged.
     tail.length = 0
@@ -66,7 +71,7 @@ const write = function (vb, parsed, words, target, passive) {
   const extra = targetTail.slice(0, targetTail.length - overlap)
   if (extra.length > 0) {
     const text = extra.join(' ')
-    if (!passive && target[0] === 'will') {
+    if (!passive && target[0] === 'will' && target[1] === 'have') {
       // Retain existing active-perfect adverb placement: 'will have really ...'.
       slots[0].toView().insertAfter(text).terms().slice(1).tag('Auxiliary')
     } else {
@@ -94,7 +99,8 @@ const convertAuxiliary = function (vb, parsed, form, target) {
   if (!chain) return null
   // Retain existing modal tense policy and the established simple/progressive
   // going-to handlers. New nested going-to forms change only their finite head.
-  if (chain.modal && target !== 'participle') return null
+  if (target === 'gerund' && !chain.passive) return null
+  if (chain.modal && target !== 'participle' && target !== 'gerund') return null
   if (chain.prospective && !chain.perfect && !chain.passive && form === 'auxiliary-future') return null
   const words = plan(chain, target, vb, parsed)
   if (words.join(' ') === chain.words.join(' ')) return vb
@@ -105,7 +111,7 @@ const convertAuxiliary = function (vb, parsed, form, target) {
   const live = parseVerb(vb)
   const root = vb.match(live.root).harden()
   write(vb, live, chain.words, words, chain.passive)
-  if (chain.modal && !chain.perfect && !chain.passive && !chain.progressive) {
+  if (target === 'participle' && chain.modal && !chain.perfect && !chain.passive && !chain.progressive) {
     const { conjugate, toInfinitive } = vb.methods.two.transform.verb
     const infinitive = toInfinitive(live.root.text('normal'), vb.model, getTense(live.root))
     const forms = conjugate(infinitive, vb.model)

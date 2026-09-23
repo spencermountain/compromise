@@ -19,13 +19,13 @@ test('verb-to-gerund:', function (t) {
 
 
     // copula forms
-    ['i am not cool', 'i am being not cool'],
-    ['i was not cool', 'i am being not cool'],
+    ['i am not cool', 'i am not being cool'],
+    ['i was not cool', 'i am not being cool'],
     // ['i will not be cool', 'i will not be being cool'],
-    ['he is not cool', 'he is being not cool'],
+    ['he is not cool', 'he is not being cool'],
     // ['he was not cool', 'he was being not cool'],
     // ['he will not be cool', 'he will not be being cool'],
-    ['they are not cool', 'they are being not cool'],
+    ['they are not cool', 'they are not being cool'],
     // ['they were not cool', 'they were being not cool'],
     // ['they will not be cool', 'they will not be being cool'],
 

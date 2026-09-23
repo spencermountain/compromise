@@ -24,7 +24,8 @@ const readAuxiliary = function (parsed, form) {
   }
   const passive = /^passive-/.test(form)
   const perfectForm = /^(present|past|future)-perfect/.test(form)
-  if (!passive && !perfectForm) {
+  const progressiveForm = /^(present|past|future)-progressive$/.test(form)
+  if (!passive && !perfectForm && !progressiveForm) {
     return null
   }
   if (words.length === 0) {

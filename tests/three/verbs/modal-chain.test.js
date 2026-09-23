@@ -66,6 +66,9 @@ test('nested going-to tense changes preserve the complement', t => {
         t.equal(doc.text(), expected, selection + '.' + method + ': ' + input)
         doc[selection]()[method]()
         t.equal(doc.text(), expected, 'repeated: ' + selection + '.' + method + ': ' + input)
+        const fresh = nlp(expected)
+        fresh[selection]()[method]()
+        t.equal(fresh.text(), expected, 'fresh: ' + selection + '.' + method + ': ' + input)
       }
     })
   })

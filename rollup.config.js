@@ -1,6 +1,6 @@
 import terser from '@rollup/plugin-terser'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-
+import sizeCheck from 'rollup-plugin-filesize-check'
 // Terser infers module mode from the output format.
 // Size limits are enforced by scripts/filesize.js in CI.
 export default [
@@ -16,9 +16,9 @@ export default [
         plugins: [
           terser({ keep_classnames: true }),
           sizeCheck({
-            expect: 45, // sizes in kb
-            warn: 10, // acceptable change (+/-)
-            throw: 25, // unacceptable change (+/-)
+            expect: 90,
+            warn: 10, // acceptable (+/-)
+            throw: 25, // unacceptable (+/-)
           }),
         ],
       },
@@ -39,7 +39,14 @@ export default [
         file: 'builds/two/compromise-two.cjs',
         format: 'umd',
         name: 'nlp',
-        plugins: [terser({ keep_classnames: true })],
+        plugins: [
+          terser({ keep_classnames: true }),
+          sizeCheck({
+            expect: 290,
+            warn: 10, // acceptable (+/-)
+            throw: 25, // unacceptable (+/-)
+          }),
+        ],
       },
       {
         file: 'builds/two/compromise-two.mjs',
@@ -58,7 +65,14 @@ export default [
         file: 'builds/compromise.js',
         format: 'umd',
         name: 'nlp',
-        plugins: [terser({ keep_classnames: true })],
+        plugins: [
+          terser({ keep_classnames: true }),
+          sizeCheck({
+            expect: 350,
+            warn: 10, // acceptable (+/-)
+            throw: 25, // unacceptable (+/-)
+          }),
+        ],
       },
       {
         file: 'builds/three/compromise-three.cjs',

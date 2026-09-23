@@ -12,19 +12,23 @@ import matchTerm from './term/doesMatch.js'
  * on a sequence of terms, 
  * starting at this certain term.
  */
-const tryHere = function (terms, regs, start_i, phrase_length) {
+const tryHere = function (terms, regs, start_i, phrase_length, offset = 0) {
   // console.log(`\n\n:start: '${terms[0].text}':`)
-  if (terms.length === 0 || regs.length === 0) {
+  if (offset >= terms.length || regs.length === 0) {
     return null
   }
-  // all the variables that matter
+  // Use the original terms with a cursor instead of copying the remaining
+  // sentence at every starting position. origin maps array indices to match
+  // pointers; offset marks the beginning of this attempt within the array.
+  const origin = start_i - offset
   const state = {
-    t: 0,
+    t: offset,
+    offset: offset,
     terms: terms,
     r: 0,
     regs: regs,
     groups: {},
-    start_i: start_i,
+    start_i: origin,
     phrase_length: phrase_length,
     inGroup: null,
   }
@@ -121,14 +125,14 @@ const tryHere = function (terms, regs, start_i, phrase_length) {
     return null
   }
   //return our results, as pointers
-  const pntr = [null, start_i, state.t + start_i]
+  const pntr = [null, start_i, state.t + origin]
   if (pntr[1] === pntr[2]) {
     return null //found 0 terms
   }
   const groups = {}
   Object.keys(state.groups).forEach(k => {
     const o = state.groups[k]
-    const start = start_i + o.start
+    const start = origin + o.start
     groups[k] = [null, start, start + o.length]
   })
   return { pointer: pntr, groups: groups }

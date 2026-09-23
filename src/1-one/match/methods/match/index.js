@@ -31,7 +31,17 @@ const runMatch = function (docs, todo, cache) {
     return { ptrs: [], byGroup: {} }
   }
 
-  const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
+  // Compiled rules carry this value; public parsed patterns can still be edited
+  // by callers, so calculate their minimum without caching on the token array.
+  let minLength = todo.minLength
+  if (minLength === undefined) {
+    minLength = 0
+    for (const reg of regs) {
+      if (reg.optional !== true && reg.negative !== true) {
+        minLength += 1
+      }
+    }
+  }
   docs: for (let n = 0; n < docs.length; n += 1) {
     const terms = docs[n]
     // let index = terms[0].index || []
@@ -49,12 +59,11 @@ const runMatch = function (docs, todo, cache) {
     }
     //ok, try starting the match now from every term
     for (let i = 0; i < terms.length; i += 1) {
-      const slice = terms.slice(i)
       // ensure it's long-enough
-      if (slice.length < minLength) {
+      if (terms.length - i < minLength) {
         break
       }
-      let res = fromHere(slice, regs, i, terms.length)
+      let res = fromHere(terms, regs, i, terms.length, i)
       // did we find a result?
       if (res) {
         // res = addSentence(res, index[0])

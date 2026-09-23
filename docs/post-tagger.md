@@ -27,6 +27,11 @@ so both can be found before either tag is applied.
 
 Hook deduplication uses rule identity. Two rules sharing a pattern may select
 different captures or apply different actions and must not collapse into one.
+Compilation records hook order and the matcher's minimum pattern length.
+Sweeps look up hooks for words and tags present in the input, then visit those
+hooks in their original order so conflicting tag actions keep their precedence.
+Candidate length, required-word, exclusion, and alternative checks share one
+filtering pass.
 The locative correction uses two ordinary `group`/`tag` rules: one selects the
 preposition and the other selects the verb.
 

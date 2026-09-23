@@ -10,7 +10,7 @@ const doAstrix = function (state) {
 
   const skipto = greedyTo(state, regs[state.r + 1])
   //maybe we couldn't find it
-  if (skipto === null || skipto === 0) {
+  if (skipto === null || skipto === state.offset) {
     return null
   }
   // ensure it's long enough

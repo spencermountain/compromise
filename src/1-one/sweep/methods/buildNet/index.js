@@ -19,8 +19,12 @@ const buildNet = function (matches, world) {
       hooks[str].push(obj)
     })
   })
-  // remove duplicates
-  Object.keys(hooks).forEach(k => {
+  // Record enumeration order, including numeric keys, so input-driven lookup
+  // can preserve the order in which tag actions have always been applied.
+  const hookOrder = Object.create(null)
+  Object.keys(hooks).forEach((k, i) => {
+    hookOrder[k] = i
+    // remove duplicates
     const already = new Set()
     hooks[k] = hooks[k].filter(obj => {
       if (already.has(obj)) {
@@ -35,6 +39,7 @@ const buildNet = function (matches, world) {
   const always = matches.filter(o => o.needs.length === 0 && o.wants.length === 0)
   return {
     hooks,
+    hookOrder,
     always
   }
 }

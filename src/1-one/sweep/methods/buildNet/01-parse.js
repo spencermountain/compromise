@@ -78,6 +78,9 @@ const parse = function (matches, world) {
     obj.minWant = count
     // get rid of tiny sentences
     obj.minWords = obj.regs.filter(o => !o.optional).length
+    // The matcher excludes negative tokens from its own minimum. Cache that
+    // separately rather than changing the sweep's existing length filter.
+    obj.minLength = obj.regs.filter(o => o.optional !== true && o.negative !== true).length
   })
   return matches
 }

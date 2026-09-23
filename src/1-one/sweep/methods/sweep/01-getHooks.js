@@ -1,21 +1,29 @@
 // for each cached-sentence, find a list of possible matches
-const getHooks = function (docCaches, hooks) {
-  return docCaches.map((set, i) => {
-    let maybe = []
-    Object.keys(hooks).forEach(k => {
-      if (docCaches[i].has(k)) {
-        maybe = maybe.concat(hooks[k])
+const getHooks = function (docCaches, hooks, hookOrder) {
+  // Older compiled nets may not include the precomputed hook order.
+  if (!hookOrder) {
+    hookOrder = Object.create(null)
+    Object.keys(hooks).forEach((k, i) => { hookOrder[k] = i })
+  }
+  return docCaches.map(set => {
+    const keys = []
+    set.forEach(k => {
+      if (typeof hookOrder[k] === 'number') {
+        keys.push(k)
       }
     })
-    // remove duplicates
+    keys.sort((a, b) => hookOrder[a] - hookOrder[b])
+    // Append each rule once, without concatenating and then filtering buckets.
+    const maybe = []
     const already = new Set()
-    maybe = maybe.filter(m => {
-      if (already.has(m)) {
-        return false
+    for (const k of keys) {
+      for (const m of hooks[k]) {
+        if (!already.has(m)) {
+          already.add(m)
+          maybe.push(m)
+        }
       }
-      already.add(m)
-      return true
-    })
+    }
     return maybe
   })
 }

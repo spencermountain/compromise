@@ -1,32 +1,14 @@
 import getHooks from './01-getHooks.js'
 import trimDown from './02-trim-down.js'
-// import getWants from './03-get-wants.js'
 import runMatch from './04-runMatch.js'
-
-
-const tooSmall = function (maybeList, document) {
-  return maybeList.map((arr, i) => {
-    const termCount = document[i].length
-    arr = arr.filter(o => {
-      return termCount >= o.minWords
-    })
-    return arr
-  })
-}
 
 const sweep = function (document, net, methods, opts = {}) {
   // find suitable matches to attempt, on each sentence
   const docCache = methods.one.cacheDoc(document)
   // collect possible matches for this document
-  let maybeList = getHooks(docCache, net.hooks)
+  let maybeList = getHooks(docCache, net.hooks, net.hookOrder)
   // ensure all defined needs are met for each match
-  maybeList = trimDown(maybeList, docCache, document)
-  // add unchacheable matches to each sentence's todo-list
-  if (net.always.length > 0) {
-    maybeList = maybeList.map(arr => arr.concat(net.always))
-  }
-  // if we don't have enough words
-  maybeList = tooSmall(maybeList, document)
+  maybeList = trimDown(maybeList, docCache, document, net.always)
 
   // now actually run the matches
   const results = runMatch(maybeList, document, docCache, methods, opts)

@@ -5,8 +5,7 @@ const notIf = function (results, not, docs) {
     const [n, start, end] = res.pointer
     const terms = docs[n].slice(start, end)
     for (let i = 0; i < terms.length; i += 1) {
-      const slice = terms.slice(i)
-      const found = fromHere(slice, not, i, terms.length)
+      const found = fromHere(terms, not, i, terms.length, i)
       if (found !== null) {
         return false
       }

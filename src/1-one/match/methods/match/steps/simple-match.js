@@ -10,7 +10,7 @@ const setGroup = function (state, startAt) {
   // Get or create capture group
   const g = getGroup(state, startAt)
   // Update group - add greedy or increment length
-  if (state.t > 1 && reg.greedy) {
+  if (state.t - state.offset > 1 && reg.greedy) {
     g.length += state.t - startAt
   } else {
     g.length++

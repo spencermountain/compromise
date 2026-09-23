@@ -1,14 +1,12 @@
 {
   "name": "compromise-paragraphs",
-  "description": "plugin for nlp-compromise",
   "version": "0.1.0",
+  "description": "plugin for nlp-compromise",
+  "license": "MIT",
+  "repository": "github:spencermountain/compromise",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-paragraphs.min.js",
-  "module": "./builds/compromise-paragraphs.mjs",
   "type": "module",
-  "sideEffects": false,
-  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",
@@ -16,8 +14,10 @@
       "types": "./index.d.ts"
     }
   },
-  "repository": "github:spencermountain/compromise",
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/paragraphs",
+  "main": "./src/plugin.js",
+  "module": "./builds/compromise-paragraphs.mjs",
+  "types": "./index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
@@ -28,9 +28,9 @@
     "builds/",
     "src/"
   ],
+  "devDependencies": {},
   "peerDependencies": {
     "compromise": ">=14.0.0"
   },
-  "devDependencies": {},
-  "license": "MIT"
+  "unpkg": "./builds/compromise-paragraphs.min.js"
 }

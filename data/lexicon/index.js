@@ -138,7 +138,7 @@ for (let i = 0; i < data.length; i++) {
     // }
     const str = list[o]
     //do some linting
-    if (str.match(/[.,0-9-]/) || str.trim().toLowerCase() !== str) {
+    if (/[.,0-9-]/.test(str) || str.trim().toLowerCase() !== str) {
       console.log(`'${str}'`) //eslint-disable-line
     }
     lex[str] = data[i][1]

@@ -1,13 +1,12 @@
 {
   "name": "compromise-payload",
-  "description": "plugin for nlp-compromise",
   "version": "0.0.3",
+  "description": "plugin for nlp-compromise",
+  "license": "MIT",
+  "repository": "github:spencermountain/compromise",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/payload",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-payload.min.js",
   "type": "module",
-  "sideEffects": false,
-  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",
@@ -15,23 +14,24 @@
       "types": "./index.d.ts"
     }
   },
-  "repository": "github:spencermountain/compromise",
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/payload",
+  "main": "./src/plugin.js",
+  "types": "./index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "watch": "node --watch ./scratch.js",
     "build": "rollup -c --silent"
   },
+  "files": [
+    "index.d.ts",
+    "builds/",
+    "src/"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
   "peerDependencies": {
     "compromise": ">=14.2.0"
   },
-  "dependencies": {},
-  "files": [
-    "builds/",
-    "src/",
-    "index.d.ts"
-  ],
-  "devDependencies": {},
-  "license": "MIT"
+  "unpkg": "./builds/compromise-payload.min.js"
 }

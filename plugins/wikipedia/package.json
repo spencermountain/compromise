@@ -1,13 +1,12 @@
 {
   "name": "compromise-wikipedia",
-  "description": "plugin for nlp-compromise",
   "version": "0.1.1",
+  "description": "plugin for nlp-compromise",
+  "license": "MIT",
+  "repository": "github:spencermountain/compromise",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/wikipedia",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-wikipedia.min.js",
   "type": "module",
-  "sideEffects": false,
-  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",
@@ -15,8 +14,9 @@
       "types": "./index.d.ts"
     }
   },
-  "repository": "github:spencermountain/compromise",
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/wikipedia",
+  "main": "./src/plugin.js",
+  "types": "./index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
@@ -26,20 +26,20 @@
     "perf": "node ./scripts/perf.js",
     "build": "rollup -c --silent"
   },
-  "peerDependencies": {
-    "compromise": ">=14.0.0"
-  },
+  "files": [
+    "index.d.ts",
+    "builds/",
+    "src/"
+  ],
   "dependencies": {
     "efrt": "^2.5.0"
   },
-  "files": [
-    "builds/",
-    "src/",
-    "index.d.ts"
-  ],
   "devDependencies": {
     "colorette": "2.0.16",
     "node-wget-promise": "0.1.6"
   },
-  "license": "MIT"
+  "peerDependencies": {
+    "compromise": ">=14.0.0"
+  },
+  "unpkg": "./builds/compromise-wikipedia.min.js"
 }

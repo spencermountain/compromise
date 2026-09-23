@@ -1,4 +1,5 @@
-import { noop, isPlural, isAreAm, doDoes, getSubject, getTense, haveHas, toPerfectAuxiliary } from '../lib.js'
+import convertAuxiliary from './auxiliary.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject, getTense } from '../lib.js'
 const keep = { tags: true }
 
 // walk->walked
@@ -50,8 +51,10 @@ const vbToInf = (vb, parsed) => {
 
 
 const forms = {
+
   // walk
   'infinitive': simple,
+
   // he walks -> he walked
   'simple-present': (vb, parsed) => {
     const { conjugate } = vb.methods.two.transform.verb
@@ -74,8 +77,10 @@ const forms = {
     }
     return vb
   },
+
   // he walked
   'simple-past': simple,
+
   // he will walk -> he walked
   'simple-future': (vb, parsed) => {
     const { root, auxiliary } = parsed
@@ -96,55 +101,22 @@ const forms = {
 
   // is walking ->
   'present-progressive': noop,
+
   // was walking -> is walking
   'past-progressive': (vb, parsed) => {
     const str = isAreAm(vb, parsed)
     return vb.replace('(were|was)', str, keep)
   },
+
   // will be walking -> is walking
   'future-progressive': (vb, parsed) => {
     vb.replace('will', isAreAm(vb, parsed), keep)
     return vb.remove('be')
   },
 
-  // Already present-perfect; retain aspect on repeated conversions.
-  'present-perfect': noop,
-
-  // had walked -> has walked
-  'past-perfect': (vb, parsed) => vb.replace('had', haveHas(vb, parsed), keep),
-  // will have walked -> has walked
-  'future-perfect': (vb, parsed) => toPerfectAuxiliary(vb, haveHas(vb, parsed)),
-
-  // has been walking
-  'present-perfect-progressive': noop,
-  // had been walking
-  'past-perfect-progressive': (vb, parsed) => vb.replace('had', haveHas(vb, parsed), keep),
-  // will have been -> has been
-  'future-perfect-progressive': (vb, parsed) => toPerfectAuxiliary(vb, haveHas(vb, parsed)),
-
-  // got walked -> is walked
-  // was walked -> is walked
-  // had been walked -> is walked
-  'passive-past': (vb, parsed) => {
-    const str = isAreAm(vb, parsed)
-    if (vb.has('(had|have|has)') && vb.has('been')) {
-      return vb.replace('(had|have|has)', haveHas(vb, parsed), keep)
-    }
-    return vb.replace('(got|was|were)', str)
-  },
-  // is being walked  ->
-  'passive-present': noop,
-  // Change the finite auxiliary without introducing or removing aspect.
-  'passive-future': (vb, parsed) => {
-    if (parsed.auxiliary.has('have')) {
-      return toPerfectAuxiliary(vb, haveHas(vb, parsed))
-    }
-    vb.replace('will', isAreAm(vb, parsed))
-    return vb.remove('be')
-  },
-
   // would be walked ->
   'present-conditional': noop,
+
   // would have been walked ->
   'past-conditional': vb => {
     vb.replace('been', 'be')
@@ -163,7 +135,7 @@ const forms = {
     vb.remove('(going|to)')
     return vb
   },
-  // used to walk -> is walking
+
   // did walk -> is walking
   'auxiliary-past': (vb, parsed) => {
     // 'did provide' -> 'does provide'
@@ -176,22 +148,26 @@ const forms = {
     vb.replace(parsed.auxiliary, 'is')
     return vb
   },
+
   // we do walk ->
   'auxiliary-present': noop,
 
   // must walk -> 'must have walked'
   'modal-infinitive': noop,
+
   // must have walked
   'modal-past': (vb, parsed) => {
     vbToInf(vb, parsed)
     return vb.remove('have')
   },
+
   // started looking
   'gerund-phrase': (vb, parsed) => {
     parsed.root = parsed.root.not('#Gerund$')
     simple(vb, parsed)
     return vb.remove('(will|have)')
   },
+
   // wanted to walk
   'want-infinitive': (vb, parsed) => {
     let str = 'wants'
@@ -205,6 +181,8 @@ const forms = {
 }
 
 const toPresent = function (vb, parsed, form) {
+  const converted = convertAuxiliary(vb, parsed, form, 'present')
+  if (converted) return converted
   // console.log(form)
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)

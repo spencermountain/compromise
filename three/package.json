@@ -2,10 +2,9 @@
   "name": "compromise-three",
   "version": "0.0.0",
   "description": "This is a stub package.json for old bundlers",
+  "license": "MIT",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
-  "module": "./../src/three.js",
-  "main": "./../src/three.js",
-  "types": "./../types/three.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -19,7 +18,8 @@
       }
     }
   },
-  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "license": "MIT",
+  "main": "./../src/three.js",
+  "module": "./../src/three.js",
+  "types": "./../types/three.d.ts",
   "sideEffects": false
 }

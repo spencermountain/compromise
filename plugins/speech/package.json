@@ -1,14 +1,12 @@
 {
   "name": "compromise-speech",
-  "description": "plugin for nlp-compromise",
   "version": "0.1.1",
+  "description": "plugin for nlp-compromise",
+  "license": "MIT",
+  "repository": "github:spencermountain/compromise",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/speech",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-speech.min.js",
-  "module": "./builds/compromise-speech.mjs",
   "type": "module",
-  "sideEffects": false,
-  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./src/plugin.js",
@@ -16,8 +14,10 @@
       "types": "./index.d.ts"
     }
   },
-  "repository": "github:spencermountain/compromise",
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/speech",
+  "main": "./src/plugin.js",
+  "module": "./builds/compromise-speech.mjs",
+  "types": "./index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
@@ -25,14 +25,14 @@
     "build": "rollup -c --silent"
   },
   "files": [
+    "index.d.ts",
     "builds/",
-    "src/",
-    "index.d.ts"
+    "src/"
   ],
+  "dependencies": {},
+  "devDependencies": {},
   "peerDependencies": {
     "compromise": ">=14.0.0"
   },
-  "dependencies": {},
-  "devDependencies": {},
-  "license": "MIT"
+  "unpkg": "./builds/compromise-speech.min.js"
 }

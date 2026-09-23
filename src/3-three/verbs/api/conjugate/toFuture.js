@@ -1,3 +1,4 @@
+import convertAuxiliary from './auxiliary.js'
 import { noop, getTense, isAreAm } from '../lib.js'
 const keep = { tags: true }
 
@@ -40,24 +41,6 @@ const progressive = (vb, parsed) => {
   return vb
 }
 
-// Change the finite auxiliary without dropping passive or progressive aspect.
-const passive = (vb, parsed) => {
-  const finite = vb.match('(is|are|am|was|were|has|have|had)').first()
-  if (!finite.found) {
-    return vb
-  }
-  const perfect = finite.has('(has|have|had)')
-  finite.replaceWith('will')
-  const next = vb.match('(being|been)').first()
-  if (next.found) {
-    next.insertBefore(perfect ? 'have' : 'be')
-  } else {
-    vb.match(parsed.root).insertBefore('be')
-  }
-  vb.match('(will|have|be)').tag('Auxiliary')
-  return vb
-}
-
 const forms = {
   // walk ->
   'infinitive': simple,
@@ -75,37 +58,6 @@ const forms = {
   // will be walking ->
   'future-progressive': noop,
 
-  // has walked ->
-  'present-perfect': (vb) => {
-    vb.match('(have|has)').replaceWith('will have')
-    return vb
-  },
-  // had walked ->
-  'past-perfect': vb => vb.replace('(had|has)', 'will have'),
-  // will have walked ->
-  'future-perfect': noop,
-
-  // has been walking
-  'present-perfect-progressive': vb => vb.replace('(has|have)', 'will have'),
-  // had been walking
-  'past-perfect-progressive': vb => vb.replace('had', 'will have'),
-  // will have been ->
-  'future-perfect-progressive': noop,
-
-  // got walked ->
-  // was walked ->
-  // was being walked ->
-  // had been walked ->
-  'passive-past': (vb, parsed) => {
-    if (vb.has('got')) {
-      return vb.replace('got', 'will get')
-    }
-    return passive(vb, parsed)
-  },
-  // is being walked  ->
-  'passive-present': passive,
-  // will be walked ->
-  'passive-future': noop,
   // would be walked ->
   'present-conditional': vb => vb.replace('would', 'will'),
   // would have been walked ->
@@ -147,6 +99,8 @@ const forms = {
 }
 
 const toFuture = function (vb, parsed, form) {
+  const converted = convertAuxiliary(vb, parsed, form, 'future')
+  if (converted) return converted
   // console.log(form)
   // is it already future-tense?
   if (vb.has('will')) {

@@ -1,4 +1,5 @@
-import { noop, getTense, haveHas, toPerfectAuxiliary } from '../lib.js'
+import convertAuxiliary from './auxiliary.js'
+import { noop, getTense, haveHas } from '../lib.js'
 
 // walk-> has walked
 const simple = (vb, parsed) => {
@@ -42,22 +43,6 @@ const simple = (vb, parsed) => {
 
 
 
-// Keep the passive participle and any progressive 'being'.
-const passive = (vb, parsed) => {
-  if (parsed.auxiliary.has('(have|has|had)')) {
-    return vb
-  }
-  const have = haveHas(vb, parsed)
-  vb.replace('(is|are|am|was|were|got)', have)
-  const being = vb.match('being')
-  if (being.found) {
-    being.insertBefore('been')
-  } else {
-    vb.match(parsed.root).insertBefore('been')
-  }
-  vb.match('been').tag('Auxiliary')
-  return vb
-}
 
 const progressive = (vb, parsed) => {
   const have = haveHas(vb, parsed)
@@ -72,12 +57,13 @@ const progressive = (vb, parsed) => {
 }
 
 const forms = {
+
   // walk -> walked
   'infinitive': simple,
+
   // he walks -> he walked
   'simple-present': simple,
-  // he walked
-  // 'simple-past': noop,
+
   // he will walk -> he walked
   'simple-future': (vb, parsed) => {
     const { conjugate, toInfinitive } = vb.methods.two.transform.verb
@@ -89,44 +75,16 @@ const forms = {
 
   // he is walking
   'present-progressive': progressive,
+
   // he was walking
   'past-progressive': progressive,
+
   // he will be walking
   'future-progressive': progressive,
 
-  // has walked -> had walked (?)
-  'present-perfect': noop,
-  // had walked
-  'past-perfect': noop,
-  // will have walked -> had walked
-  'future-perfect': (vb, parsed) => toPerfectAuxiliary(vb, haveHas(vb, parsed)),
-
-  // has been walking -> had been
-  'present-perfect-progressive': noop,
-  // had been walking
-  'past-perfect-progressive': noop,
-  // will have been -> had
-  'future-perfect-progressive': noop,
-
-  // got walked -> has been walked
-  'passive-past': passive,
-  // is being walked -> has been being walked
-  'passive-present': passive,
-  // will be walked -> has been walked
-  'passive-future': (vb, parsed) => {
-    const have = haveHas(vb, parsed)
-    if (parsed.auxiliary.has('have')) {
-      vb.remove('have')
-      return vb.replace('will', have)
-    }
-    vb.replace('will', have)
-    vb.replace('be', 'been')
-    vb.match('been').tag('Auxiliary')
-    return vb
-  },
-
   // would be walked -> 'would have been walked'
   'present-conditional': vb => vb.replace('be', 'have been'),
+
   // would have been walked
   'past-conditional': noop,
 
@@ -138,10 +96,6 @@ const forms = {
     vb.match('(have|has|been|going|to|be)').tag('Auxiliary')
     return vb
   },
-  // used to walk
-  // 'auxiliary-past': noop,
-  // we do walk -> we did walk
-  // 'auxiliary-present': noop,
 
   // must walk -> 'must have walked'
   'modal-infinitive': (vb, parsed) => {
@@ -152,6 +106,7 @@ const forms = {
     vb.match('have').tag('Auxiliary')
     return vb
   },
+
   // must have walked
   'modal-past': noop,
   'modal-perfect-progressive': noop,
@@ -162,6 +117,8 @@ const forms = {
 }
 
 const toParticiple = function (vb, parsed, form) {
+  const converted = convertAuxiliary(vb, parsed, form, 'participle')
+  if (converted) return converted
   // console.log(form)
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)

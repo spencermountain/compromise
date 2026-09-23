@@ -2,10 +2,9 @@
   "name": "compromise-two",
   "version": "0.0.0",
   "description": "This is a stub package.json for old bundlers",
+  "license": "MIT",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
-  "module": "./../src/two.js",
-  "main": "./../src/two.js",
-  "types": "./../types/two.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -19,7 +18,8 @@
       }
     }
   },
-  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "license": "MIT",
+  "main": "./../src/two.js",
+  "module": "./../src/two.js",
+  "types": "./../types/two.d.ts",
   "sideEffects": false
 }

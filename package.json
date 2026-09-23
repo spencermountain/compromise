@@ -1,24 +1,12 @@
 {
-  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "name": "compromise",
-  "description": "modest natural language processing",
   "version": "14.17.0",
-  "module": "./src/three.js",
-  "main": "./src/three.js",
-  "unpkg": "./builds/compromise.js",
+  "description": "modest natural language processing",
+  "license": "MIT",
+  "repository": "github:spencermountain/compromise",
+  "homepage": "https://compromise.cool",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
-  "sideEffects": false,
-  "types": "./types/three.d.ts",
-  "typesVersions": {
-    "*": {
-      "misc": [
-        "types/misc.d.ts"
-      ],
-      "view/*": [
-        "types/view/*.d.ts"
-      ]
-    }
-  },
   "exports": {
     ".": {
       "import": {
@@ -103,8 +91,10 @@
       }
     }
   },
-  "repository": "github:spencermountain/compromise",
-  "homepage": "https://compromise.cool",
+  "main": "./src/three.js",
+  "module": "./src/three.js",
+  "types": "./types/three.d.ts",
+  "sideEffects": false,
   "engines": {
     "node": ">=12.0.0"
   },
@@ -132,29 +122,21 @@
     "plugins:build": "node ./scripts/plugins.js --pm run build"
   },
   "files": [
-    "builds/",
-    "types/",
-    "src/",
-    "tokenize/",
-    "one/",
-    "two/",
-    "three/",
-    "docs/",
-    "skills/",
     "AGENTS.md",
-    "llms.txt"
+    "builds/",
+    "docs/",
+    "llms.txt",
+    "one/",
+    "skills/",
+    "src/",
+    "three/",
+    "tokenize/",
+    "two/",
+    "types/"
   ],
   "keywords": [
     "nlp"
   ],
-  "prettier": {
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true,
-    "printWidth": 120,
-    "arrowParens": "avoid"
-  },
   "dependencies": {
     "efrt": "2.7.0",
     "grad-school": "0.0.5",
@@ -175,5 +157,23 @@
     "tape": "5.10.2",
     "typescript": "7.0.2"
   },
-  "license": "MIT"
+  "unpkg": "./builds/compromise.js",
+  "typesVersions": {
+    "*": {
+      "misc": [
+        "types/misc.d.ts"
+      ],
+      "view/*": [
+        "types/view/*.d.ts"
+      ]
+    }
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 120,
+    "arrowParens": "avoid"
+  }
 }

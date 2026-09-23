@@ -2,10 +2,9 @@
   "name": "compromise-tokenize",
   "version": "14.14.3",
   "description": "",
+  "license": "MIT",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
-  "module": "./../src/one.js",
-  "main": "./../src/one.js",
-  "types": "./../types/one.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -19,7 +18,8 @@
       }
     }
   },
-  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "license": "MIT",
+  "main": "./../src/one.js",
+  "module": "./../src/one.js",
+  "types": "./../types/one.d.ts",
   "sideEffects": false
 }

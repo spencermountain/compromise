@@ -67,13 +67,6 @@ const haveHas = function (vb, parsed) {
   return 'have'
 }
 
-// Replace the finite future auxiliary in place, preserving negation and adverbs.
-const toPerfectAuxiliary = (vb, auxiliary) => {
-  vb.remove('have')
-  vb.replace('will', auxiliary)
-  return vb
-}
-
 const getTense = function (m) {
   if (m.has('#Infinitive')) {
     return 'Infinitive'
@@ -114,4 +107,4 @@ const noWill = (vb) => {
   return vb.remove('will')
 }
 
-export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense, wasWere, noWill, haveHas, toPerfectAuxiliary }
+export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense, wasWere, noWill, haveHas }

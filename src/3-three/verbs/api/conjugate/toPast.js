@@ -1,4 +1,5 @@
-import { noop, getTense, wasWere, noWill, toPerfectAuxiliary } from '../lib.js'
+import convertAuxiliary from './auxiliary.js'
+import { noop, getTense, wasWere, noWill } from '../lib.js'
 const keep = { tags: true }
 
 const fns = {
@@ -51,11 +52,6 @@ const fns = {
     return vb
   },
 
-  hasHad: vb => {
-    vb.replace('(has|have)', 'had', keep)
-    return vb
-  },
-
   // some verbs have this weird past-tense form
   // drive -> driven, (!drove)
   hasParticiple: (vb, parsed) => {
@@ -72,12 +68,16 @@ const fns = {
 
 
 const forms = {
+
   // walk -> walked
   'infinitive': fns.simple,
+
   // he walks -> he walked
   'simple-present': fns.simple,
+
   // he walked
   'simple-past': noop,
+
   // he will walk -> he walked
   'simple-future': fns.both,
 
@@ -87,57 +87,14 @@ const forms = {
     vb.replace('(is|are|am)', 'was', keep)
     return vb
   },
+
   // he was walking
   'past-progressive': noop,
+
   // he will be walking
   'future-progressive': (vb, parsed) => {
     vb.replace('will', wasWere(vb, parsed), keep)
     vb.remove('be')
-    return vb
-  },
-
-  // has walked -> had walked (?)
-  'present-perfect': fns.hasHad,
-  // had walked
-  'past-perfect': noop,
-  // will have walked -> had walked
-  'future-perfect': vb => toPerfectAuxiliary(vb, 'had'),
-
-  // has been walking -> had been
-  'present-perfect-progressive': fns.hasHad,
-  // had been walking
-  'past-perfect-progressive': noop,
-  // will have been -> had
-  'future-perfect-progressive': vb => toPerfectAuxiliary(vb, 'had'),
-
-  // got walked
-  'passive-past': vb => {
-    // 'have been walked' -> 'had been walked'
-    vb.replace('have', 'had', keep)
-    return vb
-  },
-  // is being walked  -> 'was being walked'
-  'passive-present': (vb, parsed) => {
-    vb.replace('(is|are|am)', wasWere(vb, parsed), keep)
-    vb.replace('(has|have)', 'had', keep)
-    return vb
-  },
-  // will be walked -> had been walked
-  'passive-future': (vb, parsed) => {
-    if (parsed.auxiliary.has('be') && parsed.auxiliary.has('being')) {
-      vb.replace('will', wasWere(vb, parsed), keep)
-      vb.remove('be')
-      return vb
-    }
-    if (parsed.auxiliary.has('will') && parsed.auxiliary.has('be')) {
-      vb.replace('will', 'had')
-      vb.replace('be', 'been')
-      return vb
-    }
-    // will have been walked -> had been walked
-    if (parsed.auxiliary.has('have') && parsed.auxiliary.has('been')) {
-      return toPerfectAuxiliary(vb, 'had')
-    }
     return vb
   },
 
@@ -146,6 +103,7 @@ const forms = {
     vb.replace('be', 'have been')
     return vb
   },
+
   // would have been walked
   'past-conditional': noop,
 
@@ -154,8 +112,10 @@ const forms = {
     vb.replace('(is|are|am)', wasWere(vb, parsed), keep)
     return vb
   },
+
   // used to walk
   'auxiliary-past': noop,
+
   // we do walk -> we did walk
   'auxiliary-present': vb => {
     vb.replace('(do|does)', 'did', keep)
@@ -180,14 +140,17 @@ const forms = {
     }
     return vb
   },
+
   // must have walked
   'modal-past': noop,
+
   // wanted to walk
   'want-infinitive': vb => {
     vb.replace('(want|wants)', 'wanted', keep)
     vb.remove('will')
     return vb
   },
+
   // started looking
   'gerund-phrase': (vb, parsed) => {
     parsed.root = parsed.root.not('#Gerund$')
@@ -198,6 +161,8 @@ const forms = {
 }
 
 const toPast = function (vb, parsed, form) {
+  const converted = convertAuxiliary(vb, parsed, form, 'past')
+  if (converted) return converted
   // console.log(form)
   if (forms.hasOwnProperty(form)) {
     vb = forms[form](vb, parsed)

@@ -1,14 +1,12 @@
 {
   "name": "compromise-dates",
-  "description": "plugin for nlp-compromise",
   "version": "3.9.0",
+  "description": "plugin for nlp-compromise",
+  "license": "MIT",
+  "repository": "github:spencermountain/compromise",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-dates.min.js",
-  "module": "./builds/compromise-dates.mjs",
   "type": "module",
-  "sideEffects": false,
-  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -21,8 +19,10 @@
       }
     }
   },
-  "repository": "github:spencermountain/compromise",
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
+  "main": "./src/plugin.js",
+  "module": "./builds/compromise-dates.mjs",
+  "types": "./index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
     "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
@@ -32,17 +32,17 @@
     "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
-    "builds/",
-    "src/",
     "index.d.ts",
-    "index.d.cts"
+    "index.d.cts",
+    "builds/",
+    "src/"
   ],
-  "peerDependencies": {
-    "compromise": ">=14.2.0"
-  },
   "dependencies": {
     "spacetime": "^7.14.0",
     "spacetime-holiday": "0.3.0"
   },
-  "license": "MIT"
+  "peerDependencies": {
+    "compromise": ">=14.2.0"
+  },
+  "unpkg": "./builds/compromise-dates.min.js"
 }

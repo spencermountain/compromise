@@ -11,3 +11,6 @@ catalog:
   'tap-dancer': '0.4.0'
   'tape': '5.10.2'
   '@rollup/plugin-terser': '1.0.0'
+
+minimumReleaseAgeExclude:
+  - rollup-plugin-filesize-check@2.0.0

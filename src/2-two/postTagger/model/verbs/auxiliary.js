@@ -33,6 +33,8 @@ export default [
   { match: '[used to] #PresentTense', group: 0, tag: 'Auxiliary', reason: 'used-to-walk' },
   // was going to walk
   { match: '#Copula (#Adverb|not)+? [going to] #Adverb+? #PresentTense', group: 0, tag: 'Auxiliary', reason: 'going-to-walk' },
+  // going to be watched (regular participles may only carry PastTense)
+  { match: 'going to (#Adverb|not)+? [be] (#Adverb|not)+? #PastTense', group: 0, tag: 'Auxiliary', reason: 'going-to-be-watched' },
   // tell me
   { match: '#Imperative [(me|him|her)]', group: 0, tag: 'Reflexive', reason: 'tell-him' },
   // there is no x

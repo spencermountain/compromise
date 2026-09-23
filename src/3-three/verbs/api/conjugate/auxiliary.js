@@ -1,11 +1,22 @@
 import readAuxiliary from '../parse/auxiliary.js'
 import parseVerb from '../parse/index.js'
-import { haveHas, isAreAm, wasWere } from '../lib.js'
+import { getTense, haveHas, isAreAm, wasWere } from '../lib.js'
 
 // Decide the auxiliary chain independently of adverbs and negation.
 const plan = function (chain, target, vb, parsed) {
   const { finite, passive, progressive, words } = chain
   let perfect = chain.perfect
+  if (chain.modal || chain.prospective) {
+    if (target === 'participle') {
+      if (perfect) return words
+      const prefix = words.slice(0, chain.prefixLength)
+      const tail = words.slice(chain.prefixLength)
+      if (tail[0] === 'be') tail[0] = 'been'
+      return [...prefix, 'have', ...tail]
+    }
+    const head = target === 'past' ? wasWere(vb, parsed) : isAreAm(vb, parsed)
+    return [head, ...words.slice(1)]
+  }
   if (target === 'present' && /^(has|have|is|are|am)$/.test(finite)) return words
   if (target === 'past' && /^(had|was|were|got)$/.test(finite)) return words
   if (target === 'future' && finite === 'will') return words
@@ -81,6 +92,10 @@ const write = function (vb, parsed, words, target, passive) {
 const convertAuxiliary = function (vb, parsed, form, target) {
   const chain = readAuxiliary(parsed, form)
   if (!chain) return null
+  // Retain existing modal tense policy and the established simple/progressive
+  // going-to handlers. New nested going-to forms change only their finite head.
+  if (chain.modal && target !== 'participle') return null
+  if (chain.prospective && !chain.perfect && !chain.passive && form === 'auxiliary-future') return null
   const words = plan(chain, target, vb, parsed)
   if (words.join(' ') === chain.words.join(' ')) return vb
   // .parse() expands contractions on a clone. Expand the live selection only
@@ -88,7 +103,14 @@ const convertAuxiliary = function (vb, parsed, form, target) {
   // A contraction's subject can sit just outside the verb selection ('he'd').
   vb.growLeft('@hasContraction+').contractions().expand()
   const live = parseVerb(vb)
+  const root = vb.match(live.root).harden()
   write(vb, live, chain.words, words, chain.passive)
+  if (chain.modal && !chain.perfect && !chain.passive && !chain.progressive) {
+    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
+    const infinitive = toInfinitive(live.root.text('normal'), vb.model, getTense(live.root))
+    const forms = conjugate(infinitive, vb.model)
+    root.replaceWith(forms.Participle || forms.PastTense)
+  }
   vb.fullSentence().compute(['tagger', 'chunks'])
   return vb
 }

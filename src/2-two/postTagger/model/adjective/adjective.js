@@ -1,4 +1,6 @@
 export default [
+  // off-white is a colour, not the particle in 'is off'
+  { match: '(off && #Hyphenated) white', tag: 'Adjective', reason: 'off-white' },
   // all fell apart
   { match: '[(all|both)] #Determiner #Noun', group: 0, tag: 'Noun', reason: 'all-noun' },
   //sometimes not-adverbs

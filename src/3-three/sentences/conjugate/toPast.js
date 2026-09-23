@@ -2,8 +2,8 @@ const toPast = function (s) {
   let verbs = s.verbs()
   // translate the first verb, no-stress
   const first = verbs.eq(0)
-  // already past
-  if (first.has('#PastTense')) {
+  // A passive participle does not make its auxiliary past tense.
+  if (first.has('#PastTense') && !first.has('#Auxiliary')) {
     return s
   }
   first.toPastTense()

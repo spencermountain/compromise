@@ -44,6 +44,23 @@ const simple = (vb, parsed) => {
 
 
 
+// Keep the passive participle and any progressive 'being'.
+const passive = (vb, parsed) => {
+  if (parsed.auxiliary.has('(have|has|had)')) {
+    return vb
+  }
+  const have = haveHas(vb, parsed)
+  vb.replace('(is|are|am|was|were|got)', have)
+  const being = vb.match('being')
+  if (being.found) {
+    being.insertBefore('been')
+  } else {
+    vb.match(parsed.root).insertBefore('been')
+  }
+  vb.match('been').tag('Auxiliary')
+  return vb
+}
+
 const forms = {
   // walk -> walked
   'infinitive': simple,
@@ -75,17 +92,27 @@ const forms = {
   // will have been -> had
   'future-perfect-progressive': noop,
 
-  // got walked
-  // 'passive-past': noop,
-  // is being walked  -> 'was being walked'
-  // 'passive-present': noop,
-  // will be walked -> had been walked
-  // 'passive-future': noop,
+  // got walked -> has been walked
+  'passive-past': passive,
+  // is being walked -> has been being walked
+  'passive-present': passive,
+  // will be walked -> has been walked
+  'passive-future': (vb, parsed) => {
+    const have = haveHas(vb, parsed)
+    if (parsed.auxiliary.has('have')) {
+      vb.remove('have')
+      return vb.replace('will', have)
+    }
+    vb.replace('will', have)
+    vb.replace('be', 'been')
+    vb.match('been').tag('Auxiliary')
+    return vb
+  },
 
   // would be walked -> 'would have been walked'
-  // 'present-conditional': noop,
+  'present-conditional': vb => vb.replace('be', 'have been'),
   // would have been walked
-  // 'past-conditional': noop,
+  'past-conditional': noop,
 
   // is going to drink -> was going to drink
   // 'auxiliary-future': noop,

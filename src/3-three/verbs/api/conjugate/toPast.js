@@ -124,8 +124,8 @@ const forms = {
     return vb
   },
   // is being walked  -> 'was being walked'
-  'passive-present': vb => {
-    vb.replace('(is|are)', 'was', keep)
+  'passive-present': (vb, parsed) => {
+    vb.replace('(is|are|am)', wasWere(vb, parsed), keep)
     return vb
   },
   // will be walked -> had been walked

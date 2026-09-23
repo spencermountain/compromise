@@ -56,7 +56,7 @@ test('toPast:', function (t) {
     ['had been walked', 'had been walked'],
     ['have been walked', 'had been walked'],
     ['is walked', 'was walked'],
-    ['are walked', 'was walked'],
+    ['are walked', 'were walked'],
     ['is being walked', 'was being walked'],
     // ['has been walked', 'had been walked'],
     ['had been walked', 'had been walked'],

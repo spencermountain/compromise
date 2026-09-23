@@ -23,7 +23,7 @@
       }
     }
   },
-  "main": "./src/plugin.js",
+  "main": "./builds/compromise-speed.cjs",
   "module": "./builds/compromise-speed.mjs",
   "types": "./index.d.ts",
   "sideEffects": false,
@@ -53,5 +53,8 @@
   "peerDependencies": {
     "compromise": "workspace:*"
   },
-  "unpkg": "./builds/compromise-speed.min.js"
+  "unpkg": "./builds/compromise-speed.min.js",
+  "dependencies": {
+    "@types/node": "catalog:"
+  }
 }

@@ -23,7 +23,7 @@
       }
     }
   },
-  "main": "./src/plugin.js",
+  "main": "./builds/compromise-speech.cjs",
   "module": "./builds/compromise-speech.mjs",
   "types": "./index.d.ts",
   "sideEffects": false,

@@ -23,7 +23,7 @@
       }
     }
   },
-  "main": "./src/plugin.js",
+  "main": "./builds/compromise-dates.cjs",
   "module": "./builds/compromise-dates.mjs",
   "types": "./index.d.ts",
   "sideEffects": false,

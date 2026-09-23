@@ -23,7 +23,7 @@
       }
     }
   },
-  "main": "./src/plugin.js",
+  "main": "./builds/compromise-stats.cjs",
   "module": "./builds/compromise-stats.mjs",
   "types": "./index.d.ts",
   "sideEffects": false,

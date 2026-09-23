@@ -3,6 +3,7 @@ packages:
 
 # Shared versions for the root library and maintained plugins.
 catalog:
+  '@types/node': '^26.6.2'
   '@rollup/plugin-node-resolve': '16.0.3'
   '@rollup/plugin-terser': '1.0.0'
   'rollup': '4.63.4'

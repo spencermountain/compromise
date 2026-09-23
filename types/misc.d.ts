@@ -68,7 +68,7 @@ export interface Plugin {
   tags?: object,
   words?: object,
   frozen?: {[key: string]: string},
-  lib?: () => object,
+  lib?: object,
   api?: (fn: (view: any) => {}) => void,  //should be View
   mutate?: (fn: (world: object) => {}) => void,
 }

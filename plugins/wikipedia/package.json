@@ -23,7 +23,7 @@
       }
     }
   },
-  "main": "./src/plugin.js",
+  "main": "./builds/compromise-wikipedia.cjs",
   "types": "./index.d.ts",
   "sideEffects": false,
   "scripts": {
@@ -58,5 +58,6 @@
   "peerDependencies": {
     "compromise": "workspace:*"
   },
-  "unpkg": "./builds/compromise-wikipedia.min.js"
+  "unpkg": "./builds/compromise-wikipedia.min.js",
+  "module": "./builds/compromise-wikipedia.mjs"
 }

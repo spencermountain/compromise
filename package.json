@@ -148,7 +148,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "catalog:",
     "@rollup/plugin-terser": "catalog:",
-    "@types/node": "^26.6.2",
+    "@types/node": "catalog:",
     "cross-env": "catalog:",
     "eslint": "10.11.0",
     "eslint-plugin-regexp": "3.3.1",

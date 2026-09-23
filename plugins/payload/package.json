@@ -23,7 +23,7 @@
       }
     }
   },
-  "main": "./src/plugin.js",
+  "main": "./builds/compromise-payload.cjs",
   "types": "./index.d.ts",
   "sideEffects": false,
   "scripts": {
@@ -50,5 +50,6 @@
   "peerDependencies": {
     "compromise": "workspace:*"
   },
-  "unpkg": "./builds/compromise-payload.min.js"
+  "unpkg": "./builds/compromise-payload.min.js",
+  "module": "./builds/compromise-payload.mjs"
 }

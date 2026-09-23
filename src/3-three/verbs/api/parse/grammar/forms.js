@@ -162,6 +162,9 @@ const verbForms = {
   ],
 
   // === modals ===
+  'modal-perfect-progressive': [
+    ['^#Modal have been #Gerund$', [past, prog]],
+  ],
   'modal-past': [
     // he could have walked
     ['^#Modal have #PastTense$', [past]],

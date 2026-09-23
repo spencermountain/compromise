@@ -1,4 +1,4 @@
-import { noop, getTense } from '../lib.js'
+import { noop, getTense, isAreAm } from '../lib.js'
 const keep = { tags: true }
 
 const simple = (vb, parsed) => {
@@ -112,7 +112,7 @@ const forms = {
   'past-conditional': vb => vb.replace('would', 'will'),
 
   // is going to drink ->
-  'auxiliary-future': noop,
+  'auxiliary-future': (vb, parsed) => vb.replace('(was|were)', isAreAm(vb, parsed)),
   // used to walk -> is walking
   // did walk -> is walking
   'auxiliary-past': vb => {
@@ -149,7 +149,7 @@ const forms = {
 const toFuture = function (vb, parsed, form) {
   // console.log(form)
   // is it already future-tense?
-  if (vb.has('will') || vb.has('going to')) {
+  if (vb.has('will')) {
     return vb
   }
   if (forms.hasOwnProperty(form)) {

@@ -4,6 +4,17 @@ const findVerbs = function (doc) {
   m = m.not('#Conjunction')
   // by walking
   m = m.not('#Preposition')
+  // Gerunds governed by a preposition are non-finite: 'by swimming'.
+  let gerunds = doc.match('#Preposition (#Adverb|#Negative)+? [#Gerund]', 0)
+  // Extend through coordination, but stop at a finite verb or a new subject.
+  while (gerunds.found) {
+    const next = gerunds.growRight('(and|or) (#Adverb|#Negative)+? #Gerund')
+    if (next.wordCount() === gerunds.wordCount()) {
+      break
+    }
+    gerunds = next
+  }
+  m = m.not(gerunds.terms())
 
 
   m = m.splitAfter('@hasComma')

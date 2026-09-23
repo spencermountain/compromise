@@ -174,7 +174,7 @@ test('toPresent:', function (t) {
 
     // present-perfect -> present hmm
     // [`the yankees had gone`, `the yankees go`],
-    [`the yankees have gone`, `the yankees go`],
+    [`the yankees have gone`, `the yankees have gone`],
     // gerund-phrase
     [`he starts seeing`, `he starts seeing`],
     [`he started seeing`, `he starts seeing`],
@@ -189,12 +189,12 @@ test('toPresent:', function (t) {
     // contractions
     // [`i'm good`, `i'm good`],
     [`i'd go`, `i'd go`],
-    [`i've gone`, `i go`],
-    [`we've gone`, `we go`],
-    [`we've walked`, `we walk`],
+    [`i've gone`, `i've gone`],
+    [`we've gone`, `we've gone`],
+    [`we've walked`, `we've walked`],
     [`he'll go`, `he goes`],
     [`he'll walk`, `he walks`],
-    [`they've seen`, `they see`],
+    [`they've seen`, `they've seen`],
     [`they were good`, 'they are good'],
 
     // ["has been considering a new strategy", `Considers a new strategy`],

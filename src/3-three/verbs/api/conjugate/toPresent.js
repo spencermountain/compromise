@@ -1,4 +1,4 @@
-import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense, haveHas, toPerfectAuxiliary } from '../lib.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject, getTense, haveHas, toPerfectAuxiliary } from '../lib.js'
 const keep = { tags: true }
 
 // walk->walked
@@ -107,26 +107,11 @@ const forms = {
     return vb.remove('be')
   },
 
-  // has walked ->  (?)
-  'present-perfect': (vb, parsed) => {
-    simple(vb, parsed)
-    vb = vb.remove('(have|had|has)')
-    return vb
-  },
+  // Already present-perfect; retain aspect on repeated conversions.
+  'present-perfect': noop,
 
   // had walked -> has walked
-  'past-perfect': (vb, parsed) => {
-    // not 'we has walked'
-    const subj = getSubject(vb, parsed)
-    const m = subj.subject
-    if (isPlural(vb, parsed) || m.has('i')) {
-      vb = toInf(vb, parsed)// we walk
-      vb.remove('had')
-      return vb
-    }
-    vb.replace('had', 'has', keep)
-    return vb
-  },
+  'past-perfect': (vb, parsed) => vb.replace('had', haveHas(vb, parsed), keep),
   // will have walked -> has walked
   'future-perfect': (vb, parsed) => toPerfectAuxiliary(vb, haveHas(vb, parsed)),
 

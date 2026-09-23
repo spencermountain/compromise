@@ -108,11 +108,7 @@ const forms = {
   // had been walking
   'past-perfect-progressive': noop,
   // will have been -> had
-  'future-perfect-progressive': vb => {
-    vb.remove('will')
-    vb.replace('have', 'had', keep)
-    return vb
-  },
+  'future-perfect-progressive': vb => toPerfectAuxiliary(vb, 'had'),
 
   // got walked
   'passive-past': vb => {
@@ -128,14 +124,15 @@ const forms = {
   },
   // will be walked -> had been walked
   'passive-future': (vb, parsed) => {
-    if (vb.has('will (#Adverb|#Negative)+? be being')) {
+    if (parsed.auxiliary.has('be') && parsed.auxiliary.has('being')) {
       vb.replace('will', wasWere(vb, parsed), keep)
       vb.remove('be')
       return vb
     }
-    if (parsed.auxiliary.has('will be')) {
-      vb.match(parsed.root).insertBefore('had been')
-      vb.remove('(will|be)')
+    if (parsed.auxiliary.has('will') && parsed.auxiliary.has('be')) {
+      vb.replace('will', 'had')
+      vb.replace('be', 'been')
+      return vb
     }
     // will have been walked -> had been walked
     if (parsed.auxiliary.has('have') && parsed.auxiliary.has('been')) {

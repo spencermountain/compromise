@@ -11,6 +11,13 @@ const simple = (vb, parsed) => {
   let str = root.text({ keepPunct: false })
   str = toInfinitive(str, vb.model, getTense(root))
   const all = conjugate(str, vb.model)
+  if (str === 'be' && parsed.negative.has('not')) {
+    const have = haveHas(vb, parsed)
+    vb.replace(root, have)
+    vb.match(parsed.negative).insertAfter('been')
+    vb.match(have).tag('Auxiliary')
+    return vb
+  }
   // 'driven' || 'drove'
   str = all.Participle || all.PastTense
 
@@ -147,6 +154,7 @@ const forms = {
   },
   // must have walked
   'modal-past': noop,
+  'modal-perfect-progressive': noop,
   // wanted to walk
   // 'want-infinitive': noop,
   // started looking

@@ -13,6 +13,8 @@ export default [
   // ==== Tense ====
   //he left
   { match: '#Noun #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
+  // she bit her tongue - the noun/verb switch assumes an infinitive
+  { match: '#Noun #Adverb? [(bit && #Infinitive)]', group: 0, tag: 'PastTense', reason: 'bit-past' },
 
   // ==== Copula ====
   //will be running (not copula)

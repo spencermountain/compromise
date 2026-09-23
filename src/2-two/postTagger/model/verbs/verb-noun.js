@@ -1,4 +1,6 @@
 export default [
+  // with heads and arms rolling around
+  { match: '#Preposition #Plural and [%Plural|Verb%] #Gerund', group: 0, tag: 'Plural', reason: 'coordinated-plurals' },
   // do the dance
   { match: '#Infinitive (this|that|the) [#Infinitive]', group: 0, tag: 'Noun', reason: 'do-this-dance' },
   //running-a-show

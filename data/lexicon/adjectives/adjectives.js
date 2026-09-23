@@ -1,5 +1,7 @@
 //adjectives that don't conjugate to superlative/adverb/verb forms
 export default [
+  'brushlike',
+  'polyunsaturated',
   'prima',
   'ultra',
   'extra',

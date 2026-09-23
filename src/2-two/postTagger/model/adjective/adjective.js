@@ -24,6 +24,7 @@ export default [
   // the said card
   { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'the-said-card' },
   // faith-based, much-appreciated, soft-boiled
+  { match: '(#Adjective && #Hyphenated) [(#Hyphenated && #PastTense)]$', group: 0, tag: 'Adjective', reason: 'red-shouldered' },
   { match: '[#Hyphenated (#Hyphenated && #PastTense)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', notIf: '#Adverb', reason: 'faith-based' },
   //self-driving
   { match: '[#Hyphenated (#Hyphenated && #Gerund)] (#Noun|#Conjunction)', group: 0, tag: 'Adjective', notIf: '#Adverb', reason: 'self-driving' },

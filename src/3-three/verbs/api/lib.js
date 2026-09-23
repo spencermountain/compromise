@@ -13,7 +13,7 @@ const isPlural = (vb, parsed) => {
 
 const wasWere = (vb, parsed) => {
   const { subject, plural } = getSubject(vb, parsed)
-  if (plural || subject.has('we')) {
+  if (plural || subject.has('(we|you)')) {
     return 'were'
   }
   return 'was'

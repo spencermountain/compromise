@@ -30,6 +30,7 @@ const adjPast = {
     has: past,
     have: past,
     been: past,
+    being: past, //being watched
     it: past, //it intoxicated him
     as: past, //as requested
     for: jj, //for discounted items

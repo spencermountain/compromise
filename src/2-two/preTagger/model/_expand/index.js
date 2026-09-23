@@ -35,7 +35,7 @@ const switchDefaults = {
   // 'victoria'
   'Person|Place': 'Person',
   // 'rusty'
-  'Person|Adj': 'Comparative',
+  'Person|Adj': 'Comparable',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
   // 'miles'

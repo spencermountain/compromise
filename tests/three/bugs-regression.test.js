@@ -35,17 +35,34 @@ test('snowboarding noun and continuous uses', t => {
   ]) {
     const doc = nlp(input)
     t.ok(doc.has('(snowboarding && #Gerund)'), 'continuous gerund: ' + input)
-    t.ok(doc.verbs().has(phrase), 'complete auxiliary phrase: ' + input,
-      { todo: phrase === 'are going to be snowboarding' })
+    t.ok(doc.verbs().has(phrase), 'complete auxiliary phrase: ' + input)
   }
   t.end()
 })
 
-test('remaining unambiguous tagging bugs from bugs.md', { todo: true }, t => {
+test('tagging regressions from bugs.md', t => {
   t.notOk(nlp('and too many of the rich made their money').has('(rich && #Comparative)'), 'rich is not comparative')
   t.ok(nlp('with heads and arms rolling around').has('(arms && #Plural)'), 'coordinated body parts')
   t.ok(nlp('it bristles outwards, brushlike.').has('(brushlike && #Adjective)'), 'brushlike adjective')
   t.ok(nlp('polyunsaturated').has('#Adjective'), 'polyunsaturated adjective')
   t.ok(nlp('red-shouldered').has('#Adjective #Adjective'), 'standalone compound adjective')
+  t.end()
+})
+
+test('bug fixes preserve nearby grammatical uses', t => {
+  t.ok(nlp('he arms the guards').has('(arms && #Verb)'), 'arms remains a verb with an object')
+  t.ok(nlp('Rich Smith arrived').has('Rich #LastName'), 'Rich remains part of a name')
+  t.ok(nlp('Rich Smith arrived').match('Rich').has('#Person'), 'Rich is a person')
+  t.ok(nlp('richer').has('#Comparative'), 'genuine comparative')
+  t.ok(nlp('richest').has('#Superlative'), 'genuine superlative')
+  t.notOk(nlp('rusty').has('#Comparative'), 'other name/adjective words are not comparative')
+  t.ok(nlp('the watched pot').has('(watched && #Adjective)'), 'attributive watched stays adjective')
+  t.ok(nlp('being kind').has('(kind && #Adjective)'), 'ordinary adjective after being')
+  t.ok(nlp('she shouldered the bag').has('(shouldered && #PastTense)'), 'unhyphenated verb')
+  t.ok(nlp('red-shouldered birds').has('#Adjective #Adjective #Plural'), 'attributive compound')
+  t.deepEqual(nlp('we are going to be swimming').verbs().out('array'),
+    ['are going to be swimming'], 'auxiliary chain stays together')
+  t.deepEqual(nlp('she likes to be pampered').verbs().out('array'),
+    ['likes', 'be pampered'], 'lexical verb and infinitive stay separate')
   t.end()
 })

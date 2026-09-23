@@ -130,6 +130,11 @@ const forms = {
   },
   // will be walked -> had been walked
   'passive-future': (vb, parsed) => {
+    if (vb.has('will (#Adverb|#Negative)+? be being')) {
+      vb.replace('will', wasWere(vb, parsed), keep)
+      vb.remove('be')
+      return vb
+    }
     if (parsed.auxiliary.has('will be')) {
       vb.match(parsed.root).insertBefore('had been')
       vb.remove('(will|be)')

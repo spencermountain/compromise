@@ -75,7 +75,7 @@ test('perfect conversion preserves passive voice and aspect', t => {
   t.end()
 })
 
-test('remaining passive conversion bugs', { todo: true }, t => {
+test('regular and future progressive passive regressions', t => {
   // Assert the intended English, rather than preserving the malformed output.
   const watched = nlp('we are not being watched')
   watched.verbs().toPastParticiple()
@@ -84,5 +84,26 @@ test('remaining passive conversion bugs', { todo: true }, t => {
   const progressive = nlp('they will be being driven')
   progressive.verbs().toPastTense()
   t.equal(progressive.text(), 'they were being driven', 'future passive retains progressive aspect')
+  for (const [input, expected] of [
+    ['you will be being driven', 'you were being driven'],
+    ['she will really be being driven', 'she was really being driven'],
+    ['I will not be being watched.', 'I was not being watched.'],
+  ]) {
+    for (const selection of ['verbs', 'sentences']) {
+      const doc = nlp(input)
+      doc[selection]().toPastTense()
+      t.equal(doc.text(), expected, selection + ': ' + input)
+    }
+  }
+  for (const [input, expected] of [
+    ['she is being watched', 'she has been being watched'],
+    ['they are not being watched', 'they have not been being watched'],
+  ]) {
+    const doc = nlp(input)
+    doc.verbs().toPastParticiple()
+    t.equal(doc.text(), expected, input)
+    doc.verbs().toPastParticiple()
+    t.equal(doc.text(), expected, 'repeated: ' + input)
+  }
   t.end()
 })

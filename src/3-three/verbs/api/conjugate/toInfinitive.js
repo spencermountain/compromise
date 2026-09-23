@@ -1,16 +1,15 @@
-import { doDoes, getTense, isAreAm } from '../lib.js'
+import { infinitive } from './inflect.js'
+import { doDoes, isAreAm } from '../lib.js'
 import parseVerb from '../parse/index.js'
 const keep = { tags: true }
 
 // all verb forms are the same
 const toInf = function (vb, parsed) {
-  const { toInfinitive } = vb.methods.two.transform.verb
   vb.growLeft('@hasContraction+').contractions().expand()
   parsed = parseVerb(vb)
   const { root, auxiliary } = parsed
   const aux = auxiliary.terms().harden()
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
+  const str = infinitive(root)
   // Like negative lexical verbs ('does not walk'), keep an agreeing finite
   // negative copula. English does not use do-support for 'be'.
   if (str === 'be' && parsed.negative.found) {

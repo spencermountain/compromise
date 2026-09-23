@@ -1,4 +1,4 @@
-import { firstGroup } from './coordinate.js'
+import { firstGroup } from './groups.js'
 import { doDoes } from '../lib.js'
 
 const methods = {
@@ -20,6 +20,7 @@ const parseQuestion = function (sentence) {
   const finite = wh ? words.findIndex((word, i) => i > 0 && auxiliary.test(word)) : 0
   if (finite < 0) return null
   if (!auxiliary.test(words[finite]) || (words[finite] === 'will' && terms.eq(finite).has('#Person'))) return null
+  const copula = /^(is|are|am|was|were)$/.test(words[finite])
   let start = finite + 1
   const frontNegative = words[start] === 'not'
   if (frontNegative) start += 1
@@ -33,14 +34,14 @@ const parseQuestion = function (sentence) {
     let noun = false
     for (; end < words.length; end += 1) {
       if (!terms.eq(end).has('(#Determiner|#Adjective|#Noun|#Preposition|#Conjunction)') || terms.eq(end).has('#Verb')) break
-      if (noun && /^(is|are|am|was|were)$/.test(words[finite]) && (terms.eq(end).has('#Adjective') || /ing$/.test(words[end]))) break
+      if (noun && copula && (terms.eq(end).has('#Adjective') || /ing$/.test(words[end]))) break
       noun = noun || terms.eq(end).has('#Noun')
     }
     if (!noun) return null
   }
-  if (end === start || (end >= words.length && !/^(is|are|am|was|were)$/.test(words[finite]))) return null
-  if (!terms.eq(end).has('(#Verb|#Adverb|#Negative)') && !/^(is|are|am|was|were)$/.test(words[finite])) return null
-  return { expanded, terms, words, finite, start, end, frontNegative }
+  if (end === start || (end >= words.length && !copula)) return null
+  if (!terms.eq(end).has('(#Verb|#Adverb|#Negative)') && !copula) return null
+  return { terms, words, finite, start, end, frontNegative }
 }
 
 export const isInverted = sentence => Boolean(parseQuestion(sentence))
@@ -63,10 +64,9 @@ export const questionSelection = function (sentence) {
 
 // Convert a declarative copy, then put only its finite auxiliary back before
 // the subject. The copy uses the same world and existing conversion policies.
-const question = function (sentence, target, selection) {
+const question = function (sentence, target) {
   const q = parseQuestion(sentence)
   if (!q) return null
-  if (selection && questionSelection(sentence).terms().not(selection.terms()).not('#Negative').found) return selection
   const { terms, words, finite, start, end, frontNegative } = q
   const subject = terms.slice(start, end).text()
   const prefix = finite > 0 ? terms.slice(0, finite).text() : ''

@@ -1,16 +1,15 @@
+import { infinitive } from './inflect.js'
 import convertAuxiliary from './auxiliary.js'
-import { noop, getTense, isAreAm } from '../lib.js'
+import { noop, isAreAm } from '../lib.js'
 const keep = { tags: true }
 
 const simple = (vb, parsed) => {
-  const { toInfinitive } = vb.methods.two.transform.verb
   const { root, auxiliary } = parsed
   // 'i may'
   if (root.has('#Modal')) {
     return vb
   }
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
+  const str = infinitive(root)
   if (str === 'be' && parsed.negative.has('not')) {
     vb.replace(root, 'will')
     vb.match(parsed.negative).insertAfter('be')
@@ -25,22 +24,6 @@ const simple = (vb, parsed) => {
   return vb
 }
 
-// 'will be walking'
-const progressive = (vb, parsed) => {
-  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
-  const { root, auxiliary } = parsed
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
-  if (str) {
-    str = conjugate(str, vb.model).Gerund
-    vb.replace(root, str, keep)
-    vb.not('#Particle').tag('PresentTense')
-  }
-  vb.remove(auxiliary)
-  vb.prepend('will be').match('will be').tag('Auxiliary')
-  return vb
-}
-
 const forms = {
   // walk ->
   'infinitive': simple,
@@ -50,13 +33,6 @@ const forms = {
   'simple-past': simple,
   // he will walk ->
   'simple-future': noop,
-
-  // is walking ->
-  'present-progressive': progressive,
-  // was walking ->
-  'past-progressive': progressive,
-  // will be walking ->
-  'future-progressive': noop,
 
   // would be walked ->
   'present-conditional': vb => vb.replace('would', 'will'),

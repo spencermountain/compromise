@@ -7,6 +7,13 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 
+#### 14.18.0 [Sept 2026]
+- **[change]** - manage plugins with pnpm workspace
+- **[change]** - improved regex edge-cases 
+- **[change]** - improved verb conjugation
+- **[update]** - efrt, grad-school dependencies
+- **[fix]** - verb conjugation regression #1226
+
 #### 14.17.0 [Sept 2026]
 - **[change]** - remove redundant re-tagging #1218
 - **[change]** - split japanese/chinese sentences on 。！？ without trailing whitespace

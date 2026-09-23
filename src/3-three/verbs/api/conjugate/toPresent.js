@@ -1,17 +1,16 @@
+import { infinitive, inflect } from './inflect.js'
 import convertAuxiliary from './auxiliary.js'
-import { noop, isPlural, isAreAm, doDoes, getSubject, getTense } from '../lib.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject } from '../lib.js'
 const keep = { tags: true }
 
 // walk->walked
 const simple = (vb, parsed) => {
-  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
+  let str = infinitive(root)
   // 'i walk' vs 'he walks'
   const plural = isPlural(vb, parsed)
   if (plural === false) {
-    str = conjugate(str, vb.model).PresentTense
+    str = inflect(root, 'PresentTense')
   }
   // handle copula
   if (root.has('#Copula')) {
@@ -27,11 +26,8 @@ const simple = (vb, parsed) => {
 }
 
 const toGerund = (vb, parsed) => {
-  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
-  str = conjugate(str, vb.model).Gerund
+  const str = inflect(root, 'Gerund')
   if (str) {
     vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('Gerund')
@@ -40,17 +36,13 @@ const toGerund = (vb, parsed) => {
 }
 
 const vbToInf = (vb, parsed) => {
-  const { toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
-  let str = parsed.root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
+  const str = infinitive(root)
   if (str) {
     vb = vb.replace(parsed.root, str, keep)
   }
   return vb
 }
-
-
 
 const forms = {
 
@@ -99,21 +91,6 @@ const forms = {
       vb = vb.remove('will')
     }
     return vb
-  },
-
-  // is walking ->
-  'present-progressive': noop,
-
-  // was walking -> is walking
-  'past-progressive': (vb, parsed) => {
-    const str = isAreAm(vb, parsed)
-    return vb.replace('(were|was)', str, keep)
-  },
-
-  // will be walking -> is walking
-  'future-progressive': (vb, parsed) => {
-    vb.replace('will', isAreAm(vb, parsed), keep)
-    return vb.remove('be')
   },
 
   // would be walked ->

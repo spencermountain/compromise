@@ -1,5 +1,6 @@
+import { inflect } from './inflect.js'
 import convertAuxiliary from './auxiliary.js'
-import { noop, getTense, wasWere, noWill } from '../lib.js'
+import { noop, wasWere, noWill } from '../lib.js'
 const keep = { tags: true }
 
 const fns = {
@@ -13,18 +14,12 @@ const fns = {
 
   // walk->walked
   simple: (vb, parsed) => {
-    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
     const root = parsed.root
     // 'i may'
     if (root.has('#Modal')) {
       return vb
     }
-    let str = root.text({ keepPunct: false })
-    str = toInfinitive(str, vb.model, getTense(root))
-    const all = conjugate(str, vb.model)
-    // 'driven' || 'drove'
-    str = all.PastTense
-    // all.Participle || all.PastTense
+    let str = inflect(root, 'PastTense', { keepPunct: false })
     // but skip the 'is' participle..
     str = str === 'been' ? 'was' : str
     if (str === 'was') {
@@ -52,20 +47,7 @@ const fns = {
     return vb
   },
 
-  // some verbs have this weird past-tense form
-  // drive -> driven, (!drove)
-  hasParticiple: (vb, parsed) => {
-    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
-    const root = parsed.root
-    let str = root.text('normal')
-    str = toInfinitive(str, vb.model, getTense(root))
-    return conjugate(str, vb.model).Participle
-  },
-
-
-
 }
-
 
 const forms = {
 
@@ -80,23 +62,6 @@ const forms = {
 
   // he will walk -> he walked
   'simple-future': fns.both,
-
-  // he is walking
-  'present-progressive': vb => {
-    vb.replace('are', 'were', keep)
-    vb.replace('(is|are|am)', 'was', keep)
-    return vb
-  },
-
-  // he was walking
-  'past-progressive': noop,
-
-  // he will be walking
-  'future-progressive': (vb, parsed) => {
-    vb.replace('will', wasWere(vb, parsed), keep)
-    vb.remove('be')
-    return vb
-  },
 
   // would be walked -> 'would have been walked'
   'present-conditional': vb => {
@@ -132,10 +97,7 @@ const forms = {
       // otherwise, 
       //  walk -> have walked
       //  drive -> have driven
-      const { conjugate, toInfinitive } = vb.methods.two.transform.verb
-      const root = toInfinitive(parsed.root.text('normal'), vb.model, getTense(parsed.root))
-      const conjugations = conjugate(root, vb.model)
-      vb.match(parsed.root).replaceWith('have ' + (conjugations.Participle || conjugations.PastTense))
+      vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, 'Participle'))
       vb.match('have').tag('Auxiliary')
     }
     return vb

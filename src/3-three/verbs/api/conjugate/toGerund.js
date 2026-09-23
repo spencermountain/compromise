@@ -1,4 +1,5 @@
-import { getTense, isAreAm } from '../lib.js'
+import { infinitive, inflect } from './inflect.js'
+import { isAreAm } from '../lib.js'
 import convertAuxiliary from './auxiliary.js'
 import parseVerb from '../parse/index.js'
 const keep = { tags: true }
@@ -7,7 +8,6 @@ const keep = { tags: true }
 const toGerund = function (vb, parsed, form) {
   const converted = convertAuxiliary(vb, parsed, form, 'gerund')
   if (converted) return converted
-  const { toInfinitive, conjugate } = vb.methods.two.transform.verb
   if (vb.has('#Gerund')) {
     return vb
   }
@@ -16,9 +16,8 @@ const toGerund = function (vb, parsed, form) {
   const { root, auxiliary } = parsed
 
   // conjugate '-ing' verb
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
-  const gerund = conjugate(str, vb.model).Gerund
+  const str = infinitive(root)
+  const gerund = inflect(root, 'Gerund')
   // 'are walking', 'is walking'
   if (gerund) {
     const aux = isAreAm(vb, parsed)

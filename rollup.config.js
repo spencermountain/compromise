@@ -42,8 +42,8 @@ export default [
         plugins: [
           terser({ keep_classnames: true }),
           sizeCheck({
-            expect: 290,
-            warn: 10, // acceptable (+/-)
+            expect: 300,
+            warn: 5, // acceptable (+/-)
             throw: 25, // unacceptable (+/-)
           }),
         ],
@@ -67,11 +67,6 @@ export default [
         name: 'nlp',
         plugins: [
           terser({ keep_classnames: true }),
-          sizeCheck({
-            expect: 350,
-            warn: 10, // acceptable (+/-)
-            throw: 25, // unacceptable (+/-)
-          }),
         ],
       },
       {
@@ -83,7 +78,14 @@ export default [
       {
         file: 'builds/three/compromise-three.mjs',
         format: 'esm',
-        plugins: [terser({ keep_classnames: true })],
+        plugins: [
+          terser({ keep_classnames: true }),
+          sizeCheck({
+            expect: 356,
+            warn: 3, // acceptable (+/-)
+            throw: 50, // unacceptable (+/-)
+          }),
+        ],
       },
     ],
   },

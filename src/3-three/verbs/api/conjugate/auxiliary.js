@@ -1,6 +1,7 @@
+import { inflect } from './inflect.js'
 import readAuxiliary from '../parse/auxiliary.js'
 import parseVerb from '../parse/index.js'
-import { getTense, haveHas, isAreAm, wasWere } from '../lib.js'
+import { haveHas, isAreAm, wasWere } from '../lib.js'
 
 // Decide the auxiliary chain independently of adverbs and negation.
 const plan = function (chain, target, vb, parsed) {
@@ -112,10 +113,7 @@ const convertAuxiliary = function (vb, parsed, form, target) {
   const root = vb.match(live.root).harden()
   write(vb, live, chain.words, words, chain.passive)
   if (target === 'participle' && chain.modal && !chain.perfect && !chain.passive && !chain.progressive) {
-    const { conjugate, toInfinitive } = vb.methods.two.transform.verb
-    const infinitive = toInfinitive(live.root.text('normal'), vb.model, getTense(live.root))
-    const forms = conjugate(infinitive, vb.model)
-    root.replaceWith(forms.Participle || forms.PastTense)
+    root.replaceWith(inflect(live.root, 'Participle'))
   }
   vb.fullSentence().compute(['tagger', 'chunks'])
   return vb

@@ -13,6 +13,11 @@ use a private pipeline:
 3. Its writer edits anchored auxiliary terms. The lexical root, negation,
    adverbs, and surrounding punctuation remain in the document.
 
+Ordinary progressive forms use this pipeline exclusively; the individual tense
+converters retain only the families that the shared converter declines.
+`conjugate/inflect.js` centralizes lexical root normalization and inflection,
+including the past-tense fallback for verbs without a distinct participle.
+
 The writer aligns auxiliary tails from the right. For example, changing
 `will not really have been driven` to present replaces `will` with `has`, removes
 the auxiliary `have`, and retains `been`. It does not search the whole phrase for
@@ -67,6 +72,9 @@ sleeping`. The private coordination helper snapshots compatible roots before any
 edits, converts the leading phrase once, and inflects its dependents without
 adding auxiliary words. Shared negation stays on the leading phrase. Sentence
 converters include these dependents when converting their first verb phrase.
+The group reader in `conjugate/groups.js` is shared by question and coordination
+conversion without importing either converter. Partial question selections are
+checked by the coordination wrapper before reconstructing a question.
 
 This applies to perfect, progressive, passive, modal, and simple future phrases
 joined by `and` or `or`, with optional adverbs. A new subject, explicit auxiliary,

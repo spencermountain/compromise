@@ -3,6 +3,8 @@ const matches = [
   // u r cool
   { match: 'u r', tag: '#Pronoun #Copula', reason: 'u r' },
   { match: '#Noun [(who|whom)]', group: 0, tag: 'Determiner', reason: 'captain-who' },
+  // who is that? / what are these? - no following noun to determine
+  { match: '^#QuestionWord #Adverb+? #Copula #Adverb+? [(this|that|these|those)] #Adverb+?$', group: 0, tag: 'Pronoun', reason: 'who-is-that' },
 
   // ==== Conditions ====
   // had he survived,

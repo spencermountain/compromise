@@ -7,10 +7,6 @@ export default [
   { match: '^please do? not? [#Infinitive #Particle?]', group: 0, tag: 'Imperative', reason: 'please-go' },
   // just go
   { match: '^just do? not? [#Infinitive #Particle?]', group: 0, tag: 'Imperative', reason: 'just-go' },
-  // do it better
-  { match: '^[#Infinitive] it #Comparative', notIf, group: 0, tag: 'Imperative', reason: 'do-it-better' },
-  // do it again
-  { match: '^[#Infinitive] it (please|now|again|plz)', notIf, group: 0, tag: 'Imperative', reason: 'do-it-please' },
   // go quickly.
   { match: '^[#Infinitive] (#Adjective|#Adverb|hard|high|fast|slow)$', group: 0, tag: 'Imperative', notIf: '(so|such|rather|enough)', reason: 'go-quickly' },
   // turn down the noise
@@ -24,7 +20,7 @@ export default [
   // call and reserve
   { match: '^[#Infinitive] (#Adjective|#Adverb)? and #Infinitive', group: 0, tag: 'Imperative', reason: 'call-and-reserve' },
   // one-word imperatives
-  { match: '^(go|stop|wait|hurry) please?$', tag: 'Imperative', reason: 'go' },
+  { match: '^[(go|stop|wait|hurry)] please?$', group: 0, tag: 'Imperative', reason: 'go' },
   // somebody call
   { match: '^(somebody|everybody) [#Infinitive]', group: 0, tag: 'Imperative', reason: 'somebody-call' },
   // let's leave
@@ -35,8 +31,13 @@ export default [
   { match: '^[#PhrasalVerb #Particle] #Determiner #Noun', group: 0, tag: 'Imperative', reason: 'turn-off-the-light' },
   // go to toronto
   { match: '^[go] to .', group: 0, tag: 'Imperative', reason: 'go-to-toronto' },
-  // would you recommend
-  { match: '^#Modal you [#Infinitive]', group: 0, tag: 'Imperative', reason: 'would-you-' },
+  // go home / come home
+  { match: '^[(go|come)] home', group: 0, tag: 'Imperative', reason: 'go-home' },
+  // A modal question alone may ask about ability or knowledge. Require an
+  // explicit request marker before treating it as an imperative.
+  { match: '^(can|could|will|would) you please [#Infinitive]', group: 0, tag: 'Imperative', reason: 'would-you-please' },
+  { match: '^please (can|could|will|would) you [#Infinitive]', group: 0, tag: 'Imperative', reason: 'please-would-you' },
+  { match: '^(can|could|will|would) you [#Infinitive] .+? please$', group: 0, tag: 'Imperative', reason: 'would-you-please-end' },
   // never say
   { match: '^never [#Infinitive]', group: 0, tag: 'Imperative', reason: 'never-stop' },
   // come have a drink
@@ -44,13 +45,11 @@ export default [
   // come and have a drink
   { match: '^come and? #Infinitive', tag: 'Imperative . Imperative', notIf: '#PhrasalVerb', reason: 'come-and-have' },
   // stay away
-  { match: '^stay (out|away|back)', tag: 'Imperative', reason: 'stay-away' },
+  { match: '^[stay] (out|away|back)', group: 0, tag: 'Imperative', reason: 'stay-away' },
   // stay cool
   { match: '^[(stay|be|keep)] #Adjective', group: 0, tag: 'Imperative', reason: 'stay-cool' },
   // keep it silent
-  { match: '^[keep it] #Adjective', group: 0, tag: 'Imperative', reason: 'keep-it-cool' },
-  // don't be late
-  { match: '^do not [#Infinitive]', group: 0, tag: 'Imperative', reason: 'do-not-be' },
+  { match: '^[keep] it #Adjective', group: 0, tag: 'Imperative', reason: 'keep-it-cool' },
   // allow yourself
   { match: '[#Infinitive] (yourself|yourselves)', group: 0, tag: 'Imperative', reason: 'allow-yourself' },
   // look what

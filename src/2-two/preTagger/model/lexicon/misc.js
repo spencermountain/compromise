@@ -71,7 +71,6 @@ const misc = {
 
   // misc
   vs: ['Conjunction', 'Abbreviation'],
-  if: ['Condition', 'Preposition'],
   closer: 'Comparative',
   closest: 'Superlative',
   much: 'Adverb',

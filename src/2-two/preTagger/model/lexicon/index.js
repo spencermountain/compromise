@@ -36,6 +36,9 @@ Object.keys(lexData).forEach(tag => {
     }
   })
 })
+// Keep the conditional tag alongside the packed conjunction entry.
+lexicon.if = ['Conjunction', 'Condition']
+
 // add ':)'
 emoticons.forEach(str => (lexicon[str] = 'Emoticon'))
 

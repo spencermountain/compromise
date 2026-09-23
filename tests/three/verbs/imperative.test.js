@@ -8,6 +8,11 @@ test('isImperative:', function (t) {
     ['do not walk', true],
     ['please do not speak', true],
     ['go!', true],
+    ['go home!', true],
+    ['come home now.', true],
+    ['we go home.', false],
+    ['they come home now.', false],
+    ['did you go home?', false],
     ['go fast.', true],
     ["don't go", true],
     ['shut the door', true],
@@ -117,6 +122,55 @@ test('imperative keeps tense:', function (t) {
     const doc = nlp(str)
     doc.verbs().toPastTense()
     t.equal(doc.text(), str, here + str + ' [toPast]')
+  })
+  t.end()
+})
+
+test('imperative captures preserve surrounding tags', function (t) {
+  const cases = [
+    ['keep it quiet', 'keep', 'it', 'Pronoun'],
+    ['stay away', 'stay', 'away', 'Adverb'],
+    ['stay out of my garden', 'stay', 'out', 'Preposition'],
+    ['go please', 'go', 'please', 'Expression'],
+    ['stop please', 'stop', 'please', 'Expression'],
+  ]
+  cases.forEach(([str, verb, other, tag]) => {
+    const doc = nlp(str)
+    t.equal(doc.match('#Imperative').text(), verb, str + ' only the verb is imperative')
+    t.equal(doc.match(other).has('#' + tag), true, str + ' preserves ' + tag)
+    t.equal(doc.match(other).has('#Verb'), false, str + ' preserves non-verb')
+  })
+  t.end()
+})
+
+test('modal questions require an explicit request marker', function (t) {
+  const questions = [
+    'could you swim when you were young?',
+    'would you know the answer?',
+    'can you speak French?',
+    'will you attend tomorrow?',
+    'should you leave now?',
+    'would you like a snack?',
+  ]
+  questions.forEach(str => {
+    const doc = nlp(str)
+    t.equal(doc.has('#Imperative'), false, str + ' is a question')
+    t.equal(doc.has('#Infinitive'), true, str + ' keeps the verb')
+  })
+  const requests = [
+    ['could you please open the door?', 'open'],
+    ['can you please help?', 'help'],
+    ['will you please stop?', 'stop'],
+    ['would you please leave?', 'leave'],
+    ['please could you open the door?', 'open'],
+    ['could you open the door please?', 'open'],
+    ['could you help please?', 'help'],
+  ]
+  requests.forEach(([str, verb]) => {
+    const doc = nlp(str)
+    t.equal(doc.match('#Imperative').text(), verb, str + ' tags the requested action')
+    t.equal(doc.match('you').has('#Pronoun'), true, str + ' keeps pronoun')
+    t.equal(doc.match('please').has('#Expression'), true, str + ' keeps request marker')
   })
   t.end()
 })

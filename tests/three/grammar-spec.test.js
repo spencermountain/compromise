@@ -50,7 +50,7 @@ test('grammar-spec negation + contractions', function (t) {
 test('grammar-spec questions', function (t) {
   const arr = [
     'where did she go? {QuestionWord,Vb,Noun|Pronoun,Vb}',
-    'who is that? {QuestionWord,Vb|Copula,Det}',
+    'who is that? {QuestionWord,Vb|Copula,Noun|Pronoun}',
     'is he going? {Vb|Copula,Noun|Pronoun,Vb|Ger}',
   ]
   check(t, arr, 'questions')
@@ -61,6 +61,7 @@ test('grammar-spec imperatives', function (t) {
   const arr = [
     'please close the door. {Expr,Vb|Imp,Det,Noun}',
     'record the record. {Vb|Imp,Det,Noun}',
+    'go home! {Vb|Imp,Noun}',
   ]
   check(t, arr, 'imperatives')
   t.end()
@@ -116,7 +117,7 @@ test('grammar-spec noun-verb ambiguity', function (t) {
     'she saw a saw. {Noun,Vb|Past,Det,Noun}',
     'i run a run club. {Noun,Vb,Det,Noun,Noun}',
     'fruit flies like a banana. {Noun,Noun,Vb,Det,Noun}',
-    'if it rains, we will stay home. {Conj,Noun,Vb,Noun,Vb,Vb,Noun}',
+    'if it rains, we will stay home. {Conj|Condition,Noun,Vb,Noun,Vb,Vb,Noun}',
   ]
   check(t, arr, 'noun-verb disambiguation')
   t.end()

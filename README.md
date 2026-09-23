@@ -26,7 +26,6 @@
   </a>
   <a href="https://bundlephobia.com/result?p=compromise">
     <img src="https://img.shields.io/bundlephobia/min/compromise"/>
-    <!-- <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/builds/compromise.min.js" /> -->
   </a>
   </div>
   <div align="center">

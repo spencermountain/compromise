@@ -10,7 +10,7 @@
 
   <!-- file size -->
   <a href="https://unpkg.com/compromise-wikipedia/builds/compromise-wikipedia.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-wikipedia/builds/compromise-wikipedia.min.js" />
+    <img src="https://img.shields.io/bundlephobia/min/compromise-wikipedia" />
   </a>
 
   <div align="center">

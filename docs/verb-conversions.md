@@ -1,5 +1,8 @@
 # Auxiliary conversion internals
 
+See the [conversion regression audit](verb-conversion-gaps.md) for the corrected
+question, verb-selection, and subject-attachment cases and their coverage limits.
+
 The public verb methods and the shapes returned by `.parse()` and `.json()` are
 unchanged. Passive, progressive, perfect, modal perfect, and nested going-to constructions
 use a private pipeline:
@@ -16,6 +19,12 @@ the auxiliary `have`, and retains `been`. It does not search the whole phrase fo
 words to delete: lexical `had` in `will have had tea` must survive.
 
 ## Conversion policy
+
+- Inverted questions use a subject-first scratch document with the same model,
+  convert its leading verb group, and restore the finite auxiliary before the
+  subject. This retains aspect and voice without separately conjugating the
+  auxiliary and lexical verb. Positive simple questions retain do-support;
+  expanded negation follows the subject, while contracted negation precedes it.
 
 - Present, past, and future conversions retain perfect/progressive aspect and
   passive voice, subject to the compatibility cases below.

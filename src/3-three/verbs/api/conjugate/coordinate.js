@@ -1,3 +1,4 @@
+import question, { isInverted } from './question.js'
 import parseVerb from '../parse/index.js'
 import getGrammar from '../parse/grammar/index.js'
 import readAuxiliary from '../parse/auxiliary.js'
@@ -63,7 +64,7 @@ const resultTense = function (head, target) {
   return isAreAm(head.vb, parsed) === 'is' ? 'PresentTense' : 'Infinitive'
 }
 
-const coordinate = function (verbs, target, convert) {
+const coordinateNormal = function (verbs, target, convert) {
   if (verbs.length < 2) return verbs.map(convert)
   const entries = groups(verbs)
   entries.forEach(entry => {
@@ -85,6 +86,16 @@ const coordinate = function (verbs, target, convert) {
       vb.fullSentence().compute(['tagger', 'chunks'])
     }
     return vb
+  })
+}
+const coordinate = function (verbs, target, convert) {
+  const sentences = verbs.fullSentence().settle()
+  if (!sentences.some(s => isInverted(s))) return coordinateNormal(verbs, target, convert)
+  return sentences.map(sentence => {
+    const index = sentence.fullPointer[0][0]
+    const selected = verbs.filter(vb => vb.fullPointer[0][0] === index)
+    const result = question(sentence, target, selected)
+    return result ? result.verbs() : coordinateNormal(selected, target, convert)
   })
 }
 export default coordinate

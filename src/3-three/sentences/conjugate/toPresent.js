@@ -1,6 +1,9 @@
+import question from '../../verbs/api/conjugate/question.js'
 import { firstGroup } from '../../verbs/api/conjugate/coordinate.js'
 
 const toPresent = function (s) {
+  const inverted = question(s, 'present')
+  if (inverted) return inverted
   let verbs = s.verbs()
   // translate the first verb, no-stress
   const first = firstGroup(verbs)

@@ -38,6 +38,12 @@ const lastNoun = function (vb) {
   let before = vb.before()
   // try to drop any mid-sentence clauses
   before = noSubClause(before)
+  // In a subject-first clause, a trailing prepositional modifier does not
+  // replace the subject: 'the keys on the table' still agrees with 'keys'.
+  if (!before.has('(#Verb|@hasComma)') && before.has('#Noun (on|near|under|beside|behind)')) {
+    const head = before.splitBefore('(on|near|under|beside|behind)').first().nouns()
+    if (head.found) return head
+  }
   // parse-out our preceding nouns
   const nouns = before.nouns()
   // look for any dead-ringers
@@ -80,6 +86,13 @@ const isPlural = function (subj, vb) {
   }
   if (subj.has('(those|they|we)')) {
     return true
+  }
+  // Agreement belongs to the head, not the plural object of 'of':
+  // 'the box of pencils' versus 'the boxes of pencils'. Keep partitives such
+  // as 'some of the dogs' on the existing noun-phrase path.
+  if (subj.has('(#Singular|#Plural) of')) {
+    const head = subj.splitBefore('of').first().nouns()
+    if (head.found) return head.isPlural().found
   }
   if (subj.found && subj.isPlural) {
     return subj.isPlural().found

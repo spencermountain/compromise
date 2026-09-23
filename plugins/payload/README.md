@@ -10,7 +10,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/compromise-payload/builds/compromise-payload.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-payload/builds/compromise-payload.min.js" />
+    <img src="https://img.shields.io/bundlephobia/min/compromise-payload" />
   </a>
 
   <div align="center">

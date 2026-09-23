@@ -5,7 +5,7 @@ const noop = vb => vb
 const isPlural = (vb, parsed) => {
   const subj = getSubject(vb, parsed)
   const m = subj.subject
-  if (m.has('i') || m.has('we')) {
+  if (m.has('(i|we|you)')) {
     return true
   }
   return subj.plural

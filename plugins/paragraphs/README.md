@@ -10,7 +10,7 @@
   v
   <!-- file size -->
   <a href="https://unpkg.com/compromise-paragraphs/builds/compromise-paragraphs.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/paragraphs/builds/compromise-paragraphs.min.js" />
+    <img src="https://img.shields.io/bundlephobia/min/compromise-paragraphs" />
   </a>
    <hr/>
 </div>

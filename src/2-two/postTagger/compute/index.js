@@ -14,6 +14,16 @@ const postTagger = function (view) {
   const m = view.update(ptrs)
   m.sweep(net)
   view.uncache()
+  // A lowercase ambiguous word after two named subjects is a predicate, not
+  // another surname ('Alice and Bob walk'). Preserve title-cased surnames.
+  view.match('#Person and #Person [%Noun|Verb%]$', 0)
+    .filter(term => /^[a-z]/.test(term.text()))
+    .tag('Infinitive', 'coordinated-subject-verb')
+  // Recover a predicate after a locative subject modifier. 'near' can otherwise
+  // remain an adjective and absorb the final verb into the noun phrase.
+  const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
+  view.match(locative, 0).tag('Preposition', 'subject-locative')
+  view.match(locative, 1).tag('Infinitive', 'subject-locative-verb')
   // Resolve coordination after the sweep: an ambiguous adjective may have
   // become a participle during that pass ('being watched and recorded').
   view.match('being #Adverb+? [%Adj|Past%] (and|or) #Adverb+? (#PastTense|#Participle)', 0)

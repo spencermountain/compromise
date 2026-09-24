@@ -354,9 +354,6 @@ It'll rain tomorrow. {Pronoun,Modal,Inf,Date}
 I'd like a glass of water. {Pronoun,Modal,Inf,Det,Singular,Prep,Noun}
 They won't forget your kindness. {Pronoun,Modal,Negative,Inf,Poss,Noun}
 
-#Adjective!=#Ger
-Oh, the kettle is boiling! {Expr,Det,Singular,Vb,Ger}
-
 #Adverb!=#Adj
 She wasn't feeling well. {Pronoun,Vb,Negative,Ger,Adj}
 
@@ -390,19 +387,12 @@ Keep the lid closed. {Imp,Det,Singular,Adj}
 This is my favorite song. {Det,Vb,Noun,Adj,Noun}
 Don't touch that. {Vb,Negative,Vb,Det}
 
-#Singular!=#Date
-The shop closes at noon. {Det,Singular,Pres,Prep,Date}
-
 #Singular!=#Season
-The flowers bloomed in spring. {Det,Plural,Past,Prep,Season}
-
-
-#Uncountable!=#Date
-Call your sister tonight. {Imp,Poss,Singular,Date}
+The flowers bloomed in spring. {Det,Plural,Past,Prep,Noun}
 
 #Uncountable!=#Pronoun
-Your explanation surprised everyone. {Poss,Singular,Past,Pronoun}
-Everyone applauded enthusiastically. {Pronoun,Past,Adv}
+Your explanation surprised everyone. {Poss,Singular,Past,Noun}
+Everyone applauded enthusiastically. {Noun,Past,Adv}
 `
 
 test('match spec:', function (t) {

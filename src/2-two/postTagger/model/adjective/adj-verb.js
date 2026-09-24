@@ -71,4 +71,12 @@ export default [
   },
   // is empty$
   { match: '#Copula #Adverb? [%Adj|Present%]$', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'was-empty$' },
+  // does the store open
+  {
+    match: '(does|will) #Determiner #Noun [%Adj|Present%]$',
+    hook: '%Adj|Present%',
+    group: 0,
+    tag: 'PresentTense',
+    reason: 'does-the-store-open',
+  },
 ]

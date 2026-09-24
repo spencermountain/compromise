@@ -181,4 +181,12 @@ export default [
   { match: '%Plural|Verb% %Plural|Verb%', hook: '%Plural|Verb%', tag: '#PresentTense #Plural', reason: 'removes-wrinkles' },
   // i water the plants
   { match: 'i [#Noun] the #Noun', hook: 'i', group: 0, tag: 'Infinitive', reason: 'i-water-the-plants' },
+  // did the engine stop
+  {
+    match: '(did|does|will) the #Noun [%Noun|Verb%]',
+    hook: '%Noun|Verb%',
+    group: 0,
+    tag: 'Infinitive',
+    reason: 'did-the-engine-stop',
+  },
 ]

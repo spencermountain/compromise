@@ -51,5 +51,7 @@ const matches = [
   { match: 'guess who', hook: 'who', tag: '#Infinitive #QuestionWord', reason: 'guess-who' },
   // swear words
   { match: '[fucking] !#Verb', hook: 'fucking', group: 0, tag: '#Gerund', reason: 'f-as-gerund' },
+  // see no
+  { match: '#Verb [no]', hook: 'no', group: 0, tag: 'Negative', reason: 'see-no' },
 ]
 export default matches

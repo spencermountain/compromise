@@ -30,6 +30,6 @@ let out = nlp.testSpec(str, true)
 // There are no seats left. {There,Vb,Negative,Noun,Vb}
 // He has no money. {Noun,Vb,Negative,Noun}
 
-// nlp.verbose(true)
-// nlp('She has no idea.').debug()
+nlp.verbose(true)
+nlp('do the stores open on time?').debug()
 

@@ -83,4 +83,12 @@ export default [
   },
   // past-tense people
   { match: '(drew && #Verb)', hook: 'drew', tag: 'PastTense', reason: 'drew-a-picture' },
+  // keep the lid closed
+  {
+    match: '#Imperative #Determiner #Noun+ [%Adj|Past%]',
+    hook: '#Imperative',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'keep-lid-closed',
+  },
 ]

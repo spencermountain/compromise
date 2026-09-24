@@ -65,7 +65,7 @@ required hook; for example, the standalone imperative alternatives now have
 separate `go`, `stop`, `wait`, and `hurry` rules.
 
 The initial choices use the 1,454 Penn/Universal Dependencies examples in
-`tests/two/tagger/_pennSample.js`. Frequency means the number of input clauses
+`tests/fixtures/penn-sample.js`. Frequency means the number of input clauses
 or sentences containing the hook immediately before the corresponding pass,
 since that determines candidate selection. Unseen hooks count as zero, with
 alphabetical ties. These are sample estimates, not universal English frequencies.
@@ -85,9 +85,9 @@ pnpm test
 pnpm run lint
 ```
 
-`tests/three/compiled-post-tagger.test.js` checks that warm post-tagging does not
+`tests/three/tagger/rules/compiled-post-tagger.test.js` checks that warm post-tagging does not
 parse patterns or use the public sweep result-View path, and that partial Views
-remain isolated. `tests/one/match/sweep.test.js` covers distinct actions sharing a
+remain isolated. `tests/one/sweep/sweep.test.js` covers distinct actions sharing a
 pattern with different capture selections.
 
 For performance work, measure short inputs as well as the full corpus in

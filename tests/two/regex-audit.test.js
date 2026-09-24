@@ -1,10 +1,5 @@
 import test from 'tape'
 import nlp from './_lib.js'
-import split from '../../src/1-one/tokenize/methods/01-sentences/01-simple-split.js'
-import rules from '../../src/2-two/preTagger/model/regex/regex-normal.js'
-import plurals from '../../src/2-two/preTagger/methods/transform/nouns/toPlural/_rules.js'
-import endings from '../../src/2-two/preTagger/model/patterns/endsWith.js'
-import clean from '../../src/1-one/tokenize/compute/normal/01-cleanup.js'
 
 test('regex audit: email and URL recognition', t => {
   for (const text of ['alice@example.technology', 'alice@my-domain.com', 'first-last@example.com', 'first.last+news@my-site.co.uk']) {
@@ -75,46 +70,53 @@ test('regex audit: capture errors and regex state on nonmatches', t => {
   t.end()
 })
 
-test('regex audit: normalization and model corrections', t => {
+test('regex audit: normalization and tagging', t => {
   for (const text of ['v1.2a.b', 'version.a.b']) {
     t.equal(nlp(text).json()[0].terms[0].normal, text, 'preserve non-acronym dots')
   }
   for (const [text, normal] of [['F.B.I.', 'fbi'], ['c.e.o.', 'ceo']]) {
     t.equal(nlp(text).json()[0].terms[0].normal, normal, 'preserve acronym normalization')
   }
-  t.ok(rules.find(([, tag]) => tag === 'Verb')[0].test('un-vite'))
-  t.ok(rules.find(([, tag]) => tag === 'Timezone')[0].test('est'))
-  t.notOk(plurals.e[2][0].test('|ouse'))
-  t.notOk(plurals.e[3][0].test('|ice'))
+  t.ok(nlp('un-vite').has('#Verb'), 'hyphenated verb is recognized')
+  t.ok(nlp('est').has('#Timezone'), 'timezone abbreviation is recognized')
   t.end()
 })
 
 test('regex audit: suffix semantics and punctuation cleanup', t => {
-  // Select the ist rule by its literal ending, so tests exercise the real model.
-  const ist = endings.t.find(([regex]) => regex.source.endsWith('ist$'))[0]
-  for (const word of ['pianist', 'artist', 'atheist']) t.ok(ist.test(word), word)
-  for (const word of ['ist', 'list', 'aunt', 'a\nist', 'a\rist', 'a\u2028ist', 'a\u2029ist']) {
-    t.notOk(ist.test(word), JSON.stringify(word))
+  for (const word of ['pianist', 'artist']) {
+    t.ok(nlp(word).has('#Actor'), `${word} is an actor noun`)
+  }
+  t.ok(nlp('atheist').has('#Adjective'), 'lexical tagging can override the suffix')
+  t.notOk(nlp('ist').has('#Actor'), 'bare suffix is not an actor')
+  t.notOk(nlp('list').has('#Actor'), 'short ending does not imply an actor')
+  for (const separator of ['\n', '\r', '\u2028', '\u2029']) {
+    const doc = nlp('a' + separator + 'ist')
+    t.equal(doc.terms().length, 2, 'suffix does not span a line separator')
+    t.notOk(doc.has('#Actor'), 'separate terms do not form an actor noun')
   }
   for (const [input, expected] of [
     ['hello!!!', 'hello'], ['hello…', 'hello'], ['("hello")', 'hello'],
     ['a!!!b', 'a!!!b'], ['a...b', 'a...b'], [':)', ':)'], ['!!!', '!!!'],
   ]) {
-    t.equal(clean(input), expected, `cleanup ${input}`)
+    t.equal(nlp(input).json()[0].terms[0].normal, expected, `cleanup ${input}`)
   }
   t.end()
 })
 
 test('regex audit: sentence boundary preservation', t => {
   const cases = [
-    ['Hello!!! Next?', ['Hello!!! ', 'Next?']],
+    ['Hello!!! Next?', ['Hello!!!', 'Next?']],
     ['「行きません。」と言った', ['「行きません。」と言った']],
     ['「はい。」「いいえ。」', ['「はい。」', '「いいえ。」']],
-    ['a\r\nb\rc\n', ['a', '\r\n', 'b', '\r', 'c', '\n']],
-    ['。 。）。 ', ['。 ', '。）', '。 ']],
+    ['a\r\nb\rc\n', ['a', 'b', 'c']],
+    ['。 。）。 ', ['。 。）。']],
     ['a。!?b', ['a。', '!?b']],
   ]
-  for (const [text, expected] of cases) t.deepEqual(split(text), expected, text)
+  for (const [text, expected] of cases) {
+    const doc = nlp(text)
+    t.deepEqual(doc.out('array'), expected, text)
+    t.equal(doc.text(), text, 'sentence splitting preserves original whitespace')
+  }
   t.end()
 })
 

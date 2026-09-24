@@ -82,7 +82,7 @@ intervening object, or comma ends the group. Only selected verbs are changed;
 `verbs(0)` does not implicitly select later coordinated verbs. Simple finite
 coordination and prospective going-to phrases retain their existing handling.
 
-`tests/three/verbs/coordinate-conversion.test.js` checks direct conversions,
+`tests/three/verbs/conjugation/coordinate-conversion.test.js` checks direct conversions,
 repetition, fresh parses, and past→future paths for constructions whose aspect
 and voice are preserved by both routes.
 
@@ -97,7 +97,7 @@ Perfect conversion of a simple going-to phrase restores `going` as a gerund and
 `to` as its complement marker, so repeated conversion of `has been going to have
 a car` cannot conjugate the lexical `have` separately.
 
-`tests/three/verbs/conversion-boundaries.test.js` checks explicit expected outputs,
+`tests/three/verbs/conjugation/conversion-boundaries.test.js` checks explicit expected outputs,
 repeated conversions on the same document, and conversions after parsing the
 expected text afresh. Both paths matter: retained tags can hide a parsing error.
 

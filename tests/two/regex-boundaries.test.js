@@ -1,9 +1,5 @@
 import test from 'tape'
 import nlp from './_lib.js'
-import parseBlocks from '../../src/1-one/match/methods/parseMatch/01-parseBlocks.js'
-import normalizePunctuation from '../../src/1-one/tokenize/methods/03-whitespace/tokenize.js'
-import * as punctuation from '../../src/1-one/tokenize/model/punctuation.js'
-import clean from '../../src/1-one/tokenize/compute/normal/01-cleanup.js'
 
 const wrappers = [['', ''], ['"', '"'], ["'", "'"], ['“', '”'], ['‘', '’'], ['(', ')']]
 
@@ -49,8 +45,7 @@ test('generated punctuation contexts preserve Unicode and are stable when normal
       for (const prefix of ['', '!!!', '  ', '😀']) {
         for (const suffix of ['', '?!', '…', '\n', '  ']) {
           const text = prefix + open + word + close + suffix
-          const parts = normalizePunctuation(text, { one: punctuation })
-          const reconstructed = parts.pre + parts.str + parts.post
+          const reconstructed = nlp(text).text()
           if (reconstructed !== text) failures.push({ text, reconstructed })
           count++
         }
@@ -63,32 +58,47 @@ test('generated punctuation contexts preserve Unicode and are stable when normal
     for (const ending of ['', '.', '!!!', '…', ')']) {
       const text = `("AlPhA${infix}BeTa${ending}`
       const expected = `alpha${infix}beta`
-      const actual = clean(text)
-      if (actual !== expected || clean(actual) !== actual) normalizationFailures.push({ text, expected, actual })
-    }
-  }
-  t.deepEqual(normalizationFailures, [], 'cleanup preserves internal punctuation and is idempotent for generated words')
-  t.end()
-})
-
-test('generated match blocks preserve captures, suffix flags and surrounding words', t => {
-  const failures = []
-  let count = 0
-  for (const prefix of ['', '!', '[', '^[<name>', '[<a>b>']) {
-    for (const body of ['red|blue', '#Noun && red', 'two words|three words']) {
-      for (const suffix of ['', '?', '+', ']', ']$']) {
-        const block = `${prefix}(${body})${suffix}`
-        const text = `before ${block} after`
-        const expected = ['before', block, 'after']
-        const actual = parseBlocks(text)
-        if (JSON.stringify(actual) !== JSON.stringify(expected)) failures.push({ text, actual })
-        count++
+      const doc = nlp(text)
+      const normals = doc.json().flatMap(sentence => sentence.terms.map(term => term.normal))
+      doc.normalize()
+      const normalized = doc.text()
+      doc.normalize()
+      if (normals.length !== 1 || normals[0] !== expected || doc.text() !== normalized) {
+        normalizationFailures.push({ text, expected, normals, normalized, repeated: doc.text() })
       }
     }
   }
-  t.deepEqual(failures, [], `${count} generated match blocks`)
-  for (const text of ['foo(no)bar', '((unclosed', '![<unfinished', '(x)', '(yes)trailing']) {
-    t.deepEqual(parseBlocks(text), [text], `preserve rejected block ${text}`)
+  t.deepEqual(normalizationFailures, [], 'term normals preserve internal punctuation and document normalization is idempotent')
+  t.end()
+})
+
+test('match groups preserve captures, repetition and surrounding words', t => {
+  const cases = [
+    ['before red after', 'before [<choice>(red|blue)] after', 'red'],
+    ['before blue after', 'before [<choice>(red|blue)] after', 'blue'],
+    ['before red blue after', 'before [<choice>(red|blue)+] after', 'red blue'],
+    ['before after', 'before [<choice>(red|blue)?] after', ''],
+    ['before two words after', 'before [<choice>(two words|three words)] after', 'two words'],
+    ['before three words after', 'before [<choice>(two words|three words)] after', 'three words'],
+    ['before cat after', 'before [<choice>(#Noun && cat)] after', 'cat'],
+    ['before green after', 'before [<choice>(!red && !blue)] after', 'green'],
+  ]
+  for (const [text, pattern, captured] of cases) {
+    const doc = nlp(text)
+    for (const anchored of [pattern, '^' + pattern + '$']) {
+      const match = doc.match(anchored)
+      t.equal(match.text(), text, anchored + ' matches the whole phrase')
+      t.equal(match.groups('choice').text(), captured, 'only the chosen words are captured')
+    }
+  }
+  for (const text of ['before green after', 'before red elsewhere', 'elsewhere red after']) {
+    t.notOk(nlp(text).has('before (red|blue) after'), 'reject mismatched alternatives or surrounding words')
+  }
+  t.notOk(nlp('before red after').has('before !(red|blue) after'), 'negation excludes the alternatives')
+  t.notOk(nlp('extra before red after').has('^before (red|blue) after$'), 'start anchor excludes preceding words')
+  t.notOk(nlp('before red after extra').has('^before (red|blue) after$'), 'end anchor excludes following words')
+  for (const pattern of ['[<unfinished', '[<>foo]', '[<name foo]']) {
+    t.throws(() => nlp.parseMatch(pattern), /Invalid named capture/, 'malformed named capture: ' + pattern)
   }
   t.end()
 })

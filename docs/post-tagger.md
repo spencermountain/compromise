@@ -27,13 +27,54 @@ so both can be found before either tag is applied.
 
 Hook deduplication uses rule identity. Two rules sharing a pattern may select
 different captures or apply different actions and must not collapse into one.
-Compilation records hook order and the matcher's minimum pattern length.
-Sweeps look up hooks for words and tags present in the input, then visit those
-hooks in their original order so conflicting tag actions keep their precedence.
+Compilation records hook order and the matcher's minimum pattern length. It
+also builds a selective index: each rule with required hooks is indexed under
+the requirement shared by the fewest rules. Rules with only alternatives remain
+indexed under each alternative. The complete hooks are retained for compatibility
+with older nets and for determining the original action order.
+Sweeps look up candidates through this index, then restore their original order
+so conflicting tag actions keep their precedence. An earlier alternative can
+still determine a rule's position, even when a required hook selected it.
 Candidate length, required-word, exclusion, and alternative checks share one
 filtering pass.
 The locative correction uses two ordinary `group`/`tag` rules: one selects the
 preposition and the other selects the verb.
+
+## Choosing a hook explicitly
+
+Rules can override automatic selection with a `hook`:
+
+```js
+{ match: 'to [%Noun|Verb%] #Preposition', hook: 'to', group: 0, tag: 'Infinitive' }
+{ match: '#Gerund #Adjective #Preposition [#PresentTense]', hook: '#Gerund', group: 0, tag: 'Noun' }
+```
+
+Use the exact required word, `#Tag`, or `%Switch%` as it appears in the compiled
+pattern. The hook only selects candidates; it does not change capture selection,
+tag actions, or action order. Omit it to keep automatic selection.
+
+Compilation rejects hooks that are absent, optional, negative, or merely one
+branch of an alternative. Required terms inside AND blocks are allowed. This
+validation is conservative: a hook must be directly identifiable as required.
+
+Every active post-tagger rule declares a hook. Choose the least frequent required
+literal word first, then the least frequent required tag if there is no such word.
+Rules with neither use a required ambiguity marker such as `%Plural|Verb%`.
+Alternative-only rules are split into specific patterns so that each has a safe
+required hook; for example, the standalone imperative alternatives now have
+separate `go`, `stop`, `wait`, and `hurry` rules.
+
+The initial choices use the 1,454 Penn/Universal Dependencies examples in
+`tests/two/tagger/_pennSample.js`. Frequency means the number of input clauses
+or sentences containing the hook immediately before the corresponding pass,
+since that determines candidate selection. Unseen hooks count as zero, with
+alphabetical ties. These are sample estimates, not universal English frequencies.
+The benchmark corpus was not used to choose hooks.
+
+Automatic selection counts rules sharing a hook. Explicit linguistic choices
+can improve on that, but word-first selection is not guaranteed to be faster:
+a common word or broad tag can be less selective than an ambiguity marker.
+Compare candidate counts and warmed timings before changing the selection policy.
 
 ## Verification
 

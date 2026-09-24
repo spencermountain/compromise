@@ -13,7 +13,36 @@ test('sweep preserves hook order independently of input order', t => {
   t.deepEqual(reasons(), ['alpha', 'both', 'beta', 'always', 'always'], 'deduplicate shared hooks and append unindexed rules')
   t.deepEqual(reasons({ matchOne: true }), ['alpha'], 'first match still follows hook order')
   delete net.hookOrder
+  delete net.index
   t.deepEqual(reasons(), ['alpha', 'both', 'beta', 'always', 'always'], 'older compiled nets retain the same ordering')
+  t.end()
+})
+
+test('selective hooks preserve earlier alternative ordering', t => {
+  const net = nlp.buildNet([
+    { match: 'zebra', reason: 'zebra' },
+    { match: 'yak', reason: 'yak' },
+    { match: 'anchor', reason: 'anchor' },
+    { match: '(zebra|yak) anchor', reason: 'alternative' },
+    { match: '(zebra|yak)', reason: 'either' },
+  ])
+  const words = ['zebra', 'yak']
+  for (let i = 0; i < words.length; i += 1) {
+    const word = words[i]
+    const doc = nlp(word + ' anchor')
+    t.deepEqual(doc.sweep(net).found.map(r => r.reason), [word, 'alternative', 'either', 'anchor'], word + ' chooses the original earlier hook')
+  }
+  t.deepEqual(nlp('anchor').sweep(net).found.map(r => r.reason), ['anchor'], 'required anchor alone cannot satisfy an alternative')
+  t.deepEqual(nlp('yak').sweep(net).found.map(r => r.reason), ['yak', 'either'], 'rules with no required words retain alternative lookup')
+  t.end()
+})
+
+test('compiled indexes remain independent when reusing rule objects', t => {
+  const rule = { match: 'one two', reason: 'shared' }
+  const first = nlp.buildNet([{ match: 'two', reason: 'two' }, rule, rule])
+  const second = nlp.buildNet([{ match: 'one', reason: 'one' }, rule])
+  t.deepEqual(nlp('one two').sweep(first).found.map(r => r.reason), ['two', 'shared'], 'original order and identity deduplication survive another compilation')
+  t.deepEqual(nlp('one two').sweep(second).found.map(r => r.reason), ['one', 'shared'], 'second compilation has its own ordering')
   t.end()
 })
 

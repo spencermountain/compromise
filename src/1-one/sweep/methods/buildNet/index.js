@@ -1,4 +1,5 @@
 import parse from './01-parse.js'
+import buildIndex from './02-index.js'
 
 // do some indexing on the list of matches
 const buildNet = function (matches, world) {
@@ -40,6 +41,7 @@ const buildNet = function (matches, world) {
   return {
     hooks,
     hookOrder,
+    index: buildIndex(matches, hooks, hookOrder),
     always
   }
 }

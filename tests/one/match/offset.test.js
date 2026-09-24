@@ -1,6 +1,15 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 
+test('captures do not leak from failed attempts', t => {
+  const doc = nlp('one wrong one two')
+  const m = doc.match('[<start>one] two')
+  t.equal(m.text(), 'one two', 'skip an attempt that fails after capturing')
+  t.equal(m.groups('start').text(), 'one', 'only the successful capture remains')
+  t.equal(doc.match('one two').groups('start').found, false, 'uncaptured matches have no groups')
+  t.end()
+})
+
 test('captures and anchors after the first term', t => {
   const doc = nlp('zero one one two tail. zero one two tail.')
   const m = doc.match('[<run>one+] two')

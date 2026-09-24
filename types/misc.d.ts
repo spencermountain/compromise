@@ -80,6 +80,8 @@ export interface matchOptions {
 
 export interface Match {
   match: string,
+  /** Required word, #Tag, or %Switch% to use instead of automatic hook selection. */
+  hook?: string,
   tag?: string | string[],
   unTag?: string | string[],
   group?: string | number,

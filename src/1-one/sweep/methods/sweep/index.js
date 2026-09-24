@@ -6,7 +6,7 @@ const sweep = function (document, net, methods, opts = {}) {
   // find suitable matches to attempt, on each sentence
   const docCache = methods.one.cacheDoc(document)
   // collect possible matches for this document
-  let maybeList = getHooks(docCache, net.hooks, net.hookOrder)
+  let maybeList = getHooks(docCache, net.hooks, net.hookOrder, net.index)
   // ensure all defined needs are met for each match
   maybeList = trimDown(maybeList, docCache, document, net.always)
 

@@ -27,7 +27,7 @@ const tryHere = function (terms, regs, start_i, phrase_length, offset = 0) {
     terms: terms,
     r: 0,
     regs: regs,
-    groups: {},
+    groups: null,
     start_i: origin,
     phrase_length: phrase_length,
     inGroup: null,
@@ -130,11 +130,13 @@ const tryHere = function (terms, regs, start_i, phrase_length, offset = 0) {
     return null //found 0 terms
   }
   const groups = {}
-  Object.keys(state.groups).forEach(k => {
-    const o = state.groups[k]
-    const start = origin + o.start
-    groups[k] = [null, start, start + o.length]
-  })
+  if (state.groups) {
+    Object.keys(state.groups).forEach(k => {
+      const o = state.groups[k]
+      const start = origin + o.start
+      groups[k] = [null, start, start + o.length]
+    })
+  }
   return { pointer: pntr, groups: groups }
 }
 export default tryHere

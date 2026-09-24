@@ -36,7 +36,8 @@ const runMatch = function (docs, todo, cache) {
   let minLength = todo.minLength
   if (minLength === undefined) {
     minLength = 0
-    for (const reg of regs) {
+    for (let i = 0; i < regs.length; i += 1) {
+      const reg = regs[i]
       if (reg.optional !== true && reg.negative !== true) {
         minLength += 1
       }

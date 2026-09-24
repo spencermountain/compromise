@@ -4,26 +4,27 @@ const localTrim = function (maybeList, docCache, document, always) {
     const haves = docCache[n]
     const termCount = document[n].length
     const found = []
-    candidates: for (const obj of list) {
+    candidates: for (let i = 0; i < list.length; i += 1) {
+      const obj = list[i]
       if (!(termCount >= obj.minWords)) {
         continue
       }
-      for (const need of obj.needs) {
-        if (!haves.has(need)) {
+      for (let j = 0; j < obj.needs.length; j += 1) {
+        if (!haves.has(obj.needs[j])) {
           continue candidates
         }
       }
       if (obj.ifNo !== undefined) {
-        for (const no of obj.ifNo) {
-          if (haves.has(no)) {
+        for (let j = 0; j < obj.ifNo.length; j += 1) {
+          if (haves.has(obj.ifNo[j])) {
             continue candidates
           }
         }
       }
       if (obj.wants.length > 0) {
         let count = 0
-        for (const want of obj.wants) {
-          if (haves.has(want)) {
+        for (let j = 0; j < obj.wants.length; j += 1) {
+          if (haves.has(obj.wants[j])) {
             count += 1
             if (count >= obj.minWant) {
               break
@@ -38,7 +39,8 @@ const localTrim = function (maybeList, docCache, document, always) {
     }
     // Unindexed rules have historically bypassed cache checks. Keep them last
     // and apply only the length check, just as the separate tooSmall pass did.
-    for (const obj of always) {
+    for (let i = 0; i < always.length; i += 1) {
+      const obj = always[i]
       if (termCount >= obj.minWords) {
         found.push(obj)
       }

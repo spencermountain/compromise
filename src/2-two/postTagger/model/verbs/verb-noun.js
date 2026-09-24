@@ -55,7 +55,7 @@ export default [
   // cause i gotta
   { match: '[cause] #Pronoun #Verb', hook: 'cause', group: 0, tag: 'Conjunction', reason: 'cause-cuz' },
   // the cardio dance party
-  { match: 'the #Singular [#Infinitive] #Noun', hook: 'the', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'cardio-dance' },
+  { match: 'the #Singular [#Infinitive] (#Noun && !#Possessive)', hook: 'the', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'cardio-dance' },
 
   // that should smoke
   { match: '#Determiner #Modal [#Noun]', hook: '#Modal', group: 0, tag: 'PresentTense', reason: 'should-smoke' },

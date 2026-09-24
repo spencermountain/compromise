@@ -391,6 +391,14 @@ You can't leave the oven unattended. {Pronoun,Modal,Negative,Inf,Det,Singular,Ad
 It'll rain tomorrow. {Pronoun,Modal,Inf,Date}
 I'd like a glass of water. {Pronoun,Modal,Inf,Det,Singular,Prep,Noun}
 They won't forget your kindness. {Pronoun,Modal,Negative,Inf,Poss,Noun}
+
+
+She has no idea. {Noun,Vb,Negative,Noun}
+There are no seats left. {There,Vb,Negative,Noun,Vb}
+This is my favorite song. {Det,Vb,Noun,Adj,Noun}
+Please wait here. {Expr,Vb,Adv}
+Don't touch that. {Vb,Negative,Vb,Det}
+He has no money. {Noun,Vb,Negative,Noun}
 `
 
 test('match spec:', function (t) {
@@ -430,9 +438,9 @@ test('match spec:', function (t) {
         if (terms.length !== slots.length) {
           differences.push(`expected ${slots.length} terms, got ${terms.length}`)
         }
-        if (!differences.length) differences.push('tags align, but the sentence pattern did not match')
+        if (differences.length === 0) differences.push('tags align, but the sentence pattern did not match')
       }
-      const detail = differences.length ? ' — ' + differences.join('; ') : ''
+      const detail = differences.length > 0 ? ' — ' + differences.join('; ') : ''
       t.equal(failing.found, false, here + sentence + detail)
     })
   t.end()

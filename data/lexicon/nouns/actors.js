@@ -527,6 +527,7 @@ export default [
   'veteran',
   'veterinarian',
   'villain',
+  'violinist',
   'vip',
   'visionary',
   'visitor',

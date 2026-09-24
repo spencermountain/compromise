@@ -4,6 +4,39 @@ const embeddedVerb = `${embedding} [(this|that)] [%Plural|Verb%] #Adverb+?$`
 const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
 
 export default [
+  // ...questionRules,
+  // These contexts need the resolved tags from the first sweep.
+  {
+    match: '#Determiner (very|remarkably|extremely|quite|unusually) [%Adj|Noun%] #Actor',
+    hook: '#Actor',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'degree-modified-actor',
+  },
+  // Keep nominal compounds such as 'sleeping aid' and 'sleeping bag'.
+  {
+    match: '#Determiner [sleeping] (#Actor|#Person|puppy|kitten|dog|cat|baby|babies|child|children)',
+    hook: 'sleeping',
+    group: 0,
+    tag: 'Adjective',
+    reason: 'sleeping-modifier',
+  },
+  {
+    match: '(#PastTense && @hasComma) and [%Adj|Past%] #Adverb+?$',
+    hook: 'and',
+    group: 0,
+    tag: 'PastTense',
+    reason: 'past-tense-list',
+  },
+  {
+    match: '^[%Noun|Verb%] #PastTense (#Determiner|#Possessive) #Adjective+? #Noun',
+    hook: '#PastTense',
+    group: 0,
+    tag: 'Noun',
+    reason: 'bare-subject-past',
+  },
+  { match: '#Determiner [present] #Adverb+$', hook: 'present', group: 0, tag: 'Noun', reason: 'present-object' },
+  { match: '[(fall|falls|fell) in] #Month', hook: 'in', group: 0, tag: '#Verb #Preposition', reason: 'fall-in-month' },
   // Inverted conditions and questions use ordinary punctuation predicates.
   { match: '^[had] #Noun+ (#Adverb|not)+? #PastTense', hook: 'had', group: 0, tag: 'Condition', reason: 'had-he', notIf: '@hasQuestionMark' },
   { match: '^[were] #Noun+ to #Infinitive *$', hook: 'were', group: 0, tag: 'Condition', reason: 'were-he', notIf: '@hasQuestionMark' },

@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import fillTags from './_fillTags.js'
+import looksPlural from '../../../methods/looksPlural.js'
 const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
 import adhoc from './_adhoc.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
@@ -80,6 +81,10 @@ const doSwitches = function (terms, i, world) {
     // lean-harder on some variable forms
     if (adhoc[form]) {
       tag = adhoc[form](terms, i) || tag
+    }
+    // Choosing a lexical reading must retain its inflection.
+    if (form === 'Person|Noun' && tag === 'Singular' && looksPlural(str)) {
+      tag = 'Plural'
     }
     // did we find anything?
     if (tag) {

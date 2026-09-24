@@ -222,6 +222,7 @@ export default [
   'steam',
   'steel',
   'sugar',
+  'sunlight',
   'sunshine',
   'sushi',
   'sweepstakes',

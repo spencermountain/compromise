@@ -1,6 +1,8 @@
 // this is really hard to do
 const notIf = '(i|we|they)' //we do not go
 export default [
+  // A URL can be the direct object of an instruction.
+  { match: '^[%Noun|Verb%] #Url', hook: '#Url', group: 0, tag: 'Imperative', reason: 'visit-url' },
   // do not go
   { match: '^do not? [#Infinitive #Particle?]', hook: 'do', notIf, group: 0, tag: 'Imperative', reason: 'do-eat' },
   // please go

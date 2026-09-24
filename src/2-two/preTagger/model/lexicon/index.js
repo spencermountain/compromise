@@ -32,7 +32,10 @@ Object.keys(lexData).forEach(tag => {
     // pluralize Noun|Verb switches
     if (tag === 'Noun|Verb') {
       const plural = toPlural(w, tmpModel)
-      switches[plural] = 'Plural|Verb'
+      // Invariant irregular plurals intentionally share a switch.
+      if (plural !== w || irregularPlurals[w] === w) {
+        switches[plural] = 'Plural|Verb'
+      }
     }
   })
 })

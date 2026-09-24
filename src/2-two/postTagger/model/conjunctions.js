@@ -21,7 +21,7 @@ export default [
 
   // ==== Prepositions ====
   //to the store - a determiner/possessive/pronoun opens a noun-phrase, so this 'to' is never an infinitive-marker
-  { match: '[to] (#Determiner|#Possessive|#Pronoun)', hook: 'to', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'to-the-store' },
+  { match: '[to] (#Determiner|#Possessive|#Pronoun|#Email|#Url)', hook: 'to', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'to-the-store' },
   // bare noun phrases and names: to lunch / to Paris
   { match: '[to] (#Noun && !#Verb)', hook: 'to', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'to-noun' },
   // intensifiers do not change the head of a prepositional phrase
@@ -33,8 +33,8 @@ export default [
   { match: '#Verb #Adverb? #Noun [(that|which)]', hook: '#Verb', group: 0, tag: 'Preposition', reason: 'that-prep' },
   //work, which has been done.
   { match: '@hasComma [which] (#Pronoun|#Verb)', hook: 'which', group: 0, tag: 'Preposition', reason: 'which-copula' },
-  //folks like her
-  { match: '#Noun [like] #Noun', hook: 'like', group: 0, tag: 'Preposition', reason: 'noun-like' },
+  //folks like her — subject-only pronouns instead introduce the verb.
+  { match: '(#Noun && !i && !he && !she && !we && !they) [like] #Noun', hook: 'like', group: 0, tag: 'Preposition', reason: 'noun-like' },
   //like the time
   { match: '^[like] #Determiner', hook: 'like', group: 0, tag: 'Preposition', reason: 'like-the' },
   //a day like this

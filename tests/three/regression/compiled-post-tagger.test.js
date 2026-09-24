@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 
 test('warm post-tagger uses compiled, tag-only passes', t => {
   nlp('warm up the post tagger')

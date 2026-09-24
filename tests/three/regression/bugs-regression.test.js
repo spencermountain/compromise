@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 
 test('resolved examples from bugs.md', t => {
   const thought = nlp('My first thought was to push it away, he said.')
@@ -21,8 +21,11 @@ test('resolved examples from bugs.md', t => {
   study.sentences().toPastTense()
   t.equal(study.text(), 'i could have studied', 'modal perfect remains unchanged')
 
-  t.deepEqual(nlp('you are John, Lisa, Fred').match('#FirstName{1,2}').out('array'),
-    ['John, Lisa,', 'Fred'], 'bounded repetition returns all names')
+  t.deepEqual(
+    nlp('you are John, Lisa, Fred').match('#FirstName{1,2}').out('array'),
+    ['John, Lisa,', 'Fred'],
+    'bounded repetition returns all names'
+  )
   t.end()
 })
 
@@ -60,9 +63,15 @@ test('bug fixes preserve nearby grammatical uses', t => {
   t.ok(nlp('being kind').has('(kind && #Adjective)'), 'ordinary adjective after being')
   t.ok(nlp('she shouldered the bag').has('(shouldered && #PastTense)'), 'unhyphenated verb')
   t.ok(nlp('red-shouldered birds').has('#Adjective #Adjective #Plural'), 'attributive compound')
-  t.deepEqual(nlp('we are going to be swimming').verbs().out('array'),
-    ['are going to be swimming'], 'auxiliary chain stays together')
-  t.deepEqual(nlp('she likes to be pampered').verbs().out('array'),
-    ['likes', 'be pampered'], 'lexical verb and infinitive stay separate')
+  t.deepEqual(
+    nlp('we are going to be swimming').verbs().out('array'),
+    ['are going to be swimming'],
+    'auxiliary chain stays together'
+  )
+  t.deepEqual(
+    nlp('she likes to be pampered').verbs().out('array'),
+    ['likes', 'be pampered'],
+    'lexical verb and infinitive stay separate'
+  )
   t.end()
 })

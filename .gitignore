@@ -16,3 +16,5 @@ bun.lockb
 /one
 /two
 /three
+infinite-jest.txt
+scripts/bench/*

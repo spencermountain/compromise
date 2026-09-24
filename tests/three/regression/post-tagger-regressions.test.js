@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 
 test('conditional had requires an inverted clause', t => {
   for (const str of ['I had dinner cooked by six', 'she had the meals prepared', 'I had already cooked dinner']) {
@@ -35,8 +35,10 @@ test('embedded demonstrative subjects and predicates', t => {
 
 test('come coordinates ordinary and phrasal imperatives', t => {
   for (const [str, verb] of [
-    ['come and sit down', 'sit'], ['come and turn off the light', 'turn'],
-    ['come and eat', 'eat'], ['come eat', 'eat'],
+    ['come and sit down', 'sit'],
+    ['come and turn off the light', 'turn'],
+    ['come and eat', 'eat'],
+    ['come eat', 'eat'],
   ]) {
     const doc = nlp(str)
     t.equal(doc.match('come').has('#Imperative'), true, str + ' come imperative')

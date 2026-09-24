@@ -1,13 +1,20 @@
 import test from 'tape'
-import nlp from './_lib.js'
-import model from '../../src/2-two/postTagger/model/index.js'
-import secondPass from '../../src/2-two/postTagger/model/second-pass.js'
+import nlp from '../_lib.js'
+import model from '../../../src/2-two/postTagger/model/index.js'
+import secondPass from '../../../src/2-two/postTagger/model/second-pass.js'
 
 test('post-tagger rules declare valid required hooks', t => {
   const rules = model.two.matches.concat(secondPass)
-  t.equal(rules.every(rule => typeof rule.hook === 'string'), true, 'every active rule has an explicit hook')
+  t.equal(
+    rules.every(rule => typeof rule.hook === 'string'),
+    true,
+    'every active rule has an explicit hook'
+  )
   // Existing model objects may already contain parsed notIf metadata.
-  t.doesNotThrow(() => nlp.buildNet(rules.map(({ match, hook }) => ({ match, hook }))), 'all hooks pass required-token validation')
+  t.doesNotThrow(
+    () => nlp.buildNet(rules.map(({ match, hook }) => ({ match, hook }))),
+    'all hooks pass required-token validation'
+  )
   t.end()
 })
 
@@ -52,7 +59,13 @@ test('specific alternatives retain their post-tagger behavior', t => {
   ]
   for (let i = 0; i < cases.length; i += 1) {
     const [text, word, tag] = cases[i]
-    t.equal(nlp(text).match(word).has('#' + tag), true, text + ': ' + tag)
+    t.equal(
+      nlp(text)
+        .match(word)
+        .has('#' + tag),
+      true,
+      text + ': ' + tag
+    )
   }
   t.end()
 })

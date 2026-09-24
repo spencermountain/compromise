@@ -53,7 +53,7 @@ test('imperative be retains adjective complements', t => {
 test('singular subjects with common intransitive predicates', t => {
   for (const str of ['the dog runs', 'a dog runs', 'that dog runs', 'my dog runs', 'the river runs', 'the dog runs quickly', 'a dog sleeps', 'my dog walks']) {
     const verb = nlp(str).match('(runs|sleeps|walks)')
-    t.equal(verb.has('#PresentTense'), true, str)
+    t.equal(verb.has('#PresentTense'), true, str + ' has #PresentTense')
     t.equal(verb.has('#Noun'), false, str + ' not noun')
   }
   for (const [str, word] of [['the dog treats', 'treats'], ['the garden plants', 'plants'], ['the credit cards', 'cards']]) {

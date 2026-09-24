@@ -55,6 +55,7 @@ export default [
   'dishonesty',
   'disrepute',
   'dope',
+  'dough',
   'downstairs',
   'draughts',
   'dynasty',

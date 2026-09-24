@@ -79,8 +79,8 @@ importers:
         specifier: 'catalog:'
         version: 2.0.1(rollup@4.63.4)
       tap-dancer:
-        specifier: 'catalog:'
-        version: 0.4.2
+        specifier: 0.4.3
+        version: 0.4.3
       tape:
         specifier: 'catalog:'
         version: 5.10.2
@@ -1392,8 +1392,8 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  serialize-javascript@7.1.1:
-    resolution: {integrity: sha512-k3CMsaIvvdSwm8oLB4MXSl0wH2/cwlH7xGcnRd2DaeRmBkbzYmyT8j0tsX60DwD1eRwHTpNpH8ljKu9oUT1MeQ==}
+  serialize-javascript@7.1.2:
+    resolution: {integrity: sha512-GL2BWwVa6JydKO6l/ljVgjAZF4QJ3S7dWDWi53s5GZT8PJzD2fNxi67HANQGKAqPrwEpL5ba7gUBGi0Ls/sEoQ==}
     engines: {node: '>=20.0.0'}
 
   set-function-length@1.2.2:
@@ -1477,6 +1477,11 @@ packages:
 
   tap-dancer@0.4.2:
     resolution: {integrity: sha512-fc+aXvCColauoRlS1QMJtQqCHWFw+0Ck2KVCbvycDs6DdWHa8V2V0yhsfBp4TyrJsfUksDAGfw1/Ukf+rEyjQA==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  tap-dancer@0.4.3:
+    resolution: {integrity: sha512-mfLUXoXW9/YmidQc1WE19oebGk3rTs+rtL74FnOJmwbMDuSMivhqNz3fHgzVIEwYEeDFLmCsXon17gHiwjbRuQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -1695,7 +1700,7 @@ snapshots:
 
   '@rollup/plugin-terser@1.0.0(rollup@4.63.4)':
     dependencies:
-      serialize-javascript: 7.1.1
+      serialize-javascript: 7.1.2
       smob: 1.6.2
       terser: 5.51.2
     optionalDependencies:
@@ -2733,7 +2738,7 @@ snapshots:
 
   semver@6.3.1: {}
 
-  serialize-javascript@7.1.1: {}
+  serialize-javascript@7.1.2: {}
 
   set-function-length@1.2.2:
     dependencies:
@@ -2840,6 +2845,10 @@ snapshots:
   supports-preserve-symlinks-flag@1.0.0: {}
 
   tap-dancer@0.4.2:
+    dependencies:
+      tap-parser: 18.3.4
+
+  tap-dancer@0.4.3:
     dependencies:
       tap-parser: 18.3.4
 

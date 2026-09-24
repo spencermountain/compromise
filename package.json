@@ -138,7 +138,7 @@
     "nlp-corpus": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
-    "tap-dancer": "catalog:",
+    "tap-dancer": "0.4.3",
     "tape": "catalog:",
     "typescript": "7.0.2"
   },

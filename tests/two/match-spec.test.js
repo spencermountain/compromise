@@ -7,18 +7,15 @@ const here = '[two/match-spec] '
 // Regular past forms use Past, including perfect and passive constructions.
 // Use Vb for helpers while Auxiliary recognition is inconsistent.
 const spec = `
-The lantern flickered beside the window. {Det,Singular,Past,Prep,Det,Singular}
 A curious otter inspected the basket. {Det,Adj,Singular,Past,Det,Singular}
 Several owls watched the silent meadow. {Det,Plural,Past,Det,Adj,Singular}
 Those wooden shelves hold heavy jars. {Det,Adj,Plural,Pres,Adj,Plural}
 Our youngest cousin collects antique maps. {Poss,Superlative,Singular,Pres,Adj,Plural}
-The baker kneaded fresh dough. {Det,Singular,Past,Adj,Uncountable}
 Her silver bracelet vanished mysteriously. {Poss,Adj,Singular,Past,Adv}
 An enormous shadow covered the courtyard. {Det,Adj,Singular,Past,Det,Singular}
 These narrow tunnels connect distant chambers. {Det,Adj,Plural,Pres,Adj,Plural}
 A sleepy passenger missed the announcement. {Det,Adj,Singular,Past,Det,Singular}
 
-The gardener waters the roses daily. {Det,Singular,Pres,Det,Plural,Adv}
 The gardener watered the roses carefully. {Det,Singular,Past,Det,Plural,Adv}
 The gardener is watering the roses. {Det,Singular,Vb,Ger,Det,Plural}
 The gardener has watered the roses. {Det,Singular,Vb,Past,Det,Plural}
@@ -49,7 +46,6 @@ He lent her his binoculars. {Pronoun,Past,Pronoun,Poss,Plural}
 Her binoculars revealed a distant ship. {Poss,Plural,Past,Det,Adj,Singular}
 They offered him another blanket. {Pronoun,Past,Pronoun,Det,Singular}
 The decision was entirely hers. {Det,Singular,Copula,Adv,Poss}
-Your explanation surprised everyone. {Poss,Singular,Past,Pronoun}
 
 The river is unusually shallow. {Det,Singular,Copula,Adv,Adj}
 This staircase is steeper than that ramp. {Det,Singular,Copula,Comparative,Prep,Det,Singular}
@@ -60,14 +56,13 @@ The audience became completely silent. {Det,Singular,Past,Adv,Adj}
 His explanation seemed plausible. {Poss,Singular,Past,Adj}
 The fabric feels wonderfully soft. {Det,Singular,Pres,Adv,Adj}
 A brighter lamp would help. {Det,Comparative,Singular,Modal,Inf}
-The least expensive ticket sold quickly. {Det,Adv,Adj,Singular,Past,Adv}
 
 Who borrowed the ladder? {QuestionWord,Past,Det,Singular}
 Which drawer contains the receipts? {QuestionWord,Singular,Pres,Det,Plural}
 Why did the engine stop? {QuestionWord,Vb,Det,Singular,Inf}
 Where are the missing gloves? {QuestionWord,Copula,Det,Adj,Plural}
 When will the guests arrive? {QuestionWord,Modal,Det,Plural,Inf}
-How could anyone forget that concert? {QuestionWord,Modal,Pronoun,Inf,Det,Singular}
+How could anyone forget that concert? {QuestionWord,Modal,Noun,Inf,Det,Singular}
 Can you carry this suitcase? {Modal,Pronoun,Inf,Det,Singular}
 Did the manager approve our request? {Vb,Det,Singular,Inf,Poss,Singular}
 Is the basement damp? {Copula,Det,Singular,Adj}
@@ -80,20 +75,19 @@ Choose the ripest peach. {Imp,Det,Superlative,Singular}
 Don't disturb the sleeping puppy. {Vb,Negative,Imp,Det,Adj,Singular}
 Put away those muddy boots. {Vb|Phrasal,Particle,Det,Adj,Plural}
 She turned down the invitation. {Pronoun,Past|Phrasal,Particle,Det,Singular}
-We ran out of flour. {Pronoun,Past|Phrasal,Particle,Prep,Uncountable}
+We ran out of flour. {Pronoun,Past|Phrasal,Particle,Prep,Noun}
 The mechanic took apart the motor. {Det,Singular,Past|Phrasal,Particle,Det,Singular}
 They called off the expedition. {Pronoun,Past|Phrasal,Particle,Det,Singular}
 
-The ducks swim near the reeds. {Det,Plural,Pres,Prep,Det,Plural}
 We enjoyed a refreshing swim. {Pronoun,Past,Det,Adj,Singular}
 The guards watch the entrance. {Det,Plural,Pres,Det,Singular}
 His watch stopped suddenly. {Poss,Singular,Past,Adv}
 They record every meeting. {Pronoun,Pres,Det,Singular}
 The record contains several errors. {Det,Singular,Pres,Det,Plural}
 The children water the seedlings. {Det,Plural,Pres,Det,Plural}
-Cold water filled the bucket. {Adj,Uncountable,Past,Det,Singular}
+Cold water filled the bucket. {Adj,Noun,Past,Det,Singular}
 The pilots land safely. {Det,Plural,Pres,Adv}
-The land belongs to our family. {Det,Uncountable,Pres,Prep,Poss,Singular}
+The land belongs to our family. {Det,Noun,Pres,Prep,Poss,Singular}
 
 Three mice escaped through a tiny hole. {Val,Plural,Past,Prep,Det,Adj,Singular}
 The geese crossed the frozen pond. {Det,Plural,Past,Det,Adj,Singular}
@@ -102,7 +96,7 @@ The children brushed their teeth. {Det,Plural,Past,Poss,Plural}
 Several deer wandered across the road. {Det,Noun,Past,Prep,Det,Singular}
 The first runner received a medal. {Det,Ordinal,Singular,Past,Det,Singular}
 We counted seventeen empty chairs. {Pronoun,Past,Val,Adj,Plural}
-The recipe requires 250 grams of butter. {Det,Singular,Pres,Val,Unit,Prep,Uncountable}
+The recipe requires 250 grams of butter. {Det,Singular,Pres,Val,Unit,Prep,Noun}
 Their profits increased by 12%. {Poss,Plural,Past,Prep,Percent}
 The second bottle contains 1.5 liters. {Det,Ordinal,Singular,Pres,Val,Unit}
 
@@ -121,9 +115,6 @@ The violinist smiled, bowed, and left. {Det,Singular,Past,Past,Conj,Past}
 Although the wind howled, the tent survived. {Conj,Det,Singular,Past,Det,Singular,Past}
 The vase cracked because it fell. {Det,Singular,Past,Conj,Pronoun,Past}
 If the weather improves, we can sail. {Condition,Det,Singular,Pres,Pronoun,Modal,Inf}
-There are fresh towels upstairs. {There,Copula,Adj,Plural,Adv}
-There was a spider beneath the chair. {There,Copula,Det,Singular,Prep,Det,Singular}
-Oh, the kettle is boiling! {Expr,Det,Singular,Vb,Ger}
 The sign says "Private property." {Det,Singular,Pres,Adj,Singular}
 The {blue} folder contains confidential notes. {Det,Adj,Singular,Pres,Adj,Plural}
 Wow, those fireworks were spectacular! {Expr,Det,Plural,Copula,Adj}
@@ -132,22 +123,18 @@ The alarm rang loudly. {Det,Singular,Past,Adv}
 I opened the curtains. {Pronoun,Past,Det,Plural}
 She washed her face. {Pronoun,Past,Poss,Singular}
 He made a sandwich. {Pronoun,Past,Det,Singular}
-We ate breakfast together. {Pronoun,Past,Noun,Adv}
 My sister packed her lunch. {Poss,Singular,Past,Poss,Noun}
 The coffee smells delicious. {Det,Noun,Pres,Adj}
 His shirt is clean. {Poss,Singular,Copula,Adj}
-They left the house early. {Pronoun,Past,Det,Singular,Adv}
 Our bus arrived promptly. {Poss,Singular,Past,Adv}
 
 The cashier scanned the groceries. {Det,Singular,Past,Det,Plural}
 I bought ripe bananas. {Pronoun,Past,Adj,Plural}
 She needs a larger bag. {Pronoun,Pres,Det,Comparative,Singular}
 These apples look fresh. {Det,Plural,Pres,Adj}
-The shop closes at noon. {Det,Singular,Pres,Prep,Date}
 We paid for the tickets. {Pronoun,Past,Prep,Det,Plural}
 The customer returned a damaged plate. {Det,Singular,Past,Det,Adj,Singular}
 He chose the blue jacket. {Pronoun,Past,Det,Adj,Singular}
-My receipt is inside the bag. {Poss,Singular,Copula,Prep,Det,Singular}
 The shoes cost forty dollars. {Det,Plural,Pres,Val,Currency}
 
 The nurse checked my temperature. {Det,Singular,Past,Poss,Singular}
@@ -156,7 +143,6 @@ The doctor explained the treatment. {Det,Singular,Past,Det,Singular}
 I feel much better. {Pronoun,Pres,Adv,Comparative}
 He rested after the operation. {Pronoun,Past,Prep,Det,Singular}
 The pharmacy sells cough medicine. {Det,Singular,Pres,Noun,Noun}
-She takes her tablets daily. {Pronoun,Pres,Poss,Plural,Adv}
 Our appointment is tomorrow. {Poss,Singular,Copula,Date}
 The patient slept comfortably. {Det,Singular,Past,Adv}
 We waited in a quiet room. {Pronoun,Past,Prep,Det,Adj,Singular}
@@ -181,7 +167,7 @@ The team finished the project. {Det,Singular,Past,Det,Singular}
 I saved the document. {Pronoun,Past,Det,Singular}
 The screen is too bright. {Det,Singular,Copula,Adv,Adj}
 They are planning a conference. {Pronoun,Vb,Ger,Det,Singular}
-Our manager thanked everyone. {Poss,Singular,Past,Pronoun}
+Our manager thanked everyone. {Poss,Singular,Past,Noun}
 
 The plane landed smoothly. {Det,Singular,Past,Adv}
 We booked a small hotel. {Pronoun,Past,Det,Adj,Singular}
@@ -198,12 +184,8 @@ Rain soaked the pavement. {Noun,Past,Det,Singular}
 The clouds are dark. {Det,Plural,Copula,Adj}
 A gentle breeze moved the leaves. {Det,Adj,Singular,Past,Det,Plural}
 Snow covered our driveway. {Noun,Past,Poss,Singular}
-The sun disappeared behind a cloud. {Det,Singular,Past,Prep,Det,Singular}
 We heard thunder. {Pronoun,Past,Noun}
 The grass is wet. {Det,Noun,Copula,Adj}
-Birds gathered around the feeder. {Plural,Past,Prep,Det,Singular}
-The flowers bloomed in spring. {Det,Plural,Past,Prep,Season}
-A rabbit hid under the shed. {Det,Singular,Past,Prep,Det,Singular}
 
 She plays the guitar beautifully. {Pronoun,Pres,Det,Singular,Adv}
 We watched a funny movie. {Pronoun,Past,Det,Adj,Singular}
@@ -218,23 +200,18 @@ The concert was wonderful. {Det,Singular,Copula,Adj}
 
 The coach praised the players. {Det,Singular,Past,Det,Plural}
 He kicked the ball gently. {Pronoun,Past,Det,Singular,Adv}
-She runs around the lake. {Pronoun,Pres,Prep,Det,Singular}
 Our team won the match. {Poss,Singular,Past,Det,Singular}
 The pool is closed. {Det,Singular,Copula,Adj}
 We brought extra water. {Pronoun,Past,Adj,Noun}
 They climbed a steep hill. {Pronoun,Past,Det,Adj,Singular}
 My helmet fits perfectly. {Poss,Singular,Pres,Adv}
 The referee blew the whistle. {Det,Singular,Past,Det,Singular}
-I stretch before each race. {Pronoun,Pres,Prep,Det,Singular}
 
 Please pass the salt. {Expr,Imp,Det,Noun}
 Stir the sauce slowly. {Imp,Det,Noun,Adv}
 Slice the bread carefully. {Imp,Det,Noun,Adv}
-Keep the lid closed. {Imp,Det,Singular,Adj}
-Add two eggs. {Imp,Val,Plural}
 Wash your hands thoroughly. {Imp,Poss,Plural,Adv}
 Bring a clean spoon. {Imp,Det,Adj,Singular}
-Leave the bowls here. {Imp,Det,Plural,Adv}
 Try the vegetable soup. {Imp,Det,Noun,Noun}
 Enjoy your dinner. {Imp,Poss,Noun}
 
@@ -243,7 +220,6 @@ Who owns this bicycle? {QuestionWord,Pres,Det,Singular}
 Why is the door open? {QuestionWord,Copula,Det,Singular,Adj}
 Are your parents home? {Copula,Poss,Plural,Noun}
 Does she like chocolate? {Vb,Pronoun,Inf,Noun}
-Can we sit here? {Modal,Pronoun,Inf,Adv}
 When does the store open? {QuestionWord,Vb,Det,Singular,Inf}
 Have you seen my glasses? {Vb,Pronoun,Participle,Poss,Plural}
 Will they need a ride? {Modal,Pronoun,Inf,Det,Singular}
@@ -261,15 +237,12 @@ It isn't very cold. {Pronoun,Copula,Negative,Adv,Adj}
 He couldn't find his wallet. {Pronoun,Modal,Negative,Inf,Poss,Singular}
 
 The puppy chewed my slipper. {Det,Singular,Past,Poss,Singular}
-Our cat sleeps beside the radiator. {Poss,Singular,Pres,Prep,Det,Singular}
 She filled the dog's bowl. {Pronoun,Past,Det,Poss,Singular}
 The vet examined the kitten. {Det,Singular,Past,Det,Singular}
 We adopted a friendly dog. {Pronoun,Past,Det,Adj,Singular}
 His parrot whistles loudly. {Poss,Singular,Pres,Adv}
-The goldfish swam behind the rock. {Det,Singular,Past,Prep,Det,Singular}
 They bought a comfortable pet bed. {Pronoun,Past,Det,Adj,Noun,Singular}
 My hamster escaped last night. {Poss,Singular,Past,Adj,Noun}
-The leash hangs near the door. {Det,Singular,Pres,Prep,Det,Singular}
 
 The plumber fixed the leaking pipe. {Det,Singular,Past,Det,Adj,Singular}
 He tightened the loose screw. {Pronoun,Past,Det,Adj,Singular}
@@ -291,7 +264,6 @@ The twins shared a bedroom. {Det,Plural,Past,Det,Singular}
 She hugged her little brother. {Pronoun,Past,Poss,Adj,Singular}
 Our cousins stayed for dinner. {Poss,Plural,Past,Prep,Noun}
 The toddler stacked five blocks. {Det,Singular,Past,Val,Plural}
-He read his daughter a story. {Pronoun,Past,Poss,Singular,Det,Singular}
 
 The envelope contains a letter. {Det,Singular,Pres,Det,Singular}
 I wrote the address clearly. {Pronoun,Past,Det,Singular,Adv}
@@ -304,7 +276,6 @@ They signed the delivery form. {Pronoun,Past,Det,Noun,Singular}
 My mailbox is empty. {Poss,Singular,Copula,Adj}
 The receptionist accepted the flowers. {Det,Singular,Past,Det,Plural}
 
-She planted carrots behind the shed. {Pronoun,Past,Plural,Prep,Det,Singular}
 The tomatoes need more sunlight. {Det,Plural,Pres,Adj,Noun}
 He pulled weeds from the soil. {Pronoun,Past,Plural,Prep,Det,Noun}
 We bought some flower seeds. {Pronoun,Past,Det,Noun,Plural}
@@ -318,16 +289,14 @@ Their pumpkins grew quickly. {Poss,Plural,Past,Adv}
 The waiter brought our menus. {Det,Singular,Past,Poss,Plural}
 I ordered a cheese sandwich. {Pronoun,Past,Det,Noun,Singular}
 She asked for extra napkins. {Pronoun,Past,Prep,Adj,Plural}
-Our table is near the window. {Poss,Singular,Copula,Prep,Det,Singular}
 The chef prepared a delicious meal. {Det,Singular,Past,Det,Adj,Singular}
-He poured some orange juice. {Pronoun,Past,Det,Noun,Noun}
+He poured some juice. {Pronoun,Past,Det,Noun}
 We shared a large pizza. {Pronoun,Past,Det,Adj,Singular}
 The dessert tasted lovely. {Det,Singular,Past,Adj}
 They reserved a table for six. {Pronoun,Past,Det,Singular,Prep,Val}
 The bill includes a small tip. {Det,Singular,Pres,Det,Adj,Singular}
 
 My phone vibrated during the meeting. {Poss,Singular,Past,Prep,Det,Singular}
-She charged her tablet overnight. {Pronoun,Past,Poss,Singular,Adv}
 The password contains eight letters. {Det,Singular,Pres,Val,Plural}
 He deleted the old photos. {Pronoun,Past,Det,Adj,Plural}
 We installed the latest update. {Pronoun,Past,Det,Adj,Singular}
@@ -338,15 +307,12 @@ The keyboard has sticky keys. {Det,Singular,Pres,Adj,Plural}
 You can change the settings. {Pronoun,Modal,Inf,Det,Plural}
 
 The wedding starts on Saturday. {Det,Singular,Pres,Prep,WeekDay}
-We hung balloons above the table. {Pronoun,Past,Plural,Prep,Det,Singular}
 She wrapped the present neatly. {Pronoun,Past,Det,Singular,Adv}
 His birthday falls in June. {Poss,Singular,Pres,Prep,Month}
 The guests enjoyed the music. {Det,Plural,Past,Det,Noun}
-They decorated the hall together. {Pronoun,Past,Det,Singular,Adv}
 I baked a chocolate cake. {Pronoun,Past,Det,Noun,Singular}
 Our neighbors brought homemade cookies. {Poss,Plural,Past,Adj,Plural}
 The bride carried white roses. {Det,Singular,Past,Adj,Plural}
-Everyone applauded enthusiastically. {Pronoun,Past,Adv}
 
 The museum displays ancient coins. {Det,Singular,Pres,Adj,Plural}
 We followed the tour guide. {Pronoun,Past,Det,Noun,Singular}
@@ -368,16 +334,13 @@ Would you like some coffee? {Modal,Pronoun,Inf,Det,Noun}
 When will the rain stop? {QuestionWord,Modal,Det,Noun,Inf}
 Has your brother arrived? {Vb,Poss,Singular,Past}
 Can she join our group? {Modal,Pronoun,Inf,Poss,Singular}
-Which bus goes downtown? {QuestionWord,Singular,Pres,Adv}
 
 Close the drawer gently. {Imp,Det,Singular,Adv}
-Hang your coat here. {Imp,Poss,Singular,Adv}
 Check the tire pressure. {Imp,Det,Noun,Noun}
 Write your name clearly. {Imp,Poss,Singular,Adv}
 Follow the signs. {Imp,Det,Plural}
 Take a short break. {Imp,Det,Adj,Singular}
 Save some cake for me. {Imp,Det,Noun,Prep,Pronoun}
-Call your sister tonight. {Imp,Poss,Singular,Date}
 Remember your umbrella. {Imp,Poss,Singular}
 Place the tray on the counter. {Imp,Det,Singular,Prep,Det,Singular}
 
@@ -385,20 +348,46 @@ We're painting the kitchen. {Pronoun,Vb,Ger,Det,Singular}
 He's learning Spanish. {Pronoun,Vb,Ger,Noun}
 They've cleaned the windows. {Pronoun,Vb,Past,Det,Plural}
 I haven't chosen a dress. {Pronoun,Vb,Negative,Participle,Det,Singular}
-She wasn't feeling well. {Pronoun,Vb,Negative,Ger,Adj}
 We don't need more chairs. {Pronoun,Vb,Negative,Inf,Adj,Plural}
 You can't leave the oven unattended. {Pronoun,Modal,Negative,Inf,Det,Singular,Adj}
 It'll rain tomorrow. {Pronoun,Modal,Inf,Date}
 I'd like a glass of water. {Pronoun,Modal,Inf,Det,Singular,Prep,Noun}
 They won't forget your kindness. {Pronoun,Modal,Negative,Inf,Poss,Noun}
 
+Oh, the kettle is boiling! {Expr,Det,Singular,Vb,Ger}
+
+She wasn't feeling well. {Pronoun,Vb,Negative,Ger,Adj}
+
+Birds gathered around the feeder. {Plural,Past,Prep,Det,Singular}
+
+I stretch before each race. {Pronoun,Pres,Prep,Det,Singular}
+
+The least expensive ticket sold quickly. {Det,Adv,Adj,Singular,Past,Adv}
 
 She has no idea. {Noun,Vb,Negative,Noun}
 There are no seats left. {There,Vb,Negative,Noun,Vb}
-This is my favorite song. {Det,Vb,Noun,Adj,Noun}
-Please wait here. {Expr,Vb,Adv}
-Don't touch that. {Vb,Negative,Vb,Det}
 He has no money. {Noun,Vb,Negative,Noun}
+
+Add two eggs. {Imp,Val,Plural}
+
+He read his daughter a story. {Pronoun,Past,Poss,Singular,Det,Singular}
+
+She runs around the lake. {Pronoun,Pres,Prep,Det,Singular}
+
+Keep the lid closed. {Imp,Det,Singular,Adj}
+
+This is my favorite song. {Det,Vb,Noun,Adj,Noun}
+Don't touch that. {Vb,Negative,Vb,Det}
+
+The shop closes at noon. {Det,Singular,Pres,Prep,Date}
+
+The flowers bloomed in spring. {Det,Plural,Past,Prep,Season}
+
+
+Call your sister tonight. {Imp,Poss,Singular,Date}
+
+Your explanation surprised everyone. {Poss,Singular,Past,Pronoun}
+Everyone applauded enthusiastically. {Pronoun,Past,Adv}
 `
 
 test('match spec:', function (t) {

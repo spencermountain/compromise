@@ -20,6 +20,7 @@ const conjugate = function (inf, model) {
       Gerund: 'being',
       PastTense: 'was',
       PresentTense: 'is',
+      Participle: 'been',
     }
   }
   const [str, particle] = parse(inf)

@@ -5,6 +5,9 @@ const here = '[three/verb-toPastParticiple] '
 test('toPastParticiple:', function (t) {
   const arr = [
     [`I eat breakfast every morning.`, `I have eaten breakfast every morning.`],
+    [`I am`, `I have been`],
+    [`She is happy.`, `She has been happy.`],
+    [`They are here.`, `They have been here.`],
     [`She reads a book before bed.`, `She has read a book before bed.`],
     [`He teaches math to high school students.`, `He has taught math to high school students.`],
     [`They walk their dog in the park.`, `They have walked their dog in the park.`],

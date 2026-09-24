@@ -67,6 +67,20 @@ export default [
   { match: '^(can|could|will|would) you (#Adverb|not)+? [#Infinitive] * @hasComma please$', hook: 'please', group: 0, tag: 'Imperative', reason: 'would-you-comma-please' },
   // Sentence matching needs explicit patterns for subjects following a comma
   // or colon; ^ only identifies the beginning of the complete sentence.
-  { match: '@hasComma [(this|that|these|those)] #Adverb+? (#Verb && !#Gerund && !#Participle)', hook: '#Verb', group: 0, tag: 'Pronoun', reason: 'demonstrative-subject' },
-  { match: '@hasColon [(this|that|these|those)] #Adverb+? (#Verb && !#Gerund && !#Participle)', hook: '#Verb', group: 0, tag: 'Pronoun', reason: 'demonstrative-subject' },
+  {
+    match: '@hasComma [(this|that|these|those)] #Adverb+? (#Verb && !#Gerund && !#Participle)',
+    hook: '#Verb',
+    group: 0,
+    tag: 'Pronoun',
+    reason: 'demonstrative-subject',
+  },
+  {
+    match: '@hasColon [(this|that|these|those)] #Adverb+? (#Verb && !#Gerund && !#Participle)',
+    hook: '#Verb',
+    group: 0,
+    tag: 'Pronoun',
+    reason: 'demonstrative-subject',
+  },
+  // past-tense people
+  { match: '(drew && #Verb)', hook: 'drew', tag: 'PastTense', reason: 'drew-a-picture' },
 ]

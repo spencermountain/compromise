@@ -886,6 +886,7 @@ export default [
   'wait',
   'walk',
   'war',
+  'water',
   'warehouse',
   'warrant',
   'wash',

@@ -202,9 +202,9 @@ test('spec comments vs braces and hashtags', function (t) {
   t.equal(doc2.text().trim(), 'the {cool} #hiking dog', here + 'braces then a hashtag, no comment')
   t.equal(nlp.testSpec('the {cool} #hiking dog {Det,Adj,HashTag,Noun}', false).found, false, here + 'tags read from the last {}')
 
-  // a '#' before the tag-block is sentence text, not a comment
+  // a leading '#' takes precedence over a tag-block
   const doc3 = nlp.fromSpec('#hiking is fun {HashTag,Vb,Adj}')
-  t.equal(doc3.text().trim(), '#hiking is fun', here + 'hashtag in text kept')
+  t.equal(doc3.found, false, here + 'leading hashtag is a comment line')
   t.equal(nlp.testSpec('#hiking is fun {HashTag,Vb,Adj} # and so is this', false).found, false, here + 'hashtag + comment')
 
   // a line with no {} block is not comment-stripped
@@ -225,5 +225,15 @@ test('testSpec ignores comments', function (t) {
   t.doesNotThrow(() => {
     nlp.testSpec('the cat slept {Det,Noun,Vb} # explain why', false, true)
   }, here + 'throwError silent when passing')
+  t.end()
+})
+
+test('spec skips whole-line comments', function (t) {
+  const comments = '# block comment\n  # indented {invalid tags}\n\t# tabbed\n\u00a0# unicode whitespace\n#'
+  const spec = `james jones {Person,Person} #inline-comment\n\n${comments}\nsally jones {Person,Person}`
+  t.equal(nlp.fromSpec(spec).out('spec'), nlp.fromSpec('james jones {Person,Person}\nsally jones {Person,Person}').out('spec'), here + 'comment lines excluded from text')
+  t.equal(nlp.testSpec(spec, false, true).found, false, here + 'comment lines never fail or throw')
+  t.equal(nlp.fromSpec(comments).found, false, here + 'comment-only input is empty')
+  t.equal(nlp.testSpec(comments, false, true).found, false, here + 'comment-only input passes')
   t.end()
 })

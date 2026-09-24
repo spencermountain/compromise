@@ -87,6 +87,14 @@ const out = function (method) {
       }, {})
     })
   }
+  if (method === 'best-tag') {
+    this.compute('tagRank')
+    return this.docs
+      .map(ts => {
+        return ts.map(t => (t.tagRank && t.tagRank[0] ? `#${t.tagRank[0]}` : '')).join(' ')
+      })
+      .join('\n')
+  }
   if (method === 'debug') {
     return this.debug() //allow
   }

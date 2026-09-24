@@ -1,10 +1,13 @@
 const lastBrace = /\{(?=[^{]*$)/ // split on the last { only
 const comment = /\}[ \t]*#.*$/ // an optional '# comment' after the last {tags} block
 
+const green = str => '\x1b[32m' + str + '\x1b[0m'
+const red = str => '\x1b[31m' + str + '\x1b[0m'
+const dim = str => '\x1b[2m' + str + '\x1b[0m'
+
 // parse the spec output
 const parseLine = function (line = '') {
-  // eslint-disable-next-line prefer-const
-  let [text, tags] = line.split(lastBrace)
+  let [text, tags] = line.split(lastBrace) // eslint-disable-line prefer-const
   if (tags === undefined) {
     return { text, tags: [] } // no {tags} block on this line
   }
@@ -36,7 +39,7 @@ const toMatchString = function (tags, aliases) {
 const fromSpec = function (spec) {
   const cleanText = spec
     .split('\n')
-    .filter(line => line.trim())
+    .filter(line => line.trim() && !/^\s*#/.test(line))
     .map(line => {
     return parseLine(line).text
   }).join('\n')
@@ -45,12 +48,14 @@ const fromSpec = function (spec) {
 
 // rebuild spec-formatted tag list
 const toTagList = function (tags) {
-  return tags.map(arr => arr.join('|')).join(',')
+  const list = tags.map(arr => arr.join('|'))
+  return dim(`{${list.join(',')}}`)
 }
 
 // compare the tagged text output of out('spec')
 const testSpec = function (spec, verbose = true, throwError = false) {
-  const world = this.world()
+  const nlp = this
+  const world = nlp.world()
   const aliases = {}
   // expand tag aliases
   const tagSet = world.model.one.tagSet
@@ -61,27 +66,41 @@ const testSpec = function (spec, verbose = true, throwError = false) {
   })
   const failingLines = spec
     .split('\n')
-    .filter(line => line.trim())
+    .filter(line => line.trim() && !/^\s*#/.test(line))
     .map(line => {
       const { text, tags } = parseLine(line)
       // parse it
-      const doc = this(text)
+      const doc = nlp(text)
       // make compromise-compatible match string
       const matchStr = toMatchString(tags, aliases)
       const didMatch = doc.has(matchStr)
       if (verbose !== false) {
-        const char = didMatch ? '✅' : '❌'
-        console.log(`${char} ${text} {${toTagList(tags)}}`) //eslint-disable-line no-console
+        if (didMatch === true) {
+          console.log(`${green('✓')} ${green(dim(text))} ${toTagList(tags)}`) //eslint-disable-line no-console
+        } else {
+          const perTerm = matchStr.split(' ')
+          let failure = ''
+          const wrong = doc.terms().find((term, i) => !term.has(perTerm[i]))
+          if (wrong.found) {
+            // wrong.compute('tagRank')
+            failure = `'${wrong.text('normal')}'`
+            const tag = wrong.out('best-tag')
+            if (tag) {
+              failure += ` = ${tag}`
+            }
+          }
+          console.log(`${red('✗')} ${text} ${toTagList(tags)} - ${red(failure)}`) //eslint-disable-line no-console
+        }
       }
       if (didMatch === false && throwError === true) {
-        throw new Error(`❌ ${text} {${toTagList(tags)}}`)
+        throw new Error(`❌ ${text} ${toTagList(tags)}`)
       }
       return didMatch ? null : text
     })
     .filter(Boolean)
     .join('\n')
   // return a doc of only the failing lines - empty means everything passed
-  return this(failingLines)
+  return nlp(failingLines)
 }
 
 export { fromSpec, testSpec }

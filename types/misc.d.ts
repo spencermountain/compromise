@@ -2,7 +2,8 @@ export type Document = Term[][]
 
 export type Pointer = [n?: number, start?: number, end?: number, startId?: string, endId?: string]
 
-export type outMethods = 'text' | 'normal' | 'offset' | 'terms' | 'topk' | 'json' | 'tags' | 'array' | 'debug'
+export type outMethods =
+  'text' | 'normal' | 'offset' | 'terms' | 'topk' | 'json' | 'tags' | 'array' | 'best-tag' | 'debug'
 
 export type Groups = object
 

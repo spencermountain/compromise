@@ -48,6 +48,16 @@ One line per sentence:
 
 ## Comments
 
+A line whose first non-whitespace character is `#` is ignored entirely by both
+`.fromSpec()` and `.testSpec()`, including lines with braces or tag blocks:
+
+```plaintext
+james jones {Person,Person} # inline comment
+
+# block comment
+sally jones {Person,Person}
+```
+
 A line may end with a `#` comment, after the tag block:
 
 ```
@@ -62,10 +72,10 @@ We'll see well-known cases. {Noun,Vb,Vb,Adv,Adj,Noun}  # contraction + hyphenate
 - A line holds **at most one tag block and one comment, and the last of each wins.**
   The tag block is the last `{…}` on the line; the comment is a `#` directly after its
   closing `}` (with only spaces or tabs between), running to the end of the line.
-- So a `#` anywhere *before* the tag block is sentence text, not a comment - both
-  `#hiking is fun {HashTag,Vb,Adj}` and `the {cool} #hiking dog {Det,Adj,HashTag,Noun}`
-  parse as written.
-- A comment cannot contain `{` `}` - a brace inside it would be read as the tag block.
+- A `#` before the tag block is sentence text unless it is the first non-whitespace
+  character. `the {cool} #hiking dog {Det,Adj,HashTag,Noun}` parses as written;
+  `#hiking is fun {HashTag,Vb,Adj}` is a comment line and is skipped.
+- An inline comment cannot contain `{` `}` - a brace inside it would be read as the tag block.
 - A line with no tag block is not comment-stripped, so `no braces here # note` stays
   ordinary text - the same preamble line it was before.
 

@@ -354,38 +354,53 @@ It'll rain tomorrow. {Pronoun,Modal,Inf,Date}
 I'd like a glass of water. {Pronoun,Modal,Inf,Det,Singular,Prep,Noun}
 They won't forget your kindness. {Pronoun,Modal,Negative,Inf,Poss,Noun}
 
+#Adjective!=#Ger
 Oh, the kettle is boiling! {Expr,Det,Singular,Vb,Ger}
 
+#Adverb!=#Adj
 She wasn't feeling well. {Pronoun,Vb,Negative,Ger,Adj}
 
+#Adverb!=#Prep
 Birds gathered around the feeder. {Plural,Past,Prep,Det,Singular}
 
+#Conjunction!=#Prep
 I stretch before each race. {Pronoun,Pres,Prep,Det,Singular}
 
+#Determiner!=#Adv
 The least expensive ticket sold quickly. {Det,Adv,Adj,Singular,Past,Adv}
 
+#Expression!=#Negative
 She has no idea. {Noun,Vb,Negative,Noun}
 There are no seats left. {There,Vb,Negative,Noun,Vb}
 He has no money. {Noun,Vb,Negative,Noun}
 
+#Infinitive!=#Imp
 Add two eggs. {Imp,Val,Plural}
 
+#Infinitive!=#Past
 He read his daughter a story. {Pronoun,Past,Poss,Singular,Det,Singular}
 
+#Particle!=#Prep
 She runs around the lake. {Pronoun,Pres,Prep,Det,Singular}
 
+#PastTense!=#Adj
 Keep the lid closed. {Imp,Det,Singular,Adj}
 
+#Pronoun!=#Det
 This is my favorite song. {Det,Vb,Noun,Adj,Noun}
 Don't touch that. {Vb,Negative,Vb,Det}
 
+#Singular!=#Date
 The shop closes at noon. {Det,Singular,Pres,Prep,Date}
 
+#Singular!=#Season
 The flowers bloomed in spring. {Det,Plural,Past,Prep,Season}
 
 
+#Uncountable!=#Date
 Call your sister tonight. {Imp,Poss,Singular,Date}
 
+#Uncountable!=#Pronoun
 Your explanation surprised everyone. {Poss,Singular,Past,Pronoun}
 Everyone applauded enthusiastically. {Pronoun,Past,Adv}
 `
@@ -398,7 +413,7 @@ test('match spec:', function (t) {
   })
   spec
     .split('\n')
-    .filter(line => line.trim())
+    .filter(line => line.trim() && !line.trimStart().startsWith('#'))
     .forEach(line => {
       const failing = nlp.testSpec(line, false)
       const brace = line.lastIndexOf('{')

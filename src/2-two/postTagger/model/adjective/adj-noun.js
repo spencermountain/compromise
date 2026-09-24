@@ -22,7 +22,7 @@ export default [
   // her favourite sport
   { match: `#Possessive [%Adj|Noun%] #Noun`, hook: '#Possessive', group: 0, tag: 'Adjective', reason: 'her-favourite' },
   // must-win
-  { match: `must && #Hyphenated .`, hook: '&&', tag: 'Adjective', reason: 'must-win' },
+  { match: `(must && #Hyphenated) .`, hook: 'must', tag: 'Adjective', reason: 'must-win' },
   // the present
   {
     match: `#Determiner [#Adjective]$`, hook: '#Adjective',

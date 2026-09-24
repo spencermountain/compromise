@@ -32,7 +32,7 @@ export default [
     reason: 'address-st',
   },
   // port dover
-  { match: '(port|mount|mt) #ProperName', hook: '#ProperName', tag: 'Place', reason: 'port-name' },
+  { match: '(port|mount|mt) #ProperNoun', hook: '#ProperNoun', tag: 'Place', reason: 'port-name' },
   // 4th st in portland
   { match: '#Address in #Place', hook: 'in', tag: 'Place', reason: 'address-place' },
   // generic 'oak ridge' names

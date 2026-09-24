@@ -21,9 +21,9 @@ export default [
   { match: 'some [#Verb] #Plural', hook: 'some', group: 0, tag: 'Noun', reason: 'determiner6' },
   // my first thought
   { match: '#Possessive #Ordinal [#PastTense]', hook: '#Ordinal', group: 0, tag: 'Noun', reason: 'first-thought' },
-  //the nice swim
+  //the nice walk
   {
-    match: '(the|this|those|these) #Adjective [%Verb|Noun%]', hook: '#Adjective',
+    match: '(the|this|those|these) #Adjective [%Noun|Verb%]', hook: '#Adjective',
     group: 0,
     tag: 'Noun',
     notIf: '#Copula',
@@ -173,7 +173,7 @@ export default [
     reason: 'dance-music',
   },
   // wit it
-  { match: '[wit] (me|it)', hook: 'wit', group: 0, tag: 'Presposition', reason: 'wit-me' },
+  { match: '[wit] (me|it)', hook: 'wit', group: 0, tag: 'Preposition', reason: 'wit-me' },
   //left-her-boots, shoved her hand
   { match: '#PastTense #Possessive [#Verb]', hook: '#Possessive', group: 0, tag: 'Noun', notIf: '(saw|made)', reason: 'left-her-boots' },
   //35 signs

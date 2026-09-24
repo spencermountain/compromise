@@ -13,6 +13,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - improved verb conjugation
 - **[change]** - improved tagging
 - **[update]** - efrt, grad-school dependencies
+- **[change]** - support block-comments in spec format
+- **[change]** - testSpec() improved verbose output
+- **[new]** - .out('best-tag') fmt
 - **[fix]** - verb conjugation regression #1226
 - **[fix]** - types paths
 - **[fix]** - possibly-unsafe regexes

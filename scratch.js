@@ -10,8 +10,8 @@ When does the store open? {QuestionWord,Vb,Det,Singular,Inf}
 When will the rain stop? {QuestionWord,Modal,Det,Noun,Inf}
 
 `
-nlp.testSpec(str, true)
-
+let out = nlp.testSpec(str, true)
+// out.debug()
 
 // let doc = nlp('john smith')
 // doc.compute('tagRank')

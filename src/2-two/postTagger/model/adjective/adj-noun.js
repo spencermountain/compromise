@@ -4,7 +4,7 @@ export default [
   // real [evil] is
   { match: '#Adjective [#Adjective] #Copula', hook: '#Copula', group: 0, tag: 'Noun', reason: 'adj-adj-is' },
   // his [fine]
-  { match: '(his|its) [%Adj|Noun%]', hook: '%Adj|Noun%', group: 0, tag: 'Noun', notIf: '#Hyphenated', reason: 'his-fine' },
+  { match: '(his|its) [%Adj|Noun%] !#Noun?', hook: '%Adj|Noun%', group: 0, tag: 'Noun', notIf: '#Hyphenated', reason: 'his-fine' },
   // is [all]
   { match: '#Copula #Adverb? [all]', hook: 'all', group: 0, tag: 'Noun', reason: 'is-all' },
   // have [fun] with it

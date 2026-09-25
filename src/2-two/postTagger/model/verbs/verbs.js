@@ -86,7 +86,9 @@ export default [
   { match: 'as #Pronoun [please]', hook: 'as', group: 0, tag: 'Infinitive', reason: 'as-we-please' },
   // verb-prefixes - '[co] write'
   // [co] write
-  { match: '[(co|mis|de|inter|intra|pre|re|un|out|under|over|counter)] #Verb', hook: '#Verb', group: 0, tag: ['Verb', 'Prefix'], notIf: '(#Copula|#PhrasalVerb)', reason: 'co-write' },
+  { match: '[(co|mis|de|inter|intra|pre|re|un|counter)] #Verb', hook: '#Verb', group: 0, tag: ['Verb', 'Prefix'], notIf: '(#Copula|#PhrasalVerb)', reason: 'co-write' },
+  // [out] run
+  { match: '[(out|under|over)] #Infinitive', hook: '#Infinitive', group: 0, tag: ['Verb', 'Prefix'], reason: 'directional-verb-prefix' },
   // dressed and [left]
   { match: '#PastTense and [%Adj|Past%]', hook: 'and', group: 0, tag: 'PastTense', reason: 'past-and-ambiguous' },
   // [melted] and fallen

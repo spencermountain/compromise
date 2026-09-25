@@ -18,7 +18,9 @@ export default [
   // alright
   { match: '^alright', hook: 'alright', tag: 'Expression', reason: 'alright-expression' },
   // shoot
-  { match: '^shoot', hook: 'shoot', tag: 'Expression', reason: 'shoot-expression' },
+  { match: '^shoot$', hook: 'shoot', tag: 'Expression', reason: 'shoot-expression' },
+  // shoot,
+  { match: '^(shoot && @hasComma)', hook: 'shoot', tag: 'Expression', reason: 'shoot-comma-expression' },
   // hell
   { match: '^hell', hook: 'hell', tag: 'Expression', reason: 'hell-expression' },
   // anyways

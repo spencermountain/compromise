@@ -10,10 +10,12 @@ export default [
     tag: 'Region',
     reason: 'us-state',
   },
-  // Portland [or]
-  { match: 'portland [or]', hook: 'portland', group: 0, tag: 'Region', reason: 'portland-or' },
+  // Portland [OR]
+  { match: 'portland [(or && @isUpperCase)]', hook: 'portland', group: 0, tag: 'Region', reason: 'portland-or' },
   // i ate [turkey]
-  { match: '(eat|ate|eating|roast|roasted|thanksgiving|with) [turkey]', hook: 'turkey', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'food-turkey' },
+  { match: '(eat|ate|eating|roast|roasted|thanksgiving) [turkey]', hook: 'turkey', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'food-turkey' },
+  // with [turkey]
+  { match: 'with [(turkey && !@isTitleCase)]', hook: 'turkey', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'with-turkey-food' },
   // [turkey] dinner
   { match: '[turkey] (roast|dinner|sandwich|burger)', hook: 'turkey', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'turkey-food' },
   // ankara [turkey]

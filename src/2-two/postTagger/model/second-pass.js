@@ -109,6 +109,10 @@ const rules = [
   { match: '^(can|could|will|would) you (#Adverb|not)+? [(#Infinitive && @hasComma)] please$', hook: 'please', group: 0, tag: 'Imperative', reason: 'request-verb-comma' },
   // can you [walk] the dog, please?
   { match: '^(can|could|will|would) you (#Adverb|not)+? [#Infinitive] * @hasComma please$', hook: 'please', group: 0, tag: 'Imperative', reason: 'request-object-comma' },
+  // [Will] walked home
+  { match: '[(will && @isTitleCase)] #PastTense', hook: 'will', group: 0, tag: 'FirstName', reason: 'will-past-subject' },
+  // jack the ripper
+  { match: '%Person|Verb% (the && #Person) #Person', hook: '#Person', tag: 'Person', reason: 'known-nickname' },
   // she drew a picture
   { match: '(drew && #Verb)', hook: 'drew', tag: 'PastTense', reason: 'drew-a-picture' },
   // keep the lid [closed]

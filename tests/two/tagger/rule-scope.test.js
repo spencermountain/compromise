@@ -82,6 +82,101 @@ be late {Vb,Adj}
 do not be late {Vb,Negative,Vb,Adj}
 the wall is off white {Det,Noun,Copula,Adj,Adj}
 
+
+# Adjective/adverb review: verbal complements and comparative adverbs.
+she does better {Noun,Pres,Adv}
+she does worse {Noun,Pres,Adv}
+she does mean it {Noun,Vb,Inf,Noun}
+she got accused of theft {Noun,Vb,Past|Passive,Prep,Noun}
+she got tired of waiting {Noun,Vb,Adj,Prep,Noun}
+she laughed or played music {Noun,Past,Conj,Past,Noun}
+the fear or heightened emotion {Det,Noun,Conj,Adj,Noun}
+display of fear or heightened emotion {Noun,Prep,Noun,Conj,Adj,Noun}
+it feels hard {Noun,Pres,Adj}
+she runs fast {Noun,Pres,Adv}
+she came to a close {Noun,Past,Prep,Det,Noun}
+a close friend {Det,Adj,Noun}
+she was happy and smiled {Noun,Copula,Adj,Conj,Past}
+she was tired and overworked {Noun,Copula,Adj,Conj,Adj}
+the meal was bland and overcooked {Det,Noun,Copula,Adj,Conj,Adj}
+
+# Useful adjective rules retained.
+he felt cheated {Noun,Past,Adj}
+a bit confused {Det,Noun,Adj}
+as fit as a fiddle {Prep,Adj,Prep,Det,Noun}
+their declared intentions {Poss,Adj,Plural}
+
+
+# Commands must occur in command context, not embedded statements.
+you should help yourself {Noun,Modal,Inf,Noun}
+help yourself {Imperative,Noun}
+and then allow yourself a time {Conj,Adv,Imperative,Noun,Det,Noun}
+I know what happened {Noun,Inf,QuestionWord,Past}
+look what happened {Imperative,QuestionWord,Past}
+they do not forget to eat {Noun,Auxiliary,Negative,Inf,Conj,Inf}
+do not forget to clean {Vb,Negative,Inf,Conj,Imperative}
+she went out dancing {Noun,Past,Prep,Ger}
+we will out run the monster {Noun,Modal,Prefix,Inf,Det,Noun}
+
+# Evaluative adjectives versus actions; purpose infinitives versus destinations.
+we found it attacking birds {Noun,Past,Noun,Ger,Plural}
+we found it interesting {Noun,Past,Noun,Adj}
+they are considering buying houses {Noun,Auxiliary,Ger,Ger,Plural}
+we are repairing crumbling roads {Noun,Auxiliary,Ger,Adj,Plural}
+she goes to eat {Noun,Pres,Conj,Inf}
+she goes to sleep {Noun,Pres,Prep,Noun}
+we go to watch birds {Noun,Inf,Conj,Inf,Plural}
+we go to market {Noun,Inf,Prep,Noun}
+they make do {Noun,PhrasalVerb,Particle}
+they make sense {Noun,Inf,Noun}
+is it me? {Copula,Pronoun,Pronoun}
+Google me {Vb,Pronoun}
+the fact that dogs bark {Det,Noun,Conj,Plural,Inf}
+the thing that runs {Det,Noun,Conj,Pres}
+take a walk or sing {Imperative,Det,Noun,Conj,Inf}
+work or prepare {Inf,Conj,Inf}
+his fine clothes {Poss,Adj,Noun}
+his fine {Poss,Noun}
+the rights of man {Det,Plural,Prep,Noun}
+
+# Name ambiguity retains lexical names while respecting ordinary verbs.
+we rob John {Noun,Inf,Person}
+we rob London {Noun,Inf,City}
+rob smith {Person,Person}
+Ollie Faroo {Person,Person}
+jack the ripper {Person,Person,Person}
+only Mark arrived {Adv,Person,Past}
+really wade {Adv,Vb}
+Will walked home {Person,Past,Noun}
+we will walk home {Noun,Modal,Inf,Noun}
+she is watching Smith {Noun,Auxiliary,Ger,Person}
+
+# Abbreviations, food, and dates need distinguishing context.
+Portland or Seattle {City,Conj,City}
+Portland OR {City,Region}
+we negotiated with Turkey {Noun,Past,Prep,Country}
+a sandwich with turkey {Det,Noun,Prep,Uncountable}
+at about noon {Prep,Adv,Noun}
+long live the king {Adv,Inf,Det,Noun}
+shoot the ball {Imperative,Det,Noun}
+shoot! {Expr}
+shoot, I forgot {Expr,Noun,Past}
+we sat yesterday {Noun,Past,Date}
+sat november {WeekDay,Month}
+early May {Adj,Month}
+late March {Adj,Month}
+quickly march {Adv,Vb}
+
+# Negation does not turn liking into resemblance.
+I never like spinach {Noun,Negative,Inf,Noun}
+I do not like spinach {Noun,Auxiliary,Negative,Inf,Noun}
+she is not like me {Noun,Copula,Negative,Prep,Noun}
+nothing like it {Noun,Prep,Noun}
+some sort of problem {Det,Noun,Prep,Noun}
+a dog of some sort {Det,Noun,Prep,Det,Noun}
+the dog is walked {Det,Noun,Auxiliary,Past|Passive}
+the door is closed {Det,Noun,Copula,Adj}
+
 `
 
 test('rule scope', t => {

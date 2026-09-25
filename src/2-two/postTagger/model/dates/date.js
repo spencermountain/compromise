@@ -13,7 +13,7 @@ export default [
   // in [march]
   { match: `(in|by|before|during|on|until|after|of|within|all) [march]`, hook: 'march', group: 0, tag: 'Month', reason: 'march' },
   // [sat] november
-  { match: '[sat] #Date', hook: 'sat', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
+  { match: '^[sat] #Date', hook: 'sat', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
 
   // ==== Month ====
   // in [march]
@@ -31,7 +31,9 @@ export default [
   // feb to [march]
   { match: `#Date .? [(march|may)]`, hook: '#Date', group: 0, tag: 'Month', reason: 'feb-and-march' },
   // quickly [march]
-  { match: `#Adverb [(march|may)]`, hook: '#Adverb', group: 0, tag: 'Verb', reason: 'quickly-march' },
+  { match: `#Adverb [(march|may)]`, hook: '#Adverb', group: 0, tag: 'Verb', notIf: '(early|late)', reason: 'quickly-march' },
+  // early [May]
+  { match: '(early|late|mid) [(march|may)]', group: 0, tag: 'Month', reason: 'early-month' },
   // [march] quickly
   { match: `[(march|may)] #Adverb`, hook: '#Adverb', group: 0, tag: 'Verb', reason: 'march-quickly' },
   // 12 am

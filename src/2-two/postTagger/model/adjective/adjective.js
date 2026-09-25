@@ -10,8 +10,8 @@ export default [
   { match: '[(all|both)] #Determiner #Noun', hook: '#Determiner', group: 0, tag: 'Noun', reason: 'all-noun' },
   // is [alone]
   { match: '#Copula [(just|alone)]$', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'not-adverb' },
-  // the door is [opened]
-  { match: '#Singular is #Adverb? [#PastTense$]', hook: 'is', group: 0, tag: 'Adjective', reason: 'is-filled' },
+  // the door is [closed]
+  { match: '#Singular is #Adverb? [%Adj|Past%]$', hook: 'is', group: 0, tag: 'Adjective', reason: 'is-filled' },
   // [forgotten] art is rediscovered
   { match: '[#PastTense] #Singular is', hook: 'is', group: 0, tag: 'Adjective', reason: 'smoked-poutine' },
   // [forgotten] stories are lost

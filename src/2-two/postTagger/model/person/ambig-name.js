@@ -18,7 +18,7 @@ export default [
   { match: '%Person|Noun% #Organization', hook: '#Organization', tag: 'Organization', reason: 'olive-garden' },
   // ===person-verb===
   // Ollie Faroo
-  { match: '%Person|Verb% #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
+  { match: '(%Person|Verb% && #Person) #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
   // [chuck] will ...
   {
     match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`, hook: '%Person|Verb%',
@@ -40,15 +40,15 @@ export default [
 
   // ===person-verb===
   // really [wade]
-  { match: `#Adverb [%Person|Verb%]`, hook: '#Adverb', group: 0, tag: 'Verb', reason: 'really-mark' },
+  { match: `#Adverb [(%Person|Verb% && !@isTitleCase)]`, hook: '#Adverb', group: 0, tag: 'Verb', reason: 'really-mark' },
   // [drew] closer
   { match: `[%Person|Verb%] (#Adverb|#Comparative)`, hook: '%Person|Verb%', group: 0, tag: 'Verb', reason: 'drew-closer' },
   // wade smith
-  { match: `%Person|Verb% #Person`, hook: '#Person', tag: 'Person', reason: 'rob-smith' },
+  { match: `(%Person|Verb% && #Person) #Person`, hook: '#Person', tag: 'Person', reason: 'rob-smith' },
   // Wade G. Slapgoop
   { match: `%Person|Verb% #Acronym #ProperNoun`, hook: '#Acronym', tag: 'Person', reason: 'rob-a-smith' },
   // [will] go
-  { match: '[will] #Verb', hook: 'will', group: 0, tag: 'Modal', reason: 'will-verb' },
+  { match: '[will] #Infinitive', hook: 'will', group: 0, tag: 'Modal', reason: 'will-verb' },
   // Will Smith
   { match: '(will && @isTitleCase) #ProperNoun', hook: 'will', tag: 'Person', reason: 'will-name' },
   // jack [layton] won

@@ -30,7 +30,7 @@ export default [
   // cheering [hard]
   {
     match: '#PresentTense [(hard|quick|bright|slow|fast|backwards|forwards)]', hook: '#PresentTense',
-    notIf: '#Copula',
+    notIf: '(#Copula|feel|feels|look|looks|seem|seems|appear|appears|sound|sounds|smell|smells|taste|tastes|become|becomes|grow|grows|get|gets|stay|stays|remain|remains)',
     group: 0,
     tag: 'Adverb',
     reason: 'lazy-ly',
@@ -47,8 +47,12 @@ export default [
   { match: '(become|fall|grow) #Adverb? [#PastTense]', hook: '#PastTense', group: 0, tag: 'Adjective', reason: 'overly-weakened' },
   // a completely [beaten] man
   { match: '(a|an) #Adverb [#Participle] #Noun', hook: '#Participle', group: 0, tag: 'Adjective', reason: 'completely-beaten' },
-  // a [close]
-  { match: '#Determiner #Adverb? [close]', hook: 'close', group: 0, tag: 'Adjective', reason: 'a-close' },
+  // a [close] friend
+  { match: '#Determiner #Adverb? [close] #Noun', hook: 'close', group: 0, tag: 'Adjective', reason: 'a-close' },
+  // came to a [close]
+  { match: '#Determiner [close]$', hook: 'close', group: 0, tag: 'Noun', reason: 'a-close-noun' },
+  // does [better]
+  { match: '(do|does|did) #Adverb? [(better|worse)]', group: 0, tag: 'Adverb', reason: 'do-better' },
   // walking [close]
   { match: '#Gerund #Adverb? [close]', hook: 'close', group: 0, tag: 'Adverb', notIf: '(getting|becoming|feeling)', reason: 'being-close' },
   // a [blown] motor

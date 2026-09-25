@@ -9,19 +9,19 @@ const matches = [
   // I like [this]
   { match: '#Verb [(this|that|these|those)] #Adverb+? (yesterday|today|tonight|tomorrow)?$', hook: '#Verb', group: 0, tag: 'Pronoun', reason: 'demonstrative-object' },
   // some sort of
-  { match: 'some sort of', hook: 'sort', tag: 'Adjective Noun Conjunction', reason: 'some-sort-of' },
+  { match: 'some sort of', hook: 'sort', tag: 'Determiner Noun Preposition', reason: 'some-sort-of' },
   // of some sort
-  { match: 'of some sort', hook: 'sort', tag: 'Conjunction Adjective Noun', reason: 'of-some-sort' },
+  { match: 'of some sort', hook: 'sort', tag: 'Preposition Determiner Noun', reason: 'of-some-sort' },
   // [such] skill
   { match: '[such] (a|an|is)? #Noun', hook: 'such', group: 0, tag: 'Determiner', reason: 'such-skill' },
   // [right] after
   { match: '[right] (before|after|in|into|to|toward)', hook: 'right', group: 0, tag: '#Adverb', reason: 'right-into' },
   // at [about]
-  { match: '#Preposition [about]', hook: 'about', group: 0, tag: 'Adjective', reason: 'at-about' },
+  { match: '#Preposition [about]', hook: 'about', group: 0, tag: 'Adverb', reason: 'at-about' },
   // are [ya]
   { match: '(are|#Modal|see|do|for) [ya]', hook: 'ya', group: 0, tag: 'Pronoun', reason: 'are-ya' },
   // [long live] the king
-  { match: '[long live] .', hook: 'live', group: 0, tag: '#Adjective #Infinitive', reason: 'long-live' },
+  { match: '[long live] .', hook: 'live', group: 0, tag: '#Adverb #Infinitive', reason: 'long-live' },
   // [plenty] of
   { match: '[plenty] of', hook: 'plenty', group: 0, tag: '#Uncountable', reason: 'plenty-of' },
   // always [there]

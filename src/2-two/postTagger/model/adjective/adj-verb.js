@@ -1,8 +1,8 @@
 export default [
   // quickly [warm]
   { match: '(slowly|quickly) [%Adj|Present%]', hook: '%Adj|Present%', group: 0, tag: 'Verb', reason: 'slowly-adj' },
-  // does [better]
-  { match: 'does (#Adverb|not)? [#Adjective]', hook: 'does', group: 0, tag: 'PresentTense', reason: 'does-mean' },
+  // does [mean]
+  { match: 'does (#Adverb|not)? [%Adj|Present%]', hook: 'does', group: 0, tag: 'Infinitive', reason: 'does-mean' },
   // [okay] by me
   { match: '[(fine|okay|cool|ok)] by me', hook: 'me', group: 0, tag: 'Adjective', reason: 'okay-by-me' },
   // i [mean]
@@ -17,10 +17,8 @@ export default [
   { match: '#Adjective and [(%Adj|Gerund% && #Gerund)] !#Preposition?', hook: 'and', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // was under [paid]
   { match: '#Copula #Adverb? (over|under) [#PastTense]', hook: '#PastTense', group: 0, tag: 'Adjective', reason: 'over-cooked' },
-  // was tired and [overworked]
-  { match: '#Copula #Adjective+ (and|or) [#PastTense]$', hook: '#PastTense', group: 0, tag: 'Adjective', reason: 'bland-and-overcooked' },
-  // got [accused] of
-  { match: 'got #Adverb? [#PastTense] of', hook: 'got', group: 0, tag: 'Adjective', reason: 'got-tired-of' },
+  // got [tired] of
+  { match: 'got #Adverb? [%Adj|Past%] of', hook: 'got', group: 0, tag: 'Adjective', reason: 'got-tired-of' },
   // felt [cheated]
   {
     match:
@@ -41,9 +39,9 @@ export default [
   { match: 'as [#Infinitive] as', hook: 'as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
   // [failed] and oppressive
   { match: '[%Adj|Past%] and #Adjective', hook: 'and', group: 0, tag: 'Adjective', reason: 'failed-and-oppressive' },
-  // or [heightened] emotion
+  // the fear or [heightened] emotion
   {
-    match: 'or [#PastTense] #Noun', hook: 'or',
+    match: '(#Determiner|#Preposition) #Adjective? #Noun or [#PastTense] #Noun', hook: 'or',
     group: 0,
     tag: 'Adjective',
     notIf: '(#Copula|#Pronoun)',

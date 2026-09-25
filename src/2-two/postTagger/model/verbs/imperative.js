@@ -62,9 +62,9 @@ export default [
   // [keep] it silent
   { match: '^[keep] it #Adjective', hook: 'keep', group: 0, tag: 'Imperative', reason: 'keep-it-cool' },
   // [allow] yourself
-  { match: '[#Infinitive] (yourself|yourselves)', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'allow-yourself' },
+  { match: '^(and|but)? (then|please)? [#Infinitive] (yourself|yourselves)', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'allow-yourself' },
   // [look] what happened
-  { match: '[#Infinitive] what .', hook: 'what', group: 0, tag: 'Imperative', reason: 'look-what' },
+  { match: '^[#Infinitive] what .', hook: 'what', group: 0, tag: 'Imperative', reason: 'look-what' },
   // [continue] playing
   { match: '^[#Infinitive] #Gerund', hook: '#Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
   // [go] to it
@@ -76,7 +76,7 @@ export default [
   // [maintain] eye contact
   { match: '^[#Infinitive] #Adjective? #Singular #Singular', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'maintain-eye-contact' },
   // don't forget to [clean]
-  { match: 'do not (forget|omit|neglect) to [#Infinitive]', hook: 'not', group: 0, tag: 'Imperative', reason: 'do-not-forget' },
+  { match: '^do not (forget|omit|neglect) to [#Infinitive]', hook: 'not', group: 0, tag: 'Imperative', reason: 'do-not-forget' },
   // [pay] attention
   { match: '^[(ask|wear|pay|look|help|show|watch|act|fix|kill|stop|start|turn|try|win)] #Noun', hook: '#Noun', group: 0, tag: 'Imperative', reason: 'pay-attention' },
   // [add] 2 eggs

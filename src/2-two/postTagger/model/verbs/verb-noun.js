@@ -21,8 +21,8 @@ export default [
   { match: '#Adjective #Noun+ [#Infinitive] #Copula', hook: '#Copula', group: 0, tag: 'Noun', reason: 'career-move' },
   // at some [thank]-you party
   { match: 'at some [#Infinitive]', hook: 'some', group: 0, tag: 'Noun', reason: 'at-some-inf' },
-  // goes to [sleep]
-  { match: '(go|goes|went) to [#Infinitive]', hook: 'to', group: 0, tag: 'Noun', reason: 'goes-to-verb' },
+  // goes [to sleep]
+  { match: '(go|goes|went) [to (sleep|work)]', hook: 'to', group: 0, tag: 'Preposition Noun', reason: 'goes-to-verb' },
   // a dog [retrieve] in the field
   { match: '(a|an) #Adjective? #Noun [#Infinitive] (#Preposition|#Noun)', hook: '#Infinitive', group: 0, notIf: 'from', tag: 'Noun', reason: 'a-noun-inf' },
   // a software [reinstall]
@@ -41,8 +41,8 @@ export default [
   { match: 'number of [#PresentTense]', hook: 'number', group: 0, tag: 'Noun', reason: 'number-of-x' },
   // taught [thank]-you etiquette
   { match: '(taught|teaches|learns|learned) [#PresentTense]', hook: '#PresentTense', group: 0, tag: 'Noun', reason: 'teaches-x' },
-  // use [cloned] pointers
-  { match: '(try|use|attempt|build|make) [#Verb #Particle?]', hook: '#Verb', notIf: '(#Copula|#Noun|sure|fun|up)', group: 0, tag: 'Noun', reason: 'do-verb' },//make sure of
+  // make [sense]
+  { match: '(try|use|attempt|build|make) [%Noun|Verb% #Particle?]', hook: '%Noun|Verb%', notIf: '(#Copula|#Noun|sure|fun|up)', group: 0, tag: 'Noun', reason: 'do-verb' },//make sure of
   // [append] is cloned
   { match: '^[#Infinitive] (is|was)', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'checkmate-is' },
   // get much [thank]-you mail
@@ -53,8 +53,8 @@ export default [
   { match: 'the #Singular [#Infinitive] (#Noun && !#Possessive)', hook: 'the', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'cardio-dance' },
   // this [rocks]
   { match: 'this [#Plural]', hook: 'this', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Date)', reason: 'this-verbs' },
-  // the thing that [runs]
-  { match: '#Noun that [#Plural]', hook: 'that', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Pronoun|way)', reason: 'voice-that-rocks' },
+  // the thing [that runs]
+  { match: '#Noun [that %Plural|Verb%]', hook: 'that', group: 0, tag: 'Conjunction PresentTense', notIf: '(#Preposition|#Pronoun|way)', reason: 'voice-that-rocks' },
   // that [leads] to
   { match: 'that [#Plural] to', hook: 'that', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'that-leads-to' },
   // let him [father] a child
@@ -142,8 +142,8 @@ export default [
   { match: '#Gerund [%Plural|Verb%]', hook: '#Gerund', group: 0, tag: 'Plural', reason: 'asking-questions' },
   // ready to [stream]
   { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', hook: 'to', group: 0, tag: 'Infinitive', reason: 'ready-to-noun' },
-  // bring to [market]
-  { match: '(bring|went|go|drive|run|bike) to [%Noun|Verb%]', hook: 'to', group: 0, tag: 'Noun', reason: 'bring-to-noun' },
+  // bring [to market]
+  { match: '(bring|went|go|drive|run|bike) [to (market|work|court|school|bed|church|prison)]', hook: 'to', group: 0, tag: 'Preposition Noun', reason: 'bring-to-noun' },
   // can i [sleep], would you [look]
   { match: '#Modal #Noun [%Noun|Verb%]', hook: '#Modal', group: 0, tag: 'Infinitive', reason: 'would-you-look' },
   // is just [spam]
@@ -159,11 +159,11 @@ export default [
   // the [individual] goals
   { match: '#Determiner [%Adj|Noun%] #Noun', hook: '#Determiner', group: 0, tag: 'Adjective', notIf: '(#Pronoun|#Possessive|#ProperNoun)', reason: 'the-individual-goals' },
   // [work] or prepare
-  { match: '[%Noun|Verb%] or #Infinitive', hook: 'or', group: 0, tag: 'Infinitive', reason: 'work-or-prepare' },
+  { match: '^[%Noun|Verb%] or #Infinitive', hook: 'or', group: 0, tag: 'Infinitive', reason: 'work-or-prepare' },
   // to give [thanks]
   { match: 'to #Infinitive [#PresentTense]', hook: 'to', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula|help)', reason: 'to-give-thanks' },
   // [Google] me
-  { match: '[#Noun] me', hook: 'me', group: 0, tag: 'Verb', reason: 'kills-me' },
+  { match: '[(#Noun && !#Pronoun)] me', hook: 'me', group: 0, tag: 'Verb', reason: 'kills-me' },
   // removes wrinkles
   { match: '%Plural|Verb% %Plural|Verb%', hook: '%Plural|Verb%', tag: '#PresentTense #Plural', reason: 'removes-wrinkles' },
   // i [Google] the answer

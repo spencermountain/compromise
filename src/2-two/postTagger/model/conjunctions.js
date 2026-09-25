@@ -42,9 +42,13 @@ export default [
   // a day [like] this
   { match: 'a #Noun [like] (#Noun|#Determiner)', hook: 'like', group: 0, tag: 'Preposition', reason: 'a-noun-like' },
   // really [like]
-  { match: '#Adverb [like]', hook: 'like', group: 0, tag: 'Verb', reason: 'really-like' },
+  { match: '(#Adverb && !lot) [like]', hook: 'like', group: 0, tag: 'Verb', reason: 'really-like' },
   // nothing [like]
-  { match: '(not|nothing|never) [like]', hook: 'like', group: 0, tag: 'Preposition', reason: 'nothing-like' },
+  { match: 'nothing [like]', hook: 'like', group: 0, tag: 'Preposition', reason: 'nothing-like' },
+  // is not [like] me
+  { match: '(#Copula|be|been|being) (not|never) [like]', group: 0, tag: 'Preposition', reason: 'negative-resemblance' },
+  // a lot [like] ours
+  { match: 'a lot [like] #Noun', hook: 'like', group: 0, tag: 'Preposition', reason: 'lot-like' },
   // treat them [like]
   { match: '#Infinitive #Pronoun [like]', hook: 'like', group: 0, tag: 'Preposition', reason: 'treat-them-like' },
   // [before] dinner

@@ -6,8 +6,8 @@ export default [
   { match: '(the|any) [more]', hook: 'more', group: 0, tag: 'Singular', reason: 'more-noun' },
   // [more] players
   { match: '[more] #Noun', hook: 'more', group: 0, tag: 'Adjective', reason: 'more-adjective' },
-  // rights of man
-  { match: '(right|rights) of .', hook: 'of', tag: 'Noun', reason: 'right-of' },
+  // [rights] of man
+  { match: '[(right|rights)] of .', hook: 'of', group: 0, tag: 'Noun', reason: 'right-of' },
   // a [bit]
   { match: 'a [bit]', hook: 'bit', group: 0, tag: 'Singular', reason: 'a-bit' },
   // a [must]
@@ -59,8 +59,6 @@ export default [
   { match: 'to [(shit|hell)]', hook: 'to', group: 0, tag: 'Noun', reason: 'to-swears' },
   // the [staff] were
   { match: '(the|these) [#Singular] (were|are)', hook: '#Singular', group: 0, tag: 'Plural', reason: 'singular-were' },
-  // a greeting or [thank] you
-  { match: `a #Noun+ or #Adverb+? [#Verb]`, hook: 'or', group: 0, tag: 'Noun', reason: 'noun-or-noun' },
   // and check this out! a [walk-in] microwave.
   {
     match: '(the|those|these|a|an) #Adjective? [(#PresentTense && !#Gerund && !#Copula && !seem && !appear && !include) #Particle?]', hook: '#PresentTense',

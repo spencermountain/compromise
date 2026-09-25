@@ -6,16 +6,16 @@ export default [
   { match: 'more [#Gerund] than', hook: 'more', group: 0, tag: 'Adjective', reason: 'more-gerund-than' },
   // very [entertaining]
   { match: '(so|very|extremely) [#Gerund]', hook: '#Gerund', group: 0, tag: 'Adjective', reason: 'so-gerund' },
-  // found it [entertaining]
-  { match: '(found|found) it #Adverb? [#Gerund]', hook: 'it', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
+  // found it [interesting]
+  { match: 'found it #Adverb? [%Adj|Gerund%]', hook: 'it', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
   // a little [fuming]
   { match: 'a (little|bit|wee) bit? [#Gerund]', hook: 'a', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
   // repairing [crumbling] roads
   {
-    match: '#Gerund [#Gerund]', hook: '#Gerund',
+    match: '#Gerund [#Gerund] #Noun', hook: '#Gerund',
     group: 0,
     tag: 'Adjective',
-    notIf: '(impersonating|practicing|considering|assuming)',
+    notIf: '(impersonating|practicing|considering|assuming|enjoying|avoiding|stopping|starting|finishing)',
     reason: 'looking-annoying',
   },
   // looked [amazing]

@@ -265,7 +265,6 @@ export default [
   'westinghouse',
   'world trade organization',
   'xiaomi',
-  'yahoo!',
   'yamaha',
   'ymca',
   'yougov',

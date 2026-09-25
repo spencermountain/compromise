@@ -7,6 +7,8 @@ const misc = {
   'motel 6': 'Organization',
   '23andme': 'Organization',
   '4chan': 'Organization',
+  'yahoo!': 'Organization',
+
   u2: 'Organization',
   g8: 'Organization',
   vh1: 'Organization',

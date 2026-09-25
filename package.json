@@ -125,7 +125,7 @@
     "nlp"
   ],
   "dependencies": {
-    "efrt": "catalog:",
+    "efrt": "2.9.0",
     "grad-school": "0.0.8",
     "suffix-thumb": "6.0.0"
   },

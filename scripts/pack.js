@@ -25,7 +25,7 @@ const steps = [
       })
       //pack each array into a tiny string
       Object.keys(packed).forEach(tag => {
-        packed[tag] = pack(packed[tag])
+        packed[tag] = pack(packed[tag], { strict: true, dictionary: true, direction: 'auto' })
       })
       return packed
     },

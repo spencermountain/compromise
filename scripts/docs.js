@@ -222,10 +222,6 @@ Docs below are plain markdown (the published observablehq.com notebooks do not r
 - [Tags](docs/tags.md): the complete, valid part-of-speech tagset
 - [API](docs/api.md): every method, signature, and description
 - [Recipes](docs/recipes.md): copy-paste solutions to common tasks
-
-## Optional
-- [Full text](docs/llms-full.txt): every doc above concatenated into one file
-- [README](README.md): the human-facing overview
 `
 }
 

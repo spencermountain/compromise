@@ -15,11 +15,15 @@ const multi = [
 ]
 */
 
+const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
+
 export default [
   // university of Toronto
   { match: 'university of #Place', hook: 'university', tag: 'Organization', reason: 'university-place' },
-  // John & Joe's
-  { match: '#Person & #Person', hook: '&', tag: 'Organization', reason: 'noun-&-noun' },
+  // John & Mary Ltd
+  { match: `#Person & #Person ${companySuffix}`, hook: '&', tag: 'Organization', reason: 'person-and-person' },
+  // Smith & Rogers
+  { match: '#LastName & #LastName', hook: '&', tag: 'Organization', reason: 'surname-and-surname' },
   // Microsoft of Canada
   { match: '#Organization of the? #ProperNoun', hook: 'of', tag: 'Organization', reason: 'org-of-place', safe: true },
   // walmart USA
@@ -28,10 +32,10 @@ export default [
   { match: '#ProperNoun #Organization', hook: '#Organization', tag: 'Organization', notIf: '#FirstName', reason: 'titlecase-org' },
   // FitBit Inc
   { match: '#ProperNoun (ltd|co|inc|dept|assn|bros)', hook: '#ProperNoun', tag: 'Organization', reason: 'org-abbrv' },
-  // the [OCED]
-  { match: 'the [#Acronym]', hook: 'the', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
-  // government of [india]
-  { match: 'government of the? [#Place+]', hook: 'government', group: 0, tag: 'Organization', reason: 'government-of-x' },
+  // the [XYZ corporation]
+  { match: `the [#Acronym ${companySuffix}]`, hook: 'the', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
+  // [government of india]
+  { match: '[government of the? #Place+]', hook: 'government', group: 0, tag: 'Organization', reason: 'government-of-x' },
   // school board
   { match: '(health|school|commerce) board', hook: 'board', tag: 'Organization', reason: 'school-board' },
   // special committee

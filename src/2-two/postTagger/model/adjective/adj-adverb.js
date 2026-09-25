@@ -22,5 +22,5 @@ export default [
   // be [early]
   { match: '(be|been|being) (#Adverb|not)+? [early]', hook: 'early', group: 0, tag: 'Adjective', reason: 'be-early' },
   // [moons] a lot
-  { match: `[#Plural] a lot`, hook: 'lot', group: 0, tag: 'PresentTense', reason: 'studies-a-lot' },
+  { match: `[#Plural] a lot !like?`, hook: 'lot', group: 0, tag: 'PresentTense', reason: 'studies-a-lot' },
 ]

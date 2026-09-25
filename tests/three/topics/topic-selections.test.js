@@ -13,7 +13,7 @@ test('topics:', function (t) {
   ]
   list.forEach(function (a) {
     const arr = nlp(a[0]).topics().out('freq')
-    t.equal(arr[0].normal, a[1], here + a[0])
+    t.equal(arr[0] && arr[0].normal, a[1], here + a[0])
   })
   t.end()
 })

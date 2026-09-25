@@ -17,19 +17,18 @@ import nlp from './src/three.js'
 // ambg-honorifics -> "I miss John"
 // dance-music -> "she can read music"
 // had-been -> "we had been tired"
-// - slowly-adj -> "he grew slowly impatient"
-// - adj-to -> "she is free to leave"
-// - left-verb -> "his left hand hurts"
-// - he-read -> "can she read this?"
-// - have-read -> "we have running water"
-// - rude-and-x -> "she is happy and dancing"
-
-// singular-subject-predicate
-// would-you-please
-// to-the-store
-// noun-like
-// be-late
-// off-white-copula
+// slowly-adj -> "he grew slowly impatient"
+// adj-to -> "she is free to leave"
+// left-verb -> "his left hand hurts"
+// he-read -> "can she read this?"
+// have-read -> "we have running water"
+// rude-and-x -> "she is happy and dancing"
+// singular-subject-predicate ->
+// would-you-please ->
+// to-the-store ->
+// noun-like ->
+// be-late ->
+// off-white-copula ->
 
 nlp.verbose(true)
 nlp(`the doors close`).debug()

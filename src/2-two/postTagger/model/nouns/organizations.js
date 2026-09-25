@@ -28,10 +28,10 @@ export default [
   { match: '#ProperNoun #Organization', hook: '#Organization', tag: 'Organization', notIf: '#FirstName', reason: 'titlecase-org' },
   // FitBit Inc
   { match: '#ProperNoun (ltd|co|inc|dept|assn|bros)', hook: '#ProperNoun', tag: 'Organization', reason: 'org-abbrv' },
-  // the OCED
+  // the [OCED]
   { match: 'the [#Acronym]', hook: 'the', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
-  // government of india
-  { match: 'government of the? [#Place+]', hook: 'government', tag: 'Organization', reason: 'government-of-x' },
+  // government of [india]
+  { match: 'government of the? [#Place+]', hook: 'government', group: 0, tag: 'Organization', reason: 'government-of-x' },
   // school board
   { match: '(health|school|commerce) board', hook: 'board', tag: 'Organization', reason: 'school-board' },
   // special committee

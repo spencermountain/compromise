@@ -64,6 +64,8 @@ const matches = [].concat(
   conjunctions,
   expressions
 )
+
+console.log('  ', matches.length, 'matches first-pass')
 export default {
   two: {
     matches,

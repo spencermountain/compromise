@@ -1,6 +1,6 @@
 export default [
   // ==== FirstNames ====
-  // is foo Smith
+  // is [foo] Smith
   { match: '#Copula [(#Noun|#PresentTense)] #LastName', hook: '#LastName', group: 0, tag: 'FirstName', reason: 'copula-noun-lastname' },
   // pope francis
   {
@@ -11,7 +11,7 @@ export default [
   },
 
   // ==== Nickname ====
-  // Dwayne 'the rock' Johnson
+  // Dwayne '[the rock]' Johnson
   { match: '#FirstName [#Determiner #Noun] #LastName', hook: '#LastName', group: 0, tag: 'Person', reason: 'first-noun-last' },
   // John b Smith
   {
@@ -28,7 +28,7 @@ export default [
   { match: '#Honorific #Acronym', hook: '#Honorific', tag: 'Person', reason: 'honorific-initial' },
   // John Smith III
   { match: '#Person #Person the? #RomanNumeral', hook: '#RomanNumeral', tag: 'Person', reason: 'roman-numeral' },
-  // John b
+  // John [b]
   { match: '#FirstName [/^[^aiurck]$/]', hook: '#FirstName', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' },
   // Ludwig van Beethoven
   { match: '#Noun van der? #Noun', hook: 'van', tag: 'Person', reason: 'van-der-noun', safe: true },
@@ -60,9 +60,9 @@ export default [
   { match: '#ProperNoun (de|du) la? #ProperNoun', hook: '#ProperNoun', tag: 'Person', notIf: '#Place', reason: 'title-de-title' },
   // Jani K. Smith
   { match: '#Singular #Acronym #LastName', hook: '#LastName', tag: '#FirstName #Person .', reason: 'title-acro-noun', safe: true },
-  // Toronto John
+  // [Toronto] John
   { match: '[#ProperNoun] #Person', hook: '#Person', group: 0, tag: 'Person', reason: 'proper-person', safe: true },
-  // john keith jones
+  // john [keith jones]
   {
     match: '#Person [#ProperNoun #ProperNoun]', hook: '#Person',
     group: 0,
@@ -71,7 +71,7 @@ export default [
     reason: 'three-name-person',
     safe: true,
   },
-  // John Foo
+  // John [Foo]
   {
     match: '#FirstName #Acronym? [#ProperNoun]', hook: '#FirstName',
     group: 0,
@@ -79,16 +79,16 @@ export default [
     notIf: '#Possessive',
     reason: 'firstname-titlecase',
   },
-  // john stewart
+  // john [stewart]
   { match: '#FirstName [#FirstName]', hook: '#FirstName', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
   // Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', hook: '#Acronym', tag: 'Person', reason: 'n-acro-noun', safe: true },
-  // Anthony de Marco
+  // Anthony [de] Marco
   { match: '#FirstName [(de|di|du|van|von)] #Person', hook: '#FirstName', group: 0, tag: 'LastName', reason: 'de-firstname' },
 
   // baker jenna smith
   // { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam-smith' },
-  // sergeant major Harold
+  // [sergeant] major Harold
   {
     match:
       '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #ProperNoun', hook: '#ProperNoun',
@@ -97,14 +97,14 @@ export default [
     reason: 'sergeant-john',
   },
   // ==== Honorics ====
-  // general John
+  // [general] John
   {
     match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', hook: '#Person',
     group: 0,
     tag: ['Honorific', 'Person'],
     reason: 'ambg-honorifics',
   },
-  // dr john foobar
+  // dr john [foobar]
   {
     match: '#Honorific #FirstName [#Singular]', hook: '#Honorific',
     group: 0,
@@ -113,7 +113,7 @@ export default [
     reason: 'dr-john-foo',
     safe: true,
   },
-  // his excellency John
+  // [his excellency] John
   {
     match: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Person', hook: '#Person',
     group: 0,
@@ -122,7 +122,7 @@ export default [
   },
   // Dr teacher
   { match: '#Honorific #Actor', hook: '#Honorific', tag: 'Honorific', reason: 'lieutenant-colonel' },
-  // first lady michelle obama
+  // [first lady] michelle obama
   { match: '[first lady] #Person', hook: 'lady', group: 0, tag: 'Honorific', reason: 'first-lady' },
   // first lady, second admiral
   { match: '(first|second|third|1st|2nd|3rd) lieutenant', hook: 'lieutenant', tag: 'Honorific', reason: 'ordinal-lieutenant' },

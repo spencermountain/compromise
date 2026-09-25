@@ -17,7 +17,7 @@ export default [
   { match: '(had|have|has) been (#PastTense|#Participle)', hook: 'been', tag: 'Passive', reason: 'been-passive' },
   // will be cleaned
   { match: 'will be being? (#PastTense|#Participle)', hook: 'will', tag: 'Passive', reason: 'will-be-passive' },
-  // dog walked by the man
+  // dog [walked] by the man
   { match: '#Noun [(#PastTense|#Participle)] by (the|a) #Noun', hook: 'by', group: 0, tag: 'Passive', reason: 'suffered-by' },
 
 ]

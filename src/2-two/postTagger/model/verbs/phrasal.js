@@ -7,31 +7,32 @@ export default [
   { match: '(#Verb && @hasHyphen) over', hook: 'over', tag: 'PhrasalVerb', reason: 'foo-over' },
   // walk-out
   { match: '(#Verb && @hasHyphen) out', hook: 'out', tag: 'PhrasalVerb', reason: 'foo-out' },
-  // walk in on
+  // [walk in] on
   {
     match: '[#Verb (in|out|up|down|off|back)] (on|in)', hook: '#Verb',
+    group: 0,
     notIf: '#Copula',
     tag: 'PhrasalVerb Particle',
     reason: 'walk-in-on',
   },
-  // went on for
+  // went [on] for
   { match: '(lived|went|crept|go) [on] for', hook: 'on', group: 0, tag: 'PhrasalVerb', reason: 'went-on' },
   // the curtains come down
   { match: '#Verb (up|down|in|on|for)$', hook: '#Verb', tag: 'PhrasalVerb #Particle', notIf: '#PhrasalVerb', reason: 'come-down' },
-  // help stop
+  // help [stop]
   { match: 'help [(stop|end|make|start)]', hook: 'help', group: 0, tag: 'Infinitive', reason: 'help-stop' },
   // work in the office
   { match: '#PhrasalVerb (in && #Particle) #Determiner', hook: 'in', tag: '#Verb #Preposition #Determiner', unTag: 'PhrasalVerb', reason: 'work-in-the' },
-  // start listening
+  // [start] listening
   { match: '[(stop|start|finish|help)] #Gerund', hook: '#Gerund', group: 0, tag: 'Infinitive', reason: 'start-listening' },
-  // back it up
+  // back it [up]
   {
     match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]', hook: '#Verb',
     group: 0,
     tag: 'Adverb',
     reason: 'phrasal-pronoun-advb',
   },
-  // runs around the lake
+  // runs [around] the lake
   {
     match: '#PhrasalVerb [around] the #Noun',
     hook: 'around',

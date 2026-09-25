@@ -19,7 +19,7 @@ export default [
   // ===person-verb===
   // Ollie Faroo
   { match: '%Person|Verb% #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
-  // chuck will ...
+  // [chuck] will ...
   {
     match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`, hook: '%Person|Verb%',
     group: 0,
@@ -28,30 +28,30 @@ export default [
   },
 
   // ===person-place===
-  // sydney harbour
+  // [sydney] harbour
   {
     match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`, hook: '%Person|Place%',
     group: 0,
     tag: 'Place',
     reason: 'sydney-harbour',
   },
-  // east sydney
+  // east [sydney]
   { match: `(west|east|north|south) [%Person|Place%]`, hook: '%Person|Place%', group: 0, tag: 'Place', reason: 'east-sydney' },
 
   // ===person-verb===
-  // really wade
+  // really [wade]
   { match: `#Adverb [%Person|Verb%]`, hook: '#Adverb', group: 0, tag: 'Verb', reason: 'really-mark' },
-  // drew closer
+  // [drew] closer
   { match: `[%Person|Verb%] (#Adverb|#Comparative)`, hook: '%Person|Verb%', group: 0, tag: 'Verb', reason: 'drew-closer' },
   // wade smith
   { match: `%Person|Verb% #Person`, hook: '#Person', tag: 'Person', reason: 'rob-smith' },
   // Wade G. Slapgoop
   { match: `%Person|Verb% #Acronym #ProperNoun`, hook: '#Acronym', tag: 'Person', reason: 'rob-a-smith' },
-  // will go
+  // [will] go
   { match: '[will] #Verb', hook: 'will', group: 0, tag: 'Modal', reason: 'will-verb' },
   // Will Smith
   { match: '(will && @isTitleCase) #ProperNoun', hook: 'will', tag: 'Person', reason: 'will-name' },
-  // jack layton won
+  // jack [layton] won
   {
     match: '(#FirstName && !#Possessive) [#Singular] #Verb', hook: '#FirstName',
     group: 0,
@@ -59,8 +59,8 @@ export default [
     tag: 'LastName',
     reason: 'jack-layton',
   },
-  // captain John walks
+  // [captain] John walks
   { match: '^[#Singular] #Person #Verb', hook: '#Person', group: 0, safe: true, tag: 'Person', reason: 'sherwood-anderson' },
-  // bought a warhol
+  // bought a [warhol]
   { match: '(a|an) [#Person]$', hook: '#Person', group: 0, unTag: 'Person', reason: 'a-warhol' },
 ]

@@ -3,22 +3,22 @@ export default [
   // west Toronto
   { match: '(west|north|south|east|western|northern|southern|eastern)+ #Place', hook: '#Place', tag: 'Region', reason: 'west-norfolk' },
   //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
-  // Toronto ca
+  // Toronto [ca]
   {
     match: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|pa|sc|tn|tx|ut|vt|pr)]', hook: '#City',
     group: 0,
     tag: 'Region',
     reason: 'us-state',
   },
-  // Portland or
+  // Portland [or]
   { match: 'portland [or]', hook: 'portland', group: 0, tag: 'Region', reason: 'portland-or' },
-  // i ate turkey
+  // i ate [turkey]
   { match: '(eat|ate|eating|roast|roasted|thanksgiving|with) [turkey]', hook: 'turkey', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'food-turkey' },
-  // turkey dinner
+  // [turkey] dinner
   { match: '[turkey] (roast|dinner|sandwich|burger)', hook: 'turkey', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'turkey-food' },
-  // ankara turkey
+  // ankara [turkey]
   { match: '#Place [turkey]', hook: 'turkey', group: 0, tag: 'Country', reason: 'ankara-turkey' },
-  // in turkey
+  // in [turkey]
   { match: '(in|near|nearby|to|from) [turkey]', hook: 'turkey', group: 0, tag: 'Country', reason: 'near-turkey' },
   // Toronto point
   {
@@ -26,7 +26,7 @@ export default [
     tag: 'Place',
     reason: 'foo-point',
   },
-  // in Foo California
+  // in [Foo] California
   { match: 'in [#ProperNoun] #Place', hook: 'in', group: 0, tag: 'Place', reason: 'propernoun-place' },
   // 123 main street
   {

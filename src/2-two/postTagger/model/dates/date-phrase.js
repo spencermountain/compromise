@@ -27,7 +27,7 @@ export default [
     tag: 'Timezone',
     reason: 'eastern-time',
   },
-  // 5pm central
+  // 5pm [central]
   { match: `#Time [(eastern|mountain|pacific|central|est|pst|gmt)]`, hook: '#Time', group: 0, tag: 'Timezone', reason: '5pm-central' },
   // central european time
   { match: `(central|western|eastern) european time`, hook: 'european', tag: 'Timezone', reason: 'central-european-time' },

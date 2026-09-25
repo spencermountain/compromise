@@ -1,22 +1,22 @@
 export default [
-  // half a penny
+  // [half] a penny
   { match: '[half] of? (a|an)', hook: 'half', group: 0, tag: 'Fraction', reason: 'half-a' },
-  // quarter of a dollar
+  // [quarter] of a dollar
   { match: '[quarter] of? (a|an)', hook: 'quarter', group: 0, tag: 'Fraction', reason: 'quarter-a' },
-  // nearly half
+  // nearly [half]
   { match: '#Adverb [half]', hook: 'half', group: 0, tag: 'Fraction', reason: 'nearly-half' },
-  // half the
+  // [half] the
   { match: '[half] the', hook: 'half', group: 0, tag: 'Fraction', reason: 'half-the' },
   // two and a half
   { match: '#Cardinal and a half', hook: 'half', tag: 'Fraction', reason: 'and-a-half' },
   // two-halves
   { match: '#Value (halves|halfs|quarters)', hook: '#Value', tag: 'Fraction', reason: 'two-halves' },
 
-  // seven fifths
-  { match: '[#Cardinal+] (#Fraction && /s$/)', hook: '#Fraction', tag: 'Fraction', reason: 'seven-fifths' },
-  // one third of it
+  // [seven] fifths
+  { match: '[#Cardinal+] (#Fraction && /s$/)', hook: '#Fraction', group: 0, tag: 'Fraction', reason: 'seven-fifths' },
+  // [one third] of it
   { match: '[#Cardinal+ #Ordinal] of .', hook: 'of', group: 0, tag: 'Fraction', reason: 'ordinal-of' },
-  // 100th of it
+  // [100th] of it
   { match: '[(#NumericValue && #Ordinal)] of .', hook: 'of', group: 0, tag: 'Fraction', reason: 'num-ordinal-of' },
   // a twenty fifth
   { match: '(a|one) #Cardinal?+ #Ordinal of', hook: '#Ordinal', tag: 'Fraction', reason: 'a-ordinal' },

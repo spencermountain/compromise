@@ -1,16 +1,16 @@
 // Gerund-Adjectives - 'amusing, annoying'
 export default [
-  // as entertaining as
+  // as [entertaining] as
   { match: 'as [#Gerund] as', hook: 'as', group: 0, tag: 'Adjective', reason: 'as-gerund-as' },
-  // more amusing than
+  // more [amusing] than
   { match: 'more [#Gerund] than', hook: 'more', group: 0, tag: 'Adjective', reason: 'more-gerund-than' },
-  // very entertaining
+  // very [entertaining]
   { match: '(so|very|extremely) [#Gerund]', hook: '#Gerund', group: 0, tag: 'Adjective', reason: 'so-gerund' },
-  // found it entertaining
+  // found it [entertaining]
   { match: '(found|found) it #Adverb? [#Gerund]', hook: 'it', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
-  // a little fuming
+  // a little [fuming]
   { match: 'a (little|bit|wee) bit? [#Gerund]', hook: 'a', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
-  // repairing crumbling roads
+  // repairing [crumbling] roads
   {
     match: '#Gerund [#Gerund]', hook: '#Gerund',
     group: 0,
@@ -18,7 +18,7 @@ export default [
     notIf: '(impersonating|practicing|considering|assuming)',
     reason: 'looking-annoying',
   },
-  // looked amazing
+  // looked [amazing]
   {
     match: '(looked|look|looks) #Adverb? [%Adj|Gerund%]', hook: '%Adj|Gerund%',
     group: 0,
@@ -26,9 +26,9 @@ export default [
     notIf: '(impersonating|practicing|considering|assuming)',
     reason: 'looked-amazing',
   },
-  // boring the audience
+  // [boring] the audience
   { match: '[%Adj|Gerund%] #Determiner', hook: '#Determiner', group: 0, tag: 'Gerund', reason: 'developing-a' },
-  // world's leading manufacturer
+  // world's [leading] manufacturer
   { match: '#Possessive [%Adj|Gerund%] #Noun', hook: '#Possessive', group: 0, tag: 'Adjective', reason: 'leading-manufacturer' },
   // meaning alluring
   { match: '%Noun|Gerund% %Adj|Gerund%', hook: '%Adj|Gerund%', tag: 'Gerund #Adjective', reason: 'meaning-alluring' },

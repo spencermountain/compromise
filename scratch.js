@@ -28,16 +28,10 @@ import nlp from './src/three.js'
 // We succeeded through working together. {Noun,Vb,Prep,Ger,Adv}
 
 
-// nlp.verbose(true)
+nlp.verbose(true)
 // nlp(`When the rain stops, we will leave`).debug()
 
 
 // nlp.testSpec('He was tired, so we stopped. {Noun,Vb,Adj,Conj,Noun,Vb}').debug()
-let str=`The dog is nice. {Det,Noun,Vb,Adj}
-The flowers bloomed in spring. {Det,Plural,Past,Prep,Noun}
-this sentence has no tags. #that's fine
-
-# block-comments are supported, too
-Tony Hawk rides {Person|FirstName,Person|LastName,Pres} #has both tags`
+let str = `Before the dog and the cat woke, she left. {Conj,Det,Noun,Conj,Det,Noun,Vb,Noun,Vb}`
 let doc=nlp.testSpec(str)
-doc.match('sentence has no tags').found //true

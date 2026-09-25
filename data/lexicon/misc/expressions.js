@@ -28,7 +28,6 @@ export default [
   'eh',
   'et cetera',
   'eww',
-  'fuck',
   'gah',
   'gee whiz',
   'gee',

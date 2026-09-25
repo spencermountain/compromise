@@ -6,6 +6,23 @@ import { compress, learn } from 'suffix-thumb'
 import lexicon from '../data/lexicon/index.js'
 import models from '../data/pairs/index.js'
 
+// Preserve expansion precedence independently of source-list insertion order.
+// Removing an overwritten word must not reorder tag groups and change which
+// generated conjugation wins. New tags are appended after these existing groups.
+const lexiconTagOrder = [
+  'Comparative', 'Superlative', 'PresentTense', 'Condition', 'PastTense', 'Participle',
+  'Gerund', 'Expression', 'Negative', 'QuestionWord', 'Reflexive', 'Plural',
+  'Unit|Noun', 'Value', 'Imperative', 'Plural|Verb', 'Demonym', 'Organization',
+  'Possessive', 'Noun|Verb', 'Actor', 'Adj|Noun', 'Adj|Past', 'Singular',
+  'Person|Noun', 'Actor|Verb', 'MaleName', 'Uncountable', 'Infinitive', 'Person',
+  'Adjective', 'Pronoun', 'Preposition', 'SportsTeam', 'Unit', 'Noun|Gerund',
+  'PhrasalVerb', 'ProperNoun', 'Person|Place', 'LastName', 'Ordinal', 'Cardinal',
+  'Multiple', 'City', 'Region', 'Place', 'Country', 'FirstName', 'WeekDay', 'Month',
+  'Date', 'Duration', 'FemaleName', 'Honorific', 'Adj|Gerund', 'Comparable',
+  'Adverb', 'Conjunction', 'Currency', 'Determiner', 'Adj|Present', 'Person|Adj',
+  'Modal', 'Verb', 'Person|Verb', 'Person|Date',
+]
+
 const steps = [
   {
     label: 'lexicon',
@@ -23,11 +40,15 @@ const steps = [
           packed[tag].push(word)
         })
       })
-      //pack each array into a tiny string
-      Object.keys(packed).forEach(tag => {
-        packed[tag] = pack(packed[tag], { strict: true, dictionary: true, direction: 'auto' })
+      // Pack in a stable order, rather than the order words first appeared.
+      const result = {}
+      const tags = new Set([...lexiconTagOrder, ...Object.keys(packed)])
+      tags.forEach(tag => {
+        if (packed[tag]) {
+          result[tag] = pack(packed[tag], { strict: true, dictionary: true, direction: 'auto' })
+        }
       })
-      return packed
+      return result
     },
   },
   {

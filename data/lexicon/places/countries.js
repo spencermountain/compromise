@@ -80,7 +80,6 @@ export default [
   'french polynesia',
   'gabon',
   'gambia',
-  'georgia',
   'germany',
   'ghana',
   'gibraltar',

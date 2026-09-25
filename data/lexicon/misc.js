@@ -11,13 +11,11 @@ export default {
 
   said: 'PastTense',
   had: 'PastTense',
-  been: 'PastTense',
   began: 'PastTense',
   came: 'PastTense',
   did: 'PastTense',
   meant: 'PastTense',
   went: 'PastTense',
-  taken: 'PastTense',
   lied: 'PastTense',
 
   going: 'Gerund',
@@ -59,7 +57,6 @@ export default {
 
   //misc
   records: 'Plural',
-  feet: 'Plural',
   'a few': 'Value',
   'ones': 'Plural', //those ones
   'dickens': 'Plural',

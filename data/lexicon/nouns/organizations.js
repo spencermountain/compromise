@@ -142,7 +142,6 @@ export default [
   'little caesars',
   'mattel',
   'mazda',
-  'mcdonalds',
   'medicaid',
   'medicare',
   'mercedes benz',
@@ -272,7 +271,6 @@ export default [
   'ywca',
   // 'mercedes',
 
-  `applebees`,
   `applebees`,
   `arbys`,
   `carls jr`,

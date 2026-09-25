@@ -50,12 +50,9 @@ export default [
   'sure',
   'suspect',
   'thin',
-  'top',//top the chart
-  'total',
   'utter',
   'warm',
   'wet',
-  'wound',
   'wrong',
   'express',
   'elicit',

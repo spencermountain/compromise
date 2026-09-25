@@ -18,3 +18,24 @@ test('get phrasal infinitive', function (t) {
   })
   t.end()
 })
+
+test('phrasal roots retain standalone conjugations', function (t) {
+  // These roots are supplied by the phrasal list, not the infinitive list.
+  const forms = [
+    ['take', 'took', 'takes', 'taking', 'taken'],
+    ['freeze', 'froze', 'freezes', 'freezing', 'frozen'],
+    ['write', 'wrote', 'writes', 'writing', 'written'],
+    ['go', 'went', 'goes', 'going', 'gone'],
+    ['die', 'died', 'dies', 'dying'],
+    ['bring', 'brought', 'brings', 'bringing'],
+  ]
+  forms.forEach(([Infinitive, PastTense, PresentTense, Gerund, Participle]) => {
+    const expected = { Infinitive, PastTense, PresentTense, Gerund, FutureTense: 'will ' + Infinitive }
+    if (Participle) {
+      expected.Participle = Participle
+    }
+    t.deepEqual(nlp(Infinitive).verbs().conjugate()[0], expected, here + ' standalone ' + Infinitive)
+    t.equal(nlp('they are ' + Gerund).has('#Gerund'), true, here + ' ' + Gerund)
+  })
+  t.end()
+})

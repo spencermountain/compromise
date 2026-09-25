@@ -48,9 +48,10 @@ jobs:
 
       - name: Build and test packages
         run: |
-          pnpm build:all
+          pnpm build
+          pnpm build:plugins
           pnpm testb
-          pnpm test:plugins:build
+          pnpm testb:plugins
 
       - name: Compare bundle sizes with latest npm release
         run: pnpm test:filesize

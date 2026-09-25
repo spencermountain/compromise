@@ -5,15 +5,13 @@ The project is a pnpm workspace
 
 ## Commands
 * `pnpm test` - Root source tests
-* `pnpm test:plugins` - Each plugin's source tests, in its own process
-* `pnpm test:all` - Root and plugin source tests
-* `pnpm build` - Root library
-* `pnpm plugins:build` - All maintained plugins
-* `pnpm build:all` - Root library, then plugins
 * `pnpm testb` - Root build tests (build first)
-* `pnpm test:plugins:build` | Plugin build tests (run `pnpm build:all` first)
-* `pnpm test:types` - Root TypeScript declarations
+* `pnpm build` - Root library
 * `pnpm lint` - Root source lint
+* `pnpm test:plugins` - Each plugin's source tests, in its own process
+* `pnpm testb:plugins` - Each plugin's source tests, in its own process
+* `pnpm build:plugins` - All maintained plugins
+* `pnpm test:types` - Root TypeScript declarations
 * `pnpm bench --no-save` - Run benchmarks and compare against saved history without saving a result |
 
 For one plugin, use `pnpm --filter compromise-dates test` or

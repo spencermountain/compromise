@@ -6,7 +6,7 @@ const toArr = function (input) {
   if (typeof input === 'string') {
     return [input]
   }
-  return input
+  return input.slice()
 }
 
 const addImplied = function (tags, already) {
@@ -24,6 +24,12 @@ const addImplied = function (tags, already) {
         tags[tags[k].is] = {}
       }
     }
+    // Additional parents need entries too, including parents introduced by plugins.
+    toArr(tags[k].also).forEach(parent => {
+      if (!already.hasOwnProperty(parent) && !tags.hasOwnProperty(parent)) {
+        tags[parent] = {}
+      }
+    })
     // add any implicit 'not' tags
     if (tags[k].not && typeof tags[k].not === 'string' && !tags.hasOwnProperty(tags[k].not)) {
       if (!already.hasOwnProperty(tags[k].not) && !tags.hasOwnProperty(tags[k].not)) {
@@ -43,6 +49,9 @@ const validate = function (tags, already) {
   Object.keys(tags).forEach(k => {
     tags[k].children = toArr(tags[k].children)
     tags[k].not = toArr(tags[k].not)
+    if (tags[k].also) {
+      tags[k].also = toArr(tags[k].also)
+    }
   })
   // not links are bi-directional
   // add any incoming not tags

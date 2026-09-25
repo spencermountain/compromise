@@ -53,5 +53,7 @@ const matches = [
   { match: '[fucking] !#Verb', hook: 'fucking', group: 0, tag: '#Gerund', reason: 'f-as-gerund' },
   // see no
   { match: '#Verb [no]', hook: 'no', group: 0, tag: 'Negative', reason: 'see-no' },
+  // than mine
+  { match: '(then|than) [mine]', hook: 'mine', group: 0, tag: 'Possessive', reason: 'than-mine' },
 ]
 export default matches

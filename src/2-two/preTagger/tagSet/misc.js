@@ -70,7 +70,7 @@ export default {
     not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
   },
   Acronym: {
-    not: ['Plural', 'RomanNumeral', 'Pronoun', 'Date'],
+    not: ['RomanNumeral', 'Pronoun', 'Date'],
   },
   Negative: {
     not: ['Noun', 'Adjective', 'Value', 'Expression'],

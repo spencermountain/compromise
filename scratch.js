@@ -10,7 +10,7 @@ When does the store open? {QuestionWord,Vb,Det,Singular,Inf}
 When will the rain stop? {QuestionWord,Modal,Det,Noun,Inf}
 
 `
-let out = nlp.testSpec(str, true)
+// let out = nlp.testSpec(str, true)
 // out.debug()
 
 // let doc = nlp('john smith')
@@ -30,6 +30,6 @@ let out = nlp.testSpec(str, true)
 // There are no seats left. {There,Vb,Negative,Noun,Vb}
 // He has no money. {Noun,Vb,Negative,Noun}
 
-nlp.verbose(true)
-nlp(`he read his daughter a sto`).debug()
+// nlp.verbose(true)
+nlp(`She left without saying goodbye`).debug()
 

@@ -197,4 +197,12 @@ export default [
     tag: 'Noun',
     reason: '40-gallons-of-water',
   },
+  // as the rain stops
+  {
+    match: '(#Conjunction|#Preposition) the #Noun [#Plural]$',
+    hook: '#Plural',
+    group: 0,
+    tag: 'PresentTense',
+    reason: 'as-the-rain-stops',
+  },
 ]

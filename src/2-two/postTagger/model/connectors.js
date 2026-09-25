@@ -48,5 +48,19 @@ export default [
   { match: '(shortly|soon|long) [after]$', hook: 'after', group: 0, tag: 'Adverb', reason: 'after-adverb' },
   { match: '(has|have|had) [since] #PastTense', hook: 'since', group: 0, tag: 'Adverb', reason: 'perfect-since-adverb' },
   { match: '#PastTense [yet]$', hook: 'yet', group: 0, tag: 'Adverb', reason: 'yet-adverb' },
-  { match: '^(who|whom) #Verb #Pronoun #Verb [before]$', hook: 'before', group: 0, tag: 'Preposition', reason: 'stranded-before' },
+  {
+    match: '^(who|whom) #Verb #Pronoun #Verb [before]$',
+    hook: 'before',
+    group: 0,
+    tag: 'Preposition',
+    reason: 'stranded-before',
+  },
+  // will leave when the rain stops
+  {
+    match: '#Modal #Infinitive [when] #Determiner',
+    hook: 'when',
+    group: 0,
+    tag: 'Conjunction',
+    reason: 'will-leave-when',
+  },
 ]

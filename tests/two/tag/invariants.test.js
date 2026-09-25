@@ -32,11 +32,11 @@ test('tag invariants: representative ordered pairs', function (t) {
     ['Noun', 'Verb'], // ordinary exclusion: passing control
     ['FirstName', 'Plural'], // inherited exclusion: passing control
     ['Value', 'Year'], // legitimate overlap: passing control
-    ['Value', 'Month'], // also-parent exclusion is not inherited
-    ['Month', 'Value'], // also-child survives removal of its parent
-    ['Person', 'Prefix'], // ProperNoun is removed but Person survives
-    ['Country', 'Timezone'], // another missing ProperNoun parent
-    ['Unit', 'Acronym'], // asymmetric exclusion from the shared entity array
+    ['Value', 'Month'], // regression: inherit also-parent exclusions
+    ['Month', 'Value'], // regression: remove also-children with their parent
+    ['Person', 'Prefix'], // regression: removing ProperNoun also removes Person
+    ['Country', 'Timezone'], // regression: removing ProperNoun also removes Country
+    ['Unit', 'Acronym'], // regression: shared arrays must not leak exclusions
   ]
   pairs.forEach(([first, second]) => {
     const doc = blank().tag(first).tag(second)
@@ -66,7 +66,7 @@ test('tag invariants: removing an also parent removes its dependent tag', functi
   t.end()
 })
 
-// Intentionally assert the desired invariants, including currently failing cases.
+// Assert the desired invariants, including the formerly failing ordered pairs.
 // Derive the matrix from the active tagset so new tags get the same coverage.
 for (const method of ['tag', 'tagSafe']) {
   test(`tag invariants: all ordered pairs using ${method}`, function (t) {

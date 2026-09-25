@@ -440,11 +440,11 @@ Tags are a hierarchy: tagging a term `#FirstName` also makes it a `#Person` and 
 | `#Country` | `#Noun`, `#Singular`, `#Place`, `#ProperNoun` | Canada |
 | `#Currency` | `#Noun` | $ |
 | `#Demonym` | `#Noun`, `#ProperNoun` | Canadian |
-| `#FemaleName` | `#Noun`, `#Singular`, `#Person`, `#FirstName`, `#ProperNoun` | mary |
-| `#FirstName` | `#Noun`, `#Singular`, `#Person`, `#ProperNoun` | john |
-| `#Honorific` | `#Noun`, `#Singular`, `#Person`, `#ProperNoun` | dr. |
-| `#LastName` | `#Noun`, `#Singular`, `#Person`, `#ProperNoun` | smith |
-| `#MaleName` | `#Noun`, `#Singular`, `#Person`, `#FirstName`, `#ProperNoun` | john |
+| `#FemaleName` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person`, `#FirstName` | mary |
+| `#FirstName` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person` | john |
+| `#Honorific` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person` | dr. |
+| `#LastName` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person` | smith |
+| `#MaleName` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person`, `#FirstName` | john |
 | `#Noun` | — | cat |
 | `#Organization` | `#Noun`, `#ProperNoun` | Google |
 | `#Person` | `#Noun`, `#Singular`, `#ProperNoun` | John Smith |

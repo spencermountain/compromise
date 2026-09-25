@@ -28,7 +28,9 @@ const checkRegex = function (terms, i, model, world) {
   const { regexText, regexNormal, regexNumbers, endsWith } = model.two
   const term = terms[i]
   const normal = term.machine || term.normal
-  let text = term.text
+  // After splitting '20mins', tag the implicit '20', not the original surface
+  // text: a Duration match would replace the numeric component's Value tags.
+  let text = term.implicit || term.text
   // keep dangling apostrophe?
   if (hasApostrophe.test(term.post) && !hasApostrophe.test(term.pre)) {
     text += term.post.trim()

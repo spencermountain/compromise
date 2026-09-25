@@ -26,15 +26,56 @@ const fmt = function (nodes) {
       novel,
       also,
       parents,
-      children: node._cache.children,
+      children: [],
       color: getColor(node),
       alias: node.alias,
     }
   })
-  // lastly, add all children of all nots
+  // `also` is another inheritance edge. Resolve its ancestors before building
+  // reverse edges, so removing any parent also removes all dependent tags.
+  const resolved = new Set()
+  const resolving = new Set()
+  const resolveParents = function (tag) {
+    if (resolved.has(tag)) {
+      return res[tag].parents
+    }
+    if (resolving.has(tag)) {
+      throw new Error(`compromise: cyclic tag inheritance at '${tag}'`)
+    }
+    resolving.add(tag)
+    const parents = new Set()
+    res[tag].parents.forEach(parent => {
+      if (res[parent]) {
+        resolveParents(parent).forEach(ancestor => parents.add(ancestor))
+      }
+      parents.add(parent)
+    })
+    res[tag].parents = Array.from(parents)
+    resolving.delete(tag)
+    resolved.add(tag)
+    return res[tag].parents
+  }
+  Object.keys(res).forEach(tag => resolveParents(tag))
+  Object.keys(res).forEach(tag => {
+    res[tag].parents.forEach(parent => {
+      if (res[parent]) {
+        res[parent].children.push(tag)
+      }
+    })
+  })
+
+  // Inherit exclusions through every parent, then exclude all descendants of
+  // each conflicting tag. Read a snapshot to keep this independent of order.
+  const exclusions = {}
+  Object.keys(res).forEach(tag => { exclusions[tag] = res[tag].not })
   Object.keys(res).forEach(k => {
-    const nots = new Set(res[k].not)
-    res[k].not.forEach(not => {
+    const nots = new Set(exclusions[k])
+    res[k].parents.forEach(parent => {
+      for (const not of exclusions[parent] || []) {
+        nots.add(not)
+      }
+    })
+    Array.from(nots).forEach(not => {
       if (res[not]) {
         res[not].children.forEach(tag => nots.add(tag))
       }

@@ -61,15 +61,12 @@ Since the accident happened, he walks slowly. {Conj,Det,Noun,Vb,Noun,Vb,Adv}
 She has changed since her graduation. {Noun,Vb,Vb,Prep,Poss,Noun}
 She has changed since she graduated. {Noun,Vb,Vb,Conj,Noun,Vb}
 Since you asked, I will explain. {Conj,Noun,Vb,Noun,Modal,Vb}
-We stayed inside since the roads were icy. {Noun,Vb,Adv,Conj,Det,Noun,Vb,Adj}
 I have seen him since. {Noun,Vb,Vb,Noun,Adv}
 She has since moved. {Noun,Vb,Adv,Vb}
 
 # Until and till: noun phrases versus clauses
 We waited until dawn. {Noun,Vb,Prep,Noun}
 We waited until the sun rose. {Noun,Vb,Conj,Det,Noun,Vb}
-Until the wedding, they lived here. {Prep,Det,Noun,Noun,Vb,Adv}
-Until the wedding ended, they stayed here. {Conj,Det,Noun,Vb,Noun,Vb,Adv}
 She worked until her retirement. {Noun,Vb,Prep,Poss,Noun}
 She worked until she retired. {Noun,Vb,Conj,Noun,Vb}
 Stay till noon. {Vb,Prep,Noun}

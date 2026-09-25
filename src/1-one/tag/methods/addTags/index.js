@@ -28,6 +28,8 @@ const fromUser = function (tags) {
 }
 
 const addTags = function (tags, already) {
+  // Normalization owns its definitions, including when callers reuse a tagset.
+  tags = Object.fromEntries(Object.entries(tags).map(([tag, definition]) => [tag, { ...definition }]))
   // are these tags internal ones, or user-generated?
   if (Object.keys(already).length > 0) {
     tags = fromUser(tags)

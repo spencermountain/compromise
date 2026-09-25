@@ -16,6 +16,12 @@ const rules = clauses.flatMap(word => [
 
 export default [
   ...rules,
+  // Before the dog and the cat woke, she left.
+  // The nurses are sweet as pie and the doctor is wonderful.
+  ...['before', 'after', 'until', 'when', 'while'].map(word => ({
+    match: `^[${word}] ${subject} and ${subject} ${predicate}`,
+    hook: word, group: 0, tag: 'Conjunction', reason: 'before-coordinated-subject',
+  })),
   // She bought flowers, for I was ill.
   { match: `@hasComma [for] ${subject} ${predicate}`, hook: 'for', group: 0, tag: 'Conjunction', reason: 'causal-for' },
   // Everyone but me agreed.

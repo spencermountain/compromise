@@ -35,6 +35,9 @@ const setTense = function (term) {
     const guess = getTense(term.normal)
     if (guess) {
       fastTag(term, guess, '3-verb-tense-guess')
+      if (guess === 'Infinitive' || guess === 'Gerund') {
+        fastTag(term, 'PresentTense', '3-verb-tense-guess')
+      }
     }
   }
 }

@@ -13,12 +13,20 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - improved verb conjugation
 - **[change]** - improved tagging
 - **[update]** - efrt, grad-school dependencies
-- **[change]** - support block-comments in spec format
+- **[change]** - support block-comments, untagged sentences in spec format
 - **[change]** - testSpec() improved verbose output
+- **[change]** - #Preposition and #Conjunction discrepency
+- **[change]** - convert to pnpm workspace for plugins
+- **[change]** - tagset exclusion/consistency rules
 - **[new]** - .out('best-tag') fmt
+- **[new]** - #Connective tag between #Preposition and #Conjunction
 - **[fix]** - verb conjugation regression #1226
+- **[fix]** - tag-consistency 'not' and 'also' fixes
 - **[fix]** - types paths
+- **[fix]** - #Preposition and #Conjunction discrepencies
 - **[fix]** - possibly-unsafe regexes
+- **[update]** - efrt compression format
+- **[update]** - dependencies
 
 #### 14.17.0 [Sept 2026]
 - **[change]** - remove redundant re-tagging #1218

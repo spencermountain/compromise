@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../_lib.js'
+import nlp from '../_lib.js'
 const here = '[two/prepositions-conjunctions-spec] '
 
 // Hand-written assessment cases in docs/spec-format.md syntax.
@@ -138,7 +138,7 @@ She spoke quietly and clearly. {Noun,Vb,Adv,Conj,Adv}
 We looked under the bed and behind the desk. {Noun,Vb,Prep,Det,Noun,Conj,Prep,Det,Noun}
 He sat beside me or near the door. {Noun,Vb,Prep,Noun,Conj,Prep,Det,Noun}
 She was tired, yet she continued. {Noun,Vb,Adj,Conj,Noun,Vb}
-He never called, nor did he write. {Noun,Adv,Vb,Conj,Vb,Noun,Vb}
+He never called, nor did he write. {Noun,Negative,Vb,Conj,Vb,Noun,Vb}
 
 # Unambiguous finite subordinating clauses
 We stayed because it rained. {Noun,Vb,Conj,Noun,Vb}

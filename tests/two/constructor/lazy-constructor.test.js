@@ -1,7 +1,7 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[two/lazy] '
-import penn from '../../two/tagger/corpus/penn-sample.js'
+import penn from '../tagger/corpus/penn-sample.js'
 const txt = penn.map(a => a.text).join('\n')
 
 test('lazy matches are equal', function (t) {

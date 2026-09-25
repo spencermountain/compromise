@@ -2,9 +2,20 @@ import connectors from './connectors.js'
 
 // Corrections matched against the main sweep's output, before any are applied.
 const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
+const tired = ['[#Copula] #Adverb+? [tired]$', '[#Copula] #Adverb+? [(tired && @hasComma)]']
+const seatedQuestion = '^(which|what) #Adjective+? #Noun (did|does|do|#Modal) #Pronoun [sit] [on]$'
 
 export default [
   ...connectors,
+  // Although he was tired, he smiled. He was tired.
+  ...tired.flatMap(match => [
+    { match, hook: 'tired', group: 0, tag: 'Copula', unTag: 'Passive', reason: 'was-tired-copula' },
+    { match, hook: 'tired', group: 0, unTag: 'Auxiliary', reason: 'was-tired-copula' },
+    { match, hook: 'tired', group: 1, tag: 'Adjective', reason: 'was-tired-adjective' },
+  ]),
+  // Which chair did she sit on? What cushion can he sit on?
+  { match: seatedQuestion, hook: 'sit', group: 0, unTag: 'PhrasalVerb', reason: 'sit-on-question' },
+  { match: seatedQuestion, hook: 'sit', group: 1, tag: 'Preposition', reason: 'sit-on-question' },
   // ...questionRules,
   // These contexts need the resolved tags from the first sweep.
   {

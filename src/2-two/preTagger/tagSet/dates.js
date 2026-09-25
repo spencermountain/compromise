@@ -1,3 +1,6 @@
+// Calendar/clock components are distinct. Holiday and Duration describe spans
+// that can overlap components or one another (for example, 'Christmas Day').
+// Each exclusion pair is declared once; the tag compiler supplies reciprocity.
 export default {
   Date: {
     not: ['Verb', 'Adverb', 'Adjective'],
@@ -5,19 +8,20 @@ export default {
   Month: {
     is: 'Date',
     also: ['Noun'],
-    not: ['Year', 'WeekDay', 'Time'],
+    not: ['WeekDay', 'Year', 'FinancialQuarter', 'Season', 'Time', 'Timezone'],
   },
   WeekDay: {
     is: 'Date',
     also: ['Noun'],
+    not: ['Year', 'FinancialQuarter', 'Season', 'Time', 'Timezone'],
   },
   Year: {
     is: 'Date',
-    not: ['RomanNumeral'],
+    not: ['RomanNumeral', 'FinancialQuarter', 'Season', 'Time', 'Timezone'],
   },
   FinancialQuarter: {
     is: 'Date',
-    not: 'Fraction',
+    not: ['Fraction', 'Season', 'Time', 'Timezone'],
   },
   // 'easter'
   Holiday: {
@@ -27,6 +31,7 @@ export default {
   // 'summer'
   Season: {
     is: 'Date',
+    not: ['Time', 'Timezone'],
   },
   Timezone: {
     is: 'Date',
@@ -35,7 +40,7 @@ export default {
   },
   Time: {
     is: 'Date',
-    not: ['AtMention'],
+    not: ['AtMention', 'Timezone'],
   },
   // 'months'
   Duration: {

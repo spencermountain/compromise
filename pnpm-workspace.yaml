@@ -6,7 +6,7 @@ catalog:
   '@types/node': '^26.6.2'
   '@rollup/plugin-node-resolve': '16.0.3'
   '@rollup/plugin-terser': '1.0.0'
-  'rollup': '4.63.4'
+  'rollup': '4.63.5'
   'rollup-plugin-filesize-check': '2.0.1'
   'tap-dancer': '0.4.2'
   'tape': '5.10.2'

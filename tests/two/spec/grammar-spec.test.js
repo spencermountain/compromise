@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/grammar-spec] '
+const here = '[two/grammar-spec] '
 
 // real grammatical parsing, expressed in the spec format (docs/spec-format.md).
 // each line is a sentence + its expected tagging - nlp.testSpec() checks every

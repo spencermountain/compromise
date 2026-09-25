@@ -47,27 +47,27 @@ export default {
     alias: 'Abbr'
   },
   Url: {
-    not: ['HashTag', 'PhoneNumber', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email', 'SlashedTerm'],
+    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'SlashedTerm', 'Email', 'PhoneNumber', 'AtMention', 'Emoji', 'Emoticon'],
   },
   PhoneNumber: {
-    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention', 'Email'],
+    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention', 'Emoji', 'Emoticon'],
   },
   HashTag: {},
   AtMention: {
     is: 'Noun',
-    not: ['HashTag', 'Email'],
+    not: ['HashTag', 'Emoji', 'Emoticon'],
   },
   Emoji: {
-    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
+    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'Emoticon'],
   },
   Emoticon: {
-    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention', 'SlashedTerm'],
+    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'SlashedTerm'],
   },
   SlashedTerm: {
     not: ['Emoticon', 'Url', 'Value']
   },
   Email: {
-    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'AtMention'],
+    not: ['HashTag', 'Verb', 'Adjective', 'Value', 'PhoneNumber', 'AtMention', 'Emoji', 'Emoticon'],
   },
   Acronym: {
     not: ['RomanNumeral', 'Pronoun', 'Date'],

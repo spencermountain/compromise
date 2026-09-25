@@ -200,12 +200,20 @@ test('spec comments vs braces and hashtags', function (t) {
   // the tag-block is the last {} on the line - a '#' before it is text, not a comment
   const doc2 = nlp.fromSpec('the {cool} #hiking dog {Det,Adj,HashTag,Noun}')
   t.equal(doc2.text().trim(), 'the {cool} #hiking dog', here + 'braces then a hashtag, no comment')
-  t.equal(nlp.testSpec('the {cool} #hiking dog {Det,Adj,HashTag,Noun}', false).found, false, here + 'tags read from the last {}')
+  t.equal(
+    nlp.testSpec('the {cool} #hiking dog {Det,Adj,HashTag,Noun}', false).found,
+    false,
+    here + 'tags read from the last {}'
+  )
 
   // a leading '#' takes precedence over a tag-block
   const doc3 = nlp.fromSpec('#hiking is fun {HashTag,Vb,Adj}')
   t.equal(doc3.found, false, here + 'leading hashtag is a comment line')
-  t.equal(nlp.testSpec('#hiking is fun {HashTag,Vb,Adj} # and so is this', false).found, false, here + 'hashtag + comment')
+  t.equal(
+    nlp.testSpec('#hiking is fun {HashTag,Vb,Adj} # and so is this', false).found,
+    false,
+    here + 'hashtag + comment'
+  )
 
   // a line with no {} block also supports trailing comments
   const doc4 = nlp.fromSpec('no braces here # a comment')
@@ -214,7 +222,11 @@ test('spec comments vs braces and hashtags', function (t) {
 })
 
 test('testSpec ignores comments', function (t) {
-  t.equal(nlp.testSpec('The dog is nice. {Det,Noun,Vb,Adj} # should pass', false).found, false, here + 'comment does not break a pass')
+  t.equal(
+    nlp.testSpec('The dog is nice. {Det,Noun,Vb,Adj} # should pass', false).found,
+    false,
+    here + 'comment does not break a pass'
+  )
 
   const res = nlp.testSpec('the cat slept {Vb,Vb,Vb} # wrong on purpose', false)
   t.equal(res.text().trim(), 'the cat slept', here + 'failing line reported without its comment')
@@ -231,7 +243,11 @@ test('testSpec ignores comments', function (t) {
 test('spec skips whole-line comments', function (t) {
   const comments = '# block comment\n  # indented {invalid tags}\n\t# tabbed\n\u00a0# unicode whitespace\n#'
   const spec = `james jones {Person,Person} #inline-comment\n\n${comments}\nsally jones {Person,Person}`
-  t.equal(nlp.fromSpec(spec).out('spec'), nlp.fromSpec('james jones {Person,Person}\nsally jones {Person,Person}').out('spec'), here + 'comment lines excluded from text')
+  t.equal(
+    nlp.fromSpec(spec).out('spec'),
+    nlp.fromSpec('james jones {Person,Person}\nsally jones {Person,Person}').out('spec'),
+    here + 'comment lines excluded from text'
+  )
   t.equal(nlp.testSpec(spec, false, true).found, false, here + 'comment lines never fail or throw')
   t.equal(nlp.fromSpec(comments).found, false, here + 'comment-only input is empty')
   t.equal(nlp.testSpec(comments, false, true).found, false, here + 'comment-only input passes')

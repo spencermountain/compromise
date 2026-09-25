@@ -203,12 +203,16 @@ export default [
     tag: 'Noun',
     reason: '40-gallons-of-water',
   },
-  // as the rain stops
-  {
-    match: '(#Conjunction|#Preposition) the #Noun [#Plural]$',
-    hook: '#Plural',
+  // When the rain stops, we will leave. Whenever the bell rings, the dog barks.
+  ...['stops', 'looks', 'rings'].map(word => ({
+    match: `(when|whenever|before|after|until|since|as|while|than) (#Determiner|#Possessive) #Adjective+? #Noun [(%Plural|Verb% && ${word})]$`,
+    hook: word,
     group: 0,
     tag: 'PresentTense',
     reason: 'as-the-rain-stops',
-  },
+  })),
+  // The sun rose. The river rose quickly.
+  { match: '(sun|moon|river|water|tide|temperature|prices|he|she|we|they|i) [rose] #Adverb+?$', hook: 'rose', group: 0, tag: 'PastTense', reason: 'sun-rose' },
+  // The cat woke. Before the dog and the cat woke, she left.
+  { match: '(#Noun && !#Possessive) [woke] #Adverb+?$', hook: 'woke', group: 0, tag: 'PastTense', reason: 'cat-woke' },
 ]

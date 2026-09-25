@@ -29,9 +29,9 @@ import nlp from './src/three.js'
 
 
 nlp.verbose(true)
-// nlp(`When the rain stops, we will leave`).debug()
+nlp(`They attend.`).debug()
 
 
 // nlp.testSpec('He was tired, so we stopped. {Noun,Vb,Adj,Conj,Noun,Vb}').debug()
-let str = `Before the dog and the cat woke, she left. {Conj,Det,Noun,Conj,Det,Noun,Vb,Noun,Vb}`
-let doc=nlp.testSpec(str)
+// let str = `Before the dog and the cat woke, she left. {Conj,Det,Noun,Conj,Det,Noun,Vb,Noun,Vb}`
+// let doc=nlp.testSpec(str)

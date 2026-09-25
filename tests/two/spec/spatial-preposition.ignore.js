@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../_lib.js'
+import nlp from '../_lib.js'
 const here = '[two/spatial-preposition] '
 
 // Deferred expectations for spatial words currently tagged Adjective instead of Preposition.

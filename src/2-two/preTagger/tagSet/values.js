@@ -1,3 +1,4 @@
+// Written format is independent of quantity types such as Fraction or Money.
 export default {
   Value: {
     not: ['Verb', 'Adjective', 'Adverb'],
@@ -20,15 +21,14 @@ export default {
   },
   RomanNumeral: {
     is: 'Cardinal',
-    not: ['TextValue'],
   },
   TextValue: {
     is: 'Value',
-    not: ['NumericValue'],
+    not: ['NumericValue', 'RomanNumeral'],
   },
   NumericValue: {
     is: 'Value',
-    not: ['TextValue'],
+    not: ['RomanNumeral'],
     alias: 'Numeric'
   },
   Money: {

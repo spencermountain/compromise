@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../_lib.js'
+import nlp from '../_lib.js'
 const here = '[two/hanging-adverb] '
 
 // Deferred expectations for adverbs outside the local verb phrase.

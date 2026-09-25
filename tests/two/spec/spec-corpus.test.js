@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../_lib.js'
+import nlp from '../../two/_lib.js'
 const here = '[two/match-spec] '
 
 // New, hand-written expectations in docs/spec-format.md syntax.

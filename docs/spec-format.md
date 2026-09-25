@@ -107,7 +107,7 @@ compromise terms carry many tags, arranged in a tree. This format reduces that n
 one **top-level (root) tag** per term, printed as its short alias when one exists.
 
 The world is genuinely closed - every tag in the model resolves up to one of these
-roots (the list is pinned by `tests/three/output/spec-tags.test.js`, which fails if a tag
+roots (the list is pinned by `tests/spec/three/spec-tags.test.js`, which fails if a tag
 change adds, removes, or orphans a root).
 
 These roots print as a short alias:
@@ -265,5 +265,5 @@ contractions (`don't` → 2) and hyphenated words (`well-known` → 2)."
 - Serializer: [`src/1-one/output/api/_spec.js`](../src/1-one/output/api/_spec.js)
 - Dispatch: `method === 'spec'` in [`src/1-one/output/api/out.js`](../src/1-one/output/api/out.js)
 - Ingest: `nlp.fromSpec()` and `nlp.testSpec()` in [`src/1-one/output/fromSpec.js`](../src/1-one/output/fromSpec.js)
-- Tests: [`tests/two/output/spec.test.js`](../tests/two/output/spec.test.js) (format + round-trip behaviour),
-  [`tests/three/output/spec-tags.test.js`](../tests/three/output/spec-tags.test.js) (the closed-world of tags)
+- Tests: [`tests/spec/two/spec-api.test.js`](../tests/spec/two/spec-api.test.js) (format + round-trip behaviour),
+  [`tests/spec/three/spec-tags.test.js`](../tests/spec/three/spec-tags.test.js) (the closed-world of tags)

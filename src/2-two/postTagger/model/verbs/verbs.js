@@ -74,11 +74,11 @@ export default [
   },
 
   // shit them
-  { match: '[shit] (#Determiner|#Possessive|them)', hook: 'shit', group: 0, tag: 'Verb', reason: 'swear1-verb' },
+  { match: '[shit] (#Determiner|#Possessive|them)', hook: 'shit', group: 0, tag: 'Verb', reason: 'shit-verb' },
   // damn them
-  { match: '[damn] (#Determiner|#Possessive|them)', hook: 'damn', group: 0, tag: 'Verb', reason: 'swear2-verb' },
+  { match: '[damn] (#Determiner|#Possessive|them)', hook: 'damn', group: 0, tag: 'Verb', reason: 'damn-verb' },
   // fuck them
-  { match: '[fuck] (#Determiner|#Possessive|them)', hook: 'fuck', group: 0, tag: 'Verb', reason: 'swear3-verb' },
+  { match: '[fuck] (#Determiner|#Possessive|them)', hook: 'fuck', group: 0, tag: 'Verb', reason: 'fuck-verb' },
 
   // jobs that fit
   { match: '#Plural that %Noun|Verb%', hook: 'that', tag: '. #Preposition #Infinitive', reason: 'jobs-that-work' },
@@ -90,9 +90,9 @@ export default [
   // co write
   { match: '[(co|mis|de|inter|intra|pre|re|un|out|under|over|counter)] #Verb', hook: '#Verb', group: 0, tag: ['Verb', 'Prefix'], notIf: '(#Copula|#PhrasalVerb)', reason: 'co-write' },
   // dressed and left
-  { match: '#PastTense and [%Adj|Past%]', hook: 'and', group: 0, tag: 'PastTense', reason: 'dressed-and-left' },
+  { match: '#PastTense and [%Adj|Past%]', hook: 'and', group: 0, tag: 'PastTense', reason: 'past-and-ambiguous' },
   // melted and fallen
-  { match: '[%Adj|Past%] and #PastTense', hook: 'and', group: 0, tag: 'PastTense', reason: 'dressed-and-left' },
+  { match: '[%Adj|Past%] and #PastTense', hook: 'and', group: 0, tag: 'PastTense', reason: 'ambiguous-and-past' },
   // is he stoked
   { match: '#Copula #Pronoun [%Adj|Past%]', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'is-he-stoked' },
   // to dream of

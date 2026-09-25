@@ -17,7 +17,7 @@ export default [
   {
     match: '#ProperNoun (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #ProperNoun', hook: '#ProperNoun',
     tag: 'Person',
-    reason: 'titlecase-acronym-titlecase',
+    reason: 'name-initial-name',
     safe: true,
   },
   // J. Smith
@@ -25,13 +25,13 @@ export default [
   // John jr
   { match: '#Person (jr|sr|md)', hook: '#Person', tag: 'Person', reason: 'person-honorific' },
   // Dr. J.
-  { match: '#Honorific #Acronym', hook: '#Honorific', tag: 'Person', reason: 'Honorific-TitleCase' },
+  { match: '#Honorific #Acronym', hook: '#Honorific', tag: 'Person', reason: 'honorific-initial' },
   // John Smith III
   { match: '#Person #Person the? #RomanNumeral', hook: '#RomanNumeral', tag: 'Person', reason: 'roman-numeral' },
   // John b
   { match: '#FirstName [/^[^aiurck]$/]', hook: '#FirstName', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' },
   // Ludwig van Beethoven
-  { match: '#Noun van der? #Noun', hook: 'van', tag: 'Person', reason: 'van der noun', safe: true },
+  { match: '#Noun van der? #Noun', hook: 'van', tag: 'Person', reason: 'van-der-noun', safe: true },
   // king of spain
   { match: '(king|queen|prince|saint|lady) of #Noun', hook: 'of', tag: 'Person', reason: 'king-of-noun', safe: true },
   // prince Paris
@@ -50,7 +50,7 @@ export default [
   // Andrew Lloyd Webber
   { match: '#FirstName #FirstName #ProperNoun', hook: '#FirstName', tag: 'Person', reason: 'bill-firstname-title' },
   // Mr Foo
-  { match: '#Honorific #FirstName? #ProperNoun', hook: '#Honorific', tag: 'Person', reason: 'dr-john-Title' },
+  { match: '#Honorific #FirstName? #ProperNoun', hook: '#Honorific', tag: 'Person', reason: 'dr-john-title' },
   // peter the great
   { match: '#FirstName the #Adjective', hook: 'the', tag: 'Person', reason: 'name-the-great' },
 
@@ -94,7 +94,7 @@ export default [
       '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #ProperNoun', hook: '#ProperNoun',
     group: 0,
     tag: 'Honorific',
-    reason: 'seargeant-john',
+    reason: 'sergeant-john',
   },
   // ==== Honorics ====
   // general John
@@ -121,11 +121,11 @@ export default [
     reason: 'his-excellency',
   },
   // Dr teacher
-  { match: '#Honorific #Actor', hook: '#Honorific', tag: 'Honorific', reason: 'Lieutenant colonel' },
+  { match: '#Honorific #Actor', hook: '#Honorific', tag: 'Honorific', reason: 'lieutenant-colonel' },
   // first lady michelle obama
   { match: '[first lady] #Person', hook: 'lady', group: 0, tag: 'Honorific', reason: 'first-lady' },
   // first lady, second admiral
-  { match: '(first|second|third|1st|2nd|3rd) lieutenant', hook: 'lieutenant', tag: 'Honorific', reason: 'first lady' },
+  { match: '(first|second|third|1st|2nd|3rd) lieutenant', hook: 'lieutenant', tag: 'Honorific', reason: 'ordinal-lieutenant' },
   // Louis IV
-  { match: '#Person #RomanNumeral', hook: '#RomanNumeral', tag: 'Person', reason: 'louis-IV' },
+  { match: '#Person #RomanNumeral', hook: '#RomanNumeral', tag: 'Person', reason: 'louis-iv' },
 ]

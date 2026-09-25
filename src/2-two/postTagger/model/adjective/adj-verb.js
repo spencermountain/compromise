@@ -36,13 +36,13 @@ export default [
   // a bit confused
   { match: 'a (bit|little|tad) [#PastTense #Particle?]', hook: 'a', group: 0, tag: 'Adjective', reason: 'a-bit-confused' },
   // do not be embarrassed
-  { match: 'not be [%Adj|Past% #Particle?]', hook: 'not', group: 0, tag: 'Adjective', reason: 'do-not-be-confused' },
+  { match: 'not be [%Adj|Past% #Particle?]', hook: 'not', group: 0, tag: 'Adjective', reason: 'not-be-adjective' },
   // is just tired
   { match: '#Copula just [%Adj|Past% #Particle?]', hook: 'just', group: 0, tag: 'Adjective', reason: 'is-just-right' },
   // as fit as
   { match: 'as [#Infinitive] as', hook: 'as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
   // failed and oppressive
-  { match: '[%Adj|Past%] and #Adjective', hook: 'and', group: 0, tag: 'Adjective', reason: 'faled-and-oppressive' },
+  { match: '[%Adj|Past%] and #Adjective', hook: 'and', group: 0, tag: 'Adjective', reason: 'failed-and-oppressive' },
   // or heightened emotion
   {
     match: 'or [#PastTense] #Noun', hook: 'or',
@@ -66,7 +66,7 @@ export default [
     reason: 'is-crowded-with',
   },
   // is empty
-  { match: '#Copula #Adverb? [%Adj|Present%]$', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'was-empty$' },
+  { match: '#Copula #Adverb? [%Adj|Present%]$', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'copula-adjective' },
   // she is being cool
   { match: 'being #Adverb? [%Adj|Present%]', hook: 'being', group: 0, tag: 'Adjective', reason: 'being-adjective' },
   // does the store open
@@ -75,6 +75,6 @@ export default [
     hook: '%Adj|Present%',
     group: 0,
     tag: 'Infinitive',
-    reason: 'does-the-store-open',
+    reason: 'question-adjective-verb',
   },
 ]

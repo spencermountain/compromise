@@ -5,20 +5,20 @@ export default [
   // any more
   { match: '(the|any) [more]', hook: 'more', group: 0, tag: 'Singular', reason: 'more-noun' },
   // more players
-  { match: '[more] #Noun', hook: 'more', group: 0, tag: 'Adjective', reason: 'more-noun' },
+  { match: '[more] #Noun', hook: 'more', group: 0, tag: 'Adjective', reason: 'more-adjective' },
   // rights of man
   { match: '(right|rights) of .', hook: 'of', tag: 'Noun', reason: 'right-of' },
   // a bit
-  { match: 'a [bit]', hook: 'bit', group: 0, tag: 'Singular', reason: 'bit-2' },
+  { match: 'a [bit]', hook: 'bit', group: 0, tag: 'Singular', reason: 'a-bit' },
   // a must
-  { match: 'a [must]', hook: 'must', group: 0, tag: 'Singular', reason: 'must-2' },
+  { match: 'a [must]', hook: 'must', group: 0, tag: 'Singular', reason: 'a-must' },
   // we all
-  { match: '(we|us) [all]', hook: 'all', group: 0, tag: 'Noun', reason: 'we all' },
+  { match: '(we|us) [all]', hook: 'all', group: 0, tag: 'Noun', reason: 'we-all' },
   // due to weather
   { match: 'due to [#Verb]', hook: 'due', group: 0, tag: 'Noun', reason: 'due-to' },
 
   // some walking dogs
-  { match: 'some [#Verb] #Plural', hook: 'some', group: 0, tag: 'Noun', reason: 'determiner6' },
+  { match: 'some [#Verb] #Plural', hook: 'some', group: 0, tag: 'Noun', reason: 'some-verb-plural' },
   // my first thought
   { match: '#Possessive #Ordinal [#PastTense]', hook: '#Ordinal', group: 0, tag: 'Noun', reason: 'first-thought' },
   // the nice walk
@@ -30,9 +30,9 @@ export default [
     reason: 'the-adj-verb',
   },
   // the truly nice swim
-  { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', hook: '#Adverb', group: 0, tag: 'Noun', reason: 'determiner4' },
+  { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', hook: '#Adverb', group: 0, tag: 'Noun', reason: 'determiner-adverb-verb' },
   // the message from Danny
-  { match: 'the [#Verb] #Preposition .', hook: 'the', group: 0, tag: 'Noun', reason: 'determiner1' },
+  { match: 'the [#Verb] #Preposition .', hook: 'the', group: 0, tag: 'Noun', reason: 'determiner-verb-prep' },
   // the manufacture of perfume
   { match: '(a|an|the) [#Verb] of', hook: 'of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
   // a type of shout
@@ -46,9 +46,9 @@ export default [
     reason: 'ended-in-ruins',
   },
   // and u
-  { match: '#Conjunction [u]', hook: 'u', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },
+  { match: '#Conjunction [u]', hook: 'u', group: 0, tag: 'Pronoun', reason: 'conjunction-u' },
   // u made me smile
-  { match: '[u] #Verb', hook: 'u', group: 0, tag: 'Pronoun', reason: 'u-pronoun-1' },
+  { match: '[u] #Verb', hook: 'u', group: 0, tag: 'Pronoun', reason: 'u-verb' },
   // the western line
   {
     match: '#Determiner [(western|eastern|northern|southern|central)] #Noun', hook: '#Determiner',
@@ -121,7 +121,7 @@ export default [
   // did a 900, paid a 20
   { match: '#Verb (a|an) [#Value]$', hook: '#Value', group: 0, tag: 'Singular', reason: 'did-a-value' },
   // the can
-  { match: 'the [(can|will|may)]', hook: 'the', group: 0, tag: 'Singular', reason: 'the can' },
+  { match: 'the [(can|will|may)]', hook: 'the', group: 0, tag: 'Singular', reason: 'the-can' },
 
   // ==== Possessive ====
   // John Smith's
@@ -155,7 +155,7 @@ export default [
   // thanks for the gift are overdue
   { match: '[#PresentTense] (of|by|for) (a|an|the) #Noun #Copula', hook: '#Copula', group: 0, tag: 'Plural', reason: 'photographs-of' },
   // You eat and sleep
-  { match: '#Infinitive and [%Noun|Verb%]', hook: 'and', group: 0, tag: 'Infinitive', reason: 'fight and win' },
+  { match: '#Infinitive and [%Noun|Verb%]', hook: 'and', group: 0, tag: 'Infinitive', reason: 'fight-and-win' },
   // dogs and running and cats
   { match: '#Noun and [#Verb] and #Noun', hook: 'and', group: 0, tag: 'Noun', reason: 'peace-and-flowers' },
   // the 1992 classic

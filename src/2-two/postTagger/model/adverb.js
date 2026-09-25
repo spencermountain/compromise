@@ -2,7 +2,7 @@
 
 export default [
   // still good
-  { match: '[still] #Adjective', hook: 'still', group: 0, tag: 'Adverb', reason: 'still-advb' },
+  { match: '[still] #Adjective', hook: 'still', group: 0, tag: 'Adverb', reason: 'still-adjective' },
   // still make
   { match: '[still] #Verb', hook: 'still', group: 0, tag: 'Adverb', reason: 'still-verb' },
   // so hot
@@ -36,7 +36,7 @@ export default [
     reason: 'lazy-ly',
   },
   // much appreciated
-  { match: '[much] #Adjective', hook: 'much', group: 0, tag: 'Adverb', reason: 'bit-1' },
+  { match: '[much] #Adjective', hook: 'much', group: 0, tag: 'Adverb', reason: 'much-participle' },
   // is well
   { match: '#Copula [#Adverb]$', hook: '#Adverb', group: 0, tag: 'Adjective', reason: 'is-well' },
   // a bit cold

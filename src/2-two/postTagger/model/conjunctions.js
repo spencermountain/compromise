@@ -26,11 +26,11 @@ export default [
   // well above the clouds
   { match: '(well|just|right|directly) [above] (#Determiner|#Possessive|#Pronoun|#ProperNoun)', hook: 'above', group: 0, tag: 'Preposition', reason: 'well-above' },
   // well below the clouds
-  { match: '(well|just|right|directly) [below] (#Determiner|#Possessive|#Pronoun|#ProperNoun)', hook: 'below', group: 0, tag: 'Preposition', reason: 'well-above' },
+  { match: '(well|just|right|directly) [below] (#Determiner|#Possessive|#Pronoun|#ProperNoun)', hook: 'below', group: 0, tag: 'Preposition', reason: 'well-below' },
   // well under the clouds
-  { match: '(well|just|right|directly) [under] (#Determiner|#Possessive|#Pronoun|#ProperNoun)', hook: 'under', group: 0, tag: 'Preposition', reason: 'well-above' },
+  { match: '(well|just|right|directly) [under] (#Determiner|#Possessive|#Pronoun|#ProperNoun)', hook: 'under', group: 0, tag: 'Preposition', reason: 'well-under' },
   // well over the clouds
-  { match: '(well|just|right|directly) [over] (#Determiner|#Possessive|#Pronoun|#ProperNoun)', hook: 'over', group: 0, tag: 'Preposition', reason: 'well-above' },
+  { match: '(well|just|right|directly) [over] (#Determiner|#Possessive|#Pronoun|#ProperNoun)', hook: 'over', group: 0, tag: 'Preposition', reason: 'well-over' },
   // I heard rumors that drivers save gas
   { match: '#Verb #Adverb? #Noun [(that|which)]', hook: '#Verb', group: 0, tag: 'Preposition', reason: 'that-prep' },
   // Tuesday, which he liked

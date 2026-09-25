@@ -22,13 +22,13 @@ export default [
   // her favourite sport
   { match: `#Possessive [%Adj|Noun%] #Noun`, hook: '#Possessive', group: 0, tag: 'Adjective', reason: 'her-favourite' },
   // must-win
-  { match: `(must && #Hyphenated) .`, hook: 'must', tag: 'Adjective', reason: 'must-win' },
+  { match: `(must && #Hyphenated) .`, hook: 'must', tag: 'Adjective', reason: 'must-hyphen' },
   // the present
   {
     match: `#Determiner [#Adjective]$`, hook: '#Adjective',
     tag: 'Noun',
     notIf: '(this|that|#Comparative|#Superlative)',
-    reason: 'the-south',
+    reason: 'determiner-adjective',
   }, //are that crazy.
   // company-wide
   {

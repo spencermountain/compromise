@@ -7,41 +7,41 @@ export default [
     match: '!once? [(a|an)] hundred', hook: 'hundred',
     group: 0,
     tag: 'Value',
-    reason: 'a-is-one',
+    reason: 'a-hundred',
   },
   // with a thousand jobs
   {
     match: '!once? [(a|an)] thousand', hook: 'thousand',
     group: 0,
     tag: 'Value',
-    reason: 'a-is-one',
+    reason: 'a-thousand',
   },
   // with a million jobs
   {
     match: '!once? [(a|an)] million', hook: 'million',
     group: 0,
     tag: 'Value',
-    reason: 'a-is-one',
+    reason: 'a-million',
   },
   // with a billion jobs
   {
     match: '!once? [(a|an)] billion', hook: 'billion',
     group: 0,
     tag: 'Value',
-    reason: 'a-is-one',
+    reason: 'a-billion',
   },
   // with a trillion jobs
   {
     match: '!once? [(a|an)] trillion', hook: 'trillion',
     group: 0,
     tag: 'Value',
-    reason: 'a-is-one',
+    reason: 'a-trillion',
   },
   // ==== PhoneNumber ====
   // 1 800 555-1234
-  { match: '(1|+1) #Value #PhoneNumber', hook: '#PhoneNumber', tag: 'PhoneNumber', reason: '1-800-Value' },
+  { match: '(1|+1) #Value #PhoneNumber', hook: '#PhoneNumber', tag: 'PhoneNumber', reason: 'phone-country-code' },
   // (454) 232-9873
-  { match: '#NumericValue #PhoneNumber', hook: '#PhoneNumber', tag: 'PhoneNumber', reason: '(800) PhoneNumber' },
+  { match: '#NumericValue #PhoneNumber', hook: '#PhoneNumber', tag: 'PhoneNumber', reason: 'phone-area-code' },
 
   // ==== Currency ====
   // chinese yuan
@@ -50,7 +50,7 @@ export default [
   { match: '#Value [(buck|bucks|grand)]', hook: '#Value', group: 0, tag: 'Currency', reason: 'value-bucks' },
   // ==== Money ====
   // 5 dollars
-  { match: '[#Value+] #Currency', hook: '#Currency', group: 0, tag: 'Money', reason: '15 usd' },
+  { match: '[#Value+] #Currency', hook: '#Currency', group: 0, tag: 'Money', reason: 'value-currency' },
 
   // ==== Ordinal ====
   // second dog
@@ -58,7 +58,7 @@ export default [
 
   // ==== Units ====
   // 5 dollars
-  { match: '#Value+ [#Currency]', hook: '#Currency', group: 0, tag: 'Unit', reason: '5-yan' },
+  { match: '#Value+ [#Currency]', hook: '#Currency', group: 0, tag: 'Unit', reason: 'currency-unit' },
   // 5 feet
   { match: '#Value [(foot|feet)]', hook: '#Value', group: 0, tag: 'Unit', reason: 'foot-unit' },
   // 500 fifth ave
@@ -78,7 +78,7 @@ export default [
   // thousand and two
   { match: `#Multiple+ and #Value`, hook: 'and', tag: 'Value', reason: 'magnitude-and-value' },
   // 5 miles per hour
-  { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', hook: '#Unit', group: 0, tag: 'Unit', reason: '12-miles-per-second' },
+  { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', hook: '#Unit', group: 0, tag: 'Unit', reason: 'unit-per-duration' },
   // 5 square miles
   { match: '#Value [(square|cubic)] #Unit', hook: '#Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
   // twelve percent

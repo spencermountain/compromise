@@ -17,9 +17,9 @@ const multi = [
 
 export default [
   // university of Toronto
-  { match: 'university of #Place', hook: 'university', tag: 'Organization', reason: 'university-of-Foo' },
+  { match: 'university of #Place', hook: 'university', tag: 'Organization', reason: 'university-place' },
   // John & Joe's
-  { match: '#Noun (&|n) (#Noun && @hasTitleCase)', hook: '#Noun', tag: 'Organization', reason: 'Noun-&-Noun' },
+  { match: '#Person & #Person', hook: '&', tag: 'Organization', reason: 'noun-&-noun' },
   // Microsoft of Canada
   { match: '#Organization of the? #ProperNoun', hook: 'of', tag: 'Organization', reason: 'org-of-place', safe: true },
   // walmart USA
@@ -38,7 +38,7 @@ export default [
   {
     match: '(nominating|special|conference|executive|steering|central|congressional) committee', hook: 'committee',
     tag: 'Organization',
-    reason: 'special-comittee',
+    reason: 'special-committee',
   },
   // global Microsoft
   {

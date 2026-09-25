@@ -22,13 +22,13 @@ export default [
   // come and have a drink
   { match: '^[#Infinitive] (#Adjective|#Adverb)? and #Infinitive', hook: 'and', group: 0, tag: 'Imperative', reason: 'call-and-reserve' },
   // go
-  { match: '^[go] please?$', hook: 'go', group: 0, tag: 'Imperative', reason: 'go' },
+  { match: '^[go] please?$', hook: 'go', group: 0, tag: 'Imperative', reason: 'go-imperative' },
   // stop
-  { match: '^[stop] please?$', hook: 'stop', group: 0, tag: 'Imperative', reason: 'go' },
+  { match: '^[stop] please?$', hook: 'stop', group: 0, tag: 'Imperative', reason: 'stop-imperative' },
   // wait
-  { match: '^[wait] please?$', hook: 'wait', group: 0, tag: 'Imperative', reason: 'go' },
+  { match: '^[wait] please?$', hook: 'wait', group: 0, tag: 'Imperative', reason: 'wait-imperative' },
   // hurry
-  { match: '^[hurry] please?$', hook: 'hurry', group: 0, tag: 'Imperative', reason: 'go' },
+  { match: '^[hurry] please?$', hook: 'hurry', group: 0, tag: 'Imperative', reason: 'hurry-imperative' },
   // somebody call
   { match: '^(somebody|everybody) [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'somebody-call' },
   // let's leave

@@ -1,7 +1,7 @@
 // order matters
 const matches = [
   // u r cool
-  { match: 'u r', hook: 'r', tag: '#Pronoun #Copula', reason: 'u r' },
+  { match: 'u r', hook: 'r', tag: '#Pronoun #Copula', reason: 'u-r' },
   // the captain who
   { match: '#Noun [(who|whom)]', hook: '#Noun', group: 0, tag: 'Determiner', reason: 'captain-who' },
   // who is that?

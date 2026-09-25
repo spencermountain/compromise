@@ -17,9 +17,9 @@ export default [
   // turkey dinner
   { match: '[turkey] (roast|dinner|sandwich|burger)', hook: 'turkey', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'turkey-food' },
   // ankara turkey
-  { match: '#Place [turkey]', hook: 'turkey', group: 0, tag: 'Country', reason: 'ankara turkey' },
+  { match: '#Place [turkey]', hook: 'turkey', group: 0, tag: 'Country', reason: 'ankara-turkey' },
   // in turkey
-  { match: '(in|near|nearby|to|from) [turkey]', hook: 'turkey', group: 0, tag: 'Country', reason: 'near turkey' },
+  { match: '(in|near|nearby|to|from) [turkey]', hook: 'turkey', group: 0, tag: 'Country', reason: 'near-turkey' },
   // Toronto point
   {
     match: '#ProperNoun+ (cliff|place|range|pit|place|point|room|grounds|ruins)', hook: '#ProperNoun',

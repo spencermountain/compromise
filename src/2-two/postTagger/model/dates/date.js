@@ -19,9 +19,9 @@ export default [
   // in march
   { match: `#Preposition [(march|may)]`, hook: '#Preposition', group: 0, tag: 'Month', reason: 'in-month' },
   // this march
-  { match: '(this|next|last) march !#Infinitive?', hook: 'march', tag: '#Date #Month', reason: 'this-month' },
+  { match: '(this|next|last) march !#Infinitive?', hook: 'march', tag: '#Date #Month', reason: 'this-march' },
   // this may
-  { match: '(this|next|last) may !#Infinitive?', hook: 'may', tag: '#Date #Month', reason: 'this-month' },
+  { match: '(this|next|last) may !#Infinitive?', hook: 'may', tag: '#Date #Month', reason: 'this-may' },
   // march 5th
   { match: `(march|may) the? #Value`, hook: '#Value', tag: '#Month #Date #Date', reason: 'march-5th' },
   // 5th of march

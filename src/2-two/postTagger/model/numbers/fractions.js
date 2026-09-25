@@ -1,8 +1,8 @@
 export default [
   // half a penny
-  { match: '[half] of? (a|an)', hook: 'half', group: 0, tag: 'Fraction', reason: 'millionth' },
+  { match: '[half] of? (a|an)', hook: 'half', group: 0, tag: 'Fraction', reason: 'half-a' },
   // quarter of a dollar
-  { match: '[quarter] of? (a|an)', hook: 'quarter', group: 0, tag: 'Fraction', reason: 'millionth' },
+  { match: '[quarter] of? (a|an)', hook: 'quarter', group: 0, tag: 'Fraction', reason: 'quarter-a' },
   // nearly half
   { match: '#Adverb [half]', hook: 'half', group: 0, tag: 'Fraction', reason: 'nearly-half' },
   // half the

@@ -44,9 +44,9 @@ export default [
   // vacuum-sealed
   { match: `(#Hyphenated && #Infinitive) #Hyphenated`, hook: '#Hyphenated', tag: 'Adjective', notIf: '#PhrasalVerb', reason: 'vacuum-sealed' },
   // too much
-  { match: 'too much', hook: 'much', tag: 'Adverb Adjective', reason: 'bit-4' },
+  { match: 'too much', hook: 'much', tag: 'Adverb Adjective', reason: 'too-much' },
   // a bit much
-  { match: 'a bit much', hook: 'bit', tag: 'Determiner Adverb Adjective', reason: 'bit-3' },
+  { match: 'a bit much', hook: 'bit', tag: 'Determiner Adverb Adjective', reason: 'a-bit-much' },
   // un skilled
   { match: '[(un|contra|extra|inter|intra|macro|micro|mid|mis|mono|multi|pre|sub|tri|ex)] #Adjective', hook: '#Adjective', group: 0, tag: ['Adjective', 'Prefix'], reason: 'un-skilled' },
 

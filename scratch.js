@@ -3,7 +3,15 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// kinda-sparkly-and -> "she ran very quickly and quietly"
+// determiner6 -> "some eat apples"
+// your-guild-colors -> "your dog smiles"
+// det-inf -> "the poor eat rice"
+// a-nice-inf -> "the poor eat rice"
+// had-time -> "she had put it there"
+// western-line -> "the western coast"
+// shut-the -> "near the lake we rested"
+// some-kind -> "a kind teacher"
+// so-noun -> "I do so well"
 // studies-hard -> "the doors close"
 // suffered-by -> "he walked by the house"
 // ambg-honorifics -> "I miss John"
@@ -18,7 +26,7 @@ import nlp from './src/three.js'
 // off-white-copula
 
 nlp.verbose(true)
-nlp(`her first child`).debug()
+nlp(`the doors close`).debug()
 
 
 // nlp.testSpec('He was tired, so we stopped. {Noun,Vb,Adj,Conj,Noun,Vb}').debug()

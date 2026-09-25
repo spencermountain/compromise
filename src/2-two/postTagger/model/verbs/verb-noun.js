@@ -2,7 +2,7 @@ export default [
   // Common intransitive predicates after a singular subject. Keep arbitrary
   // plural/verb switches conservative: 'the dog treats' is a noun phrase.
   // the dog runs
-  { match: '^(#Determiner|#Possessive) #Adjective+? #Singular #Adverb+? [(runs|walks|barks|swims|sleeps)] #Adverb+?$', hook: '#Singular', group: 0, tag: 'PresentTense', reason: 'singular-subject-predicate' },
+  { match: '^(#Determiner|#Possessive) #Adjective+? #Singular #Adverb+? [(runs|walks|barks|swims|sleeps)] #Adverb+?$', hook: '#Singular', group: 0, tag: 'PresentTense', reason: 'singular-subject-verb' },
   // with heads and arms rolling around
   { match: '#Preposition #Plural and [%Plural|Verb%] #Gerund', hook: 'and', group: 0, tag: 'Plural', reason: 'coordinated-plurals' },
   // he can solve the puzzle
@@ -12,7 +12,7 @@ export default [
   // the-only-reason
   { match: '#Determiner (only|further|just|more|backward) [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'the-only-reason' },
   // the slide makes noise
-  { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'determiner5' },
+  { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'determiner-verb-subject' },
   // Use a pointed stick (a pencil) or a similar tool
   { match: '#Determiner #Adjective #Adjective? [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'a-nice-inf' },
   // the American thank-you letter
@@ -26,7 +26,7 @@ export default [
   // a dog retrieve in the field
   { match: '(a|an) #Adjective? #Noun [#Infinitive] (#Preposition|#Noun)', hook: '#Infinitive', group: 0, notIf: 'from', tag: 'Noun', reason: 'a-noun-inf' },
   // a software reinstall
-  { match: '(a|an) #Noun [#Infinitive]$', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'a-noun-inf2' },
+  { match: '(a|an) #Noun [#Infinitive]$', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'noun-infinitive-end' },
   // working for thank-you letters
   { match: '#Gerund #Adjective? for [#Infinitive]', hook: 'for', group: 0, tag: 'Noun', reason: 'running-for' },
   // about thank-you letters
@@ -65,10 +65,10 @@ export default [
     reason: 'let-him-glue',
   },
   // assign all tasks
-  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', hook: '#PresentTense', notIf: '#Modal', group: 0, tag: 'Noun', reason: 'all-presentTense' },  // PresentTense/Noun ambiguities
+  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', hook: '#PresentTense', notIf: '#Modal', group: 0, tag: 'Noun', reason: 'quantifier-verb-noun' },  // PresentTense/Noun ambiguities
   // big dreams, critical thinking
   // found all upcoming words
-  { match: '(had|have|#PastTense) #Adjective [#PresentTense]', hook: '#Adjective', group: 0, tag: 'Noun', notIf: 'better', reason: 'adj-presentTense' },
+  { match: '(had|have|#PastTense) #Adjective [#PresentTense]', hook: '#Adjective', group: 0, tag: 'Noun', notIf: 'better', reason: 'adjective-verb-noun' },
   // one big thank-you
   { match: '#Value #Adjective [#PresentTense]', hook: '#Value', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'one-big-reason' },
   // found all upcoming words
@@ -114,7 +114,7 @@ export default [
   // get better thank-you notes
   { match: `(get|got|have) #Comparative [#PresentTense]`, hook: '#Comparative', group: 0, tag: 'Noun', reason: 'got-better-aim' },
   // whose thanks are appreciated
-  { match: 'whose [#PresentTense] #Copula', hook: 'whose', group: 0, tag: 'Noun', reason: 'whos-name-was' },
+  { match: 'whose [#PresentTense] #Copula', hook: 'whose', group: 0, tag: 'Noun', reason: 'whose-verb-copula' },
   // give up on thank-you letters
   { match: `#PhrasalVerb #Particle #Preposition [#PresentTense]`, hook: '#Particle', group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   // there are thank-you notes
@@ -173,7 +173,7 @@ export default [
     hook: '%Noun|Verb%',
     group: 0,
     tag: 'Infinitive',
-    reason: 'did-the-engine-stop',
+    reason: 'question-noun-verb',
   },
   // 40 gallons of water
   {
@@ -181,7 +181,7 @@ export default [
     hook: '%Noun|Verb%',
     group: 0,
     tag: 'Noun',
-    reason: '40-gallons-of-water',
+    reason: 'quantity-of-noun',
   },
   // When the rain stops, we will leave. Whenever the bell rings, the dog barks.
   // when the dog looks
@@ -190,7 +190,7 @@ export default [
     hook: word,
     group: 0,
     tag: 'PresentTense',
-    reason: 'as-the-rain-stops',
+    reason: `${word}-clause-verb`,
   })),
   // The sun rose. The river rose quickly.
   { match: '(sun|moon|river|water|tide|temperature|prices|he|she|we|they|i) [rose] #Adverb+?$', hook: 'rose', group: 0, tag: 'PastTense', reason: 'sun-rose' },

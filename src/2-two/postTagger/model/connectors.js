@@ -11,11 +11,11 @@ const rules = clauses.flatMap(word => [
   // before she left
   // after she left
   // since she left...
-  { match: `[${word}] ${subject} ${predicate}`, hook: word, group: 0, tag: 'Conjunction', reason: 'connector-finite-clause' },
+  { match: `[${word}] ${subject} ${predicate}`, hook: word, group: 0, tag: 'Conjunction', reason: `${word}-clause` },
   // Before the guests from the village arrived, we ate.
   // After the guests from the village arrived, we ate.
   // Since the guests from the village arrived, we ate. ...
-  { match: `[${word}] ${subject} (from|of|with|in|on|at|beside|near) ${subject} ${predicate}`, hook: word, group: 0, tag: 'Conjunction', reason: 'connector-modified-subject' },
+  { match: `[${word}] ${subject} (from|of|with|in|on|at|beside|near) ${subject} ${predicate}`, hook: word, group: 0, tag: 'Conjunction', reason: `${word}-modified-subject` },
 ])
 
 export default [
@@ -25,7 +25,7 @@ export default [
   // after the dog and the cat woke...
   ...['before', 'after', 'until', 'when', 'while'].map(word => ({
     match: `^[${word}] ${subject} and ${subject} ${predicate}`,
-    hook: word, group: 0, tag: 'Conjunction', reason: 'before-coordinated-subject',
+    hook: word, group: 0, tag: 'Conjunction', reason: `${word}-joint-subject`,
   })),
   // She bought flowers, for I was ill.
   { match: `@hasComma [for] ${subject} ${predicate}`, hook: 'for', group: 0, tag: 'Conjunction', reason: 'causal-for' },
@@ -37,7 +37,7 @@ export default [
   // she stood directly below the window...
   ...['above', 'below', 'under', 'over', 'beside', 'behind', 'against', 'outside', 'inside', 'near'].map(word => ({
     match: `[(${word} && !#Verb)] (#Determiner|#Possessive|#Pronoun|#ProperNoun)`,
-    hook: word, group: 0, tag: 'Preposition', reason: 'spatial-object',
+    hook: word, group: 0, tag: 'Preposition', reason: `${word}-spatial-object`,
   })),
   // We looked under the bed.
   { match: '#Verb [under] (#Determiner|#Possessive|#Pronoun)', hook: 'under', group: 0, tag: 'Preposition', reason: 'under-object' },

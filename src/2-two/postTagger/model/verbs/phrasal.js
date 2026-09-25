@@ -17,7 +17,7 @@ export default [
   // went on for
   { match: '(lived|went|crept|go) [on] for', hook: 'on', group: 0, tag: 'PhrasalVerb', reason: 'went-on' },
   // the curtains come down
-  { match: '#Verb (up|down|in|on|for)$', hook: '#Verb', tag: 'PhrasalVerb #Particle', notIf: '#PhrasalVerb', reason: 'come-down$' },
+  { match: '#Verb (up|down|in|on|for)$', hook: '#Verb', tag: 'PhrasalVerb #Particle', notIf: '#PhrasalVerb', reason: 'come-down' },
   // help stop
   { match: 'help [(stop|end|make|start)]', hook: 'help', group: 0, tag: 'Infinitive', reason: 'help-stop' },
   // work in the office

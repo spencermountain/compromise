@@ -1,28 +1,29 @@
-# AGENTS.md — using compromise
+# compromise
 
-Guidance for AI coding agents (and humans) writing code with **compromise**, a rule-based English
-NLP library. This file is the map; the linked docs are the territory. Prefer them over guessing —
-the published docs at observablehq.com are interactive notebooks and do not render as readable text.
+> A rule-based natural-language-processing library for English. Tokenizes text, tags parts-of-speech,
+> and finds & transforms parts of the text. Runs offline in node and the browser, no dependencies.
+> Not an LLM/neural model.
 
-## Read these first
+Docs below are plain markdown (the published observablehq.com notebooks do not render as readable text).
 
-| File | What's in it |
-|---|---|
-| [docs/concepts.md](docs/concepts.md) | the document/View/Term model, **mutability**, build tiers — the mental model |
-| [docs/match-syntax.md](docs/match-syntax.md) | the `.match()` mini-language (`#Tag`, `[capture]`, `(a\|b)`, `~fuzzy~`, `{root}`, …) |
-| [docs/tags.md](docs/tags.md) | the complete, valid part-of-speech tagset |
-| [docs/api.md](docs/api.md) | every method, signature, and one-line description |
-| [docs/recipes.md](docs/recipes.md) | copy-paste solutions to common tasks |
-| [docs/SKILL.md](docs/SKILL.md) | example skill for using compromise in a coding agent |
+## Docs
 
-## 30-second mental model
+- [Concepts](docs/concepts.md): document/View/Term model, mutability, build tiers
+- [Match syntax](docs/match-syntax.md): the .match() mini-language
+- [Tags](docs/tag-definitions.md): the complete part-of-speech tagset
+- [Tagging-differences](docs/tagging-differences.md): ways compromise differs from other taggers
+- [API](docs/api.md): every method, signature, and description
+- [Recipes](docs/recipes.md): copy-paste solutions to common tasks
+- [Development](docs/development.md): pnpm scripts, and conventions
+
+## Quick mental model
 
 ```js
 import nlp from 'compromise'
 
 let doc = nlp('she sells seashells by the seashore.')  // parse → a View of the whole document
-doc.verbs().toPastTense()                               // select verbs, transform them (mutates doc)
-doc.text()                                              // 'she sold seashells by the seashore.'
+doc.verbs().toPastTense() // select verbs, transform them (mutates doc)
+const str = doc.text() // 'she sold seashells by the seashore.'
 ```
 
 - `nlp(text)` returns a **View**. Almost every method returns a View, so calls **chain**.
@@ -42,9 +43,9 @@ doc.text()                                              // 'she sold seashells b
    ```
    Use `.clone()` to transform a copy without touching the original.
 
-2. **Only real tags work.** A `#Tag` that isn't in [docs/tags.md](docs/tags.md) matches **nothing,
+2. **Only real tags work.** A `#Tag` that isn't in [docs/tag-definitions.md](docs/tag-definitions.md) matches **nothing,
    silently**. Frequent inventions that are NOT tags: `#Name`, `#Location`, `#Subject`, `#Object`,
-   `#Adj`, `#Time` (it's `#Date`/`#Time`… check the list). When in doubt, grep [docs/tags.md](docs/tags.md).
+   `#Adj`, `#Time` (it's `#Date`/`#Time`… check the list). When in doubt, grep [docs/tag-definitions.md](docs/tag-definitions.md).
 
 3. **The match-syntax is not regex.** It matches whole words/terms. `+ * ? . ^ $` mean term-level
    things; for character-level patterns use a `/regex/` token. See [docs/match-syntax.md](docs/match-syntax.md).
@@ -62,6 +63,14 @@ doc.text()                                              // 'she sold seashells b
 - A grammar/dependency parse tree — transforms are heuristic.
 - Slash-joined matching — `nlp('eats/shoots/leaves')` splits on the slash.
 
+## Debugging a wrong result
+
+```js
+doc.debug()        // prints how every word was tagged — start here
+nlp.verbose(true)  // log the tagger's decision-making
+console.log(doc.json()) // full structured data
+```
+
 ## Plugins & extension
 
 ```js
@@ -74,19 +83,36 @@ nlp.plugin({
 Or the lightweight forms: `nlp(text, { kermit: 'FirstName' })` and `nlp.addWords({...})`.
 Official plugins live in [`plugins/`](plugins) (dates, stats, syllables, wikipedia, paragraphs).
 
-## Debugging a wrong result
+---
 
-```js
-doc.debug()        // prints how every word was tagged — start here
-doc.json()         // full structured data
-nlp.verbose(true)  // log the tagger's decision-making
-```
+# Development
 
-## Repo / contributor notes
+Unless given specific instruction:
+- Do not edit README or add documentation
+- do not install or change dependencies
+- do not change existing tests
+- do not make a commit or PR
 
-- Source is layered `src/1-one` → `src/4-four` (tokenize → tags → selections → sense). The default
-  entry is `src/three.js`.
-- pnpm is used for repository development. See [docs/workspace.md](docs/workspace.md) for
-  shared dependencies, plugin peers, and workspace build/test commands.
-- Regenerate the machine docs after changing types or the tagset: `node ./scripts/docs.js`
-  (writes `docs/tags.md`, `docs/api.md`, `llms-full.txt`). The other docs are hand-written.
+Work on the current branch. The user may make simultaneous changes. Verify their work is not overwritten, or ask permission before destructive git changes.
+
+### Code style
+- Write maintainable javascript, using esmodules
+- Write portable ES2022+ for browers or for Node>=18
+- Typescript and jsdoc are not required
+- Add terse comments for maintainability
+- Prefer functions assigned with const, over declarations
+- Do not use unbracketed if statements
+- Do not use complex, multi-line, or nested ternary operators
+- Defensive try/catch blocks are not required
+- File-size is always important
+
+### Project structure
+- Prefer pnpm over npm
+- eslint is always configured
+- Prefer small maintainable files with one purpose
+- Split out utility functions into a _lib.js file or ./_lib dir
+- Prefer `export default` on files with one export
+- Prefer clear exports at the bottom of files
+- If workflow is sequential, prefix filenames with 01-, 02-, ...
+- Prefer tape-formatted tests
+- Use process.env for any secrets, tokens, or keys

@@ -2,6 +2,22 @@ Compromise has a custom tagset that is broadly compatible with a penn tagset. It
 
 Examples use [spec syntax](spec-format.md).
 
+## #Connector groups linking words
+
+`Preposition`, `Conjunction`, and `Condition` inherit `Connector`.
+`out('spec')` prints the broad `Connector` tag; tests can use the specific tags.
+
+- She walked to school. {Pronoun,Past,Prep,Noun} # to also matches Connector
+- She walked to school. {Pronoun,Past,Connector,Noun} # the broader tag works too
+- Cats and dogs play. {Noun,Conj,Noun,Vb} # and also matches Connector
+
+## #Condition can overlap with #Conjunction
+
+Conditional words get `Condition`. Some, including if, also get `Conjunction`.
+
+- If it rains, we will stay home. {Condition|Conj,Pronoun,Pres,Pronoun,Modal,Inf,Noun} # if carries both tags
+- Unless it rains, we will walk. {Condition,Pronoun,Pres,Pronoun,Modal,Inf}
+
 ## #Auxiliary is for verb spans
 
 `Auxiliary` marks helpers in a verb chain. A subject generally breaks the chain.
@@ -43,11 +59,11 @@ some patterns also get `Conjunction`. This is compromise's convention:
 - Where did she go? {QuestionWord,Past,Pronoun,Inf} # direct question
 - Do you know where she went? {Vb,Pronoun,Inf,Prep,Pronoun,Past} # embedded where, even with a question mark
 - When did she leave? {QuestionWord,Past,Pronoun,Inf}
-- I was cooking when you called. {Pronoun,Aux,Ger,Prep,Pronoun,Past} # when links a time clause
+- I was cooking when you called. {Pronoun,Aux,Ger,Conj,Pronoun,Past} # when links a time clause
 - Do you know how she did it? {Vb,Pronoun,Inf,Prep,Pronoun,Past,Pronoun}
 - Who called? {QuestionWord,Past}
 - The woman who called is here. {Det,Noun,Prep,Past,Copula,Noun} # relative who
-- I know where she is going. {Pronoun,Inf,Conj|Prep,Pronoun,Aux,Ger} # both linking tags can coexist
+- I know where she is going. {Pronoun,Inf,Prep,Pronoun,Aux,Ger} # embedded where
 - She asked whether we agreed. {Pronoun,Past,Conj,Pronoun,Past} # introducing a question does not require QuestionWord
 
 ## #Negative marks negation
@@ -59,7 +75,7 @@ gets a separate term and slot.
 - She didn't leave. {Pronoun,Aux,Negative,Inf} # didn't expands to did + not
 - He cannot swim. {Pronoun,Modal,Negative,Inf} # cannot also has two slots
 - She never swims. {Pronoun,Negative,Pres}
-- She has no money. {Pronoun,Vb,Expr,Noun} # no gets Expression, despite its negative meaning
+- She has no money. {Pronoun,Vb,Negative,Noun} # no negates the noun phrase
 
 ## #Expression covers conversational words
 
@@ -77,7 +93,7 @@ Its spec alias is `Expr`.
 
 Spatial words such as near and inside can get `Adjective`.
 
-- My house is near the school. {Poss,Noun,Copula,Adj,Det,Noun}
+- My house is near the school. {Poss,Noun,Copula,Prep,Det,Noun} # near introduces a location
 - The cat is inside. {Det,Noun,Copula,Adj}
 - She walked to school. {Pronoun,Past,Prep,Noun} # to remains a preposition
 - The bird flew directly above the house. {Det,Noun,Past,Adv,Prep,Det,Noun} # context can select Preposition

@@ -57,7 +57,7 @@ There are ~88 valid part-of-speech tags, and they're a hierarchy (`#FirstName` �
 `#Noun`). A `#Tag` that isn't real does not error — it just matches nothing, which looks like a
 logic bug. Common inventions that are **NOT** tags: `#Name`, `#Location`, `#Subject`, `#Object`,
 `#Adj`, `#Entity`. (Valid ones include `#Person`, `#Place`, `#Organization`, `#Noun`, `#Verb`,
-`#Value`, `#Date`.) When unsure, check `node_modules/compromise/docs/tags.md`.
+`#Value`, `#Date`.) When unsure, check `node_modules/compromise/docs/tag-definitions.md`.
 
 ### 3. Match-syntax is term-level, not regex
 
@@ -145,7 +145,7 @@ The authoritative docs ship inside the package the project actually installed, s
 exact version. Read these when you need more than the cheat sheet above:
 
 - `node_modules/compromise/docs/match-syntax.md` — every match operator, with examples
-- `node_modules/compromise/docs/tags.md` — the complete, valid tagset with the hierarchy
+- `node_modules/compromise/docs/tag-definitions.md` — the complete, valid tagset with the hierarchy
 - `node_modules/compromise/docs/api.md` — every method, signature, and description
 - `node_modules/compromise/docs/recipes.md` — copy-paste solutions to common tasks
 - `node_modules/compromise/docs/concepts.md` — the document/View/Term model in full

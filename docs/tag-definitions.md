@@ -1,7 +1,136 @@
+# Compromise Tags (Part-of-Speech tagset)
+
+Every term is assigned one or more of these **90 tags**. Use them in match-patterns with a `#` prefix, e.g. `doc.match('#Person')`.
+
+Tags are a hierarchy: tagging a term `#FirstName` also makes it a `#Person` and a `#Noun`. Tagging a term one thing may remove conflicting tags (a term can't be both `#Singular` and `#Plural`).
+
+> ⚠️ Only the tags listed here are valid. `#Name`, `#Subject`, `#Object`, `#Adj` etc. are **not** real tags and silently match nothing.
+
+## Nouns
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Activity` | `#Noun` | swimming |
+| `#Actor` | `#Noun` | swimmer |
+| `#AtMention` | `#Noun` | @nlp |
+| `#City` | `#Noun`, `#Singular`, `#Place`, `#ProperNoun` | Toronto |
+| `#Company` | `#Noun`, `#ProperNoun`, `#Organization` | Google |
+| `#Country` | `#Noun`, `#Singular`, `#Place`, `#ProperNoun` | Canada |
+| `#Currency` | `#Noun` | $ |
+| `#Demonym` | `#Noun`, `#ProperNoun` | Canadian |
+| `#FemaleName` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person`, `#FirstName` | mary |
+| `#FirstName` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person` | john |
+| `#Honorific` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person` | dr. |
+| `#LastName` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person` | smith |
+| `#MaleName` | `#Noun`, `#Singular`, `#ProperNoun`, `#Person`, `#FirstName` | john |
+| `#Noun` | — | cat |
+| `#Organization` | `#Noun`, `#ProperNoun` | Google |
+| `#Person` | `#Noun`, `#Singular`, `#ProperNoun` | John Smith |
+| `#Place` | `#Noun`, `#Singular` | Paris |
+| `#Plural` | `#Noun` | cats |
+| `#Possessive` | `#Noun` | spencer's |
+| `#Pronoun` | `#Noun` | he |
+| `#ProperNoun` | `#Noun` | Tesla |
+| `#Reflexive` | `#Noun`, `#Pronoun` | yourself |
+| `#Region` | `#Noun`, `#Singular`, `#Place`, `#ProperNoun` | California |
+| `#School` | `#Noun`, `#ProperNoun`, `#Organization` | UCLA |
+| `#Singular` | `#Noun` | cat |
+| `#SportsTeam` | `#Noun`, `#ProperNoun`, `#Organization` | the Leafs |
+| `#Uncountable` | `#Noun` | gravity |
+| `#Unit` | `#Noun` | km |
+
+## Verbs
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Auxiliary` | `#Verb` | will have |
+| `#Copula` | `#Verb` | is |
+| `#FutureTense` | `#Verb` | will walk |
+| `#Gerund` | `#Verb`, `#PresentTense` | walking |
+| `#Imperative` | `#Verb` | eat! |
+| `#Infinitive` | `#Verb`, `#PresentTense` | walk |
+| `#Modal` | `#Verb` | could |
+| `#Negative` | — | not |
+| `#Participle` | `#Verb`, `#PastTense` | awoken |
+| `#Particle` | `#Verb`, `#PhrasalVerb` | out |
+| `#Passive` | `#Verb` | was walked |
+| `#PastTense` | `#Verb` | walked |
+| `#PhrasalVerb` | `#Verb` | walk out |
+| `#PresentTense` | `#Verb` | walks |
+| `#Verb` | — | walk |
+
+## Adjectives
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Adjective` | — | quick |
+| `#Comparable` | `#Adjective` | quick |
+| `#Comparative` | `#Adjective` | quicker |
+| `#Superlative` | `#Adjective` | quickest |
+
+## Values & Dates
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Cardinal` | `#Value` | five |
+| `#Date` | — | monday |
+| `#Duration` | `#Date`, `#Noun` | 2 weeks |
+| `#FinancialQuarter` | `#Date` | q2 |
+| `#Fraction` | `#Value` | 2/3 |
+| `#Holiday` | `#Date`, `#Noun` | easter |
+| `#Money` | `#Value`, `#Cardinal` | $5 |
+| `#Month` | `#Date`, `#Noun` | march |
+| `#Multiple` | `#Value`, `#TextValue` | million |
+| `#NumericValue` | `#Value` | 5 |
+| `#Ordinal` | `#Value` | fifth |
+| `#Percent` | `#Value` | 5% |
+| `#RomanNumeral` | `#Value`, `#Cardinal` | xviii |
+| `#Season` | `#Date` | summer |
+| `#TextValue` | `#Value` | five |
+| `#Time` | `#Date` | 4:30pm |
+| `#Timezone` | `#Date`, `#Noun` | EST |
+| `#Value` | — | 5 |
+| `#WeekDay` | `#Date`, `#Noun` | monday |
+| `#Year` | `#Date` | 1992 |
+
+## Closed-class
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Adverb` | — | quickly |
+| `#Condition` | `#Connector` | if |
+| `#Conjunction` | `#Connector` | and |
+| `#Connector` | — | and, of, if |
+| `#Determiner` | — | the |
+| `#Hyphenated` | — | bone-headed |
+| `#Preposition` | `#Connector` | of |
+
+## Other
+
+| Tag | Is also a | Example |
+|---|---|---|
+| `#Abbreviation` | — | mrs. |
+| `#Acronym` | — | FBI |
+| `#Address` | — | 4 main st. |
+| `#Email` | — | hi@compromise.cool |
+| `#Emoji` | — | 💋 |
+| `#Emoticon` | — | :) |
+| `#Expression` | — | hi |
+| `#HashTag` | — | #nlp |
+| `#NumberRange` | — |  |
+| `#PhoneNumber` | — | (555) 123-4567 |
+| `#Prefix` | — | co- |
+| `#QuestionWord` | — | who |
+| `#Redacted` | — |  |
+| `#SlashedTerm` | — | love/hate |
+| `#There` | — | there |
+| `#Url` | — | compromise.cool |
+
+---
 # Tagset reference
 
-Short definitions and current parser behavior. See [the hierarchy](tags.md) and
-[POS perspectives](pos-perspectives.md) for broader conventions.
+Short definitions and current parser behavior. See [the hierarchy above](#compromise-tags-part-of-speech-tagset) and
+[tagging differences](tagging-differences.md) for broader conventions.
 
 Examples use [spec syntax](spec-format.md): one slot per term; `|` means **both**
 tags. Slots show relevant tags, not every inherited tag. Contractions and some

@@ -83,7 +83,7 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "build": "node ./scripts/version.js && node ./scripts/docs.js && rollup -c --silent",
+    "build": "node ./scripts/version.js && rollup -c --silent",
     "watch": "node --watch ./scratch.js",
     "pack": "node ./scripts/pack.js",
     "version": "node ./scripts/version.js",
@@ -102,7 +102,6 @@
     "match": "node ./scripts/match.js",
     "bench": "node ./scripts/bench/index.js",
     "lint": "eslint src",
-    "docs": "node ./scripts/docs.js",
     "plugins:build": "pnpm --filter \"./plugins/*\" run build",
     "test:plugins:build": "pnpm --filter \"./plugins/*\" run testb",
     "build:all": "pnpm run build && pnpm run plugins:build",
@@ -112,7 +111,6 @@
     "AGENTS.md",
     "builds/",
     "docs/",
-    "llms.txt",
     "one/",
     "skills/",
     "src/",

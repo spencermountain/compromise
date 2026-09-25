@@ -432,7 +432,7 @@ Plain-text, copy-paste docs that render without JavaScript live in this repo:
 - **[AGENTS.md](./AGENTS.md)** — start here: mental model, rules, and gotchas
 - **[docs/concepts.md](./docs/concepts.md)** — the document/View/Term model, mutability, build tiers
 - **[docs/match-syntax.md](./docs/match-syntax.md)** — the `.match()` mini-language
-- **[docs/tags.md](./docs/tags.md)** — the complete, valid part-of-speech tagset
+- **[docs/tag-definitions.md](./docs/tag-definitions.md)** — the complete, valid part-of-speech tagset
 - **[docs/api.md](./docs/api.md)** — every method, signature, and description
 - **[docs/recipes.md](./docs/recipes.md)** — solutions to common tasks
 

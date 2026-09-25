@@ -1,5 +1,6 @@
 const prp = ['Possessive', 'Pronoun']
-//words that can't be compressed, for whatever reason
+// Unpacked spellings and explicit multi-tag entries, plus conjugation exceptions.
+// Ordinary words supplied by data/lexicon must not be repeated here.
 const misc = {
   // numbers
   '20th century fox': 'Organization',
@@ -45,13 +46,7 @@ const misc = {
   "ben & jerry's": 'Organization',
   '&': 'Conjunction',
 
-  //pronouns
-  i: ['Pronoun', 'Singular'],
-  he: ['Pronoun', 'Singular'],
-  she: ['Pronoun', 'Singular'],
-  it: ['Pronoun', 'Singular'],
-  they: ['Pronoun', 'Plural'],
-  we: ['Pronoun', 'Plural'],
+  // copulas
   was: ['Copula', 'PastTense'],
   is: ['Copula', 'PresentTense'],
   are: ['Copula', 'PresentTense'],
@@ -64,18 +59,12 @@ const misc = {
   hers: prp,
   their: prp,
   theirs: prp,
-  themselves: prp,
   your: prp,
-  our: prp,
-  ours: prp,
-  my: prp,
-  its: prp,
 
   // misc
   vs: ['Conjunction', 'Abbreviation'],
   closer: 'Comparative',
   closest: 'Superlative',
-  much: 'Adverb',
   may: 'Modal',
 
   // irregular conjugations with two forms
@@ -85,22 +74,15 @@ const misc = {
   drove: 'PastTense',
   forgave: 'PastTense',
   skiied: 'PastTense',
-  spilt: 'PastTense',
   stung: 'PastTense',
   swam: 'PastTense',
   swung: 'PastTense',
   guaranteed: 'PastTense',
-  shrunk: 'PastTense',
 
   // support 'near', 'nears', 'nearing'
   nears: 'PresentTense',
   nearing: 'Gerund',
   neared: 'PastTense',
 
-  no: ['Negative', 'Expression'],
-
-  // '-': 'Preposition', //june - july
-
-  // there: 'There'
 }
 export default misc

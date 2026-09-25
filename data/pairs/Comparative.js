@@ -302,8 +302,5 @@ export default [
   ['zany', 'zanier'],
   ['clever', 'cleverer'],
   ['glad', 'gladder'],
-  ['neat', 'neater'],
   ['dim', 'dimmer'],
-  ['', ''],
-  ['', ''],
 ]

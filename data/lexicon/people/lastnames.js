@@ -1,7 +1,7 @@
 //a random copy+paste job from around the internet
 //(dont mean to step on any toes)
 //some countries have a higher lastname-signal than others
-//this list is further augmented by some regexps, over in ./data/punct_rules.js
+// Also recognized by src/2-two/preTagger/model/patterns/suffixes.js.
 // https://en.wikipedia.org/wiki/List_of_most_common_surnames_in_Europe
 export default [
   'acosta',

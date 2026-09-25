@@ -352,7 +352,6 @@ export default [
   'president',
   'priest',
   'priestess',
-  'prime minister',
   'prince',
   'princess',
   'prisoner',

@@ -122,7 +122,6 @@ export default [
   'there now',
   'aye',
   'cmon', //come on
-  'excuse me',
   'oh well',
   'oh hell',
   'oh my god',

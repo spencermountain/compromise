@@ -11,7 +11,7 @@ import irregularPlurals from '../irregulars/plurals.js'
 // more clever things are done on the data later
 //  - once the plugin is applied
 const hasSwitch = /\|/
-const lexicon = misc
+const lexicon = { ...misc }
 const switches = {}
 
 const tmpModel = { two: { irregularPlurals, uncountable: {} } }

@@ -62,7 +62,6 @@ export default [
   'nova scotia',
   'nunavut',
   'ontario',
-  'prince edward island',
   'pei',
   'quebec',
   'saskatchewan',

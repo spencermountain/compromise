@@ -1,6 +1,8 @@
 //directory of files to pack with `node scripts/pack.js`
 //they are stored in compressed form
-import lex from './misc.js'
+import misc from './misc.js'
+import { addWords } from '../validate.js'
+import { shared } from '../../src/2-two/preTagger/model/lexicon/frozenLex.js'
 
 import demonyms from './nouns/demonyms.js'
 import organizations from './nouns/organizations.js'
@@ -129,22 +131,15 @@ const data = [
   [personAdj, 'Person|Adj'],
   [unitNoun, 'Unit|Noun'],
 ]
-for (let i = 0; i < data.length; i++) {
-  const list = data[i][0]
-  for (let o = 0; o < list.length; o++) {
-    // log duplicates
-    // if (lex[list[o]]) {
-    //   console.log(list[o] + '  ' + lex[list[o]] + ' ' + data[i][1])
-    // }
-    const str = list[o]
-    //do some linting
-    if (/[.,0-9-]/.test(str) || str.trim().toLowerCase() !== str) {
-      console.log(`'${str}'`) //eslint-disable-line
-    }
-    lex[str] = data[i][1]
-  }
+const lex = {}
+for (const [word, tag] of Object.entries(misc)) {
+  addWords(lex, [word], tag, 'lexicon/misc.js')
+}
+for (const [words, tag] of data) {
+  addWords(lex, words, tag, tag + ' list')
+}
+for (const [word, tag] of Object.entries(shared)) {
+  addWords(lex, [word], tag, 'shared frozen lexicon')
 }
 
 export default lex
-// console.log(Object.keys(lex).length);
-// console.log(lex[`grown`])

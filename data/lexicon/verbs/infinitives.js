@@ -674,7 +674,6 @@ export default [
   'swim',
   'tackle',
   'tailor',
-  'take part',
   'tamper',
   'tarnish',
   'teach',

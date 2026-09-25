@@ -34,5 +34,4 @@ export default [
   'nis',
   'riel',
   'euro',
-  'iron maiden',
 ]

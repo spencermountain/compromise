@@ -114,7 +114,6 @@ export default [
   'arc de triomphe',
   'browns canyon',
   'carrizo plain',
-  'cedar falls',
   'chichen itza',
   'chimney rock',
   'chiricahua',
@@ -135,7 +134,6 @@ export default [
   'tuzigoot',
   'virgin islands',
   'wupatki',
-  'cedar breaks',
   'scotts bluff',
   'saint lawrence river',
 

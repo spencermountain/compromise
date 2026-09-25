@@ -226,7 +226,6 @@ export default [
   'intellect',
   'verdict',
   'district',
-  'free market',
   'human right',
 
   // -ent
@@ -350,8 +349,6 @@ export default [
   'autopsy',
   'embassy',
   'pussy',
-  'spin off',
-  'lay up',
   'leg up',
   'poppy',
   'epidemic',

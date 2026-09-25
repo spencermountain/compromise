@@ -432,8 +432,7 @@ export default [
   ['wily', 'wiliness'],
   ['wise', 'wisdom'],
   ['wistful', 'wistfulness'],
-  ['witty', 'wit'],
-  ['witty', 'wittiness'],
+  ['witty', 'wit'], // Keep the existing derivation; wittiness is an alternative, not a second rule.
   ['woebegone', 'woefulness'],
   ['yielding', 'yieldingness'],
   ['young', 'youth'],

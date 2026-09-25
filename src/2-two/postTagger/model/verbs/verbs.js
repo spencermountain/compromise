@@ -13,7 +13,7 @@ export default [
   { match: '(#Modal|i|they|we|do) not? [like]', hook: 'like', group: 0, tag: 'PresentTense', reason: 'modal-like' },
   // ==== Tense ====
   // he [left]
-  { match: '#Noun #Adverb? [left]', hook: 'left', group: 0, tag: 'PastTense', reason: 'left-verb' },
+  { match: '(#Noun && !#Possessive) #Adverb? [left]', hook: 'left', group: 0, tag: 'PastTense', reason: 'left-verb' },
   // she [bit] her tongue
   { match: '#Noun #Adverb? [(bit && #Infinitive)]', hook: 'bit', group: 0, tag: 'PastTense', reason: 'bit-past' },
   // will [be] running
@@ -53,8 +53,6 @@ export default [
   { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, hook: 'been', group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
   // had to [Google] the answer
   { match: `(had|has) to [#Noun] (#Determiner|#Possessive)`, hook: 'to', group: 0, tag: 'Infinitive', reason: 'had-to-noun' },
-  // have [read]
-  { match: `have [#PresentTense]`, hook: 'have', group: 0, tag: 'PastTense', notIf: '(come|gotten)', reason: 'have-read' },
   // does that [work]
   { match: `(do|does|did|#Modal) (this|that|these|those) [work]`, hook: 'work', group: 0, tag: 'Infinitive', reason: 'does-that-work' },
   // [sounds] fun
@@ -98,5 +96,5 @@ export default [
   // to [dream] of
   { match: 'to [%Noun|Verb%] #Preposition', hook: 'to', group: 0, tag: 'Infinitive', reason: 'to-dream-of' },
   // he [read]
-  { match: '(he|she|it|#Person) [read]', hook: 'read', group: 0, tag: 'PastTense', reason: 'he-read' },
+  { match: '^(he|she|it|#Person) [read]', hook: 'read', group: 0, tag: 'PastTense', reason: 'he-read' },
 ]

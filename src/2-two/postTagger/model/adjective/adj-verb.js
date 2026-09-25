@@ -1,6 +1,6 @@
 export default [
   // quickly [warm]
-  { match: '(slowly|quickly) [#Adjective]', hook: '#Adjective', group: 0, tag: 'Verb', reason: 'slowly-adj' },
+  { match: '(slowly|quickly) [%Adj|Present%]', hook: '%Adj|Present%', group: 0, tag: 'Verb', reason: 'slowly-adj' },
   // does [better]
   { match: 'does (#Adverb|not)? [#Adjective]', hook: 'does', group: 0, tag: 'PresentTense', reason: 'does-mean' },
   // [okay] by me
@@ -11,12 +11,10 @@ export default [
   { match: 'will #Adjective', hook: 'will', tag: 'Auxiliary Infinitive', reason: 'will-adj' },
   // I [frequent] this restaurant
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', hook: '#Pronoun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
-  // is [open] to go
-  { match: '#Copula [%Adj|Present%] to #Verb', hook: 'to', group: 0, tag: 'Verb', reason: 'adj-to' },
   // is [done] well
   { match: '#Copula [#Adjective] (well|badly|quickly|slowly)', hook: '#Copula', group: 0, tag: 'Verb', reason: 'done-well' },
   // rude and [insulting]
-  { match: '#Adjective and [#Gerund] !#Preposition?', hook: 'and', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
+  { match: '#Adjective and [(%Adj|Gerund% && #Gerund)] !#Preposition?', hook: 'and', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // was under [paid]
   { match: '#Copula #Adverb? (over|under) [#PastTense]', hook: '#PastTense', group: 0, tag: 'Adjective', reason: 'over-cooked' },
   // was tired and [overworked]

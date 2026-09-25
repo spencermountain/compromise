@@ -99,11 +99,13 @@ export default [
   // ==== Honorics ====
   // [general] John
   {
-    match: '[(private|general|major|rear|prime|field|count|miss)] #Honorific? #Person', hook: '#Person',
+    match: '[(private|general|major|rear|prime|field|count)] #Honorific? #Person', hook: '#Person',
     group: 0,
     tag: ['Honorific', 'Person'],
     reason: 'ambg-honorifics',
   },
+  // [Miss] John
+  { match: '[(miss && @isTitleCase)] #Person', hook: 'miss', group: 0, tag: ['Honorific', 'Person'], reason: 'miss-honorific' },
   // dr john [foobar]
   {
     match: '#Honorific #FirstName [#Singular]', hook: '#Honorific',

@@ -14,7 +14,7 @@ export default [
   // the [slide] makes noise
   { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'determiner-verb-subject' },
   // Use a pointed [stick] (a pencil) or a similar tool
-  { match: '#Determiner #Adjective #Adjective? [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'a-nice-inf' },
+  { match: '#Determiner #Adjective #Adjective? [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Noun', notIf: 'the (poor|rich|young|old|elderly|unemployed|homeless|disabled)', reason: 'a-nice-inf' },
   // the American [thank]-you letter
   { match: '#Determiner #Demonym [#PresentTense]', hook: '#Demonym', group: 0, tag: 'Noun', reason: 'mexican-train' },
   // the next career [read] is brief

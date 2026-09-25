@@ -35,9 +35,8 @@ export default [
   { match: '#Verb #Adverb? #Noun [(that|which)]', hook: '#Verb', group: 0, tag: 'Preposition', reason: 'that-prep' },
   // Tuesday, [which] he liked
   { match: '@hasComma [which] (#Pronoun|#Verb)', hook: 'which', group: 0, tag: 'Preposition', reason: 'which-copula' },
-  // folks [like] her — subject-only pronouns instead introduce the verb.
-  // folks [like] her
-  { match: '(#Noun && !i && !he && !she && !we && !they) [like] #Noun', hook: 'like', group: 0, tag: 'Preposition', reason: 'noun-like' },
+  // treated them [like] sons
+  { match: '(me|him|her|us|them|it) [like] #Noun', hook: 'like', group: 0, tag: 'Preposition', reason: 'noun-like' },
   // [like] the time
   { match: '^[like] #Determiner', hook: 'like', group: 0, tag: 'Preposition', reason: 'like-the' },
   // a day [like] this

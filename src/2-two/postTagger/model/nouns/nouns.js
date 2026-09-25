@@ -17,8 +17,6 @@ export default [
   // due to [weather]
   { match: 'due to [#Verb]', hook: 'due', group: 0, tag: 'Noun', reason: 'due-to' },
 
-  // some [walking] dogs
-  { match: 'some [#Verb] #Plural', hook: 'some', group: 0, tag: 'Noun', reason: 'some-verb-plural' },
   // my first [thought]
   { match: '#Possessive #Ordinal [#PastTense]', hook: '#Ordinal', group: 0, tag: 'Noun', reason: 'first-thought' },
   // the nice [walk]
@@ -49,19 +47,12 @@ export default [
   { match: '#Conjunction [u]', hook: 'u', group: 0, tag: 'Pronoun', reason: 'conjunction-u' },
   // [u] made me smile
   { match: '[u] #Verb', hook: 'u', group: 0, tag: 'Pronoun', reason: 'u-verb' },
-  // the [western] line
-  {
-    match: '#Determiner [(western|eastern|northern|southern|central)] #Noun', hook: '#Determiner',
-    group: 0,
-    tag: 'Noun',
-    reason: 'western-line',
-  },
   // water-flows
   { match: '(#Singular && @hasHyphen) #PresentTense', hook: '#PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
   // is no [going] back
   { match: 'is no [#Verb]', hook: 'no', group: 0, tag: 'Noun', reason: 'is-no-verb' },
   // do [so]
-  { match: 'do [so]', hook: 'so', group: 0, tag: 'Noun', reason: 'so-noun' },
+  { match: 'do [so]', hook: 'so', group: 0, tag: 'Adverb', reason: 'so-noun' },
   // what the [hell]
   { match: '#Determiner [(shit|damn|hell)]', hook: '#Determiner', group: 0, tag: 'Noun', reason: 'swears-noun' },
   // go to [shit]
@@ -72,10 +63,10 @@ export default [
   { match: `a #Noun+ or #Adverb+? [#Verb]`, hook: 'or', group: 0, tag: 'Noun', reason: 'noun-or-noun' },
   // and check this out! a [walk-in] microwave.
   {
-    match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', hook: '#PresentTense',
+    match: '(the|those|these|a|an) #Adjective? [(#PresentTense && !#Gerund && !#Copula && !seem && !appear && !include) #Particle?]', hook: '#PresentTense',
     group: 0,
     tag: 'Noun',
-    notIf: '(seem|appear|include|#Gerund|#Copula)',
+    notIf: 'the (poor|rich|young|old|elderly|unemployed|homeless|disabled)',
     reason: 'det-inf',
   },
 
@@ -167,7 +158,7 @@ export default [
   { match: 'i #Verb [me] #Noun', hook: 'me', group: 0, tag: 'Possessive', reason: 'scottish-me' },
   // [dance] music
   {
-    match: '[#Infinitive] (music|class|lesson|night|party|festival|league|ceremony)', hook: '#Infinitive',
+    match: '[(dance|rock|rap|swing)] (music|class|lesson|night|party|festival|league|ceremony)',
     group: 0,
     tag: 'Noun',
     reason: 'dance-music',
@@ -179,7 +170,7 @@ export default [
   // 35 [signs]
   { match: '#Value [%Plural|Verb%]', hook: '#Value', group: 0, tag: 'Plural', notIf: '(one|1|a|an)', reason: '35-signs' },
   // had [time]
-  { match: 'had [#PresentTense]', hook: 'had', group: 0, tag: 'Noun', notIf: '(#Gerund|come|become)', reason: 'had-time' },
+  { match: 'had [%Noun|Verb%]', hook: 'had', group: 0, tag: 'Noun', notIf: '(#Gerund|come|become)', reason: 'had-time' },
   // instant access
   { match: '%Adj|Noun% %Noun|Verb%', hook: '%Adj|Noun%', tag: '#Adjective #Noun', notIf: '#ProperNoun #Noun', reason: 'instant-access' },
   // a [representative] to
@@ -193,5 +184,5 @@ export default [
     reason: 'near-death-experiences',
   },
   // your guild [colors]
-  { match: '#Possessive #Noun [%Plural|Verb%]$', hook: '#Possessive', group: 0, tag: 'Plural', reason: 'your-guild-colors' },
+  { match: '#Possessive #Noun [(colors|colours)]$', hook: '#Possessive', group: 0, tag: 'Plural', reason: 'your-guild-colors' },
 ]

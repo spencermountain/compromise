@@ -25,8 +25,8 @@ export default [
   // jury is out - preposition ➔ adjective
   // jury is [out]
   { match: '#Copula #Adjective? [(out|in|through)]$', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'still-out' },
-  // [near] the shore
-  { match: '^[#Adjective] (the|your) #Noun', hook: '#Adjective', group: 0, notIf: '(all|even)', tag: 'Infinitive', reason: 'shut-the' },
+  // [quiet] the room
+  { match: '^[(#Adjective && !near && !inside && !outside && !opposite)] (the|your) #Noun', hook: '#Adjective', group: 0, notIf: '(all|even)', tag: 'Infinitive', reason: 'shut-the' },
   // the [said] dog
   { match: 'the [said] #Noun', hook: 'said', group: 0, tag: 'Adjective', reason: 'the-said-card' },
   // blue-[tinted]

@@ -5,14 +5,16 @@ import connectors from './connectors.js'
 const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
 const tired = [
   // He [was] [tired].
-  { match: '[#Copula] #Adverb+? [tired]$', position: 'end' },
+  { match: '[(#Copula|been)] #Adverb+? [tired]$', position: 'end' },
   // Although he [was] [tired], he smiled.
-  { match: '[#Copula] #Adverb+? [(tired && @hasComma)]', position: 'comma' },
+  { match: '[(#Copula|been)] #Adverb+? [(tired && @hasComma)]', position: 'comma' },
 ]
 // Which chair did she [sit] [on]?
 const seatedQuestion = '^(which|what) #Adjective+? #Noun (did|does|do|#Modal) #Pronoun [sit] [on]$'
 
 const rules = [
+  // veggies, [like] kale
+  { match: '(#Noun && @hasComma) [like] #Noun', hook: 'like', group: 0, tag: 'Preposition', reason: 'comma-like-example' },
   ...connectors,
   // Although he [was] [tired], he smiled. He [was] [tired].
   ...tired.flatMap(({ match, position }) => [
@@ -23,6 +25,8 @@ const rules = [
     // Although he [was] [tired], he smiled. He [was] [tired].
     { match, hook: 'tired', group: 1, tag: 'Adjective', reason: `tired-${position}-adjective` },
   ]),
+  // had been tired
+  { match: '(has|have|had) (#Adverb|not)+? been #Adverb+? tired$', hook: 'tired', unTag: 'Passive', reason: 'perfect-tired-unpassive' },
   // Which chair did she [sit] [on]? What cushion can he [sit] [on]?
   { match: seatedQuestion, hook: 'sit', group: 0, unTag: 'PhrasalVerb', reason: 'sit-question-unphrasal' },
   // Which chair did she [sit] [on]? What cushion can he [sit] [on]?
@@ -83,8 +87,8 @@ const rules = [
   { match: '[this] #Adverb+? (#PresentTense && !#Infinitive && !#Gerund)', hook: 'this', group: 0, tag: 'Pronoun', reason: 'this-finite-subject' },
   // [This] will be one sentence. [This] might help.
   { match: '[this] #Adverb+? #Modal #Adverb+? #Infinitive', hook: 'this', group: 0, tag: 'Pronoun', reason: 'this-modal-subject' },
-  // has [read]
-  { match: '(has|have|had) (#Adverb|not)+? [read]', hook: 'read', group: 0, tag: 'Participle', reason: 'perfect-read' },
+  // has [read], had [put]
+  { match: '(has|have|had) (#Adverb|not)+? [(read|put)]', group: 0, tag: 'Participle', reason: 'perfect-invariant' },
   // what [work] he did
   { match: '(which|what|whose) [%Noun|Verb%] #Pronoun', hook: '#Pronoun', group: 0, tag: 'Noun', reason: 'embedded-wh-object' },
   // what [walks] he took

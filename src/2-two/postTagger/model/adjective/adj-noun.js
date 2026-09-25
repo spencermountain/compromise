@@ -17,8 +17,10 @@ export default [
   { match: `no [#Adjective] #Modal`, hook: 'no', group: 0, tag: 'Noun', reason: 'no-golden' },
   // [brand] new
   { match: `[brand #Gerund?] new`, hook: 'brand', group: 0, tag: 'Adverb', reason: 'brand-new' },
-  // some [kind]
-  { match: `(#Determiner|#Comparative|new|different) [kind]`, hook: 'kind', group: 0, tag: 'Noun', reason: 'some-kind' },
+  // some [kind] of teacher
+  { match: `(#Determiner|#Comparative|new|different) [kind] of`, hook: 'kind', group: 0, tag: 'Noun', reason: 'some-kind' },
+  // a new [kind]
+  { match: '(#Determiner|#Comparative|new|different) [kind]$', hook: 'kind', group: 0, tag: 'Noun', reason: 'some-kind-end' },
   // her [favourite] sport
   { match: `#Possessive [%Adj|Noun%] #Noun`, hook: '#Possessive', group: 0, tag: 'Adjective', reason: 'her-favourite' },
   // must-win

@@ -4,7 +4,7 @@ const here = '[three/spec-tags] '
 
 // ---------------------------------------------------------
 // the closed-world of out('spec') for the full build:
-//   every slot is one of these 28 root tags (Redacted comes
+//   every slot is one of these 26 root tags (Redacted comes
 //   from three's redact plugin), written as its alias when
 //   one exists, plus '-' for an untagged term.
 // this is the vocabulary documented in docs/spec-format.md -
@@ -16,8 +16,7 @@ const specWorld = {
   Address: 'Addr',
   Adjective: 'Adj',
   Adverb: 'Adv',
-  Condition: 'Condition',
-  Conjunction: 'Conj',
+  Connector: 'Connector',
   Date: 'Date',
   Determiner: 'Det',
   Email: 'Email',
@@ -31,7 +30,6 @@ const specWorld = {
   NumberRange: 'NumberRange',
   PhoneNumber: 'PhoneNumber',
   Prefix: 'Prefix',
-  Preposition: 'Prep',
   QuestionWord: 'QuestionWord',
   Redacted: 'Redacted',
   SlashedTerm: 'SlashedTerm',
@@ -44,7 +42,7 @@ const specWorld = {
 test('spec-tags closed-world', function (t) {
   const tagSet = nlp.model().one.tagSet
   const roots = Object.keys(tagSet).filter(k => !tagSet[k].parents || tagSet[k].parents.length === 0)
-  t.deepEqual(roots.sort(), Object.keys(specWorld).sort(), here + 'the 28 root tags')
+  t.deepEqual(roots.sort(), Object.keys(specWorld).sort(), here + 'the 26 root tags')
 
   // aliases turn each root into its printed spec form
   roots.forEach(root => {

@@ -75,7 +75,7 @@ const examples = {
   RomanNumeral: 'xviii', TextValue: 'five', NumericValue: '5', Money: '$5', Percent: '5%',
   Date: 'monday', Month: 'march', WeekDay: 'monday', Year: '1992', FinancialQuarter: 'q2',
   Holiday: 'easter', Season: 'summer', Timezone: 'EST', Time: '4:30pm', Duration: '2 weeks',
-  Determiner: 'the', Conjunction: 'and', Preposition: 'of', QuestionWord: 'who', Expression: 'hi',
+  Determiner: 'the', Connector: 'and, of, if', Conjunction: 'and', Preposition: 'of', QuestionWord: 'who', Expression: 'hi',
   Negative: 'not', Condition: 'if', There: 'there', Prefix: 'co-', Hyphenated: 'bone-headed',
   Abbreviation: 'mrs.', Acronym: 'FBI', Url: 'compromise.cool', PhoneNumber: '(555) 123-4567',
   HashTag: '#nlp', Email: 'hi@compromise.cool', Emoji: '💋', Emoticon: ':)', SlashedTerm: 'love/hate',

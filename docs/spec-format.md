@@ -107,15 +107,13 @@ compromise terms carry many tags, arranged in a tree. This format reduces that n
 one **top-level (root) tag** per term, printed as its short alias when one exists.
 
 The world is genuinely closed - every tag in the model resolves up to one of these
-roots (the list is pinned by `tests/spec/three/spec-tags.test.js`, which fails if a tag
+roots (the list is pinned by `tests/two/spec/spec-tags.test.js`, which fails if a tag
 change adds, removes, or orphans a root).
 
 These roots print as a short alias:
 * Vb (Verb)
 * Adj (Adjective)
 * Adv (Adverb)
-* Prep (Preposition)
-* Conj (Conjunction)
 * Det (Determiner)
 * Val (Value)
 * Expr (Expression)
@@ -127,7 +125,7 @@ These roots print as-is:
 * Date
 * Negative
 * Acronym
-* Condition
+* Connector
 * QuestionWord
 * There
 * NumberRange
@@ -158,10 +156,16 @@ POS - so in practice it never wins a slot.
 > applies the coarse POS, letting its own tagger refill the sub-tags. `spec` is for
 > communicating structure, not for byte-exact serialization of the full tag-set.
 
+`Connector` is the shared root of `Preposition`, `Conjunction`, and `Condition`.
+For example, `of`, `and`, and `if` all print as `Connector`. Their child tags
+remain available for matching and for more precise `.testSpec()` expectations.
+
 ### Sub-tag aliases (ingest only)
 
 These aliases name tags *below* a root, so `out('spec')` never emits them - but
 `.testSpec()` accepts them, usually piped onto a root, like `Vb|Past`:
+* Prep (Preposition)
+* Conj (Conjunction)
 * Aux (Auxiliary)
 * Fut (FutureTense)
 * Past (PastTense)
@@ -208,7 +212,7 @@ The dog's tail wagged. {Det,Noun,Noun,Vb}
 We'll see well-known cases. {Noun,Vb,Vb,Adv,Adj,Noun}
 It's a 3.5 inch disk. {Noun,Vb,Det,Val,Noun,Noun}
 He cannot go. {Noun,Vb,Negative,Vb}
-Visit https://nlp.com or email me@x.com today! {Noun,Url,Conj,Noun,Email,Date}
+Visit https://nlp.com or email me@x.com today! {Noun,Url,Connector,Noun,Email,Date}
 there are five hundred quick reasons. {There,Vb,Val,Val,Adj,Noun}
 ```
 
@@ -265,5 +269,5 @@ contractions (`don't` → 2) and hyphenated words (`well-known` → 2)."
 - Serializer: [`src/1-one/output/api/_spec.js`](../src/1-one/output/api/_spec.js)
 - Dispatch: `method === 'spec'` in [`src/1-one/output/api/out.js`](../src/1-one/output/api/out.js)
 - Ingest: `nlp.fromSpec()` and `nlp.testSpec()` in [`src/1-one/output/fromSpec.js`](../src/1-one/output/fromSpec.js)
-- Tests: [`tests/spec/two/spec-api.test.js`](../tests/spec/two/spec-api.test.js) (format + round-trip behaviour),
-  [`tests/spec/three/spec-tags.test.js`](../tests/spec/three/spec-tags.test.js) (the closed-world of tags)
+- Tests: [`tests/two/spec/spec-api.test.js`](../tests/two/spec/spec-api.test.js) (format + round-trip behaviour),
+  [`tests/two/spec/spec-tags.test.js`](../tests/two/spec/spec-tags.test.js) (the closed-world of tags)

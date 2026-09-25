@@ -25,11 +25,16 @@ export default {
     not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Conjunction'], //allow 'a' to be a Determiner/Value
     alias: 'Det'
   },
+  Connector: {
+    not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Determiner'],
+  },
   Conjunction: {
+    is: 'Connector',
     not: anything.concat(['Preposition']),
     alias: 'Conj'
   },
   Preposition: {
+    is: 'Connector',
     not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Determiner', 'Conjunction'],
     alias: 'Prep'
   },
@@ -76,6 +81,7 @@ export default {
     not: ['Noun', 'Adjective', 'Value', 'Expression'],
   },
   Condition: {
+    is: 'Connector',
     not: ['Verb', 'Adjective', 'Noun', 'Value'],
   },
   // existential 'there'

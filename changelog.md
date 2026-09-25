@@ -19,7 +19,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - convert to pnpm workspace for plugins
 - **[change]** - tagset exclusion/consistency rules
 - **[new]** - .out('best-tag') fmt
-- **[new]** - #Connective tag between #Preposition and #Conjunction
+- **[new]** - #Connector tag between #Preposition and #Conjunction
 - **[fix]** - verb conjugation regression #1226
 - **[fix]** - tag-consistency 'not' and 'also' fixes
 - **[fix]** - types paths

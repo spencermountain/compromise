@@ -45,7 +45,8 @@ test('noun-phrases', function (t) {
     [`nobody suspected that the mobile phone was working`, ['nobody', 'the mobile phone']],
     [
       `a slew of gadgets was sitting on the delicate table near the door`,
-      ['a slew of gadgets', 'the delicate table near the door'],
+      // "near" is a preposition, so its object is a separate noun selection.
+      ['a slew of gadgets', 'the delicate table', 'the door'],
     ],
 
     [`spencer's friend is upset`, [`spencer's friend`]],

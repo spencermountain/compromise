@@ -45,21 +45,14 @@ export default [
   { match: '(not|nothing|never) [like]', hook: 'like', group: 0, tag: 'Preposition', reason: 'nothing-like' },
   // treat them like
   { match: '#Infinitive #Pronoun [like]', hook: 'like', group: 0, tag: 'Preposition', reason: 'treat-them-like' },
-  // stretch before the race
+  // Nominal complements, including pronoun objects and gerunds. The second
+  // pass recognizes a following subject + predicate and promotes before to Conj.
   {
-    match: '#Verb [before] #Determiner',
+    match: '[before] (#Determiner|#Possessive|#Noun|#Gerund|#Date)',
     hook: 'before',
     group: 0,
     tag: 'Preposition',
-    reason: 'stretch-before-the-race',
-  },
-  // before you left
-  {
-    match: '[before] (#Pronoun|#Person)',
-    hook: 'before',
-    group: 0,
-    tag: 'Conjunction',
-    reason: 'before-you-left',
+    reason: 'before-nominal',
   },
 
 

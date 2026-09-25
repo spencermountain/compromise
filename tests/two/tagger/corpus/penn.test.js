@@ -70,7 +70,10 @@ test('pennTreebank-test:', function (t) {
       // Penn's DT includes standalone demonstratives, which compromise now
       // distinguishes as pronouns. Keep ordinary determiners strict.
       const demonstrative = sentence.tags[i] === 'DT' && /^(this|that|these|those)(['’]s)?$/i.test(terms[i].text)
-      const found = terms[i].tags.some(tag => tag === want || (demonstrative && tag === 'Pronoun'))
+      // Penn IN includes both prepositions and subordinating conjunctions.
+      // Its relative WDT "that" is also a clause linker in our tagset.
+      const clauseLinker = sentence.tags[i] === 'IN' || (sentence.tags[i] === 'WDT' && /^that$/i.test(terms[i].text))
+      const found = terms[i].tags.some(tag => tag === want || (demonstrative && tag === 'Pronoun') || (clauseLinker && tag === 'Conjunction'))
       if (!found) {
         isPerfect = false
         msg += `'${terms[i].text}' no #${want}`

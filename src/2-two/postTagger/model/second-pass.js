@@ -1,7 +1,10 @@
+import connectors from './connectors.js'
+
 // Corrections matched against the main sweep's output, before any are applied.
 const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
 
 export default [
+  ...connectors,
   // ...questionRules,
   // These contexts need the resolved tags from the first sweep.
   {

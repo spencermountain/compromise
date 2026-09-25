@@ -26,11 +26,11 @@ export default {
     alias: 'Det'
   },
   Conjunction: {
-    not: anything,
+    not: anything.concat(['Preposition']),
     alias: 'Conj'
   },
   Preposition: {
-    not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Determiner'],
+    not: ['Noun', 'Verb', 'Adjective', 'Adverb', 'QuestionWord', 'Determiner', 'Conjunction'],
     alias: 'Prep'
   },
   QuestionWord: {

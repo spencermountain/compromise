@@ -96,5 +96,5 @@ export default [
   // to dream of
   { match: 'to [%Noun|Verb%] #Preposition', hook: 'to', group: 0, tag: 'Infinitive', reason: 'to-dream-of' },
   // he-read (past-tense)
-  { match: '(he|she|it) [read]', hook: 'read', group: 0, tag: 'PastTense', reason: 'he-read' },
+  { match: '(he|she|it|#Person) [read]', hook: 'read', group: 0, tag: 'PastTense', reason: 'he-read' },
 ]

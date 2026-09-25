@@ -4,6 +4,56 @@ import nlp from '../_lib.js'
 const here = '[two/exclusions] '
 const blank = () => nlp('xyz').unTag('*')
 
+test('exclusions: reciprocal links across registration batches', function (t) {
+  const model = nlp.world().model.one
+  const original = model.tagSet
+  t.teardown(() => { model.tagSet = original })
+
+  nlp.addTags({ Existing: {}, ExistingChild: { also: ['Existing'] } })
+  const previous = model.tagSet
+  const previousExclusions = [...previous.Existing.not]
+  nlp.addTags({ Special: { not: ['Existing', 'Noun'] }, SpecialChild: { is: 'Special' } })
+  t.deepEqual(previous.Existing.not, previousExclusions, here + 'previous compiled model is unchanged')
+  for (const [a, b] of [['Special', 'Noun'], ['Special', 'Existing'], ['SpecialChild', 'ExistingChild']]) {
+    for (const [first, second] of [[a, b], [b, a]]) {
+      const doc = blank().tag(first)
+      const before = [...doc.termList()[0].tags].sort()
+      t.equal(doc.canBe(second).found, false, here + `${first} cannot be ${second}`)
+      doc.tagSafe(second)
+      t.deepEqual([...doc.termList()[0].tags].sort(), before, here + `${second} is safely rejected`)
+      doc.tag(second)
+      t.ok(doc.has(`#${second}`), here + `${second} is assigned`)
+      t.notOk(doc.has(`#${first}`), here + `${first} is removed`)
+    }
+  }
+
+  // Descendants introduced in yet another batch inherit the reciprocal edge.
+  nlp.addTags({ LaterChild: { is: 'ExistingChild' } })
+  t.equal(blank().tag('SpecialChild').canBe('LaterChild').found, false, here + 'later descendant conflicts')
+  t.equal(blank().tag('LaterChild').canBe('SpecialChild').found, false, here + 'later descendant reciprocates')
+  t.end()
+})
+
+test('exclusions: string and array references normalize identically', function (t) {
+  const compile = nlp.world().methods.one.addTags
+  for (const property of ['not', 'notA']) {
+    for (const existing of [{}, compile({ Earlier: {} }, {})]) {
+      const stringForm = compile({ Special: { [property]: 'Implicit' } }, existing)
+      const arrayForm = compile({ Special: { [property]: ['Implicit'] } }, existing)
+      t.deepEqual(arrayForm, stringForm, here + property + ' string and array produce the same model')
+      t.ok(arrayForm.Implicit.not.includes('Special'), here + property + ' implicit tag reciprocates')
+    }
+  }
+  const existing = compile({ Earlier: {} }, {})
+  const result = compile({ Special: { not: ['Earlier', 'ImplicitA', 'ImplicitB', 'ImplicitA'] } }, existing)
+  for (const tag of ['Earlier', 'ImplicitA', 'ImplicitB']) {
+    t.equal(result.Special.not.filter(value => value === tag).length, 1, here + tag + ' excluded once')
+    t.equal(result[tag].not.filter(value => value === 'Special').length, 1, here + tag + ' reciprocates once')
+  }
+  t.deepEqual(existing.Earlier.not, [], here + 'normalization does not mutate existing exclusions')
+  t.end()
+})
+
 test('exclusions: shared arrays and reusable definitions', function (t) {
   const shared = Object.freeze(['Entity'])
   const definitions = Object.freeze({

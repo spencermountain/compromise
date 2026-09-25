@@ -36,10 +36,9 @@ const addTags = function (tags, already) {
   }
   tags = validate(tags, already)
 
-  const allTags = Object.assign({}, already, tags)
   // do some basic setting-up
   // 'fill-down' parent logic
-  const nodes = compute(allTags)
+  const nodes = compute(tags)
   // convert it to our final format
   const res = fmt(nodes)
   return res

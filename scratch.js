@@ -30,6 +30,6 @@ When will the rain stop? {QuestionWord,Modal,Det,Noun,Inf}
 // There are no seats left. {There,Vb,Negative,Noun,Vb}
 // He has no money. {Noun,Vb,Negative,Noun}
 
-// nlp.verbose(true)
-nlp(`She left without saying goodbye`).debug()
+nlp.verbose(true)
+nlp(`He apologized for shouting`).debug()
 

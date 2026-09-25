@@ -153,7 +153,7 @@ We will leave when the rain stops. {Noun,Modal,Vb,Conj,Det,Noun,Vb}
 When the rain stops, we will leave. {Conj,Det,Noun,Vb,Noun,Modal,Vb}
 
 # Prepositions can precede gerunds or contain embedded clauses
-She left without saying goodbye. {Noun,Vb,Prep,Ger,Noun}
+She left without saying anything. {Noun,Vb,Prep,Ger,Noun}
 He learned by watching birds. {Noun,Vb,Prep,Ger,Noun}
 They argued about buying a car. {Noun,Vb,Prep,Ger,Det,Noun}
 We succeeded through working together. {Noun,Vb,Prep,Ger,Adv}

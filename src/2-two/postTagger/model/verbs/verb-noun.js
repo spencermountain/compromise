@@ -106,7 +106,13 @@ export default [
   // to facilitate gas exchange with
   { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, hook: 'to', group: 0, tag: 'Noun', reason: 'gas-exchange' },
   // waited until release
-  { match: `#PastTense (until|as|through|without) [#PresentTense]`, hook: '#PastTense', group: 0, tag: 'Noun', reason: 'waited-until-release' },
+  {
+    match: `#PastTense (until|as|through|without) [(#PresentTense && !#Gerund && !#Copula)]`,
+    hook: '#PastTense',
+    group: 0,
+    tag: 'Noun',
+    reason: 'waited-until-release',
+  },
   // selling like hot cakes
   { match: `#Gerund like #Adjective? [#PresentTense]`, hook: 'like', group: 0, tag: 'Plural', reason: 'like-hot-cakes' },
   // some valid reason

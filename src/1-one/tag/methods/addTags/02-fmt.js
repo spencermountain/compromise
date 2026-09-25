@@ -81,6 +81,13 @@ const fmt = function (nodes) {
       }
     })
     res[k].not = Array.from(nots)
+    // Keep accepting custom definitions, but flag impossible combinations once
+    // per tag, after both inheritance and reciprocal exclusions are resolved.
+    const conflicts = [k, ...res[k].parents].filter(tag => nots.has(tag))
+    if (conflicts.length > 0) {
+      const names = conflicts.map(tag => `#${tag}`).join(', ')
+      console.warn(`compromise: contradictory tag '#${k}' requires and excludes: ${names}`) // eslint-disable-line no-console
+    }
   })
   return res
 }

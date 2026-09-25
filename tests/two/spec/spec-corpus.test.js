@@ -381,7 +381,7 @@ She runs around the lake. {Pronoun,Pres,Prep,Det,Singular}
 Keep the lid closed. {Imp,Det,Singular,Adj}
 
 #Pronoun!=#Det
-This is my favorite song. {Det,Vb,Noun,Adj,Noun}
+This is my favorite song. {Pronoun,Vb,Noun,Adj,Noun}
 
 #Singular!=#Season
 The flowers bloomed in spring. {Det,Plural,Past,Prep,Noun}

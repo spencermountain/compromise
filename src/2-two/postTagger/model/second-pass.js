@@ -56,6 +56,10 @@ export default [
   { match: '^[had] #Noun+ (#Adverb|not)+? #PastTense * @hasQuestionMark$', hook: 'had', group: 0, tag: 'Auxiliary', reason: 'had-question', notIf: '@hasComma' },
   { match: '@hasComma [had] #Noun+ (#Adverb|not)+? #PastTense', hook: 'had', group: 0, tag: 'Condition', reason: 'had-he', notIf: '@hasQuestionMark' },
   { match: '(do|does|did|#Modal) [(this|that|these|those)] #Adverb+? #Infinitive', hook: '#Infinitive', group: 0, tag: 'Pronoun', reason: 'demonstrative-question' },
+  // This is useful. Hope this helps. This really rocks.
+  { match: '[this] #Adverb+? (#PresentTense && !#Infinitive && !#Gerund)', hook: 'this', group: 0, tag: 'Pronoun', reason: 'this-finite-subject' },
+  // This will be one sentence. This might help.
+  { match: '[this] #Adverb+? #Modal #Adverb+? #Infinitive', hook: 'this', group: 0, tag: 'Pronoun', reason: 'this-modal-subject' },
   { match: '(has|have|had) (#Adverb|not)+? [read]', hook: 'read', group: 0, tag: 'Participle', reason: 'perfect-read' },
   { match: '(which|what|whose) [%Noun|Verb%] #Pronoun', hook: '#Pronoun', group: 0, tag: 'Noun', reason: 'embedded-wh-object' },
   { match: '(which|what|whose) [%Plural|Verb%] #Pronoun', hook: '#Pronoun', group: 0, tag: 'Plural', reason: 'embedded-wh-plural' },

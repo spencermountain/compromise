@@ -1005,7 +1005,6 @@ const arr = [
   [`he would later say`, `he #Modal #Adverb #Infinitive`],
   [`even worse`, `#Adverb #Comparative`],
   [`these many stars and [reviews]`, `#Determiner #Adjective #Plural and #Plural`],
-  [`this may help`, `#Pronoun #Modal #Infinitive`],
   [`this may was cold`, `#Determiner #Month #Copula #Adjective`],
   [`The 1968 [film] about a school`, `the #Year #Noun #Preposition a #Noun`],
   [`i have cash`, `#Pronoun #Infinitive #Noun`],

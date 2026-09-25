@@ -189,4 +189,12 @@ export default [
     tag: 'Infinitive',
     reason: 'did-the-engine-stop',
   },
+  // 40 gallons of water
+  {
+    match: '#Value #Noun of [%Noun|Verb%]',
+    hook: '%Noun|Verb%',
+    group: 0,
+    tag: 'Noun',
+    reason: '40-gallons-of-water',
+  },
 ]

@@ -76,7 +76,7 @@ export default [
     match: '(does|will) #Determiner #Noun [%Adj|Present%]$',
     hook: '%Adj|Present%',
     group: 0,
-    tag: 'PresentTense',
+    tag: 'Infinitive',
     reason: 'does-the-store-open',
   },
 ]

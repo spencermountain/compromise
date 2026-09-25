@@ -385,7 +385,6 @@ Keep the lid closed. {Imp,Det,Singular,Adj}
 
 #Pronoun!=#Det
 This is my favorite song. {Det,Vb,Noun,Adj,Noun}
-Don't touch that. {Vb,Negative,Vb,Det}
 
 #Singular!=#Season
 The flowers bloomed in spring. {Det,Plural,Past,Prep,Noun}

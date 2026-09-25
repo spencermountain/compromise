@@ -63,4 +63,7 @@ export default [
   { match: '#Determiner [well] !#PastTense?', hook: 'well', group: 0, tag: 'Noun', reason: 'the-well' },
   // high enough
   { match: '#Adjective [enough]', hook: 'enough', group: 0, tag: 'Adverb', reason: 'high-enough' },
+  // least expensive
+  { match: '[least] #Adjective', hook: 'least', group: 0, tag: 'Adverb', reason: 'least-expensive' },
+  { match: '#Determiner [least]', hook: 'least', group: 0, tag: 'Adverb', reason: 'the-least' },
 ]

@@ -74,5 +74,7 @@ export default [
   { match: 'do not (forget|omit|neglect) to [#Infinitive]', hook: 'not', group: 0, tag: 'Imperative', reason: 'do-not-forget' },
   // pay attention
   { match: '^[(ask|wear|pay|look|help|show|watch|act|fix|kill|stop|start|turn|try|win)] #Noun', hook: '#Noun', group: 0, tag: 'Imperative', reason: 'pay-attention' },
+  // add 2 eggs
+  { match: '[#Infinitive] #Value #Noun', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'add-2-eggs' },
 
 ]

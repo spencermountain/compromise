@@ -17,11 +17,11 @@ export default [
   // due to weather
   { match: 'due to [#Verb]', hook: 'due', group: 0, tag: 'Noun', reason: 'due-to' },
 
-  //some pressing issues
+  // some walking dogs
   { match: 'some [#Verb] #Plural', hook: 'some', group: 0, tag: 'Noun', reason: 'determiner6' },
   // my first thought
   { match: '#Possessive #Ordinal [#PastTense]', hook: '#Ordinal', group: 0, tag: 'Noun', reason: 'first-thought' },
-  //the nice walk
+  // the nice walk
   {
     match: '(the|this|those|these) #Adjective [%Noun|Verb%]', hook: '#Adjective',
     group: 0,
@@ -31,13 +31,13 @@ export default [
   },
   // the truly nice swim
   { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', hook: '#Adverb', group: 0, tag: 'Noun', reason: 'determiner4' },
-  //the wait to vote
+  // the message from Danny
   { match: 'the [#Verb] #Preposition .', hook: 'the', group: 0, tag: 'Noun', reason: 'determiner1' },
-  //a sense of
+  // the manufacture of perfume
   { match: '(a|an|the) [#Verb] of', hook: 'of', group: 0, tag: 'Noun', reason: 'the-verb-of' },
-  //the threat of force
+  // a type of shout
   { match: '#Determiner #Noun of [#Verb]', hook: 'of', group: 0, tag: 'Noun', notIf: '#Gerund', reason: 'noun-of-noun' },
-  // ended in ruins
+  // waited until release
   {
     match: '#PastTense #Preposition [#PresentTense]', hook: '#PastTense',
     group: 0,
@@ -45,21 +45,22 @@ export default [
     tag: 'Noun',
     reason: 'ended-in-ruins',
   },
-  //'u' as pronoun
+  // and u
   { match: '#Conjunction [u]', hook: 'u', group: 0, tag: 'Pronoun', reason: 'u-pronoun-2' },
+  // u made me smile
   { match: '[u] #Verb', hook: 'u', group: 0, tag: 'Pronoun', reason: 'u-pronoun-1' },
-  //the western line
+  // the western line
   {
     match: '#Determiner [(western|eastern|northern|southern|central)] #Noun', hook: '#Determiner',
     group: 0,
     tag: 'Noun',
     reason: 'western-line',
   },
-  //air-flow
+  // water-flows
   { match: '(#Singular && @hasHyphen) #PresentTense', hook: '#PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
-  //is no walk
+  // is no going back
   { match: 'is no [#Verb]', hook: 'no', group: 0, tag: 'Noun', reason: 'is-no-verb' },
-  //do so
+  // do so
   { match: 'do [so]', hook: 'so', group: 0, tag: 'Noun', reason: 'so-noun' },
   // what the hell
   { match: '#Determiner [(shit|damn|hell)]', hook: '#Determiner', group: 0, tag: 'Noun', reason: 'swears-noun' },
@@ -67,9 +68,9 @@ export default [
   { match: 'to [(shit|hell)]', hook: 'to', group: 0, tag: 'Noun', reason: 'to-swears' },
   // the staff were
   { match: '(the|these) [#Singular] (were|are)', hook: '#Singular', group: 0, tag: 'Plural', reason: 'singular-were' },
-  // a comdominium, or simply condo
+  // a greeting or thank you
   { match: `a #Noun+ or #Adverb+? [#Verb]`, hook: 'or', group: 0, tag: 'Noun', reason: 'noun-or-noun' },
-  // walk the walk
+  // and check this out! a walk-in microwave.
   {
     match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', hook: '#PresentTense',
     group: 0,
@@ -80,15 +81,15 @@ export default [
   // { match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula)', reason: 'det-pres' },
 
   // ==== Actor ====
-  //Aircraft designer
+  // Aircraft designer
   { match: '#Noun #Actor', hook: '#Actor', tag: 'Actor', notIf: '(#Person|#Pronoun)', reason: 'thing-doer' },
-  //lighting designer
+  // lighting designer
   { match: '#Gerund #Actor', hook: '#Gerund', tag: 'Actor', reason: 'gerund-doer' },
   // captain sanders
   // { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific', reason: 'sgt-kelly' },
-  // co-founder
+  // co founder
   { match: `co #Singular`, hook: 'co', tag: 'Actor', reason: 'co-noun' },
-  // co-founder
+  // aircraft designer
   {
     match: `[#Noun+] #Actor`, hook: '#Actor',
     group: 0,
@@ -116,54 +117,55 @@ export default [
   { match: `senior? vice? president of #Noun+`, hook: 'president', tag: 'Actor', reason: 'president-of' },
 
   // ==== Singular ====
-  //the sun
+  // the sun
   { match: '#Determiner [sun]', hook: 'sun', group: 0, tag: 'Singular', reason: 'the-sun' },
-  //did a 900, paid a 20
+  // did a 900, paid a 20
   { match: '#Verb (a|an) [#Value]$', hook: '#Value', group: 0, tag: 'Singular', reason: 'did-a-value' },
-  //'the can'
+  // the can
   { match: 'the [(can|will|may)]', hook: 'the', group: 0, tag: 'Singular', reason: 'the can' },
 
   // ==== Possessive ====
-  //spencer kelly's
+  // John Smith's
   { match: '#FirstName #Acronym? (#Possessive && #LastName)', hook: '#Possessive', tag: 'Possessive', reason: 'name-poss' },
-  //Super Corp's fundraiser
+  // Microsoft Research's office
   { match: '#Organization+ #Possessive', hook: '#Possessive', tag: 'Possessive', reason: 'org-possessive' },
-  //Los Angeles's fundraiser
+  // Los Angeles's fundraiser
   { match: '#Place+ #Possessive', hook: '#Possessive', tag: 'Possessive', reason: 'place-possessive' },
-  // Ptolemy's experiments
+  // my butt smells
   { match: '#Possessive #PresentTense #Particle?', hook: '#Possessive', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'possessive-verb' }, // anna's eating vs anna's eating lunch
-  // my presidents house
+  // my teachers dog
   { match: '(my|our|their|her|his|its) [(#Plural && #Actor)] #Noun', hook: '#Actor', tag: 'Possessive', reason: 'my-dads' },
 
   // 10th of a second
   { match: '#Value of a [second]', hook: 'second', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-of-a-second' },
   // 10 seconds
   { match: '#Value [seconds]', hook: 'seconds', group: 0, unTag: 'Value', tag: 'Plural', reason: '10-seconds' },
-  // in time
+  // in love
   { match: 'in [#Infinitive]', hook: 'in', group: 0, tag: 'Singular', reason: 'in-age' },
   // a minor in
   { match: 'a [#Adjective] #Preposition', hook: 'a', group: 0, tag: 'Noun', reason: 'a-minor-in' },
-  //the repairer said
+  // the repairer said
   { match: '#Determiner [#Singular] said', hook: 'said', group: 0, tag: 'Actor', reason: 'the-actor-said' },
-  //the euro sense
+  // the euro sense
   {
     match: `#Determiner #Noun [${infNouns}] !(#Preposition|to|#Adverb)?`, hook: '#Determiner',
     group: 0,
     tag: 'Noun',
     reason: 'the-noun-sense',
   },
-  // photographs of a computer are
+  // thanks for the gift are overdue
   { match: '[#PresentTense] (of|by|for) (a|an|the) #Noun #Copula', hook: '#Copula', group: 0, tag: 'Plural', reason: 'photographs-of' },
-  // fight and win
+  // You eat and sleep
   { match: '#Infinitive and [%Noun|Verb%]', hook: 'and', group: 0, tag: 'Infinitive', reason: 'fight and win' },
-  // peace and flowers and love
+  // dogs and running and cats
   { match: '#Noun and [#Verb] and #Noun', hook: 'and', group: 0, tag: 'Noun', reason: 'peace-and-flowers' },
   // the 1992 classic
   { match: 'the #Cardinal [%Adj|Noun%]', hook: 'the', group: 0, tag: 'Noun', reason: 'the-1992-classic' },
-  // the premier university
+  // This is the premier university in Virginia
   { match: '#Copula the [%Adj|Noun%] #Noun', hook: 'the', group: 0, tag: 'Adjective', reason: 'the-premier-university' },
 
   // scottish - i ate me sandwich
+  // i ate me sandwich
   { match: 'i #Verb [me] #Noun', hook: 'me', group: 0, tag: 'Possessive', reason: 'scottish-me' },
   // dance music
   {
@@ -174,13 +176,13 @@ export default [
   },
   // wit it
   { match: '[wit] (me|it)', hook: 'wit', group: 0, tag: 'Preposition', reason: 'wit-me' },
-  //left-her-boots, shoved her hand
+  // He bowed his head in prayer
   { match: '#PastTense #Possessive [#Verb]', hook: '#Possessive', group: 0, tag: 'Noun', notIf: '(saw|made)', reason: 'left-her-boots' },
-  //35 signs
+  // 35 signs
   { match: '#Value [%Plural|Verb%]', hook: '#Value', group: 0, tag: 'Plural', notIf: '(one|1|a|an)', reason: '35-signs' },
-  //had time
+  // had time
   { match: 'had [#PresentTense]', hook: 'had', group: 0, tag: 'Noun', notIf: '(#Gerund|come|become)', reason: 'had-time' },
-  //instant access
+  // instant access
   { match: '%Adj|Noun% %Noun|Verb%', hook: '%Adj|Noun%', tag: '#Adjective #Noun', notIf: '#ProperNoun #Noun', reason: 'instant-access' },
   // a representative to
   { match: '#Determiner [%Adj|Noun%] #Conjunction', hook: '#Conjunction', group: 0, tag: 'Noun', reason: 'a-rep-to' },

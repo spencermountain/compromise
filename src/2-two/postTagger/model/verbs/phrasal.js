@@ -1,9 +1,12 @@
 export default [
   // ==== Phrasal ====
-  //'foo-up'
+  // walk-up
   { match: '(#Verb && @hasHyphen) up', hook: 'up', tag: 'PhrasalVerb', reason: 'foo-up' },
+  // walk-off
   { match: '(#Verb && @hasHyphen) off', hook: 'off', tag: 'PhrasalVerb', reason: 'foo-off' },
+  // walk-over
   { match: '(#Verb && @hasHyphen) over', hook: 'over', tag: 'PhrasalVerb', reason: 'foo-over' },
+  // walk-out
   { match: '(#Verb && @hasHyphen) out', hook: 'out', tag: 'PhrasalVerb', reason: 'foo-out' },
   // walk in on
   {
@@ -26,7 +29,7 @@ export default [
   { match: '[(stop|start|finish|help)] #Gerund', hook: '#Gerund', group: 0, tag: 'Infinitive', reason: 'start-listening' },
   // mis-fired
   // { match: '[(mis)] #Verb', group: 0, tag: 'Verb', reason: 'mis-firedsa' },
-  //back it up
+  // back it up
   {
     match: '#Verb (him|her|it|us|himself|herself|itself|everything|something) [(up|down)]', hook: '#Verb',
     group: 0,

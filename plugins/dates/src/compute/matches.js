@@ -6,6 +6,8 @@ const knownDate = '(yesterday|today|tomorrow)'
 
 // { match: '', tag: '', reason:'' },
 const matches = [
+  // Christmas eve
+  { match: '#Holiday (day|eve)', hook: '#Holiday', tag: 'Holiday', reason: 'holiday-day' },
   // in the evening
   { match: 'in the (night|evening|morning|afternoon|day|daytime)', tag: 'Time', reason: 'in-the-night' },
   // 8 pm

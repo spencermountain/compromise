@@ -3,31 +3,31 @@ export default [
   // { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Verb', reason: 'gerund-his-noun' },
   // loving you
   // { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
-  // slowly stunning
+  // quickly warm
   { match: '(slowly|quickly) [#Adjective]', hook: '#Adjective', group: 0, tag: 'Verb', reason: 'slowly-adj' },
-  // does mean
+  // does better
   { match: 'does (#Adverb|not)? [#Adjective]', hook: 'does', group: 0, tag: 'PresentTense', reason: 'does-mean' },
   // okay by me
   { match: '[(fine|okay|cool|ok)] by me', hook: 'me', group: 0, tag: 'Adjective', reason: 'okay-by-me' },
   // i mean
   { match: 'i (#Adverb|do)? not? [mean]', hook: 'mean', group: 0, tag: 'PresentTense', reason: 'i-mean' },
-  //will secure our
+  // the ship will near the coast
   { match: 'will #Adjective', hook: 'will', tag: 'Auxiliary Infinitive', reason: 'will-adj' },
-  //he disguised the thing
+  // I frequent this restaurant
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', hook: '#Pronoun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
-  //is eager to go
+  // is open to go
   { match: '#Copula [%Adj|Present%] to #Verb', hook: 'to', group: 0, tag: 'Verb', reason: 'adj-to' },
-  //is done well
+  // is done well
   { match: '#Copula [#Adjective] (well|badly|quickly|slowly)', hook: '#Copula', group: 0, tag: 'Verb', reason: 'done-well' },
   // rude and insulting
   { match: '#Adjective and [#Gerund] !#Preposition?', hook: 'and', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
-  // were over cooked
+  // was under paid
   { match: '#Copula #Adverb? (over|under) [#PastTense]', hook: '#PastTense', group: 0, tag: 'Adjective', reason: 'over-cooked' },
-  // was bland and overcooked
+  // was tired and overworked
   { match: '#Copula #Adjective+ (and|or) [#PastTense]$', hook: '#PastTense', group: 0, tag: 'Adjective', reason: 'bland-and-overcooked' },
-  // got tired of
+  // got accused of
   { match: 'got #Adverb? [#PastTense] of', hook: 'got', group: 0, tag: 'Adjective', reason: 'got-tired-of' },
-  //felt loved
+  // felt cheated
   {
     match:
       '(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adverb|#Adjective)? [#PastTense]', hook: '#PastTense',
@@ -35,17 +35,17 @@ export default [
     tag: 'Adjective',
     reason: 'felt-loved',
   },
-  // seem confused
+  // felt cheated
   { match: '(seem|feel|seemed|felt) [#PastTense #Particle?]', hook: '#PastTense', group: 0, tag: 'Adjective', reason: 'seem-confused' },
   // a bit confused
   { match: 'a (bit|little|tad) [#PastTense #Particle?]', hook: 'a', group: 0, tag: 'Adjective', reason: 'a-bit-confused' },
   // do not be embarrassed
   { match: 'not be [%Adj|Past% #Particle?]', hook: 'not', group: 0, tag: 'Adjective', reason: 'do-not-be-confused' },
-  // is just right
+  // is just tired
   { match: '#Copula just [%Adj|Past% #Particle?]', hook: 'just', group: 0, tag: 'Adjective', reason: 'is-just-right' },
-  // as pale as
+  // as fit as
   { match: 'as [#Infinitive] as', hook: 'as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
-  //failed and oppressive
+  // failed and oppressive
   { match: '[%Adj|Past%] and #Adjective', hook: 'and', group: 0, tag: 'Adjective', reason: 'faled-and-oppressive' },
   // or heightened emotion
   {
@@ -55,7 +55,7 @@ export default [
     notIf: '(#Copula|#Pronoun)',
     reason: 'or-heightened-emotion',
   },
-  // became involved
+  // became embroiled
   { match: '(become|became|becoming|becomes) [#Verb]', hook: '#Verb', group: 0, tag: 'Adjective', reason: 'become-verb' },
   // their declared intentions
   { match: '#Possessive [#PastTense] #Noun', hook: '#Possessive', group: 0, tag: 'Adjective', reason: 'declared-intentions' },
@@ -69,8 +69,10 @@ export default [
     notIf: '(associated|worn|baked|aged|armed|bound|fried|loaded|mixed|packed|pumped|filled|sealed)',
     reason: 'is-crowded-with',
   },
-  // is empty$
+  // is empty
   { match: '#Copula #Adverb? [%Adj|Present%]$', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'was-empty$' },
+  // she is being cool
+  { match: 'being #Adverb? [%Adj|Present%]$', hook: 'being', group: 0, tag: 'Adjective', reason: 'being-adjective' },
   // does the store open
   {
     match: '(does|will) #Determiner #Noun [%Adj|Present%]$',

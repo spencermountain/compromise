@@ -1,17 +1,17 @@
 export default [
-  //the above is clear
+  // the above is clear
   { match: '#Determiner [#Adjective] #Copula', hook: '#Copula', group: 0, tag: 'Noun', reason: 'the-adj-is' },
-  //real evil is
+  // real evil is
   { match: '#Adjective [#Adjective] #Copula', hook: '#Copula', group: 0, tag: 'Noun', reason: 'adj-adj-is' },
-  //his fine
+  // his fine
   { match: '(his|its) [%Adj|Noun%]', hook: '%Adj|Noun%', group: 0, tag: 'Noun', notIf: '#Hyphenated', reason: 'his-fine' },
-  //is all
+  // is all
   { match: '#Copula #Adverb? [all]', hook: 'all', group: 0, tag: 'Noun', reason: 'is-all' },
-  // have fun
+  // have fun with it
   { match: `(have|had) [#Adjective] #Preposition .`, hook: '#Preposition', group: 0, tag: 'Noun', reason: 'have-fun' },
   // brewing giant
   { match: `#Gerund (giant|capital|center|zone|application)`, hook: '#Gerund', tag: 'Noun', reason: 'brewing-giant' },
-  // in an instant
+  // in a perfect
   { match: `#Preposition (a|an) [#Adjective]$`, hook: '#Preposition', group: 0, tag: 'Noun', reason: 'an-instant' },
   // no golden would
   { match: `no [#Adjective] #Modal`, hook: 'no', group: 0, tag: 'Noun', reason: 'no-golden' },

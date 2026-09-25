@@ -9,15 +9,15 @@ export default [
     reason: 'firstname-noun',
   },
 
-  // ===person-date===
+  // June Smith
   { match: '%Person|Date% #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'jan-thierson' },
   // ===person-noun===
-  //Cliff Clavin
+  // Cliff Clavin
   { match: '%Person|Noun% #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'switch-person', safe: true },
-  // olive garden
+  // Rose Microsoft
   { match: '%Person|Noun% #Organization', hook: '#Organization', tag: 'Organization', reason: 'olive-garden' },
   // ===person-verb===
-  // ollie faroo
+  // Ollie Faroo
   { match: '%Person|Verb% #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
   // chuck will ...
   {
@@ -28,7 +28,7 @@ export default [
   },
 
   // ===person-place===
-  //sydney harbour
+  // sydney harbour
   {
     match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`, hook: '%Person|Place%',
     group: 0,
@@ -55,11 +55,11 @@ export default [
   { match: `[%Person|Verb%] (#Adverb|#Comparative)`, hook: '%Person|Verb%', group: 0, tag: 'Verb', reason: 'drew-closer' },
   // wade smith
   { match: `%Person|Verb% #Person`, hook: '#Person', tag: 'Person', reason: 'rob-smith' },
-  // wade m. Cooper
+  // Wade G. Slapgoop
   { match: `%Person|Verb% #Acronym #ProperNoun`, hook: '#Acronym', tag: 'Person', reason: 'rob-a-smith' },
   // will go
   { match: '[will] #Verb', hook: 'will', group: 0, tag: 'Modal', reason: 'will-verb' },
-  // will Pharell
+  // Will Smith
   { match: '(will && @isTitleCase) #ProperNoun', hook: 'will', tag: 'Person', reason: 'will-name' },
   // jack layton won
   {
@@ -69,7 +69,7 @@ export default [
     tag: 'LastName',
     reason: 'jack-layton',
   },
-  // sherwood anderson told
+  // captain John walks
   { match: '^[#Singular] #Person #Verb', hook: '#Person', group: 0, safe: true, tag: 'Person', reason: 'sherwood-anderson' },
   // bought a warhol
   { match: '(a|an) [#Person]$', hook: '#Person', group: 0, unTag: 'Person', reason: 'a-warhol' },

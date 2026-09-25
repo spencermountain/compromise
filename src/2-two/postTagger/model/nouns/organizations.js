@@ -27,17 +27,17 @@ export default [
   // { match: `${orgMap} (stock|mergantile)+ exchange`, tag: 'Organization', reason: 'stock-exchange' },
   // // foo news service
   // { match: `${orgMap} (daily|evening|local)+ news service?`, tag: 'Organization', reason: 'foo-news' },
-  //University of Foo
+  // university of Toronto
   { match: 'university of #Place', hook: 'university', tag: 'Organization', reason: 'university-of-Foo' },
-  //John & Joe's
+  // John & Joe's
   { match: '#Noun (&|n) #Noun', hook: '#Noun', tag: 'Organization', reason: 'Noun-&-Noun' },
-  // teachers union of Ontario
+  // Microsoft of Canada
   { match: '#Organization of the? #ProperNoun', hook: 'of', tag: 'Organization', reason: 'org-of-place', safe: true },
-  //walmart USA
+  // walmart USA
   { match: '#Organization #Country', hook: '#Country', tag: 'Organization', reason: 'org-country' },
-  //organization
+  // Toronto Microsoft
   { match: '#ProperNoun #Organization', hook: '#Organization', tag: 'Organization', notIf: '#FirstName', reason: 'titlecase-org' },
-  //FitBit Inc
+  // FitBit Inc
   { match: '#ProperNoun (ltd|co|inc|dept|assn|bros)', hook: '#ProperNoun', tag: 'Organization', reason: 'org-abbrv' },
   // the OCED
   { match: 'the [#Acronym]', hook: 'the', group: 0, tag: 'Organization', reason: 'the-acronym', safe: true },
@@ -45,21 +45,21 @@ export default [
   { match: 'government of the? [#Place+]', hook: 'government', tag: 'Organization', reason: 'government-of-x' },
   // school board
   { match: '(health|school|commerce) board', hook: 'board', tag: 'Organization', reason: 'school-board' },
-  // special comittee
+  // special committee
   {
     match: '(nominating|special|conference|executive|steering|central|congressional) committee', hook: 'committee',
     tag: 'Organization',
     reason: 'special-comittee',
   },
-  // global trade union
+  // global Microsoft
   {
     match: '(world|global|international|national|#Demonym) #Organization', hook: '#Organization',
     tag: 'Organization',
     reason: 'global-org',
   },
-  // schools
+  // Toronto public school
   { match: '#Noun+ (public|private) school', hook: 'school', tag: 'School', reason: 'noun-public-school' },
-  // new york yankees
+  // Toronto Yankees
   { match: '#Place+ #SportsTeam', hook: '#SportsTeam', tag: 'SportsTeam', reason: 'place-sportsteam' },
   // 'manchester united'
   {
@@ -70,7 +70,7 @@ export default [
   // 'toronto fc'
   { match: '#Place+ fc', hook: 'fc', tag: 'SportsTeam', reason: 'fc-sportsteam' },
 
-  // baltimore quilting club
+  // the new orleans basketball team
   {
     match: '#Place+ #Noun{0,2} (club|society|group|team|committee|commission|association|guild|crew)', hook: '#Place',
     tag: 'Organization',

@@ -1,9 +1,9 @@
 // const adverbAdj = '(dark|bright|flat|light|soft|pale|dead|dim|faux|little|wee|sheer|most|near|good|extra|all)'
 
 export default [
-  //still good
+  // still good
   { match: '[still] #Adjective', hook: 'still', group: 0, tag: 'Adverb', reason: 'still-advb' },
-  //still make
+  // still make
   { match: '[still] #Verb', hook: 'still', group: 0, tag: 'Adverb', reason: 'still-verb' },
   // so hot
   { match: '[so] #Adjective', hook: 'so', group: 0, tag: 'Adverb', reason: 'so-adv' },
@@ -11,15 +11,15 @@ export default [
   { match: '[way] #Comparative', hook: 'way', group: 0, tag: 'Adverb', reason: 'way-adj' },
   // way too hot
   { match: '[way] #Adverb #Adjective', hook: 'way', group: 0, tag: 'Adverb', reason: 'way-too-adj' },
-  // all singing
+  // they all swim
   { match: '[all] #Verb', hook: 'all', group: 0, tag: 'Adverb', reason: 'all-verb' },
   // sing like an angel
   { match: '#Verb  [like]', hook: 'like', group: 0, notIf: '(#Modal|#PhrasalVerb)', tag: 'Adverb', reason: 'verb-like' },
-  //barely even walk
+  // barely even walk
   { match: '(barely|hardly) even', hook: 'even', tag: 'Adverb', reason: 'barely-even' },
-  //even held
+  // even held
   { match: '[even] #Verb', hook: 'even', group: 0, tag: 'Adverb', reason: 'even-walk' },
-  //even worse
+  // even worse
   { match: '[even] #Comparative', hook: 'even', group: 0, tag: 'Adverb', reason: 'even-worse' },
   // even the greatest
   { match: '[even] (#Determiner|#Possessive)', hook: 'even', group: 0, tag: '#Adverb', reason: 'even-the' },
@@ -28,6 +28,7 @@ export default [
   // way over
   { match: '[way] #Adjective', hook: 'way', group: 0, tag: '#Adverb', reason: 'way-over' },
   //cheering hard - dropped -ly's
+  // cheering hard
   {
     match: '#PresentTense [(hard|quick|bright|slow|fast|backwards|forwards)]', hook: '#PresentTense',
     notIf: '#Copula',
@@ -47,9 +48,9 @@ export default [
   { match: '(become|fall|grow) #Adverb? [#PastTense]', hook: '#PastTense', group: 0, tag: 'Adjective', reason: 'overly-weakened' },
   // a completely beaten man
   { match: '(a|an) #Adverb [#Participle] #Noun', hook: '#Participle', group: 0, tag: 'Adjective', reason: 'completely-beaten' },
-  //a close
+  // a close
   { match: '#Determiner #Adverb? [close]', hook: 'close', group: 0, tag: 'Adjective', reason: 'a-close' },
-  //walking close
+  // walking close
   { match: '#Gerund #Adverb? [close]', hook: 'close', group: 0, tag: 'Adverb', notIf: '(getting|becoming|feeling)', reason: 'being-close' },
   // a blown motor
   { match: '(the|those|these|a|an) [#Participle] #Noun', hook: '#Participle', group: 0, tag: 'Adjective', reason: 'blown-motor' },
@@ -60,10 +61,11 @@ export default [
   // the well
   { match: '#Determiner [well] !#PastTense?', hook: 'well', group: 0, tag: 'Noun', reason: 'the-well' },
   // sees well
-  { match: 'PresentTense [well]', hook: 'well', group: 0, tag: 'Adverb', reason: 'sees-well' },
+  { match: '(#PresentTense && !#Copula) [well]', hook: 'well', group: 0, tag: 'Adverb', reason: 'sees-well' },
   // high enough
   { match: '#Adjective [enough]', hook: 'enough', group: 0, tag: 'Adverb', reason: 'high-enough' },
   // least expensive
   { match: '[least] #Adjective', hook: 'least', group: 0, tag: 'Adverb', reason: 'least-expensive' },
+  // the least
   { match: '#Determiner [least]', hook: 'least', group: 0, tag: 'Adverb', reason: 'the-least' },
 ]

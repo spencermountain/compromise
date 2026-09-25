@@ -1,7 +1,7 @@
 // this is really hard to do
 const notIf = '(i|we|they)' //we do not go
 export default [
-  // A URL can be the direct object of an instruction.
+  // visit https://example.com
   { match: '^[%Noun|Verb%] #Url', hook: '#Url', group: 0, tag: 'Imperative', reason: 'visit-url' },
   // do not go
   { match: '^do not? [#Infinitive #Particle?]', hook: 'do', notIf, group: 0, tag: 'Imperative', reason: 'do-eat' },
@@ -19,12 +19,15 @@ export default [
   { match: '^[#Infinitive] (him|her|it|us|me|there)', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'tell-him' },
   // avoid loud noises
   { match: '^[#Infinitive] #Adjective #Noun$', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'avoid-loud-noises' },
-  // call and reserve
+  // come and have a drink
   { match: '^[#Infinitive] (#Adjective|#Adverb)? and #Infinitive', hook: 'and', group: 0, tag: 'Imperative', reason: 'call-and-reserve' },
-  // one-word imperatives
+  // go
   { match: '^[go] please?$', hook: 'go', group: 0, tag: 'Imperative', reason: 'go' },
+  // stop
   { match: '^[stop] please?$', hook: 'stop', group: 0, tag: 'Imperative', reason: 'go' },
+  // wait
   { match: '^[wait] please?$', hook: 'wait', group: 0, tag: 'Imperative', reason: 'go' },
+  // hurry
   { match: '^[hurry] please?$', hook: 'hurry', group: 0, tag: 'Imperative', reason: 'go' },
   // somebody call
   { match: '^(somebody|everybody) [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'somebody-call' },
@@ -36,12 +39,15 @@ export default [
   { match: '^[#PhrasalVerb #Particle] #Determiner #Noun', hook: '#Particle', group: 0, tag: 'Imperative', reason: 'turn-off-the-light' },
   // go to toronto
   { match: '^[go] to .', hook: 'go', group: 0, tag: 'Imperative', reason: 'go-to-toronto' },
-  // go home / come home
+  // go home
   { match: '^[(go|come)] home', hook: 'home', group: 0, tag: 'Imperative', reason: 'go-home' },
   // A modal question alone may ask about ability or knowledge. Require an
   // explicit request marker before treating it as an imperative.
+  // can you please walk
   { match: '^(can|could|will|would) you (#Adverb|not)+? please (#Adverb|not)+? [#Infinitive]', hook: 'please', group: 0, tag: 'Imperative', reason: 'would-you-please' },
+  // please can you walk
   { match: '^please (can|could|will|would) you (#Adverb|not)+? [#Infinitive]', hook: 'please', group: 0, tag: 'Imperative', reason: 'please-would-you' },
+  // can you walk please
   { match: '^(can|could|will|would) you (#Adverb|not)+? [#Infinitive] .+? please$', hook: 'please', group: 0, tag: 'Imperative', reason: 'would-you-please-end' },
   // never say
   { match: '^never [#Infinitive]', hook: 'never', group: 0, tag: 'Imperative', reason: 'never-stop' },
@@ -54,16 +60,17 @@ export default [
   // stay cool
   { match: '^[(stay|be|keep)] #Adjective', hook: '#Adjective', group: 0, tag: 'Imperative', reason: 'stay-cool' },
   // keep it silent
+  // keep it silent
   { match: '^[keep] it #Adjective', hook: 'keep', group: 0, tag: 'Imperative', reason: 'keep-it-cool' },
   // allow yourself
   { match: '[#Infinitive] (yourself|yourselves)', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'allow-yourself' },
-  // look what
+  // look what happened
   { match: '[#Infinitive] what .', hook: 'what', group: 0, tag: 'Imperative', reason: 'look-what' },
   // continue playing
   { match: '^[#Infinitive] #Gerund', hook: '#Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
   // go to it
   { match: '^[#Infinitive] (to|for|into|toward|here|there)', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'go-to' },
-  // relax and unwind
+  // come and have a drink
   { match: '^[#Infinitive] (and|or) #Infinitive', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'inf-and-inf' },
 
   // commit to

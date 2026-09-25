@@ -1,71 +1,72 @@
 export default [
   // Common intransitive predicates after a singular subject. Keep arbitrary
   // plural/verb switches conservative: 'the dog treats' is a noun phrase.
+  // the dog runs
   { match: '^(#Determiner|#Possessive) #Adjective+? #Singular #Adverb+? [(runs|walks|barks|swims|sleeps)] #Adverb+?$', hook: '#Singular', group: 0, tag: 'PresentTense', reason: 'singular-subject-predicate' },
   // with heads and arms rolling around
   { match: '#Preposition #Plural and [%Plural|Verb%] #Gerund', hook: 'and', group: 0, tag: 'Plural', reason: 'coordinated-plurals' },
-  // do the dance
+  // he can solve the puzzle
   { match: '#Infinitive (this|that|the) [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'do-this-dance' },
-  //running-a-show
+  // keeping the matter a secret
   { match: '#Gerund #Determiner [#Infinitive]', hook: '#Gerund', group: 0, tag: 'Noun', reason: 'running-a-show' },
-  //the-only-reason
+  // the-only-reason
   { match: '#Determiner (only|further|just|more|backward) [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'the-only-reason' },
-  // a stream runs
+  // the slide makes noise
   { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'determiner5' },
-  //a nice deal
+  // Use a pointed stick (a pencil) or a similar tool
   { match: '#Determiner #Adjective #Adjective? [#Infinitive]', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'a-nice-inf' },
-  // the mexican train
+  // the American thank-you letter
   { match: '#Determiner #Demonym [#PresentTense]', hook: '#Demonym', group: 0, tag: 'Noun', reason: 'mexican-train' },
-  //next career move
+  // the next career read is brief
   { match: '#Adjective #Noun+ [#Infinitive] #Copula', hook: '#Copula', group: 0, tag: 'Noun', reason: 'career-move' },
-  // at some point
+  // at some thank-you party
   { match: 'at some [#Infinitive]', hook: 'some', group: 0, tag: 'Noun', reason: 'at-some-inf' },
   // goes to sleep
   { match: '(go|goes|went) to [#Infinitive]', hook: 'to', group: 0, tag: 'Noun', reason: 'goes-to-verb' },
-  //a close watch on
+  // a dog retrieve in the field
   { match: '(a|an) #Adjective? #Noun [#Infinitive] (#Preposition|#Noun)', hook: '#Infinitive', group: 0, notIf: 'from', tag: 'Noun', reason: 'a-noun-inf' },
-  //a tv show
+  // a software reinstall
   { match: '(a|an) #Noun [#Infinitive]$', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'a-noun-inf2' },
   //is mark hughes
   // { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
   // good wait staff
   // { match: '#Adjective [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'good-wait-staff' },
-  // running for congress
+  // working for thank-you letters
   { match: '#Gerund #Adjective? for [#Infinitive]', hook: 'for', group: 0, tag: 'Noun', reason: 'running-for' },
   // running to work
   // { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
-  // about love
+  // about thank-you letters
   { match: 'about [#Infinitive]', hook: 'about', group: 0, tag: 'Singular', reason: 'about-love' },
-  // singers on stage
+  // artists on thank-you cards
   { match: '#Plural on [#Infinitive]', hook: 'on', group: 0, tag: 'Noun', reason: 'on-stage' },
-  // any charge
+  // any thank-you letter
   { match: 'any [#Infinitive]', hook: 'any', group: 0, tag: 'Noun', reason: 'any-charge' },
-  // no doubt
+  // no thank you
   { match: 'no [#Infinitive]', hook: 'no', group: 0, tag: 'Noun', reason: 'no-doubt' },
-  // number of seats
+  // number of thank-yous
   { match: 'number of [#PresentTense]', hook: 'number', group: 0, tag: 'Noun', reason: 'number-of-x' },
-  // teaches/taught
+  // taught thank-you etiquette
   { match: '(taught|teaches|learns|learned) [#PresentTense]', hook: '#PresentTense', group: 0, tag: 'Noun', reason: 'teaches-x' },
-  // use reverse
+  // use cloned pointers
   { match: '(try|use|attempt|build|make) [#Verb #Particle?]', hook: '#Verb', notIf: '(#Copula|#Noun|sure|fun|up)', group: 0, tag: 'Noun', reason: 'do-verb' },//make sure of
-  // checkmate is
+  // append is cloned
   { match: '^[#Infinitive] (is|was)', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'checkmate-is' },
-  // get much sleep
+  // get much thank-you mail
   { match: '#Infinitive much [#Infinitive]', hook: 'much', group: 0, tag: 'Noun', reason: 'get-much' },
   // cause i gotta
   { match: '[cause] #Pronoun #Verb', hook: 'cause', group: 0, tag: 'Conjunction', reason: 'cause-cuz' },
-  // the cardio dance party
+  // the US air force
   { match: 'the #Singular [#Infinitive] (#Noun && !#Possessive)', hook: 'the', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'cardio-dance' },
 
-  // that should smoke
+  // that can Bob sent
   { match: '#Determiner #Modal [#Noun]', hook: '#Modal', group: 0, tag: 'PresentTense', reason: 'should-smoke' },
-  //this rocks
+  // this rocks
   { match: 'this [#Plural]', hook: 'this', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Date)', reason: 'this-verbs' },
-  //voice that rocks
+  // the thing that runs
   { match: '#Noun that [#Plural]', hook: 'that', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Pronoun|way)', reason: 'voice-that-rocks' },
-  //that leads to
+  // that leads to
   { match: 'that [#Plural] to', hook: 'that', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'that-leads-to' },
-  //let him glue
+  // let him father a child
   {
     match: '(let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)', hook: '#Singular',
     group: 0,
@@ -76,34 +77,35 @@ export default [
   // assign all tasks
   { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', hook: '#PresentTense', notIf: '#Modal', group: 0, tag: 'Noun', reason: 'all-presentTense' },  // PresentTense/Noun ambiguities
   // big dreams, critical thinking
-  // have big dreams
+  // found all upcoming words
   { match: '(had|have|#PastTense) #Adjective [#PresentTense]', hook: '#Adjective', group: 0, tag: 'Noun', notIf: 'better', reason: 'adj-presentTense' },
   // excellent answer spencer
   // { match: '^#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'start adj-presentTense' },
-  // one big reason
+  // one big thank-you
   { match: '#Value #Adjective [#PresentTense]', hook: '#Value', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'one-big-reason' },
-  // won widespread support
+  // found all upcoming words
   { match: '#PastTense #Adjective+ [#PresentTense]', hook: '#PastTense', group: 0, tag: 'Noun', notIf: '(#Copula|better)', reason: 'won-wide-support' },
-  // many poses
+  // many thanks
   { match: '(many|few|several|couple) [#PresentTense]', hook: '#PresentTense', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'many-poses' },
-  // very big dreams
+  // a very big dream
   { match: '#Determiner #Adverb #Adjective [%Noun|Verb%]', hook: '#Adverb', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'very-big-dream' },
   // from start to finish
   { match: 'from #Noun to [%Noun|Verb%]', hook: 'from', group: 0, tag: 'Noun', reason: 'start-to-finish' },
   // for comparison or contrast
   { match: '(for|with|of) #Noun (and|or|not) [%Noun|Verb%]', hook: '#Noun', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'for-food-and-gas' },
-  // adorable little store
+  // cute little thank-you bags
   { match: '#Adjective #Adjective [#PresentTense]', hook: '#Adjective', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'adorable-little-store' },
   // of basic training
   // { match: '#Preposition #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'of-basic-training' },
-  // justifiying higher costs
+  // writing bigger thank-you notes
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', hook: '#Comparative', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'higher-costs' },
 
+  // Tuesday, gifts and thanks
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', hook: '#PresentTense', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'noun-list' },
 
-  // any questions for
+  // some thanks for helping
   { match: '(many|any|some|several) [#PresentTense] for', hook: 'for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
-  // to facilitate gas exchange with
+  // to write people thanks for helping
   { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, hook: 'to', group: 0, tag: 'Noun', reason: 'gas-exchange' },
   // waited until release
   {
@@ -113,43 +115,44 @@ export default [
     tag: 'Noun',
     reason: 'waited-until-release',
   },
-  // selling like hot cakes
+  // selling like hot thank-you cards
   { match: `#Gerund like #Adjective? [#PresentTense]`, hook: 'like', group: 0, tag: 'Plural', reason: 'like-hot-cakes' },
-  // some valid reason
+  // some nice thank-you notes
   { match: `some #Adjective [#PresentTense]`, hook: 'some', group: 0, tag: 'Noun', reason: 'some-reason' },
-  // for some reason
+  // for some thank-you letters
   { match: `for some [#PresentTense]`, hook: 'some', group: 0, tag: 'Noun', reason: 'for-some-reason' },
   // same kind of shouts
   { match: `(same|some|the|that|a) kind of [#PresentTense]`, hook: 'kind', group: 0, tag: 'Noun', reason: 'some-kind-of' },
   // a type of shout
   { match: `(same|some|the|that|a) type of [#PresentTense]`, hook: 'type', group: 0, tag: 'Noun', reason: 'some-type-of' },
-  // doing better for fights
+  // looking good in thank-you photos
   { match: `#Gerund #Adjective #Preposition [#PresentTense]`, hook: '#Gerund', group: 0, tag: 'Noun', reason: 'doing-better-for-x' },
-  // get better aim
+  // get better thank-you notes
   { match: `(get|got|have) #Comparative [#PresentTense]`, hook: '#Comparative', group: 0, tag: 'Noun', reason: 'got-better-aim' },
-  // whose name was
+  // whose thanks are appreciated
   { match: 'whose [#PresentTense] #Copula', hook: 'whose', group: 0, tag: 'Noun', reason: 'whos-name-was' },
-  // give up on reason
+  // give up on thank-you letters
   { match: `#PhrasalVerb #Particle #Preposition [#PresentTense]`, hook: '#Particle', group: 0, tag: 'Noun', reason: 'given-up-on-x' },
-  //there are reasons
+  // there are thank-you notes
   { match: 'there (are|were) #Adjective? [#PresentTense]', hook: 'there', group: 0, tag: 'Plural', reason: 'there-are' },
-  // 30 trains
+  // a thousand thanks of gratitude
   { match: '#Value [#PresentTense] of', hook: 'of', group: 0, notIf: '(one|1|#Copula|#Infinitive)', tag: 'Plural', reason: '2-trains' },
-  // compromises are possible
+  // thanks are appreciated
   { match: '[#PresentTense] (are|were) #Adjective', hook: '#Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   // hope i helped
   { match: '^[(hope|guess|thought|think)] #Pronoun #Verb', hook: '#Pronoun', group: 0, tag: 'Infinitive', reason: 'suppose-i' },
   //pursue its dreams
   // { match: '#PresentTense #Possessive [#PresentTense]', notIf: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
-  // our unyielding support
+  // its proper functioning
   { match: '#Possessive #Adjective [#Verb]', hook: '#Possessive', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'our-full-support' },
   // tastes good
   { match: '[(tastes|smells)] #Adverb? #Adjective', hook: '#Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
   // are you playing golf
   // { match: '^are #Pronoun [#Noun]', group: 0, notIf: '(here|there)', tag: 'Verb', reason: 'are-you-x' },
-  // ignoring commute
-  { match: '#Copula #Gerund [#PresentTense] !by?', hook: '#Gerund', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring-commute' },
-  // noun-pastTense variables
+  // she is writing thank-you letters
+  // Being introduces a predicate rather than a direct object.
+  { match: '#Copula (#Gerund && !being) [#PresentTense] !by?', hook: '#Gerund', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring-commute' },
+  // the shed
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', hook: '#Determiner', group: 0, tag: 'Noun', reason: 'noun-past' },
 
   // 'verb-to'
@@ -171,7 +174,7 @@ export default [
   { match: '^%Noun|Verb% %Plural|Verb%', hook: '%Plural|Verb%', tag: 'Imperative #Plural', reason: 'request-copies' },
   // homemade pickles and drinks
   { match: '#Adjective #Plural and [%Plural|Verb%]', hook: 'and', group: 0, tag: '#Plural', reason: 'pickles-and-drinks' },
-  // the 1968 film
+  // the 1968 stand-off
   { match: '#Determiner #Year [#Verb]', hook: '#Year', group: 0, tag: 'Noun', reason: 'the-1968-film' },
   // the break up
   { match: '#Determiner [#PhrasalVerb #Particle]', hook: '#Particle', group: 0, tag: 'Noun', reason: 'the-break-up' },
@@ -181,11 +184,11 @@ export default [
   { match: '[%Noun|Verb%] or #Infinitive', hook: 'or', group: 0, tag: 'Infinitive', reason: 'work-or-prepare' },
   // to give thanks
   { match: 'to #Infinitive [#PresentTense]', hook: 'to', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula|help)', reason: 'to-give-thanks' },
-  // kills me
+  // Google me
   { match: '[#Noun] me', hook: 'me', group: 0, tag: 'Verb', reason: 'kills-me' },
   // removes wrinkles
   { match: '%Plural|Verb% %Plural|Verb%', hook: '%Plural|Verb%', tag: '#PresentTense #Plural', reason: 'removes-wrinkles' },
-  // i water the plants
+  // i Google the answer
   { match: 'i [#Noun] the #Noun', hook: 'i', group: 0, tag: 'Infinitive', reason: 'i-water-the-plants' },
   // did the engine stop
   {
@@ -204,6 +207,7 @@ export default [
     reason: '40-gallons-of-water',
   },
   // When the rain stops, we will leave. Whenever the bell rings, the dog barks.
+  // when the dog looks
   ...['stops', 'looks', 'rings'].map(word => ({
     match: `(when|whenever|before|after|until|since|as|while|than) (#Determiner|#Possessive) #Adjective+? #Noun [(%Plural|Verb% && ${word})]$`,
     hook: word,

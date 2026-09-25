@@ -2,17 +2,17 @@
 export default [
   //a staggering cost
   // { match: '(a|an) [#Gerund]', group: 0, tag: 'Adjective', reason: 'a|an' },
-  //as amusing as
+  // as entertaining as
   { match: 'as [#Gerund] as', hook: 'as', group: 0, tag: 'Adjective', reason: 'as-gerund-as' },
   // more amusing than
   { match: 'more [#Gerund] than', hook: 'more', group: 0, tag: 'Adjective', reason: 'more-gerund-than' },
-  // very amusing
+  // very entertaining
   { match: '(so|very|extremely) [#Gerund]', hook: '#Gerund', group: 0, tag: 'Adjective', reason: 'so-gerund' },
-  // found it amusing
+  // found it entertaining
   { match: '(found|found) it #Adverb? [#Gerund]', hook: 'it', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
-  // a bit amusing
+  // a little fuming
   { match: 'a (little|bit|wee) bit? [#Gerund]', hook: 'a', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
-  // looking annoying
+  // repairing crumbling roads
   {
     match: '#Gerund [#Gerund]', hook: '#Gerund',
     group: 0,
@@ -30,7 +30,7 @@ export default [
   },
   // were really amazing
   // { match: '(looked|look|looks) #Adverb [%Adj|Gerund%]', group: 0, tag: 'Adjective', notIf: '(impersonating|practicing|considering|assuming)', reason: 'looked-amazing' },
-  // developing a
+  // boring the audience
   { match: '[%Adj|Gerund%] #Determiner', hook: '#Determiner', group: 0, tag: 'Gerund', reason: 'developing-a' },
   // world's leading manufacturer
   { match: '#Possessive [%Adj|Gerund%] #Noun', hook: '#Possessive', group: 0, tag: 'Adjective', reason: 'leading-manufacturer' },

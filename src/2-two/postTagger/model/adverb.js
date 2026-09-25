@@ -55,12 +55,12 @@ export default [
   { match: '(the|those|these|a|an) [#Participle] #Noun', hook: '#Participle', group: 0, tag: 'Adjective', reason: 'blown-motor' },
   // charged back
   { match: '(#PresentTense|#PastTense) [back]', hook: 'back', group: 0, tag: 'Adverb', notIf: '(#PhrasalVerb|#Copula)', reason: 'charge-back' },
-  // send around
-  { match: '#Verb [around]', hook: 'around', group: 0, tag: 'Adverb', notIf: '#PhrasalVerb', reason: 'send-around' },
   // later say
   { match: '[later] #PresentTense', hook: 'later', group: 0, tag: 'Adverb', reason: 'later-say' },
   // the well
   { match: '#Determiner [well] !#PastTense?', hook: 'well', group: 0, tag: 'Noun', reason: 'the-well' },
+  // sees well
+  { match: 'PresentTense [well]', hook: 'well', group: 0, tag: 'Adverb', reason: 'sees-well' },
   // high enough
   { match: '#Adjective [enough]', hook: 'enough', group: 0, tag: 'Adverb', reason: 'high-enough' },
   // least expensive

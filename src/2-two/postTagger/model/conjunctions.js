@@ -45,6 +45,22 @@ export default [
   { match: '(not|nothing|never) [like]', hook: 'like', group: 0, tag: 'Preposition', reason: 'nothing-like' },
   // treat them like
   { match: '#Infinitive #Pronoun [like]', hook: 'like', group: 0, tag: 'Preposition', reason: 'treat-them-like' },
+  // stretch before the race
+  {
+    match: '#Verb [before] #Determiner',
+    hook: 'before',
+    group: 0,
+    tag: 'Preposition',
+    reason: 'stretch-before-the-race',
+  },
+  // before you left
+  {
+    match: '[before] (#Pronoun|#Person)',
+    hook: 'before',
+    group: 0,
+    tag: 'Conjunction',
+    reason: 'before-you-left',
+  },
 
 
 

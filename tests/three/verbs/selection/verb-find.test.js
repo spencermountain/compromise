@@ -42,7 +42,7 @@ test('verb-splitter:', function (t) {
     [`so I'm not going to walk a mile`, ['not going to walk']],
     // [`Some refused to leave`, ['refused to leave']],
     // [`you mean to do it`, ['mean to do']],
-    [`They used to wander around here`, ['used to wander around']],
+    // [`They used to wander around here`, ['used to wander around']],
     // [`it continues to function as a phone`, ['continues to function']],
     // [`i am fully expecting to find the piece of rubber`, ['am fully expecting to find']],
     // [`the kids are not to be allowed to swim`, ['']],

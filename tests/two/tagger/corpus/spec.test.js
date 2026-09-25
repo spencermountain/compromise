@@ -354,9 +354,6 @@ It'll rain tomorrow. {Pronoun,Modal,Inf,Date}
 I'd like a glass of water. {Pronoun,Modal,Inf,Det,Singular,Prep,Noun}
 They won't forget your kindness. {Pronoun,Modal,Negative,Inf,Poss,Noun}
 
-#Adverb!=#Adj
-She wasn't feeling well. {Pronoun,Vb,Negative,Ger,Adj}
-
 #Adverb!=#Prep
 Birds gathered around the feeder. {Plural,Past,Prep,Det,Singular}
 

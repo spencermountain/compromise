@@ -33,4 +33,12 @@ export default [
     tag: 'Adverb',
     reason: 'phrasal-pronoun-advb',
   },
+  // runs around the lake
+  {
+    match: '#PhrasalVerb [around] the #Noun',
+    hook: 'around',
+    group: 0,
+    tag: 'Preposition', //(breaks the phrasal)
+    reason: 'around-the-noun',
+  },
 ]

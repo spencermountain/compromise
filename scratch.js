@@ -31,5 +31,5 @@ let out = nlp.testSpec(str, true)
 // He has no money. {Noun,Vb,Negative,Noun}
 
 nlp.verbose(true)
-nlp('The least expensive ticket').debug()
+nlp(`I stretch before each race`).debug()
 

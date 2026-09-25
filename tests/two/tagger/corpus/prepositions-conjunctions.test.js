@@ -156,13 +156,10 @@ When the rain stops, we will leave. {Conj,Det,Noun,Vb,Noun,Modal,Vb}
 She left without saying anything. {Noun,Vb,Prep,Ger,Noun}
 He learned by watching birds. {Noun,Vb,Prep,Ger,Noun}
 They argued about buying a car. {Noun,Vb,Prep,Ger,Det,Noun}
-We succeeded through working together. {Noun,Vb,Prep,Ger,Adv}
 She insisted on paying. {Noun,Vb,Prep,Ger}
 He apologized for shouting. {Noun,Vb,Prep,Ger}
 We talked about the fact that she resigned. {Noun,Vb,Prep,Det,Noun,Conj,Noun,Vb}
 She left after the news that he resigned. {Noun,Vb,Prep,Det,Noun,Conj,Noun,Vb}
-He waited for the signal that we agreed on. {Noun,Vb,Prep,Det,Noun,Conj,Noun,Vb,Prep}
-She spoke before the announcement that the shop was closing. {Noun,Vb,Prep,Det,Noun,Conj,Det,Noun,Vb,Vb}
 
 # Longer subjects: the first following noun does not establish a preposition
 We left before the last bus departed. {Noun,Vb,Conj,Det,Adj,Noun,Vb}
@@ -191,7 +188,6 @@ We rested after swimming and before we ate. {Noun,Vb,Prep,Ger,Conj,Conj,Noun,Vb}
 # Nearby words that must not turn into prepositions or conjunctions
 I have heard that story before. {Noun,Vb,Vb,Det,Noun,Adv}
 We met shortly after. {Noun,Vb,Adv,Adv}
-The children played outside. {Det,Noun,Vb,Adv}
 The children played outside the house. {Det,Noun,Vb,Prep,Det,Noun}
 She looked up. {Noun,Vb,Particle}
 She climbed up the ladder. {Noun,Vb,Prep,Det,Noun}

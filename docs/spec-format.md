@@ -1,11 +1,15 @@
 # The `spec` format
+Compromise has defined a text format for declaring and testing pos-tagging.
+It is a line-oriented format designed to round-trip between **compromise** and **LLMs**.
 
-A line-oriented format for tagging the parts of speech in a sentence, designed to
-round-trip between **compromise** and **LLMs**.
+It looks like this:
+```
+The dog is nice. {Det,Noun,Vb,Adj}
+The flowers bloomed in spring. {Det,Plural,Past,Prep,Noun}
+this sentence has no tags. #that's fine
 
-```js
-nlp("The dog is nice.").out('spec')
-// → "The dog is nice. {Det,Noun,Vb,Adj}"
+# block-comments are supported, too
+Tony Hawk rides {Person|FirstName,Person|LastName,Pres} #has both tags
 ```
 
 ## Why it exists
@@ -76,8 +80,8 @@ We'll see well-known cases. {Noun,Vb,Vb,Adv,Adj,Noun}  # contraction + hyphenate
   character. `the {cool} #hiking dog {Det,Adj,HashTag,Noun}` parses as written;
   `#hiking is fun {HashTag,Vb,Adj}` is a comment line and is skipped.
 - An inline comment cannot contain `{` `}` - a brace inside it would be read as the tag block.
-- A line with no tag block is not comment-stripped, so `no braces here # note` stays
-  ordinary text - the same preamble line it was before.
+- A line with no tag block also supports a trailing comment: whitespace followed
+  by `#` starts the comment, so `no braces here # note` becomes `no braces here`.
 
 ## Alignment
 
@@ -219,12 +223,16 @@ Two library methods ingest the format:
 let doc = nlp.fromSpec(spec)
 
 // check each line's tags against compromise's own tagger,
-// logging ✅/❌ per line - returns a doc of only the failing
-// lines, so an empty doc means everything passed
+// logging ✅/❌ per line - returns untagged sentences and failing tagged lines
 nlp.testSpec(spec)
 nlp.testSpec(spec, false)        // quiet
 nlp.testSpec(spec, false, true)  // throw on a failing line
 ```
+
+Sentences without a tag block pass without validation and remain in the returned
+document, with trailing comments removed. An explicit empty `{}` block still
+undergoes validation. Because untagged sentences are retained, a nonempty result
+does not necessarily mean validation failed; use `throwError` to enforce it.
 
 Both accept aliases or full tag-names, and are forgiving about LLM-style mess: blank
 lines, a trailing newline, `#` comments, and preamble lines without a `{}` block won't

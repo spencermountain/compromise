@@ -1,17 +1,6 @@
-# How compromise uses parts of speech
+Compromise has a custom tagset that is broadly compatible with a penn tagset. It has made some selective decisions about tagging that diverge from other taggers, which are documented here.
 
-Examples use [spec syntax](spec-format.md): one tag slot per term.
-
-## #Participle is rare
-
-Distinct forms usually get `Participle`; ordinary past forms keep `Past`.
-
-- She has driven. {Pronoun,Aux,Participle}
-- She has walked. {Pronoun,Aux,Past} # has does not require Participle
-- She has bought it. {Pronoun,Aux,Past,Pronoun}
-- She has read it. {Pronoun,Aux,Participle,Pronoun} # a contextual exception
-- She has taken it. {Pronoun,Aux,Past|Participle,Pronoun} # Participle inherits Past
-- The roses were watered yesterday. {Det,Noun,Aux,Past|Passive,Date} # passive does not require Participle
+Examples use [spec syntax](spec-format.md).
 
 ## #Auxiliary is for verb spans
 
@@ -33,6 +22,17 @@ An -ing word used as a noun gets `Noun`, sometimes also `Activity`.
 - The swimming pool is open. {Det,Noun,Noun,Copula,Adj}
 - She was swimming. {Pronoun,Aux,Ger} # Gerund applies in past-tense sentences too
 - Her swimming was impressive. {Poss,Noun,Copula,Adj}
+
+## #Participle is rare
+
+Distinct forms usually get `Participle`; ordinary past forms keep `Past`.
+
+- She has driven. {Pronoun,Aux,Participle}
+- She has walked. {Pronoun,Aux,Past} # has does not require Participle
+- She has bought it. {Pronoun,Aux,Past,Pronoun}
+- She has read it. {Pronoun,Aux,Participle,Pronoun} # a contextual exception
+- She has taken it. {Pronoun,Aux,Past|Participle,Pronoun} # Participle inherits Past
+- The roses were watered yesterday. {Det,Noun,Aux,Past|Passive,Date} # passive does not require Participle
 
 ## #QuestionWord can be #Preposition
 
@@ -82,14 +82,24 @@ Spatial words such as near and inside can get `Adjective`.
 - She walked to school. {Pronoun,Past,Prep,Noun} # to remains a preposition
 - The bird flew directly above the house. {Det,Noun,Past,Adv,Prep,Det,Noun} # context can select Preposition
 
-## #PhrasalVerb includes its particle
+## #PhrasalVerb marks a verb span
+"threw up" is not a direction of "threw", but a different sense, so compromise takes care to identify phrasal verbs as meaningful units, and not `#Verb #Preposition` sequence.
+Both words are tagged as `#PhrasalVerb`, and the second word is also tagged as a `#Particle`.
+Both parts belong to the verb family. The words remain separate terms. Recognition includes literal
+directions and focuses on adjacent words, rather than requiring an idiomatic meaning.
 
-`Particle` inherits `PhrasalVerb`, so both parts match #PhrasalVerb.
+For comparison, [UD links a verb to its particle with compound:prt](https://universaldependencies.org/en/dep/compound-prt.html),
+including across an object, and excludes purely directional uses from that relation.
 
-- She turned down the invitation. {Pronoun,Phrasal,Particle,Det,Noun}
-- They called off the expedition. {Pronoun,Phrasal,Particle,Det,Noun}
+- She turned down the invitation. {Pronoun,Phrasal,Particle,Det,Noun} # both turned and down match #PhrasalVerb
+- They called off the expedition. {Pronoun,Phrasal,Particle,Det,Noun} # off also matches #Verb
 - They picked up the parcel. {Pronoun,Past|Phrasal,Particle,Det,Noun} # the verb keeps its tense tag
+- They picked up the parcel. {Pronoun,Vb,Vb,Det,Noun} # broad tags include the particle as a verb
+- They picked it up. {Pronoun,Past,Pronoun,Adv} # the intervening object changes the tagging
+- She walked out. {Pronoun,Past|Phrasal,Particle} # literal movement can count too
 - She walked down the street. {Pronoun,Past,Prep,Det,Noun} # down introduces a location
+- We waited for the bus. {Pronoun,Past,Prep,Det,Noun} # a following preposition does not automatically form a phrasal verb
+- She took care of him. {Pronoun,Past,Noun,Prep,Pronoun} # not every multiword expression gets PhrasalVerb
 
 ## Noun phrases retain individual tags
 

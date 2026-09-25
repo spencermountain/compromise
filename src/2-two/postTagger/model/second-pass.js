@@ -69,4 +69,21 @@ export default [
     tag: 'Adjective',
     reason: 'keep-lid-closed',
   },
+
+  // Before dinner, we rested. → Preposition
+  // {
+  //   match: '[#Conjunction] #Noun',
+  //   hook: '#Conjunction',
+  //   group: 0,
+  //   tag: '#Preposition',
+  //   reason: 'before-dinner',
+  // },
+  // // Before we ate, we rested. → Conjunction
+  // {
+  //   match: '[#Preposition] #Pronoun (#PastTense || #PresentTense)',
+  //   hook: '#Preposition',
+  //   group: 0,
+  //   tag: 'Conjunction',
+  //   reason: 'before-we-ate',
+  // },
 ]

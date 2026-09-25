@@ -9,7 +9,7 @@ const dim = str => '\x1b[2m' + str + '\x1b[0m'
 const parseLine = function (line = '') {
   let [text, tags] = line.split(lastBrace) // eslint-disable-line prefer-const
   if (tags === undefined) {
-    return { text, tags: [] } // no {tags} block on this line
+    return { text: text.replace(/\s#.*$/, '').trimEnd(), tags: null } // no {tags} block on this line
   }
   tags = tags.replace(comment, '}') // drop the comment - only ever one, always last
   tags = tags.split(',').map(tag => tag.trim())
@@ -64,11 +64,17 @@ const testSpec = function (spec, verbose = true, throwError = false) {
       aliases[tagSet[k].alias] = k
     }
   })
-  const failingLines = spec
+  const resultLines = spec
     .split('\n')
     .filter(line => line.trim() && !/^\s*#/.test(line))
     .map(line => {
       const { text, tags } = parseLine(line)
+      if (tags === null) {
+        if (verbose !== false) {
+          console.log(`${green('✓')} ${green(dim(text))}`) //eslint-disable-line no-console
+        }
+        return text
+      }
       // parse it
       const doc = nlp(text)
       // make compromise-compatible match string
@@ -99,8 +105,8 @@ const testSpec = function (spec, verbose = true, throwError = false) {
     })
     .filter(Boolean)
     .join('\n')
-  // return a doc of only the failing lines - empty means everything passed
-  return nlp(failingLines)
+  // retain untagged sentences alongside any failing tagged lines
+  return nlp(resultLines)
 }
 
 export { fromSpec, testSpec }

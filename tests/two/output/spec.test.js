@@ -156,8 +156,8 @@ test('testSpec messy input', function (t) {
     nlp.testSpec('Here are the sentences:\n\nthe dog barked {Det,Noun,Vb}\n', false)
   }, here + 'messy specs do not throw')
 
-  const res = nlp.testSpec('Here is a preamble:\nthe dog barked {Det,Noun,Vb}', false)
-  t.equal(res.text().trim(), 'Here is a preamble:', here + 'tagless preamble line counts as failing')
+  const res = nlp.testSpec('Here is a preamble:\nthe dog barked {Det,Noun,Vb}', false, true)
+  t.equal(res.text().trim(), 'Here is a preamble:', here + 'tagless preamble is retained without failing')
   t.end()
 })
 
@@ -207,9 +207,9 @@ test('spec comments vs braces and hashtags', function (t) {
   t.equal(doc3.found, false, here + 'leading hashtag is a comment line')
   t.equal(nlp.testSpec('#hiking is fun {HashTag,Vb,Adj} # and so is this', false).found, false, here + 'hashtag + comment')
 
-  // a line with no {} block is not comment-stripped
-  const doc4 = nlp.fromSpec('no braces here # not a comment')
-  t.equal(doc4.text().trim(), 'no braces here # not a comment', here + 'comment needs a tag-block')
+  // a line with no {} block also supports trailing comments
+  const doc4 = nlp.fromSpec('no braces here # a comment')
+  t.equal(doc4.text().trim(), 'no braces here', here + 'comment without a tag-block')
   t.end()
 })
 
@@ -235,5 +235,23 @@ test('spec skips whole-line comments', function (t) {
   t.equal(nlp.testSpec(spec, false, true).found, false, here + 'comment lines never fail or throw')
   t.equal(nlp.fromSpec(comments).found, false, here + 'comment-only input is empty')
   t.equal(nlp.testSpec(comments, false, true).found, false, here + 'comment-only input passes')
+  t.end()
+})
+
+test('testSpec retains sentences without a tag-block', function (t) {
+  const spec = `The dog is nice. {Det,Noun,Vb,Adj}
+The flowers bloomed in spring. {Det,Plural,Past,Prep,Noun}
+this sentence has no tags. #that's fine
+
+# block-comments are supported, too
+Tony Hawk rides {Person|FirstName,Person|LastName,Pres} #has both tags`
+  const doc = nlp.testSpec(spec, false, true)
+  t.equal(doc.match('sentence has no tags').found, true, here + 'untagged sentence available for matching')
+  t.equal(doc.text().trim(), 'this sentence has no tags.', here + 'only untagged sentence retained, without comment')
+  t.equal(nlp.fromSpec(spec).has('sentence has no tags'), true, here + 'fromSpec retains untagged sentence too')
+  t.equal(nlp.testSpec('plain sentence.', false, true).text(), 'plain sentence.', here + 'plain sentence passes')
+  t.throws(() => nlp.testSpec('plain sentence. {}', false, true), here + 'explicit empty tag-block still validated')
+  const mixed = nlp.testSpec('plain sentence.\nthe cat slept {Vb,Vb,Vb}', false)
+  t.equal(mixed.length, 2, here + 'untagged sentence and failing tagged sentence retained')
   t.end()
 })

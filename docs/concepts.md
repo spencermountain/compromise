@@ -109,6 +109,7 @@ Three escalating ways to teach compromise new things — see [recipes.md](recipe
 
 - [match-syntax.md](match-syntax.md) — the match mini-language
 - [tags.md](tags.md) — the full tagset
+- [tagset.md](tagset.md) — tag definitions and checked spec examples
 - [api.md](api.md) — every method
 - [recipes.md](recipes.md) — copy-paste task examples
 - [verb-conversions.md](verb-conversions.md) — passive/perfect conversion policy and internals

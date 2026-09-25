@@ -3,13 +3,7 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-let str = `
-john smith {Person, Person}
-Why did the engine stop? {QuestionWord,Vb,Det,Singular,Inf}
-When does the store open? {QuestionWord,Vb,Det,Singular,Inf}
-When will the rain stop? {QuestionWord,Modal,Det,Noun,Inf}
 
-`
 // let out = nlp.testSpec(str, true)
 // out.debug()
 
@@ -30,6 +24,20 @@ When will the rain stop? {QuestionWord,Modal,Det,Noun,Inf}
 // There are no seats left. {There,Vb,Negative,Noun,Vb}
 // He has no money. {Noun,Vb,Negative,Noun}
 
-nlp.verbose(true)
-nlp(`He apologized for shouting`).debug()
+// adverb
+// We succeeded through working together. {Noun,Vb,Prep,Ger,Adv}
 
+
+// nlp.verbose(true)
+// nlp(`When the rain stops, we will leave`).debug()
+
+
+// nlp.testSpec('He was tired, so we stopped. {Noun,Vb,Adj,Conj,Noun,Vb}').debug()
+let str=`The dog is nice. {Det,Noun,Vb,Adj}
+The flowers bloomed in spring. {Det,Plural,Past,Prep,Noun}
+this sentence has no tags. #that's fine
+
+# block-comments are supported, too
+Tony Hawk rides {Person|FirstName,Person|LastName,Pres} #has both tags`
+let doc=nlp.testSpec(str)
+doc.match('sentence has no tags').found //true

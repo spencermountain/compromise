@@ -149,6 +149,5 @@ exact version. Read these when you need more than the cheat sheet above:
 - `node_modules/compromise/docs/api.md` — every method, signature, and description
 - `node_modules/compromise/docs/recipes.md` — copy-paste solutions to common tasks
 - `node_modules/compromise/docs/concepts.md` — the document/View/Term model in full
-- `node_modules/compromise/docs/llms-full.txt` — all of the above in one file
 
 (When working inside the compromise repo itself, these are at `docs/…` and `AGENTS.md`.)

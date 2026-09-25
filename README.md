@@ -435,7 +435,6 @@ Plain-text, copy-paste docs that render without JavaScript live in this repo:
 - **[docs/tags.md](./docs/tags.md)** — the complete, valid part-of-speech tagset
 - **[docs/api.md](./docs/api.md)** — every method, signature, and description
 - **[docs/recipes.md](./docs/recipes.md)** — solutions to common tasks
-- **[llms-full.txt](./docs/llms-full.txt)** — all of the above in one fetchable file
 
 <img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 

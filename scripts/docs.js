@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // generate machine-readable docs for LLMs and coding-agents, from source-of-truth.
 //
 //   node ./scripts/docs.js
@@ -5,7 +6,6 @@
 // emits:
 //   docs/tags.md       - the full tagset graph (from the running library)
 //   docs/api.md        - every method, signature + one-line description (from types/*.d.ts)
-//   llms-full.txt      - all in-repo docs concatenated into one fetchable file
 //
 // the curated docs (AGENTS.md, docs/match-syntax.md, docs/recipes.md, docs/concepts.md)
 // are hand-written - this script does not touch them, it only stitches them into llms-full.txt
@@ -229,25 +229,8 @@ Docs below are plain markdown (the published observablehq.com notebooks do not r
 `
 }
 
-// ------------------------------------------------------------------ llms-full.txt
-const generateLlmsFull = function () {
-  const files = ['AGENTS.md', 'docs/concepts.md', 'docs/match-syntax.md', 'docs/tags.md', 'docs/api.md', 'docs/recipes.md']
-  let out = `# compromise ${nlp.version} — full documentation for LLMs\n`
-  out += `# https://github.com/spencermountain/compromise\n`
-  out += `# This file concatenates every in-repo doc into one fetchable text.\n\n`
-  for (const f of files) {
-    if (!fs.existsSync(path.join(root, f))) continue
-    out += `\n\n${'='.repeat(78)}\n# FILE: ${f}\n${'='.repeat(78)}\n\n`
-    out += read(f).replace(stamp, '')
-  }
-  return out
-}
-
 // ------------------------------------------------------------------ run
-console.log('generating docs...')
 if (!fs.existsSync(path.join(root, 'docs'))) fs.mkdirSync(path.join(root, 'docs'))
 write('docs/tags.md', generateTags())
 write('docs/api.md', generateApi())
 write('llms.txt', generateLlms())
-write('docs/llms-full.txt', generateLlmsFull())
-console.log('done.')

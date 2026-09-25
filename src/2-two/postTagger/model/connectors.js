@@ -1,6 +1,6 @@
-// These rules need the predicates resolved by the main post-tagger sweep.
-// Keep nominal subjects bounded: do not cross a comma, a relative clause, or
-// another connector to find an unrelated verb later in the sentence.
+// Before the meal ended, we left.
+// Before the meal, we left.
+// After the news that she resigned, we called.
 const noun = '(#Noun && !#Possessive && !@hasComma)'
 const modifiers = '(#Determiner|#Possessive)? #Adverb+? #Adjective+?'
 const subject = `${modifiers} ${noun}+`
@@ -8,46 +8,52 @@ const predicate = '#Adverb+? not? (#Verb && !#Gerund && !#Particle)'
 
 const clauses = ['before', 'after', 'since', 'until', 'till', 'as', 'than', 'when', 'whereas']
 const rules = clauses.flatMap(word => [
-  // after she left / after the very tired driver returned
+  // We ate after she left. We waited until the very tired driver returned.
   { match: `[${word}] ${subject} ${predicate}`, hook: word, group: 0, tag: 'Conjunction', reason: 'connector-finite-clause' },
-  // after the guests from the village arrived
+  // After the guests from the village arrived, we ate.
   { match: `[${word}] ${subject} (from|of|with|in|on|at|beside|near) ${subject} ${predicate}`, hook: word, group: 0, tag: 'Conjunction', reason: 'connector-modified-subject' },
 ])
 
 export default [
   ...rules,
-  // Causal for normally links clauses after punctuation; ordinary beneficiaries
-  // and purpose phrases must remain prepositional.
+  // She bought flowers, for I was ill.
   { match: `@hasComma [for] ${subject} ${predicate}`, hook: 'for', group: 0, tag: 'Conjunction', reason: 'causal-for' },
+  // Everyone but me agreed.
   { match: '(everyone|everybody|everything|anyone|anybody|anything|nobody|nothing|all) [but] (me|him|her|us|them|#Determiner|#Possessive|#ProperNoun)', hook: 'but', group: 0, tag: 'Preposition', reason: 'exceptive-but' },
 
-  // Spatial complements, not predicative adjectives (the game is over) or
-  // degree adverbs (near perfect). Keep verbs such as "near the coast" intact.
+  // The cat slept under the table. He sat beside me.
+  // The game is over. The ship will near the coast.
   ...['above', 'below', 'under', 'over', 'beside', 'behind', 'against', 'outside', 'inside', 'near'].map(word => ({
     match: `[(${word} && !#Verb)] (#Determiner|#Possessive|#Pronoun|#ProperNoun)`,
     hook: word, group: 0, tag: 'Preposition', reason: 'spatial-object',
   })),
+  // We looked under the bed.
   { match: '#Verb [under] (#Determiner|#Possessive|#Pronoun)', hook: 'under', group: 0, tag: 'Preposition', reason: 'under-object' },
 
-  // Resemblance after a lexical predicate; exclude auxiliaries/modals so
-  // "would like" and "do like" keep the lexical verb.
+  // She sings like her mother.
+  // I would like tea. We do like tea.
   { match: '(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] (#Noun|#Determiner|#Possessive)', hook: 'like', group: 0, tag: 'Preposition', reason: 'resemblance-like' },
-  // The comma distinguishes "Like his brother, ..." from "Like my page".
+  // Like his brother, he enjoys chess.
+  // Like my page.
   { match: '^[like] (#Determiner|#Possessive)? #Adjective+? (#Noun && @hasComma)', hook: 'like', group: 0, tag: 'Preposition', reason: 'initial-resemblance' },
-  // Require preceding predicate or punctuation: "I like her mother" stays Verb.
+  // She sings like her mother does.
+  // I like her mother.
   { match: `(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] ${subject} ${predicate}`, hook: 'like', group: 0, tag: 'Conjunction', reason: 'manner-like-clause' },
+  // I like tea, like my sister does.
   { match: `@hasComma [like] ${subject} ${predicate}`, hook: 'like', group: 0, tag: 'Conjunction', reason: 'comma-like-clause' },
 
-  // Content and relative clauses inside a prepositional object: do not retag
-  // the outer preposition merely because a verb occurs inside this clause.
+  // We talked about the fact that she resigned.
   { match: `#Noun [that] ${subject} ${predicate}`, hook: 'that', group: 0, tag: 'Conjunction', reason: 'noun-that-clause' },
 
-  // No complement: temporal adverbs. Question-final before can instead be a
-  // stranded preposition, so exclude questions from the general adverb rule.
+  // I have heard that story before. I have seen him since.
   { match: '#Verb (#Determiner|#Possessive)? #Noun+? [(before|since)]$', hook: '#Verb', group: 0, tag: 'Adverb', notIf: '@hasQuestionMark', reason: 'temporal-adverb' },
+  // We met shortly after.
   { match: '(shortly|soon|long) [after]$', hook: 'after', group: 0, tag: 'Adverb', reason: 'after-adverb' },
+  // She has since moved.
   { match: '(has|have|had) [since] #PastTense', hook: 'since', group: 0, tag: 'Adverb', reason: 'perfect-since-adverb' },
+  // She has not arrived yet.
   { match: '#PastTense [yet]$', hook: 'yet', group: 0, tag: 'Adverb', reason: 'yet-adverb' },
+  // Who did she arrive before?
   {
     match: '^(who|whom) #Verb #Pronoun #Verb [before]$',
     hook: 'before',
@@ -55,7 +61,7 @@ export default [
     tag: 'Preposition',
     reason: 'stranded-before',
   },
-  // will leave when the rain stops
+  // We will leave when the rain stops.
   {
     match: '#Modal #Infinitive [when] #Determiner',
     hook: 'when',

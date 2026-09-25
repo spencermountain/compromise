@@ -27,13 +27,10 @@ export default [
   { match: seatedQuestion, hook: 'sit', group: 0, unTag: 'PhrasalVerb', reason: 'sit-on-question' },
   // Which chair did she sit on? What cushion can he sit on?
   { match: seatedQuestion, hook: 'sit', group: 1, tag: 'Preposition', reason: 'sit-on-question' },
-
   // “May twenty five”
   { match: '(#TextValue && #Date) #TextValue', hook: '#TextValue', tag: 'Date', reason: 'textvalue-date' },
   // 23 Main Street in Toronto
   { match: '#Address in #Place', hook: 'in', tag: 'Place', reason: 'address-place' },
-  // ...questionRules,
-  // These contexts need the resolved tags from the first sweep.
   // the very professional actor
   {
     match: '#Determiner (very|remarkably|extremely|quite|unusually) [%Adj|Noun%] #Actor',
@@ -42,7 +39,6 @@ export default [
     tag: 'Adjective',
     reason: 'degree-modified-actor',
   },
-  // Keep nominal compounds such as 'sleeping aid' and 'sleeping bag'.
   // the sleeping dog
   {
     match: '#Determiner [sleeping] (#Actor|#Person|puppy|kitten|dog|cat|baby|babies|child|children)',
@@ -93,7 +89,6 @@ export default [
   { match: '(which|what|whose) [%Noun|Verb%] #Pronoun', hook: '#Pronoun', group: 0, tag: 'Noun', reason: 'embedded-wh-object' },
   // what walks he took
   { match: '(which|what|whose) [%Plural|Verb%] #Pronoun', hook: '#Pronoun', group: 0, tag: 'Plural', reason: 'embedded-wh-plural' },
-  // Capitalization predicates keep surnames such as “Alice and Bob Walk”.
   // John and Mary walk
   { match: '#Person and #Person [(%Noun|Verb% && !@isTitleCase && !@isUpperCase)]$', hook: 'and', group: 0, tag: 'Infinitive', reason: 'coordinated-subject-verb' },
   // dogs near the house bark
@@ -113,29 +108,11 @@ export default [
   // she drew a picture
   { match: '(drew && #Verb)', hook: 'drew', tag: 'PastTense', reason: 'drew-a-picture' },
   // keep the lid closed
-  // keep the lid closed
   {
     match: '#Imperative #Determiner #Noun+ [%Adj|Past%]',
     hook: '#Imperative',
     group: 0,
     tag: 'Adjective',
     reason: 'keep-lid-closed',
-  },
-
-  // Before dinner, we rested. → Preposition
-  // {
-  //   match: '[#Conjunction] #Noun',
-  //   hook: '#Conjunction',
-  //   group: 0,
-  //   tag: '#Preposition',
-  //   reason: 'before-dinner',
-  // },
-  // // Before we ate, we rested. → Conjunction
-  // {
-  //   match: '[#Preposition] #Pronoun (#PastTense || #PresentTense)',
-  //   hook: '#Preposition',
-  //   group: 0,
-  //   tag: 'Conjunction',
-  //   reason: 'before-we-ate',
-  // },
+  }
 ]

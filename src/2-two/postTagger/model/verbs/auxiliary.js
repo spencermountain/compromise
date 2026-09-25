@@ -1,11 +1,15 @@
 // these are some of our heaviest-used matches
 export default [
-  // ought not to walk: retain the infinitival marker inside the modal phrase.
   // ought not to walk
-  { match: 'ought (#Adverb|not)+? [to] (#Adverb|not)+? #Verb', hook: 'ought', group: 0, tag: 'Auxiliary', reason: 'ought-to' },
+  {
+    match: 'ought (#Adverb|not)+? [to] (#Adverb|not)+? #Verb',
+    hook: 'ought',
+    group: 0,
+    tag: 'Auxiliary',
+    reason: 'ought-to',
+  },
   // ought to be walking
   { match: 'ought (#Adverb|not)+? to (#Adverb|not)+? [be] (#Adverb|not)+? #Verb', hook: 'ought', group: 0, tag: 'Auxiliary', reason: 'ought-to-be' },
-  // ==== Auxiliary ====
   // will have walked
   { match: `will (#Adverb|not)+? [have] (#Adverb|not)+? #Verb`, hook: 'will', group: 0, tag: 'Auxiliary', reason: 'will-have-vb' },
   // was walking
@@ -40,8 +44,6 @@ export default [
   { match: '#Copula (#Adverb|not)+? [going to] #Adverb+? #PresentTense', hook: 'going', group: 0, tag: 'Auxiliary', reason: 'going-to-walk' },
   // going to be watched
   { match: 'going to (#Adverb|not)+? [be] (#Adverb|not)+? #PastTense', hook: 'going', group: 0, tag: 'Auxiliary', reason: 'going-to-be-watched' },
-  // kiss him
-  // { match: '#Imperative [(me|him|her)]', hook: '#Imperative', group: 0, tag: 'Reflexive', reason: 'tell-him' },
   // there is no x
   { match: '(is|was) #Adverb? [no]', hook: 'no', group: 0, tag: 'Negative', reason: 'is-no' },
   // been told

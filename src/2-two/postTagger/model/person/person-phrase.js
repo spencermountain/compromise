@@ -122,8 +122,10 @@ export default [
   },
   // Dr teacher
   { match: '#Honorific #Actor', hook: '#Honorific', tag: 'Honorific', reason: 'Lieutenant colonel' },
+  // first lady michelle obama
+  { match: '[first lady] #Person', hook: 'lady', group: 0, tag: 'Honorific', reason: 'first-lady' },
   // first lady, second admiral
-  { match: '(first|second|third|1st|2nd|3rd) #Actor', hook: '#Actor', tag: 'Honorific', reason: 'first lady' },
+  { match: '(first|second|third|1st|2nd|3rd) lieutenant', hook: 'lieutenant', tag: 'Honorific', reason: 'first lady' },
   // Louis IV
   { match: '#Person #RomanNumeral', hook: '#RomanNumeral', tag: 'Person', reason: 'louis-IV' },
 ]

@@ -4,22 +4,16 @@ const matches = [
   { match: 'u r', hook: 'r', tag: '#Pronoun #Copula', reason: 'u r' },
   // the captain who
   { match: '#Noun [(who|whom)]', hook: '#Noun', group: 0, tag: 'Determiner', reason: 'captain-who' },
-  // who is that? / what are these? - no following noun to determine
   // who is that?
   { match: '^#QuestionWord #Adverb+? #Copula #Adverb+? [(this|that|these|those)] #Adverb+?$', hook: '#QuestionWord', group: 0, tag: 'Pronoun', reason: 'who-is-that' },
   // I like this
   { match: '#Verb [(this|that|these|those)] #Adverb+? (yesterday|today|tonight|tomorrow)?$', hook: '#Verb', group: 0, tag: 'Pronoun', reason: 'demonstrative-object' },
-
   // some sort of
   { match: 'some sort of', hook: 'sort', tag: 'Adjective Noun Conjunction', reason: 'some-sort-of' },
-  // some of
-  // { match: 'some of', tag: 'Noun Conjunction', reason: 'some-of' },
   // of some sort
   { match: 'of some sort', hook: 'sort', tag: 'Conjunction Adjective Noun', reason: 'of-some-sort' },
   // such skill
   { match: '[such] (a|an|is)? #Noun', hook: 'such', group: 0, tag: 'Determiner', reason: 'such-skill' },
-  // another one
-  // { match: '[another] (#Noun|#Value)', group: 0, tag: 'Adjective', reason: 'another-one' },
   // right after
   { match: '[right] (before|after|in|into|to|toward)', hook: 'right', group: 0, tag: '#Adverb', reason: 'right-into' },
   // at about
@@ -32,7 +26,6 @@ const matches = [
   { match: '[plenty] of', hook: 'plenty', group: 0, tag: '#Uncountable', reason: 'plenty-of' },
   // always there
   { match: '(always|nearly|barely|practically) [there]', hook: 'there', group: 0, tag: 'Adjective', reason: 'always-there' },
-  // existential 'there'
   // there she is
   { match: '[there] (#Adverb|#Pronoun)? #Copula', hook: 'there', group: 0, tag: 'There', reason: 'there-is' },
   // is there food

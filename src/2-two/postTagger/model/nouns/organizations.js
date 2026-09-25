@@ -16,21 +16,10 @@ const multi = [
 */
 
 export default [
-  // Foo University
-  // { match: `#Noun ${orgMap}`, tag: 'Organization', safe: true, reason: 'foo-university' },
-  // // University of Toronto
-  // { match: `${orgMap} of #Place`, tag: 'Organization', safe: true, reason: 'university-of-foo' },
-
-  // // foo regional health authority
-  // { match: `${orgMap} (health|local|regional)+ authority`, tag: 'Organization', reason: 'regional-health' },
-  // // foo stock exchange
-  // { match: `${orgMap} (stock|mergantile)+ exchange`, tag: 'Organization', reason: 'stock-exchange' },
-  // // foo news service
-  // { match: `${orgMap} (daily|evening|local)+ news service?`, tag: 'Organization', reason: 'foo-news' },
   // university of Toronto
   { match: 'university of #Place', hook: 'university', tag: 'Organization', reason: 'university-of-Foo' },
   // John & Joe's
-  { match: '#Noun (&|n) #Noun', hook: '#Noun', tag: 'Organization', reason: 'Noun-&-Noun' },
+  { match: '#Noun (&|n) (#Noun && @hasTitleCase)', hook: '#Noun', tag: 'Organization', reason: 'Noun-&-Noun' },
   // Microsoft of Canada
   { match: '#Organization of the? #ProperNoun', hook: 'of', tag: 'Organization', reason: 'org-of-place', safe: true },
   // walmart USA

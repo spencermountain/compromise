@@ -1,5 +1,4 @@
 export default [
-
   // holy shit
   { match: 'holy (shit|fuck|hell)', hook: 'holy', tag: 'Expression', reason: 'swears-expression' },
   // well..
@@ -24,8 +23,6 @@ export default [
   { match: '^hell', hook: 'hell', tag: 'Expression', reason: 'ok-' },
   // anyways
   { match: '^anyways', hook: 'anyways', tag: 'Expression', reason: 'ok-' },
-  // c'mon marge..
-  // { match: '^[come on] #Noun', group: 0, tag: 'Expression', reason: 'come-on' },
   // say,
   { match: '^(say && @hasComma)', hook: 'say', tag: 'Expression', reason: 'say-' },
   // like, hello

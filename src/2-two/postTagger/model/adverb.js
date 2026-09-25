@@ -27,7 +27,6 @@ export default [
   { match: 'even left', hook: 'even', tag: '#Adverb #Verb', reason: 'even-left' },
   // way over
   { match: '[way] #Adjective', hook: 'way', group: 0, tag: '#Adverb', reason: 'way-over' },
-  //cheering hard - dropped -ly's
   // cheering hard
   {
     match: '#PresentTense [(hard|quick|bright|slow|fast|backwards|forwards)]', hook: '#PresentTense',

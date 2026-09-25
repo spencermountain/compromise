@@ -78,7 +78,6 @@ export default [
     notIf: '(seem|appear|include|#Gerund|#Copula)',
     reason: 'det-inf',
   },
-  // { match: '(the|those|these|a|an) #Adjective? [#PresentTense #Particle?]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula)', reason: 'det-pres' },
 
   // ==== Actor ====
   // Aircraft designer
@@ -164,8 +163,7 @@ export default [
   // This is the premier university in Virginia
   { match: '#Copula the [%Adj|Noun%] #Noun', hook: 'the', group: 0, tag: 'Adjective', reason: 'the-premier-university' },
 
-  // scottish - i ate me sandwich
-  // i ate me sandwich
+  // i ate me sandwich (scottish slang)
   { match: 'i #Verb [me] #Noun', hook: 'me', group: 0, tag: 'Possessive', reason: 'scottish-me' },
   // dance music
   {

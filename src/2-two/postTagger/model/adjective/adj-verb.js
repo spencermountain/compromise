@@ -1,8 +1,4 @@
 export default [
-  // amusing his aunt
-  // { match: '[#Adjective] #Possessive #Noun', group: 0, tag: 'Verb', reason: 'gerund-his-noun' },
-  // loving you
-  // { match: '[#Adjective] (us|you)', group: 0, tag: 'Gerund', reason: 'loving-you' },
   // quickly warm
   { match: '(slowly|quickly) [#Adjective]', hook: '#Adjective', group: 0, tag: 'Verb', reason: 'slowly-adj' },
   // does better

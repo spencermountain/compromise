@@ -1,4 +1,3 @@
-// ==== Passive voice ===
 export default [
   // got walked
   { match: 'got (#PastTense|#Participle)', hook: 'got', tag: 'Passive', reason: 'got-walked' },

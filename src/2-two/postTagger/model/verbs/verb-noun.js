@@ -27,14 +27,8 @@ export default [
   { match: '(a|an) #Adjective? #Noun [#Infinitive] (#Preposition|#Noun)', hook: '#Infinitive', group: 0, notIf: 'from', tag: 'Noun', reason: 'a-noun-inf' },
   // a software reinstall
   { match: '(a|an) #Noun [#Infinitive]$', hook: '#Infinitive', group: 0, tag: 'Noun', reason: 'a-noun-inf2' },
-  //is mark hughes
-  // { match: '#Copula [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'is-pres-noun' },
-  // good wait staff
-  // { match: '#Adjective [#Infinitive] #Noun', group: 0, tag: 'Noun', reason: 'good-wait-staff' },
   // working for thank-you letters
   { match: '#Gerund #Adjective? for [#Infinitive]', hook: 'for', group: 0, tag: 'Noun', reason: 'running-for' },
-  // running to work
-  // { match: '#Gerund #Adjective to [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-to' },
   // about thank-you letters
   { match: 'about [#Infinitive]', hook: 'about', group: 0, tag: 'Singular', reason: 'about-love' },
   // artists on thank-you cards
@@ -57,7 +51,6 @@ export default [
   { match: '[cause] #Pronoun #Verb', hook: 'cause', group: 0, tag: 'Conjunction', reason: 'cause-cuz' },
   // the US air force
   { match: 'the #Singular [#Infinitive] (#Noun && !#Possessive)', hook: 'the', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'cardio-dance' },
-
   // this rocks
   { match: 'this [#Plural]', hook: 'this', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Date)', reason: 'this-verbs' },
   // the thing that runs
@@ -71,14 +64,11 @@ export default [
     tag: 'Infinitive',
     reason: 'let-him-glue',
   },
-
   // assign all tasks
   { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', hook: '#PresentTense', notIf: '#Modal', group: 0, tag: 'Noun', reason: 'all-presentTense' },  // PresentTense/Noun ambiguities
   // big dreams, critical thinking
   // found all upcoming words
   { match: '(had|have|#PastTense) #Adjective [#PresentTense]', hook: '#Adjective', group: 0, tag: 'Noun', notIf: 'better', reason: 'adj-presentTense' },
-  // excellent answer spencer
-  // { match: '^#Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'start adj-presentTense' },
   // one big thank-you
   { match: '#Value #Adjective [#PresentTense]', hook: '#Value', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'one-big-reason' },
   // found all upcoming words
@@ -93,14 +83,10 @@ export default [
   { match: '(for|with|of) #Noun (and|or|not) [%Noun|Verb%]', hook: '#Noun', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'for-food-and-gas' },
   // cute little thank-you bags
   { match: '#Adjective #Adjective [#PresentTense]', hook: '#Adjective', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'adorable-little-store' },
-  // of basic training
-  // { match: '#Preposition #Adjective [#PresentTense]', group: 0, tag: 'Noun', reason: 'of-basic-training' },
   // writing bigger thank-you notes
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', hook: '#Comparative', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'higher-costs' },
-
   // Tuesday, gifts and thanks
   { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', hook: '#PresentTense', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'noun-list' },
-
   // some thanks for helping
   { match: '(many|any|some|several) [#PresentTense] for', hook: 'for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
   // to write people thanks for helping
@@ -139,21 +125,14 @@ export default [
   { match: '[#PresentTense] (are|were) #Adjective', hook: '#Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
   // hope i helped
   { match: '^[(hope|guess|thought|think)] #Pronoun #Verb', hook: '#Pronoun', group: 0, tag: 'Infinitive', reason: 'suppose-i' },
-  //pursue its dreams
-  // { match: '#PresentTense #Possessive [#PresentTense]', notIf: '#Gerund', group: 0, tag: 'Plural', reason: 'pursue-its-dreams' },
   // its proper functioning
   { match: '#Possessive #Adjective [#Verb]', hook: '#Possessive', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'our-full-support' },
   // tastes good
   { match: '[(tastes|smells)] #Adverb? #Adjective', hook: '#Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
-  // are you playing golf
-  // { match: '^are #Pronoun [#Noun]', group: 0, notIf: '(here|there)', tag: 'Verb', reason: 'are-you-x' },
-  // she is writing thank-you letters
   // Being introduces a predicate rather than a direct object.
   { match: '#Copula (#Gerund && !being) [#PresentTense] !by?', hook: '#Gerund', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring-commute' },
   // the shed
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', hook: '#Determiner', group: 0, tag: 'Noun', reason: 'noun-past' },
-
-  // 'verb-to'
   // how to watch
   { match: 'how to [%Noun|Verb%]', hook: 'how', group: 0, tag: 'Infinitive', reason: 'how-to-noun' },
   // which boost it

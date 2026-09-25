@@ -1,5 +1,4 @@
 export default [
-  //sometimes adverbs - 'pretty good','well above'
   // is pretty good
   {
     match: '#Copula [(pretty|dead|full|well|sure)] #Adjective', hook: '#Copula',
@@ -15,23 +14,18 @@ export default [
   // ==== Tense ====
   // he left
   { match: '#Noun #Adverb? [left]', hook: 'left', group: 0, tag: 'PastTense', reason: 'left-verb' },
-  // she bit her tongue - the noun/verb switch assumes an infinitive
   // she bit her tongue
   { match: '#Noun #Adverb? [(bit && #Infinitive)]', hook: 'bit', group: 0, tag: 'PastTense', reason: 'bit-past' },
-
-  // ==== Copula ====
   // will be running
   { match: 'will #Adverb? not? #Adverb? [be] #Gerund', hook: 'will', group: 0, tag: 'Copula', reason: 'will-be-copula' },
   // will be nice
   { match: 'will #Adverb? not? #Adverb? [be] #Adjective', hook: 'will', group: 0, tag: 'Copula', reason: 'be-copula' },
-  // ==== Infinitive ====
   // march up
   { match: '[march] (up|down|back|toward)', hook: 'march', notIf: '#Date', group: 0, tag: 'Infinitive', reason: 'march-to' },
   // must march
   { match: '#Modal [march]', hook: 'march', group: 0, tag: 'Infinitive', reason: 'must-march' },
   // may be
   { match: `[may] be`, hook: 'may', group: 0, tag: 'Verb', reason: 'may-be' },
-  // predicative noun/adjective, not the verbs 'home' and 'subject'
   // birds home to their nest
   { match: '(#Pronoun|#Plural|#Modal) #Adverb+? [home] to', hook: 'home', group: 0, tag: 'Infinitive', reason: 'birds-home-to' },
   // is home to birds
@@ -47,8 +41,6 @@ export default [
   { match: '(#Copula|be|been|being) #Adverb+? home [to] #Adjective+? #Noun', hook: 'home', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'home-to-noun' },
 
   // === misc==
-  // side with
-  // { match: '[(side|fool|monkey)] with', group: 0, tag: 'Infinitive', reason: 'fool-with' },
   // open the door
   { match: '[open] #Determiner', hook: 'open', group: 0, tag: 'Infinitive', reason: 'open-the' },
   // were being run

@@ -60,7 +60,6 @@ export default [
   // stay cool
   { match: '^[(stay|be|keep)] #Adjective', hook: '#Adjective', group: 0, tag: 'Imperative', reason: 'stay-cool' },
   // keep it silent
-  // keep it silent
   { match: '^[keep] it #Adjective', hook: 'keep', group: 0, tag: 'Imperative', reason: 'keep-it-cool' },
   // allow yourself
   { match: '[#Infinitive] (yourself|yourselves)', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'allow-yourself' },
@@ -72,7 +71,6 @@ export default [
   { match: '^[#Infinitive] (to|for|into|toward|here|there)', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'go-to' },
   // come and have a drink
   { match: '^[#Infinitive] (and|or) #Infinitive', hook: '#Infinitive', group: 0, tag: 'Imperative', reason: 'inf-and-inf' },
-
   // commit to
   { match: '^[%Noun|Verb%] to', hook: 'to', group: 0, tag: 'Imperative', reason: 'commit-to' },
   // maintain eye contact

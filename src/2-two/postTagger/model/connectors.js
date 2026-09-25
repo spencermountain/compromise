@@ -10,23 +10,11 @@ const clauses = ['before', 'after', 'since', 'until', 'till', 'as', 'than', 'whe
 const rules = clauses.flatMap(word => [
   // before she left
   // after she left
-  // since she left
-  // until she left
-  // till she left
-  // as she left
-  // than she left
-  // when she left
-  // whereas she left
+  // since she left...
   { match: `[${word}] ${subject} ${predicate}`, hook: word, group: 0, tag: 'Conjunction', reason: 'connector-finite-clause' },
   // Before the guests from the village arrived, we ate.
   // After the guests from the village arrived, we ate.
-  // Since the guests from the village arrived, we ate.
-  // Until the guests from the village arrived, we waited.
-  // Till the guests from the village arrived, we waited.
-  // As the guests from the village arrived, we ate.
-  // More guests from the city arrived than guests from the village arrived.
-  // When the guests from the village arrived, we ate.
-  // We ate whereas the guests from the village arrived.
+  // Since the guests from the village arrived, we ate. ...
   { match: `[${word}] ${subject} (from|of|with|in|on|at|beside|near) ${subject} ${predicate}`, hook: word, group: 0, tag: 'Conjunction', reason: 'connector-modified-subject' },
 ])
 
@@ -34,10 +22,7 @@ export default [
   ...rules,
   // Before the dog and the cat woke, she left.
   // before the dog and the cat woke
-  // after the dog and the cat woke
-  // until the dog and the cat woke
-  // when the dog and the cat woke
-  // while the dog and the cat woke
+  // after the dog and the cat woke...
   ...['before', 'after', 'until', 'when', 'while'].map(word => ({
     match: `^[${word}] ${subject} and ${subject} ${predicate}`,
     hook: word, group: 0, tag: 'Conjunction', reason: 'before-coordinated-subject',
@@ -49,37 +34,23 @@ export default [
 
   // The cat slept under the table. He sat beside me.
   // the plane flew well above the clouds
-  // she stood directly below the window
-  // the cat hid just under the bed
-  // the fox jumped over the dog
-  // he sat beside me
-  // they stood behind us
-  // he leaned against the wall
-  // they stood outside the house
-  // they stayed inside the house
-  // the dogs near the house walk
+  // she stood directly below the window...
   ...['above', 'below', 'under', 'over', 'beside', 'behind', 'against', 'outside', 'inside', 'near'].map(word => ({
     match: `[(${word} && !#Verb)] (#Determiner|#Possessive|#Pronoun|#ProperNoun)`,
     hook: word, group: 0, tag: 'Preposition', reason: 'spatial-object',
   })),
   // We looked under the bed.
   { match: '#Verb [under] (#Determiner|#Possessive|#Pronoun)', hook: 'under', group: 0, tag: 'Preposition', reason: 'under-object' },
-
-  // She sings like her mother.
   // She sings like her mother
   { match: '(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] (#Noun|#Determiner|#Possessive)', hook: 'like', group: 0, tag: 'Preposition', reason: 'resemblance-like' },
-  // Like his brother, he enjoys chess.
   // Like his brother, he enjoys chess
   { match: '^[like] (#Determiner|#Possessive)? #Adjective+? (#Noun && @hasComma)', hook: 'like', group: 0, tag: 'Preposition', reason: 'initial-resemblance' },
-  // She sings like her mother does.
   // She sings like her mother does
   { match: `(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] ${subject} ${predicate}`, hook: 'like', group: 0, tag: 'Conjunction', reason: 'manner-like-clause' },
   // I like tea, like my sister does.
   { match: `@hasComma [like] ${subject} ${predicate}`, hook: 'like', group: 0, tag: 'Conjunction', reason: 'comma-like-clause' },
-
   // We talked about the fact that she resigned.
   { match: `#Noun [that] ${subject} ${predicate}`, hook: 'that', group: 0, tag: 'Conjunction', reason: 'noun-that-clause' },
-
   // I have heard that story before
   { match: '#Verb (#Determiner|#Possessive)? #Noun+? [(before|since)]$', hook: '#Verb', group: 0, tag: 'Adverb', notIf: '@hasQuestionMark', reason: 'temporal-adverb' },
   // We met shortly after.

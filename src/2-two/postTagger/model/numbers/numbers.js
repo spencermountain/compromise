@@ -2,13 +2,6 @@ export default [
   // ==== Ambiguous numbers ====
   // one second
   { match: `#Cardinal [second]`, hook: 'second', tag: 'Unit', reason: 'one-second' },
-  //'a/an' can mean 1 - "a hour"
-  // {
-  //   match: '!once? [(a|an)] #Duration', hook: '#Duration',
-  //   group: 0,
-  //   tag: 'Value',
-  //   reason: 'a-is-one',
-  // },
   // with a hundred jobs
   {
     match: '!once? [(a|an)] hundred', hook: 'hundred',

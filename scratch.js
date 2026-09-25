@@ -3,14 +3,22 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-// - tell-him -> "kiss him"
-// - should-smoke -> "the can Bob sent"
-// - would-mark -> "the can Bob sent"
-// - being-adjective -> "she is being cool to me"
+// kinda-sparkly-and -> "she ran very quickly and quietly"
+// studies-hard -> "the doors close"
+// suffered-by -> "he walked by the house"
+// ambg-honorifics -> "I miss John"
+// dance-music -> "she can read music"
+// had-been -> "we had been tired"
 
+// singular-subject-predicate
+// would-you-please
+// to-the-store
+// noun-like
+// be-late
+// off-white-copula
 
 nlp.verbose(true)
-nlp(`she is being cool to me`).debug()
+nlp(`her first child`).debug()
 
 
 // nlp.testSpec('He was tired, so we stopped. {Noun,Vb,Adj,Conj,Noun,Vb}').debug()

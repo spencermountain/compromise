@@ -1,7 +1,5 @@
 // Gerund-Adjectives - 'amusing, annoying'
 export default [
-  //a staggering cost
-  // { match: '(a|an) [#Gerund]', group: 0, tag: 'Adjective', reason: 'a|an' },
   // as entertaining as
   { match: 'as [#Gerund] as', hook: 'as', group: 0, tag: 'Adjective', reason: 'as-gerund-as' },
   // more amusing than
@@ -28,8 +26,6 @@ export default [
     notIf: '(impersonating|practicing|considering|assuming)',
     reason: 'looked-amazing',
   },
-  // were really amazing
-  // { match: '(looked|look|looks) #Adverb [%Adj|Gerund%]', group: 0, tag: 'Adjective', notIf: '(impersonating|practicing|considering|assuming)', reason: 'looked-amazing' },
   // boring the audience
   { match: '[%Adj|Gerund%] #Determiner', hook: '#Determiner', group: 0, tag: 'Gerund', reason: 'developing-a' },
   // world's leading manufacturer

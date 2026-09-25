@@ -41,7 +41,7 @@ export default [
   // going to be watched
   { match: 'going to (#Adverb|not)+? [be] (#Adverb|not)+? #PastTense', hook: 'going', group: 0, tag: 'Auxiliary', reason: 'going-to-be-watched' },
   // kiss him
-  { match: '#Imperative [(me|him|her)]', hook: '#Imperative', group: 0, tag: 'Reflexive', reason: 'tell-him' },
+  // { match: '#Imperative [(me|him|her)]', hook: '#Imperative', group: 0, tag: 'Reflexive', reason: 'tell-him' },
   // there is no x
   { match: '(is|was) #Adverb? [no]', hook: 'no', group: 0, tag: 'Negative', reason: 'is-no' },
   // been told

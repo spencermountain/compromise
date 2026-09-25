@@ -36,13 +36,4 @@ export default [
   { match: '#Possessive [%Adj|Gerund%] #Noun', hook: '#Possessive', group: 0, tag: 'Adjective', reason: 'leading-manufacturer' },
   // meaning alluring
   { match: '%Noun|Gerund% %Adj|Gerund%', hook: '%Adj|Gerund%', tag: 'Gerund #Adjective', reason: 'meaning-alluring' },
-
-  // face shocking revelations
-  {
-    match: '(face|embrace|reveal|stop|start|resume) %Adj|Gerund%', hook: '%Adj|Gerund%',
-    tag: '#PresentTense #Adjective',
-    reason: 'face-shocking',
-  },
-  // are enduring symbols
-  { match: '(are|were) [%Adj|Gerund%] #Plural', hook: '#Plural', group: 0, tag: 'Adjective', reason: 'are-enduring-symbols' },
 ]

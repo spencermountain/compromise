@@ -3,33 +3,14 @@ import nlp from './src/three.js'
 // import plg from './plugins/dates/src/plugin.js'
 // nlp.plugin(plg)
 
-
-// let out = nlp.testSpec(str, true)
-// out.debug()
-
-// let doc = nlp('john smith')
-// doc.compute('tagRank')
-// let out=doc.docs.map(ts => {
-//   return ts.map(t => {
-//     if (t.tagRank[0]) {
-//       return `#${t.tagRank[0]}`
-//     }
-//     return  ''
-//   }).join(' ')
-// }).join('\n')
-// console.log(out)
-
-// #Expression!=#Negative
-// She has no idea. {Noun,Vb,Negative,Noun}
-// There are no seats left. {There,Vb,Negative,Noun,Vb}
-// He has no money. {Noun,Vb,Negative,Noun}
-
-// adverb
-// We succeeded through working together. {Noun,Vb,Prep,Ger,Adv}
+// - tell-him -> "kiss him"
+// - should-smoke -> "the can Bob sent"
+// - would-mark -> "the can Bob sent"
+// - being-adjective -> "she is being cool to me"
 
 
 nlp.verbose(true)
-nlp(`They attend.`).debug()
+nlp(`she is being cool to me`).debug()
 
 
 // nlp.testSpec('He was tired, so we stopped. {Noun,Vb,Adj,Conj,Noun,Vb}').debug()

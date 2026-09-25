@@ -38,17 +38,7 @@ export default [
   // east sydney
   { match: `(west|east|north|south) [%Person|Place%]`, hook: '%Person|Place%', group: 0, tag: 'Place', reason: 'east-sydney' },
 
-  // ===person-adjective===
-  // rusty smith
-  // { match: `${personAdj} #Person`, tag: 'Person', reason: 'randy-smith' },
-  // rusty a. smith
-  // { match: `${personAdj} #Acronym? #ProperNoun`, tag: 'Person', reason: 'rusty-smith' },
-  // very rusty
-  // { match: `#Adverb [${personAdj}]`, group: 0, tag: 'Adjective', reason: 'really-rich' },
-
   // ===person-verb===
-  // would wade
-  { match: `#Modal [%Person|Verb%]`, hook: '#Modal', group: 0, tag: 'Verb', reason: 'would-mark' },
   // really wade
   { match: `#Adverb [%Person|Verb%]`, hook: '#Adverb', group: 0, tag: 'Verb', reason: 'really-mark' },
   // drew closer

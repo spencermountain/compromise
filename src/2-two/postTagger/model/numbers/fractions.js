@@ -12,9 +12,6 @@ export default [
   // two-halves
   { match: '#Value (halves|halfs|quarters)', hook: '#Value', tag: 'Fraction', reason: 'two-halves' },
 
-  // ---ordinals as fractions---
-  // a fifth
-  { match: 'a #Ordinal', hook: 'a', tag: 'Fraction', reason: 'a-quarter' },
   // seven fifths
   { match: '[#Cardinal+] (#Fraction && /s$/)', hook: '#Fraction', tag: 'Fraction', reason: 'seven-fifths' },
   // doc.match('(#Fraction && /s$/)').lookBefore('#Cardinal+$').tag('Fraction')
@@ -23,7 +20,7 @@ export default [
   // 100th of it
   { match: '[(#NumericValue && #Ordinal)] of .', hook: 'of', group: 0, tag: 'Fraction', reason: 'num-ordinal-of' },
   // a twenty fifth
-  { match: '(a|one) #Cardinal?+ #Ordinal', hook: '#Ordinal', tag: 'Fraction', reason: 'a-ordinal' },
+  { match: '(a|one) #Cardinal?+ #Ordinal of', hook: '#Ordinal', tag: 'Fraction', reason: 'a-ordinal' },
 
   // //  '3 out of 5'
   // 3 out of 5

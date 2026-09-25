@@ -58,8 +58,6 @@ export default [
   // the US air force
   { match: 'the #Singular [#Infinitive] (#Noun && !#Possessive)', hook: 'the', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'cardio-dance' },
 
-  // that can Bob sent
-  { match: '#Determiner #Modal [#Noun]', hook: '#Modal', group: 0, tag: 'PresentTense', reason: 'should-smoke' },
   // this rocks
   { match: 'this [#Plural]', hook: 'this', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Date)', reason: 'this-verbs' },
   // the thing that runs

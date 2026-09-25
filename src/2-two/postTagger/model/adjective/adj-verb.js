@@ -72,7 +72,7 @@ export default [
   // is empty
   { match: '#Copula #Adverb? [%Adj|Present%]$', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'was-empty$' },
   // she is being cool
-  { match: 'being #Adverb? [%Adj|Present%]$', hook: 'being', group: 0, tag: 'Adjective', reason: 'being-adjective' },
+  { match: 'being #Adverb? [%Adj|Present%]', hook: 'being', group: 0, tag: 'Adjective', reason: 'being-adjective' },
   // does the store open
   {
     match: '(does|will) #Determiner #Noun [%Adj|Present%]$',

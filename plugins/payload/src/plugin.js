@@ -4,7 +4,7 @@ export default {
   //establish payload db
   mutate: function (world) {
     world.model.one.db = {}
-    world.methods.one.debug = world.methods.one.debug || {}
+    world.methods.one.debug ||= {}
     world.methods.one.debug.payload = debug
   },
 
@@ -15,7 +15,7 @@ export default {
       const db = this.world.model.one.db || {}
       this.fullPointer.forEach(ptr => {
         const n = ptr[0]
-        if (db.hasOwnProperty(n)) {
+        if (Object.hasOwn(db, n)) {
           // look at all vals for this sentence
           const seeking = this.update([ptr])
           db[n].forEach(obj => {
@@ -37,7 +37,7 @@ export default {
       const db = this.world.model.one.db || {}
       this.fullPointer.forEach(ptr => {
         const n = ptr[0]
-        db[n] = db[n] || []
+        db[n] ||= []
         if (typeof val === 'function') {
           //push in whatever the callback wants
           const m = this.update([ptr])
@@ -60,7 +60,7 @@ export default {
       res.forEach(obj => {
         const ptr = obj.match.fullPointer[0] || []
         const [n, start, end] = ptr
-        db[n] = db[n] || []
+        db[n] ||= []
         // remove it from our list of payloads
         db[n] = db[n].filter(r => {
           if (r.ptr[1] === start && r.ptr[2] === end) {

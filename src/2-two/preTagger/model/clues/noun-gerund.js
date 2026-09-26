@@ -40,9 +40,9 @@ const misc = {
   },
 }
 const clue = {
-  beforeTags: Object.assign({}, gerund.beforeTags, noun.beforeTags, misc.beforeTags),
-  afterTags: Object.assign({}, gerund.afterTags, noun.afterTags, misc.afterTags),
-  beforeWords: Object.assign({}, gerund.beforeWords, noun.beforeWords, misc.beforeWords),
-  afterWords: Object.assign({}, gerund.afterWords, noun.afterWords, misc.afterWords),
+  beforeTags: { ...gerund.beforeTags, ...noun.beforeTags, ...misc.beforeTags },
+  afterTags: { ...gerund.afterTags, ...noun.afterTags, ...misc.afterTags },
+  beforeWords: { ...gerund.beforeWords, ...noun.beforeWords, ...misc.beforeWords },
+  afterWords: { ...gerund.afterWords, ...noun.afterWords, ...misc.afterWords },
 }
 export default clue

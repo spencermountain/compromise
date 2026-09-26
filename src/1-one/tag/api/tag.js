@@ -1,7 +1,5 @@
 /* eslint no-console: 0 */
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
+
 const fns = {
   /** add a given tag, to all these terms */
   tag: function (input, reason = '', isSafe) {
@@ -17,7 +15,7 @@ const fns = {
     if (verbose === true) {
       console.log(' +  ', input, reason || '')
     }
-    if (isArray(input)) {
+    if (Array.isArray(input)) {
       input.forEach(tag => methods.one.setTag(terms, tag, world, isSafe, reason))
     } else {
       methods.one.setTag(terms, input, world, isSafe, reason)
@@ -47,7 +45,7 @@ const fns = {
       console.log(' -  ', input, reason || '')
     }
     const tagSet = model.one.tagSet
-    if (isArray(input)) {
+    if (Array.isArray(input)) {
       input.forEach(tag => methods.one.unTag(terms, tag, tagSet))
     } else {
       methods.one.unTag(terms, input, tagSet)

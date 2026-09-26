@@ -5,11 +5,11 @@ const parseDecimals = function (arr) {
   let str = '0.'
   for (let i = 0; i < arr.length; i++) {
     const w = arr[i]
-    if (words.ones.hasOwnProperty(w) === true) {
+    if (Object.hasOwn(words.ones, w) === true) {
       str += words.ones[w]
-    } else if (words.teens.hasOwnProperty(w) === true) {
+    } else if (Object.hasOwn(words.teens, w) === true) {
       str += words.teens[w]
-    } else if (words.tens.hasOwnProperty(w) === true) {
+    } else if (Object.hasOwn(words.tens, w) === true) {
       str += words.tens[w]
     } else if (/^[0-9]$/.test(w) === true) {
       str += w

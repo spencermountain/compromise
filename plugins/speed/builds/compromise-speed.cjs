@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('fs'), require('path'), require('url'), require('worker_threads'), require('os')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'fs', 'path', 'url', 'worker_threads', 'os'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.compromiseSpeed = {}, global.fs, global.path, global.url, global.worker_threads, global.os));
-})(this, (function (exports, fs, path, url, worker_threads, os) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('node:fs'), require('node:path'), require('node:url'), require('node:worker_threads'), require('node:os')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'node:fs', 'node:path', 'node:url', 'node:worker_threads', 'node:os'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.compromiseSpeed = {}, global.fs, global.path, global.node_url, global.node_worker_threads, global.os));
+})(this, (function (exports, fs, path, node_url, node_worker_threads, os) { 'use strict';
 
   var _documentCurrentScript = typeof document !== 'undefined' ? document.currentScript : null;
   function _interopNamespaceDefault(e) {
@@ -90,7 +90,7 @@
     const list = [];
     arr.forEach(str => {
       //do we already have it parsed?
-      if (sentenceCache.hasOwnProperty(str) === true) {
+      if (Object.hasOwn(sentenceCache, str) === true) {
         //use the cache
         list.push(sentenceCache[str].data);
         sentenceCache[str].used = true;
@@ -163,7 +163,7 @@
   // let res = rip('one, two, three. four five six. seven eight nine', 4)
   // console.log(JSON.stringify(res, null, 2))
 
-  const dir = path.dirname(url.fileURLToPath((typeof document === 'undefined' && typeof location === 'undefined' ? require('u' + 'rl').pathToFileURL(__filename).href : typeof document === 'undefined' ? location.href : (_documentCurrentScript && _documentCurrentScript.tagName.toUpperCase() === 'SCRIPT' && _documentCurrentScript.src || new URL('compromise-speed.cjs', document.baseURI).href))));
+  const dir = path.dirname(node_url.fileURLToPath((typeof document === 'undefined' && typeof location === 'undefined' ? require('u' + 'rl').pathToFileURL(__filename).href : typeof document === 'undefined' ? location.href : (_documentCurrentScript && _documentCurrentScript.tagName.toUpperCase() === 'SCRIPT' && _documentCurrentScript.src || new URL('compromise-speed.cjs', document.baseURI).href))));
 
   const makePool = function (count, reg) {
     const workers = [];
@@ -176,7 +176,7 @@
         }
       };
       const file = path.join(dir, './worker.js');
-      const worker = new worker_threads.Worker(file, info);
+      const worker = new node_worker_threads.Worker(file, info);
       worker.on('error', (err) => console.error(err));// eslint-disable-line
       workers.push(worker);
     }
@@ -280,7 +280,7 @@
 
   // combine all the plugins
   const plugin = {
-    lib: Object.assign({}, streamFile$1.lib, keyPress$1.lib, workerPool.lib, lazyParse.lib),
+    lib: { ...streamFile$1.lib, ...keyPress$1.lib, ...workerPool.lib, ...lazyParse.lib },
     version: version
   };
 

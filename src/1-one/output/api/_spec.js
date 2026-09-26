@@ -16,7 +16,7 @@ const rootOf = function (tag, tagSet) {
       return p
     }
   }
-  return entry.parents[entry.parents.length - 1]
+  return entry.parents.at(-1)
 }
 
 // reduce a term's tag-set to a single top-level tag (or '-' when untagged)

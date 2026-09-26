@@ -17,7 +17,7 @@ const multiWord = function (terms, start_i, world) {
       }
       const str = words.map(term => term.machine || term.normal).join(' ')
       // lookup regular lexicon
-      if (lexicon.hasOwnProperty(str) === true) {
+      if (Object.hasOwn(lexicon, str) === true) {
         const tag = lexicon[str]
         // 'is off-white' is not the phrasal verb 'is off'.
         if (tag && tag.includes('PhrasalVerb') && words[words.length - 1].post === '-') {

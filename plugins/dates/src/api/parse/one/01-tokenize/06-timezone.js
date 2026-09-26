@@ -56,7 +56,7 @@ const parseTimezone = function (doc) {
   const str = m.text('reduced')
 
   // check our list of informal tz names
-  if (informal.hasOwnProperty(str)) {
+  if (Object.hasOwn(informal, str)) {
     return { result: informal[str], m }
   }
   // try the raw text first - 'utc-5' loses its minus-sign in reduced text

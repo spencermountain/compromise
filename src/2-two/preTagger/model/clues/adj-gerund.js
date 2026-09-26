@@ -6,20 +6,26 @@ const jj = 'Adjective'
 // rallying the troops
 // her rallying cry
 const clue = {
-  beforeTags: Object.assign({}, adj.beforeTags, gerund.beforeTags, {
+  beforeTags: {
+    ...adj.beforeTags,
+    ...gerund.beforeTags,
     // Copula: jj,
     Imperative: g, //recommend living in
     Infinitive: jj, //say charming things
     // PresentTense: g,
     Plural: g, //kids cutting
-  }),
+  },
 
-  afterTags: Object.assign({}, adj.afterTags, gerund.afterTags, {
+  afterTags: {
+    ...adj.afterTags,
+    ...gerund.afterTags,
     Noun: jj, //shocking ignorance
     // Plural: jj, //shocking lies
-  }),
+  },
 
-  beforeWords: Object.assign({}, adj.beforeWords, gerund.beforeWords, {
+  beforeWords: {
+    ...adj.beforeWords,
+    ...gerund.beforeWords,
     is: jj,
     are: g, //is overflowing: JJ, are overflowing : VB ??
     was: jj,
@@ -59,13 +65,15 @@ const clue = {
     help: g,
     embrace: g,
     with: jj, //filled with daring
-  }),
+  },
 
-  afterWords: Object.assign({}, adj.afterWords, gerund.afterWords, {
+  afterWords: {
+    ...adj.afterWords,
+    ...gerund.afterWords,
     to: g,
     not: g, //trying not to car
     the: g, //sweeping the country
-  }),
+  },
 }
 // console.log(clue)
 export default clue

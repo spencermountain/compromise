@@ -90,8 +90,8 @@ const textFromDoc = function (docs, opts) {
       text = text.replace(trimStart, '')
     }
     // remove ending periods
-    const last = docs[docs.length - 1]
-    if (!last[last.length - 1].tags.has('Emoticon')) {
+    const last = docs.at(-1)
+    if (!last.at(-1).tags.has('Emoticon')) {
       text = trimEnd(text)
     }
     // kill end quotations

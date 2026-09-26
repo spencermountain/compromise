@@ -19,7 +19,7 @@ const imperative = function (terms, world) {
       return
     }
     // avoid multi-noun words like '[board] room'
-    if (!t.tags.has('PhrasalVerb') && multiWords.hasOwnProperty(t.normal)) {
+    if (!t.tags.has('PhrasalVerb') && Object.hasOwn(multiWords, t.normal)) {
       return
     }
     // is the next word a noun? - 'compile information ..'

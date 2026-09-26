@@ -74,7 +74,7 @@ const nOrinalth = function (m) {
     den = den.replaceWith(str)
   }
   // support 'one half' as '1/2'
-  if (mapping.hasOwnProperty(str)) {
+  if (Object.hasOwn(mapping, str)) {
     den = mapping[str]
   } else {
     // dem = dem.numbers().get()[0]
@@ -110,7 +110,7 @@ const oneNth = function (m) {
 // 'half'
 const named = function (m) {
   const str = m.text('reduced')
-  if (mapping.hasOwnProperty(str)) {
+  if (Object.hasOwn(mapping, str)) {
     return { numerator: 1, denominator: mapping[str] }
   }
   return null

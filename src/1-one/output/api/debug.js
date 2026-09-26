@@ -4,7 +4,7 @@ const isClientSide = () => typeof window !== 'undefined' && window.document
 const debug = function (fmt) {
   const debugMethods = this.methods.one.debug || {}
   // see if method name exists
-  if (fmt && debugMethods.hasOwnProperty(fmt)) {
+  if (fmt && Object.hasOwn(debugMethods, fmt)) {
     debugMethods[fmt](this)
     return this
   }

@@ -163,7 +163,7 @@ const toPresent = function (vb, parsed, form) {
   const converted = convertAuxiliary(vb, parsed, form, 'present')
   if (converted) return converted
   // console.log(form)
-  if (forms.hasOwnProperty(form)) {
+  if (Object.hasOwn(forms, form)) {
     vb = forms[form](vb, parsed)
     vb.fullSentence().compute(['tagger', 'chunks'])
     return vb

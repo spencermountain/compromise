@@ -64,10 +64,6 @@ const multiTag = function (terms, tagString, tagSet, isSafe) {
   })
 }
 
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
 // verbose-mode tagger debuging
 const log = (terms, tag, reason = '') => {
   const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
@@ -91,11 +87,11 @@ const setTag = function (terms, tag, world = {}, isSafe, reason) {
     return
   }
   // some logging for debugging
-  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
+  const env = globalThis.process?.env ?? globalThis.env ?? {}
   if (env && env.DEBUG_TAGS) {
     log(terms, tag, reason)
   }
-  if (isArray(tag) === true) {
+  if (Array.isArray(tag) === true) {
     tag.forEach(tg => setTag(terms, tg, world, isSafe))
     return
   }

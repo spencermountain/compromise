@@ -8,7 +8,7 @@ const doNegative = function (state) {
   const reg = regs[state.r]
 
   // match *anything* but this term
-  const tmpReg = Object.assign({}, reg)
+  const tmpReg = { ...reg }
   tmpReg.negative = false // try removing it
 
   // found it? if so, we die here

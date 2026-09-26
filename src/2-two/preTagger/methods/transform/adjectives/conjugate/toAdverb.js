@@ -37,7 +37,7 @@ const exceptions = {
 // 'roomy' -> 'roomily'
 // but here, conjugate what it would be, if it made sense to
 const toAdverb = function (str) {
-  if (exceptions.hasOwnProperty(str)) {
+  if (Object.hasOwn(exceptions, str)) {
     return exceptions[str]
   }
   let adv = doRules(str, suffixes)

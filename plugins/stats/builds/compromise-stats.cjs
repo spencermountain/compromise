@@ -10,14 +10,14 @@
   };
 
   const oneSize$2 = function (list, size) {
-    const grams = {};
+    const grams = Object.create(null);
     // count each instance
     list.forEach(terms => {
       for (let i = 0; i < terms.length; i += 1) {
         const slice = terms.slice(i, i + size);
         if (slice.length === size) {
           const str = slice.join(' ');
-          if (grams.hasOwnProperty(str)) {
+          if (Object.hasOwn(grams, str)) {
             grams[str].count += 1;
           } else {
             grams[str] = {
@@ -38,7 +38,7 @@
 
   const allGrams = function (list, options) {
     // support {size:2} syntax
-    if (options.size) {
+    if (options.size > 0) {
       options.min = options.size;
       options.max = options.size;
     }
@@ -57,14 +57,14 @@
   };
 
   const oneSize$1 = function (list, size) {
-    const grams = {};
+    const grams = Object.create(null);
     // count each instance
     list.forEach(terms => {
       for (let i = 0; i <= terms.length; i += 1) {
         const slice = terms.slice(0, i);
         if (slice.length === size) {
           const str = slice.join(' ');
-          if (grams.hasOwnProperty(str)) {
+          if (Object.hasOwn(grams, str)) {
             grams[str].count += 1;
           } else {
             grams[str] = {
@@ -85,7 +85,7 @@
 
   const startGrams = function (list, options) {
     // support {size:2} syntax
-    if (options.size) {
+    if (options.size > 0) {
       options.min = options.size;
       options.max = options.size;
     }
@@ -104,7 +104,7 @@
   };
 
   const oneSize = function (list, size) {
-    const grams = {};
+    const grams = Object.create(null);
     // count each instance
     list.forEach(terms => {
       const len = terms.length;
@@ -112,7 +112,7 @@
         const slice = terms.slice(len - i, len);
         if (slice.length === size) {
           const str = slice.join(' ');
-          if (grams.hasOwnProperty(str)) {
+          if (Object.hasOwn(grams, str)) {
             grams[str].count += 1;
           } else {
             grams[str] = {
@@ -133,7 +133,7 @@
 
   const endGrams = function (list, options) {
     // support {size:2} syntax
-    if (options.size) {
+    if (options.size > 0) {
       options.min = options.size;
       options.max = options.size;
     }
@@ -251,7 +251,7 @@
           h[a.normal] = a;
         }
         return h
-      }, {});
+      }, Object.create(null));
       let arr = Object.keys(combine).map(k => combine[k]);
       arr = sort(arr);
       return arr
@@ -753,13 +753,13 @@
   };
 
   const tf = function (view, opts = {}) {
-    const counts = {};
+    const counts = Object.create(null);
     const form = opts.form || 'root';
     view.docs.forEach(terms => {
       terms.forEach(term => {
         const str = term[form] || term.implicit || term.normal;
         if (str) {
-          counts[str] = counts[str] || 0;
+          counts[str] ??= 0;
           counts[str] += 1;
         }
       });
@@ -768,14 +768,14 @@
   };
 
   const idf = function (view, opts = {}) {
-    let counts = {};
+    let counts = Object.create(null);
     let total = 0;
     const form = opts.form || 'root';
     view.docs.forEach(terms => {
       terms.forEach(term => {
         const str = term[form] || term.implicit || term.normal;
         if (str) {
-          counts[str] = counts[str] || 0;
+          counts[str] ??= 0;
           counts[str] += 1;
           total += 1;
         }
@@ -783,21 +783,18 @@
     });
 
     counts = Object.entries(counts);
-    counts = counts.reduce((h, a) => {
-      if (opts.min && a[1] < opts.min) {
-        return h
-      }
+    counts = counts.filter(([, count]) => !opts.min || count >= opts.min);
+    return Object.fromEntries(counts.map(([word, count]) => {
       // IDF = (Total number of documents) / (total number of documents containing the keyword)
-      const num = Math.log10(total / a[1]);
+      const num = Math.log10(total / count);
       //force between 0-1
       // num = num / max
       // num = Math.round(num * 1000) / 1000 // round to 2 digits
-      h[a[0]] = num.toFixed(3);
-      return h
-    }, {});
-    return counts
+      return [word, num.toFixed(3)]
+    }))
   };
 
+  /* eslint-disable no-empty */
   const BASE = 36;
   const seq = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -848,55 +845,87 @@
   };
 
   const symbols = function (t) {
-    //... process these lines
-    const reSymbol = new RegExp('([0-9A-Z]+):([0-9A-Z]+)');
+    const reSymbol = /^([0-9A-Z]+):([0-9A-Z]+)$/;
     for (let i = 0; i < t.nodes.length; i++) {
-      const m = reSymbol.exec(t.nodes[i]);
-      if (!m) {
-        t.symCount = i;
+      if (!t.nodes[i].includes(':')) {
         break
       }
-      t.syms[encoding.fromAlphaCode(m[1])] = encoding.fromAlphaCode(m[2]);
+      const m = reSymbol.exec(t.nodes[i]);
+      if (!m || m[0].length !== t.nodes[i].length || encoding.fromAlphaCode(m[1]) !== i) {
+        throw new SyntaxError('Invalid efrt packed data: symbol definition')
+      }
+      t.syms.push(encoding.fromAlphaCode(m[2]));
     }
-    //remove from main node list
-    t.nodes = t.nodes.slice(t.symCount, t.nodes.length);
+    t.symCount = t.syms.length;
+    t.nodes = t.nodes.slice(t.symCount);
+    if (!t.nodes.length || t.syms.some((index) => !Number.isSafeInteger(index) || index >= t.nodes.length)) {
+      throw new SyntaxError('Invalid efrt packed data: symbol target')
+    }
   };
 
   // References are either absolute (symbol) or relative (1 - based)
   const indexFromRef = function (trie, ref, index) {
     const dnode = encoding.fromAlphaCode(ref);
-    if (dnode < trie.symCount) {
-      return trie.syms[dnode]
+    const target = dnode < trie.symCount ? trie.syms[dnode] : index + dnode + 1 - trie.symCount;
+    // The encoder emits nodes in topological order. Every edge must point
+    // forward, which also rules out cycles before expansion starts.
+    if (!Number.isSafeInteger(target) || target <= index || target >= trie.nodes.length) {
+      throw new SyntaxError('Invalid efrt packed data: node reference')
     }
-    return index + dnode + 1 - trie.symCount
+    return target
+  };
+
+  const parseNodes = function (trie) {
+    return trie.nodes.map((node, index) => {
+      if (node === '' && trie.nodes.length !== 1) {
+        throw new SyntaxError('Invalid efrt packed data: empty node')
+      }
+      const terminal = node[0] === '!';
+      const body = terminal ? node.slice(1) : node;
+      const edges = [];
+      const token = /([^A-Z0-9,;!:|¦]+)([A-Z0-9]+|,|$)/g;
+      let offset = 0;
+      while (offset < body.length) {
+        const match = token.exec(body);
+        if (!match || match.index !== offset || (match[2] === ',' && token.lastIndex === body.length)) {
+          throw new SyntaxError('Invalid efrt packed data: node syntax')
+        }
+        const ref = match[2];
+        edges.push({
+          text: match[1],
+          target: ref === '' || ref === ',' ? -1 : indexFromRef(trie, ref, index)
+        });
+        offset = token.lastIndex;
+      }
+      return { terminal, edges }
+    })
   };
 
   const toArray = function (trie) {
+    const nodes = parseNodes(trie);
     const all = [];
-    const crawl = (index, pref) => {
-      let node = trie.nodes[index];
-      if (node[0] === '!') {
-        all.push(pref);
-        node = node.slice(1); //ok, we tried. remove it.
-      }
-      const matches = node.split(/([A-Z0-9,]+)/g);
-      for (let i = 0; i < matches.length; i += 2) {
-        const str = matches[i];
-        const ref = matches[i + 1];
-        if (!str) {
-          continue
+    const stack = [{ index: 0, pref: '', edge: -1 }];
+    while (stack.length) {
+      const frame = stack[stack.length - 1];
+      const node = nodes[frame.index];
+      if (frame.edge === -1) {
+        if (node.terminal) {
+          all.push(frame.pref);
         }
-        const have = pref + str;
-        //branch's end
-        if (ref === ',' || ref === undefined) {
-          all.push(have);
-          continue
-        }
-        const newIndex = indexFromRef(trie, ref, index);
-        crawl(newIndex, have);
+        frame.edge = 0;
       }
-    };
-    crawl(0, '');
+      if (frame.edge === node.edges.length) {
+        stack.pop();
+        continue
+      }
+      const edge = node.edges[frame.edge++];
+      const word = frame.pref + edge.text;
+      if (edge.target === -1) {
+        all.push(word);
+      } else {
+        stack.push({ index: edge.target, pref: word, edge: -1 });
+      }
+    }
     return all
   };
 
@@ -915,15 +944,21 @@
   };
 
   const unpack = function (str) {
-    if (!str) {
+    if (str === '' || str === null || str === undefined) {
       return {}
+    }
+    if (typeof str !== 'string') {
+      throw new TypeError('efrt unpack expects a string')
     }
     //turn the weird string into a key-value object again
     const obj = str.split('|').reduce((h, s) => {
       const arr = s.split('¦');
+      if (arr.length !== 2 || Object.prototype.hasOwnProperty.call(h, arr[0])) {
+        throw new SyntaxError('Invalid efrt packed data: category separator or duplicate category')
+      }
       h[arr[0]] = arr[1];
       return h
-    }, {});
+    }, Object.create(null));
     const all = {};
     Object.keys(obj).forEach(function (cat) {
       const arr = unpack$1(obj[cat]);
@@ -933,14 +968,19 @@
       }
       for (let i = 0; i < arr.length; i++) {
         const k = arr[i];
-        if (all.hasOwnProperty(k) === true) {
+        if (Object.prototype.hasOwnProperty.call(all, k)) {
           if (Array.isArray(all[k]) === false) {
             all[k] = [all[k], cat];
           } else {
             all[k].push(cat);
           }
         } else {
-          all[k] = cat;
+          Object.defineProperty(all, k, {
+            value: cat,
+            writable: true,
+            enumerable: true,
+            configurable: true
+          });
         }
       }
     });
@@ -968,13 +1008,17 @@
   const addMethods = function (View) {
 
     View.prototype.tfidf = function (opts = {}, mod) {
+      if (!mod) {
+        mod = model;
+      }
       // term frequency
       const counts = tf(this, opts);
       let freqs = Object.entries(counts);
       freqs = freqs.map(a => {
         const [w, count] = a;
         // tfidf = tf * idf
-        let tfidf = count * (model[w] || max);
+        const weight = Object.hasOwn(mod, w) ? mod[w] : max;
+        let tfidf = count * weight;
         // round it 2 decimals
         tfidf = Math.round(tfidf * 100) / 100;
         a[1] = tfidf;
@@ -991,18 +1035,16 @@
       })
     };
 
-    View.prototype.buildIDF = idf;
+    View.prototype.buildIDF = function (opts) {
+      return idf(this, opts)
+    };
   };
 
   const compute = {
     // this is just the same thing
     // but written to Term objects
     tfidf: (view) => {
-      let res = view.tfidf();
-      res = res.reduce((h, a) => {
-        h[a[0]] = a[1];
-        return h
-      }, {});
+      const res = Object.fromEntries(view.tfidf());
       view.docs.forEach(terms => {
         terms.forEach(term => {
           term.tfidf = res[term.root || term.implicit || term.normal] || 0;

@@ -8,7 +8,7 @@ const tagger = function (list, document, world) {
     return list
   }
   // some logging for debugging
-  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
+  const env = globalThis.process?.env ?? globalThis.env ?? {}
   if (env.DEBUG_TAGS) {
     console.log(`\n\n  \x1b[32m→ ${list.length} post-tagger:\x1b[0m`) //eslint-disable-line
   }

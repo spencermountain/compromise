@@ -17,7 +17,7 @@ const setup = function (senses, tag) {
         fallback = name
       }
     })
-    byWord[ambig] = byWord[ambig] || []
+    byWord[ambig] ||= []
     byWord[ambig].push({
       tag: tag,
       fallback,

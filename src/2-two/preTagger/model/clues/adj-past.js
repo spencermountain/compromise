@@ -67,8 +67,8 @@ const adjPast = {
 }
 
 export default {
-  beforeTags: Object.assign({}, adj.beforeTags, adjPast.beforeTags),
-  afterTags: Object.assign({}, adj.afterTags, adjPast.afterTags),
-  beforeWords: Object.assign({}, adj.beforeWords, adjPast.beforeWords),
-  afterWords: Object.assign({}, adj.afterWords, adjPast.afterWords),
+  beforeTags: { ...adj.beforeTags, ...adjPast.beforeTags },
+  afterTags: { ...adj.afterTags, ...adjPast.afterTags },
+  beforeWords: { ...adj.beforeWords, ...adjPast.beforeWords },
+  afterWords: { ...adj.afterWords, ...adjPast.afterWords },
 }

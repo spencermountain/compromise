@@ -6,7 +6,7 @@ import version from './_version.js'
 
 // combine all the plugins
 const plugin = {
-  lib: Object.assign({}, streamFile.lib, keyPress.lib, workerPool.lib, lazyParse.lib),
+  lib: { ...streamFile.lib, ...keyPress.lib, ...workerPool.lib, ...lazyParse.lib },
   version: version
 }
 

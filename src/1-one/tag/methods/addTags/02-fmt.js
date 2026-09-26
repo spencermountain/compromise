@@ -1,10 +1,10 @@
 import colors from './_colors.js'
 
 const getColor = function (node) {
-  if (colors.hasOwnProperty(node.id)) {
+  if (Object.hasOwn(colors, node.id)) {
     return colors[node.id]
   }
-  if (colors.hasOwnProperty(node.is)) {
+  if (Object.hasOwn(colors, node.is)) {
     return colors[node.is]
   }
   const found = node._cache.parents.find(c => colors[c])

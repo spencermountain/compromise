@@ -5,7 +5,7 @@ export default [
   regexpPlugin.configs['flat/recommended'],
   {
     languageOptions: {
-      ecmaVersion: 'latest',
+      ecmaVersion: 2022,
       sourceType: 'module',
       globals: {
         // Node globals

@@ -1,7 +1,5 @@
 import parse from './parse/index.js'
 
-const isArray = arr => Object.prototype.toString.call(arr) === '[object Array]'
-
 // turn anything into {foo:true} format
 const coerceToObject = function (input) {
   if (typeof input === 'string' || typeof input === 'number') {
@@ -9,7 +7,7 @@ const coerceToObject = function (input) {
     tmp[input] = true
     return tmp
   }
-  if (isArray(input)) {
+  if (Array.isArray(input)) {
     return input.reduce((h, s) => {
       h[s] = true
       return h

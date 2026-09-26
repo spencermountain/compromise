@@ -26,7 +26,7 @@ const isSentence = function (str, abbrevs) {
   const words = txt.split(' ')
   const lastWord = words[words.length - 1].toLowerCase()
   // check for 'Mr.' (and not mr?)
-  if (abbrevs.hasOwnProperty(lastWord) === true && hasPeriod.test(str) === true) {
+  if (Object.hasOwn(abbrevs, lastWord) === true && hasPeriod.test(str) === true) {
     return false
   }
   // //check for jeopardy!

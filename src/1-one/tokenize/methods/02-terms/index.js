@@ -34,20 +34,16 @@ notWord = notWord.reduce((h, c) => {
   return h
 }, {})
 
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
 //turn a string into an array of strings (naiive for now, lumped later)
 const splitWords = function (str, model) {
   let result = []
   let arr = []
   //start with a naiive split
-  str = str || ''
+  str ||= ''
   if (typeof str === 'number') {
     str = String(str)
   }
-  if (isArray(str)) {
+  if (Array.isArray(str)) {
     return str
   }
   const words = str.split(naiiveSplit)
@@ -64,7 +60,7 @@ const splitWords = function (str, model) {
   for (let i = 0; i < arr.length; i++) {
     const word = arr[i]
     //if it's more than a whitespace
-    if (wordlike.test(word) === true && notWord.hasOwnProperty(word) === false && isBoundary.test(word) === false) {
+    if (wordlike.test(word) === true && Object.hasOwn(notWord, word) === false && isBoundary.test(word) === false) {
       //put whitespace on end of previous term, if possible
       if (result.length > 0) {
         result[result.length - 1] += carry

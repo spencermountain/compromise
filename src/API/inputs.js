@@ -2,15 +2,11 @@ const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'
 }
 
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
 // internal Term objects are slightly different
 const fromJson = function (json) {
   return json.map(o => {
     return o.terms.map(term => {
-      if (isArray(term.tags)) {
+      if (Array.isArray(term.tags)) {
         term.tags = new Set(term.tags)
       }
       return term
@@ -55,9 +51,9 @@ const inputs = function (input, View, world) {
     return new View(input.document, input.ptrs)
   }
   // handle json input
-  if (isArray(input)) {
+  if (Array.isArray(input)) {
     // pre-tokenized array-of-arrays 
-    if (isArray(input[0])) {
+    if (Array.isArray(input[0])) {
       const document = preTokenized(input)
       return new View(document)
     }

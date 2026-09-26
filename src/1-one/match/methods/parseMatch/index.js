@@ -10,7 +10,7 @@ const syntax = function (input, opts, world) {
   if (input === null || input === undefined || input === '') {
     return []
   }
-  opts = opts || {}
+  opts ||= {}
   if (typeof input === 'number') {
     input = String(input) //go for it?
   }

@@ -18,7 +18,7 @@ const normalizePunctuation = function (str, model) {
   let end = chars.length
 
   // punctuation-only words, like '<3'
-  if (emoticons.hasOwnProperty(str.trim())) {
+  if (Object.hasOwn(emoticons, str.trim())) {
     return { str: str.trim(), pre, post: ' ' } //not great
   }
 

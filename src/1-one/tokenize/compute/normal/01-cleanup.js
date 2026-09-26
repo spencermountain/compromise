@@ -7,16 +7,16 @@ const trimPunctuation = (str, punctuation) => {
 
 /** some basic operations on a string to reduce noise */
 const clean = function (str) {
-  str = str || ''
+  str ||= ''
   str = str.toLowerCase()
   str = str.trim()
   const original = str
   //punctuation
   str = trimPunctuation(str, /[,;.!?]/)
   //coerce Unicode ellipses
-  str = str.replace(/\u2026/g, '...')
+  str = str.replaceAll('…', '...')
   //en-dash
-  str = str.replace(/\u2013/g, '-')
+  str = str.replaceAll('–', '-')
   //strip leading & trailing grammatical punctuation
   if (/^[:;]/.test(str) === false) {
     str = trimPunctuation(str, /[",.!:;?)]/)

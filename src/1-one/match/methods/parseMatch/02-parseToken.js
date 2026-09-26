@@ -90,7 +90,7 @@ const parseToken = function (w, opts) {
     if (start(w) === '~' && end(w) === '~' && w.length > 2) {
       w = stripBoth(w)
       obj.fuzzy = true
-      obj.min = opts.fuzzy || 0.85
+      obj.min = opts.fuzzy ?? 0.85
       if (/\(/.test(w) === false) {
         obj.word = w
         return obj

@@ -10,7 +10,7 @@ const hasSomething = /\S/
 const startWhitespace = /^\s+/
 
 const splitSentences = function (text, world) {
-  text = text || ''
+  text ||= ''
   text = String(text)
   // Ensure it 'smells like' a sentence
   if (!text || typeof text !== 'string' || hasSomething.test(text) === false) {

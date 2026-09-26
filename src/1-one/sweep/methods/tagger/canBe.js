@@ -1,7 +1,7 @@
 // is this tag consistent with the tags they already have?
 const canBe = function (terms, tag, model) {
   const tagSet = model.one.tagSet
-  if (!tagSet.hasOwnProperty(tag)) {
+  if (!Object.hasOwn(tagSet, tag)) {
     return true
   }
   const not = tagSet[tag].not || []

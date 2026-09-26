@@ -27,12 +27,12 @@ const addSuffix = function (obj) {
     prefix: obj.prefix,
   }
   // $5 to 'five dollars'
-  if (prefixes.hasOwnProperty(obj.prefix)) {
+  if (Object.hasOwn(prefixes, obj.prefix)) {
     res.suffix += ' ' + prefixes[obj.prefix]
     res.prefix = ''
   }
   // 5% to 'five percent'
-  if (suffixes.hasOwnProperty(obj.suffix)) {
+  if (Object.hasOwn(suffixes, obj.suffix)) {
     res.suffix += ' ' + suffixes[obj.suffix]
   }
   if (res.suffix && obj.num === 1) {

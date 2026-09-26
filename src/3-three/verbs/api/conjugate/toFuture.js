@@ -82,7 +82,7 @@ const toFuture = function (vb, parsed, form) {
   if (vb.has('will')) {
     return vb
   }
-  if (forms.hasOwnProperty(form)) {
+  if (Object.hasOwn(forms, form)) {
     vb = forms[form](vb, parsed)
     vb.fullSentence().compute(['tagger', 'chunks'])
     return vb

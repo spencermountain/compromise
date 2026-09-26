@@ -4,7 +4,7 @@ const defaults = {
 }
 
 const oneSize = function (list, size) {
-  const grams = {}
+  const grams = Object.create(null)
   // count each instance
   list.forEach(terms => {
     const len = terms.length
@@ -12,7 +12,7 @@ const oneSize = function (list, size) {
       const slice = terms.slice(len - i, len)
       if (slice.length === size) {
         const str = slice.join(' ')
-        if (grams.hasOwnProperty(str)) {
+        if (Object.hasOwn(grams, str)) {
           grams[str].count += 1
         } else {
           grams[str] = {

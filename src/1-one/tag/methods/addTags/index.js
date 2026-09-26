@@ -21,7 +21,7 @@ const compute = function (allTags) {
 
 const fromUser = function (tags) {
   Object.keys(tags).forEach(k => {
-    tags[k] = Object.assign({}, tags[k])
+    tags[k] = { ...tags[k] }
     tags[k].novel = true
   })
   return tags

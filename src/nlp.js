@@ -5,7 +5,7 @@ import extend from './API/extend.js'
 import { verbose } from './API/_lib.js'
 import handleInputs from './API/inputs.js'
 
-const world = Object.assign({}, tmpWrld)
+const world = { ...tmpWrld }
 
 const nlp = function (input, lex) {
   if (lex) {

@@ -31,7 +31,7 @@ const runMatch = function (maybeList, document, docCache, methods, opts) {
           //     }
           //   }
           // }
-          const todo = Object.assign({}, m, { pointer: ptr })
+          const todo = { ...m, pointer: ptr }
           if (m.unTag !== undefined) {
             todo.unTag = m.unTag
           }

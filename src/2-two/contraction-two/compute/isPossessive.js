@@ -17,7 +17,7 @@ const nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must',
 const isPossessive = (terms, i) => {
   const term = terms[i]
   // these can't be possessive
-  if (banList.hasOwnProperty(term.machine || term.normal)) {
+  if (Object.hasOwn(banList, term.machine || term.normal)) {
     return false
   }
   // if we already know it

@@ -9,15 +9,12 @@ const isObject = val => {
 
 // sort by frequency
 const topk = function (arr) {
-  const obj = {}
-  arr.forEach(a => {
-    obj[a] = obj[a] || 0
-    obj[a] += 1
+  const counts = new Map()
+  arr.forEach(word => {
+    counts.set(word, (counts.get(word) ?? 0) + 1)
   })
-  const res = Object.keys(obj).map(k => {
-    return { normal: k, count: obj[k] }
-  })
-  return res.sort((a, b) => (a.count > b.count ? -1 : 0))
+  const res = Array.from(counts, ([normal, count]) => ({ normal, count }))
+  return res.sort((a, b) => b.count - a.count)
 }
 
 /** some named output formats */
@@ -71,13 +68,7 @@ const out = function (method) {
 
   // some handy ad-hoc outputs
   if (method === 'terms') {
-    let list = []
-    this.docs.forEach(terms => {
-      let words = terms.map(t => t.text)
-      words = words.filter(t => t)
-      list = list.concat(words)
-    })
-    return list
+    return this.docs.flatMap(terms => terms.map(t => t.text).filter(Boolean))
   }
   if (method === 'tags') {
     return this.docs.map(terms => {
@@ -91,7 +82,7 @@ const out = function (method) {
     this.compute('tagRank')
     return this.docs
       .map(ts => {
-        return ts.map(t => (t.tagRank && t.tagRank[0] ? `#${t.tagRank[0]}` : '')).join(' ')
+        return ts.map(t => (t.tagRank?.[0] ? `#${t.tagRank[0]}` : '')).join(' ')
       })
       .join('\n')
   }

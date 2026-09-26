@@ -35,7 +35,7 @@ const parseQuestion = function (sentence) {
     for (; end < words.length; end += 1) {
       if (!terms.eq(end).has('(#Determiner|#Adjective|#Noun|#Preposition|#Conjunction)') || terms.eq(end).has('#Verb')) break
       if (noun && copula && (terms.eq(end).has('#Adjective') || /ing$/.test(words[end]))) break
-      noun = noun || terms.eq(end).has('#Noun')
+      noun ||= terms.eq(end).has('#Noun')
     }
     if (!noun) return null
   }

@@ -24,7 +24,7 @@ export default function (View) {
     }
     // run each method
     Object.keys(opts).forEach(fn => {
-      if (methods.hasOwnProperty(fn)) {
+      if (Object.hasOwn(methods, fn)) {
         methods[fn](this, opts[fn])
       }
     })

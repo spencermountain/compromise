@@ -170,7 +170,7 @@
     let unit = m.match('#Duration').text('normal');
     unit = unit.replace(/s$/, '');
     // support shorthands like 'min'
-    if (aliases.hasOwnProperty(unit)) {
+    if (Object.hasOwn(aliases, unit)) {
       unit = aliases[unit];
     }
     return unit
@@ -373,7 +373,7 @@
     hour = hour.text('reduced');
     let mins = punt.text('reduced');
     // support 'quarter'
-    if (minMap.hasOwnProperty(mins)) {
+    if (Object.hasOwn(minMap, mins)) {
       mins = minMap[mins];
     }
     const behind = m.has('to');
@@ -406,7 +406,7 @@
     // check for known-times (like 'today')
     let timeStr = time.not('in? the').text('reduced');
     timeStr = timeStr.replace(/^@/, '');//@4pm
-    if (hardCoded.hasOwnProperty(timeStr)) {
+    if (Object.hasOwn(hardCoded, timeStr)) {
       return { result: hardCoded[timeStr], m: time }
     }
     // '5 oclock'
@@ -441,7 +441,7 @@
       let min = m.groups('min').text('reduced');
       let d = pt(context.today);
       // support 'quarter', etc.
-      if (minMap.hasOwnProperty(min)) {
+      if (Object.hasOwn(minMap, min)) {
         min = minMap[min];
       }
       d = d.next('hour').startOf('hour').minute(min);
@@ -455,7 +455,7 @@
       let min = m.groups('min').text('reduced');
       let d = pt(context.today);
       // support 'quarter', etc.
-      if (minMap.hasOwnProperty(min)) {
+      if (Object.hasOwn(minMap, min)) {
         min = minMap[min];
       }
       d = d.next('hour').startOf('hour').minus(min, 'minutes');
@@ -878,7 +878,7 @@
     return h
   }, {});
 
-  var timezones = Object.assign({}, informal, formal);
+  var timezones = { ...informal, ...formal };
 
   const isOffset = /^[-+]?[0-9]{1,2}h(rs)?$/i;
   const isNumber = /^[-+]?[0-9]{1,2}$/;
@@ -936,7 +936,7 @@
     const str = m.text('reduced');
 
     // check our list of informal tz names
-    if (timezones.hasOwnProperty(str)) {
+    if (Object.hasOwn(timezones, str)) {
       return { result: timezones[str], m }
     }
     // try the raw text first - 'utc-5' loses its minus-sign in reduced text
@@ -1035,7 +1035,7 @@
     constructor(input, unit, context, setTime) {
       this.unit = unit || 'day';
       this.setTime = setTime || false;
-      context = context || {};
+      context ||= {};
       let today = {};
       if (context.today) {
         today = {
@@ -1569,7 +1569,7 @@
     }
     // today, yesterday, tomorrow
     const str = doc.text('reduced');
-    if (knownWord.hasOwnProperty(str) === true) {
+    if (Object.hasOwn(knownWord, str) === true) {
       return knownWord[str](context)
     }
     // 'the saturday after next'
@@ -1582,7 +1582,7 @@
     if ((str === 'next' || str === 'last') && parts.shift && Object.keys(parts.shift).length > 0) {
       const keys = Object.keys(parts.shift);
       // 'week after next' → start from next week, the shift then adds one more
-      if (keys.length === 1 && Math.abs(parts.shift[keys[0]]) === 1 && afterNext.hasOwnProperty(keys[0])) {
+      if (keys.length === 1 && Math.abs(parts.shift[keys[0]]) === 1 && Object.hasOwn(afterNext, keys[0])) {
         const Model = afterNext[keys[0]];
         const base = new Model(context.today, null, context);
         return str === 'next' ? base.next() : base.last()
@@ -2178,7 +2178,7 @@
     let m = doc.match(matchStr);
     if (m.found === true) {
       const str = m.text('reduced');
-      if (mapping$1.hasOwnProperty(str)) {
+      if (Object.hasOwn(mapping$1, str)) {
         const Model = mapping$1[str];
         const unit = new Model(null, str, context);
         return unit
@@ -2481,15 +2481,15 @@
   const parse$3 = function (doc, context, parts) {
     let unit = null;
     //'in two days'
-    unit = unit || today(doc, context, parts);
+    unit ||= today(doc, context, parts);
     // 'this haloween'
-    unit = unit || parseHoliday(doc, context);
+    unit ||= parseHoliday(doc, context);
     // 'this month'
-    unit = unit || nextLast(doc, context);
+    unit ||= nextLast(doc, context);
     // 'q2 2002'
-    unit = unit || parseYearly(doc, context);
+    unit ||= parseYearly(doc, context);
     // 'this june 2nd'
-    unit = unit || parseExplicit(doc, context);
+    unit ||= parseExplicit(doc, context);
 
     return unit
   };
@@ -2631,7 +2631,7 @@
 
   // import spacetime from 'spacetime'
 
-  const env$1 = typeof process === 'undefined' || !process.env ? self.env || {} : process.env;
+  const env$1 = globalThis.process?.env ?? globalThis.env ?? {};
   const log$1 = parts => {
     if (env$1.DEBUG_DATE) {
       // console.log(parts)// eslint-disable-line
@@ -2654,7 +2654,7 @@
 
     //apply our given timezone
     if (parts.tz) {
-      context = Object.assign({}, context, { timezone: parts.tz });
+      context = { ...context, timezone: parts.tz };
       // move 'today' to the same wall-clock date + time in the new zone
       const iso = context.today.format('iso-short');
       const time = context.today.format('time-24');
@@ -3530,15 +3530,11 @@
 
   const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate);
 
-  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env;
+  const env = globalThis.process?.env ?? globalThis.env ?? {};
   const log = msg => {
     if (env.DEBUG_DATE) {
       console.log(`\n  \x1b[32m ${msg} \x1b[0m`); // eslint-disable-line
     }
-  };
-
-  const isArray = function (arr) {
-    return Object.prototype.toString.call(arr) === '[object Array]'
   };
 
   //else, try whole thing, non ranges
@@ -3573,7 +3569,7 @@
         let res = fmt.parse(m, context);
         if (res !== null) {
           // did it return more than one date?
-          if (!isArray(res)) {
+          if (!Array.isArray(res)) {
             res = [res];
           }
           return res
@@ -3598,7 +3594,7 @@
       found = [tryFull(m, context)];
     }
     // add the repeat info to each date
-    found = found.map((o) => Object.assign({}, repeats, o));
+    found = found.map((o) => ({ ...repeats, ...o }));
     // ensure start is not after end
     found.forEach((res) => {
       if (res.start && res.end && res.start.d.epoch > res.end.d.epoch) {
@@ -3671,13 +3667,13 @@
 
   const parse$2 = function (doc, context) {
     // normalize context
-    context = context || {};
+    context ||= {};
     if (context.timezone === false) {
       context.timezone = 'UTC';
     }
     // the implied duration of 'after june 2nd'
-    context.punt = context.punt || { weeks: 2 };
-    context.today = context.today || pt.now(context.timezone);
+    context.punt ||= { weeks: 2 };
+    context.today ||= pt.now(context.timezone);
     context.today = pt(context.today, context.timezone);
 
     doc = normalize(doc);
@@ -3756,7 +3752,7 @@
       constructor(document, pointer, groups, opts = {}) {
         super(document, pointer, groups);
         this.viewType = 'Dates';
-        this.opts = Object.assign({}, opts);
+        this.opts = { ...opts };
       }
 
       get(n) {
@@ -3963,10 +3959,10 @@
         unit = unit.replace(/ies$/, 'y');
         unit = unit.replace(/s$/, '');
         // turn 'mins' into 'minute'
-        if (mapping.hasOwnProperty(unit)) {
+        if (Object.hasOwn(mapping, unit)) {
           unit = mapping[unit];
         }
-        if (known.hasOwnProperty(unit) && num !== null) {
+        if (Object.hasOwn(known, unit) && num !== null) {
           duration[unit] = num;
         }
       });
@@ -3979,10 +3975,10 @@
         if (num && unit) {
           num = num[0] || null;
           unit = unit[0] || null;
-          if (mapping.hasOwnProperty(unit)) {
+          if (Object.hasOwn(mapping, unit)) {
             unit = mapping[unit];
           }
-          if (known.hasOwnProperty(unit) && num !== null) {
+          if (Object.hasOwn(known, unit) && num !== null) {
             duration[unit] = Number(num);
           }
         }
@@ -5039,10 +5035,10 @@
     api,
     mutate: world => {
       // add our regexes
-      world.model.two.regexText = world.model.two.regexText || [];
+      world.model.two.regexText ||= [];
       world.model.two.regexText = world.model.two.regexText.concat(regex);
       // add our debug('dates') method
-      world.methods.one.debug = world.methods.one.debug || {};
+      world.methods.one.debug ||= {};
       world.methods.one.debug.dates = debug;
     },
     hooks: ['dates'],

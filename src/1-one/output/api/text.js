@@ -9,10 +9,10 @@ export default {
   /** */
   text: function (fmt) {
     let opts = {}
-    if (fmt && typeof fmt === 'string' && fmts.hasOwnProperty(fmt)) {
-      opts = Object.assign({}, fmts[fmt])
+    if (fmt && typeof fmt === 'string' && Object.hasOwn(fmts, fmt)) {
+      opts = { ...fmts[fmt] }
     } else if (fmt && isObject(fmt)) {
-      opts = Object.assign({}, fmt) //todo: fixme
+      opts = { ...fmt } //todo: fixme
     }
     // is it a full document?
     if (opts.keepSpace === undefined && !this.isFull()) {
@@ -21,7 +21,7 @@ export default {
     }
     if (opts.keepEndPunct === undefined && this.pointer) {
       const ptr = this.pointer[0]
-      if (ptr && ptr[1]) {
+      if (ptr?.[1]) {
         opts.keepEndPunct = false
       } else {
         opts.keepEndPunct = true

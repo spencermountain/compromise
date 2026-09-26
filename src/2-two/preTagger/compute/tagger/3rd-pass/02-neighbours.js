@@ -31,13 +31,13 @@ const neighbours = function (terms, i, model) {
   if (term.tags.size === 0) {
     let tag = null
     // look left <-
-    tag = tag || lookAtWord(terms[i - 1], leftWords)
+    tag ||= lookAtWord(terms[i - 1], leftWords)
     // look right ->
-    tag = tag || lookAtWord(terms[i + 1], rightWords)
+    tag ||= lookAtWord(terms[i + 1], rightWords)
     // look left <-
-    tag = tag || lookAtTag(terms[i - 1], leftTags)
+    tag ||= lookAtTag(terms[i - 1], leftTags)
     // look right ->
-    tag = tag || lookAtTag(terms[i + 1], rightTags)
+    tag ||= lookAtTag(terms[i + 1], rightTags)
     if (tag) {
       fastTag(term, tag, '3-[neighbour]')
       fillTag(terms, i, model)

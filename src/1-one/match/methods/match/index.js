@@ -24,7 +24,7 @@ const handleStart = function (terms, regs, n) {
 
 // ok, here we go.
 const runMatch = function (docs, todo, cache) {
-  cache = cache || []
+  cache ||= []
   const { regs, group, justOne } = todo
   let results = []
   if (!regs || regs.length === 0) {

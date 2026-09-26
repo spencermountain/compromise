@@ -80,7 +80,7 @@
   "types": "./types/three.d.ts",
   "sideEffects": false,
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=18"
   },
   "scripts": {
     "build": "node ./scripts/version.js && rollup -c --silent",

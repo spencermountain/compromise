@@ -35,7 +35,7 @@ const getParts = function (s) {
         // do we already have an object?
         if (res.obj) {
           if (pivot) {
-            res.obj.mod = res.obj.mod || {}
+            res.obj.mod ||= {}
             res.obj.mod[pivot] = parseNoun(chunk)
           } else {
             // console.log('=-=-=-= missing mod -=-=-=-')

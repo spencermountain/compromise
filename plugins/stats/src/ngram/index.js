@@ -80,7 +80,7 @@ const addMethod = function (View) {
         h[a.normal] = a
       }
       return h
-    }, {})
+    }, Object.create(null))
     let arr = Object.keys(combine).map(k => combine[k])
     arr = sort(arr)
     return arr

@@ -59,13 +59,13 @@ class View {
     return pointers.map(a => {
       // eslint-disable-next-line prefer-const
       let [n, start, end, id, endId] = a
-      start = start || 0
-      end = end || (document[n] || []).length
+      start ||= 0
+      end ||= (document[n] || []).length
       //add frozen id, for good-measure
-      if (document[n] && document[n][start]) {
-        id = id || document[n][start].id
+      if (document[n]?.[start]) {
+        id ||= document[n][start].id
         if (document[n][end - 1]) {
-          endId = endId || document[n][end - 1].id
+          endId ||= document[n][end - 1].id
         }
       }
       return [n, start, end, id, endId]
@@ -75,7 +75,7 @@ class View {
   update(pointer) {
     const m = new View(this.document, pointer)
     // send the cache down, too?
-    if (this._cache && pointer && pointer.length > 0) {
+    if (this._cache && pointer?.length > 0) {
       // only keep cache if it's a full-sentence
       const cache = []
       pointer.forEach((ptr, i) => {
@@ -115,7 +115,7 @@ class View {
     let document = this.document.slice(0) //node 17: structuredClone(document);
     document = document.map(terms => {
       return terms.map(term => {
-        term = Object.assign({}, term)
+        term = { ...term }
         term.tags = new Set(term.tags)
         return term
       })

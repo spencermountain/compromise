@@ -21,7 +21,8 @@ const addMethods = function (View) {
     freqs = freqs.map(a => {
       const [w, count] = a
       // tfidf = tf * idf
-      let tfidf = count * (model[w] || max)
+      const weight = Object.hasOwn(mod, w) ? mod[w] : max
+      let tfidf = count * weight
       // round it 2 decimals
       tfidf = Math.round(tfidf * 100) / 100
       a[1] = tfidf
@@ -38,6 +39,8 @@ const addMethods = function (View) {
     })
   }
 
-  View.prototype.buildIDF = idf
+  View.prototype.buildIDF = function (opts) {
+    return idf(this, opts)
+  }
 }
 export default addMethods

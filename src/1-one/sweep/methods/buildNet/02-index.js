@@ -32,7 +32,7 @@ const buildIndex = function (matches, hooks, hookOrder) {
     const keys = anchor === null ? [...new Set(rule.wants)] : [anchor]
     for (let i = 0; i < keys.length; i += 1) {
       const key = keys[i]
-      index[key] = index[key] || []
+      index[key] ||= []
       index[key].push(entry)
     }
   })

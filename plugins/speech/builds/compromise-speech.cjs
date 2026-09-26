@@ -10,7 +10,7 @@
       return s.replace(/([^c])\1/g, '$1')
     },
     dropInitialLetters: (s) => {
-      if (s.match(/^(kn|gn|pn|ae|wr)/)) {
+      if (/^(kn|gn|pn|ae|wr)/.test(s)) {
         return s.substring(1, s.length - 1)
       }
       return s
@@ -216,14 +216,14 @@
 
     if (arr.length > 1) {
       const single = arr[0] + arr[1];
-      if (single.match(starts_with_single_vowel_combos)) {
+      if (starts_with_single_vowel_combos.test(single)) {
         arr[0] = single;
         arr.splice(1, 1);
       }
     }
 
     if (arr.length > 1) {
-      if (arr[arr.length - 1].match(only_one_or_more_c)) {
+      if (only_one_or_more_c.test(arr[arr.length - 1])) {
         arr[arr.length - 2] = arr[arr.length - 2] + arr[arr.length - 1];
         arr.splice(arr.length - 1, 1);
       }
@@ -258,8 +258,8 @@
       let candidate = before + chars[i];
 
       //it's a consonant that comes after a vowel
-      if (before.match(ends_with_vowel) && !current.match(ends_with_vowel)) {
-        if (after.match(starts_with_e_then_specials)) {
+      if (ends_with_vowel.test(before) && !ends_with_vowel.test(current)) {
+        if (starts_with_e_then_specials.test(after)) {
           candidate += 'e';
           after = after.replace(starts_with_e, '');
         }
@@ -268,7 +268,7 @@
       }
 
       //unblended vowels ('noisy' vowel combinations)
-      if (candidate.match(ends_with_noisy_vowel_combos)) {
+      if (ends_with_noisy_vowel_combos.test(candidate)) {
         //'io' is noisy, not in 'ion'
         all.push(before);
         all.push(current);
@@ -276,13 +276,13 @@
       }
 
       // if candidate is followed by a CV, assume consecutive open syllables
-      if (candidate.match(ends_with_vowel) && after.match(starts_with_consonant_vowel)) {
+      if (ends_with_vowel.test(candidate) && starts_with_consonant_vowel.test(after)) {
         all.push(candidate);
         return all.concat(doWord(after))
       }
     }
     //if still running, end last syllable
-    if (w.match(aiouy) || w.match(ends_with_ee)) {
+    if (aiouy.test(w) || ends_with_ee.test(w)) {
       //allow silent trailing e
       all.push(w);
     } else if (w) {

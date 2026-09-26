@@ -23,7 +23,7 @@ const nope = {
 const checkCase = function (terms, i, model) {
   const term = terms[i]
   // assume terms are already indexed
-  term.index = term.index || [0, 0]
+  term.index ||= [0, 0]
   const index = term.index[1]
   const str = term.text || '' //need case info
   // titlecase and not first word of sentence

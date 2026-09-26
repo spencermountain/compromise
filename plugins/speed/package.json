@@ -27,6 +27,9 @@
   "module": "./builds/compromise-speed.mjs",
   "types": "./index.d.ts",
   "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",

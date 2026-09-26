@@ -18,7 +18,7 @@ const expand = function (words) {
         _multi[split[0]] = split.length
       }
     }
-    lex[word] = lex[word] || tag
+    lex[word] ||= tag
   })
   // cleanup
   delete lex['']

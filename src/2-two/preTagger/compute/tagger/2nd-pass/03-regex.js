@@ -12,7 +12,7 @@ const doRegs = function (str, regs) {
 // suffix-regexes, indexed by last-character
 const doEndsWith = function (str = '', byEnd) {
   const char = str[str.length - 1]
-  if (byEnd.hasOwnProperty(char) === true) {
+  if (Object.hasOwn(byEnd, char) === true) {
     const regs = byEnd[char] || []
     for (let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {

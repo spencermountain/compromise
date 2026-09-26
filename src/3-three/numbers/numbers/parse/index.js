@@ -16,7 +16,7 @@ const parseNumeric = function (str, m) {
       num = null
     }
     // strip an ordinal off the suffix
-    suffix = suffix || ''
+    suffix ||= ''
     if (suffix === 'st' || suffix === 'nd' || suffix === 'rd' || suffix === 'th') {
       suffix = ''
     }

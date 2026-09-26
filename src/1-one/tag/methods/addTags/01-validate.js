@@ -20,19 +20,19 @@ const addImplied = function (tags) {
     }
     // add any implicit 'is' tags
     if (tags[k].is && typeof tags[k].is === 'string') {
-      if (!tags.hasOwnProperty(tags[k].is)) {
+      if (!Object.hasOwn(tags, tags[k].is)) {
         tags[tags[k].is] = {}
       }
     }
     // Additional parents need entries too, including parents introduced by plugins.
     toArr(tags[k].also).forEach(parent => {
-      if (!tags.hasOwnProperty(parent)) {
+      if (!Object.hasOwn(tags, parent)) {
         tags[parent] = {}
       }
     })
     // add any implicit 'not' tags
     toArr(tags[k].not).forEach(excluded => {
-      if (!tags.hasOwnProperty(excluded)) {
+      if (!Object.hasOwn(tags, excluded)) {
         tags[excluded] = {}
       }
     })

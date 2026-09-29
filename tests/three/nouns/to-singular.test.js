@@ -257,3 +257,17 @@ test('toSingular - longer:', function (t) {
   })
   t.end()
 })
+test('toSingular - keeps case:', function (t) {
+  const arr = [
+    [`Those are Great Danes`, `Those are Great Dane`],
+    [`The Children played`, `The Child played`],
+    [`I saw Mice`, `I saw Mouse`],
+    [`I saw MICE`, `I saw MOUSE`],
+  ]
+  arr.forEach(function (a) {
+    const doc = nlp(a[0])
+    doc.nouns().toSingular()
+    t.equal(doc.text(), a[1], here + '[case] ' + a[0])
+  })
+  t.end()
+})

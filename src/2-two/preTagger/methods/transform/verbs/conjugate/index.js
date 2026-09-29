@@ -1,4 +1,3 @@
-// import { toPast, toPresent, toGerund, toParticiple } from '../../../../model/models/index.js'
 import { convert } from 'suffix-thumb'
 
 // pull-apart phrasal verb 'fall over'
@@ -19,6 +18,7 @@ const conjugate = function (inf, model) {
       Infinitive: inf,
       Gerund: 'being',
       PastTense: 'was',
+      Participle: 'been',
       PresentTense: 'is',
     }
   }
@@ -58,4 +58,3 @@ export default conjugate
 
 // console.log(toPresent.rules.y)
 // console.log(convert('buy', toPresent))
-

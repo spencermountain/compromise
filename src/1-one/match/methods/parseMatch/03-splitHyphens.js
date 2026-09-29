@@ -8,13 +8,13 @@ const splitHyphens = function (regs, world) {
     if (reg.word && hasDash.test(reg.word)) {
       let words = reg.word.split(/[-–—]/g)
       // don't split 're-cycle', etc
-      if (prefixes.hasOwnProperty(words[0])) {
+      if (Object.hasOwn(prefixes, words[0])) {
         continue
       }
       words = words.filter(w => w).reverse()
       regs.splice(i, 1)
       words.forEach(w => {
-        const obj = Object.assign({}, reg)
+        const obj = { ...reg }
         obj.word = w
         regs.splice(i, 0, obj)
       })

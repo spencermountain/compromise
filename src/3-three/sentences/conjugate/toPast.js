@@ -1,16 +1,21 @@
+import question from '../../verbs/api/conjugate/question.js'
+import { firstGroup } from '../../verbs/api/conjugate/coordinate.js'
+
 const toPast = function (s) {
+  const inverted = question(s, 'past')
+  if (inverted) return inverted
   let verbs = s.verbs()
   // translate the first verb, no-stress
-  const first = verbs.eq(0)
-  // already past
-  if (first.has('#PastTense')) {
+  const first = firstGroup(verbs)
+  // A passive participle does not make its auxiliary past tense.
+  if (first.has('#PastTense') && !first.has('#Auxiliary')) {
     return s
   }
   first.toPastTense()
 
   // force agreement with any 2nd/3rd verbs:
   if (verbs.length > 1) {
-    verbs = verbs.slice(1)
+    verbs = verbs.slice(first.length)
     // remove any sorta infinitive - 'to engage'
     verbs = verbs.filter((v) => !v.lookBehind('to$').found)
 

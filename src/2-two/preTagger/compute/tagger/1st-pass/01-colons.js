@@ -6,7 +6,7 @@ const byPunctuation = function (terms, i, model, world) {
   if (i === 0 && terms.length >= 3) {
     const hasColon = /:/
     const post = terms[0].post
-    if (post.match(hasColon)) {
+    if (hasColon.test(post)) {
       // phone: 555-2938
       const nextTerm = terms[1]
       if (nextTerm.tags.has('Value') || nextTerm.tags.has('Email') || nextTerm.tags.has('PhoneNumber')) {

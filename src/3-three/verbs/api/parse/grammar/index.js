@@ -29,17 +29,14 @@ const cleanUp = function (vb, res) {
 
 // 'learned [to code]'
 const isInfinitive = function (vb) {
-  if (vb.has('#Infinitive')) {
-    const m = vb.growLeft('to')
-    if (m.has('^to #Infinitive')) {
-      return true
-    }
-  }
-  return false
+  // Auxiliary tagging can remove Infinitive from 'have' or 'be'. The leading
+  // 'to' still governs the whole complement, including intervening modifiers.
+  return vb.growLeft('to (#Adverb|#Negative)+?').has('^to (#Adverb|#Negative)+? #Verb')
 }
 
 const getGrammar = function (vb, res) {
   const grammar = {}
+  const infinitive = isInfinitive(vb)
   // make it easy to classify, first
   vb = cleanUp(vb, res)
   for (let i = 0; i < forms.length; i += 1) {
@@ -62,7 +59,7 @@ const getGrammar = function (vb, res) {
   }
   grammar.copula = res.root.has('#Copula')
   // 'learn to code'
-  grammar.isInfinitive = isInfinitive(vb)
+  grammar.isInfinitive = infinitive
   return grammar
 }
 

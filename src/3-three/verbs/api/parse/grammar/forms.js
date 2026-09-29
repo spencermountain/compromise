@@ -91,6 +91,7 @@ const verbForms = {
 
   // === Progressive-perfect ===
   'present-perfect-progressive': [
+    ['^(has|have) been going to be #Gerund$', [past, prog]],
     // he has been walking
     ['^(has|have) been #Gerund$', [past, prog]], //present?
   ],
@@ -105,22 +106,28 @@ const verbForms = {
 
   // ==== Passive ===
   'passive-past': [
+    ['^(was|were) being? (#PastTense|#Participle)$', [past, passive]],
+    ['^had been being? (#PastTense|#Participle)$', [past, passive]],
     // got walked, was walked, were walked
     ['(got|were|was) #Passive', [past, passive]],
     // was being walked
     ['^(was|were) being #Passive', [past, passive]],
-    // had been walked, have been eaten
-    ['^(had|have) been #Passive', [past, passive]],
+    // had been walked
+    ['^had been #Passive', [past, passive]],
   ],
   'passive-present': [
+    ['^(is|are|am) being? (#PastTense|#Participle)$', [present, passive]],
+    ['^(has|have) been being? (#PastTense|#Participle)$', [present, passive]],
     // is walked, are stolen
     ['^(is|are|am) #Passive', [present, passive]],
     // is being walked
     ['^(is|are|am) being #Passive', [present, passive]],
-    // has been cleaned
-    ['^has been #Passive', [present, passive]],
+    // has/have been cleaned
+    ['^(has|have) been #Passive', [present, passive]],
   ],
   'passive-future': [
+    ['^will have been being? (#PastTense|#Participle)$', [future, passive, conditional]],
+    ['^will be being? (#PastTense|#Participle)$', [future, passive, conditional]],
     // will have been walked
     ['will have been #Passive', [future, passive, conditional]],
     // will be cleaned
@@ -130,17 +137,18 @@ const verbForms = {
   // === Conditional ===
   'present-conditional': [
     // would be walked
-    ['would be #PastTense', [present, conditional]],
+    ['^#Modal be #PastTense$', [present, conditional, passive]],
   ],
   'past-conditional': [
     // would have been walked
-    ['would have been #PastTense', [past, conditional]],
+    ['^#Modal have been #PastTense$', [past, conditional, passive]],
   ],
 
   // ==== Auxiliary ===
   'auxiliary-future': [
+    ['^(is|are|am|was|were) going to be #Gerund$', [future, prog]],
     // going to drink
-    ['(is|are|am|was) going to (#Infinitive|#PresentTense)', [future]],
+    ['(is|are|am|was|were) going to (#Infinitive|#PresentTense)', [future]],
   ],
   'auxiliary-past': [
     // he did walk
@@ -154,9 +162,12 @@ const verbForms = {
   ],
 
   // === modals ===
+  'modal-perfect-progressive': [
+    ['^#Modal have been #Gerund$', [past, prog]],
+  ],
   'modal-past': [
     // he could have walked
-    ['^(could|must|should|shall) have #PastTense$', [past]],
+    ['^#Modal have #PastTense$', [past]],
   ],
   'modal-infinitive': [
     // he can walk

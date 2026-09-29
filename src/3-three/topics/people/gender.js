@@ -51,7 +51,7 @@ const predictGender = function (parsed, person) {
   if (honorific.found) {
     let hon = honorific.text('normal')
     hon = hon.replace(/\./g, '') //clean it up a bit
-    if (honorifics.hasOwnProperty(hon)) {
+    if (Object.hasOwn(honorifics, hon)) {
       return honorifics[hon]
     }
     // her excelency

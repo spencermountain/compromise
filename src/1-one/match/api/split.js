@@ -2,12 +2,8 @@ const combine = function (left, right) {
   return [left[0], left[1], right[2]]
 }
 
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
 const getDoc = (reg, view, group) => {
-  if (typeof reg === 'string' || isArray(reg)) {
+  if (typeof reg === 'string' || Array.isArray(reg)) {
     return view.match(reg, group)
   }
   if (!reg) {
@@ -18,10 +14,10 @@ const getDoc = (reg, view, group) => {
 
 const addIds = function (ptr, view) {
   const [n, start, end] = ptr
-  if (view.document[n] && view.document[n][start]) {
-    ptr[3] = ptr[3] || view.document[n][start].id
+  if (view.document[n]?.[start]) {
+    ptr[3] ||= view.document[n][start].id
     if (view.document[n][end - 1]) {
-      ptr[4] = ptr[4] || view.document[n][end - 1].id
+      ptr[4] ||= view.document[n][end - 1].id
     }
   }
   return ptr
@@ -54,7 +50,7 @@ methods.splitBefore = function (m, group) {
   // - instead of [before, match]
   for (let i = 0; i < all.length; i += 1) {
     // move a before to a preceding after
-    if (!all[i].after && all[i + 1] && all[i + 1].before) {
+    if (!all[i].after && all[i + 1]?.before) {
       // ensure it's from the same original sentence
       if (all[i].match && all[i].match[0] === all[i + 1].before[0]) {
         all[i].after = all[i + 1].before

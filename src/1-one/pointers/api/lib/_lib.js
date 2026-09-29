@@ -37,7 +37,7 @@ export const getExtent = function (ptrs) {
 export const indexN = function (ptrs) {
   const byN = {}
   ptrs.forEach(ref => {
-    byN[ref[0]] = byN[ref[0]] || []
+    byN[ref[0]] ||= []
     byN[ref[0]].push(ref)
   })
   return byN

@@ -35,7 +35,7 @@ const switchDefaults = {
   // 'victoria'
   'Person|Place': 'Person',
   // 'rusty'
-  'Person|Adj': 'Comparative',
+  'Person|Adj': 'Comparable',
   // 'boxes'
   'Plural|Verb': 'Plural', //(these are already derivative)
   // 'miles'
@@ -65,24 +65,24 @@ const addUncountables = function (words, model) {
 
 const expandVerb = function (str, words, doPresent) {
   const obj = conjugate(str, tmpModel)
-  words[obj.PastTense] = words[obj.PastTense] || 'PastTense'
-  words[obj.Gerund] = words[obj.Gerund] || 'Gerund'
+  words[obj.PastTense] ||= 'PastTense'
+  words[obj.Gerund] ||= 'Gerund'
   if (doPresent === true) {
     // is this plural noun, or present-tense?
-    words[obj.PresentTense] = words[obj.PresentTense] || 'PresentTense'
+    words[obj.PresentTense] ||= 'PresentTense'
   }
 }
 
 const expandAdjective = function (str, words, model) {
   const sup = toSuperlative(str, model)
-  words[sup] = words[sup] || 'Superlative'
+  words[sup] ||= 'Superlative'
   const comp = toComparative(str, model)
-  words[comp] = words[comp] || 'Comparative'
+  words[comp] ||= 'Comparative'
 }
 
 const expandNoun = function (str, words, model) {
   const plur = toPlural(str, model)
-  words[plur] = words[plur] || 'Plural'
+  words[plur] ||= 'Plural'
 }
 
 // harvest ambiguous words for any conjugations

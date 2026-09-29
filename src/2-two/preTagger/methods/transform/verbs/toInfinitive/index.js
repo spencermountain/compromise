@@ -40,7 +40,7 @@ const toInfinitive = function (str, model, tense) {
   if (!tense) {
     tense = getTense(str)
   }
-  if (copulaMap.hasOwnProperty(str)) {
+  if (Object.hasOwn(copulaMap, str)) {
     inf = copulaMap[str]
   } else if (tense === 'Participle') {
     inf = convert(verb, fromParticiple)

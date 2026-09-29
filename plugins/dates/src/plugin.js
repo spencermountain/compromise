@@ -13,10 +13,10 @@ export default {
   api,
   mutate: world => {
     // add our regexes
-    world.model.two.regexText = world.model.two.regexText || []
+    world.model.two.regexText ||= []
     world.model.two.regexText = world.model.two.regexText.concat(regex)
     // add our debug('dates') method
-    world.methods.one.debug = world.methods.one.debug || {}
+    world.methods.one.debug ||= {}
     world.methods.one.debug.dates = debug
   },
   hooks: ['dates'],

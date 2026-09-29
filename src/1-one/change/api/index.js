@@ -7,7 +7,7 @@ import sort from './sort.js'
 import concat from './concat.js'
 import harden from './harden.js'
 
-const methods = Object.assign({}, caseFns, insert, replace, remove, whitespace, sort, concat, harden)
+const methods = { ...caseFns, ...insert, ...replace, ...remove, ...whitespace, ...sort, ...concat, ...harden }
 
 const addAPI = function (View) {
   Object.assign(View.prototype, methods)

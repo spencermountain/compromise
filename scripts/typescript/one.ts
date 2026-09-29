@@ -6,6 +6,7 @@ const doc = nlp('okay cool')
 nlp.tokenize('adf')
 nlp.plugin({})
 nlp.parseMatch('')
+nlp.buildNet([{ match: 'including [#Noun]', hook: 'including', group: 0, tag: 'Noun' }])
 
 nlp.world()
 nlp.model()
@@ -155,7 +156,6 @@ doc.autoFill()
 // ### Lexicon
 doc.compute('lexicon')
 nlp.addWords({})
-
 
 
 

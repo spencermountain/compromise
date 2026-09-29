@@ -120,7 +120,7 @@ const toAdjective = function (str) {
   if (noAdj.has(str)) {
     return null
   }
-  if (exceptions.hasOwnProperty(str)) {
+  if (Object.hasOwn(exceptions, str)) {
     return exceptions[str]
   }
   return doRules(str, suffixes) || str

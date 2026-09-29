@@ -19,10 +19,10 @@ test('copula-form', function (t) {
 
   //negative forms
   m.toPastTense()
-  // t.equal(m.out(), 'john was not nice', here + 'toPast-neg')
+  t.equal(m.out(), 'john was not nice', here + 'toPast-neg')
 
   m.toPresentTense()
-  // t.equal(m.out(), 'john is not nice', here + 'toPres-neg')
+  t.equal(m.out(), 'john is not nice', here + 'toPres-neg')
 
   m.toFutureTense()
   t.equal(m.out(), 'john will not be nice', here + 'toFuture-neg')
@@ -163,7 +163,7 @@ test('pronoun-specific', function (t) {
   m = nlp("i wasn't cool").sentences().toPastTense()
   t.equal(m.out(), "i wasn't cool", here + 'neg-2')
   m = nlp('i was not cool').sentences().toFutureTense()
-  t.equal(m.out(), 'i will be not cool', here + 'neg-3')
+  t.equal(m.out(), 'i will not be cool', here + 'neg-3')
 
   //with adverbs
   m = nlp('i was really cool').sentences().toPresentTense()

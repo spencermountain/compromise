@@ -10,7 +10,7 @@ const prefixLoop = function (str = '', prefixes = []) {
   }
   for (let i = max; i > 2; i -= 1) {
     const prefix = str.substring(0, i)
-    if (prefixes[prefix.length].hasOwnProperty(prefix) === true) {
+    if (Object.hasOwn(prefixes[prefix.length], prefix) === true) {
       const tag = prefixes[prefix.length][prefix]
       return tag
     }

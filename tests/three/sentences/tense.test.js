@@ -2,6 +2,25 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/sentence-conjugate] '
 
+test('sentence-change-tense: bit', function (t) {
+  const doc = nlp('she bit her tongue')
+  t.ok(doc.has('(bit && #PastTense)'), 'bit is past tense')
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), 'she bit her tongue', 'past tense stays unchanged')
+  doc.sentences().toPresentTense()
+  t.equal(doc.text(), 'she bites her tongue', 'present tense uses bite')
+  doc.sentences().toFutureTense()
+  t.equal(doc.text(), 'she will bite her tongue', 'future tense uses bite')
+  doc.sentences().toPastTense()
+  t.equal(doc.text(), 'she bit her tongue', 'round trip returns to bit')
+
+  const noun = nlp('she ate a bit of cheese')
+  t.ok(noun.has('(bit && #Noun)'), 'bit remains a noun in noun contexts')
+  noun.sentences().toFutureTense()
+  t.equal(noun.text(), 'she will eat a bit of cheese', 'noun bit stays unchanged')
+  t.end()
+})
+
 test('sentence-change-tense:', function (t) {
   const arr = [
     ['john walks quickly', 'john walked quickly', 'john will walk quickly'],
@@ -108,4 +127,3 @@ test('sentence-change-tense:', function (t) {
   })
   t.end()
 })
-

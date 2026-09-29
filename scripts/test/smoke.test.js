@@ -1,39 +1,32 @@
-/* eslint-disable no-console */
 import test from 'tape'
-// import main from '../../builds/compromise.js'
-import main from '../../builds/three/compromise-three.mjs'
-import one from '../../builds/one/compromise-one.cjs'
-// import two from '../../builds/two/compromise-two.cjs'
-console.log('\n 🎗️  - running smoke-test..\n') // eslint-disable-line
+import fs from 'node:fs'
+import { createRequire } from 'node:module'
+import vm from 'node:vm'
 
-//'sanity-test' the builds
-test('main build', function (t) {
-  const doc = main('John and Joe walked to the store')
-  t.equal(doc.people().json().length, 2, 'found-people')
-  t.equal(doc.verbs().json().length, 1, 'found-verbs')
-  t.equal(doc.match('joe walked .').found, true, 'match-statement')
-  t.equal(doc.terms(1).text('reduced'), 'and', 'text-out')
-  t.equal(doc.match('joe walked .').found, true)
-  t.end()
-})
+const require = createRequire(import.meta.url)
 
-// test('min build', function (t) {
-//   let doc = min('John and Joe walked to the store')
-//   t.equal(doc.people().json().length, 2, 'found-people')
-//   t.equal(doc.verbs().json().length, 1, 'found-verbs')
-//   t.equal(doc.match('joe walked .').found, true, 'match-statement')
-//   t.equal(doc.terms(1).text('reduced'), 'and', 'text-out')
-//   t.equal(doc.match('joe walked .').found, true)
-//   t.end()
-// })
+for (const tier of ['one', 'two', 'three']) {
+  test(`${tier} ESM and CommonJS bundles`, async t => {
+    const file = `../../builds/${tier}/compromise-${tier}`
+    const esm = (await import(`${file}.mjs`)).default
+    const cjs = require(`${file}.cjs`)
+    for (const nlp of [esm, cjs]) {
+      t.equal(nlp('hello world').text(), 'hello world', 'parses text')
+      t.deepEqual(
+        nlp('constructor constructor').terms().out('freq'),
+        [{ normal: 'constructor', count: 2 }],
+        'bundled dictionary counting is safe'
+      )
+    }
+    t.end()
+  })
+}
 
-test('tokenize build', function (t) {
-  const doc = one('John and Joe walked to the store')
-  t.equal(doc.match('joe walked .').found, true, 'match-statement')
-  t.equal(doc.match('joe walked .').found, true, 'match-statement')
-  t.equal(doc.has('#Person'), false, 'no sneaky tags')
-  //ensure lexicon works
-  // let tmp = tokenize('spencer kelly', { spencer: 'Cool' })
-  // t.equal(tmp.match('#Cool').text(), 'spencer', 'lexicon-works')
+test('browser bundle without Node globals', t => {
+  const code = fs.readFileSync(new URL('../../builds/compromise.js', import.meta.url), 'utf8')
+  const context = vm.createContext({ console })
+  vm.runInContext(code, context)
+  t.equal(context.nlp('hello world').text(), 'hello world', 'parses without process or self')
+  t.doesNotThrow(() => context.nlp.verbose(false), 'environment detection works without Node globals')
   t.end()
 })

@@ -1,11 +1,9 @@
-const isArray = (arr) => Object.prototype.toString.call(arr) === '[object Array]'
-
 // append a new document, somehow
 const combineDocs = function (homeDocs, inputDocs) {
   if (homeDocs.length > 0) {
     // add a space
-    const end = homeDocs[homeDocs.length - 1]
-    const last = end[end.length - 1]
+    const end = homeDocs.at(-1)
+    const last = end.at(-1)
     if (/ /.test(last.post) === false) {
       last.post += ' '
     }
@@ -41,7 +39,7 @@ export default {
       } else {
         // if we are in the middle, this is actually a splice operation
         const ptrs = this.fullPointer
-        const at = ptrs[ptrs.length - 1][0]
+        const at = ptrs.at(-1)[0]
         this.document.splice(at, 0, ...more.document)
       }
       // put the docs
@@ -52,7 +50,7 @@ export default {
       return combineViews(this, input)
     }
     // assume it's an array of terms
-    if (isArray(input)) {
+    if (Array.isArray(input)) {
       const docs = combineDocs(this.document, input)
       this.document = docs
       return this.all()

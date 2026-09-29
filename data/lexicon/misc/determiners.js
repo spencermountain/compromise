@@ -11,7 +11,6 @@ export default [
   'least',
   'much',
   'neither',
-  'own',
   'plenty',
   'some',
   'several',

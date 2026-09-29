@@ -115,7 +115,7 @@ const toNegative = function (vb, parsed, form) {
   if (vb.has('#Negative')) {
     return vb
   }
-  if (forms.hasOwnProperty(form)) {
+  if (Object.hasOwn(forms, form)) {
     vb = forms[form](vb, parsed)
     return vb
   }

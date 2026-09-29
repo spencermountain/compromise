@@ -18,7 +18,6 @@ export default [
   'iax',
   'icn',
   'ist',
-  'jfk',
   'kul',
   'las',
   'lax',
@@ -31,7 +30,6 @@ export default [
   'phl',
   'phx',
   'sfo',
-  'syd',
   'yyz',
 
   // bodies of water
@@ -82,7 +80,6 @@ export default [
   'malibu',
   'gay village',
   'orange county',
-  'sunderland',
   'main st',
   'main street',
   'boardwalk',
@@ -117,8 +114,6 @@ export default [
   'arc de triomphe',
   'browns canyon',
   'carrizo plain',
-  'cedar breaks',
-  'cedar falls',
   'chichen itza',
   'chimney rock',
   'chiricahua',
@@ -139,7 +134,6 @@ export default [
   'tuzigoot',
   'virgin islands',
   'wupatki',
-  'cedar breaks',
   'scotts bluff',
   'saint lawrence river',
 
@@ -167,7 +161,6 @@ export default [
   'lowland',
   'maplewood',
   'meadowlands',
-  'midlands',
   'oakmont',
   'pinecrest',
   'riverbend',

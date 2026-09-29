@@ -1,8 +1,8 @@
 // do acronyms need to be ASCII?  ... kind of?
-const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
+const periodAcronym = /^([A-Z]\.)+[A-Z]?,?$/
 const oneLetterAcronym = /^[A-Z]\.,?$/
-const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
-const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/
+const noPeriodAcronym = /^[A-Z]{2,}('s|,)?$/
+const lowerCaseAcronym = /^([a-z]\.)+[a-z]\.?$/
 
 const isAcronym = function (str) {
   //like N.D.A

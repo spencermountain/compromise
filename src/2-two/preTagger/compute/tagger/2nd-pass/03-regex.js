@@ -12,7 +12,7 @@ const doRegs = function (str, regs) {
 // suffix-regexes, indexed by last-character
 const doEndsWith = function (str = '', byEnd) {
   const char = str[str.length - 1]
-  if (byEnd.hasOwnProperty(char) === true) {
+  if (Object.hasOwn(byEnd, char) === true) {
     const regs = byEnd[char] || []
     for (let r = 0; r < regs.length; r += 1) {
       if (regs[r][0].test(str) === true) {
@@ -28,12 +28,19 @@ const checkRegex = function (terms, i, model, world) {
   const { regexText, regexNormal, regexNumbers, endsWith } = model.two
   const term = terms[i]
   const normal = term.machine || term.normal
-  let text = term.text
+  // After splitting '20mins', tag the implicit '20', not the original surface
+  // text: a Duration match would replace the numeric component's Value tags.
+  let text = term.implicit || term.text
   // keep dangling apostrophe?
   if (hasApostrophe.test(term.post) && !hasApostrophe.test(term.pre)) {
     text += term.post.trim()
   }
   let arr = doRegs(text, regexText) || doRegs(normal, regexNormal)
+  // Try the preserved hyphen for unknown prefixed words, without overriding
+  // lexicon nouns such as re-enactment or implicit unit forms such as km/h.
+  if (!arr && term.tags.size === 0 && normal !== term.normal) {
+    arr = doRegs(term.normal, regexNormal)
+  }
   // hide a bunch of number regexes behind this one
   if (!arr && /[0-9]/.test(normal)) {
     arr = doRegs(normal, regexNumbers)

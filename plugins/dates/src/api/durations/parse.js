@@ -41,10 +41,10 @@ const parse = function (doc) {
       unit = unit.replace(/ies$/, 'y')
       unit = unit.replace(/s$/, '')
       // turn 'mins' into 'minute'
-      if (mapping.hasOwnProperty(unit)) {
+      if (Object.hasOwn(mapping, unit)) {
         unit = mapping[unit]
       }
-      if (known.hasOwnProperty(unit) && num !== null) {
+      if (Object.hasOwn(known, unit) && num !== null) {
         duration[unit] = num
       }
     })
@@ -57,10 +57,10 @@ const parse = function (doc) {
       if (num && unit) {
         num = num[0] || null
         unit = unit[0] || null
-        if (mapping.hasOwnProperty(unit)) {
+        if (Object.hasOwn(mapping, unit)) {
           unit = mapping[unit]
         }
-        if (known.hasOwnProperty(unit) && num !== null) {
+        if (Object.hasOwn(known, unit) && num !== null) {
           duration[unit] = Number(num)
         }
       }

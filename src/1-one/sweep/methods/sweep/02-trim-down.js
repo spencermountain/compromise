@@ -1,28 +1,51 @@
 // filter-down list of maybe-matches
-const localTrim = function (maybeList, docCache) {
+const localTrim = function (maybeList, docCache, document, always) {
   return maybeList.map((list, n) => {
     const haves = docCache[n]
-    // ensure all stated-needs of the match are met
-    list = list.filter(obj => {
-      return obj.needs.every(need => haves.has(need))
-    })
-    // ensure nothing matches in our 'ifNo' property
-    list = list.filter(obj => {
-      if (obj.ifNo !== undefined && obj.ifNo.some(no => haves.has(no)) === true) {
-        return false
+    const termCount = document[n].length
+    const found = []
+    candidates: for (let i = 0; i < list.length; i += 1) {
+      const obj = list[i]
+      if (!(termCount >= obj.minWords)) {
+        continue
       }
-      return true
-    })
-    // ensure atleast one(?) of the wants is found
-    list = list.filter(obj => {
-      if (obj.wants.length === 0) {
-        return true
+      for (let j = 0; j < obj.needs.length; j += 1) {
+        if (!haves.has(obj.needs[j])) {
+          continue candidates
+        }
       }
-      // ensure there's one cache-hit
-      const found = obj.wants.filter(str => haves.has(str)).length
-      return found >= obj.minWant
-    })
-    return list
+      if (obj.ifNo !== undefined) {
+        for (let j = 0; j < obj.ifNo.length; j += 1) {
+          if (haves.has(obj.ifNo[j])) {
+            continue candidates
+          }
+        }
+      }
+      if (obj.wants.length > 0) {
+        let count = 0
+        for (let j = 0; j < obj.wants.length; j += 1) {
+          if (haves.has(obj.wants[j])) {
+            count += 1
+            if (count >= obj.minWant) {
+              break
+            }
+          }
+        }
+        if (!(count >= obj.minWant)) {
+          continue
+        }
+      }
+      found.push(obj)
+    }
+    // Unindexed rules have historically bypassed cache checks. Keep them last
+    // and apply only the length check, just as the separate tooSmall pass did.
+    for (let i = 0; i < always.length; i += 1) {
+      const obj = always[i]
+      if (termCount >= obj.minWords) {
+        found.push(obj)
+      }
+    }
+    return found
   })
 }
 export default localTrim

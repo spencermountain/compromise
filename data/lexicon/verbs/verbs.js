@@ -6,6 +6,5 @@ export default [
   'cannot',
   'gonna',
   'msg',
-  'make sure',
 
 ]

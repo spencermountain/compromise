@@ -5,6 +5,7 @@ const parseNumeric = function (str, m) {
   str = str.replace(/,/g, '')
   //parse a numeric-number
   const arr = str.split(/([0-9.,]*)/)
+
   // eslint-disable-next-line prefer-const
   let [prefix, num] = arr
   let suffix = arr.slice(2).join('')
@@ -15,7 +16,7 @@ const parseNumeric = function (str, m) {
       num = null
     }
     // strip an ordinal off the suffix
-    suffix = suffix || ''
+    suffix ||= ''
     if (suffix === 'st' || suffix === 'nd' || suffix === 'rd' || suffix === 'th') {
       suffix = ''
     }

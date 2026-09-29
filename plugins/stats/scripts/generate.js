@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import corpus from 'nlp-corpus'
-import fs from 'fs'
+import fs from 'node:fs'
 import nlp from '../../../src/three.js'
 import plugin from '../src/plugin.js'
 nlp.extend(plugin)

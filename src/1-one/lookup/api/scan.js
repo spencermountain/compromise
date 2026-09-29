@@ -5,11 +5,11 @@ const scanWords = function (terms, trie, opts) {
   for (let i = 0; i < terms.length; i++) {
     const word = terms[i][opts.form] || terms[i].normal
     // main match-logic loop:
-    while (n > 0 && (trie.goNext[n] === undefined || !trie.goNext[n].hasOwnProperty(word))) {
+    while (n > 0 && (trie.goNext[n] === undefined || !Object.hasOwn(trie.goNext[n], word))) {
       n = trie.failTo[n] || 0 // (usually back to 0)
     }
     // did we fail?
-    if (!trie.goNext[n].hasOwnProperty(word)) {
+    if (!Object.hasOwn(trie.goNext[n], word)) {
       continue
     }
     n = trie.goNext[n][word]
@@ -37,7 +37,7 @@ const cacheMiss = function (words, cache) {
 
 const scan = function (view, trie, opts) {
   let results = []
-  opts.form = opts.form || 'normal'
+  opts.form ||= 'normal'
   const docs = view.docs
   if (!trie.goNext || !trie.goNext[0]) {
     console.error('Compromise invalid lookup trie')//eslint-disable-line

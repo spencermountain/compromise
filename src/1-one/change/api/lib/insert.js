@@ -8,8 +8,7 @@ const spliceArr = (parent, index, child) => {
   // tag them as dirty
   child.forEach(term => term.dirty = true)
   if (parent) {
-    const args = [index, 0].concat(child)
-    Array.prototype.splice.apply(parent, args)
+    parent.splice(index, 0, ...child)
   }
   return parent
 }
@@ -18,7 +17,7 @@ const spliceArr = (parent, index, child) => {
 const endSpace = function (terms) {
   const hasSpace = / $/
   const hasDash = /[-–—]/
-  const lastTerm = terms[terms.length - 1]
+  const lastTerm = terms.at(-1)
   if (lastTerm && !hasSpace.test(lastTerm.post) && !hasDash.test(lastTerm.post)) {
     lastTerm.post += ' '
   }
@@ -34,7 +33,7 @@ const movePunct = (source, end, needle) => {
   const post = wasLast.post
   if (juicy.test(post)) {
     const punct = post.match(juicy).join('') //not perfect
-    const last = needle[needle.length - 1]
+    const last = needle.at(-1)
     last.post = punct + last.post
     // remove it, from source
     wasLast.post = wasLast.post.replace(juicy, '')
@@ -96,12 +95,12 @@ const cleanAppend = function (home, ptr, needle, document) {
     movePunct(home, end, needle)
     // is there another sentence after?
     if (document[n + 1]) {
-      needle[needle.length - 1].post += ' '
+      needle.at(-1).post += ' '
     }
   }
   spliceArr(home, ptr[2], needle)
   // set new endId
-  ptr[4] = needle[needle.length - 1].id
+  ptr[4] = needle.at(-1).id
 }
 
 export { cleanPrepend, cleanAppend }

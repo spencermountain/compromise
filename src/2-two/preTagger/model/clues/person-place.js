@@ -31,9 +31,9 @@ const place = {
 }
 
 const clue = {
-  beforeTags: Object.assign({}, place.beforeTags, person.beforeTags),
-  afterTags: Object.assign({}, place.afterTags, person.afterTags),
-  beforeWords: Object.assign({}, place.beforeWords, person.beforeWords),
-  afterWords: Object.assign({}, place.afterWords, person.afterWords),
+  beforeTags: { ...place.beforeTags, ...person.beforeTags },
+  afterTags: { ...place.afterTags, ...person.afterTags },
+  beforeWords: { ...place.beforeWords, ...person.beforeWords },
+  afterWords: { ...place.afterWords, ...person.afterWords },
 }
 export default clue

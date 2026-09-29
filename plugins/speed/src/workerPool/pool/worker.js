@@ -1,4 +1,4 @@
-import { workerData, parentPort } from 'worker_threads'
+import { workerData, parentPort } from 'node:worker_threads'
 // import nlp from 'compromise'
 import nlp from '../../../../../src/three.js'
 

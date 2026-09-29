@@ -65,10 +65,10 @@ export default [
         // add more run-on numbers?
         const more = m.not(before)
         if (more.found) {
-          let month = m.match('#Month').text('reduced')
+          const month = m.match('#Month').text('reduced')
           more.match('#Value').forEach((v) => {
-            let thisD = v.prepend(month)
-            let startDate = parseDate(thisD, context)
+            const thisD = v.prepend(month)
+            const startDate = parseDate(thisD, context)
             if (startDate) {
               result.push({
                 start: startDate,

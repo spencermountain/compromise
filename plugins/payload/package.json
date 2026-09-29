@@ -1,40 +1,58 @@
 {
   "name": "compromise-payload",
-  "description": "plugin for nlp-compromise",
   "version": "0.0.3",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-payload.min.js",
-  "type": "module",
-  "sideEffects": false,
-  "types": "./index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./src/plugin.js",
-      "require": "./builds/compromise-payload.cjs",
-      "types": "./index.d.ts"
-    }
-  },
+  "description": "Attach custom data to text matches in compromise",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/payload"
   },
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/payload",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./builds/compromise-payload.cjs"
+      }
+    }
+  },
+  "main": "./builds/compromise-payload.cjs",
+  "types": "./index.d.ts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "build": "rollup -c --silent"
   },
-  "peerDependencies": {
-    "compromise": ">=14.2.0"
-  },
-  "dependencies": {},
   "files": [
+    "index.d.ts",
+    "index.d.cts",
     "builds/",
-    "src/",
-    "index.d.ts"
+    "src/"
   ],
-  "devDependencies": {},
-  "license": "MIT"
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
+  },
+  "peerDependencies": {
+    "compromise": "workspace:*"
+  },
+  "unpkg": "./builds/compromise-payload.min.js",
+  "module": "./builds/compromise-payload.mjs"
 }

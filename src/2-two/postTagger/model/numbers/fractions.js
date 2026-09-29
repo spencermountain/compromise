@@ -1,30 +1,26 @@
 export default [
-  // half a penny
-  { match: '[(half|quarter)] of? (a|an)', group: 0, tag: 'Fraction', reason: 'millionth' },
-  // nearly half
-  { match: '#Adverb [half]', group: 0, tag: 'Fraction', reason: 'nearly-half' },
-  // half the
-  { match: '[half] the', group: 0, tag: 'Fraction', reason: 'half-the' },
-  // and a half
-  { match: '#Cardinal and a half', tag: 'Fraction', reason: 'and-a-half' },
+  // [half] a penny
+  { match: '[half] of? (a|an)', hook: 'half', group: 0, tag: 'Fraction', reason: 'half-a' },
+  // [quarter] of a dollar
+  { match: '[quarter] of? (a|an)', hook: 'quarter', group: 0, tag: 'Fraction', reason: 'quarter-a' },
+  // nearly [half]
+  { match: '#Adverb [half]', hook: 'half', group: 0, tag: 'Fraction', reason: 'nearly-half' },
+  // [half] the
+  { match: '[half] the', hook: 'half', group: 0, tag: 'Fraction', reason: 'half-the' },
+  // two and a half
+  { match: '#Cardinal and a half', hook: 'half', tag: 'Fraction', reason: 'and-a-half' },
   // two-halves
-  { match: '#Value (halves|halfs|quarters)', tag: 'Fraction', reason: 'two-halves' },
+  { match: '#Value (halves|halfs|quarters)', hook: '#Value', tag: 'Fraction', reason: 'two-halves' },
 
-  // ---ordinals as fractions---
-  // a fifth
-  { match: 'a #Ordinal', tag: 'Fraction', reason: 'a-quarter' },
-  // seven fifths
-  { match: '[#Cardinal+] (#Fraction && /s$/)', tag: 'Fraction', reason: 'seven-fifths' },
-  // doc.match('(#Fraction && /s$/)').lookBefore('#Cardinal+$').tag('Fraction')
-  // one third of ..
-  { match: '[#Cardinal+ #Ordinal] of .', group: 0, tag: 'Fraction', reason: 'ordinal-of' },
-  // 100th of
-  { match: '[(#NumericValue && #Ordinal)] of .', group: 0, tag: 'Fraction', reason: 'num-ordinal-of' },
-  // a twenty fifth
-  { match: '(a|one) #Cardinal?+ #Ordinal', tag: 'Fraction', reason: 'a-ordinal' },
+  // [seven] fifths
+  { match: '[#Cardinal+] (#Fraction && /s$/)', hook: '#Fraction', group: 0, tag: 'Fraction', reason: 'seven-fifths' },
+  // [one third] of it
+  { match: '[#Cardinal+ #Ordinal] of .', hook: 'of', group: 0, tag: 'Fraction', reason: 'ordinal-of' },
+  // [100th] of it
+  { match: '[(#NumericValue && #Ordinal)] of .', hook: 'of', group: 0, tag: 'Fraction', reason: 'num-ordinal-of' },
+  // [a twenty fifth] of it
+  { match: '[(a|one) #Cardinal?+ #Ordinal] of', hook: '#Ordinal', group: 0, tag: 'Fraction', reason: 'a-ordinal' },
 
-  // //  '3 out of 5'
-  { match: '#Cardinal+ out? of every? #Cardinal', tag: 'Fraction', reason: 'out-of' },
+  // 3 out of 5
+  { match: '#Cardinal+ out? of every? #Cardinal', hook: 'of', tag: 'Fraction', reason: 'out-of' },
 ]
-
-// {match:'', tag:'',reason:''},

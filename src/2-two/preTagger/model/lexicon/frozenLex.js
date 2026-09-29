@@ -1,7 +1,6 @@
-export default {
-  '20th century fox': 'Organization',
-  '7 eleven': 'Organization',
-  'motel 6': 'Organization',
+// These phrases also seed the packed lexicon and its derived forms.
+// Imported by data/lexicon/index.js: edit their tags here only.
+export const shared = {
   'excuse me': 'Expression',
   'financial times': 'Organization',
   'guns n roses': 'Organization',
@@ -11,12 +10,9 @@ export default {
   'new york times': 'Organization',
   'the guess who': 'Organization',
   'thin lizzy': 'Organization',
-
   'prime minister': 'Actor',
   'free market': 'Singular',
   'lay up': 'Singular',
-  'living room': 'Singular',
-  'living rooms': 'Plural',
   'spin off': 'Singular',
   'appeal court': 'Uncountable',
   'cold war': 'Uncountable',
@@ -25,10 +21,8 @@ export default {
   'nail polish': 'Uncountable',
   'time off': 'Uncountable',
   'take part': 'Infinitive',
-
   'bill gates': 'Person',
   'doctor who': 'Person',
-  'dr who': 'Person',
   'he man': 'Person',
   'iron man': 'Person',
   'kid cudi': 'Person',
@@ -36,7 +30,6 @@ export default {
   'rush limbaugh': 'Person',
   'snow white': 'Person',
   'tiger woods': 'Person',
-
   'brand new': 'Adjective',
   'en route': 'Adjective',
   'left wing': 'Adjective',
@@ -52,7 +45,6 @@ export default {
   'top notch': 'Adjective',
   'up to date': 'Adjective',
   'win win': 'Adjective',
-
   'brooklyn nets': 'SportsTeam',
   'chicago bears': 'SportsTeam',
   'houston astros': 'SportsTeam',
@@ -64,7 +56,6 @@ export default {
   'san antonio spurs': 'SportsTeam',
   'san diego chargers': 'SportsTeam',
   'san diego padres': 'SportsTeam',
-
   'iron maiden': 'ProperNoun',
   'isle of man': 'Country',
   'united states': 'Country',
@@ -72,12 +63,21 @@ export default {
   'prince edward island': 'Region',
   'cedar breaks': 'Place',
   'cedar falls': 'Place',
-
   'point blank': 'Adverb',
   'tiny bit': 'Adverb',
   'by the time': 'Conjunction',
   'no matter': 'Conjunction',
+}
 
+// Frozen-only entries protect phrases without seeding additional derivations.
+export default {
+  ...shared,
+  '20th century fox': 'Organization',
+  '7 eleven': 'Organization',
+  'motel 6': 'Organization',
+  'living room': 'Singular',
+  'living rooms': 'Plural',
+  'dr who': 'Person',
   'civil wars': 'Plural',
   'credit cards': 'Plural',
   'default rates': 'Plural',
@@ -93,12 +93,10 @@ export default {
   'tax returns': 'Plural',
   'tv shows': 'Plural',
   'video games': 'Plural',
-
   'took part': 'PastTense',
   'takes part': 'PresentTense',
   'taking part': 'Gerund',
   'taken part': 'Participle',
-
   'light bulb': 'Noun',
   'rush hour': 'Noun',
   'fluid ounce': 'Unit',

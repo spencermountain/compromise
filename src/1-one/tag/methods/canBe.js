@@ -1,6 +1,6 @@
 // quick check if this tag will require any untagging
 const canBe = function (term, tag, tagSet) {
-  if (!tagSet.hasOwnProperty(tag)) {
+  if (!Object.hasOwn(tagSet, tag)) {
     return true // everything can be an unknown tag
   }
   const not = tagSet[tag].not || []

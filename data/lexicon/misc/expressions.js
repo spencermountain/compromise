@@ -28,7 +28,6 @@ export default [
   'eh',
   'et cetera',
   'eww',
-  'fuck',
   'gah',
   'gee whiz',
   'gee',
@@ -123,7 +122,6 @@ export default [
   'there now',
   'aye',
   'cmon', //come on
-  'excuse me',
   'oh well',
   'oh hell',
   'oh my god',

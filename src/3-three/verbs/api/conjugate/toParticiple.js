@@ -1,35 +1,32 @@
-import { noop, getTense, getSubject } from '../lib.js'
-
-const haveHas = function (vb, parsed) {
-  const subj = getSubject(vb, parsed)
-  const m = subj.subject
-  if (m.has('(i|we|you)')) {
-    return 'have'
-  }
-  // the dog has
-  if (subj.plural === false) {
-    return 'has'
-  }
-  // spencer has
-  if (m.has('he') || m.has('she') || m.has('#Person')) {
-    return 'has'
-  }
-  return 'have'
-}
+import { infinitive, inflect } from './inflect.js'
+import convertAuxiliary from './auxiliary.js'
+import { noop, haveHas } from '../lib.js'
 
 // walk-> has walked
 const simple = (vb, parsed) => {
-  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
   const { root, auxiliary } = parsed
   // 'i may'
   if (root.has('#Modal')) {
     return vb
   }
-  let str = root.text({ keepPunct: false })
-  str = toInfinitive(str, vb.model, getTense(root))
-  const all = conjugate(str, vb.model)
+  let str = infinitive(root, { keepPunct: false })
+  if (str === 'be' && parsed.negative.has('not')) {
+    const have = haveHas(vb, parsed)
+    vb.replace(root, have)
+    vb.match(parsed.negative).insertAfter('been')
+    vb.match(have).tag('Auxiliary')
+    return vb
+  }
   // 'driven' || 'drove'
-  str = all.Participle || all.PastTense
+  str = inflect(root, 'Participle', { keepPunct: false })
+
+  // Replace emphatic do in place, retaining intervening adverbs and negation.
+  if (auxiliary.has('(do|does|did)')) {
+    const have = haveHas(vb, parsed)
+    vb.replace(root, str)
+    vb.replace('(do|does|did)', have).match(have).tag('Auxiliary')
+    return vb
+  }
 
   if (str) {
     vb = vb.replace(root, str)
@@ -42,62 +39,49 @@ const simple = (vb, parsed) => {
   return vb
 }
 
-
-
 const forms = {
+
   // walk -> walked
   'infinitive': simple,
+
   // he walks -> he walked
   'simple-present': simple,
-  // he walked
-  // 'simple-past': noop,
+
   // he will walk -> he walked
-  'simple-future': (vb, parsed) => vb.replace('will', haveHas(vb, parsed)),
-
-  // he is walking
-  // 'present-progressive': noop,
-  // he was walking
-  // 'past-progressive': noop,
-  // he will be walking
-  // 'future-progressive': noop,
-
-  // has walked -> had walked (?)
-  'present-perfect': noop,
-  // had walked
-  'past-perfect': noop,
-  // will have walked -> had walked
-  'future-perfect': (vb, parsed) => vb.replace('will have', haveHas(vb, parsed)),
-
-  // has been walking -> had been
-  'present-perfect-progressive': noop,
-  // had been walking
-  'past-perfect-progressive': noop,
-  // will have been -> had
-  'future-perfect-progressive': noop,
-
-  // got walked
-  // 'passive-past': noop,
-  // is being walked  -> 'was being walked'
-  // 'passive-present': noop,
-  // will be walked -> had been walked
-  // 'passive-future': noop,
+  'simple-future': (vb, parsed) => {
+    vb.replace(parsed.root, inflect(parsed.root, 'Participle'))
+    return vb.replace('will', haveHas(vb, parsed))
+  },
 
   // would be walked -> 'would have been walked'
-  // 'present-conditional': noop,
+  'present-conditional': vb => vb.replace('be', 'have been'),
+
   // would have been walked
-  // 'past-conditional': noop,
+  'past-conditional': noop,
 
   // is going to drink -> was going to drink
-  // 'auxiliary-future': noop,
-  // used to walk
-  // 'auxiliary-past': noop,
-  // we do walk -> we did walk
-  // 'auxiliary-present': noop,
+  'auxiliary-future': (vb, parsed) => {
+    const have = haveHas(vb, parsed)
+    vb.replace('(is|are|am|was|were)', have)
+    vb.match('going').insertBefore('been')
+    vb.match('(have|has|been|be)').tag('Auxiliary')
+    // The new perfect head governs 'going'; its infinitival complement must
+    // remain separate on subsequent conversions, just as on a fresh parse.
+    vb.match('going').unTag('Auxiliary').tag('Gerund')
+    vb.match('to').unTag('Auxiliary').tag('Conjunction')
+    return vb
+  },
 
   // must walk -> 'must have walked'
-  // 'modal-infinitive': noop,
+  'modal-infinitive': (vb, parsed) => {
+    vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, 'Participle'))
+    vb.match('have').tag('Auxiliary')
+    return vb
+  },
+
   // must have walked
-  // 'modal-past': noop,
+  'modal-past': noop,
+  'modal-perfect-progressive': noop,
   // wanted to walk
   // 'want-infinitive': noop,
   // started looking
@@ -105,8 +89,10 @@ const forms = {
 }
 
 const toParticiple = function (vb, parsed, form) {
+  const converted = convertAuxiliary(vb, parsed, form, 'participle')
+  if (converted) return converted
   // console.log(form)
-  if (forms.hasOwnProperty(form)) {
+  if (Object.hasOwn(forms, form)) {
     vb = forms[form](vb, parsed)
     vb.fullSentence().compute(['tagger', 'chunks'])
     return vb

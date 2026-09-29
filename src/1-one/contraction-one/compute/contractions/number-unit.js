@@ -8,7 +8,7 @@ const numberUnit = function (terms, i, world) {
     // is it a recognized unit, like 'km'?
     const unit = parts[2].toLowerCase().trim()
     // don't split '3rd'
-    if (notUnit.hasOwnProperty(unit)) {
+    if (Object.hasOwn(notUnit, unit)) {
       return null
     }
     return [parts[1], unit] //split it

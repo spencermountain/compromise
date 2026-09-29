@@ -1,6 +1,11 @@
+import { isWebToken } from '../web.js'
+
 const hasHyphen = function (str, model) {
   const parts = str.split(/[-–—]/)
   if (parts.length <= 1) {
+    return false
+  }
+  if (isWebToken(str)) {
     return false
   }
   const { prefixes, suffixes } = model.one
@@ -10,12 +15,12 @@ const hasHyphen = function (str, model) {
     return false
   }
   //dont split 're-do'
-  if (prefixes.hasOwnProperty(parts[0])) {
+  if (Object.hasOwn(prefixes, parts[0])) {
     return false
   }
   //dont split 'flower-like'
   parts[1] = parts[1].trim().replace(/[.?!]$/, '')
-  if (suffixes.hasOwnProperty(parts[1])) {
+  if (Object.hasOwn(suffixes, parts[1])) {
     return false
   }
   //letter-number 'aug-20'

@@ -42,8 +42,8 @@ const month = {
   },
 }
 export default {
-  beforeTags: Object.assign({}, person.beforeTags, month.beforeTags),
-  afterTags: Object.assign({}, person.afterTags, month.afterTags),
-  beforeWords: Object.assign({}, person.beforeWords, month.beforeWords),
-  afterWords: Object.assign({}, person.afterWords, month.afterWords),
+  beforeTags: { ...person.beforeTags, ...month.beforeTags },
+  afterTags: { ...person.afterTags, ...month.afterTags },
+  beforeWords: { ...person.beforeWords, ...month.beforeWords },
+  afterWords: { ...person.afterWords, ...month.afterWords },
 }

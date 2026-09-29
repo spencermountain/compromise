@@ -272,4 +272,4 @@ const formal = Object.keys(iana).reduce((h, k) => {
   return h
 }, {})
 
-export default Object.assign({}, informal, formal)
+export default { ...informal, ...formal }

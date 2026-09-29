@@ -10,7 +10,7 @@ const grammar = function (vb) {
     tense = 'PresentTense'
   }
   return {
-    tense
+    tense,
   }
 }
 
@@ -28,15 +28,15 @@ const parse = function (s) {
     !chunks.eq(0).has('<Verb>') &&
     chunks.eq(1).has('^(who|whom|whose|which|that)$') &&
     chunks.filter(ch => ch.has('<Verb>')).length > 1
-  let skipped = false
+  let isSkipped = false
   chunks.forEach((ch, i) => {
     if (i === 0 && !ch.has('<Verb>')) {
       subj = ch
       return
     }
     if (!verb.found && ch.has('<Verb>')) {
-      if (relative && !skipped) {
-        skipped = true
+      if (relative && !isSkipped) {
+        isSkipped = true
         return
       }
       verb = ch
@@ -54,7 +54,7 @@ const parse = function (s) {
     subj,
     verb,
     pred,
-    grammar: grammar(verb)
+    grammar: grammar(verb),
   }
 }
 export default parse

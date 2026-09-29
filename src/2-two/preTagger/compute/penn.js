@@ -76,7 +76,7 @@ const toPenn = function (term) {
   // run through an ordered list of tags
   const arr = term.tagRank || []
   for (let i = 0; i < arr.length; i += 1) {
-    if (mapping.hasOwnProperty(arr[i])) {
+    if (Object.hasOwn(mapping, arr[i])) {
       return mapping[arr[i]]
     }
   }

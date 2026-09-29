@@ -2,11 +2,11 @@ const isClass = /^\../
 const isId = /^#./
 
 const escapeXml = str => {
-  str = str.replace(/&/g, '&amp;')
-  str = str.replace(/</g, '&lt;')
-  str = str.replace(/>/g, '&gt;')
-  str = str.replace(/"/g, '&quot;')
-  str = str.replace(/'/g, '&apos;')
+  str = str.replaceAll('&', '&amp;')
+  str = str.replaceAll('<', '&lt;')
+  str = str.replaceAll('>', '&gt;')
+  str = str.replaceAll('"', '&quot;')
+  str = str.replaceAll("'", '&apos;')
   return str
 }
 
@@ -42,10 +42,10 @@ const getIndex = function (doc, obj) {
         return
       }
       const a = terms[0].id
-      starts[a] = starts[a] || []
+      starts[a] ||= []
       starts[a].push(tag.start)
-      const b = terms[terms.length - 1].id
-      ends[b] = ends[b] || []
+      const b = terms.at(-1).id
+      ends[b] ||= []
       ends[b].push(tag.end)
     })
   })
@@ -61,12 +61,12 @@ const html = function (obj) {
     for (let i = 0; i < terms.length; i += 1) {
       const t = terms[i]
       // do a span tag
-      if (starts.hasOwnProperty(t.id)) {
+      if (Object.hasOwn(starts, t.id)) {
         out += starts[t.id].join('')
       }
       out += t.pre || ''
       out += t.text || ''
-      if (ends.hasOwnProperty(t.id)) {
+      if (Object.hasOwn(ends, t.id)) {
         out += ends[t.id].join('')
       }
       out += t.post || ''

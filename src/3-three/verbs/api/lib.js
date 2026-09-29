@@ -5,7 +5,7 @@ const noop = vb => vb
 const isPlural = (vb, parsed) => {
   const subj = getSubject(vb, parsed)
   const m = subj.subject
-  if (m.has('i') || m.has('we')) {
+  if (m.has('(i|we|you)')) {
     return true
   }
   return subj.plural
@@ -13,7 +13,7 @@ const isPlural = (vb, parsed) => {
 
 const wasWere = (vb, parsed) => {
   const { subject, plural } = getSubject(vb, parsed)
-  if (plural || subject.has('we')) {
+  if (plural || subject.has('(we|you)')) {
     return 'were'
   }
   return 'was'
@@ -30,7 +30,7 @@ const isAreAm = function (vb, parsed) {
   if (subject.has('i')) {
     return 'am'
   }
-  if (subject.has('we') || plural) {
+  if (subject.has('(we|you)') || plural) {
     return 'are'
   }
   // 'he was' -> he is
@@ -41,13 +41,30 @@ const isAreAm = function (vb, parsed) {
 const doDoes = function (vb, parsed) {
   const subj = getSubject(vb, parsed)
   const m = subj.subject
-  if (m.has('i') || m.has('we')) {
+  if (m.has('(i|we|you)')) {
     return 'do'
   }
   if (subj.plural) {
     return 'do'
   }
   return 'does'
+}
+
+const haveHas = function (vb, parsed) {
+  const subj = getSubject(vb, parsed)
+  const m = subj.subject
+  if (m.has('(i|we|you)')) {
+    return 'have'
+  }
+  // the dog has
+  if (subj.plural === false) {
+    return 'has'
+  }
+  // spencer has
+  if (m.has('he') || m.has('she') || m.has('#Person')) {
+    return 'has'
+  }
+  return 'have'
 }
 
 const getTense = function (m) {
@@ -90,4 +107,4 @@ const noWill = (vb) => {
   return vb.remove('will')
 }
 
-export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense, wasWere, noWill }
+export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense, wasWere, noWill, haveHas }

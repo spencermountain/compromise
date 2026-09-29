@@ -19,11 +19,11 @@ const fastTag = function (term, tag, reason) {
     return
   }
   // some logging for debugging
-  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
+  const env = globalThis.process?.env ?? globalThis.env ?? {}
   if (env && env.DEBUG_TAGS) {
     log(term, tag, reason)
   }
-  term.tags = term.tags || new Set()
+  term.tags ||= new Set()
   if (typeof tag === 'string') {
     term.tags.add(tag)
   } else {

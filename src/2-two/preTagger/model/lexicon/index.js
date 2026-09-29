@@ -11,7 +11,7 @@ import irregularPlurals from '../irregulars/plurals.js'
 // more clever things are done on the data later
 //  - once the plugin is applied
 const hasSwitch = /\|/
-const lexicon = misc
+const lexicon = { ...misc }
 const switches = {}
 
 const tmpModel = { two: { irregularPlurals, uncountable: {} } }
@@ -32,10 +32,16 @@ Object.keys(lexData).forEach(tag => {
     // pluralize Noun|Verb switches
     if (tag === 'Noun|Verb') {
       const plural = toPlural(w, tmpModel)
-      switches[plural] = 'Plural|Verb'
+      // Invariant irregular plurals intentionally share a switch.
+      if (plural !== w || irregularPlurals[w] === w) {
+        switches[plural] = 'Plural|Verb'
+      }
     }
   })
 })
+// Keep the conditional tag alongside the packed conjunction entry.
+lexicon.if = ['Conjunction', 'Condition']
+
 // add ':)'
 emoticons.forEach(str => (lexicon[str] = 'Emoticon'))
 

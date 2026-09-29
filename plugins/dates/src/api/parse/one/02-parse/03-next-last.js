@@ -29,7 +29,7 @@ const nextLast = function (doc, context) {
   let m = doc.match(matchStr)
   if (m.found === true) {
     const str = m.text('reduced')
-    if (mapping.hasOwnProperty(str)) {
+    if (Object.hasOwn(mapping, str)) {
       const Model = mapping[str]
       const unit = new Model(null, str, context)
       return unit

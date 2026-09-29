@@ -15,7 +15,7 @@ nlp('the cat sat down').match('#Determiner #Noun').text()
 | Token | Means | Example pattern | Matches |
 |---|---|---|---|
 | `word` | exact word (case-insensitive, lemma-aware) | `sat` | "sat" |
-| `#Tag` | a part-of-speech [tag](tags.md) | `#Person` | "John" |
+| `#Tag` | a part-of-speech [tag](tag-definitions.md) | `#Person` | "John" |
 | `.` | exactly one of any term | `the . sat` | "the cat sat" |
 | `*` | zero or more of any term (greedy) | `the * sat` | "the cat quickly sat" |
 | `(a\|b)` | one of these options (OR) | `(cat\|dog)` | "cat" or "dog" |
@@ -50,7 +50,7 @@ Use `{walk}` (root form) if you want all conjugations — see below.
 ### Tags — `#Tag`
 
 The most useful token. Match by part-of-speech instead of literal word. The full, valid tag
-list is in [tags.md](tags.md). Tags are hierarchical: `#FirstName` is also a `#Person` is also a `#Noun`.
+list is in [tag-definitions.md](tag-definitions.md). Tags are hierarchical: `#FirstName` is also a `#Person` is also a `#Noun`.
 
 ```js
 nlp('the cat sat').match('#Noun').text()                  // 'cat'
@@ -58,7 +58,7 @@ nlp('John Smith left').match('[<who>#Person+]').groups('who').text()  // 'john s
 ```
 
 > ⚠️ Invalid tag names match **nothing silently**. `#Name`, `#Subject`, `#Adj`, `#Place` are easy
-> mistakes — check [tags.md](tags.md). (`#Place` *is* valid; `#Location` is not.)
+> mistakes — check [tag-definitions.md](tag-definitions.md). (`#Place` *is* valid; `#Location` is not.)
 
 ### Wildcards — `.` and `*`
 

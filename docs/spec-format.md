@@ -1,11 +1,15 @@
 # The `spec` format
+Compromise has defined a text format for declaring and testing pos-tagging.
+It is a line-oriented format designed to round-trip between **compromise** and **LLMs**.
 
-A line-oriented format for tagging the parts of speech in a sentence, designed to
-round-trip between **compromise** and **LLMs**.
+It looks like this:
+```
+The dog is nice. {Det,Noun,Vb,Adj}
+The flowers bloomed in spring. {Det,Plural,Past,Prep,Noun}
+this sentence has no tags. #that's fine
 
-```js
-nlp("The dog is nice.").out('spec')
-// → "The dog is nice. {Det,Noun,Vb,Adj}"
+# block-comments are supported, too
+Tony Hawk rides {Person|FirstName,Person|LastName,Pres} #has both tags
 ```
 
 ## Why it exists
@@ -48,6 +52,16 @@ One line per sentence:
 
 ## Comments
 
+A line whose first non-whitespace character is `#` is ignored entirely by both
+`.fromSpec()` and `.testSpec()`, including lines with braces or tag blocks:
+
+```plaintext
+james jones {Person,Person} # inline comment
+
+# block comment
+sally jones {Person,Person}
+```
+
 A line may end with a `#` comment, after the tag block:
 
 ```
@@ -62,12 +76,12 @@ We'll see well-known cases. {Noun,Vb,Vb,Adv,Adj,Noun}  # contraction + hyphenate
 - A line holds **at most one tag block and one comment, and the last of each wins.**
   The tag block is the last `{…}` on the line; the comment is a `#` directly after its
   closing `}` (with only spaces or tabs between), running to the end of the line.
-- So a `#` anywhere *before* the tag block is sentence text, not a comment - both
-  `#hiking is fun {HashTag,Vb,Adj}` and `the {cool} #hiking dog {Det,Adj,HashTag,Noun}`
-  parse as written.
-- A comment cannot contain `{` `}` - a brace inside it would be read as the tag block.
-- A line with no tag block is not comment-stripped, so `no braces here # note` stays
-  ordinary text - the same preamble line it was before.
+- A `#` before the tag block is sentence text unless it is the first non-whitespace
+  character. `the {cool} #hiking dog {Det,Adj,HashTag,Noun}` parses as written;
+  `#hiking is fun {HashTag,Vb,Adj}` is a comment line and is skipped.
+- An inline comment cannot contain `{` `}` - a brace inside it would be read as the tag block.
+- A line with no tag block also supports a trailing comment: whitespace followed
+  by `#` starts the comment, so `no braces here # note` becomes `no braces here`.
 
 ## Alignment
 
@@ -93,15 +107,13 @@ compromise terms carry many tags, arranged in a tree. This format reduces that n
 one **top-level (root) tag** per term, printed as its short alias when one exists.
 
 The world is genuinely closed - every tag in the model resolves up to one of these
-roots (the list is pinned by `tests/three/spec-tags.test.js`, which fails if a tag
+roots (the list is pinned by `tests/two/spec/spec-tags.test.js`, which fails if a tag
 change adds, removes, or orphans a root).
 
 These roots print as a short alias:
 * Vb (Verb)
 * Adj (Adjective)
 * Adv (Adverb)
-* Prep (Preposition)
-* Conj (Conjunction)
 * Det (Determiner)
 * Val (Value)
 * Expr (Expression)
@@ -113,7 +125,7 @@ These roots print as-is:
 * Date
 * Negative
 * Acronym
-* Condition
+* Connector
 * QuestionWord
 * There
 * NumberRange
@@ -144,10 +156,16 @@ POS - so in practice it never wins a slot.
 > applies the coarse POS, letting its own tagger refill the sub-tags. `spec` is for
 > communicating structure, not for byte-exact serialization of the full tag-set.
 
+`Connector` is the shared root of `Preposition`, `Conjunction`, and `Condition`.
+For example, `of`, `and`, and `if` all print as `Connector`. Their child tags
+remain available for matching and for more precise `.testSpec()` expectations.
+
 ### Sub-tag aliases (ingest only)
 
 These aliases name tags *below* a root, so `out('spec')` never emits them - but
 `.testSpec()` accepts them, usually piped onto a root, like `Vb|Past`:
+* Prep (Preposition)
+* Conj (Conjunction)
 * Aux (Auxiliary)
 * Fut (FutureTense)
 * Past (PastTense)
@@ -194,7 +212,7 @@ The dog's tail wagged. {Det,Noun,Noun,Vb}
 We'll see well-known cases. {Noun,Vb,Vb,Adv,Adj,Noun}
 It's a 3.5 inch disk. {Noun,Vb,Det,Val,Noun,Noun}
 He cannot go. {Noun,Vb,Negative,Vb}
-Visit https://nlp.com or email me@x.com today! {Noun,Url,Conj,Noun,Email,Date}
+Visit https://nlp.com or email me@x.com today! {Noun,Url,Connector,Noun,Email,Date}
 there are five hundred quick reasons. {There,Vb,Val,Val,Adj,Noun}
 ```
 
@@ -209,12 +227,16 @@ Two library methods ingest the format:
 let doc = nlp.fromSpec(spec)
 
 // check each line's tags against compromise's own tagger,
-// logging ✅/❌ per line - returns a doc of only the failing
-// lines, so an empty doc means everything passed
+// logging ✅/❌ per line - returns untagged sentences and failing tagged lines
 nlp.testSpec(spec)
 nlp.testSpec(spec, false)        // quiet
 nlp.testSpec(spec, false, true)  // throw on a failing line
 ```
+
+Sentences without a tag block pass without validation and remain in the returned
+document, with trailing comments removed. An explicit empty `{}` block still
+undergoes validation. Because untagged sentences are retained, a nonempty result
+does not necessarily mean validation failed; use `throwError` to enforce it.
 
 Both accept aliases or full tag-names, and are forgiving about LLM-style mess: blank
 lines, a trailing newline, `#` comments, and preamble lines without a `{}` block won't
@@ -247,5 +269,5 @@ contractions (`don't` → 2) and hyphenated words (`well-known` → 2)."
 - Serializer: [`src/1-one/output/api/_spec.js`](../src/1-one/output/api/_spec.js)
 - Dispatch: `method === 'spec'` in [`src/1-one/output/api/out.js`](../src/1-one/output/api/out.js)
 - Ingest: `nlp.fromSpec()` and `nlp.testSpec()` in [`src/1-one/output/fromSpec.js`](../src/1-one/output/fromSpec.js)
-- Tests: [`tests/two/output/spec.test.js`](../tests/two/output/spec.test.js) (format + round-trip behaviour),
-  [`tests/three/spec-tags.test.js`](../tests/three/spec-tags.test.js) (the closed-world of tags)
+- Tests: [`tests/two/spec/spec-api.test.js`](../tests/two/spec/spec-api.test.js) (format + round-trip behaviour),
+  [`tests/two/spec/spec-tags.test.js`](../tests/two/spec/spec-tags.test.js) (the closed-world of tags)

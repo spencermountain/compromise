@@ -4,9 +4,8 @@ const autoFill = function () {
   if (docs.length === 0) {
     return this
   }
-  const lastPhrase = docs[docs.length - 1] || []
-  const term = lastPhrase[lastPhrase.length - 1]
-  if (term.typeahead === true && term.machine) {
+  const term = docs.at(-1)?.at(-1)
+  if (term?.typeahead === true && term.machine) {
     term.text = term.machine
     term.normal = term.machine
   }

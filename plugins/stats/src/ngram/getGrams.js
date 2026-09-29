@@ -4,14 +4,14 @@ const defaults = {
 }
 
 const oneSize = function (list, size) {
-  const grams = {}
+  const grams = Object.create(null)
   // count each instance
   list.forEach(terms => {
     for (let i = 0; i < terms.length; i += 1) {
       const slice = terms.slice(i, i + size)
       if (slice.length === size) {
         const str = slice.join(' ')
-        if (grams.hasOwnProperty(str)) {
+        if (Object.hasOwn(grams, str)) {
           grams[str].count += 1
         } else {
           grams[str] = {
@@ -32,7 +32,7 @@ const oneSize = function (list, size) {
 
 const allGrams = function (list, options) {
   // support {size:2} syntax
-  if (options.size) {
+  if (options.size > 0) {
     options.min = options.size
     options.max = options.size
   }

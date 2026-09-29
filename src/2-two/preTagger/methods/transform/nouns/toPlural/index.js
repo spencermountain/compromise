@@ -3,7 +3,7 @@ const addE = /([xsz]|ch|sh)$/
 
 const trySuffix = function (str) {
   const c = str[str.length - 1]
-  if (rules.hasOwnProperty(c) === true) {
+  if (Object.hasOwn(rules, c) === true) {
     for (let i = 0; i < rules[c].length; i += 1) {
       const reg = rules[c][i][0]
       if (reg.test(str) === true) {
@@ -19,11 +19,11 @@ const trySuffix = function (str) {
 const pluralize = function (str = '', model) {
   const { irregularPlurals, uncountable } = model.two
   // is it a word without a plural form?
-  if (uncountable.hasOwnProperty(str)) {
+  if (Object.hasOwn(uncountable, str)) {
     return str
   }
   // check irregulars list
-  if (irregularPlurals.hasOwnProperty(str)) {
+  if (Object.hasOwn(irregularPlurals, str)) {
     return irregularPlurals[str]
   }
   //we have some rules to try-out

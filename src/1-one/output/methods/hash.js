@@ -1,12 +1,10 @@
-/* eslint-disable no-bitwise */
-/* eslint-disable no-mixed-operators */
-/* eslint-disable no-multi-assign */
+/* eslint-disable no-bitwise, no-multi-assign */
 
 // https://github.com/jbt/tiny-hashes/
 const k = []
 let i = 0
-for (; i < 64; ) {
-  k[i] = 0 | (Math.sin(++i % Math.PI) * 4294967296)
+for (; i < 64; i++) {
+  k[i] = 0 | (Math.sin((i + 1) % Math.PI) * 4294967296)
 }
 
 const md5 = function (s) {

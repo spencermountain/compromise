@@ -68,9 +68,9 @@ const thirdPass = function (terms, model, world, isYelling) {
     // deduce parent tags
     fillTags(terms, i, model)
     // look left+right for hints
-    found = found || neighbours(terms, i, model)
+    found ||= neighbours(terms, i, model)
     //  ¯\_(ツ)_/¯ - found nothing
-    found = found || nounFallback(terms, i, model)
+    found ||= nounFallback(terms, i, model)
   }
   for (let i = 0; i < terms.length; i += 1) {
     // skip these

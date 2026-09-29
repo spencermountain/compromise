@@ -156,7 +156,7 @@ At parse time, with a lexicon object:
 nlp('kermit waved', { kermit: 'FirstName' }).people().out('array')   // ['kermit']
 ```
 
-Globally, with `nlp.addWords()` (use a valid [tag](tags.md)):
+Globally, with `nlp.addWords()` (use a valid [tag](tag-definitions.md)):
 
 ```js
 nlp.addWords({ frodo: 'FirstName', gandalf: 'FirstName' })
@@ -189,7 +189,7 @@ See [concepts.md](concepts.md) for `.extend()` and the full plugin shape, and th
 
 ## When `.match()` returns nothing
 
-1. Check the tag is real — [tags.md](tags.md). `#Name`, `#Location`, `#Adj` are not tags.
+1. Check the tag is real — [tag-definitions.md](tag-definitions.md). `#Name`, `#Location`, `#Adj` are not tags.
 2. Remember matches don't cross sentence boundaries.
 3. Use `doc.debug()` to print how each word was actually tagged.
 4. Exact words match the literal word; use `{root}` to match all conjugations.

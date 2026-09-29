@@ -9,7 +9,7 @@ const keyPress = function (text, lex, opts = {}) {
   const list = []
   arr.forEach(str => {
     //do we already have it parsed?
-    if (sentenceCache.hasOwnProperty(str) === true) {
+    if (Object.hasOwn(sentenceCache, str) === true) {
       //use the cache
       list.push(sentenceCache[str].data)
       sentenceCache[str].used = true

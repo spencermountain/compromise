@@ -22,7 +22,7 @@ const showHighlight = function (doc) {
   }
   const bySentence = {}
   doc.fullPointer.forEach(ptr => {
-    bySentence[ptr[0]] = bySentence[ptr[0]] || []
+    bySentence[ptr[0]] ||= []
     bySentence[ptr[0]].push(ptr)
   })
   Object.keys(bySentence).forEach(k => {

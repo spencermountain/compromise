@@ -226,7 +226,6 @@ export default [
   'intellect',
   'verdict',
   'district',
-  'free market',
   'human right',
 
   // -ent
@@ -251,8 +250,6 @@ export default [
   // -ist
   'waist',
 
-  'bout',
-  'overview',
   'tv show',
   't rex',
   'array',
@@ -285,7 +282,6 @@ export default [
 
   'tummy',
   'economy',
-  'fanny',
   'bunny',
   'puppy',
 
@@ -301,9 +297,7 @@ export default [
   'notary',
 
   'city',
-  'guy',
   'school',
-  'bar',
   'prediction',
   'pie',
   'rerun',
@@ -328,7 +322,6 @@ export default [
 
   'stone',
   'tributary',
-  'flower',
   'sandwich',
   'x ray',
   'dump truck',
@@ -356,8 +349,6 @@ export default [
   'autopsy',
   'embassy',
   'pussy',
-  'spin off',
-  'lay up',
   'leg up',
   'poppy',
   'epidemic',
@@ -368,7 +359,6 @@ export default [
   'seminar',
   'variety',
   'laboratory',
-  'programme',
   'legend',
   'fiend',
   'cloth',
@@ -397,9 +387,7 @@ export default [
   'overtime',
   'preposition',
   'disposition',
-  'stake',
   'nite',
-  'prop',
   'sect',
   'mischief',
   'marsupial',
@@ -413,12 +401,7 @@ export default [
   'vet',
   'suite',
   'uncoordinated',
-  'latch',
   'deathbed',
-  'tunnel',
-  'intern',
-  'tribute',
-  'intent',
   'undertone',
   'underestimate',
   'underwear',

@@ -3,7 +3,6 @@ export default [
   // 'hers',
   // 'his',
   'its',
-  'mine',
   'my',
   // 'none',
   'our',

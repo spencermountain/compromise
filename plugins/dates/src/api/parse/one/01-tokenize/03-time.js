@@ -41,7 +41,7 @@ const halfPast = function (m, s) {
   hour = hour.text('reduced')
   let mins = punt.text('reduced')
   // support 'quarter'
-  if (minMap.hasOwnProperty(mins)) {
+  if (Object.hasOwn(minMap, mins)) {
     mins = minMap[mins]
   }
   const behind = m.has('to')
@@ -74,7 +74,7 @@ const parseTime = function (doc, context) {
   // check for known-times (like 'today')
   let timeStr = time.not('in? the').text('reduced')
   timeStr = timeStr.replace(/^@/, '')//@4pm
-  if (hardCoded.hasOwnProperty(timeStr)) {
+  if (Object.hasOwn(hardCoded, timeStr)) {
     return { result: hardCoded[timeStr], m: time }
   }
   // '5 oclock'
@@ -109,7 +109,7 @@ const parseTime = function (doc, context) {
     let min = m.groups('min').text('reduced')
     let d = spacetime(context.today)
     // support 'quarter', etc.
-    if (minMap.hasOwnProperty(min)) {
+    if (Object.hasOwn(minMap, min)) {
       min = minMap[min]
     }
     d = d.next('hour').startOf('hour').minute(min)
@@ -123,7 +123,7 @@ const parseTime = function (doc, context) {
     let min = m.groups('min').text('reduced')
     let d = spacetime(context.today)
     // support 'quarter', etc.
-    if (minMap.hasOwnProperty(min)) {
+    if (Object.hasOwn(minMap, min)) {
       min = minMap[min]
     }
     d = d.next('hour').startOf('hour').minus(min, 'minutes')
@@ -192,8 +192,8 @@ const parseTime = function (doc, context) {
   if (m.found) {
     const hour = m.groups('hour')
     const minute = m.groups('minute')
-    let hourNum = hour.numbers().get()[0]
-    let minuteNum = minute.numbers().get()[0]
+    const hourNum = hour.numbers().get()[0]
+    const minuteNum = minute.numbers().get()[0]
     if (hourNum < 24 && minuteNum < 60) {
       s = s.hour(hour.text('reduced'))
       s = s.minute(minute.text('reduced'))

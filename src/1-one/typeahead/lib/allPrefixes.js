@@ -12,15 +12,15 @@ const getPrefixes = function (arr, opts, world) {
     for (let size = opts.min; size < max; size += 1) {
       const prefix = str.substring(0, size)
       // ensure prefix is not a word
-      if (opts.safe && world.model.one.lexicon.hasOwnProperty(prefix)) {
+      if (opts.safe && Object.hasOwn(world.model.one.lexicon, prefix)) {
         continue
       }
       // does it already exist?
-      if (existing.hasOwnProperty(prefix) === true) {
+      if (Object.hasOwn(existing, prefix) === true) {
         collisions.push(prefix)
         continue
       }
-      if (index.hasOwnProperty(prefix) === true) {
+      if (Object.hasOwn(index, prefix) === true) {
         collisions.push(prefix)
         continue
       }
@@ -28,7 +28,7 @@ const getPrefixes = function (arr, opts, world) {
     }
   })
   // merge with existing prefixes
-  index = Object.assign({}, existing, index)
+  index = { ...existing, ...index }
   // remove ambiguous-prefixes
   collisions.forEach((str) => {
     delete index[str]

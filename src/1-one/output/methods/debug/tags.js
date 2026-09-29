@@ -4,7 +4,7 @@ import cli from './_color.js'
 const tagString = function (tags, model) {
   if (model.one.tagSet) {
     tags = tags.map(tag => {
-      if (!model.one.tagSet.hasOwnProperty(tag)) {
+      if (!Object.hasOwn(model.one.tagSet, tag)) {
         return tag
       }
       const c = model.one.tagSet[tag].color || 'blue'

@@ -1,5 +1,8 @@
 import build from '../../../builds/one/compromise-one.mjs'
-import src from '../../../src/one.js'
+import src from 'compromise/one'
+import { streamFile as sourceStreamFile } from '../src/plugin.js'
+import { streamFile as builtStreamFile } from '../builds/compromise-speed.mjs'
+export const streamFile = process.env.TESTENV === 'prod' ? builtStreamFile : sourceStreamFile
 let nlp;
 
 if (process.env.TESTENV === 'prod') {

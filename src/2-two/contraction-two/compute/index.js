@@ -71,7 +71,7 @@ const contractionTwo = view => {
       }
       let words = null
       // any known-ones, like 'dunno'?
-      if (byEnd.hasOwnProperty(after)) {
+      if (Object.hasOwn(byEnd, after)) {
         words = byEnd[after](terms, i, world)
       }
       // actually insert the new terms

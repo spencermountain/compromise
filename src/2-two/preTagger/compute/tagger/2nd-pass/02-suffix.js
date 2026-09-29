@@ -9,7 +9,7 @@ const suffixLoop = function (str = '', suffixes = []) {
   }
   for (let i = max; i > 1; i -= 1) {
     const suffix = str.substring(len - i, len)
-    if (suffixes[suffix.length].hasOwnProperty(suffix) === true) {
+    if (Object.hasOwn(suffixes[suffix.length], suffix) === true) {
       // console.log(suffix)
       const tag = suffixes[suffix.length][suffix]
       return tag

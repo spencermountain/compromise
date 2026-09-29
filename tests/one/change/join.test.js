@@ -48,7 +48,7 @@ test('join-all:', function (t) {
   const m = doc.splitAfter('john .')
   t.deepEqual(m.out('array'), ['john jacob', 'and john.', 'john cool', 'foo'], here + 'full join')
 
-  const res = m.join()
+  const res = m.join('')
   t.equal(res.length, 2, here + 'two again')
   t.equal(res.text(), str, here + 'full again')
 
@@ -59,7 +59,7 @@ test('join-all-miss:', function (t) {
   const doc = nlp(`before but after. before after`)
   let m = doc.split()
   m = m.not('but')
-  const res = m.join()
+  const res = m.join('')
   t.deepEqual(res.out('array'), ['before', 'after.', 'before after'], here + 'full join')
 
   t.end()
@@ -68,7 +68,7 @@ test('join-all-miss:', function (t) {
 test('join-lazy:', function (t) {
   const doc = nlp('one foo two foo')
   let m = doc.terms()
-  m = m.join()
+  m = m.join('')
   t.deepEqual(m.out('array'), ['one foo two foo'], here + 'lazy join')
   t.end()
 })

@@ -34,7 +34,7 @@ const parseUnit = function (m) {
   let unit = m.match('#Duration').text('normal')
   unit = unit.replace(/s$/, '')
   // support shorthands like 'min'
-  if (aliases.hasOwnProperty(unit)) {
+  if (Object.hasOwn(aliases, unit)) {
     unit = aliases[unit]
   }
   return unit

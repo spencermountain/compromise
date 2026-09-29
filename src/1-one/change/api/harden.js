@@ -6,7 +6,7 @@ const harden = function () {
 // remove indexes from pointers
 const soften = function () {
   let ptr = this.ptrs
-  if (!ptr || ptr.length < 1) {
+  if (!ptr || ptr.length === 0) {
     return this
   }
   ptr = ptr.map(a => a.slice(0, 3))

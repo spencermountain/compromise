@@ -50,10 +50,10 @@ export default [
   // became [embroiled]
   { match: '(become|became|becoming|becomes) [#Verb]', hook: '#Verb', group: 0, tag: 'Adjective', reason: 'become-verb' },
   // their [declared] intentions
-  { match: '#Possessive [#PastTense] #Noun', hook: '#Possessive', group: 0, tag: 'Adjective', reason: 'declared-intentions' },
+   { match: '#Possessive [#PastTense] #Noun', group: 0, hook: '#Possessive', notIf: '#Copula', tag: 'Adjective', reason: 'declared-intentions' },
   // is he [cool]
   { match: '#Copula #Pronoun [%Adj|Present%]', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'is-he-cool' },
-  // is [crowded] with
+  // is [crowded] with  
   {
     match: '#Copula [%Adj|Past%] with', hook: 'with',
     group: 0,

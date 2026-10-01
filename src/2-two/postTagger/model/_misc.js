@@ -12,6 +12,10 @@ const matches = [
   { match: 'some sort of', hook: 'sort', tag: 'Determiner Noun Preposition', reason: 'some-sort-of' },
   // of some sort
   { match: 'of some sort', hook: 'sort', tag: 'Preposition Determiner Noun', reason: 'of-some-sort' },
+  // [some] eat apples
+  { match: '^[some] #Infinitive #Noun', hook: 'some', group: 0, tag: 'Pronoun', reason: 'some-subject' },
+  // put it [there]
+  { match: '(put|puts|putting|place|placed|leave|left) #Pronoun [there]', hook: 'there', group: 0, tag: 'Adverb', reason: 'locative-there' },
   // [such] skill
   { match: '[such] (a|an|is)? #Noun', hook: 'such', group: 0, tag: 'Determiner', reason: 'such-skill' },
   // [right] after

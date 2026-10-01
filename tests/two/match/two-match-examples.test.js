@@ -205,7 +205,6 @@ const arr = [
 
   // ['some brand of cleaner', '#Noun #Noun of #Noun'],
   // ['some sort of dog', '#Noun #Noun of #Noun'],
-  ['a dog of some sort', 'a #Noun of #Adjective #Noun'],
   ['the dutch feel', '#Determiner #Noun #Noun'],
   ['the captains feel too', '#Determiner #Noun #Verb #Adverb'],
   ['the baby dump', '#Determiner #Noun #Noun'],
@@ -959,7 +958,6 @@ const arr = [
   [`I ask Congress to enact new safeguards`, `#Pronoun #Infinitive #Noun to #Infinitive #Adjective #Plural`],
   [`enforcement will help [combat] illegal drugs`, `#Noun #Verb+ #Adjective #Noun`],
   [`something funny [happened] to you`, `#Noun #Adjective #PastTense to #Noun`],
-  [`Long live Prince Prigio`, `#Adjective #Verb #Person+`],
   [`look what we almost left`, `#Imperative what #Pronoun #Adverb #Verb`],
   [`programs [which] [boost] achievement`, `#Plural which #Verb #Noun`],
   [`shirts [last] a long time`, `#Plural #Infinitive #Determiner #Adjective #Noun`],

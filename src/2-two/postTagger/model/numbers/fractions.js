@@ -21,6 +21,9 @@ export default [
   // [a twenty fifth] of it
   { match: '[(a|one) #Cardinal?+ #Ordinal] of', hook: '#Ordinal', group: 0, tag: 'Fraction', reason: 'a-ordinal' },
 
+  // a sixteenth, one twenty fifth (without a following noun)
+  { match: '[(a|one) #Cardinal+? (#Ordinal && !first && !second)]$', hook: '#Ordinal', group: 0, tag: 'Fraction', reason: 'standalone-fraction' },
+
   // 3 out of 5
   { match: '#Cardinal+ out? of every? #Cardinal', hook: 'of', tag: 'Fraction', reason: 'out-of' },
 ]

@@ -47,6 +47,8 @@ export default [
     notIf: '(#Copula|#Pronoun)',
     reason: 'or-heightened-emotion',
   },
+  // tired and overworked describes a state after a copula
+  { match: '#Copula #Adverb? #Adjective and [(overworked|overwhelmed|overpaid|underpaid|overqualified|underqualified|understaffed)]$', hook: 'and', group: 0, tag: 'Adjective', reason: 'coordinated-state' },
   // became [embroiled]
   { match: '(become|became|becoming|becomes) [#Verb]', hook: '#Verb', group: 0, tag: 'Adjective', reason: 'become-verb' },
   // their [declared] intentions

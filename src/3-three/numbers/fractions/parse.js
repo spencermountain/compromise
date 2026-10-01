@@ -49,6 +49,18 @@ const nOutOfN = function (m) {
   return null
 }
 
+// Keep compound singular denominators together: a twenty fifth.
+const compoundOrdinal = (m) => {
+  if (!m.has('^(a|one) #Cardinal+ #Ordinal$')) {
+    return null
+  }
+  const denominator = parseNumber(m.terms().slice(1))
+  if (typeof denominator === 'number' && denominator > 0) {
+    return { numerator: 1, denominator }
+  }
+  return null
+}
+
 // parse 'five thirds'
 const nOrinalth = function (m) {
   const found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
@@ -127,7 +139,7 @@ const round = n => {
 
 const parseFraction = function (m) {
   m = m.clone()
-  const res = named(m) || slashForm(m) || nOutOfN(m) || nOrinalth(m) || oneNth(m) || null
+  const res = named(m) || slashForm(m) || nOutOfN(m) || compoundOrdinal(m) || nOrinalth(m) || oneNth(m) || null
   if (res !== null) {
     // do the math
     if (res.numerator && res.denominator) {

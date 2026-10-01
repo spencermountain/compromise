@@ -16,6 +16,9 @@ const rules = [
   // veggies, [like] kale
   { match: '(#Noun && @hasComma) [like] #Noun', hook: 'like', group: 0, tag: 'Preposition', reason: 'comma-like-example' },
   ...connectors,
+  // Possession of running water and enduring noun phrases are not progressives.
+  { match: '[(have|has|had)] running water', hook: 'running', group: 0, unTag: 'Auxiliary', reason: 'have-running-water' },
+  { match: '[#Copula] (enduring && #Adjective) #Noun', hook: 'enduring', group: 0, unTag: 'Auxiliary', reason: 'enduring-copula' },
   // Although he [was] [tired], he smiled. He [was] [tired].
   ...tired.flatMap(({ match, position }) => [
     // Although he [was] [tired], he smiled. He [was] [tired].

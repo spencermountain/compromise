@@ -29,7 +29,7 @@ export default [
   // John Smith III
   { match: '#Person #Person the? #RomanNumeral', hook: '#RomanNumeral', tag: 'Person', reason: 'roman-numeral' },
   // John [b]
-  { match: '#FirstName [/^[^aiurck]$/]', hook: '#FirstName', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' },
+  { match: '#FirstName [/^[bdefghjlmnopqstvwxyz]$/]', hook: '#FirstName', group: 0, tag: ['Acronym', 'Person'], reason: 'john-e' },
   // Ludwig van Beethoven
   { match: '#Noun van der? #Noun', hook: 'van', tag: 'Person', reason: 'van-der-noun', safe: true },
   // king of spain

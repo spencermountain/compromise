@@ -43,6 +43,13 @@ export default [
   { match: '#Verb [under] (#Determiner|#Possessive|#Pronoun)', hook: 'under', group: 0, tag: 'Preposition', reason: 'under-object' },
   // She sings [like] her mother
   { match: '(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] (#Noun|#Determiner|#Possessive)', hook: 'like', group: 0, tag: 'Preposition', reason: 'resemblance-like' },
+  // images on a screen [like] humans do
+  { match: '#Noun [like] #Noun+ (do|does|did)$', hook: 'like', group: 0, tag: 'Preposition', reason: 'noun-like-comparison' },
+  // cities [like] New York, Boston
+  ...['', '#Place ', '#Place #Place '].map(prefix => ({
+    match: `#Plural [like] ${prefix}(#Place && @hasComma) #Place`,
+    hook: 'like', group: 0, tag: 'Preposition', reason: 'like-place-examples',
+  })),
   // [Like] his brother, he enjoys chess
   { match: '^[like] (#Determiner|#Possessive)? #Adjective+? (#Noun && @hasComma)', hook: 'like', group: 0, tag: 'Preposition', reason: 'initial-resemblance' },
   // She sings [like] her mother does

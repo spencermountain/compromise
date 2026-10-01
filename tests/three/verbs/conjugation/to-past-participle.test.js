@@ -241,6 +241,9 @@ test('toPastParticiple:', function (t) {
     ['i regard', 'i have regarded'],
     ['i occur', 'i have occurred'],
     ['i relate', 'i have related'],
+    [`I am`, `I have been`],
+    [`She is happy.`, `She has been happy.`],
+    [`They are here.`, `They have been here.`],
   ]
   arr.forEach(a => {
     const doc = nlp(a[0])

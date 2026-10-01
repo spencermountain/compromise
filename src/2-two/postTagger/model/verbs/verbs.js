@@ -92,7 +92,7 @@ export default [
   // dressed and [left]
   { match: '#PastTense and [%Adj|Past%]', hook: 'and', group: 0, tag: 'PastTense', reason: 'past-and-ambiguous' },
   // [melted] and fallen
-  { match: '[%Adj|Past%] and #PastTense', hook: 'and', group: 0, tag: 'PastTense', reason: 'ambiguous-and-past' },
+  { match: '[(%Adj|Past% && !#Adjective)] and #PastTense', hook: 'and', group: 0, tag: 'PastTense', reason: 'ambiguous-and-past' },
   // is he [stoked]
   { match: '#Copula #Pronoun [%Adj|Past%]', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'is-he-stoked' },
   // to [dream] of

@@ -20,6 +20,8 @@ const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
 export default [
   // university of Toronto
   { match: 'university of #Place', hook: 'university', tag: 'Organization', reason: 'university-place' },
+  // Name pairs can be business names without a known organization suffix.
+  { match: '#ProperNoun & #ProperNoun', hook: '&', tag: 'ProperNoun', reason: 'name-and-name' },
   // John & Mary Ltd
   { match: `#Person & #Person ${companySuffix}`, hook: '&', tag: 'Organization', reason: 'person-and-person' },
   // Smith & Rogers

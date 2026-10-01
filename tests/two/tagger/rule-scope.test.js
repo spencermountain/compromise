@@ -17,7 +17,7 @@ He studies a lot today. {Noun,Pres,Adv,Adv,Date}
 # Articles and coordinated first names alone do not imply organizations.
 They saw the DNA. {Noun,Past,Det,Acronym}
 They measured the CPU. {Noun,Past,Det,Acronym}
-John & Mary went home. {Person,Conj,Person,Past,Noun}
+John & Mary went home. {Person,ProperNoun,Person,Past,Noun}
 
 # Company suffixes, surname pairs, and known organizations remain recognized.
 the John & Mary Ltd {Det,Organization,Organization,Organization,Organization}

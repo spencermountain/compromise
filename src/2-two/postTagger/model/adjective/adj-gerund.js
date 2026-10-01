@@ -8,6 +8,11 @@ export default [
   { match: '(so|very|extremely) [#Gerund]', hook: '#Gerund', group: 0, tag: 'Adjective', reason: 'so-gerund' },
   // found it [interesting]
   { match: 'found it #Adverb? [%Adj|Gerund%]', hook: 'it', group: 0, tag: 'Adjective', reason: 'found-it-gerund' },
+  // found it [isolating], but found it isolating cells
+  { match: 'found it #Adverb? [isolating]$', hook: 'isolating', group: 0, tag: 'Adjective', reason: 'found-it-isolating' },
+  // enduring symbols, running water
+  { match: '[enduring] (symbols|legacy|legacies|appeal|influence|value|values)', hook: 'enduring', group: 0, tag: 'Adjective', reason: 'enduring-noun' },
+  { match: '(have|has|had|#Determiner|#Possessive) [running] water', hook: 'running', group: 0, tag: 'Adjective', reason: 'running-water' },
   // a little [fuming]
   { match: 'a (little|bit|wee) bit? [#Gerund]', hook: 'a', group: 0, tag: 'Adjective', reason: 'a-bit-gerund' },
   // repairing [crumbling] roads

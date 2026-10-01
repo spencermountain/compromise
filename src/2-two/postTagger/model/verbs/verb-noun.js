@@ -131,7 +131,7 @@ export default [
   { match: '[(tastes|smells)] #Adverb? #Adjective', hook: '#Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
   // Being introduces a predicate rather than a direct object.
   // she is writing [thank]-you letters
-  { match: '#Copula (#Gerund && !being) [#PresentTense] !by?', hook: '#Gerund', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring-commute' },
+  { match: '#Copula (#Gerund && !being) [(#PresentTense && !#Gerund)] !by?', hook: '#Gerund', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring-commute' },
   // the [shed]
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', hook: '#Determiner', group: 0, tag: 'Noun', reason: 'noun-past' },
   // how to [watch]

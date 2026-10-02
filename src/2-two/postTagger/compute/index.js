@@ -1,11 +1,11 @@
-import rules from '../model/second-pass.js'
+import secondPassRules from '../model/second-pass.js'
 let net = null
 let secondNet = null
 
 // Compile once, then match all corrections against the main sweep's output.
 const secondPass = function (sentences, world) {
   const { methods } = world
-  secondNet ||= methods.one.buildNet(rules, world)
+  secondNet ||= methods.one.buildNet(secondPassRules, world)
   // Match the whole sentence so rules can include context across commas.
   // All matches see the same incoming tags; there are no dependent subpasses.
   const found = methods.one.bulkMatch(sentences, secondNet, methods)

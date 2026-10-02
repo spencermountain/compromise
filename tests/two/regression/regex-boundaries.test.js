@@ -1,7 +1,14 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 
-const wrappers = [['', ''], ['"', '"'], ["'", "'"], ['“', '”'], ['‘', '’'], ['(', ')']]
+const wrappers = [
+  ['', ''],
+  ['"', '"'],
+  ["'", "'"],
+  ['“', '”'],
+  ['‘', '’'],
+  ['(', ')'],
+]
 
 test('generated email and URL boundaries preserve text and selections', t => {
   const emails = []
@@ -16,7 +23,10 @@ test('generated email and URL boundaries preserve text and selections', t => {
   }
   const failures = []
   let count = 0
-  for (const [tag, values] of [['Email', emails], ['Url', urls]]) {
+  for (const [tag, values] of [
+    ['Email', emails],
+    ['Url', urls],
+  ]) {
     for (const value of values) {
       for (const [open, close] of wrappers) {
         for (const separator of [' ', '\n', '\r\n']) {
@@ -68,7 +78,11 @@ test('generated punctuation contexts preserve Unicode and are stable when normal
       }
     }
   }
-  t.deepEqual(normalizationFailures, [], 'term normals preserve internal punctuation and document normalization is idempotent')
+  t.deepEqual(
+    normalizationFailures,
+    [],
+    'term normals preserve internal punctuation and document normalization is idempotent'
+  )
   t.end()
 })
 

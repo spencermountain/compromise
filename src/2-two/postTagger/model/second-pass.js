@@ -127,6 +127,6 @@ const rules = [
     reason: 'keep-lid-closed',
   }
 ]
-console.log('  ', rules.length, 'matches second-pass\n\n')
+// console.log('  ', rules.length, 'matches second-pass\n\n')
 
 export default rules

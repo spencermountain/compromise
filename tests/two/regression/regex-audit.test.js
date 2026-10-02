@@ -1,16 +1,33 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 
 test('regex audit: email and URL recognition', t => {
-  for (const text of ['alice@example.technology', 'alice@my-domain.com', 'first-last@example.com', 'first.last+news@my-site.co.uk']) {
+  for (const text of [
+    'alice@example.technology',
+    'alice@my-domain.com',
+    'first-last@example.com',
+    'first.last+news@my-site.co.uk',
+  ]) {
     const doc = nlp(`Contact ${text}, please.`)
     t.equal(doc.match('#Email').text('normal'), text, text)
     t.equal(doc.match('#Email').terms().length, 1, 'address stays one term')
   }
-  for (const text of ['x.io', 'https://my-site.xyz', 'https://a-b.example:8080/path?q=yes#part', 'my-site.com/path', 'www.a-b.technology']) {
+  for (const text of [
+    'x.io',
+    'https://my-site.xyz',
+    'https://a-b.example:8080/path?q=yes#part',
+    'my-site.com/path',
+    'www.a-b.technology',
+  ]) {
     t.ok(nlp(text).has('#Url'), text)
   }
-  for (const text of ['file.completely', 'notes.internal', 'http://http://example.com', 'example.com:abc', 'name@example']) {
+  for (const text of [
+    'file.completely',
+    'notes.internal',
+    'http://http://example.com',
+    'example.com:abc',
+    'name@example',
+  ]) {
     t.notOk(nlp(text).has('#Url'), text)
   }
   t.end()
@@ -74,7 +91,10 @@ test('regex audit: normalization and tagging', t => {
   for (const text of ['v1.2a.b', 'version.a.b']) {
     t.equal(nlp(text).json()[0].terms[0].normal, text, 'preserve non-acronym dots')
   }
-  for (const [text, normal] of [['F.B.I.', 'fbi'], ['c.e.o.', 'ceo']]) {
+  for (const [text, normal] of [
+    ['F.B.I.', 'fbi'],
+    ['c.e.o.', 'ceo'],
+  ]) {
     t.equal(nlp(text).json()[0].terms[0].normal, normal, 'preserve acronym normalization')
   }
   t.ok(nlp('un-vite').has('#Verb'), 'hyphenated verb is recognized')
@@ -95,8 +115,13 @@ test('regex audit: suffix semantics and punctuation cleanup', t => {
     t.notOk(doc.has('#Actor'), 'separate terms do not form an actor noun')
   }
   for (const [input, expected] of [
-    ['hello!!!', 'hello'], ['hello…', 'hello'], ['("hello")', 'hello'],
-    ['a!!!b', 'a!!!b'], ['a...b', 'a...b'], [':)', ':)'], ['!!!', '!!!'],
+    ['hello!!!', 'hello'],
+    ['hello…', 'hello'],
+    ['("hello")', 'hello'],
+    ['a!!!b', 'a!!!b'],
+    ['a...b', 'a...b'],
+    [':)', ':)'],
+    ['!!!', '!!!'],
   ]) {
     t.equal(nlp(input).json()[0].terms[0].normal, expected, `cleanup ${input}`)
   }

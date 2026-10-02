@@ -99,8 +99,6 @@ export default [
   { match: '#Adjective #Adjective [#PresentTense]', hook: '#Adjective', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'adorable-little-store' },
   // writing bigger [thank]-you notes
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', hook: '#Comparative', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'higher-costs' },
-  // Tuesday, gifts and [thanks]
-  // { match: '(#Noun && @hasComma) #Noun (and|or) [#PresentTense]', hook: '#PresentTense', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'noun-list' },
   // some [thanks] for helping
   { match: '(many|any|some|several) [#PresentTense] for', hook: 'for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
   // to write people [thanks] for helping

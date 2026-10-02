@@ -1,16 +1,13 @@
 export default [
   // got walked
   { match: 'got (#PastTense|#Participle)', hook: 'got', tag: 'Passive', reason: 'got-passive' },
-  // were walked
-  { match: 'were (#PastTense|#Participle)', hook: 'were', tag: 'Passive', reason: 'were-passive' },
-  // was walked
-  { match: 'was (#PastTense|#Participle)', hook: 'was', tag: 'Passive', reason: 'was-passive' },
-  // is walked
-  { match: 'is (#PastTense|#Participle)', hook: 'is', tag: 'Passive', reason: 'is-passive' },
-  // are walked
-  { match: 'are (#PastTense|#Participle)', hook: 'are', tag: 'Passive', reason: 'are-passive' },
-  // am walked
-  { match: 'am (#PastTense|#Participle)', hook: 'am', tag: 'Passive', reason: 'am-passive' },
+  // Share the pattern while keeping cheap word-specific hooks.
+  ...['were', 'was', 'is', 'are', 'am'].map(word => ({
+    match: `${word} (#PastTense|#Participle)`,
+    hook: word,
+    tag: 'Passive',
+    reason: `${word}-passive`,
+  })),
   // was being walked
   { match: '(was|were|is|are|am) being (#PastTense|#Participle)', hook: 'being', tag: 'Passive', reason: 'being-passive' },
   // had been walked

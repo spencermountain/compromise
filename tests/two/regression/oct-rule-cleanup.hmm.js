@@ -151,13 +151,16 @@ const spec = `
   I enjoy music, art and dance. {Pronoun,Inf,Noun,Noun,Conj,Noun}
   On Friday, John and Mary work. {Prep,Date,Person,Conj,Person,Inf}
   John and Mary work. {Person,Conj,Person,Inf}
+  Is it a joke, Dad, or do I need help? {Copula,Pronoun,Det,Noun,Noun,Conj,Vb,Pronoun,Vb,Noun}
+  It has fins, Jim, and has a motor. {Pronoun,Pres,Plural,Person,Conj,Pres,Det,Noun}
+  We discussed the engine, bag, and evacuating the building. {Pronoun,Past,Det,Noun,Noun,Conj,Ger,Det,Noun}
 
   # Share locative patterns without losing adjective context.
   Dogs on the wooden porch bark. {Plural,Prep,Det,Adj,Noun,Inf}
-  Children behind the old school play. {Plural,Prep,Det,Adj,Noun,Inf}
+  Children behind the tall fence play. {Plural,Prep,Det,Adj,Noun,Inf}
 
   # Copula variants share passive syntax; adjectives remain adjectives.
-  I am watched. {Pronoun,Aux|Passive,Past|Passive}
+  I am watched by everyone. {Pronoun,Aux|Passive,Past|Passive,Prep,Noun}
   The parcel is delivered. {Det,Noun,Aux|Passive,Past|Passive}
   The parcels are delivered. {Det,Plural,Aux|Passive,Past|Passive}
   The parcel was delivered. {Det,Noun,Aux|Passive,Past|Passive}

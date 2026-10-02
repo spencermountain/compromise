@@ -1,8 +1,7 @@
 import connectors from './connectors.js'
 
 // Corrections matched against the main sweep's output, before any are applied.
-// dogs [near] the house [bark]
-// const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
+const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
 const tired = [
   // He [was] [tired].
   { match: '[(#Copula|been)] #Adverb+? [tired]$', position: 'end' },
@@ -15,6 +14,15 @@ const seatedQuestion = '^(which|what) #Adjective+? #Noun (did|does|do|#Modal) #P
 const rules = [
   // veggies, [like] kale
   { match: '(#Noun && @hasComma) [like] #Noun', hook: 'like', group: 0, tag: 'Preposition', reason: 'comma-like-example' },
+  // Keep comma context, but don't turn unambiguous verbs into list items.
+  ...['%Noun|Verb%', '%Plural|Verb%', 'thanks'].map(target => ({
+    match: `(#Noun && @hasComma) #Noun (and|or) [(${target} && #PresentTense)]`,
+    hook: target,
+    group: 0,
+    tag: 'Noun',
+    notIf: '#Copula',
+    reason: 'noun-list',
+  })),
   ...connectors,
   // Possession of running water and enduring noun phrases are not progressives.
   { match: '[(have|has|had)] running water', hook: 'running', group: 0, unTag: 'Auxiliary', reason: 'have-running-water' },
@@ -105,16 +113,8 @@ const rules = [
     reason: 'joint-subject-verb',
   },
   // dogs [near] the house [bark]
-
-// near|on|under|beside|behind
-  ...['near', 'on', 'under', 'beside', 'behind'].flatMap(word => ([
-    { match: `#Plural [${word}] #Determiner #Adjective+? #Noun [%Noun|Verb%]$`, hook: word, group: 0, tag: 'Preposition', reason: 'subject-locative' },
-    { match: `#Plural [${word}] #Determiner #Adjective+? #Noun [%Noun|Verb%]$`, hook: word, group: 1, tag: 'Infinitive', reason: 'subject-locative-verb' },
-  ])),
-  // const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
-  // { match: locative, hook: '#Plural', group: 0, tag: 'Preposition', reason: 'subject-locative' },
-  // dogs [near] the house [bark]
-  // { match: locative, hook: '#Plural', group: 1, tag: 'Infinitive', reason: 'subject-locative-verb' },
+  { match: locative, hook: '%Noun|Verb%', group: 0, tag: 'Preposition', reason: 'subject-locative' },
+  { match: locative, hook: '%Noun|Verb%', group: 1, tag: 'Infinitive', reason: 'subject-locative-verb' },
   // being [injured] and treated
   { match: 'being #Adverb+? [%Adj|Past%] (and|or) #Adverb+? (#PastTense|#Participle)', hook: 'being', group: 0, tag: 'PastTense', reason: 'coordinated-passive' },
   // has eaten and [drunk]

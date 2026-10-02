@@ -2,6 +2,7 @@ import failFast from './01-failFast.js'
 import fromHere from './02-from-here.js'
 import getGroup from './03-getGroup.js'
 import notIf from './03-notIf.js'
+import matchTerm from './term/doesMatch.js'
 
 
 // make proper pointers
@@ -25,7 +26,7 @@ const handleStart = function (terms, regs, n) {
 // ok, here we go.
 const runMatch = function (docs, todo, cache) {
   cache ||= []
-  const { regs, group, justOne } = todo
+  const { regs, group, justOne, checkFirst } = todo
   let results = []
   if (!regs || regs.length === 0) {
     return { ptrs: [], byGroup: {} }
@@ -63,6 +64,10 @@ const runMatch = function (docs, todo, cache) {
       // ensure it's long-enough
       if (terms.length - i < minLength) {
         break
+      }
+      // Compiled sweep rules can reject a start before allocating match state.
+      if (checkFirst && !matchTerm(terms[i], regs[0], i, terms.length)) {
+        continue
       }
       let res = fromHere(terms, regs, i, terms.length, i)
       // did we find a result?

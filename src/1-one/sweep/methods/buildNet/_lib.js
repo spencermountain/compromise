@@ -1,10 +1,12 @@
-// Only cache required, single-term boundary checks.
+// Only precheck required, single-term tokens without special matching steps.
+const canCheck = reg => Boolean(reg && !reg.optional && !reg.negative && !reg.greedy &&
+  !reg.choices && !reg.anything && !reg.regex && !reg.method)
+
 const getBoundary = (reg, boundary) => {
-  if (!reg || !reg[boundary] || reg.optional || reg.negative || reg.greedy ||
-    reg.choices || reg.anything || reg.regex || reg.method) {
+  if (!canCheck(reg) || !reg[boundary]) {
     return null
   }
   return reg
 }
 
-export default getBoundary
+export { canCheck, getBoundary }

@@ -2,6 +2,16 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[two/match-spec] '
 
+test('fixed-length matches preserve captures and fallbacks', t => {
+  t.deepEqual(nlp('the red fox and the red fox').match('the [red fox]', 0).out('array'), ['red fox', 'red fox'], 'capture offsets at multiple starts')
+  t.equal(nlp('the red fox').match('^the [red fox]$', 0).text(), 'red fox', 'anchored capture')
+  t.equal(nlp('the red fox').match('the red fox jumps').found, false, 'short input')
+  t.equal(nlp("we've arrived").match("we've arrived").text(), "we've arrived", 'contraction consumes its implicit terms')
+  t.equal(nlp('the red fox').match('the very? red fox').text(), 'the red fox', 'optional term fallback')
+  t.equal(nlp('red red fox').match('red+ fox').text(), 'red red fox', 'repetition fallback')
+  t.end()
+})
+
 test('matcher cleanup preserves occurrence order and boundaries', t => {
   const doc = nlp('red blue red blue')
   t.deepEqual(doc.match('red blue').out('array'), ['red blue', 'red blue'], 'repeated matches')

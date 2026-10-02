@@ -311,6 +311,9 @@ const rules = {
     // said [sorry]
     'said _ -> #Expression',
   ],
+
+  // 'in [#ProperNoun] #Place'
+  '#ProperNoun': ['in _ -> #Place']
 }
 
 export default {

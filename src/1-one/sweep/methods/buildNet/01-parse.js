@@ -1,5 +1,4 @@
 import { canCheck, getBoundary } from './_lib.js'
-import { isFixed } from '../../../match/methods/match/_fixed.js'
 
 // extract the clear needs for an individual match token
 const getTokenNeeds = function (reg) {
@@ -82,7 +81,6 @@ const parse = function (matches, world) {
   const parseMatch = world.methods.one.parseMatch
   matches.forEach(obj => {
     obj.regs = parseMatch(obj.match, {}, world)
-    obj.fixed = isFixed(obj.regs)
     obj.checkFirst = canCheck(obj.regs[0])
     obj.startTerm = getBoundary(obj.regs[0], 'start')
     obj.endTerm = getBoundary(obj.regs[obj.regs.length - 1], 'end')

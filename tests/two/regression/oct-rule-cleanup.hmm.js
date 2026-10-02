@@ -4,6 +4,17 @@ import leftRight from '../../../src/2-two/left-right/plugin.js'
 import compileLeftRight from '../../../src/2-two/left-right/model/_lib.js'
 const here = '[two/match-spec] '
 
+test('matching respects edits to parsed patterns', t => {
+  const doc = nlp('red blue')
+  const pattern = nlp.parseMatch('green red blue')
+  t.equal(doc.match(pattern).found, false, 'required prefix is missing')
+  pattern[0].optional = true
+  t.equal(doc.match(pattern).text(), 'red blue', 'prefix can become optional')
+  pattern[0].optional = false
+  t.equal(doc.match(pattern).found, false, 'prefix can become required again')
+  t.end()
+})
+
 test('more left/right tagging contexts', t => {
   const cases = [
     ['They have running water.', 'running', 'Adjective'],

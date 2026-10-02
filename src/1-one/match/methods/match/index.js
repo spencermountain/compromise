@@ -3,7 +3,6 @@ import fromHere from './02-from-here.js'
 import getGroup from './03-getGroup.js'
 import notIf from './03-notIf.js'
 import matchTerm from './term/doesMatch.js'
-import { isFixed, fromFixed } from './_fixed.js'
 
 
 // make proper pointers
@@ -15,8 +14,8 @@ const addSentence = function (res, n) {
   return res
 }
 
-const handleStart = function (terms, regs, n, attempt) {
-  let res = attempt(terms, regs, 0, terms.length)
+const handleStart = function (terms, regs, n) {
+  let res = fromHere(terms, regs, 0, terms.length)
   if (res) {
     res = addSentence(res, n)
     return res //getGroup([res], group)
@@ -32,7 +31,6 @@ const runMatch = function (docs, todo, cache) {
   if (!regs || regs.length === 0) {
     return { ptrs: [], byGroup: {} }
   }
-  const attempt = (todo.fixed ?? isFixed(regs)) ? fromFixed : fromHere
 
   // Compiled rules carry this value; public parsed patterns can still be edited
   // by callers, so calculate their minimum without caching on the token array.
@@ -55,7 +53,7 @@ const runMatch = function (docs, todo, cache) {
     }
     // ^start regs only run once, per phrase
     if (regs[0].start === true) {
-      const foundStart = handleStart(terms, regs, n, attempt)
+      const foundStart = handleStart(terms, regs, n)
       if (foundStart) {
         results.push(foundStart)
       }
@@ -71,7 +69,7 @@ const runMatch = function (docs, todo, cache) {
       if (checkFirst && !matchTerm(terms[i], regs[0], i, terms.length)) {
         continue
       }
-      let res = attempt(terms, regs, i, terms.length, i)
+      let res = fromHere(terms, regs, i, terms.length, i)
       // did we find a result?
       if (res) {
         // res = addSentence(res, index[0])

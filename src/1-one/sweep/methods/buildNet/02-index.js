@@ -28,8 +28,10 @@ const buildIndex = function (matches, hooks, hookOrder) {
     const earlier = [...new Set(rule.wants)]
       .filter(key => hookOrder[key] < rank)
       .sort((a, b) => hookOrder[a] - hookOrder[b])
-    const entry = { rule, order, rank, earlier }
     const keys = anchor === null ? [...new Set(rule.wants)] : [anchor]
+    // The bucket already proves its anchor; check each remaining need once.
+    const needs = [...new Set(rule.needs)].filter(key => key !== anchor)
+    const entry = { rule, order, rank, earlier, needs, single: keys.length === 1 }
     for (let i = 0; i < keys.length; i += 1) {
       const key = keys[i]
       index[key] ||= []

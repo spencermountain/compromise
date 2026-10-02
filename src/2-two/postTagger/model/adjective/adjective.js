@@ -3,13 +3,13 @@ export default [
   { match: '(off && #Hyphenated) white', tag: 'Adjective', reason: 'off-white' },
   // Restore the copula when the colour is written without a hyphen.
   // [is] off white
-  { match: '[(is|are|am|was|were)] off white$', group: 0, unTag: 'PhrasalVerb', tag: 'Copula', reason: 'off-white-copula' },
+  { match: '[(is|are|am|was|were)] off white$', group: 0, unTag: 'PhrasalVerb', tag: 'Copula', reason: 'off-white-cop' },
   // is [off white]
-  { match: '(is|are|am|was|were) [off white]$', group: 0, tag: 'Adjective', reason: 'off-white-predicate' },
+  { match: '(is|are|am|was|were) [off white]$', group: 0, tag: 'Adjective', reason: 'off-white-pred' },
   // [all] the dogs
   { match: '[(all|both)] #Determiner #Noun', group: 0, tag: 'Noun', reason: 'all-noun' },
   // is [alone]
-  { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adverb' },
+  { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adv' },
   // the door is [closed]
   { match: '#Singular is #Adverb? [%Adj|Past%]$', group: 0, tag: 'Adjective', reason: 'is-filled' },
   // [forgotten] art is rediscovered
@@ -19,7 +19,7 @@ export default [
   // well [made]
   { match: 'well [#PastTense]', group: 0, tag: 'Adjective', reason: 'well-made' },
   // is [fucked up]
-  { match: '#Copula [fucked up?]', group: 0, tag: 'Adjective', reason: 'swears-adjective' },
+  { match: '#Copula [fucked up?]', group: 0, tag: 'Adjective', reason: 'swears-adj' },
   // the door seems [opened]
   { match: '#Singular (seems|appears) #Adverb? [#PastTense$]', group: 0, tag: 'Adjective', reason: 'seems-filled' },
   // jury is out - preposition ➔ adjective
@@ -28,7 +28,7 @@ export default [
   // [quiet] the room
   { match: '^[(#Adjective && !near && !inside && !outside && !opposite)] (the|your) #Noun', group: 0, notIf: '(all|even)', tag: 'Infinitive', reason: 'shut-the' },
   // the [said] dog
-  { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'the-said-card' },
+  { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'said-card' },
   // blue-[tinted]
   { match: '(#Adjective && #Hyphenated) [(#Hyphenated && #PastTense)]$', group: 0, tag: 'Adjective', reason: 'red-shouldered' },
   // [blue-tinted] glasses

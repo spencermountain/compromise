@@ -39,18 +39,18 @@ export default [
   },
   // ==== PhoneNumber ====
   // 1 800 555-1234
-  { match: '(1|+1) #Value #PhoneNumber', tag: 'PhoneNumber', reason: 'phone-country-code' },
+  { match: '(1|+1) #Value #PhoneNumber', tag: 'PhoneNumber', reason: 'country-code' },
   // (454) 232-9873
-  { match: '#NumericValue #PhoneNumber', tag: 'PhoneNumber', reason: 'phone-area-code' },
+  { match: '#NumericValue #PhoneNumber', tag: 'PhoneNumber', reason: 'area-code' },
 
   // ==== Currency ====
   // chinese yuan
-  { match: '#Demonym #Currency', tag: 'Currency', reason: 'demonym-currency' },
+  { match: '#Demonym #Currency', tag: 'Currency', reason: 'demonym-curr' },
   // ten [bucks]
   { match: '#Value [(buck|bucks|grand)]', group: 0, tag: 'Currency', reason: 'value-bucks' },
   // ==== Money ====
   // [5] dollars
-  { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: 'value-currency' },
+  { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: 'value-curr' },
 
   // ==== Ordinal ====
   // [second] dog
@@ -58,7 +58,7 @@ export default [
 
   // ==== Units ====
   // 5 [dollars]
-  { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: 'currency-unit' },
+  { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: 'curr-unit' },
   // 5 [feet]
   { match: '#Value [(foot|feet)]', group: 0, tag: 'Unit', reason: 'foot-unit' },
   // 500 fifth [ave]
@@ -72,17 +72,17 @@ export default [
   // minus 7
   { match: '(minus|negative) #Value', tag: 'Value', reason: 'minus-value' },
   // seven point five
-  { match: '#Value (point|decimal) #Value', tag: 'Value', reason: 'value-point-value' },
+  { match: '#Value (point|decimal) #Value', tag: 'Value', reason: 'decimal-point' },
   // a [half] second
-  { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
+  { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ord' },
   // thousand and two
-  { match: `#Multiple+ and #Value`, tag: 'Value', reason: 'magnitude-and-value' },
+  { match: `#Multiple+ and #Value`, tag: 'Value', reason: 'mag-and-value' },
   // 5 miles [per hour]
-  { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', group: 0, tag: 'Unit', reason: 'unit-per-duration' },
+  { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', group: 0, tag: 'Unit', reason: 'unit-per-dur' },
   // 5 [square] miles
   { match: '#Value [(square|cubic)] #Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
   // twelve percent
   { match: '#Cardinal percent', tag: '#Percent #Unit', reason: 'value-percent' },
   // 5 [gb]
-  { match: '#Value [(gb|pa|ft|foot|feet|m)]', group: 0, tag: 'Unit', reason: 'ambiguous-unit' },
+  { match: '#Value [(gb|pa|ft|foot|feet|m)]', group: 0, tag: 'Unit', reason: 'ambig-unit' },
 ]

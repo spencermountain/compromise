@@ -24,19 +24,19 @@ export default [
   // work in the office
   { match: '#PhrasalVerb (in && #Particle) #Determiner', tag: '#Verb #Preposition #Determiner', unTag: 'PhrasalVerb', reason: 'work-in-the' },
   // [start] listening
-  { match: '[(stop|start|finish|help)] #Gerund', group: 0, tag: 'Infinitive', reason: 'start-listening' },
+  { match: '[(stop|start|finish|help)] #Gerund', group: 0, tag: 'Infinitive', reason: 'start-listen' },
   // back it [up]
   ...['up', 'down'].map(word => ({
     match: `#Verb (him|her|it|us|himself|herself|itself|everything|something) [${word}]`,
     group: 0,
     tag: 'Adverb',
-    reason: 'phrasal-pronoun-advb',
+    reason: 'phr-pron-adv',
   })),
   // runs [around] the lake
   {
     match: '#PhrasalVerb [around] the #Noun',
     group: 0,
     tag: 'Preposition', //(breaks the phrasal)
-    reason: 'around-the-noun',
+    reason: 'around-noun',
   },
 ]

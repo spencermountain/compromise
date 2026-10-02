@@ -6,7 +6,7 @@ export default [
     match: '#FirstName #Noun$',
     tag: '. #LastName',
     notIf: '(#Possessive|#Organization|#Place|#Pronoun|@hasTitleCase)',
-    reason: 'firstname-noun',
+    reason: 'first-noun',
   },
 
   // June Smith
@@ -18,7 +18,7 @@ export default [
   { match: '%Person|Noun% #Organization', tag: 'Organization', reason: 'olive-garden' },
   // ===person-verb===
   // Ollie Faroo
-  { match: '(%Person|Verb% && #Person) #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
+  { match: '(%Person|Verb% && #Person) #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-proper', ifNo: '#Actor' },
   // [chuck] will ...
   {
     match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`,
@@ -60,7 +60,7 @@ export default [
     reason: 'jack-layton',
   },
   // [captain] John walks
-  { match: '^[#Singular] #Person #Verb', group: 0, safe: true, tag: 'Person', reason: 'sherwood-anderson' },
+  { match: '^[#Singular] #Person #Verb', group: 0, safe: true, tag: 'Person', reason: 'sherwood' },
   // bought a [warhol]
   { match: '(a|an) [#Person]$', group: 0, unTag: 'Person', reason: 'a-warhol' },
 ]

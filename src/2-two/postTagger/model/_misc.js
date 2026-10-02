@@ -7,15 +7,15 @@ const matches = [
   // who is [that]?
   { match: '^#QuestionWord #Adverb+? #Copula #Adverb+? [(this|that|these|those)] #Adverb+?$', group: 0, tag: 'Pronoun', reason: 'who-is-that' },
   // I like [this]
-  { match: '#Verb [(this|that|these|those)] #Adverb+? (yesterday|today|tonight|tomorrow)?$', group: 0, tag: 'Pronoun', reason: 'demonstrative-object' },
+  { match: '#Verb [(this|that|these|those)] #Adverb+? (yesterday|today|tonight|tomorrow)?$', group: 0, tag: 'Pronoun', reason: 'dem-obj' },
   // some sort of
   { match: 'some sort of', tag: 'Determiner Noun Preposition', reason: 'some-sort-of' },
   // of some sort
   { match: 'of some sort', tag: 'Preposition Determiner Noun', reason: 'of-some-sort' },
   // [some] eat apples
-  { match: '^[some] #Infinitive #Noun', group: 0, tag: 'Pronoun', reason: 'some-subject' },
+  { match: '^[some] #Infinitive #Noun', group: 0, tag: 'Pronoun', reason: 'some-subj' },
   // put it [there]
-  { match: '(put|puts|putting|place|placed|leave|left) #Pronoun [there]', group: 0, tag: 'Adverb', reason: 'locative-there' },
+  { match: '(put|puts|putting|place|placed|leave|left) #Pronoun [there]', group: 0, tag: 'Adverb', reason: 'loc-there' },
   // [such] skill
   { match: '[such] (a|an|is)? #Noun', group: 0, tag: 'Determiner', reason: 'such-skill' },
   // [right] after
@@ -41,15 +41,15 @@ const matches = [
   // [does] he
   { match: '^[does] (he|she|it|#ProperNoun)', group: 0, tag: 'QuestionWord', reason: 'does-he' },
   // the person [who] runs
-  { match: '#Determiner #Noun+ [who] #Verb', group: 0, tag: 'Preposition', reason: 'the-x-who' },
+  { match: '#Determiner #Noun+ [who] #Verb', group: 0, tag: 'Preposition', reason: 'x-who' },
   // the person [which] eats
-  { match: '#Determiner #Noun+ [which] #Verb', group: 0, tag: 'Preposition', reason: 'the-x-which' },
+  { match: '#Determiner #Noun+ [which] #Verb', group: 0, tag: 'Preposition', reason: 'x-which' },
   // a [while]
   { match: 'a [while]', group: 0, tag: 'Noun', reason: 'a-while' },
   // guess who
   { match: 'guess who', tag: '#Infinitive #QuestionWord', reason: 'guess-who' },
   // [fucking] ridiculous
-  { match: '[fucking] !#Verb', group: 0, tag: '#Gerund', reason: 'f-as-gerund' },
+  { match: '[fucking] !#Verb', group: 0, tag: '#Gerund', reason: 'f-as-ger' },
   // see [no]
   { match: '#Verb [no]', group: 0, tag: 'Negative', reason: 'see-no' },
   // than [mine]

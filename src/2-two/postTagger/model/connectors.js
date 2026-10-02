@@ -15,7 +15,7 @@ const rules = clauses.flatMap(word => [
   // [Before] the guests from the village arrived, we ate.
   // [After] the guests from the village arrived, we ate.
   // [Since] the guests from the village arrived, we ate. ...
-  { match: `[${word}] ${subject} (from|of|with|in|on|at|beside|near) ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: `${word}-modified-subject` },
+  { match: `[${word}] ${subject} (from|of|with|in|on|at|beside|near) ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: `${word}-mod-subj` },
 ])
 
 export default [
@@ -25,7 +25,7 @@ export default [
   // [after] the dog and the cat woke...
   ...['before', 'after', 'until', 'when', 'while'].map(word => ({
     match: `^[${word}] ${subject} and ${subject} ${predicate}`,
-    group: 0, tag: 'Conjunction', reason: `${word}-joint-subject`,
+    group: 0, tag: 'Conjunction', reason: `${word}-joint-subj`,
   })),
   // She bought flowers, [for] I was ill.
   { match: `@hasComma [for] ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: 'causal-for' },
@@ -40,47 +40,47 @@ export default [
   // she stood directly [below] the window...
   ...['above', 'below', 'under', 'over', 'beside', 'behind', 'against', 'outside', 'inside', 'near'].map(word => ({
     match: `[(${word} && !#Verb)] (#Determiner|#Possessive|#Pronoun|#ProperNoun)`,
-    group: 0, tag: 'Preposition', reason: `${word}-spatial-object`,
+    group: 0, tag: 'Preposition', reason: `${word}-space-obj`,
   })),
   // We looked [under] the bed.
-  { match: '#Verb [under] (#Determiner|#Possessive|#Pronoun)', group: 0, tag: 'Preposition', reason: 'under-object' },
+  { match: '#Verb [under] (#Determiner|#Possessive|#Pronoun)', group: 0, tag: 'Preposition', reason: 'under-obj' },
   // She sings [like] her mother
-  { match: '(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] (#Noun|#Determiner|#Possessive)', group: 0, tag: 'Preposition', reason: 'resemblance-like' },
+  { match: '(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] (#Noun|#Determiner|#Possessive)', group: 0, tag: 'Preposition', reason: 'like-like' },
   // images on a screen [like] humans do
-  { match: '#Noun [like] #Noun+ (do|does|did)$', group: 0, tag: 'Preposition', reason: 'noun-like-comparison' },
+  { match: '#Noun [like] #Noun+ (do|does|did)$', group: 0, tag: 'Preposition', reason: 'noun-like-cmp' },
   // cities [like] New York, Boston
   ...['', '#Place ', '#Place #Place '].map(prefix => ({
     match: `#Plural [like] ${prefix}(#Place && @hasComma) #Place`,
-    group: 0, tag: 'Preposition', reason: 'like-place-examples',
+    group: 0, tag: 'Preposition', reason: 'like-place',
   })),
   // [Like] his brother, he enjoys chess
-  { match: '^[like] (#Determiner|#Possessive)? #Adjective+? (#Noun && @hasComma)', group: 0, tag: 'Preposition', reason: 'initial-resemblance' },
+  { match: '^[like] (#Determiner|#Possessive)? #Adjective+? (#Noun && @hasComma)', group: 0, tag: 'Preposition', reason: 'init-like' },
   // She sings [like] her mother does
-  { match: `(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: 'manner-like-clause' },
+  { match: `(#Verb && !#Auxiliary && !#Modal && !do && !does && !did && !have && !has && !had) [like] ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: 'manner-like' },
   // I like tea, [like] my sister does.
-  { match: `@hasComma [like] ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: 'comma-like-clause' },
+  { match: `@hasComma [like] ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: 'comma-like-cl' },
   // We talked about the fact [that] she resigned.
-  { match: `#Noun [that] ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: 'noun-that-clause' },
+  { match: `#Noun [that] ${subject} ${predicate}`, group: 0, tag: 'Conjunction', reason: 'noun-that' },
   // I have heard that story [before]
-  { match: '#Verb (#Determiner|#Possessive)? #Noun+? [(before|since)]$', group: 0, tag: 'Adverb', notIf: '@hasQuestionMark', reason: 'temporal-adverb' },
+  { match: '#Verb (#Determiner|#Possessive)? #Noun+? [(before|since)]$', group: 0, tag: 'Adverb', notIf: '@hasQuestionMark', reason: 'time-adv' },
   // We met shortly [after].
-  { match: '(shortly|soon|long) [after]$', group: 0, tag: 'Adverb', reason: 'after-adverb' },
+  { match: '(shortly|soon|long) [after]$', group: 0, tag: 'Adverb', reason: 'after-adv' },
   // She has [since] moved.
-  { match: '(has|have|had) [since] #PastTense', group: 0, tag: 'Adverb', reason: 'perfect-since-adverb' },
+  { match: '(has|have|had) [since] #PastTense', group: 0, tag: 'Adverb', reason: 'perf-since-adv' },
   // She has not arrived [yet].
-  { match: '#PastTense [yet]$', group: 0, tag: 'Adverb', reason: 'yet-adverb' },
+  { match: '#PastTense [yet]$', group: 0, tag: 'Adverb', reason: 'yet-adv' },
   // Who did she arrive [before]?
   {
     match: '^(who|whom) #Verb #Pronoun #Verb [before]$',
     group: 0,
     tag: 'Preposition',
-    reason: 'stranded-before',
+    reason: 'before-end',
   },
   // We will leave [when] the rain stops.
   {
     match: '#Modal #Infinitive [when] #Determiner',
     group: 0,
     tag: 'Conjunction',
-    reason: 'will-leave-when',
+    reason: 'leave-when',
   },
 ]

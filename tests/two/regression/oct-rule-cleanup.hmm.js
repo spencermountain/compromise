@@ -2,6 +2,17 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[two/match-spec] '
 
+test('matcher cleanup preserves occurrence order and boundaries', t => {
+  const doc = nlp('red blue red blue')
+  t.deepEqual(doc.match('red blue').out('array'), ['red blue', 'red blue'], 'repeated matches')
+  t.deepEqual(doc.match('^red blue').out('array'), ['red blue'], 'first occurrence')
+  t.deepEqual(doc.match('red blue$').out('array'), ['red blue'], 'last occurrence')
+  t.deepEqual(doc.match('!blue blue').out('array'), ['red blue', 'red blue'], 'negative first term')
+  t.deepEqual(nlp('red red red').match('red red').out('array'), ['red red'], 'nonoverlapping matches')
+  t.deepEqual(nlp('red blue. red blue.').match('^red blue$').out('array'), ['red blue.', 'red blue.'], 'sentence boundaries')
+  t.end()
+})
+
 const spec = `
 
   On Friday, food and drinks are free. {Prep,Date,Noun,Conj,Noun,Vb,Adj}

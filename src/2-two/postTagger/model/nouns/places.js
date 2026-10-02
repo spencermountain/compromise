@@ -15,7 +15,7 @@ export default [
   // i ate [turkey]
   { match: '(eat|ate|eating|roast|roasted|thanksgiving) [turkey]', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'food-turkey' },
   // with [turkey]
-  { match: 'with [(turkey && !@isTitleCase)]', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'with-turkey-food' },
+  { match: 'with [(turkey && !@isTitleCase)]', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'with-turkey' },
   // [turkey] dinner
   { match: '[turkey] (roast|dinner|sandwich|burger)', group: 0, unTag: 'Place', tag: 'Uncountable', reason: 'turkey-food' },
   // ankara [turkey]
@@ -29,7 +29,7 @@ export default [
     reason: 'foo-point',
   },
   // in [Foo] California
-  { match: 'in [#ProperNoun] #Place', group: 0, tag: 'Place', reason: 'propernoun-place' },
+  { match: 'in [#ProperNoun] #Place', group: 0, tag: 'Place', reason: 'proper-place' },
   // 123 main street
   {
     match: '#Value #Noun+ (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway|way)',

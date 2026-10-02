@@ -33,7 +33,7 @@ export default [
   // I heard rumors [that] drivers save gas
   { match: '#Verb #Adverb? #Noun [(that|which)]', group: 0, tag: 'Preposition', reason: 'that-prep' },
   // Tuesday, [which] he liked
-  { match: '@hasComma [which] (#Pronoun|#Verb)', group: 0, tag: 'Preposition', reason: 'which-copula' },
+  { match: '@hasComma [which] (#Pronoun|#Verb)', group: 0, tag: 'Preposition', reason: 'which-cop' },
   // treated them [like] sons
   { match: '(me|him|her|us|them|it) [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
   // [like] the time
@@ -45,11 +45,11 @@ export default [
   // nothing [like]
   { match: 'nothing [like]', group: 0, tag: 'Preposition', reason: 'nothing-like' },
   // is not [like] me
-  { match: '(#Copula|be|been|being) (not|never) [like]', group: 0, tag: 'Preposition', reason: 'negative-resemblance' },
+  { match: '(#Copula|be|been|being) (not|never) [like]', group: 0, tag: 'Preposition', reason: 'neg-like' },
   // a lot [like] ours
   { match: 'a lot [like] #Noun', group: 0, tag: 'Preposition', reason: 'lot-like' },
   // treat them [like]
-  { match: '#Infinitive #Pronoun [like]', group: 0, tag: 'Preposition', reason: 'treat-them-like' },
+  { match: '#Infinitive #Pronoun [like]', group: 0, tag: 'Preposition', reason: 'treat-like' },
   // [before] dinner
   {
     match: '[before] (#Determiner|#Possessive|#Noun|#Gerund|#Date)',
@@ -71,7 +71,7 @@ export default [
   // what
   // which
   //the word 'how many'
-  // { match: '^(how|which)', tag: 'QuestionWord', reason: 'how-question' },
+  // { match: '^(how|which)', tag: 'QuestionWord', reason: 'how-q' },
   // [how] he
   { match: '[#QuestionWord] (#Pronoun|#Determiner)', group: 0, tag: 'Preposition', reason: 'how-he' },
   // [when] stolen

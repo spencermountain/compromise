@@ -1,6 +1,6 @@
 export default [
   // the [above] is clear
-  { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'the-adj-is' },
+  { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-is' },
   // real [evil] is
   { match: '#Adjective [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-adj-is' },
   // his [fine]
@@ -31,7 +31,7 @@ export default [
     group: 0,
     tag: 'Noun',
     notIf: '(this|that|#Comparative|#Superlative)',
-    reason: 'determiner-adjective',
+    reason: 'det-adj',
   }, //are that crazy.
   // company-wide
   {
@@ -46,7 +46,7 @@ export default [
     notIf: '(#Comparative|#Superlative)',
     group: 0,
     tag: 'Noun',
-    reason: 'the-poor',
+    reason: 'poor',
   },
   // [professional] bodybuilder
   {
@@ -54,6 +54,6 @@ export default [
     notIf: '(#Pronoun|#ProperNoun)',
     group: 0,
     tag: 'Adjective',
-    reason: 'stable-foundations',
+    reason: 'stable',
   },
 ]

@@ -12,11 +12,14 @@ const getIndexed = function (set, index, hookOrder, terms) {
     }
     for (let i = 0; i < bucket.length; i += 1) {
       const entry = bucket[i]
-      if (seen.has(entry)) {
-        continue
+      // Single-bucket entries cannot be encountered twice. Older nets fall back.
+      if (entry.single !== true) {
+        if (seen.has(entry)) {
+          continue
+        }
+        seen.add(entry)
       }
-      seen.add(entry)
-      if (!canMatch(entry.rule, set, terms)) {
+      if (!canMatch(entry.rule, set, terms, entry.needs)) {
         continue
       }
       let rank = entry.rank

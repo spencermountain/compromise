@@ -1,12 +1,12 @@
 export default [
   // ==== FirstNames ====
   // is [foo] Smith
-  { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', notIf: '#Gerund', reason: 'copula-noun-lastname' },
+  { match: '#Copula [(#Noun|#PresentTense)] #LastName', group: 0, tag: 'FirstName', notIf: '#Gerund', reason: 'cop-noun-last' },
   // pope francis
   {
     match: '(sister|pope|brother|father|aunt|uncle|grandpa|grandfather|grandma) #ProperNoun',
     tag: 'Person',
-    reason: 'lady-titlecase',
+    reason: 'lady-title',
     safe: true,
   },
 
@@ -17,15 +17,15 @@ export default [
   {
     match: '#ProperNoun (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #ProperNoun',
     tag: 'Person',
-    reason: 'name-initial-name',
+    reason: 'name-init-name',
     safe: true,
   },
   // J. Smith
-  { match: '#Acronym #LastName', tag: 'Person', reason: 'acronym-lastname', safe: true },
+  { match: '#Acronym #LastName', tag: 'Person', reason: 'acro-last', safe: true },
   // John jr
-  { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-honorific' },
+  { match: '#Person (jr|sr|md)', tag: 'Person', reason: 'person-hon' },
   // Dr. J.
-  { match: '#Honorific #Acronym', tag: 'Person', reason: 'honorific-initial' },
+  { match: '#Honorific #Acronym', tag: 'Person', reason: 'hon-init' },
   // John Smith III
   { match: '#Person #Person the? #RomanNumeral', tag: 'Person', reason: 'roman-numeral' },
   // John [b]
@@ -46,9 +46,9 @@ export default [
   // Osama bin Laden
   { match: '#FirstName (bin|al) #Noun', tag: 'Person', reason: 'bill-al-noun' },
   // John L. Foo
-  { match: '#FirstName #Acronym #ProperNoun', tag: 'Person', reason: 'bill-acronym-title' },
+  { match: '#FirstName #Acronym #ProperNoun', tag: 'Person', reason: 'bill-acro-title' },
   // Andrew Lloyd Webber
-  { match: '#FirstName #FirstName #ProperNoun', tag: 'Person', reason: 'bill-firstname-title' },
+  { match: '#FirstName #FirstName #ProperNoun', tag: 'Person', reason: 'bill-first-title' },
   // Mr Foo
   { match: '#Honorific #FirstName? #ProperNoun', tag: 'Person', reason: 'dr-john-title' },
   // peter the great
@@ -68,7 +68,7 @@ export default [
     group: 0,
     tag: 'Person',
     notIf: '#Possessive',
-    reason: 'three-name-person',
+    reason: 'three-names',
     safe: true,
   },
   // John [Foo]
@@ -77,17 +77,17 @@ export default [
     group: 0,
     tag: 'LastName',
     notIf: '#Possessive',
-    reason: 'firstname-titlecase',
+    reason: 'first-title',
   },
   // john [stewart]
-  { match: '#FirstName [#FirstName]', group: 0, tag: 'LastName', reason: 'firstname-firstname' },
+  { match: '#FirstName [#FirstName]', group: 0, tag: 'LastName', reason: 'first-first' },
   // Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   // Anthony [de] Marco
-  { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-firstname' },
+  { match: '#FirstName [(de|di|du|van|von)] #Person', group: 0, tag: 'LastName', reason: 'de-first' },
 
   // baker jenna smith
-  // { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam-smith' },
+  // { match: '[#Actor+] #Person', group: 0, tag: 'Person', reason: 'baker-sam' },
   // [sergeant] major Harold
   {
     match:
@@ -102,10 +102,10 @@ export default [
     match: '[(private|general|major|rear|prime|field|count)] #Honorific? #Person',
     group: 0,
     tag: ['Honorific', 'Person'],
-    reason: 'ambg-honorifics',
+    reason: 'ambg-hon',
   },
   // [Miss] John
-  { match: '[(miss && @isTitleCase)] #Person', group: 0, tag: ['Honorific', 'Person'], reason: 'miss-honorific' },
+  { match: '[(miss && @isTitleCase)] #Person', group: 0, tag: ['Honorific', 'Person'], reason: 'miss-hon' },
   // dr john [foobar]
   {
     match: '#Honorific #FirstName [#Singular]',
@@ -123,11 +123,11 @@ export default [
     reason: 'his-excellency',
   },
   // Dr teacher
-  { match: '#Honorific #Actor', tag: 'Honorific', reason: 'lieutenant-colonel' },
+  { match: '#Honorific #Actor', tag: 'Honorific', reason: 'lt-colonel' },
   // [first lady] michelle obama
   { match: '[first lady] #Person', group: 0, tag: 'Honorific', reason: 'first-lady' },
   // first lady, second admiral
-  { match: '(first|second|third|1st|2nd|3rd) lieutenant', tag: 'Honorific', reason: 'ordinal-lieutenant' },
+  { match: '(first|second|third|1st|2nd|3rd) lieutenant', tag: 'Honorific', reason: 'ord-lt' },
   // Louis IV
   { match: '#Person #RomanNumeral', tag: 'Person', reason: 'louis-iv' },
 ]

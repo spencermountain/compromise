@@ -6,7 +6,7 @@ export default [
   // June 5 to 7
   { match: '#Month #Value to #Value', tag: 'Date', reason: 'value-to-value' },
   // June the 12th
-  { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
+  { match: '#Month the #Value', tag: 'Date', reason: 'month-value' },
   // june 7
   { match: '(#WeekDay|#Month) #Value', tag: 'Date', reason: 'date-value' },
   // 7 june
@@ -14,7 +14,7 @@ export default [
   // aug 20-21
   { match: `#Month #NumberRange`, tag: 'Date', reason: 'aug-20-21' },
   // Wednesday June 5th
-  { match: `#WeekDay #Month #Ordinal`, tag: 'Date', reason: 'weekday-month-ordinal' },
+  { match: `#WeekDay #Month #Ordinal`, tag: 'Date', reason: 'weekday-date' },
   // aug 5th 2021
   { match: `#Month #Ordinal #Cardinal`, tag: 'Date', reason: 'month-day-year' },
 
@@ -30,5 +30,5 @@ export default [
   // 5pm [central]
   { match: `#Time [(eastern|mountain|pacific|central|est|pst|gmt)]`, group: 0, tag: 'Timezone', reason: '5pm-central' },
   // central european time
-  { match: `(central|western|eastern) european time`, tag: 'Timezone', reason: 'central-european-time' },
+  { match: `(central|western|eastern) european time`, tag: 'Timezone', reason: 'central-time' },
 ]

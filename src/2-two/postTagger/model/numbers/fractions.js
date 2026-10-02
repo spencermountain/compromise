@@ -15,14 +15,14 @@ export default [
   // [seven] fifths
   { match: '[#Cardinal+] (#Fraction && /s$/)', group: 0, tag: 'Fraction', reason: 'seven-fifths' },
   // [one third] of it
-  { match: '[#Cardinal+ #Ordinal] of .', group: 0, tag: 'Fraction', reason: 'ordinal-of' },
+  { match: '[#Cardinal+ #Ordinal] of .', group: 0, tag: 'Fraction', reason: 'ord-of' },
   // [100th] of it
-  { match: '[(#NumericValue && #Ordinal)] of .', group: 0, tag: 'Fraction', reason: 'num-ordinal-of' },
+  { match: '[(#NumericValue && #Ordinal)] of .', group: 0, tag: 'Fraction', reason: 'num-ord-of' },
   // [a twenty fifth] of it
-  { match: '[(a|one) #Cardinal?+ #Ordinal] of', group: 0, tag: 'Fraction', reason: 'a-ordinal' },
+  { match: '[(a|one) #Cardinal?+ #Ordinal] of', group: 0, tag: 'Fraction', reason: 'a-ord' },
 
   // a sixteenth, one twenty fifth (without a following noun)
-  { match: '[(a|one) #Cardinal+? (#Ordinal && !first && !second)]$', group: 0, tag: 'Fraction', reason: 'standalone-fraction' },
+  { match: '[(a|one) #Cardinal+? (#Ordinal && !first && !second)]$', group: 0, tag: 'Fraction', reason: 'solo-fraction' },
 
   // 3 out of 5
   { match: '#Cardinal+ out? of every? #Cardinal', tag: 'Fraction', reason: 'out-of' },

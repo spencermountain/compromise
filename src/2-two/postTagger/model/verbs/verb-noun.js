@@ -4,7 +4,7 @@ export default [
     match: `(#Pronoun|#Singular|#Plural) [${word} (submit|save|cancel)]$`,
     group: 0,
     tag: 'PresentTense Noun',
-    reason: 'click-button-label',
+    reason: 'click-button',
   })),
   // Common intransitive predicates after a singular subject. Keep arbitrary
   // plural/verb switches conservative: 'the dog treats' is a noun phrase.
@@ -13,18 +13,18 @@ export default [
     match: `^(#Determiner|#Possessive) #Adjective+? #Singular #Adverb+? [${word}] #Adverb+?$`,
     group: 0,
     tag: 'PresentTense',
-    reason: 'singular-subject-verb',
+    reason: 'sing-subj-verb',
   })),
   // with heads and [arms] rolling around
-  { match: '#Preposition #Plural and [%Plural|Verb%] #Gerund', group: 0, tag: 'Plural', reason: 'coordinated-plurals' },
+  { match: '#Preposition #Plural and [%Plural|Verb%] #Gerund', group: 0, tag: 'Plural', reason: 'coord-pl' },
   // he can solve the [puzzle]
   { match: '#Infinitive (this|that|the) [#Infinitive]', group: 0, tag: 'Noun', reason: 'do-this-dance' },
   // keeping the [matter] a secret
   { match: '#Gerund #Determiner [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-a-show' },
   // the-only-[reason]
-  { match: '#Determiner (only|further|just|more|backward) [#Infinitive]', group: 0, tag: 'Noun', reason: 'the-only-reason' },
+  { match: '#Determiner (only|further|just|more|backward) [#Infinitive]', group: 0, tag: 'Noun', reason: 'only-reason' },
   // the [slide] makes noise
-  { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', group: 0, tag: 'Noun', reason: 'determiner-verb-subject' },
+  { match: '(the|this|a|an) [#Infinitive] #Adverb? #Verb', group: 0, tag: 'Noun', reason: 'det-verb-subj' },
   // Use a pointed [stick] (a pencil) or a similar tool
   { match: '#Determiner #Adjective #Adjective? [#Infinitive]', group: 0, tag: 'Noun', notIf: 'the (poor|rich|young|old|elderly|unemployed|homeless|disabled)', reason: 'a-nice-inf' },
   // the American [thank]-you letter
@@ -41,7 +41,7 @@ export default [
     group: 0, notIf: 'from', tag: 'Noun', reason: 'a-noun-inf',
   })),
   // a software [reinstall]
-  { match: '(a|an) #Noun [#Infinitive]$', group: 0, tag: 'Noun', reason: 'noun-infinitive-end' },
+  { match: '(a|an) #Noun [#Infinitive]$', group: 0, tag: 'Noun', reason: 'noun-inf-end' },
   // working for [thank]-you letters
   { match: '#Gerund #Adjective? for [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-for' },
   // about [thank]-you letters
@@ -69,7 +69,7 @@ export default [
   // this [rocks]
   { match: 'this [#Plural]', group: 0, tag: 'PresentTense', notIf: '(#Preposition|#Date)', reason: 'this-verbs' },
   // the thing [that runs]
-  { match: '#Noun [that %Plural|Verb%]', group: 0, tag: 'Conjunction PresentTense', notIf: '(#Preposition|#Pronoun|way)', reason: 'voice-that-rocks' },
+  { match: '#Noun [that %Plural|Verb%]', group: 0, tag: 'Conjunction PresentTense', notIf: '(#Preposition|#Pronoun|way)', reason: 'that-rocks' },
   // that [leads] to
   { match: 'that [#Plural] to', group: 0, tag: 'PresentTense', notIf: '#Preposition', reason: 'that-leads-to' },
   // let him [father] a child
@@ -80,24 +80,24 @@ export default [
     reason: 'let-him-glue',
   })),
   // assign all [tasks]
-  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', notIf: '#Modal', group: 0, tag: 'Noun', reason: 'quantifier-verb-noun' },  // PresentTense/Noun ambiguities
+  { match: '#Verb (all|every|each|most|some|no) [#PresentTense]', notIf: '#Modal', group: 0, tag: 'Noun', reason: 'quant-verb-noun' },  // PresentTense/Noun ambiguities
   // big dreams, critical thinking
   // found all [upcoming] words
-  { match: '(had|have|#PastTense) #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: 'better', reason: 'adjective-verb-noun' },
+  { match: '(had|have|#PastTense) #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: 'better', reason: 'adj-verb-noun' },
   // one big [thank]-you
   { match: '#Value #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'one-big-reason' },
   // found all [upcoming] words
-  { match: '#PastTense #Adjective+ [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Copula|better)', reason: 'won-wide-support' },
+  { match: '#PastTense #Adjective+ [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Copula|better)', reason: 'wide-support' },
   // many [thanks]
   { match: '(many|few|several|couple) [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'many-poses' },
   // a very big [dream]
   { match: '#Determiner #Adverb #Adjective [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'very-big-dream' },
   // from start to [finish]
-  { match: 'from #Noun to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'start-to-finish' },
+  { match: 'from #Noun to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'start-finish' },
   // for comparison or [contrast]
-  { match: '(for|with|of) #Noun (and|or|not) [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'for-food-and-gas' },
+  { match: '(for|with|of) #Noun (and|or|not) [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '#Pronoun', reason: 'food-and-gas' },
   // cute little [thank]-you bags
-  { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'adorable-little-store' },
+  { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'little-store' },
   // writing bigger [thank]-you notes
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'higher-costs' },
   // some [thanks] for helping
@@ -109,24 +109,24 @@ export default [
     match: `#PastTense (until|as|through|without) [(#PresentTense && !#Gerund && !#Copula)]`,
     group: 0,
     tag: 'Noun',
-    reason: 'waited-until-release',
+    reason: 'until-release',
   },
   // selling like hot [thank]-you cards
   { match: `#Gerund like #Adjective? [#PresentTense]`, group: 0, tag: 'Plural', reason: 'like-hot-cakes' },
   // some nice [thank]-you notes
   { match: `some #Adjective [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-reason' },
   // for some [thank]-you letters
-  { match: `for some [#PresentTense]`, group: 0, tag: 'Noun', reason: 'for-some-reason' },
+  { match: `for some [#PresentTense]`, group: 0, tag: 'Noun', reason: 'for-some' },
   // same kind of [shouts]
   { match: `(same|some|the|that|a) kind of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-kind-of' },
   // a type of [shout]
   { match: `(same|some|the|that|a) type of [#PresentTense]`, group: 0, tag: 'Noun', reason: 'some-type-of' },
   // looking good in [thank]-you photos
-  { match: `#Gerund #Adjective #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'doing-better-for-x' },
+  { match: `#Gerund #Adjective #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'better-for' },
   // get better [thank]-you notes
   { match: `(get|got|have) #Comparative [#PresentTense]`, group: 0, tag: 'Noun', reason: 'got-better-aim' },
   // whose [thanks] are appreciated
-  { match: 'whose [#PresentTense] #Copula', group: 0, tag: 'Noun', reason: 'whose-verb-copula' },
+  { match: 'whose [#PresentTense] #Copula', group: 0, tag: 'Noun', reason: 'whose-verb-cop' },
   // give up on [thank]-you letters
   { match: `#PhrasalVerb #Particle #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   // there are [thank]-you notes
@@ -134,16 +134,16 @@ export default [
   // a thousand [thanks] of gratitude
   { match: '#Value [#PresentTense] of', group: 0, notIf: '(one|1|#Copula|#Infinitive)', tag: 'Plural', reason: '2-trains' },
   // [thanks] are appreciated
-  { match: '[#PresentTense] (are|were) #Adjective', group: 0, tag: 'Plural', reason: 'compromises-are-possible' },
+  { match: '[#PresentTense] (are|were) #Adjective', group: 0, tag: 'Plural', reason: 'compromises' },
   // [hope] i helped
   { match: '^[(hope|guess|thought|think)] #Pronoun #Verb', group: 0, tag: 'Infinitive', reason: 'suppose-i' },
   // its proper [functioning]
-  { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'our-full-support' },
+  { match: '#Possessive #Adjective [#Verb]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'full-support' },
   // [tastes] good
   { match: '[(tastes|smells)] #Adverb? #Adjective', group: 0, tag: 'PresentTense', reason: 'tastes-good' },
   // Being introduces a predicate rather than a direct object.
   // she is writing [thank]-you letters
-  { match: '#Copula (#Gerund && !being) [(#PresentTense && !#Gerund)] !by?', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring-commute' },
+  { match: '#Copula (#Gerund && !being) [(#PresentTense && !#Gerund)] !by?', group: 0, tag: 'Noun', notIf: 'going', reason: 'ignoring' },
   // the [shed]
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', group: 0, tag: 'Noun', reason: 'noun-past' },
   // how to [watch]
@@ -151,7 +151,7 @@ export default [
   // which [boost] it
   { match: 'which [%Noun|Verb%] #Noun', group: 0, tag: 'Infinitive', reason: 'which-boost-it' },
   // asking [questions]
-  { match: '#Gerund [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'asking-questions' },
+  { match: '#Gerund [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'asking' },
   // ready to [stream]
   { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'ready-to-noun' },
   // bring [to market]
@@ -161,38 +161,38 @@ export default [
   // is just [spam]
   { match: '#Copula just [#Infinitive]', group: 0, tag: 'Noun', reason: 'is-just-spam' },
   // request copies
-  { match: '^%Noun|Verb% %Plural|Verb%', tag: 'Imperative #Plural', reason: 'request-copies' },
+  { match: '^%Noun|Verb% %Plural|Verb%', tag: 'Imperative #Plural', reason: 'req-copies' },
   // homemade pickles and [drinks]
-  { match: '#Adjective #Plural and [%Plural|Verb%]', group: 0, tag: '#Plural', reason: 'pickles-and-drinks' },
+  { match: '#Adjective #Plural and [%Plural|Verb%]', group: 0, tag: '#Plural', reason: 'and-drinks' },
   // the 1968 [stand]-off
-  { match: '#Determiner #Year [#Verb]', group: 0, tag: 'Noun', reason: 'the-1968-film' },
+  { match: '#Determiner #Year [#Verb]', group: 0, tag: 'Noun', reason: '1968-film' },
   // the [break up]
-  { match: '#Determiner [#PhrasalVerb #Particle]', group: 0, tag: 'Noun', reason: 'the-break-up' },
+  { match: '#Determiner [#PhrasalVerb #Particle]', group: 0, tag: 'Noun', reason: 'break-up' },
   // the [individual] goals
-  { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', notIf: '(#Pronoun|#Possessive|#ProperNoun)', reason: 'the-individual-goals' },
+  { match: '#Determiner [%Adj|Noun%] #Noun', group: 0, tag: 'Adjective', notIf: '(#Pronoun|#Possessive|#ProperNoun)', reason: 'individual' },
   // [work] or prepare
-  { match: '^[%Noun|Verb%] or #Infinitive', group: 0, tag: 'Infinitive', reason: 'work-or-prepare' },
+  { match: '^[%Noun|Verb%] or #Infinitive', group: 0, tag: 'Infinitive', reason: 'work-or' },
   // to give [thanks]
   { match: 'to #Infinitive [#PresentTense]', group: 0, tag: 'Noun', notIf: '(#Gerund|#Copula|help)', reason: 'to-give-thanks' },
   // [Google] me
   { match: '[(#Noun && !#Pronoun)] me', group: 0, tag: 'Verb', reason: 'kills-me' },
   // removes wrinkles
-  { match: '%Plural|Verb% %Plural|Verb%', tag: '#PresentTense #Plural', reason: 'removes-wrinkles' },
+  { match: '%Plural|Verb% %Plural|Verb%', tag: '#PresentTense #Plural', reason: 'removes' },
   // i [Google] the answer
-  { match: 'i [#Noun] the #Noun', group: 0, tag: 'Infinitive', reason: 'i-water-the-plants' },
+  { match: 'i [#Noun] the #Noun', group: 0, tag: 'Infinitive', reason: 'i-water' },
   // did the engine [stop]
   {
     match: '(did|does|will) the #Noun [%Noun|Verb%]',
     group: 0,
     tag: 'Infinitive',
-    reason: 'question-noun-verb',
+    reason: 'q-noun-verb',
   },
   // 40 gallons of [water]
   {
     match: '#Value #Noun of [%Noun|Verb%]',
     group: 0,
     tag: 'Noun',
-    reason: 'quantity-of-noun',
+    reason: 'qty-of-noun',
   },
   // When the rain [stops], we will leave. Whenever the bell [rings], the dog barks.
   // when the dog [looks]

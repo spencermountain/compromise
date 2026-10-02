@@ -3,7 +3,7 @@ export default [
   {
     match: '^[developed] (#Adjective|#ProperNoun)+? (backend|frontend|software|architecture|applications|apps|systems)',
     group: 0, tag: 'PastTense',
-    notIf: '(#PresentTense|#Copula|#Modal)', reason: 'developed-software',
+    notIf: '(#PresentTense|#Copula|#Modal)', reason: 'developed',
   },
   // quickly [warm]
   { match: '(slowly|quickly) [%Adj|Present%]', group: 0, tag: 'Verb', reason: 'slowly-adj' },
@@ -38,27 +38,27 @@ export default [
   // a bit [confused]
   { match: 'a (bit|little|tad) [#PastTense #Particle?]', group: 0, tag: 'Adjective', reason: 'a-bit-confused' },
   // do not be [embarrassed]
-  { match: 'not be [%Adj|Past% #Particle?]', group: 0, tag: 'Adjective', reason: 'not-be-adjective' },
+  { match: 'not be [%Adj|Past% #Particle?]', group: 0, tag: 'Adjective', reason: 'not-be-adj' },
   // is just [tired]
   { match: '#Copula just [%Adj|Past% #Particle?]', group: 0, tag: 'Adjective', reason: 'is-just-right' },
   // as [fit] as
   { match: 'as [#Infinitive] as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
   // [failed] and oppressive
-  { match: '[%Adj|Past%] and #Adjective', group: 0, tag: 'Adjective', reason: 'failed-and-oppressive' },
+  { match: '[%Adj|Past%] and #Adjective', group: 0, tag: 'Adjective', reason: 'failed-and' },
   // the fear or [heightened] emotion
   {
     match: '(#Determiner|#Preposition) #Adjective? #Noun or [#PastTense] #Noun',
     group: 0,
     tag: 'Adjective',
     notIf: '(#Copula|#Pronoun)',
-    reason: 'or-heightened-emotion',
+    reason: 'or-heightened',
   },
   // tired and overworked describes a state after a copula
-  { match: '#Copula #Adverb? #Adjective and [(overworked|overwhelmed|overpaid|underpaid|overqualified|underqualified|understaffed)]$', group: 0, tag: 'Adjective', reason: 'coordinated-state' },
+  { match: '#Copula #Adverb? #Adjective and [(overworked|overwhelmed|overpaid|underpaid|overqualified|underqualified|understaffed)]$', group: 0, tag: 'Adjective', reason: 'coord-state' },
   // became [embroiled]
   { match: '(become|became|becoming|becomes) [#Verb]', group: 0, tag: 'Adjective', reason: 'become-verb' },
   // their [declared] intentions
-   { match: '#Possessive [#PastTense] #Noun', group: 0, notIf: '#Copula', tag: 'Adjective', reason: 'declared-intentions' },
+   { match: '#Possessive [#PastTense] #Noun', group: 0, notIf: '#Copula', tag: 'Adjective', reason: 'declared' },
   // is he [cool]
   { match: '#Copula #Pronoun [%Adj|Present%]', group: 0, tag: 'Adjective', reason: 'is-he-cool' },
   // is [crowded] with  
@@ -67,17 +67,17 @@ export default [
     group: 0,
     tag: 'Adjective',
     notIf: '(associated|worn|baked|aged|armed|bound|fried|loaded|mixed|packed|pumped|filled|sealed)',
-    reason: 'is-crowded-with',
+    reason: 'crowded-with',
   },
   // is [empty]
-  { match: '#Copula #Adverb? [%Adj|Present%]$', group: 0, tag: 'Adjective', reason: 'copula-adjective' },
+  { match: '#Copula #Adverb? [%Adj|Present%]$', group: 0, tag: 'Adjective', reason: 'cop-adj' },
   // she is being [cool]
-  { match: 'being #Adverb? [%Adj|Present%]', group: 0, tag: 'Adjective', reason: 'being-adjective' },
+  { match: 'being #Adverb? [%Adj|Present%]', group: 0, tag: 'Adjective', reason: 'being-adj' },
   // does the store [open]
   {
     match: '(does|will) #Determiner #Noun [%Adj|Present%]$',
     group: 0,
     tag: 'Infinitive',
-    reason: 'question-adjective-verb',
+    reason: 'q-adj-verb',
   },
 ]

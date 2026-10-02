@@ -12,7 +12,7 @@ export default [
   // will [have] walked
   { match: `will (#Adverb|not)+? [have] (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'will-have-vb' },
   // [was] walking
-  { match: `[#Copula] (#Adverb|not)+? (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'copula-walking' },
+  { match: `[#Copula] (#Adverb|not)+? (#Gerund|#PastTense)`, group: 0, tag: 'Auxiliary', reason: 'cop-walking' },
   // [would] walk
   { match: `[(#Modal|did)+] (#Adverb|not)+? #Verb`, group: 0, tag: 'Auxiliary', reason: 'modal-verb' },
   // would [have] [had] to go
@@ -40,7 +40,7 @@ export default [
   // was [going to] walk
   { match: '#Copula (#Adverb|not)+? [going to] #Adverb+? #PresentTense', group: 0, tag: 'Auxiliary', reason: 'going-to-walk' },
   // going to [be] watched
-  { match: 'going to (#Adverb|not)+? [be] (#Adverb|not)+? #PastTense', group: 0, tag: 'Auxiliary', reason: 'going-to-be-watched' },
+  { match: 'going to (#Adverb|not)+? [be] (#Adverb|not)+? #PastTense', group: 0, tag: 'Auxiliary', reason: 'to-be-watched' },
   // there is [no] x
   { match: '(is|was) #Adverb? [no]', group: 0, tag: 'Negative', reason: 'is-no' },
   // [been] told

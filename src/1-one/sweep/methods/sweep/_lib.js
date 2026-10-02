@@ -1,13 +1,13 @@
 import matchTerm from '../../../match/methods/match/term/doesMatch.js'
 
 // Reject impossible candidates before allocating and sorting their entries.
-const canMatch = (obj, haves, terms) => {
+const canMatch = (obj, haves, terms, needs = obj.needs) => {
   const termCount = terms.length
   if (!(termCount >= obj.minWords)) {
     return false
   }
-  for (let j = 0; j < obj.needs.length; j += 1) {
-    if (!haves.has(obj.needs[j])) {
+  for (let j = 0; j < needs.length; j += 1) {
+    if (!haves.has(needs[j])) {
       return false
     }
   }

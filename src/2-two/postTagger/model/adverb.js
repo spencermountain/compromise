@@ -2,7 +2,7 @@
 
 export default [
   // [still] good
-  { match: '[still] #Adjective', group: 0, tag: 'Adverb', reason: 'still-adjective' },
+  { match: '[still] #Adjective', group: 0, tag: 'Adverb', reason: 'still-adj' },
   // [still] make
   { match: '[still] #Verb', group: 0, tag: 'Adverb', reason: 'still-verb' },
   // [so] hot
@@ -36,7 +36,7 @@ export default [
     reason: 'lazy-ly',
   },
   // [much] appreciated
-  { match: '[much] #Adjective', group: 0, tag: 'Adverb', reason: 'much-participle' },
+  { match: '[much] #Adjective', group: 0, tag: 'Adverb', reason: 'much-part' },
   // is [well]
   { match: '#Copula [#Adverb]$', group: 0, tag: 'Adjective', reason: 'is-well' },
   // a [bit] cold
@@ -44,9 +44,9 @@ export default [
   // [super] strong
   { match: `[(super|pretty)] #Adjective`, group: 0, tag: 'Adverb', reason: 'super-strong' },
   // become overly [weakened]
-  { match: '(become|fall|grow) #Adverb? [#PastTense]', group: 0, tag: 'Adjective', reason: 'overly-weakened' },
+  { match: '(become|fall|grow) #Adverb? [#PastTense]', group: 0, tag: 'Adjective', reason: 'weakened' },
   // a completely [beaten] man
-  { match: '(a|an) #Adverb [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'completely-beaten' },
+  { match: '(a|an) #Adverb [#Participle] #Noun', group: 0, tag: 'Adjective', reason: 'beaten' },
   // a [close] friend
   { match: '#Determiner #Adverb? [close] #Noun', group: 0, tag: 'Adjective', reason: 'a-close' },
   // came to a [close]
@@ -62,13 +62,13 @@ export default [
   // [later] say
   { match: '[later] #PresentTense', group: 0, tag: 'Adverb', reason: 'later-say' },
   // the [well]
-  { match: '#Determiner [well] !#PastTense?', group: 0, tag: 'Noun', reason: 'the-well' },
+  { match: '#Determiner [well] !#PastTense?', group: 0, tag: 'Noun', reason: 'well' },
   // sees [well]
   { match: '(#PresentTense && !#Copula) [well]', group: 0, tag: 'Adverb', reason: 'sees-well' },
   // high [enough]
   { match: '#Adjective [enough]', group: 0, tag: 'Adverb', reason: 'high-enough' },
   // [least] expensive
-  { match: '[least] #Adjective', group: 0, tag: 'Adverb', reason: 'least-expensive' },
+  { match: '[least] #Adjective', group: 0, tag: 'Adverb', reason: 'least-costly' },
   // the [least]
-  { match: '#Determiner [least]', group: 0, tag: 'Adverb', reason: 'the-least' },
+  { match: '#Determiner [least]', group: 0, tag: 'Adverb', reason: 'least' },
 ]

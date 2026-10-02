@@ -4,7 +4,7 @@ export default [
     match: '#Copula [(pretty|dead|full|well|sure)] #Adjective',
     group: 0,
     tag: 'Adverb',
-    reason: 'sometimes-adverb',
+    reason: 'sometimes-adv',
   },
   // i [better] go
   { match: '(#Pronoun|#Person) (had|#Adverb)? [better] #PresentTense', group: 0, tag: 'Modal', reason: 'i-better' },
@@ -17,9 +17,9 @@ export default [
   // she [bit] her tongue
   { match: '#Noun #Adverb? [(bit && #Infinitive)]', group: 0, tag: 'PastTense', reason: 'bit-past' },
   // will [be] running
-  { match: 'will #Adverb? not? #Adverb? [be] #Gerund', group: 0, tag: 'Copula', reason: 'will-be-copula' },
+  { match: 'will #Adverb? not? #Adverb? [be] #Gerund', group: 0, tag: 'Copula', reason: 'will-be-cop' },
   // will [be] nice
-  { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-copula' },
+  { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-cop' },
   // [march] up
   { match: '[march] (up|down|back|toward)', notIf: '#Date', group: 0, tag: 'Infinitive', reason: 'march-to' },
   // must [march]
@@ -31,11 +31,11 @@ export default [
   // is [home] to birds
   { match: '(#Copula|be|been|being) #Adverb+? [home] to', group: 0, tag: 'Noun', reason: 'is-home-to' },
   // is [subject] to change
-  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? [subject] to', group: 0, tag: 'Adjective', reason: 'is-subject-to' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? [subject] to', group: 0, tag: 'Adjective', reason: 'is-subj-to' },
   // is subject [to]
-  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject [to]', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'predicative-to' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject [to]', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'pred-to' },
   // is subject to [change]
-  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'predicative-to-noun' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'pred-to-noun' },
 
   // is home [to] dogs
   { match: '(#Copula|be|been|being) #Adverb+? home [to] #Adjective+? #Noun', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'home-to-noun' },
@@ -46,9 +46,9 @@ export default [
   // were being [run]
   { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
   // had [been broken]
-  { match: `(had|has|have) [been (#PastTense && /en$/)]`, group: 0, tag: 'Auxiliary Participle', reason: 'had-been-broken' },
+  { match: `(had|has|have) [been (#PastTense && /en$/)]`, group: 0, tag: 'Auxiliary Participle', reason: 'been-broken' },
   // had [been smoked]
-  { match: `(had|has|have) [been (#PastTense && /ed$/)]`, group: 0, tag: 'Auxiliary PastTense', reason: 'had-been-smoked' },
+  { match: `(had|has|have) [been (#PastTense && /ed$/)]`, group: 0, tag: 'Auxiliary PastTense', reason: 'been-smoked' },
   // had [been] eaten
   { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
   // had to [Google] the answer
@@ -63,7 +63,7 @@ export default [
   // [look] good
   { match: `[(look|looks)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'looks-good' },
   // [stops] thinking
-  { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-thinking' },
+  { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-think' },
   // have read
   { match: `(has|have|had) read`, tag: 'Auxiliary Participle', reason: 'read-read' },
   // were [under paid]
@@ -71,7 +71,7 @@ export default [
     match: `(is|was|were) [${word} #PastTense]`,
     group: 0,
     tag: 'Adverb Adjective',
-    reason: 'was-under-cooked',
+    reason: 'under-cooked',
   })),
 
   // [shit] them
@@ -91,11 +91,11 @@ export default [
   // [co] write
   { match: '[(co|mis|de|inter|intra|pre|re|un|counter)] #Verb', group: 0, tag: ['Verb', 'Prefix'], notIf: '(#Copula|#PhrasalVerb)', reason: 'co-write' },
   // [out] run
-  { match: '[(out|under|over)] #Infinitive', group: 0, tag: ['Verb', 'Prefix'], reason: 'directional-verb-prefix' },
+  { match: '[(out|under|over)] #Infinitive', group: 0, tag: ['Verb', 'Prefix'], reason: 'dir-verb-pre' },
   // dressed and [left]
-  { match: '#PastTense and [%Adj|Past%]', group: 0, tag: 'PastTense', reason: 'past-and-ambiguous' },
+  { match: '#PastTense and [%Adj|Past%]', group: 0, tag: 'PastTense', reason: 'past-and-ambig' },
   // [melted] and fallen
-  { match: '[(%Adj|Past% && !#Adjective)] and #PastTense', group: 0, tag: 'PastTense', reason: 'ambiguous-and-past' },
+  { match: '[(%Adj|Past% && !#Adjective)] and #PastTense', group: 0, tag: 'PastTense', reason: 'ambig-and-past' },
   // is he [stoked]
   { match: '#Copula #Pronoun [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'is-he-stoked' },
   // to [dream] of

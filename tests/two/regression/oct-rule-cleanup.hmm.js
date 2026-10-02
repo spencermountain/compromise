@@ -9,6 +9,29 @@ const spec = `
   On Tuesday, gifts and thanks arrived. {Prep,Date,Noun,Conj,Noun,Past}
   We discussed London, Paris and travel. {Noun,Past,Noun,Noun,Conj,Noun}
 
+  The dog runs. {Det,Noun,Pres}
+  My dog barks loudly. {Poss,Noun,Pres,Adv}
+  The small child walks slowly. {Det,Adj,Noun,Pres,Adv}
+  Her cat usually sleeps peacefully. {Poss,Noun,Adv,Pres,Adv}
+  The young athlete swims well. {Det,Adj,Noun,Pres,Adv}
+  Our old dog often barks loudly. {Poss,Adj,Noun,Adv,Pres,Adv}
+  A tired baby sleeps soundly. {Det,Adj,Noun,Pres,Adv}
+
+  Hope changed the world. {Noun,Past,Det,Noun}
+  Love changed my life. {Noun,Past,Poss,Noun}
+  Work consumed his time. {Noun,Past,Poss,Noun}
+  Rain ruined the picnic. {Noun,Past,Det,Noun}
+  Support exceeded our expectations. {Noun,Past,Poss,Noun}
+  Change brought a new opportunity. {Noun,Past,Det,Adj,Noun}
+  Fear gripped the small town. {Noun,Past,Det,Adj,Noun}
+  Trust saved our friendship. {Noun,Past,Poss,Noun}
+
+  Let John shoulder the burden. {Vb,Noun,Inf,Det,Noun}
+  Make Sarah shoulder the responsibility. {Vb,Noun,Inf,Det,Noun}
+  We made John shoulder the burden. {Noun,Past,Noun,Inf,Det,Noun}
+  Let her shoulder the burden. {Vb,Noun,Inf,Det,Noun}
+  Make Google shoulder the cost. {Vb,Noun,Inf,Det,Noun}
+  They made Canada shoulder the cost. {Noun,Past,Noun,Inf,Det,Noun}
 `
 
 test('match spec:', function (t) {

@@ -93,6 +93,7 @@
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "pnpm --filter \"./plugins/*\" run test",
     "test:hmm": "tape \"./tests/**/*.hmm.js\" | tap-dancer",
+    "test:sweep": "node scripts/bench/post-tagger/sweep-profile.js infinite-jest.txt",
     "testb:plugins": "pnpm --filter \"./plugins/*\" run testb",
     "build:plugins": "pnpm --filter \"./plugins/*\" run build",
     "stress": "node scripts/test/stress.js",

@@ -2,7 +2,7 @@ import connectors from './connectors.js'
 
 // Corrections matched against the main sweep's output, before any are applied.
 // dogs [near] the house [bark]
-const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
+// const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
 const tired = [
   // He [was] [tired].
   { match: '[(#Copula|been)] #Adverb+? [tired]$', position: 'end' },
@@ -65,7 +65,7 @@ const rules = [
   // [water] broke the pipe
   {
     match: '^[%Noun|Verb%] #PastTense (#Determiner|#Possessive) #Adjective+? #Noun',
-    hook: '#PastTense',
+    hook: '%Noun|Verb%',
     group: 0,
     tag: 'Noun',
     reason: 'bare-subject-past',
@@ -97,11 +97,24 @@ const rules = [
   // what [walks] he took
   { match: '(which|what|whose) [%Plural|Verb%] #Pronoun', hook: '#Pronoun', group: 0, tag: 'Plural', reason: 'embedded-wh-plural' },
   // John and Mary [walk]
-  { match: '#Person and #Person [(%Noun|Verb% && !@isTitleCase && !@isUpperCase)]$', hook: 'and', group: 0, tag: 'Infinitive', reason: 'joint-subject-verb' },
+  {
+    match: '#Person and #Person [(%Noun|Verb% && !@isTitleCase && !@isUpperCase)]$',
+    hook: '%Noun|Verb%',
+    group: 0,
+    tag: 'Infinitive',
+    reason: 'joint-subject-verb',
+  },
   // dogs [near] the house [bark]
-  { match: locative, hook: '#Plural', group: 0, tag: 'Preposition', reason: 'subject-locative' },
+
+// near|on|under|beside|behind
+  ...['near', 'on', 'under', 'beside', 'behind'].flatMap(word => ([
+    { match: `#Plural [${word}] #Determiner #Adjective+? #Noun [%Noun|Verb%]$`, hook: word, group: 0, tag: 'Preposition', reason: 'subject-locative' },
+    { match: `#Plural [${word}] #Determiner #Adjective+? #Noun [%Noun|Verb%]$`, hook: word, group: 1, tag: 'Infinitive', reason: 'subject-locative-verb' },
+  ])),
+  // const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
+  // { match: locative, hook: '#Plural', group: 0, tag: 'Preposition', reason: 'subject-locative' },
   // dogs [near] the house [bark]
-  { match: locative, hook: '#Plural', group: 1, tag: 'Infinitive', reason: 'subject-locative-verb' },
+  // { match: locative, hook: '#Plural', group: 1, tag: 'Infinitive', reason: 'subject-locative-verb' },
   // being [injured] and treated
   { match: 'being #Adverb+? [%Adj|Past%] (and|or) #Adverb+? (#PastTense|#Participle)', hook: 'being', group: 0, tag: 'PastTense', reason: 'coordinated-passive' },
   // has eaten and [drunk]

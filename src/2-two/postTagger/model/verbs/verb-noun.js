@@ -1,10 +1,22 @@
 export default [
   // A final button label is an object, not a second verb.
-  { match: '(#Pronoun|#Singular|#Plural) [(click|clicks) (submit|save|cancel)]$', group: 0, tag: 'PresentTense Noun', reason: 'click-button-label' },
+  ...['click', 'clicks', 'selects', 'pick', 'picks'].map(word => ({
+    match: `(#Pronoun|#Singular|#Plural) [${word} (submit|save|cancel)]$`,
+    group: 0,
+    hook: word,
+    tag: 'PresentTense Noun',
+    reason: 'click-button-label',
+  })),
   // Common intransitive predicates after a singular subject. Keep arbitrary
   // plural/verb switches conservative: 'the dog treats' is a noun phrase.
   // the dog [runs]
-  { match: '^(#Determiner|#Possessive) #Adjective+? #Singular #Adverb+? [(runs|walks|barks|swims|sleeps)] #Adverb+?$', hook: '#Singular', group: 0, tag: 'PresentTense', reason: 'singular-subject-verb' },
+  ...['runs', 'walks', 'barks', 'swims', 'sleeps'].map(word => ({
+    match: `^(#Determiner|#Possessive) #Adjective+? #Singular #Adverb+? [${word}] #Adverb+?$`,
+    hook: word,
+    group: 0,
+    tag: 'PresentTense',
+    reason: 'singular-subject-verb',
+  })),
   // with heads and [arms] rolling around
   { match: '#Preposition #Plural and [%Plural|Verb%] #Gerund', hook: 'and', group: 0, tag: 'Plural', reason: 'coordinated-plurals' },
   // he can solve the [puzzle]

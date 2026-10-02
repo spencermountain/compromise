@@ -18,18 +18,10 @@ const matches = [
   { match: '(put|puts|putting|place|placed|leave|left) #Pronoun [there]', group: 0, tag: 'Adverb', reason: 'loc-there' },
   // [such] skill
   { match: '[such] (a|an|is)? #Noun', group: 0, tag: 'Determiner', reason: 'such-skill' },
-  // [right] after
-  // left-right: { match: '[right] (before|after|in|into|to|toward)', group: 0, tag: '#Adverb', reason: 'right-into' },
-  // at [about]
-  // left-right: { match: '#Preposition [about]', group: 0, tag: 'Adverb', reason: 'at-about' },
   // are [ya]
   { match: '(are|#Modal|see|do|for) [ya]', group: 0, tag: 'Pronoun', reason: 'are-ya' },
   // [long live] the king
   { match: '[long live] .', group: 0, tag: '#Adverb #Infinitive', reason: 'long-live' },
-  // [plenty] of
-  // left-right: { match: '[plenty] of', group: 0, tag: '#Uncountable', reason: 'plenty-of' },
-  // always [there]
-  // left-right: { match: '(always|nearly|barely|practically) [there]', group: 0, tag: 'Adjective', reason: 'always-there' },
   // [there] she is
   { match: '[there] (#Adverb|#Pronoun)? #Copula', group: 0, tag: 'There', reason: 'there-is' },
   // is [there] food
@@ -44,15 +36,9 @@ const matches = [
   { match: '#Determiner #Noun+ [who] #Verb', group: 0, tag: 'Preposition', reason: 'x-who' },
   // the person [which] eats
   { match: '#Determiner #Noun+ [which] #Verb', group: 0, tag: 'Preposition', reason: 'x-which' },
-  // a [while]
-  // left-right: { match: 'a [while]', group: 0, tag: 'Noun', reason: 'a-while' },
   // guess who
   { match: 'guess who', tag: '#Infinitive #QuestionWord', reason: 'guess-who' },
   // [fucking] ridiculous
   { match: '[fucking] !#Verb', group: 0, tag: '#Gerund', reason: 'f-as-ger' },
-  // see [no]
-  // left-right: { match: '#Verb [no]', group: 0, tag: 'Negative', reason: 'see-no' },
-  // than [mine]
-  // left-right: { match: '(then|than) [mine]', group: 0, tag: 'Possessive', reason: 'than-mine' },
 ]
 export default matches

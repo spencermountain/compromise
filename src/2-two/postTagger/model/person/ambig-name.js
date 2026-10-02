@@ -19,24 +19,6 @@ export default [
   // ===person-verb===
   // Ollie Faroo
   { match: '(%Person|Verb% && #Person) #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-proper', ifNo: '#Actor' },
-  // [chuck] will ...
-  // left-right: {
-  //   match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`,
-  //   group: 0,
-  //   tag: 'Person',
-  //   reason: 'person-said',
-  // },
-
-  // ===person-place===
-  // [sydney] harbour
-  // left-right: {
-  //   match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`,
-  //   group: 0,
-  //   tag: 'Place',
-  //   reason: 'sydney-harbour',
-  // },
-  // east [sydney]
-  // left-right: { match: `(west|east|north|south) [%Person|Place%]`, group: 0, tag: 'Place', reason: 'east-sydney' },
 
   // ===person-verb===
   // really [wade]
@@ -47,8 +29,6 @@ export default [
   { match: `(%Person|Verb% && #Person) #Person`, tag: 'Person', reason: 'rob-smith' },
   // Wade G. Slapgoop
   { match: `%Person|Verb% #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
-  // [will] go
-  // left-right: { match: '[will] #Infinitive', group: 0, tag: 'Modal', reason: 'will-verb' },
   // Will Smith
   { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' },
   // jack [layton] won
@@ -61,6 +41,4 @@ export default [
   },
   // [captain] John walks
   { match: '^[#Singular] #Person #Verb', group: 0, safe: true, tag: 'Person', reason: 'sherwood' },
-  // bought a [warhol]
-  { match: '(a|an) [#Person]$', group: 0, unTag: 'Person', reason: 'a-warhol' },
 ]

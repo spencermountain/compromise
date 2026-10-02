@@ -22,10 +22,6 @@ export default [
   { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-cop' },
   // [march] up
   { match: '[march] (up|down|back|toward)', notIf: '#Date', group: 0, tag: 'Infinitive', reason: 'march-to' },
-  // must [march]
-  // left-right: { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
-  // [may] be
-  // left-right: { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
   // birds [home] to their nest
   { match: '(#Pronoun|#Plural|#Modal) #Adverb+? [home] to', group: 0, tag: 'Infinitive', reason: 'birds-home-to' },
   // is [home] to birds
@@ -41,8 +37,6 @@ export default [
   { match: '(#Copula|be|been|being) #Adverb+? home [to] #Adjective+? #Noun', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'home-to-noun' },
 
   // === misc==
-  // [open] the door
-  // left-right: { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
   // were being [run]
   { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
   // had [been broken]
@@ -58,12 +52,6 @@ export default [
   })),
   // does that [work]
   { match: `(do|does|did|#Modal) (this|that|these|those) [work]`, group: 0, tag: 'Infinitive', reason: 'does-that-work' },
-  // [sounds] fun
-  // left-right: { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
-  // [look] good
-  // left-right: { match: `[(look|looks)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'looks-good' },
-  // [stops] thinking
-  // left-right: { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-think' },
   // have read
   { match: `(has|have|had) read`, tag: 'Auxiliary Participle', reason: 'read-read' },
   // were [under paid]
@@ -100,6 +88,4 @@ export default [
   { match: '#Copula #Pronoun [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'is-he-stoked' },
   // to [dream] of
   { match: 'to [%Noun|Verb%] #Preposition', group: 0, tag: 'Infinitive', reason: 'to-dream-of' },
-  // he [read]
-  // left-right: { match: '^(he|she|it|#Person) [read]', group: 0, tag: 'PastTense', reason: 'he-read' },
 ]

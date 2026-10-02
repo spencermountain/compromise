@@ -33,10 +33,6 @@ const rules = {
     // [even] the greatest
     '_ (#Verb|#Comparative|#Determiner|#Possessive) -> #Adverb',
   ],
-  much: [
-    // [much] appreciated
-    '_ #Adjective -> #Adverb',
-  ],
   later: [
     // [later] say
     '_ #PresentTense -> #Adverb',
@@ -63,14 +59,6 @@ const rules = {
     // any [more]
     '(the|any) _ -> #Singular',
   ],
-  bit: [
-    // a [bit]
-    'a _ -> #Singular',
-  ],
-  must: [
-    // a [must]
-    'a _ -> #Singular',
-  ],
   u: [
     // and [u]
     '#Conjunction _ -> #Pronoun',
@@ -90,10 +78,6 @@ const rules = {
     '#Cardinal _ -> #Unit',
     // [second] dog
     '_ #Noun -> #Ordinal',
-  ],
-  k: [
-    // 5 [k]
-    '#Value _ -> #Unit',
   ],
   will: [
     // [will] go
@@ -135,15 +119,15 @@ const rules = {
     // [plenty] of
     '_ of -> #Uncountable',
   ],
-  while: [
-    // a [while]
-    'a _ -> #Singular',
-  ],
   no: [
     // see [no]
     '#Verb _ -> #Negative',
   ],
   turkey: [
+    // i ate [turkey]
+    '(eat|ate|eating|roast|roasted|thanksgiving) _ -> #Uncountable | !#Place',
+    // [turkey] dinner
+    '_ (roast|dinner|sandwich|burger) -> #Uncountable | !#Place',
     // ankara [turkey]
     // in [turkey]
     '(#Place|in|near|nearby|to|from) _ -> #Country',
@@ -168,79 +152,15 @@ const rules = {
     // enduring symbols, running water
     '(have|has|had|#Determiner|#Possessive) _ water -> #Adjective',
   ],
-  super: [
-    // [super] strong
-    '_ #Adjective -> #Adverb',
-  ],
-  pretty: [
-    // [super] strong
-    '_ #Adjective -> #Adverb',
-  ],
   wit: [
     // [wit] it
     '_ (me|it) -> #Preposition',
-  ],
-  sound: [
-    // [sounds] fun
-    '_ #Adjective -> #PresentTense',
-  ],
-  sounds: [
-    // [sounds] fun
-    '_ #Adjective -> #PresentTense',
   ],
   look: [
     // [look] good
     '_ #Adjective -> #PresentTense',
     // [pay] attention
     '^ _ #Noun -> #Imperative',
-  ],
-  looks: [
-    // [look] good
-    '_ #Adjective -> #PresentTense',
-  ],
-  start: [
-    // [stops] thinking
-    '_ #Gerund -> #Verb',
-    // help [stop]
-    'help _ -> #Infinitive',
-    // [start] listening
-    '_ #Gerund -> #Infinitive',
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  starts: [
-    // [stops] thinking
-    '_ #Gerund -> #Verb',
-  ],
-  stop: [
-    // [stops] thinking
-    '_ #Gerund -> #Verb',
-    // help [stop]
-    'help _ -> #Infinitive',
-    // [start] listening
-    '_ #Gerund -> #Infinitive',
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  stops: [
-    // [stops] thinking
-    '_ #Gerund -> #Verb',
-  ],
-  begin: [
-    // [stops] thinking
-    '_ #Gerund -> #Verb',
-  ],
-  begins: [
-    // [stops] thinking
-    '_ #Gerund -> #Verb',
-  ],
-  end: [
-    // help [stop]
-    'help _ -> #Infinitive',
-  ],
-  make: [
-    // help [stop]
-    'help _ -> #Infinitive',
   ],
   finish: [
     // [start] listening
@@ -272,97 +192,9 @@ const rules = {
     // on [wed]
     '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay',
   ],
-  eastern: [
-    // 5pm [central]
-    '#Time _ -> #Timezone',
-  ],
-  mountain: [
-    // 5pm [central]
-    '#Time _ -> #Timezone',
-  ],
-  pacific: [
-    // 5pm [central]
-    '#Time _ -> #Timezone',
-  ],
-  central: [
-    // 5pm [central]
-    '#Time _ -> #Timezone',
-  ],
-  est: [
-    // 5pm [central]
-    '#Time _ -> #Timezone',
-  ],
-  pst: [
-    // 5pm [central]
-    '#Time _ -> #Timezone',
-  ],
-  gmt: [
-    // 5pm [central]
-    '#Time _ -> #Timezone',
-  ],
-  dance: [
-    // [dance] music
-    '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
-  ],
-  rock: [
-    // [dance] music
-    '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
-  ],
-  rap: [
-    // [dance] music
-    '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
-  ],
-  swing: [
-    // [dance] music
-    '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
-  ],
-  buck: [
-    // ten [bucks]
-    '#Value _ -> #Currency',
-  ],
-  bucks: [
-    // ten [bucks]
-    '#Value _ -> #Currency',
-  ],
-  grand: [
-    // ten [bucks]
-    '#Value _ -> #Currency',
-  ],
   quarter: [
     // a [half] second
     '#Determiner _ #Ordinal -> #Value',
-  ],
-  square: [
-    // 5 [square] miles
-    '#Value _ #Unit -> #Unit',
-  ],
-  cubic: [
-    // 5 [square] miles
-    '#Value _ #Unit -> #Unit',
-  ],
-  gb: [
-    // 5 [gb]
-    '#Value _ -> #Unit',
-  ],
-  pa: [
-    // 5 [gb]
-    '#Value _ -> #Unit',
-  ],
-  ft: [
-    // 5 [gb]
-    '#Value _ -> #Unit',
-  ],
-  m: [
-    // 5 [gb]
-    '#Value _ -> #Unit',
-  ],
-  just: [
-    // is [alone]
-    '#Copula _ $ -> #Adjective',
-  ],
-  alone: [
-    // is [alone]
-    '#Copula _ $ -> #Adjective',
   ],
   kind: [
     // a new [kind]
@@ -380,14 +212,6 @@ const rules = {
     // he [read]
     '^(he|she|it|#Person) _ -> #PastTense',
   ],
-  go: [
-    // [go] home
-    '^ _ home -> #Imperative',
-  ],
-  come: [
-    // [go] home
-    '^ _ home -> #Imperative',
-  ],
   stay: [
     // [stay] away
     '^ _ (out|away|back) -> #Imperative',
@@ -398,82 +222,66 @@ const rules = {
     // [stay] cool
     '^ _ #Adjective -> #Imperative',
   ],
-  ask: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  wear: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  pay: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  show: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  watch: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  act: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  fix: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  kill: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  turn: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  try: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  win: [
-    // [pay] attention
-    '^ _ #Noun -> #Imperative',
-  ],
-  ok: [
-    // ok,
-    '^ _ -> #Expression',
-  ],
-  alright: [
-    // alright
-    '^ _ -> #Expression',
-  ],
   shoot: [
     // shoot
     '^ _ $ -> #Expression',
   ],
-  hell: [
-    // hell
-    '^ _ -> #Expression',
-  ],
-  anyways: [
-    // anyways
-    '^ _ -> #Expression',
-  ],
-  dude: [
-    // [dude] we should
-    '^ _ #Pronoun -> #Expression',
-  ],
-  man: [
-    // [dude] we should
-    '^ _ #Pronoun -> #Expression',
-  ],
-  girl: [
-    // [dude] we should
-    '^ _ #Pronoun -> #Expression',
+  seconds: [
+    // 10 [seconds]
+    '#Value _ -> #Plural | !#Value',
   ],
 }
+
+const compounds = {
+  // [much] appreciated
+  // [super] strong
+  'much|super|pretty': '_ #Adjective -> #Adverb',
+  // a [bit]
+  // a [must]
+  // a [while]
+  'bit|must|while': 'a _ -> #Singular',
+  // 5 [k]
+  // 5 [gb]
+  'k|gb|pa|ft|m': '#Value _ -> #Unit',
+  // [sounds] fun
+  // [look] good
+  'sound|sounds|looks': '_ #Adjective -> #PresentTense',
+  // [stops] thinking
+  'start|stop|starts|stops|begin|begins': '_ #Gerund -> #Verb',
+  // help [stop]
+  'start|stop|end|make': 'help _ -> #Infinitive',
+  // [start] listening
+  'start|stop': '_ #Gerund -> #Infinitive',
+  // [pay] attention
+  'start|stop|ask|wear|pay|show|watch|act|fix|kill|turn|try|win': '^ _ #Noun -> #Imperative',
+  // 5pm [central]
+  'eastern|mountain|pacific|central|est|pst|gmt': '#Time _ -> #Timezone',
+  // [dance] music
+  'dance|rock|rap|swing': '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
+  // ten [bucks]
+  'buck|bucks|grand': '#Value _ -> #Currency',
+  // 5 [square] miles
+  'square|cubic': '#Value _ #Unit -> #Unit',
+  // is [alone]
+  'just|alone': '#Copula _ $ -> #Adjective',
+  // [go] home
+  'go|come': '^ _ home -> #Imperative',
+  // ok,
+  // alright
+  // hell
+  // anyways
+  'ok|alright|hell|anyways': '^ _ -> #Expression',
+  // [dude] we should
+  'dude|man|girl': '^ _ #Pronoun -> #Expression',
+  // [un] skilled
+  'un|contra|extra|inter|intra|macro|micro|mid|mis|mono|multi|pre|sub|tri|ex': '_ #Adjective -> #Adjective | #Prefix',
+}
+
+Object.entries(compounds).forEach(([words, rule]) => {
+  words.split('|').forEach(word => {
+    rules[word] ||= []
+    rules[word].push(rule)
+  })
+})
 
 export default rules

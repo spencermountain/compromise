@@ -1,4 +1,8 @@
 const rules = {
+  '#Person': [
+    // bought a [warhol]
+    '(a|an) _ $ -> !#Person',
+  ],
   '#ProperNoun': [
     // in [#ProperNoun] -> #Place
     // in [Foo] California

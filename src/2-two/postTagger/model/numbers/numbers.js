@@ -1,7 +1,5 @@
 export default [
   // ==== Ambiguous numbers ====
-  // one [second]
-  // left-right: { match: `#Cardinal [second]`, group: 0, tag: 'Unit', reason: 'one-second' },
   // with [a] hundred jobs
   {
     match: '!once? [(a|an)] hundred',
@@ -46,25 +44,17 @@ export default [
   // ==== Currency ====
   // chinese yuan
   { match: '#Demonym #Currency', tag: 'Currency', reason: 'demonym-curr' },
-  // ten [bucks]
-  // left-right: { match: '#Value [(buck|bucks|grand)]', group: 0, tag: 'Currency', reason: 'value-bucks' },
   // ==== Money ====
   // [5] dollars
   { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: 'value-curr' },
 
   // ==== Ordinal ====
-  // [second] dog
-  // left-right: { match: '[second] #Noun', group: 0, tag: 'Ordinal', reason: 'second-noun' },
 
   // ==== Units ====
   // 5 [dollars]
   { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: 'curr-unit' },
   // 5 [feet]
   { match: '#Value [(foot|feet)]', group: 0, tag: 'Unit', reason: 'foot-unit' },
-  // 500 fifth [ave]
-  // left-right: { match: '#Value [#Abbreviation]', group: 0, tag: 'Unit', reason: 'value-abbr' },
-  // 5 [k]
-  // left-right: { match: '#Value [k]', group: 0, tag: 'Unit', reason: 'value-k' },
   // kilometers an hour
   { match: '#Unit an hour', tag: 'Unit', reason: 'unit-an-hour' },
 
@@ -73,16 +63,10 @@ export default [
   { match: '(minus|negative) #Value', tag: 'Value', reason: 'minus-value' },
   // seven point five
   { match: '#Value (point|decimal) #Value', tag: 'Value', reason: 'decimal-point' },
-  // a [half] second
-  // left-right: { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ord' },
   // thousand and two
   { match: `#Multiple+ and #Value`, tag: 'Value', reason: 'mag-and-value' },
   // 5 miles [per hour]
   { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', group: 0, tag: 'Unit', reason: 'unit-per-dur' },
-  // 5 [square] miles
-  // left-right: { match: '#Value [(square|cubic)] #Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
   // twelve percent
   { match: '#Cardinal percent', tag: '#Percent #Unit', reason: 'value-percent' },
-  // 5 [gb]
-  // left-right: { match: '#Value [(gb|pa|ft|foot|feet|m)]', group: 0, tag: 'Unit', reason: 'ambig-unit' },
 ]

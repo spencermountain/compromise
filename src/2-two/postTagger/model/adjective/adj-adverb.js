@@ -6,8 +6,6 @@ export default [
   { match: `[${adverbAdj}] #Adjective`, group: 0, tag: 'Adverb', reason: 'dark-green' },
   // is [far too] cold
   { match: `#Copula [far too] #Adjective`, group: 0, tag: 'Adverb', reason: 'far-too' },
-  // was [still] in
-  // left-right: { match: `#Copula [still] (in|#Gerund|#Adjective)`, group: 0, tag: 'Adverb', reason: 'still-walking' },
   // shops [direct]
   {
     match: `#Verb [${noLy}] !#Noun?`,

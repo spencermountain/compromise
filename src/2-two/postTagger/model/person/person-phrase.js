@@ -79,8 +79,6 @@ export default [
     notIf: '#Possessive',
     reason: 'first-title',
   },
-  // john [stewart]
-  // left-right: { match: '#FirstName [#FirstName]', group: 0, tag: 'LastName', reason: 'first-first' },
   // Joe K. Sombrero
   { match: '#FirstName #Acronym #Noun', tag: 'Person', reason: 'n-acro-noun', safe: true },
   // Anthony [de] Marco

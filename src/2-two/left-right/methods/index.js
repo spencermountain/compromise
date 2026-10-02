@@ -1,4 +1,5 @@
 import matches from './_lib.js'
+import apply from './_actions.js'
 
 const collect = (entry, terms, i, pending) => {
   if (!entry) {
@@ -38,17 +39,7 @@ const leftRight = (document, { byWord, byTag, bySwitch = {} }, world) => {
     }
   })
   // All indexes see incoming state; apply word, tag, then switch actions per term.
-  pending.forEach(([term, rule]) => {
-    const { setTag } = world.methods.one
-    const terms = [term]
-    const reason = rule.reason || 'left-right'
-    setTag(terms, rule.tag, world, rule.safe, reason)
-    // Preserve the noun number that the sweep's tagger supplies.
-    if (rule.tag === 'Noun') {
-      const tag = world.methods.two.looksPlural(term.text) ? 'Plural' : 'Singular'
-      setTag(terms, tag, world, rule.safe, reason)
-    }
-  })
+  pending.forEach(([term, rule]) => apply(term, rule, world))
 }
 
 const methods = { two: { leftRight } }

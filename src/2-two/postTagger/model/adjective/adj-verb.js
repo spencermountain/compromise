@@ -5,8 +5,6 @@ export default [
     group: 0, tag: 'PastTense',
     notIf: '(#PresentTense|#Copula|#Modal)', reason: 'developed',
   },
-  // quickly [warm]
-  // left-right: { match: '(slowly|quickly) [%Adj|Present%]', group: 0, tag: 'Verb', reason: 'slowly-adj' },
   // does [mean]
   { match: 'does (#Adverb|not)? [%Adj|Present%]', group: 0, tag: 'Infinitive', reason: 'does-mean' },
   // [okay] by me
@@ -17,8 +15,6 @@ export default [
   { match: 'will #Adjective', tag: 'Auxiliary Infinitive', reason: 'will-adj' },
   // I [frequent] this restaurant
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
-  // is [done] well
-  // left-right: { match: '#Copula [#Adjective] (well|badly|quickly|slowly)', group: 0, tag: 'Verb', reason: 'done-well' },
   // rude and [insulting]
   { match: '#Adjective and [(%Adj|Gerund% && #Gerund)] !#Preposition?', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // was under [paid]
@@ -41,8 +37,6 @@ export default [
   { match: 'not be [%Adj|Past% #Particle?]', group: 0, tag: 'Adjective', reason: 'not-be-adj' },
   // is just [tired]
   { match: '#Copula just [%Adj|Past% #Particle?]', group: 0, tag: 'Adjective', reason: 'is-just-right' },
-  // as [fit] as
-  // left-right: { match: 'as [#Infinitive] as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
   // [failed] and oppressive
   { match: '[%Adj|Past%] and #Adjective', group: 0, tag: 'Adjective', reason: 'failed-and' },
   // the fear or [heightened] emotion
@@ -55,8 +49,6 @@ export default [
   },
   // tired and overworked describes a state after a copula
   { match: '#Copula #Adverb? #Adjective and [(overworked|overwhelmed|overpaid|underpaid|overqualified|underqualified|understaffed)]$', group: 0, tag: 'Adjective', reason: 'coord-state' },
-  // became [embroiled]
-  // left-right: { match: '(become|became|becoming|becomes) [#Verb]', group: 0, tag: 'Adjective', reason: 'become-verb' },
   // their [declared] intentions
    { match: '#Possessive [#PastTense] #Noun', group: 0, notIf: '#Copula', tag: 'Adjective', reason: 'declared' },
   // is he [cool]

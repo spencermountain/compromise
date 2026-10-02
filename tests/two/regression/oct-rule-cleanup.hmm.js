@@ -4,6 +4,51 @@ import leftRight from '../../../src/2-two/left-right/plugin.js'
 import compileLeftRight from '../../../src/2-two/left-right/model/_lib.js'
 const here = '[two/match-spec] '
 
+test('left/right tag and untag actions run in source order', t => {
+  const cases = [
+    ['!#Verb', 'PastTense', [], ['Verb', 'PastTense']],
+    ['#Noun | #Hyphenated', 'Verb', ['Noun', 'Singular', 'Hyphenated'], ['Verb']],
+    ['#Noun | !#Singular', 'Verb', ['Noun'], ['Singular', 'Verb']],
+    ['#Noun | !#Noun', 'Verb', [], ['Noun', 'Singular', 'Verb']],
+    ['!#Noun | #Noun', 'Singular', ['Noun', 'Singular'], []],
+    ['#Noun | #Adjective', 'Verb', ['Adjective'], ['Noun', 'Singular', 'Verb']],
+    ['!#PastTense|#Adverb|!#Verb', 'PastTense', ['Adverb'], ['PastTense', 'Verb']],
+  ]
+  cases.forEach(([actions, initial, present, absent]) => {
+    const doc = nlp('before foo after')
+    const target = doc.match('foo').tag(initial)
+    const byWord = compileLeftRight({ foo: [`before _ after -> ${actions}`] })
+    leftRight.methods.two.leftRight(doc.docs, { byWord, byTag: {} }, doc.world)
+    present.forEach(tag => t.equal(target.has('#' + tag), true, `${actions}: has ${tag}`))
+    absent.forEach(tag => t.equal(target.has('#' + tag), false, `${actions}: lacks ${tag}`))
+  })
+  const doc = nlp('before foo after')
+  const target = doc.match('foo').tag('PastTense')
+  const term = target.docs[0][0]
+  term.switch = 'Noun|Verb'
+  const byWord = compileLeftRight({ foo: ['before _ after -> !#Verb'] })
+  const byTag = compileLeftRight({ '#PastTense': ['before _ after -> #Adjective | #Hyphenated'] })
+  const bySwitch = compileLeftRight({ '%Noun|Verb%': ['before _ after -> !#Hyphenated'] })
+  leftRight.methods.two.leftRight(doc.docs, { byWord, byTag, bySwitch }, doc.world)
+  t.equal(target.has('#Adjective'), true, 'tag rules still see incoming tags before an untag action')
+  t.equal(target.has('#Hyphenated'), false, 'switch rules can untag after tag rules')
+
+  const unmatched = nlp('near foo after')
+  unmatched.match('foo').tag('PastTense')
+  leftRight.methods.two.leftRight(unmatched.docs, { byWord, byTag: {} }, unmatched.world)
+  t.equal(unmatched.match('foo').has('#PastTense'), true, 'unmatched untag rule leaves tags alone')
+
+  const frozen = nlp('before foo after')
+  frozen.match('foo').tag('PastTense').docs[0][0].frozen = true
+  leftRight.methods.two.leftRight(frozen.docs, { byWord, byTag: {} }, frozen.world)
+  t.equal(frozen.match('foo').has('#PastTense'), true, 'untag respects frozen terms')
+  const invalid = ['', '!Noun', '#Noun |', '| #Noun', '#Noun || #Verb', '#Noun #Verb', '!!#Noun', '#Noun | nope']
+  invalid.forEach(actions => {
+    t.throws(() => compileLeftRight({ foo: [`_ -> ${actions}`] }), /Invalid left-right rule/, actions)
+  })
+  t.end()
+})
+
 test('switch-keyed tagging examples', t => {
   const cases = [
     ['Our leading manufacturer closed.', 'leading', 'Adjective'],
@@ -632,5 +677,30 @@ test('match spec:', function (t) {
       const detail = differences.length > 0 ? ' — ' + differences.join('; ') : ''
       t.equal(failing.found, false, here + sentence + detail)
     })
+  t.end()
+})
+
+test('left/right migrated tag and untag phrases', t => {
+  const cases = [
+    ['I ate turkey', 'turkey', ['Uncountable'], ['Place', 'Country']],
+    ['a turkey sandwich', 'turkey', ['Uncountable'], ['Place', 'Country']],
+    ['we visited Turkey', 'Turkey', ['Country'], []],
+    ['I waited ten seconds', 'seconds', ['Plural'], ['Value']],
+    ['I waited ten seconds', 'ten', ['Cardinal'], ['Fraction']],
+    ['an un-skilled worker', 'un-skilled', ['Adjective'], []],
+    ['make me talk to his hand', 'talk', ['Verb'], ['Noun']],
+    ['a left-out-type existence', 'type', ['Noun'], ['Verb']],
+    ['send it to her', 'to', ['Preposition'], ['Conjunction']],
+    ['go to the store', 'to', ['Preposition'], ['Conjunction']],
+    ['an un skilled worker', 'un', ['Adjective', 'Prefix'], []],
+    ['they over-estimate it', 'over', ['Verb', 'Prefix'], []],
+    ['she bought a Warhol', 'Warhol', ['Noun'], ['Person', 'LastName']],
+    ['she spoke to Warhol', 'Warhol', ['Person'], []],
+  ]
+  cases.forEach(([text, word, present, absent]) => {
+    const target = nlp(text).match(word)
+    present.forEach(tag => t.equal(target.has('#' + tag), true, `${text}: ${word} has ${tag}`))
+    absent.forEach(tag => t.equal(target.has('#' + tag), false, `${text}: ${word} lacks ${tag}`))
+  })
   t.end()
 })

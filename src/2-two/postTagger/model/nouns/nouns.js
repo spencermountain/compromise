@@ -2,16 +2,8 @@ const infNouns =
   '(feel|sense|process|rush|side|bomb|bully|challenge|cover|crush|dump|exchange|flow|function|issue|lecture|limit|march|process)'
 export default [
   //'more' is not always an adverb
-  // any [more]
-  // left-right: { match: '(the|any) [more]', group: 0, tag: 'Singular', reason: 'more-noun' },
-  // [more] players
-  // left-right: { match: '[more] #Noun', group: 0, tag: 'Adjective', reason: 'more-adj' },
   // [rights] of man
   { match: '[(right|rights)] of .', group: 0, tag: 'Noun', reason: 'right-of' },
-  // a [bit]
-  // left-right: { match: 'a [bit]', group: 0, tag: 'Singular', reason: 'a-bit' },
-  // a [must]
-  // left-right: { match: 'a [must]', group: 0, tag: 'Singular', reason: 'a-must' },
   // we [all]
   { match: '(we|us) [all]', group: 0, tag: 'Noun', reason: 'we-all' },
   // due to [weather]
@@ -31,8 +23,6 @@ export default [
   { match: '(the|this|those|these) #Adverb #Adjective [#Verb]', group: 0, tag: 'Noun', reason: 'det-adv-verb' },
   // the [message] from Danny
   { match: 'the [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'det-verb-prep' },
-  // the [manufacture] of perfume
-  // left-right: { match: '(a|an|the) [#Verb] of', group: 0, tag: 'Noun', reason: 'verb-of' },
   // a type of [shout]
   { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', notIf: '#Gerund', reason: 'noun-of-noun' },
   // waited until [release]
@@ -43,22 +33,14 @@ export default [
     tag: 'Noun',
     reason: 'ended-in-ruins',
   },
-  // and [u]
-  // left-right: { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'conjunction-u' },
-  // [u] made me smile
-  // left-right: { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-verb' },
   // water-flows
   { match: '(#Singular && @hasHyphen) #PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
   // is no [going] back
   { match: 'is no [#Verb]', group: 0, tag: 'Noun', reason: 'is-no-verb' },
-  // do [so]
-  // left-right: { match: 'do [so]', group: 0, tag: 'Adverb', reason: 'so-noun' },
   // what the [hell]
   { match: '#Determiner [(shit|damn|hell)]', group: 0, tag: 'Noun', reason: 'swears-noun' },
   // go to [shit]
   { match: 'to [(shit|hell)]', group: 0, tag: 'Noun', reason: 'to-swears' },
-  // the [staff] were
-  // left-right: { match: '(the|these) [#Singular] (were|are)', group: 0, tag: 'Plural', reason: 'sing-were' },
   // and check this out! a [walk-in] microwave.
   {
     match: '(the|those|these|a|an) #Adjective? [(#PresentTense && !#Gerund && !#Copula && !seem && !appear && !include) #Particle?]',
@@ -105,8 +87,6 @@ export default [
   { match: `senior? vice? president of #Noun+`, tag: 'Actor', reason: 'president-of' },
 
   // ==== Singular ====
-  // the [sun]
-  // left-right: { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'sun' },
   // did a [900], paid a [20]
   { match: '#Verb (a|an) [#Value]$', group: 0, tag: 'Singular', reason: 'did-a-value' },
   // the [can]
@@ -126,14 +106,6 @@ export default [
 
   // 10th of a [second]
   { match: '#Value of a [second]', group: 0, unTag: 'Value', tag: 'Singular', reason: '10th-second' },
-  // 10 [seconds]
-  { match: '#Value [seconds]', group: 0, unTag: 'Value', tag: 'Plural', reason: '10-seconds' },
-  // in [love]
-  // left-right: { match: 'in [#Infinitive]', group: 0, tag: 'Singular', reason: 'in-age' },
-  // a [minor] in
-  // left-right: { match: 'a [#Adjective] #Preposition', group: 0, tag: 'Noun', reason: 'a-minor-in' },
-  // the [repairer] said
-  // left-right: { match: '#Determiner [#Singular] said', group: 0, tag: 'Actor', reason: 'actor-said' },
   // the euro [sense]
   {
     match: `#Determiner #Noun [${infNouns}] !(#Preposition|to|#Adverb)?`,
@@ -154,15 +126,6 @@ export default [
 
   // i ate [me] sandwich (scottish slang)
   { match: 'i #Verb [me] #Noun', group: 0, tag: 'Possessive', reason: 'scottish-me' },
-  // [dance] music
-  // left-right: {
-  //   match: '[(dance|rock|rap|swing)] (music|class|lesson|night|party|festival|league|ceremony)',
-  //   group: 0,
-  //   tag: 'Noun',
-  //   reason: 'dance-music',
-  // },
-  // [wit] it
-  // left-right: { match: '[wit] (me|it)', group: 0, tag: 'Preposition', reason: 'wit-me' },
   // He bowed his [head] in prayer
   { match: '#PastTense #Possessive [#Verb]', group: 0, tag: 'Noun', notIf: '(saw|made)', reason: 'left-her-boots' },
   // 35 [signs]
@@ -171,8 +134,6 @@ export default [
   { match: 'had [%Noun|Verb%]', group: 0, tag: 'Noun', notIf: '(#Gerund|come|become)', reason: 'had-time' },
   // instant access
   { match: '%Adj|Noun% %Noun|Verb%', tag: '#Adjective #Noun', notIf: '#ProperNoun #Noun', reason: 'instant-access' },
-  // a [representative] to
-  // left-right: { match: '#Determiner [%Adj|Noun%] #Conjunction', group: 0, tag: 'Noun', reason: 'a-rep-to' },
   // near death experiences, ambitious sales [targets]
   {
     match: '#Adjective #Noun [%Plural|Verb%]$',

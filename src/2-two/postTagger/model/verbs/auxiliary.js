@@ -26,8 +26,6 @@ export default [
   { match: '[about to] #Adverb? #Verb', hook: 'about', group: 0, tag: ['Auxiliary', 'Verb'], reason: 'about-to' },
   // would [be] walking
   { match: `#Modal (#Adverb|not)+? [be] (#Adverb|not)+? #Verb`, hook: 'be', group: 0, tag: 'Auxiliary', reason: 'would-be' },
-  // [had] [been] walking
-  { match: `[(#Modal|had|has)] (#Adverb|not)+? [been] (#Adverb|not)+? #Verb`, hook: 'been', group: 0, tag: 'Auxiliary', reason: 'had-been-auxiliary' },
   // was [being] driven
   { match: '[(be|being|been)] #Participle', hook: '#Participle', group: 0, tag: 'Auxiliary', reason: 'being-driven' },
   // [may] want

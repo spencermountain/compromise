@@ -3,10 +3,10 @@ packages:
 
 # Shared versions for the root library and maintained plugins.
 catalog:
-  '@types/node': '^26.6.2'
+  '@types/node': '^26.6.3'
   '@rollup/plugin-node-resolve': '16.0.3'
   '@rollup/plugin-terser': '1.0.0'
-  'rollup': '4.63.5'
+  'rollup': '4.63.6'
   'rollup-plugin-filesize-check': '2.0.1'
   'tap-dancer': '0.4.2'
   'tape': '5.10.2'

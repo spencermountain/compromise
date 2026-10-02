@@ -74,6 +74,22 @@ test('apostrophe lexicon:', function (t) {
   t.end()
 })
 
+test('hashtag lexicon:', function (t) {
+  const lex = {
+    '#GoJetsGo': 'SportsTeam',
+    '@NHLJets': 'SportsTeam',
+  }
+  let doc = nlp('#GoJetsGo', lex)
+  t.equal(doc.match('#SportsTeam').text(), '#GoJetsGo', here + 'lexicon w/ hashtag')
+
+  doc = nlp('go @NHLJets', lex)
+  t.equal(doc.match('#SportsTeam').text(), '@NHLJets', here + 'lexicon w/ at-mention')
+
+  doc = nlp('GoJetsGo', lex)
+  t.equal(doc.has('#SportsTeam'), false, here + 'no hashtag, no match')
+  t.end()
+})
+
 test('long lexicon:', function (t) {
   nlp.addWords({ 'new york yankees are cool and not bad': 'Long' })
   let doc = nlp('the new york yankees are cool and smart')

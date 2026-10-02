@@ -1,4 +1,10 @@
 export default [
+  // Resume fragments: developed [scalable React] architecture.
+  {
+    match: '^[developed] (#Adjective|#ProperNoun)+? (backend|frontend|software|architecture|applications|apps|systems)',
+    hook: 'developed', group: 0, tag: 'PastTense',
+    notIf: '(#PresentTense|#Copula|#Modal)', reason: 'developed-software',
+  },
   // quickly [warm]
   { match: '(slowly|quickly) [%Adj|Present%]', hook: '%Adj|Present%', group: 0, tag: 'Verb', reason: 'slowly-adj' },
   // does [mean]

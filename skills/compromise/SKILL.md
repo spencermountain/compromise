@@ -1,6 +1,8 @@
 ---
 name: compromise
 description: Write and debug JavaScript or TypeScript that uses the compromise English NLP library to match text, extract entities or numbers, customize tagging, and transform sentences. Use when the user requests compromise or the project already uses it, especially for its match syntax, selection semantics, build tiers, and plugins.
+metadata:
+  version: "0.1"
 ---
 
 # Using compromise

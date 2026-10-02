@@ -22,6 +22,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - tagset exclusion/consistency rules
 - **[new]** - .out('best-tag') fmt
 - **[new]** - #Connector tag between #Preposition and #Conjunction
+- **[new]** - .adjectives().toRoot() converts comparative and superlative adjectives to their base form #1186
+- **[fix]** - tagging fixes #1190 and  #1169
+- **[fix]** - add missing Node 18 runtime checks for source and bundles #1207
 - **[fix]** - verb conjugation regression #1226
 - **[fix]** - tag-consistency 'not' and 'also' fixes
 - **[fix]** - types paths

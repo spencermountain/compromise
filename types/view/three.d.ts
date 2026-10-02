@@ -259,6 +259,7 @@ export interface Adjectives extends View {
   adverbs: () => View
   /**  return all forms of these */
   conjugate: () => object[]
+  toRoot: (n?: number) => View
   /** 'quick' -> 'quicker' */
   toComparative: (n?: number) => View
   /** 'quick' -> 'quickest' */

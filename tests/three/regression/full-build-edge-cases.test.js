@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 const here = '[three/misc] '
 
 test('full-sentence-issue', function (t) {
@@ -106,7 +106,6 @@ test('retain class', function (t) {
   t.end()
 })
 
-
 test('barely a term', function (t) {
   let str = '.('
   let doc = nlp(str)
@@ -138,7 +137,6 @@ test('json extended options:', function (t) {
   t.end()
 })
 
-
 test('tag-multiples:', function (t) {
   const r = nlp('twas brillig in the doofgafoof.')
   r.match('brillig').tag(['Foo', 'Barr'])
@@ -157,7 +155,6 @@ test('root-text vs match-text', function (t) {
   t.equal(m.text(), 'scissors, scissors', 'match-text')
   t.end()
 })
-
 
 test('fullwidth question-mark', function (t) {
   const doc = nlp('元気ですか？はい、元気です！')

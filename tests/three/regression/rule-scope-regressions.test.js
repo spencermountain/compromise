@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 
 test('standalone fractions preserve ordinal noun modifiers', t => {
   const fractions = [
@@ -43,7 +43,12 @@ test('scoped tag corrections preserve nearby verb meanings', t => {
     ['dogs like bones', 'like', 'Verb'],
   ]
   cases.forEach(([text, word, tag]) => {
-    t.ok(nlp(text).match(word).has('#' + tag), text)
+    t.ok(
+      nlp(text)
+        .match(word)
+        .has('#' + tag),
+      text
+    )
   })
   t.equal(nlp('we have running water').match('have').has('#Auxiliary'), false, 'lexical have')
   t.equal(nlp('ruins are enduring symbols').match('are').has('#Auxiliary'), false, 'copular are')

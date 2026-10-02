@@ -50,6 +50,11 @@ const api = function (View) {
         }
       }, [])
     }
+    toRoot(n) {
+      return this.getNth(n).map(adj => {
+        return adj.replaceWith(toRoot(adj))
+      })
+    }
     toComparative(n) {
       const { toComparative } = this.methods.two.transform.adjective
       return this.getNth(n).map(adj => {

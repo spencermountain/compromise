@@ -3,6 +3,8 @@
 // they are all inflected to add their plural form
 
 export default [
+  'backend',
+  'frontend',
   // -ic
   'medic',
   'ethic',

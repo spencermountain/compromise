@@ -1,3 +1,5 @@
+import getBoundary from './_lib.js'
+
 // extract the clear needs for an individual match token
 const getTokenNeeds = function (reg) {
   // negatives can't be cached
@@ -79,6 +81,8 @@ const parse = function (matches, world) {
   const parseMatch = world.methods.one.parseMatch
   matches.forEach(obj => {
     obj.regs = parseMatch(obj.match, {}, world)
+    obj.startTerm = getBoundary(obj.regs[0], 'start')
+    obj.endTerm = getBoundary(obj.regs[obj.regs.length - 1], 'end')
     // wrap these ifNo properties into an array
     if (typeof obj.ifNo === 'string') {
       obj.ifNo = [obj.ifNo]

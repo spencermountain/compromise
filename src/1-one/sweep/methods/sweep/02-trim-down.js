@@ -1,3 +1,5 @@
+import matchTerm from '../../../match/methods/match/term/doesMatch.js'
+
 // filter-down list of maybe-matches
 const localTrim = function (maybeList, docCache, document, always) {
   return maybeList.map((list, n) => {
@@ -34,6 +36,13 @@ const localTrim = function (maybeList, docCache, document, always) {
         if (!(count >= obj.minWant)) {
           continue
         }
+      }
+      // Required anchors must match the sentence boundary, not just occur in it.
+      if (termCount && obj.startTerm && !matchTerm(document[n][0], obj.startTerm, 0, termCount)) {
+        continue
+      }
+      if (termCount && obj.endTerm && !matchTerm(document[n][termCount - 1], obj.endTerm, termCount - 1, termCount)) {
+        continue
       }
       found.push(obj)
     }

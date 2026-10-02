@@ -107,6 +107,63 @@ const spec = `
   # (is|was|were) [(under|over) #PastTense]
   They were under paid. {Noun,Vb,Adv,Adj}
   It is over rated. {Noun,Vb,Adv,Adj}
+
+  # Consecutive gerunds: preserve the action and the adjective modifier.
+  They are repairing crumbling roads. {Pronoun,Aux,Ger,Adj,Plural}
+  They are repairing leaking pipes. {Pronoun,Aux,Ger,Adj,Plural}
+
+  # Perfect progressives: preserve auxiliaries with and without intervening adverbs.
+  She had been walking. {Pronoun,Aux,Aux,Ger}
+  He has not been sleeping. {Pronoun,Aux,Negative,Aux,Ger}
+  They had already been working. {Pronoun,Aux,Adv,Aux,Ger}
+  She would have been walking. {Pronoun,Modal|Aux,Aux,Aux,Ger}
+
+  # Synthetic overlap probes: preserve coverage of the second had.
+  John would have had not been walking. {Person,Modal|Aux,Aux,Aux,Negative,Aux,Ger}
+  John would not have had really been walking. {Person,Modal|Aux,Negative,Aux,Aux,Adv,Aux,Ger}
+
+  # A later adjective correction must survive intervening Actor rules.
+  a semiprofessional bodyworker {Det,Adj,Noun}
+  on stable foundations {Prep,Adj,Plural}
+
+  # Adjective correction before a proper noun.
+  This is the classic London. {Pronoun,Copula,Det,Adj,Place}
+  It is the premier university. {Pronoun,Copula,Det,Adj,Noun}
+
+  # Relative clause: preserve the finite verb after that.
+  A path that leads to the river. {Det,Noun,Conj,Pres,Prep,Det,Noun}
+
+  # A verb-shaped word used as a noun after a preposition.
+  We waited until release. {Pronoun,Past,Prep,Noun}
+  It served as cover. {Pronoun,Past,Prep,Noun}
+  She acted as judge. {Pronoun,Past,Prep,Noun}
+
+  # Locative subjects: preserve both the preposition and the final verb.
+  Dogs near the porch bark. {Plural,Prep,Det,Noun,Inf}
+  Dogs on the porch bark. {Plural,Prep,Det,Noun,Inf}
+  Dogs under the porch bark. {Plural,Prep,Det,Noun,Inf}
+  Dogs beside the porch bark. {Plural,Prep,Det,Noun,Inf}
+  Dogs behind the porch bark. {Plural,Prep,Det,Noun,Inf}
+  Children on the playground play. {Plural,Prep,Det,Noun,Inf}
+
+  # Lists need their comma context; coordinated subjects still take verbs.
+  We sell books, toys and watches. {Pronoun,Inf,Plural,Plural,Conj,Plural}
+  I enjoy music, art and dance. {Pronoun,Inf,Noun,Noun,Conj,Noun}
+  On Friday, John and Mary work. {Prep,Date,Person,Conj,Person,Inf}
+  John and Mary work. {Person,Conj,Person,Inf}
+
+  # Share locative patterns without losing adjective context.
+  Dogs on the wooden porch bark. {Plural,Prep,Det,Adj,Noun,Inf}
+  Children behind the old school play. {Plural,Prep,Det,Adj,Noun,Inf}
+
+  # Copula variants share passive syntax; adjectives remain adjectives.
+  I am watched. {Pronoun,Aux|Passive,Past|Passive}
+  The parcel is delivered. {Det,Noun,Aux|Passive,Past|Passive}
+  The parcels are delivered. {Det,Plural,Aux|Passive,Past|Passive}
+  The parcel was delivered. {Det,Noun,Aux|Passive,Past|Passive}
+  The parcels were delivered. {Det,Plural,Aux|Passive,Past|Passive}
+  The parcel was quickly delivered. {Det,Noun,Aux,Adv,Past}
+  She was tired. {Pronoun,Copula,Adj}
 `
 
 test('match spec:', function (t) {

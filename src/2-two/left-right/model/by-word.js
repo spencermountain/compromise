@@ -82,6 +82,8 @@ const rules = {
     '#Adverb _ -> #Fraction',
     // [half] the
     '_ the -> #Fraction',
+    // a [half] second
+    '#Determiner _ #Ordinal -> #Value',
   ],
   second: [
     // one [second]
@@ -100,10 +102,20 @@ const rules = {
   march: [
     // must [march]
     '#Modal _ -> #Infinitive',
+    // in [march]
+    '(in|by|before|during|on|until|after|of|within|all) _ -> #Month',
+    // early [May]
+    '(early|late|mid) _ -> #Month',
+    // [march] quickly
+    '_ #Adverb -> #Verb',
   ],
   may: [
     // [may] be
     '_ be -> #Verb',
+    // early [May]
+    '(early|late|mid) _ -> #Month',
+    // [march] quickly
+    '_ #Adverb -> #Verb',
   ],
   open: [
     // [open] the door
@@ -243,6 +255,94 @@ const rules = {
   sorry: [
     // said [sorry]
     '(say|says|said) _ -> #Expression',
+  ],
+  wed: [
+    // on [wed]
+    '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay',
+  ],
+  eastern: [
+    // 5pm [central]
+    '#Time _ -> #Timezone',
+  ],
+  mountain: [
+    // 5pm [central]
+    '#Time _ -> #Timezone',
+  ],
+  pacific: [
+    // 5pm [central]
+    '#Time _ -> #Timezone',
+  ],
+  central: [
+    // 5pm [central]
+    '#Time _ -> #Timezone',
+  ],
+  est: [
+    // 5pm [central]
+    '#Time _ -> #Timezone',
+  ],
+  pst: [
+    // 5pm [central]
+    '#Time _ -> #Timezone',
+  ],
+  gmt: [
+    // 5pm [central]
+    '#Time _ -> #Timezone',
+  ],
+  dance: [
+    // [dance] music
+    '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
+  ],
+  rock: [
+    // [dance] music
+    '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
+  ],
+  rap: [
+    // [dance] music
+    '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
+  ],
+  swing: [
+    // [dance] music
+    '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
+  ],
+  buck: [
+    // ten [bucks]
+    '#Value _ -> #Currency',
+  ],
+  bucks: [
+    // ten [bucks]
+    '#Value _ -> #Currency',
+  ],
+  grand: [
+    // ten [bucks]
+    '#Value _ -> #Currency',
+  ],
+  quarter: [
+    // a [half] second
+    '#Determiner _ #Ordinal -> #Value',
+  ],
+  square: [
+    // 5 [square] miles
+    '#Value _ #Unit -> #Unit',
+  ],
+  cubic: [
+    // 5 [square] miles
+    '#Value _ #Unit -> #Unit',
+  ],
+  gb: [
+    // 5 [gb]
+    '#Value _ -> #Unit',
+  ],
+  pa: [
+    // 5 [gb]
+    '#Value _ -> #Unit',
+  ],
+  ft: [
+    // 5 [gb]
+    '#Value _ -> #Unit',
+  ],
+  m: [
+    // 5 [gb]
+    '#Value _ -> #Unit',
   ],
 }
 

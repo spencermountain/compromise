@@ -155,12 +155,12 @@ export default [
   // i ate [me] sandwich (scottish slang)
   { match: 'i #Verb [me] #Noun', group: 0, tag: 'Possessive', reason: 'scottish-me' },
   // [dance] music
-  {
-    match: '[(dance|rock|rap|swing)] (music|class|lesson|night|party|festival|league|ceremony)',
-    group: 0,
-    tag: 'Noun',
-    reason: 'dance-music',
-  },
+  // left-right: {
+  //   match: '[(dance|rock|rap|swing)] (music|class|lesson|night|party|festival|league|ceremony)',
+  //   group: 0,
+  //   tag: 'Noun',
+  //   reason: 'dance-music',
+  // },
   // [wit] it
   // left-right: { match: '[wit] (me|it)', group: 0, tag: 'Preposition', reason: 'wit-me' },
   // He bowed his [head] in prayer

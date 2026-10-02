@@ -9,9 +9,9 @@ export default [
   // on [sat]
   { match: `(in|by|before|during|on|until|after|of|within|all) [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
   // on [wed]
-  { match: `(in|by|before|during|on|until|after|of|within|all) [wed]`, group: 0, tag: 'WeekDay', reason: 'wed' },
+  // left-right: { match: `(in|by|before|during|on|until|after|of|within|all) [wed]`, group: 0, tag: 'WeekDay', reason: 'wed' },
   // in [march]
-  { match: `(in|by|before|during|on|until|after|of|within|all) [march]`, group: 0, tag: 'Month', reason: 'march' },
+  // left-right: { match: `(in|by|before|during|on|until|after|of|within|all) [march]`, group: 0, tag: 'Month', reason: 'march' },
   // [sat] november
   { match: '^[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
 
@@ -33,9 +33,9 @@ export default [
   // quickly [march]
   { match: `#Adverb [(march|may)]`, group: 0, tag: 'Verb', notIf: '(early|late)', reason: 'quickly-march' },
   // early [May]
-  { match: '(early|late|mid) [(march|may)]', group: 0, tag: 'Month', reason: 'early-month' },
+  // left-right: { match: '(early|late|mid) [(march|may)]', group: 0, tag: 'Month', reason: 'early-month' },
   // [march] quickly
-  { match: `[(march|may)] #Adverb`, group: 0, tag: 'Verb', reason: 'march-quickly' },
+  // left-right: { match: `[(march|may)] #Adverb`, group: 0, tag: 'Verb', reason: 'march-quickly' },
   // 12 am
   { match: `#Value (am|pm)`, tag: 'Time', reason: '2-am' },
 ]

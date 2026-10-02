@@ -4,6 +4,37 @@ import leftRight from '../../../src/2-two/left-right/plugin.js'
 import compileLeftRight from '../../../src/2-two/left-right/model/_lib.js'
 const here = '[two/match-spec] '
 
+test('left/right dates, units and local prepositions', t => {
+  const cases = [
+    ['It costs five bucks.', 'bucks', 'Currency'],
+    ['It costs five bucks.', 'five', 'Money'],
+    ['It costs five bucks.', 'bucks', 'Unit'],
+    ['The board is five feet long.', 'feet', 'Unit'],
+    ['The park covers three square miles.', 'square', 'Unit'],
+    ['We need five gb of storage.', 'gb', 'Unit'],
+    ['Wait a half second.', 'half', 'Value'],
+    ['We meet on sat.', 'sat', 'WeekDay'],
+    ['We meet on wed.', 'wed', 'WeekDay'],
+    ['We arrive in March.', 'March', 'Month'],
+    ['We arrive in early May.', 'May', 'Month'],
+    ['They march quickly.', 'march', 'Verb'],
+    ['We need some kind of help.', 'kind', 'Noun'],
+    ['She teaches dance music.', 'dance', 'Noun'],
+    ['We meet at 5pm eastern.', 'eastern', 'Timezone'],
+    ['The plane is right above the clouds.', 'above', 'Preposition'],
+    ['The boat is directly below the bridge.', 'below', 'Preposition'],
+    ['They stood just under our balcony.', 'under', 'Preposition'],
+    ['The bird flew well over them.', 'over', 'Preposition'],
+  ]
+  cases.forEach(([text, target, tag]) => {
+    const doc = nlp(text)
+    t.equal(doc.match(target).has('#' + tag), true, text)
+    doc.compute('tagger')
+    t.equal(doc.match(target).has('#' + tag), true, 'retag: ' + text)
+  })
+  t.end()
+})
+
 test('left/right alternatives preserve context and action order', t => {
   const byWord = compileLeftRight({
     foo: ['(my|your) _ (cat|dog) -> #Adjective'],

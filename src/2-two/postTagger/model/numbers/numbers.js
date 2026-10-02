@@ -47,7 +47,7 @@ export default [
   // chinese yuan
   { match: '#Demonym #Currency', tag: 'Currency', reason: 'demonym-curr' },
   // ten [bucks]
-  { match: '#Value [(buck|bucks|grand)]', group: 0, tag: 'Currency', reason: 'value-bucks' },
+  // left-right: { match: '#Value [(buck|bucks|grand)]', group: 0, tag: 'Currency', reason: 'value-bucks' },
   // ==== Money ====
   // [5] dollars
   { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: 'value-curr' },
@@ -74,15 +74,15 @@ export default [
   // seven point five
   { match: '#Value (point|decimal) #Value', tag: 'Value', reason: 'decimal-point' },
   // a [half] second
-  { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ord' },
+  // left-right: { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ord' },
   // thousand and two
   { match: `#Multiple+ and #Value`, tag: 'Value', reason: 'mag-and-value' },
   // 5 miles [per hour]
   { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', group: 0, tag: 'Unit', reason: 'unit-per-dur' },
   // 5 [square] miles
-  { match: '#Value [(square|cubic)] #Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
+  // left-right: { match: '#Value [(square|cubic)] #Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
   // twelve percent
   { match: '#Cardinal percent', tag: '#Percent #Unit', reason: 'value-percent' },
   // 5 [gb]
-  { match: '#Value [(gb|pa|ft|foot|feet|m)]', group: 0, tag: 'Unit', reason: 'ambig-unit' },
+  // left-right: { match: '#Value [(gb|pa|ft|foot|feet|m)]', group: 0, tag: 'Unit', reason: 'ambig-unit' },
 ]

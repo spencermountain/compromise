@@ -1,88 +1,88 @@
 export default [
   // ==== Ambiguous numbers ====
   // one [second]
-  { match: `#Cardinal [second]`, hook: 'second', group: 0, tag: 'Unit', reason: 'one-second' },
+  { match: `#Cardinal [second]`, group: 0, tag: 'Unit', reason: 'one-second' },
   // with [a] hundred jobs
   {
-    match: '!once? [(a|an)] hundred', hook: 'hundred',
+    match: '!once? [(a|an)] hundred',
     group: 0,
     tag: 'Value',
     reason: 'a-hundred',
   },
   // with [a] thousand jobs
   {
-    match: '!once? [(a|an)] thousand', hook: 'thousand',
+    match: '!once? [(a|an)] thousand',
     group: 0,
     tag: 'Value',
     reason: 'a-thousand',
   },
   // with [a] million jobs
   {
-    match: '!once? [(a|an)] million', hook: 'million',
+    match: '!once? [(a|an)] million',
     group: 0,
     tag: 'Value',
     reason: 'a-million',
   },
   // with [a] billion jobs
   {
-    match: '!once? [(a|an)] billion', hook: 'billion',
+    match: '!once? [(a|an)] billion',
     group: 0,
     tag: 'Value',
     reason: 'a-billion',
   },
   // with [a] trillion jobs
   {
-    match: '!once? [(a|an)] trillion', hook: 'trillion',
+    match: '!once? [(a|an)] trillion',
     group: 0,
     tag: 'Value',
     reason: 'a-trillion',
   },
   // ==== PhoneNumber ====
   // 1 800 555-1234
-  { match: '(1|+1) #Value #PhoneNumber', hook: '#PhoneNumber', tag: 'PhoneNumber', reason: 'phone-country-code' },
+  { match: '(1|+1) #Value #PhoneNumber', tag: 'PhoneNumber', reason: 'phone-country-code' },
   // (454) 232-9873
-  { match: '#NumericValue #PhoneNumber', hook: '#PhoneNumber', tag: 'PhoneNumber', reason: 'phone-area-code' },
+  { match: '#NumericValue #PhoneNumber', tag: 'PhoneNumber', reason: 'phone-area-code' },
 
   // ==== Currency ====
   // chinese yuan
-  { match: '#Demonym #Currency', hook: '#Currency', tag: 'Currency', reason: 'demonym-currency' },
+  { match: '#Demonym #Currency', tag: 'Currency', reason: 'demonym-currency' },
   // ten [bucks]
-  { match: '#Value [(buck|bucks|grand)]', hook: '#Value', group: 0, tag: 'Currency', reason: 'value-bucks' },
+  { match: '#Value [(buck|bucks|grand)]', group: 0, tag: 'Currency', reason: 'value-bucks' },
   // ==== Money ====
   // [5] dollars
-  { match: '[#Value+] #Currency', hook: '#Currency', group: 0, tag: 'Money', reason: 'value-currency' },
+  { match: '[#Value+] #Currency', group: 0, tag: 'Money', reason: 'value-currency' },
 
   // ==== Ordinal ====
   // [second] dog
-  { match: '[second] #Noun', hook: 'second', group: 0, tag: 'Ordinal', reason: 'second-noun' },
+  { match: '[second] #Noun', group: 0, tag: 'Ordinal', reason: 'second-noun' },
 
   // ==== Units ====
   // 5 [dollars]
-  { match: '#Value+ [#Currency]', hook: '#Currency', group: 0, tag: 'Unit', reason: 'currency-unit' },
+  { match: '#Value+ [#Currency]', group: 0, tag: 'Unit', reason: 'currency-unit' },
   // 5 [feet]
-  { match: '#Value [(foot|feet)]', hook: '#Value', group: 0, tag: 'Unit', reason: 'foot-unit' },
+  { match: '#Value [(foot|feet)]', group: 0, tag: 'Unit', reason: 'foot-unit' },
   // 500 fifth [ave]
-  { match: '#Value [#Abbreviation]', hook: '#Abbreviation', group: 0, tag: 'Unit', reason: 'value-abbr' },
+  { match: '#Value [#Abbreviation]', group: 0, tag: 'Unit', reason: 'value-abbr' },
   // 5 [k]
-  { match: '#Value [k]', hook: 'k', group: 0, tag: 'Unit', reason: 'value-k' },
+  { match: '#Value [k]', group: 0, tag: 'Unit', reason: 'value-k' },
   // kilometers an hour
-  { match: '#Unit an hour', hook: 'hour', tag: 'Unit', reason: 'unit-an-hour' },
+  { match: '#Unit an hour', tag: 'Unit', reason: 'unit-an-hour' },
 
   // ==== Magnitudes ====
   // minus 7
-  { match: '(minus|negative) #Value', hook: '#Value', tag: 'Value', reason: 'minus-value' },
+  { match: '(minus|negative) #Value', tag: 'Value', reason: 'minus-value' },
   // seven point five
-  { match: '#Value (point|decimal) #Value', hook: '#Value', tag: 'Value', reason: 'value-point-value' },
+  { match: '#Value (point|decimal) #Value', tag: 'Value', reason: 'value-point-value' },
   // a [half] second
-  { match: '#Determiner [(half|quarter)] #Ordinal', hook: '#Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
+  { match: '#Determiner [(half|quarter)] #Ordinal', group: 0, tag: 'Value', reason: 'half-ordinal' },
   // thousand and two
-  { match: `#Multiple+ and #Value`, hook: 'and', tag: 'Value', reason: 'magnitude-and-value' },
+  { match: `#Multiple+ and #Value`, tag: 'Value', reason: 'magnitude-and-value' },
   // 5 miles [per hour]
-  { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', hook: '#Unit', group: 0, tag: 'Unit', reason: 'unit-per-duration' },
+  { match: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', group: 0, tag: 'Unit', reason: 'unit-per-duration' },
   // 5 [square] miles
-  { match: '#Value [(square|cubic)] #Unit', hook: '#Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
+  { match: '#Value [(square|cubic)] #Unit', group: 0, tag: 'Unit', reason: 'square-miles' },
   // twelve percent
-  { match: '#Cardinal percent', hook: 'percent', tag: '#Percent #Unit', reason: 'value-percent' },
+  { match: '#Cardinal percent', tag: '#Percent #Unit', reason: 'value-percent' },
   // 5 [gb]
-  { match: '#Value [(gb|pa|ft|foot|feet|m)]', hook: '#Value', group: 0, tag: 'Unit', reason: 'ambiguous-unit' },
+  { match: '#Value [(gb|pa|ft|foot|feet|m)]', group: 0, tag: 'Unit', reason: 'ambiguous-unit' },
 ]

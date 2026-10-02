@@ -3,25 +3,25 @@
 export default [
   // ebenezer scrooge
   {
-    match: '#FirstName #Noun$', hook: '#FirstName',
+    match: '#FirstName #Noun$',
     tag: '. #LastName',
     notIf: '(#Possessive|#Organization|#Place|#Pronoun|@hasTitleCase)',
     reason: 'firstname-noun',
   },
 
   // June Smith
-  { match: '%Person|Date% #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'jan-thierson' },
+  { match: '%Person|Date% #Acronym? #ProperNoun', tag: 'Person', reason: 'jan-thierson' },
   // ===person-noun===
   // Cliff Clavin
-  { match: '%Person|Noun% #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'switch-person', safe: true },
+  { match: '%Person|Noun% #Acronym? #ProperNoun', tag: 'Person', reason: 'switch-person', safe: true },
   // Rose Microsoft
-  { match: '%Person|Noun% #Organization', hook: '#Organization', tag: 'Organization', reason: 'olive-garden' },
+  { match: '%Person|Noun% #Organization', tag: 'Organization', reason: 'olive-garden' },
   // ===person-verb===
   // Ollie Faroo
-  { match: '(%Person|Verb% && #Person) #Acronym? #ProperNoun', hook: '#ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
+  { match: '(%Person|Verb% && #Person) #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-propernoun', ifNo: '#Actor' },
   // [chuck] will ...
   {
-    match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`, hook: '%Person|Verb%',
+    match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`,
     group: 0,
     tag: 'Person',
     reason: 'person-said',
@@ -30,37 +30,37 @@ export default [
   // ===person-place===
   // [sydney] harbour
   {
-    match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`, hook: '%Person|Place%',
+    match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`,
     group: 0,
     tag: 'Place',
     reason: 'sydney-harbour',
   },
   // east [sydney]
-  { match: `(west|east|north|south) [%Person|Place%]`, hook: '%Person|Place%', group: 0, tag: 'Place', reason: 'east-sydney' },
+  { match: `(west|east|north|south) [%Person|Place%]`, group: 0, tag: 'Place', reason: 'east-sydney' },
 
   // ===person-verb===
   // really [wade]
-  { match: `#Adverb [(%Person|Verb% && !@isTitleCase)]`, hook: '#Adverb', group: 0, tag: 'Verb', reason: 'really-mark' },
+  { match: `#Adverb [(%Person|Verb% && !@isTitleCase)]`, group: 0, tag: 'Verb', reason: 'really-mark' },
   // [drew] closer
-  { match: `[%Person|Verb%] (#Adverb|#Comparative)`, hook: '%Person|Verb%', group: 0, tag: 'Verb', reason: 'drew-closer' },
+  { match: `[%Person|Verb%] (#Adverb|#Comparative)`, group: 0, tag: 'Verb', reason: 'drew-closer' },
   // wade smith
-  { match: `(%Person|Verb% && #Person) #Person`, hook: '#Person', tag: 'Person', reason: 'rob-smith' },
+  { match: `(%Person|Verb% && #Person) #Person`, tag: 'Person', reason: 'rob-smith' },
   // Wade G. Slapgoop
-  { match: `%Person|Verb% #Acronym #ProperNoun`, hook: '#Acronym', tag: 'Person', reason: 'rob-a-smith' },
+  { match: `%Person|Verb% #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
   // [will] go
-  { match: '[will] #Infinitive', hook: 'will', group: 0, tag: 'Modal', reason: 'will-verb' },
+  { match: '[will] #Infinitive', group: 0, tag: 'Modal', reason: 'will-verb' },
   // Will Smith
-  { match: '(will && @isTitleCase) #ProperNoun', hook: 'will', tag: 'Person', reason: 'will-name' },
+  { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' },
   // jack [layton] won
   {
-    match: '(#FirstName && !#Possessive) [#Singular] #Verb', hook: '#FirstName',
+    match: '(#FirstName && !#Possessive) [#Singular] #Verb',
     group: 0,
     safe: true,
     tag: 'LastName',
     reason: 'jack-layton',
   },
   // [captain] John walks
-  { match: '^[#Singular] #Person #Verb', hook: '#Person', group: 0, safe: true, tag: 'Person', reason: 'sherwood-anderson' },
+  { match: '^[#Singular] #Person #Verb', group: 0, safe: true, tag: 'Person', reason: 'sherwood-anderson' },
   // bought a [warhol]
-  { match: '(a|an) [#Person]$', hook: '#Person', group: 0, unTag: 'Person', reason: 'a-warhol' },
+  { match: '(a|an) [#Person]$', group: 0, unTag: 'Person', reason: 'a-warhol' },
 ]

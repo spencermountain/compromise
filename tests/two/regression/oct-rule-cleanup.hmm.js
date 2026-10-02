@@ -167,6 +167,23 @@ const spec = `
   The parcels were delivered. {Det,Plural,Aux|Passive,Past|Passive}
   The parcel was quickly delivered. {Det,Noun,Aux,Adv,Past}
   She was tired. {Pronoun,Copula,Adj}
+
+  # Multiple alternatives in one sentence must retain each correction.
+  They let John shoulder the burden and made Mary shoulder the cost. {Pronoun,Vb,Person,Inf,Det,Noun,Conj,Past,Person,Inf,Det,Noun}
+  She had to Google the answer and he has to Google the address. {Pronoun,Vb,Connector,Inf,Det,Noun,Conj,Pronoun,Vb,Connector,Inf,Det,Noun}
+  We scheduled a software reinstall on Monday. {Pronoun,Past,Det,Noun,Noun,Prep,Date}
+  We scheduled an engine rebuild on Tuesday. {Pronoun,Past,Det,Noun,Noun,Prep,Date}
+  I know why he is happy and where she is working. {Pronoun,Inf,Connector,Pronoun,Copula,Adj,Conj,Connector,Pronoun,Aux,Ger}
+
+  # Smaller word-hook families: exceptions, particles, and perfect forms.
+  Everyone but me agreed. {Noun,Prep,Pronoun,Past}
+  Anybody but him could help. {Noun,Prep,Pronoun,Modal,Inf}
+  She picked it up and put it down. {Pronoun,Past,Pronoun,Adv,Conj,Vb,Pronoun,Adv}
+  She has read the note and he has put the book on the table. {Pronoun,Aux,Participle,Det,Noun,Conj,Pronoun,Aux,Participle,Det,Noun,Prep,Det,Noun}
+  The plane flew directly above the clouds. {Det,Noun,Past,Adv,Prep,Det,Plural}
+  She stood right below the window. {Pronoun,Past,Adv,Prep,Det,Noun}
+  They slept just under the bridge. {Pronoun,Past,Adv,Prep,Det,Noun}
+  The plane flew well over the hill. {Det,Noun,Past,Adv,Prep,Det,Noun}
 `
 
 test('match spec:', function (t) {

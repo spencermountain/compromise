@@ -1,102 +1,105 @@
 export default [
   // is [pretty] good
   {
-    match: '#Copula [(pretty|dead|full|well|sure)] #Adjective', hook: '#Copula',
+    match: '#Copula [(pretty|dead|full|well|sure)] #Adjective',
     group: 0,
     tag: 'Adverb',
     reason: 'sometimes-adverb',
   },
   // i [better] go
-  { match: '(#Pronoun|#Person) (had|#Adverb)? [better] #PresentTense', hook: 'better', group: 0, tag: 'Modal', reason: 'i-better' },
+  { match: '(#Pronoun|#Person) (had|#Adverb)? [better] #PresentTense', group: 0, tag: 'Modal', reason: 'i-better' },
   // adj -> gerund
   // i [like]
-  { match: '(#Modal|i|they|we|do) not? [like]', hook: 'like', group: 0, tag: 'PresentTense', reason: 'modal-like' },
+  { match: '(#Modal|i|they|we|do) not? [like]', group: 0, tag: 'PresentTense', reason: 'modal-like' },
   // ==== Tense ====
   // he [left]
-  { match: '(#Noun && !#Possessive) #Adverb? [left]', hook: 'left', group: 0, tag: 'PastTense', reason: 'left-verb' },
+  { match: '(#Noun && !#Possessive) #Adverb? [left]', group: 0, tag: 'PastTense', reason: 'left-verb' },
   // she [bit] her tongue
-  { match: '#Noun #Adverb? [(bit && #Infinitive)]', hook: 'bit', group: 0, tag: 'PastTense', reason: 'bit-past' },
+  { match: '#Noun #Adverb? [(bit && #Infinitive)]', group: 0, tag: 'PastTense', reason: 'bit-past' },
   // will [be] running
-  { match: 'will #Adverb? not? #Adverb? [be] #Gerund', hook: 'will', group: 0, tag: 'Copula', reason: 'will-be-copula' },
+  { match: 'will #Adverb? not? #Adverb? [be] #Gerund', group: 0, tag: 'Copula', reason: 'will-be-copula' },
   // will [be] nice
-  { match: 'will #Adverb? not? #Adverb? [be] #Adjective', hook: 'will', group: 0, tag: 'Copula', reason: 'be-copula' },
+  { match: 'will #Adverb? not? #Adverb? [be] #Adjective', group: 0, tag: 'Copula', reason: 'be-copula' },
   // [march] up
-  { match: '[march] (up|down|back|toward)', hook: 'march', notIf: '#Date', group: 0, tag: 'Infinitive', reason: 'march-to' },
+  { match: '[march] (up|down|back|toward)', notIf: '#Date', group: 0, tag: 'Infinitive', reason: 'march-to' },
   // must [march]
-  { match: '#Modal [march]', hook: 'march', group: 0, tag: 'Infinitive', reason: 'must-march' },
+  { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
   // [may] be
-  { match: `[may] be`, hook: 'may', group: 0, tag: 'Verb', reason: 'may-be' },
+  { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
   // birds [home] to their nest
-  { match: '(#Pronoun|#Plural|#Modal) #Adverb+? [home] to', hook: 'home', group: 0, tag: 'Infinitive', reason: 'birds-home-to' },
+  { match: '(#Pronoun|#Plural|#Modal) #Adverb+? [home] to', group: 0, tag: 'Infinitive', reason: 'birds-home-to' },
   // is [home] to birds
-  { match: '(#Copula|be|been|being) #Adverb+? [home] to', hook: 'home', group: 0, tag: 'Noun', reason: 'is-home-to' },
+  { match: '(#Copula|be|been|being) #Adverb+? [home] to', group: 0, tag: 'Noun', reason: 'is-home-to' },
   // is [subject] to change
-  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? [subject] to', hook: 'subject', group: 0, tag: 'Adjective', reason: 'is-subject-to' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? [subject] to', group: 0, tag: 'Adjective', reason: 'is-subject-to' },
   // is subject [to]
-  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject [to]', hook: 'subject', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'predicative-to' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject [to]', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'predicative-to' },
   // is subject to [change]
-  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject to [%Noun|Verb%]', hook: 'subject', group: 0, tag: 'Noun', reason: 'predicative-to-noun' },
+  { match: '(#Copula|be|been|being|remain|remains|remained) #Adverb+? subject to [%Noun|Verb%]', group: 0, tag: 'Noun', reason: 'predicative-to-noun' },
 
   // is home [to] dogs
-  { match: '(#Copula|be|been|being) #Adverb+? home [to] #Adjective+? #Noun', hook: 'home', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'home-to-noun' },
+  { match: '(#Copula|be|been|being) #Adverb+? home [to] #Adjective+? #Noun', group: 0, unTag: 'Conjunction', tag: 'Preposition', reason: 'home-to-noun' },
 
   // === misc==
   // [open] the door
-  { match: '[open] #Determiner', hook: 'open', group: 0, tag: 'Infinitive', reason: 'open-the' },
+  { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
   // were being [run]
-  { match: `(were|was) being [#PresentTense]`, hook: 'being', group: 0, tag: 'PastTense', reason: 'was-being' },
+  { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
   // had [been broken]
-  { match: `(had|has|have) [been (#PastTense && /en$/)]`, hook: 'been', group: 0, tag: 'Auxiliary Participle', reason: 'had-been-broken' },
+  { match: `(had|has|have) [been (#PastTense && /en$/)]`, group: 0, tag: 'Auxiliary Participle', reason: 'had-been-broken' },
   // had [been smoked]
-  { match: `(had|has|have) [been (#PastTense && /ed$/)]`, hook: 'been', group: 0, tag: 'Auxiliary PastTense', reason: 'had-been-smoked' },
+  { match: `(had|has|have) [been (#PastTense && /ed$/)]`, group: 0, tag: 'Auxiliary PastTense', reason: 'had-been-smoked' },
   // had [been] eaten
-  { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, hook: 'been', group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
+  { match: `(had|has) #Adverb? [been] #Adverb? #PastTense`, group: 0, tag: 'Auxiliary', reason: 'had-been-adj' },
   // had to [Google] the answer
-  { match: `(had|has) to [#Noun] (#Determiner|#Possessive)`, hook: 'to', group: 0, tag: 'Infinitive', reason: 'had-to-noun' },
+  ...['had', 'has'].map(word => ({
+    match: `${word} to [#Noun] (#Determiner|#Possessive)`,
+    group: 0, tag: 'Infinitive', reason: 'had-to-noun',
+  })),
   // does that [work]
-  { match: `(do|does|did|#Modal) (this|that|these|those) [work]`, hook: 'work', group: 0, tag: 'Infinitive', reason: 'does-that-work' },
+  { match: `(do|does|did|#Modal) (this|that|these|those) [work]`, group: 0, tag: 'Infinitive', reason: 'does-that-work' },
   // [sounds] fun
-  { match: `[(sound|sounds)] #Adjective`, hook: '#Adjective', group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
+  { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
   // [look] good
-  { match: `[(look|looks)] #Adjective`, hook: '#Adjective', group: 0, tag: 'PresentTense', reason: 'looks-good' },
+  { match: `[(look|looks)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'looks-good' },
   // [stops] thinking
-  { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, hook: '#Gerund', group: 0, tag: 'Verb', reason: 'starts-thinking' },
+  { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-thinking' },
   // have read
-  { match: `(has|have|had) read`, hook: 'read', tag: 'Auxiliary Participle', reason: 'read-read' },
+  { match: `(has|have|had) read`, tag: 'Auxiliary Participle', reason: 'read-read' },
   // were [under paid]
-  {
-    match: `(is|was|were) [(under|over) #PastTense]`, hook: '#PastTense',
+  ...['under', 'over'].map(word => ({
+    match: `(is|was|were) [${word} #PastTense]`,
     group: 0,
     tag: 'Adverb Adjective',
     reason: 'was-under-cooked',
-  },
+  })),
 
   // [shit] them
-  { match: '[shit] (#Determiner|#Possessive|them)', hook: 'shit', group: 0, tag: 'Verb', reason: 'shit-verb' },
+  { match: '[shit] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'shit-verb' },
   // [damn] them
-  { match: '[damn] (#Determiner|#Possessive|them)', hook: 'damn', group: 0, tag: 'Verb', reason: 'damn-verb' },
+  { match: '[damn] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'damn-verb' },
   // [fuck] them
-  { match: '[fuck] (#Determiner|#Possessive|them)', hook: 'fuck', group: 0, tag: 'Verb', reason: 'fuck-verb' },
+  { match: '[fuck] (#Determiner|#Possessive|them)', group: 0, tag: 'Verb', reason: 'fuck-verb' },
 
   // jobs that fit
-  { match: '#Plural that %Noun|Verb%', hook: 'that', tag: '. #Preposition #Infinitive', reason: 'jobs-that-work' },
+  { match: '#Plural that %Noun|Verb%', tag: '. #Preposition #Infinitive', reason: 'jobs-that-work' },
   // [works] for me
-  { match: '[works] for me', hook: 'works', group: 0, tag: 'PresentTense', reason: 'works-for-me' },
+  { match: '[works] for me', group: 0, tag: 'PresentTense', reason: 'works-for-me' },
   // as we [please]
-  { match: 'as #Pronoun [please]', hook: 'as', group: 0, tag: 'Infinitive', reason: 'as-we-please' },
+  { match: 'as #Pronoun [please]', group: 0, tag: 'Infinitive', reason: 'as-we-please' },
   // verb-prefixes - '[co] write'
   // [co] write
-  { match: '[(co|mis|de|inter|intra|pre|re|un|counter)] #Verb', hook: '#Verb', group: 0, tag: ['Verb', 'Prefix'], notIf: '(#Copula|#PhrasalVerb)', reason: 'co-write' },
+  { match: '[(co|mis|de|inter|intra|pre|re|un|counter)] #Verb', group: 0, tag: ['Verb', 'Prefix'], notIf: '(#Copula|#PhrasalVerb)', reason: 'co-write' },
   // [out] run
-  { match: '[(out|under|over)] #Infinitive', hook: '#Infinitive', group: 0, tag: ['Verb', 'Prefix'], reason: 'directional-verb-prefix' },
+  { match: '[(out|under|over)] #Infinitive', group: 0, tag: ['Verb', 'Prefix'], reason: 'directional-verb-prefix' },
   // dressed and [left]
-  { match: '#PastTense and [%Adj|Past%]', hook: 'and', group: 0, tag: 'PastTense', reason: 'past-and-ambiguous' },
+  { match: '#PastTense and [%Adj|Past%]', group: 0, tag: 'PastTense', reason: 'past-and-ambiguous' },
   // [melted] and fallen
-  { match: '[(%Adj|Past% && !#Adjective)] and #PastTense', hook: 'and', group: 0, tag: 'PastTense', reason: 'ambiguous-and-past' },
+  { match: '[(%Adj|Past% && !#Adjective)] and #PastTense', group: 0, tag: 'PastTense', reason: 'ambiguous-and-past' },
   // is he [stoked]
-  { match: '#Copula #Pronoun [%Adj|Past%]', hook: '#Copula', group: 0, tag: 'Adjective', reason: 'is-he-stoked' },
+  { match: '#Copula #Pronoun [%Adj|Past%]', group: 0, tag: 'Adjective', reason: 'is-he-stoked' },
   // to [dream] of
-  { match: 'to [%Noun|Verb%] #Preposition', hook: 'to', group: 0, tag: 'Infinitive', reason: 'to-dream-of' },
+  { match: 'to [%Noun|Verb%] #Preposition', group: 0, tag: 'Infinitive', reason: 'to-dream-of' },
   // he [read]
-  { match: '^(he|she|it|#Person) [read]', hook: 'read', group: 0, tag: 'PastTense', reason: 'he-read' },
+  { match: '^(he|she|it|#Person) [read]', group: 0, tag: 'PastTense', reason: 'he-read' },
 ]

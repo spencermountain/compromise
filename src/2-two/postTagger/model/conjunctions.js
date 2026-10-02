@@ -1,6 +1,6 @@
 export default [
   // [so] he
-  { match: '[so] #Noun', group: 0, tag: 'Conjunction', reason: 'so-conj' },
+  // left-right: { match: '[so] #Noun', group: 0, tag: 'Conjunction', reason: 'so-conj' },
   // [how] he is driving
   ...['who', 'what', 'where', 'why', 'how', 'when'].map(word => ({
     match: `[${word}] #Noun #Copula #Adverb? (#Verb|#Adjective)`,
@@ -11,9 +11,9 @@ export default [
   // is [when] he
   { match: '#Copula [(who|what|where|why|how|when)] #Noun', group: 0, tag: 'Conjunction', reason: 'when-he' },
   // says [that] he
-  { match: '#Verb [that] #Pronoun', group: 0, tag: 'Conjunction', reason: 'said-that-he' },
+  // left-right: { match: '#Verb [that] #Pronoun', group: 0, tag: 'Conjunction', reason: 'said-that-he' },
   // things [that] are required
-  { match: '#Noun [that] #Copula', group: 0, tag: 'Conjunction', reason: 'that-are' },
+  // left-right: { match: '#Noun [that] #Copula', group: 0, tag: 'Conjunction', reason: 'that-are' },
   // things [that] seem cool
   { match: '#Noun [that] #Verb #Adjective', group: 0, tag: 'Conjunction', reason: 'that-seem' },
   // he was [that] wide
@@ -43,7 +43,7 @@ export default [
   // really [like]
   { match: '(#Adverb && !lot) [like]', group: 0, tag: 'Verb', reason: 'really-like' },
   // nothing [like]
-  { match: 'nothing [like]', group: 0, tag: 'Preposition', reason: 'nothing-like' },
+  // left-right: { match: 'nothing [like]', group: 0, tag: 'Preposition', reason: 'nothing-like' },
   // is not [like] me
   { match: '(#Copula|be|been|being) (not|never) [like]', group: 0, tag: 'Preposition', reason: 'neg-like' },
   // a lot [like] ours

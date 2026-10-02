@@ -3,15 +3,15 @@ const infNouns =
 export default [
   //'more' is not always an adverb
   // any [more]
-  { match: '(the|any) [more]', group: 0, tag: 'Singular', reason: 'more-noun' },
+  // left-right: { match: '(the|any) [more]', group: 0, tag: 'Singular', reason: 'more-noun' },
   // [more] players
-  { match: '[more] #Noun', group: 0, tag: 'Adjective', reason: 'more-adj' },
+  // left-right: { match: '[more] #Noun', group: 0, tag: 'Adjective', reason: 'more-adj' },
   // [rights] of man
   { match: '[(right|rights)] of .', group: 0, tag: 'Noun', reason: 'right-of' },
   // a [bit]
-  { match: 'a [bit]', group: 0, tag: 'Singular', reason: 'a-bit' },
+  // left-right: { match: 'a [bit]', group: 0, tag: 'Singular', reason: 'a-bit' },
   // a [must]
-  { match: 'a [must]', group: 0, tag: 'Singular', reason: 'a-must' },
+  // left-right: { match: 'a [must]', group: 0, tag: 'Singular', reason: 'a-must' },
   // we [all]
   { match: '(we|us) [all]', group: 0, tag: 'Noun', reason: 'we-all' },
   // due to [weather]
@@ -44,15 +44,15 @@ export default [
     reason: 'ended-in-ruins',
   },
   // and [u]
-  { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'conjunction-u' },
+  // left-right: { match: '#Conjunction [u]', group: 0, tag: 'Pronoun', reason: 'conjunction-u' },
   // [u] made me smile
-  { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-verb' },
+  // left-right: { match: '[u] #Verb', group: 0, tag: 'Pronoun', reason: 'u-verb' },
   // water-flows
   { match: '(#Singular && @hasHyphen) #PresentTense', tag: 'Noun', reason: 'hyphen-verb' },
   // is no [going] back
   { match: 'is no [#Verb]', group: 0, tag: 'Noun', reason: 'is-no-verb' },
   // do [so]
-  { match: 'do [so]', group: 0, tag: 'Adverb', reason: 'so-noun' },
+  // left-right: { match: 'do [so]', group: 0, tag: 'Adverb', reason: 'so-noun' },
   // what the [hell]
   { match: '#Determiner [(shit|damn|hell)]', group: 0, tag: 'Noun', reason: 'swears-noun' },
   // go to [shit]
@@ -106,7 +106,7 @@ export default [
 
   // ==== Singular ====
   // the [sun]
-  { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'sun' },
+  // left-right: { match: '#Determiner [sun]', group: 0, tag: 'Singular', reason: 'sun' },
   // did a [900], paid a [20]
   { match: '#Verb (a|an) [#Value]$', group: 0, tag: 'Singular', reason: 'did-a-value' },
   // the [can]
@@ -162,7 +162,7 @@ export default [
     reason: 'dance-music',
   },
   // [wit] it
-  { match: '[wit] (me|it)', group: 0, tag: 'Preposition', reason: 'wit-me' },
+  // left-right: { match: '[wit] (me|it)', group: 0, tag: 'Preposition', reason: 'wit-me' },
   // He bowed his [head] in prayer
   { match: '#PastTense #Possessive [#Verb]', group: 0, tag: 'Noun', notIf: '(saw|made)', reason: 'left-her-boots' },
   // 35 [signs]

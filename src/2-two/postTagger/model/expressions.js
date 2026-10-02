@@ -12,7 +12,7 @@ export default [
   // come on
   { match: '^come on', tag: 'Expression', reason: 'come-on' },
   // said [sorry]
-  { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
+  // left-right: { match: '(say|says|said) [sorry]', group: 0, tag: 'Expression', reason: 'say-sorry' },
   // ok,
   { match: '^ok', tag: 'Expression', reason: 'ok-expr' },
   // alright

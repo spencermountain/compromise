@@ -1,6 +1,116 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import leftRight from '../../../src/2-two/left-right/plugin.js'
+import compileLeftRight from '../../../src/2-two/left-right/model/_lib.js'
 const here = '[two/match-spec] '
+
+test('more left/right tagging contexts', t => {
+  const cases = [
+    ['They have running water.', 'running', 'Adjective'],
+    ['It left an enduring legacy.', 'enduring', 'Adjective'],
+    ['She is pretty happy.', 'pretty', 'Adverb'],
+    ['Even the dog left.', 'even', 'Adverb'],
+    ['He looks happy.', 'looks', 'PresentTense'],
+    ['She sounds happy.', 'sounds', 'PresentTense'],
+    ['They start singing.', 'start', 'Infinitive'],
+    ['We left right after lunch.', 'right', 'Adverb'],
+    ['It is always there.', 'there', 'Adjective'],
+    ['I said sorry.', 'sorry', 'Expression'],
+    ['We flew to Turkey.', 'Turkey', 'Country'],
+    ['Is there any more?', 'more', 'Singular'],
+  ]
+  cases.forEach(([text, target, tag]) => {
+    const doc = nlp(text)
+    t.equal(doc.match(target).has('#' + tag), true, text)
+    doc.compute('tagger')
+    t.equal(doc.match(target).has('#' + tag), true, 'retag: ' + text)
+  })
+  t.end()
+})
+
+test('left/right string rules', t => {
+  const rules = compileLeftRight({
+    second: ['#Cardinal _ -> #Unit', '_ #Noun -> #Ordinal'],
+    said: ['the _ #Noun -> #Adjective'],
+  })
+  const cases = [
+    ['one second', 'second', 'Unit'],
+    ['second dog', 'second', 'Ordinal'],
+    ['the said dog', 'said', 'Adjective'],
+  ]
+  cases.forEach(([text, target, tag]) => {
+    const doc = nlp(text)
+    doc.match(target).tag('Verb')
+    leftRight.methods.two.leftRight(doc.docs, rules, doc.world)
+    t.equal(doc.match(target).has('#' + tag), true, text)
+  })
+  const invalid = [
+    '#Cardinal -> #Unit',
+    '_ _ -> #Unit',
+    'one two _ -> #Unit',
+    '_ -> Unit',
+    '_ -> #Unit -> #Ordinal',
+    '(one|two) _ -> #Unit',
+    '^ _ -> #Unit',
+  ]
+  invalid.forEach(rule => {
+    t.throws(() => compileLeftRight({ second: [rule] }), /Invalid left-right rule for "second"/, rule)
+  })
+  t.end()
+})
+
+test('left/right rules in the tagging pipeline', t => {
+  const examples = [
+    ['The said elephant vanished.', 'said', 'Adjective'],
+    ['She still sings.', 'still', 'Adverb'],
+    ['The shelf is high enough.', 'enough', 'Adverb'],
+    ['A ticket is a must.', 'must', 'Singular'],
+    ['We must march.', 'march', 'Infinitive'],
+    ['She will dance.', 'will', 'Modal'],
+    ['They said that she left.', 'that', 'Conjunction'],
+    ['It looks nothing like a cat.', 'like', 'Preposition'],
+    ['There is plenty of food.', 'plenty', 'Uncountable'],
+    ['I waited a while.', 'while', 'Singular'],
+  ]
+  examples.forEach(([text, target, tag]) => {
+    const doc = nlp(text)
+    t.equal(doc.match(target).has('#' + tag), true, text)
+    doc.compute('tagger')
+    t.equal(doc.match(target).has('#' + tag), true, 'retag: ' + text)
+  })
+  t.end()
+})
+
+test('left/right tagger sketch', t => {
+  const run = (doc, rules) => leftRight.methods.two.leftRight(doc.docs, rules, doc.world)
+  const doc = nlp('my foo and your foo')
+  doc.match('foo').tag('Verb')
+  run(doc, { foo: [{ pre: 'my', post: '', tag: 'Noun' }] })
+  t.equal(doc.match('my #Noun').found, true, 'left literal selects the target')
+  t.equal(doc.match('your #Verb').found, true, 'unmatched target stays unchanged')
+
+  const right = nlp('foo bar')
+  right.match('foo').tag('Verb')
+  right.match('bar').tag('Noun')
+  run(right, { foo: [{ post: '#Noun', tag: 'Adjective' }] })
+  t.equal(right.match('#Adjective #Noun').found, true, 'right tag condition')
+
+  const boundary = nlp('my. foo')
+  boundary.match('foo').tag('Verb')
+  run(boundary, { foo: [{ pre: 'my', tag: 'Noun' }] })
+  t.equal(boundary.match('foo').has('#Verb'), true, 'does not cross sentences')
+
+  const deferred = nlp('my foo bar')
+  deferred.match('foo bar').tag('Verb')
+  run(deferred, {
+    foo: [{ pre: 'my', tag: 'Noun' }],
+    bar: [{ pre: '#Noun', tag: 'Adjective' }],
+  })
+  t.equal(deferred.match('bar').has('#Verb'), true, 'checks see tags from before the pass')
+  run(deferred, { foo: [{ pre: 'my', tag: 'Adjective' }, { pre: 'my', tag: 'Verb' }] })
+  t.equal(deferred.match('foo').has('#Verb'), true, 'bucket order resolves conflicting actions')
+  t.end()
+})
 
 test('fixed-length matches preserve captures and fallbacks', t => {
   t.deepEqual(nlp('the red fox and the red fox').match('the [red fox]', 0).out('array'), ['red fox', 'red fox'], 'capture offsets at multiple starts')

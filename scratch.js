@@ -4,7 +4,7 @@ import nlp from './src/three.js'
 // nlp.plugin(plg)
 
 nlp.verbose(true)
-nlp(`the doors close`).debug()
+nlp(`look my change works`).debug()
 
 
 // nlp.testSpec('He was tired, so we stopped. {Noun,Vb,Adj,Conj,Noun,Vb}').debug()

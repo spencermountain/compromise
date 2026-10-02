@@ -48,7 +48,7 @@ export default [
   // Wade G. Slapgoop
   { match: `%Person|Verb% #Acronym #ProperNoun`, tag: 'Person', reason: 'rob-a-smith' },
   // [will] go
-  { match: '[will] #Infinitive', group: 0, tag: 'Modal', reason: 'will-verb' },
+  // left-right: { match: '[will] #Infinitive', group: 0, tag: 'Modal', reason: 'will-verb' },
   // Will Smith
   { match: '(will && @isTitleCase) #ProperNoun', tag: 'Person', reason: 'will-name' },
   // jack [layton] won

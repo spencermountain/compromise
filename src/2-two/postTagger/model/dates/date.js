@@ -3,7 +3,7 @@ export default [
   // [sun] the 5th
   { match: '[sun] the #Ordinal', group: 0, tag: 'WeekDay', reason: 'sun-the-5th' },
   // [sun] feb 2
-  { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
+  // left-right: { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
   // 1pm next [sun]
   { match: '#Date (on|this|next|last|during)? [sun]', group: 0, tag: 'WeekDay', reason: '1pm-sun' },
   // on [sat]

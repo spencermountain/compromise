@@ -2,31 +2,31 @@
 
 export default [
   // [still] good
-  { match: '[still] #Adjective', group: 0, tag: 'Adverb', reason: 'still-adj' },
+  // left-right: { match: '[still] #Adjective', group: 0, tag: 'Adverb', reason: 'still-adj' },
   // [still] make
-  { match: '[still] #Verb', group: 0, tag: 'Adverb', reason: 'still-verb' },
+  // left-right: { match: '[still] #Verb', group: 0, tag: 'Adverb', reason: 'still-verb' },
   // [so] hot
-  { match: '[so] #Adjective', group: 0, tag: 'Adverb', reason: 'so-adv' },
+  // left-right: { match: '[so] #Adjective', group: 0, tag: 'Adverb', reason: 'so-adv' },
   // [way] hotter
-  { match: '[way] #Comparative', group: 0, tag: 'Adverb', reason: 'way-adj' },
+  // left-right: { match: '[way] #Comparative', group: 0, tag: 'Adverb', reason: 'way-adj' },
   // [way] too hot
   { match: '[way] #Adverb #Adjective', group: 0, tag: 'Adverb', reason: 'way-too-adj' },
   // they [all] swim
-  { match: '[all] #Verb', group: 0, tag: 'Adverb', reason: 'all-verb' },
+  // left-right: { match: '[all] #Verb', group: 0, tag: 'Adverb', reason: 'all-verb' },
   // sing [like] an angel
   { match: '#Verb  [like]', group: 0, notIf: '(#Modal|#PhrasalVerb)', tag: 'Adverb', reason: 'verb-like' },
   // barely even walk
   { match: '(barely|hardly) even', tag: 'Adverb', reason: 'barely-even' },
   // [even] held
-  { match: '[even] #Verb', group: 0, tag: 'Adverb', reason: 'even-walk' },
+  // left-right: { match: '[even] #Verb', group: 0, tag: 'Adverb', reason: 'even-walk' },
   // [even] worse
-  { match: '[even] #Comparative', group: 0, tag: 'Adverb', reason: 'even-worse' },
+  // left-right: { match: '[even] #Comparative', group: 0, tag: 'Adverb', reason: 'even-worse' },
   // [even] the greatest
-  { match: '[even] (#Determiner|#Possessive)', group: 0, tag: '#Adverb', reason: 'even-the' },
+  // left-right: { match: '[even] (#Determiner|#Possessive)', group: 0, tag: '#Adverb', reason: 'even-the' },
   // even left
   { match: 'even left', tag: '#Adverb #Verb', reason: 'even-left' },
   // [way] over
-  { match: '[way] #Adjective', group: 0, tag: '#Adverb', reason: 'way-over' },
+  // left-right: { match: '[way] #Adjective', group: 0, tag: '#Adverb', reason: 'way-over' },
   // cheering [hard]
   {
     match: '#PresentTense [(hard|quick|bright|slow|fast|backwards|forwards)]',
@@ -36,13 +36,13 @@ export default [
     reason: 'lazy-ly',
   },
   // [much] appreciated
-  { match: '[much] #Adjective', group: 0, tag: 'Adverb', reason: 'much-part' },
+  // left-right: { match: '[much] #Adjective', group: 0, tag: 'Adverb', reason: 'much-part' },
   // is [well]
   { match: '#Copula [#Adverb]$', group: 0, tag: 'Adjective', reason: 'is-well' },
   // a [bit] cold
   { match: 'a [(little|bit|wee) bit?] #Adjective', group: 0, tag: 'Adverb', reason: 'a-bit-cold' },
   // [super] strong
-  { match: `[(super|pretty)] #Adjective`, group: 0, tag: 'Adverb', reason: 'super-strong' },
+  // left-right: { match: `[(super|pretty)] #Adjective`, group: 0, tag: 'Adverb', reason: 'super-strong' },
   // become overly [weakened]
   { match: '(become|fall|grow) #Adverb? [#PastTense]', group: 0, tag: 'Adjective', reason: 'weakened' },
   // a completely [beaten] man
@@ -60,15 +60,15 @@ export default [
   // charged [back]
   { match: '(#PresentTense|#PastTense) [back]', group: 0, tag: 'Adverb', notIf: '(#PhrasalVerb|#Copula)', reason: 'charge-back' },
   // [later] say
-  { match: '[later] #PresentTense', group: 0, tag: 'Adverb', reason: 'later-say' },
+  // left-right: { match: '[later] #PresentTense', group: 0, tag: 'Adverb', reason: 'later-say' },
   // the [well]
   { match: '#Determiner [well] !#PastTense?', group: 0, tag: 'Noun', reason: 'well' },
   // sees [well]
   { match: '(#PresentTense && !#Copula) [well]', group: 0, tag: 'Adverb', reason: 'sees-well' },
   // high [enough]
-  { match: '#Adjective [enough]', group: 0, tag: 'Adverb', reason: 'high-enough' },
+  // left-right: { match: '#Adjective [enough]', group: 0, tag: 'Adverb', reason: 'high-enough' },
   // [least] expensive
-  { match: '[least] #Adjective', group: 0, tag: 'Adverb', reason: 'least-costly' },
+  // left-right: { match: '[least] #Adjective', group: 0, tag: 'Adverb', reason: 'least-costly' },
   // the [least]
-  { match: '#Determiner [least]', group: 0, tag: 'Adverb', reason: 'least' },
+  // left-right: { match: '#Determiner [least]', group: 0, tag: 'Adverb', reason: 'least' },
 ]

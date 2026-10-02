@@ -23,9 +23,9 @@ export default [
   // [march] up
   { match: '[march] (up|down|back|toward)', notIf: '#Date', group: 0, tag: 'Infinitive', reason: 'march-to' },
   // must [march]
-  { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
+  // left-right: { match: '#Modal [march]', group: 0, tag: 'Infinitive', reason: 'must-march' },
   // [may] be
-  { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
+  // left-right: { match: `[may] be`, group: 0, tag: 'Verb', reason: 'may-be' },
   // birds [home] to their nest
   { match: '(#Pronoun|#Plural|#Modal) #Adverb+? [home] to', group: 0, tag: 'Infinitive', reason: 'birds-home-to' },
   // is [home] to birds
@@ -42,7 +42,7 @@ export default [
 
   // === misc==
   // [open] the door
-  { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
+  // left-right: { match: '[open] #Determiner', group: 0, tag: 'Infinitive', reason: 'open-the' },
   // were being [run]
   { match: `(were|was) being [#PresentTense]`, group: 0, tag: 'PastTense', reason: 'was-being' },
   // had [been broken]
@@ -59,11 +59,11 @@ export default [
   // does that [work]
   { match: `(do|does|did|#Modal) (this|that|these|those) [work]`, group: 0, tag: 'Infinitive', reason: 'does-that-work' },
   // [sounds] fun
-  { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
+  // left-right: { match: `[(sound|sounds)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'sounds-fun' },
   // [look] good
-  { match: `[(look|looks)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'looks-good' },
+  // left-right: { match: `[(look|looks)] #Adjective`, group: 0, tag: 'PresentTense', reason: 'looks-good' },
   // [stops] thinking
-  { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-think' },
+  // left-right: { match: `[(start|starts|stop|stops|begin|begins)] #Gerund`, group: 0, tag: 'Verb', reason: 'starts-think' },
   // have read
   { match: `(has|have|had) read`, tag: 'Auxiliary Participle', reason: 'read-read' },
   // were [under paid]

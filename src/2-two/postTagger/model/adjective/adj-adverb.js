@@ -7,7 +7,7 @@ export default [
   // is [far too] cold
   { match: `#Copula [far too] #Adjective`, group: 0, tag: 'Adverb', reason: 'far-too' },
   // was [still] in
-  { match: `#Copula [still] (in|#Gerund|#Adjective)`, group: 0, tag: 'Adverb', reason: 'still-walking' },
+  // left-right: { match: `#Copula [still] (in|#Gerund|#Adjective)`, group: 0, tag: 'Adverb', reason: 'still-walking' },
   // shops [direct]
   {
     match: `#Verb [${noLy}] !#Noun?`,

@@ -11,8 +11,8 @@ export default [
   // found it [isolating], but found it isolating cells
   { match: 'found it #Adverb? [isolating]$', group: 0, tag: 'Adjective', reason: 'it-isolating' },
   // enduring symbols, running water
-  { match: '[enduring] (symbols|legacy|legacies|appeal|influence|value|values)', group: 0, tag: 'Adjective', reason: 'enduring-noun' },
-  { match: '(have|has|had|#Determiner|#Possessive) [running] water', group: 0, tag: 'Adjective', reason: 'running-water' },
+  // left-right: { match: '[enduring] (symbols|legacy|legacies|appeal|influence|value|values)', group: 0, tag: 'Adjective', reason: 'enduring-noun' },
+  // left-right: { match: '(have|has|had|#Determiner|#Possessive) [running] water', group: 0, tag: 'Adjective', reason: 'running-water' },
   // a little [fuming]
   { match: 'a (little|bit|wee) bit? [#Gerund]', group: 0, tag: 'Adjective', reason: 'a-bit-ger' },
   // repairing [crumbling] roads

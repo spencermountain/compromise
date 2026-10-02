@@ -1,7 +1,7 @@
 export default [
   // ==== Ambiguous numbers ====
   // one [second]
-  { match: `#Cardinal [second]`, group: 0, tag: 'Unit', reason: 'one-second' },
+  // left-right: { match: `#Cardinal [second]`, group: 0, tag: 'Unit', reason: 'one-second' },
   // with [a] hundred jobs
   {
     match: '!once? [(a|an)] hundred',
@@ -54,7 +54,7 @@ export default [
 
   // ==== Ordinal ====
   // [second] dog
-  { match: '[second] #Noun', group: 0, tag: 'Ordinal', reason: 'second-noun' },
+  // left-right: { match: '[second] #Noun', group: 0, tag: 'Ordinal', reason: 'second-noun' },
 
   // ==== Units ====
   // 5 [dollars]
@@ -64,7 +64,7 @@ export default [
   // 500 fifth [ave]
   { match: '#Value [#Abbreviation]', group: 0, tag: 'Unit', reason: 'value-abbr' },
   // 5 [k]
-  { match: '#Value [k]', group: 0, tag: 'Unit', reason: 'value-k' },
+  // left-right: { match: '#Value [k]', group: 0, tag: 'Unit', reason: 'value-k' },
   // kilometers an hour
   { match: '#Unit an hour', tag: 'Unit', reason: 'unit-an-hour' },
 

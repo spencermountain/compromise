@@ -28,7 +28,7 @@ export default [
   // [quiet] the room
   { match: '^[(#Adjective && !near && !inside && !outside && !opposite)] (the|your) #Noun', group: 0, notIf: '(all|even)', tag: 'Infinitive', reason: 'shut-the' },
   // the [said] dog
-  { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'said-card' },
+  // left-right: { match: 'the [said] #Noun', group: 0, tag: 'Adjective', reason: 'said-card' },
   // blue-[tinted]
   { match: '(#Adjective && #Hyphenated) [(#Hyphenated && #PastTense)]$', group: 0, tag: 'Adjective', reason: 'red-shouldered' },
   // [blue-tinted] glasses

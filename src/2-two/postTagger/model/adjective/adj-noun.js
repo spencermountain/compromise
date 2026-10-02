@@ -20,7 +20,7 @@ export default [
   // some [kind] of teacher
   { match: `(#Determiner|#Comparative|new|different) [kind] of`, group: 0, tag: 'Noun', reason: 'some-kind' },
   // a new [kind]
-  { match: '(#Determiner|#Comparative|new|different) [kind]$', group: 0, tag: 'Noun', reason: 'some-kind-end' },
+  // left-right: { match: '(#Determiner|#Comparative|new|different) [kind]$', group: 0, tag: 'Noun', reason: 'some-kind-end' },
   // her [favourite] sport
   { match: `#Possessive [%Adj|Noun%] #Noun`, group: 0, tag: 'Adjective', reason: 'her-favourite' },
   // must-win

@@ -37,7 +37,7 @@ export default [
   // treated them [like] sons
   { match: '(me|him|her|us|them|it) [like] #Noun', group: 0, tag: 'Preposition', reason: 'noun-like' },
   // [like] the time
-  { match: '^[like] #Determiner', group: 0, tag: 'Preposition', reason: 'like-the' },
+  // left-right: { match: '^[like] #Determiner', group: 0, tag: 'Preposition', reason: 'like-the' },
   // a day [like] this
   { match: 'a #Noun [like] (#Noun|#Determiner)', group: 0, tag: 'Preposition', reason: 'a-noun-like' },
   // really [like]

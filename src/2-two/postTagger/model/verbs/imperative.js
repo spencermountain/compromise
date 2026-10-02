@@ -30,7 +30,7 @@ export default [
   // [hurry]
   { match: '^[hurry] please?$', group: 0, tag: 'Imperative', reason: 'hurry-imp' },
   // somebody [call]
-  { match: '^(somebody|everybody) [#Infinitive]', group: 0, tag: 'Imperative', reason: 'somebody-call' },
+  // left-right: { match: '^(somebody|everybody) [#Infinitive]', group: 0, tag: 'Imperative', reason: 'somebody-call' },
   // let's [leave]
   { match: '^let (us|me) [#Infinitive]', group: 0, tag: 'Imperative', reason: 'lets-leave' },
   // [shut] the door
@@ -40,7 +40,7 @@ export default [
   // [go] to toronto
   { match: '^[go] to .', group: 0, tag: 'Imperative', reason: 'go-to-toronto' },
   // [go] home
-  { match: '^[(go|come)] home', group: 0, tag: 'Imperative', reason: 'go-home' },
+  // left-right: { match: '^[(go|come)] home', group: 0, tag: 'Imperative', reason: 'go-home' },
   // A modal question alone may ask about ability or knowledge. Require an
   // explicit request marker before treating it as an imperative.
   // can you please [walk]
@@ -50,15 +50,15 @@ export default [
   // can you [walk] please
   { match: '^(can|could|will|would) you (#Adverb|not)+? [#Infinitive] .+? please$', group: 0, tag: 'Imperative', reason: 'please-end' },
   // never [say]
-  { match: '^never [#Infinitive]', group: 0, tag: 'Imperative', reason: 'never-stop' },
+  // left-right: { match: '^never [#Infinitive]', group: 0, tag: 'Imperative', reason: 'never-stop' },
   // come have a drink
   { match: '^come #Infinitive', tag: 'Imperative', notIf: 'on', reason: 'come-have' },
   // come and have a drink
   { match: '^come and #Infinitive', tag: 'Imperative . Imperative', reason: 'come-and-have' },
   // [stay] away
-  { match: '^[stay] (out|away|back)', group: 0, tag: 'Imperative', reason: 'stay-away' },
+  // left-right: { match: '^[stay] (out|away|back)', group: 0, tag: 'Imperative', reason: 'stay-away' },
   // [stay] cool
-  { match: '^[(stay|be|keep)] #Adjective', group: 0, tag: 'Imperative', reason: 'stay-cool' },
+  // left-right: { match: '^[(stay|be|keep)] #Adjective', group: 0, tag: 'Imperative', reason: 'stay-cool' },
   // [keep] it silent
   { match: '^[keep] it #Adjective', group: 0, tag: 'Imperative', reason: 'keep-it-cool' },
   // [allow] yourself
@@ -66,7 +66,7 @@ export default [
   // [look] what happened
   { match: '^[#Infinitive] what .', group: 0, tag: 'Imperative', reason: 'look-what' },
   // [continue] playing
-  { match: '^[#Infinitive] #Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
+  // left-right: { match: '^[#Infinitive] #Gerund', group: 0, tag: 'Imperative', reason: 'keep-playing' },
   // [go] to it
   { match: '^[#Infinitive] (to|for|into|toward|here|there)', group: 0, tag: 'Imperative', reason: 'go-to' },
   // [come] and have a drink
@@ -78,7 +78,7 @@ export default [
   // don't forget to [clean]
   { match: '^do not (forget|omit|neglect) to [#Infinitive]', group: 0, tag: 'Imperative', reason: 'do-not-forget' },
   // [pay] attention
-  { match: '^[(ask|wear|pay|look|help|show|watch|act|fix|kill|stop|start|turn|try|win)] #Noun', group: 0, tag: 'Imperative', reason: 'pay-attention' },
+  // left-right: { match: '^[(ask|wear|pay|look|help|show|watch|act|fix|kill|stop|start|turn|try|win)] #Noun', group: 0, tag: 'Imperative', reason: 'pay-attention' },
   // [add] 2 eggs
   { match: '^[#Infinitive] #Value #Noun', group: 0, tag: 'Imperative', reason: 'add-2-eggs' },
 

@@ -9,7 +9,7 @@ export default [
   // [all] the dogs
   { match: '[(all|both)] #Determiner #Noun', group: 0, tag: 'Noun', reason: 'all-noun' },
   // is [alone]
-  { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adv' },
+  // left-right: { match: '#Copula [(just|alone)]$', group: 0, tag: 'Adjective', reason: 'not-adv' },
   // the door is [closed]
   { match: '#Singular is #Adverb? [%Adj|Past%]$', group: 0, tag: 'Adjective', reason: 'is-filled' },
   // [forgotten] art is rediscovered

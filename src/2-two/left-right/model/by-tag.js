@@ -56,6 +56,12 @@ const rules = {
     '(any|no) _ -> #Noun',
     // as [fit] as
     'as _ as -> #Adjective',
+    // somebody [call]
+    '^(somebody|everybody) _ -> #Imperative',
+    // never [say]
+    '^never _ -> #Imperative',
+    // [continue] playing
+    '^ _ #Gerund -> #Imperative',
   ],
   '#PresentTense': [
     // taught [thank]-you etiquette

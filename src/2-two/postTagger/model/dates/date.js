@@ -13,7 +13,7 @@ export default [
   // in [march]
   // left-right: { match: `(in|by|before|during|on|until|after|of|within|all) [march]`, group: 0, tag: 'Month', reason: 'march' },
   // [sat] november
-  { match: '^[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
+  // left-right: { match: '^[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
 
   // ==== Month ====
   // in [march]

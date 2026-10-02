@@ -50,7 +50,7 @@ export default [
   // a [close] friend
   { match: '#Determiner #Adverb? [close] #Noun', group: 0, tag: 'Adjective', reason: 'a-close' },
   // came to a [close]
-  { match: '#Determiner [close]$', group: 0, tag: 'Noun', reason: 'a-close-noun' },
+  // left-right: { match: '#Determiner [close]$', group: 0, tag: 'Noun', reason: 'a-close-noun' },
   // does [better]
   { match: '(do|does|did) #Adverb? [(better|worse)]', group: 0, tag: 'Adverb', reason: 'do-better' },
   // walking [close]

@@ -7,6 +7,12 @@ const collect = (entry, terms, i, pending) => {
   const bucket = Array.isArray(entry) ? entry : [entry]
   for (let r = 0; r < bucket.length; r += 1) {
     const rule = bucket[r]
+    if (rule.start !== undefined && i !== rule.start) {
+      continue
+    }
+    if (rule.end !== undefined && i !== terms.length - 1 - rule.end) {
+      continue
+    }
     if (matches(terms[i - 1], rule.pre) && matches(terms[i + 1], rule.post)) {
       pending.push([terms[i], rule])
     }

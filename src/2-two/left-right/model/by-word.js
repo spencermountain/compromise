@@ -124,6 +124,8 @@ const rules = {
   be: [
     // will [be] walked
     'will _ #PastTense -> #Auxiliary',
+    // [stay] cool
+    '^ _ #Adjective -> #Imperative',
   ],
   about: [
     // at [about]
@@ -155,6 +157,8 @@ const rules = {
   like: [
     // nothing [like]
     'nothing _ -> #Preposition',
+    // [like] the time
+    '^ _ #Determiner -> #Preposition',
   ],
   enduring: [
     // enduring symbols, running water
@@ -187,6 +191,8 @@ const rules = {
   look: [
     // [look] good
     '_ #Adjective -> #PresentTense',
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
   ],
   looks: [
     // [look] good
@@ -199,6 +205,8 @@ const rules = {
     'help _ -> #Infinitive',
     // [start] listening
     '_ #Gerund -> #Infinitive',
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
   ],
   starts: [
     // [stops] thinking
@@ -211,6 +219,8 @@ const rules = {
     'help _ -> #Infinitive',
     // [start] listening
     '_ #Gerund -> #Infinitive',
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
   ],
   stops: [
     // [stops] thinking
@@ -239,6 +249,8 @@ const rules = {
   help: [
     // [start] listening
     '_ #Gerund -> #Infinitive',
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
   ],
   right: [
     // [right] after
@@ -343,6 +355,124 @@ const rules = {
   m: [
     // 5 [gb]
     '#Value _ -> #Unit',
+  ],
+  just: [
+    // is [alone]
+    '#Copula _ $ -> #Adjective',
+  ],
+  alone: [
+    // is [alone]
+    '#Copula _ $ -> #Adjective',
+  ],
+  kind: [
+    // a new [kind]
+    '(#Determiner|#Comparative|new|different) _ $ -> #Noun',
+  ],
+  close: [
+    // came to a [close]
+    '#Determiner _ $ -> #Noun',
+  ],
+  sat: [
+    // [sat] november
+    '^ _ #Date -> #WeekDay',
+  ],
+  read: [
+    // he [read]
+    '^(he|she|it|#Person) _ -> #PastTense',
+  ],
+  go: [
+    // [go] home
+    '^ _ home -> #Imperative',
+  ],
+  come: [
+    // [go] home
+    '^ _ home -> #Imperative',
+  ],
+  stay: [
+    // [stay] away
+    '^ _ (out|away|back) -> #Imperative',
+    // [stay] cool
+    '^ _ #Adjective -> #Imperative',
+  ],
+  keep: [
+    // [stay] cool
+    '^ _ #Adjective -> #Imperative',
+  ],
+  ask: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  wear: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  pay: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  show: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  watch: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  act: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  fix: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  kill: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  turn: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  try: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  win: [
+    // [pay] attention
+    '^ _ #Noun -> #Imperative',
+  ],
+  ok: [
+    // ok,
+    '^ _ -> #Expression',
+  ],
+  alright: [
+    // alright
+    '^ _ -> #Expression',
+  ],
+  shoot: [
+    // shoot
+    '^ _ $ -> #Expression',
+  ],
+  hell: [
+    // hell
+    '^ _ -> #Expression',
+  ],
+  anyways: [
+    // anyways
+    '^ _ -> #Expression',
+  ],
+  dude: [
+    // [dude] we should
+    '^ _ #Pronoun -> #Expression',
+  ],
+  man: [
+    // [dude] we should
+    '^ _ #Pronoun -> #Expression',
+  ],
+  girl: [
+    // [dude] we should
+    '^ _ #Pronoun -> #Expression',
   ],
 }
 

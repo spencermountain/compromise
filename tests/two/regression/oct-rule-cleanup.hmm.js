@@ -4,6 +4,87 @@ import leftRight from '../../../src/2-two/left-right/plugin.js'
 import compileLeftRight from '../../../src/2-two/left-right/model/_lib.js'
 const here = '[two/match-spec] '
 
+test('migrated anchored tagging rules', t => {
+  const cases = [
+    ['Go home.', 'go', 'Imperative', true],
+    ['Stay cool.', 'stay', 'Imperative', true],
+    ['Stay away.', 'stay', 'Imperative', true],
+    ['Tell him the story.', 'tell', 'Imperative', true],
+    ['Somebody call the police.', 'call', 'Imperative', true],
+    ['Never say never.', 'say', 'Imperative', true],
+    ['Keep playing.', 'keep', 'Imperative', true],
+    ['Work-saving appliances.', 'work', 'Adjective', true],
+    ['Work-saving appliances.', 'work', 'Imperative', false],
+    ['Pay attention.', 'pay', 'Imperative', true],
+    ['I will go home.', 'go', 'Imperative', false],
+    ['Do you know?', 'do', 'QuestionWord', true],
+    ['Does she know?', 'does', 'QuestionWord', true],
+    ['He read the book.', 'read', 'PastTense', true],
+    ['She is alone.', 'alone', 'Adjective', true],
+    ['It is well.', 'well', 'Adjective', true],
+    ['The meeting came to a close.', 'close', 'Noun', true],
+    ['Shoot!', 'shoot', 'Expression', true],
+    ['Shoot the ball.', 'shoot', 'Expression', false],
+    ['Dude we should leave.', 'dude', 'Expression', true],
+  ]
+  cases.forEach(([text, target, tag, expected]) => {
+    t.equal(nlp(text).match(target).has('#' + tag), expected, text)
+  })
+  t.end()
+})
+
+test('left/right boundaries anchor targets and neighbours', t => {
+  const cases = [
+    ['^ _ bar', 'foo bar', true],
+    ['^ _ bar', 'other foo bar', false],
+    ['^ _ bar', 'foo baz', false],
+    ['^ _ bar', 'foo', false],
+    ['^ _ bar', 'other. Foo bar.', true],
+    ['^ _ bar', 'foo. Bar.', false],
+    ['bar _ $', 'bar foo', true],
+    ['bar _ $', 'bar foo other', false],
+    ['bar _ $', 'baz foo', false],
+    ['^ _ $', 'foo', true],
+    ['^ _ $', 'bar foo', false],
+    ['^ _ $', 'foo bar', false],
+    ['^bar _ baz', 'bar foo baz', true],
+    ['^bar _ baz', 'other bar foo baz', false],
+    ['^bar _ baz', 'bar foo', false],
+    ['bar _ baz$', 'bar foo baz', true],
+    ['bar _ baz$', 'bar foo baz other', false],
+    ['bar _ baz$', 'bar foo', false],
+    ['^bar _ baz$', 'bar foo baz', true],
+    ['^bar _ baz$', 'bar foo baz other', false],
+    ['^(bar|baz) _ $', 'baz foo', true],
+    ['^(bar|baz) _ $', 'other baz foo', false],
+    ['^ _ (bar|baz)$', 'foo baz', true],
+    ['^ _ (bar|baz)$', 'foo baz other', false],
+    ['^#Determiner _ #Plural$', 'the foo dogs', true],
+    ['^#Determiner _ #Plural$', 'with the foo dogs', false],
+    ['^(my|#Determiner) _ (bar|#Plural)$', 'my foo bar', true],
+    ['^(my|#Determiner) _ (bar|#Plural)$', 'the foo dogs', true],
+  ]
+  cases.forEach(([pattern, text, expected]) => {
+    const doc = nlp(text)
+    doc.match('foo').tag('Verb')
+    const byWord = compileLeftRight({ foo: [`${pattern} -> #Adjective`] })
+    leftRight.methods.two.leftRight(doc.docs, { byWord, byTag: {} }, doc.world)
+    t.equal(doc.match('foo').has('#Adjective'), expected, `${pattern}: ${text}`)
+  })
+  const doc = nlp('left foo bar')
+  doc.match('foo').tag('Verb')
+  const byTag = compileLeftRight({ '#Verb': ['^ _ bar$ -> #Adjective'] })
+  const clauses = [doc.docs[0].slice(0, 1), doc.docs[0].slice(1)]
+  leftRight.methods.two.leftRight(clauses, { byWord: {}, byTag }, doc.world)
+  t.equal(doc.match('foo').has('#Adjective'), true, 'boundaries use the supplied clause, including byTag rules')
+  const invalid = ['$ _', '_ ^', 'bar$ _', '_ ^bar', '^^bar _', '_ bar$$',
+    '^(bar|) _', '_ (bar|$)', '^ bar _', '_ bar $', '^_ bar', 'bar _$']
+  invalid.forEach(pattern => {
+    t.throws(() => compileLeftRight({ foo: [`${pattern} -> #Adjective`] }), /Invalid left-right rule/, pattern)
+  })
+  t.end()
+})
+
 test('left/right dates, units and local prepositions', t => {
   const cases = [
     ['It costs five bucks.', 'bucks', 'Currency'],
@@ -183,7 +264,7 @@ test('left/right string rules', t => {
     '_ -> Unit',
     '_ -> #Unit -> #Ordinal',
     '(one|) _ -> #Unit',
-    '^ _ -> #Unit',
+    '$ _ -> #Unit',
   ]
   invalid.forEach(rule => {
     t.throws(() => compileLeftRight({ second: [rule] }), /Invalid left-right rule for "second"/, rule)

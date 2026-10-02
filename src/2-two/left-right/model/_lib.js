@@ -38,10 +38,25 @@ const parse = (word, source) => {
   }
   const rule = { tag: parts[1].slice(1), reason: `${word}: ${source}` }
   if (index === 1) {
-    rule.pre = parseContext(terms[0], fail)
+    let pre = terms[0]
+    if (pre.startsWith('^')) {
+      pre = pre.slice(1)
+      // Distance from the clause start: target first, or its neighbour first.
+      rule.start = pre ? 1 : 0
+    }
+    if (pre) {
+      rule.pre = parseContext(pre, fail)
+    }
   }
   if (index < terms.length - 1) {
-    rule.post = parseContext(terms[index + 1], fail)
+    let post = terms[index + 1]
+    if (post.endsWith('$')) {
+      post = post.slice(0, -1)
+      rule.end = post ? 1 : 0
+    }
+    if (post) {
+      rule.post = parseContext(post, fail)
+    }
   }
   return rule
 }

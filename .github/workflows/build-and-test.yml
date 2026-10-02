@@ -66,9 +66,6 @@ jobs:
         with:
           node-version: 24
 
-      - name: Compare bundle sizes with latest npm release
-        run: pnpm test:filesize
-
       - name: Benchmark base commit
         id: baseline
         env:

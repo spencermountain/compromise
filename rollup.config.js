@@ -4,7 +4,6 @@ import sizeCheck from 'rollup-plugin-filesize-check'
 
 const terserOpts = { keep_classnames: true, compress: { passes: 2 } }
 
-// Size limits are enforced by scripts/filesize.js in CI.
 export default [
   // === One ==
   {

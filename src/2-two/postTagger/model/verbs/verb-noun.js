@@ -1,4 +1,6 @@
 export default [
+  // A final button label is an object, not a second verb.
+  { match: '(#Pronoun|#Singular|#Plural) [(click|clicks) (submit|save|cancel)]$', group: 0, tag: 'PresentTense Noun', reason: 'click-button-label' },
   // Common intransitive predicates after a singular subject. Keep arbitrary
   // plural/verb switches conservative: 'the dog treats' is a noun phrase.
   // the dog [runs]

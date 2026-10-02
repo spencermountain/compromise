@@ -167,3 +167,10 @@ test('a range does not stop other dates from splitting', (t) => {
   t.equal(res.length, 3, 'three dates found')
   t.end()
 })
+
+test('a trailing dash is not part of the date', (t) => {
+  const doc = nlp('2025-05-11 - They have taken the bridge and the Second Hall')
+  t.equal(doc.dates(context).text(), '2025-05-11', 'iso date before a dash')
+  t.equal(nlp('june 5 - june 7').dates(context).text(), 'june 5 - june 7', 'dash range')
+  t.end()
+})

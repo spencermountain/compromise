@@ -25,6 +25,12 @@ test('whitespace-out', function (t) {
   t.end()
 })
 
+test('match before a spaced dash', function (t) {
+  t.equal(nlp('june 5 - they left').match('june 5').text(), 'june 5', here + 'first words')
+  t.equal(nlp('i saw john - he left').match('john').text(), 'john', here + 'middle word')
+  t.end()
+})
+
 test('pre/post concat', function (t) {
   const doc = nlp(`Getting ready for whacking day? What's whacking day?`)
   doc.post(' ', true)

@@ -37,7 +37,7 @@ const firstPass = function (docs, model, world) {
 }
 
 // these methods don't care about word-neighbours
-const secondPass = function (terms, model, world, isYelling) {
+const secondPass = function (terms, model, world, isYelling, afterColon) {
   for (let i = 0; i < terms.length; i += 1) {
     // skip frozen terms, for now
     if (terms[i].frozen === true) {
@@ -47,7 +47,7 @@ const secondPass = function (terms, model, world, isYelling) {
     tagSwitch(terms, i, model)
     //  is it titlecased?
     if (isYelling === false) {
-      checkCase(terms, i, model)
+      checkCase(terms, i, model, afterColon)
     }
     // look at word ending
     checkSuffix(terms, i, model)
@@ -104,8 +104,11 @@ const preTagger = function (view) {
     const terms = document[n]
     // is it all upper-case?
     const isYelling = ignoreCase(terms)
+    // does it follow a colon?
+    const before = document[n - 1]
+    const afterColon = before !== undefined && /:/.test(before[before.length - 1].post)
     // guess by the letters
-    secondPass(terms, model, world, isYelling)
+    secondPass(terms, model, world, isYelling, afterColon)
     // guess by the neighbours
     thirdPass(terms, model, world, isYelling)
   }

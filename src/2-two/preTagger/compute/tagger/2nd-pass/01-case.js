@@ -20,7 +20,7 @@ const nope = {
 }
 
 // if it's a unknown titlecase word, it's a propernoun
-const checkCase = function (terms, i, model) {
+const checkCase = function (terms, i, model, afterColon) {
   const term = terms[i]
   // assume terms are already indexed
   term.index ||= [0, 0]
@@ -38,6 +38,12 @@ const checkCase = function (terms, i, model) {
     }
     // first word in a quotation?
     if (/["']$/.test(term.pre)) {
+      return null
+    }
+    // gerund after a colon - 'Tutorial: Creating a cake'
+    const before = terms[i - 1]
+    const hasColon = before ? /:/.test(before.post) : afterColon
+    if (hasColon && term.tags.has('Gerund')) {
       return null
     }
     if (term.normal === 'the') {

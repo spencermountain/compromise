@@ -119,3 +119,17 @@ test('match:', function (t) {
   })
   t.end()
 })
+
+test('titlecase after a colon', function (t) {
+  const arr = [
+    ['Tutorial: Creating a cake', '. #Gerund #Determiner #Noun'],
+    ['Step two: Mixing the flour', '. #Value #Gerund the #Noun'],
+    ['On Tuesday: Baking a cake', 'on #Date #Singular a #Noun'],
+  ]
+  arr.forEach(function (a) {
+    const [str, match] = a
+    const doc = nlp(str)
+    t.equal(doc.match(match).text(), doc.text(), here + str)
+  })
+  t.end()
+})

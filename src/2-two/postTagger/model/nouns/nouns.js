@@ -120,7 +120,7 @@ export default [
   // Los Angeles's fundraiser
   { match: '#Place+ #Possessive', tag: 'Possessive', reason: 'place-poss' },
   // my butt smells
-  { match: '#Possessive #PresentTense #Particle?', notIf: '(#Gerund|her)', tag: 'Noun', reason: 'poss-verb' }, // anna's eating vs anna's eating lunch
+  { match: '#Possessive #PresentTense #Particle?', notIf: '(#Gerund|#Copula|her)', tag: 'Noun', reason: 'poss-verb' }, // anna's eating vs anna's eating lunch
   // my [teachers] dog
   { match: '(my|our|their|her|his|its) [(#Plural && #Actor)] #Noun', group: 0, tag: 'Possessive', reason: 'my-dads' },
 

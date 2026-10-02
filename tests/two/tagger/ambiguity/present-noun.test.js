@@ -190,3 +190,18 @@ test('match:', function (t) {
   })
   t.end()
 })
+
+test('possessive before a copula', function (t) {
+  const arr = [
+    ['His is green.', '#Possessive #Copula #Adjective'],
+    ['Hers is blue.', '#Possessive #Copula #Adjective'],
+    ['Ours are bigger.', '#Possessive #Copula #Adjective'],
+    ['Theirs are old.', '#Possessive #Copula #Adjective'],
+  ]
+  arr.forEach(function (a) {
+    const [str, match] = a
+    const doc = nlp(str)
+    t.equal(doc.match(match).text(), doc.text(), here + str)
+  })
+  t.end()
+})

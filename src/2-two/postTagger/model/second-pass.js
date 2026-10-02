@@ -1,7 +1,7 @@
 import connectors from './connectors.js'
 
 // Corrections matched against the main sweep's output, before any are applied.
-const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
+// const locative = '#Plural [(near|on|under|beside|behind)] #Determiner #Adjective+? #Noun [%Noun|Verb%]$'
 const tired = [
   // He [was] [tired].
   { match: '[(#Copula|been)] #Adverb+? [tired]$', position: 'end' },
@@ -113,8 +113,25 @@ const rules = [
     reason: 'joint-subject-verb',
   },
   // dogs [near] the house [bark]
-  { match: locative, hook: '%Noun|Verb%', group: 0, tag: 'Preposition', reason: 'subject-locative' },
-  { match: locative, hook: '%Noun|Verb%', group: 1, tag: 'Infinitive', reason: 'subject-locative-verb' },
+  // near|on|under|beside|behind
+  ...['near', 'on', 'under', 'beside', 'behind'].flatMap(word => [
+    {
+      match: `#Plural [${word}] #Determiner #Adjective+? #Noun [%Noun|Verb%]$`,
+      hook: word,
+      group: 0,
+      tag: 'Preposition',
+      reason: 'subject-locative',
+    },
+    {
+      match: `#Plural [${word}] #Determiner #Adjective+? #Noun [%Noun|Verb%]$`,
+      hook: word,
+      group: 1,
+      tag: 'Infinitive',
+      reason: 'subject-locative-verb',
+    },
+  ]),
+  // { match: locative, hook: '%Noun|Verb%', group: 0, tag: 'Preposition', reason: 'subject-locative' },
+  // { match: locative, hook: '%Noun|Verb%', group: 1, tag: 'Infinitive', reason: 'subject-locative-verb' },
   // being [injured] and treated
   { match: 'being #Adverb+? [%Adj|Past%] (and|or) #Adverb+? (#PastTense|#Participle)', hook: 'being', group: 0, tag: 'PastTense', reason: 'coordinated-passive' },
   // has eaten and [drunk]

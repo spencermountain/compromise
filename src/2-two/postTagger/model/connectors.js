@@ -38,7 +38,7 @@ export default [
   // The cat slept [under] the table. He sat [beside] me.
   // the plane flew well [above] the clouds
   // she stood directly [below] the window...
-  ...['above', 'below', 'under', 'over', 'beside', 'behind', 'against', 'outside', 'inside', 'near'].map(word => ({
+  ...['above', 'below', 'under', 'over', 'beside', 'behind', 'against', 'outside', 'inside', 'near', 'beneath', 'underneath', 'aboard'].map(word => ({
     match: `[(${word} && !#Verb)] (#Determiner|#Possessive|#Pronoun|#ProperNoun)`,
     group: 0, tag: 'Preposition', reason: `${word}-space-obj`,
   })),

@@ -41,6 +41,23 @@ test('contract basic', function (t) {
   t.end()
 })
 
+test('contract before not', function (t) {
+  let doc = nlp('he is not here')
+  doc.contract()
+  t.equal(doc.text(), `he's not here`, here + 'he is not')
+  doc.contractions().expand()
+  t.equal(doc.text(), 'he is not here', here + 'he is not expand')
+
+  doc = nlp('spencer is not here')
+  doc.contract()
+  t.equal(doc.text(), `spencer's not here`, here + 'spencer is not')
+
+  doc = nlp('that is not true')
+  doc.contract()
+  t.equal(doc.text(), `that isn't true`, here + 'that is not')
+  t.end()
+})
+
 test('avoid contraction messes', function (t) {
   let doc = nlp('Tony, is').contract()
   t.equal(doc.has('is'), true, here + 'avoid-contraction 1')

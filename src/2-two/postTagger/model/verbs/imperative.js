@@ -2,7 +2,7 @@
 const notIf = '(i|we|they)' //we do not go
 export default [
   // [visit] https://example.com
-  { match: '^[%Noun|Verb%] #Url', group: 0, tag: 'Imperative', reason: 'visit-url' },
+  // left-right: { match: '^[%Noun|Verb%] #Url', group: 0, tag: 'Imperative', reason: 'visit-url' },
   // do not [go]
   { match: '^do not? [#Infinitive #Particle?]', notIf, group: 0, tag: 'Imperative', reason: 'do-eat' },
   // please [go]
@@ -72,7 +72,7 @@ export default [
   // [come] and have a drink
   { match: '^[#Infinitive] (and|or) #Infinitive', group: 0, tag: 'Imperative', reason: 'inf-and-inf' },
   // [commit] to
-  { match: '^[%Noun|Verb%] to', group: 0, tag: 'Imperative', reason: 'commit-to' },
+  // left-right: { match: '^[%Noun|Verb%] to', group: 0, tag: 'Imperative', reason: 'commit-to' },
   // [maintain] eye contact
   { match: '^[#Infinitive] #Adjective? #Singular #Singular', group: 0, tag: 'Imperative', reason: 'eye-contact' },
   // don't forget to [clean]

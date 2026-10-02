@@ -172,7 +172,7 @@ export default [
   // instant access
   { match: '%Adj|Noun% %Noun|Verb%', tag: '#Adjective #Noun', notIf: '#ProperNoun #Noun', reason: 'instant-access' },
   // a [representative] to
-  { match: '#Determiner [%Adj|Noun%] #Conjunction', group: 0, tag: 'Noun', reason: 'a-rep-to' },
+  // left-right: { match: '#Determiner [%Adj|Noun%] #Conjunction', group: 0, tag: 'Noun', reason: 'a-rep-to' },
   // near death experiences, ambitious sales [targets]
   {
     match: '#Adjective #Noun [%Plural|Verb%]$',

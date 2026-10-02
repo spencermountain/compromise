@@ -65,7 +65,12 @@ const compile = rules => Object.fromEntries(Object.entries(rules).map(([word, en
   if (!Array.isArray(entries)) {
     throw new Error(`Left-right rules for "${word}" must be an array.`)
   }
-  const key = word.startsWith('#') ? word.slice(1) : word
+  let key = word
+  if (word.startsWith('#')) {
+    key = word.slice(1)
+  } else if (word.startsWith('%') && word.endsWith('%')) {
+    key = word.slice(1, -1)
+  }
   return [key, entries.map(source => parse(word, source))]
 }))
 

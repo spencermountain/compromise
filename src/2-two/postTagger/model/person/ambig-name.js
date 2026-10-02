@@ -20,23 +20,23 @@ export default [
   // Ollie Faroo
   { match: '(%Person|Verb% && #Person) #Acronym? #ProperNoun', tag: 'Person', reason: 'verb-proper', ifNo: '#Actor' },
   // [chuck] will ...
-  {
-    match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`,
-    group: 0,
-    tag: 'Person',
-    reason: 'person-said',
-  },
+  // left-right: {
+  //   match: `[%Person|Verb%] (will|had|has|said|says|told|did|learned|wants|wanted)`,
+  //   group: 0,
+  //   tag: 'Person',
+  //   reason: 'person-said',
+  // },
 
   // ===person-place===
   // [sydney] harbour
-  {
-    match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`,
-    group: 0,
-    tag: 'Place',
-    reason: 'sydney-harbour',
-  },
+  // left-right: {
+  //   match: `[%Person|Place%] (harbor|harbour|pier|town|city|place|dump|landfill)`,
+  //   group: 0,
+  //   tag: 'Place',
+  //   reason: 'sydney-harbour',
+  // },
   // east [sydney]
-  { match: `(west|east|north|south) [%Person|Place%]`, group: 0, tag: 'Place', reason: 'east-sydney' },
+  // left-right: { match: `(west|east|north|south) [%Person|Place%]`, group: 0, tag: 'Place', reason: 'east-sydney' },
 
   // ===person-verb===
   // really [wade]

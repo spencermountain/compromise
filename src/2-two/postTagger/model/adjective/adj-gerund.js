@@ -34,7 +34,7 @@ export default [
   // [boring] the audience
   { match: '[%Adj|Gerund%] #Determiner', group: 0, tag: 'Gerund', reason: 'developing-a' },
   // world's [leading] manufacturer
-  { match: '#Possessive [%Adj|Gerund%] #Noun', group: 0, tag: 'Adjective', reason: 'leading-mfg' },
+  // left-right: { match: '#Possessive [%Adj|Gerund%] #Noun', group: 0, tag: 'Adjective', reason: 'leading-mfg' },
   // meaning alluring
   { match: '%Noun|Gerund% %Adj|Gerund%', tag: 'Gerund #Adjective', reason: 'alluring' },
 ]

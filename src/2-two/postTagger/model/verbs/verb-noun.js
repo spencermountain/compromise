@@ -149,9 +149,9 @@ export default [
   // how to [watch]
   { match: 'how to [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'how-to-noun' },
   // which [boost] it
-  { match: 'which [%Noun|Verb%] #Noun', group: 0, tag: 'Infinitive', reason: 'which-boost-it' },
+  // left-right: { match: 'which [%Noun|Verb%] #Noun', group: 0, tag: 'Infinitive', reason: 'which-boost-it' },
   // asking [questions]
-  { match: '#Gerund [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'asking' },
+  // left-right: { match: '#Gerund [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'asking' },
   // ready to [stream]
   { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'ready-to-noun' },
   // bring [to market]

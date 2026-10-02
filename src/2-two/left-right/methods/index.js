@@ -19,7 +19,7 @@ const collect = (entry, terms, i, pending) => {
   }
 }
 
-const leftRight = (document, { byWord, byTag }, world) => {
+const leftRight = (document, { byWord, byTag, bySwitch = {} }, world) => {
   const pending = []
   document.forEach(terms => {
     for (let i = 0; i < terms.length; i += 1) {
@@ -32,9 +32,12 @@ const leftRight = (document, { byWord, byTag }, world) => {
           collect(byTag[tag], terms, i, pending)
         }
       })
+      if (term.switch && Object.hasOwn(bySwitch, term.switch)) {
+        collect(bySwitch[term.switch], terms, i, pending)
+      }
     }
   })
-  // Both indexes see incoming tags; word actions run before tag actions.
+  // All indexes see incoming state; apply word, tag, then switch actions per term.
   pending.forEach(([term, rule]) => {
     const { setTag } = world.methods.one
     const terms = [term]

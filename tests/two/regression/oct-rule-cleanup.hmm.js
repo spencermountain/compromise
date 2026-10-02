@@ -4,6 +4,66 @@ import leftRight from '../../../src/2-two/left-right/plugin.js'
 import compileLeftRight from '../../../src/2-two/left-right/model/_lib.js'
 const here = '[two/match-spec] '
 
+test('switch-keyed tagging examples', t => {
+  const cases = [
+    ['Our leading manufacturer closed.', 'leading', 'Adjective'],
+    ['Her favourite book disappeared.', 'favourite', 'Adjective'],
+    ['Drew said hello.', 'Drew', 'Person'],
+    ['She drew closer.', 'drew', 'Verb'],
+    ['We visited East Sydney.', 'Sydney', 'Place'],
+    ['We visited Sydney harbour.', 'Sydney', 'Place'],
+    ['They are asking questions.', 'questions', 'Plural'],
+    ['Quickly warm the milk.', 'warm', 'Verb'],
+    ['Visit https://example.com.', 'visit', 'Imperative'],
+    ['Commit to the plan.', 'commit', 'Imperative'],
+  ]
+  cases.forEach(([text, target, tag]) => {
+    t.equal(nlp(text).match(target).has('#' + tag), true, text)
+  })
+  t.end()
+})
+
+test('left/right switch keys use exact incoming ambiguity', t => {
+  const bySwitch = compileLeftRight({
+    '%Noun|Verb%': ['^(my|your) _ (dog|#Plural)$ -> #Adjective'],
+  })
+  const cases = [
+    ['my foo dog', 'Noun|Verb', true],
+    ['your foo dogs', 'Noun|Verb', true],
+    ['my foo dog', 'Verb|Noun', false],
+    ['my foo dog', 'Adj|Noun', false],
+    ['my foo dog', undefined, false],
+    ['their foo dog', 'Noun|Verb', false],
+    ['near my foo dog', 'Noun|Verb', false],
+    ['my foo dog outside', 'Noun|Verb', false],
+  ]
+  cases.forEach(([text, ambiguity, expected]) => {
+    const doc = nlp(text)
+    const target = doc.match('foo').tag('Verb')
+    target.docs[0][0].switch = ambiguity
+    leftRight.methods.two.leftRight(doc.docs, { byWord: {}, byTag: {}, bySwitch }, doc.world)
+    t.equal(target.has('#Adjective'), expected, `${text}: ${ambiguity}`)
+  })
+  const doc = nlp('my foo dog')
+  doc.match('foo').tag('Verb').docs[0][0].switch = 'Noun|Verb'
+  const byWord = compileLeftRight({ foo: ['my _ -> #Noun'] })
+  const byTag = compileLeftRight({ '#Verb': ['my _ -> #Adverb'] })
+  leftRight.methods.two.leftRight(doc.docs, { byWord, byTag, bySwitch }, doc.world)
+  t.equal(doc.match('foo').has('#Adjective'), true, 'switch action follows word and incoming-tag actions')
+
+  const neighbours = nlp('my foo bar')
+  neighbours.match('foo bar').tag('Verb')
+  neighbours.match('foo').docs[0][0].switch = 'Noun|Verb'
+  neighbours.match('bar').docs[0][0].switch = 'Adj|Noun'
+  const deferred = compileLeftRight({
+    '%Noun|Verb%': ['my _ -> #Noun'],
+    '%Adj|Noun%': ['#Noun _ -> #Adjective'],
+  })
+  leftRight.methods.two.leftRight(neighbours.docs, { byWord: {}, byTag: {}, bySwitch: deferred }, neighbours.world)
+  t.equal(neighbours.match('bar').has('#Verb'), true, 'neighbour checks do not see pending switch actions')
+  t.end()
+})
+
 test('migrated anchored tagging rules', t => {
   const cases = [
     ['Go home.', 'go', 'Imperative', true],

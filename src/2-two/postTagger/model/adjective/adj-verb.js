@@ -6,7 +6,7 @@ export default [
     notIf: '(#PresentTense|#Copula|#Modal)', reason: 'developed',
   },
   // quickly [warm]
-  { match: '(slowly|quickly) [%Adj|Present%]', group: 0, tag: 'Verb', reason: 'slowly-adj' },
+  // left-right: { match: '(slowly|quickly) [%Adj|Present%]', group: 0, tag: 'Verb', reason: 'slowly-adj' },
   // does [mean]
   { match: 'does (#Adverb|not)? [%Adj|Present%]', group: 0, tag: 'Infinitive', reason: 'does-mean' },
   // [okay] by me

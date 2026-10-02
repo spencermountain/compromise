@@ -62,7 +62,7 @@ export default [
   // 5 [feet]
   { match: '#Value [(foot|feet)]', group: 0, tag: 'Unit', reason: 'foot-unit' },
   // 500 fifth [ave]
-  { match: '#Value [#Abbreviation]', group: 0, tag: 'Unit', reason: 'value-abbr' },
+  // left-right: { match: '#Value [#Abbreviation]', group: 0, tag: 'Unit', reason: 'value-abbr' },
   // 5 [k]
   // left-right: { match: '#Value [k]', group: 0, tag: 'Unit', reason: 'value-k' },
   // kilometers an hour

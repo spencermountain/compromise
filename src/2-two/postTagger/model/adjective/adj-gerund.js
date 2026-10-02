@@ -1,11 +1,11 @@
 // Gerund-Adjectives - 'amusing, annoying'
 export default [
   // as [entertaining] as
-  { match: 'as [#Gerund] as', group: 0, tag: 'Adjective', reason: 'as-ger-as' },
+  // left-right: { match: 'as [#Gerund] as', group: 0, tag: 'Adjective', reason: 'as-ger-as' },
   // more [amusing] than
-  { match: 'more [#Gerund] than', group: 0, tag: 'Adjective', reason: 'more-than-ger' },
+  // left-right: { match: 'more [#Gerund] than', group: 0, tag: 'Adjective', reason: 'more-than-ger' },
   // very [entertaining]
-  { match: '(so|very|extremely) [#Gerund]', group: 0, tag: 'Adjective', reason: 'so-ger' },
+  // left-right: { match: '(so|very|extremely) [#Gerund]', group: 0, tag: 'Adjective', reason: 'so-ger' },
   // found it [interesting]
   { match: 'found it #Adverb? [%Adj|Gerund%]', group: 0, tag: 'Adjective', reason: 'found-it-ger' },
   // found it [isolating], but found it isolating cells

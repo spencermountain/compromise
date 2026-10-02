@@ -4,7 +4,7 @@ export default [
   // the [upcoming thank]-you
   { match: '(that|the) [#Gerund #PresentTense]', group: 0, ifNo: '#Copula', tag: 'Plural', reason: 'paving-stones' },
   // the [failing] line
-  { match: '#Determiner [#Gerund] #Noun', group: 0, tag: 'Adjective', reason: 'ger-noun' },
+  // left-right: { match: '#Determiner [#Gerund] #Noun', group: 0, tag: 'Adjective', reason: 'ger-noun' },
   // i think [tipping] sucks
   { match: `#Pronoun #Infinitive [#Gerund] #PresentTense`, group: 0, tag: 'Noun', reason: 'tipping-sucks' },
   // lexical [tagging]
@@ -14,7 +14,7 @@ export default [
   // are [doing] is
   { match: '#Copula [(#Gerund|#Activity)] #Copula', group: 0, tag: 'Gerund', reason: 'are-doing-is' },
   // [walking] should be fun
-  { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'ger-modal' },
+  // left-right: { match: '[#Gerund] #Modal', group: 0, tag: 'Activity', reason: 'ger-modal' },
   // responsibility for [setting]
   { match: '#Singular for [%Noun|Gerund%]', group: 0, tag: 'Gerund', reason: 'noun-for-ger' },
   // better for [training]

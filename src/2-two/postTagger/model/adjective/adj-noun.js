@@ -1,8 +1,8 @@
 export default [
   // the [above] is clear
-  { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-is' },
+  // left-right: { match: '#Determiner [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-is' },
   // real [evil] is
-  { match: '#Adjective [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-adj-is' },
+  // left-right: { match: '#Adjective [#Adjective] #Copula', group: 0, tag: 'Noun', reason: 'adj-adj-is' },
   // his [fine]
   { match: '(his|its) [%Adj|Noun%] !#Noun?', group: 0, tag: 'Noun', notIf: '#Hyphenated', reason: 'his-fine' },
   // is [all]
@@ -14,7 +14,7 @@ export default [
   // in a [perfect]
   { match: `#Preposition (a|an) [#Adjective]$`, group: 0, tag: 'Noun', reason: 'an-instant' },
   // no [golden] would
-  { match: `no [#Adjective] #Modal`, group: 0, tag: 'Noun', reason: 'no-golden' },
+  // left-right: { match: `no [#Adjective] #Modal`, group: 0, tag: 'Noun', reason: 'no-golden' },
   // [brand] new
   { match: `[brand #Gerund?] new`, group: 0, tag: 'Adverb', reason: 'brand-new' },
   // some [kind] of teacher

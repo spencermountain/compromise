@@ -32,7 +32,7 @@ export default [
   // the [message] from Danny
   { match: 'the [#Verb] #Preposition .', group: 0, tag: 'Noun', reason: 'det-verb-prep' },
   // the [manufacture] of perfume
-  { match: '(a|an|the) [#Verb] of', group: 0, tag: 'Noun', reason: 'verb-of' },
+  // left-right: { match: '(a|an|the) [#Verb] of', group: 0, tag: 'Noun', reason: 'verb-of' },
   // a type of [shout]
   { match: '#Determiner #Noun of [#Verb]', group: 0, tag: 'Noun', notIf: '#Gerund', reason: 'noun-of-noun' },
   // waited until [release]
@@ -58,7 +58,7 @@ export default [
   // go to [shit]
   { match: 'to [(shit|hell)]', group: 0, tag: 'Noun', reason: 'to-swears' },
   // the [staff] were
-  { match: '(the|these) [#Singular] (were|are)', group: 0, tag: 'Plural', reason: 'sing-were' },
+  // left-right: { match: '(the|these) [#Singular] (were|are)', group: 0, tag: 'Plural', reason: 'sing-were' },
   // and check this out! a [walk-in] microwave.
   {
     match: '(the|those|these|a|an) #Adjective? [(#PresentTense && !#Gerund && !#Copula && !seem && !appear && !include) #Particle?]',
@@ -129,11 +129,11 @@ export default [
   // 10 [seconds]
   { match: '#Value [seconds]', group: 0, unTag: 'Value', tag: 'Plural', reason: '10-seconds' },
   // in [love]
-  { match: 'in [#Infinitive]', group: 0, tag: 'Singular', reason: 'in-age' },
+  // left-right: { match: 'in [#Infinitive]', group: 0, tag: 'Singular', reason: 'in-age' },
   // a [minor] in
-  { match: 'a [#Adjective] #Preposition', group: 0, tag: 'Noun', reason: 'a-minor-in' },
+  // left-right: { match: 'a [#Adjective] #Preposition', group: 0, tag: 'Noun', reason: 'a-minor-in' },
   // the [repairer] said
-  { match: '#Determiner [#Singular] said', group: 0, tag: 'Actor', reason: 'actor-said' },
+  // left-right: { match: '#Determiner [#Singular] said', group: 0, tag: 'Actor', reason: 'actor-said' },
   // the euro [sense]
   {
     match: `#Determiner #Noun [${infNouns}] !(#Preposition|to|#Adverb)?`,

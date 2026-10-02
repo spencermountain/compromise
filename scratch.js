@@ -1,12 +1,14 @@
+import fs from 'node:fs'
+import nlp from './src/two.js'
 
-import nlp from './src/three.js'
-// import plg from './plugins/dates/src/plugin.js'
-// nlp.plugin(plg)
+const book = fs.readFileSync(new URL('./infinite-jest.txt', import.meta.url), 'utf8')
 
-nlp.verbose(true)
-nlp(`look my change works`).debug()
+// lexicon:        512ms
+// preTagger:      968ms
+// contractionTwo: 155ms
+// left-right:     104ms
+// main-sweep:    2731ms
+// second-sweep:   696ms
 
-
-// nlp.testSpec('He was tired, so we stopped. {Noun,Vb,Adj,Conj,Noun,Vb}').debug()
-// let str = `Before the dog and the cat woke, she left. {Conj,Det,Noun,Conj,Det,Noun,Vb,Noun,Vb}`
-// let doc=nlp.testSpec(str)
+const doc = nlp(book)
+console.log(`${doc.docs.length.toLocaleString()} sentences; ${doc.wordCount().toLocaleString()} words`)

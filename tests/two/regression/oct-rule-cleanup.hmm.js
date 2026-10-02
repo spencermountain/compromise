@@ -4,6 +4,96 @@ import leftRight from '../../../src/2-two/left-right/plugin.js'
 import compileLeftRight from '../../../src/2-two/left-right/model/_lib.js'
 const here = '[two/match-spec] '
 
+test('left/right alternatives preserve context and action order', t => {
+  const byWord = compileLeftRight({
+    foo: ['(my|your) _ (cat|dog) -> #Adjective'],
+    bar: ['(near|#Determiner) _ (#Plural|#Pronoun) -> #Adjective'],
+    baz: ['as _ as -> #Adjective', 'more _ than -> #Adjective'],
+    quux: ['_ (cat|dog) -> #Adjective', 'my _ -> #Verb'],
+  })
+  const cases = [
+    ['my foo cat', 'foo', true],
+    ['your foo dog', 'foo', true],
+    ['their foo dog', 'foo', false],
+    ['my foo horse', 'foo', false],
+    ['foo dog', 'foo', false],
+    ['my foo', 'foo', false],
+    ['my. foo dog', 'foo', false],
+    ['near bar cats', 'bar', true],
+    ['the bar she', 'bar', true],
+    ['near bar cat', 'bar', false],
+    ['as baz as', 'baz', true],
+    ['more baz than', 'baz', true],
+    ['as baz than', 'baz', false],
+    ['more baz as', 'baz', false],
+    ['my quux dog', 'quux', false],
+  ]
+  cases.forEach(([text, target, expected]) => {
+    const doc = nlp(text)
+    doc.match(target).tag('Verb')
+    leftRight.methods.two.leftRight(doc.docs, { byWord, byTag: {} }, doc.world)
+    t.equal(doc.match(target).has('#Adjective'), expected, text)
+  })
+  const invalid = ['(my|)', '(|my)', '(my)', '(my|(your|their))', 'my|your', '(#Noun|!)']
+  invalid.forEach(context => {
+    t.throws(() => compileLeftRight({ foo: [`${context} _ -> #Adjective`] }), /Invalid left-right rule/, context)
+  })
+  t.end()
+})
+
+test('migrated tag-based left/right contexts', t => {
+  const cases = [
+    ['a well made table', 'made', 'Adjective'],
+    ['as entertaining as a movie', 'entertaining', 'Adjective'],
+    ['more amusing than a movie', 'amusing', 'Adjective'],
+    ['very annoying', 'annoying', 'Adjective'],
+    ['a blown motor', 'blown', 'Adjective'],
+    ['no doubt', 'doubt', 'Noun'],
+    ['any charge', 'charge', 'Noun'],
+    ['the above is clear', 'above', 'Singular'],
+    ['who he knows', 'who', 'Preposition'],
+  ]
+  cases.forEach(([text, target, tag]) => {
+    const doc = nlp(text)
+    t.equal(doc.match(target).has('#' + tag), true, text)
+    doc.compute('tagger')
+    t.equal(doc.match(target).has('#' + tag), true, 'retag: ' + text)
+  })
+  const gerund = nlp('the running horse')
+  gerund.match('running').tag('Gerund')
+  leftRight.methods.two.leftRight(gerund.docs, gerund.world.model.two.leftRight, gerund.world)
+  t.equal(gerund.match('running').has('#Adjective'), true, 'gerund modifier with incoming Gerund tag')
+  t.end()
+})
+
+test('left/right target tags', t => {
+  const byTag = compileLeftRight({ '#ProperNoun': ['in _ -> #Place'] })
+  const run = (doc, byWord = {}) => leftRight.methods.two.leftRight(doc.docs, { byWord, byTag }, doc.world)
+  const doc = nlp('in foo near bar')
+  doc.match('(foo|bar)').tag('ProperNoun')
+  run(doc)
+  t.equal(doc.match('foo').has('#Place'), true, 'matching target tag and left neighbour')
+  t.equal(doc.match('bar').has('#Place'), false, 'target tag still requires the neighbour')
+
+  const ordinary = nlp('in box')
+  run(ordinary)
+  t.equal(ordinary.match('box').has('#Place'), false, 'ordinary noun does not match ProperNoun')
+
+  const both = nlp('in foo')
+  both.match('foo').tag('ProperNoun')
+  run(both, compileLeftRight({ foo: ['in _ -> #Adjective'] }))
+  t.equal(both.match('foo').has('#Place'), true, 'tag rules see incoming tags even when a word rule removes them')
+
+  const fresh = nlp('in foo')
+  fresh.match('foo').tag('Verb')
+  run(fresh, compileLeftRight({ foo: ['in _ -> #ProperNoun'] }))
+  t.equal(fresh.match('foo').has('#ProperNoun'), true, 'word rule applies')
+  t.equal(fresh.match('foo').has('#Place'), false, 'new tags do not trigger tag rules in the same pass')
+  run(fresh)
+  t.equal(fresh.match('foo').has('#Place'), true, 'new tag is available on the next pass')
+  t.end()
+})
+
 test('matching respects edits to parsed patterns', t => {
   const doc = nlp('red blue')
   const pattern = nlp.parseMatch('green red blue')
@@ -52,7 +142,7 @@ test('left/right string rules', t => {
   cases.forEach(([text, target, tag]) => {
     const doc = nlp(text)
     doc.match(target).tag('Verb')
-    leftRight.methods.two.leftRight(doc.docs, rules, doc.world)
+    leftRight.methods.two.leftRight(doc.docs, { byWord: rules, byTag: {} }, doc.world)
     t.equal(doc.match(target).has('#' + tag), true, text)
   })
   const invalid = [
@@ -61,7 +151,7 @@ test('left/right string rules', t => {
     'one two _ -> #Unit',
     '_ -> Unit',
     '_ -> #Unit -> #Ordinal',
-    '(one|two) _ -> #Unit',
+    '(one|) _ -> #Unit',
     '^ _ -> #Unit',
   ]
   invalid.forEach(rule => {
@@ -93,7 +183,7 @@ test('left/right rules in the tagging pipeline', t => {
 })
 
 test('left/right tagger sketch', t => {
-  const run = (doc, rules) => leftRight.methods.two.leftRight(doc.docs, rules, doc.world)
+  const run = (doc, rules) => leftRight.methods.two.leftRight(doc.docs, { byWord: rules, byTag: {} }, doc.world)
   const doc = nlp('my foo and your foo')
   doc.match('foo').tag('Verb')
   run(doc, { foo: [{ pre: 'my', post: '', tag: 'Noun' }] })

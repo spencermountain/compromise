@@ -29,7 +29,7 @@ export default [
     reason: 'foo-point',
   },
   // in [Foo] California
-  { match: 'in [#ProperNoun] #Place', group: 0, tag: 'Place', reason: 'proper-place' },
+  // left-right: { match: 'in [#ProperNoun] #Place', group: 0, tag: 'Place', reason: 'proper-place' },
   // 123 main street
   {
     match: '#Value #Noun+ (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway|way)',

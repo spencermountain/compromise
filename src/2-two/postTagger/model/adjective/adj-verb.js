@@ -18,7 +18,7 @@ export default [
   // I [frequent] this restaurant
   { match: '#Pronoun [#Adjective] #Determiner #Adjective? #Noun', group: 0, tag: 'Verb', reason: 'he-adj-the' },
   // is [done] well
-  { match: '#Copula [#Adjective] (well|badly|quickly|slowly)', group: 0, tag: 'Verb', reason: 'done-well' },
+  // left-right: { match: '#Copula [#Adjective] (well|badly|quickly|slowly)', group: 0, tag: 'Verb', reason: 'done-well' },
   // rude and [insulting]
   { match: '#Adjective and [(%Adj|Gerund% && #Gerund)] !#Preposition?', group: 0, tag: 'Adjective', reason: 'rude-and-x' },
   // was under [paid]
@@ -42,7 +42,7 @@ export default [
   // is just [tired]
   { match: '#Copula just [%Adj|Past% #Particle?]', group: 0, tag: 'Adjective', reason: 'is-just-right' },
   // as [fit] as
-  { match: 'as [#Infinitive] as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
+  // left-right: { match: 'as [#Infinitive] as', group: 0, tag: 'Adjective', reason: 'as-pale-as' },
   // [failed] and oppressive
   { match: '[%Adj|Past%] and #Adjective', group: 0, tag: 'Adjective', reason: 'failed-and' },
   // the fear or [heightened] emotion
@@ -56,7 +56,7 @@ export default [
   // tired and overworked describes a state after a copula
   { match: '#Copula #Adverb? #Adjective and [(overworked|overwhelmed|overpaid|underpaid|overqualified|underqualified|understaffed)]$', group: 0, tag: 'Adjective', reason: 'coord-state' },
   // became [embroiled]
-  { match: '(become|became|becoming|becomes) [#Verb]', group: 0, tag: 'Adjective', reason: 'become-verb' },
+  // left-right: { match: '(become|became|becoming|becomes) [#Verb]', group: 0, tag: 'Adjective', reason: 'become-verb' },
   // their [declared] intentions
    { match: '#Possessive [#PastTense] #Noun', group: 0, notIf: '#Copula', tag: 'Adjective', reason: 'declared' },
   // is he [cool]

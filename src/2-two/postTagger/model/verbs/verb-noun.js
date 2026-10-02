@@ -45,17 +45,17 @@ export default [
   // working for [thank]-you letters
   { match: '#Gerund #Adjective? for [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-for' },
   // about [thank]-you letters
-  { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
+  // left-right: { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
   // artists on [thank]-you cards
   { match: '#Plural on [#Infinitive]', group: 0, tag: 'Noun', reason: 'on-stage' },
   // any [thank]-you letter
-  { match: 'any [#Infinitive]', group: 0, tag: 'Noun', reason: 'any-charge' },
+  // left-right: { match: 'any [#Infinitive]', group: 0, tag: 'Noun', reason: 'any-charge' },
   // no [thank] you
-  { match: 'no [#Infinitive]', group: 0, tag: 'Noun', reason: 'no-doubt' },
+  // left-right: { match: 'no [#Infinitive]', group: 0, tag: 'Noun', reason: 'no-doubt' },
   // number of [thank]-yous
   { match: 'number of [#PresentTense]', group: 0, tag: 'Noun', reason: 'number-of-x' },
   // taught [thank]-you etiquette
-  { match: '(taught|teaches|learns|learned) [#PresentTense]', group: 0, tag: 'Noun', reason: 'teaches-x' },
+  // left-right: { match: '(taught|teaches|learns|learned) [#PresentTense]', group: 0, tag: 'Noun', reason: 'teaches-x' },
   // make [sense]
   { match: '(try|use|attempt|build|make) [%Noun|Verb% #Particle?]', notIf: '(#Copula|#Noun|sure|fun|up)', group: 0, tag: 'Noun', reason: 'do-verb' },//make sure of
   // [append] is cloned
@@ -101,7 +101,7 @@ export default [
   // writing bigger [thank]-you notes
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'higher-costs' },
   // some [thanks] for helping
-  { match: '(many|any|some|several) [#PresentTense] for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
+  // left-right: { match: '(many|any|some|several) [#PresentTense] for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
   // to write people [thanks] for helping
   { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
   // waited until [release]
@@ -126,7 +126,7 @@ export default [
   // get better [thank]-you notes
   { match: `(get|got|have) #Comparative [#PresentTense]`, group: 0, tag: 'Noun', reason: 'got-better-aim' },
   // whose [thanks] are appreciated
-  { match: 'whose [#PresentTense] #Copula', group: 0, tag: 'Noun', reason: 'whose-verb-cop' },
+  // left-right: { match: 'whose [#PresentTense] #Copula', group: 0, tag: 'Noun', reason: 'whose-verb-cop' },
   // give up on [thank]-you letters
   { match: `#PhrasalVerb #Particle #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   // there are [thank]-you notes

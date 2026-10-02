@@ -17,7 +17,7 @@ export default [
   // [forgotten] stories are lost
   { match: '[#PastTense] #Plural are', group: 0, tag: 'Adjective', reason: 'baked-onions' },
   // well [made]
-  { match: 'well [#PastTense]', group: 0, tag: 'Adjective', reason: 'well-made' },
+  // left-right: { match: 'well [#PastTense]', group: 0, tag: 'Adjective', reason: 'well-made' },
   // is [fucked up]
   { match: '#Copula [fucked up?]', group: 0, tag: 'Adjective', reason: 'swears-adj' },
   // the door seems [opened]

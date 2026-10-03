@@ -56,6 +56,10 @@ const words = [
   'tur key',
   'cor si ca',
   'dev iled',
+  'si lent',
+  'ta lent',
+  'pa rent',
+  'a gent',
   // 'horse',
   // 'chance',
   // 'peo ple'

@@ -12,6 +12,8 @@ import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
 import toNegative from './conjugate/toNegative.js'
 import { getTense } from './lib.js'
+import { inflect } from './conjugate/inflect.js'
+const keep = { tags: true }
 
 
 const api = function (View) {
@@ -146,6 +148,15 @@ const api = function (View) {
       if (m.found) {
         m.remove('do not')
       }
+      // 'does not walk' -> 'walks'
+      this.forEach(vb => {
+        const { root, auxiliary, negative } = parseVerb(vb)
+        if (negative.found && auxiliary.has('^(does|did)$')) {
+          const tense = auxiliary.has('did') ? 'PastTense' : 'PresentTense'
+          vb.replace(root, inflect(root, tense), keep).unTag('Infinitive').tag(tense)
+          vb.remove(auxiliary)
+        }
+      })
       return this.remove('#Negative')
     }
     toNegative(n) {

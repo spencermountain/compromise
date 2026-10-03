@@ -12,3 +12,13 @@ test('sentences.toPositive', function (t) {
 
   t.end()
 })
+
+test('sentences.toPositive does-not', function (t) {
+  const doc = nlp(`He does not like camels.`)
+  doc.sentences().toPositive()
+  t.equal(doc.text(), 'He likes camels.', here + 'does not')
+
+  doc.sentences().toNegative()
+  t.equal(doc.text(), 'He does not like camels.', here + 'back to neg')
+  t.end()
+})

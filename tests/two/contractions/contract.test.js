@@ -74,3 +74,22 @@ test('multiple contraction in sentence', function (t) {
   t.equal(doc.match('he is dead').length, 2, here + 'multi-contraction-count')
   t.end()
 })
+
+test('contract multiple matches', function (t) {
+  let doc = nlp('he is here and she is there')
+  doc.contract()
+  t.equal(doc.text(), `he's here and she's there`, here + 'two in one sentence')
+
+  doc = nlp('we are tired and they are not')
+  doc.contract()
+  t.equal(doc.text(), `we're tired and they're not`, here + 'two of the same')
+
+  doc = nlp('he is here. she is there.')
+  doc.contract()
+  t.equal(doc.text(), `he's here. she's there.`, here + 'two sentences')
+
+  doc = nlp('Tony, is here and John is there')
+  doc.contract()
+  t.equal(doc.text(), `Tony, is here and John's there`, here + 'skip one with punctuation')
+  t.end()
+})

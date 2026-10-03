@@ -1,10 +1,6 @@
 const postPunct = /[,)"';:\-–—.…]/
 
-const setContraction = function (m, suffix) {
-  if (!m.found) {
-    return
-  }
-  const terms = m.termList()
+const contractTerms = function (terms, suffix) {
   //avoid any problematic punctuation
   for (let i = 0; i < terms.length - 1; i++) {
     const t = terms[i]
@@ -25,6 +21,11 @@ const setContraction = function (m, suffix) {
   for (let i = 0; i < terms.length - 1; i++) {
     terms[i].post = terms[i].post.replace(/ /, '')
   }
+}
+
+// contract each match on its own
+const setContraction = function (m, suffix) {
+  m.docs.forEach(terms => contractTerms(terms, suffix))
 }
 
 /** turn 'i am' into i'm */

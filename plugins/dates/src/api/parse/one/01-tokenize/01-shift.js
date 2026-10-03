@@ -18,6 +18,11 @@ const aliases = {
   weekend: 'week', //for now...
 }
 
+// units made of other units
+const multiples = {
+  fortnight: [2, 'week'],
+}
+
 // half of a unit, in smaller whole units
 const halfUnits = {
   year: [6, 'month'],
@@ -53,9 +58,14 @@ const parseShift = function (doc) {
 
   // '5 weeks'
   shift.match('#Cardinal #Duration').forEach((ts) => {
-    const num = ts.match('#Cardinal').numbers().get()[0]
+    let num = ts.match('#Cardinal').numbers().get()[0]
     if (num && typeof num === 'number') {
-      const unit = parseUnit(ts)
+      let unit = parseUnit(ts)
+      // '1 fortnight' is 2 weeks
+      if (Object.hasOwn(multiples, unit)) {
+        num *= multiples[unit][0]
+        unit = multiples[unit][1]
+      }
       if (knownUnits[unit] === true) {
         result[unit] = isNegative ? num * -1 : num
       }

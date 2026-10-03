@@ -167,3 +167,11 @@ test('a range does not stop other dates from splitting', (t) => {
   t.equal(res.length, 3, 'three dates found')
   t.end()
 })
+
+test('singular possessive durations', (t) => {
+  t.equal(getStart("in a month's time"), '2026-08-11T00:00:00.000-04:00', "a month's time")
+  t.equal(getStart("in a week's time"), '2026-07-18T00:00:00.000-04:00', "a week's time")
+  t.equal(getStart("in a year's time"), '2027-07-11T00:00:00.000-04:00', "a year's time")
+  t.equal(getStart("in two weeks' time"), '2026-07-25T00:00:00.000-04:00', "two weeks' time")
+  t.end()
+})

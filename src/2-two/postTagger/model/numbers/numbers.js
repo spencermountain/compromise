@@ -37,6 +37,15 @@ export default [
     tag: 'Value',
     reason: 'a-trillion',
   },
+  // two [dozen] eggs
+  { match: '(a|#Cardinal) [dozen]', hook: 'dozen', group: 0, tag: ['Multiple', 'Cardinal'], reason: 'value-dozen' },
+  // with [a] dozen eggs
+  {
+    match: '!once? [a] dozen', hook: 'dozen',
+    group: 0,
+    tag: 'Value',
+    reason: 'a-dozen',
+  },
   // ==== PhoneNumber ====
   // 1 800 555-1234
   { match: '(1|+1) #Value #PhoneNumber', tag: 'PhoneNumber', reason: 'country-code' },

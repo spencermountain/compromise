@@ -32,6 +32,10 @@ const checkCase = function (terms, i, model) {
     if (notProper.find(tag => term.tags.has(tag))) {
       return null
     }
+    // known comparative - 'is Higher than 16'
+    if (term.tags.has('Comparative') && terms[i + 1]?.normal === 'than') {
+      return null
+    }
     // A heading can start a new clause: 'Tutorial: Creating a cake'.
     if (i === 0 && term.tags.has('Gerund') && terms[i + 1]?.tags.has('Determiner')) {
       return null

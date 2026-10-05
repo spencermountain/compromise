@@ -31,6 +31,9 @@ test('connectors distinguish nominal objects from finite clauses', t => {
     ['They stood behind us.', 'behind', 'Preposition'],
     ['He leaned against the wall.', 'against', 'Preposition'],
     ['He sat near the door.', 'near', 'Preposition'],
+    ['The dog slept beneath the bench.', 'beneath', 'Preposition'],
+    ['The keys were underneath the mat.', 'underneath', 'Preposition'],
+    ['We went aboard the ship.', 'aboard', 'Preposition'],
   ]
   for (const [str, word, tag] of cases) {
     const term = nlp(str).match(word)

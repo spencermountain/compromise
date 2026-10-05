@@ -57,7 +57,21 @@ const rules = [
   // The cat slept [under] the table. He sat [beside] me.
   // the plane flew well [above] the clouds
   // she stood directly [below] the window...
-  ...['above', 'below', 'under', 'over', 'beside', 'behind', 'against', 'outside', 'inside', 'near'].map(word => ({
+  ...[
+    'above',
+    'below',
+    'under',
+    'over',
+    'beside',
+    'behind',
+    'against',
+    'outside',
+    'inside',
+    'near',
+    'beneath',
+    'underneath',
+    'aboard',
+  ].map(word => ({
     m: `[(${word} && !#V)] (#Det|#Poss|#Pron|#Prop)`,
     g: 0,
     t: 'Prep',

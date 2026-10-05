@@ -37,7 +37,8 @@ const halfUnits = {
 
 const parseUnit = function (m) {
   let unit = m.match('#Duration').text('normal')
-  unit = unit.replace(/s$/, '')
+  // 'weeks', or "a month's time"
+  unit = unit.replace(/'?s$/, '')
   // support shorthands like 'min'
   if (Object.hasOwn(aliases, unit)) {
     unit = aliases[unit]

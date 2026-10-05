@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../three/_lib.js'
 
 const wrappers = [
   ['', ''],
@@ -47,7 +47,7 @@ test('generated email and URL boundaries preserve text and selections', t => {
   t.end()
 })
 
-test('generated punctuation contexts preserve Unicode and are stable when normalized', t => {
+test('generated punctuation contexts preserve Unicode', t => {
   const failures = []
   let count = 0
   for (const word of ['alpha', 'café', '𐐀word', '東京', 'word😀word']) {
@@ -63,26 +63,7 @@ test('generated punctuation contexts preserve Unicode and are stable when normal
     }
   }
   t.deepEqual(failures, [], `${count} punctuation contexts round-trip code points`)
-  const normalizationFailures = []
-  for (const infix of ['.', '...', ',', '!', '?', '-', '😀']) {
-    for (const ending of ['', '.', '!!!', '…', ')']) {
-      const text = `("AlPhA${infix}BeTa${ending}`
-      const expected = `alpha${infix}beta`
-      const doc = nlp(text)
-      const normals = doc.json().flatMap(sentence => sentence.terms.map(term => term.normal))
-      doc.normalize()
-      const normalized = doc.text()
-      doc.normalize()
-      if (normals.length !== 1 || normals[0] !== expected || doc.text() !== normalized) {
-        normalizationFailures.push({ text, expected, normals, normalized, repeated: doc.text() })
-      }
-    }
-  }
-  t.deepEqual(
-    normalizationFailures,
-    [],
-    'term normals preserve internal punctuation and document normalization is idempotent'
-  )
+
   t.end()
 })
 

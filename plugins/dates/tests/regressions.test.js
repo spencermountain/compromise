@@ -172,5 +172,10 @@ test('a trailing dash is not part of the date', (t) => {
   const doc = nlp('2025-05-11 - They have taken the bridge and the Second Hall')
   t.equal(doc.dates(context).text(), '2025-05-11', 'iso date before a dash')
   t.equal(nlp('june 5 - june 7').dates(context).text(), 'june 5 - june 7', 'dash range')
+
+  t.equal(getStart("in a month's time"), '2026-08-11T00:00:00.000-04:00', "a month's time")
+  t.equal(getStart("in a week's time"), '2026-07-18T00:00:00.000-04:00', "a week's time")
+  t.equal(getStart("in a year's time"), '2027-07-11T00:00:00.000-04:00', "a year's time")
+  t.equal(getStart("in two weeks' time"), '2026-07-25T00:00:00.000-04:00', "two weeks' time")
   t.end()
 })

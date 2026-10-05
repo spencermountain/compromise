@@ -33,6 +33,22 @@ test('basic is contractions', function (t) {
   t.end()
 })
 
+test('wanna before a noun', function (t) {
+  const arr = [
+    ['I wanna pickle', 'I want pickle'],
+    ['I wanna a cookie', 'I want a cookie'],
+    ['do you wanna coffee?', 'do you want coffee?'],
+    ['I wanna go', 'I want to go'],
+    ['I wanna pickle some beets', 'I want to pickle some beets'],
+  ]
+  arr.forEach(([str, want]) => {
+    const r = nlp(str)
+    r.contractions().expand()
+    t.equal(r.text(), want, here + str)
+  })
+  t.end()
+})
+
 test('do-not contractions', function (t) {
   let r = nlp(`please do not eat the marshmellow`)
   r.contractions().expand()

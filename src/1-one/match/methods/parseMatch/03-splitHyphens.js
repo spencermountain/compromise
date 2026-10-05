@@ -1,16 +1,12 @@
-const hasDash = /[a-z0-9][-–—][a-z]/i
+import { hasHyphen } from '../../../tokenize/methods/02-terms/01-hyphens.js'
 
 // match 're-do' -> ['re','do']
+// split them the same way the tokenizer does - 'x-ray' stays one word
 const splitHyphens = function (regs, world) {
-  const prefixes = world.model.one.prefixes
   for (let i = regs.length - 1; i >= 0; i -= 1) {
     const reg = regs[i]
-    if (reg.word && hasDash.test(reg.word)) {
+    if (reg.word && hasHyphen(reg.word, world.model)) {
       let words = reg.word.split(/[-–—]/g)
-      // don't split 're-cycle', etc
-      if (Object.hasOwn(prefixes, words[0])) {
-        continue
-      }
       words = words.filter(w => w).reverse()
       regs.splice(i, 1)
       words.forEach(w => {

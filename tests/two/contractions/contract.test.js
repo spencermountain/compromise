@@ -41,6 +41,23 @@ test('contract basic', function (t) {
   t.end()
 })
 
+test('contract before not', function (t) {
+  let doc = nlp('he is not here')
+  doc.contract()
+  t.equal(doc.text(), `he's not here`, here + 'he is not')
+  doc.contractions().expand()
+  t.equal(doc.text(), 'he is not here', here + 'he is not expand')
+
+  doc = nlp('spencer is not here')
+  doc.contract()
+  t.equal(doc.text(), `spencer's not here`, here + 'spencer is not')
+
+  doc = nlp('that is not true')
+  doc.contract()
+  t.equal(doc.text(), `that isn't true`, here + 'that is not')
+  t.end()
+})
+
 test('avoid contraction messes', function (t) {
   let doc = nlp('Tony, is').contract()
   t.equal(doc.has('is'), true, here + 'avoid-contraction 1')
@@ -72,5 +89,22 @@ test('multiple contraction in sentence', function (t) {
 
   doc = nlp(`he's dead, he's dead`)
   t.equal(doc.match('he is dead').length, 2, here + 'multi-contraction-count')
+  t.end()
+})
+
+test('contract negatives', function (t) {
+  const arr = [
+    ['I can not go', `I can't go`],
+    ['You Can not go', `You Can't go`],
+    ['i did not go', `i didn't go`],
+    ['they were not here', `they weren't here`],
+  ]
+  arr.forEach(a => {
+    const doc = nlp(a[0])
+    doc.contract()
+    t.equal(doc.text(), a[1], here + a[0])
+    doc.contractions().expand()
+    t.equal(doc.text(), a[0], here + 'expand ' + a[0])
+  })
   t.end()
 })

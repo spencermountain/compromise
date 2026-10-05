@@ -1,119 +1,119 @@
 const rules = {
   said: [
     // the [said] dog
-    'the _ #Noun -> #Adjective',
+    'the _ #NN -> #Adj',
   ],
   still: [
     // was [still] in
-    '#Copula _ (in|#Gerund|#Adjective) -> #Adverb',
+    '#Cop _ (in|#Ger|#Adj) -> #Adv',
     // [still] good
     // [still] make
-    '_ (#Adjective|#Verb) -> #Adverb',
+    '_ (#Adj|#V) -> #Adv',
   ],
   so: [
     // [so] hot
-    '_ #Adjective -> #Adverb',
+    '_ #Adj -> #Adv',
     // do [so]
-    'do _ -> #Adverb',
+    'do _ -> #Adv',
     // [so] he
-    '_ #Noun -> #Conjunction',
+    '_ #NN -> #Conj',
   ],
   way: [
     // [way] hotter
     // [way] over
-    '_ (#Comparative|#Adjective) -> #Adverb',
+    '_ (#Comp|#Adj) -> #Adv',
   ],
   all: [
     // they [all] swim
-    '_ #Verb -> #Adverb',
+    '_ #V -> #Adv',
   ],
   even: [
     // [even] held
     // [even] worse
     // [even] the greatest
-    '_ (#Verb|#Comparative|#Determiner|#Possessive) -> #Adverb',
+    '_ (#V|#Comp|#Det|#Poss) -> #Adv',
   ],
   later: [
     // [later] say
-    '_ #PresentTense -> #Adverb',
+    '_ #Pres -> #Adv',
   ],
   enough: [
     // high [enough]
-    '#Adjective _ -> #Adverb',
+    '#Adj _ -> #Adv',
   ],
   least: [
     // [least] expensive
-    '_ #Adjective -> #Adverb',
+    '_ #Adj -> #Adv',
     // the [least]
-    '#Determiner _ -> #Adverb',
+    '#Det _ -> #Adv',
   ],
   sun: [
     // [sun] feb 2
     '_ #Date -> #WeekDay',
     // the [sun]
-    '#Determiner _ -> #Singular',
+    '#Det _ -> #Sing',
   ],
   more: [
     // [more] players
-    '_ #Noun -> #Adjective',
+    '_ #NN -> #Adj',
     // any [more]
-    '(the|any) _ -> #Singular',
+    '(the|any) _ -> #Sing',
   ],
   u: [
     // and [u]
-    '#Conjunction _ -> #Pronoun',
+    '#Conj _ -> #Pron',
     // [u] made me smile
-    '_ #Verb -> #Pronoun',
+    '_ #V -> #Pron',
   ],
   half: [
     // nearly [half]
-    '#Adverb _ -> #Fraction',
+    '#Adv _ -> #Frac',
     // [half] the
-    '_ the -> #Fraction',
+    '_ the -> #Frac',
     // a [half] second
-    '#Determiner _ #Ordinal -> #Value',
+    '#Det _ #Ord -> #Value',
   ],
   second: [
     // one [second]
-    '#Cardinal _ -> #Unit',
+    '#Card _ -> #Unit',
     // [second] dog
-    '_ #Noun -> #Ordinal',
+    '_ #NN -> #Ord',
   ],
   will: [
     // [will] go
-    '_ #Infinitive -> #Modal',
+    '_ #Inf -> #Mod',
   ],
   march: [
     // must [march]
-    '#Modal _ -> #Infinitive',
+    '#Mod _ -> #Inf',
     // in [march]
     '(in|by|before|during|on|until|after|of|within|all) _ -> #Month',
     // early [May]
     '(early|late|mid) _ -> #Month',
     // [march] quickly
-    '_ #Adverb -> #Verb',
+    '_ #Adv -> #V',
   ],
   may: [
     // [may] be
-    '_ be -> #Verb',
+    '_ be -> #V',
     // early [May]
     '(early|late|mid) _ -> #Month',
     // [march] quickly
-    '_ #Adverb -> #Verb',
+    '_ #Adv -> #V',
   ],
   open: [
     // [open] the door
-    '_ #Determiner -> #Infinitive',
+    '_ #Det -> #Inf',
   ],
   be: [
     // will [be] walked
-    'will _ #PastTense -> #Auxiliary',
+    'will _ #Past -> #Aux',
     // [stay] cool
-    '^ _ #Adjective -> #Imperative',
+    '^ _ #Adj -> #Imp',
   ],
   about: [
     // at [about]
-    '#Preposition _ -> #Adverb',
+    '#Prep _ -> #Adv',
   ],
   plenty: [
     // [plenty] of
@@ -121,7 +121,7 @@ const rules = {
   ],
   no: [
     // see [no]
-    '#Verb _ -> #Negative',
+    '#V _ -> #Neg',
   ],
   turkey: [
     // i ate [turkey]
@@ -134,59 +134,59 @@ const rules = {
   ],
   that: [
     // says [that] he
-    '#Verb _ #Pronoun -> #Conjunction',
+    '#V _ #Pron -> #Conj',
     // things [that] are required
-    '#Noun _ #Copula -> #Conjunction',
+    '#NN _ #Cop -> #Conj',
   ],
   like: [
     // nothing [like]
-    'nothing _ -> #Preposition',
+    'nothing _ -> #Prep',
     // [like] the time
-    '^ _ #Determiner -> #Preposition',
+    '^ _ #Det -> #Prep',
   ],
   enduring: [
     // enduring symbols, running water
-    '_ (symbols|legacy|legacies|appeal|influence|value|values) -> #Adjective',
+    '_ (symbols|legacy|legacies|appeal|influence|value|values) -> #Adj',
   ],
   running: [
     // enduring symbols, running water
-    '(have|has|had|#Determiner|#Possessive) _ water -> #Adjective',
+    '(have|has|had|#Det|#Poss) _ water -> #Adj',
   ],
   wit: [
     // [wit] it
-    '_ (me|it) -> #Preposition',
+    '_ (me|it) -> #Prep',
   ],
   look: [
     // [look] good
-    '_ #Adjective -> #PresentTense',
+    '_ #Adj -> #Pres',
     // [pay] attention
-    '^ _ #Noun -> #Imperative',
+    '^ _ #NN -> #Imp',
   ],
   finish: [
     // [start] listening
-    '_ #Gerund -> #Infinitive',
+    '_ #Ger -> #Inf',
   ],
   help: [
     // [start] listening
-    '_ #Gerund -> #Infinitive',
+    '_ #Ger -> #Inf',
     // [pay] attention
-    '^ _ #Noun -> #Imperative',
+    '^ _ #NN -> #Imp',
   ],
   right: [
     // [right] after
-    '_ (before|after|in|into|to|toward) -> #Adverb',
+    '_ (before|after|in|into|to|toward) -> #Adv',
   ],
   there: [
     // always [there]
-    '(always|nearly|barely|practically) _ -> #Adjective',
+    '(always|nearly|barely|practically) _ -> #Adj',
   ],
   mine: [
     // than [mine]
-    '(then|than) _ -> #Possessive',
+    '(then|than) _ -> #Poss',
   ],
   sorry: [
     // said [sorry]
-    '(say|says|said) _ -> #Expression',
+    '(say|says|said) _ -> #Expr',
   ],
   wed: [
     // on [wed]
@@ -194,15 +194,15 @@ const rules = {
   ],
   quarter: [
     // a [half] second
-    '#Determiner _ #Ordinal -> #Value',
+    '#Det _ #Ord -> #Value',
   ],
   kind: [
     // a new [kind]
-    '(#Determiner|#Comparative|new|different) _ $ -> #Noun',
+    '(#Det|#Comp|new|different) _ $ -> #NN',
   ],
   close: [
     // came to a [close]
-    '#Determiner _ $ -> #Noun',
+    '#Det _ $ -> #NN',
   ],
   sat: [
     // [sat] november
@@ -210,71 +210,71 @@ const rules = {
   ],
   read: [
     // he [read]
-    '^(he|she|it|#Person) _ -> #PastTense',
+    '^(he|she|it|#Pers) _ -> #Past',
   ],
   stay: [
     // [stay] away
-    '^ _ (out|away|back) -> #Imperative',
+    '^ _ (out|away|back) -> #Imp',
     // [stay] cool
-    '^ _ #Adjective -> #Imperative',
+    '^ _ #Adj -> #Imp',
   ],
   keep: [
     // [stay] cool
-    '^ _ #Adjective -> #Imperative',
+    '^ _ #Adj -> #Imp',
   ],
   shoot: [
     // shoot
-    '^ _ $ -> #Expression',
+    '^ _ $ -> #Expr',
   ],
   seconds: [
     // 10 [seconds]
-    '#Value _ -> #Plural | !#Value',
+    '#Value _ -> #Plur | !#Value',
   ],
 }
 
 const compounds = {
   // [much] appreciated
   // [super] strong
-  'much|super|pretty': '_ #Adjective -> #Adverb',
+  'much|super|pretty': '_ #Adj -> #Adv',
   // a [bit]
   // a [must]
   // a [while]
-  'bit|must|while': 'a _ -> #Singular',
+  'bit|must|while': 'a _ -> #Sing',
   // 5 [k]
   // 5 [gb]
   'k|gb|pa|ft|m': '#Value _ -> #Unit',
   // [sounds] fun
   // [look] good
-  'sound|sounds|looks': '_ #Adjective -> #PresentTense',
+  'sound|sounds|looks': '_ #Adj -> #Pres',
   // [stops] thinking
-  'start|stop|starts|stops|begin|begins': '_ #Gerund -> #Verb',
+  'start|stop|starts|stops|begin|begins': '_ #Ger -> #V',
   // help [stop]
-  'start|stop|end|make': 'help _ -> #Infinitive',
+  'start|stop|end|make': 'help _ -> #Inf',
   // [start] listening
-  'start|stop': '_ #Gerund -> #Infinitive',
+  'start|stop': '_ #Ger -> #Inf',
   // [pay] attention
-  'start|stop|ask|wear|pay|show|watch|act|fix|kill|turn|try|win': '^ _ #Noun -> #Imperative',
+  'start|stop|ask|wear|pay|show|watch|act|fix|kill|turn|try|win': '^ _ #NN -> #Imp',
   // 5pm [central]
   'eastern|mountain|pacific|central|est|pst|gmt': '#Time _ -> #Timezone',
   // [dance] music
-  'dance|rock|rap|swing': '_ (music|class|lesson|night|party|festival|league|ceremony) -> #Noun',
+  'dance|rock|rap|swing': '_ (music|class|lesson|night|party|festival|league|ceremony) -> #NN',
   // ten [bucks]
   'buck|bucks|grand': '#Value _ -> #Currency',
   // 5 [square] miles
   'square|cubic': '#Value _ #Unit -> #Unit',
   // is [alone]
-  'just|alone': '#Copula _ $ -> #Adjective',
+  'just|alone': '#Cop _ $ -> #Adj',
   // [go] home
-  'go|come': '^ _ home -> #Imperative',
+  'go|come': '^ _ home -> #Imp',
   // ok,
   // alright
   // hell
   // anyways
-  'ok|alright|hell|anyways': '^ _ -> #Expression',
+  'ok|alright|hell|anyways': '^ _ -> #Expr',
   // [dude] we should
-  'dude|man|girl': '^ _ #Pronoun -> #Expression',
+  'dude|man|girl': '^ _ #Pron -> #Expr',
   // [un] skilled
-  'un|contra|extra|inter|intra|macro|micro|mid|mis|mono|multi|pre|sub|tri|ex': '_ #Adjective -> #Adjective | #Prefix',
+  'un|contra|extra|inter|intra|macro|micro|mid|mis|mono|multi|pre|sub|tri|ex': '_ #Adj -> #Adj | #Prefix',
 }
 
 Object.entries(compounds).forEach(([words, rule]) => {

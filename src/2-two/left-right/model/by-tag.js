@@ -1,7 +1,7 @@
 const rules = {
   '#Person': [
     // bought a [warhol]
-    '(a|an) _ $ -> !#Person',
+    '(a|an) _ $ -> !#Pers',
   ],
   '#ProperNoun': [
     // in [#ProperNoun] -> #Place
@@ -10,70 +10,70 @@ const rules = {
   ],
   '#PastTense': [
     // well [made]
-    'well _ -> #Adjective',
+    'well _ -> #Adj',
   ],
   '#Gerund': [
     // as [entertaining] as
-    'as _ as -> #Adjective',
+    'as _ as -> #Adj',
     // more [amusing] than
-    'more _ than -> #Adjective',
+    'more _ than -> #Adj',
     // very [entertaining]
-    '(so|very|extremely) _ -> #Adjective',
+    '(so|very|extremely) _ -> #Adj',
     // the [failing] line
-    '#Determiner _ #Noun -> #Adjective',
+    '#Det _ #NN -> #Adj',
     // [walking] should be fun
-    '_ #Modal -> #Activity',
+    '_ #Mod -> #Activity',
   ],
   '#Adjective': [
     // the [above] is clear
     // real [evil] is
-    '(#Determiner|#Adjective) _ #Copula -> #Noun',
+    '(#Det|#Adj) _ #Cop -> #NN',
     // no [golden] would
-    'no _ #Modal -> #Noun',
+    'no _ #Mod -> #NN',
     // a [minor] in
-    'a _ #Preposition -> #Noun',
+    'a _ #Prep -> #NN',
     // is [done] well
-    '#Copula _ (well|badly|quickly|slowly) -> #Verb',
+    '#Cop _ (well|badly|quickly|slowly) -> #V',
   ],
   '#Participle': [
     // a [blown] motor
-    '(the|those|these|a|an) _ #Noun -> #Adjective',
+    '(the|those|these|a|an) _ #NN -> #Adj',
   ],
   '#Verb': [
     // the [manufacture] of perfume
-    '(a|an|the) _ of -> #Noun',
+    '(a|an|the) _ of -> #NN',
     // became [embroiled]
-    '(become|became|becoming|becomes) _ -> #Adjective',
+    '(become|became|becoming|becomes) _ -> #Adj',
   ],
   '#Singular': [
     // the [staff] were
-    '(the|these) _ (were|are) -> #Plural',
+    '(the|these) _ (were|are) -> #Plur',
     // the [repairer] said
-    '#Determiner _ said -> #Actor',
+    '#Det _ said -> #Actor',
   ],
   '#Infinitive': [
     // in [love]
     // about [thank]-you letters
-    '(in|about) _ -> #Singular',
+    '(in|about) _ -> #Sing',
     // any [thank]-you letter
     // no [thank] you
-    '(any|no) _ -> #Noun',
+    '(any|no) _ -> #NN',
     // as [fit] as
-    'as _ as -> #Adjective',
+    'as _ as -> #Adj',
     // somebody [call]
-    '^(somebody|everybody) _ -> #Imperative',
+    '^(somebody|everybody) _ -> #Imp',
     // never [say]
-    '^never _ -> #Imperative',
+    '^never _ -> #Imp',
     // [continue] playing
-    '^ _ #Gerund -> #Imperative',
+    '^ _ #Ger -> #Imp',
   ],
   '#PresentTense': [
     // taught [thank]-you etiquette
-    '(taught|teaches|learns|learned) _ -> #Noun',
+    '(taught|teaches|learns|learned) _ -> #NN',
     // some [thanks] for helping
-    '(many|any|some|several) _ for -> #Noun',
+    '(many|any|some|several) _ for -> #NN',
     // whose [thanks] are appreciated
-    'whose _ #Copula -> #Noun',
+    'whose _ #Cop -> #NN',
   ],
   '#Abbreviation': [
     // 500 fifth [ave]
@@ -81,7 +81,7 @@ const rules = {
   ],
   '#FirstName': [
     // john [stewart]
-    '#FirstName _ -> #LastName',
+    '#First _ -> #Last',
   ],
 }
 

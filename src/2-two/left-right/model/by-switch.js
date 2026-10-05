@@ -1,27 +1,27 @@
 const rules = {
   '%Adj|Gerund%': [
     // world's [leading] manufacturer
-    '#Possessive _ #Noun -> #Adjective',
+    '#Poss _ #NN -> #Adj',
   ],
   '%Adj|Noun%': [
     // a [representative] to
-    '#Determiner _ #Conjunction -> #Noun',
+    '#Det _ #Conj -> #NN',
   ],
   '%Noun|Verb%': [
     // which [boost] it
-    'which _ #Noun -> #Infinitive',
+    'which _ #NN -> #Inf',
     // [visit] https://example.com
-    '^ _ #Url -> #Imperative',
+    '^ _ #Url -> #Imp',
     // [commit] to
-    '^ _ to -> #Imperative',
+    '^ _ to -> #Imp',
   ],
   '%Plural|Verb%': [
     // asking [questions]
-    '#Gerund _ -> #Plural',
+    '#Ger _ -> #Plur',
   ],
   '%Person|Verb%': [
     // [chuck] will ...
-    '_ (will|had|has|said|says|told|did|learned|wants|wanted) -> #Person',
+    '_ (will|had|has|said|says|told|did|learned|wants|wanted) -> #Pers',
   ],
   '%Person|Place%': [
     // [sydney] harbour
@@ -31,7 +31,7 @@ const rules = {
   ],
   '%Adj|Present%': [
     // quickly [warm]
-    '(slowly|quickly) _ -> #Verb',
+    '(slowly|quickly) _ -> #V',
   ],
 }
 

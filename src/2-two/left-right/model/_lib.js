@@ -1,3 +1,5 @@
+import expandTags from '../../postTagger/model/_lib.js'
+
 // Neighbours accept literal words or tags; actions accept tags with optional removal.
 const context = /^(?:#[A-Za-z][A-Za-z0-9]*|[\p{L}\p{N}][\p{L}\p{N}'’-]*)$/u
 const tagName = /^!?#[a-z][a-z0-9]*$/i
@@ -88,7 +90,7 @@ const compile = rules => Object.fromEntries(Object.entries(rules).map(([word, en
   } else if (word.startsWith('%') && word.endsWith('%')) {
     key = word.slice(1, -1)
   }
-  return [key, entries.map(source => parse(word, source))]
+  return [key, entries.map(source => parse(word, expandTags(source)))]
 }))
 
 export default compile

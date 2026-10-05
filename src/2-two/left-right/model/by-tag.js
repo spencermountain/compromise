@@ -11,6 +11,7 @@ const rules = {
   '#PastTense': [
     // well [made]
     'well _ -> #Adj',
+    '(over|under) _ -> #Adj',
   ],
   '#Gerund': [
     // as [entertaining] as

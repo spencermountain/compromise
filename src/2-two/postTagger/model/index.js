@@ -1208,12 +1208,12 @@ const rules = [
   // have read
   { m: `(has|have|had) read`, t: 'Aux Part', r: 'read-read' },
   // were [under paid]
-  ...['under', 'over'].map(word => ({
-    m: `(is|was|were) [${word} #Past]`,
-    g: 0,
-    t: 'Adv Adj',
-    r: 'under-cooked',
-  })),
+  // ...['under', 'over'].map(word => ({
+  //   m: `(is|was|were) [${word} #Past]`,
+  //   g: 0,
+  //   t: 'Adv Adj',
+  //   r: 'under-cooked',
+  // })),
 
   // [shit] them
   { m: '[shit] (#Det|#Poss|them)', g: 0, t: 'V', r: 'shit-verb' },

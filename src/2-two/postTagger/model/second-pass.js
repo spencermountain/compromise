@@ -92,13 +92,13 @@ const rules = [
   },
   // does [this] work
   // Keep each auxiliary as a required hook.
-  // ...['do', 'does', 'did', '#Mod'].map(aux => ({
-  //   m: `${aux} [(this|that|these|those)] #Adv+? #Inf`,
-  //   hook: aux,
-  //   g: 0,
-  //   t: 'Pron',
-  //   r: 'dem-q',
-  // })),
+  ...['do', 'does', 'did', '#Mod'].map(aux => ({
+    m: `${aux} [(this|that|these|those)] #Adv+? #Inf`,
+    hook: aux,
+    g: 0,
+    t: 'Pron',
+    r: 'dem-q',
+  })),
   // [This] is useful. Hope [this] helps. [This] really rocks.
   {
     m: '[this] #Adv+? (#Pres && !#Inf && !#Ger)',

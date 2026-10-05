@@ -329,13 +329,9 @@ const compounds = {
   // [un] skilled
   'un|contra|extra|inter|intra|macro|micro|mid|mis|mono|multi|pre|sub|tri|ex': '_ #Adj -> #Adj | #Prefix',
 
-  // 'do|does|did': '_ (this|that|these|those) -> #Imp',
-  // ...['do', 'does', 'did', '#Mod'].map(aux => ({
-  //   m: `${aux} [(this|that|these|those)] #Adv+? #Inf`,
-  // Does this machine work
-  'this|those|that|these': '(did|can|do) _ (#NN|#Adv) -> #Pron',
-  //  Can that bird really fly
-  'this|that': '(did|can|does) _ (#NN|#Adv) -> #Pron',
+  'over|under': '(is|was|were) _ #Past -> #Adv',
+  // ...['under', 'over'].map(word => ({
+  // m: `(is|was|were) [${word} #Past]`,
 }
 
 Object.entries(compounds).forEach(([words, rule]) => {

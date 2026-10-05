@@ -777,3 +777,22 @@ test.skip('noun list with clothing preserves watches as a noun', t => {
   t.equal(target.has('#Verb'), false)
   t.end()
 })
+
+test('early imperative commands', t => {
+  const commands = [
+    ['Go to Toronto.', 'go'], ['Go to the store.', 'go'],
+    ['Keep it quiet.', 'keep'], ['Keep it cool.', 'keep'], ['Keep it simple.', 'keep'],
+  ]
+  commands.forEach(([text, word]) => {
+    t.equal(nlp(text).match(word).has('#Imperative'), true, text)
+  })
+  const statements = [
+    ['I go to Toronto.', 'go'], ['They wait for the bus.', 'wait'],
+    ['We keep it quiet.', 'keep'], ['The stop was nearby.', 'stop'],
+    ['There is no hurry.', 'hurry'],
+  ]
+  statements.forEach(([text, word]) => {
+    t.equal(nlp(text).match(word).has('#Imperative'), false, text)
+  })
+  t.end()
+})

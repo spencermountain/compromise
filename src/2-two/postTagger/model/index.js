@@ -539,7 +539,7 @@ const rules = [
     r: 'sing-subj-verb',
   })),
   // with heads and [arms] rolling around
-  { m: '#Prep #Plur and [%Plural|Verb%] #Ger', g: 0, t: 'Plur', r: 'coord-pl' },
+  // { m: '#Prep #Plur and [%Plural|Verb%] #Ger', g: 0, t: 'Plur', r: 'coord-pl' },
   // he can solve the [puzzle]
   { m: '#Inf (this|that|the) [#Inf]', g: 0, t: 'NN', r: 'do-this-dance' },
   // keeping the [matter] a secret
@@ -685,12 +685,12 @@ const rules = [
   // to write people [thanks] for helping
   { m: `to #Pres #NN [#Pres] #Prep`, g: 0, t: 'NN', r: 'gas-exchange' },
   // waited until [release]
-  {
-    m: `#Past (until|as|through|without) [(#Pres && !#Ger && !#Cop)]`,
-    g: 0,
-    t: 'NN',
-    r: 'until-release',
-  },
+  // {
+  //   m: `#Past (until|as|through|without) [(#Pres && !#Ger && !#Cop)]`,
+  //   g: 0,
+  //   t: 'NN',
+  //   r: 'until-release',
+  // },
   // selling like hot [thank]-you cards
   { m: `#Ger like #Adj? [#Pres]`, g: 0, t: 'Plur', r: 'like-hot-cakes' },
   // some nice [thank]-you notes
@@ -1502,13 +1502,10 @@ const rules = [
   { m: '^[#Inf] #Adj #NN$', g: 0, t: 'Imp', r: 'loud-noises' },
   // [come] and have a drink
   { m: '^[#Inf] (#Adj|#Adv)? and #Inf', g: 0, t: 'Imp', r: 'and-reserve' },
-  // [go]
+  // Keep isolated commands here: pre-tagging also runs on replacement words.
   { m: '^[go] please?$', g: 0, t: 'Imp', r: 'go-imp' },
-  // [stop]
   { m: '^[stop] please?$', g: 0, t: 'Imp', r: 'stop-imp' },
-  // [wait]
   { m: '^[wait] please?$', g: 0, t: 'Imp', r: 'wait-imp' },
-  // [hurry]
   { m: '^[hurry] please?$', g: 0, t: 'Imp', r: 'hurry-imp' },
   // let's [leave]
   { m: '^let (us|me) [#Inf]', g: 0, t: 'Imp', r: 'lets-leave' },
@@ -1521,8 +1518,6 @@ const rules = [
   },
   // [turn off] the light
   { m: '^[#PhrV #Prt] #Det #NN', g: 0, t: 'Imp', r: 'turn-off' },
-  // [go] to toronto
-  { m: '^[go] to .', g: 0, t: 'Imp', r: 'go-to-toronto' },
   // A modal question alone may ask about ability or knowledge. Require an
   // explicit request marker before treating it as an imperative.
   // can you please [walk]
@@ -1550,8 +1545,6 @@ const rules = [
   { m: '^come #Inf', t: 'Imp', n: 'on', r: 'come-have' },
   // come and have a drink
   { m: '^come and #Inf', t: 'Imp . Imp', r: 'come-and-have' },
-  // [keep] it silent
-  { m: '^[keep] it #Adj', g: 0, t: 'Imp', r: 'keep-it-cool' },
   // [allow] yourself
   {
     m: '^(and|but)? (then|please)? [#Inf] (yourself|yourselves)',
@@ -1990,14 +1983,6 @@ const multi = [
     t: 'Aux',
     r: 'had-q-obj',
     n: '@hasComma',
-  },
-  // then, [had] he walked
-  {
-    m: '@hasComma [had] #NN+ (#Adv|not)+? #Past',
-    g: 0,
-    t: 'Condition',
-    r: 'had-comma-cond',
-    n: '@hasQuestionMark',
   },
   // [This] will be one sentence. [This] might help.
   { m: '[this] #Adv+? #Mod #Adv+? #Inf', g: 0, t: 'Pron', r: 'this-modal-subj' },

@@ -14,10 +14,14 @@ const rules = {
     '^ _ #Url -> #Imp',
     // [commit] to
     '^ _ to -> #Imp',
+    //John and Mary [walk]
+    // '#Pers _ $ -> #Inf',
   ],
   '%Plural|Verb%': [
     // asking [questions]
     '#Ger _ -> #Plur',
+    // and arms roiling around
+    'and _ #Ger -> #Plur',
   ],
   '%Person|Verb%': [
     // [chuck] will ...

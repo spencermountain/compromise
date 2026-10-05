@@ -11,5 +11,5 @@ nlp.verbose('tagger')
 // second-sweep:   696ms
 
 // const doc = nlp('dude we should').debug()
-const doc = nlp('Does that really help').debug()
+const doc = nlp('the poor eat rice').debug()
 // console.log(`${doc.docs.length.toLocaleString()} sentences; ${doc.wordCount().toLocaleString()} words`)

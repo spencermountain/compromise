@@ -217,13 +217,13 @@ const rules = [
     r: 'company-wide',
   },
   // the [poor] were
-  {
-    m: `#Det [#Adj] (#Cop|#Det)`,
-    n: '(#Comp|#Sup)',
-    g: 0,
-    t: 'NN',
-    r: 'poor',
-  },
+  // {
+  //   m: `#Det [#Adj] (#Cop|#Det)`,
+  //   n: '(#Comp|#Sup)',
+  //   g: 0,
+  //   t: 'NN',
+  //   r: 'poor',
+  // },
   // [professional] bodybuilder
   {
     m: `[%Adj|Noun%] #NN`,
@@ -320,7 +320,7 @@ const rules = [
   // 5th of June
   { m: '#Value of #Month', t: 'Date', r: 'value-of-month' },
   // 5 June
-  { m: '#Card #Month', t: 'Date', r: 'cardinal-month' },
+  // { m: '#Card #Month', t: 'Date', r: 'cardinal-month' },
   // June 5 to 7
   { m: '#Month #Value to #Value', t: 'Date', r: 'value-to-value' },
   // June the 12th
@@ -600,13 +600,13 @@ const rules = [
   // [cause] i gotta
   { m: '[cause] #Pron #V', g: 0, t: 'Conj', r: 'cause-cuz' },
   // the US [air] force
-  {
-    m: 'the #Sing [#Inf] (#NN && !#Poss)',
-    g: 0,
-    t: 'NN',
-    n: '#Pron',
-    r: 'cardio-dance',
-  },
+  // {
+  //   m: 'the #Sing [#Inf] (#NN && !#Poss)',
+  //   g: 0,
+  //   t: 'NN',
+  //   n: '#Pron',
+  //   r: 'cardio-dance',
+  // },
   // this [rocks]
   { m: 'this [#Plur]', g: 0, t: 'Pres', n: '(#Prep|#Date)', r: 'this-verbs' },
   // the thing [that runs]

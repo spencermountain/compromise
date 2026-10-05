@@ -1,4 +1,8 @@
 const rules = {
+  air: [
+    // the [air] force
+    '_ force -> #NN',
+  ],
   said: [
     // the [said] dog
     'the _ #NN -> #Adj',
@@ -388,13 +392,8 @@ const compounds = {
   // ...['under', 'over'].map(word => ({
   // m: `(is|was|were) [${word} #Past]`,
   'shit|damn|fuck': '_ (#Det|#Poss|them) -> #Verb',
-
-  // // [shit] them
-  // { m: '[shit] (#Det|#Poss|them)', g: 0, t: 'V', r: 'shit-verb' },
-  // // [damn] them
-  // { m: '[damn] (#Det|#Poss|them)', g: 0, t: 'V', r: 'damn-verb' },
-  // // [fuck] them
-  // { m: '[fuck] (#Det|#Poss|them)', g: 0, t: 'V', r: 'fuck-verb' },
+// the poor
+  'poor|weary|public': 'the _ #Verb-> #Noun',
 }
 
 Object.entries(compounds).forEach(([words, rule]) => {

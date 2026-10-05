@@ -37,6 +37,8 @@ const rules = {
     'a _ #Prep -> #NN',
     // is [done] well
     '#Cop _ (well|badly|quickly|slowly) -> #V',
+    // for the poor this
+    'the _ #Det -> #NN',
   ],
   '#Participle': [
     // a [blown] motor
@@ -87,6 +89,10 @@ const rules = {
   '#FirstName': [
     // john [stewart]
     '#First _ -> #Last',
+  ],
+  '#Cardinal': [
+    //  5 June
+    '_ #Month -> #Date',
   ],
 }
 

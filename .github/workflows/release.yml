@@ -44,7 +44,7 @@ jobs:
           pnpm lint
           pnpm test
           pnpm build
-          pnpm test:smoke
+          pnpm testb
 
       - name: Publish package
         run: pnpm publish --access public --provenance --no-git-checks

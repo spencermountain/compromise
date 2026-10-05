@@ -14,13 +14,13 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - improved regex edge-cases 
 - **[change]** - improved verb conjugation
 - **[change]** - improved tagging
-- **[update]** - efrt, grad-school dependencies
 - **[change]** - support block-comments, untagged sentences in spec format
 - **[change]** - testSpec() improved verbose output
 - **[change]** - #Preposition and #Conjunction discrepency
 - **[change]** - convert to pnpm workspace for plugins
 - **[change]** - tagset exclusion/consistency rules
 - **[change]** - misc performance tweaks to .sweep() logic
+- **[update]** - efrt, grad-school dependencies
 - **[new]** - .out('best-tag') fmt
 - **[new]** - #Connector tag between #Preposition and #Conjunction
 - **[new]** - .adjectives().toRoot() converts comparative and superlative adjectives to their base form #1186

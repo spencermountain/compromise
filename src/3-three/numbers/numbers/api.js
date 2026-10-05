@@ -2,6 +2,7 @@ import find from './find.js'
 import parse from './parse/index.js'
 import format from './format/index.js'
 import isUnit from './isUnit.js'
+import convert from './_lib.js'
 
 const addMethod = function (View) {
   /**   */
@@ -52,20 +53,9 @@ const addMethod = function (View) {
 
     /** convert to numeric form like '8' or '8th' */
     toNumber() {
-      const res = this.map(val => {
-        if (!this.has('#TextValue')) {
-          return val
-        }
-        const obj = parse(val)
-        if (obj.num === null) {
-          return val
-        }
-        const fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
-        const str = format(obj, fmt)
-        val.replaceWith(str, { tags: true })
-        return val.tag('NumericValue')
-      })
-      return new Numbers(res.document, res.pointer)
+      return convert(this, Numbers, 'NumericValue',
+        () => !this.has('#TextValue'),
+        val => val.has('#Ordinal') ? 'Ordinal' : 'Cardinal')
     }
     /** add commas, or nicer formatting for numbers */
     toLocaleString() {
@@ -89,60 +79,21 @@ const addMethod = function (View) {
     }
     /** convert to numeric form like 'eight' or 'eighth' */
     toText() {
-      const m = this
-      const res = m.map(val => {
-        if (val.has('#TextValue')) {
-          return val
-        }
-        const obj = parse(val)
-        if (obj.num === null) {
-          return val
-        }
-        const fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
-        const str = format(obj, fmt)
-        val.replaceWith(str, { tags: true })
-        val.tag('TextValue')
-        return val
-      })
-      return new Numbers(res.document, res.pointer)
+      return convert(this, Numbers, 'TextValue',
+        val => val.has('#TextValue'),
+        val => val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal')
     }
     /** convert ordinal to cardinal form, like 'eight', or '8' */
     toCardinal() {
-      const m = this
-      const res = m.map(val => {
-        if (!val.has('#Ordinal')) {
-          return val
-        }
-        const obj = parse(val)
-        if (obj.num === null) {
-          return val
-        }
-        const fmt = val.has('#TextValue') ? 'TextCardinal' : 'Cardinal'
-        const str = format(obj, fmt)
-        val.replaceWith(str, { tags: true })
-        val.tag('Cardinal')
-        return val
-      })
-      return new Numbers(res.document, res.pointer)
+      return convert(this, Numbers, 'Cardinal',
+        val => !val.has('#Ordinal'),
+        val => val.has('#TextValue') ? 'TextCardinal' : 'Cardinal')
     }
     /** convert cardinal to ordinal form, like 'eighth', or '8th' */
     toOrdinal() {
-      const m = this
-      const res = m.map(val => {
-        if (val.has('#Ordinal')) {
-          return val
-        }
-        const obj = parse(val)
-        if (obj.num === null) {
-          return val
-        }
-        const fmt = val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal'
-        const str = format(obj, fmt)
-        val.replaceWith(str, { tags: true })
-        val.tag('Ordinal')
-        return val
-      })
-      return new Numbers(res.document, res.pointer)
+      return convert(this, Numbers, 'Ordinal',
+        val => val.has('#Ordinal'),
+        val => val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal')
     }
 
     /** return only numbers that are == n */

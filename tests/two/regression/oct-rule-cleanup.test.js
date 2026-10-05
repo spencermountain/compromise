@@ -1129,14 +1129,27 @@ const spec = `
   Jack the ripper. {Person,Person,Person}
   Keep the lid closed. {Imperative,Det,Noun,Adj}
 
+  # Local left/right corrections
+  That is all. {Pronoun,Copula,Noun}
+  She even left. {Pronoun,Adv,Past}
+  She had time. {Pronoun,Past,Noun}
+  Same kind of shouts. {Adj,Noun,Prep,Plural}
+  Google me. {Inf,Pronoun}
+  Half a penny. {Fraction,Det,Currency}
+  I frequent this restaurant. {Pronoun,Inf,Det,Noun}
+  The station was closing. {Det,Noun,Aux,Ger}
+  The shop is closing soon. {Det,Noun,Aux,Ger,Adv}
+  Plants that were growing. {Plural,Conj,Aux,Ger}
+  That is when he arrived. {Pronoun,Copula,Conj,Pronoun,Past}
+  She has since moved. {Pronoun,Aux,Adv,Past}
+
   # Currently failing examples
+#  A bit confused. {Det,Adv,Adj}
 #  A dammed-up river. {Det,Adj,Adj,Noun}
 #  A must-win game. {Det,Adj,Adj,Noun}
 #  Vacuum-sealed. {Adj,Adj}
 #  He was a little fuming. {Pronoun,Copula,Det,Adv,Adj}
-#  That is all. {Pronoun,Copula,Noun}
 #  Brand new. {Adv,Adj}
-#  She even left. {Pronoun,Adv,Past}
 #  Sun the 5th. {WeekDay,Date,Date}
 #  1pm next sun. {Time,Date,WeekDay}
 #  Due to weather. {Prep,Prep,Noun}
@@ -1147,7 +1160,6 @@ const spec = `
 #  And check this out! {Conj,Inf,Pronoun,Particle}
 #  My butt smells. {Poss,Noun,Pres}
 #  He bowed his head in prayer. {Pronoun,Past,Poss,Noun,Prep,Noun}
-#  She had time. {Pronoun,Past,Noun}
 #  The upcoming thank-you. {Det,Noun,Noun,Noun}
 #  What they are doing is useful. {Conj,Pronoun,Aux,Ger,Copula,Adj}
 #  With heads and arms rolling around. {Prep,Plural,Conj,Plural,Ger,Adv}
@@ -1169,7 +1181,6 @@ const spec = `
 #  Selling like hot thank-you cards. {Ger,Prep,Adj,Noun,Noun,Plural}
 #  Some nice thank-you notes. {Det,Adj,Noun,Noun,Plural}
 #  For some thank-you letters. {Prep,Det,Noun,Noun,Plural}
-#  Same kind of shouts. {Adj,Noun,Prep,Plural}
 #  Looking good in thank-you photos. {Ger,Adj,Prep,Noun,Noun,Plural}
 #  Get better thank-you notes. {Inf,Comparative,Noun,Noun,Plural}
 #  Give up on thank-you letters. {Inf,Particle,Prep,Noun,Noun,Plural}
@@ -1178,10 +1189,8 @@ const spec = `
 #  Thanks are appreciated. {Plural,Aux,Past}
 #  She is writing thank-you letters. {Pronoun,Aux,Ger,Noun,Noun,Plural}
 #  The 1968 stand-off. {Det,Year,Noun,Noun}
-#  Google me. {Inf,Pronoun}
 #  $5 and $6. {Money,Conj,Money}
 #  6 dollars and 5 cents. {Money,Unit,Conj,Money,Unit}
-#  Half a penny. {Fraction,Det,Currency}
 #  Pope Francis. {Honorific,Person}
 #  Prince Paris. {Honorific,Person}
 #  Saint Foo. {Honorific,Person}
@@ -1195,9 +1204,7 @@ const spec = `
 #  Damn them. {Inf,Pronoun}
 #  Jobs that fit. {Plural,Conj,Inf}
 #  Melted and fallen. {Past,Conj,Past}
-#  I frequent this restaurant. {Pronoun,Inf,Det,Noun}
 #  He was under paid. {Pronoun,Aux,Adv,Past}
-#  A bit confused. {Det,Adv,Adj}
 #  She is being cool. {Pronoun,Aux,Copula,Adj}
 #  He ought not to walk. {Pronoun,Modal,Negative,Connector,Inf}
 #  He ought to be walking. {Pronoun,Modal,Connector,Aux,Ger}
@@ -1208,18 +1215,13 @@ const spec = `
 #  Walk-over. {Inf,Particle}
 #  Back it up. {Inf,Pronoun,Particle}
 #  Eat my shorts. {Imperative,Poss,Plural}
-#  The station was closing. {Det,Noun,Aux,Ger}
-#  The shop is closing soon. {Det,Noun,Aux,Ger,Adv}
-#  Plants that were growing. {Plural,Conj,Aux,Ger}
 #  Long live the king. {Expression,Expression,Det,Noun}
 #  There she is. {Adv,Pronoun,Copula}
 #  Fucking ridiculous. {Adv,Adj}
 #  Microsoft of Canada. {Organization,Organization,Organization}
 #  How he is driving. {Conj,Pronoun,Aux,Ger}
-#  That is when he arrived. {Pronoun,Copula,Conj,Pronoun,Past}
 #  A lot like ours. {Det,Noun,Prep,Pronoun}
 #  How many? {QuestionWord,Value}
-#  She has since moved. {Pronoun,Aux,Adv,Past}
 #  23 Main Street in Toronto. {Address,Address,Address,Place,Place}
 #  The very professional actor. {Det,Adv,Adj,Actor}
 `

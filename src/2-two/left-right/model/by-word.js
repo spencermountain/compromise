@@ -135,6 +135,8 @@ const rules = {
     '(#Place|in|near|nearby|to|from) _ -> #Country',
   ],
   that: [
+    // [that] is all
+    '^ _ #Cop -> #Pron',
     // says [that] he
     '#V _ #Pron -> #Conj',
     // things [that] are required
@@ -205,6 +207,8 @@ const rules = {
     '#Det _ #Ord -> #Value',
   ],
   kind: [
+    // same [kind] of shouts
+    'same _ of -> #NN',
     // a new [kind]
     '(#Det|#Comp|new|different) _ $ -> #NN',
   ],
@@ -243,7 +247,42 @@ const rules = {
     'the _ #NN -> #Adj',
     // { m: '#Cop the [%Adj|Noun%] #NN', g: 0, t: 'Adj', r: 'premier-uni' },
   ],
-
+  frequent: [
+    // i [frequent] this restaurant
+    '#Pron _ #Det -> #Inf',
+  ],
+  google: [
+    // [google] me
+    '^ _ #Pron -> #Inf',
+  ],
+  left: [
+    // she even [left]
+    'even _ $ -> #Past',
+  ],
+  since: [
+    // she has [since] moved
+    '(has|have|had) _ #Past -> #Adv',
+  ],
+  time: [
+    // she had [time]
+    'had _ $ -> #NN',
+  ],
+  closing: [
+    // the station was [closing]
+    '#Cop _ -> #Ger',
+  ],
+  growing: [
+    // plants that were [growing]
+    '#Cop _ -> #Ger',
+  ],
+  soon: [
+    // the shop is closing [soon]
+    'closing _ $ -> #Adv',
+  ],
+  penny: [
+    // half a [penny]
+    'a _ $ -> #Currency',
+  ],
 }
 
 const compounds = {
@@ -289,6 +328,14 @@ const compounds = {
   'dude|man|girl': '^ _ #Pron -> #Expr',
   // [un] skilled
   'un|contra|extra|inter|intra|macro|micro|mid|mis|mono|multi|pre|sub|tri|ex': '_ #Adj -> #Adj | #Prefix',
+
+  // 'do|does|did': '_ (this|that|these|those) -> #Imp',
+  // ...['do', 'does', 'did', '#Mod'].map(aux => ({
+  //   m: `${aux} [(this|that|these|those)] #Adv+? #Inf`,
+  // Does this machine work
+  'this|those|that|these': '(did|can|do) _ (#NN|#Adv) -> #Pron',
+  //  Can that bird really fly
+  'this|that': '(did|can|does) _ (#NN|#Adv) -> #Pron',
 }
 
 Object.entries(compounds).forEach(([words, rule]) => {

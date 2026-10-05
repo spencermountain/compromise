@@ -93,6 +93,10 @@ const textFromDoc = function (docs, opts) {
     const last = docs.at(-1)
     if (!last.at(-1).tags.has('Emoticon')) {
       text = trimEnd(text)
+      // removing a spaced dash leaves its space behind
+      if (!opts.keepSpace) {
+        text = text.trimEnd()
+      }
     }
     // kill end quotations
     if (text.endsWith(`'`) && !text.endsWith(`s'`)) {

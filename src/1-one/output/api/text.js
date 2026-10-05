@@ -4,6 +4,8 @@ import fmts from './_fmts.js'
 const isObject = val => {
   return Object.prototype.toString.call(val) === '[object Object]'
 }
+// a dash between two words, like '2025-05-11 - they'
+const spacedDash = /^\s+[-—]\s+$/
 
 export default {
   /** */
@@ -21,7 +23,8 @@ export default {
     }
     if (opts.keepEndPunct === undefined && this.pointer) {
       const ptr = this.pointer[0]
-      if (ptr?.[1]) {
+      const lastTerm = this.docs.at(-1)?.at(-1)
+      if (ptr?.[1] || spacedDash.test(lastTerm?.post)) {
         opts.keepEndPunct = false
       } else {
         opts.keepEndPunct = true

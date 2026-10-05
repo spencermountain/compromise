@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import fillTags from './_fillTags.js'
 import looksPlural from '../../../methods/looksPlural.js'
-const env = globalThis.process?.env ?? globalThis.env ?? {}
+import debug from '../../../../../API/debug.js'
 import adhoc from './_adhoc.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
@@ -14,7 +14,7 @@ const checkWord = (term, obj) => {
   if (Object.hasOwn(obj, str)) {
     found = obj[str]
   }
-  if (found && env.DEBUG_TAGS) {
+  if (found && debug.tags) {
     console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)
   }
   return found
@@ -31,7 +31,7 @@ const checkTag = (term, obj = {}, tagSet) => {
     return numA > numB ? -1 : 1
   })
   let found = tags.find(tag => obj[tag])
-  if (found && env.DEBUG_TAGS) {
+  if (found && debug.tags) {
     console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`)
   }
   found = obj[found]
@@ -92,7 +92,7 @@ const doSwitches = function (terms, i, world) {
       setTag([term], tag, world, null, `3-[switch] (${form})`)
       // add plural/singular etc.
       fillTags(terms, i, model)
-    } else if (env.DEBUG_TAGS) {
+    } else if (debug.tags) {
       console.log(`\n -> X  - '${str}'  : (${form})  `)
     }
   }

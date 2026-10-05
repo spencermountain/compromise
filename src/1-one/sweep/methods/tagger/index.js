@@ -1,4 +1,5 @@
 import canBe from './canBe.js'
+import debug from '../../../../API/debug.js'
 
 const tagger = function (list, document, world) {
   const { model, methods } = world
@@ -8,8 +9,7 @@ const tagger = function (list, document, world) {
     return list
   }
   // some logging for debugging
-  const env = globalThis.process?.env ?? globalThis.env ?? {}
-  if (env.DEBUG_TAGS) {
+  if (debug.tags) {
     console.log(`\n\n  \x1b[32m→ ${list.length} post-tagger:\x1b[0m`) //eslint-disable-line
   }
   return list.map(todo => {
@@ -18,6 +18,7 @@ const tagger = function (list, document, world) {
     }
     const reason = todo.reason || todo.match
     const terms = getDoc([todo.pointer], document)[0]
+    let validated
     // handle 'safe' tag
     if (todo.safe === true) {
       // check for conflicting tags
@@ -28,9 +29,14 @@ const tagger = function (list, document, world) {
       if (terms[terms.length - 1].post === '-') {
         return
       }
+      // Only an exact single tag was checked by canBe; arrays and shorthand
+      // still need their individual checks in setTag.
+      if (typeof todo.tag === 'string' && Object.hasOwn(model.one.tagSet, todo.tag)) {
+        validated = model.one.tagSet[todo.tag]
+      }
     }
     if (todo.tag !== undefined) {
-      setTag(terms, todo.tag, world, todo.safe, `[post] '${reason}'`)
+      setTag(terms, todo.tag, world, todo.safe, `[post] '${reason}'`, validated)
       // quick and dirty plural tagger 😕
       if (todo.tag === 'Noun' && looksPlural) {
         const term = terms[terms.length - 1]

@@ -618,7 +618,7 @@ const rules = [
     r: 'that-rocks',
   },
   // that [leads] to
-  { m: 'that [#Plur] to', g: 0, t: 'Pres', n: '#Prep', r: 'that-leads-to' },
+  // { m: 'that [#Plur] to', g: 0, t: 'Pres', n: '#Prep', r: 'that-leads-to' },
   // let him [father] a child
   ...['let', 'make', 'made'].map(word => ({
     m: `${word} (him|her|it|#Pers|#Place|#Org)+ [#Sing] (a|an|the|it)`,
@@ -1287,7 +1287,7 @@ const rules = [
     r: 'felt-loved',
   },
   // felt [cheated]
-  { m: '(seem|feel|seemed|felt) [#Past #Prt?]', g: 0, t: 'Adj', r: 'seem-confused' },
+  // { m: '(seem|feel|seemed|felt) [#Past #Prt?]', g: 0, t: 'Adj', r: 'seem-confused' },
   // a bit [confused]
   { m: 'a (bit|little|tad) [#Past #Prt?]', g: 0, t: 'Adj', r: 'a-bit-confused' },
   // do not be [embarrassed]

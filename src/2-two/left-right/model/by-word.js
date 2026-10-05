@@ -156,6 +156,12 @@ const rules = {
     // [wit] it
     '_ (me|it) -> #Prep',
   ],
+  leads: [
+    // it [leads] to
+    '_ (to|from) -> #Pres',
+    // that [leads]
+    '(that|this) _ -> #Pres',
+  ],
   look: [
     // [look] good
     '_ #Adj -> #Pres',
@@ -230,6 +236,11 @@ const rules = {
     // 10 [seconds]
     '#Value _ -> #Plur | !#Value',
   ],
+  premier: [
+    // This is the [premier] university in Virginia
+    'the _ #NN -> #Adj',
+    // { m: '#Cop the [%Adj|Noun%] #NN', g: 0, t: 'Adj', r: 'premier-uni' },
+  ]
 }
 
 const compounds = {

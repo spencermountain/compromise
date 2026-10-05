@@ -1825,22 +1825,22 @@ const multi = [
 
   // holy shit
   { m: 'holy (shit|fuck|hell)', t: 'Expr', r: 'swears-expr' },
-  // [well]..
-  { m: '^[well] !#Adj?', g: 0, t: 'Expr', r: 'well-expr' },
-  // [so]
-  { m: '^[so] !#Adj?', g: 0, t: 'Expr', r: 'so-expr' },
-  // [okay]
-  { m: '^[okay] !#Adj?', g: 0, t: 'Expr', r: 'okay-expr' },
-  // [now]
-  { m: '^[now] !#Adj?', g: 0, t: 'Expr', r: 'now-expr' },
   // come on
   { m: '^come on', t: 'Expr', r: 'come-on' },
-  // shoot,
-  { m: '^(shoot && @hasComma)', t: 'Expr', r: 'shoot-comma-expr' },
-  // say,
-  { m: '^(say && @hasComma)', t: 'Expr', r: 'say-expr' },
-  // like, hello
-  { m: '^(like && @hasComma)', t: 'Expr', r: 'like-expr' },
+  // // [well]..
+  // { m: '^[well] !#Adj?', g: 0, t: 'Expr', r: 'well-expr' },
+  // // [so]
+  // { m: '^[so] !#Adj?', g: 0, t: 'Expr', r: 'so-expr' },
+  // // [okay]
+  // { m: '^[okay] !#Adj?', g: 0, t: 'Expr', r: 'okay-expr' },
+  // // [now]
+  // { m: '^[now] !#Adj?', g: 0, t: 'Expr', r: 'now-expr' },
+  // // shoot,
+  // { m: '^(shoot && @hasComma)', t: 'Expr', r: 'shoot-comma-expr' },
+  // // say,
+  // { m: '^(say && @hasComma)', t: 'Expr', r: 'say-expr' },
+  // // like, hello
+  // { m: '^(like && @hasComma)', t: 'Expr', r: 'like-expr' },
 
   // Rules promoted from the second pass.
 

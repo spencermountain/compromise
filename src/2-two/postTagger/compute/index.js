@@ -1,4 +1,4 @@
-import secondPassRules from '../model/second-pass.js'
+import { secondPassRules } from '../model/index.js'
 let net = null
 let secondNet = null
 

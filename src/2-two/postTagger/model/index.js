@@ -449,7 +449,7 @@ const rules = [
   // Los Angeles's fundraiser
   { m: '#Place+ #Poss', t: 'Poss', r: 'place-poss' },
   // my butt smells
-  { m: '#Poss #Pres #Prt?', n: '(#Ger|her)', t: 'NN', r: 'poss-verb' }, // anna's eating vs anna's eating lunch
+  { m: '#Poss #Pres #Prt?', n: '(#Ger|#Copula|her)', t: 'NN', r: 'poss-verb' }, // anna's eating vs anna's eating lunch
   // my [teachers] dog
   { m: '(my|our|their|her|his|its) [(#Plur && #Actor)] #NN', g: 0, t: 'Poss', r: 'my-dads' },
 

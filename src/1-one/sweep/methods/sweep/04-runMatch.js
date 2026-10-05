@@ -3,10 +3,11 @@
 const runMatch = function (maybeList, document, docCache, methods, opts) {
   const results = []
   for (let n = 0; n < maybeList.length; n += 1) {
+    const sentence = [document[n]]
     for (let i = 0; i < maybeList[n].length; i += 1) {
       const m = maybeList[n][i]
       // ok, actually do the work.
-      const res = methods.one.match([document[n]], m)
+      const res = methods.one.match(sentence, m)
       // found something.
       if (res.ptrs.length > 0) {
         res.ptrs.forEach(ptr => {

@@ -100,7 +100,7 @@
     "debug": "node ./scripts/debug.js",
     "match": "node ./scripts/match.js",
     "bench": "node ./scripts/bench/index.js --no-save",
-    "bench:save": "node ./scripts/bench/index.js",
+    "bench:write": "node ./scripts/bench/index.js",
     "lint": "eslint src"
   },
   "files": [

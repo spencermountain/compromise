@@ -1,17 +1,17 @@
-const conflicts = new WeakMap()
+const sets = new WeakMap()
 const empty = new Set()
 
-// Normalization replaces exclusion arrays when plugins rebuild the tag graph.
-const getConflicts = (not) => {
-  if (!not || not.length === 0) {
+// Normalization replaces these arrays when plugins rebuild the tag graph.
+const getTagSet = (tags) => {
+  if (!tags || tags.length === 0) {
     return empty
   }
-  let set = conflicts.get(not)
+  let set = sets.get(tags)
   if (!set) {
-    set = new Set(not)
-    conflicts.set(not, set)
+    set = new Set(tags)
+    sets.set(tags, set)
   }
   return set
 }
 
-export default getConflicts
+export default getTagSet

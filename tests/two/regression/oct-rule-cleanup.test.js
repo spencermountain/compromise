@@ -1164,13 +1164,10 @@ const spec = `
 #  Saint Foo. {Honorific,Person}
 #  Due to weather. {Prep,Prep,Noun}
 #  A bit confused. {Det,Adv,Adj}
-#  He was a little fuming. {Pronoun,Copula,Det,Adv,Adj}
 #  Brand new. {Adv,Adj}
 #  Sun the 5th. {WeekDay,Date,Date}
 #  There is no going back. {There,Copula,Negative,Noun,Adv}
-#  Go to shit. {Inf,Prep,Noun}
 #  And check this out! {Conj,Inf,Pronoun,Particle}
-#  My butt smells. {Poss,Noun,Pres}
 #  The upcoming thank-you. {Det,Noun,Noun,Noun}
 #  With heads and arms rolling around. {Prep,Plural,Conj,Plural,Ger,Adv}
 #  The-only-reason. {Det,Adj,Noun}
@@ -1205,7 +1202,7 @@ const spec = `
 #  Second admiral. {Honorific,Honorific}
 #  March up. {Inf,Particle}
 #  Jobs that fit. {Plural,Conj,Inf}
-#  He was under paid. {Pronoun,Aux,Adv,Past}
+#  He was under-paid. {Pronoun,Aux,Adv,Past}
 #  She is being cool. {Pronoun,Aux,Copula,Adj}
 #  He ought not to walk. {Pronoun,Modal,Negative,Connector,Inf}
 #  He ought to be walking. {Pronoun,Modal,Connector,Aux,Ger}

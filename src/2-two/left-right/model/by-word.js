@@ -82,6 +82,8 @@ const rules = {
   will: [
     // [will] go
     '_ #Inf -> #Mod',
+    // [will] walked to the park
+    '^ _ #Past -> #First',
   ],
   march: [
     // must [march]
@@ -240,7 +242,8 @@ const rules = {
     // This is the [premier] university in Virginia
     'the _ #NN -> #Adj',
     // { m: '#Cop the [%Adj|Noun%] #NN', g: 0, t: 'Adj', r: 'premier-uni' },
-  ]
+  ],
+
 }
 
 const compounds = {

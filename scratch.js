@@ -11,5 +11,5 @@ nlp.verbose('tagger')
 // second-sweep:   696ms
 
 // const doc = nlp('dude we should').debug()
-const doc = nlp('This is the [premier] university in Virginia').debug()
+const doc = nlp('Will walked to the park').debug()
 // console.log(`${doc.docs.length.toLocaleString()} sentences; ${doc.wordCount().toLocaleString()} words`)

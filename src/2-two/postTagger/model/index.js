@@ -1275,8 +1275,6 @@ const rules = [
     t: 'Adj',
     r: 'rude-and-x',
   },
-  // was under [paid]
-  { m: '#Cop #Adv? (over|under) [#Past]', g: 0, t: 'Adj', r: 'over-cooked' },
   // got [tired] of
   { m: 'got #Adv? [%Adj|Past%] of', g: 0, t: 'Adj', r: 'got-tired-of' },
   // felt [cheated]
@@ -1658,7 +1656,7 @@ const multi = [
   // Smith & Rogers
   { m: '#Last & #Last', t: 'Org', r: 'last-and-last' },
   // Microsoft of Canada
-  { m: '#Org of the? #Prop', t: 'Org', r: 'org-of-place', safe: true },
+  // { m: '#Org of the? #Prop', t: 'Org', r: 'org-of-place', safe: true },
   // walmart USA
   { m: '#Org #Country', t: 'Org', r: 'org-country' },
   // Toronto Microsoft

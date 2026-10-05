@@ -29,6 +29,22 @@ test('term punctuation', function (t) {
   t.end()
 })
 
+test('closing bracket inside a word', function (t) {
+  const arr = [
+    ['foo(bar) foo', 'foo(bar)', ' '],
+    ['foo[bar] foo', 'foo[bar]', ' '],
+    ['foo{bar} foo', 'foo{bar}', ' '],
+    ['f(x), y', 'f(x)', ', '],
+    ['(foo) bar', 'foo', ') '],
+  ]
+  arr.forEach(([str, text, post]) => {
+    const term = nlp(str).docs[0][0]
+    t.equal(term.text, text, here + `text "${str}"`)
+    t.equal(term.post, post, here + `post "${str}"`)
+  })
+  t.end()
+})
+
 test('modify existing punctuation', function (t) {
   const world = nlp.world()
 

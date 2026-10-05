@@ -10,8 +10,16 @@ const beside = {
 // '[place] tea bags in hot water'
 const imperative = function (terms, world) {
   const setTag = world.methods.one.setTag
-  const multiWords = world.model.one._multiCache || {}
   const t = terms[0]
+  const next = terms[1]
+  // "Go to Toronto", "keep it quiet".
+  const goTo = t.normal === 'go' && next?.normal === 'to' && terms.length >= 3
+  const keepIt = t.normal === 'keep' && next?.normal === 'it' && terms[2]?.tags.has('Adjective')
+  if (goTo || keepIt) {
+    setTag([t], 'Imperative', world, null, '3-[imperative]')
+    return
+  }
+  const multiWords = world.model.one._multiCache || {}
   const isRight = t.switch === 'Noun|Verb' || t.tags.has('Infinitive')
   if (isRight && terms.length >= 2) {
     // ensure rest of sentence is ok

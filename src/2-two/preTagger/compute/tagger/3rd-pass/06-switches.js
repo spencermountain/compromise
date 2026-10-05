@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import fillTags from './_fillTags.js'
 import looksPlural from '../../../methods/looksPlural.js'
-const env = globalThis.process?.env ?? globalThis.env ?? {}
+import debug from '../../../../../API/debug.js'
 import adhoc from './_adhoc.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
@@ -14,7 +14,7 @@ const checkWord = (term, obj) => {
   if (Object.hasOwn(obj, str)) {
     found = obj[str]
   }
-  if (found && env.DEBUG_TAGS) {
+  if (found && debug.tags) {
     console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)
   }
   return found
@@ -24,14 +24,19 @@ const checkTag = (term, obj = {}, tagSet) => {
   if (!term || !obj) {
     return null
   }
-  // rough sort, so 'Noun' is after ProperNoun, etc
-  const tags = Array.from(term.tags).sort((a, b) => {
-    const numA = tagSet[a] ? tagSet[a].parents.length : 0
-    const numB = tagSet[b] ? tagSet[b].parents.length : 0
-    return numA > numB ? -1 : 1
-  })
-  let found = tags.find(tag => obj[tag])
-  if (found && env.DEBUG_TAGS) {
+  // Prefer the most specific matching tag; retain insertion order on ties.
+  let found
+  let best = -1
+  for (const tag of term.tags) {
+    if (obj[tag]) {
+      const rank = tagSet[tag] ? tagSet[tag].parents.length : 0
+      if (rank > best) {
+        found = tag
+        best = rank
+      }
+    }
+  }
+  if (found && debug.tags) {
     console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`)
   }
   found = obj[found]
@@ -62,39 +67,40 @@ const pickTag = function (terms, i, clues, model) {
 
 // words like 'bob' that can change between two tags
 const doSwitches = function (terms, i, world) {
+  const term = terms[i]
+  if (!term.switch) {
+    return
+  }
   const model = world.model
   const setTag = world.methods.one.setTag
   const { switches, clues } = model.two
-  const term = terms[i]
   let str = term.normal || term.implicit || ''
   // support prefixes for switching words
   if (prefix.test(str) && !switches[str]) {
     str = str.replace(prefix, '') // could use some guards, here
   }
-  if (term.switch) {
-    const form = term.switch
-    // skip propernouns, acronyms, etc
-    if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb')) {
-      return
-    }
-    let tag = pickTag(terms, i, clues[form], model)
-    // lean-harder on some variable forms
-    if (adhoc[form]) {
-      tag = adhoc[form](terms, i) || tag
-    }
-    // Choosing a lexical reading must retain its inflection.
-    if (form === 'Person|Noun' && tag === 'Singular' && looksPlural(str)) {
-      tag = 'Plural'
-    }
-    // did we find anything?
-    if (tag) {
-      // tag it
-      setTag([term], tag, world, null, `3-[switch] (${form})`)
-      // add plural/singular etc.
-      fillTags(terms, i, model)
-    } else if (env.DEBUG_TAGS) {
-      console.log(`\n -> X  - '${str}'  : (${form})  `)
-    }
+  const form = term.switch
+  // skip propernouns, acronyms, etc
+  if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb')) {
+    return
+  }
+  let tag = pickTag(terms, i, clues[form], model)
+  // lean-harder on some variable forms
+  if (adhoc[form]) {
+    tag = adhoc[form](terms, i) || tag
+  }
+  // Choosing a lexical reading must retain its inflection.
+  if (form === 'Person|Noun' && tag === 'Singular' && looksPlural(str)) {
+    tag = 'Plural'
+  }
+  // did we find anything?
+  if (tag) {
+    // tag it
+    setTag([term], tag, world, null, `3-[switch] (${form})`)
+    // add plural/singular etc.
+    fillTags(terms, i, model)
+  } else if (debug.tags) {
+    console.log(`\n -> X  - '${str}'  : (${form})  `)
   }
 }
 export default doSwitches

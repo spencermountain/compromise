@@ -3,6 +3,7 @@ import apostropheS from './apostrophe-s.js'
 import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
 import isPossessive from './isPossessive.js'
+import wannaNoun from './wanna.js'
 
 const byApostrophe = /'/
 
@@ -61,6 +62,10 @@ const contractionTwo = view => {
   document.forEach((terms, n) => {
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {
+      if (wannaNoun(terms, i)) {
+        reIndex(terms)
+        continue
+      }
       // is it already a contraction
       if (terms[i].implicit) {
         continue

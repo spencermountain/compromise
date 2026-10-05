@@ -17,6 +17,7 @@ import placeWords from './3rd-pass/04-placeWords.js'
 import nounFallback from './3rd-pass/05-fallback.js'
 import switches from './3rd-pass/06-switches.js'
 import imperative from './3rd-pass/08-imperative.js'
+import firstWord from './3rd-pass/09-first-word.js'
 
 // is it all yelling-case?
 const ignoreCase = function (terms) {
@@ -90,6 +91,8 @@ const thirdPass = function (terms, model, world, isYelling) {
   }
   // place tea bags
   imperative(terms, world)
+  // dude wheres my car
+  firstWord(terms, world)
 }
 
 const preTagger = function (view) {

@@ -17,5 +17,3 @@ bun.lockb
 /two
 /three
 infinite-jest.txt
-
-/scripts/bench/post-tagger/

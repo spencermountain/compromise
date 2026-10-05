@@ -1,3 +1,5 @@
+import debug from '../../../../API/debug.js'
+
 // verbose-mode tagger debuging
 const log = (term, tag, reason = '') => {
   const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
@@ -19,8 +21,7 @@ const fastTag = function (term, tag, reason) {
     return
   }
   // some logging for debugging
-  const env = globalThis.process?.env ?? globalThis.env ?? {}
-  if (env && env.DEBUG_TAGS) {
+  if (debug.tags) {
     log(term, tag, reason)
   }
   term.tags ||= new Set()

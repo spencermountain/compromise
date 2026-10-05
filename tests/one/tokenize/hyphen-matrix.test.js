@@ -79,7 +79,13 @@ test('match-dash', function (t) {
     'fifty-six bottles',
     'a 10-minute speech',
     'self-serve',
-    'non-sequitur'
+    'non-sequitur',
+    'an x-ray was done',
+    'the x-ray-machine broke',
+    'she had covid-19',
+    'a t-shirt',
+    'a flower-like shape',
+    'the president-elect',
   ]
   arr.forEach(str => {
     t.equal(nlp(str).has(str), true, here + '[dash] ' + str)

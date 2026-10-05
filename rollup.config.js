@@ -43,7 +43,7 @@ export default [
         plugins: [
           terser(terserOpts),
           sizeCheck({
-            expect: 293,
+            expect: 273,
             warn: 5, // acceptable (+/-)
             throw: 25, // unacceptable (+/-)
           }),
@@ -75,8 +75,8 @@ export default [
         plugins: [
           terser(terserOpts),
           sizeCheck({
-            expect: 369,
-            warn: 0.1, // acceptable (+/-)
+            expect: 342,
+            warn: 4, // acceptable (+/-)
             throw: 50, // unacceptable (+/-)
           }),
         ],

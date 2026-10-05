@@ -24,6 +24,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - .out('best-tag') fmt
 - **[new]** - #Connector tag between #Preposition and #Conjunction
 - **[new]** - .adjectives().toRoot() converts comparative and superlative adjectives to their base form #1186
+- **[new]** - internal left-right rules for faster-tagging
 - **[fix]** - tagging fixes #1190  #1189 and  #1169
 - **[fix]** - Penn tags for standalone mathematical and currency symbols #1192
 - **[fix]** - add missing Node 18 runtime checks for source and bundles #1207

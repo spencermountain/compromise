@@ -19,6 +19,7 @@ const postTagger = function (view) {
   net ||= methods.one.buildNet(model.two.matches, world)
   const sentences = view.docs
   const clauses = methods.two.quickSplit(sentences)
+  methods.two.leftRight(clauses, model.two.leftRight, world)
   const found = methods.one.bulkMatch(clauses, net, methods)
   methods.one.bulkTagger(found, clauses, world)
   secondPass(sentences, world)

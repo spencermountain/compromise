@@ -2,18 +2,10 @@ export default [
   // ==== WeekDay ====
   // [sun] the 5th
   { match: '[sun] the #Ordinal', group: 0, tag: 'WeekDay', reason: 'sun-the-5th' },
-  // [sun] feb 2
-  { match: '[sun] #Date', group: 0, tag: 'WeekDay', reason: 'sun-feb' },
   // 1pm next [sun]
   { match: '#Date (on|this|next|last|during)? [sun]', group: 0, tag: 'WeekDay', reason: '1pm-sun' },
   // on [sat]
   { match: `(in|by|before|during|on|until|after|of|within|all) [sat]`, group: 0, tag: 'WeekDay', reason: 'sat' },
-  // on [wed]
-  { match: `(in|by|before|during|on|until|after|of|within|all) [wed]`, group: 0, tag: 'WeekDay', reason: 'wed' },
-  // in [march]
-  { match: `(in|by|before|during|on|until|after|of|within|all) [march]`, group: 0, tag: 'Month', reason: 'march' },
-  // [sat] november
-  { match: '^[sat] #Date', group: 0, tag: 'WeekDay', reason: 'sat-feb' },
 
   // ==== Month ====
   // in [march]
@@ -32,10 +24,6 @@ export default [
   { match: `#Date .? [(march|may)]`, group: 0, tag: 'Month', reason: 'feb-and-march' },
   // quickly [march]
   { match: `#Adverb [(march|may)]`, group: 0, tag: 'Verb', notIf: '(early|late)', reason: 'quickly-march' },
-  // early [May]
-  { match: '(early|late|mid) [(march|may)]', group: 0, tag: 'Month', reason: 'early-month' },
-  // [march] quickly
-  { match: `[(march|may)] #Adverb`, group: 0, tag: 'Verb', reason: 'march-quickly' },
   // 12 am
   { match: `#Value (am|pm)`, tag: 'Time', reason: '2-am' },
 ]

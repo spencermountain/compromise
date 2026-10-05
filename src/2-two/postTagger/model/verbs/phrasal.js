@@ -19,12 +19,8 @@ export default [
   { match: '(lived|went|crept|go) [on] for', group: 0, tag: 'PhrasalVerb', reason: 'went-on' },
   // the curtains come down
   { match: '#Verb (up|down|in|on|for)$', tag: 'PhrasalVerb #Particle', notIf: '#PhrasalVerb', reason: 'come-down' },
-  // help [stop]
-  { match: 'help [(stop|end|make|start)]', group: 0, tag: 'Infinitive', reason: 'help-stop' },
   // work in the office
   { match: '#PhrasalVerb (in && #Particle) #Determiner', tag: '#Verb #Preposition #Determiner', unTag: 'PhrasalVerb', reason: 'work-in-the' },
-  // [start] listening
-  { match: '[(stop|start|finish|help)] #Gerund', group: 0, tag: 'Infinitive', reason: 'start-listen' },
   // back it [up]
   ...['up', 'down'].map(word => ({
     match: `#Verb (him|her|it|us|himself|herself|itself|everything|something) [${word}]`,

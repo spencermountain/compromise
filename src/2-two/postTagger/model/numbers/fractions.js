@@ -3,10 +3,6 @@ export default [
   { match: '[half] of? (a|an)', group: 0, tag: 'Fraction', reason: 'half-a' },
   // [quarter] of a dollar
   { match: '[quarter] of? (a|an)', group: 0, tag: 'Fraction', reason: 'quarter-a' },
-  // nearly [half]
-  { match: '#Adverb [half]', group: 0, tag: 'Fraction', reason: 'nearly-half' },
-  // [half] the
-  { match: '[half] the', group: 0, tag: 'Fraction', reason: 'half-the' },
   // two and a half
   { match: '#Cardinal and a half', tag: 'Fraction', reason: 'and-a-half' },
   // two-halves

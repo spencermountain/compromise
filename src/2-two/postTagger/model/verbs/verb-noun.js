@@ -44,18 +44,10 @@ export default [
   { match: '(a|an) #Noun [#Infinitive]$', group: 0, tag: 'Noun', reason: 'noun-inf-end' },
   // working for [thank]-you letters
   { match: '#Gerund #Adjective? for [#Infinitive]', group: 0, tag: 'Noun', reason: 'running-for' },
-  // about [thank]-you letters
-  { match: 'about [#Infinitive]', group: 0, tag: 'Singular', reason: 'about-love' },
   // artists on [thank]-you cards
   { match: '#Plural on [#Infinitive]', group: 0, tag: 'Noun', reason: 'on-stage' },
-  // any [thank]-you letter
-  { match: 'any [#Infinitive]', group: 0, tag: 'Noun', reason: 'any-charge' },
-  // no [thank] you
-  { match: 'no [#Infinitive]', group: 0, tag: 'Noun', reason: 'no-doubt' },
   // number of [thank]-yous
   { match: 'number of [#PresentTense]', group: 0, tag: 'Noun', reason: 'number-of-x' },
-  // taught [thank]-you etiquette
-  { match: '(taught|teaches|learns|learned) [#PresentTense]', group: 0, tag: 'Noun', reason: 'teaches-x' },
   // make [sense]
   { match: '(try|use|attempt|build|make) [%Noun|Verb% #Particle?]', notIf: '(#Copula|#Noun|sure|fun|up)', group: 0, tag: 'Noun', reason: 'do-verb' },//make sure of
   // [append] is cloned
@@ -100,8 +92,6 @@ export default [
   { match: '#Adjective #Adjective [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'little-store' },
   // writing bigger [thank]-you notes
   { match: '#Gerund #Adverb? #Comparative [#PresentTense]', group: 0, tag: 'Noun', notIf: '#Copula', reason: 'higher-costs' },
-  // some [thanks] for helping
-  { match: '(many|any|some|several) [#PresentTense] for', group: 0, tag: 'Noun', reason: 'any-verbs-for' },
   // to write people [thanks] for helping
   { match: `to #PresentTense #Noun [#PresentTense] #Preposition`, group: 0, tag: 'Noun', reason: 'gas-exchange' },
   // waited until [release]
@@ -125,8 +115,6 @@ export default [
   { match: `#Gerund #Adjective #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'better-for' },
   // get better [thank]-you notes
   { match: `(get|got|have) #Comparative [#PresentTense]`, group: 0, tag: 'Noun', reason: 'got-better-aim' },
-  // whose [thanks] are appreciated
-  { match: 'whose [#PresentTense] #Copula', group: 0, tag: 'Noun', reason: 'whose-verb-cop' },
   // give up on [thank]-you letters
   { match: `#PhrasalVerb #Particle #Preposition [#PresentTense]`, group: 0, tag: 'Noun', reason: 'given-up-on-x' },
   // there are [thank]-you notes
@@ -148,10 +136,6 @@ export default [
   { match: '#Determiner #Adjective? [(shed|thought|rose|bid|saw|spelt)]', group: 0, tag: 'Noun', reason: 'noun-past' },
   // how to [watch]
   { match: 'how to [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'how-to-noun' },
-  // which [boost] it
-  { match: 'which [%Noun|Verb%] #Noun', group: 0, tag: 'Infinitive', reason: 'which-boost-it' },
-  // asking [questions]
-  { match: '#Gerund [%Plural|Verb%]', group: 0, tag: 'Plural', reason: 'asking' },
   // ready to [stream]
   { match: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', group: 0, tag: 'Infinitive', reason: 'ready-to-noun' },
   // bring [to market]

@@ -74,3 +74,20 @@ test('multiple contraction in sentence', function (t) {
   t.equal(doc.match('he is dead').length, 2, here + 'multi-contraction-count')
   t.end()
 })
+
+test('contract negatives', function (t) {
+  const arr = [
+    ['I can not go', `I can't go`],
+    ['You Can not go', `You Can't go`],
+    ['i did not go', `i didn't go`],
+    ['they were not here', `they weren't here`],
+  ]
+  arr.forEach(a => {
+    const doc = nlp(a[0])
+    doc.contract()
+    t.equal(doc.text(), a[1], here + a[0])
+    doc.contractions().expand()
+    t.equal(doc.text(), a[0], here + 'expand ' + a[0])
+  })
+  t.end()
+})

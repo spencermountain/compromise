@@ -46,8 +46,11 @@ const contract = function () {
   m = doc.match('#Person would')
   setContraction(m, `'d`)
   // would not -> wouldn't
-  m = doc.match('(is|was|had|would|should|could|do|does|have|has|can) not')
+  m = doc.match('(is|was|were|had|would|should|could|do|does|did|have|has) not')
   setContraction(m, `n't`)
+  // can not -> can't
+  m = doc.match('can not')
+  setContraction(m, `'t`)
   // i have -> i've
   m = doc.match('(i|we|they) have')
   setContraction(m, `'ve`)

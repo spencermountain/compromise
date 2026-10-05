@@ -22,7 +22,7 @@
     <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
   </a>
   <a href="https://bundlephobia.com/result?p=compromise">
-    <img src="https://badgen.net/bundlejs/min/compromise"/>
+    <img src="https://badgen.net/bundlephobia/min/compromise"/>
   </a>
   </div>
   <div align="center">

@@ -120,7 +120,7 @@
   ],
   "dependencies": {
     "efrt": "2.9.0",
-    "grad-school": "0.0.8",
+    "grad-school": "0.0.9",
     "suffix-thumb": "6.0.0"
   },
   "devDependencies": {
@@ -128,12 +128,12 @@
     "@rollup/plugin-terser": "catalog:",
     "@types/node": "catalog:",
     "cross-env": "catalog:",
-    "eslint": "10.11.0",
+    "eslint": "10.12.0",
     "eslint-plugin-regexp": "3.3.1",
     "nlp-corpus": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
-    "tap-dancer": "0.4.3",
+    "tap-dancer": "0.4.4",
     "tape": "catalog:",
     "typescript": "7.0.2"
   },

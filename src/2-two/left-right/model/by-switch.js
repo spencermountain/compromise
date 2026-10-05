@@ -1,13 +1,21 @@
 const rules = {
   '%Adj|Gerund%': [
+    // [boring] the audience
+    '_ #Det -> #Ger',
     // world's [leading] manufacturer
     '#Poss _ #NN -> #Adj',
   ],
   '%Adj|Noun%': [
+    // her [favourite] sport
+    '#Poss _ #NN -> #Adj',
     // a [representative] to
     '#Det _ #Conj -> #NN',
   ],
   '%Noun|Verb%': [
+    // to [dream] of
+    'to _ #Prep -> #Inf',
+    // what [work] he did
+    '(which|what|whose) _ #Pron -> #NN',
     // which [boost] it
     'which _ #NN -> #Inf',
     // [visit] https://example.com
@@ -18,6 +26,8 @@ const rules = {
     // '#Pers _ $ -> #Inf',
   ],
   '%Plural|Verb%': [
+    // what [walks] he took
+    '(which|what|whose) _ #Pron -> #Plur',
     // asking [questions]
     '#Ger _ -> #Plur',
     // and arms roiling around

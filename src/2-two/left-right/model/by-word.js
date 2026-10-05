@@ -209,16 +209,22 @@ const rules = {
     '#Det _ #Ord -> #Value',
   ],
   kind: [
+    // some [kind] of teacher
+    '(#Det|#Comp|new|different) _ of -> #NN',
     // same [kind] of shouts
     'same _ of -> #NN',
     // a new [kind]
     '(#Det|#Comp|new|different) _ $ -> #NN',
   ],
   close: [
+    // a close friend
+    '#Det _ #NN -> #Adj',
     // came to a [close]
     '#Det _ $ -> #NN',
   ],
   sat: [
+    // on [sat]
+    '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay',
     // [sat] november
     '^ _ #Date -> #WeekDay',
   ],
@@ -309,9 +315,30 @@ const rules = {
     // being [born]
     'being _ -> #Past',
   ],
+  ya: [
+    // are [ya]
+    '(are|#Mod|see|do|for) _ -> #Pron',
+  ],
+  after: [
+    // we met shortly [after]
+    '(shortly|soon|long) _ $ -> #Adv',
+  ],
+  yet: [
+    // she has not arrived [yet]
+    '#Past _ $ -> #Adv',
+  ],
+  me: [
+    // i ate [me] sandwich (scottish slang)
+    '#Past _ #NN -> #Poss',
+  ],
+
 }
 
 const compounds = {
+  // the [can]
+  'can|will|may': 'the _ -> #Sing',
+  // five [feet]
+  'foot|feet': '#Value _ -> #Unit',
   // [damn] them
   'shit|damn': '^ _ them -> #Inf',
   // [much] appreciated

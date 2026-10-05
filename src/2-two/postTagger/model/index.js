@@ -261,7 +261,7 @@ const rules = [
   // a completely [beaten] man
   { m: '(a|an) #Adv [#Part] #NN', g: 0, t: 'Adj', r: 'beaten' },
   // a [close] friend
-  { m: '#Det #Adv? [close] #NN', g: 0, t: 'Adj', r: 'a-close' },
+  // { m: '#Det #Adv? [close] #NN', g: 0, t: 'Adj', r: 'a-close' },
   // does [better]
   { m: '(do|does|did) #Adv? [(better|worse)]', g: 0, t: 'Adv', r: 'do-better' },
   // walking [close]
@@ -474,7 +474,7 @@ const rules = [
   { m: '#Cop the [%Adj|Noun%] #NN', g: 0, t: 'Adj', r: 'premier-uni' },
 
   // i ate [me] sandwich (scottish slang)
-  { m: 'i #V [me] #NN', g: 0, t: 'Poss', r: 'scottish-me' },
+  // { m: 'i #V [me] #NN', g: 0, t: 'Poss', r: 'scottish-me' },
   // He bowed his [head] in prayer
   { m: '#Past #Poss [#V]', g: 0, t: 'NN', n: '(saw|made)', r: 'left-her-boots' },
   // 35 [signs]

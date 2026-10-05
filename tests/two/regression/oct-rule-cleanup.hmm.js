@@ -704,3 +704,76 @@ test('left/right migrated tag and untag phrases', t => {
   })
   t.end()
 })
+
+test('frequent failed-rule cleanup preserves nouns and predicates', t => {
+  const cases = [
+    ['She watched the ducks.', 'ducks', 'Noun', 'Verb'],
+    ['He plans a walk.', 'walk', 'Noun', 'Verb'],
+    ['The repairs took all day.', 'repairs', 'Plural', 'Verb'],
+    ['They had high hopes.', 'hopes', 'Plural', 'Verb'],
+    ['She has big plans.', 'plans', 'Plural', 'Verb'],
+    ['He had great looks.', 'looks', 'Plural', 'Verb'],
+    ['The river flows quickly.', 'flows', 'Verb', 'Noun'],
+    ['The engine-controls failed.', 'controls', 'Plural', 'Verb'],
+    ['The artist paints murals.', 'paints', 'Verb', 'Noun'],
+    ['The cook can sing.', 'cook', 'Noun', 'Verb'],
+    ['The fish swim.', 'fish', 'Noun', 'Verb'],
+    ['The fish swim.', 'swim', 'Verb', 'Noun'],
+    ['The shops close early.', 'shops', 'Plural', 'Verb'],
+    ['The shops close early.', 'close', 'Verb', 'Noun'],
+    ['We sell books, toys and watches.', 'watches', 'Plural', 'Verb'],
+    ['I enjoy music, art and dance.', 'dance', 'Noun', 'Verb'],
+    ['She talks, laughs and dances.', 'dances', 'Verb', 'Noun'],
+    ['John and Mary work.', 'work', 'Verb', 'Noun'],
+  ]
+  cases.forEach(([text, word, present, absent]) => {
+    const target = nlp(text).match(word)
+    t.equal(target.has('#' + present), true, `${text}: ${word} has ${present}`)
+    t.equal(target.has('#' + absent), false, `${text}: ${word} lacks ${absent}`)
+  })
+  t.end()
+})
+
+test('frequent failed-rule cleanup preserves demonstrative questions', t => {
+  const cases = [
+    ['Does this work?', 'this', 'Pronoun'],
+    ['Does that really help?', 'that', 'Pronoun'],
+    ['Do these work?', 'these', 'Pronoun'],
+    ['Can those really fly?', 'those', 'Pronoun'],
+    ['Does this machine work?', 'this', 'Determiner'],
+    ['Can that bird fly?', 'that', 'Determiner'],
+    ['These machines work.', 'these', 'Determiner'],
+    ['Those birds can fly.', 'those', 'Determiner'],
+  ]
+  cases.forEach(([text, word, tag]) => {
+    t.equal(nlp(text).match(word).has('#' + tag), true, `${text}: ${word} has ${tag}`)
+  })
+  t.end()
+})
+
+test('noun corrections retain compound and nominal contexts', t => {
+  const cases = [
+    ['The slide makes noise.', 'slide'],
+    ['The ride costs money.', 'ride'],
+    ['They had good timing.', 'timing'],
+    ['We have great hopes.', 'hopes'],
+    ['They offered food, shelter and thanks.', 'thanks'],
+    ['They sell shoes, hats and dresses.', 'dresses'],
+    ['They took short drill-breaks.', 'breaks'],
+    ['The panel has a recess-lock.', 'lock'],
+  ]
+  cases.forEach(([text, word]) => {
+    const target = nlp(text).match(word)
+    t.equal(target.has('#Noun'), true, `${text}: ${word} is a noun`)
+    t.equal(target.has('#Verb'), false, `${text}: ${word} is not a verb`)
+  })
+  t.end()
+})
+
+// Already fails before rule cleanup: the gerund-like list item hides the noun list.
+test.skip('noun list with clothing preserves watches as a noun', t => {
+  const target = nlp('We sell food, clothing and watches.').match('watches')
+  t.equal(target.has('#Noun'), true)
+  t.equal(target.has('#Verb'), false)
+  t.end()
+})

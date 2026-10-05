@@ -8,6 +8,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 
 #### 14.18.0 [Sept 2026]
+- **[perf]** - 12% faster and 30% smaller
 - **[change]** - include acronyms in .topics(), without duplicating existing entities
 - **[change]** - tag Name & Name phrases as #ProperNoun
 - **[change]** - manage plugins with pnpm workspace

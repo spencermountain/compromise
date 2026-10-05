@@ -7,6 +7,36 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 
+#### 14.18.0 [Sept 2026]
+- **[perf]** - 12% faster and 30% smaller
+- **[change]** - include acronyms in .topics(), without duplicating existing entities
+- **[change]** - tag Name & Name phrases as #ProperNoun
+- **[change]** - manage plugins with pnpm workspace
+- **[change]** - improved regex edge-cases 
+- **[change]** - improved verb conjugation
+- **[change]** - improved tagging
+- **[change]** - support block-comments, untagged sentences in spec format
+- **[change]** - testSpec() improved verbose output
+- **[change]** - #Preposition and #Conjunction discrepency
+- **[change]** - convert to pnpm workspace for plugins
+- **[change]** - tagset exclusion/consistency rules
+- **[change]** - misc performance tweaks to .sweep() logic
+- **[update]** - efrt, grad-school dependencies
+- **[new]** - .out('best-tag') fmt
+- **[new]** - #Connector tag between #Preposition and #Conjunction
+- **[new]** - .adjectives().toRoot() converts comparative and superlative adjectives to their base form #1186
+- **[new]** - internal left-right rules for faster-tagging
+- **[fix]** - tagging fixes #1190  #1189 and  #1169
+- **[fix]** - Penn tags for standalone mathematical and currency symbols #1192
+- **[fix]** - add missing Node 18 runtime checks for source and bundles #1207
+- **[fix]** - verb conjugation regression #1226
+- **[fix]** - tag-consistency 'not' and 'also' fixes
+- **[fix]** - types paths
+- **[fix]** - #Preposition and #Conjunction discrepencies
+- **[fix]** - possibly-unsafe regexes
+- **[update]** - efrt compression format
+- **[update]** - dependencies
+
 #### 14.17.0 [Sept 2026]
 - **[change]** - remove redundant re-tagging #1218
 - **[change]** - split japanese/chinese sentences on 。！？ without trailing whitespace

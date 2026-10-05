@@ -138,7 +138,7 @@
           run = [];
         }
       });
-      if (run.length) {
+      if (run.length > 0) {
         all.push(run);
       }
       const views = all.map(ptr => {

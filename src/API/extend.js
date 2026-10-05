@@ -2,10 +2,6 @@ const isObject = function (item) {
   return item && typeof item === 'object' && !Array.isArray(item)
 }
 
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
 const isUnsafeKey = key => key === '__proto__' || key === 'constructor' || key === 'prototype'
 
 // recursive merge of objects
@@ -33,7 +29,7 @@ function mergeDeep(model, plugin) {
 function mergeQuick(model, plugin) {
   for (const key in plugin) {
     if (isUnsafeKey(key)) continue
-    model[key] = model[key] || {}
+    model[key] ||= {}
     Object.assign(model[key], plugin[key])
   }
   return model
@@ -89,7 +85,7 @@ const addIrregulars = function (model, conj) {
 
 const extend = function (plugin, world, View, nlp) {
   // support array of plugins
-  if (isArray(plugin)) {
+  if (Array.isArray(plugin)) {
     plugin.forEach(p => extend(p, world, View, nlp))
     return
   }

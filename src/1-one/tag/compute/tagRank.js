@@ -3,10 +3,10 @@ const boringTags = new Set(['Auxiliary', 'Possessive'])
 const sortByKids = function (tags, tagSet) {
   tags = tags.sort((a, b) => {
     // (unknown tags are interesting)
-    if (boringTags.has(a) || !tagSet.hasOwnProperty(b)) {
+    if (boringTags.has(a) || !Object.hasOwn(tagSet, b)) {
       return 1
     }
-    if (boringTags.has(b) || !tagSet.hasOwnProperty(a)) {
+    if (boringTags.has(b) || !Object.hasOwn(tagSet, a)) {
       return -1
     }
     let kids = tagSet[a].children || []

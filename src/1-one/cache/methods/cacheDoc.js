@@ -24,10 +24,9 @@ const createCache = function (document) {
       if (term.alias) {
         term.alias.forEach(str => items.add(str))
       }
-      const tags = Array.from(term.tags)
-      for (let t = 0; t < tags.length; t += 1) {
-        items.add('#' + tags[t])
-      }
+      term.tags.forEach(tag => {
+        items.add('#' + tag)
+      })
     })
     return items
   })

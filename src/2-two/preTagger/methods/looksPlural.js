@@ -66,7 +66,7 @@ const looksPlural = function (str) {
   }
   const end = str[str.length - 1]
   // look at 'firemen'
-  if (isPlural.hasOwnProperty(end)) {
+  if (Object.hasOwn(isPlural, end)) {
     return isPlural[end].find(suff => str.endsWith(suff))
   }
   if (end !== 's') {

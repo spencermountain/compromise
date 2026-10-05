@@ -1,122 +1,127 @@
-const entity = ['Person', 'Place', 'Organization']
+import {
+  Person, Place, Organization, V, JJ, RB, Value, Det, NN, NNS, Uncountable, NNs, NNP, Date,
+  FirstName, FemaleName, LastName, MaleName, City, Country, PRP,
+} from './_lib.js'
+
+const entity = [Person, Place, Organization]
 
 export default {
   Noun: {
-    not: ['Verb', 'Adjective', 'Adverb', 'Value', 'Determiner'],
+    not: [V, JJ, RB, Value, Det],
   },
   Singular: {
-    is: 'Noun',
-    not: ['Plural', 'Uncountable'],
+    is: NN,
+    not: [NNS, Uncountable],
   },
   // 'Canada'
   ProperNoun: {
-    is: 'Noun',
+    is: NN,
     alias: 'Prop'
   },
   Person: {
-    is: 'Singular',
-    also: ['ProperNoun'],
-    not: ['Place', 'Organization', 'Date'],
+    is: NNs,
+    also: [NNP],
+    not: [Place, Organization, Date],
   },
   FirstName: {
-    is: 'Person',
+    is: Person,
   },
   MaleName: {
-    is: 'FirstName',
-    not: ['FemaleName', 'LastName'],
+    is: FirstName,
+    not: [FemaleName, LastName],
   },
   FemaleName: {
-    is: 'FirstName',
-    not: ['MaleName', 'LastName'],
+    is: FirstName,
+    not: [MaleName, LastName],
   },
   LastName: {
-    is: 'Person',
-    not: ['FirstName'],
+    is: Person,
+    not: [FirstName],
   },
   // 'dr.'
   Honorific: {
-    is: 'Person',
-    not: ['FirstName', 'LastName', 'Value'],
+    is: Person,
+    not: [FirstName, LastName, Value],
     alias: 'Hon'
   },
   Place: {
-    is: 'Singular',
-    not: ['Person', 'Organization'],
+    is: NNs,
+    not: [Person, Organization],
   },
   Country: {
-    is: 'Place',
-    also: ['ProperNoun'],
-    not: ['City'],
+    is: Place,
+    also: [NNP],
+    not: [City],
   },
   City: {
-    is: 'Place',
-    also: ['ProperNoun'],
-    not: ['Country'],
+    is: Place,
+    also: [NNP],
+    not: [Country],
   },
   // 'california'
   Region: {
-    is: 'Place',
-    also: ['ProperNoun'],
+    is: Place,
+    also: [NNP],
   },
   Address: {
     // is: 'Place',
     alias: 'Addr'
   },
   Organization: {
-    is: 'ProperNoun',
-    not: ['Person', 'Place'],
+    is: NNP,
+    not: [Person, Place],
     alias: 'Org'
   },
   SportsTeam: {
-    is: 'Organization',
+    is: Organization,
   },
   School: {
-    is: 'Organization',
+    is: Organization,
   },
   Company: {
-    is: 'Organization',
+    is: Organization,
   },
   Plural: {
-    is: 'Noun',
-    not: ['Singular', 'Uncountable'],
+    is: NN,
+    not: [NNs, Uncountable],
   },
   // 'gravity'
   Uncountable: {
-    is: 'Noun',
+    is: NN,
   },
   // 'it'
   Pronoun: {
-    is: 'Noun',
+    is: NN,
     not: entity,
   },
   // 'swimmer'
   Actor: {
-    is: 'Noun',
-    not: ['Place', 'Organization'],
+    is: NN,
+    not: [Place, Organization],
   },
   // walking
   Activity: {
-    is: 'Noun',
-    not: ['Person', 'Place'],
+    is: NN,
+    not: [Person, Place],
   },
   // kilometres
   Unit: {
-    is: 'Noun',
+    is: NN,
     not: entity,
   },
   // canadian
   Demonym: {
-    is: 'Noun',
-    also: ['ProperNoun'],
+    is: NN,
+    also: [NNP],
     not: entity,
   },
   // [spencer's] hat
   Possessive: {
-    is: 'Noun',
+    is: NN,
     alias: 'Poss'
   },
   // 'yourself'
   Reflexive: {
-    is: 'Pronoun',
+    is: PRP,
   },
 }

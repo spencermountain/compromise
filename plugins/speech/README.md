@@ -10,7 +10,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/compromise-speech/builds/compromise-speech.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/speech/builds/compromise-speech.min.js" />
+    <img src="https://img.shields.io/bundlephobia/min/compromise-speech" />
   </a>
 
   <div align="center">

@@ -35,7 +35,7 @@ export default [
     desc: 'between friday and sunday',
     parse: (m, context) => {
       const startM = m.groups('start')
-      let start = parseDate(startM, context)
+      const start = parseDate(startM, context)
       const endM = m.groups('end')
       let end = parseDate(endM, context)
       // 'between june 2nd and 5th' - inherit the month

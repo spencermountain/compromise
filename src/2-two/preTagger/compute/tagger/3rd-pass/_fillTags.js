@@ -1,6 +1,7 @@
 import fastTag from '../_fastTag.js'
 import looksPlural from '../../../methods/looksPlural.js'
 import getTense from '../../../methods/transform/verbs/getTense/index.js'
+import debug from '../../../../../API/debug.js'
 // tags that are neither plural or singular
 const uncountable = [
   'Acronym',
@@ -35,6 +36,9 @@ const setTense = function (term) {
     const guess = getTense(term.normal)
     if (guess) {
       fastTag(term, guess, '3-verb-tense-guess')
+      if (guess === 'Infinitive' || guess === 'Gerund') {
+        fastTag(term, 'PresentTense', '3-verb-tense-guess')
+      }
     }
   }
 }
@@ -42,12 +46,27 @@ const setTense = function (term) {
 //add deduced parent tags to our terms
 const fillTags = function (terms, i, model) {
   const term = terms[i]
-  //there is probably just one tag, but we'll allow more
-  const tags = Array.from(term.tags)
-  for (let k = 0; k < tags.length; k += 1) {
-    if (model.one.tagSet[tags[k]]) {
-      const toAdd = model.one.tagSet[tags[k]].parents
-      fastTag(term, toAdd, ` -inferred by #${tags[k]}`)
+  if (term.frozen === true) {
+    return
+  }
+  // Visit only the original tags, without copying the Set.
+  let remaining = term.tags.size
+  for (const tag of term.tags) {
+    if (remaining === 0) {
+      break
+    }
+    remaining -= 1
+    const parents = model.one.tagSet[tag]?.parents
+    if (parents) {
+      if (debug.tags) {
+        fastTag(term, parents, ` -inferred by #${tag}`)
+      } else {
+        for (let k = 0; k < parents.length; k += 1) {
+          if (!term.tags.has(parents[k])) {
+            term.tags.add(parents[k])
+          }
+        }
+      }
     }
   }
   // turn 'Noun' into Plural/Singular

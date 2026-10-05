@@ -16,7 +16,7 @@ const rootOf = function (tag, tagSet) {
       return p
     }
   }
-  return entry.parents[entry.parents.length - 1]
+  return entry.parents.at(-1)
 }
 
 // reduce a term's tag-set to a single top-level tag (or '-' when untagged)
@@ -47,7 +47,7 @@ const toSpec = function (doc, world) {
   return doc.docs.map(terms => {
     const text = terms.reduce((str, t) => str + t.pre + t.text + t.post, '').trim()
     const tags = terms.map(t => {
-      let tag = slotForTerm(t, tagSet)
+      const tag = slotForTerm(t, tagSet)
       return aliases[tag] || tag
     }).join(',')
     return `${text} {${tags}}`

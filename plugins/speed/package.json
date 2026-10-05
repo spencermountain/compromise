@@ -1,43 +1,63 @@
 {
   "name": "compromise-speed",
-  "description": "plugin for nlp-compromise",
   "version": "0.1.2",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-speed.min.js",
-  "module": "./builds/compromise-speed.mjs",
-  "type": "module",
-  "sideEffects": false,
-  "types": "./index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./src/plugin.js",
-      "require": "./builds/compromise-speed.cjs",
-      "types": "./index.d.ts"
-    }
-  },
+  "description": "Streaming, parallel parsing, and performance helpers for compromise",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/speed"
   },
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/speed",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./builds/compromise-speed.cjs"
+      }
+    }
+  },
+  "main": "./builds/compromise-speed.cjs",
+  "module": "./builds/compromise-speed.mjs",
+  "types": "./index.d.ts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "version": "node ./scripts/version.js",
     "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
+    "index.d.ts",
+    "index.d.cts",
     "builds/",
-    "src/",
-    "index.d.ts"
+    "src/"
   ],
-  "peerDependencies": {
-    "compromise": ">=14.0.0"
-  },
   "devDependencies": {
-    "nlp-corpus": "^4.4.0"
+    "nlp-corpus": "catalog:",
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
   },
-  "license": "MIT"
+  "peerDependencies": {
+    "compromise": "workspace:*"
+  },
+  "unpkg": "./builds/compromise-speed.min.js",
+  "dependencies": {
+    "@types/node": "catalog:"
+  }
 }

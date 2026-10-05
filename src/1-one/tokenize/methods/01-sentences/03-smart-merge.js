@@ -1,5 +1,5 @@
 const hasNewline = function (c) {
-  return Boolean(c.match(/\n$/))
+  return Boolean(/\n$/.test(c))
 }
 
 //loop through these chunks, and join the non-sentence chunks back together..

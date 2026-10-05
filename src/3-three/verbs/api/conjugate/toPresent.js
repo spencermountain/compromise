@@ -1,15 +1,16 @@
-import { noop, isPlural, isAreAm, doDoes, getSubject, toInf, getTense } from '../lib.js'
+import { infinitive, inflect } from './inflect.js'
+import convertAuxiliary from './auxiliary.js'
+import { noop, isPlural, isAreAm, doDoes, getSubject } from '../lib.js'
 const keep = { tags: true }
 
 // walk->walked
 const simple = (vb, parsed) => {
-  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
+  let str = infinitive(root)
   // 'i walk' vs 'he walks'
-  if (isPlural(vb, parsed) === false) {
-    str = conjugate(str, vb.model).PresentTense
+  const plural = isPlural(vb, parsed)
+  if (plural === false) {
+    str = inflect(root, 'PresentTense')
   }
   // handle copula
   if (root.has('#Copula')) {
@@ -17,6 +18,7 @@ const simple = (vb, parsed) => {
   }
   if (str) {
     vb = vb.replace(root, str, keep)
+    if (!plural) vb.not('#Particle').unTag('Infinitive')
     vb.not('#Particle').tag('PresentTense')
   }
   // vb.replace('not ' + str, str + ' not')
@@ -24,14 +26,8 @@ const simple = (vb, parsed) => {
 }
 
 const toGerund = (vb, parsed) => {
-  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
-  // 'i walk' vs 'he walks'
-  if (isPlural(vb, parsed) === false) {
-    str = conjugate(str, vb.model).Gerund
-  }
+  const str = inflect(root, 'Gerund')
   if (str) {
     vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('Gerund')
@@ -40,21 +36,19 @@ const toGerund = (vb, parsed) => {
 }
 
 const vbToInf = (vb, parsed) => {
-  const { toInfinitive } = vb.methods.two.transform.verb
   const root = parsed.root
-  let str = parsed.root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
+  const str = infinitive(root)
   if (str) {
     vb = vb.replace(parsed.root, str, keep)
   }
   return vb
 }
 
-
-
 const forms = {
+
   // walk
   'infinitive': simple,
+
   // he walks -> he walked
   'simple-present': (vb, parsed) => {
     const { conjugate } = vb.methods.two.transform.verb
@@ -70,15 +64,17 @@ const forms = {
       const str = root.text('normal')
       const pres = conjugate(str, vb.model).PresentTense
       if (str !== pres) {
-        vb.replace(root, pres, keep)
+        vb.replace(root, pres, keep).not('#Particle').unTag('Infinitive').tag('PresentTense')
       }
     } else {
       return simple(vb, parsed)
     }
     return vb
   },
+
   // he walked
   'simple-past': simple,
+
   // he will walk -> he walked
   'simple-future': (vb, parsed) => {
     const { root, auxiliary } = parsed
@@ -88,6 +84,8 @@ const forms = {
       vb.replace(root, str)
       vb = vb.remove('will')
       vb.replace('not ' + str, str + ' not')
+    } else if (parsed.negative.found) {
+      vb.replace('will', doDoes(vb, parsed)).match('(do|does)').tag('Auxiliary')
     } else {
       simple(vb, parsed)
       vb = vb.remove('will')
@@ -95,78 +93,9 @@ const forms = {
     return vb
   },
 
-  // is walking ->
-  'present-progressive': noop,
-  // was walking -> is walking
-  'past-progressive': (vb, parsed) => {
-    const str = isAreAm(vb, parsed)
-    return vb.replace('(were|was)', str, keep)
-  },
-  // will be walking -> is walking
-  'future-progressive': vb => {
-    vb.match('will').insertBefore('is')
-    vb.remove('be')
-    return vb.remove('will')
-  },
-
-  // has walked ->  (?)
-  'present-perfect': (vb, parsed) => {
-    simple(vb, parsed)
-    vb = vb.remove('(have|had|has)')
-    return vb
-  },
-
-  // had walked -> has walked
-  'past-perfect': (vb, parsed) => {
-    // not 'we has walked'
-    const subj = getSubject(vb, parsed)
-    const m = subj.subject
-    if (isPlural(vb, parsed) || m.has('i')) {
-      vb = toInf(vb, parsed)// we walk
-      vb.remove('had')
-      return vb
-    }
-    vb.replace('had', 'has', keep)
-    return vb
-  },
-  // will have walked -> has walked
-  'future-perfect': vb => {
-    vb.match('will').insertBefore('has')
-    return vb.remove('have').remove('will')
-  },
-
-  // has been walking
-  'present-perfect-progressive': noop,
-  // had been walking
-  'past-perfect-progressive': vb => vb.replace('had', 'has', keep),
-  // will have been -> has been
-  'future-perfect-progressive': vb => {
-    vb.match('will').insertBefore('has')
-    return vb.remove('have').remove('will')
-  },
-
-  // got walked -> is walked
-  // was walked -> is walked
-  // had been walked -> is walked
-  'passive-past': (vb, parsed) => {
-    const str = isAreAm(vb, parsed)
-    if (vb.has('(had|have|has)') && vb.has('been')) {
-      vb.replace('(had|have|has)', str, keep)
-      vb.replace('been', 'being')
-      return vb
-    }
-    return vb.replace('(got|was|were)', str)
-  },
-  // is being walked  ->
-  'passive-present': noop,
-  // will be walked -> is being walked
-  'passive-future': vb => {
-    vb.replace('will', 'is')
-    return vb.replace('be', 'being')
-  },
-
   // would be walked ->
   'present-conditional': noop,
+
   // would have been walked ->
   'past-conditional': vb => {
     vb.replace('been', 'be')
@@ -175,11 +104,17 @@ const forms = {
 
   // is going to drink -> is drinking
   'auxiliary-future': (vb, parsed) => {
+    const copula = isAreAm(vb, parsed)
+    vb.replace('(was|were)', copula)
+    if (parsed.root.has('#Gerund') && vb.has('going to be')) {
+      vb.remove('going to be')
+      return vb
+    }
     toGerund(vb, parsed)
     vb.remove('(going|to)')
     return vb
   },
-  // used to walk -> is walking
+
   // did walk -> is walking
   'auxiliary-past': (vb, parsed) => {
     // 'did provide' -> 'does provide'
@@ -192,22 +127,26 @@ const forms = {
     vb.replace(parsed.auxiliary, 'is')
     return vb
   },
+
   // we do walk ->
   'auxiliary-present': noop,
 
   // must walk -> 'must have walked'
   'modal-infinitive': noop,
+
   // must have walked
   'modal-past': (vb, parsed) => {
     vbToInf(vb, parsed)
     return vb.remove('have')
   },
+
   // started looking
   'gerund-phrase': (vb, parsed) => {
     parsed.root = parsed.root.not('#Gerund$')
     simple(vb, parsed)
     return vb.remove('(will|have)')
   },
+
   // wanted to walk
   'want-infinitive': (vb, parsed) => {
     let str = 'wants'
@@ -221,8 +160,10 @@ const forms = {
 }
 
 const toPresent = function (vb, parsed, form) {
+  const converted = convertAuxiliary(vb, parsed, form, 'present')
+  if (converted) return converted
   // console.log(form)
-  if (forms.hasOwnProperty(form)) {
+  if (Object.hasOwn(forms, form)) {
     vb = forms[form](vb, parsed)
     vb.fullSentence().compute(['tagger', 'chunks'])
     return vb

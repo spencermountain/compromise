@@ -10,7 +10,7 @@
 
   <!-- file size -->
   <a href="https://unpkg.com/compromise-dates/builds/compromise-dates.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/dates/builds/compromise-dates.min.js" />
+    <img src="https://img.shields.io/bundlephobia/min/compromise-dates" />
   </a>
 
   <div align="center">

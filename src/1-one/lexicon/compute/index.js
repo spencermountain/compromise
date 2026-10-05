@@ -10,9 +10,9 @@ const lexicon = function (view) {
     for (let i = 0; i < terms.length; i += 1) {
       if (terms[i].tags.size === 0) {
         let found = null
-        found = found || multiWord(terms, i, world)
+        found ||= multiWord(terms, i, world)
         // lookup known words
-        found = found || singleWord(terms, i, world)
+        found ||= singleWord(terms, i, world)
       }
     }
   })

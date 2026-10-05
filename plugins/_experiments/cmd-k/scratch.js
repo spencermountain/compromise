@@ -4,7 +4,7 @@ import plugin from './src/plugin.js'
 nlp.extend(plugin)
 
 
-let txt = '! i walk !ohyeah gh'
+const txt = '! i walk !ohyeah gh'
 const doc = nlp(txt)
 doc.searchBangs()
 doc.debug()

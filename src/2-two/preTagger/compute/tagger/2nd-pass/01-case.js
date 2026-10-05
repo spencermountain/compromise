@@ -23,7 +23,7 @@ const nope = {
 const checkCase = function (terms, i, model) {
   const term = terms[i]
   // assume terms are already indexed
-  term.index = term.index || [0, 0]
+  term.index ||= [0, 0]
   const index = term.index[1]
   const str = term.text || '' //need case info
   // titlecase and not first word of sentence
@@ -32,8 +32,12 @@ const checkCase = function (terms, i, model) {
     if (notProper.find(tag => term.tags.has(tag))) {
       return null
     }
+    // A heading can start a new clause: 'Tutorial: Creating a cake'.
+    if (i === 0 && term.tags.has('Gerund') && terms[i + 1]?.tags.has('Determiner')) {
+      return null
+    }
     // first word in a quotation?
-    if (term.pre.match(/["']$/)) {
+    if (/["']$/.test(term.pre)) {
       return null
     }
     if (term.normal === 'the') {

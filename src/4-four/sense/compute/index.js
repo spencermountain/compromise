@@ -27,7 +27,7 @@ const getSense = function (view) {
   for (let i = 0; i < terms.length; i += 1) {
     const term = terms[i]
     const str = term.normal
-    if (senses.hasOwnProperty(str) === true) {
+    if (Object.hasOwn(senses, str) === true) {
       // get appropriate sense for the term's tag
       const sense = senses[str].find(obj => term.tags.has(obj.tag))
       const name = chooseSense(terms, i, sense)

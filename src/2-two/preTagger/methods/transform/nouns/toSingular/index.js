@@ -10,7 +10,7 @@ const toSingular = function (str, model) {
   const { irregularPlurals } = model.two
   const invert = invertObj(irregularPlurals) //(not very efficient)
   // check irregulars list
-  if (invert.hasOwnProperty(str)) {
+  if (Object.hasOwn(invert, str)) {
     return invert[str]
   }
   // go through our regexes

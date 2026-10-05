@@ -16,7 +16,7 @@ const api = function (View) {
     constructor(document, pointer, groups, opts = {}) {
       super(document, pointer, groups)
       this.viewType = 'Dates'
-      this.opts = Object.assign({}, opts)
+      this.opts = { ...opts }
     }
 
     get(n) {

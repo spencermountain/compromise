@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import repl from 'repl'
+import repl from 'node:repl'
 import corpus from 'nlp-corpus'
 import nlp from '../src/three.js'
 

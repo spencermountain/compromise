@@ -1,6 +1,6 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
-import { Worker } from 'worker_threads'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { Worker } from 'node:worker_threads'
 const dir = path.dirname(fileURLToPath(import.meta.url))
 
 const makePool = function (count, reg) {

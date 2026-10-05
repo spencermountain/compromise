@@ -3,7 +3,7 @@ import tokenize from './01-tokenize/index.js'
 import parse from './02-parse/index.js'
 import transform from './03-transform/index.js'
 
-const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
+const env = globalThis.process?.env ?? globalThis.env ?? {}
 const log = parts => {
   if (env.DEBUG_DATE) {
     // console.log(parts)// eslint-disable-line
@@ -26,7 +26,7 @@ const parseDate = function (doc, context) {
 
   //apply our given timezone
   if (parts.tz) {
-    context = Object.assign({}, context, { timezone: parts.tz })
+    context = { ...context, timezone: parts.tz }
     // move 'today' to the same wall-clock date + time in the new zone
     const iso = context.today.format('iso-short')
     const time = context.today.format('time-24')

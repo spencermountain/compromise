@@ -4,6 +4,23 @@ const findVerbs = function (doc) {
   m = m.not('#Conjunction')
   // by walking
   m = m.not('#Preposition')
+  // Gerunds governed by a preposition are non-finite: 'by swimming'.
+  let gerunds = doc.match('#Preposition (#Adverb|#Negative)+? [#Gerund]', 0)
+  // Auxiliary 'being/having' may no longer carry the Gerund tag. Protect the
+  // complete non-finite chain, not just its first word.
+  const passive = '(being|having) (#Adverb|#Negative|#Auxiliary)+? (#PastTense|#Participle|#Gerund)'
+  let chains = doc.match('#Preposition (#Adverb|#Negative)+? [' + passive + ']', 0)
+  gerunds = gerunds.concat(chains)
+  // Extend through coordination, but stop at a finite verb or a new subject.
+  while (gerunds.found) {
+    chains = gerunds.growRight('(and|or) (#Adverb|#Negative)+? ' + passive)
+    const next = chains.growRight('(and|or) (#Adverb|#Negative)+? #Gerund')
+    if (next.wordCount() === gerunds.wordCount()) {
+      break
+    }
+    gerunds = next
+  }
+  m = m.not(gerunds.terms())
 
 
   m = m.splitAfter('@hasComma')
@@ -16,9 +33,9 @@ const findVerbs = function (doc) {
   // cool
 
   // like being pampered
-  m = m.splitBefore('(#Verb && !#Copula) [being] #Verb', 0)
+  m = m.splitBefore('(#Verb && !#Copula && !#Auxiliary) [being] #Verb', 0)
   // like to be pampered
-  m = m.splitBefore('#Verb [to be] #Verb', 0)
+  m = m.splitBefore('(#Verb && !#Auxiliary) [to be] #Verb', 0)
 
   // implicit conjugation - 'help fix'
 

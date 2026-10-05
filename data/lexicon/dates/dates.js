@@ -5,7 +5,6 @@ export default [
   'tmr',
   'tmrw',
   'yesterday',
-  'weekend',
   'weekends',
   'week end',
   'ago',

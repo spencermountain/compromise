@@ -4,7 +4,7 @@ const transformations = {
     return s.replace(/([^c])\1/g, '$1')
   },
   dropInitialLetters: (s) => {
-    if (s.match(/^(kn|gn|pn|ae|wr)/)) {
+    if (/^(kn|gn|pn|ae|wr)/.test(s)) {
       return s.substring(1, s.length - 1)
     }
     return s

@@ -1,5 +1,5 @@
 const setChunk = function (term, chunk) {
-  const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
+  const env = globalThis.process?.env ?? globalThis.env ?? {}
   if (env.DEBUG_CHUNKS) {
     const str = (term.normal + "'").padEnd(8)
     console.log(`  | '${str}  →  \x1b[34m${chunk.padEnd(12)}\x1b[0m \x1b[2m -fallback- \x1b[0m`) // eslint-disable-line

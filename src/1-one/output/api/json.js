@@ -10,7 +10,7 @@ const defaults = {
 const opts = { case: 'none', unicode: 'some', form: 'machine', punctuation: 'some' }
 
 const merge = function (a, b) {
-  return Object.assign({}, a, b)
+  return { ...a, ...b }
 }
 
 const fns = {
@@ -32,11 +32,7 @@ const fns = {
     }
   },
   terms: terms => {
-    return terms.map(t => {
-      const term = Object.assign({}, t)
-      term.tags = Array.from(t.tags)
-      return term
-    })
+    return terms.map(t => ({ ...t, tags: [...t.tags] }))
   },
   confidence: (_terms, view, i) => view.eq(i).confidence(),
   syllables: (_terms, view, i) => view.eq(i).syllables(),
@@ -48,11 +44,11 @@ fns.clean = fns.normal
 fns.reduced = fns.root
 
 const toJSON = function (view, option) {
-  option = option || {}
+  option ||= {}
   if (typeof option === 'string') {
     option = {}
   }
-  option = Object.assign({}, defaults, option)
+  option = { ...defaults, ...option }
   // run any necessary upfront steps
   if (option.offset) {
     view.compute('offset')

@@ -1,37 +1,26 @@
-import { noop, getTense } from '../lib.js'
+import { infinitive } from './inflect.js'
+import convertAuxiliary from './auxiliary.js'
+import { noop, isAreAm } from '../lib.js'
 const keep = { tags: true }
 
 const simple = (vb, parsed) => {
-  const { toInfinitive } = vb.methods.two.transform.verb
   const { root, auxiliary } = parsed
   // 'i may'
   if (root.has('#Modal')) {
     return vb
   }
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
+  const str = infinitive(root)
+  if (str === 'be' && parsed.negative.has('not')) {
+    vb.replace(root, 'will')
+    vb.match(parsed.negative).insertAfter('be')
+    return vb
+  }
   if (str) {
     vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag('Verb')
   }
   vb.prepend('will').match('will').tag('Auxiliary')
   vb.remove(auxiliary)
-  return vb
-}
-
-// 'will be walking'
-const progressive = (vb, parsed) => {
-  const { conjugate, toInfinitive } = vb.methods.two.transform.verb
-  const { root, auxiliary } = parsed
-  let str = root.text('normal')
-  str = toInfinitive(str, vb.model, getTense(root))
-  if (str) {
-    str = conjugate(str, vb.model).Gerund
-    vb.replace(root, str, keep)
-    vb.not('#Particle').tag('PresentTense')
-  }
-  vb.remove(auxiliary)
-  vb.prepend('will be').match('will be').tag('Auxiliary')
   return vb
 }
 
@@ -45,62 +34,13 @@ const forms = {
   // he will walk ->
   'simple-future': noop,
 
-  // is walking ->
-  'present-progressive': progressive,
-  // was walking ->
-  'past-progressive': progressive,
-  // will be walking ->
-  'future-progressive': noop,
-
-  // has walked ->
-  'present-perfect': (vb) => {
-    vb.match('(have|has)').replaceWith('will have')
-    return vb
-  },
-  // had walked ->
-  'past-perfect': vb => vb.replace('(had|has)', 'will have'),
-  // will have walked ->
-  'future-perfect': noop,
-
-  // has been walking
-  'present-perfect-progressive': vb => vb.replace('has', 'will have'),
-  // had been walking
-  'past-perfect-progressive': vb => vb.replace('had', 'will have'),
-  // will have been ->
-  'future-perfect-progressive': noop,
-
-  // got walked ->
-  // was walked ->
-  // was being walked ->
-  // had been walked ->
-  'passive-past': vb => {
-    if (vb.has('got')) {
-      return vb.replace('got', 'will get')
-    }
-    if (vb.has('(was|were)')) {
-      vb.replace('(was|were)', 'will be')
-      return vb.remove('being')
-    }
-    if (vb.has('(have|has|had) been')) {
-      return vb.replace('(have|has|had) been', 'will be')
-    }
-    return vb
-  },
-  // is being walked  ->
-  'passive-present': vb => {
-    vb.replace('being', 'will be')
-    vb.remove('(is|are|am)')
-    return vb
-  },
-  // will be walked ->
-  'passive-future': noop,
   // would be walked ->
   'present-conditional': vb => vb.replace('would', 'will'),
   // would have been walked ->
   'past-conditional': vb => vb.replace('would', 'will'),
 
   // is going to drink ->
-  'auxiliary-future': noop,
+  'auxiliary-future': (vb, parsed) => vb.replace('(was|were)', isAreAm(vb, parsed)),
   // used to walk -> is walking
   // did walk -> is walking
   'auxiliary-past': vb => {
@@ -135,12 +75,14 @@ const forms = {
 }
 
 const toFuture = function (vb, parsed, form) {
+  const converted = convertAuxiliary(vb, parsed, form, 'future')
+  if (converted) return converted
   // console.log(form)
   // is it already future-tense?
-  if (vb.has('will') || vb.has('going to')) {
+  if (vb.has('will')) {
     return vb
   }
-  if (forms.hasOwnProperty(form)) {
+  if (Object.hasOwn(forms, form)) {
     vb = forms[form](vb, parsed)
     vb.fullSentence().compute(['tagger', 'chunks'])
     return vb

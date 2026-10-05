@@ -10,7 +10,7 @@
   
   <!-- file size -->
   <a href="https://unpkg.com/compromise-speed/builds/compromise-speed.min.js">
-    <img src="https://badge-size.herokuapp.com/spencermountain/compromise/master/plugins/plugin-speed/builds/compromise-speed.min.js" />
+    <img src="https://img.shields.io/bundlephobia/min/compromise-speed" />
   </a>
 
   <div align="center">
@@ -21,6 +21,25 @@
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+
+### TypeScript
+
+The speed methods are added to the `nlp` library. Use `SpeedNlp` for the extended
+library's type:
+
+```ts
+import nlp from 'compromise'
+import speed, { type SpeedNlp } from 'compromise-speed'
+
+nlp.extend(speed)
+const fast = nlp as SpeedNlp
+const doc = await fast.streamFile('./input.txt', chunk => chunk.match('hello'))
+```
+
+Named exports (`streamFile`, `workerPool`, `keyPress`, and `lazyParse`) are
+individual plugin objects passed to `nlp.extend()`. `lazyParse` installs
+`nlp.lazy(text, match)`. For CommonJS, the complete plugin is
+`require('compromise-speed').default`.
 
 ### WorkerPool
 parse sentences of a large text in parallel:

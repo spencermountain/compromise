@@ -19,7 +19,7 @@ const getGroup = function (res, group) {
     res.forEach(r => {
       ptrs.push(r.pointer)
       Object.keys(r.groups).forEach(k => {
-        byGroup[k] = byGroup[k] || []
+        byGroup[k] ||= []
         byGroup[k].push(r.groups[k])
       })
     })

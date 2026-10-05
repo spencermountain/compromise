@@ -7,8 +7,7 @@ export default {
   beforeTags: {
     // Verb: g, // loves shocking
     Adverb: g, //quickly shocking
-    Preposition: g, //by insulting
-    Conjunction: g, //to insulting
+    Connector: g, //by insulting, if swimming
   },
   afterTags: {
     Adverb: g, //shocking quickly
@@ -17,8 +16,7 @@ export default {
     Pronoun: g, //shocking him
     Determiner: g, //shocking the
     Copula: g, //shocking is
-    Preposition: g, //dashing by, swimming in
-    Conjunction: g, //insulting to
+    Connector: g, //swimming in, swimming and running
     Comparative: g, //growing shorter
   },
   beforeWords: {

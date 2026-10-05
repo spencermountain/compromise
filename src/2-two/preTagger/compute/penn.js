@@ -50,7 +50,6 @@ const mapping = {
   There: 'EX', //'there'
   // 'Adverb':'WRB',
   // 'Noun':'PDT', //predeterminer
-  // 'Noun':'SYM', //symbol
   // 'Noun':'NFP', //
 
   //  WDT 	Wh-determiner
@@ -60,6 +59,16 @@ const mapping = {
 }
 
 const toPenn = function (term) {
+  // Inspect the whole token, leaving amounts and attached punctuation alone.
+  if (/^[*/+=<>|~^×÷±≠≤≥]+$/.test(term.text)) {
+    return 'SYM'
+  }
+  if (term.text === '$') {
+    return '$'
+  }
+  if (term.text === '£' || term.text === '#') {
+    return '#'
+  }
   // try some ad-hoc ones
   if (term.tags.has('ProperNoun') && term.tags.has('Plural')) {
     return 'NNPS'
@@ -76,7 +85,7 @@ const toPenn = function (term) {
   // run through an ordered list of tags
   const arr = term.tagRank || []
   for (let i = 0; i < arr.length; i += 1) {
-    if (mapping.hasOwnProperty(arr[i])) {
+    if (Object.hasOwn(mapping, arr[i])) {
       return mapping[arr[i]]
     }
   }

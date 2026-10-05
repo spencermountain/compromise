@@ -1,7 +1,7 @@
 const hasMinMax = /\{([0-9]+)?(, *[0-9]*)?\}/
 const andSign = /&&/
 // const hasDash = /\p{Letter}[-–—]\p{Letter}/u
-const captureName = new RegExp(/^<\s*(\S+)\s*>/)
+const captureName = /^<\s*([^\s>]+)\s*>/
 /* break-down a match expression into this:
 {
   word:'',
@@ -63,6 +63,9 @@ const parseToken = function (w, opts) {
       // Use capture group name
       if (start(w) === '<') {
         const res = captureName.exec(w)
+        if (!res) {
+          throw new SyntaxError('Invalid named capture: expected [<name> ...]')
+        }
         if (res.length >= 2) {
           obj.group = res[1]
           w = w.replace(res[0], '')
@@ -87,7 +90,7 @@ const parseToken = function (w, opts) {
     if (start(w) === '~' && end(w) === '~' && w.length > 2) {
       w = stripBoth(w)
       obj.fuzzy = true
-      obj.min = opts.fuzzy || 0.85
+      obj.min = opts.fuzzy ?? 0.85
       if (/\(/.test(w) === false) {
         obj.word = w
         return obj

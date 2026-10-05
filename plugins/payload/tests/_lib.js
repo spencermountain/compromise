@@ -1,4 +1,4 @@
-import src from '../../../src/one.js'
+import src from 'compromise/one'
 import build from '../../../builds/one/compromise-one.mjs'
 
 import plg from '../src/plugin.js'

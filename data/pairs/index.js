@@ -5,8 +5,9 @@ import PastTense from './PastTense.js'
 import PresentTense from './PresentTense.js'
 import Superlative from './Superlative.js'
 import AdjToNoun from './AdjToNoun.js'
+import { validatePairs } from '../validate.js'
 
-export default {
+const models = {
   Comparative,
   Gerund,
   Participle,
@@ -15,3 +16,6 @@ export default {
   Superlative,
   AdjToNoun,
 }
+
+validatePairs(models)
+export default models

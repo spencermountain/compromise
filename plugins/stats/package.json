@@ -1,46 +1,62 @@
 {
   "name": "compromise-stats",
-  "description": "plugin for nlp-compromise",
   "version": "0.1.1",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-stats.min.js",
-  "type": "module",
-  "module": "./builds/compromise-stats.mjs",
-  "sideEffects": false,
-  "types": "./index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./src/plugin.js",
-      "require": "./builds/compromise-stats.cjs",
-      "types": "./index.d.ts"
-    }
-  },
+  "description": "N-grams and text statistics for compromise",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/stats"
   },
   "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/stats",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./builds/compromise-stats.cjs"
+      }
+    }
+  },
+  "main": "./builds/compromise-stats.cjs",
+  "module": "./builds/compromise-stats.mjs",
+  "types": "./index.d.ts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "generate": "node ./scripts/generate.js",
-    "stat": "node ./scripts/stat.js",
-    "perf": "node ./scripts/perf.js",
     "build": "rollup -c --silent"
   },
   "files": [
+    "index.d.ts",
+    "index.d.cts",
     "builds/",
-    "src/",
-    "index.d.ts"
+    "src/"
   ],
-  "peerDependencies": {
-    "compromise": ">=14.0.0"
-  },
   "dependencies": {
-    "efrt": "^2.5.0"
+    "efrt": "catalog:"
   },
-  "devDependencies": {},
-  "license": "MIT"
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
+  },
+  "peerDependencies": {
+    "compromise": "workspace:*"
+  },
+  "unpkg": "./builds/compromise-stats.min.js"
 }

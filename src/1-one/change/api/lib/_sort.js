@@ -46,9 +46,9 @@ const sequential = (a, b) => {
 
 /** sort by # of duplicates in the document*/
 const byFreq = function (arr) {
-  const counts = {}
+  const counts = Object.create(null)
   arr.forEach(o => {
-    counts[o.normal] = counts[o.normal] || 0
+    counts[o.normal] ??= 0
     counts[o.normal] += 1
   })
   // sort by freq

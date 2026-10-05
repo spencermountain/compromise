@@ -23,7 +23,7 @@ const sort = function (input) {
   if (typeof input === 'function') {
     return customSort(this, input)
   }
-  input = input || 'alpha'
+  input ||= 'alpha'
   const ptrs = pointer || docs.map((_d, n) => [n])
   let arr = docs.map((terms, n) => {
     return {

@@ -23,7 +23,7 @@ const buildTrie = function (phrases, world) {
     const words = tokenize(phrase, world)
     for (let i = 0; i < words.length; i++) {
       const word = words[i]
-      if (goNext[curr] && goNext[curr].hasOwnProperty(word)) {
+      if (goNext[curr] && Object.hasOwn(goNext[curr], word)) {
         curr = goNext[curr][word]
       } else {
         n++
@@ -42,7 +42,7 @@ const buildTrie = function (phrases, world) {
     xs.push(n)
   }
 
-  while (xs.length) {
+  while (xs.length > 0) {
     const r = xs.shift()
     // for each symbol a such that g(r, a) = s
     const keys = Object.keys(goNext[r])
@@ -52,14 +52,14 @@ const buildTrie = function (phrases, world) {
       xs.push(s)
       // set state = f(r)
       n = failTo[r]
-      while (n > 0 && !goNext[n].hasOwnProperty(word)) {
+      while (n > 0 && !Object.hasOwn(goNext[n], word)) {
         n = failTo[n]
       }
-      if (goNext.hasOwnProperty(n)) {
+      if (Object.hasOwn(goNext, n)) {
         const fs = goNext[n][word]
         failTo[s] = fs
         if (endAs[fs]) {
-          endAs[s] = endAs[s] || []
+          endAs[s] ||= []
           endAs[s] = endAs[s].concat(endAs[fs])
         }
       } else {

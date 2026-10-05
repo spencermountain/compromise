@@ -13,11 +13,13 @@ const beforePossessive = {
 }
 const adjLike = new Set(['too', 'also', 'enough', 'about'])
 const nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must', 'had', 'have'])
+// "is was" or "has was" can't happen, so a copula means the 's is possessive
+const copulas = new Set(['is', 'are', 'was', 'were', 'am'])
 
 const isPossessive = (terms, i) => {
   const term = terms[i]
   // these can't be possessive
-  if (banList.hasOwnProperty(term.machine || term.normal)) {
+  if (Object.hasOwn(banList, term.machine || term.normal)) {
     return false
   }
   // if we already know it
@@ -68,6 +70,10 @@ const isPossessive = (terms, i) => {
   }
   //a gerund suggests 'is walking'
   if (nextTerm.tags.has('Verb')) {
+    // 'leonard's was closed'
+    if (copulas.has(nextTerm.normal)) {
+      return true
+    }
     //fix 'jamie's bite'
     if (nextTerm.tags.has('Infinitive')) {
       return true

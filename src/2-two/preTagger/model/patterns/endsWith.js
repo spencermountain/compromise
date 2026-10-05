@@ -111,7 +111,7 @@ export default {
   t: [
     [/.[di]est$/, 'Superlative'],
     [/.[icldtgrv]ent$/, Adj],
-    [/[aeiou].*ist$/, Adj],
+    [/[aeiou][^aeiou\r\n\u2028\u2029]*ist$/, Adj],
     [/^[a-z]et$/, Verb],
   ],
   s: [

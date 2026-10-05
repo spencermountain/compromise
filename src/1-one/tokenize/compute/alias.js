@@ -8,8 +8,8 @@ const addAliases = function (term, world) {
   const str = term.normal || term.text || term.machine
   const aliases = world.model.one.aliases
   // lookup known aliases like '&'
-  if (aliases.hasOwnProperty(str)) {
-    term.alias = term.alias || []
+  if (Object.hasOwn(aliases, str)) {
+    term.alias ||= []
     term.alias.push(aliases[str])
   }
   // support slashes as aliases
@@ -20,7 +20,7 @@ const addAliases = function (term, world) {
       arr.forEach(word => {
         word = word.trim()
         if (word !== '') {
-          term.alias = term.alias || []
+          term.alias ||= []
           term.alias.push(word)
         }
       })

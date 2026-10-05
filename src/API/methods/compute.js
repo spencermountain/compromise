@@ -1,18 +1,16 @@
-const isArray = input => Object.prototype.toString.call(input) === '[object Array]'
-
 const fns = {
   /** add metadata to term objects */
   compute: function (input) {
     const { world } = this
     const compute = world.compute
     // do one method
-    if (typeof input === 'string' && compute.hasOwnProperty(input)) {
+    if (typeof input === 'string' && Object.hasOwn(compute, input)) {
       compute[input](this)
     }
     // allow a list of methods
-    else if (isArray(input)) {
+    else if (Array.isArray(input)) {
       input.forEach(name => {
-        if (world.compute.hasOwnProperty(name)) {
+        if (Object.hasOwn(world.compute, name)) {
           compute[name](this)
         } else {
           console.warn('no compute:', input) // eslint-disable-line

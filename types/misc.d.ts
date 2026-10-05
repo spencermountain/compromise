@@ -2,7 +2,8 @@ export type Document = Term[][]
 
 export type Pointer = [n?: number, start?: number, end?: number, startId?: string, endId?: string]
 
-export type outMethods = 'text' | 'normal' | 'offset' | 'terms' | 'topk' | 'json' | 'tags' | 'array' | 'debug'
+export type outMethods =
+  'text' | 'normal' | 'offset' | 'terms' | 'topk' | 'json' | 'tags' | 'array' | 'best-tag' | 'debug'
 
 export type Groups = object
 
@@ -68,7 +69,7 @@ export interface Plugin {
   tags?: object,
   words?: object,
   frozen?: {[key: string]: string},
-  lib?: () => object,
+  lib?: object,
   api?: (fn: (view: any) => {}) => void,  //should be View
   mutate?: (fn: (world: object) => {}) => void,
 }
@@ -80,6 +81,8 @@ export interface matchOptions {
 
 export interface Match {
   match: string,
+  /** Required word, #Tag, or %Switch% to use instead of automatic hook selection. */
+  hook?: string,
   tag?: string | string[],
   unTag?: string | string[],
   group?: string | number,

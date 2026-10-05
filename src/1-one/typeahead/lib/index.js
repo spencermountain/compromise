@@ -11,7 +11,7 @@ const defaults = {
 
 const prepare = function (words = [], opts = {}) {
   const model = this.model()
-  opts = Object.assign({}, defaults, opts)
+  opts = { ...defaults, ...opts }
   if (isObject(words)) {
     Object.assign(model.one.lexicon, words)
     words = Object.keys(words)
@@ -20,7 +20,7 @@ const prepare = function (words = [], opts = {}) {
   // manually combine these with any existing prefixes
   Object.keys(prefixes).forEach(str => {
     // explode any overlaps
-    if (model.one.typeahead.hasOwnProperty(str)) {
+    if (Object.hasOwn(model.one.typeahead, str)) {
       delete model.one.typeahead[str]
       return
     }

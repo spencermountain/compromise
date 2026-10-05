@@ -1,14 +1,19 @@
+import question from '../../verbs/api/conjugate/question.js'
+import { firstGroup } from '../../verbs/api/conjugate/coordinate.js'
+
 const toFuture = function (s) {
+  const inverted = question(s, 'future')
+  if (inverted) return inverted
   let verbs = s.verbs()
   // translate the first verb, no-stress
-  const first = verbs.eq(0)
+  const first = firstGroup(verbs)
   first.toFutureTense()
   s = s.fullSentence()
   verbs = s.verbs()//re-do it
   // verbs.debug()
   // force agreement with any 2nd/3rd verbs:
   if (verbs.length > 1) {
-    verbs = verbs.slice(1)
+    verbs = verbs.slice(first.length)
     // which following-verbs should we also change?
     const toChange = verbs.filter((vb) => {
       // remove any sorta infinitive - 'to engage'

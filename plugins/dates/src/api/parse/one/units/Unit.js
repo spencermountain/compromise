@@ -4,7 +4,7 @@ class Unit {
   constructor(input, unit, context, setTime) {
     this.unit = unit || 'day'
     this.setTime = setTime || false
-    context = context || {}
+    context ||= {}
     let today = {}
     if (context.today) {
       today = {

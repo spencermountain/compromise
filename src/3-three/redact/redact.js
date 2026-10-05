@@ -34,7 +34,7 @@ const redactMatch = function (m, blockStr, keep = true) {
 }
 
 const redact = function (opts = {}, blockStr = '██████████', keep = true) {
-  opts = Object.assign({}, defaults, opts)
+  opts = { ...defaults, ...opts }
   if (opts.people !== false) {
     redactMatch(this.people(), blockStr, keep).unTag(hideTags.people)
   }

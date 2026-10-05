@@ -61,6 +61,19 @@ test('one-word durations', function (t) {
   t.end()
 })
 
+test('compact durations keep numeric and unit tags separate', function (t) {
+  for (const text of ['20mins', '1sec', '10hrs']) {
+    const doc = nlp(text)
+    const terms = doc.termList()
+    t.equal(terms.length, 2, here + text + ' has numeric and unit components')
+    t.ok(terms[0].tags.has('Value'), here + text + ' numeric component retains Value')
+    t.notOk(terms[0].tags.has('Noun'), here + text + ' numeric component is not a Noun')
+    t.ok(terms[1].tags.has('Duration'), here + text + ' unit retains Duration')
+    t.notOk(terms[1].tags.has('Value'), here + text + ' unit is not a Value')
+  }
+  t.end()
+})
+
 // test('durations normalize', function (t) {
 //   let arr = [
 //     ['blah blah two hours and 8 mins foobar', 'blah blah 2 hours and 8 minutes foobar'],

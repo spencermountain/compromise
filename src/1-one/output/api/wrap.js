@@ -23,7 +23,7 @@ const wrap = function (doc, obj) {
     for (let i = 0; i < terms.length; i += 1) {
       const t = terms[i]
       // do a span tag
-      if (starts.hasOwnProperty(t.id)) {
+      if (Object.hasOwn(starts, t.id)) {
         const { fn, end } = starts[t.id]
         const m = doc.update([[n, i, end]])
         text += terms[i].pre || ''

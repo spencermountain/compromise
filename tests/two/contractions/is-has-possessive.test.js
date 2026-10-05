@@ -141,6 +141,9 @@ test('is-has', function (t) {
     ["The librarian's knowledge of books was vast", '#Possessive'],
     ["The manager's decision was unexpected", '#Possessive'],
     ["The meeting's been rescheduled", 'has'],
+    ["Leonard's was Randall", '#Possessive'],
+    ["Toronto's was Canada", '#Possessive'],
+    ["Leonard's was closed on Monday", '#Possessive'],
     ["The meeting's scheduled for 3 PM", 'is'],
     ["The mountain's peak is covered in snow", '#Possessive'],
     ["The movie's already started", 'has'],
@@ -200,5 +203,13 @@ test('is-has', function (t) {
     const doc = nlp(a[0])
     t.equal(doc.has(a[1]), true, here + ' (' + a[1] + ')  ' + a[0])
   })
+  t.end()
+})
+
+test('possessive before a copula keeps its whitespace', function (t) {
+  const doc = nlp(`Leonard's was Randall`)
+  t.equal(doc.match('#Noun').text(), `Leonard's Randall`, here + 'noun match')
+  t.ok(doc.match('was').has('#Copula'), here + 'was stays a verb')
+  t.notOk(doc.match('was').has('#Adjective'), here + 'was is not an adjective')
   t.end()
 })

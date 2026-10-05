@@ -66,7 +66,7 @@ const api = function (View) {
         }
         //eslint-disable-next-line
         console.log(`${blue(subj.padEnd(10))} | ${green(verb.padEnd(10))}  | ${cyan(obj.padEnd(10))}`)
-        if (mods.length) {
+        if (mods.length > 0) {
           mods.forEach(mod => {
             console.log(''.padEnd(25) + `+${dim(mod)}`)//eslint-disable-line
           })

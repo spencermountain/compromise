@@ -1,5 +1,5 @@
 import lz from './lz.js'
-import fs from 'fs'
+import fs from 'node:fs'
 
 let string = fs.readFileSync('../../../plugins/speed/tests/files/freshPrince.txt').toString()
 // string = "This is my compression test.";

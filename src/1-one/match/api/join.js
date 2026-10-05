@@ -16,8 +16,8 @@ const isNeighbour = function (ptrL, ptrR) {
 const mergeIf = function (doc, lMatch, rMatch) {
   const world = doc.world
   const parseMatch = world.methods.one.parseMatch
-  lMatch = lMatch || '.$' //defaults
-  rMatch = rMatch || '^.'
+  lMatch ||= '.$' //defaults
+  rMatch ||= '^.'
   const leftMatch = parseMatch(lMatch, {}, world)
   const rightMatch = parseMatch(rMatch, {}, world)
   // ensure end-requirement to left-match, start-requiremnts to right match

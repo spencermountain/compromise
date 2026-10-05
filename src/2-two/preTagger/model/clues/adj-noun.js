@@ -14,15 +14,17 @@ const misc = {
   }
 }
 const clue = {
-  beforeTags: Object.assign({}, adj.beforeTags, noun.beforeTags, misc.beforeTags),
-  afterTags: Object.assign({}, adj.afterTags, noun.afterTags, misc.afterTags),
-  beforeWords: Object.assign({}, adj.beforeWords, noun.beforeWords, {
+  beforeTags: { ...adj.beforeTags, ...noun.beforeTags, ...misc.beforeTags },
+  afterTags: { ...adj.afterTags, ...noun.afterTags, ...misc.afterTags },
+  beforeWords: {
+    ...adj.beforeWords,
+    ...noun.beforeWords,
     // are representative
     are: 'Adjective', is: 'Adjective', was: 'Adjective', be: 'Adjective',
     // phrasals
     off: 'Adjective',//start off fine
     out: 'Adjective',//comes out fine
-  }),
-  afterWords: Object.assign({}, adj.afterWords, noun.afterWords),
+  },
+  afterWords: { ...adj.afterWords, ...noun.afterWords },
 }
 export default clue

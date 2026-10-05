@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import fs from 'fs'
-import path from 'path'
-import { performance } from 'perf_hooks'
-import { fileURLToPath } from 'url'
+import fs from 'node:fs'
+import path from 'node:path'
+import { performance } from 'node:perf_hooks'
+import { fileURLToPath } from 'node:url'
 import nlp from '../../src/three.js'
 
 // Keep this input local and fixed so scores remain comparable between runs.
@@ -45,6 +45,7 @@ const DEFAULT_MAX_SLOWDOWN_PERCENT = 10
 const MAX_ITERATIONS = 16384
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const resultsFile = path.join(scriptDir, 'results.jsonl')
+const noSave = process.argv.includes('--no-save')
 
 // Some package managers consume `--quiet` themselves and expose only their
 // lifecycle log level. Supporting argv keeps direct execution identical.
@@ -306,8 +307,8 @@ const main = () => {
   } else {
     console.log(comparisonText(previous, result))
 
-    if (isQuiet) {
-      console.log(dim('not saved (--quiet)'))
+    if (noSave || isQuiet) {
+      console.log(dim(`not saved (${noSave ? '--no-save' : '--quiet'})`))
     } else {
       fs.appendFileSync(resultsFile, `${JSON.stringify(result)}\n`, 'utf8')
       console.log(dim(`saved to ${path.relative(process.cwd(), resultsFile)}`))

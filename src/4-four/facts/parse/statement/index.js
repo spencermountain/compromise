@@ -30,7 +30,7 @@ const getFacts = function (s) {
         fact.subject = nounObj
       } else if (prop) {
         // walk [to] [the store]
-        fact.modifiers = fact.modifiers || {}
+        fact.modifiers ||= {}
         fact.modifiers[prop] = nounObj
       } else {
         // after our action, no property

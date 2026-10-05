@@ -1,14 +1,19 @@
+import getConflicts from '../../../tag/methods/_lib.js'
+
 // is this tag consistent with the tags they already have?
 const canBe = function (terms, tag, model) {
   const tagSet = model.one.tagSet
-  if (!tagSet.hasOwnProperty(tag)) {
+  if (!Object.hasOwn(tagSet, tag)) {
     return true
   }
-  const not = tagSet[tag].not || []
+  const conflicts = getConflicts(tagSet[tag].not)
+  if (conflicts.size === 0) {
+    return true
+  }
   for (let i = 0; i < terms.length; i += 1) {
     const term = terms[i]
-    for (let k = 0; k < not.length; k += 1) {
-      if (term.tags.has(not[k]) === true) {
+    for (const existing of term.tags) {
+      if (conflicts.has(existing)) {
         return false //found a tag conflict - bail!
       }
     }

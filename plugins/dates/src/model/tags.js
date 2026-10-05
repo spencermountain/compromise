@@ -1,22 +1,5 @@
 export default {
-  FinancialQuarter: {
-    is: 'Date',
-    not: ['Fraction'],
-  },
-  // 'summer'
-  Season: {
-    is: 'Date',
-  },
-  // '1982'
-  Year: {
-    is: 'Date',
-    not: ['RomanNumeral'],
-  },
-  // 'easter'
-  Holiday: {
-    is: 'Date',
-    also: 'Noun',
-  },
+  // Calendar tags and their exclusions are supplied by core.
   // 'two weeks before'
   DateShift: {
     is: 'Date',

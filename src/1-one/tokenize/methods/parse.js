@@ -4,7 +4,7 @@ import normalize from '../compute/normal/index.js'
 const parse = function (input, world) {
   const { methods, model } = world
   const { splitSentences, splitTerms, splitWhitespace } = methods.one.tokenize
-  input = input || ''
+  input ||= ''
   // split into sentences
   const sentences = splitSentences(input, world)
   // split into word objects

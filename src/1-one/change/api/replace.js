@@ -23,7 +23,7 @@ const subDollarSign = function (input, main) {
   const groups = main.groups()
   input = input.replace(dollarStub, a => {
     const num = a.replace(/\$/, '')
-    if (groups.hasOwnProperty(num)) {
+    if (Object.hasOwn(groups, num)) {
       return groups[num].text()
     }
     return a
@@ -48,7 +48,7 @@ fns.replaceWith = function (input, keep = {}) {
   }
   const terms = main.docs[0]
   if (!terms) return main
-  const isOriginalPossessive = keep.possessives && terms[terms.length - 1].tags.has('Possessive')
+  const isOriginalPossessive = keep.possessives && terms.at(-1).tags.has('Possessive')
   const isOriginalTitleCase = keep.case && isTitleCase(terms[0].text)
   // support 'foo $0' replacements
   input = subDollarSign(input, main)
@@ -59,7 +59,7 @@ fns.replaceWith = function (input, keep = {}) {
   // original.freeze()
   let oldTags = (original.docs[0] || []).map(term => Array.from(term.tags))
   const originalPre = original.docs[0][0].pre
-  const originalPost = original.docs[0][original.docs[0].length - 1].post
+  const originalPost = original.docs[0].at(-1).post
   // slide this in
   if (typeof input === 'string') {
     input = this.fromText(input).compute('id')
@@ -76,7 +76,7 @@ fns.replaceWith = function (input, keep = {}) {
   // keep "John's"
   if (isOriginalPossessive) {
     const tmp = main.docs[0]
-    const term = tmp[tmp.length - 1]
+    const term = tmp.at(-1)
     if (!term.tags.has('Possessive')) {
       term.text += "'s"
       term.normal += "'s"
@@ -90,7 +90,7 @@ fns.replaceWith = function (input, keep = {}) {
   }
   // try to keep any post-punctuation
   if (originalPost && main.docs[0]) {
-    const lastOne = main.docs[0][main.docs[0].length - 1]
+    const lastOne = main.docs[0].at(-1)
     if (!lastOne.post.trim()) {
       lastOne.post = originalPost
     }

@@ -62,7 +62,7 @@ const today = function (doc, context, parts) {
   }
   // today, yesterday, tomorrow
   const str = doc.text('reduced')
-  if (knownWord.hasOwnProperty(str) === true) {
+  if (Object.hasOwn(knownWord, str) === true) {
     return knownWord[str](context)
   }
   // 'the saturday after next'
@@ -75,7 +75,7 @@ const today = function (doc, context, parts) {
   if ((str === 'next' || str === 'last') && parts.shift && Object.keys(parts.shift).length > 0) {
     const keys = Object.keys(parts.shift)
     // 'week after next' → start from next week, the shift then adds one more
-    if (keys.length === 1 && Math.abs(parts.shift[keys[0]]) === 1 && afterNext.hasOwnProperty(keys[0])) {
+    if (keys.length === 1 && Math.abs(parts.shift[keys[0]]) === 1 && Object.hasOwn(afterNext, keys[0])) {
       const Model = afterNext[keys[0]]
       const base = new Model(context.today, null, context)
       return str === 'next' ? base.next() : base.last()

@@ -10,8 +10,6 @@ const expand = function (m) {
   }
 }
 
-const isArray = arr => Object.prototype.toString.call(arr) === '[object Array]'
-
 // set new ids for each terms
 const addIds = function (terms) {
   terms = terms.map(term => {
@@ -32,8 +30,8 @@ const getTerms = function (input, world) {
     return input.clone().docs[0] || [] //assume one sentence
   }
   //allow an array of terms, too
-  if (isArray(input)) {
-    return isArray(input[0]) ? input[0] : input
+  if (Array.isArray(input)) {
+    return Array.isArray(input[0]) ? input[0] : input
   }
   return []
 }
@@ -63,7 +61,7 @@ const insert = function (input, view, prepend) {
       cleanAppend(home, ptr, terms, document)
     }
     // harden the pointer
-    if (document[n] && document[n][ptr[1]]) {
+    if (document[n]?.[ptr[1]]) {
       ptr[3] = document[n][ptr[1]].id
     }
     // change self backwards by len

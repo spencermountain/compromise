@@ -18,7 +18,7 @@ const freeze = function (view) {
           const words = terms.slice(i, k + 1)
           const str = words.map(term => term.machine || term.normal).join(' ')
           // lookup frozen lexicon
-          if (frozenLex.hasOwnProperty(str) === true) {
+          if (Object.hasOwn(frozenLex, str) === true) {
             setTag(words, frozenLex[str], world, false, '1-frozen-multi-lexicon')
             words.forEach(term => (term.frozen = true))
             continue
@@ -26,7 +26,7 @@ const freeze = function (view) {
         }
       }
       // test single word
-      if (frozenLex[word] !== undefined && frozenLex.hasOwnProperty(word)) {
+      if (frozenLex[word] !== undefined && Object.hasOwn(frozenLex, word)) {
         setTag([t], frozenLex[word], world, false, '1-freeze-lexicon')
         t.frozen = true
         continue

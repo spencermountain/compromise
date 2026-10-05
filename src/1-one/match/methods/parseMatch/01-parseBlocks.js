@@ -1,7 +1,7 @@
+import splitGroups from './splitGroups.js'
+
 // match  'foo /yes/' and not 'foo/no/bar'
 const bySlashes = /(?:^|\s)([![^]*(?:<[^<]*>)?\/.*?[^\\/]\/[?\]+*$~]*)(?:\s|$)/
-// match '(yes) but not foo(no)bar'
-const byParentheses = /([!~[^]*(?:<[^<]*>)?\([^)]+[^\\)]\)[?\]+*$~]*)(?:\s|$)/
 // okay
 const byWord = / /g
 
@@ -28,7 +28,7 @@ const parseBlocks = function (txt) {
       res.push(str)
       return
     }
-    res = res.concat(str.split(byParentheses))
+    res = res.concat(splitGroups(str))
   })
   res = cleanUp(res)
   // split by spaces, now

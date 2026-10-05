@@ -1,9 +1,5 @@
 import doesMatch from '../../term/doesMatch.js'
 
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
-}
-
 // try to match a list of tokens, starting at state.t + skipN
 // returns the number of terms it consumed, or 0 for no-match
 const tryChoice = function (state, regs, skipN) {
@@ -21,7 +17,7 @@ const tryChoice = function (state, regs, skipN) {
     // this can be greedy - '(foo+ bar)'
     if (cr.greedy === true) {
       // like getGreedy, anchors should not apply to the repeated terms
-      const gr = Object.assign({}, cr, { start: false, end: false })
+      const gr = { ...cr, start: false, end: false }
       for (let i = t + 1; i < state.terms.length; i += 1) {
         if (doesMatch(state.terms[i], gr, state.start_i + i, state.phrase_length) !== true) {
           break
@@ -38,7 +34,7 @@ const tryChoices = function (state, skipN) {
   const block = state.regs[state.r]
   for (let c = 0; c < block.choices.length; c += 1) {
     const regs = block.choices[c]
-    if (!isArray(regs)) {
+    if (!Array.isArray(regs)) {
       return 0
     }
     const len = tryChoice(state, regs, skipN)

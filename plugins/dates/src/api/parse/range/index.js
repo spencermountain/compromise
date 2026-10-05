@@ -8,15 +8,11 @@ import doOneDate from './03-one-date.js'
 
 const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate)
 
-const env = typeof process === 'undefined' || !process.env ? self.env || {} : process.env
+const env = globalThis.process?.env ?? globalThis.env ?? {}
 const log = msg => {
   if (env.DEBUG_DATE) {
     console.log(`\n  \x1b[32m ${msg} \x1b[0m`) // eslint-disable-line
   }
-}
-
-const isArray = function (arr) {
-  return Object.prototype.toString.call(arr) === '[object Array]'
 }
 
 //else, try whole thing, non ranges
@@ -51,7 +47,7 @@ const tryRanges = function (doc, context) {
       let res = fmt.parse(m, context)
       if (res !== null) {
         // did it return more than one date?
-        if (!isArray(res)) {
+        if (!Array.isArray(res)) {
           res = [res]
         }
         return res
@@ -76,7 +72,7 @@ const parseRanges = function (m, context) {
     found = [tryFull(m, context)]
   }
   // add the repeat info to each date
-  found = found.map((o) => Object.assign({}, repeats, o))
+  found = found.map((o) => ({ ...repeats, ...o }))
   // ensure start is not after end
   found.forEach((res) => {
     if (res.start && res.end && res.start.d.epoch > res.end.d.epoch) {

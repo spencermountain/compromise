@@ -100,11 +100,11 @@ const contractions = view => {
       // any known-ones, like 'dunno'?
       let words = knownOnes(list, terms[i], before, after)
       // ['foo', 's']
-      if (!words && byEnd.hasOwnProperty(after)) {
+      if (!words && Object.hasOwn(byEnd, after)) {
         words = byEnd[after](terms, i, world)
       }
       // ['j', 'aime']
-      if (!words && byStart.hasOwnProperty(before)) {
+      if (!words && Object.hasOwn(byStart, before)) {
         words = byStart[before](terms, i)
       }
       // 'there is' vs 'there has'

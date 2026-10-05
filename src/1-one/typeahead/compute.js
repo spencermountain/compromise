@@ -5,14 +5,13 @@ const typeahead = function (view) {
   if (docs.length === 0 || Object.keys(prefixes).length === 0) {
     return
   }
-  const lastPhrase = docs[docs.length - 1] || []
-  const lastTerm = lastPhrase[lastPhrase.length - 1]
+  const lastTerm = docs.at(-1)?.at(-1)
   // if we've already put whitespace, end.
-  if (lastTerm.post) {
+  if (!lastTerm || lastTerm.post) {
     return
   }
   // if we found something
-  if (prefixes.hasOwnProperty(lastTerm.normal)) {
+  if (Object.hasOwn(prefixes, lastTerm.normal)) {
     const found = prefixes[lastTerm.normal]
     // add full-word as an implicit result
     lastTerm.implicit = found

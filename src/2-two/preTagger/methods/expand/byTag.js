@@ -5,7 +5,7 @@ export default {
     const already = model.one.lexicon
     const plural = methods.two.transform.noun.toPlural(word, model)
     if (!already[plural]) {
-      lex[plural] = lex[plural] || 'Plural'
+      lex[plural] ||= 'Plural'
     }
   },
   // 'lawyer', 'manager' plural forms
@@ -13,7 +13,7 @@ export default {
     const already = model.one.lexicon
     const plural = methods.two.transform.noun.toPlural(word, model)
     if (!already[plural]) {
-      lex[plural] = lex[plural] || ['Plural', 'Actor']
+      lex[plural] ||= ['Plural', 'Actor']
     }
   },
 
@@ -24,12 +24,12 @@ export default {
     // fast -> fastest
     const sup = toSuperlative(word, model)
     if (!already[sup]) {
-      lex[sup] = lex[sup] || 'Superlative'
+      lex[sup] ||= 'Superlative'
     }
     // fast -> faster
     const comp = toComparative(word, model)
     if (!already[comp]) {
-      lex[comp] = lex[comp] || 'Comparative'
+      lex[comp] ||= 'Comparative'
     }
     // overwrite
     lex[word] = 'Adjective'
@@ -38,7 +38,7 @@ export default {
   // 'german' -> 'germans'
   Demonym: (word, lex, methods, model) => {
     const plural = methods.two.transform.noun.toPlural(word, model)
-    lex[plural] = lex[plural] || ['Demonym', 'Plural']
+    lex[plural] ||= ['Demonym', 'Plural']
   },
 
   // conjugate all forms of these verbs
@@ -60,7 +60,7 @@ export default {
     const [inf, rest] = word.split(' ')
     // add root verb
     if (!already[inf]) {
-      lex[inf] = lex[inf] || 'Infinitive'
+      lex[inf] ||= 'Infinitive'
     }
     // conjugate it
     const all = methods.two.transform.verb.conjugate(inf, model)
@@ -76,7 +76,7 @@ export default {
       }
       _multi[a[1]] = 2
       const str = a[1] + ' ' + rest
-      lex[str] = lex[str] || [a[0], 'PhrasalVerb']
+      lex[str] ||= [a[0], 'PhrasalVerb']
     })
   },
 

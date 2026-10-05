@@ -2,6 +2,8 @@ import failFast from './01-failFast.js'
 import fromHere from './02-from-here.js'
 import getGroup from './03-getGroup.js'
 import notIf from './03-notIf.js'
+import matchTerm from './term/doesMatch.js'
+import { isFixed, fromFixed } from './_fixed.js'
 
 
 // make proper pointers
@@ -13,8 +15,8 @@ const addSentence = function (res, n) {
   return res
 }
 
-const handleStart = function (terms, regs, n) {
-  let res = fromHere(terms, regs, 0, terms.length)
+const handleStart = function (terms, regs, n, attempt) {
+  let res = attempt(terms, regs, 0, terms.length)
   if (res) {
     res = addSentence(res, n)
     return res //getGroup([res], group)
@@ -24,14 +26,26 @@ const handleStart = function (terms, regs, n) {
 
 // ok, here we go.
 const runMatch = function (docs, todo, cache) {
-  cache = cache || []
-  const { regs, group, justOne } = todo
+  cache ||= []
+  const { regs, group, justOne, checkFirst } = todo
   let results = []
   if (!regs || regs.length === 0) {
     return { ptrs: [], byGroup: {} }
   }
+  const attempt = (todo.fixed ?? isFixed(regs)) ? fromFixed : fromHere
 
-  const minLength = regs.filter(r => r.optional !== true && r.negative !== true).length
+  // Compiled rules carry this value; public parsed patterns can still be edited
+  // by callers, so calculate their minimum without caching on the token array.
+  let minLength = todo.minLength
+  if (minLength === undefined) {
+    minLength = 0
+    for (let i = 0; i < regs.length; i += 1) {
+      const reg = regs[i]
+      if (reg.optional !== true && reg.negative !== true) {
+        minLength += 1
+      }
+    }
+  }
   docs: for (let n = 0; n < docs.length; n += 1) {
     const terms = docs[n]
     // let index = terms[0].index || []
@@ -41,7 +55,7 @@ const runMatch = function (docs, todo, cache) {
     }
     // ^start regs only run once, per phrase
     if (regs[0].start === true) {
-      const foundStart = handleStart(terms, regs, n, group)
+      const foundStart = handleStart(terms, regs, n, attempt)
       if (foundStart) {
         results.push(foundStart)
       }
@@ -49,12 +63,15 @@ const runMatch = function (docs, todo, cache) {
     }
     //ok, try starting the match now from every term
     for (let i = 0; i < terms.length; i += 1) {
-      const slice = terms.slice(i)
       // ensure it's long-enough
-      if (slice.length < minLength) {
+      if (terms.length - i < minLength) {
         break
       }
-      let res = fromHere(slice, regs, i, terms.length)
+      // Compiled sweep rules can reject a start before allocating match state.
+      if (checkFirst && !matchTerm(terms[i], regs[0], i, terms.length)) {
+        continue
+      }
+      let res = attempt(terms, regs, i, terms.length, i)
       // did we find a result?
       if (res) {
         // res = addSentence(res, index[0])

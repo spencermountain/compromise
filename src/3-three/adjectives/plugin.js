@@ -1,3 +1,4 @@
+const transforms = ['toComparative', 'toSuperlative', 'toAdverb', 'toNoun']
 
 // guard against superlative+comparative forms
 const toRoot = function (adj) {
@@ -50,39 +51,26 @@ const api = function (View) {
         }
       }, [])
     }
-    toComparative(n) {
-      const { toComparative } = this.methods.two.transform.adjective
+    toRoot(n) {
       return this.getNth(n).map(adj => {
-        const root = toRoot(adj)
-        const str = toComparative(root, this.model)
-        return adj.replaceWith(str)
-      })
-    }
-    toSuperlative(n) {
-      const { toSuperlative } = this.methods.two.transform.adjective
-      return this.getNth(n).map(adj => {
-        const root = toRoot(adj)
-        const str = toSuperlative(root, this.model)
-        return adj.replaceWith(str)
-      })
-    }
-    toAdverb(n) {
-      const { toAdverb } = this.methods.two.transform.adjective
-      return this.getNth(n).map(adj => {
-        const root = toRoot(adj)
-        const str = toAdverb(root, this.model)
-        return adj.replaceWith(str)
-      })
-    }
-    toNoun(n) {
-      const { toNoun } = this.methods.two.transform.adjective
-      return this.getNth(n).map(adj => {
-        const root = toRoot(adj)
-        const str = toNoun(root, this.model)
-        return adj.replaceWith(str)
+        return adj.replaceWith(toRoot(adj))
       })
     }
   }
+
+  // Keep generated methods non-enumerable, like the class methods above.
+  transforms.forEach(name => {
+    Object.defineProperty(Adjectives.prototype, name, {
+      configurable: true,
+      writable: true,
+      value: function (n) {
+        const transform = this.methods.two.transform.adjective[name]
+        return this.getNth(n).map(adj => {
+          return adj.replaceWith(transform(toRoot(adj), this.model))
+        })
+      },
+    })
+  })
 
   View.prototype.adjectives = function (n) {
     let m = this.match('#Adjective')

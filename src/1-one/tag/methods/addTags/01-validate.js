@@ -6,10 +6,10 @@ const toArr = function (input) {
   if (typeof input === 'string') {
     return [input]
   }
-  return input
+  return input.slice()
 }
 
-const addImplied = function (tags, already) {
+const addImplied = function (tags) {
   Object.keys(tags).forEach(k => {
     // support deprecated fmts
     if (tags[k].isA) {
@@ -20,36 +20,47 @@ const addImplied = function (tags, already) {
     }
     // add any implicit 'is' tags
     if (tags[k].is && typeof tags[k].is === 'string') {
-      if (!already.hasOwnProperty(tags[k].is) && !tags.hasOwnProperty(tags[k].is)) {
+      if (!Object.hasOwn(tags, tags[k].is)) {
         tags[tags[k].is] = {}
       }
     }
-    // add any implicit 'not' tags
-    if (tags[k].not && typeof tags[k].not === 'string' && !tags.hasOwnProperty(tags[k].not)) {
-      if (!already.hasOwnProperty(tags[k].not) && !tags.hasOwnProperty(tags[k].not)) {
-        tags[tags[k].not] = {}
+    // Additional parents need entries too, including parents introduced by plugins.
+    toArr(tags[k].also).forEach(parent => {
+      if (!Object.hasOwn(tags, parent)) {
+        tags[parent] = {}
       }
-    }
+    })
+    // add any implicit 'not' tags
+    toArr(tags[k].not).forEach(excluded => {
+      if (!Object.hasOwn(tags, excluded)) {
+        tags[excluded] = {}
+      }
+    })
   })
   return tags
 }
 
 
 const validate = function (tags, already) {
-
-  tags = addImplied(tags, already)
+  // Reciprocal links must reach previously registered tags too. Copy entries
+  // before normalization so the existing compiled model remains untouched.
+  tags = Object.fromEntries(Object.entries({ ...already, ...tags }).map(([tag, definition]) => [tag, { ...definition }]))
+  tags = addImplied(tags)
 
   // property validation
   Object.keys(tags).forEach(k => {
     tags[k].children = toArr(tags[k].children)
     tags[k].not = toArr(tags[k].not)
+    if (tags[k].also) {
+      tags[k].also = toArr(tags[k].also)
+    }
   })
   // not links are bi-directional
   // add any incoming not tags
   Object.keys(tags).forEach(k => {
     const nots = tags[k].not || []
     nots.forEach(no => {
-      if (tags[no] && tags[no].not) {
+      if (tags[no] && tags[no].not && !tags[no].not.includes(k)) {
         tags[no].not.push(k)
       }
     })

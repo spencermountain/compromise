@@ -1,4 +1,5 @@
 import parse from './01-parse.js'
+import buildIndex from './02-index.js'
 
 // do some indexing on the list of matches
 const buildNet = function (matches, world) {
@@ -19,14 +20,18 @@ const buildNet = function (matches, world) {
       hooks[str].push(obj)
     })
   })
-  // remove duplicates
-  Object.keys(hooks).forEach(k => {
-    const already = {}
+  // Record enumeration order, including numeric keys, so input-driven lookup
+  // can preserve the order in which tag actions have always been applied.
+  const hookOrder = Object.create(null)
+  Object.keys(hooks).forEach((k, i) => {
+    hookOrder[k] = i
+    // remove duplicates
+    const already = new Set()
     hooks[k] = hooks[k].filter(obj => {
-      if (typeof already[obj.match] === 'boolean') {
+      if (already.has(obj)) {
         return false
       }
-      already[obj.match] = true
+      already.add(obj)
       return true
     })
   })
@@ -35,6 +40,8 @@ const buildNet = function (matches, world) {
   const always = matches.filter(o => o.needs.length === 0 && o.wants.length === 0)
   return {
     hooks,
+    hookOrder,
+    index: buildIndex(matches, hooks, hookOrder),
     always
   }
 }

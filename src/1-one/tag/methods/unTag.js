@@ -1,6 +1,9 @@
+import getChildren from './_lib.js'
+
 // remove this tag, and its children, from these terms
 const unTag = function (terms, tag, tagSet) {
   tag = tag.trim().replace(/^#/, '')
+  const children = getChildren(tagSet[tag]?.children)
   for (let i = 0; i < terms.length; i += 1) {
     const term = terms[i]
     // don't untag anything if term is frozen
@@ -12,12 +15,12 @@ const unTag = function (terms, tag, tagSet) {
       term.tags.clear()
       continue
     }
-    // for known tags, do logical dependencies first
-    const known = tagSet[tag]
     // removing #Verb should also remove #PastTense
-    if (known && known.children.length > 0) {
-      for (let o = 0; o < known.children.length; o += 1) {
-        term.tags.delete(known.children[o])
+    if (children.size > 0) {
+      for (const existing of term.tags) {
+        if (children.has(existing)) {
+          term.tags.delete(existing)
+        }
       }
     }
     term.tags.delete(tag)

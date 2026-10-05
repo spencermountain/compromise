@@ -1,14 +1,16 @@
 {
   "name": "compromise-dates",
-  "description": "plugin for nlp-compromise",
-  "version": "3.8.1",
-  "author": "Spencer Kelly <spencermountain@gmail.com> (http://spencermounta.in)",
-  "main": "./src/plugin.js",
-  "unpkg": "./builds/compromise-dates.min.js",
-  "module": "./builds/compromise-dates.mjs",
+  "version": "3.9.0",
+  "description": "Date and time extraction for compromise",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/dates"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
-  "sideEffects": false,
-  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -21,31 +23,42 @@
       }
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/spencermountain/compromise.git"
+  "main": "./builds/compromise-dates.cjs",
+  "module": "./builds/compromise-dates.mjs",
+  "types": "./index.d.ts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
   },
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/dates",
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
-    "testb": "TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer  --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "perf": "node ./scripts/perf.js",
     "version": "node ./scripts/version.js",
     "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
-    "builds/",
-    "src/",
     "index.d.ts",
-    "index.d.cts"
+    "index.d.cts",
+    "builds/",
+    "src/"
   ],
-  "peerDependencies": {
-    "compromise": ">=14.2.0"
-  },
   "dependencies": {
-    "spacetime": "^7.12.1",
+    "spacetime": "^7.14.0",
     "spacetime-holiday": "0.3.0"
   },
-  "license": "MIT"
+  "peerDependencies": {
+    "compromise": "workspace:*"
+  },
+  "unpkg": "./builds/compromise-dates.min.js",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tape": "catalog:",
+    "cross-env": "catalog:",
+    "tap-dancer": "catalog:"
+  }
 }

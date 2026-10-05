@@ -5,7 +5,7 @@ import extend from './API/extend.js'
 import { verbose } from './API/_lib.js'
 import handleInputs from './API/inputs.js'
 
-const world = Object.assign({}, tmpWrld)
+const world = { ...tmpWrld }
 
 const nlp = function (input, lex) {
   if (lex) {
@@ -45,7 +45,6 @@ nlp.plugin = function (plugin) {
 }
 nlp.extend = nlp.plugin
 
-
 /** reach-into compromise internals */
 nlp.world = function () {
   return this._world
@@ -60,9 +59,9 @@ nlp.hooks = function () {
   return this._world.hooks
 }
 
-/** log the decision-making to console */
+// log the decision-making to console
 nlp.verbose = verbose
-/** current library release version */
+// current library release version
 nlp.version = version
 
 export default nlp

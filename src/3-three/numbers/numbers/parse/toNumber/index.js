@@ -26,7 +26,7 @@ const section_sum = obj => {
 //turn a string into a number
 const parse = function (str) {
   //convert some known-numbers
-  if (casualForms.hasOwnProperty(str) === true) {
+  if (Object.hasOwn(casualForms, str) === true) {
     return casualForms[str]
   }
   //'a/an' is 1
@@ -76,7 +76,7 @@ const parse = function (str) {
       continue
     }
     // try to support 'two fifty'
-    if (words.tens.hasOwnProperty(w)) {
+    if (Object.hasOwn(words.tens, w)) {
       if (has.ones && Object.keys(has).length === 1) {
         sum = has.ones * 100
         has = {}
@@ -91,13 +91,13 @@ const parse = function (str) {
     //buildOut section, collect 'has' values
     if (/^[0-9.]+$/.test(w)) {
       has.ones = parseFloat(w) //not technically right
-    } else if (words.ones.hasOwnProperty(w) === true) {
+    } else if (Object.hasOwn(words.ones, w) === true) {
       has.ones = words.ones[w]
-    } else if (words.teens.hasOwnProperty(w) === true) {
+    } else if (Object.hasOwn(words.teens, w) === true) {
       has.teens = words.teens[w]
-    } else if (words.tens.hasOwnProperty(w) === true) {
+    } else if (Object.hasOwn(words.tens, w) === true) {
       has.tens = words.tens[w]
-    } else if (words.multiples.hasOwnProperty(w) === true) {
+    } else if (Object.hasOwn(words.multiples, w) === true) {
       let mult = words.multiples[w]
 
       //something has gone wrong : 'two hundred five hundred'

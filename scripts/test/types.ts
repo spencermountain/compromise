@@ -105,6 +105,7 @@ tape('misc functions', function (t) {
   let txt = doc.text()
   txt = doc.text('normal')
   txt = doc.text('machine')
+  txt = doc.text('best-tag')
   txt = doc.text('root')
   txt = doc.text('implicit')
   txt = doc.json()

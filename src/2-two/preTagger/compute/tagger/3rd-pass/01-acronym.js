@@ -3,9 +3,9 @@ import fastTag from '../_fastTag.js'
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
 const isUpperCase = /^[A-Z-]+$/
 const upperThenS = /^[A-Z]+s$/
-const periodAcronym = /([A-Z]\.)+[A-Z]?,?$/
-const noPeriodAcronym = /[A-Z]{2,}('s|,)?$/
-const lowerCaseAcronym = /([a-z]\.)+[a-z]\.?$/
+const periodAcronym = /^([A-Z]\.)+[A-Z]?,?$/
+const noPeriodAcronym = /^[A-Z]{2,}('s|,)?$/
+const lowerCaseAcronym = /^([a-z]\.)+[a-z]\.?$/
 
 const oneLetterWord = {
   I: true,
@@ -33,7 +33,7 @@ const isNoPeriodAcronym = function (term, model) {
     } else {
       return false
     }
-  } else if (places.hasOwnProperty(term.normal) === true) {
+  } else if (Object.hasOwn(places, term.normal) === true) {
     // NY, US, UK, etc.
     return true
   }
@@ -42,11 +42,11 @@ const isNoPeriodAcronym = function (term, model) {
     return false
   }
   // 'I' is not a acronym
-  if (oneLetterWord.hasOwnProperty(str)) {
+  if (Object.hasOwn(oneLetterWord, str)) {
     return false
   }
   // known-words, like 'PIZZA' is not an acronym.
-  if (model.one.lexicon.hasOwnProperty(term.normal)) {
+  if (Object.hasOwn(model.one.lexicon, term.normal)) {
     return false
   }
   //like N.D.A
@@ -90,7 +90,7 @@ const isAcronym = function (terms, i, model) {
     return true
   }
   // one-letter acronyms
-  if (!oneLetterWord.hasOwnProperty(term.text) && oneLetterAcronym.test(term.text)) {
+  if (!Object.hasOwn(oneLetterWord, term.text) && oneLetterAcronym.test(term.text)) {
     term.tags.clear()
     fastTag(term, ['Acronym', 'Noun'], '3-one-letter-acronym')
     return true

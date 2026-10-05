@@ -115,7 +115,6 @@ export default [
   'joules',
   'pascals',
   'watt',
-  'watts',
   'wb',
   'coulomb',
   'coulombs',

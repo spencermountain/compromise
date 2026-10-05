@@ -7,6 +7,14 @@ const predicate = '#Adv+? not? (#V && !#Ger && !#Prt)'
 const seatedQuestion = '^(which|what) #Adj+? #NN (did|does|do|#Mod) #Pron [sit] [on]$'
 
 const rules = [
+  // the very [professional] actor
+  {
+    m: '#Det (very|remarkably|extremely|quite|unusually) [%Adj|Noun%] #Actor',
+    g: 0,
+    t: 'Adj',
+    r: 'degree-actor',
+  },
+
   // === second-pass.js ===
   // Corrections matched against the main sweep's output, before any are applied.
   // Keep comma context, but don't turn unambiguous verbs into list items.

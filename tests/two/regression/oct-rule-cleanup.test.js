@@ -1152,25 +1152,26 @@ const spec = `
   Shit them. {Inf,Pronoun}
   Damn them. {Inf,Pronoun}
   Being born. {Aux,Past}
+  How he is driving. {Conj,Pronoun,Aux,Ger}
+  The very professional actor. {Det,Adv,Adj,Actor}
+  A dammed-up river. {Det,Adj,Adj,Noun}
+  A must-win game. {Det,Adj,Adj,Noun}
+  Vacuum-sealed. {Adj,Adj}
+  What the hell? {QuestionWord,Det,Noun}
+  What they are doing is useful. {Conj,Pronoun,Aux,Ger,Copula,Adj}
 
   # Currently failing examples
 #  Saint Foo. {Honorific,Person}
 #  Due to weather. {Prep,Prep,Noun}
 #  A bit confused. {Det,Adv,Adj}
-#  A dammed-up river. {Det,Adj,Adj,Noun}
-#  A must-win game. {Det,Adj,Adj,Noun}
-#  Vacuum-sealed. {Adj,Adj}
 #  He was a little fuming. {Pronoun,Copula,Det,Adv,Adj}
 #  Brand new. {Adv,Adj}
 #  Sun the 5th. {WeekDay,Date,Date}
-#  Water-flows. {Noun,Noun}
 #  There is no going back. {There,Copula,Negative,Noun,Adv}
-#  What the hell? {QuestionWord,Det,Noun}
 #  Go to shit. {Inf,Prep,Noun}
 #  And check this out! {Conj,Inf,Pronoun,Particle}
 #  My butt smells. {Poss,Noun,Pres}
 #  The upcoming thank-you. {Det,Noun,Noun,Noun}
-#  What they are doing is useful. {Conj,Pronoun,Aux,Ger,Copula,Adj}
 #  With heads and arms rolling around. {Prep,Plural,Conj,Plural,Ger,Adv}
 #  The-only-reason. {Det,Adj,Noun}
 #  The American thank-you letter. {Det,Demonym,Noun,Noun,Noun}
@@ -1202,29 +1203,21 @@ const spec = `
 #  Baker Jenna Smith. {Actor,Person,Person}
 #  First lady. {Honorific,Honorific}
 #  Second admiral. {Honorific,Honorific}
-#  Rose Microsoft. {Person,Person}
 #  March up. {Inf,Particle}
 #  Jobs that fit. {Plural,Conj,Inf}
-#  Melted and fallen. {Past,Conj,Past}
 #  He was under paid. {Pronoun,Aux,Adv,Past}
 #  She is being cool. {Pronoun,Aux,Copula,Adj}
 #  He ought not to walk. {Pronoun,Modal,Negative,Connector,Inf}
 #  He ought to be walking. {Pronoun,Modal,Connector,Aux,Ger}
 #  He would have had to go. {Pronoun,Modal,Aux,Aux,Connector,Inf}
 #  He is about to go. {Pronoun,Aux,Aux,Aux,Inf}
-#  Walk-up. {Inf,Particle}
-#  Walk-over. {Inf,Particle}
 #  Back it up. {Inf,Pronoun,Particle}
 #  Eat my shorts. {Imperative,Poss,Plural}
 #  Long live the king. {Expression,Expression,Det,Noun}
 #  There she is. {Adv,Pronoun,Copula}
-#  Fucking ridiculous. {Adv,Adj}
 #  Microsoft of Canada. {Organization,Organization,Organization}
-#  How he is driving. {Conj,Pronoun,Aux,Ger}
 #  A lot like ours. {Det,Noun,Prep,Pronoun}
-#  How many? {QuestionWord,Value}
 #  23 Main Street in Toronto. {Address,Address,Address,Place,Place}
-#  The very professional actor. {Det,Adv,Adj,Actor}
 `
 
 test('match spec:', function (t) {

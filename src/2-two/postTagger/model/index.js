@@ -383,7 +383,7 @@ const rules = [
     r: 'ended-in-ruins',
   },
   // water-flows
-  { m: '(#Sing && @hasHyphen) #Pres', t: 'NN', r: 'hyphen-verb' },
+  { m: '(#Sing && @hasHyphen && !must) #Pres', t: 'NN', r: 'hyphen-verb' },
   // is no [going] back
   { m: 'is no [#V]', g: 0, t: 'NN', r: 'is-no-verb' },
   // what the [hell]
@@ -728,7 +728,7 @@ const rules = [
   // Being introduces a predicate rather than a direct object.
   // she is writing [thank]-you letters
   {
-    m: '#Cop (#Ger && !being) [(#Pres && !#Ger)] !by?',
+    m: '#Cop (#Ger && !being) [(#Pres && !#Ger && !#Cop)] !by?',
     g: 0,
     t: 'NN',
     n: 'going',
@@ -763,7 +763,7 @@ const rules = [
   // the 1968 [stand]-off
   { m: '#Det #Year [#V]', g: 0, t: 'NN', r: '1968-film' },
   // the [break up]
-  { m: '#Det [#PhrV #Prt]', g: 0, t: 'NN', r: 'break-up' },
+  { m: '#Det [(#PhrV && !#Past) #Prt]', g: 0, t: 'NN', r: 'break-up' },
   // the [individual] goals
   {
     m: '#Det [%Adj|Noun%] #NN',
@@ -1344,7 +1344,7 @@ const rules = [
   // would [have] [had] to go
   {
     m: `#Mod (#Adv|not)+? [have] (#Adv|not)+? [had] (#Adv|not)+? #V`,
-    g: 0,
+    g: 1,
     t: 'Aux',
     r: 'would-have',
   },
@@ -1410,7 +1410,7 @@ const rules = [
   // === verbs/phrasal.js ===
 
   // walk-up
-  { m: '(#V && @hasHyphen) up', t: 'PhrV', r: 'foo-up' },
+  { m: '(#V && @hasHyphen && !#Past) up', t: 'PhrV', r: 'foo-up' },
   // walk-off
   { m: '(#V && @hasHyphen) off', t: 'PhrV', r: 'foo-off' },
   // walk-over
@@ -1463,7 +1463,7 @@ const rules = [
   { m: '^just do? not? [#Inf #Prt?]', g: 0, t: 'Imp', r: 'just-go' },
   // [go] quickly.
   {
-    m: '^[#Inf] (#Adj|#Adv|hard|high|fast|slow)$',
+    m: '^[(#Inf && !#Hyphenated)] (#Adj|#Adv|hard|high|fast|slow)$',
     g: 0,
     t: 'Imp',
     n: '(so|such|rather|enough)',
@@ -1789,7 +1789,7 @@ const multi = [
   //the word 'how many'
   // { match: '^(how|which)', tag: 'QuestionWord', reason: 'how-q' },
   // [how] he
-  { m: '[#QW] (#Pron|#Det)', g: 0, t: 'Prep', r: 'how-he' },
+  { m: '[#QW] (#Pron|#Det) !#Cop', g: 0, t: 'Prep', n: 'what the (hell|heck)', r: 'how-he' },
   // [when] stolen
   { m: '[#QW] #Part', g: 0, t: 'Prep', r: 'when-stolen' },
   // [how] is
@@ -1910,13 +1910,6 @@ const multi = [
   { m: '(has|have|had) (#Adv|not)+? been #Adv+? tired$', u: 'Pass', r: 'tired-unpass' },
   // 23 Main Street in Toronto
   { m: '#Address in #Place', t: 'Place', r: 'address-place' },
-  // the very [professional] actor
-  {
-    m: '#Det (very|remarkably|extremely|quite|unusually) [%Adj|Noun%] #Actor',
-    g: 0,
-    t: 'Adj',
-    r: 'degree-actor',
-  },
   // the [sleeping] dog
   {
     m: '#Det [sleeping] (#Actor|#Pers|puppy|kitten|dog|cat|baby|babies|child|children)',
@@ -2016,7 +2009,7 @@ const multi = [
 
 const matches = expandRules(rules)
 
-// console.log('  ', matches.length, 'matches first-pass')
+console.log('  ', matches.length, 'matches first-pass')
 
 export default {
   two: {

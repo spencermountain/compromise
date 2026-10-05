@@ -1143,7 +1143,19 @@ const spec = `
   That is when he arrived. {Pronoun,Copula,Conj,Pronoun,Past}
   She has since moved. {Pronoun,Aux,Adv,Past}
 
+  1pm next sun. {Time,Date,WeekDay}
+  He bowed his head in prayer. {Pronoun,Past,Poss,Noun,Prep,Noun}
+  Assign all tasks. {Inf,Det,Plural}
+  From start to finish. {Prep,Noun,Prep,Noun}
+  Pope Francis. {Honorific,Person}
+  Prince Paris. {Honorific,Person}
+  Shit them. {Inf,Pronoun}
+  Damn them. {Inf,Pronoun}
+  Being born. {Aux,Past}
+
   # Currently failing examples
+#  Saint Foo. {Honorific,Person}
+#  Due to weather. {Prep,Prep,Noun}
 #  A bit confused. {Det,Adv,Adj}
 #  A dammed-up river. {Det,Adj,Adj,Noun}
 #  A must-win game. {Det,Adj,Adj,Noun}
@@ -1151,15 +1163,12 @@ const spec = `
 #  He was a little fuming. {Pronoun,Copula,Det,Adv,Adj}
 #  Brand new. {Adv,Adj}
 #  Sun the 5th. {WeekDay,Date,Date}
-#  1pm next sun. {Time,Date,WeekDay}
-#  Due to weather. {Prep,Prep,Noun}
 #  Water-flows. {Noun,Noun}
 #  There is no going back. {There,Copula,Negative,Noun,Adv}
 #  What the hell? {QuestionWord,Det,Noun}
 #  Go to shit. {Inf,Prep,Noun}
 #  And check this out! {Conj,Inf,Pronoun,Particle}
 #  My butt smells. {Poss,Noun,Pres}
-#  He bowed his head in prayer. {Pronoun,Past,Poss,Noun,Prep,Noun}
 #  The upcoming thank-you. {Det,Noun,Noun,Noun}
 #  What they are doing is useful. {Conj,Pronoun,Aux,Ger,Copula,Adj}
 #  With heads and arms rolling around. {Prep,Plural,Conj,Plural,Ger,Adv}
@@ -1171,11 +1180,9 @@ const spec = `
 #  Number of thank-yous. {Noun,Prep,Noun,Plural}
 #  We get much thank-you mail. {Pronoun,Inf,Det,Noun,Noun,Noun}
 #  That leads to trouble. {Pronoun,Pres,Prep,Noun}
-#  Assign all tasks. {Inf,Det,Plural}
 #  One big thank-you. {Cardinal,Adj,Noun,Noun}
 #  We found all upcoming words. {Pronoun,Past,Det,Adj,Plural}
 #  Many thanks. {Det,Plural}
-#  From start to finish. {Prep,Noun,Prep,Noun}
 #  Cute little thank-you bags. {Adj,Adj,Noun,Noun,Plural}
 #  Writing bigger thank-you notes. {Ger,Comparative,Noun,Noun,Plural}
 #  Selling like hot thank-you cards. {Ger,Prep,Adj,Noun,Noun,Plural}
@@ -1191,17 +1198,12 @@ const spec = `
 #  The 1968 stand-off. {Det,Year,Noun,Noun}
 #  $5 and $6. {Money,Conj,Money}
 #  6 dollars and 5 cents. {Money,Unit,Conj,Money,Unit}
-#  Pope Francis. {Honorific,Person}
-#  Prince Paris. {Honorific,Person}
-#  Saint Foo. {Honorific,Person}
 #  Toronto John. {Person,Person}
 #  Baker Jenna Smith. {Actor,Person,Person}
 #  First lady. {Honorific,Honorific}
 #  Second admiral. {Honorific,Honorific}
 #  Rose Microsoft. {Person,Person}
 #  March up. {Inf,Particle}
-#  Shit them. {Inf,Pronoun}
-#  Damn them. {Inf,Pronoun}
 #  Jobs that fit. {Plural,Conj,Inf}
 #  Melted and fallen. {Past,Conj,Past}
 #  He was under paid. {Pronoun,Aux,Adv,Past}
@@ -1210,7 +1212,6 @@ const spec = `
 #  He ought to be walking. {Pronoun,Modal,Connector,Aux,Ger}
 #  He would have had to go. {Pronoun,Modal,Aux,Aux,Connector,Inf}
 #  He is about to go. {Pronoun,Aux,Aux,Aux,Inf}
-#  Being born. {Aux,Past}
 #  Walk-up. {Inf,Particle}
 #  Walk-over. {Inf,Particle}
 #  Back it up. {Inf,Pronoun,Particle}

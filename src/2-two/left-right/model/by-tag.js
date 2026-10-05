@@ -69,6 +69,8 @@ const rules = {
     '^never _ -> #Imp',
     // [continue] playing
     '^ _ #Ger -> #Imp',
+    // much [thank]-you mail
+    'much _ -> #NN',
   ],
   '#PresentTense': [
     // taught [thank]-you etiquette

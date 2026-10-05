@@ -26,6 +26,8 @@ const rules = {
   all: [
     // they [all] swim
     '_ #V -> #Adv',
+    // assign [all] tasks
+    'assign _ (#Pres|#Plur) -> #Det',
   ],
   even: [
     // [even] held
@@ -283,9 +285,35 @@ const rules = {
     // half a [penny]
     'a _ $ -> #Currency',
   ],
+  next: [
+    // 1pm [next] sun
+    '#Time _ (sun|#WeekDay) -> #Date',
+  ],
+  to: [
+    // from start [to] finish
+    'start _ finish -> #Prep',
+  ],
+  in: [
+    // bowed his head [in] prayer
+    '_ prayer -> #Prep',
+  ],
+  pope: [
+    // [pope] francis
+    '_ #Pers -> #Hon',
+  ],
+  prince: [
+    // [prince] paris
+    '_ #Prop -> #Hon',
+  ],
+  born: [
+    // being [born]
+    'being _ -> #Past',
+  ],
 }
 
 const compounds = {
+  // [damn] them
+  'shit|damn': '^ _ them -> #Inf',
   // [much] appreciated
   // [super] strong
   'much|super|pretty': '_ #Adj -> #Adv',
@@ -332,6 +360,14 @@ const compounds = {
   'over|under': '(is|was|were) _ #Past -> #Adv',
   // ...['under', 'over'].map(word => ({
   // m: `(is|was|were) [${word} #Past]`,
+  'shit|damn|fuck': '_ (#Det|#Poss|them) -> #Verb',
+
+  // // [shit] them
+  // { m: '[shit] (#Det|#Poss|them)', g: 0, t: 'V', r: 'shit-verb' },
+  // // [damn] them
+  // { m: '[damn] (#Det|#Poss|them)', g: 0, t: 'V', r: 'damn-verb' },
+  // // [fuck] them
+  // { m: '[fuck] (#Det|#Poss|them)', g: 0, t: 'V', r: 'fuck-verb' },
 }
 
 Object.entries(compounds).forEach(([words, rule]) => {

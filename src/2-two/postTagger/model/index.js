@@ -596,7 +596,7 @@ const rules = [
   // [append] is cloned
   { m: '^[#Inf] (is|was)', g: 0, t: 'NN', r: 'checkmate-is' },
   // get much [thank]-you mail
-  { m: '#Inf much [#Inf]', g: 0, t: 'NN', r: 'get-much' },
+  // { m: '#Inf much [#Inf]', g: 0, t: 'NN', r: 'get-much' },
   // [cause] i gotta
   { m: '[cause] #Pron #V', g: 0, t: 'Conj', r: 'cause-cuz' },
   // the US [air] force
@@ -1207,21 +1207,6 @@ const rules = [
   },
   // have read
   { m: `(has|have|had) read`, t: 'Aux Part', r: 'read-read' },
-  // were [under paid]
-  // ...['under', 'over'].map(word => ({
-  //   m: `(is|was|were) [${word} #Past]`,
-  //   g: 0,
-  //   t: 'Adv Adj',
-  //   r: 'under-cooked',
-  // })),
-
-  // [shit] them
-  { m: '[shit] (#Det|#Poss|them)', g: 0, t: 'V', r: 'shit-verb' },
-  // [damn] them
-  { m: '[damn] (#Det|#Poss|them)', g: 0, t: 'V', r: 'damn-verb' },
-  // [fuck] them
-  { m: '[fuck] (#Det|#Poss|them)', g: 0, t: 'V', r: 'fuck-verb' },
-
   // jobs that fit
   { m: '#Plur that %Noun|Verb%', t: '. #Prep #Inf', r: 'jobs-that-work' },
   // [works] for me

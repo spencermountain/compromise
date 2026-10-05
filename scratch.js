@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import nlp from './src/two.js'
-
+nlp.verbose('tagger')
 // const book = fs.readFileSync(new URL('./scripts/bench/infinite-jest.txt', import.meta.url), 'utf8')
 
 // lexicon:        512ms
@@ -10,5 +10,6 @@ import nlp from './src/two.js'
 // main-sweep:    2731ms
 // second-sweep:   696ms
 
-const doc = nlp('hello world')
+// const doc = nlp('dude we should').debug()
+const doc = nlp('Like, I understand').debug()
 // console.log(`${doc.docs.length.toLocaleString()} sentences; ${doc.wordCount().toLocaleString()} words`)

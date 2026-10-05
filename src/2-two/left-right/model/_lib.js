@@ -53,7 +53,7 @@ const parse = (word, source) => {
   if (index < 0 || index > 1 || terms.length - index > 2) {
     fail()
   }
-  const rule = { actions, reason: `${word}: ${source}` }
+  const rule = { actions, reason: `${source}` }
   if (index === 1) {
     let pre = terms[0]
     if (pre.startsWith('^')) {

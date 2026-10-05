@@ -12,3 +12,4 @@ export default {
     },
   },
 }
+// console.log(compile(byWord).like[2])

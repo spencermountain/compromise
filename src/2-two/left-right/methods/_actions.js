@@ -1,7 +1,7 @@
 const apply = (term, rule, world) => {
   const { setTag, unTag } = world.methods.one
   const terms = [term]
-  const reason = rule.reason || 'left-right'
+    const reason = '2-left-right: ' + (rule.reason || '')
   // Object rules retain their original single-action format.
   const actions = rule.actions || [rule]
   for (let i = 0; i < actions.length; i += 1) {

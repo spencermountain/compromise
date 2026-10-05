@@ -23,6 +23,8 @@ const rules = {
     '#Det _ #NN -> #Adj',
     // [walking] should be fun
     '_ #Mod -> #Activity',
+    // i think tipping sucks
+    '#Inf _ #Pres -> #Noun',
   ],
   '#Adjective': [
     // the [above] is clear

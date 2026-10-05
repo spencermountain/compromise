@@ -500,8 +500,6 @@ const rules = [
   { m: '(this|that|the|a|an) [#Ger #Inf]', g: 0, t: 'Sing', r: 'planning' },
   // the [upcoming thank]-you
   { m: '(that|the) [#Ger #Pres]', g: 0, ifNo: '#Cop', t: 'Plur', r: 'paving-stones' },
-  // i think [tipping] sucks
-  { m: `#Pron #Inf [#Ger] #Pres`, g: 0, t: 'NN', r: 'tipping-sucks' },
   // lexical [tagging]
   { m: '#Adj [#Ger]', g: 0, t: 'NN', n: '(still|even|just)', r: 'early-warning' },
   // [walking] is cool
@@ -995,8 +993,6 @@ const rules = [
   { m: '#First (bin|al) #NN', t: 'Pers', r: 'bill-al-noun' },
   // John L. Foo
   { m: '#First #Acronym #Prop', t: 'Pers', r: 'bill-acro-title' },
-  // Andrew Lloyd Webber
-  { m: '#First #First #Prop', t: 'Pers', r: 'bill-first-title' },
   // Mr Foo
   { m: '#Hon #First? #Prop', t: 'Pers', r: 'dr-john-title' },
   // peter the great

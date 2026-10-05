@@ -283,5 +283,4 @@ Object.entries(compounds).forEach(([words, rule]) => {
     rules[word].push(rule)
   })
 })
-
 export default rules

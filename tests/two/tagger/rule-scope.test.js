@@ -29,7 +29,7 @@ the FBI {Det,Organization}
 some eat apples {Pronoun,Pres,Plural}
 your dog smiles {Poss,Noun,Pres}
 your guild colors {Poss,Noun,Plural}
-the poor eat rice {Det,Adj,Pres,Noun}
+the poor eat rice {Det,Noun,Pres,Noun}
 a good read {Det,Adj,Noun}
 a refreshing swim {Det,Adj,Noun}
 she had put it there {Noun,Auxiliary,Participle,Noun,Adv}

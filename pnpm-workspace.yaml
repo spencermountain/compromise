@@ -3,10 +3,10 @@ packages:
 
 # Shared versions for the root library and maintained plugins.
 catalog:
-  '@types/node': '^26.6.2'
+  '@types/node': '^26.6.4'
   '@rollup/plugin-node-resolve': '16.0.3'
   '@rollup/plugin-terser': '1.0.0'
-  'rollup': '4.63.5'
+  'rollup': '4.64.0'
   'rollup-plugin-filesize-check': '2.0.1'
   'tap-dancer': '0.4.2'
   'tape': '5.10.2'
@@ -17,11 +17,4 @@ catalog:
 linkWorkspacePackages: true
 
 minimumReleaseAgeExclude:
-  - rollup-plugin-filesize-check@2.0.1
-  - tap-dancer@0.4.2
-  - efrt@2.8.0
-  - grad-school@0.0.7
-  - suffix-thumb@6.0.0
-  - grad-school@0.0.8
-  - tap-dancer@0.4.3
-  - efrt@2.9.0
+  - grad-school@0.0.9

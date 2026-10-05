@@ -30,7 +30,11 @@ const getIndexed = function (set, index, hookOrder, terms) {
           break
         }
       }
-      found.push({ rule: entry.rule, rank, order: entry.order })
+      if (rank === entry.rank) {
+        found.push(entry)
+      } else {
+        found.push({ rule: entry.rule, rank, order: entry.order })
+      }
     }
   })
   found.sort((a, b) => a.rank - b.rank || a.order - b.order)

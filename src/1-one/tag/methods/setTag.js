@@ -1,3 +1,5 @@
+import debug from '../../../API/debug.js'
+import getConflicts from './_lib.js'
 const isMulti = / /
 
 const addChunk = function (term, tag) {
@@ -9,7 +11,7 @@ const addChunk = function (term, tag) {
   }
 }
 
-const tagTerm = function (term, tag, tagSet, isSafe) {
+const tagTerm = function (term, tag, tagSet, isSafe, validated) {
   // does it already have this tag?
   if (term.tags.has(tag) === true) {
     return null
@@ -26,13 +28,16 @@ const tagTerm = function (term, tag, tagSet, isSafe) {
   const known = tagSet[tag]
   if (known) {
     // first, we remove any conflicting tags
-    if (known.not && known.not.length > 0) {
-      for (let o = 0; o < known.not.length; o += 1) {
-        // if we're in tagSafe, skip this term.
-        if (isSafe === true && term.tags.has(known.not[o])) {
-          return null
+    if (known !== validated && known.not && known.not.length > 0) {
+      const conflicts = getConflicts(known.not)
+      for (const existing of term.tags) {
+        if (conflicts.has(existing)) {
+          // Safe and frozen terms cannot lose conflicting tags.
+          if (isSafe === true) {
+            return null
+          }
+          term.tags.delete(existing)
         }
-        term.tags.delete(known.not[o])
       }
     }
     // add parent tags
@@ -81,14 +86,15 @@ const log = (terms, tag, reason = '') => {
 }
 
 // add a tag to all these terms
-const setTag = function (terms, tag, world = {}, isSafe, reason) {
+// Whole-match validation is separate from per-term safety.
+// eslint-disable-next-line max-params
+const setTag = function (terms, tag, world = {}, isSafe, reason, validated) {
   const tagSet = world.model.one.tagSet || {}
   if (!tag) {
     return
   }
   // some logging for debugging
-  const env = globalThis.process?.env ?? globalThis.env ?? {}
-  if (env && env.DEBUG_TAGS) {
+  if (debug.tags) {
     log(terms, tag, reason)
   }
   if (Array.isArray(tag) === true) {
@@ -108,7 +114,7 @@ const setTag = function (terms, tag, world = {}, isSafe, reason) {
   tag = tag.replace(/^#/, '')
   // let set = false
   for (let i = 0; i < terms.length; i += 1) {
-    tagTerm(terms[i], tag, tagSet, isSafe)
+    tagTerm(terms[i], tag, tagSet, isSafe, validated)
   }
 }
 export default setTag

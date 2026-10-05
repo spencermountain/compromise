@@ -1,45 +1,47 @@
+import expandTags from '../../../2-two/postTagger/model/_lib.js'
+
 const rules = [
   // === Conjunction ===
   // that the houses
-  { match: '[that] #Determiner #Noun', group: 0, chunk: 'Pivot' },
+  { match: '[that] #Det #NN', group: 0, chunk: 'Pivot' },
   // estimated that
-  { match: '#PastTense [that]', group: 0, chunk: 'Pivot' },
+  { match: '#Past [that]', group: 0, chunk: 'Pivot' },
   // so the
-  { match: '[so] #Determiner', group: 0, chunk: 'Pivot' },
+  { match: '[so] #Det', group: 0, chunk: 'Pivot' },
 
   // === Adjective ===
   // was really nice
-  { match: '#Copula #Adverb+? [#Adjective]', group: 0, chunk: 'Adjective' },
+  { match: '#Cop #Adv+? [#Adj]', group: 0, chunk: 'Adjective' },
   // was nice
   // { match: '#Copula [#Adjective]', group: 0, chunk: 'Adjective' },
   // nice and cool
-  { match: '#Adjective and #Adjective', chunk: 'Adjective' },
+  { match: '#Adj and #Adj', chunk: 'Adjective' },
   // really nice
   // { match: '#Adverb+ #Adjective', chunk: 'Adjective' },
 
   // === Verb ===
   // quickly and suddenly run
-  { match: '#Adverb+ and #Adverb #Verb', chunk: 'Verb' },
+  { match: '#Adv+ and #Adv #V', chunk: 'Verb' },
   // sitting near
-  { match: '#Gerund #Adjective$', chunk: 'Verb' },
+  { match: '#Ger #Adj$', chunk: 'Verb' },
   // going to walk
-  { match: '#Gerund to #Verb', chunk: 'Verb' },
+  { match: '#Ger to #V', chunk: 'Verb' },
   // come and have a drink
-  { match: '#PresentTense and #PresentTense', chunk: 'Verb' },
+  { match: '#Pres and #Pres', chunk: 'Verb' },
   // really not
-  { match: '#Adverb #Negative', chunk: 'Verb' },
+  { match: '#Adv #Neg', chunk: 'Verb' },
   // want to see
-  { match: '(want|wants|wanted) to #Infinitive', chunk: 'Verb' },
+  { match: '(want|wants|wanted) to #Inf', chunk: 'Verb' },
   // walk ourselves
-  { match: '#Verb #Reflexive', chunk: 'Verb' },
+  { match: '#V #Refl', chunk: 'Verb' },
   // tell him the story
   // { match: '#PresentTense [#Pronoun] #Determiner', group: 0, chunk: 'Verb' },
   // tries to walk
-  { match: '#Verb [to] #Adverb? #Infinitive', group: 0, chunk: 'Verb' },
+  { match: '#V [to] #Adv? #Inf', group: 0, chunk: 'Verb' },
   // upon seeing
-  { match: '[#Preposition] #Gerund', group: 0, chunk: 'Verb' },
+  { match: '[#Prep] #Ger', group: 0, chunk: 'Verb' },
   // ensure that
-  { match: '#Infinitive [that] <Noun>', group: 0, chunk: 'Verb' },
+  { match: '#Inf [that] <Noun>', group: 0, chunk: 'Verb' },
 
   // === Noun ===
   // the brown fox
@@ -50,17 +52,17 @@ const rules = [
   // { match: '#Adjective+ <Noun>', chunk: 'Noun' },
   // --- of ---
   // son of a gun
-  { match: '#Noun of #Determiner? #Noun', chunk: 'Noun' },
+  { match: '#NN of #Det? #NN', chunk: 'Noun' },
   // 3 beautiful women
-  { match: '#Value+ #Adverb? #Adjective', chunk: 'Noun' },
+  { match: '#Value+ #Adv? #Adj', chunk: 'Noun' },
   // the last russian tsar
-  { match: 'the [#Adjective] #Noun', chunk: 'Noun' },
+  { match: 'the [#Adj] #NN', chunk: 'Noun' },
   // breakfast in bed
-  { match: '#Singular in #Determiner? #Singular', chunk: 'Noun' },
+  { match: '#Sing in #Det? #Sing', chunk: 'Noun' },
   // Some citizens in this Canadian capital
-  { match: '#Plural [in] #Determiner? #Noun', group: 0, chunk: 'Pivot' },
+  { match: '#Plur [in] #Det? #NN', group: 0, chunk: 'Pivot' },
   // indoor and outdoor seating
-  { match: '#Noun and #Determiner? #Noun', notIf: '(#Possessive|#Pronoun)', chunk: 'Noun' },
+  { match: '#NN and #Det? #NN', notIf: '(#Poss|#Pron)', chunk: 'Noun' },
   //  boys and girls
   // { match: '#Plural and #Determiner? #Plural', chunk: 'Noun' },
   // tomatoes and cheese
@@ -68,6 +70,14 @@ const rules = [
   // that is why
   // { match: '[that] (is|was)', group: 0, chunk: 'Noun' },
 ]
+
+// Restore public tag names once before compiling the matcher.
+rules.forEach(rule => {
+  rule.match = expandTags(rule.match)
+  if (rule.notIf) {
+    rule.notIf = expandTags(rule.notIf)
+  }
+})
 
 let net = null
 const matcher = function (view, _, world) {

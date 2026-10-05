@@ -1,4 +1,5 @@
 import colors from './_colors.js'
+import getTagSet from '../_lib.js'
 
 const getColor = function (node) {
   if (Object.hasOwn(colors, node.id)) {
@@ -81,6 +82,8 @@ const fmt = function (nodes) {
       }
     })
     res[k].not = Array.from(nots)
+    getTagSet(res[k].not)
+    getTagSet(res[k].children)
     // Keep accepting custom definitions, but flag impossible combinations once
     // per tag, after both inheritance and reciprocal exclusions are resolved.
     const conflicts = [k, ...res[k].parents].filter(tag => nots.has(tag))

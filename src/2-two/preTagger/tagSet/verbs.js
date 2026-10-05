@@ -1,75 +1,79 @@
+import {
+  NN, JJ, RB, Value, Expression, V, VBD, Fut, Pres, VBG, Cop, VB, Conj, PhrasalVerb,
+} from './_lib.js'
+
 export default {
   Verb: {
-    not: ['Noun', 'Adjective', 'Adverb', 'Value', 'Expression'],
+    not: [NN, JJ, RB, Value, Expression],
     alias: 'Vb'
   },
   // 'he [walks]'
   PresentTense: {
-    is: 'Verb',
-    not: ['PastTense', 'FutureTense'],
+    is: V,
+    not: [VBD, Fut],
     alias: 'Pres'
   },
   // 'will [walk]'
   Infinitive: {
-    is: 'PresentTense',
-    not: ['Gerund'],
+    is: Pres,
+    not: [VBG],
     alias: 'Inf'
   },
   // '[walk] now!'
   Imperative: {
-    is: 'Verb',
-    not: ['PastTense', 'Gerund', 'Copula'],
+    is: V,
+    not: [VBD, VBG, Cop],
     alias: 'Imp'
   },
   // walking
   Gerund: {
-    is: 'PresentTense',
-    not: ['Copula'],
+    is: Pres,
+    not: [Cop],
     alias: 'Ger'
   },
   // walked
   PastTense: {
-    is: 'Verb',
-    not: ['PresentTense', 'Gerund', 'FutureTense'],
+    is: V,
+    not: [Pres, VBG, Fut],
     alias: 'Past'
   },
   // will walk
   FutureTense: {
-    is: 'Verb',
-    not: ['PresentTense', 'PastTense'],
+    is: V,
+    not: [Pres, VBD],
     alias: 'Fut'
   },
   // is/was
   Copula: {
-    is: 'Verb',
+    is: V,
   },
   // '[could] walk'
   Modal: {
-    is: 'Verb',
-    not: ['Infinitive'],
+    is: V,
+    not: [VB],
   },
   // 'awaken'
   Participle: {
-    is: 'PastTense',
+    is: VBD,
   },
   // '[will have had] walked'
   Auxiliary: {
-    is: 'Verb',
-    not: ['PastTense', 'PresentTense', 'Gerund', 'Conjunction'],
+    is: V,
+    not: [VBD, Pres, VBG, Conj],
     alias: 'Aux'
   },
   // 'walk out'
   PhrasalVerb: {
-    is: 'Verb',
+    is: V,
     alias: 'Phrasal'
   },
   // 'walk [out]'
   Particle: {
-    is: 'PhrasalVerb',
-    not: ['PastTense', 'PresentTense', 'Copula', 'Gerund'],
+    is: PhrasalVerb,
+    not: [VBD, Pres, Cop, VBG],
   },
   // 'walked by'
   Passive: {
-    is: 'Verb',
+    is: V,
   },
 }

@@ -89,6 +89,11 @@ There is **one tag-slot per compromise term, in document order.** This is the en
 alignment contract. Punctuation is not a term — it lives in the sentence text only and
 never consumes a slot.
 
+When a `{…}` block is present, `.testSpec()` requires its slot count to equal the
+term count. Shorter lists cannot match a prefix or an interior phrase, and longer
+lists fail too. Use `.` for a term whose tags you do not want to check. Omitting the
+whole block skips validation; it does not make individual slots optional.
+
 compromise's own tokenizer decides what a "term" is, and that decision is the
 authority for both sides of the format:
 
@@ -233,10 +238,83 @@ nlp.testSpec(spec, false)        // quiet
 nlp.testSpec(spec, false, true)  // throw on a failing line
 ```
 
+`fromSpec()` accepts an options object, defaulting to:
+
+```js
+nlp.fromSpec(spec, { tags: 'ignore', failures: 'ignore' })
+```
+
+| Option | Behavior |
+| --- | --- |
+| `tags: 'ignore'` | Run the normal tagger; supplied tags do not alter the document. |
+| `tags: 'use'` | Tokenize without the normal tagger, then apply positive supplied tags with inheritance. |
+| `failures: 'ignore'` | Skip validation and return all text with an empty `.failures` array. |
+| `failures: 'throw'` | Validate and throw on failure; otherwise return all text. |
+| `failures: 'retain'` | Validate and return only failing tagged lines plus tagless lines. |
+
+With `tags: 'use'`, `.` and negative constraints add no tags, and tagless lines
+remain untagged. Validation checks the **resulting supplied tagging**, so
+`use + retain` normally returns an empty document. Contradictions such as
+`Noun|!Noun` can still fail. Invalid slot syntax and mismatched term counts always
+throw in `use` mode, because the supplied tags cannot be assigned reliably.
+
+```js
+nlp.fromSpec('dog {Verb}', { tags: 'use' }) // dog is tagged Verb
+nlp.fromSpec('dog {Verb}', { failures: 'throw' }) // normal tagging fails validation
+nlp.fromSpec('dog {Verb}', { tags: 'use', failures: 'retain' }) // passes; omitted
+```
+
+`fromSpec()` is quiet by default; `verbose: true` logs validation results.
+`testSpec(spec)` delegates to `fromSpec(spec, { tags: 'ignore', failures: 'retain' })`,
+while retaining its legacy logging and `throwError` arguments. Both return a View,
+not an array; use `.failures` when only the diagnostics are needed.
+
 Sentences without a tag block pass without validation and remain in the returned
 document, with trailing comments removed. An explicit empty `{}` block still
-undergoes validation. Because untagged sentences are retained, a nonempty result
-does not necessarily mean validation failed; use `throwError` to enforce it.
+undergoes validation when validation is enabled. Because untagged sentences are retained, a nonempty result
+does not necessarily mean validation failed; check `result.failures.length` or use
+`throwError` to enforce it.
+
+The returned document has a `failures` array, empty when validation passes:
+
+```js
+const result = nlp.testSpec('the cat slept {.,!Noun,.}', false)
+result.failures.forEach(failure => console.log(failure.line, failure.message))
+result.text() // document methods still work
+```
+
+Each error includes its original, one-based `line` number (counting blank and comment
+lines), sentence `text`, readable `message`, and a `code`: `tags`, `length`, `syntax`,
+or `match`. Term errors include a one-based `term` position, `word` (including implicit
+contraction terms), `expected` slot constraints, and `actual` tags. Length errors
+use numeric `expected` and `actual` term counts. One line can have multiple errors.
+Tagless lines produce no errors. The array describes the original validation; it
+does not update when the document is edited or carry over to derived Views.
+
+Within a tag block, `.testSpec()` accepts these positional constraints:
+
+| Slot | Meaning |
+| --- | --- |
+| `Noun` or `#Noun` | The term has this tag. Aliases such as `Vb` work too. |
+| `!Noun` or `!#Noun` | The term does not have this tag. Negated aliases such as `!Vb` work too. |
+| `.` | Any single term, regardless of its tags. |
+| `Vb\|!Noun` | Both constraints must hold for the same term. Pipes mean **and**, not **or**. |
+
+```js
+nlp.testSpec('slept {!Noun}', false)              // passes: a verb, not a noun
+nlp.testSpec('the cat slept {.,Noun,!Noun}', false) // passes: three slots, three terms
+nlp.testSpec('the cat slept {Noun}', false)       // fails: one slot, three terms
+nlp.testSpec('the cat slept {.,.,.,.}', false)    // fails: four slots, three terms
+nlp.testSpec("she didn't walk {.,.,!Noun,.}", false) // four terms, including implicit 'not'
+```
+
+Every slot consumes exactly one term. Quantifiers (`*`, `+`, `?`), groups, and
+greedy or optional slots are not supported. An empty slot is invalid; use `.`
+instead. An explicit `{}` fails for nonempty text. Length mismatches are reported
+in verbose output and in errors when `throwError` is enabled.
+
+`out('spec')` still emits one tag per term. By default, `fromSpec()` extracts and
+reparses the text; its options enable applying tags and validating constraints.
 
 Both accept aliases or full tag-names, and are forgiving about LLM-style mess: blank
 lines, a trailing newline, `#` comments, and preamble lines without a `{}` block won't

@@ -1,4 +1,20 @@
 const rules = {
+  lieutenant: [
+    // 1st [lieutenant]
+    '(1st|2nd|3rd) _ -> #Hon',
+  ],
+  dozen: [
+    // two [dozen] eggs
+    '(a|#Cardinal) _ -> #Multiple | #Cardinal',
+  ],
+  how: [
+    // [how] is she?
+    '_ (#Det|#Cop|#Mod|#Past) -> #QW',
+  ],
+  rival: [
+    // a [rival] company
+    '(#Det|#Poss) _ #Noun -> #Adjective',
+  ],
   bill: [
     // the [bill] is a common noun, despite its name default
     '(#Det|#Poss) _ -> #Singular | !#Person | !#ProperNoun',
@@ -361,6 +377,10 @@ const rules = {
 }
 
 const compounds = {
+  // [1st] lieutenant
+  '1st|2nd|3rd': '_ lieutenant -> #Hon',
+  // is [when] he left
+  'who|what|where|why|how|when': '#Cop _ #NN -> #Conj',
   // [dark] green
   'dark|bright|flat|light|soft|pale|dead|dim|faux|little|wee|sheer|most|near|good|extra|all': '_ #Adj -> #Adv',
   // in [march]

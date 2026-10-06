@@ -80,6 +80,13 @@ export default {
   'bests': 'PresentTense',
 
   // funny switches
+  'authors': 'Plural|Verb',
+  'captains': 'Plural|Verb',
+  'mentors': 'Plural|Verb',
+  'partners': 'Plural|Verb',
+  'pioneers': 'Plural|Verb',
+  'shepherds': 'Plural|Verb',
+  'tutors': 'Plural|Verb',
   'bills': 'Plural|Verb',
   'leaves': 'Plural|Verb'
 }

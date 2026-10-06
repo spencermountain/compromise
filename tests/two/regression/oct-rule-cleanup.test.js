@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import assertSpec from '../_spec.js'
 import leftRight from '../../../src/2-two/left-right/plugin.js'
 import compileLeftRight from '../../../src/2-two/left-right/model/_lib.js'
 const here = '[two/rule-cleanup] '
@@ -715,7 +716,7 @@ const spec = `
   June the 12th. {Month,Date,Date}
   June 7. {Month,Date}
   7 June. {Date,Month}
-  Aug 20-21. {Month,Date,Date}
+  Aug 20-21. {Month,Date,Date,Date}
   Wednesday June 5th. {WeekDay,Month,Date}
   Aug 5th 2021. {Month,Date,Date}
   China standard time. {Timezone,Timezone,Timezone}
@@ -1218,47 +1219,7 @@ const spec = `
 `
 
 test('match spec:', function (t) {
-  const tagSet = nlp.world().model.one.tagSet
-  const aliases = {}
-  Object.entries(tagSet).forEach(([tag, info]) => {
-    if (info.alias) aliases[info.alias] = tag
-  })
-  spec
-    .split('\n')
-    .filter(line => line.trim() && !line.trimStart().startsWith('#'))
-    .forEach(line => {
-      const failing = nlp.testSpec(line, false)
-      const brace = line.lastIndexOf('{')
-      const sentence = line.slice(0, brace).trim()
-      const differences = []
-      if (failing.found) {
-        failing.compute('tagRank')
-        const slots = line
-          .slice(brace + 1)
-          .replace(/\}[ \t]*#.*$/, '}')
-          .replace(/\}$/, '')
-          .split(',')
-        const terms = failing.docs.flat()
-        slots.forEach((slot, i) => {
-          const expected = slot.split('|').map(tag => tag.trim())
-          const term = terms[i]
-          if (!term) {
-            differences.push(`term ${i + 1}: missing, expected ${slot}`)
-          } else if (!expected.every(tag => term.tags.has(aliases[tag] || tag))) {
-            const word = term.implicit || term.text
-            const actual = term.tagRank[0] || 'Untagged'
-            const missing = expected.find(tag => !term.tags.has(aliases[tag] || tag))
-            differences.push(`'${word}' #${actual}!=#${missing}`)
-          }
-        })
-        if (terms.length !== slots.length) {
-          differences.push(`expected ${slots.length} terms, got ${terms.length}`)
-        }
-        if (differences.length === 0) differences.push('tags align, but the sentence pattern did not match')
-      }
-      const detail = differences.length > 0 ? ' — ' + differences.join('; ') : ''
-      t.equal(failing.found, false, here + sentence + detail)
-    })
+  assertSpec(t, spec, here.trim())
   t.end()
 })
 
@@ -1578,6 +1539,257 @@ test('rule cleanup: hyphenated verb compounds', t => {
   cases.forEach(([text, phrase]) => {
     const target = nlp(text).match(phrase)
     t.ok(target.found && target.docs.flat().every(term => term.tags.has('Adjective')), text)
+  })
+  t.end()
+})
+
+test('second-pass cleanup: spatial prepositions retain verbal contrasts', t => {
+  const words = ['above', 'below', 'under', 'over', 'beside', 'behind', 'against', 'outside', 'inside', 'near', 'beneath', 'underneath', 'aboard']
+  words.forEach(word => {
+    ;[`they stayed ${word} the ship`, `we waited ${word} my house`, `she stood ${word} him`].forEach(text => {
+      t.ok(nlp(text).match(word).has('#Preposition'), text)
+    })
+  })
+  ;['we near the coast', 'they will near the coast', 'the boat nears the coast'].forEach(text => {
+    t.ok(nlp(text).match('(near|nears)').has('#Verb'), text)
+    t.notOk(nlp(text).match('(near|nears)').has('#Preposition'), `${text}: verbal near`)
+  })
+  t.end()
+})
+
+test('second-pass cleanup: degree modifiers and proper names', t => {
+  const cases = [
+    ['the very professional actor', 'professional', 'Adjective'],
+    ['a remarkably professional teacher', 'professional', 'Adjective'],
+    ['the extremely professional designer', 'professional', 'Adjective'],
+    ['Will walked home', 'Will', 'FirstName'],
+    ['Will called yesterday', 'Will', 'FirstName'],
+    ['Will arrived late', 'Will', 'FirstName'],
+    ['will she walk home?', 'will', 'Modal'],
+    ['they will arrive tomorrow', 'will', 'Modal'],
+  ]
+  cases.forEach(([text, word, tag]) => {
+    t.ok(nlp(text).match(word).has('#' + tag), `${text}: ${word} is ${tag}`)
+  })
+  t.end()
+})
+
+test('second-pass cleanup: demonstrative subjects and text dates', t => {
+  const cases = [
+    ['this helps', 'this', 'Pronoun'],
+    ['this really works', 'this', 'Pronoun'],
+    ['this is useful', 'this', 'Pronoun'],
+    ['this machine works', 'this', 'Determiner'],
+    ['this red boat floats', 'this', 'Determiner'],
+    ['this helps, but that hurts', 'this', 'Pronoun'],
+    ['May twenty five', 'twenty five', 'Date'],
+    ['June twenty one', 'twenty one', 'Date'],
+    ['August thirty one', 'thirty one', 'Date'],
+  ]
+  cases.forEach(([text, word, tag]) => {
+    const target = nlp(text).match(word)
+    t.ok(target.found && target.docs.flat().every(term => term.tags.has(tag)), `${text}: ${word} is ${tag}`)
+  })
+  t.notOk(nlp('twenty five apples').match('twenty five').has('#Date'), 'ordinary numbers are not dates')
+  t.end()
+})
+
+test('second-pass cleanup: spatial objects after modifiers and commas', t => {
+  const cases = [
+    ['the plane flew well above London', 'above'],
+    ['she stood directly below the window', 'below'],
+    ['we looked just under the bed', 'under'],
+    ['the bird flew right over my head', 'over'],
+    ['he waited, beside her', 'beside'],
+    ['she stood, behind him', 'behind'],
+    ['they leaned against our fence', 'against'],
+    ['she waited outside London', 'outside'],
+    ['we stayed inside their house', 'inside'],
+    ['they camped near Toronto', 'near'],
+    ['the tunnel runs beneath our house', 'beneath'],
+    ['he hid underneath the table', 'underneath'],
+    ['she climbed aboard their ship', 'aboard'],
+  ]
+  cases.forEach(([text, word]) => {
+    const target = nlp(text).match(word)
+    t.ok(target.has('#Preposition'), `${text}: ${word} is a preposition`)
+    t.notOk(target.has('#Verb'), `${text}: ${word} is not a verb`)
+  })
+  t.end()
+})
+
+test('second-pass cleanup: degree adjectives preserve their noun context', t => {
+  const cases = [
+    ['the quite professional actor', 'actor'],
+    ['an unusually professional teacher', 'teacher'],
+    ['the very professional designer', 'designer'],
+  ]
+  cases.forEach(([text, actor]) => {
+    const doc = nlp(text)
+    t.ok(doc.match('professional').has('#Adjective'), `${text}: professional is adjectival`)
+    t.notOk(doc.match('professional').has('#Noun'), `${text}: professional is not a noun`)
+    t.ok(doc.match(actor).has('#Actor'), `${text}: occupation is preserved`)
+  })
+  t.ok(nlp('she hired a professional').match('professional').has('#Noun'), 'professional can still be a noun')
+  t.end()
+})
+
+test('second-pass cleanup: Will inside sentences and modal contrasts', t => {
+  const names = ['yesterday Will walked home', 'after lunch Will called', 'Mary smiled, and Will waved']
+  names.forEach(text => {
+    const target = nlp(text).match('will')
+    t.ok(target.has('#FirstName'), `${text}: Will is a name`)
+    t.notOk(target.has('#Modal'), `${text}: Will is not a modal`)
+  })
+  const modals = ['Will you help?', 'Will she call?', 'Will they leave?']
+  modals.forEach(text => {
+    const target = nlp(text).match('will')
+    t.ok(target.has('#Modal'), `${text}: Will is a modal`)
+    t.notOk(target.has('#FirstName'), `${text}: Will is not a name`)
+  })
+  t.end()
+})
+
+test('second-pass cleanup: this across adverbs and clause boundaries', t => {
+  const subjects = ['this really helps', 'this almost always works', 'we waited, but this really helps']
+  subjects.forEach(text => {
+    const target = nlp(text).match('this')
+    t.ok(target.has('#Pronoun'), `${text}: this is a pronoun`)
+    t.notOk(target.has('#Determiner'), `${text}: this is not a determiner`)
+  })
+  const determiners = ['this really useful tool works', 'this very old house stands', 'this running water helps']
+  determiners.forEach(text => {
+    t.ok(nlp(text).match('this').has('#Determiner'), `${text}: this still modifies a noun`)
+  })
+  t.end()
+})
+
+test('second-pass cleanup: date numbers do not leak into other sentences', t => {
+  const dates = ['on May twenty five', 'by June twenty two', 'until August thirty one']
+  dates.forEach(text => {
+    const values = nlp(text).match('#TextValue').docs.flat()
+    t.equal(values.length, 2, `${text}: both written number terms are selected`)
+    t.ok(values.every(term => term.tags.has('Date')), `${text}: both number terms are dates`)
+  })
+  const ordinary = ['May ended. Twenty five apples remained.', 'June began. Thirty one people arrived.', 'August ended. Twenty two birds left.']
+  ordinary.forEach(text => {
+    const values = nlp(text).match('#TextValue')
+    t.ok(values.found, `${text}: written numbers are present`)
+    t.notOk(values.has('#Date'), `${text}: separate sentence numbers are not dates`)
+  })
+  t.end()
+})
+
+test('this still helps keeps an adverb between subject and verb', t => {
+  const cases = ['this still helps', 'we waited, but this still helps', 'this still works']
+  cases.forEach(text => {
+    const doc = nlp(text)
+    t.ok(doc.match('this').has('#Pronoun'), `${text}: this is a pronoun`)
+    t.ok(doc.match('still').has('#Adverb'), `${text}: still is an adverb`)
+    t.ok(doc.match('(helps|works)').has('#PresentTense'), `${text}: finite verb`)
+    t.notOk(doc.match('(helps|works)').has('#Noun'), `${text}: predicate is not a noun`)
+  })
+  ;['this still water', 'a still night', 'the still air'].forEach(text => {
+    t.ok(nlp(text).match('still').has('#Adjective'), `${text}: still modifies a noun`)
+  })
+  t.end()
+})
+
+test('still distinguishes demonstrative predicates from plural noun phrases', t => {
+  ;['this still helps me', 'that still works', 'that still helps us'].forEach(text => {
+    const doc = nlp(text)
+    t.ok(doc.match('still').has('#Adverb'), `${text}: adverb`)
+    t.ok(doc.match('(helps|works)').has('#PresentTense'), `${text}: verb`)
+  })
+  ;['the still waters', 'these still waters', 'those still waters'].forEach(text => {
+    const doc = nlp(text)
+    t.ok(doc.match('still').has('#Adjective'), `${text}: adjective`)
+    t.ok(doc.match('waters').has('#Plural'), `${text}: plural noun`)
+    t.notOk(doc.match('waters').has('#Verb'), `${text}: not a verb`)
+  })
+  t.end()
+})
+
+test('rule cleanup: short numeric and question contexts', t => {
+  const cases = [
+    ['a dozen eggs', 'dozen', 'Multiple'],
+    ['two dozen eggs', 'dozen', 'Cardinal'],
+    ['three dozen roses', 'dozen', 'Multiple'],
+    ['five dollars', 'dollars', 'Unit'],
+    ['twenty euros', 'euros', 'Unit'],
+    ['ten yen', 'yen', 'Unit'],
+    ['that is when he left', 'when', 'Conjunction'],
+    ['this is when she arrived', 'when', 'Conjunction'],
+    ['that was when we left', 'when', 'Conjunction'],
+    ['when stolen', 'when', 'Preposition'],
+    ['where eaten', 'where', 'Preposition'],
+    ['when eaten', 'when', 'Preposition'],
+    ['how is she?', 'how', 'QuestionWord'],
+    ['how can we help?', 'how', 'QuestionWord'],
+    ['how did they leave?', 'how', 'QuestionWord'],
+    ['she is well', 'well', 'Adjective'],
+    ['he is alone', 'alone', 'Adjective'],
+    ['they are just', 'just', 'Adjective'],
+  ]
+  cases.forEach(([text, word, tag]) => {
+    t.ok(nlp(text).match(word).has('#' + tag), `${text}: ${word} is ${tag}`)
+  })
+  t.end()
+})
+
+test('rule cleanup: spatial modifiers retain their prepositions', t => {
+  ;['well', 'just', 'right', 'directly'].forEach(modifier => {
+    ;['above', 'below', 'under', 'over'].forEach(prep => {
+      ;[`the plane flew ${modifier} ${prep} the clouds`, `she stood ${modifier} ${prep} my window`, `it hovered ${modifier} ${prep} him`].forEach(text => {
+        t.ok(nlp(text).match(prep).has('#Preposition'), text)
+      })
+    })
+  })
+  t.ok(nlp('we looked under the bed').match('under').has('#Preposition'), 'looked under keeps its preposition')
+  t.end()
+})
+
+test('rule cleanup: numbered lieutenant titles', t => {
+  ;['first', 'second', 'third', '1st', '2nd', '3rd'].forEach(rank => {
+    const text = `the ${rank} lieutenant arrived`
+    const title = nlp(text).match(`${rank} lieutenant`)
+    t.ok(title.found && title.docs.flat().every(term => term.tags.has('Honorific')), text)
+  })
+  ;['the first visitor arrived', 'the second train stopped', 'the third child waved'].forEach(text => {
+    t.notOk(nlp(text).has('#Honorific'), `${text}: ordinary ordinals are not titles`)
+  })
+  t.end()
+})
+
+test('rule cleanup: demonstrative questions after auxiliaries', t => {
+  const questions = [
+    ['do these work?', 'these'],
+    ['do those really help?', 'those'],
+    ['do these actually work?', 'these'],
+    ['does this work?', 'this'],
+    ['does that really help?', 'that'],
+    ['does this always work?', 'this'],
+    ['did this work?', 'this'],
+    ['did that really help?', 'that'],
+    ['did these actually work?', 'these'],
+    ['can this work?', 'this'],
+    ['could those really help?', 'those'],
+    ['will these actually work?', 'these'],
+  ]
+  questions.forEach(([text, word]) => {
+    const target = nlp(text).match(word)
+    t.ok(target.has('#Pronoun'), `${text}: demonstrative subject`)
+    t.notOk(target.has('#Determiner'), `${text}: not a determiner`)
+  })
+  const nouns = [
+    ['do these machines work?', 'these'],
+    ['does this machine work?', 'this'],
+    ['did that machine work?', 'that'],
+    ['can those birds fly?', 'those'],
+    ['does this very old machine work?', 'this'],
+  ]
+  nouns.forEach(([text, word]) => {
+    t.ok(nlp(text).match(word).has('#Determiner'), `${text}: determiner before a noun`)
   })
   t.end()
 })

@@ -85,7 +85,6 @@ export default [
   'home made',
   'wee',
   'teenage',
-  'average',
   'awake',
   'upscale',
   'wholesale',
@@ -271,7 +270,6 @@ export default [
   'usual',
   'actual',
   'archival',
-  'rival',
   'royal',
 
   // -el
@@ -304,7 +302,6 @@ export default [
   'thoughtful',
   'wistful',
 
-  'dim',
   'longterm',
   'ad infinitum',
   'urban',
@@ -670,7 +667,6 @@ export default [
   'artsy',
   'antsy',
   'golden',
-  'bare',
   'subpar',
   'ingrown',
   'agreeable',

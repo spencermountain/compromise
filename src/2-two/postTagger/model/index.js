@@ -227,8 +227,6 @@ const rules = [
     t: 'Adv',
     r: 'lazy-ly',
   },
-  // is [well]
-  { m: '#Cop [#Adv]$', g: 0, t: 'Adj', r: 'is-well' },
   // a [bit] cold
   { m: 'a [(little|bit|wee) bit?] #Adj', g: 0, t: 'Adv', r: 'a-bit-cold' },
   // become overly [weakened]
@@ -857,8 +855,6 @@ const rules = [
     t: 'Value',
     r: 'a-trillion',
   },
-  // two [dozen] eggs
-  { match: '(a|#Cardinal) [dozen]', hook: 'dozen', group: 0, tag: ['Multiple', 'Cardinal'], reason: 'value-dozen' },
   // with [a] dozen eggs
   {
     match: '!once? [a] dozen',
@@ -883,6 +879,7 @@ const rules = [
   // ==== Ordinal ====
 
   // ==== Units ====
+  // Currency can be assigned by left/right rules, so keep this correction late.
   // 5 [dollars]
   { m: '#Value+ [#Currency]', g: 0, t: 'Unit', r: 'curr-unit' },
   // kilometers an hour
@@ -1030,8 +1027,6 @@ const rules = [
   { m: '#Hon #Actor', t: 'Hon', r: 'lt-colonel' },
   // [first lady] michelle obama
   { m: '[first lady] #Pers', g: 0, t: 'Hon', r: 'first-lady' },
-  // first lady, second admiral
-  { m: '(first|second|third|1st|2nd|3rd) lieutenant', t: 'Hon', r: 'ord-lt' },
   // Louis IV
   { m: '#Pers #RomanNumeral', t: 'Pers', r: 'louis-iv' },
 
@@ -1670,23 +1665,12 @@ const multi = [
     t: 'Conj',
     r: 'how-he-is-x',
   })),
-  // is [when] he
-  { m: '#Cop [(who|what|where|why|how|when)] #NN', g: 0, t: 'Conj', r: 'when-he' },
   // things [that] seem cool
   { m: '#NN [that] #V #Adj', g: 0, t: 'Conj', r: 'that-seem' },
   // he was [that] wide
   { m: '#NN #Cop not? [that] #Adj', g: 0, t: 'Adv', r: 'that-adj' },
   // [to] lunch
   { m: '[to] (#NN && !#V)', g: 0, u: 'Conj', t: 'Prep', r: 'to-noun' },
-  // well [above] the clouds, directly [under] the bridge
-  ...['above', 'below', 'under', 'over'].flatMap(prep =>
-    ['well', 'just', 'right', 'directly'].map(word => ({
-      m: `${word} [${prep}] (#Det|#Poss|#Pron|#Prop)`,
-      g: 0,
-      t: 'Prep',
-      r: `well-${prep}`,
-    }))
-  ),
   // I heard rumors [that] drivers save gas
   { m: '#V #Adv? #NN [(that|which)]', g: 0, t: 'Prep', r: 'that-prep' },
   // Tuesday, [which] he liked
@@ -1716,10 +1700,6 @@ const multi = [
   // { match: '^(how|which)', tag: 'QuestionWord', reason: 'how-q' },
   // [how] he
   { m: '[(#QW && !do && !does)] (#Pron|#Det) !#Cop', g: 0, t: 'Prep', n: 'what the (hell|heck)', r: 'how-he' },
-  // [when] stolen
-  { m: '[#QW] #VBN', g: 0, t: 'Prep', r: 'when-stolen' },
-  // [how] is
-  { m: '[how] (#Det|#Cop|#Mod|#Past)', g: 0, t: 'QW', r: 'how-is' },
   // children [who] dance
   { m: '#Plur [(who|which|when)] .', g: 0, t: 'Prep', r: 'people-who' },
 

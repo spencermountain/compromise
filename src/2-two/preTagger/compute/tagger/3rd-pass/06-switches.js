@@ -45,6 +45,10 @@ const pickTag = function (terms, i, clues, model) {
   if (previousTerm && previousTerm.text === 'also') {
     beforeIndex = Math.max(0, i - 2)
   }
+  // In 'we each pay', each separates the subject from its predicate.
+  if (previousTerm?.normal === 'each' && /^(we|they)$/.test(terms[i - 2]?.normal)) {
+    beforeIndex = i - 2
+  }
   const tagSet = model.one.tagSet
   // look -> right word, first
   let tag = checkWord(terms[i + 1], clues.afterWords)

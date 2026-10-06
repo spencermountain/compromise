@@ -88,11 +88,19 @@ const expandNoun = function (str, words, model) {
 // harvest ambiguous words for any conjugations
 const expandVariable = function (switchWords, model) {
   const words = {}
+  const actorPlurals = {}
   const lex = model.one.lexicon
   //add first tag as an assumption for each variable word
   Object.keys(switchWords).forEach(w => {
     const name = switchWords[w]
     words[w] = switchDefaults[name]
+    // Plural actors keep their actor reading until a verb clue wins.
+    if (name === 'Actor|Verb') {
+      const plural = toPlural(w, model)
+      if (switchWords[plural] === 'Plural|Verb') {
+        actorPlurals[plural] = ['Plural', 'Actor']
+      }
+    }
     // conjugate some verbs
     if (name === 'Noun|Verb' || name === 'Person|Verb' || name === 'Actor|Verb') {
       expandVerb(w, lex, false)
@@ -124,6 +132,7 @@ const expandVariable = function (switchWords, model) {
     }
   })
   // add conjugations
+  Object.assign(words, actorPlurals)
   model = expandLexicon(words, model)
   return model
 }

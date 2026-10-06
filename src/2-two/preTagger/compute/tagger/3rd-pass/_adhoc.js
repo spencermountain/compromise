@@ -70,6 +70,14 @@ const adhoc = {
     return isCapital(terms, i)
   },
   'Adj|Present': (terms, i) => {
+    // 'are ready for' and 'are not ready for' describe a state.
+    let before = i - 1
+    if (terms[before]?.tags.has('Negative')) {
+      before -= 1
+    }
+    if (terms[before]?.tags.has('Copula')) {
+      return 'Adjective'
+    }
     return  isCapital(terms, i)
   },
   'Noun|Gerund': (terms, i) => {
@@ -79,6 +87,11 @@ const adhoc = {
     return  (i > 0 && isCapital(terms, i)) || isAlone(terms, i, 'Infinitive')
   },
   'Plural|Verb': (terms, i) => {
+    // A singular demonstrative makes 'this still helps' a predicate.
+    const subject = terms[i - 2]?.normal
+    if (terms[i - 1]?.normal === 'still' && (subject === 'this' || subject === 'that')) {
+      return 'PresentTense'
+    }
     return isCapital(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
   },
   'Person|Noun': (terms, i) => {

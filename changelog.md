@@ -6,8 +6,16 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
+#### 14.19.0 [Oct 2026]
+- **[change]** - proper end-to-end tag aliases support
+- **[change]** - filter verbose mode output by word
+- **[new]** - `"debug:word"` script
+- **[new]** - `"debug:hooks"` script
+- **[new]** - behaviour options to `fromSpec()` method
+- **[change]** - add term-length test to `.testSpec()`
 
-#### 14.18.0 [Sept 2026]
+
+#### 14.18.0 [Oct 2026]
 - **[perf]** - 12% faster and 30% smaller
 - **[change]** - include acronyms in .topics(), without duplicating existing entities
 - **[change]** - tag Name & Name phrases as #ProperNoun

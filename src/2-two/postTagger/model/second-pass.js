@@ -7,14 +7,6 @@ const predicate = '#Adv+? not? (#V && !#Ger && !#Particle)'
 const seatedQuestion = '^(which|what) #Adj+? #NN (did|does|do|#Mod) #Pron [sit] [on]$'
 
 const rules = [
-  // the very [professional] actor
-  {
-    m: '#Det (very|remarkably|extremely|quite|unusually) [%Adj|Noun%] #Actor',
-    g: 0,
-    t: 'Adj',
-    r: 'degree-actor',
-  },
-
   // === second-pass.js ===
   // Corrections matched against the main sweep's output, before any are applied.
   // Keep comma context, but don't turn unambiguous verbs into list items.
@@ -62,29 +54,6 @@ const rules = [
   // She bought flowers, [for] I was ill.
   { m: `@hasComma [for] ${subject} ${predicate}`, g: 0, t: 'Conj', r: 'causal-for' },
 
-  // The cat slept [under] the table. He sat [beside] me.
-  // the plane flew well [above] the clouds
-  // she stood directly [below] the window...
-  ...[
-    'above',
-    'below',
-    'under',
-    'over',
-    'beside',
-    'behind',
-    'against',
-    'outside',
-    'inside',
-    'near',
-    'beneath',
-    'underneath',
-    'aboard',
-  ].map(word => ({
-    m: `[(${word} && !#V)] (#Det|#Poss|#Pron|#Prop)`,
-    g: 0,
-    t: 'Prep',
-    r: `${word}-space-obj`,
-  })),
   // She sings [like] her mother
   {
     m: '(#V && !#Aux && !#Mod && !do && !does && !did && !have && !has && !had) [like] (#NN|#Det|#Poss)',
@@ -103,30 +72,12 @@ const rules = [
   { m: seatedQuestion, g: 0, u: 'PhrV', r: 'sit-q-unphr' },
   // Which chair did she [sit] [on]? What cushion can he [sit] [on]?
   { m: seatedQuestion, g: 1, t: 'Prep', r: 'sit-q-prep' },
-  // “May twenty five”
-  { m: '(#TxtNum && #Date) #TxtNum', t: 'Date', r: 'textvalue-date' },
   // he ate, and [left]
   {
     m: '(#Past && @hasComma) and [%Adj|Past%] #Adv+?$',
     g: 0,
     t: 'Past',
     r: 'past-list',
-  },
-  // does [this] work
-  // Keep each auxiliary as a required hook.
-  ...['do', 'does', 'did', '#Mod'].map(aux => ({
-    m: `${aux} [(this|that|these|those)] #Adv+? #Inf`,
-    hook: aux,
-    g: 0,
-    t: 'Pron',
-    r: 'dem-q',
-  })),
-  // [This] is useful. Hope [this] helps. [This] really rocks.
-  {
-    m: '[this] #Adv+? (#Pres && !#Inf && !#Ger)',
-    g: 0,
-    t: 'Pron',
-    r: 'this-finite-subj',
   },
   // { match: locative, group: 0, tag: 'Preposition', reason: 'subj-loc' },
   // { match: locative, group: 1, tag: 'Infinitive', reason: 'subj-loc-verb' },
@@ -158,8 +109,6 @@ const rules = [
     t: 'Imp',
     r: 'req-obj-comma',
   },
-  // [Will] walked home
-  { m: '[(will && @isTitleCase)] #Past', g: 0, t: 'First', r: 'will-past-subj' },
   // jack the ripper
   { m: '%Person|Verb% (the && #Pers) #Pers', t: 'Pers', r: 'known-nickname' },
   // keep the lid [closed]

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import assertSpec from '../_spec.js'
 
 // Hand-written expectations, including noun and name contrasts.
 const cases = [
@@ -22,9 +22,6 @@ const cases = [
 ]
 
 test('switch candidates spec', t => {
-  cases.forEach(line => {
-    const failing = nlp.testSpec(line, false, false)
-    t.deepEqual(failing.out('array'), [], line)
-  })
+  assertSpec(t, cases)
   t.end()
 })

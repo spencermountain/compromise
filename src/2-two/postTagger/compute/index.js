@@ -1,4 +1,5 @@
 import secondPassRules from '../model/second-pass.js'
+import localCorrections from './local-corrections.js'
 let net = null
 let secondNet = null
 
@@ -8,8 +9,10 @@ const secondPass = function (sentences, world) {
   secondNet ||= methods.one.buildNet(secondPassRules, world)
   // Match the whole sentence so rules can include context across commas.
   // All matches see the same incoming tags; there are no dependent subpasses.
+  const local = localCorrections(sentences)
   const found = methods.one.bulkMatch(sentences, secondNet, methods)
   methods.one.bulkTagger(found, sentences, world)
+  local.forEach(([terms, tag, reason]) => methods.one.setTag(terms, tag, world, null, `[post-local] ${reason}`))
 }
 
 // Compiled tag-only passes avoid building match-result Views that are discarded.

@@ -1,4 +1,12 @@
 const rules = {
+  '#QuestionWord': [
+    // [when] stolen
+    '_ #VBN -> #Prep',
+  ],
+  '#Adverb': [
+    // is [well]
+    '#Cop _ $ -> #Adj',
+  ],
   '#Person': [
     // bought a [warhol]
     '(a|an) _ $ -> !#Pers',

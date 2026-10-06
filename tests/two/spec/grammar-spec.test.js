@@ -1,15 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import assertSpec from '../_spec.js'
 const here = '[two/grammar-spec] '
-
-// real grammatical parsing, expressed in the spec format (docs/spec-format.md).
-// each line is a sentence + its expected tagging - nlp.testSpec() checks every
-// line against the tagger, and returns a doc of only the *failing* lines,
-// so an empty result means the whole block parsed correctly.
-const check = function (t, lines, msg) {
-  const failing = nlp.testSpec(lines.join('\n'), false, false)
-  t.deepEqual(failing.out('array'), [], here + msg)
-}
 
 test('grammar-spec verb tenses + auxiliaries', function (t) {
   const arr = [
@@ -20,7 +11,7 @@ test('grammar-spec verb tenses + auxiliaries', function (t) {
     'she is walking home. {Noun,Vb|Aux,Vb|Ger,Noun}',
     'she could swim faster. {Noun,Vb|Modal,Vb|Inf,Adj|Comparative}',
   ]
-  check(t, arr, 'tenses + auxiliaries')
+  assertSpec(t, arr, here + 'tenses + auxiliaries')
   t.end()
 })
 
@@ -31,7 +22,7 @@ test('grammar-spec copulas + adjectives', function (t) {
     'she is taller than him. {Noun,Vb|Copula,Adj|Comparative,Prep,Noun|Pronoun}',
     'running is fun. {Noun,Vb|Copula,Adj}',
   ]
-  check(t, arr, 'copulas + adjectives')
+  assertSpec(t, arr, here + 'copulas + adjectives')
   t.end()
 })
 
@@ -43,7 +34,7 @@ test('grammar-spec negation + contractions', function (t) {
     'he cannot swim. {Noun|Pronoun,Vb,Negative,Vb|Inf}',
     `The dog don't bark. {Det,Noun,Vb,Negative,Vb}`,
   ]
-  check(t, arr, 'negation + contractions')
+  assertSpec(t, arr, here + 'negation + contractions')
   t.end()
 })
 
@@ -53,7 +44,7 @@ test('grammar-spec questions', function (t) {
     'who is that? {QuestionWord,Vb|Copula,Noun|Pronoun}',
     'is he going? {Vb|Copula,Noun|Pronoun,Vb|Ger}',
   ]
-  check(t, arr, 'questions')
+  assertSpec(t, arr, here + 'questions')
   t.end()
 })
 
@@ -63,7 +54,7 @@ test('grammar-spec imperatives', function (t) {
     'record the record. {Vb|Imp,Det,Noun}',
     'go home! {Vb|Imp,Noun}',
   ]
-  check(t, arr, 'imperatives')
+  assertSpec(t, arr, here + 'imperatives')
   t.end()
 })
 
@@ -74,7 +65,7 @@ test('grammar-spec noun inflection', function (t) {
     `spencer's house is nice. {Noun|Poss,Noun,Vb|Copula,Adj}`,
     'he gave her the book. {Noun|Pronoun,Vb|Past,Noun|Pronoun,Det,Noun}',
   ]
-  check(t, arr, 'plurals, possessives, pronouns')
+  assertSpec(t, arr, here + 'plurals, possessives, pronouns')
   t.end()
 })
 
@@ -84,7 +75,7 @@ test('grammar-spec proper nouns', function (t) {
     'Google hired spencer in May. {Noun|Org,Vb|Past,Noun,Prep,Date}',
     'the FBI met NASA. {Det,Noun|Acronym,Vb|Past,Noun|Acronym}',
   ]
-  check(t, arr, 'honorifics, orgs, acronyms')
+  assertSpec(t, arr, here + 'honorifics, orgs, acronyms')
   t.end()
 })
 
@@ -98,7 +89,7 @@ test('grammar-spec phrases + clauses', function (t) {
     'unless it rains, we go. {Condition,Noun|Pronoun,Vb,Noun|Pronoun,Vb}',
     'the cake was eaten by the dog. {Det,Noun,Vb|Copula,Vb|Participle,Prep,Det,Noun}',
   ]
-  check(t, arr, 'phrasal verbs, preposition-phrases, there, conditions, passives')
+  assertSpec(t, arr, here + 'phrasal verbs, preposition-phrases, there, conditions, passives')
   t.end()
 })
 
@@ -107,7 +98,7 @@ test('grammar-spec values + dates', function (t) {
     'i bought two tickets for $50 on friday. {Noun|Pronoun,Vb|Past,Val,Noun|Plural,Prep,Val,Prep,Date}',
     'the meeting is at 5pm on june 5th. {Det,Noun,Vb,Prep,Date,Prep,Date,Date}',
   ]
-  check(t, arr, 'values + dates')
+  assertSpec(t, arr, here + 'values + dates')
   t.end()
 })
 
@@ -119,6 +110,6 @@ test('grammar-spec noun-verb ambiguity', function (t) {
     'fruit flies like a banana. {Noun,Noun,Vb,Det,Noun}',
     'if it rains, we will stay home. {Conj|Condition,Noun,Vb,Noun,Vb,Vb,Noun}',
   ]
-  check(t, arr, 'noun-verb disambiguation')
+  assertSpec(t, arr, here + 'noun-verb disambiguation')
   t.end()
 })

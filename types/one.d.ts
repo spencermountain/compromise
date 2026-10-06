@@ -40,10 +40,25 @@ declare namespace nlp {
   export function buildNet(matches: Match[]): Net
   /** add words to the autoFill dictionary */
   export function typeahead(words: Lexicon): any
-  /** parse the tagged text output of out('spec') */
-  export function fromSpec(spec: string): View
-  /** test the given tagging of a spec-formatted output - returns untagged sentences and failing tagged lines */
-  export function testSpec(spec: string, verbose?: boolean, throwError?: boolean): View
+  export interface SpecOptions {
+    tags?: 'ignore' | 'use'
+    failures?: 'ignore' | 'throw' | 'retain'
+    verbose?: boolean
+  }
+  /** parse spec text, optionally applying tags or validating its constraints */
+  export function fromSpec(spec: string, options?: SpecOptions): View & { failures: SpecFailure[] }
+  export interface SpecFailure {
+    code: 'length' | 'tags' | 'syntax' | 'match'
+    line: number
+    text: string
+    message: string
+    term?: number
+    word?: string
+    expected?: string[] | number
+    actual?: string[] | number
+  }
+  /** returns untagged sentences and failing tagged lines, with validation failures */
+  export function testSpec(spec: string, verbose?: boolean, throwError?: boolean): View & { failures: SpecFailure[] }
   /** export internal methods for plugins */
   export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
 }

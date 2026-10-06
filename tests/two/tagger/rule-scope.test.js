@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import assertSpec from '../_spec.js'
 
 const spec = `
 # Fractions leave the following preposition outside the number phrase.
@@ -180,7 +180,6 @@ the door is closed {Det,Noun,Copula,Adj}
 `
 
 test('rule scope', t => {
-  const failing = nlp.testSpec(spec, false, false)
-  t.deepEqual(failing.out('array'), [], 'tagging matches the rule-scope spec')
+  assertSpec(t, spec, '[two/rule-scope]')
   t.end()
 })

@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import assertSpec from '../_spec.js'
 
 // Hand-written expectations for common actor/verb and contextual ambiguities.
 const cases = [
@@ -36,10 +37,7 @@ const cases = [
 ]
 
 test('actor switches and contextual clues spec', t => {
-  cases.forEach(line => {
-    const failing = nlp.testSpec(line, false, false)
-    t.deepEqual(failing.out('array'), [], line)
-  })
+  assertSpec(t, cases)
   // Keep these controls focused on the switch, not unrelated neighbouring tags.
   t.ok(nlp('We each work here').match('work').has('#Verb'), 'each after a subject: work is a verb')
   t.ok(nlp('Each pay rise helps').match('pay').has('#Noun'), 'each before a noun phrase: pay is a noun')

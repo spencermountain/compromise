@@ -6,6 +6,9 @@ import {
 // These phrases also seed the packed lexicon and its derived forms.
 // Imported by data/lexicon/index.js: edit their tags here only.
 export const shared = {
+  'first lieutenant': 'Honorific',
+  'second lieutenant': 'Honorific',
+  'third lieutenant': 'Honorific',
   // Club names keep 'united' out of adjective/past-tense disambiguation.
   'atlanta united': SportsTeam,
   'dc united': SportsTeam,

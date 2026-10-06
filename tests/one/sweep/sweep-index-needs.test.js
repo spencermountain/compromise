@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../two/_lib.js'
+import nlp from '../_lib.js'
+const here = '[one/sweep/sweep-index-needs] '
 
-test('sweep index shortcuts preserve repeated needs and alternatives', t => {
+test(here + 'sweep index shortcuts preserve repeated needs and alternatives', t => {
   const world = nlp.world()
   const repeated = { match: 'red red', hook: 'red' }
   const rules = [repeated, { match: '(red|blue)' }, { match: 'red blue green', hook: 'blue' }, repeated, { match: '.' }]

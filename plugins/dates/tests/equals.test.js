@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/equals] '
 
 const context = {
   today: '2020-01-21',
@@ -357,7 +358,7 @@ const arr = [
 
 ]
 
-test('date-variety', function (t) {
+test(here + 'date-variety', function (t) {
   arr.forEach((a) => {
     const left = nlp(a[0]).dates(context).json()[0] || {}
     const right = nlp(a[1]).dates(context).json()[0] || {}

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/payload/tests/payload] '
 
-test('payload-misc', function (t) {
+test(here + 'payload-misc', function (t) {
   const doc = nlp('i saw John Lennon, and tom cruise.')
 
   doc.match('(john lennon|tom cruise|johnny carson)').forEach(m => {
@@ -29,7 +30,7 @@ test('payload-misc', function (t) {
   t.end()
 })
 
-test('payload-fn', function (t) {
+test(here + 'payload-fn', function (t) {
   const doc = nlp('i saw John Lennon, and john smith and bob dylan')
   doc.match('(john|bob|dave) .').addPayload(m => {
     return /john/i.test(m.text()) ? { isjohn: true } : null
@@ -58,7 +59,7 @@ test('payload-fn', function (t) {
   t.end()
 })
 
-test('payload-after-remove', function (t) {
+test(here + 'payload-after-remove', function (t) {
   let doc = nlp('one apple. two pears. three plums.')
   doc.match('(apple|plums)').addPayload(m => ({ fruit: m.text('normal') }))
   t.equal(doc.getPayloads().length, 2, 'before-remove')

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/selection/subject-predicate-regression] '
 
-test('recover predicates after coordinated names and locative modifiers', t => {
+test(here + 'recover predicates after coordinated names and locative modifiers', t => {
   const cases = [
     ['Alice and Bob walk.', 'Alice and Bob walked.', 'Alice and Bob walk.', 'Alice and Bob will walk.'],
     ['The dogs near the house walk.', 'The dogs near the house walked.', 'The dogs near the house walk.', 'The dogs near the house will walk.'],

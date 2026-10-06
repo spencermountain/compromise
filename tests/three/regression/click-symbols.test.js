@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/regression/click-symbols] '
 
-test('clicking button labels', t => {
+test(here + 'clicking button labels', t => {
   for (const label of ['submit', 'save', 'cancel', '"submit"']) {
     const doc = nlp(`the user clicks ${label}.`)
     doc.sentences().toPastTense()
@@ -18,7 +19,7 @@ test('clicking button labels', t => {
   t.end()
 })
 
-test('Penn standalone symbols', t => {
+test(here + 'Penn standalone symbols', t => {
   for (const symbol of ['/', '*', '+', '=']) {
     t.equal(nlp(symbol).compute('penn').termList()[0].penn, 'SYM', symbol)
   }

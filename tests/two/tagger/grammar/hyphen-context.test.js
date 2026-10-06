@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/hyphen-context] '
 
-test('two/tagger/hyphen-context: hyphenated adjectives and irregular past readings', t => {
+test(here + 'two/tagger/hyphen-context: hyphenated adjectives and irregular past readings', t => {
   assertSpec(t, `
 # rule cleanup: hyphenated adjectives and irregular past readings
 off-white paint {Adj,Adj,Noun}
@@ -30,7 +31,7 @@ she used a vacuum {Pronoun,Past,Det,Noun}
   t.end()
 })
 
-test('two/tagger/hyphen-context: hyphenated verb compounds', t => {
+test(here + 'two/tagger/hyphen-context: hyphenated verb compounds', t => {
   assertSpec(t, `
 # rule cleanup: hyphenated verb compounds
 freeze-dried fruit {Adj,Adj,Noun}

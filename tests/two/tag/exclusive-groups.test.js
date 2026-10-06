@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/tag/exclusive-groups] '
 
 const blank = () => nlp('xyz').unTag('*')
 const groups = {
@@ -9,7 +10,7 @@ const groups = {
 }
 
 Object.entries(groups).forEach(([name, tags]) => {
-  test('exclusive groups: ' + name, function (t) {
+  test(here + 'exclusive groups: ' + name, function (t) {
     tags.forEach(first => {
       tags.filter(second => second !== first).forEach(second => {
         const doc = blank().tag(first)
@@ -26,7 +27,7 @@ Object.entries(groups).forEach(([name, tags]) => {
   })
 })
 
-test('exclusive groups: independent attributes still overlap', function (t) {
+test(here + 'exclusive groups: independent attributes still overlap', function (t) {
   const pairs = [
     ['NumericValue', 'Year'], ['NumericValue', 'Money'], ['TextValue', 'Money'],
     ['NumericValue', 'Percent'], ['NumericValue', 'Fraction'], ['Cardinal', 'Fraction'],

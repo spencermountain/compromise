@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[two/tagger/grammar/connector-predicates] '
 
-test('connector predicates and their competing word senses', t => {
+test(here + 'connector predicates and their competing word senses', t => {
   for (const [str, word, want, reject] of [
     ['We waited until the sun rose.', 'rose', 'PastTense', 'Noun'],
     ['As rain fell, the river rose.', 'rose', 'PastTense', 'Noun'],
@@ -35,7 +36,7 @@ test('connector predicates and their competing word senses', t => {
   t.end()
 })
 
-test('tired describes a state without leaving passive tags on the copula', t => {
+test(here + 'tired describes a state without leaving passive tags on the copula', t => {
   for (const str of [
     'He was tired.',
     'Although he was tired, he smiled.',
@@ -51,7 +52,7 @@ test('tired describes a state without leaving passive tags on the copula', t => 
   t.end()
 })
 
-test('resolved predicates support connector decisions', t => {
+test(here + 'resolved predicates support connector decisions', t => {
   for (const [str, word, want] of [
     ['We waited until the sun rose.', 'until', 'Conjunction'],
     ['When the rain stops, we will leave.', 'when', 'Conjunction'],

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[one/match/match-offsets] '
 
-test('captures do not leak from failed attempts', t => {
+test(here + 'captures do not leak from failed attempts', t => {
   const doc = nlp('one wrong one two')
   const m = doc.match('[<start>one] two')
   t.equal(m.text(), 'one two', 'skip an attempt that fails after capturing')
@@ -10,7 +11,7 @@ test('captures do not leak from failed attempts', t => {
   t.end()
 })
 
-test('captures and anchors after the first term', t => {
+test(here + 'captures and anchors after the first term', t => {
   const doc = nlp('zero one one two tail. zero one two tail.')
   const m = doc.match('[<run>one+] two')
   t.deepEqual(m.out('array'), ['one one two', 'one two'], 'repeated matches in separate sentences')
@@ -22,7 +23,7 @@ test('captures and anchors after the first term', t => {
   t.end()
 })
 
-test('optional, negative, and alternative matches at later positions', t => {
+test(here + 'optional, negative, and alternative matches at later positions', t => {
   const doc = nlp('zero one two three tail')
   t.equal(doc.match('one? two [three]').groups(0).text(), 'three', 'optional prefix preserves capture')
   t.equal(doc.match('!one+ three').text(), 'two three', 'negative repetition stops before the following token')
@@ -31,7 +32,7 @@ test('optional, negative, and alternative matches at later positions', t => {
   t.end()
 })
 
-test('notIf scans only the matched span', t => {
+test(here + 'notIf scans only the matched span', t => {
   const net = nlp.buildNet([{ match: 'one [.+]', group: 0, notIf: 'two$' }])
   const doc = nlp('zero one two. two one three.')
   t.deepEqual(doc.sweep(net).view.out('array'), ['three.'], 'exclude ending two, not two before the match')

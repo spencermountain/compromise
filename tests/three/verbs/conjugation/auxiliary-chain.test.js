@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/auxiliary-chain] '
 
 // Explicit expected sentences: these do not reuse the converter's planner.
 const cases = [
@@ -18,7 +19,7 @@ const cases = [
   ['they will not have had tea', 'they had not had tea', 'they have not had tea', 'they will not have had tea'],
 ]
 
-test('shared auxiliary converter preserves roots and modifier positions', t => {
+test(here + 'shared auxiliary converter preserves roots and modifier positions', t => {
   const methods = ['toPastTense', 'toPresentTense', 'toFutureTense']
   cases.forEach(([input, ...expected]) => {
     methods.forEach((method, i) => {
@@ -37,7 +38,7 @@ test('shared auxiliary converter preserves roots and modifier positions', t => {
   t.end()
 })
 
-test('private auxiliary model does not change public parse shapes', t => {
+test(here + 'private auxiliary model does not change public parse shapes', t => {
   const verbs = nlp('she has really been driven').verbs()
   t.deepEqual(Object.keys(verbs.parse()[0]).sort(),
     ['adverbs', 'auxiliary', 'negative', 'phrasal', 'prefix', 'root'], 'parse fields')
@@ -46,7 +47,7 @@ test('private auxiliary model does not change public parse shapes', t => {
   t.end()
 })
 
-test('auxiliary changes retain punctuation and preserve contractions on no-ops', t => {
+test(here + 'auxiliary changes retain punctuation and preserve contractions on no-ops', t => {
   const unchanged = nlp("They've eaten, haven't they?")
   unchanged.verbs(0).toPresentTense()
   t.equal(unchanged.text(), "They've eaten, haven't they?", 'unchanged contraction')

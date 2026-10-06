@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../two/_lib.js'
+import nlp from '../_lib.js'
+const here = '[one/sweep/sweep-boundary] '
 
-test('sweep checks required sentence boundaries before matching', t => {
+test(here + 'sweep checks required sentence boundaries before matching', t => {
   const world = nlp.world()
   const rules = [{ match: '^hello' }, { match: 'world$' }]
   const net = world.methods.one.buildNet(rules, world)
@@ -23,7 +24,7 @@ test('sweep checks required sentence boundaries before matching', t => {
   t.end()
 })
 
-test('sweep boundary filtering preserves match results', t => {
+test(here + 'sweep boundary filtering preserves match results', t => {
   const world = nlp.world()
   const patterns = [
     '^hello', 'world$', '^hello world$', '^(hello|world)', '(hello|world)$',

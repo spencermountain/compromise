@@ -1,10 +1,11 @@
 import test from 'tape'
 import nlp from './_lib.js'
 import spacetime from 'spacetime'
+const here = '[plugins/dates/tests/misc] '
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
-test('misc dates', function (t) {
+test(here + 'misc dates', function (t) {
   const doc = nlp('my birthday is June 5th 1998')
   t.equal(doc.dates().length, 1, 'one-date')
 
@@ -14,7 +15,7 @@ test('misc dates', function (t) {
   t.end()
 })
 
-test('parsed today shorthand', function (t) {
+test(here + 'parsed today shorthand', function (t) {
   const context = {
     today: 'Dec 12th 2020',
     timezone: 'Canada/Pacific',
@@ -25,7 +26,7 @@ test('parsed today shorthand', function (t) {
   t.end()
 })
 
-test('never allow end > start', (t) => {
+test(here + 'never allow end > start', (t) => {
   const context = {
     today: 'january 5 2018',
   }
@@ -39,7 +40,7 @@ test('never allow end > start', (t) => {
   t.end()
 })
 
-test('durations are not dates', function (t) {
+test(here + 'durations are not dates', function (t) {
   let doc = nlp('it took 20 minutes')
   t.equal(doc.dates().length, 0, 'no-dates')
   t.equal(doc.durations().length, 1, 'one-duration')
@@ -50,7 +51,7 @@ test('durations are not dates', function (t) {
   t.end()
 })
 
-test('lists of days', function (t) {
+test(here + 'lists of days', function (t) {
   let doc = nlp('tuesday, wednesday, or friday')
   t.equal(doc.dates().length, 3, '3-dates in list')
 
@@ -60,7 +61,7 @@ test('lists of days', function (t) {
   t.end()
 })
 
-test('tagger does not mutate text', function (t) {
+test(here + 'tagger does not mutate text', function (t) {
   const arr = ['in a hour', 'in an hour', 'jan and tues the third', 'tmrw the second', 'JAN and WeD']
   arr.forEach((str) => {
     const doc = nlp(str)

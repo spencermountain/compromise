@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/neighbour-context] '
 
-test('two/tagger/neighbour-context: left/right dates, units and local prepositions', t => {
+test(here + 'two/tagger/neighbour-context: left/right dates, units and local prepositions', t => {
   assertSpec(t, `
 # left/right dates, units and local prepositions
 It costs five bucks. {Pronoun,Pres,Money,Unit|Currency}
@@ -25,7 +26,7 @@ The bird flew well over them. {Det,Noun,Past,Adv,Prep,Pronoun}
   t.end()
 })
 
-test('two/tagger/neighbour-context: migrated tag-based left/right contexts', t => {
+test(here + 'two/tagger/neighbour-context: migrated tag-based left/right contexts', t => {
   assertSpec(t, `
 # migrated tag-based left/right contexts
 a well made table {Det,Adv,Adj,Noun}
@@ -39,7 +40,7 @@ who he knows {Preposition,Pronoun,Pres}
   t.end()
 })
 
-test('two/tagger/neighbour-context: more left/right tagging contexts', t => {
+test(here + 'two/tagger/neighbour-context: more left/right tagging contexts', t => {
   assertSpec(t, `
 # more left/right tagging contexts
 They have running water. {Pronoun,Inf,Adj,Noun}
@@ -58,7 +59,7 @@ Is there any more? {Copula,There,Det,Singular}
   t.end()
 })
 
-test('two/tagger/neighbour-context: left/right rules in the tagging pipeline', t => {
+test(here + 'two/tagger/neighbour-context: left/right rules in the tagging pipeline', t => {
   assertSpec(t, `
 # left/right rules in the tagging pipeline
 The said elephant vanished. {Det,Adj,Noun,Past}
@@ -74,7 +75,7 @@ I waited a while. {Pronoun,Past,Det,Singular}
   t.end()
 })
 
-test('two/tagger/neighbour-context: Local left/right corrections', t => {
+test(here + 'two/tagger/neighbour-context: Local left/right corrections', t => {
   assertSpec(t, `
 # Local left/right corrections
 That is all. {Pronoun,Copula,Noun}
@@ -110,7 +111,7 @@ What they are doing is useful. {Conj,Pronoun,Aux,Ger,Copula,Adj}
   t.end()
 })
 
-test('two/tagger/neighbour-context: left/right migrated tag and untag phrases', t => {
+test(here + 'two/tagger/neighbour-context: left/right migrated tag and untag phrases', t => {
   assertSpec(t, `
 # left/right migrated tag and untag phrases
 I ate turkey {Pronoun,Past,Uncountable|!Place|!Country}
@@ -129,7 +130,7 @@ she spoke to Warhol {Pronoun,Past,Prep,Person}
   t.end()
 })
 
-test('two/tagger/neighbour-context: existing neighbour equivalents', t => {
+test(here + 'two/tagger/neighbour-context: existing neighbour equivalents', t => {
   assertSpec(t, `
 # rule cleanup: existing neighbour equivalents
 boring the audience {Ger,Det,Noun}

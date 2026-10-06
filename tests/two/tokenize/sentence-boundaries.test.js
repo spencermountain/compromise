@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/tokenize/sentence-boundaries] '
 
-test('two/tokenize/sentence-boundaries: sentence boundary preservation', t => {
+test(here + 'two/tokenize/sentence-boundaries: sentence boundary preservation', t => {
   const cases = [
     ['Hello!!! Next?', ['Hello!!!', 'Next?']],
     ['「行きません。」と言った', ['「行きません。」と言った']],

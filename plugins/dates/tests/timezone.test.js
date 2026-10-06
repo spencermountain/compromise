@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/timezone] '
 
-test('text sets timezone', function (t) {
+test(here + 'text sets timezone', function (t) {
   const arr = [
     ['today', '2019-01-01T00:00:00.000Z'], //london
     ['today in PST', '2019-01-01T00:00:00.000-08:00'],
@@ -81,7 +82,7 @@ test('text sets timezone', function (t) {
   t.end()
 })
 
-test('set timezone context', function (t) {
+test(here + 'set timezone context', function (t) {
   const phrase = 'April 7th 2018'
   const arr = [
     { tz: 'Asia/Karachi', start: '2018-04-07T00:00:00.000+05:00' },

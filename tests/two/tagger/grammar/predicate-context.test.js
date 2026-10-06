@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[two/tagger/grammar/predicate-context] '
 
-test('work takes the base form in modal and do-support questions', t => {
+test(here + 'work takes the base form in modal and do-support questions', t => {
   for (const str of ['does that work?', 'will that work?', 'could that work?', 'can this work?', 'do these work?', 'will those work?']) {
     const word = nlp(str).match('work')
     t.equal(word.has('#Infinitive'), true, str)
@@ -11,7 +12,7 @@ test('work takes the base form in modal and do-support questions', t => {
   t.end()
 })
 
-test('perfect read uses an auxiliary and a participle', t => {
+test(here + 'perfect read uses an auxiliary and a participle', t => {
   for (const str of ['I have read the book', 'I had read the book', 'she has read the book', 'I had already read the book', 'she has not read it']) {
     const doc = nlp(str)
     const aux = doc.match('(has|have|had)')
@@ -23,7 +24,7 @@ test('perfect read uses an auxiliary and a participle', t => {
   t.end()
 })
 
-test('predicative home and subject before to', t => {
+test(here + 'predicative home and subject before to', t => {
   for (const [str, word, tag] of [
     ['this island is home to birds', 'home', 'Noun'],
     ['this island was once home to birds', 'home', 'Noun'],
@@ -51,7 +52,7 @@ test('predicative home and subject before to', t => {
 })
 
 
-test('home distinguishes residents from an infinitive of purpose', t => {
+test(here + 'home distinguishes residents from an infinitive of purpose', t => {
   for (const str of ['she is home to rest', 'he is home to work', 'she will be home to rest']) {
     const doc = nlp(str)
     t.equal(doc.match('(rest|work)').has('#Infinitive'), true, str + ' purpose')
@@ -63,7 +64,7 @@ test('home distinguishes residents from an infinitive of purpose', t => {
   t.end()
 })
 
-test('been does not turn adjective suffixes into verbs', t => {
+test(here + 'been does not turn adjective suffixes into verbs', t => {
   for (const [str, word] of [
     ['the house has been green for years', 'green'],
     ['the light has been red for minutes', 'red'],
@@ -81,7 +82,7 @@ test('been does not turn adjective suffixes into verbs', t => {
   t.end()
 })
 
-test('pretty preserves adjective-noun complements', t => {
+test(here + 'pretty preserves adjective-noun complements', t => {
   const doc = nlp('that is pretty furniture')
   t.equal(doc.match('pretty').has('#Adjective'), true, 'pretty adjective')
   t.equal(doc.match('furniture').has('#Noun'), true, 'furniture noun')

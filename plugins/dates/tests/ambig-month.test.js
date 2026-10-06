@@ -1,10 +1,11 @@
 import test from 'tape'
 import nlp from './_lib.js'
 import spacetime from 'spacetime'
+const here = '[plugins/dates/tests/ambig-month] '
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
-test('this month', function (t) {
+test(here + 'this month', function (t) {
   const arr = [
     [2020, 11, 1],
     [2020, 11, 8],
@@ -23,7 +24,7 @@ test('this month', function (t) {
   t.end()
 })
 
-test('next month', function (t) {
+test(here + 'next month', function (t) {
   const arr = [
     [2020, 11, 1],
     [2020, 11, 8],
@@ -42,7 +43,7 @@ test('next month', function (t) {
   t.end()
 })
 
-test('last month', function (t) {
+test(here + 'last month', function (t) {
   const arr = [
     [2020, 11, 1],
     [2020, 11, 8],
@@ -61,7 +62,7 @@ test('last month', function (t) {
   t.end()
 })
 
-test('this december', function (t) {
+test(here + 'this december', function (t) {
   const arr = [
     [2020, 1, 1],
     [2020, 2, 8],
@@ -94,7 +95,7 @@ test('this december', function (t) {
   t.end()
 })
 
-test('this september', function (t) {
+test(here + 'this september', function (t) {
   const doc = nlp('this september')
   let found = doc.dates({ today: [2019, 7, 4] }).json()[0] || {}
   t.equal(fmt((found.dates || {}).start), '2019-09-01', 'this sept - before')

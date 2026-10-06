@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/aliases/additional-short-forms] '
 
-test('additional short forms preserve canonical tags and spec output', t => {
+test(here + 'additional short forms preserve canonical tags and spec output', t => {
   const aliases = {
     SG: 'Singular',
     PL: 'Plural',

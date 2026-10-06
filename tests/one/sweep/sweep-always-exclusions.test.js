@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../three/_lib.js'
+import nlp from '../_lib.js'
+const here = '[one/sweep/sweep-always-exclusions] '
 
-test('unindexed sweep rules respect exclusions', t => {
+test(here + 'unindexed sweep rules respect exclusions', t => {
   const patterns = ['.', '/^house$/', '#Noun?']
   patterns.forEach(match => {
     const net = nlp.buildNet([{ match, ifNo: '#SweepBlocker', tag: 'SweepExcludedMarker' }])
@@ -14,7 +15,7 @@ test('unindexed sweep rules respect exclusions', t => {
   t.end()
 })
 
-test('unindexed exclusions preserve ordering and legacy nets', t => {
+test(here + 'unindexed exclusions preserve ordering and legacy nets', t => {
   const net = nlp.buildNet([
     { match: '.', ifNo: ['house'], reason: 'blocked' },
     { match: 'house', reason: 'indexed' },

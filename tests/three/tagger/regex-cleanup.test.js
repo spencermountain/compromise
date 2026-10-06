@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../_lib.js'
+import nlp from '../_lib.js'
+const here = '[three/tagger/rules/regex-cleanup] '
 
-test('regex cleanup: removal repairs only the first qualifying run', t => {
+test(here + 'regex cleanup: removal repairs only the first qualifying run', t => {
   for (const [post, expected] of [
     ['   x', '   x'],
     [',,,x', ',,,x'],
@@ -18,7 +19,7 @@ test('regex cleanup: removal repairs only the first qualifying run', t => {
   t.end()
 })
 
-test('regex cleanup: output and sentence suffixes preserve behavior', t => {
+test(here + 'regex cleanup: output and sentence suffixes preserve behavior', t => {
   for (const [post, expected] of [
     [',,,x', 'word,,,x'],
     [',,,', 'word'],
@@ -49,7 +50,7 @@ test('regex cleanup: output and sentence suffixes preserve behavior', t => {
   t.end()
 })
 
-test('regex cleanup: long rejecting inputs preserve behavior', t => {
+test(here + 'regex cleanup: long rejecting inputs preserve behavior', t => {
   for (const [pattern, label] of [
     ['!'.repeat(100000) + 'x', 'negation prefix'],
     ['('.repeat(100000) + 'x', 'unclosed parentheses'],
@@ -70,18 +71,19 @@ test('regex cleanup: long rejecting inputs preserve behavior', t => {
     t.equal(doc.text(), 'one' + post, `removal preserves a run of ${JSON.stringify(char)}`)
   }
   const post = ','.repeat(100000) + 'x'
-  t.equal(
-    nlp('word').post(post).text({ keepPunct: false }),
-    'word' + post,
-    'output preserves punctuation before text'
-  )
+  t.equal(nlp('word').post(post).text({ keepPunct: false }), 'word' + post, 'output preserves punctuation before text')
   const dotted = 'a' + '.'.repeat(100000) + 'xx'
   t.deepEqual(nlp(dotted).out('array'), [dotted], 'long internal dot run remains intact')
   t.end()
 })
 
-test('pluralization handles irregular endings through noun selections', t => {
-  for (const [singular, plural] of [['mouse', 'mice'], ['louse', 'lice'], ['house', 'houses'], ['slice', 'slices']]) {
+test(here + 'pluralization handles irregular endings through noun selections', t => {
+  for (const [singular, plural] of [
+    ['mouse', 'mice'],
+    ['louse', 'lice'],
+    ['house', 'houses'],
+    ['slice', 'slices'],
+  ]) {
     // Supply the noun reading explicitly to test inflection rather than ambiguity.
     const doc = nlp('the ' + singular, { [singular]: 'Singular' })
     doc.nouns().toPlural()

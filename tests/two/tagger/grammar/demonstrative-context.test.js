@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/demonstrative-context] '
 
-test('two/tagger/demonstrative-context: demonstrative questions', t => {
+test(here + 'two/tagger/demonstrative-context: demonstrative questions', t => {
   assertSpec(t, `
 # frequent failed-rule cleanup preserves demonstrative questions
 Can those really fly? {Modal,Pronoun,Adv,Inf}
@@ -12,7 +13,7 @@ Those birds can fly. {Det,Plural,Modal,Inf}
   t.end()
 })
 
-test('two/tagger/demonstrative-context: demonstrative subjects and text dates', t => {
+test(here + 'two/tagger/demonstrative-context: demonstrative subjects and text dates', t => {
   assertSpec(t, `
 # second-pass cleanup: demonstrative subjects and text dates
 this helps {Pronoun,Pres}
@@ -29,7 +30,7 @@ twenty five apples {Cardinal|!Date,Cardinal|!Date,Plural}
   t.end()
 })
 
-test('two/tagger/demonstrative-context: this across adverbs and clause boundaries', t => {
+test(here + 'two/tagger/demonstrative-context: this across adverbs and clause boundaries', t => {
   assertSpec(t, `
 # second-pass cleanup: this across adverbs and clause boundaries
 this really helps {Pronoun|!Determiner,Adv,Pres}
@@ -42,7 +43,7 @@ this running water helps {Det,Adj,Noun,Pres}
   t.end()
 })
 
-test('two/tagger/demonstrative-context: this still helps keeps an adverb between subject and verb', t => {
+test(here + 'two/tagger/demonstrative-context: this still helps keeps an adverb between subject and verb', t => {
   assertSpec(t, `
 # this still helps keeps an adverb between subject and verb
 this still helps {Pronoun,Adv,Pres|!Noun}
@@ -55,7 +56,7 @@ the still air {Det,Adj,Noun}
   t.end()
 })
 
-test('two/tagger/demonstrative-context: still distinguishes demonstrative predicates from plural noun phrases', t => {
+test(here + 'two/tagger/demonstrative-context: still distinguishes demonstrative predicates from plural noun phrases', t => {
   assertSpec(t, `
 # still distinguishes demonstrative predicates from plural noun phrases
 this still helps me {Pronoun,Adv,Pres,Pronoun}
@@ -68,7 +69,7 @@ those still waters {Det,Adj,Plural|!Verb}
   t.end()
 })
 
-test('two/tagger/demonstrative-context: demonstrative questions after auxiliaries', t => {
+test(here + 'two/tagger/demonstrative-context: demonstrative questions after auxiliaries', t => {
   assertSpec(t, `
 # rule cleanup: demonstrative questions after auxiliaries
 can this work? {Modal,Pronoun|!Determiner,Inf}

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/phrase] '
 
-test('date-phrase tests:', function (t) {
+test(here + 'date-phrase tests:', function (t) {
   const arr = [
     [`remind me to buy eggs`, `buy`, `egg`, ``],
     [`please remind me to buy eggs`, `buy`, `egg`, ``],

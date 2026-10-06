@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/person-context] '
 
-test('two/tagger/person-context: names and honorifics', t => {
+test(here + 'two/tagger/person-context: names and honorifics', t => {
   assertSpec(t, `
 # index.js: names and honorifics
 He is Foo Smith. {Pronoun,Copula,FirstName,LastName}
@@ -50,7 +51,7 @@ Captain John walks. {Honorific,Person,Pres}
   t.end()
 })
 
-test('two/tagger/person-context: Will inside sentences and modal contrasts', t => {
+test(here + 'two/tagger/person-context: Will inside sentences and modal contrasts', t => {
   assertSpec(t, `
 # second-pass cleanup: Will inside sentences and modal contrasts
 yesterday Will walked home {Date,FirstName|!Modal,Past,Noun}
@@ -63,7 +64,7 @@ Will they leave? {Modal|!FirstName,Pronoun,Inf}
   t.end()
 })
 
-test('two/tagger/person-context: numbered lieutenant titles', t => {
+test(here + 'two/tagger/person-context: numbered lieutenant titles', t => {
   assertSpec(t, `
 # rule cleanup: numbered lieutenant titles
 the first lieutenant arrived {Det,Honorific,Honorific,Past}
@@ -79,7 +80,7 @@ the third child waved {Det|!Honorific,Ordinal|!Honorific,Noun|!Honorific,Past|!H
   t.end()
 })
 
-test('two/tagger/person-context: person names with roman numerals', t => {
+test(here + 'two/tagger/person-context: person names with roman numerals', t => {
   assertSpec(t, `
 # rule cleanup: person names with roman numerals
 King Louis XIV {Person,Person,Person}

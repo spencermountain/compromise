@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/duration-range] '
 
 const context = {
   today: '2024-09-24',
@@ -327,7 +328,7 @@ const arr = [
 ]
 
 
-test('duration-ranges', function (t) {
+test(here + 'duration-ranges', function (t) {
   arr.forEach(obj => {
     const doc = nlp(obj.str)
     const { start, end } = doc.dates(context).get()[0]

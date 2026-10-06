@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/speech/tests/syllables] '
 
 const words = [
   'sud den ly',
@@ -65,7 +66,7 @@ const words = [
   // 'peo ple'
 ]
 
-test('test length', function (t) {
+test(here + 'test length', function (t) {
   words.forEach(sep => {
     const str = sep.replace(/ /g, '')
     const doc = nlp(str)

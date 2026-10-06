@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/regression/rule-scope-regressions] '
 
-test('standalone fractions preserve ordinal noun modifiers', t => {
+test(here + 'standalone fractions preserve ordinal noun modifiers', t => {
   const fractions = [
     ['a sixteenth', 0.063],
     ['one hundredth', 0.01],
@@ -19,7 +20,7 @@ test('standalone fractions preserve ordinal noun modifiers', t => {
   t.end()
 })
 
-test('scoped tag corrections preserve nearby verb meanings', t => {
+test(here + 'scoped tag corrections preserve nearby verb meanings', t => {
   const cases = [
     ['John & Mary went home', '&', 'ProperNoun'],
     ['John E Smith', 'e', 'Acronym'],

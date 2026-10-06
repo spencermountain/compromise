@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/adverb-context] '
 
-test('two/tagger/adverb-context: adverbs and dates', t => {
+test(here + 'two/tagger/adverb-context: adverbs and dates', t => {
   assertSpec(t, `
 # index.js: adverbs and dates
 Way too hot. {Adv,Adv,Adj}

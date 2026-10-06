@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/false-positive] '
 
-test('no dates', function (t) {
+test(here + 'no dates', function (t) {
   const arr = [
     'laughing out loud',
     '1 adult',

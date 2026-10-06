@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/aliases/formal] '
 
-test('formal tag aliases', t => {
+test(here + 'formal tag aliases', t => {
   const model = nlp.world().model.one
   const { tagSet, tagAliases } = model
   t.teardown(() => {

@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/lexical-context] '
 
-test('two/tagger/lexical-context: lexical ambiguity in sentence context', t => {
+test(here + 'two/tagger/lexical-context: lexical ambiguity in sentence context', t => {
   assertSpec(t, `
 #switch-keyed tagging examples
 Her favourite book disappeared. {Poss,Adj,Noun,Past}
@@ -15,7 +16,7 @@ Commit to the plan. {Imperative,Prep,Det,Noun}
   t.end()
 })
 
-test('two/tagger/lexical-context: lexical phrase readings', t => {
+test(here + 'two/tagger/lexical-context: lexical phrase readings', t => {
   assertSpec(t, `
 # Phrase readings carried over from the pending rule-cleanup tests
 we have since finished {Pronoun,Aux,Adv,Past}
@@ -27,7 +28,7 @@ an even number {Det,Adj,Noun}
   t.end()
 })
 
-test('two/tagger/lexical-context: fixed lexical phrases', t => {
+test(here + 'two/tagger/lexical-context: fixed lexical phrases', t => {
   assertSpec(t, `
 # rule cleanup: fixed lexical phrases
 Manchester United won {SportsTeam,SportsTeam,Past}
@@ -56,12 +57,24 @@ the school opened {Det,Noun,Past}
   t.end()
 })
 
-test('two/tagger/lexical-context: u r shorthand', t => {
+test(here + 'two/tagger/lexical-context: u r shorthand', t => {
   assertSpec(t, `
 # rule cleanup: u r shorthand
 u r cool {Pronoun,Copula,Adj}
 u r very kind {Pronoun,Copula,Adverb,Adj}
 u r a friend {Pronoun,Copula,Det,Noun}
 `)
+  t.end()
+})
+
+test('rule cleanup: modal words used as nouns', t => {
+  assertSpec(t, `
+    the can {Det,Singular}
+    the will {Det,Singular}
+    the may {Det,Singular}
+    she can swim {Pronoun,Modal,Inf}
+    they will leave {Pronoun,Modal,Inf}
+    we may go {Pronoun,Modal,Inf}
+  `, here.trim())
   t.end()
 })

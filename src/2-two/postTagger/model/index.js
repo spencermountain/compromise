@@ -281,8 +281,6 @@ const rules = [
   { m: `#Date .? [(march|may)]`, g: 0, t: 'Month', r: 'feb-and-march' },
   // quickly [march]
   { m: `#Adv [(march|may)]`, g: 0, t: 'V', n: '(early|late)', r: 'quickly-march' },
-  // 12 am
-  { m: `#Value (am|pm)`, t: 'Time', r: '2-am' },
 
   // === dates/date-phrase.js ===
 
@@ -389,8 +387,6 @@ const rules = [
   // ==== Singular ====
   // did a [900], paid a [20]
   { m: '#V (a|an) [#Value]$', g: 0, t: 'Sing', r: 'did-a-value' },
-  // the [can]
-  { m: 'the [(can|will|may)]', g: 0, t: 'Sing', r: 'can' },
 
   // ==== Possessive ====
   // John Smith's
@@ -1719,8 +1715,6 @@ const multi = [
     t: 'Prep',
     r: 'exceptive-but',
   })),
-  // We looked [under] the bed.
-  { m: '#V [under] (#Det|#Poss|#Pron)', g: 0, t: 'Prep', r: 'under-obj' },
   // images on a screen [like] humans do
   { m: '#NN [like] #NN+ (do|does|did)$', g: 0, t: 'Prep', r: 'noun-like-cmp' },
   // cities [like] New York, Boston

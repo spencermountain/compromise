@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[one/misc-one] '
 
-test('dictionary keys in frequency counts', t => {
+test(here + 'dictionary keys in frequency counts', t => {
   const doc = nlp('apple constructor constructor pear')
   t.deepEqual(
     doc.terms().out('freq'),
@@ -26,7 +27,7 @@ test('dictionary keys in frequency counts', t => {
   t.end()
 })
 
-test('fuzzy matching preserves a zero threshold', t => {
+test(here + 'fuzzy matching preserves a zero threshold', t => {
   const doc = nlp('talk')
   t.equal(doc.match('~walk~', null, { fuzzy: 0 }).text(), 'talk', 'accepts an explicit zero')
   t.equal(doc.match('~walk~', null, {}).text(), '', 'omitted threshold retains the default')
@@ -34,7 +35,7 @@ test('fuzzy matching preserves a zero threshold', t => {
   t.end()
 })
 
-test('lexicon membership does not depend on inherited methods', t => {
+test(here + 'lexicon membership does not depend on inherited methods', t => {
   const model = nlp.model().one
   const original = model.lexicon
   t.teardown(() => {

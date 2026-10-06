@@ -1,42 +1,73 @@
 import test from 'tape'
-import nlp from '../../two/_lib.js'
-// Compare the source matcher implementations directly; these are internal unit tests.
-import fromHere from '../../../src/1-one/match/methods/match/02-from-here.js'
-import { isFixed, fromFixed } from '../../../src/1-one/match/methods/match/_fixed.js'
+import nlp from '../_lib.js'
+const here = '[one/sweep/sweep-fixed-pattern] '
 
-test('fixed patterns preserve matches and capture pointers', t => {
-  const world = nlp.world()
-  const patterns = ['alpha beta', '[alpha beta]', 'alpha [beta]', '[alpha] [beta]',
-    '^alpha beta', 'alpha beta$', '(alpha|beta)', '#Noun', '#Determiner #Adjective #Noun',
-    "we've", "[we've] walked", 'we have', 'have walked', 'have [walked]', 'hello']
-  const texts = ['alpha beta', 'gamma alpha beta alpha beta', 'alpha beta gamma',
-    'the red car', "we've walked home", "they said we've walked", "we've", 'Hello', '']
-  patterns.forEach(pattern => {
-    const regs = world.methods.one.parseMatch(pattern, {}, world)
-    t.ok(isFixed(regs), `eligible: ${pattern}`)
-    texts.forEach(text => {
-      nlp(text).docs.forEach(terms => {
-        for (let i = 0; i <= terms.length; i += 1) {
-          t.deepEqual(fromFixed(terms, regs, i, terms.length, i),
-            fromHere(terms, regs, i, terms.length, i), `${pattern}: ${text} at ${i}`)
-        }
-      })
-    })
+test(here + 'fixed patterns preserve matches and captures', t => {
+  const cases = [
+    ['alpha beta', 'alpha beta', ['alpha beta']],
+    ['alpha beta', '[alpha beta]', ['alpha beta']],
+    ['alpha beta', 'alpha [beta]', ['beta']],
+    ['alpha beta', '[alpha] beta', ['alpha']],
+    ['gamma alpha beta alpha beta', 'alpha beta', ['alpha beta', 'alpha beta']],
+    ['gamma alpha beta alpha beta', 'alpha [beta]', ['beta', 'beta']],
+    ['alpha beta gamma', '^alpha beta', ['alpha beta']],
+    ['gamma alpha beta', '^alpha beta', []],
+    ['gamma alpha beta', 'alpha beta$', ['alpha beta']],
+    ['alpha beta gamma', 'alpha beta$', []],
+    ['alpha beta', '^alpha [beta]$', ['beta']],
+    ['alpha beta', 'alpha beta gamma', []],
+    ['alpha gamma beta', '(alpha|beta)', ['alpha', 'beta']],
+    ['Hello', 'hello', ['Hello']],
+    ['', 'alpha beta', []],
+  ]
+  cases.forEach(([input, pattern, expected]) => {
+    const doc = nlp(input)
+    const group = pattern.includes('[') ? 0 : undefined
+    const net = nlp.buildNet([{ match: pattern, group }])
+    t.deepEqual(doc.match(pattern, group).out('array'), expected, `${here}${input}: match ${pattern}`)
+    t.deepEqual(doc.sweep(net, { tagger: false }).view.out('array'), expected, `${here}${input}: sweep ${pattern}`)
   })
   t.end()
 })
 
-test('complex patterns retain the general matcher', t => {
-  const world = nlp.world()
-  const patterns = ['alpha? beta', 'alpha+ beta', '!alpha beta', '.* beta',
-    '(alpha beta|gamma)', '(alpha && #Noun)', '/alpha/', '@hasContraction']
-  patterns.forEach(pattern => {
-    const regs = world.methods.one.parseMatch(pattern, {}, world)
-    t.notOk(isFixed(regs), pattern)
+test(here + 'tag patterns and named groups preserve selections', t => {
+  const doc = nlp('the red car')
+  doc.match('the').tag('Determiner')
+  doc.match('red').tag('Adjective')
+  doc.match('car').tag('Noun')
+  const pattern = '#Determiner [<description>#Adjective #Noun]'
+  const match = doc.match(pattern)
+  t.equal(match.text(), 'the red car', here + 'named capture retains the complete match')
+  t.equal(match.groups('description').text(), 'red car', here + 'named group selects its terms')
+  const net = nlp.buildNet([{ match: '#Determiner [#Adjective #Noun]', group: 0 }])
+  t.deepEqual(doc.sweep(net, { tagger: false }).view.out('array'), ['red car'], here + 'sweep preserves tag capture')
+  t.end()
+})
+
+test(here + 'complex patterns preserve optional and repeated matches', t => {
+  const cases = [
+    ['beta', 'alpha? beta', ['beta']],
+    ['alpha alpha beta', 'alpha+ beta', ['alpha alpha beta']],
+    ['gamma beta', '!alpha beta', ['gamma beta']],
+    ['gamma', '(alpha beta|gamma)', ['gamma']],
+    ['alpha beta', '/alpha/', ['alpha']],
+  ]
+  cases.forEach(([input, pattern, expected]) => {
+    const doc = nlp(input)
+    const net = nlp.buildNet([{ match: pattern }])
+    t.deepEqual(doc.match(pattern).out('array'), expected, `${here}${input}: match ${pattern}`)
+    t.deepEqual(doc.sweep(net, { tagger: false }).view.out('array'), expected, `${here}${input}: sweep ${pattern}`)
   })
-  const regs = world.methods.one.parseMatch('alpha beta', {}, world)
-  t.ok(isFixed(regs), 'initially simple')
-  regs[0].optional = true
-  t.notOk(isFixed(regs), 'eligibility follows edited parsed patterns')
+  t.end()
+})
+
+test(here + 'matching respects edits to parsed patterns', t => {
+  const doc = nlp('beta')
+  const pattern = nlp.parseMatch('alpha beta')
+  t.equal(doc.match(pattern).found, false, here + 'required prefix is missing')
+  pattern[0].optional = true
+  t.equal(doc.match(pattern).text(), 'beta', here + 'prefix can become optional')
+  pattern[0].optional = false
+  t.equal(doc.match(pattern).found, false, here + 'prefix can become required again')
   t.end()
 })

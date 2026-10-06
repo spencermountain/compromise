@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/spatial-context] '
 
-test('two/tagger/spatial-context: spatial prepositions retain verbal contrasts', t => {
+test(here + 'two/tagger/spatial-context: spatial prepositions retain verbal contrasts', t => {
   assertSpec(t, `
 # second-pass cleanup: spatial prepositions retain verbal contrasts
 they stayed above the ship {Pronoun,Past,Prep,Det,Noun}
@@ -49,7 +50,7 @@ the boat nears the coast {Det,Noun,Pres|!Preposition,Det,Noun}
   t.end()
 })
 
-test('two/tagger/spatial-context: spatial objects after modifiers and commas', t => {
+test(here + 'two/tagger/spatial-context: spatial objects after modifiers and commas', t => {
   assertSpec(t, `
 # second-pass cleanup: spatial objects after modifiers and commas
 the plane flew well above London {Det,Noun,Past,Adv,Prep|!Verb,City}
@@ -69,7 +70,7 @@ she climbed aboard their ship {Pronoun,Past,Prep|!Verb,Poss,Noun}
   t.end()
 })
 
-test('two/tagger/spatial-context: spatial modifiers retain their prepositions', t => {
+test(here + 'two/tagger/spatial-context: spatial modifiers retain their prepositions', t => {
   assertSpec(t, `
 # rule cleanup: spatial modifiers retain their prepositions
 the plane flew well above the clouds {Det,Noun,Past,Adv,Prep,Det,Plural}
@@ -122,5 +123,14 @@ she stood directly over my window {Pronoun,Past,Adv,Prep,Poss,Noun}
 it hovered directly over him {Pronoun,Past,Adv,Prep,Pronoun}
 we looked under the bed {Pronoun,Past,Prep,Det,Noun}
 `)
+  t.end()
+})
+
+test('rule cleanup: under after a verb', t => {
+  assertSpec(t, `
+    we looked under the bed {Pronoun,Past,Prep,Det,Noun}
+    she crawled under my desk {Pronoun,Past,Prep,Poss,Noun}
+    they stood under it {Pronoun,Past,Prep,Pronoun}
+  `, here.trim())
   t.end()
 })

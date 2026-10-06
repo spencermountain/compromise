@@ -1,6 +1,7 @@
 import test from 'tape'
 import nlp from './_lib.js'
 import spacetime from 'spacetime'
+const here = '[plugins/dates/tests/fullDates] '
 
 //number of days between start+end
 const tests = [
@@ -556,7 +557,7 @@ const fmt = function (str) {
   return spacetime(str).format('nice')
 }
 
-test('full-dates', (t) => {
+test(here + 'full-dates', (t) => {
   tests.forEach((obj) => {
     const context = {
       today: obj.today,

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[one/sweep/sweep-hook] '
 
-test('explicit hooks choose a required word or tag', t => {
+test(here + 'explicit hooks choose a required word or tag', t => {
   const net = nlp.buildNet([
     { match: 'including [#Noun]', hook: 'including', group: 0, tag: 'Listed' },
     { match: 'near [#Place]', hook: '#Place', group: 0, tag: 'Nearby' },
@@ -16,7 +17,7 @@ test('explicit hooks choose a required word or tag', t => {
   t.end()
 })
 
-test('explicit hooks preserve action order and matchOne', t => {
+test(here + 'explicit hooks preserve action order and matchOne', t => {
   const rules = [
     { match: 'two', reason: 'two' },
     { match: 'one two', hook: 'one', reason: 'both' },
@@ -29,7 +30,7 @@ test('explicit hooks preserve action order and matchOne', t => {
   t.end()
 })
 
-test('explicit hooks accept required AND terms and switches', t => {
+test(here + 'explicit hooks accept required AND terms and switches', t => {
   const net = nlp.buildNet([
     { match: '(including && #Verb) #Noun', hook: 'including' },
     { match: '[%Noun|Verb%] #Preposition', hook: '%Noun|Verb%' },
@@ -38,7 +39,7 @@ test('explicit hooks accept required AND terms and switches', t => {
   t.end()
 })
 
-test('unsafe explicit hooks fail at compilation', t => {
+test(here + 'unsafe explicit hooks fail at compilation', t => {
   const cases = [
     ['one #Noun', 'missing'],
     ['one #Noun', '#Verb'],

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/question-boundaries] '
 
-test('question conversion stays inside selected sentences', t => {
+test(here + 'question conversion stays inside selected sentences', t => {
   const source = 'She walks. Has he eaten? They sleep.'
   const selectors = [
     doc => doc.sentences(1),
@@ -23,7 +24,7 @@ test('question conversion stays inside selected sentences', t => {
   t.end()
 })
 
-test('main and subordinate question predicates can be selected independently', t => {
+test(here + 'main and subordinate question predicates can be selected independently', t => {
   const source = 'Has she eaten after he arrived?'
   const rows = [
     [doc => doc.verbs().slice(0, 2), 'Will she have eaten after he arrived?'],

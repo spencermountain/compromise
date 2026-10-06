@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/agreement/auxiliary-agreement] '
 
-test('future, modal and perfect auxiliary regressions', t => {
+test(here + 'future, modal and perfect auxiliary regressions', t => {
   const cases = [
     ['she will drive', 'toPastParticiple', 'she has driven'],
     ['they will not eat', 'toPastParticiple', 'they have not eaten'],
@@ -44,7 +45,7 @@ test('future, modal and perfect auxiliary regressions', t => {
   t.end()
 })
 
-test('perfect passive classification is independent of subject number', t => {
+test(here + 'perfect passive classification is independent of subject number', t => {
   for (const input of ['she has been driven', 'they have been driven']) {
     const grammar = nlp(input).verbs().json()[0].verb.grammar
     t.equal(grammar.form, 'passive-present', input)
@@ -53,7 +54,7 @@ test('perfect passive classification is independent of subject number', t => {
   t.end()
 })
 
-test('including accepts determined and modified noun phrases', t => {
+test(here + 'including accepts determined and modified noun phrases', t => {
   for (const input of [
     '20 people, including the children',
     '20 people, including very young children',

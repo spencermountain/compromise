@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/adjective-predicates] '
 
-test('two/tagger/adjective-predicates: passive and adjective examples', t => {
+test(here + 'two/tagger/adjective-predicates: passive and adjective examples', t => {
   assertSpec(t, `
 # index.js: passive and adjective examples
 We do not go. {Pronoun,Aux,Negative,Inf}
@@ -56,7 +57,7 @@ A professional bodybuilder. {Det,Adj,Noun}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: Woke adjective contrasts', t => {
+test(here + 'two/tagger/adjective-predicates: Woke adjective contrasts', t => {
   assertSpec(t, `
 # Woke adjective contrasts
 a woke activist {Det,Adj,Actor}
@@ -66,7 +67,7 @@ a woke audience {Det,Adj,Noun}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: Predicate vacuum-sealed', t => {
+test(here + 'two/tagger/adjective-predicates: Predicate vacuum-sealed', t => {
   assertSpec(t, `
 # Predicate vacuum-sealed
 the package is vacuum-sealed {Det,Noun,Copula,Adj,Adj}
@@ -74,7 +75,7 @@ the package is vacuum-sealed {Det,Noun,Copula,Adj,Adj}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: guards on later adjective and question corrections', t => {
+test(here + 'two/tagger/adjective-predicates: guards on later adjective and question corrections', t => {
   assertSpec(t, `
 # rule cleanup: guards on later adjective and question corrections
 the individual goals {Det,Adj,Plural}
@@ -86,7 +87,7 @@ when they arrived {Conjunction,Pronoun,Past}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: adjective and noun pairs outside timezone names', t => {
+test(here + 'two/tagger/adjective-predicates: adjective and noun pairs outside timezone names', t => {
   assertSpec(t, `
 # rule cleanup: adjective and noun pairs outside timezone names
 instant access {Adj,Noun}
@@ -96,7 +97,7 @@ individual work {Adj,Noun}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: degree modifiers and proper names', t => {
+test(here + 'two/tagger/adjective-predicates: degree modifiers and proper names', t => {
   assertSpec(t, `
 # second-pass cleanup: degree modifiers and proper names
 the very professional actor {Det,Adv,Adj,Actor}
@@ -111,7 +112,7 @@ they will arrive tomorrow {Pronoun,Modal,Inf,Date}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: degree adjectives preserve their noun context', t => {
+test(here + 'two/tagger/adjective-predicates: degree adjectives preserve their noun context', t => {
   assertSpec(t, `
 # second-pass cleanup: degree adjectives preserve their noun context
 the quite professional actor {Det,Adv,Adj|!Noun,Actor}
@@ -122,7 +123,7 @@ she hired a professional {Pronoun,Past,Det,Noun}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: even before better', t => {
+test(here + 'two/tagger/adjective-predicates: even before better', t => {
   assertSpec(t, `
 # rule cleanup: even before better
 this is even better {Pronoun,Copula,Adverb,Comparative}
@@ -132,7 +133,7 @@ we feel even better today {Pronoun,Inf,Adverb,Comparative,Date}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: gerunds followed by adjective modifiers', t => {
+test(here + 'two/tagger/adjective-predicates: gerunds followed by adjective modifiers', t => {
   assertSpec(t, `
 # #Gerund [#Gerund] #Plural
 They are repairing crumbling roads. {Noun,Vb,Ger,Adj,Plural}
@@ -141,7 +142,7 @@ They are repairing leaking pipes. {Noun,Vb,Ger,Adj,Plural}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: adjectives between comparative connectors', t => {
+test(here + 'two/tagger/adjective-predicates: adjectives between comparative connectors', t => {
   assertSpec(t, `
 # as [#Infinitive] as
 She is as fit as ever. {Noun,Vb,Connector,Adj,Connector,Adv}
@@ -150,7 +151,7 @@ They are as welcome as ever. {Noun,Vb,Connector,Adj,Connector,Adv}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: adjective modifiers after copulas', t => {
+test(here + 'two/tagger/adjective-predicates: adjective modifiers after copulas', t => {
   assertSpec(t, `
 # #Copula the [%Adj|Noun%] #Noun
 It is the premier university. {Noun,Vb,Det,Adj,Noun}
@@ -159,7 +160,7 @@ This is the principal reason. {Noun,Vb,Det,Adj,Noun}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: under and over modify participles', t => {
+test(here + 'two/tagger/adjective-predicates: under and over modify participles', t => {
   assertSpec(t, `
 # (is|was|were) [(under|over) #PastTense]
 They were under paid. {Noun,Vb,Adv,Adj}
@@ -168,7 +169,7 @@ It is over rated. {Noun,Vb,Adv,Adj}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: Consecutive gerunds: preserve the action and the adjective modifier.', t => {
+test(here + 'two/tagger/adjective-predicates: Consecutive gerunds: preserve the action and the adjective modifier.', t => {
   assertSpec(t, `
 # Consecutive gerunds: preserve the action and the adjective modifier.
 They are repairing crumbling roads. {Pronoun,Aux,Ger,Adj,Plural}
@@ -177,7 +178,7 @@ They are repairing leaking pipes. {Pronoun,Aux,Ger,Adj,Plural}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: A later adjective correction must survive intervening Actor rules.', t => {
+test(here + 'two/tagger/adjective-predicates: A later adjective correction must survive intervening Actor rules.', t => {
   assertSpec(t, `
 # A later adjective correction must survive intervening Actor rules.
 a semiprofessional bodyworker {Det,Adj,Noun}
@@ -186,7 +187,7 @@ on stable foundations {Prep,Adj,Plural}
   t.end()
 })
 
-test('two/tagger/adjective-predicates: Adjective correction before a proper noun.', t => {
+test(here + 'two/tagger/adjective-predicates: Adjective correction before a proper noun.', t => {
   assertSpec(t, `
 # Adjective correction before a proper noun.
 This is the classic London. {Pronoun,Copula,Det,Adj,Place}

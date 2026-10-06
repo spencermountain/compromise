@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/combo] '
 
 const context = {
   today: '2021-04-17', //saturday
@@ -66,7 +67,7 @@ const arr = [
   ['sept 1 2 3', ['sept 1', 'sept 2', 'sept 3']],
 ]
 
-test('multi-dates', function (t) {
+test(here + 'multi-dates', function (t) {
   arr.forEach((a) => {
     const found = nlp(a[0]).dates(context).get()
     t.equal(found.length, a[1].length, '[length] ' + a[0])

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/conversion-stability] '
 
-test('coordinated prepositional gerunds are protected', t => {
+test(here + 'coordinated prepositional gerunds are protected', t => {
   for (const phrase of ['swimming and diving', 'swimming or diving', 'swimming and diving and surfing', 'swimming and carefully diving']) {
     const doc = nlp('she learns by ' + phrase)
     doc.verbs().toPastTense()
@@ -13,7 +14,7 @@ test('coordinated prepositional gerunds are protected', t => {
   t.end()
 })
 
-test('passive conversion is stable across adverb positions', t => {
+test(here + 'passive conversion is stable across adverb positions', t => {
   for (const [input, expected] of [
     ['she will really be being driven', 'she was really being driven'],
     ['she will be really being driven', 'she was really being driven'],
@@ -29,7 +30,7 @@ test('passive conversion is stable across adverb positions', t => {
   t.end()
 })
 
-test('negative copula perfect conversion preserves auxiliary order', t => {
+test(here + 'negative copula perfect conversion preserves auxiliary order', t => {
   for (const [input, expected] of [
     ['she is not happy', 'she has not been happy'],
     ['they were not happy', 'they have not been happy'],
@@ -44,7 +45,7 @@ test('negative copula perfect conversion preserves auxiliary order', t => {
   t.end()
 })
 
-test('present conversion preserves perfect aspect on repeated calls', t => {
+test(here + 'present conversion preserves perfect aspect on repeated calls', t => {
   for (const [input, expected] of [
     ['she had eaten', 'she has eaten'],
     ['they had not eaten', 'they have not eaten'],

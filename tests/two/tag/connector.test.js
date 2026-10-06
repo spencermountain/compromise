@@ -1,10 +1,11 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/tag/connector] '
 
 const children = ['Preposition', 'Conjunction', 'Condition']
 const blank = () => nlp('xyz').unTag('*')
 
-test('Connector is the parent of prepositions, conjunctions, and conditions', t => {
+test(here + 'Connector is the parent of prepositions, conjunctions, and conditions', t => {
   const tagSet = nlp.world().model.one.tagSet
   t.deepEqual([...tagSet.Connector.children].sort(), [...children].sort(), 'three child tags')
   children.forEach(tag => {
@@ -27,7 +28,7 @@ test('Connector is the parent of prepositions, conjunctions, and conditions', t 
   t.end()
 })
 
-test('Connector matches parsed text and preserves child distinctions', t => {
+test(here + 'Connector matches parsed text and preserves child distinctions', t => {
   const doc = nlp('If rain falls, we wait under the roof and talk.')
   t.deepEqual(doc.match('#Connector').out('array'), ['If', 'under', 'and'], 'shared selection')
   t.ok(doc.match('under').has('#Preposition'), 'under remains a preposition')

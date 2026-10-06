@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[two/tagger/entities/web-addresses] '
 
-test('two/tagger/entities/web-addresses: email and URL recognition', t => {
+test(here + 'two/tagger/entities/web-addresses: email and URL recognition', t => {
   for (const text of [
     'alice@example.technology',
     'alice@my-domain.com',
@@ -33,7 +34,7 @@ test('two/tagger/entities/web-addresses: email and URL recognition', t => {
   t.end()
 })
 
-test('two/tagger/entities/web-addresses: addresses retain boundaries and punctuation', t => {
+test(here + 'two/tagger/entities/web-addresses: addresses retain boundaries and punctuation', t => {
   for (const text of ['alice@example.info', 'First-Last+news@My-Site.COM']) {
     const input = `Email "${text}", please.`
     const doc = nlp(input)

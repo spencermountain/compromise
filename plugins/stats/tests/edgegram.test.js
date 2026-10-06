@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/stats/tests/edgegram] '
 
-test('edgegram-sizes:', function (t) {
+test(here + 'edgegram-sizes:', function (t) {
   const r = nlp(`he is cool. john was cool. He is really nice.`)
 
   let arr = r.startGrams({ size: 5 })
@@ -31,7 +32,7 @@ test('edgegram-sizes:', function (t) {
   t.end()
 })
 
-test('edgegram:', function (t) {
+test(here + 'edgegram:', function (t) {
   const doc = nlp('my birthday is June 5th my birthday')
   const arr = doc.edgegrams()
   t.equal(arr[0].normal, 'my birthday', 'combine edges')
@@ -39,7 +40,7 @@ test('edgegram:', function (t) {
   t.end()
 })
 
-test('start-sizes:', function (t) {
+test(here + 'start-sizes:', function (t) {
   const r = nlp(`he is cool. john was cool. He is really nice.`)
   const arr = r.startGrams()
   t.equal(arr[0].normal, 'he is', 'sorted-by-freq')

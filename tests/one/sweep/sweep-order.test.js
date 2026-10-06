@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[one/sweep/sweep-order] '
 
-test('sweep preserves hook order independently of input order', t => {
+test(here + 'sweep preserves hook order independently of input order', t => {
   const net = nlp.buildNet([
     { match: 'alpha', reason: 'alpha' },
     { match: 'beta alpha', reason: 'both' },
@@ -18,7 +19,7 @@ test('sweep preserves hook order independently of input order', t => {
   t.end()
 })
 
-test('selective hooks preserve earlier alternative ordering', t => {
+test(here + 'selective hooks preserve earlier alternative ordering', t => {
   const net = nlp.buildNet([
     { match: 'zebra', reason: 'zebra' },
     { match: 'yak', reason: 'yak' },
@@ -37,7 +38,7 @@ test('selective hooks preserve earlier alternative ordering', t => {
   t.end()
 })
 
-test('compiled indexes remain independent when reusing rule objects', t => {
+test(here + 'compiled indexes remain independent when reusing rule objects', t => {
   const rule = { match: 'one two', reason: 'shared' }
   const first = nlp.buildNet([{ match: 'two', reason: 'two' }, rule, rule])
   const second = nlp.buildNet([{ match: 'one', reason: 'one' }, rule])
@@ -46,21 +47,21 @@ test('compiled indexes remain independent when reusing rule objects', t => {
   t.end()
 })
 
-test('sweep preserves numeric hook enumeration', t => {
+test(here + 'sweep preserves numeric hook enumeration', t => {
   const net = nlp.buildNet([{ match: '10' }, { match: '2' }])
   const result = nlp('10 2').sweep(net)
   t.deepEqual(result.found.map(r => r.match), ['2', '10'], 'numeric keys keep their original enumeration order')
   t.end()
 })
 
-test('serialized hook order ignores inherited property names', t => {
+test(here + 'serialized hook order ignores inherited property names', t => {
   const net = JSON.parse(JSON.stringify(nlp.buildNet([{ match: 'alpha' }])))
   const result = nlp('constructor alpha').sweep(net)
   t.deepEqual(result.found.map(r => r.match), ['alpha'], 'only compiled hook keys are candidates')
   t.end()
 })
 
-test('sweep combines candidate filters without losing alternatives', t => {
+test(here + 'sweep combines candidate filters without losing alternatives', t => {
   const net = nlp.buildNet([
     { match: 'one two', reason: 'required' },
     { match: 'one', ifNo: 'two', reason: 'blocked' },
@@ -74,7 +75,7 @@ test('sweep combines candidate filters without losing alternatives', t => {
   t.end()
 })
 
-test('compiled match minimum agrees with uncached matching', t => {
+test(here + 'compiled match minimum agrees with uncached matching', t => {
   const net = nlp.buildNet([{ match: 'one? !three [two]', group: 0 }])
   const doc = nlp('one four two')
   const compiled = doc.sweep(net).view.out('array')

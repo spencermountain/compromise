@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/clause-context] '
 
-test('two/tagger/clause-context: connectors and clause predicates', t => {
+test(here + 'two/tagger/clause-context: connectors and clause predicates', t => {
   assertSpec(t, `
 # index.js: connectors, expressions and promoted rules
 Things that seem cool. {Plural,Conj,Inf,Adj}
@@ -75,7 +76,7 @@ She drew a picture. {Pronoun,Past,Det,Noun}
   t.end()
 })
 
-test('two/tagger/clause-context: clause boundaries and modifiers', t => {
+test(here + 'two/tagger/clause-context: clause boundaries and modifiers', t => {
   assertSpec(t, `
 # second-pass.js: clause boundaries and remaining corrections
 Before the meal ended, we left. {Conj,Det,Noun,Past,Pronoun,Past}
@@ -114,7 +115,7 @@ Keep the lid closed. {Imperative,Det,Noun,Adj}
   t.end()
 })
 
-test('two/tagger/clause-context: short contextual rules', t => {
+test(here + 'two/tagger/clause-context: short contextual rules', t => {
   assertSpec(t, `
 # rule cleanup: short contextual rules
 dark green paint {Adv,Adj,Noun}
@@ -153,7 +154,7 @@ before she left, we ate {Conj,Pronoun,Past,Pronoun,Past}
   t.end()
 })
 
-test('two/tagger/clause-context: introductory like before a comma', t => {
+test(here + 'two/tagger/clause-context: introductory like before a comma', t => {
   assertSpec(t, `
 # ^(like && @hasComma)
 Like, I understand. {Expr,Noun,Vb}
@@ -162,7 +163,7 @@ Like, what happened? {Expr,QuestionWord,Past}
   t.end()
 })
 
-test('two/tagger/clause-context: relative clauses retain finite verbs', t => {
+test(here + 'two/tagger/clause-context: relative clauses retain finite verbs', t => {
   assertSpec(t, `
 # that [#Plural] to
 A path that leads to the river. {Det,Noun,Conj,Pres,Prep,Det,Noun}
@@ -171,7 +172,7 @@ A road that winds to the coast. {Det,Noun,Conj,Pres,Prep,Det,Noun}
   t.end()
 })
 
-test('two/tagger/clause-context: Relative clause: preserve the finite verb after that.', t => {
+test(here + 'two/tagger/clause-context: Relative clause: preserve the finite verb after that.', t => {
   assertSpec(t, `
 # Relative clause: preserve the finite verb after that.
 A path that leads to the river. {Det,Noun,Conj,Pres,Prep,Det,Noun}
@@ -179,7 +180,7 @@ A path that leads to the river. {Det,Noun,Conj,Pres,Prep,Det,Noun}
   t.end()
 })
 
-test('two/tagger/clause-context: Multiple alternatives in one sentence must retain each correction.', t => {
+test(here + 'two/tagger/clause-context: Multiple alternatives in one sentence must retain each correction.', t => {
   assertSpec(t, `
 # Multiple alternatives in one sentence must retain each correction.
 They let John shoulder the burden and made Mary shoulder the cost. {Pronoun,Vb,Person,Inf,Det,Noun,Conj,Past,Person,Inf,Det,Noun}
@@ -191,7 +192,7 @@ I know why he is happy and where she is working. {Pronoun,Inf,Connector,Pronoun,
   t.end()
 })
 
-test('two/tagger/clause-context: Smaller word-hook families: exceptions, particles, and perfect forms.', t => {
+test(here + 'two/tagger/clause-context: Smaller word-hook families: exceptions, particles, and perfect forms.', t => {
   assertSpec(t, `
 # Smaller word-hook families: exceptions, particles, and perfect forms.
 Everyone but me agreed. {Noun,Prep,Pronoun,Past}

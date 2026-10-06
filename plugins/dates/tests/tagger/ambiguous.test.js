@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[plugins/dates/tests/tagger/ambiguous] '
 
-test('negative-ambiguous-dates', t => {
+test(here + 'negative-ambiguous-dates', t => {
   const noDates = [
     'march quickly',
     'quickly march',
@@ -38,7 +39,7 @@ test('negative-ambiguous-dates', t => {
   t.end()
 })
 
-test('positive-ambiguous-dates', t => {
+test(here + 'positive-ambiguous-dates', t => {
   const yesDates = [
     'go south in march',
     'march in march',
@@ -56,7 +57,7 @@ test('positive-ambiguous-dates', t => {
   t.end()
 })
 
-test('date-tagger', function (t) {
+test(here + 'date-tagger', function (t) {
   const arr = [
     ['june 2009', ['Month', 'Year']],
     ['june 5th 2009', ['Month', 'Date', 'Year']],

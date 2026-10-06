@@ -1,10 +1,11 @@
 import test from 'tape'
 import nlp from './_lib.js'
 import spacetime from 'spacetime'
+const here = '[plugins/dates/tests/ambig-weekday] '
 
 const fmt = (iso) => (iso ? spacetime(iso).format('{iso-short}') : '-')
 
-test('this monday', function (t) {
+test(here + 'this monday', function (t) {
   const arr = [
     ['2020-12-7', '2020-12-07'], //mon (itself)
     ['2020-12-8', '2020-12-14'], //tues

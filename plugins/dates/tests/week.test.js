@@ -1,8 +1,9 @@
 import test from 'tape'
 import nlp from './_lib.js'
 import spacetime from 'spacetime'
+const here = '[plugins/dates/tests/week] '
 
-test('week-logic', function (t) {
+test(here + 'week-logic', function (t) {
   const tests = [
     {
       today: '2021-03-01', //on monday

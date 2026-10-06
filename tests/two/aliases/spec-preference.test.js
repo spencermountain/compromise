@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/aliases/spec-preference] '
 
-test('alias order selects spec output', t => {
+test(here + 'alias order selects spec output', t => {
   const model = nlp.world().model.one
   const { tagSet, tagAliases } = model
   t.teardown(() => {
@@ -22,7 +23,7 @@ test('alias order selects spec output', t => {
   t.end()
 })
 
-test('legacy alias is a fallback only', t => {
+test(here + 'legacy alias is a fallback only', t => {
   const model = nlp.world().model.one
   const { tagSet, tagAliases } = model
   t.teardown(() => {

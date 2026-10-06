@@ -48,6 +48,7 @@ const MAX_ITERATIONS = 16384
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const resultsFile = path.join(scriptDir, 'results.jsonl')
 const noSave = process.argv.includes('--no-save')
+const write = process.argv.includes('--write')
 
 // Some package managers consume `--quiet` themselves and expose only their
 // lifecycle log level. Supporting argv keeps direct execution identical.
@@ -292,18 +293,12 @@ const main = () => {
   console.log(dim('running benchmark…'))
 
   const measurement = benchmarkSuite(tests)
-  console.log(dim('measuring memory and building file sizes…'))
   const result = {
-    ...metadata(),
     libraryVersion: nlp.version,
     score: Number(measurement.score.toFixed(4)),
   }
 
   console.log(`\n${bold(result.score.toFixed(2))} ${dim('runs/sec')}`)
-  console.log(dim(`${result.timestamp} · ${result.commit}`))
-  console.log(`Memory: init ${result.memoryKB.init} kB · freshPrince ${result.memoryKB.freshPrince} kB`)
-  console.log(`Filesize (three): ${(result.filesizeBytes / 1024).toFixed(2)} KiB`)
-  console.log('desc: ""')
 
   if (!measurement.stable) {
     console.log(yellow('◆ system too busy — try again'))
@@ -314,9 +309,17 @@ const main = () => {
   } else {
     console.log(comparisonText(previous, result))
 
-    if (noSave || isQuiet) {
+    if (!write) {
+      console.log(dim('not saved (use --write to profile and save)'))
+    } else if (noSave || isQuiet) {
       console.log(dim(`not saved (${noSave ? '--no-save' : '--quiet'})`))
     } else {
+      console.log(dim('measuring memory and building file sizes…'))
+      Object.assign(result, metadata())
+      console.log(dim(`${result.timestamp} · ${result.commit}`))
+      console.log(`Memory: init ${result.memoryKB.init} kB · freshPrince ${result.memoryKB.freshPrince} kB`)
+      console.log(`Filesize (three): ${(result.filesizeBytes / 1024).toFixed(2)} KiB`)
+      console.log('desc: ""')
       fs.appendFileSync(resultsFile, `${JSON.stringify(result)}\n`, 'utf8')
       console.log(dim(`saved to ${path.relative(process.cwd(), resultsFile)}`))
     }

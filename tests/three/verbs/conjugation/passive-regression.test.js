@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/passive-regression] '
 
-test('passive past tense agrees with the subject', t => {
+test(here + 'passive past tense agrees with the subject', t => {
   const cases = [
     ['i am being driven', 'i was being driven'],
     ['we are being driven', 'we were being driven'],
@@ -35,7 +36,7 @@ test('passive past tense agrees with the subject', t => {
   t.end()
 })
 
-test('perfect conversion preserves passive voice and aspect', t => {
+test(here + 'perfect conversion preserves passive voice and aspect', t => {
   const cases = [
     ['i am being driven', 'i have been being driven'],
     ['she is driven', 'she has been driven'],
@@ -75,7 +76,7 @@ test('perfect conversion preserves passive voice and aspect', t => {
   t.end()
 })
 
-test('regular and future progressive passive regressions', t => {
+test(here + 'regular and future progressive passive regressions', t => {
   // Assert the intended English, rather than preserving the malformed output.
   const watched = nlp('we are not being watched')
   watched.verbs().toPastParticiple()

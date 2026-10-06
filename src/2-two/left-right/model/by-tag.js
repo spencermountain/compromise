@@ -1,4 +1,8 @@
 const rules = {
+  '#Value': [
+    // [five] pm
+    '_ (am|pm) -> #Time',
+  ],
   '#QuestionWord': [
     // [when] stolen
     '_ #VBN -> #Prep',

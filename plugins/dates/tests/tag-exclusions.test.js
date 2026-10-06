@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/tag-exclusions] '
 
-test('dates plugin preserves core component exclusions', function (t) {
+test(here + 'dates plugin preserves core component exclusions', function (t) {
   const tags = ['Month', 'WeekDay', 'Year', 'FinancialQuarter', 'Season', 'Time', 'Timezone']
   tags.forEach(first => {
     tags.filter(second => second !== first).forEach(second => {

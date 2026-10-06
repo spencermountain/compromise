@@ -1,4 +1,15 @@
 const rules = {
+  under: [
+    // looked [under] the bed
+    '#V _ (#Det|#Poss|#Pron) -> #Prep',
+  ],
+  am: [
+    // five [am]
+    '#Value _ -> #Time',
+  ],
+  pm: [
+    '#Value _ -> #Time',
+  ],
   well: [
     // a [well] made table
     '_ #Past -> #Adv',

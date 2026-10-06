@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[plugins/dates/tests/tagger/date-chunk] '
 
-test('date-chunk :', function (t) {
+test(here + 'date-chunk :', function (t) {
   const arr = [
     ['remember to buy eggs tomorrow', 'tomorrow'],
     ['i should buy eggs for the kids on sunday', 'on sunday'],

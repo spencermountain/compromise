@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/format] '
 
 // test('short+long form', function (t) {
 //   let r = nlp('wednesday, january 2nd, 2016')
@@ -34,7 +35,7 @@ import nlp from './_lib.js'
 //   t.end()
 // })
 
-test('date-format', function (t) {
+test(here + 'date-format', function (t) {
   let doc = nlp(`i'm going skiing two days after November 1st 2019 at 7pm`)
   doc.dates().format('{day} {month} {date-ordinal}, {time}')
   t.equal(doc.text(), `i'm going skiing Sunday November 3rd, 7:00pm`, 'format-test')

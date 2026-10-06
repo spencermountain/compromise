@@ -1,8 +1,9 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/tokenizer] '
 // const spacetime = require('spacetime')
 
-test('date-tokenizer', function (t) {
+test(here + 'date-tokenizer', function (t) {
   const arr = [
     ['june 5th, june 10th', 2],
     ['monday, wednesday', 2],

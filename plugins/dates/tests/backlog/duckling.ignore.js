@@ -5,6 +5,7 @@
 import test from 'tape'
 import spacetime from 'spacetime'
 import nlp from '../_lib.js'
+const here = '[plugins/dates/tests/backlog/duckling] '
 const isArray = function (arr) {
   return Object.prototype.toString.call(arr) === '[object Array]'
 }
@@ -916,7 +917,7 @@ const arr = [
   [mk([2013, 2, 18, 0, 0, 0]), ['next monday']],
 ]
 
-test('duckling-tests', (t) => {
+test(here + 'duckling-tests', (t) => {
   arr.forEach((a) => {
     a[1].forEach((str) => {
       const context = {

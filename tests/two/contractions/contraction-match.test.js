@@ -1,8 +1,9 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/contractions/contraction-match] '
 const h = '[two/contraction-match] '
 
-test('half-contraction', function (t) {
+test(here + 'half-contraction', function (t) {
   const doc = nlp(`before gonna after`)
 
   let found = doc.has('gonna')
@@ -21,7 +22,7 @@ test('half-contraction', function (t) {
 })
 
 
-test('partial-contraction', function (t) {
+test(here + 'partial-contraction', function (t) {
   const doc = nlp(`we've walked`)
   let m = doc.match('we')
   t.equal(m.text('implicit'), 'we', h + 'one-half')
@@ -57,7 +58,7 @@ test('partial-contraction', function (t) {
 })
 
 
-test('contraction-skip', function (t) {
+test(here + 'contraction-skip', function (t) {
   const str = `We've matched`
   const doc = nlp(str)
 
@@ -86,7 +87,7 @@ test('contraction-skip', function (t) {
 })
 
 
-test('contraction-no-skip', function (t) {
+test(here + 'contraction-no-skip', function (t) {
   const doc = nlp(`We won't match`)
   let m = doc.match(`we will match`)
   t.equal(m.found, false, h + 'half-contraction')
@@ -105,7 +106,7 @@ test('contraction-no-skip', function (t) {
   t.end()
 })
 
-test('multiple-contractions', function (t) {
+test(here + 'multiple-contractions', function (t) {
   let doc = nlp(`everybody's creating, and they're going`)
   t.ok(doc.has('everybody is') && doc.has('they are'), `everybody's + they're`)
 

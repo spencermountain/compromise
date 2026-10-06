@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/regressions] '
 
 const context = {
   today: '2026-07-11', //saturday
@@ -14,7 +15,7 @@ const getEnd = (str, ctx = context) => {
   return res ? res.end : null
 }
 
-test('holidays honor an explicit year', (t) => {
+test(here + 'holidays honor an explicit year', (t) => {
   // easter 2026 already happened - but the year is explicit
   t.equal(getStart('easter 2026'), '2026-04-05T00:00:00.000-04:00', 'easter 2026')
   t.equal(getStart('easter 2030'), '2030-04-21T00:00:00.000-04:00', 'easter 2030')
@@ -25,7 +26,7 @@ test('holidays honor an explicit year', (t) => {
   t.end()
 })
 
-test('overnight time-ranges cross midnight', (t) => {
+test(here + 'overnight time-ranges cross midnight', (t) => {
   t.equal(getStart('from 10pm to 2am'), '2026-07-11T22:00:00.000-04:00', '10pm-2am start')
   t.equal(getEnd('from 10pm to 2am'), '2026-07-12T02:00:00.000-04:00', '10pm-2am end')
   // explicit 'am' should not become pm
@@ -34,7 +35,7 @@ test('overnight time-ranges cross midnight', (t) => {
   t.end()
 })
 
-test('between-ranges are forward-ordered', (t) => {
+test(here + 'between-ranges are forward-ordered', (t) => {
   // was: a reversed range with negative duration
   t.equal(getStart('between friday and sunday'), '2026-07-17T00:00:00.000-04:00', 'starts friday')
   t.equal(getEnd('between friday and sunday'), '2026-07-18T23:59:59.999-04:00', 'ends before sunday')
@@ -44,14 +45,14 @@ test('between-ranges are forward-ordered', (t) => {
   t.end()
 })
 
-test('end of the month', (t) => {
+test(here + 'end of the month', (t) => {
   t.equal(getStart('end of the month'), '2026-07-31T23:59:59.999-04:00', 'end of the month')
   t.equal(getStart('start of the month'), '2026-07-01T00:00:00.000-04:00', 'start of the month')
   t.equal(getStart('end of the year'), '2026-12-31T23:59:59.999-05:00', 'end of the year')
   t.end()
 })
 
-test('day after next', (t) => {
+test(here + 'day after next', (t) => {
   t.equal(getStart('day after next'), '2026-07-13T00:00:00.000-04:00', 'day after next')
   t.equal(getStart('the week after next'), '2026-07-20T00:00:00.000-04:00', 'week after next')
   t.equal(getStart('the weekend after next'), '2026-07-25T00:00:00.000-04:00', 'weekend after next')
@@ -60,7 +61,7 @@ test('day after next', (t) => {
   t.end()
 })
 
-test('next-month wraps the year', (t) => {
+test(here + 'next-month wraps the year', (t) => {
   const dec = { today: '2026-12-10', timezone: 'America/New_York' }
   t.equal(getStart('the 5th of next month', dec), '2027-01-05T00:00:00.000-05:00', 'next month in december')
   const jan = { today: '2026-01-10', timezone: 'America/New_York' }
@@ -68,7 +69,7 @@ test('next-month wraps the year', (t) => {
   t.end()
 })
 
-test('relative shifts', (t) => {
+test(here + 'relative shifts', (t) => {
   t.equal(getStart('two weeks hence'), '2026-07-25T00:00:00.000-04:00', 'hence is the future')
   t.equal(getStart('in a few weeks'), '2026-08-01T00:00:00.000-04:00', 'a few is 3')
   t.equal(getStart('in a couple of weeks'), '2026-07-25T00:00:00.000-04:00', 'a couple of')
@@ -82,7 +83,7 @@ test('relative shifts', (t) => {
   t.end()
 })
 
-test('nth weekday of month', (t) => {
+test(here + 'nth weekday of month', (t) => {
   const ctx = { today: '2021-01-01', timezone: 'America/New_York' }
   t.equal(getStart('the second monday of february', ctx), '2021-02-08T00:00:00.000-05:00', '2nd monday')
   t.equal(getStart('first monday of february', ctx), '2021-02-01T00:00:00.000-05:00', 'first monday')
@@ -92,7 +93,7 @@ test('nth weekday of month', (t) => {
   t.end()
 })
 
-test('march/may as verbs', (t) => {
+test(here + 'march/may as verbs', (t) => {
   t.equal(getStart('the soldiers march tomorrow'), '2026-07-12T00:00:00.000-04:00', 'march tomorrow → tomorrow')
   t.equal(getStart('you may tomorrow find peace'), '2026-07-12T00:00:00.000-04:00', 'may tomorrow → tomorrow')
   t.equal(getStart('may 2020'), '2020-05-01T00:00:00.000-04:00', 'may 2020 still works')
@@ -100,14 +101,14 @@ test('march/may as verbs', (t) => {
   t.end()
 })
 
-test('quarter-to times', (t) => {
+test(here + 'quarter-to times', (t) => {
   t.equal(getStart('quarter to five'), '2026-07-11T16:45:00.000-04:00', 'quarter to five')
   t.equal(getStart('at quarter to five'), '2026-07-11T16:45:00.000-04:00', 'at quarter to five')
   t.equal(getStart('at ten to 4'), '2026-07-11T15:50:00.000-04:00', 'at ten to 4')
   t.end()
 })
 
-test('year windows', (t) => {
+test(here + 'year windows', (t) => {
   t.equal(getStart('2030'), '2030-01-01T00:00:00.000-05:00', 'bare 2030')
   t.equal(getStart('2045'), '2045-01-01T00:00:00.000-05:00', 'bare 2045')
   t.equal(getStart(`june of '98`), '1998-06-01T00:00:00.000-04:00', `june of '98`)
@@ -116,7 +117,7 @@ test('year windows', (t) => {
   t.end()
 })
 
-test('timezone handling', (t) => {
+test(here + 'timezone handling', (t) => {
   t.equal(getStart('4pm JST'), '2026-07-11T16:00:00.000+09:00', 'jst resolves')
   t.equal(getStart('4pm SGT'), '2026-07-11T16:00:00.000+08:00', 'sgt resolves')
   t.equal(getStart('4pm GMT+9'), '2026-07-11T16:00:00.000+09:00', 'gmt+9 is utc+9')
@@ -131,7 +132,7 @@ test('timezone handling', (t) => {
   t.end()
 })
 
-test('repeating dates surface in json', (t) => {
+test(here + 'repeating dates surface in json', (t) => {
   const res = nlp('every tuesday').dates(context).get()
   t.equal(res.length, 1, 'every tuesday found')
   t.ok(res[0].repeat, 'has repeat info')
@@ -142,7 +143,7 @@ test('repeating dates surface in json', (t) => {
   t.end()
 })
 
-test('unit field', (t) => {
+test(here + 'unit field', (t) => {
   const res = nlp('june 9th 2012').dates(context).get()[0]
   t.equal(res.unit, 'day', 'june 9th is a day')
   const range = nlp('jan 1 to dec 31').dates(context).get()[0]
@@ -150,25 +151,25 @@ test('unit field', (t) => {
   t.end()
 })
 
-test('times api shape', (t) => {
+test(here + 'times api shape', (t) => {
   t.deepEqual(nlp('hello world').times().get(), [], 'empty is an array')
   const one = nlp('at 4:30pm').times().get(0)
   t.equal(one.time, '4:30pm', 'get(0) is an object')
   t.end()
 })
 
-test('eod is end-of-day', (t) => {
+test(here + 'eod is end-of-day', (t) => {
   t.equal(getStart('due eod'), '2026-07-11T22:00:00.000-04:00', 'due eod')
   t.end()
 })
 
-test('a range does not stop other dates from splitting', (t) => {
+test(here + 'a range does not stop other dates from splitting', (t) => {
   const res = nlp('it runs between june and july. see me june 5, june 10').dates(context).get()
   t.equal(res.length, 3, 'three dates found')
   t.end()
 })
 
-test('a trailing dash is not part of the date', (t) => {
+test(here + 'a trailing dash is not part of the date', (t) => {
   const doc = nlp('2025-05-11 - They have taken the bridge and the Second Hall')
   t.equal(doc.dates(context).text(), '2025-05-11', 'iso date before a dash')
   t.equal(nlp('june 5 - june 7').dates(context).text(), 'june 5 - june 7', 'dash range')

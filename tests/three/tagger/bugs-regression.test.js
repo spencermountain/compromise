@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../_lib.js'
+import nlp from '../_lib.js'
+const here = '[three/tagger/rules/bugs-regression] '
 
-test('resolved examples from bugs.md', t => {
+test(here + 'resolved examples from bugs.md', t => {
   const thought = nlp('My first thought was to push it away, he said.')
   t.ok(thought.has('(thought && #Noun)'), 'thought is a noun after a possessive ordinal')
   t.notOk(thought.has('(thought && #Verb)'), 'thought is not a verb here')
@@ -29,7 +30,7 @@ test('resolved examples from bugs.md', t => {
   t.end()
 })
 
-test('snowboarding noun and continuous uses', t => {
+test(here + 'snowboarding noun and continuous uses', t => {
   t.ok(nlp('Snowboarding is a winter sport.').has('(snowboarding && #Noun)'), 'subject activity')
   for (const [input, phrase] of [
     ['Right now, the athlete is snowboarding.', 'is snowboarding'],
@@ -43,7 +44,7 @@ test('snowboarding noun and continuous uses', t => {
   t.end()
 })
 
-test('tagging regressions from bugs.md', t => {
+test(here + 'tagging regressions from bugs.md', t => {
   t.notOk(nlp('and too many of the rich made their money').has('(rich && #Comparative)'), 'rich is not comparative')
   t.ok(nlp('with heads and arms rolling around').has('(arms && #Plural)'), 'coordinated body parts')
   t.ok(nlp('it bristles outwards, brushlike.').has('(brushlike && #Adjective)'), 'brushlike adjective')
@@ -52,7 +53,7 @@ test('tagging regressions from bugs.md', t => {
   t.end()
 })
 
-test('bug fixes preserve nearby grammatical uses', t => {
+test(here + 'bug fixes preserve nearby grammatical uses', t => {
   t.ok(nlp('he arms the guards').has('(arms && #Verb)'), 'arms remains a verb with an object')
   t.ok(nlp('Rich Smith arrived').has('Rich #LastName'), 'Rich remains part of a name')
   t.ok(nlp('Rich Smith arrived').match('Rich').has('#Person'), 'Rich is a person')

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/auxiliary-regression] '
 
-test('auxiliary conversions preserve agreement and grammatical forms', t => {
+test(here + 'auxiliary conversions preserve agreement and grammatical forms', t => {
   const cases = [
     ['she is driven', 'toFutureTense', 'she will be driven'],
     ['they are not driven', 'toFutureTense', 'they will not be driven'],
@@ -38,7 +39,7 @@ test('auxiliary conversions preserve agreement and grammatical forms', t => {
   t.end()
 })
 
-test('prepositional including is not conjugated', t => {
+test(here + 'prepositional including is not conjugated', t => {
   for (const method of ['toPastTense', 'toPresentTense', 'toFutureTense', 'toPastParticiple']) {
     const input = '20 people, including many children'
     const doc = nlp(input)

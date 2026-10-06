@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/noun-context] '
 
-test('two/tagger/noun-context: nouns, actors, possessives and gerunds', t => {
+test(here + 'two/tagger/noun-context: nouns, actors, possessives and gerunds', t => {
   assertSpec(t, `
 # index.js: nouns, actors, possessives and gerunds
 Rights of man. {Noun,Prep,Noun}
@@ -53,7 +54,7 @@ He reads the upcoming. {Pronoun,Pres,Det,Noun}
   t.end()
 })
 
-test('two/tagger/noun-context: Noun list with clothing preserves watches as a noun', t => {
+test(here + 'two/tagger/noun-context: Noun list with clothing preserves watches as a noun', t => {
   assertSpec(t, `
 # Noun list with clothing preserves watches as a noun
 We sell food, clothing and watches. {Pronoun,Inf,Noun,Noun,Conj,Plural|!Verb}
@@ -61,7 +62,7 @@ We sell food, clothing and watches. {Pronoun,Inf,Noun,Noun,Conj,Plural|!Verb}
   t.end()
 })
 
-test('two/tagger/noun-context: nouns and predicates retain contextual readings', t => {
+test(here + 'two/tagger/noun-context: nouns and predicates retain contextual readings', t => {
   assertSpec(t, `
 # frequent failed-rule cleanup preserves nouns and predicates
 She watched the ducks. {Pronoun,Past,Det,Plural|!Verb}
@@ -83,7 +84,7 @@ John and Mary work. {Person,Conj,Person,Inf|!Noun}
   t.end()
 })
 
-test('two/tagger/noun-context: noun corrections retain compound and nominal contexts', t => {
+test(here + 'two/tagger/noun-context: noun corrections retain compound and nominal contexts', t => {
   assertSpec(t, `
 # noun corrections retain compound and nominal contexts
 The slide makes noise. {Det,Noun|!Verb,Pres,Noun}
@@ -98,7 +99,7 @@ The panel has a recess-lock. {Det,Noun,Pres,Det,Noun,Noun|!Verb}
   t.end()
 })
 
-test('two/tagger/noun-context: nominal subjects before past verbs', t => {
+test(here + 'two/tagger/noun-context: nominal subjects before past verbs', t => {
   assertSpec(t, `
 # ^[%Noun|Verb%] #PastTense (#Determiner|#Possessive) #Adjective+? #Noun
 Hope changed the world. {Noun,Past,Det,Noun}
@@ -107,7 +108,7 @@ Love changed my life. {Noun,Past,Poss,Noun}
   t.end()
 })
 
-test('two/tagger/noun-context: gerunds as clause subjects', t => {
+test(here + 'two/tagger/noun-context: gerunds as clause subjects', t => {
   assertSpec(t, `
 # #Pronoun #Infinitive [#Gerund] #PresentTense
 I think tipping sucks. {Noun,Inf,Noun,Pres}
@@ -116,7 +117,7 @@ We believe running improves health. {Noun,Inf,Noun,Pres,Noun}
   t.end()
 })
 
-test('two/tagger/noun-context: nominal objects after prepositions', t => {
+test(here + 'two/tagger/noun-context: nominal objects after prepositions', t => {
   assertSpec(t, `
 # #PastTense (until|as|through|without) [(#PresentTense && !#Gerund && !#Copula)]
 We waited until release. {Noun,Past,Prep,Noun}
@@ -124,7 +125,7 @@ We waited until release. {Noun,Past,Prep,Noun}
   t.end()
 })
 
-test('two/tagger/noun-context: coordinated plural nouns before gerunds', t => {
+test(here + 'two/tagger/noun-context: coordinated plural nouns before gerunds', t => {
   assertSpec(t, `
 # #Preposition #Plural and [%Plural|Verb%] #Gerund
 We watched with smiles and waves greeting us. {Noun,Past,Prep,Plural,Conj,Plural,Ger,Noun}
@@ -133,7 +134,7 @@ With dogs and bears running, we left. {Prep,Plural,Conj,Plural,Ger,Noun,Past}
   t.end()
 })
 
-test('two/tagger/noun-context: A verb-shaped word used as a noun after a preposition.', t => {
+test(here + 'two/tagger/noun-context: A verb-shaped word used as a noun after a preposition.', t => {
   assertSpec(t, `
 # A verb-shaped word used as a noun after a preposition.
 We waited until release. {Pronoun,Past,Prep,Noun}
@@ -143,7 +144,7 @@ She acted as judge. {Pronoun,Past,Prep,Noun}
   t.end()
 })
 
-test('two/tagger/noun-context: nominal subjects before past verbs', t => {
+test(here + 'two/tagger/noun-context: nominal subjects before past verbs', t => {
   assertSpec(t, `
 Hope changed the world. {Noun,Past,Det,Noun}
 Love changed my life. {Noun,Past,Poss,Noun}

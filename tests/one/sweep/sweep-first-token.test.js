@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../two/_lib.js'
+import nlp from '../_lib.js'
+const here = '[one/sweep/sweep-first-token] '
 
-test('sweep finds matches after rejected starting terms', t => {
+test(here + 'sweep finds matches after rejected starting terms', t => {
   const world = nlp.world()
   const net = world.methods.one.buildNet([{ match: 'hello [world]', group: '0' }], world)
   const doc = nlp('well hello world and hello world again')
@@ -9,7 +10,7 @@ test('sweep finds matches after rejected starting terms', t => {
   t.end()
 })
 
-test('sweep first-token check preserves pointers and groups', t => {
+test(here + 'sweep first-token check preserves pointers and groups', t => {
   const world = nlp.world()
   const patterns = [
     'hello world', '[hello] world', 'hello [world]', '(hello|world)',

@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/wh-phrases] '
 
 const rows = [
   ['Which books has she read?', 'Which books had she read?', 'Which books has she read?', 'Which books will she have read?'],
@@ -14,7 +15,7 @@ const rows = [
   ['Which dogs are hungry?', 'Which dogs were hungry?', 'Which dogs are hungry?', 'Which dogs will be hungry?'],
 ]
 
-test('object wh-phrases invert while subject wh-phrases retain subject order', t => {
+test(here + 'object wh-phrases invert while subject wh-phrases retain subject order', t => {
   rows.forEach(([input, ...expected]) => {
     for (const selection of ['verbs', 'sentences']) {
       ['toPastTense', 'toPresentTense', 'toFutureTense'].forEach((method, i) => {
@@ -32,7 +33,7 @@ test('object wh-phrases invert while subject wh-phrases retain subject order', t
   t.end()
 })
 
-test('embedded wh-nouns are not conjugated and remain in statement order', t => {
+test(here + 'embedded wh-nouns are not conjugated and remain in statement order', t => {
   const input = 'She asked which books he had read.'
   const embedded = [
     ['toPastTense', input],

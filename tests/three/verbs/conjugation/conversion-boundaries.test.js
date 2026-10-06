@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/conversion-boundaries] '
 
 // Compare explicit sentence outputs, then check both retained and freshly
 // inferred tags. Repetition alone could silently preserve a wrong first result.
@@ -14,7 +15,7 @@ const check = (t, input, method, expected, selection = 'verbs') => {
   t.equal(fresh.text(), expected, 'fresh: ' + method + ': ' + input)
 }
 
-test('conversions preserve prepositional gerunds and passive/perfect complements', t => {
+test(here + 'conversions preserve prepositional gerunds and passive/perfect complements', t => {
   const complements = [
     'by swimming and diving',
     'by being watched',
@@ -43,7 +44,7 @@ test('conversions preserve prepositional gerunds and passive/perfect complements
   t.end()
 })
 
-test('infinitival complements survive every conversion and reparsing', t => {
+test(here + 'infinitival complements survive every conversion and reparsing', t => {
   const complements = ['to have a car', 'to be watched', 'to have been watched', 'to not really have eaten']
   const main = {
     toPastTense: 'she wanted',
@@ -64,7 +65,7 @@ test('infinitival complements survive every conversion and reparsing', t => {
   t.end()
 })
 
-test('gerund conversions retain agreement, voice, modifiers and punctuation', t => {
+test(here + 'gerund conversions retain agreement, voice, modifiers and punctuation', t => {
   const cases = [
     ['she does not walk', 'she is not walking'],
     ["She doesn't really walk.", 'She is not really walking.'],
@@ -90,7 +91,7 @@ test('gerund conversions retain agreement, voice, modifiers and punctuation', t 
   t.end()
 })
 
-test('negative auxiliary phrases convert as a unit', t => {
+test(here + 'negative auxiliary phrases convert as a unit', t => {
   const cases = [
     ['she ought not to swim', 'toPastParticiple', 'she ought not to have swum'],
     ['she ought not to be swimming', 'toPastParticiple', 'she ought not to have been swimming'],
@@ -113,7 +114,7 @@ test('negative auxiliary phrases convert as a unit', t => {
   t.end()
 })
 
-test('sentence tense conversions share complement boundaries', t => {
+test(here + 'sentence tense conversions share complement boundaries', t => {
   const cases = [
     ['she learns by being watched', 'toPastTense', 'she learned by being watched'],
     ['she wants to have a car', 'toFutureTense', 'she will want to have a car'],

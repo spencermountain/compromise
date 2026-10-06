@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../_lib.js'
+import nlp from '../_lib.js'
+const here = '[three/tagger/rules/post-tagger-typos] '
 
-test('corrected post-tagger patterns tag their intended words', t => {
+test(here + 'corrected post-tagger patterns tag their intended words', t => {
   const cases = [
     ['the nice walk', 'walk', 'Noun'],
     ['wit me', 'wit', 'Preposition'],

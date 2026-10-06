@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/nonfinite-regression] '
 
-test('auxiliary conversion tolerates negation and adverbs', t => {
+test(here + 'auxiliary conversion tolerates negation and adverbs', t => {
   const cases = [
     ['she will not have been walking', 'toPastTense', 'she had not been walking'],
     ['they will really have been walking', 'toPastTense', 'they had really been walking'],
@@ -27,7 +28,7 @@ test('auxiliary conversion tolerates negation and adverbs', t => {
   t.end()
 })
 
-test('already perfect modal progressives remain unchanged', t => {
+test(here + 'already perfect modal progressives remain unchanged', t => {
   for (const input of [
     'she could have been swimming',
     'they might not have been swimming',
@@ -42,7 +43,7 @@ test('already perfect modal progressives remain unchanged', t => {
   t.end()
 })
 
-test('prepositional gerunds are not conjugated', t => {
+test(here + 'prepositional gerunds are not conjugated', t => {
   for (const [input, expected] of [
     ['I am excited by snowboarding.', 'I was excited by snowboarding.'],
     ['she learns by swimming', 'she learned by swimming'],

@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/entity-context] '
 
-test('two/tagger/entity-context: miscellaneous, organizations and places', t => {
+test(here + 'two/tagger/entity-context: miscellaneous, organizations and places', t => {
   assertSpec(t, `
 # index.js: miscellaneous, organizations and places
 U r cool. {Pronoun,Copula,Adj}

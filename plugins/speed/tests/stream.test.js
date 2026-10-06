@@ -6,11 +6,12 @@ nlp.plugin(streamFile)
 
 
 import { fileURLToPath } from 'node:url'
+const here = '[plugins/speed/tests/stream] '
 const dir = path.dirname(fileURLToPath(import.meta.url))
 
 const file = path.join(dir, `./files/freshPrince.txt`)
 
-test('stream the whole document', function (t) {
+test(here + 'stream the whole document', function (t) {
   const want = fs.readFileSync(file).toString()
   nlp.streamFile(file, (s) => {
     return s.match('.')
@@ -20,7 +21,7 @@ test('stream the whole document', function (t) {
   })
 })
 
-test('return no matches', function (t) {
+test(here + 'return no matches', function (t) {
   nlp.streamFile(file, (s) => {
     return s.match('coconut')
   }).then(doc => {

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/normalize/regex-boundaries] '
 
-test('generated punctuation contexts are stable when normalized', t => {
+test(here + 'generated punctuation contexts are stable when normalized', t => {
   const normalizationFailures = []
   for (const infix of ['.', '...', ',', '!', '?', '-', '😀']) {
     for (const ending of ['', '.', '!!!', '…', ')']) {

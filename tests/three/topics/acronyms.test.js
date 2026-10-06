@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/topics/acronyms] '
 
-test('topics include acronyms without overlapping entities', t => {
+test(here + 'topics include acronyms without overlapping entities', t => {
   const doc = nlp('NASA works with EACD and IBM. John H. Smith met EACD representatives.')
   t.deepEqual(doc.topics().out('array').sort(), ['NASA', 'EACD', 'IBM.', 'John H. Smith', 'EACD'].sort())
   t.equal(doc.topics().out('freq').find(o => o.normal === 'eacd').count, 2, 'keep repeated occurrences')
@@ -12,7 +13,7 @@ test('topics include acronyms without overlapping entities', t => {
   t.end()
 })
 
-test('name pairs are proper nouns with stronger organization cues retained', t => {
+test(here + 'name pairs are proper nouns with stronger organization cues retained', t => {
   const pairs = ['John & John', 'John & Mary', 'Smith & Rogers', 'John & Mary Ltd']
   pairs.forEach(text => {
     const doc = nlp(text)

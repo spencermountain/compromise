@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/match/regex-state] '
 
-test('two/match/regex-state: captures and reusable compiled expressions', t => {
+test(here + 'two/match/regex-state: captures and reusable compiled expressions', t => {
   t.equal(nlp('foo>bar').match('[<name>/foo>bar/]').groups('name').text(), 'foo>bar')
   t.throws(() => nlp.parseMatch('[<oops #Noun]'), /Invalid named capture/)
   for (const regex of [/foo/g, /foo/y]) {
@@ -15,7 +16,7 @@ test('two/match/regex-state: captures and reusable compiled expressions', t => {
   t.end()
 })
 
-test('two/match/regex-state: capture errors and regex state on nonmatches', t => {
+test(here + 'two/match/regex-state: capture errors and regex state on nonmatches', t => {
   t.equal(nlp('foo>bar').match('[<name>/foo>bar/]').groups('name').length, 1, 'capture has the intended name')
   for (const pattern of ['[<>foo]', '[<name foo]']) {
     t.throws(() => nlp.parseMatch(pattern), /Invalid named capture/, pattern)

@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/duration] '
 // const relaxed = 14
 
 const february = 1
@@ -231,7 +232,7 @@ const tests = [
   },
 ]
 
-test('day durations', t => {
+test(here + 'day durations', t => {
   tests.forEach(obj => {
     const context = {
       today: obj.today,

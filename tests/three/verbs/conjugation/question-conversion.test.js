@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/question-conversion] '
 
 const cases = [
   ['Has she eaten?', 'Had she eaten?', 'Has she eaten?', 'Will she have eaten?'],
@@ -32,7 +33,7 @@ const verify = (t, input, expected, method, selection) => {
   t.equal(fresh.text(), expected, 'fresh: ' + expected)
 }
 
-test('question conversion retains inversion, aspect and negative placement', t => {
+test(here + 'question conversion retains inversion, aspect and negative placement', t => {
   cases.forEach(([input, ...expected]) => {
     for (const selection of ['verbs', 'sentences']) {
       ['toPastTense', 'toPresentTense', 'toFutureTense'].forEach((method, i) => {
@@ -43,7 +44,7 @@ test('question conversion retains inversion, aspect and negative placement', t =
   t.end()
 })
 
-test('question perfect and gerund conversions use the same auxiliary model', t => {
+test(here + 'question perfect and gerund conversions use the same auxiliary model', t => {
   const rows = [
     ['Did she walk?', 'Has she walked?', 'toPastParticiple'],
     ['Has she eaten?', 'Is she eating?', 'toGerund'],
@@ -54,7 +55,7 @@ test('question perfect and gerund conversions use the same auxiliary model', t =
   t.end()
 })
 
-test('question conversion respects selection and sentence boundaries', t => {
+test(here + 'question conversion respects selection and sentence boundaries', t => {
   const selected = nlp('Has she eaten?')
   selected.verbs(0).toPastTense()
   t.equal(selected.text(), 'Has she eaten?', 'incomplete inverted phrase stays intact')

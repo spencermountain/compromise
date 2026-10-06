@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/tag/representative-text] '
 
 // Explicit expectations for the representative text from the parser audit.
 // Pipes require both tags; a dot leaves an unrelated term unspecified.
@@ -52,7 +53,7 @@ const examples = [
   ['The dog is nice. They attend.', 'Determiner Noun Copula Adjective Pronoun Infinitive|PresentTense'],
 ]
 
-test('representative parser text', function (t) {
+test(here + 'representative parser text', function (t) {
   examples.forEach(([text, expected]) => {
     const terms = nlp(text).termList()
     const slots = expected.split(' ')

@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/agreement/subject-agreement-regression] '
 
 const verify = (t, input, method, expected) => {
   const doc = nlp(input)
@@ -12,7 +13,7 @@ const verify = (t, input, method, expected) => {
   t.equal(fresh.text(), expected, 'fresh: ' + expected)
 }
 
-test('second-person present tense uses the base verb', t => {
+test(here + 'second-person present tense uses the base verb', t => {
   const rows = [
     ['You walked.', 'You walk.'],
     ['You walk.', 'You walk.'],
@@ -25,7 +26,7 @@ test('second-person present tense uses the base verb', t => {
   t.end()
 })
 
-test('of-phrase objects do not control verb agreement', t => {
+test(here + 'of-phrase objects do not control verb agreement', t => {
   const rows = [
     ['The box of pencils is missing.', 'toPastTense', 'The box of pencils was missing.'],
     ['The box of pencils is missing.', 'toPresentTense', 'The box of pencils is missing.'],

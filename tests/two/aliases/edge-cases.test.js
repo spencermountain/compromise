@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/aliases/edge-cases] '
 
 const restore = t => {
   const model = nlp.world().model.one
@@ -10,7 +11,7 @@ const restore = t => {
   })
 }
 
-test('aliases in plugin relationships', t => {
+test(here + 'aliases in plugin relationships', t => {
   restore(t)
   nlp.addTags({
     AliasParent: { aliases: ['AliasParentShort'] },
@@ -29,7 +30,7 @@ test('aliases in plugin relationships', t => {
   t.end()
 })
 
-test('compiled rules resolve aliases before applying actions', t => {
+test(here + 'compiled rules resolve aliases before applying actions', t => {
   restore(t)
   nlp.addTags({ AliasRuleNoun: { isA: 'Noun', aliases: ['AliasRuleShort'] } })
   const removed = nlp.tokenize('example').tag('AliasRuleNoun')
@@ -50,7 +51,7 @@ test('compiled rules resolve aliases before applying actions', t => {
   t.end()
 })
 
-test('spec output never uses a shadowed alias', t => {
+test(here + 'spec output never uses a shadowed alias', t => {
   restore(t)
   nlp.addTags({ AliasSpecRoot: { aliases: ['AliasSpecShort'] } })
   const doc = nlp.tokenize('example').tag('AliasSpecRoot')
@@ -62,7 +63,7 @@ test('spec output never uses a shadowed alias', t => {
   t.end()
 })
 
-test('invalid aliases are rejected without changing the model', t => {
+test(here + 'invalid aliases are rejected without changing the model', t => {
   restore(t)
   const previous = nlp.world().model.one.tagSet
   const invalid = ['Bad+', 'Bad?', 'Bad|Name', 'Bad Name', '#Bad', '', false, 42]
@@ -77,7 +78,7 @@ test('invalid aliases are rejected without changing the model', t => {
   t.end()
 })
 
-test('normalized aliases cannot claim another canonical name', t => {
+test(here + 'normalized aliases cannot claim another canonical name', t => {
   restore(t)
   t.throws(
     () => nlp.addTags({ AliasAccentConflict: { aliases: ['Nóun'] } }),

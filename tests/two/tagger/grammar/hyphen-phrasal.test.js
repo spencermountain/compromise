@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[two/tagger/grammar/hyphen-phrasal] '
 
-test('phrasal verbs do not consume half of off-white', t => {
+test(here + 'phrasal verbs do not consume half of off-white', t => {
   for (const input of ['is off-white', 'the wall is off-white']) {
     const doc = nlp(input)
     t.ok(doc.has('(is && #Copula)'), input + ': copula')
@@ -14,7 +15,7 @@ test('phrasal verbs do not consume half of off-white', t => {
   t.end()
 })
 
-test('off-white works in noun phrases and retains punctuation', t => {
+test(here + 'off-white works in noun phrases and retains punctuation', t => {
   for (const input of ['off-white', 'an off-white wall', 'The walls are off-white.']) {
     const doc = nlp(input)
     t.equal(doc.text(), input, 'unchanged text: ' + input)

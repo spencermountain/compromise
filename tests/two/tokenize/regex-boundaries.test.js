@@ -1,5 +1,6 @@
 import test from 'tape'
-import nlp from '../../three/_lib.js'
+import nlp from '../_lib.js'
+const here = '[two/tokenize/regex-boundaries] '
 
 const wrappers = [
   ['', ''],
@@ -10,7 +11,7 @@ const wrappers = [
   ['(', ')'],
 ]
 
-test('generated email and URL boundaries preserve text and selections', t => {
+test(here + 'generated email and URL boundaries preserve text and selections', t => {
   const emails = []
   for (const local of ['alice', 'first-last', 'first.last+news']) {
     for (const domain of ['example.com', 'my-site.info', 'sub.my-site.technology']) {
@@ -47,7 +48,7 @@ test('generated email and URL boundaries preserve text and selections', t => {
   t.end()
 })
 
-test('generated punctuation contexts preserve Unicode', t => {
+test(here + 'generated punctuation contexts preserve Unicode', t => {
   const failures = []
   let count = 0
   for (const word of ['alpha', 'café', '𐐀word', '東京', 'word😀word']) {
@@ -67,7 +68,7 @@ test('generated punctuation contexts preserve Unicode', t => {
   t.end()
 })
 
-test('match groups preserve captures, repetition and surrounding words', t => {
+test(here + 'match groups preserve captures, repetition and surrounding words', t => {
   const cases = [
     ['before red after', 'before [<choice>(red|blue)] after', 'red'],
     ['before blue after', 'before [<choice>(red|blue)] after', 'blue'],

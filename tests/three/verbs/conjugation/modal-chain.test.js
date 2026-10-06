@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/modal-chain] '
 
 const perfect = [
   ['she should be swimming', 'she should have been swimming'],
@@ -35,7 +36,7 @@ const unchanged = [
   "She isn't going to have eaten.",
 ]
 
-test('perfect conversion handles modal and nested going-to chains', t => {
+test(here + 'perfect conversion handles modal and nested going-to chains', t => {
   perfect.concat(unchanged.map(s => [s, s])).forEach(([input, expected]) => {
     const doc = nlp(input)
     doc.verbs().toPastParticiple()
@@ -49,7 +50,7 @@ test('perfect conversion handles modal and nested going-to chains', t => {
   t.end()
 })
 
-test('nested going-to tense changes preserve the complement', t => {
+test(here + 'nested going-to tense changes preserve the complement', t => {
   const cases = [
     ['she is going to be driven', 'she was going to be driven', 'she is going to be driven'],
     ['they were not going to have eaten', 'they were not going to have eaten', 'they are not going to have eaten'],

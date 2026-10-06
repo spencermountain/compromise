@@ -1,8 +1,9 @@
 import test from 'tape'
 import spacetime from 'spacetime'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/today] '
 
-test('set today context', function (t) {
+test(here + 'set today context', function (t) {
   let doc = nlp('today')
   let json = doc.dates({ today: '1996-03-28', timezone: 'Canada/Eastern' }).json()[0] || {}
   t.equal(json.dates.start, '1996-03-28T00:00:00.000-04:00', '+5hrs')
@@ -18,7 +19,7 @@ test('set today context', function (t) {
 })
 
 //ensure dateRange renders as local time
-test('today is always today', (t) => {
+test(here + 'today is always today', (t) => {
   const arr=[
     'Europe/Paris',
     'Europe/London',

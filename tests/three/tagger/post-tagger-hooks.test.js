@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../_lib.js'
+import nlp from '../_lib.js'
+const here = '[three/tagger/rules/post-tagger-hooks] '
 
-test('specific alternatives retain their post-tagger behavior', t => {
+test(here + 'specific alternatives retain their post-tagger behavior', t => {
   const cases = [
     ['they got hired', 'hired', 'Passive'],
     ['they were hired', 'hired', 'Passive'],

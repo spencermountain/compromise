@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/copula-passive-regression] '
 
-test('copula and future passive conversions retain agreement and aspect', t => {
+test(here + 'copula and future passive conversions retain agreement and aspect', t => {
   for (const [subject, present, past, perfect] of [
     ['I', 'am', 'was', 'have'],
     ['she', 'is', 'was', 'has'],
@@ -28,7 +29,7 @@ test('copula and future passive conversions retain agreement and aspect', t => {
   t.end()
 })
 
-test('negative copula round trips retain auxiliary order', t => {
+test(here + 'negative copula round trips retain auxiliary order', t => {
   for (const input of ['she will not be happy', 'they will not be happy']) {
     const doc = nlp(input)
     doc.verbs().toPastTense()
@@ -48,7 +49,7 @@ test('negative copula round trips retain auxiliary order', t => {
   t.end()
 })
 
-test('off white preserves the copula, including without a hyphen', t => {
+test(here + 'off white preserves the copula, including without a hyphen', t => {
   for (const colour of ['off white', 'off-white']) {
     const input = 'the wall is ' + colour
     const doc = nlp(input)
@@ -61,7 +62,7 @@ test('off white preserves the copula, including without a hyphen', t => {
   t.end()
 })
 
-test('numeric including phrases are not conjugated', t => {
+test(here + 'numeric including phrases are not conjugated', t => {
   for (const quantity of ['two', '2', 'twenty five']) {
     const input = `20 people, including ${quantity} children`
     const doc = nlp(input)

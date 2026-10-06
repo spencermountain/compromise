@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/imperatives] '
 
-test('two/tagger/imperatives: anchored commands and predicate contrasts', t => {
+test(here + 'two/tagger/imperatives: anchored commands and predicate contrasts', t => {
   assertSpec(t, `
 #migrated anchored tagging rules
 Go home. {Imperative,Noun}
@@ -23,7 +24,7 @@ Dude we should leave. {Expression,Pronoun,Modal,Inf}
   t.end()
 })
 
-test('two/tagger/imperatives: early imperative commands', t => {
+test(here + 'two/tagger/imperatives: early imperative commands', t => {
   assertSpec(t, `
 # early imperative commands
 Go to Toronto. {Imperative,Prep,City}
@@ -39,7 +40,7 @@ The stop was nearby. {Det,Noun|!Imperative,Copula,Adj}
   t.end()
 })
 
-test('two/tagger/imperatives: coordinated imperatives', t => {
+test(here + 'two/tagger/imperatives: coordinated imperatives', t => {
   assertSpec(t, `
 # rule cleanup: coordinated imperatives
 come and eat {Imperative,Conj,Imperative}
@@ -48,7 +49,7 @@ they stay or leave {Pronoun,Inf|!Imperative,Conj,Inf}
   t.end()
 })
 
-test('two/tagger/imperatives: commands before quantities', t => {
+test(here + 'two/tagger/imperatives: commands before quantities', t => {
   assertSpec(t, `
 # ^[#Infinitive] #Value #Noun
 Add two eggs. {Imp,Val,Noun}

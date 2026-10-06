@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/auxiliary-context] '
 
-test('two/tagger/auxiliary-context: auxiliaries, phrasal verbs and commands', t => {
+test(here + 'two/tagger/auxiliary-context: auxiliaries, phrasal verbs and commands', t => {
   assertSpec(t, `
 # index.js: auxiliaries, phrasal verbs and commands
 He will have walked. {Pronoun,Modal,Aux,Past}
@@ -52,7 +53,7 @@ Add 2 eggs. {Imperative,Cardinal,Plural}
   t.end()
 })
 
-test('two/tagger/auxiliary-context: has and had before past verbs', t => {
+test(here + 'two/tagger/auxiliary-context: has and had before past verbs', t => {
   assertSpec(t, `
 # rule cleanup: has and had before past verbs
 she has walked home {Pronoun,Auxiliary,Past,Noun}
@@ -65,7 +66,7 @@ they had lunch {Pronoun,Past|!Auxiliary,Noun}
   t.end()
 })
 
-test('two/tagger/auxiliary-context: better as a modal', t => {
+test(here + 'two/tagger/auxiliary-context: better as a modal', t => {
   assertSpec(t, `
 # rule cleanup: better as a modal
 I better go {Pronoun,Modal,Inf}
@@ -76,7 +77,7 @@ a better plan {Det,Comparative|!Modal,Noun}
   t.end()
 })
 
-test('two/tagger/auxiliary-context: may before verbs', t => {
+test(here + 'two/tagger/auxiliary-context: may before verbs', t => {
   assertSpec(t, `
 # rule cleanup: may before verbs
 she may leave {Pronoun,Modal|Auxiliary,Inf}
@@ -88,7 +89,7 @@ Ms. May Smith arrived {Honorific,Person,Person,Past}
   t.end()
 })
 
-test('two/tagger/auxiliary-context: perfect passive auxiliaries', t => {
+test(here + 'two/tagger/auxiliary-context: perfect passive auxiliaries', t => {
   assertSpec(t, `
 # rule cleanup: perfect passive auxiliaries
 it has been smoked {Pronoun,Auxiliary,Auxiliary,Past}
@@ -99,7 +100,7 @@ it had already been carefully painted {Pronoun,Auxiliary,Adverb,Auxiliary,Adverb
   t.end()
 })
 
-test('two/tagger/auxiliary-context: had in questions without objects', t => {
+test(here + 'two/tagger/auxiliary-context: had in questions without objects', t => {
   assertSpec(t, `
 # ^[had] #Noun+ (#Adverb|not)+? (#PastTense && @hasQuestionMark)$
 Had he walked? {Aux,Noun,Past}
@@ -108,7 +109,7 @@ Had they already finished? {Aux,Noun,Adv,Past}
   t.end()
 })
 
-test('two/tagger/auxiliary-context: had in questions with objects', t => {
+test(here + 'two/tagger/auxiliary-context: had in questions with objects', t => {
   assertSpec(t, `
 # ^[had] #Noun+ (#Adverb|not)+? #PastTense * @hasQuestionMark$
 Had she walked the dog? {Aux,Noun,Past,Det,Noun}
@@ -117,7 +118,7 @@ Had they already finished their homework? {Aux,Noun,Adv,Past,Poss,Noun}
   t.end()
 })
 
-test('two/tagger/auxiliary-context: perfect auxiliaries with intervening modifiers', t => {
+test(here + 'two/tagger/auxiliary-context: perfect auxiliaries with intervening modifiers', t => {
   assertSpec(t, `
 # [(#Modal|had|has)] (#Adverb|not)+? [been] (#Adverb|not)+? #Verb
 She had been walking. {Noun,Aux,Vb,Ger}
@@ -126,7 +127,7 @@ He has not been sleeping. {Noun,Aux,Negative,Vb,Ger}
   t.end()
 })
 
-test('two/tagger/auxiliary-context: Perfect progressives: preserve auxiliaries with and without intervening adverbs.', t => {
+test(here + 'two/tagger/auxiliary-context: Perfect progressives: preserve auxiliaries with and without intervening adverbs.', t => {
   assertSpec(t, `
 # Perfect progressives: preserve auxiliaries with and without intervening adverbs.
 She had been walking. {Pronoun,Aux,Aux,Ger}
@@ -137,7 +138,7 @@ She would have been walking. {Pronoun,Modal|Aux,Aux,Aux,Ger}
   t.end()
 })
 
-test('two/tagger/auxiliary-context: Synthetic overlap probes: preserve coverage of the second had.', t => {
+test(here + 'two/tagger/auxiliary-context: Synthetic overlap probes: preserve coverage of the second had.', t => {
   assertSpec(t, `
 # Synthetic overlap probes: preserve coverage of the second had.
 John would have had not been walking. {Person,Modal|Aux,Aux,Aux,Negative,Aux,Ger}
@@ -146,7 +147,7 @@ John would not have had really been walking. {Person,Modal|Aux,Negative,Aux,Aux,
   t.end()
 })
 
-test('two/tagger/auxiliary-context: Copula variants share passive syntax; adjectives remain adjectives.', t => {
+test(here + 'two/tagger/auxiliary-context: Copula variants share passive syntax; adjectives remain adjectives.', t => {
   assertSpec(t, `
 # Copula variants share passive syntax; adjectives remain adjectives.
 I am watched by everyone. {Pronoun,Aux|Passive,Past|Passive,Prep,Noun}

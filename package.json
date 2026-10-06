@@ -101,8 +101,8 @@
     "debug:memory": "node --expose-gc scripts/debug/memory/index.js",
     "debug:filesize": "node scripts/debug/filesize/index.js",
     "stress": "node scripts/test/stress.js",
-    "bench": "node ./scripts/bench/index.js --no-save",
-    "bench:write": "node ./scripts/bench/index.js",
+    "bench": "node ./scripts/bench/index.js",
+    "bench:write": "node ./scripts/bench/index.js --write",
     "lint": "eslint src && pnpm lint:tests",
     "lint:tests": "eslint tests \"plugins/*/tests/**/*.js\""
   },

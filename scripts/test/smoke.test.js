@@ -2,11 +2,12 @@ import test from 'tape'
 import fs from 'node:fs'
 import { createRequire } from 'node:module'
 import vm from 'node:vm'
+const here = '[scripts/test/smoke] '
 
 const require = createRequire(import.meta.url)
 
 for (const tier of ['one', 'two', 'three']) {
-  test(`${tier} ESM and CommonJS bundles`, async t => {
+  test(here + `${tier} ESM and CommonJS bundles`, async t => {
     const file = `../../builds/${tier}/compromise-${tier}`
     const esm = (await import(`${file}.mjs`)).default
     const cjs = require(`${file}.cjs`)
@@ -22,7 +23,7 @@ for (const tier of ['one', 'two', 'three']) {
   })
 }
 
-test('browser bundle without Node globals', t => {
+test(here + 'browser bundle without Node globals', t => {
   const code = fs.readFileSync(new URL('../../builds/compromise.js', import.meta.url), 'utf8')
   const context = vm.createContext({ console })
   vm.runInContext(code, context)

@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/numeric-context] '
 
-test('two/tagger/numeric-context: numbers, money and units', t => {
+test(here + 'two/tagger/numeric-context: numbers, money and units', t => {
   assertSpec(t, `
 # index.js: numbers, money and units
 5 rand. {Money,Currency}
@@ -37,7 +38,7 @@ Twelve percent. {Value,Unit}
   t.end()
 })
 
-test('two/tagger/numeric-context: short numeric and question contexts', t => {
+test(here + 'two/tagger/numeric-context: short numeric and question contexts', t => {
   assertSpec(t, `
 # rule cleanup: short numeric and question contexts
 a dozen eggs {Det,Multiple,Plural}
@@ -61,7 +62,7 @@ they are just {Pronoun,Copula,Adj}
   t.end()
 })
 
-test('two/tagger/numeric-context: signed and decimal values', t => {
+test(here + 'two/tagger/numeric-context: signed and decimal values', t => {
   assertSpec(t, `
 # rule cleanup: signed and decimal values
 minus seven {Value,Value}
@@ -74,5 +75,15 @@ twenty point six {Value,Value,Value}
 a decimal place {Det,Noun|!Value,Noun}
 the point is clear {Det,Noun,Copula,Adj}
 `)
+  t.end()
+})
+
+test('rule cleanup: spaced am and pm times', t => {
+  assertSpec(t, `
+    5 am {Time,Time}
+    seven pm {Time,Time}
+    10 pm {Time,Time}
+    I am ready {Pronoun,Copula,Adjective}
+  `, here.trim())
   t.end()
 })

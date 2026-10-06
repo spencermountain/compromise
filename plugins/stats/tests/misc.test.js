@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/stats/tests/misc] '
 
-test('misc ngrams', function (t) {
+test(here + 'misc ngrams', function (t) {
   let doc = nlp(`quickly, suddenly`)
   t.equal(doc.ngrams().length, 3, 'found three ngrams')
 

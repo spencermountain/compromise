@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/tagger/clause-context] '
 
-test('inverted questions retain auxiliaries rather than conditions', t => {
+test(here + 'inverted questions retain auxiliaries rather than conditions', t => {
   for (const str of ['had she left already?', 'had you eaten before you arrived?', 'had she already left?']) {
     const had = nlp(str).match('had')
     t.equal(had.has('#Auxiliary'), true, str)
@@ -17,7 +18,7 @@ test('inverted questions retain auxiliaries rather than conditions', t => {
   t.end()
 })
 
-test('prepositions before noun phrases and after intensifiers', t => {
+test(here + 'prepositions before noun phrases and after intensifiers', t => {
   for (const str of ['she walked to Paris', 'she talked to John', 'he came to lunch']) {
     const to = nlp(str).match('to')
     t.equal(to.has('#Preposition'), true, str)
@@ -39,7 +40,7 @@ test('prepositions before noun phrases and after intensifiers', t => {
   t.end()
 })
 
-test('imperative be retains adjective complements', t => {
+test(here + 'imperative be retains adjective complements', t => {
   for (const str of ['do not be late', 'please do not be late', 'can you please not be late?', 'be early', 'we are late']) {
     const adj = nlp(str).match('(late|early)')
     t.equal(adj.has('#Adjective'), true, str)
@@ -50,7 +51,7 @@ test('imperative be retains adjective complements', t => {
   t.end()
 })
 
-test('singular subjects with common intransitive predicates', t => {
+test(here + 'singular subjects with common intransitive predicates', t => {
   for (const str of ['the dog runs', 'a dog runs', 'that dog runs', 'my dog runs', 'the river runs', 'the dog runs quickly', 'a dog sleeps', 'my dog walks']) {
     const verb = nlp(str).match('(runs|sleeps|walks)')
     t.equal(verb.has('#PresentTense'), true, str + ' has #PresentTense')

@@ -1,7 +1,8 @@
 import test from 'tape'
-import nlp from '../../two/_lib.js'
+import nlp from '../_lib.js'
+const here = '[one/sweep/sweep-filter-order] '
 
-test('sweep filtering preserves legacy candidate order and results', t => {
+test(here + 'sweep filtering preserves legacy candidate order and results', t => {
   const world = nlp.world()
   const rules = [
     { match: 'red blue' },

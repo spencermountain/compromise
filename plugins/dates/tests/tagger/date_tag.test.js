@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[plugins/dates/tests/tagger/date_tag] '
 
-test('date-tag :', function (t) {
+test(here + 'date-tag :', function (t) {
   const arr = [
     'yesterday',
     'today',

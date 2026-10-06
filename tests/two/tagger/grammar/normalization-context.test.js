@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[two/tagger/grammar/normalization-context] '
 
-test('two/tagger/grammar/normalization-context: normalization and tagging', t => {
+test(here + 'two/tagger/grammar/normalization-context: normalization and tagging', t => {
   for (const text of ['v1.2a.b', 'version.a.b']) {
     t.equal(nlp(text).json()[0].terms[0].normal, text, 'preserve non-acronym dots')
   }
@@ -16,7 +17,7 @@ test('two/tagger/grammar/normalization-context: normalization and tagging', t =>
   t.end()
 })
 
-test('two/tagger/grammar/normalization-context: suffix semantics and punctuation cleanup', t => {
+test(here + 'two/tagger/grammar/normalization-context: suffix semantics and punctuation cleanup', t => {
   for (const word of ['pianist', 'artist']) {
     t.ok(nlp(word).has('#Actor'), `${word} is an actor noun`)
   }

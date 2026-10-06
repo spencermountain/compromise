@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[three/verbs/conjugation/coordinate-conversion] '
 
 const cases = [
   ['she has eaten and slept', 'she had eaten and slept', 'she has eaten and slept', 'she will have eaten and slept'],
@@ -28,7 +29,7 @@ const verify = (t, input, expected, method, selection = 'verbs') => {
   t.equal(fresh.text(), expected, 'fresh: ' + expected)
 }
 
-test('tense conversion preserves shared auxiliaries in coordination', t => {
+test(here + 'tense conversion preserves shared auxiliaries in coordination', t => {
   const methods = ['toPastTense', 'toPresentTense', 'toFutureTense']
   cases.forEach(([input, ...expected]) => {
     for (const selection of ['verbs', 'sentences']) {
@@ -38,7 +39,7 @@ test('tense conversion preserves shared auxiliaries in coordination', t => {
   t.end()
 })
 
-test('coordinated roots follow perfect, progressive and infinitive conversions', t => {
+test(here + 'coordinated roots follow perfect, progressive and infinitive conversions', t => {
   const rows = [
     ['she has eaten and slept', 'toPastParticiple', 'she has eaten and slept'],
     ['she is eating and sleeping', 'toPastParticiple', 'she has been eating and sleeping'],
@@ -56,7 +57,7 @@ test('coordinated roots follow perfect, progressive and infinitive conversions',
   t.end()
 })
 
-test('shared coordination does not consume independent clauses or auxiliaries', t => {
+test(here + 'shared coordination does not consume independent clauses or auxiliaries', t => {
   verify(t, 'she has eaten and he sleeps', 'she will have eaten and he will sleep', 'toFutureTense')
   verify(t, 'she has eaten and will sleep', 'she will have eaten and will sleep', 'toFutureTense')
   verify(t, 'she has eaten and will sleep', 'she has eaten and sleeps', 'toPresentTense')
@@ -71,7 +72,7 @@ test('shared coordination does not consume independent clauses or auxiliaries', 
   t.end()
 })
 
-test('aspect-preserving conversion paths agree with direct conversion', t => {
+test(here + 'aspect-preserving conversion paths agree with direct conversion', t => {
   // These paths have equivalent aspect/voice; simple future passive has a
   // documented past-perfect compatibility rule and is intentionally excluded.
   const rows = [

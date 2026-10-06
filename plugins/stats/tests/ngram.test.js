@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/stats/tests/ngram] '
 
-test('ngram-test:', function (t) {
+test(here + 'ngram-test:', function (t) {
   const r = nlp('he is strong. he is cool')
   const arr = r.ngrams()
 
@@ -13,7 +14,7 @@ test('ngram-test:', function (t) {
   t.end()
 })
 
-test('sort-bigrams:', function (t) {
+test(here + 'sort-bigrams:', function (t) {
   const r = nlp('he is strong. he is cool')
   const arr = r.ngrams({
     size: 2,
@@ -25,7 +26,7 @@ test('sort-bigrams:', function (t) {
   t.end()
 })
 
-test('contractions-support:', function (t) {
+test(here + 'contractions-support:', function (t) {
   const r = nlp("It's free for me and free for you")
   const arr = r.ngrams()
   const obj = arr.find(o => o.normal === 'free for')
@@ -33,7 +34,7 @@ test('contractions-support:', function (t) {
   t.end()
 })
 
-test('ngrams-options:', function (t) {
+test(here + 'ngrams-options:', function (t) {
   const doc = nlp('one two three four five, one two three four five, one two three four five')
   let arr = doc.ngrams({
     max: 5,

@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[two/tagger/ambiguity/being-adjective] '
 
-test('being keeps adjective complements', t => {
+test(here + 'being keeps adjective complements', t => {
   const phrases = ['she is being cool', 'she was being very cool', 'being cool']
   phrases.forEach(text => {
     const word = nlp(text).match('cool')

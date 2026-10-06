@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/verb-noun-context] '
 
-test('two/tagger/verb-noun-context: verb/noun ambiguity', t => {
+test(here + 'two/tagger/verb-noun-context: verb/noun ambiguity', t => {
   assertSpec(t, `
 # index.js: verb/noun ambiguity
 The dog treats. {Det,Noun,Plural}
@@ -54,7 +55,7 @@ Before the dog and the cat woke, she left. {Conj,Det,Noun,Conj,Det,Noun,Past,Pro
   t.end()
 })
 
-test('two/tagger/verb-noun-context: causatives retain infinitive complements', t => {
+test(here + 'two/tagger/verb-noun-context: causatives retain infinitive complements', t => {
   assertSpec(t, `
 # (let|make|made) (him|her|it|#Person|#Place|#Organization)+ [#Singular] (a|an|the|it)
 Let John shoulder the burden. {Vb,Person,Inf,Det,Noun}
@@ -63,7 +64,7 @@ They made Canada shoulder the cost. {Noun,Past,Place,Inf,Det,Noun}
   t.end()
 })
 
-test('two/tagger/verb-noun-context: coordinated people followed by a verb', t => {
+test(here + 'two/tagger/verb-noun-context: coordinated people followed by a verb', t => {
   assertSpec(t, `
 # #Person and #Person [(%Noun|Verb% && !@isTitleCase && !@isUpperCase)]$
 John and Mary work. {Person,Conj,Person,Inf}
@@ -72,7 +73,7 @@ Alice and Bob dance. {Person,Conj,Person,Inf}
   t.end()
 })
 
-test('two/tagger/verb-noun-context: locative subjects retain their final verb', t => {
+test(here + 'two/tagger/verb-noun-context: locative subjects retain their final verb', t => {
   assertSpec(t, `
 # #Plural [on] #Determiner #Adjective+? #Noun [%Noun|Verb%]$
 Dogs on the porch bark. {Plural,Prep,Det,Noun,Inf}
@@ -81,7 +82,7 @@ Children on the playground play. {Plural,Prep,Det,Noun,Inf}
   t.end()
 })
 
-test('two/tagger/verb-noun-context: some as a pronoun subject', t => {
+test(here + 'two/tagger/verb-noun-context: some as a pronoun subject', t => {
   assertSpec(t, `
 # ^[some] #Infinitive #Noun
 Some like coffee. {Pronoun,Inf,Noun}
@@ -90,7 +91,7 @@ Some prefer tea. {Pronoun,Inf,Noun}
   t.end()
 })
 
-test('two/tagger/verb-noun-context: Locative subjects: preserve both the preposition and the final verb.', t => {
+test(here + 'two/tagger/verb-noun-context: Locative subjects: preserve both the preposition and the final verb.', t => {
   assertSpec(t, `
 # Locative subjects: preserve both the preposition and the final verb.
 Dogs near the porch bark. {Plural,Prep,Det,Noun,Inf}
@@ -103,7 +104,7 @@ Children on the playground play. {Plural,Prep,Det,Noun,Inf}
   t.end()
 })
 
-test('two/tagger/verb-noun-context: Lists need their comma context; coordinated subjects still take verbs.', t => {
+test(here + 'two/tagger/verb-noun-context: Lists need their comma context; coordinated subjects still take verbs.', t => {
   assertSpec(t, `
 # Lists need their comma context; coordinated subjects still take verbs.
 We sell books, toys and watches. {Pronoun,Inf,Plural,Plural,Conj,Plural}
@@ -117,7 +118,7 @@ We discussed the engine, bag, and evacuating the building. {Pronoun,Past,Det,Nou
   t.end()
 })
 
-test('two/tagger/verb-noun-context: Share locative patterns without losing adjective context.', t => {
+test(here + 'two/tagger/verb-noun-context: Share locative patterns without losing adjective context.', t => {
   assertSpec(t, `
 # Share locative patterns without losing adjective context.
 Dogs on the wooden porch bark. {Plural,Prep,Det,Adj,Noun,Inf}
@@ -126,7 +127,7 @@ Children behind the tall fence play. {Plural,Prep,Det,Adj,Noun,Inf}
   t.end()
 })
 
-test('two/tagger/verb-noun-context: coordinated subjects', t => {
+test(here + 'two/tagger/verb-noun-context: coordinated subjects', t => {
   assertSpec(t, `
 On Friday, food and drinks are free. {Prep,Date,Noun,Conj,Noun,Vb,Adj}
 On Friday, food or drinks will be provided. {Prep,Date,Noun,Conj,Noun,Vb,Vb,Vb}
@@ -136,7 +137,7 @@ We discussed London, Paris and travel. {Noun,Past,Noun,Noun,Conj,Noun}
   t.end()
 })
 
-test('two/tagger/verb-noun-context: singular subjects', t => {
+test(here + 'two/tagger/verb-noun-context: singular subjects', t => {
   assertSpec(t, `
 The dog runs. {Det,Noun,Pres}
 My dog barks loudly. {Poss,Noun,Pres,Adv}
@@ -149,7 +150,7 @@ A tired baby sleeps soundly. {Det,Adj,Noun,Pres,Adv}
   t.end()
 })
 
-test('two/tagger/verb-noun-context: causative verbs', t => {
+test(here + 'two/tagger/verb-noun-context: causative verbs', t => {
   assertSpec(t, `
 Let John shoulder the burden. {Vb,Noun,Inf,Det,Noun}
 Make Sarah shoulder the responsibility. {Vb,Noun,Inf,Det,Noun}

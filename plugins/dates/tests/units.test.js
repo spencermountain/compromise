@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/units] '
 
-test('units', function (t) {
+test(here + 'units', function (t) {
   const arr = [
     ['2020', 'year'],
     ['jan 1 to dec 31', 'year'],

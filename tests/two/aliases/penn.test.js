@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/aliases/penn] '
 
-test('common Penn-style aliases use canonical tags', t => {
+test(here + 'common Penn-style aliases use canonical tags', t => {
   const aliases = {
     NN: 'Noun',
     NNS: 'Plural',
@@ -31,7 +32,7 @@ test('common Penn-style aliases use canonical tags', t => {
   t.end()
 })
 
-test('localized plugin aliases preserve tag definitions', t => {
+test(here + 'localized plugin aliases preserve tag definitions', t => {
   const model = nlp.world().model.one
   const { tagSet, tagAliases } = model
   t.teardown(() => {

@@ -1,8 +1,9 @@
 import test from 'tape'
 import spacetime from 'spacetime'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/day-start] '
 
-test('day-start edge-cases', function (t) {
+test(here + 'day-start edge-cases', function (t) {
   const doc = nlp('in june 2021')
   const date = doc.dates({ dayStart: '8:00am', dayEnd: '6:00pm', timezone: 'Asia/Shanghai' }).get()[0]
   t.equal(date.start, '2021-06-01T08:00:00.000+08:00', 'start')
@@ -24,7 +25,7 @@ const arr = [
   'the 5th to 7th of august',
 ]
 
-test('day start', function (t) {
+test(here + 'day start', function (t) {
   const startTime = '5:30am'
   arr.forEach(str => {
     const doc = nlp(str)
@@ -35,7 +36,7 @@ test('day start', function (t) {
   t.end()
 })
 
-test('day end', function (t) {
+test(here + 'day end', function (t) {
   const endTime = '8:30pm'
   arr.forEach(str => {
     const doc = nlp(str)

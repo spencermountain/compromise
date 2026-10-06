@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/tagger/this-subject] '
 
-test('this is a pronoun before a finite predicate', t => {
+test(here + 'this is a pronoun before a finite predicate', t => {
   for (const str of ['This is useful.', 'Hope this helps.', 'This rocks dude.', 'This really helps.', 'This will be one sentence.', 'For the poor, this is the largest tax.']) {
     const word = nlp(str).match('this')
     t.equal(word.has('#Pronoun'), true, str)
@@ -15,7 +16,7 @@ test('this is a pronoun before a finite predicate', t => {
   t.end()
 })
 
-test('quantities after a modal do not make commands', t => {
+test(here + 'quantities after a modal do not make commands', t => {
   for (const str of ['This will be one sentence.', 'She will buy two books.', 'We can add two eggs.']) {
     t.equal(nlp(str).has('#Imperative'), false, str)
   }

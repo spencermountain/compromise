@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/dmy] '
 
-test('dmy option loop', function (t) {
+test(here + 'dmy option loop', function (t) {
   const arr = [
     ['01/02', 'January 2', false],
     ['01/12', 'January 12', false],
@@ -30,7 +31,7 @@ test('dmy option loop', function (t) {
   t.end()
 })
 
-test('dmy option falsy', function (t) {
+test(here + 'dmy option falsy', function (t) {
   t.equal('March 26', nlp('03/26').dates().format('{month} {date}').text(), 'WITHOUT dmy option')
   t.equal('March 26', nlp('03/26').dates({ dmy: false }).format('{month} {date}').text(), 'WITHOUT dmy option')
   t.equal('March 26', nlp('26/03').dates().format('{month} {date}').text(), 'WITHOUT dmy option')
@@ -40,14 +41,14 @@ test('dmy option falsy', function (t) {
   t.end()
 })
 
-test('dmy option true', function (t) {
+test(here + 'dmy option true', function (t) {
   const out = nlp('03/04').dates({ dmy: true }).format('{month} {date}').text()
   t.equal('April 3', out, 'WITH dmy option')
 
   t.end()
 })
 
-test('dmy invalid', function (t) {
+test(here + 'dmy invalid', function (t) {
   const arr = [
     '24/24',
     '124/2',

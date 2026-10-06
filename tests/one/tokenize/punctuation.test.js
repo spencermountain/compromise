@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../two/_lib.js'
+import nlp from '../_lib.js'
 const here = '[one/term-punctuation] '
 
 

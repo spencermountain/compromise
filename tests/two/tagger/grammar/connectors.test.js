@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
+const here = '[two/tagger/grammar/connectors] '
 
-test('connectors distinguish nominal objects from finite clauses', t => {
+test(here + 'connectors distinguish nominal objects from finite clauses', t => {
   const cases = [
     ['She left before me.', 'before', 'Preposition'],
     ['She left before I finished.', 'before', 'Conjunction'],
@@ -44,7 +45,7 @@ test('connectors distinguish nominal objects from finite clauses', t => {
   t.end()
 })
 
-test('connector rules preserve boundaries and other word senses', t => {
+test(here + 'connector rules preserve boundaries and other word senses', t => {
   for (const [str, word, tag] of [
     ['Before you, I was the youngest.', 'before', 'Preposition'],
     ['After dinner I left.', 'after', 'Preposition'],

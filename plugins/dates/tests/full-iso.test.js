@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/full-iso] '
 
-test('full iso start+end tests', function (t) {
+test(here + 'full iso start+end tests', function (t) {
   const context = {
     timezone: 'Asia/Shanghai',
     today: '2021-02-19', //friday

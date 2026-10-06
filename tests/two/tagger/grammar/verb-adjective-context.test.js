@@ -1,7 +1,8 @@
 import test from 'tape'
 import assertSpec from '../../_spec.js'
+const here = '[two/tagger/grammar/verb-adjective-context] '
 
-test('two/tagger/verb-adjective-context: verbs and adjective/verb ambiguity', t => {
+test(here + 'two/tagger/verb-adjective-context: verbs and adjective/verb ambiguity', t => {
   assertSpec(t, `
 # index.js: verbs and adjective/verb ambiguity
 It is pretty good. {Pronoun,Copula,Adv,Adj}

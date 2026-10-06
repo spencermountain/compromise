@@ -1,9 +1,10 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[two/tag/tag-regressions] '
 
 const blank = () => nlp('xyz').unTag('*')
 
-test('tag regressions: inherited exclusions', function (t) {
+test(here + 'tag regressions: inherited exclusions', function (t) {
   const cases = [
     ['Noun', 'Verb', 'Noun'],
     ['FirstName', 'Plural', 'FirstName'],
@@ -22,7 +23,7 @@ test('tag regressions: inherited exclusions', function (t) {
   t.end()
 })
 
-test('tag regressions: Month requires Noun', function (t) {
+test(here + 'tag regressions: Month requires Noun', function (t) {
   const doc = blank().tag('Value')
   const before = [...doc.termList()[0].tags].sort()
   t.equal(doc.canBe('Month').found, false, 'Value cannot also become Month/Noun')

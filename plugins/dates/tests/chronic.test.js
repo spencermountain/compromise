@@ -5,6 +5,7 @@
 import test from 'tape'
 import spacetime from 'spacetime'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/chronic] '
 
 const fmt = (iso) => (iso ? spacetime(iso).format('iso-short') : '-')
 
@@ -29,7 +30,7 @@ const mk = function (y, m, d, h, sec, mil) {
   return fmt(s)
 }
 
-test('chronic-tests-one', (t) => {
+test(here + 'chronic-tests-one', (t) => {
   const arr = [
     ['2012-08-02T13:00:00', mk(2012, 8, 2, 13)],
     ['aug 3', mk(2007, 8, 3, 12)],
@@ -153,7 +154,7 @@ test('chronic-tests-one', (t) => {
   t.end()
 })
 
-test('chronic-tests-two', (t) => {
+test(here + 'chronic-tests-two', (t) => {
   const context = {
     today: [2006, 7, 16],
   }

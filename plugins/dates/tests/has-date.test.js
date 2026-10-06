@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/dates/tests/has-date] '
 
-test('has a date', function (t) {
+test(here + 'has a date', function (t) {
   const arr = [
     'July 13 through 15',
     `this minute`,

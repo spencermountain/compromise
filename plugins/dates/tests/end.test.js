@@ -1,6 +1,7 @@
 import test from 'tape'
 import nlp from './_lib.js'
 import spacetime from 'spacetime'
+const here = '[plugins/dates/tests/end] '
 //single-date tests
 
 //yep,
@@ -204,7 +205,7 @@ const tests = [
   },
 ]
 
-test('end dates', (t) => {
+test(here + 'end dates', (t) => {
   Object.keys(tests).forEach((k) => {
     const context = {
       today: tests[k].today,

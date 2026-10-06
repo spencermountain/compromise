@@ -565,6 +565,7 @@ export default [
   'praise',
   'preserve',
   'press',
+  'pressure',
   'prey',
   'price',
   'pride',

@@ -14,10 +14,11 @@ const rules = {
   '%Noun|Verb%': [
     // to [dream] of
     'to _ #Prep -> #Inf',
-    // what [work] he did
-    '(which|what|whose) _ #Pron -> #NN',
     // which [boost] it
     'which _ #NN -> #Inf',
+    // Pronouns are nouns too; prefer the embedded object reading.
+    // what [work] he did
+    '(which|what|whose) _ #Pron -> #NN',
     // [visit] https://example.com
     '^ _ #Url -> #Imp',
     // [commit] to

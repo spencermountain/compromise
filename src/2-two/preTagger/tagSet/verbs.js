@@ -7,13 +7,13 @@ export default {
   },
   // 'he [walks]'
   PresentTense: {
-    aliases: ['Pres'],
+    aliases: ['Pres', 'PRS'],
     is: Vb,
     not: [Past, Fut],
   },
   // 'will [walk]'
   Infinitive: {
-    aliases: ['Inf'],
+    aliases: ['Inf', 'VVI'],
     is: Pres,
     not: [Ger],
   },
@@ -31,7 +31,7 @@ export default {
   },
   // walked
   PastTense: {
-    aliases: ['Past', 'VBD'],
+    aliases: ['Past', 'VBD', 'PST'],
     is: Vb,
     not: [Pres, Ger, Fut],
   },
@@ -54,7 +54,7 @@ export default {
   },
   // 'awaken'
   Participle: {
-    aliases: [null, 'Part', 'VBN'],
+    aliases: [null, 'VBN'],
     is: Past,
   },
   // '[will have had] walked'

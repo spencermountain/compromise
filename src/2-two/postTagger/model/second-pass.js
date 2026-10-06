@@ -132,7 +132,7 @@ const rules = [
   // { match: locative, group: 1, tag: 'Infinitive', reason: 'subj-loc-verb' },
   // being [injured] and treated
   {
-    m: 'being #Adv+? [%Adj|Past%] (and|or) #Adv+? (#Past|#Part)',
+    m: 'being #Adv+? [%Adj|Past%] (and|or) #Adv+? (#Past|#VBN)',
     g: 0,
     t: 'Past',
     r: 'coord-pass',

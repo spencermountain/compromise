@@ -29,13 +29,13 @@ const slotForTerm = function (term, tagSet) {
   return rootOf(primary, tagSet)
 }
 
-const makeAliases = function (tagSet) {
-  const aliases = {}
+const makeAliases = function (tagSet, registered) {
+  const aliases = Object.create(null)
   for (const tag in tagSet) {
     const entry = tagSet[tag]
     // A leading null explicitly keeps the canonical name.
     const preferred = entry.aliases === undefined ? entry.alias : entry.aliases[0]
-    if (preferred) {
+    if (preferred && registered[preferred] === tag) {
       aliases[tag] = preferred
     }
   }
@@ -45,7 +45,7 @@ const makeAliases = function (tagSet) {
 // one line per sentence: '<text> {Tag,Tag,…}'
 const toSpec = function (doc, world) {
   const tagSet = world.model.one.tagSet
-  const aliases = makeAliases(tagSet)
+  const aliases = makeAliases(tagSet, world.model.one.tagAliases)
   return doc.docs.map(terms => {
     const text = terms.reduce((str, t) => str + t.pre + t.text + t.post, '').trim()
     const tags = terms.map(t => {

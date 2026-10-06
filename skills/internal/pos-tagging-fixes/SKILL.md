@@ -20,8 +20,8 @@ table or indexed rule when it expresses the same condition faithfully.
 ## Establish the failure
 
 Record the input, target term, expected tags, and contrasting readings that must remain valid.
-Use compromise's conventions in [tagging differences](../../docs/tagging-differences.md) and
-[tag definitions](../../docs/tag-definitions.md), not a different tagger's labels. Distinguish a
+Use compromise's conventions in [tagging differences](../../../docs/tagging-differences.md) and
+[tag definitions](../../../docs/tag-definitions.md), not a different tagger's labels. Distinguish a
 wrong POS from a tokenization, contraction, entity-selection, or chunking failure. Correct tags
 with a wrong `.verbs()` selection may require a selection fix rather than another tagging rule.
 
@@ -47,7 +47,18 @@ event does not prove that a rule never ran. Check frozen state and conflicts sep
 when investigating neighbouring words or contractions. `nlp.verbose()` equals `verbose(true)`
 and enables multiple debug modes; prefer `'tagger'` to reduce noise. `verbose(false)` turns
 logging off. These settings are shared, and calling `verbose` again replaces the options.
-`node scripts/debug.js 'the failing sentence'` is available for an unfiltered trace.
+
+Use the pnpm inspector for lexical entries, prefix/suffix candidates, related forms, and rules:
+
+```sh
+pnpm debug:word chaser
+pnpm debug:word walk --in 'They walk home.'
+pnpm --silent debug:word walk --in 'They walk home.' --json
+```
+
+The default output is compact and colored; `--json` retains full detail, and pnpm's `--silent`
+suppresses its command banner. Candidates are not proof that a rule ran. Use `--in` for actual
+tag changes in context, or the verbose API above for an unfiltered trace.
 
 For LLM inspection, capture JSON instead of parsing colored terminal output:
 
@@ -105,12 +116,12 @@ phrase exception; check whether the distinction applies to other words in the sa
 ## Understand the sequence before editing
 
 Check `nlp.hooks()` and the current implementations; plugin registration can change this order.
-The source pipeline is assembled in [one.js](../../src/one.js), [two.js](../../src/two.js), and
-[three.js](../../src/three.js). The relevant sequence is:
+The source pipeline is assembled in [one.js](../../../src/one.js), [two.js](../../../src/two.js), and
+[three.js](../../../src/three.js). The relevant sequence is:
 
 1. Tokenization and early contraction/normalization/index hooks prepare terms. Freeze and
    lexicon hooks seed tags before contextual disambiguation.
-2. [preTagger](../../src/2-two/preTagger/compute/tagger/index.js) handles colons, then uses
+2. [preTagger](../../../src/2-two/preTagger/compute/tagger/index.js) handles colons, then uses
    `quickSplit` for rough clauses. Its second pass attaches switch metadata, then checks case,
    suffix, regex, prefix, and year. Several heuristics only act on untagged terms; lexical tags
    can suppress them.
@@ -119,7 +130,7 @@ The source pipeline is assembled in [one.js](../../src/one.js), [two.js](../../s
    hyphens, followed by imperative and first-word logic. These loops mutate terms as they go;
    later terms can see earlier edits. `found ||=` also skips later guesses after success.
 4. `contractionTwo` uses the earlier tags to resolve further contractions/possessives.
-5. [postTagger](../../src/2-two/postTagger/compute/index.js) re-splits clauses, applies indexed
+5. [postTagger](../../../src/2-two/postTagger/compute/index.js) re-splits clauses, applies indexed
    left/right rules, matches the main pattern sweep, then applies its collected tag actions.
    It next matches and applies a second sweep over whole sentences, preserving comma context.
    Finally it clears caches and unfreezes terms.
@@ -158,9 +169,9 @@ can rule out an otherwise cheaper option.
 
 ### Lexical data and switches
 
-Edit human-readable [data/lexicon](../../data/lexicon/index.js), including its `switches/`
+Edit human-readable [data/lexicon](../../../data/lexicon/index.js), including its `switches/`
 lists, rather than hand-editing packed `_data.js`. Inspect duplicate entries and merge precedence.
-Runtime loading is in [lexicon/index.js](../../src/2-two/preTagger/model/lexicon/index.js), with
+Runtime loading is in [lexicon/index.js](../../../src/2-two/preTagger/model/lexicon/index.js), with
 additional direct entries in `misc.js` and `frozenLex.js` in that directory. Avoid creating a
 second source of truth to bypass packing.
 
@@ -171,13 +182,13 @@ run `pnpm build` merely to test ESM source; that also runs the version script.
 
 Switches are metadata, not two simultaneous POS tags. `%Noun|Verb%` in a pattern matches
 `term.switch`; source lexical groups use `Noun|Verb`. Loading supplies default tags and expansion
-in [model/_expand](../../src/2-two/preTagger/model/_expand/index.js). `Noun|Verb` also generates
+in [model/_expand](../../../src/2-two/preTagger/model/_expand/index.js). `Noun|Verb` also generates
 plural switch membership (`Plural|Verb`), and expansions can seed conjugations. Some prefixed
 words inherit switch metadata. Check the base, plural, conjugated, and prefixed forms, plus
 competing lexical entries, when adding or removing membership.
 
-Switch clues live in [model/clues](../../src/2-two/preTagger/model/clues/index.js). The current
-[resolver](../../src/2-two/preTagger/compute/tagger/3rd-pass/06-switches.js) tries right word,
+Switch clues live in [model/clues](../../../src/2-two/preTagger/model/clues/index.js). The current
+[resolver](../../../src/2-two/preTagger/compute/tagger/3rd-pass/06-switches.js) tries right word,
 left word, left tag, then right tag; tag clues prefer the most specific tag by parent depth.
 Ad-hoc handlers can override that choice. Inspect shared `_noun.js`, `_verb.js`, etc. before
 editing them: their changes propagate through multiple clue tables. For a word-specific
@@ -185,7 +196,7 @@ exception, an indexed word rule usually has less collateral effect.
 
 ### Indexed rules and general patterns
 
-Use [left-right/model/by-word.js](../../src/2-two/left-right/model/by-word.js) for word-specific
+Use [left-right/model/by-word.js](../../../src/2-two/left-right/model/by-word.js) for word-specific
 conditions, `by-tag.js` for actual tag-wide generalizations, and `by-switch.js` for existing
 ambiguity classes. The key selects the target and `_` marks it:
 
@@ -194,21 +205,21 @@ ambiguity classes. The key selects the target and `_` marks it:
 '_ #Det -> #Inf'
 ```
 
-The [left/right parser](../../src/2-two/left-right/model/_lib.js) accepts at most one neighbour
+The [left/right parser](../../../src/2-two/left-right/model/_lib.js) accepts at most one neighbour
 on each side, literal words or tags, and one-term alternatives such as `(the|a|#Poss)`.
 Anchors constrain clause edges. On the right, `|` sequences actions, not alternatives:
 `#Uncountable | !#Place` adds a tag then removes another. This is a restricted syntax, not the
 full matcher; do not smuggle quantifiers, nested groups, or distant context into it.
 
-General patterns live in [postTagger/model/index.js](../../src/2-two/postTagger/model/index.js)
-and [second-pass.js](../../src/2-two/postTagger/model/second-pass.js). Compact fields are `m`
+General patterns live in [postTagger/model/index.js](../../../src/2-two/postTagger/model/index.js)
+and [second-pass.js](../../../src/2-two/postTagger/model/second-pass.js). Compact fields are `m`
 (match), `g` (capture group), `t` (tag), `r` (reason), `n` (notIf), and `u` (unTag).
 Use a capture to retag only the intended terms; otherwise the action can cover the entire match.
 Read the matcher implementation for `notIf` scope rather than guessing. Include a short example
 and useful reason string. Check canonical names and registered aliases in
 `nlp.model().one.tagSet` and `nlp.model().one.tagAliases`. Public matching and tagging resolve
 registered aliases; static English rules use
-[tagSet/aliases.js](../../src/2-two/preTagger/tagSet/aliases.js). Do not invent aliases or assume
+[tagSet/aliases.js](../../../src/2-two/preTagger/tagSet/aliases.js). Do not invent aliases or assume
 they exist in every build/plugin configuration. Prefer canonical names in diagnostic comparisons.
 
 Use existing tagging helpers. `setTag` handles parent tags and incompatible tags; `safe` tagging
@@ -217,23 +228,22 @@ bypass these invariants. Do not alter conflicts or freeze a word merely to make 
 
 ## Debug stage boundaries
 
-For difficult cases, inspect a fresh document after each hook. This diagnostic starts with
-`nlp.tokenize`, which already does limited normalization/contraction work; compare its final
-result with a normal `nlp(text)` parse for the actual reproducer.
+For difficult cases, inspect a fresh document after each hook:
 
-```js
-const staged = nlp.tokenize(text)
-for (const hook of nlp.hooks()) {
-  staged.compute(hook)
-  console.dir({
-    hook,
-    terms: staged.docs.map(terms => terms.map(t => ({
-      text: t.text, normal: t.normal, implicit: t.implicit,
-      tags: [...t.tags], switch: t.switch, frozen: t.frozen,
-    }))),
-  }, { depth: null })
-}
+```sh
+pnpm debug:hooks "They won't walk home."
+pnpm --silent debug:hooks "They won't walk home." --json
 ```
+
+The script starts with raw tokenization and executes each full-build hook once. Pretty output
+shows aligned spec after every hook, including unchanged stages. Each word uses the tag colors
+from `debug()`; untagged words, hook names, and the spec tag list are dim. Use `--no-color` for
+plain text. Follow a word down the rows to locate the first hook that changes its POS, then use
+`nlp.verbose('tagger', { word })` to inspect individual decisions within that stage.
+Spec shows only root tags, so use JSON snapshots to inspect subtype changes, implicit terms,
+switches, and frozen state even when the spec text stays identical. Do not start
+from `nlp.tokenize()` when reproducing hook order: it already runs some contraction and
+normalization computations.
 
 If the failure is inside `postTagger`, inspect before/after leftRight, the main bulkMatch and
 bulkTagger, and the second sweep using temporary instrumentation or a debugger. Capture tag
@@ -263,7 +273,7 @@ For new general patterns or broad hot-path changes, compare `pnpm bench` before/
 same input (it uses `--no-save`), with verbose disabled. Inspect expensive sweep candidates with:
 
 ```sh
-node scripts/bench/post-tagger/sweep-profile.js /path/to/corpus.txt --sort miss-ms --top 20
+pnpm debug:rules /path/to/corpus.txt --sort miss-ms --top 20
 ```
 
 Use an available representative corpus; do not install dependencies or download one without
@@ -273,7 +283,7 @@ rule. Do not claim a speed improvement from rule count alone, or an accuracy imp
 edit count. Weigh added source/bundle size too, especially for procedural preTagger exceptions.
 Keep richer diagnostics in development scripts when possible; do not grow the distributed
 runtime to support a niche investigation. Shared core CLI styles live in
-[src/API/_color.js](../../src/API/_color.js); use JSON events for machine-readable output.
+[src/API/_color.js](../../../src/API/_color.js); use JSON events for machine-readable output.
 
 Report the chosen intervention, why cheaper/narrower alternatives were insufficient, the stage
 where it runs, the contrasts preserved, and the checks performed. Keep the fix focused; leave

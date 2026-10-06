@@ -16,6 +16,7 @@ export default {
   did: 'PastTense',
   meant: 'PastTense',
   went: 'PastTense',
+  woke: 'PastTense',
   lied: 'PastTense',
 
   going: 'Gerund',
@@ -79,5 +80,6 @@ export default {
   'bests': 'PresentTense',
 
   // funny switches
+  'bills': 'Plural|Verb',
   'leaves': 'Plural|Verb'
 }

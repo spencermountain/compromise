@@ -9,7 +9,7 @@ import secondPass from '../../../src/2-two/postTagger/model/second-pass.js'
 import { createSweepProfiler } from './sweep-profiler.js'
 import { formatYaml, formatTable } from './sweep-report.js'
 
-const help = `Usage: node scripts/bench/post-tagger/sweep-profile.js corpus.txt [options]
+const help = `Usage: pnpm debug:rules corpus.txt [options]
   --out FILE          Write YAML keyed by pattern, including rule names
   --top N             Rules to print (default: 20)
   --sort FIELD        tag-rate (default, lowest first), attempts, edits, misses, no-tag, miss-ms
@@ -47,7 +47,7 @@ const parseArgs = args => {
       opts.file = path.resolve(arg)
     }
   }
-  opts.file =  'scripts/bench/infinite-jest.txt'
+  opts.file = opts.file || 'scripts/bench/infinite-jest.txt'
   opts.top = Number(opts.top)
   opts.batchChars = Number(opts.batchChars)
   if (

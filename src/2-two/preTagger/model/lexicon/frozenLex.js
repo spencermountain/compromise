@@ -1,11 +1,18 @@
 import {
   Expr, Org, Actor, Sing, Uncountable, Inf, Pers, Adj, SportsTeam, Prop, Country,
-  Region, Place, Adv, Conj, Plur, Past, Pres, Ger, Part, NN, Unit,
+  Region, Place, Adv, Conj, Plur, Past, Pres, Ger, Participle, NN, Unit,
 } from '../../tagSet/_lib.js'
 
 // These phrases also seed the packed lexicon and its derived forms.
 // Imported by data/lexicon/index.js: edit their tags here only.
 export const shared = {
+  // Club names keep 'united' out of adjective/past-tense disambiguation.
+  'atlanta united': SportsTeam,
+  'dc united': SportsTeam,
+  'minnesota united': SportsTeam,
+  'manchester united': SportsTeam,
+  'newcastle united': SportsTeam,
+  'sheffield united': SportsTeam,
   'excuse me': Expr,
   'financial times': Org,
   'guns n roses': Org,
@@ -101,7 +108,7 @@ export default {
   'took part': Past,
   'takes part': Pres,
   'taking part': Ger,
-  'taken part': Part,
+  'taken part': Participle,
   'light bulb': NN,
   'rush hour': NN,
   'fluid ounce': Unit,

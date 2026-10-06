@@ -2,7 +2,7 @@ import tags from '../../tagSet/aliases.js'
 
 const {
   JJ: Adj, Inf, Pres, Sing, VBD: Past, RB: Avb, NNS: Plrl, Actor,
-  V: Vb, NN: Noun, NNP: Prop, Last, Modal, Place, VBN: Prt
+  V: Vb, NN: Noun, NNP: Prop, Last, Modal, Place, VBN: Participle
 } = tags
 //just a foolish lookup of known suffixes
 
@@ -51,9 +51,9 @@ export default [
     ian: Sing,
     zes: Pres,
     eld: Past,
-    ken: Prt, //awoken
-    ven: Prt, //woven
-    ten: Prt, //brighten
+    ken: Participle, //awoken
+    ven: Participle, //woven
+    ten: Participle, //brighten
     ect: Inf,
     ict: Inf,
     // ide: Inf,

@@ -26,6 +26,7 @@ import places from './places/places.js'
 import regions from './places/regions.js'
 
 import dates from './dates/dates.js'
+import timezones from './dates/timezones.js'
 import months from './dates/months.js'
 import weekdays from './dates/weekdays.js'
 import durations from './dates/durations.js'
@@ -93,6 +94,7 @@ const data = [
   [months, 'Month'],
   [dates, 'Date'],
   [durations, 'Duration'],
+  [timezones, 'Timezone'],
 
   [femaleNames, 'FemaleName'], //5kb
   [firstnames, 'FirstName'],

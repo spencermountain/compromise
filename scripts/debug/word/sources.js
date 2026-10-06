@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const root = fileURLToPath(new URL('../../', import.meta.url))
+const root = fileURLToPath(new URL('../../../', import.meta.url))
 const runtime = 'src/2-two/preTagger/model/lexicon/'
 
 const list = dir => fs.readdirSync(path.join(root, dir), { withFileTypes: true }).flatMap(entry => {

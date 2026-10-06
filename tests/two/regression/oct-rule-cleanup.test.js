@@ -1352,14 +1352,6 @@ test('noun corrections retain compound and nominal contexts', t => {
   t.end()
 })
 
-// Already fails before rule cleanup: the gerund-like list item hides the noun list.
-test.skip('noun list with clothing preserves watches as a noun', t => {
-  const target = nlp('We sell food, clothing and watches.').match('watches')
-  t.equal(target.has('#Noun'), true)
-  t.equal(target.has('#Verb'), false)
-  t.end()
-})
-
 test('early imperative commands', t => {
   const commands = [
     ['Go to Toronto.', 'go'], ['Go to the store.', 'go'],
@@ -1375,6 +1367,217 @@ test('early imperative commands', t => {
   ]
   statements.forEach(([text, word]) => {
     t.equal(nlp(text).match(word).has('#Imperative'), false, text)
+  })
+  t.end()
+})
+
+// Specify the intended readings before moving these rules to earlier stages.
+test('rule cleanup: existing neighbour equivalents', t => {
+  const cases = [
+    ['developing-a', 'boring the audience', 'boring', 'Gerund'],
+    ['developing-a', 'amusing the children', 'amusing', 'Gerund'],
+    ['developing-a', 'annoying the neighbours', 'annoying', 'Gerund'],
+    ['her-favourite', 'her favourite sport', 'favourite', 'Adjective'],
+    ['her-favourite', 'his professional opinion', 'professional', 'Adjective'],
+    ['her-favourite', 'their individual goals', 'individual', 'Adjective'],
+    ['some-kind', 'some kind of teacher', 'kind', 'Noun'],
+    ['some-kind', 'a different kind of music', 'kind', 'Noun'],
+    ['some-kind', 'a new kind of engine', 'kind', 'Noun'],
+    ['sat', 'on Sat', 'sat', 'WeekDay'],
+    ['sat', 'before Sat', 'sat', 'WeekDay'],
+    ['sat', 'until Sat', 'sat', 'WeekDay'],
+    ['foot-unit', 'five feet', 'feet', 'Unit'],
+    ['foot-unit', 'one foot', 'foot', 'Unit'],
+    ['foot-unit', 'twelve feet long', 'feet', 'Unit'],
+    ['to-dream-of', 'to dream of home', 'dream', 'Infinitive'],
+    ['to-dream-of', 'to talk about music', 'talk', 'Infinitive'],
+    ['to-dream-of', 'to walk through town', 'walk', 'Infinitive'],
+    ['are-ya', 'how are ya', 'ya', 'Pronoun'],
+    ['are-ya', 'see ya tomorrow', 'ya', 'Pronoun'],
+    ['are-ya', 'this is for ya', 'ya', 'Pronoun'],
+    ['after-adv', 'we met shortly after', 'after', 'Adverb'],
+    ['after-adv', 'she arrived soon after', 'after', 'Adverb'],
+    ['after-adv', 'they returned long after', 'after', 'Adverb'],
+    ['perf-since-adv', 'she has since moved', 'since', 'Adverb'],
+    ['perf-since-adv', 'we have since moved', 'since', 'Adverb'],
+    ['perf-since-adv', 'they had since resigned', 'since', 'Adverb'],
+    ['yet-adv', 'she has not arrived yet', 'yet', 'Adverb'],
+    ['yet-adv', 'we have not arrived yet', 'yet', 'Adverb'],
+    ['yet-adv', 'he has not called yet', 'yet', 'Adverb'],
+    ['embed-wh-obj', 'what work he did', 'work', 'Noun'],
+    ['embed-wh-obj', 'which book she read', 'book', 'Noun'],
+    ['embed-wh-obj', 'whose watch he borrowed', 'watch', 'Noun'],
+    ['embed-wh-pl', 'what walks he took', 'walks', 'Plural'],
+    ['embed-wh-pl', 'which books she read', 'books', 'Plural'],
+    ['embed-wh-pl', 'whose watches he repaired', 'watches', 'Plural'],
+  ]
+  cases.forEach(([rule, text, word, tag]) => {
+    t.ok(nlp(text).match(word).has('#' + tag), `${rule}: ${text} — ${word} is ${tag}`)
+  })
+  t.end()
+})
+
+test('rule cleanup: short contextual rules', t => {
+  const cases = [
+    ['dark-green', 'dark green paint', 'dark', 'Adverb'],
+    ['dark-green', 'bright red shoes', 'bright', 'Adverb'],
+    ['dark-green', 'pale blue water', 'pale', 'Adverb'],
+    ['in-month', 'in March', 'march', 'Month'],
+    ['in-month', 'during May', 'may', 'Month'],
+    ['in-month', 'before March', 'march', 'Month'],
+    ['we-all', 'we all swim', 'all', 'Noun'],
+    ['we-all', 'this helps us all', 'all', 'Noun'],
+    ['we-all', 'we all agree', 'all', 'Noun'],
+    ['swears-noun', 'what the hell', 'hell', 'Noun'],
+    ['swears-noun', 'all this shit', 'shit', 'Noun'],
+    ['swears-noun', 'the damn was audible', 'damn', 'Noun'],
+    ['to-swears', 'go to hell', 'hell', 'Noun'],
+    ['to-swears', 'it went to shit', 'shit', 'Noun'],
+    ['to-swears', 'they sent him to hell', 'hell', 'Noun'],
+    ['dir-verb-pre', 'they over-estimate it', 'over', 'Prefix'],
+    ['dir-verb-pre', 'under cook the meat', 'under', 'Prefix'],
+    ['dir-verb-pre', 'over cook the rice', 'over', 'Prefix'],
+    ['tell-him', 'tell him the story', 'tell', 'Imperative'],
+    ['tell-him', 'give me the book', 'give', 'Imperative'],
+    ['tell-him', 'show us the way', 'show', 'Imperative'],
+    ['do-you', 'do you swim?', 'do', 'QuestionWord'],
+    ['do-you', 'do we agree?', 'do', 'QuestionWord'],
+    ['do-you', 'do they work?', 'do', 'QuestionWord'],
+    ['does-he', 'does he swim?', 'does', 'QuestionWord'],
+    ['does-he', 'does she work?', 'does', 'QuestionWord'],
+    ['does-he', 'does it help?', 'does', 'QuestionWord'],
+    ['to-the-store', 'go to the store', 'to', 'Preposition'],
+    ['to-the-store', 'send it to her', 'to', 'Preposition'],
+    ['to-the-store', 'walk to my house', 'to', 'Preposition'],
+    ['before-nominal', 'before the meal', 'before', 'Preposition'],
+    ['before-nominal', 'before my birthday', 'before', 'Preposition'],
+    ['before-nominal', 'before Monday', 'before', 'Preposition'],
+  ]
+  cases.forEach(([rule, text, word, tag]) => {
+    t.ok(nlp(text).match(word).has('#' + tag), `${rule}: ${text} — ${word} is ${tag}`)
+  })
+  const contrasts = [
+    ['the dark room', 'dark', 'Adjective'],
+    ['the bright light', 'bright', 'Adjective'],
+    ['we march home', 'march', 'Verb'],
+    ['she may leave', 'may', 'Modal'],
+    ['he tells us stories', 'tells', 'PresentTense'],
+    ['I do the work', 'do', 'Verb'],
+    ['she does the work', 'does', 'Verb'],
+    ['before she left, we ate', 'before', 'Conjunction'],
+  ]
+  contrasts.forEach(([text, word, tag]) => {
+    t.ok(nlp(text).match(word).has('#' + tag), `${text}: ${word} remains ${tag}`)
+  })
+  ;['go to the store', 'send it to her', 'walk to my house'].forEach(text => {
+    t.notOk(nlp(text).match('to').has('#Conjunction'), `${text}: to is not a conjunction`)
+  })
+  t.end()
+})
+
+test('rule cleanup: fixed lexical phrases', t => {
+  const cases = [
+    ['united-team', 'Manchester United won', 'manchester united', 'SportsTeam'],
+    ['united-team', 'we support Newcastle United', 'newcastle united', 'SportsTeam'],
+    ['united-team', 'Sheffield United played well', 'sheffield united', 'SportsTeam'],
+    ['school-board', 'the school board met', 'school board', 'Organization'],
+    ['school-board', 'our health board voted', 'health board', 'Organization'],
+    ['school-board', 'the commerce board agreed', 'commerce board', 'Organization'],
+    ['special', 'the steering committee met', 'steering committee', 'Organization'],
+    ['special', 'a special committee investigated', 'special committee', 'Organization'],
+    ['special', 'the executive committee voted', 'executive committee', 'Organization'],
+    ['eastern-time', 'eastern time', 'eastern time', 'Timezone'],
+    ['eastern-time', 'pacific daylight time', 'pacific daylight time', 'Timezone'],
+    ['eastern-time', 'atlantic standard time', 'atlantic standard time', 'Timezone'],
+    ['central-time', 'central european time', 'central european time', 'Timezone'],
+    ['central-time', 'western european time', 'western european time', 'Timezone'],
+    ['central-time', 'eastern european time', 'eastern european time', 'Timezone'],
+    ['swears-expr', 'holy shit!', 'holy shit', 'Expression'],
+    ['swears-expr', 'holy fuck!', 'holy fuck', 'Expression'],
+    ['swears-expr', 'holy hell!', 'holy hell', 'Expression'],
+    ['barely-even', 'I barely even noticed', 'barely even', 'Adverb'],
+    ['barely-even', 'we hardly even spoke', 'hardly even', 'Adverb'],
+    ['barely-even', 'she barely even smiled', 'barely even', 'Adverb'],
+  ]
+  cases.forEach(([rule, text, phrase, tag]) => {
+    const terms = nlp(text).match(phrase).terms()
+    t.ok(terms.found && terms.docs.flat().every(term => term.tags.has(tag)), `${rule}: ${text} — all of ${phrase} is ${tag}`)
+  })
+  const contrasts = [
+    ['the school opened', 'school', 'Noun'],
+    ['eastern Canada', 'canada', 'Country'],
+  ]
+  contrasts.forEach(([text, word, tag]) => {
+    t.ok(nlp(text).match(word).has('#' + tag), `${text}: ${word} remains ${tag}`)
+  })
+  t.end()
+})
+
+test('rule cleanup: guards on later adjective and question corrections', t => {
+  const cases = [
+    ['a professional bodybuilder', 'professional', 'Adjective'],
+    ['the individual goals', 'individual', 'Adjective'],
+    ['a standard procedure', 'standard', 'Adjective'],
+    ['how he walks', 'how', 'Preposition'],
+    ['where she lives', 'where', 'Preposition'],
+    ['when they arrived', 'when', 'Conjunction'],
+  ]
+  cases.forEach(([text, word, tag]) => {
+    t.ok(nlp(text).match(word).has('#' + tag), `${text}: ${word} is ${tag}`)
+  })
+  t.end()
+})
+
+test('rule cleanup: adjective and noun pairs outside timezone names', t => {
+  const cases = ['instant access', 'professional support', 'individual work']
+  cases.forEach(text => {
+    t.ok(nlp(text).has('#Adjective #Noun'), `${text}: adjective followed by noun`)
+  })
+  t.end()
+})
+
+test('rule cleanup: hyphenated adjectives and irregular past readings', t => {
+  const cases = [
+    ['off-white paint', 'off-white', 'Adjective'],
+    ['an off-white shirt', 'off-white', 'Adjective'],
+    ['the wall is off-white', 'off-white', 'Adjective'],
+    ['a two-fold increase', 'two-fold', 'Adjective'],
+    ['a three-fold improvement', 'three-fold', 'Adjective'],
+    ['a ten-fold reduction', 'ten-fold', 'Adjective'],
+    ['a must-win game', 'must-win', 'Adjective'],
+    ['a must-see movie', 'must-see', 'Adjective'],
+    ['a must-read book', 'must-read', 'Adjective'],
+    ['vacuum-sealed food', 'vacuum-sealed', 'Adjective'],
+    ['a vacuum-sealed bag', 'vacuum-sealed', 'Adjective'],
+    ['she drew a picture', 'drew', 'PastTense'],
+    ['he drew closer', 'drew', 'PastTense'],
+    ['they drew the curtains', 'drew', 'PastTense'],
+    ['the cat woke', 'woke', 'PastTense'],
+    ['the baby woke suddenly', 'woke', 'PastTense'],
+    ['she woke early', 'woke', 'PastTense'],
+    ['Drew walked home', 'drew', 'Person'],
+    ['Drew Smith arrived', 'drew', 'Person'],
+    ['we met Drew', 'drew', 'Person'],
+    ['they must win', 'must', 'Modal'],
+    ['we must read this book', 'read', 'Verb'],
+    ['she used a vacuum', 'vacuum', 'Noun'],
+  ]
+  cases.forEach(([text, phrase, tag]) => {
+    const target = nlp(text).match(phrase)
+    t.ok(target.found && target.docs.flat().every(term => term.tags.has(tag)), `${text}: ${phrase} is ${tag}`)
+  })
+  t.end()
+})
+
+test('rule cleanup: hyphenated verb compounds', t => {
+  const cases = [
+    ['freeze-dried fruit', 'freeze-dried'],
+    ['wash-dried clothes', 'wash-dried'],
+    ['spin-dried clothes', 'spin-dried'],
+  ]
+  cases.forEach(([text, phrase]) => {
+    const target = nlp(text).match(phrase)
+    t.ok(target.found && target.docs.flat().every(term => term.tags.has('Adjective')), text)
   })
   t.end()
 })

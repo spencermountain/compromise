@@ -31,18 +31,18 @@ const anything = [NN, Vb, Adj, Adv, Val, QW]
 
 export default {
   Adjective: {
-    aliases: ['Adj', 'JJ', 'ADJ'],
+    aliases: ['Adj', 'JJ', 'ADJ', 'AJ0'],
     not: [NN, Vb, Adv, Val],
   },
   Comparable: {
     is: Adj,
   },
   Comparative: {
-    aliases: [null, 'Comp', 'JJR'],
+    aliases: [null, 'Comp', 'JJR', 'AJC'],
     is: Adj,
   },
   Superlative: {
-    aliases: [null, 'Sup', 'JJS'],
+    aliases: [null, 'Sup', 'JJS', 'AJS'],
     is: Adj,
     not: [Comp],
   },

@@ -30,13 +30,13 @@ export default {
     not: [Vb, Adj, Adv, Val, Det],
   },
   Singular: {
-    aliases: [null, 'Sing'],
+    aliases: [null, 'Sing', 'SG', 'NN1'],
     is: NN,
     not: [Plur, Uncountable],
   },
   // 'Canada'
   ProperNoun: {
-    aliases: ['Prop', 'NNP', 'PROPN'],
+    aliases: ['Prop', 'NNP', 'PROPN', 'NP0'],
     is: NN,
   },
   Person: {
@@ -107,7 +107,7 @@ export default {
     is: Org,
   },
   Plural: {
-    aliases: [null, 'Plur', 'NNS'],
+    aliases: [null, 'Plur', 'NNS', 'PL', 'NN2'],
     is: NN,
     not: [Sing, Uncountable],
   },

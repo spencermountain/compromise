@@ -1,3 +1,4 @@
+import compileAliases from '../../_aliases.js'
 
 const toArr = function (input) {
   if (!input) {
@@ -10,6 +11,8 @@ const toArr = function (input) {
 }
 
 const addImplied = function (tags) {
+  const aliases = compileAliases(tags)
+  const resolve = tag => aliases[tag] || tag
   Object.keys(tags).forEach(k => {
     // support deprecated fmts
     if (tags[k].isA) {
@@ -17,6 +20,15 @@ const addImplied = function (tags) {
     }
     if (tags[k].notA) {
       tags[k].not = tags[k].notA
+    }
+    if (typeof tags[k].is === 'string') {
+      tags[k].is = resolve(tags[k].is)
+    }
+    if (tags[k].also) {
+      tags[k].also = toArr(tags[k].also).map(resolve)
+    }
+    if (tags[k].not) {
+      tags[k].not = toArr(tags[k].not).map(resolve)
     }
     // add any implicit 'is' tags
     if (tags[k].is && typeof tags[k].is === 'string') {

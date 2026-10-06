@@ -1,5 +1,6 @@
 import sources from './sources.js'
-import adhoc from '../../src/2-two/preTagger/compute/tagger/3rd-pass/_adhoc.js'
+import patterns from './patterns.js'
+import adhoc from '../../../src/2-two/preTagger/compute/tagger/3rd-pass/_adhoc.js'
 
 const own = (obj, key) => Object.hasOwn(obj, key) ? obj[key] : null
 const array = value => [value].flat().filter(Boolean)
@@ -46,6 +47,7 @@ const inspect = (nlp, word, sentence) => {
   const report = {
     ...lexical,
     sourceCandidates,
+    patterns: patterns(model.two, word),
     related: related(nlp, lexical),
     clues: model.two.clues[lexical.switch] || null,
     clueSource: null,
@@ -58,6 +60,7 @@ const inspect = (nlp, word, sentence) => {
     notes: [
       'Source hits are candidates, not proven provenance; maintained data may differ from packed runtime data.',
       'Related forms are morphology suggestions, not proof that an entry was generated from this word.',
+      'Pattern candidates show the first match per stage, in suffix → suffix regex → prefix order. These require an untagged term; earlier stages and other regex rules may take precedence.',
       'Indexed rules are candidates. Default-tag rules omit rules enabled by later tag changes; general postTagger patterns are not listed.',
     ],
   }

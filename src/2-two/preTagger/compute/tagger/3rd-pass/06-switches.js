@@ -73,7 +73,7 @@ const doSwitches = function (terms, i, world) {
   }
   const form = term.switch
   // skip propernouns, acronyms, etc
-  if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb')) {
+  if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb') || term.tags.has('SportsTeam')) {
     return
   }
   let tag = pickTag(terms, i, clues[form], model)
@@ -84,6 +84,10 @@ const doSwitches = function (terms, i, world) {
   // Choosing a lexical reading must retain its inflection.
   if (form === 'Person|Noun' && tag === 'Singular' && looksPlural(str)) {
     tag = 'Plural'
+  }
+  // Drew is also a name; only its verbal reading carries past tense.
+  if (str === 'drew' && (tag === 'Verb' || tag === 'Infinitive' || tag === 'PresentTense')) {
+    tag = 'PastTense'
   }
   // did we find anything?
   if (tag) {

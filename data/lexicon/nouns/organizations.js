@@ -1,6 +1,16 @@
 //just a few named-organizations
 //no acronyms needed. no product/brand pollution.
 export default [
+  'health board',
+  'school board',
+  'commerce board',
+  'nominating committee',
+  'special committee',
+  'conference committee',
+  'executive committee',
+  'steering committee',
+  'central committee',
+  'congressional committee',
   // 'abc',
   'academy of sciences',
   'acer',

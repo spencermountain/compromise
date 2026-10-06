@@ -9,7 +9,6 @@ export default [
   'baker',
   'benedict',
   'berg',
-  'bill',
   'brandy',
   'brook',
   'cam',
@@ -98,4 +97,3 @@ export default [
   "fields",
   "potter",
 ]
-

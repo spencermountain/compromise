@@ -1,4 +1,8 @@
 const rules = {
+  bill: [
+    // the [bill] is a common noun, despite its name default
+    '(#Det|#Poss) _ -> #Singular | !#Person | !#ProperNoun',
+  ],
   air: [
     // the [air] force
     '_ force -> #NN',
@@ -32,8 +36,12 @@ const rules = {
     '_ #V -> #Adv',
     // assign [all] tasks
     'assign _ (#Pres|#Plur) -> #Det',
+    // we [all]
+    '(we|us) _ -> #NN',
   ],
   even: [
+    // barely [even] noticed
+    '(barely|hardly) _ -> #Adv',
     // [even] held
     // [even] worse
     // [even] the greatest
@@ -302,6 +310,8 @@ const rules = {
   to: [
     // from start [to] finish
     'start _ finish -> #Prep',
+    // [to] the store
+    '_ (#Det|#Poss|#Pron|#Email|#Url) -> #Prep | !#Conj',
   ],
   in: [
     // bowed his head [in] prayer
@@ -331,6 +341,18 @@ const rules = {
     // she has not arrived [yet]
     '#Past _ $ -> #Adv',
   ],
+  before: [
+    // [before] dinner
+    '_ (#Det|#Poss|#NN|#Ger|#Date) -> #Prep',
+  ],
+  do: [
+    // [do] you swim?
+    '^ _ (you|we|they) -> #QW',
+  ],
+  does: [
+    // [does] he swim?
+    '^ _ (he|she|it|#Prop) -> #QW',
+  ],
   me: [
     // i ate [me] sandwich (scottish slang)
     '#Past _ #NN -> #Poss',
@@ -339,6 +361,14 @@ const rules = {
 }
 
 const compounds = {
+  // [dark] green
+  'dark|bright|flat|light|soft|pale|dead|dim|faux|little|wee|sheer|most|near|good|extra|all': '_ #Adj -> #Adv',
+  // in [march]
+  'march|may': '#Prep _ -> #Month',
+  // what the [hell]
+  'shit|damn|hell': '#Det _ -> #NN',
+  // go to [hell]
+  'shit|hell': 'to _ -> #NN',
   // the [can]
   'can|will|may': 'the _ -> #Sing',
   // five [feet]

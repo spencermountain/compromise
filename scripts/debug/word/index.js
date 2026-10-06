@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import inspect from './inspect-word/model.js'
-import format from './inspect-word/format.js'
+import inspect from './model.js'
+import format from './format.js'
 
-const help = `Usage: node scripts/inspect-word.js WORD [options]
+const help = `Usage: pnpm debug:word WORD [options]
   --in TEXT          Include the word's tagging trace in a sentence
   --json             Output JSON (equivalent to --format json)
   --format FORMAT    pretty (default), text (no colors), or json
@@ -45,7 +45,7 @@ const main = async args => {
   let nlp
   try {
     console.log = () => {}
-    nlp = (await import('../src/two.js')).default
+    nlp = (await import('../../../src/two.js')).default
   } finally {
     console.log = log
   }

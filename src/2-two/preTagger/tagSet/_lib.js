@@ -17,7 +17,7 @@ const Vb = 'Verb'
 const Inf = 'Infinitive'
 const Past = 'PastTense'
 const Ger = 'Gerund'
-const Part = 'Participle'
+const Participle = 'Participle'
 const Pres = 'PresentTense'
 const Fut = 'FutureTense'
 
@@ -76,7 +76,7 @@ const Url = 'Url'
 
 
 export {
-  NN, Sing, Plur, Prop, Pron, Poss, Adj, Comp, Sup, Adv, Det, Vb, Inf, Past, Ger, Part, Pres, Fut, Cop, Mod,
+  NN, Sing, Plur, Prop, Pron, Poss, Adj, Comp, Sup, Adv, Det, Vb, Inf, Past, Ger, Participle, Pres, Fut, Cop, Mod,
   Conj, Prep, Expr, QW, Pers, Place, Org, First, Last, MaleName,
   FemaleName, Actor, Uncountable, SportsTeam, Country, City, Region, Unit, Val, Card,
   Ord, TxtNum, Numeric, RomanNumeral, Frac, Date, WeekDay, Year, FinancialQuarter,

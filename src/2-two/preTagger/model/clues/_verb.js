@@ -1,6 +1,6 @@
 import tags from '../../tagSet/aliases.js'
 
-const { VB: v } = tags
+const { Inf: v } = tags
 
 export default {
   beforeTags: {

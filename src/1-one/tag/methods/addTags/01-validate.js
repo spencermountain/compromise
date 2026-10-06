@@ -49,6 +49,9 @@ const validate = function (tags, already) {
 
   // property validation
   Object.keys(tags).forEach(k => {
+    if (tags[k].aliases !== undefined) {
+      tags[k].aliases = toArr(tags[k].aliases)
+    }
     tags[k].children = toArr(tags[k].children)
     tags[k].not = toArr(tags[k].not)
     if (tags[k].also) {

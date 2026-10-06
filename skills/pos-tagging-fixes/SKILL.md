@@ -26,21 +26,81 @@ wrong POS from a tokenization, contraction, entity-selection, or chunking failur
 with a wrong `.verbs()` selection may require a selection fix rather than another tagging rule.
 
 Reproduce with ESM imports from `./src/two.js` or `./src/three.js`. Avoid stale CommonJS builds.
-Start with `node scripts/debug.js 'the failing sentence'`, or:
+Start with a word-filtered trace, enabling it before parsing:
 
 ```js
 import nlp from './src/three.js'
 
-nlp.verbose(true)
-const doc = nlp('the failing sentence')
+nlp.verbose('tagger', { word: 'walk' })
+const doc = nlp('They walk home.')
+nlp.verbose(false)
 doc.debug()
 console.dir(doc.json(), { depth: null })
-nlp.verbose(false)
 ```
 
 Trace both the first wrong decision and the last rule to touch the term. Search verbose reason
-strings with `rg` in `src/`. Logging a requested tag is not proof that it was applied:
-`setTag` logs before conflict and safety checks. Inspect the actual tag set after the stage.
+strings with `rg` in `src/`. Tagger events report actual added and removed tags, including
+conflict removals and implied parents. They omit no-ops and blocked requests: absence of an
+event does not prove that a rule never ran. Check frozen state and conflicts separately.
+
+`word` is an exact, case-insensitive term filter, not a substring or inflection family. Omit it
+when investigating neighbouring words or contractions. `nlp.verbose()` equals `verbose(true)`
+and enables multiple debug modes; prefer `'tagger'` to reduce noise. `verbose(false)` turns
+logging off. These settings are shared, and calling `verbose` again replaces the options.
+`node scripts/debug.js 'the failing sentence'` is available for an unfiltered trace.
+
+For LLM inspection, capture JSON instead of parsing colored terminal output:
+
+```js
+const events = []
+nlp.verbose('tagger', { word: 'walk', emit: event => events.push(event) })
+nlp('They walk home.')
+nlp.verbose(false)
+console.log(JSON.stringify(events, null, 2))
+```
+
+Events contain `text`, `normal`, `index`, `reason`, `added`, and `removed`. Indexes distinguish
+repeated words; they are positions at the time of the event, not permanent identities through
+token edits. There is no stored history to retrieve afterward. Keep inputs short, or stream
+selected events rather than accumulating a whole corpus in memory.
+
+### Investigate matching separately
+
+Parse before enabling match logging to avoid internal tagging matches flooding the output:
+
+```js
+const sample = nlp('The red boat. The very red boat.')
+const pattern = '#Determiner #Adjective #Noun'
+nlp.verbose('match', { pattern })
+sample.eq(0).match(pattern) // matched span
+sample.eq(1).match(pattern) // no match
+nlp.verbose(false)
+```
+
+Match logging supports `emit` and `word` too. Its JSON contains `type: 'match'`, `pattern`,
+`matched`, and `matches` (text, index, length). It reports results only: it does not explain
+failed tokens, backtracking, or why a candidate was filtered out before reaching the matcher.
+The `pattern` filter compares the recorded string exactly, not structural equivalence. Internal
+rules may have expanded aliases; already-parsed input can appear as `[parsed pattern]`.
+Inspect an unfiltered short run if the filter produces nothing.
+
+A public match against final tags does not reproduce an internal rule's earlier input. For an
+internal rule, enable tracing before parsing and compare its match event with subsequent tag
+events. Match success does not guarantee a tag change. Disabling verbose restores the original
+matcher/parser functions; do not add permanent logging checks to their hot loops for diagnosis.
+
+### Reduce the problem before expanding the fix
+
+Shorten the failing sentence while preserving the error, retaining the original as a check.
+Build a contrasting example where the current reading is correct. Change one condition at a
+time: determiner, auxiliary, neighbour, capitalization, inflection, or punctuation. State what
+evidence distinguishes the readings before choosing a rule. If the sentence is genuinely
+ambiguous, identify the preferred convention rather than claiming one interpretation is certain.
+
+Try one intervention at a time and compare both examples plus surrounding term tags. Keep the
+first divergent stage and reason as evidence. A changed final tag alone cannot tell you whether
+you fixed the cause or added a late override. Do not turn every reduced example into a literal
+phrase exception; check whether the distinction applies to other words in the same class.
 
 ## Understand the sequence before editing
 
@@ -104,7 +164,7 @@ Runtime loading is in [lexicon/index.js](../../src/2-two/preTagger/model/lexicon
 additional direct entries in `misc.js` and `frozenLex.js` in that directory. Avoid creating a
 second source of truth to bypass packing.
 
-`pnpm pack` runs `scripts/pack.js`, regenerating both lexical and pair-model data. Check the
+`pnpm run pack` runs `scripts/pack.js`, regenerating both lexical and pair-model data. Check the
 working tree before running it and inspect all generated diffs afterward. Do not erase unrelated
 changes. Editing `data/` alone does not change the runtime lexicon until it is packed. Do not
 run `pnpm build` merely to test ESM source; that also runs the version script.
@@ -145,8 +205,11 @@ and [second-pass.js](../../src/2-two/postTagger/model/second-pass.js). Compact f
 (match), `g` (capture group), `t` (tag), `r` (reason), `n` (notIf), and `u` (unTag).
 Use a capture to retag only the intended terms; otherwise the action can cover the entire match.
 Read the matcher implementation for `notIf` scope rather than guessing. Include a short example
-and useful reason string. Check aliases in `postTagger/model/_lib.js`; aliases such as `#NN`
-and `#Inf` are expanded by these model loaders and are not universal public tag names.
+and useful reason string. Check canonical names and registered aliases in
+`nlp.model().one.tagSet` and `nlp.model().one.tagAliases`. Public matching and tagging resolve
+registered aliases; static English rules use
+[tagSet/aliases.js](../../src/2-two/preTagger/tagSet/aliases.js). Do not invent aliases or assume
+they exist in every build/plugin configuration. Prefer canonical names in diagnostic comparisons.
 
 Use existing tagging helpers. `setTag` handles parent tags and incompatible tags; `safe` tagging
 declines conflicts, and frozen terms resist conflicting changes. Direct `term.tags.add()` can
@@ -197,7 +260,7 @@ repository's constraints on creating or modifying tests. Compare failures with t
 baseline when necessary, and report any checks that could not run.
 
 For new general patterns or broad hot-path changes, compare `pnpm bench` before/after on the
-same input (it uses `--no-save`). Inspect expensive sweep candidates with:
+same input (it uses `--no-save`), with verbose disabled. Inspect expensive sweep candidates with:
 
 ```sh
 node scripts/bench/post-tagger/sweep-profile.js /path/to/corpus.txt --sort miss-ms --top 20
@@ -208,6 +271,9 @@ authorization. The profiler measures matcher attempts surviving early filtering 
 tag edits, not final accuracy. Many misses or no-op edits suggest narrowing or relocating a
 rule. Do not claim a speed improvement from rule count alone, or an accuracy improvement from
 edit count. Weigh added source/bundle size too, especially for procedural preTagger exceptions.
+Keep richer diagnostics in development scripts when possible; do not grow the distributed
+runtime to support a niche investigation. Shared core CLI styles live in
+[src/API/_color.js](../../src/API/_color.js); use JSON events for machine-readable output.
 
 Report the chosen intervention, why cheaper/narrower alternatives were insufficient, the stage
 where it runs, the contrasts preserved, and the checks performed. Keep the fix focused; leave

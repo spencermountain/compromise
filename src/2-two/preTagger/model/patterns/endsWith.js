@@ -1,7 +1,7 @@
 import tags from '../../tagSet/aliases.js'
 
 const {
-  JJ: Adj, VB: Inf, Pres, Sing, VBD: Past, RB: Adverb, Expression: Exp, Actor,
+  JJ: Adj, Inf, Pres, Sing, VBD: Past, RB: Adverb, Expression: Exp, Actor,
   V: Verb, NN: Noun, Last
 } = tags
 //regex suffix patterns and their most common parts of speech,

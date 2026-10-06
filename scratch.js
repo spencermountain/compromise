@@ -31,3 +31,11 @@ const german = nlp.tokenize('das Haus')
 german.match('Haus').tag('#Nomen')
 console.log(german.match('das #Nomen').text())
 console.log(german.match('#NN').text())
+
+// The first alias controls spec output; null keeps the canonical name.
+nlp.addTags({ Determiner: { aliases: ['Det', 'DT'] } })
+const article = nlp.tokenize('the').tag('DT')
+console.log(article.out('spec')) // the {Det}
+nlp.addTags({ Determiner: { aliases: [null, 'Det', 'DT'] } })
+console.log(article.out('spec')) // the {Determiner}
+console.log(article.has('#Det')) // true

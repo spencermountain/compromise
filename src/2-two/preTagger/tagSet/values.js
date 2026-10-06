@@ -1,49 +1,49 @@
-import {
-  V, JJ, RB, Value, Cardinal, Ordinal, NN, TextValue, NumericValue, RomanNumeral,
-} from './_lib.js'
+import { Vb, Adj, Adv, Val, Card, Ord, NN, TxtNum, Numeric, RomanNumeral } from './_lib.js'
 
 // Written format is independent of quantity types such as Fraction or Money.
 export default {
   Value: {
-    not: [V, JJ, RB],
-    alias: 'Val'
+    aliases: ['Val', 'Num'],
+    not: [Vb, Adj, Adv],
   },
   Ordinal: {
-    aliases: ['Ord'],
-    is: Value,
-    not: [Cardinal],
+    aliases: [null, 'Ord'],
+    is: Val,
+    not: [Card],
   },
   Cardinal: {
-    aliases: ['Card'],
-    is: Value,
-    not: [Ordinal],
+    aliases: [null, 'Card', 'CD'],
+    is: Val,
+    not: [Ord],
   },
   Fraction: {
-    aliases: ['Frac'],
-    is: Value,
+    aliases: [null, 'Frac'],
+    is: Val,
     not: [NN],
   },
   Multiple: {
-    is: TextValue,
+    aliases: [null, 'Mult'],
+    is: TxtNum,
   },
   RomanNumeral: {
-    is: Cardinal,
+    aliases: [null, 'RomNum'],
+    is: Card,
   },
   TextValue: {
-    aliases: ['TxtNum'],
-    is: Value,
-    not: [NumericValue, RomanNumeral],
+    aliases: [null, 'TxtNum'],
+    is: Val,
+    not: [Numeric, RomanNumeral],
   },
   NumericValue: {
-    aliases: ['Num'],
-    is: Value,
+    aliases: ['Numeric'],
+    is: Val,
     not: [RomanNumeral],
-    alias: 'Numeric'
   },
   Money: {
-    is: Cardinal,
+    is: Card,
   },
   Percent: {
-    is: Value,
+    aliases: [null, 'Perc', 'Pct'],
+    is: Val,
   },
 }

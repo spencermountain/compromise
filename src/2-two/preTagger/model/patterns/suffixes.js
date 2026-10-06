@@ -1,7 +1,7 @@
 import tags from '../../tagSet/aliases.js'
 
 const {
-  JJ: Adj, VB: Inf, Pres, Sing, VBD: Past, RB: Avb, NNS: Plrl, Actor,
+  JJ: Adj, Inf, Pres, Sing, VBD: Past, RB: Avb, NNS: Plrl, Actor,
   V: Vb, NN: Noun, NNP: Prop, Last, Modal, Place, VBN: Prt
 } = tags
 //just a foolish lookup of known suffixes

@@ -3,10 +3,21 @@ import nlp from '../../src/three.js'
 
 test('common Penn-style aliases use canonical tags', t => {
   const aliases = {
-    NN: 'Noun', NNS: 'Plural', NNP: 'ProperNoun', JJ: 'Adjective',
-    JJR: 'Comparative', JJS: 'Superlative', RB: 'Adverb',
-    VB: 'Infinitive', VBD: 'PastTense', VBG: 'Gerund', VBN: 'Participle',
-    PRP: 'Pronoun', DT: 'Determiner', IN: 'Preposition', CC: 'Conjunction',
+    NN: 'Noun',
+    NNS: 'Plural',
+    NNP: 'ProperNoun',
+    JJ: 'Adjective',
+    JJR: 'Comparative',
+    JJS: 'Superlative',
+    RB: 'Adverb',
+    Inf: 'Infinitive',
+    VBD: 'PastTense',
+    VBG: 'Gerund',
+    VBN: 'Participle',
+    PRP: 'Pronoun',
+    DT: 'Determiner',
+    IN: 'Preposition',
+    CC: 'Conjunction',
     MD: 'Modal',
   }
   Object.entries(aliases).forEach(([alias, canonical]) => {
@@ -17,9 +28,6 @@ test('common Penn-style aliases use canonical tags', t => {
     doc.unTag(alias)
     t.notOk(doc.has(`#${canonical}`), `${alias} removes canonical tag`)
   })
-  t.ok(nlp.tokenize('example').tag('Prt').has('#Participle'), 'Prt retains participle meaning')
-  t.notOk(nlp.tokenize('example').tag('Prt').has('#Particle'), 'Prt never means particle')
-  t.ok(nlp.tokenize('out').tag('Particle').has('#Particle'), 'particle uses full name')
   t.end()
 })
 

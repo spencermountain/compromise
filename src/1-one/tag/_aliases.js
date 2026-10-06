@@ -4,7 +4,7 @@ const compileAliases = tags => {
   Object.keys(tags).forEach(tag => { aliases[tag] = tag })
   Object.keys(tags).forEach(tag => {
     const entry = tags[tag]
-    const names = [entry.alias, ...[entry.aliases || []].flat()]
+    const names = entry.aliases === undefined ? [entry.alias] : [entry.aliases].flat()
     names.forEach(name => {
       if (!name) {
         return

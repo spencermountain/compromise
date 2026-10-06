@@ -1,39 +1,39 @@
-// Shared tag names; public names stay unchanged.
-// NN is the umbrella noun tag; NNs is specifically singular.
+// Preferred alias identifiers holding canonical tag names.
+// NN is the umbrella noun tag; Sing is specifically singular.
 const NN = 'Noun'
-const NNs = 'Singular'
-const NNS = 'Plural'
-const NNP = 'ProperNoun'
-const PRP = 'Pronoun'
+const Sing = 'Singular'
+const Plur = 'Plural'
+const Prop = 'ProperNoun'
+const Pron = 'Pronoun'
 const Poss = 'Possessive'
 
-const JJ = 'Adjective'
-const JJR = 'Comparative'
-const JJS = 'Superlative'
-const RB = 'Adverb'
+const Adj = 'Adjective'
+const Comp = 'Comparative'
+const Sup = 'Superlative'
+const Adv = 'Adverb'
 const Det = 'Determiner'
 
-const V = 'Verb'
-const VB = 'Infinitive'
-const VBD = 'PastTense'
-const VBG = 'Gerund'
-const VBN = 'Participle'
+const Vb = 'Verb'
+const Inf = 'Infinitive'
+const Past = 'PastTense'
+const Ger = 'Gerund'
+const Part = 'Participle'
 const Pres = 'PresentTense'
 const Fut = 'FutureTense'
 
 const Cop = 'Copula'
-const MD = 'Modal'
-const PhrasalVerb = 'PhrasalVerb'
+const Mod = 'Modal'
+const Phrasal = 'PhrasalVerb'
 const Conj = 'Conjunction'
-const IN = 'Preposition'
-const Expression = 'Expression'
-const QuestionWord = 'QuestionWord'
+const Prep = 'Preposition'
+const Expr = 'Expression'
+const QW = 'QuestionWord'
 
-const Person = 'Person'
+const Pers = 'Person'
 const Place = 'Place'
-const Organization = 'Organization'
-const FirstName = 'FirstName'
-const LastName = 'LastName'
+const Org = 'Organization'
+const First = 'FirstName'
+const Last = 'LastName'
 const MaleName = 'MaleName'
 const FemaleName = 'FemaleName'
 
@@ -45,13 +45,13 @@ const City = 'City'
 const Region = 'Region'
 const Unit = 'Unit'
 
-const Value = 'Value'
-const Cardinal = 'Cardinal'
-const Ordinal = 'Ordinal'
-const TextValue = 'TextValue'
-const NumericValue = 'NumericValue'
+const Val = 'Value'
+const Card = 'Cardinal'
+const Ord = 'Ordinal'
+const TxtNum = 'TextValue'
+const Numeric = 'NumericValue'
 const RomanNumeral = 'RomanNumeral'
-const Fraction = 'Fraction'
+const Frac = 'Fraction'
 
 const Date = 'Date'
 const WeekDay = 'WeekDay'
@@ -62,7 +62,7 @@ const Time = 'Time'
 const Timezone = 'Timezone'
 
 const Connector = 'Connector'
-const Abbreviation = 'Abbreviation'
+const Abbr = 'Abbreviation'
 const Acronym = 'Acronym'
 const HashTag = 'HashTag'
 const AtMention = 'AtMention'
@@ -76,10 +76,10 @@ const Url = 'Url'
 
 
 export {
-  NN, NNs, NNS, NNP, PRP, Poss, JJ, JJR, JJS, RB, Det, V, VB, VBD, VBG, VBN, Pres, Fut, Cop, MD,
-  Conj, IN, Expression, QuestionWord, Person, Place, Organization, FirstName, LastName, MaleName,
-  FemaleName, Actor, Uncountable, SportsTeam, Country, City, Region, Unit, Value, Cardinal,
-  Ordinal, TextValue, NumericValue, RomanNumeral, Fraction, Date, WeekDay, Year, FinancialQuarter,
-  Season, Time, Timezone, Connector, Abbreviation, Acronym, HashTag, AtMention, Emoji, Emoticon,
-  SlashedTerm, Email, PhoneNumber, Url, PhrasalVerb,
+  NN, Sing, Plur, Prop, Pron, Poss, Adj, Comp, Sup, Adv, Det, Vb, Inf, Past, Ger, Part, Pres, Fut, Cop, Mod,
+  Conj, Prep, Expr, QW, Pers, Place, Org, First, Last, MaleName,
+  FemaleName, Actor, Uncountable, SportsTeam, Country, City, Region, Unit, Val, Card,
+  Ord, TxtNum, Numeric, RomanNumeral, Frac, Date, WeekDay, Year, FinancialQuarter,
+  Season, Time, Timezone, Connector, Abbr, Acronym, HashTag, AtMention, Emoji, Emoticon,
+  SlashedTerm, Email, PhoneNumber, Url, Phrasal,
 }

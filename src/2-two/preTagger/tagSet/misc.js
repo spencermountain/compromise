@@ -1,77 +1,96 @@
 import {
-  NN, V, JJ, RB, Value, QuestionWord, JJR, Conj, Det, Connector, IN, HashTag, SlashedTerm, Email,
-  PhoneNumber, AtMention, Emoji, Emoticon, Url, RomanNumeral, PRP, Date, Expression, Abbreviation,
-  Acronym, NNP,
+  NN,
+  Vb,
+  Adj,
+  Adv,
+  Val,
+  QW,
+  Comp,
+  Conj,
+  Det,
+  Connector,
+  Prep,
+  HashTag,
+  SlashedTerm,
+  Email,
+  PhoneNumber,
+  AtMention,
+  Emoji,
+  Emoticon,
+  Url,
+  RomanNumeral,
+  Pron,
+  Date,
+  Expr,
+  Abbr,
+  Acronym,
+  Prop,
 } from './_lib.js'
 
-const anything = [NN, V, JJ, RB, Value, QuestionWord]
+const anything = [NN, Vb, Adj, Adv, Val, QW]
 
 export default {
   Adjective: {
-    aliases: ['JJ'],
-    not: [NN, V, RB, Value],
-    alias: 'Adj'
+    aliases: ['Adj', 'JJ', 'ADJ'],
+    not: [NN, Vb, Adv, Val],
   },
   Comparable: {
-    is: JJ,
+    is: Adj,
   },
   Comparative: {
-    aliases: ['Comp', 'JJR'],
-    is: JJ,
+    aliases: [null, 'Comp', 'JJR'],
+    is: Adj,
   },
   Superlative: {
-    aliases: ['Sup', 'JJS'],
-    is: JJ,
-    not: [JJR],
+    aliases: [null, 'Sup', 'JJS'],
+    is: Adj,
+    not: [Comp],
   },
   NumberRange: {
-    aliases: ['NumRange'],
+    aliases: [null, 'NumRange'],
   },
   Adverb: {
-    aliases: ['RB'],
-    not: [NN, V, JJ, Value],
-    alias: 'Adv'
+    aliases: ['Adv', 'RB', 'ADV'],
+    not: [NN, Vb, Adj, Val],
   },
 
   Determiner: {
-    aliases: ['DT'],
-    not: [NN, V, JJ, RB, QuestionWord, Conj], //allow 'a' to be a Determiner/Value
-    alias: 'Det'
+    aliases: ['Det', 'DT', 'DET'],
+    not: [NN, Vb, Adj, Adv, QW, Conj], //allow 'a' to be a Determiner/Value
   },
   Connector: {
-    not: [NN, V, JJ, RB, QuestionWord, Det],
+    not: [NN, Vb, Adj, Adv, QW, Det],
   },
   Conjunction: {
-    aliases: ['CC'],
+    aliases: ['Conj', 'CC'],
     is: Connector,
-    not: anything.concat([IN]),
-    alias: 'Conj'
+    not: anything.concat([Prep]),
   },
   Preposition: {
-    aliases: ['IN'],
+    aliases: ['Prep', 'IN', 'ADP'],
     is: Connector,
-    not: [NN, V, JJ, RB, QuestionWord, Det, Conj],
-    alias: 'Prep'
+    not: [NN, Vb, Adj, Adv, QW, Det, Conj],
   },
   QuestionWord: {
-    aliases: ['QW'],
+    aliases: [null, 'QW'],
     not: [Det],
   },
   Currency: {
     is: NN,
   },
   Expression: {
-    not: [NN, JJ, V, RB],
-    alias: 'Expr'
+    aliases: ['Expr'],
+    not: [NN, Adj, Vb, Adv],
   },
   Abbreviation: {
-    alias: 'Abbr'
+    aliases: ['Abbr'],
   },
   Url: {
-    not: [HashTag, V, JJ, Value, SlashedTerm, Email, PhoneNumber, AtMention, Emoji, Emoticon],
+    aliases: [null, 'URL'],
+    not: [HashTag, Vb, Adj, Val, SlashedTerm, Email, PhoneNumber, AtMention, Emoji, Emoticon],
   },
   PhoneNumber: {
-    not: [HashTag, V, JJ, Value, AtMention, Emoji, Emoticon],
+    not: [HashTag, Vb, Adj, Val, AtMention, Emoji, Emoticon],
   },
   HashTag: {},
   AtMention: {
@@ -79,35 +98,37 @@ export default {
     not: [HashTag, Emoji, Emoticon],
   },
   Emoji: {
-    not: [HashTag, V, JJ, Value, Emoticon],
+    not: [HashTag, Vb, Adj, Val, Emoticon],
   },
   Emoticon: {
-    not: [HashTag, V, JJ, Value, SlashedTerm],
+    not: [HashTag, Vb, Adj, Val, SlashedTerm],
   },
   SlashedTerm: {
-    not: [Emoticon, Url, Value]
+    not: [Emoticon, Url, Val]
   },
   Email: {
-    not: [HashTag, V, JJ, Value, PhoneNumber, AtMention, Emoji, Emoticon],
+    not: [HashTag, Vb, Adj, Val, PhoneNumber, AtMention, Emoji, Emoticon],
   },
   Acronym: {
-    not: [RomanNumeral, PRP, Date],
+    not: [RomanNumeral, Pron, Date],
   },
   Negative: {
-    aliases: ['Neg'],
-    not: [NN, JJ, Value, Expression],
+    aliases: [null, 'Neg'],
+    not: [NN, Adj, Val, Expr],
   },
   Condition: {
     is: Connector,
-    not: [V, JJ, NN, Value],
+    aliases: [null, 'Cond'],
+    not: [Vb, Adj, NN, Val],
   },
   // existential 'there'
   There: {
-    not: [V, JJ, NN, Value, Conj, IN],
+    aliases: [null, 'EX'],
+    not: [Vb, Adj, NN, Val, Conj, Prep],
   },
   // 'co-wrote'
   Prefix: {
-    not: [Abbreviation, Acronym, NNP],
+    not: [Abbr, Acronym, Prop],
   },
   // hard-nosed, bone-headed
   Hyphenated: {},

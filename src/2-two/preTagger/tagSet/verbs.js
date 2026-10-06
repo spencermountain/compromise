@@ -1,88 +1,82 @@
-import {
-  NN, JJ, RB, Value, Expression, V, VBD, Fut, Pres, VBG, Cop, VB, Conj, PhrasalVerb,
-} from './_lib.js'
+import { NN, Adj, Adv, Val, Expr, Vb, Past, Fut, Pres, Ger, Cop, Inf, Conj, Phrasal } from './_lib.js'
 
 export default {
   Verb: {
-    aliases: ['V'],
-    not: [NN, JJ, RB, Value, Expression],
-    alias: 'Vb'
+    aliases: ['Vb', 'V', 'VB'],
+    not: [NN, Adj, Adv, Val, Expr],
   },
   // 'he [walks]'
   PresentTense: {
-    is: V,
-    not: [VBD, Fut],
-    alias: 'Pres'
+    aliases: ['Pres'],
+    is: Vb,
+    not: [Past, Fut],
   },
   // 'will [walk]'
   Infinitive: {
-    aliases: ['VB'],
+    aliases: ['Inf'],
     is: Pres,
-    not: [VBG],
-    alias: 'Inf'
+    not: [Ger],
   },
   // '[walk] now!'
   Imperative: {
-    is: V,
-    not: [VBD, VBG, Cop],
-    alias: 'Imp'
+    aliases: ['Imp'],
+    is: Vb,
+    not: [Past, Ger, Cop],
   },
   // walking
   Gerund: {
-    aliases: ['VBG'],
+    aliases: ['Ger', 'VBG'],
     is: Pres,
     not: [Cop],
-    alias: 'Ger'
   },
   // walked
   PastTense: {
-    aliases: ['VBD'],
-    is: V,
-    not: [Pres, VBG, Fut],
-    alias: 'Past'
+    aliases: ['Past', 'VBD'],
+    is: Vb,
+    not: [Pres, Ger, Fut],
   },
   // will walk
   FutureTense: {
-    is: V,
-    not: [Pres, VBD],
-    alias: 'Fut'
+    aliases: ['Fut'],
+    is: Vb,
+    not: [Pres, Past],
   },
   // is/was
   Copula: {
-    aliases: ['Cop'],
-    is: V,
+    aliases: [null, 'Cop'],
+    is: Vb,
   },
   // '[could] walk'
   Modal: {
-    aliases: ['Mod', 'MD'],
-    is: V,
-    not: [VB],
+    aliases: [null, 'Mod', 'MD'],
+    is: Vb,
+    not: [Inf],
   },
   // 'awaken'
   Participle: {
-    aliases: ['Part', 'Prt', 'VBN'],
-    is: VBD,
+    aliases: [null, 'Part', 'VBN'],
+    is: Past,
   },
   // '[will have had] walked'
   Auxiliary: {
-    is: V,
-    not: [VBD, Pres, VBG, Conj],
-    alias: 'Aux'
+    aliases: ['Aux'],
+    is: Vb,
+    not: [Past, Pres, Ger, Conj],
   },
   // 'walk out'
   PhrasalVerb: {
-    aliases: ['PhrV'],
-    is: V,
-    alias: 'Phrasal'
+    aliases: ['Phrasal', 'PhrV'],
+    is: Vb,
   },
   // 'walk [out]'
   Particle: {
-    is: PhrasalVerb,
-    not: [VBD, Pres, Cop, VBG],
+    aliases: [null, 'RP'],
+    is: Phrasal,
+    not: [Past, Pres, Cop, Ger],
   },
   // 'walked by'
   Passive: {
-    aliases: ['Pass'],
-    is: V,
+    aliases: [null, 'Pass'],
+    is: Vb,
   },
 }

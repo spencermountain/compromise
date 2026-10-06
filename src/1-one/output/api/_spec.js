@@ -33,8 +33,10 @@ const makeAliases = function (tagSet) {
   const aliases = {}
   for (const tag in tagSet) {
     const entry = tagSet[tag]
-    if (entry.alias) {
-      aliases[tag] = entry.alias
+    // A leading null explicitly keeps the canonical name.
+    const preferred = entry.aliases === undefined ? entry.alias : entry.aliases[0]
+    if (preferred) {
+      aliases[tag] = preferred
     }
   }
   return aliases

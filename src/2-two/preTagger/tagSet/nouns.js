@@ -1,96 +1,115 @@
 import {
-  Person, Place, Organization, V, JJ, RB, Value, Det, NN, NNS, Uncountable, NNs, NNP, Date,
-  FirstName, FemaleName, LastName, MaleName, City, Country, PRP,
+  Pers,
+  Place,
+  Org,
+  Vb,
+  Adj,
+  Adv,
+  Val,
+  Det,
+  NN,
+  Plur,
+  Uncountable,
+  Sing,
+  Prop,
+  Date,
+  First,
+  FemaleName,
+  Last,
+  MaleName,
+  City,
+  Country,
+  Pron,
 } from './_lib.js'
 
-const entity = [Person, Place, Organization]
+const entity = [Pers, Place, Org]
 
 export default {
   Noun: {
-    aliases: ['NN'],
-    not: [V, JJ, RB, Value, Det],
+    aliases: [null, 'NN'],
+    not: [Vb, Adj, Adv, Val, Det],
   },
   Singular: {
-    aliases: ['Sing'],
+    aliases: [null, 'Sing'],
     is: NN,
-    not: [NNS, Uncountable],
+    not: [Plur, Uncountable],
   },
   // 'Canada'
   ProperNoun: {
-    aliases: ['NNP'],
+    aliases: ['Prop', 'NNP', 'PROPN'],
     is: NN,
-    alias: 'Prop'
   },
   Person: {
-    aliases: ['Pers'],
-    is: NNs,
-    also: [NNP],
-    not: [Place, Organization, Date],
+    aliases: [null, 'Pers'],
+    is: Sing,
+    also: [Prop],
+    not: [Place, Org, Date],
   },
   FirstName: {
-    aliases: ['First'],
-    is: Person,
+    aliases: [null, 'First'],
+    is: Pers,
   },
   MaleName: {
-    is: FirstName,
-    not: [FemaleName, LastName],
+    is: First,
+    not: [FemaleName, Last],
   },
   FemaleName: {
-    is: FirstName,
-    not: [MaleName, LastName],
+    is: First,
+    not: [MaleName, Last],
   },
   LastName: {
-    aliases: ['Last'],
-    is: Person,
-    not: [FirstName],
+    aliases: [null, 'Last'],
+    is: Pers,
+    not: [First],
   },
   // 'dr.'
   Honorific: {
-    is: Person,
-    not: [FirstName, LastName, Value],
-    alias: 'Hon'
+    aliases: ['Hon'],
+    is: Pers,
+    not: [First, Last, Val],
   },
   Place: {
-    is: NNs,
-    not: [Person, Organization],
+    is: Sing,
+    not: [Pers, Org],
   },
   Country: {
     is: Place,
-    also: [NNP],
+    also: [Prop],
     not: [City],
   },
   City: {
     is: Place,
-    also: [NNP],
+    also: [Prop],
     not: [Country],
   },
   // 'california'
   Region: {
     is: Place,
-    also: [NNP],
+    also: [Prop],
   },
   Address: {
+    aliases: ['Addr'],
     // is: 'Place',
-    alias: 'Addr'
   },
   Organization: {
-    is: NNP,
-    not: [Person, Place],
-    alias: 'Org'
+    aliases: ['Org'],
+    is: Prop,
+    not: [Pers, Place],
   },
   SportsTeam: {
-    is: Organization,
+    aliases: [null, 'Team'],
+    is: Org,
   },
   School: {
-    is: Organization,
+    is: Org,
   },
   Company: {
-    is: Organization,
+    is: Org,
   },
   Plural: {
-    aliases: ['Plur', 'NNS'],
+    aliases: [null, 'Plur', 'NNS'],
     is: NN,
-    not: [NNs, Uncountable],
+    not: [Sing, Uncountable],
   },
   // 'gravity'
   Uncountable: {
@@ -98,19 +117,19 @@ export default {
   },
   // 'it'
   Pronoun: {
-    aliases: ['Pron', 'PRP'],
+    aliases: [null, 'Pron', 'PRP', 'PRON'],
     is: NN,
     not: entity,
   },
   // 'swimmer'
   Actor: {
     is: NN,
-    not: [Place, Organization],
+    not: [Place, Org],
   },
   // walking
   Activity: {
     is: NN,
-    not: [Person, Place],
+    not: [Pers, Place],
   },
   // kilometres
   Unit: {
@@ -119,19 +138,19 @@ export default {
   },
   // canadian
   Demonym: {
-    aliases: ['Dem'],
+    aliases: [null, 'Dem'],
     is: NN,
-    also: [NNP],
+    also: [Prop],
     not: entity,
   },
   // [spencer's] hat
   Possessive: {
+    aliases: ['Poss'],
     is: NN,
-    alias: 'Poss'
   },
   // 'yourself'
   Reflexive: {
-    aliases: ['Refl'],
-    is: PRP,
+    aliases: [null, 'Refl'],
+    is: Pron,
   },
 }

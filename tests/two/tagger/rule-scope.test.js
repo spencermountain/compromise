@@ -1,5 +1,6 @@
 import test from 'tape'
 import assertSpec from '../_spec.js'
+const here = '[two/tagger/rule-scope]'
 
 const spec = `
 # Fractions leave the following preposition outside the number phrase.
@@ -176,10 +177,9 @@ some sort of problem {Det,Noun,Prep,Noun}
 a dog of some sort {Det,Noun,Prep,Det,Noun}
 the dog is walked {Det,Noun,Auxiliary,Past|Passive}
 the door is closed {Det,Noun,Copula,Adj}
-
 `
 
-test('rule scope', t => {
-  assertSpec(t, spec, '[two/rule-scope]')
+test(here, t => {
+  assertSpec(t, spec, here)
   t.end()
 })

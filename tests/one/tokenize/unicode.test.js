@@ -3,7 +3,6 @@ import nlp from '../_lib.js'
 const here = '[one/unicode] '
 
 test('many-unicode', function (t) {
-  // eslint-disable-next-line
   const str = `✐✠✰❀❐❞❰➀➐➠➰✁✑✡✱❁❑❡❱➁➑➡➱✂✒✢✲❂❒❢❲➂➒➢➲✃✓✣✳❃❓❣❳➃➓➣➳✄✔✤✴❄❔❤❴➄➔➤➴✅✕✥✵❅❕❥❵➅➕➥➵✆✖✦✶❆❖❦❶➆➖➦➶✇✗✧✷❇❗❧❷➇➗➧➷✈✘✨✸❈❘❨❸➈➘➨➸✉✙✩✹❉❙❩❹➉➙➩➹✊✚✪✺❊❚❪❺➊➚➪➺✋✛✫✻❋❛❫❻➋➛➫➻✌✜✬✼❌❜❬❼➌➜➬➼✍✝✭✽❍❝❭❽➍➝➭➽✎✞✮✾❎❞❮❾➎➞➮➾✏✟✯✿❏❜❯❿➏➟➯➿😀😐😠😰🙀😁😑😡😱🙁😂😒😢😲🙂😃😓😣😳🙃😄😔😤😴🙄😅😕😥😵🙅😆😖😦😶🙆😇😗😧😷🙇😈😘😨😸🙈😉😙😩😹🙉😊😚😪😺🙊😋😛😫😻🙋😌😜😬😼🙌😍😝😭😽🙍😎😞😮😾🙎😏😟😯😿🙏,&、*.+-;<:>?=!—\($)%{@}〔〕₠₰₡₱₢₲₣₳₤₴₥₵₦₶₧₷₸₩₹₪₺₫₻€₼₭₽₮₾₯₿` // eslint-dis
   const doc = nlp(str)
   t.equal(doc.text(), str, here + 'identical-text')
@@ -22,6 +21,7 @@ test('em-dashes', function (t) {
 // this section is very cursed
 test('zero-width-chars', function (t) {
   //this has a zero-width character
+  // eslint-disable-next-line no-irregular-whitespace -- Intentional tokenization fixture.
   const str = `before​ after`
   const doc = nlp(str)
   t.equal(doc.text(), str, here + 'zero-width passes-through')

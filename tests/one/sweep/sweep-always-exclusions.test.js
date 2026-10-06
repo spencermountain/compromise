@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../../src/three.js'
+import nlp from '../../three/_lib.js'
 
 test('unindexed sweep rules respect exclusions', t => {
   const patterns = ['.', '/^house$/', '#Noun?']

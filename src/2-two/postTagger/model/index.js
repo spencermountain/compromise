@@ -204,7 +204,7 @@ const rules = [
   // },
   // [professional] bodybuilder
   {
-    m: `[(%Adj|Noun% && !#Timezone)] #NN`,
+    m: `[(%Adj|Noun% && !#Timezone && !#Value)] #NN`,
     n: '(#Pron|#Prop)',
     g: 0,
     t: 'Adj',
@@ -254,7 +254,7 @@ const rules = [
     r: 'charge-back',
   },
   // the [well]
-  { m: '#Det [well] !#Past?', g: 0, t: 'NN', r: 'well' },
+  { m: '#Det [well] !#Past?', g: 0, t: 'NN', n: 'well made', r: 'well' },
   // sees [well]
   { m: '(#Pres && !#Cop) [well]', g: 0, t: 'Adv', r: 'sees-well' },
 
@@ -298,10 +298,6 @@ const rules = [
   { m: '(#WeekDay|#Month) #Value', t: 'Date', r: 'date-value' },
   // 7 june
   { m: '#Value (#WeekDay|#Month)', t: 'Date', r: 'value-date' },
-  // aug 20-21
-  { m: `#Month #NumRange`, t: 'Date', r: 'aug-20-21' },
-  // Wednesday June 5th
-  { m: `#WeekDay #Month #Ord`, t: 'Date', r: 'weekday-date' },
   // aug 5th 2021
   { m: `#Month #Ord #Card`, t: 'Date', r: 'month-day-year' },
 
@@ -721,7 +717,7 @@ const rules = [
   { m: '#Det [(#PhrV && !#Past) #Particle]', g: 0, t: 'NN', r: 'break-up' },
   // the [individual] goals
   {
-    m: '#Det [%Adj|Noun%] #NN',
+    m: '#Det [(%Adj|Noun% && !#Value)] #NN',
     g: 0,
     t: 'Adj',
     n: '(#Pron|#Poss|#Prop)',
@@ -886,10 +882,6 @@ const rules = [
   { m: '#Unit an hour', t: 'Unit', r: 'unit-an-hour' },
 
   // ==== Magnitudes ====
-  // minus 7
-  { m: '(minus|negative) #Value', t: 'Value', r: 'minus-value' },
-  // seven point five
-  { m: '#Value (point|decimal) #Value', t: 'Value', r: 'decimal-point' },
   // thousand and two
   { m: `#Multiple+ and #Value`, t: 'Value', r: 'mag-and-value' },
   // 5 miles [per hour]
@@ -932,8 +924,6 @@ const rules = [
   { m: '#Pers (jr|sr|md)', t: 'Pers', r: 'person-hon' },
   // Dr. J.
   { m: '#Hon #Acronym', t: 'Pers', r: 'hon-init' },
-  // John Smith III
-  { m: '#Pers #Pers the? #RomanNumeral', t: 'Pers', r: 'roman-numeral' },
   // John [b]
   { m: '#First [/^[bdefghjlmnopqstvwxyz]$/]', g: 0, t: ['Acronym', 'Pers'], r: 'john-e' },
   // Ludwig van Beethoven
@@ -1028,7 +1018,7 @@ const rules = [
   // [first lady] michelle obama
   { m: '[first lady] #Pers', g: 0, t: 'Hon', r: 'first-lady' },
   // Louis IV
-  { m: '#Pers #RomanNumeral', t: 'Pers', r: 'louis-iv' },
+  { m: '#Pers the? #RomanNumeral', t: 'Pers', r: 'louis-iv' },
 
   // === person/ambig-name.js ===
   // const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
@@ -1083,8 +1073,6 @@ const rules = [
     t: 'Adv',
     r: 'sometimes-adv',
   },
-  // i [better] go
-  { m: '(#Pron|#Pers) (had|#Adv)? [better] #Pres', g: 0, t: 'Mod', r: 'i-better' },
   // adj -> gerund
   // i [like]
   { m: '(#Mod|i|they|we|do) not? [like]', g: 0, t: 'Pres', r: 'modal-like' },
@@ -1145,8 +1133,6 @@ const rules = [
     t: 'Aux VBN',
     r: 'been-broken',
   },
-  // had [been smoked]
-  { m: `(had|has|have) [been (#Past && /ed$/)]`, g: 0, t: 'Aux Past', r: 'been-smoked' },
   // had [been] eaten
   { m: `(had|has) #Adv? [been] #Adv? #Past`, g: 0, t: 'Aux', r: 'had-been-adj' },
   // had to [Google] the answer
@@ -1305,13 +1291,12 @@ const rules = [
     t: 'Aux',
     r: 'would-have',
   },
-  // [has] walked
-  { m: `[(has|had)] (#Adv|not)+? #Past`, g: 0, t: 'Aux', r: 'had-walked' },
   // [will] walk
   {
     m: '[(do|does|did|will|have|had|has|got)] (not|#Adv)+? #V',
     g: 0,
     t: 'Aux',
+    n: '#Prop',
     r: 'have-had',
   },
   // [about to] go
@@ -1320,8 +1305,6 @@ const rules = [
   { m: `#Mod (#Adv|not)+? [be] (#Adv|not)+? #V`, g: 0, t: 'Aux', r: 'would-be' },
   // was [being] driven
   { m: '[(be|being|been)] #VBN', g: 0, t: 'Aux', r: 'being-driven' },
-  // [may] want
-  { m: '[may] #Adv? #Inf', g: 0, t: 'Aux', r: 'may-want' },
   // was [being] walked
   {
     m: '#Cop (#Adv|not)+? [(be|being|been)] #Adv+? #Past',
@@ -1361,8 +1344,6 @@ const rules = [
   { m: '[(being|having|getting)] #V', g: 0, t: 'Aux', r: 'being-born' },
   // [better] go
   { m: '[better] #Pres', g: 0, t: 'Mod', n: '(#Cop|#Ger)', r: 'better-go' },
-  // even better
-  { m: 'even better', t: 'Adv #Comp', r: 'even-better' },
 
   // === verbs/phrasal.js ===
 
@@ -1442,7 +1423,7 @@ const rules = [
   // [avoid] loud noises
   { m: '^[#Inf] #Adj #NN$', g: 0, t: 'Imp', r: 'loud-noises' },
   // [come] and have a drink
-  { m: '^[#Inf] (#Adj|#Adv)? and #Inf', g: 0, t: 'Imp', r: 'and-reserve' },
+  { m: '^[#Inf] (#Adj|#Adv)? (and|or) #Inf', g: 0, t: 'Imp', r: 'and-reserve' },
   // Keep isolated commands here: pre-tagging also runs on replacement words.
   { m: '^[go] please?$', g: 0, t: 'Imp', r: 'go-imp' },
   { m: '^[stop] please?$', g: 0, t: 'Imp', r: 'stop-imp' },
@@ -1497,8 +1478,6 @@ const rules = [
   { m: '^[#Inf] what .', g: 0, t: 'Imp', r: 'look-what' },
   // [go] to it
   { m: '^[#Inf] (to|for|into|toward|here|there)', g: 0, t: 'Imp', r: 'go-to' },
-  // [come] and have a drink
-  { m: '^[#Inf] (and|or) #Inf', g: 0, t: 'Imp', r: 'inf-and-inf' },
   // [maintain] eye contact
   { m: '^[#Inf] #Adj? #Sing #Sing', g: 0, t: 'Imp', r: 'eye-contact' },
   // don't forget to [clean]
@@ -1516,8 +1495,6 @@ const rules = [
   // === _misc.js ===
   // order matters
 
-  // u r cool
-  { m: 'u r', t: '#Pron #Cop', r: 'u-r' },
   // the captain [who]
   { m: '#NN [(who|whom)]', g: 0, t: 'Det', r: 'captain-who' },
   // who is [that]?
@@ -1901,7 +1878,7 @@ const multi = [
 
 const matches = expandRules(rules)
 
-console.log('  ', matches.length, 'matches first-pass')
+// console.log('  ', matches.length, 'matches first-pass')
 
 export default {
   two: {

@@ -1,5 +1,6 @@
 import test from 'tape'
-import nlp from '../../../src/two.js'
+import nlp from '../../two/_lib.js'
+// Compare the source matcher implementations directly; these are internal unit tests.
 import fromHere from '../../../src/1-one/match/methods/match/02-from-here.js'
 import { isFixed, fromFixed } from '../../../src/1-one/match/methods/match/_fixed.js'
 

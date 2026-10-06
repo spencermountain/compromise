@@ -92,16 +92,19 @@
     "test:types": "tsc --project tsconfig.json && tsc --project tsconfig.json --module Node16 --moduleResolution Node16",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "pnpm --filter \"./plugins/*\" run test",
-    "test:hmm": "tape \"./tests/**/*.hmm.js\" | tap-dancer",
+    "test:hmm": "tape \"./tests/hmm/**/*.hmm.js\" | tap-dancer",
     "testb:plugins": "pnpm --filter \"./plugins/*\" run testb",
     "build:plugins": "pnpm --filter \"./plugins/*\" run build",
     "debug:rules": "node scripts/debug/rules/index.js",
     "debug:word": "node scripts/debug/word/index.js",
     "debug:hooks": "node scripts/debug/hooks/index.js",
+    "debug:memory": "node --expose-gc scripts/debug/memory/index.js",
+    "debug:filesize": "node scripts/debug/filesize/index.js",
     "stress": "node scripts/test/stress.js",
     "bench": "node ./scripts/bench/index.js --no-save",
     "bench:write": "node ./scripts/bench/index.js",
-    "lint": "eslint src"
+    "lint": "eslint src && pnpm lint:tests",
+    "lint:tests": "eslint tests \"plugins/*/tests/**/*.js\""
   },
   "files": [
     "AGENTS.md",

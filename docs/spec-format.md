@@ -251,20 +251,31 @@ nlp.fromSpec(spec, { tags: 'ignore', failures: 'ignore' })
 | `failures: 'ignore'` | Skip validation and return all text with an empty `.failures` array. |
 | `failures: 'throw'` | Validate and throw on failure; otherwise return all text. |
 | `failures: 'retain'` | Validate and return only failing tagged lines plus tagless lines. |
+| `failures: 'log'` | Validate, pretty-print failures to `console.error`, and return all text without throwing. |
 
 With `tags: 'use'`, `.` and negative constraints add no tags, and tagless lines
 remain untagged. Validation checks the **resulting supplied tagging**, so
 `use + retain` normally returns an empty document. Contradictions such as
 `Noun|!Noun` can still fail. Invalid slot syntax and mismatched term counts always
-throw in `use` mode, because the supplied tags cannot be assigned reliably.
+throw in `use` mode, because the supplied tags cannot be assigned reliably, except
+with `failures: 'log'`: the invalid line is retained untagged and its failures are logged.
 
 ```js
 nlp.fromSpec('dog {Verb}', { tags: 'use' }) // dog is tagged Verb
 nlp.fromSpec('dog {Verb}', { failures: 'throw' }) // normal tagging fails validation
 nlp.fromSpec('dog {Verb}', { tags: 'use', failures: 'retain' }) // passes; omitted
+const doc = nlp.fromSpec(spec, { failures: 'log' }) // report failures and keep going
+doc.failures // structured diagnostics are still available
 ```
 
-`fromSpec()` is quiet by default; `verbose: true` logs validation results.
+Log mode prints only the expected spec line, with mismatched words and tag
+constraints highlighted in red. Correct tags within a piped slot keep their normal
+color. An implicit term highlights its visible contraction or number-range token.
+Extra words or tag slots are highlighted for length mismatches. Detailed diagnostics
+remain available in `.failures`. Passing and tagless lines are silent unless
+`verbose: true`; failures are never logged twice.
+
+`fromSpec()` is quiet by default; `verbose: true` logs validation results to `console.log`.
 `testSpec(spec)` delegates to `fromSpec(spec, { tags: 'ignore', failures: 'retain' })`,
 while retaining its legacy logging and `throwError` arguments. Both return a View,
 not an array; use `.failures` when only the diagnostics are needed.

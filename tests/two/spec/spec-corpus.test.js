@@ -1,6 +1,6 @@
 import test from 'tape'
 import assertSpec from '../_spec.js'
-const here = '[two/match-spec] '
+const here = '[two/match-spec]'
 
 // New, hand-written expectations in docs/spec-format.md syntax.
 // Keep these independent of tagger output: one slot per term, including contractions.
@@ -391,7 +391,7 @@ Your explanation surprised everyone. {Poss,Singular,Past,Noun}
 Everyone applauded enthusiastically. {Noun,Past,Adv}
 `
 
-test('match spec:', function (t) {
-  assertSpec(t, spec, here.trim())
+test(here, t => {
+  assertSpec(t, spec, here)
   t.end()
 })

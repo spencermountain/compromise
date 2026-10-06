@@ -1,9 +1,10 @@
 import { green, red, dim } from '../../API/_color.js'
 import specFailures from './_spec-failures.js'
+import logSpec from './_spec-log.js'
 import { parseLine, toMatchString, applyTags } from './_spec-lib.js'
 
 const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMode = 'ignore', verbose = false } = {}) {
-  if (!['ignore', 'use'].includes(tagMode) || !['ignore', 'throw', 'retain'].includes(failureMode)) {
+  if (!['ignore', 'use'].includes(tagMode) || !['ignore', 'throw', 'retain', 'log'].includes(failureMode)) {
     throw new Error('Invalid fromSpec options')
   }
   const aliases = this.world().model.one.tagAliases
@@ -21,12 +22,13 @@ const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMo
       const patterns = tags.map(slot => toMatchString([slot], aliases))
       const pattern = toMatchString(tags, aliases)
       // Assigning slots is unsafe when the shape or syntax is invalid.
-      if (tagMode === 'use' && (count !== tags.length || pattern === null)) {
+      const canApply = count === tags.length && pattern !== null
+      if (tagMode === 'use' && !canApply && failureMode !== 'log') {
         const invalid = specFailures(doc, tags, patterns, aliases)
         throw new Error(`${text.trim()} - ${invalid.map(failure => failure.message).join('; ')}`)
       }
       if (tagMode === 'use') {
-        applyTags(doc, tags, aliases)
+        applyTags(doc, canApply ? tags : null, aliases)
       }
       if (failureMode !== 'ignore' && (count !== tags.length || pattern === null || !doc.has(pattern))) {
         failures = specFailures(doc, tags, patterns, aliases)
@@ -37,7 +39,9 @@ const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMo
       applyTags(doc, null, aliases)
     }
     const detail = failures.map(failure => failure.message).join('; ')
-    if (verbose) {
+    if (failureMode === 'log' && failures.length > 0) {
+      console.error(logSpec(doc, tags, failures, aliases)) //eslint-disable-line no-console
+    } else if (verbose) {
       const block = tags === null ? '' : ` {${tags.map(slot => slot.join('|')).join(',')}}`
       if (failures.length > 0) {
         console.log(`${red('✗')} ${text}${dim(block)} - ${red(detail)}`) //eslint-disable-line no-console

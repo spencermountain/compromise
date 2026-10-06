@@ -117,11 +117,11 @@ test('contract multiple matches', function (t) {
     ['they were not here', `they weren't here`],
   ]
   arr.forEach(a => {
-    const doc = nlp(a[0])
-    doc.contract()
-    t.equal(doc.text(), a[1], here + a[0])
-    doc.contractions().expand()
-    t.equal(doc.text(), a[0], here + 'expand ' + a[0])
+    const example = nlp(a[0])
+    example.contract()
+    t.equal(example.text(), a[1], here + a[0])
+    example.contractions().expand()
+    t.equal(example.text(), a[0], here + 'expand ' + a[0])
   })
   t.end()
 })

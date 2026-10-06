@@ -3,6 +3,15 @@ import nlp from '../_lib.js'
 const here = '[two/addWords] '
 
 test('persistent-lexicon-change', function (t) {
+  // Keep persistent changes inside this test, independent of suite order.
+  const model = nlp.world().model.one
+  const { lexicon, _multiCache } = model
+  model.lexicon = { ...lexicon }
+  model._multiCache = { ..._multiCache }
+  t.teardown(() => {
+    model.lexicon = lexicon
+    model._multiCache = _multiCache
+  })
   let doc = nlp('he is marko')
   t.equal(doc.match('#Place+').length, 0, here + 'default-no-place')
   t.equal(doc.match('#Person+').length, 1, here + 'default-one-person')

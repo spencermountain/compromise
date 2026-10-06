@@ -1,115 +1,72 @@
 import test from 'tape'
 import assertSpec from '../_spec.js'
-const here = '[two/grammar-spec] '
+const here = '[two/spec/grammar-spec]'
 
-test('grammar-spec verb tenses + auxiliaries', function (t) {
-  const arr = [
-    'she walked home. {Noun,Vb|Past,Noun}',
-    'she walks quickly. {Noun,Vb|Pres,Adv}',
-    'she has walked home. {Noun,Vb|Aux,Vb|Past,Noun}',
-    'she will walk home. {Noun,Vb|Aux,Vb|Inf,Noun}',
-    'she is walking home. {Noun,Vb|Aux,Vb|Ger,Noun}',
-    'she could swim faster. {Noun,Vb|Modal,Vb|Inf,Adj|Comparative}',
-  ]
-  assertSpec(t, arr, here + 'tenses + auxiliaries')
-  t.end()
-})
+const spec = `
+# grammar-spec verb tenses + auxiliaries
+she walked home. {Noun,Vb|Past,Noun}
+she walks quickly. {Noun,Vb|Pres,Adv}
+she has walked home. {Noun,Vb|Aux,Vb|Past,Noun}
+she will walk home. {Noun,Vb|Aux,Vb|Inf,Noun}
+she is walking home. {Noun,Vb|Aux,Vb|Ger,Noun}
+she could swim faster. {Noun,Vb|Modal,Vb|Inf,Adj|Comparative}
 
-test('grammar-spec copulas + adjectives', function (t) {
-  const arr = [
-    'the sky is blue. {Det,Noun,Vb|Copula,Adj}',
-    'the biggest dog won. {Det,Adj|Superlative,Noun,Vb|Past}',
-    'she is taller than him. {Noun,Vb|Copula,Adj|Comparative,Prep,Noun|Pronoun}',
-    'running is fun. {Noun,Vb|Copula,Adj}',
-  ]
-  assertSpec(t, arr, here + 'copulas + adjectives')
-  t.end()
-})
+# grammar-spec copulas + adjectives
+the sky is blue. {Det,Noun,Vb|Copula,Adj}
+the biggest dog won. {Det,Adj|Superlative,Noun,Vb|Past}
+she is taller than him. {Noun,Vb|Copula,Adj|Comparative,Prep,Noun|Pronoun}
+running is fun. {Noun,Vb|Copula,Adj}
 
-test('grammar-spec negation + contractions', function (t) {
-  // contractions split into two terms - the implicit term is matchable too
-  const arr = [
-    'she did not walk. {Noun,Vb|Aux,Negative,Vb|Inf}',
-    `she didn't walk. {Noun|Pronoun,Vb|Aux,Negative,Vb|Inf}`,
-    'he cannot swim. {Noun|Pronoun,Vb,Negative,Vb|Inf}',
-    `The dog don't bark. {Det,Noun,Vb,Negative,Vb}`,
-  ]
-  assertSpec(t, arr, here + 'negation + contractions')
-  t.end()
-})
+# grammar-spec negation + contractions
+# contractions split into two terms - the implicit term is matchable too
+she did not walk. {Noun,Vb|Aux,Negative,Vb|Inf}
+she didn't walk. {Noun|Pronoun,Vb|Aux,Negative,Vb|Inf}
+he cannot swim. {Noun|Pronoun,Vb,Negative,Vb|Inf}
+The dog don't bark. {Det,Noun,Vb,Negative,Vb}
 
-test('grammar-spec questions', function (t) {
-  const arr = [
-    'where did she go? {QuestionWord,Vb,Noun|Pronoun,Vb}',
-    'who is that? {QuestionWord,Vb|Copula,Noun|Pronoun}',
-    'is he going? {Vb|Copula,Noun|Pronoun,Vb|Ger}',
-  ]
-  assertSpec(t, arr, here + 'questions')
-  t.end()
-})
+# grammar-spec questions
+where did she go? {QuestionWord,Vb,Noun|Pronoun,Vb}
+who is that? {QuestionWord,Vb|Copula,Noun|Pronoun}
+is he going? {Vb|Copula,Noun|Pronoun,Vb|Ger}
 
-test('grammar-spec imperatives', function (t) {
-  const arr = [
-    'please close the door. {Expr,Vb|Imp,Det,Noun}',
-    'record the record. {Vb|Imp,Det,Noun}',
-    'go home! {Vb|Imp,Noun}',
-  ]
-  assertSpec(t, arr, here + 'imperatives')
-  t.end()
-})
+# grammar-spec imperatives
+please close the door. {Expr,Vb|Imp,Det,Noun}
+record the record. {Vb|Imp,Det,Noun}
+go home! {Vb|Imp,Noun}
 
-test('grammar-spec noun inflection', function (t) {
-  const arr = [
-    'the dogs barked. {Det,Noun|Plural,Vb|Past}',
-    `the dog's tail wagged. {Det,Noun|Poss,Noun,Vb|Past}`,
-    `spencer's house is nice. {Noun|Poss,Noun,Vb|Copula,Adj}`,
-    'he gave her the book. {Noun|Pronoun,Vb|Past,Noun|Pronoun,Det,Noun}',
-  ]
-  assertSpec(t, arr, here + 'plurals, possessives, pronouns')
-  t.end()
-})
+# grammar-spec noun inflection
+the dogs barked. {Det,Noun|Plural,Vb|Past}
+the dog's tail wagged. {Det,Noun|Poss,Noun,Vb|Past}
+spencer's house is nice. {Noun|Poss,Noun,Vb|Copula,Adj}
+he gave her the book. {Noun|Pronoun,Vb|Past,Noun|Pronoun,Det,Noun}
 
-test('grammar-spec proper nouns', function (t) {
-  const arr = [
-    'Dr. Smith arrived in Toronto. {Noun|Hon,Noun|Prop,Vb|Past,Prep,Noun|Prop}',
-    'Google hired spencer in May. {Noun|Org,Vb|Past,Noun,Prep,Date}',
-    'the FBI met NASA. {Det,Noun|Acronym,Vb|Past,Noun|Acronym}',
-  ]
-  assertSpec(t, arr, here + 'honorifics, orgs, acronyms')
-  t.end()
-})
+# grammar-spec proper nouns
+Dr. Smith arrived in Toronto. {Noun|Hon,Noun|Prop,Vb|Past,Prep,Noun|Prop}
+Google hired spencer in May. {Noun|Org,Vb|Past,Noun,Prep,Date}
+the FBI met NASA. {Det,Noun|Acronym,Vb|Past,Noun|Acronym}
 
-test('grammar-spec phrases + clauses', function (t) {
-  const arr = [
-    'she gave up quickly. {Noun,Vb|Phrasal,Vb|Particle,Adv}',
-    'she walked to the store. {Noun,Vb,Prep,Det,Noun}',
-    'give it to her. {Vb,Noun|Pronoun,Prep,Noun|Pronoun}',
-    'the book on the table is mine. {Det,Noun,Prep,Det,Noun,Vb|Copula,Noun}',
-    'there are many options. {There,Vb|Pres,Adj,Noun|Plural}',
-    'unless it rains, we go. {Condition,Noun|Pronoun,Vb,Noun|Pronoun,Vb}',
-    'the cake was eaten by the dog. {Det,Noun,Vb|Copula,Vb|Participle,Prep,Det,Noun}',
-  ]
-  assertSpec(t, arr, here + 'phrasal verbs, preposition-phrases, there, conditions, passives')
-  t.end()
-})
+# grammar-spec phrases + clauses
+she gave up quickly. {Noun,Vb|Phrasal,Vb|Particle,Adv}
+she walked to the store. {Noun,Vb,Prep,Det,Noun}
+give it to her. {Vb,Noun|Pronoun,Prep,Noun|Pronoun}
+the book on the table is mine. {Det,Noun,Prep,Det,Noun,Vb|Copula,Noun}
+there are many options. {There,Vb|Pres,Adj,Noun|Plural}
+unless it rains, we go. {Condition,Noun|Pronoun,Vb,Noun|Pronoun,Vb}
+the cake was eaten by the dog. {Det,Noun,Vb|Copula,Vb|Participle,Prep,Det,Noun}
 
-test('grammar-spec values + dates', function (t) {
-  const arr = [
-    'i bought two tickets for $50 on friday. {Noun|Pronoun,Vb|Past,Val,Noun|Plural,Prep,Val,Prep,Date}',
-    'the meeting is at 5pm on june 5th. {Det,Noun,Vb,Prep,Date,Prep,Date,Date}',
-  ]
-  assertSpec(t, arr, here + 'values + dates')
-  t.end()
-})
+# grammar-spec values + dates
+i bought two tickets for $50 on friday. {Noun|Pronoun,Vb|Past,Val,Noun|Plural,Prep,Val,Prep,Date}
+the meeting is at 5pm on june 5th. {Det,Noun,Vb,Prep,Date,Prep,Date,Date}
 
-test('grammar-spec noun-verb ambiguity', function (t) {
-  // same word, both jobs - the tagger disambiguates from context
-  const arr = [
-    'she saw a saw. {Noun,Vb|Past,Det,Noun}',
-    'i run a run club. {Noun,Vb,Det,Noun,Noun}',
-    'fruit flies like a banana. {Noun,Noun,Vb,Det,Noun}',
-    'if it rains, we will stay home. {Conj|Condition,Noun,Vb,Noun,Vb,Vb,Noun}',
-  ]
-  assertSpec(t, arr, here + 'noun-verb disambiguation')
+# grammar-spec noun-verb ambiguity
+# same word, both jobs - the tagger disambiguates from context
+she saw a saw. {Noun,Vb|Past,Det,Noun}
+i run a run club. {Noun,Vb,Det,Noun,Noun}
+fruit flies like a banana. {Noun,Noun,Vb,Det,Noun}
+if it rains, we will stay home. {Conj|Condition,Noun,Vb,Noun,Vb,Vb,Noun}
+`
+
+test(here, t => {
+  assertSpec(t, spec, here)
   t.end()
 })

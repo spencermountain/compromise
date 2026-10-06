@@ -5,6 +5,7 @@ import path from 'node:path'
 import { performance } from 'node:perf_hooks'
 import { fileURLToPath } from 'node:url'
 import nlp from '../../src/three.js'
+import metadata from './_lib.js'
 
 // Keep this input local and fixed so scores remain comparable between runs.
 const SENTENCES = [
@@ -291,13 +292,18 @@ const main = () => {
   console.log(dim('running benchmark…'))
 
   const measurement = benchmarkSuite(tests)
+  console.log(dim('measuring memory and building file sizes…'))
   const result = {
-    timestamp: new Date().toISOString(),
+    ...metadata(),
     libraryVersion: nlp.version,
     score: Number(measurement.score.toFixed(4)),
   }
 
   console.log(`\n${bold(result.score.toFixed(2))} ${dim('runs/sec')}`)
+  console.log(dim(`${result.timestamp} · ${result.commit}`))
+  console.log(`Memory: init ${result.memoryKB.init} kB · freshPrince ${result.memoryKB.freshPrince} kB`)
+  console.log(`Filesize (three): ${(result.filesizeBytes / 1024).toFixed(2)} KiB`)
+  console.log('desc: ""')
 
   if (!measurement.stable) {
     console.log(yellow('◆ system too busy — try again'))

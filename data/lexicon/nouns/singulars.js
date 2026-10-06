@@ -197,7 +197,6 @@ export default [
   'civil war',
 
   // -er
-  'number',
   'wafer',
   'glacier',
   'grenadier',

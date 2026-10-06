@@ -1,4 +1,34 @@
 const rules = {
+  well: [
+    // a [well] made table
+    '_ #Past -> #Adv',
+  ],
+  cool: [
+    // keep it [cool]
+    'it _ $ -> #Adj',
+  ],
+  long: [
+    '_ after$ -> #Adv',
+  ],
+  minus: [
+    // [minus] seven
+    '_ #Value -> #Value',
+  ],
+  negative: [
+    '_ #Value -> #Value',
+  ],
+  point: [
+    // seven [point] five
+    '#Value _ #Value -> #Value',
+  ],
+  decimal: [
+    '#Value _ #Value -> #Value',
+  ],
+  fine: [
+    // pay his [fine]; it works out [fine]
+    '#Poss _ $ -> #Singular',
+    '#PhrasalVerb _ $ -> #Adjective',
+  ],
   lieutenant: [
     // 1st [lieutenant]
     '(1st|2nd|3rd) _ -> #Hon',
@@ -56,6 +86,7 @@ const rules = {
     '(we|us) _ -> #NN',
   ],
   even: [
+    '#Det _ #NN -> #Adj',
     // barely [even] noticed
     '(barely|hardly) _ -> #Adv',
     // [even] held
@@ -94,8 +125,14 @@ const rules = {
     '#Conj _ -> #Pron',
     // [u] made me smile
     '_ #V -> #Pron',
+    '_ r -> #Pron',
+  ],
+  r: [
+    // u [r] cool
+    'u _ -> #Cop',
   ],
   half: [
+    '#Det _ #Unit -> #Value',
     // nearly [half]
     '#Adv _ -> #Frac',
     // [half] the
@@ -104,6 +141,7 @@ const rules = {
     '#Det _ #Ord -> #Value',
   ],
   second: [
+    '(half|quarter) _ -> #Unit | #Singular',
     // one [second]
     '#Card _ -> #Unit',
     // [second] dog
@@ -214,7 +252,7 @@ const rules = {
   ],
   right: [
     // [right] after
-    '_ (before|after|in|into|to|toward) -> #Adv',
+    '_ (before|after|in|into|to|toward|above|below|under|over) -> #Adv',
   ],
   there: [
     // always [there]
@@ -230,9 +268,10 @@ const rules = {
   ],
   wed: [
     // on [wed]
-    '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay',
+    '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay | #Singular',
   ],
   quarter: [
+    '#Det _ #Unit -> #Value',
     // a [half] second
     '#Det _ #Ord -> #Value',
   ],
@@ -252,9 +291,9 @@ const rules = {
   ],
   sat: [
     // on [sat]
-    '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay',
+    '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay | #Singular',
     // [sat] november
-    '^ _ #Date -> #WeekDay',
+    '^ _ #Date -> #WeekDay | #Singular',
   ],
   read: [
     // he [read]
@@ -312,6 +351,7 @@ const rules = {
     '#Cop _ -> #Ger',
   ],
   soon: [
+    '_ after$ -> #Adv',
     // the shop is closing [soon]
     'closing _ $ -> #Adv',
   ],
@@ -417,7 +457,7 @@ const compounds = {
   // [pay] attention
   'start|stop|ask|wear|pay|show|watch|act|fix|kill|turn|try|win': '^ _ #NN -> #Imp',
   // 5pm [central]
-  'eastern|mountain|pacific|central|est|pst|gmt': '#Time _ -> #Timezone',
+  'eastern|mountain|pacific|central|est|pst|gmt': '#Time _ -> #Timezone | #Singular',
   // [dance] music
   'dance|rock|rap|swing': '_ (music|class|lesson|night|party|festival|league|ceremony) -> #NN',
   // ten [bucks]

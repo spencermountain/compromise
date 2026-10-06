@@ -1,6 +1,6 @@
 import test from 'tape'
 import assertSpec from '../_spec.js'
-const here = '[two/prepositions-conjunctions-spec] '
+const here = '[two/prepositions-conjunctions-spec]'
 
 // Hand-written assessment cases in docs/spec-format.md syntax.
 // Expectations are independent of tagger output; do not regenerate from nlp().
@@ -209,7 +209,7 @@ Who did he run after? {QuestionWord,Vb,Noun,Vb,Prep}
 Which chair did she sit on? {QuestionWord,Noun,Vb,Noun,Vb,Prep}
 `
 
-test('prepositions and conjunctions spec:', function (t) {
-  assertSpec(t, spec, here.trim())
+test(here, t => {
+  assertSpec(t, spec, here)
   t.end()
 })

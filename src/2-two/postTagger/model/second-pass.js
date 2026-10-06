@@ -31,7 +31,11 @@ const rules = [
     // [before] she left
     // [after] she left
     // [since] she left...
-    { m: `[${word}] ${subject} ${predicate}`, g: 0, t: 'Conj', r: `${word}-clause` },
+    {
+      m: `[${word}] ${subject} ${predicate}`, g: 0, t: 'Conj',
+      n: `${word} (#NN && !#Pron && !#Prop && !#Actor) #Prop`,
+      r: `${word}-clause`,
+    },
     // [Before] the guests from the village arrived, we ate.
     // [After] the guests from the village arrived, we ate.
     // [Since] the guests from the village arrived, we ate. ...

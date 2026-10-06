@@ -52,7 +52,6 @@ export default [
   'holy hell',
   'holy moly',
   'holy smokes',
-  'holy',
   'hooray',
   'hooyah',
   'huh',

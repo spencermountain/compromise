@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../../src/two.js'
+import nlp from '../../two/_lib.js'
 
 test('sweep checks required sentence boundaries before matching', t => {
   const world = nlp.world()

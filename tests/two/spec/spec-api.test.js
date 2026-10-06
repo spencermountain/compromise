@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import assertSpec from '../_spec.js'
 const here = '[two/spec] '
 
 // behavioural tests for out('spec') / fromSpec / testSpec.
@@ -271,3 +272,232 @@ Tony Hawk rides {Person|FirstName,Person|LastName,Pres} #has both tags`
   t.equal(mixed.length, 2, here + 'untagged sentence and failing tagged sentence retained')
   t.end()
 })
+
+test('fromSpec ignores or uses supplied tags', t => {
+  const normal = nlp.fromSpec('dog {Verb}')
+  t.ok(normal.has('#Noun'), 'default uses normal tagging')
+  t.deepEqual(normal.failures, [], 'default skips validation')
+  const supplied = nlp.fromSpec('dog {Past}', { tags: 'use' })
+  t.ok(supplied.has('#PastTense'), 'alias applied')
+  t.ok(supplied.has('#Verb'), 'parent tag inherited')
+  t.notOk(supplied.has('#Noun'), 'normal tagger did not run')
+  const partial = nlp.fromSpec('dog slept {.,Vb|Past}', { tags: 'use' })
+  t.equal(partial.docs[0][0].tags.size, 0, 'wildcard adds no tags')
+  t.ok(partial.match('slept').has('#PastTense'), 'multiple tags applied')
+  t.equal(nlp.fromSpec('dog', { tags: 'use' }).docs[0][0].tags.size, 0, 'tagless text stays untagged')
+  t.throws(() => nlp.fromSpec('dog slept {Vb}', { tags: 'use' }), /expected 1 terms, got 2/, 'cannot assign a misaligned spec')
+  t.throws(() => nlp.fromSpec('dog {Vb?}', { tags: 'use' }), /invalid slot/, 'cannot assign invalid syntax')
+  t.end()
+})
+
+test('fromSpec failure modes and testSpec agree', t => {
+  const spec = 'dog {Noun}\nslept {Adj}\nplain text'
+  const retained = nlp.fromSpec(spec, { failures: 'retain' })
+  t.equal(retained.failures.length, 1, 'retain reports mismatch')
+  t.notOk(retained.has('dog'), 'passing line omitted')
+  t.ok(retained.has('slept'), 'failing line retained')
+  t.ok(retained.has('plain text'), 'tagless line retained')
+  t.deepEqual(retained.failures, nlp.testSpec(spec, false).failures, 'wrapper shares diagnostics')
+  t.equal(retained.text(), nlp.testSpec(spec, false).text(), 'wrapper shares returned text')
+  t.throws(() => nlp.fromSpec(spec, { failures: 'throw' }), /missing #Adj/, 'throw validates')
+  t.ok(nlp.fromSpec('dog {Noun}', { failures: 'throw' }).has('dog'), 'throw retains successful text')
+  t.ok(nlp.fromSpec(spec).has('dog'), 'ignore keeps successful text')
+  t.ok(nlp.fromSpec(spec).has('slept'), 'ignore keeps mismatching text')
+  t.end()
+})
+
+test('using supplied tags validates the resulting document', t => {
+  const used = nlp.fromSpec('dog {Verb}', { tags: 'use', failures: 'retain' })
+  t.deepEqual(used.failures, [], 'supplied tags satisfy validation')
+  t.equal(used.found, false, 'passing constructed line omitted')
+  const negative = nlp.fromSpec('dog {!Noun}', { tags: 'use', failures: 'throw' })
+  t.equal(negative.docs[0][0].tags.size, 0, 'negative constraint adds no tag')
+  const contradictory = nlp.fromSpec('dog {Noun|!Noun}', { tags: 'use', failures: 'retain' })
+  t.equal(contradictory.failures.length, 1, 'contradiction fails')
+  t.ok(contradictory.has('#Noun'), 'retained View preserves assigned tags')
+  const contraction = nlp.fromSpec("she didn't walk {Noun,Vb,Negative,Vb}", { tags: 'use', failures: 'throw' })
+  t.equal(contraction.docs.flat().length, 4, 'contraction split once')
+  t.deepEqual(contraction.failures, [], 'constructed contraction validates')
+  t.end()
+})
+
+test('spec slots support negative tags and one-term wildcards', t => {
+  const passing = [
+    'slept {!Noun}',
+    'slept {!#Noun}',
+    'slept {!Adj}',
+    'slept {!#Adj}',
+    'slept {Vb|!Noun}',
+    'slept {#Vb|!#Noun}',
+    'slept {.}',
+    'slept {.|!Noun}',
+    'the cat slept {.,Noun,.}',
+    "she didn't walk {.,.,!Noun,.}",
+  ]
+  assertSpec(t, passing)
+  const failing = [
+    'slept {!Verb}',
+    'slept {!#Verb}',
+    'slept {!Vb}',
+    'slept {!#Vb}',
+    'slept {Vb|!Past}',
+    'slept {.|!Vb}',
+    'the cat slept {.,!Noun,.}',
+    'slept {.,.}',
+    'slept {.*}',
+    'slept {Vb?}',
+  ]
+  failing.forEach(spec => {
+    t.equal(nlp.testSpec(spec, false).found, true, spec)
+  })
+  t.throws(() => nlp.testSpec('slept {!Vb}', false, true), /slept/, 'negation respects throwError')
+  t.equal(nlp.testSpec('slept', false, true).text(), 'slept', 'tag block remains optional')
+  t.end()
+})
+
+test('spec assertions report one simple spec per failing sentence', t => {
+  const results = []
+  const capture = { equal: (actual, expected, message) => results.push({ actual, expected, message }) }
+  assertSpec(capture, 'the cat slept {.,!Noun,Adj}')
+  t.equal(results.length, 1, 'multiple mismatches produce one assertion')
+  t.equal(results[0].actual, true, 'failed assertion recorded')
+  t.equal(results[0].expected, false, 'assertion expects passing spec')
+  t.equal(results[0].message, 'the cat slept {Det,Noun,Vb}', 'failure message shows actual tagging in spec format')
+  t.end()
+})
+
+test('spec tag blocks require exactly one slot per term', t => {
+  const failures = [
+    'the cat slept {Det}',
+    'the cat slept {Noun}',
+    'the cat slept {Vb}',
+    'the cat slept {Det,Noun}',
+    'the cat slept {.,.,.,.}',
+    'the cat slept {}',
+    'the cat slept {Det,,Noun,Vb}',
+    'the cat slept {Det,Noun,}',
+    "she didn't walk {.,.,.}",
+    'well-known {Adj}',
+  ]
+  failures.forEach(spec => {
+    t.equal(nlp.testSpec(spec, false).found, true, spec)
+  })
+  const passes = [
+    'the cat slept {Det,Noun,Vb}',
+    'the cat slept {.,.,.}',
+    'the cat slept {.,Noun,!Noun}',
+    'the cat slept! {.,.,.} # punctuation has no slot',
+    "she didn't walk {.,.,.,.}",
+    'well-known {.,.}',
+  ]
+  passes.forEach(spec => {
+    t.equal(nlp.testSpec(spec, false).found, false, spec)
+  })
+  t.throws(() => nlp.testSpec('the cat slept {Noun}', false, true), /expected 1 terms, got 3/, 'short list reports count')
+  t.throws(() => nlp.testSpec('slept {.,.}', false, true), /expected 2 terms, got 1/, 'long list reports count')
+  t.equal(nlp.testSpec('the cat slept', false, true).text(), 'the cat slept', 'tagless text retained without validation')
+  t.equal(nlp.fromSpec('the cat slept {Noun}').text().trim(), 'the cat slept', 'fromSpec does not validate lengths')
+  t.end()
+})
+
+test('testSpec returns diagnostics alongside its View', t => {
+  const result = nlp.testSpec('# heading\n\nthe cat slept {.,!Noun,Adj}\nplain text\nslept {Vb}', false)
+  t.equal(result.failures.length, 2, 'all mismatching terms reported')
+  const [noun, verb] = result.failures
+  t.equal(noun.line, 3, 'source line counts blank lines and comments')
+  t.equal(noun.text, 'the cat slept', 'sentence text retained')
+  t.equal(noun.code, 'tags', 'tag mismatch code')
+  t.equal(noun.term, 2, 'one-based term position')
+  t.equal(noun.word, 'cat', 'term text')
+  t.deepEqual(noun.expected, ['!Noun'], 'original constraint')
+  t.ok(noun.actual.includes('Noun'), 'actual canonical tags')
+  t.ok(noun.message.includes('unexpected #Noun'), 'readable forbidden-tag message')
+  t.equal(verb.term, 3, 'second mismatch position')
+  t.ok(verb.message.includes('missing #Adj'), 'readable missing-tag message')
+  t.ok(result.has('cat'), 'View methods still work')
+  t.ok(result.has('plain text'), 'tagless text retained')
+  t.equal(nlp.testSpec('plain text', false).failures.length, 0, 'tagless lines are not errors')
+  t.deepEqual(nlp.testSpec('slept {Vb}', false).failures, [], 'passing spec has no errors')
+  t.deepEqual(nlp.testSpec('# comment\n', false).failures, [], 'comments have no errors')
+  t.end()
+})
+
+test('spec errors describe counts, syntax, and implicit terms', t => {
+  const short = nlp.testSpec('the cat slept {Det}', false).failures[0]
+  t.equal(short.code, 'length', 'length mismatch code')
+  t.equal(short.expected, 1, 'expected count')
+  t.equal(short.actual, 3, 'actual count')
+  const long = nlp.testSpec('slept {.,.}', false).failures[0]
+  t.equal(long.expected, 2, 'extra slot expected count')
+  t.equal(long.actual, 1, 'extra slot actual count')
+  const invalid = nlp.testSpec('slept {Vb?}', false).failures[0]
+  t.equal(invalid.code, 'syntax', 'invalid syntax code')
+  t.deepEqual(invalid.expected, ['Vb?'], 'invalid slot retained')
+  const implicit = nlp.testSpec("she didn't walk {.,.,Noun,.}", false).failures[0]
+  t.equal(implicit.word, 'not', 'implicit contraction text')
+  t.equal(implicit.term, 3, 'implicit term position')
+  const result = nlp.testSpec('slept {!Vb}', false)
+  const original = JSON.stringify(result.failures)
+  result.tag('Noun')
+  t.equal(JSON.stringify(result.failures), original, 'diagnostics remain a snapshot')
+  t.throws(() => nlp.testSpec('slept {!Vb}', false, true), /unexpected #Vb/, 'throw includes the same diagnostic')
+  t.end()
+})
+
+/* eslint-disable no-console */
+test('fromSpec log mode reports failures and retains all text', t => {
+  const errors = []
+  const logs = []
+  const originalError = console.error
+  const originalLog = console.log
+  let doc
+  let used
+  let invalid
+  try {
+    console.error = message => errors.push(message)
+    console.log = message => logs.push(message)
+    doc = nlp.fromSpec('# heading\n\nthe cat slept {.,!Noun,Adj}\nslept {.,.}\ndog {Noun}\nplain text', { failures: 'log' })
+    used = nlp.fromSpec('dog {Verb|!Verb}', { tags: 'use', failures: 'log', verbose: true })
+    invalid = nlp.fromSpec('dog slept {Vb}\ndog {Vb?}\ndog {Noun}', { tags: 'use', failures: 'log' })
+    nlp.fromSpec('# comment\ndog {Noun}\nplain text', { failures: 'log' })
+  } finally {
+    console.error = originalError
+    console.log = originalLog
+  }
+  const red = value => '\x1b[31m' + value + '\x1b[0m'
+  t.equal(errors.length, 5, here + 'one spec line per failing line')
+  t.equal(logs.length, 0, here + 'failures are not duplicated on console.log')
+  t.equal(errors[0], `the ${red('cat')} ${red('slept')} {.,${red('!Noun')},${red('Adj')}}`, here + 'only wrong words and constraints are red')
+  t.equal(errors[1], `slept {.,${red('.')}}`, here + 'extra slot is red')
+  t.equal(errors[2], `${red('dog')} {Verb|${red('!Verb')}}`, here + 'correct piped constraint keeps its color')
+  t.equal(errors[3], `${red('dog')} ${red('slept')} {${red('Vb')}}`, here + 'unmatched word is red')
+  t.equal(errors[4], `${red('dog')} {${red('Vb?')}}`, here + 'invalid syntax is red')
+  t.ok(doc.has('cat') && doc.has('dog') && doc.has('plain text'), here + 'failing, passing and tagless text retained')
+  t.equal(doc.failures.length, 3, here + 'structured failures retained')
+  t.ok(used.has('#Verb'), here + 'supplied tags preserved after validation failure')
+  t.equal(used.failures[0].code, 'tags', here + 'supplied contradiction reported')
+  t.equal(invalid.docs[0][0].tags.size, 0, here + 'misaligned line kept untagged')
+  t.equal(invalid.docs[1][0].tags.size, 0, here + 'invalid syntax kept untagged')
+  t.ok(invalid.eq(2).has('#Noun'), here + 'processing continues after invalid lines')
+  t.end()
+})
+test('spec log highlights preserve sentence text and implicit terms', t => {
+  const lines = []
+  const originalError = console.error
+  try {
+    console.error = line => lines.push(line)
+    nlp.fromSpec("she didn't walk {Pronoun,Aux,Noun,Inf}", { failures: 'log' })
+    nlp.fromSpec('the cat slept, and the cat slept. {Det,Adj,Vb,Conj,Det,Noun,Vb}', { failures: 'log' })
+    nlp.fromSpec('the  cat slept! {Det,Adj,Vb}', { failures: 'log' })
+    nlp.fromSpec('slept {}', { failures: 'log' })
+  } finally {
+    console.error = originalError
+  }
+  const red = value => '\x1b[31m' + value + '\x1b[0m'
+  t.equal(lines[0], `she ${red("didn't")} walk {Pronoun,Aux,${red('Noun')},Inf}`, here + 'implicit mismatch colors the contraction')
+  t.equal(lines[1], `the ${red('cat')} slept, and the cat slept. {Det,${red('Adj')},Vb,Conj,Det,Noun,Vb}`, here + 'only the mismatching occurrence is red')
+  t.equal(lines[2], `the  ${red('cat')} slept! {Det,${red('Adj')},Vb}`, here + 'spacing and punctuation preserved')
+  t.equal(lines[3], `${red('slept')} ${red('{}')}`, here + 'empty block mismatch is visible')
+  t.end()
+})
+/* eslint-enable no-console */

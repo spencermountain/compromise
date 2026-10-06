@@ -42,7 +42,7 @@ declare namespace nlp {
   export function typeahead(words: Lexicon): any
   export interface SpecOptions {
     tags?: 'ignore' | 'use'
-    failures?: 'ignore' | 'throw' | 'retain'
+    failures?: 'ignore' | 'throw' | 'retain' | 'log'
     verbose?: boolean
   }
   /** parse spec text, optionally applying tags or validating its constraints */

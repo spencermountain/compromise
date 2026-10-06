@@ -12,5 +12,5 @@ import nlp from './src/two.js'
 // const doc = nlp('dude we should').debug()
 // const doc = nlp('the poor eat rice').debug()
 
-nlp.verbose(true)
-const doc = nlp('chaser')
+// nlp.verbose(true)
+const doc = nlp.fromSpec('This is my favorite song. {Det,Vb,Noun,Adj,Noun}', { failures: 'log' })

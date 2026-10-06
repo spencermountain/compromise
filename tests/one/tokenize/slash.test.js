@@ -2,46 +2,31 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[one/slash] '
 
-test('slash whitespace', function (t) {
-  let str = 'left his / her backpack '
-  let doc = nlp(str)
-  t.equal(doc.out(), str, here + 'slash with normal spaces')
-
-  str = 'left   his/her  backpack '
-  doc = nlp(str)
-  t.equal(doc.out(), str, here + 'slash with no spaces')
-
-  str = 'left  his  /  her  backpack'
-  doc = nlp(str)
-  t.equal(doc.out(), str, here + 'slash with lots of spaces')
+test('slash whitespace', t => {
+  const cases = [
+    'left his / her backpack ',
+    'left   his/her  backpack ',
+    'left  his  /  her  backpack',
+  ]
+  cases.forEach(input => {
+    t.equal(nlp(input).out(), input, here + `preserves whitespace: ${input}`)
+  })
   t.end()
 })
 
-test('slash match', function (t) {
-  let str = 'left his / her backpack '
-  let doc = nlp(str)
-  t.equal(doc.has('his'), true, here + 'slash with normal spaces - his')
-  t.equal(doc.has('her'), true, here + 'slash with normal spaces - her')
-  // t.equal(doc.has('his / her'), true, 'slash with normal spaces - his / her')
-
-  str = 'left   his/her  backpack '
-  doc = nlp(str)
-  t.equal(doc.has('his'), true, here + 'slash with no spaces - his')
-  t.equal(doc.has('her'), true, here + 'slash with no spaces - her')
-  t.equal(doc.has('his/her'), true, here + 'slash with no spaces - his/her')
-
-  str = 'left  his  /  her  backpack'
-  doc = nlp(str)
-  t.equal(doc.has('his'), true, here + 'slash with lots of spaces')
-  t.equal(doc.has('her'), true, here + 'slash with lots of spaces')
-
-  str = 'left   his/her/their  backpack '
-  doc = nlp(str)
-  t.equal(doc.has('his'), true, here + 'three-slash - his')
-  t.equal(doc.has('her'), true, here + 'three-slash - her')
-  t.equal(doc.has('their'), true, here + 'three-slash - their')
-  t.equal(doc.has('his/her/their'), true, here + 'three-slash - his/her/their ')
-  // t.equal(doc.has('#SlashedTerm'), true, here + 'SlashedTerm tag')
-
+test('slash match', t => {
+  const cases = [
+    ['left his / her backpack ', ['his', 'her']],
+    ['left   his/her  backpack ', ['his', 'her', 'his/her']],
+    ['left  his  /  her  backpack', ['his', 'her']],
+    ['left   his/her/their  backpack ', ['his', 'her', 'their', 'his/her/their']],
+  ]
+  cases.forEach(([input, patterns]) => {
+    const doc = nlp(input)
+    patterns.forEach(pattern => {
+      t.equal(doc.has(pattern), true, here + `${input}: ${pattern}`)
+    })
+  })
+  // Pending: matching 'his / her' across split terms and the SlashedTerm tag.
   t.end()
 })

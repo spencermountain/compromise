@@ -11,7 +11,8 @@ const addChunk = function (term, tag) {
   }
 }
 
-const tagTerm = function (term, tag, tagSet, isSafe, validated) {
+// eslint-disable-next-line max-params
+const tagTerm = function (term, tag, tagSet, isSafe, validated, reason) {
   // does it already have this tag?
   if (term.tags.has(tag) === true) {
     return null
@@ -24,6 +25,7 @@ const tagTerm = function (term, tag, tagSet, isSafe, validated) {
   if (term.frozen === true) {
     isSafe = true
   }
+  const previous = debug.tags ? debug.before(term) : null
   // for known tags, do logical dependencies first
   const known = tagSet[tag]
   if (known) {
@@ -54,35 +56,22 @@ const tagTerm = function (term, tag, tagSet, isSafe, validated) {
   term.dirty = true
   // add a chunk too, if it's easy
   addChunk(term, tag)
+  if (previous) {
+    debug.log(term, previous, reason)
+  }
   return true
 }
 
 // support '#Noun . #Adjective' syntax
-const multiTag = function (terms, tagString, tagSet, isSafe) {
+const multiTag = function (terms, tagString, tagSet, isSafe, reason) {
   const tags = tagString.split(isMulti)
   terms.forEach((term, i) => {
     let tag = tags[i]
     if (tag) {
       tag = tag.replace(/^#/, '')
-      tagTerm(term, tag, tagSet, isSafe)
+      tagTerm(term, tag, tagSet, isSafe, undefined, reason)
     }
   })
-}
-
-// verbose-mode tagger debuging
-const log = (terms, tag, reason = '') => {
-  const yellow = str => '\x1b[33m\x1b[3m' + str + '\x1b[0m'
-  const i = str => '\x1b[3m' + str + '\x1b[0m'
-  const word = terms
-    .map(t => {
-      return t.text || '[' + t.implicit + ']'
-    })
-    .join(' ')
-  if (typeof tag !== 'string' && tag.length > 2) {
-    tag = tag.slice(0, 2).join(', #') + ' +' //truncate the list of tags
-  }
-  tag = typeof tag !== 'string' ? tag.join(', #') : tag
-  console.log(` ${yellow(word).padEnd(24)} \x1b[32m→\x1b[0m #${tag.padEnd(22)}  ${i(reason)}`) // eslint-disable-line
 }
 
 // add a tag to all these terms
@@ -93,12 +82,8 @@ const setTag = function (terms, tag, world = {}, isSafe, reason, validated) {
   if (!tag) {
     return
   }
-  // some logging for debugging
-  if (debug.tags) {
-    log(terms, tag, reason)
-  }
   if (Array.isArray(tag) === true) {
-    tag.forEach(tg => setTag(terms, tg, world, isSafe))
+    tag.forEach(tg => setTag(terms, tg, world, isSafe, reason))
     return
   }
   if (typeof tag !== 'string') {
@@ -108,13 +93,13 @@ const setTag = function (terms, tag, world = {}, isSafe, reason, validated) {
   tag = tag.trim()
   // support '#Noun . #Adjective' syntax
   if (isMulti.test(tag)) {
-    multiTag(terms, tag, tagSet, isSafe)
+    multiTag(terms, tag, tagSet, isSafe, reason)
     return
   }
   tag = tag.replace(/^#/, '')
   // let set = false
   for (let i = 0; i < terms.length; i += 1) {
-    tagTerm(terms[i], tag, tagSet, isSafe, validated)
+    tagTerm(terms[i], tag, tagSet, isSafe, validated, reason)
   }
 }
 export default setTag

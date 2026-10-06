@@ -97,3 +97,17 @@ export interface Net {
 }
 
 export type ParsedMatch = object[]
+
+export interface TaggerEvent {
+  text: string
+  normal?: string
+  index?: number[]
+  reason: string
+  added: string[]
+  removed: string[]
+}
+
+export interface VerboseOptions {
+  word?: string
+  emit?: (event: TaggerEvent) => void
+}

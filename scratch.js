@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import nlp from './src/two.js'
-nlp.verbose('tagger')
+nlp.verbose()
 // const book = fs.readFileSync(new URL('./scripts/bench/infinite-jest.txt', import.meta.url), 'utf8')
 
 // lexicon:        512ms

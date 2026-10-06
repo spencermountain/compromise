@@ -1,3 +1,4 @@
+import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
@@ -76,7 +77,7 @@ const isAcronym = function (terms, i, model) {
   }
   //non-period ones are harder
   if (isNoPeriodAcronym(term, model)) {
-    term.tags.clear()
+    unTag([term], '*', model.one.tagSet, '3-acronym')
     fastTag(term, ['Acronym', 'Noun'], '3-no-period-acronym')
     // ny, la
     if (places[term.normal] === true) {
@@ -91,7 +92,7 @@ const isAcronym = function (terms, i, model) {
   }
   // one-letter acronyms
   if (!Object.hasOwn(oneLetterWord, term.text) && oneLetterAcronym.test(term.text)) {
-    term.tags.clear()
+    unTag([term], '*', model.one.tagSet, '3-acronym')
     fastTag(term, ['Acronym', 'Noun'], '3-one-letter-acronym')
     return true
   }

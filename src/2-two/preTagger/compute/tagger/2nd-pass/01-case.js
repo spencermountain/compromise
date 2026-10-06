@@ -1,3 +1,4 @@
+import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 import fillTags from '../3rd-pass/_fillTags.js'
 
@@ -49,7 +50,7 @@ const checkCase = function (terms, i, model) {
     }
     fillTags(terms, i, model)
     if (!term.tags.has('Noun') && !term.frozen) {
-      term.tags.clear()
+      unTag([term], '*', model.one.tagSet, '2-titlecase')
     }
     fastTag(term, 'ProperNoun', '2-titlecase')
     return true

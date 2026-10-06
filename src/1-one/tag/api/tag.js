@@ -46,9 +46,9 @@ const fns = {
     }
     const tagSet = model.one.tagSet
     if (Array.isArray(input)) {
-      input.forEach(tag => methods.one.unTag(terms, tag, tagSet))
+      input.forEach(tag => methods.one.unTag(terms, tag, tagSet, reason))
     } else {
-      methods.one.unTag(terms, input, tagSet)
+      methods.one.unTag(terms, input, tagSet, reason)
     }
     // uncache
     this.uncache()

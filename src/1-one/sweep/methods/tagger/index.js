@@ -1,5 +1,4 @@
 import canBe from './canBe.js'
-import debug from '../../../../API/debug.js'
 
 const tagger = function (list, document, world) {
   const { model, methods } = world
@@ -7,10 +6,6 @@ const tagger = function (list, document, world) {
   const looksPlural = methods.two.looksPlural
   if (list.length === 0) {
     return list
-  }
-  // some logging for debugging
-  if (debug.tags) {
-    console.log(`\n\n  \x1b[32m→ ${list.length} post-tagger:\x1b[0m`) //eslint-disable-line
   }
   return list.map(todo => {
     if (!todo.tag && !todo.chunk && !todo.unTag) {
@@ -52,7 +47,7 @@ const tagger = function (list, document, world) {
       }
     }
     if (todo.unTag !== undefined) {
-      unTag(terms, todo.unTag, world, todo.safe, reason)
+      unTag(terms, todo.unTag, model.one.tagSet, reason)
     }
     // allow setting chunks, too
     if (todo.chunk) {

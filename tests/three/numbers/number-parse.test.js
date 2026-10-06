@@ -45,3 +45,18 @@ test('parse numbers', function (t) {
   })
   t.end()
 })
+
+test('parse dozen', function (t) {
+  const arr = [
+    ['a dozen', 12],
+    ['two dozen eggs', 24],
+    ['three dozen', 36],
+    ['i bought a dozen eggs', 12],
+    ['half a dozen eggs', 6],
+  ]
+  arr.forEach(function (a) {
+    const num = nlp(a[0]).numbers().get()[0]
+    t.equal(num, a[1], here + a[0])
+  })
+  t.end()
+})

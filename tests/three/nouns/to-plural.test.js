@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import isolateModel from '../../_lib/isolate-model.js'
 const here = '[three/noun-toPlural] '
 
 test('toPlural:', function (t) {
@@ -345,5 +346,21 @@ test('toPlural - longer:', function (t) {
     doc.nouns().toPlural()
     t.equal(doc.text(), a[1], here + '[toPlural] ' + a[0])
   })
+  t.end()
+})
+
+test(here + 'pluralization handles irregular endings through noun selections', t => {
+  isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
+  for (const [singular, plural] of [
+    ['mouse', 'mice'],
+    ['louse', 'lice'],
+    ['house', 'houses'],
+    ['slice', 'slices'],
+  ]) {
+    // Supply the noun reading explicitly to test inflection rather than ambiguity.
+    const doc = nlp('the ' + singular, { [singular]: 'Singular' })
+    doc.nouns().toPlural()
+    t.equal(doc.text(), 'the ' + plural, singular)
+  }
   t.end()
 })

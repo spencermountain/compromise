@@ -9,10 +9,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 #### 14.19.0 [Oct 2026]
 - **[change]** - proper end-to-end tag aliases support
 - **[change]** - filter verbose mode output by word
-- **[new]** - `"debug:word"` script
-- **[new]** - `"debug:hooks"` script
+- **[new]** - `"debug:word"`, `"debug:hooks"`, and  `"debug:filesize"` scripts
+- **[new]** - `money().add()` and other arithmetic methods
+- **[new]** - `percentages().toFraction()` and `fractions().toPercentage()` method
 - **[new]** - behaviour options to `fromSpec()` method
 - **[change]** - add term-length test to `.testSpec()`
+- **[change]** - more unicode punctuation normalization
 
 
 #### 14.18.0 [Oct 2026]

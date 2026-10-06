@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/isQuestion] '
 
-test('false-positives', function (t) {
+test('selects questions from mixed sentences', function (t) {
   const txt = `He is cool. Do you agree? I do.`
   let s = nlp(txt).sentences()
   t.equal(s.length, 3, here + 'sentences has questions')

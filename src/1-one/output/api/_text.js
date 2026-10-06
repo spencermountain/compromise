@@ -8,7 +8,7 @@ const trimEnd = str => {
 const trimStart =
   /^[(['"*~\uFF02\u201C\u2018\u201F\u201B\u201E\u2E42\u201A\u00AB\u2039\u2035\u2036\u2037\u301D\u0060\u301F]+/
 
-const punctToKill = /[,:;)('"\u201D\]]/
+const punctToKill = /[,:;)('"\uFF02\u201D\u2019\u00BB\u203A\u2032\u2033\u2034\u301E\u00B4\]]/
 const isHyphen = /^[-–—]$/
 const hasSpace = / /
 
@@ -18,6 +18,7 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
     let pre = t.pre || ''
     let post = t.post || ''
     if (opts.punctuation === 'some') {
+      pre = pre.replace(/[,،]/g, '')
       pre = pre.replace(trimStart, '')
       // replace a hyphen with a space
       if (isHyphen.test(post)) {
@@ -29,7 +30,7 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
       post = post.replace(/!+/, '!')
       post = post.replace(/\?+/, '?')
       // kill elipses
-      post = post.replace(/\.{2,}/, '')
+      post = post.replace(/[,،…]|\.{2,}/g, '')
       // kill abbreviation periods
       if (t.tags.has('Abbreviation')) {
         post = post.replace(/\./, '')

@@ -1,4 +1,5 @@
 import expandRules from './expand-rules.js'
+import hangingAdverbs from './hanging-adverbs.js'
 
 const noun = '(#NN && !#Poss && !@hasComma)'
 const modifiers = '(#Det|#Poss)? #Adv+? #Adj+?'
@@ -7,6 +8,7 @@ const predicate = '#Adv+? not? (#V && !#Ger && !#Particle)'
 const seatedQuestion = '^(which|what) #Adj+? #NN (did|does|do|#Mod) #Pron [sit] [on]$'
 
 const rules = [
+  ...hangingAdverbs,
   // === second-pass.js ===
   // Corrections matched against the main sweep's output, before any are applied.
   // Keep comma context, but don't turn unambiguous verbs into list items.

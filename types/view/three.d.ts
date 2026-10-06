@@ -1,4 +1,5 @@
 import type View from './two.d.ts'
+import type { JsonProps } from '../misc.d.ts'
 
 interface Three extends View {
   // Selections
@@ -65,7 +66,7 @@ interface Three extends View {
   /** return any percentages in the view */
   percentages: (n?: number, opts?: object) => Numbers
   /** return any money in the view */
-  money: (n?: number, opts?: object) => Numbers
+  money: (n?: number, opts?: object) => Money
   /** return any fractions in the view */
   fractions: (n?: number, opts?: object) => Fractions
 
@@ -123,8 +124,10 @@ export interface Numbers extends View {
   toCardinal: () => View
   /** convert number to `fifth` or `5th` */
   toOrdinal: () => View
+  /** convert a percentage to a fraction with denominator 100 */
+  toFraction: () => Fractions
   /** return numbers with this value */
-  isEqual: () => View
+  isEqual: (n?: number) => View
   /** return numbers bigger than n */
   greaterThan: (min: number) => View
   /** return numbers smaller than n */
@@ -143,6 +146,52 @@ export interface Numbers extends View {
   decrement: () => View
 }
 
+export interface MoneyValue {
+  currency: string
+  num: number
+}
+
+export interface MoneyJson {
+  money: MoneyValue
+  [key: string]: unknown
+}
+
+export interface Money extends Omit<Numbers, 'toOrdinal' | 'toCardinal' | 'toFraction'> {
+  parse: (n?: number) => MoneyValue[]
+  get: (n?: number) => number[]
+  json: (n?: number | JsonProps | string) => MoneyJson[]
+  values: (n?: number, opts?: object) => Numbers
+  units: () => View
+  isOrdinal: () => this
+  isCardinal: () => this
+  isUnit: (units: string | string[] | object) => this
+  clone: (shallow?: boolean) => this
+  filter: (fn: (m: this) => boolean) => this
+  numbers: (n?: number, opts?: object) => Numbers
+  currency: (n?: number) => string[]
+  set: (n: number | string) => this
+  add: (n: number | string) => this
+  subtract: (n: number) => this
+  increment: () => this
+  decrement: () => this
+  plus: (n: number | string) => this
+  minus: (n: number) => this
+  isEqual: (n?: number) => this
+  equals: (n: number) => this
+  greaterThan: (n: number) => this
+  lessThan: (n: number) => this
+  between: (min: number, max: number) => this
+  isBetween: (min: number, max: number) => this
+  toNumber: () => this
+  toText: () => this
+  toLocaleString: () => this
+  toNice: () => this
+  first: (n?: number) => this
+  last: (n?: number) => this
+  eq: (n: number) => this
+  slice: (start: number, end?: number) => this
+}
+
 export interface Fractions extends View {
   /** grab the parsed number */
   parse: (n?: number) => object[]
@@ -157,7 +206,11 @@ export interface Fractions extends View {
   /** convert '1/4th' to '1/4' */
   toCardinal: () => View
   /** convert '1/4' to `25%` */
-  toPercentage: () => View
+  toPercentage: (n?: number) => View
+  first: (n?: number) => this
+  last: (n?: number) => this
+  eq: (n: number) => this
+  slice: (start: number, end?: number) => this
 }
 
 // Sentences class

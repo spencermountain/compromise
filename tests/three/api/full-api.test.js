@@ -1,9 +1,11 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import isolateModel from '../../_lib/isolate-model.js'
 const here = '[three/full-api] '
 
 //run every method once, and check against runtime errors
 test('constructor api', function (t) {
+  isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
   const fns = {
     tokenize: () => { nlp.tokenize("you're sure you haven't just made thousands of mistakes?") },
     plugin: () => { nlp.plugin({ words: { bloobah: 'Yeah' } }) },
@@ -103,11 +105,5 @@ test('constructor api', function (t) {
       }
     }, k)
   })
-  t.end()
-})
-
-test('normalize fullwidth-ascii', function (t) {
-  const doc = nlp('Ｈｅｌｌｏ ２０２４').normalize({ unicode: true })
-  t.equal(doc.text(), 'Hello 2024', '[three/normalize] fullwidth ascii')
   t.end()
 })

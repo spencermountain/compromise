@@ -1,4 +1,27 @@
 const rules = {
+  here: [
+    // come [here], leave the bowls [here], is [here]
+    '(#Verb|#Noun) _ $ -> #Adv',
+    '#Verb _ (#Date|now) -> #Adv',
+  ],
+  too: [
+    '_ much -> #Adv',
+  ],
+  much: [
+    '_ #Adj -> #Adv',
+    '(too|bit) _ -> #Adj',
+  ],
+  bit: [
+    'a _ -> #Sing',
+    // a [bit] much
+    'a _ much -> #Adv',
+  ],
+  live: [
+    'long _ -> #Inf',
+  ],
+  rights: [
+    '_ of -> #NN',
+  ],
   under: [
     // looked [under] the bed
     '#V _ (#Det|#Poss|#Pron) -> #Prep',
@@ -20,6 +43,7 @@ const rules = {
   ],
   long: [
     '_ after$ -> #Adv',
+    '_ live -> #Adv',
   ],
   minus: [
     // [minus] seven
@@ -143,6 +167,7 @@ const rules = {
     'u _ -> #Cop',
   ],
   half: [
+    '^ _ $ -> #Frac',
     '#Det _ #Unit -> #Value',
     // nearly [half]
     '#Adv _ -> #Frac',
@@ -264,6 +289,7 @@ const rules = {
   right: [
     // [right] after
     '_ (before|after|in|into|to|toward|above|below|under|over) -> #Adv',
+    '_ of -> #NN',
   ],
   there: [
     // always [there]
@@ -412,6 +438,18 @@ const rules = {
     // [before] dinner
     '_ (#Det|#Poss|#NN|#Ger|#Date) -> #Prep',
   ],
+  below: [
+    // dropped [below] zero
+    '_ #Value -> #Prep',
+  ],
+  alongside: [
+    // runs [alongside] the river
+    '_ (#Det|#Poss|#Pron|#Prop) -> #Prep',
+  ],
+  behind: [
+    // fell [behind] the sofa, but fell behind
+    '#Past _ (#Det|#Poss|#Pron) -> #Prep',
+  ],
   do: [
     // [do] you swim?
     '^ _ (you|we|they) -> #QW',
@@ -446,13 +484,11 @@ const compounds = {
   'foot|feet': '#Value _ -> #Unit',
   // [damn] them
   'shit|damn': '^ _ them -> #Inf',
-  // [much] appreciated
   // [super] strong
-  'much|super|pretty': '_ #Adj -> #Adv',
-  // a [bit]
+  'super|pretty': '_ #Adj -> #Adv',
   // a [must]
   // a [while]
-  'bit|must|while': 'a _ -> #Sing',
+  'must|while': 'a _ -> #Sing',
   // 5 [k]
   // 5 [gb]
   'k|gb|pa|ft|m': '#Value _ -> #Unit',

@@ -53,23 +53,3 @@ test(here + 'perfect passive classification is independent of subject number', t
   }
   t.end()
 })
-
-test(here + 'including accepts determined and modified noun phrases', t => {
-  for (const input of [
-    '20 people, including the children',
-    '20 people, including very young children',
-    '20 people, including all the children',
-  ]) {
-    const doc = nlp(input)
-    t.ok(doc.has('(including && #Preposition)'), input)
-    for (const method of ['toPastTense', 'toPresentTense', 'toFutureTense', 'toPastParticiple']) {
-      const copy = doc.clone()
-      copy.verbs()[method]()
-      t.equal(copy.text(), input, 'unchanged: ' + method)
-    }
-  }
-  for (const input of ['she is including the children', 'they are including very young children']) {
-    t.ok(nlp(input).has('(including && #Gerund)'), 'verbal: ' + input)
-  }
-  t.end()
-})

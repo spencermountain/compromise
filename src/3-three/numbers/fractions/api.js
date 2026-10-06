@@ -76,13 +76,25 @@ const plugin = function (View) {
       return this
     }
     toPercentage(n) {
-      this.getNth(n).forEach(m => {
-        const { decimal } = parse(m)
-        let percent = decimal * 100
-        percent = Math.round(percent * 100) / 100 // round it
-        m.replaceWith(`${percent}%`)
+      return this.getNth(n).map(m => {
+        const obj = parse(m)
+        if (!obj || !Number.isFinite(obj.numerator) || !Number.isFinite(obj.denominator) || obj.denominator === 0) {
+          return m
+        }
+        const { numerator, denominator } = obj
+        let percent = numerator
+        // Hundredths already contain the exact percentage.
+        if (denominator !== 100) {
+          percent = numerator / denominator * 100
+          percent = Math.round(percent * 100) / 100
+        }
+        return m.replaceWith(`${percent}%`)
       })
-      return this
+    }
+    update(pointer) {
+      const m = new Fractions(this.document, pointer)
+      m._cache = this._cache
+      return m
     }
   }
 

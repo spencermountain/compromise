@@ -65,7 +65,6 @@ export default {
 
 
   // 
-  'come here': 'Imperative',
   'beware': 'Imperative',
   // 'go away': 'Imperative',
   // 'hurry up': 'Imperative',

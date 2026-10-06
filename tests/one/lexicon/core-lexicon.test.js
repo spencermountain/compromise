@@ -1,8 +1,10 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import isolateModel from '../../_lib/isolate-model.js'
 const here = '[one/lexicon] '
 
 test('addWords side-load:', function (t) {
+  isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
   let lex = {
     bigg: 'Size',
     'bigg apple': 'Town',
@@ -33,6 +35,7 @@ test('addWords side-load:', function (t) {
 })
 
 test('lexicon compute:', function (t) {
+  isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
   const words = {
     'captain obvious': 'Captain',
   }
@@ -43,6 +46,7 @@ test('lexicon compute:', function (t) {
 })
 
 test('tricky lexicon:', function (t) {
+  isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
   const lexicon = {
     'bed bath and beyond': 'Organization',
   }
@@ -62,6 +66,7 @@ test('tricky lexicon:', function (t) {
 })
 
 test('apostrophe lexicon:', function (t) {
+  isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
   const lex = {
     "queen anne's lace": 'Flower',
     "applebee's": 'Restaurant',
@@ -75,6 +80,7 @@ test('apostrophe lexicon:', function (t) {
 })
 
 test('hashtag lexicon:', function (t) {
+  isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
   const lex = {
     '#GoJetsGo': 'SportsTeam',
     '@NHLJets': 'SportsTeam',
@@ -91,6 +97,7 @@ test('hashtag lexicon:', function (t) {
 })
 
 test('long lexicon:', function (t) {
+  isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
   nlp.addWords({ 'new york yankees are cool and not bad': 'Long' })
   let doc = nlp('the new york yankees are cool and smart')
   t.equal(doc.has('#Long'), false, here + 'missed-long')

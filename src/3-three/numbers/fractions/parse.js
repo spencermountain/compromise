@@ -15,7 +15,7 @@ const mapping = {
 
 const slashForm = function (m) {
   const str = m.text('reduced')
-  const found = str.match(/^([-+]?[0-9]+)\/([-+]?[0-9]+)(st|nd|rd|th)?s?$/)
+  const found = str.match(/^([-+]?[0-9]+(?:\.[0-9]+)?)\/([-+]?[0-9]+)(st|nd|rd|th)?s?$/)
   if (found && found[1] && found[0]) {
     return {
       numerator: Number(found[1]),
@@ -142,7 +142,7 @@ const parseFraction = function (m) {
   const res = named(m) || slashForm(m) || nOutOfN(m) || compoundOrdinal(m) || nOrinalth(m) || oneNth(m) || null
   if (res !== null) {
     // do the math
-    if (res.numerator && res.denominator) {
+    if (res.denominator !== 0) {
       res.decimal = res.numerator / res.denominator
       res.decimal = round(res.decimal)
     }

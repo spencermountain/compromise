@@ -56,3 +56,9 @@ test('normalize empty', function (t) {
   t.equal(doc.text(), ``, here + 'normalize-nothing')
   t.end()
 })
+
+test('normalize fullwidth-ascii', function (t) {
+  const doc = nlp('Ｈｅｌｌｏ ２０２４').normalize({ unicode: true })
+  t.equal(doc.text(), 'Hello 2024', here + 'fullwidth ascii')
+  t.end()
+})

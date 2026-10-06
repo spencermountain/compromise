@@ -4,8 +4,8 @@ import money from './money/api.js'
 
 const api = function (View) {
   fractions(View)
-  numbers(View)
-  money(View)
+  const Numbers = numbers(View)
+  money(View, Numbers)
 }
 
 export default {

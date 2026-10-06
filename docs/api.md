@@ -189,7 +189,7 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.nouns(n?, opts?)`** — return noun phrases in the view
 - **`.numbers(n?, opts?)`** — return any numbers in the view
 - **`.percentages(n?, opts?)`** — return any percentages in the view
-- **`.money(n?, opts?)`** — return any money in the view
+- **`.money(n?)`** — return monetary amounts as a Money view
 - **`.fractions(n?, opts?)`** — return any fractions in the view
 - **`.sentences(n?, opts?)`** — return full sentences in the view
 - **`.questions(n?, opts?)`** — find full sentences of any questions in the view
@@ -219,6 +219,7 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.toText()`** — convert number to `five` or `fifth`
 - **`.toCardinal()`** — convert number to `five` or `5`
 - **`.toOrdinal()`** — convert number to `fifth` or `5th`
+- **`.toFraction()`** — convert selected percentages to fractions over 100, such as `4.5%` → `4.5/100`; returns a Fractions selection
 - **`.isEqual()`** — return numbers with this value
 - **`.greaterThan(min)`** — return numbers bigger than n
 - **`.lessThan(max)`** — return numbers smaller than n
@@ -229,6 +230,64 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.increment()`** — increase number by 1
 - **`.decrement()`** — decrease number by 1
 
+### `.percentages()` →
+
+Uses the Numbers methods above. `.toFraction()` mutates the document and returns only the converted fractions, retaining their fraction methods on subsets:
+
+```js
+const doc = nlp('We saved 25% on books and 50% on pens.')
+const fractions = doc.percentages().toFraction()
+fractions.eq(0).toPercentage()
+doc.text() // 'We saved 25% on books and 50/100 on pens.'
+```
+
+### `.money()` →
+
+Money extends Numbers. Arithmetic, formatting, comparisons, and the selections listed
+below return Money views, so methods can chain with `.currency()`. Transformations
+mutate the original document while retaining currency symbols and words.
+
+```js
+const doc = nlp('i paid $5.32 for a pizza slice')
+const amount = doc.money().add(1)
+amount.text() // '$6.32'
+amount.currency() // ['dollar']
+doc.text() // 'i paid $6.32 for a pizza slice'
+```
+
+- **`.parse(n?)`** — array of `{ currency, num }` objects
+- **`.get(n?)`** — array of numeric amounts, including when selecting one index
+- **`.currency(n?)`** — array of currency names or codes; these are not normalized to a single standard
+- **`.json(n?)`** — ordinary JSON records with an additional `money: { currency, num }` property; also accepts JSON output options
+- **`.set(n)`** — set each amount; accepts a number or number words
+- **`.add(n)`**, **`.plus(n)`** — increase each amount; accepts a number or number words
+- **`.subtract(n)`**, **`.minus(n)`** — decrease each amount by a number
+- **`.increment()`**, **`.decrement()`** — increase or decrease each amount by one
+- **`.isEqual(n)`**, **`.equals(n)`** — select amounts equal to n
+- **`.greaterThan(n)`**, **`.lessThan(n)`** — select amounts strictly above or below n
+- **`.between(min, max)`**, **`.isBetween(min, max)`** — select amounts strictly between the bounds
+- **`.toNumber()`** — convert number words to digits, retaining the currency
+- **`.toText()`** — convert digits to number words; recognized prefix symbols become currency words, such as `$5` → `five dollars`
+- **`.toLocaleString()`**, **`.toNice()`** — format amounts using the runtime's default locale, retaining the currency
+- **`.isOrdinal()`**, **`.isCardinal()`** — select by the number's ordinal/cardinal tags
+- **`.units()`** — select words tagged as units, including currency words such as `dollars`
+- **`.isUnit(units)`** — filter by unit text, using the same arguments as Numbers
+- **`.first(n?)`**, **`.last(n?)`**, **`.eq(n)`**, **`.slice(start, end?)`**, **`.filter(fn)`** — retain the Money class when selecting amounts
+- **`.clone()`** — create an independent Money view and document
+- **`.numbers(n?)`**, **`.values(n?)`** — explicitly select the numeric portions as Numbers
+
+Comparisons use numeric values without currency conversion. Arithmetic operates in
+the written unit: adding 1 to `50 cents` produces `51 cents`. Compound amounts such
+as `5 dollars and 32 cents` are currently left unchanged by arithmetic and formatting;
+parsing currently returns only the first numeric component. Arithmetic inherits
+Numbers' floating-point behavior and does not preserve trailing decimal zeros.
+
+Known output gaps covered by regression tests: `.json(n)` can throw for a nonzero
+index, and empty `.parse()`, `.get()`, and `.currency()` currently return a view
+instead of the intended empty array. Converting a symbol amount such as `$5` with
+`.toText()` produces `five dollars`, but subsequent `.currency()` can return an empty
+string because the generated currency word is not recognized.
+
 ### `.fractions()` →
 
 - **`.parse(n?)`** — grab the parsed number
@@ -237,7 +296,7 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.toFraction()`** — convert 'one fourth' to `1/4`
 - **`.toOrdinal()`** — convert '1/4' to '1/4th'
 - **`.toCardinal()`** — convert '1/4th' to '1/4'
-- **`.toPercentage()`** — convert '1/4' to `25%`
+- **`.toPercentage(n?)`** — convert fractions such as `1/4` or `one half` to `25%` or `50%`; optionally convert only the nth fraction. Mutates the document and returns a View of the processed selection. Fractions over 100 preserve the numerator's precision; other denominators round to two decimal places. Unparseable fractions and zero denominators remain unchanged.
 
 ### `.sentences()` →
 

@@ -20,6 +20,11 @@ const subject = `${modifiers} ${noun}+`
 const predicate = '#Adv+? not? (#V && !#Ger && !#Particle)'
 
 const rules = [
+  // let the dough [rest] overnight
+  {
+    m: 'let (#Det|#Poss)? #Adj+? #NN [(%Noun|Verb% && !#Plur)] (overnight|outside|inside|here)$',
+    g: 0, t: 'Inf', r: 'let-object-verb',
+  },
   // === verbs/passive.js ===
 
   // got walked
@@ -110,10 +115,6 @@ const rules = [
     t: 'Adj',
     r: 'dammed-up',
   },
-  // too much
-  { m: 'too much', t: 'Adv Adj', r: 'too-much' },
-  // a bit much
-  { m: 'a bit much', t: 'Det Adv Adj', r: 'a-bit-much' },
 
   // === adjective/adj-adverb.js ===
 
@@ -306,8 +307,6 @@ const rules = [
   // === nouns/nouns.js ===
 
   //'more' is not always an adverb
-  // [rights] of man
-  { m: '[(right|rights)] of .', g: 0, t: 'NN', r: 'right-of' },
   // due to [weather]
   { m: 'due to [#V]', g: 0, t: 'NN', r: 'due-to' },
 
@@ -781,9 +780,9 @@ const rules = [
   // === numbers/fractions.js ===
 
   // [half] a penny
-  { m: '[half] of? (a|an)', g: 0, t: 'Frac', r: 'half-a' },
+  { m: '[(a|one)? half] of? (a|an|the)', g: 0, t: 'Frac', r: 'half-a' },
   // [quarter] of a dollar
-  { m: '[quarter] of? (a|an)', g: 0, t: 'Frac', r: 'quarter-a' },
+  { m: '[(a|one)? quarter] of? (a|an|the)', g: 0, t: 'Frac', r: 'quarter-a' },
   // two and a half
   { m: '#Card and a half', t: 'Frac', r: 'and-a-half' },
   // two-halves
@@ -805,6 +804,7 @@ const rules = [
     t: 'Frac',
     r: 'solo-fraction',
   },
+  { m: '(a|one) (half|quarter)$', t: 'Frac', r: 'solo-half' },
 
   // 3 out of 5
   { m: '#Card+ out? of every? #Card', t: 'Frac', r: 'out-of' },
@@ -1522,8 +1522,6 @@ const rules = [
   },
   // [such] skill
   { m: '[such] (a|an|is)? #NN', g: 0, t: 'Det', r: 'such-skill' },
-  // [long live] the king
-  { m: '[long live] .', g: 0, t: '#Adv #Inf', r: 'long-live' },
   // [there] she is
   { m: '[there] (#Adv|#Pron)? #Cop', g: 0, t: 'There', r: 'there-is' },
   // is [there] food

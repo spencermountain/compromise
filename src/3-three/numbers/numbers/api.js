@@ -3,6 +3,7 @@ import parse from './parse/index.js'
 import format from './format/index.js'
 import isUnit from './isUnit.js'
 import convert from './_lib.js'
+import toFraction from './toFraction.js'
 
 const addMethod = function (View) {
   /**   */
@@ -53,74 +54,76 @@ const addMethod = function (View) {
 
     /** convert to numeric form like '8' or '8th' */
     toNumber() {
-      return convert(this, Numbers, 'NumericValue',
+      return convert(this, 'NumericValue',
         () => !this.has('#TextValue'),
         val => val.has('#Ordinal') ? 'Ordinal' : 'Cardinal')
     }
     /** add commas, or nicer formatting for numbers */
     toLocaleString() {
       const m = this
-      m.forEach(val => {
+      const res = m._mapNumbers(val => {
         const obj = parse(val)
         if (obj.num === null) {
-          return
+          return val
         }
         let num = obj.num.toLocaleString()
         // support ordinal ending, too
         if (val.has('#Ordinal')) {
-          const str = format(obj, 'Ordinal')
-          let end = str.length
-          while (end > 0 && /[a-z]/.test(str[end - 1])) end--
-          num += str.slice(end)
+          num += format(obj, 'Ordinal').slice(obj.prefix.length).match(/[a-z]+/)[0]
         }
-        val.replaceWith(num, { tags: true })
+        val.replaceWith(obj.prefix + num + obj.suffix, { tags: true })
+        return val
       })
-      return this
+      return this.update(res.pointer)
     }
+
     /** convert to numeric form like 'eight' or 'eighth' */
     toText() {
-      return convert(this, Numbers, 'TextValue',
+      return convert(this, 'TextValue',
         val => val.has('#TextValue'),
         val => val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal')
     }
     /** convert ordinal to cardinal form, like 'eight', or '8' */
     toCardinal() {
-      return convert(this, Numbers, 'Cardinal',
+      return convert(this, 'Cardinal',
         val => !val.has('#Ordinal'),
         val => val.has('#TextValue') ? 'TextCardinal' : 'Cardinal')
     }
     /** convert cardinal to ordinal form, like 'eighth', or '8th' */
     toOrdinal() {
-      return convert(this, Numbers, 'Ordinal',
+      return convert(this, 'Ordinal',
         val => val.has('#Ordinal'),
         val => val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal')
+    }
+    toFraction() {
+      return toFraction(this.percentages())
     }
 
     /** return only numbers that are == n */
     isEqual(n) {
       return this.filter(val => {
-        const num = parse(val).num
+        const num = val.get(0)[0]
         return num === n
       })
     }
     /** return only numbers that are > n*/
     greaterThan(n) {
       return this.filter(val => {
-        const num = parse(val).num
+        const num = val.get(0)[0]
         return num > n
       })
     }
     /** return only numbers that are < n*/
     lessThan(n) {
       return this.filter(val => {
-        const num = parse(val).num
+        const num = val.get(0)[0]
         return num < n
       })
     }
     /** return only numbers > min and < max */
     between(min, max) {
       return this.filter(val => {
-        const num = parse(val).num
+        const num = val.get(0)[0]
         return num > min && num < max
       })
     }
@@ -133,7 +136,7 @@ const addMethod = function (View) {
         n = parse(n).num
       }
       const m = this
-      const res = m.map(val => {
+      const res = m._mapNumbers(val => {
         const obj = parse(val)
         obj.num = n
         if (obj.num === null) {
@@ -143,18 +146,14 @@ const addMethod = function (View) {
         if (val.has('#TextValue')) {
           fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
         }
-        let str = format(obj, fmt)
-        // add commas to number
-        if (obj.hasComma && fmt === 'Cardinal') {
-          str = Number(str).toLocaleString()
-        }
+        const str = format(obj, fmt)
         val = val.not('#Currency')
         val.replaceWith(str, { tags: true })
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
         return val
       })
-      return new Numbers(res.document, res.pointer)
+      return this.update(res.pointer)
     }
     add(n) {
       if (!n) {
@@ -164,7 +163,7 @@ const addMethod = function (View) {
         n = parse(n).num
       }
       const m = this
-      const res = m.map(val => {
+      const res = m._mapNumbers(val => {
         const obj = parse(val)
         if (obj.num === null) {
           return val
@@ -180,7 +179,7 @@ const addMethod = function (View) {
         // agreeUnits(agree, val, obj)
         return val
       })
-      return new Numbers(res.document, res.pointer)
+      return this.update(res.pointer)
     }
     /** decrease each number by n*/
     subtract(n, agree) {
@@ -194,10 +193,15 @@ const addMethod = function (View) {
     decrement(agree) {
       return this.add(-1, agree)
     }
-    // overloaded - keep Numbers class
+    // Let subclasses select the numeric portion of each phrase.
+    _mapNumbers(fn) {
+      return this.map(fn)
+    }
+    // overloaded - keep the current class
     update(pointer) {
-      const m = new Numbers(this.document, pointer)
+      const m = new this.constructor(this.document, pointer)
       m._cache = this._cache // share this full thing
+      m.world = this.world
       return m
     }
   }
@@ -215,11 +219,12 @@ const addMethod = function (View) {
   }
   View.prototype.percentages = function (n) {
     let m = find(this)
-    m = m.filter(v => v.has('#Percent'))
+    m = m.filter(v => v.has('#Percent') || v.after('^per cent').found)
     m = m.getNth(n)
     return new Numbers(this.document, m.pointer)
   }
   // alias
   View.prototype.values = View.prototype.numbers
+  return Numbers
 }
 export default addMethod

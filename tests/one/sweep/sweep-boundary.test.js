@@ -8,17 +8,15 @@ test(here + 'sweep checks required sentence boundaries before matching', t => {
   const net = world.methods.one.buildNet(rules, world)
   const doc = nlp('hello world. world hello.')
   const original = world.methods.one.match
+  t.teardown(() => {
+    world.methods.one.match = original
+  })
   let attempts = 0
   world.methods.one.match = (...args) => {
     attempts += 1
     return original(...args)
   }
-  let result
-  try {
-    result = doc.sweep(net, { tagger: false })
-  } finally {
-    world.methods.one.match = original
-  }
+  const result = doc.sweep(net, { tagger: false })
   t.deepEqual(result.view.out('array'), ['hello', 'world.'], 'only the anchored words match')
   t.equal(attempts, 2, 'wrong boundaries skip the matcher')
   t.end()

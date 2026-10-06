@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import isolateModel from '../../_lib/isolate-model.js'
 const here = '[one/term-punctuation] '
 
 
@@ -47,6 +48,7 @@ test('closing bracket inside a word', function (t) {
 
 test('modify existing punctuation', function (t) {
   const world = nlp.world()
+  isolateModel(t, world.model.one, ['prePunctuation', 'postPunctuation'])
 
   let term = nlp('=cool=').docs[0][0]
   t.equal(term.normal, 'cool', here + 'before')

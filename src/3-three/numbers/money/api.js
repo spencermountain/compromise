@@ -1,4 +1,5 @@
 import symbols from './currencies.js'
+import mapNumbers from './_lib.js'
 
 const find = function (doc) {
   return doc.match('#Money+ #Currency? (#Money+ #Currency?)?')
@@ -23,13 +24,16 @@ const parse = function (m) {
   }
 }
 
-const plugin = function (View) {
+const plugin = function (View, Numbers) {
   /**
    */
-  class Money extends View {
+  class Money extends Numbers {
     constructor(document, pointer, groups) {
       super(document, pointer, groups)
       this.viewType = 'Money'
+    }
+    _mapNumbers(fn) {
+      return mapNumbers(this, fn)
     }
     parse(n) {
       return this.getNth(n).map(parse)
@@ -52,6 +56,13 @@ const plugin = function (View) {
       })
     }
   }
+
+  // These conversions do not describe monetary amounts.
+  Object.assign(Money.prototype, {
+    toOrdinal: undefined,
+    toCardinal: undefined,
+    toFraction: undefined,
+  })
 
   View.prototype.money = function (n) {
     let m = find(this)

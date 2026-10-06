@@ -902,6 +902,16 @@ const rules = [
     t: 'Value',
     r: 'a-trillion',
   },
+  // two [dozen] eggs
+  { match: '(a|#Cardinal) [dozen]', hook: 'dozen', group: 0, tag: ['Multiple', 'Cardinal'], reason: 'value-dozen' },
+  // with [a] dozen eggs
+  {
+    match: '!once? [a] dozen',
+    hook: 'dozen',
+    group: 0,
+    tag: 'Value',
+    reason: 'a-dozen',
+  },
   // ==== PhoneNumber ====
   // 1 800 555-1234
   { m: '(1|+1) #Value #PhoneNumber', t: 'PhoneNumber', r: 'country-code' },

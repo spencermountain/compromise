@@ -1,4 +1,6 @@
-const g = 'Gerund'
+import tags from '../../tagSet/aliases.js'
+
+const { VBG: g } = tags
 
 // Adj|Gerund
 // Noun|Gerund

@@ -1,4 +1,6 @@
-const v = 'Infinitive'
+import tags from '../../tagSet/aliases.js'
+
+const { VB: v } = tags
 
 export default {
   beforeTags: {

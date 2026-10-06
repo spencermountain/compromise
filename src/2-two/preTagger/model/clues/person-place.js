@@ -1,5 +1,7 @@
 import person from './_person.js'
-const p = 'Place'
+import tags from '../../tagSet/aliases.js'
+
+const { Place: p } = tags
 
 // 'paris hilton' vs 'paris france'
 const place = {

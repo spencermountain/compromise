@@ -44,7 +44,7 @@ const addImplied = function (tags) {
 const validate = function (tags, already) {
   // Reciprocal links must reach previously registered tags too. Copy entries
   // before normalization so the existing compiled model remains untouched.
-  tags = Object.fromEntries(Object.entries({ ...already, ...tags }).map(([tag, definition]) => [tag, { ...definition }]))
+  tags = Object.fromEntries(Object.keys({ ...already, ...tags }).map(tag => [tag, { ...already[tag], ...tags[tag] }]))
   tags = addImplied(tags)
 
   // property validation

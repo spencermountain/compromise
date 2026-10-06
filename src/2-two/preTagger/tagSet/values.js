@@ -9,14 +9,17 @@ export default {
     alias: 'Val'
   },
   Ordinal: {
+    aliases: ['Ord'],
     is: Value,
     not: [Cardinal],
   },
   Cardinal: {
+    aliases: ['Card'],
     is: Value,
     not: [Ordinal],
   },
   Fraction: {
+    aliases: ['Frac'],
     is: Value,
     not: [NN],
   },
@@ -27,10 +30,12 @@ export default {
     is: Cardinal,
   },
   TextValue: {
+    aliases: ['TxtNum'],
     is: Value,
     not: [NumericValue, RomanNumeral],
   },
   NumericValue: {
+    aliases: ['Num'],
     is: Value,
     not: [RomanNumeral],
     alias: 'Numeric'

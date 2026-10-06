@@ -1,5 +1,6 @@
-const vb = 'Verb'
-const nn = 'Noun'
+import tags from '../../tagSet/aliases.js'
+
+const { V: vb, NN: nn } = tags
 
 export default {
   // looking at the previous word's tags:

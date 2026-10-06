@@ -30,6 +30,7 @@ const fmt = function (nodes) {
       children: [],
       color: getColor(node),
       alias: node.alias,
+      aliases: node.aliases,
     }
   })
   // `also` is another inheritance edge. Resolve its ancestors before building

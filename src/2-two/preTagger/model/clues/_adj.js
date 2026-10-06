@@ -1,4 +1,6 @@
-const jj = 'Adjective'
+import tags from '../../tagSet/aliases.js'
+
+const { JJ: jj } = tags
 
 export default {
   beforeTags: {

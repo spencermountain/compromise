@@ -4,6 +4,7 @@ import {
 
 export default {
   Verb: {
+    aliases: ['V'],
     not: [NN, JJ, RB, Value, Expression],
     alias: 'Vb'
   },
@@ -15,6 +16,7 @@ export default {
   },
   // 'will [walk]'
   Infinitive: {
+    aliases: ['VB'],
     is: Pres,
     not: [VBG],
     alias: 'Inf'
@@ -27,12 +29,14 @@ export default {
   },
   // walking
   Gerund: {
+    aliases: ['VBG'],
     is: Pres,
     not: [Cop],
     alias: 'Ger'
   },
   // walked
   PastTense: {
+    aliases: ['VBD'],
     is: V,
     not: [Pres, VBG, Fut],
     alias: 'Past'
@@ -45,15 +49,18 @@ export default {
   },
   // is/was
   Copula: {
+    aliases: ['Cop'],
     is: V,
   },
   // '[could] walk'
   Modal: {
+    aliases: ['Mod', 'MD'],
     is: V,
     not: [VB],
   },
   // 'awaken'
   Participle: {
+    aliases: ['Part', 'Prt', 'VBN'],
     is: VBD,
   },
   // '[will have had] walked'
@@ -64,6 +71,7 @@ export default {
   },
   // 'walk out'
   PhrasalVerb: {
+    aliases: ['PhrV'],
     is: V,
     alias: 'Phrasal'
   },
@@ -74,6 +82,7 @@ export default {
   },
   // 'walked by'
   Passive: {
+    aliases: ['Pass'],
     is: V,
   },
 }

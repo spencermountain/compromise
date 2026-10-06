@@ -63,12 +63,14 @@ const tagTerm = function (term, tag, tagSet, isSafe, validated, reason) {
 }
 
 // support '#Noun . #Adjective' syntax
-const multiTag = function (terms, tagString, tagSet, isSafe, reason) {
+// eslint-disable-next-line max-params
+const multiTag = function (terms, tagString, tagSet, aliases, isSafe, reason) {
   const tags = tagString.split(isMulti)
   terms.forEach((term, i) => {
     let tag = tags[i]
     if (tag) {
       tag = tag.replace(/^#/, '')
+      tag = aliases?.[tag] || tag
       tagTerm(term, tag, tagSet, isSafe, undefined, reason)
     }
   })
@@ -93,10 +95,11 @@ const setTag = function (terms, tag, world = {}, isSafe, reason, validated) {
   tag = tag.trim()
   // support '#Noun . #Adjective' syntax
   if (isMulti.test(tag)) {
-    multiTag(terms, tag, tagSet, isSafe, reason)
+    multiTag(terms, tag, tagSet, world.model.one.tagAliases, isSafe, reason)
     return
   }
   tag = tag.replace(/^#/, '')
+  tag = world.model.one.tagAliases?.[tag] || tag
   // let set = false
   for (let i = 0; i < terms.length; i += 1) {
     tagTerm(terms[i], tag, tagSet, isSafe, validated, reason)

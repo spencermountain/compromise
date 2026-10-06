@@ -45,10 +45,14 @@ const fns = {
       console.log(' -  ', input, reason || '')
     }
     const tagSet = model.one.tagSet
+    const resolve = tag => {
+      tag = tag.trim().replace(/^#/, '')
+      return model.one.tagAliases[tag] || tag
+    }
     if (Array.isArray(input)) {
-      input.forEach(tag => methods.one.unTag(terms, tag, tagSet, reason))
+      input.forEach(tag => methods.one.unTag(terms, resolve(tag), tagSet, reason))
     } else {
-      methods.one.unTag(terms, input, tagSet, reason)
+      methods.one.unTag(terms, resolve(input), tagSet, reason)
     }
     // uncache
     this.uncache()
@@ -58,6 +62,7 @@ const fns = {
   /** return only the terms that can be this tag  */
   canBe: function (tag) {
     tag = tag.replace(/^#/, '')
+    tag = this.model.one.tagAliases[tag] || tag
     const tagSet = this.model.one.tagSet
     const canBe = this.methods.one.canBe
     const nope = []

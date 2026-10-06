@@ -9,9 +9,10 @@ import doOneDate from './03-one-date.js'
 const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate)
 
 const env = globalThis.process?.env ?? globalThis.env ?? {}
+const green = str => '\x1b[32m' + str + '\x1b[0m'
 const log = msg => {
   if (env.DEBUG_DATE) {
-    console.log(`\n  \x1b[32m ${msg} \x1b[0m`) // eslint-disable-line
+    console.log(`\n  ${green(` ${msg} `)}`) // eslint-disable-line
   }
 }
 

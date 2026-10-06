@@ -1,7 +1,8 @@
 import adj from './_adj.js'
 import gerund from './_gerund.js'
-const g = 'Gerund'
-const jj = 'Adjective'
+import tags from '../../tagSet/aliases.js'
+
+const { VBG: g, JJ: jj } = tags
 
 // rallying the troops
 // her rallying cry

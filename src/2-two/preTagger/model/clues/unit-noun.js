@@ -1,5 +1,7 @@
+import tags from '../../tagSet/aliases.js'
+
+const { Unit: un } = tags
 // '5 oz'   -  'dr oz'
-const un = 'Unit'
 const clues = {
   beforeTags: { Value: un },
   afterTags: {},

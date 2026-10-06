@@ -60,7 +60,7 @@ test('out best-tag retains slots for untagged terms', function (t) {
   doc.match('alpha').tag('First')
   doc.match('beta').unTag('*')
   doc.match('gamma').tag('Last')
-  t.equal(doc.out('best-tag'), '#First  #Last', here + 'middle empty slot')
+  t.equal(doc.out('best-tag'), '#FirstName  #LastName', here + 'middle empty slot')
   t.end()
 })
 

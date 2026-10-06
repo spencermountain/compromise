@@ -1,7 +1,8 @@
 import noun from './_noun.js'
 import verb from './_verb.js'
-const nn = 'Singular'
-const vb = 'Infinitive'
+import tags from '../../tagSet/aliases.js'
+
+const { Sing: nn, VB: vb } = tags
 // 'boot the ball'   -  'the red boot'
 // 'boots the ball'  -   'the red boots'
 const clue = {

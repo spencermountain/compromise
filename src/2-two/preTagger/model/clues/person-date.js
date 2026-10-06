@@ -1,9 +1,10 @@
 import person from './_person.js'
+import tags from '../../tagSet/aliases.js'
+
+const { Month: m, Person: p } = tags
 
 // 'april o'neil'  -  'april 1st'
 
-const m = 'Month'
-const p = 'Person'
 const month = {
   beforeTags: {
     Date: m,

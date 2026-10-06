@@ -31,7 +31,7 @@ const stripBoth = function (str) {
   return str
 }
 //
-const parseToken = function (w, opts) {
+const parseToken = function (w, opts, aliases) {
   const obj = {}
   //collect any flags (do it twice)
   for (let i = 0; i < 2; i += 1) {
@@ -156,7 +156,7 @@ const parseToken = function (w, opts) {
       obj.choices = obj.choices.filter(s => s)
       //recursion alert!
       obj.choices = obj.choices.map(str => {
-        return str.split(/ /g).map(s => parseToken(s, opts))
+        return str.split(/ /g).map(s => parseToken(s, opts, aliases))
       })
       w = ''
     }
@@ -197,8 +197,12 @@ const parseToken = function (w, opts) {
   }
   //do the actual token content
   if (start(w) === '#') {
-    obj.tag = stripStart(w)
-    obj.tag = titleCase(obj.tag)
+    const name = stripStart(w)
+    obj.tag = aliases?.[name]
+    if (!obj.tag) {
+      obj.tag = titleCase(name)
+      obj.tag = aliases?.[obj.tag] || obj.tag
+    }
     return obj
   }
   //dynamic function on a term object

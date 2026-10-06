@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import cli from './_color.js'
+import * as cli from '../../../../API/_color.js'
 
 const tagString = function (tags, model) {
   if (model.one.tagSet) {

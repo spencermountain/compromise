@@ -7,23 +7,28 @@ const entity = [Person, Place, Organization]
 
 export default {
   Noun: {
+    aliases: ['NN'],
     not: [V, JJ, RB, Value, Det],
   },
   Singular: {
+    aliases: ['Sing'],
     is: NN,
     not: [NNS, Uncountable],
   },
   // 'Canada'
   ProperNoun: {
+    aliases: ['NNP'],
     is: NN,
     alias: 'Prop'
   },
   Person: {
+    aliases: ['Pers'],
     is: NNs,
     also: [NNP],
     not: [Place, Organization, Date],
   },
   FirstName: {
+    aliases: ['First'],
     is: Person,
   },
   MaleName: {
@@ -35,6 +40,7 @@ export default {
     not: [MaleName, LastName],
   },
   LastName: {
+    aliases: ['Last'],
     is: Person,
     not: [FirstName],
   },
@@ -82,6 +88,7 @@ export default {
     is: Organization,
   },
   Plural: {
+    aliases: ['Plur', 'NNS'],
     is: NN,
     not: [NNs, Uncountable],
   },
@@ -91,6 +98,7 @@ export default {
   },
   // 'it'
   Pronoun: {
+    aliases: ['Pron', 'PRP'],
     is: NN,
     not: entity,
   },
@@ -111,6 +119,7 @@ export default {
   },
   // canadian
   Demonym: {
+    aliases: ['Dem'],
     is: NN,
     also: [NNP],
     not: entity,
@@ -122,6 +131,7 @@ export default {
   },
   // 'yourself'
   Reflexive: {
+    aliases: ['Refl'],
     is: PRP,
   },
 }

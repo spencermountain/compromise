@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import cli from './_color.js'
+import { blue } from '../../../../API/_color.js'
 
 const split = (txt, offset, index) => {
   const buff = index * 9 //there are 9 new chars addded to each highlight
@@ -13,7 +13,7 @@ const split = (txt, offset, index) => {
 
 const spliceIn = function (txt, offset, index) {
   const parts = split(txt, offset, index)
-  return `${parts[0]}${cli.blue(parts[1])}${parts[2]}`
+  return `${parts[0]}${blue(parts[1])}${parts[2]}`
 }
 
 const showHighlight = function (doc) {

@@ -1,3 +1,4 @@
+import { green, blue, cyan, dim } from '../../API/_color.js'
 import getFacts from './parse/index.js'
 
 /*
@@ -16,10 +17,6 @@ Question/YesNo - did she sleep with him?, are crabs edible?
 
 */
 
-const green = str => '\x1b[32m' + str + '\x1b[0m'
-const blue = str => '\x1b[34m' + str + '\x1b[0m'
-const cyan = str => '\x1b[36m' + str + '\x1b[0m'
-const dim = str => '\x1b[2m' + str + '\x1b[0m'
 
 
 const api = function (View) {

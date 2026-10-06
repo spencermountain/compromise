@@ -18,7 +18,7 @@ const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
 const noun = '(#NN && !#Poss && !@hasComma)'
 const modifiers = '(#Det|#Poss)? #Adv+? #Adj+?'
 const subject = `${modifiers} ${noun}+`
-const predicate = '#Adv+? not? (#V && !#Ger && !#Prt)'
+const predicate = '#Adv+? not? (#V && !#Ger && !#Particle)'
 
 const rules = [
   // === verbs/passive.js ===
@@ -392,7 +392,7 @@ const rules = [
   { m: 'to [(shit|hell)]', g: 0, t: 'NN', r: 'to-swears' },
   // and check this out! a [walk-in] microwave.
   {
-    m: '(the|those|these|a|an) #Adj? [(#Pres && !#Ger && !#Cop && !seem && !appear && !include) #Prt?]',
+    m: '(the|those|these|a|an) #Adj? [(#Pres && !#Ger && !#Cop && !seem && !appear && !include) #Particle?]',
     g: 0,
     t: 'NN',
     n: 'the (poor|rich|young|old|elderly|unemployed|homeless|disabled)',
@@ -449,7 +449,7 @@ const rules = [
   // Los Angeles's fundraiser
   { m: '#Place+ #Poss', t: 'Poss', r: 'place-poss' },
   // my butt smells
-  { m: '#Poss #Pres #Prt?', n: '(#Ger|#Copula|her)', t: 'NN', r: 'poss-verb' }, // anna's eating vs anna's eating lunch
+  { m: '#Poss #Pres #Particle?', n: '(#Ger|#Copula|her)', t: 'NN', r: 'poss-verb' }, // anna's eating vs anna's eating lunch
   // my [teachers] dog
   { m: '(my|our|their|her|his|its) [(#Plur && #Actor)] #NN', g: 0, t: 'Poss', r: 'my-dads' },
 
@@ -587,7 +587,7 @@ const rules = [
   { m: 'number of [#Pres]', g: 0, t: 'NN', r: 'number-of-x' },
   // make [sense]
   {
-    m: '(try|use|attempt|build|make) [%Noun|Verb% #Prt?]',
+    m: '(try|use|attempt|build|make) [%Noun|Verb% #Particle?]',
     n: '(#Cop|#NN|sure|fun|up)',
     g: 0,
     t: 'NN',
@@ -706,7 +706,7 @@ const rules = [
   // get better [thank]-you notes
   { m: `(get|got|have) #Comp [#Pres]`, g: 0, t: 'NN', r: 'got-better-aim' },
   // give up on [thank]-you letters
-  { m: `#PhrV #Prt #Prep [#Pres]`, g: 0, t: 'NN', r: 'given-up-on-x' },
+  { m: `#PhrV #Particle #Prep [#Pres]`, g: 0, t: 'NN', r: 'given-up-on-x' },
   // there are [thank]-you notes
   { m: 'there (are|were) #Adj? [#Pres]', g: 0, t: 'Plur', r: 'there-are' },
   // a thousand [thanks] of gratitude
@@ -763,7 +763,7 @@ const rules = [
   // the 1968 [stand]-off
   { m: '#Det #Year [#V]', g: 0, t: 'NN', r: '1968-film' },
   // the [break up]
-  { m: '#Det [(#PhrV && !#Past) #Prt]', g: 0, t: 'NN', r: 'break-up' },
+  { m: '#Det [(#PhrV && !#Past) #Particle]', g: 0, t: 'NN', r: 'break-up' },
   // the [individual] goals
   {
     m: '#Det [%Adj|Noun%] #NN',
@@ -1280,13 +1280,13 @@ const rules = [
     r: 'felt-loved',
   },
   // felt [cheated]
-  // { m: '(seem|feel|seemed|felt) [#Past #Prt?]', g: 0, t: 'Adj', r: 'seem-confused' },
+  // { m: '(seem|feel|seemed|felt) [#Past #Particle?]', g: 0, t: 'Adj', r: 'seem-confused' },
   // a bit [confused]
-  { m: 'a (bit|little|tad) [#Past #Prt?]', g: 0, t: 'Adj', r: 'a-bit-confused' },
+  { m: 'a (bit|little|tad) [#Past #Particle?]', g: 0, t: 'Adj', r: 'a-bit-confused' },
   // do not be [embarrassed]
-  { m: 'not be [%Adj|Past% #Prt?]', g: 0, t: 'Adj', r: 'not-be-adj' },
+  { m: 'not be [%Adj|Past% #Particle?]', g: 0, t: 'Adj', r: 'not-be-adj' },
   // is just [tired]
-  { m: '#Cop just [%Adj|Past% #Prt?]', g: 0, t: 'Adj', r: 'is-just-right' },
+  { m: '#Cop just [%Adj|Past% #Particle?]', g: 0, t: 'Adj', r: 'is-just-right' },
   // [failed] and oppressive
   { m: '[%Adj|Past%] and #Adj', g: 0, t: 'Adj', r: 'failed-and' },
   // the fear or [heightened] emotion
@@ -1432,16 +1432,16 @@ const rules = [
     m: '[#V (in|out|up|down|off|back)] (on|in)',
     g: 0,
     n: '#Cop',
-    t: 'PhrV Prt',
+    t: 'PhrV Particle',
     r: 'walk-in-on',
   },
   // went [on] for
   { m: '(lived|went|crept|go) [on] for', g: 0, t: 'PhrV', r: 'went-on' },
   // the curtains come down
-  { m: '#V (up|down|in|on|for)$', t: 'PhrV #Prt', n: '#PhrV', r: 'come-down' },
+  { m: '#V (up|down|in|on|for)$', t: 'PhrV #Particle', n: '#PhrV', r: 'come-down' },
   // work in the office
   {
-    m: '#PhrV (in && #Prt) #Det',
+    m: '#PhrV (in && #Particle) #Det',
     t: '#V #Prep #Det',
     u: 'PhrV',
     r: 'work-in-the',
@@ -1466,11 +1466,11 @@ const rules = [
   //we do not go
 
   // do not [go]
-  { m: '^do not? [#Inf #Prt?]', n: notIf, g: 0, t: 'Imp', r: 'do-eat' },
+  { m: '^do not? [#Inf #Particle?]', n: notIf, g: 0, t: 'Imp', r: 'do-eat' },
   // please [go]
-  { m: '^please do? not? [#Inf #Prt?]', g: 0, t: 'Imp', r: 'please-go' },
+  { m: '^please do? not? [#Inf #Particle?]', g: 0, t: 'Imp', r: 'please-go' },
   // just [go]
-  { m: '^just do? not? [#Inf #Prt?]', g: 0, t: 'Imp', r: 'just-go' },
+  { m: '^just do? not? [#Inf #Particle?]', g: 0, t: 'Imp', r: 'just-go' },
   // [go] quickly.
   {
     m: '^[(#Inf && !#Hyphenated)] (#Adj|#Adv|hard|high|fast|slow)$',
@@ -1510,7 +1510,7 @@ const rules = [
     r: 'shut-the-door',
   },
   // [turn off] the light
-  { m: '^[#PhrV #Prt] #Det #NN', g: 0, t: 'Imp', r: 'turn-off' },
+  { m: '^[#PhrV #Particle] #Det #NN', g: 0, t: 'Imp', r: 'turn-off' },
   // A modal question alone may ask about ability or knowledge. Require an
   // explicit request marker before treating it as an imperative.
   // can you please [walk]

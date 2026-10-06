@@ -1,9 +1,7 @@
+import { green, red, dim } from '../../API/_color.js'
 const lastBrace = /\{(?=[^{]*$)/ // split on the last { only
 const comment = /\}[ \t]*#.*$/ // an optional '# comment' after the last {tags} block
 
-const green = str => '\x1b[32m' + str + '\x1b[0m'
-const red = str => '\x1b[31m' + str + '\x1b[0m'
-const dim = str => '\x1b[2m' + str + '\x1b[0m'
 
 // parse the spec output
 const parseLine = function (line = '') {
@@ -56,14 +54,7 @@ const toTagList = function (tags) {
 const testSpec = function (spec, verbose = true, throwError = false) {
   const nlp = this
   const world = nlp.world()
-  const aliases = {}
-  // expand tag aliases
-  const tagSet = world.model.one.tagSet
-  Object.keys(tagSet).forEach(k => {
-    if (tagSet[k].alias) {
-      aliases[tagSet[k].alias] = k
-    }
-  })
+  const aliases = world.model.one.tagAliases
   const resultLines = spec
     .split('\n')
     .filter(line => line.trim() && !/^\s*#/.test(line))

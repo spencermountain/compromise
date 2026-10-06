@@ -1,4 +1,6 @@
-const p = 'Person'
+import tags from '../../tagSet/aliases.js'
+
+const { Person: p } = tags
 
 export default {
   beforeTags: {

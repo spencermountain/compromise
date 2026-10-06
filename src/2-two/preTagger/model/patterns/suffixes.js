@@ -1,19 +1,10 @@
+import tags from '../../tagSet/aliases.js'
+
+const {
+  JJ: Adj, VB: Inf, Pres, Sing, VBD: Past, RB: Avb, NNS: Plrl, Actor,
+  V: Vb, NN: Noun, NNP: Prop, Last, Modal, Place, VBN: Prt
+} = tags
 //just a foolish lookup of known suffixes
-const Adj = 'Adjective'
-const Inf = 'Infinitive'
-const Pres = 'PresentTense'
-const Sing = 'Singular'
-const Past = 'PastTense'
-const Avb = 'Adverb'
-const Plrl = 'Plural'
-const Actor = 'Actor'
-const Vb = 'Verb'
-const Noun = 'Noun'
-const Prop = 'ProperNoun'
-const Last = 'LastName'
-const Modal = 'Modal'
-const Place = 'Place'
-const Prt = 'Participle'
 
 export default [
   null,

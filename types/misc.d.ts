@@ -107,7 +107,15 @@ export interface TaggerEvent {
   removed: string[]
 }
 
-export interface VerboseOptions {
+export interface MatchEvent {
+  type: 'match'
+  pattern: string
+  matched: boolean
+  matches: { text: string, index?: number[], length: number }[]
+}
+
+export interface VerboseOptions<Event = TaggerEvent | MatchEvent> {
   word?: string
-  emit?: (event: TaggerEvent) => void
+  pattern?: string
+  emit?: (event: Event) => void
 }

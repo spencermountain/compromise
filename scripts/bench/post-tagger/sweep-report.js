@@ -1,3 +1,5 @@
+import { b, dim, cyan, yellow, green } from '../../../src/API/_color.js'
+
 const tagRate = row => {
   if (!row.attempts) {
     return null
@@ -31,26 +33,26 @@ const formatYaml = report => {
 }
 
 const formatTable = (rows, { color = false } = {}) => {
-  const paint = (code, text) => (color ? `\x1b[${code}m${text}\x1b[0m` : text)
+  const paint = (style, text) => (color ? style(text) : text)
   const width = 90
   const header = `${'Match'.padEnd(width)}  ${'Requires matching'.padStart(18)}  ${'Tag edits'.padStart(12)}  ${'Tag rate'.padStart(10)}`
   const divider = '─'.repeat(header.length)
-  const lines = [paint('1', header), paint('2', divider)]
+  const lines = [paint(b, header), paint(dim, divider)]
   rows.forEach(row => {
     lines.push(
-      paint('36', row.reason.slice(0, width).padEnd(width)) +
+      paint(cyan, row.reason.slice(0, width).padEnd(width)) +
         '  ' +
-        paint('33', row.attempts.toLocaleString('en-US').padStart(18)) +
+        paint(yellow, row.attempts.toLocaleString('en-US').padStart(18)) +
         '  ' +
-        paint('32', row.changedTerms.toLocaleString('en-US').padStart(12)) +
+        paint(green, row.changedTerms.toLocaleString('en-US').padStart(12)) +
         '  ' +
-        paint('32', (tagRate(row) ?? '—').padStart(10))
+        paint(green, (tagRate(row) ?? '—').padStart(10))
     )
     for (let i = width; i < row.match.length; i += width) {
-      lines.push(paint('36', row.match.slice(i, i + width)))
+      lines.push(paint(cyan, row.match.slice(i, i + width)))
     }
   })
-  lines.push(paint('2', divider))
+  lines.push(paint(dim, divider))
   return lines.join('\n')
 }
 

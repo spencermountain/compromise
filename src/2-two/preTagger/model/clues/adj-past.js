@@ -1,9 +1,10 @@
 import adj from './_adj.js'
+import tags from '../../tagSet/aliases.js'
+
+const { VBD: past, JJ: jj } = tags
 
 // the boiled egg
 // boiled the water
-const past = 'PastTense'
-const jj = 'Adjective'
 
 const adjPast = {
   beforeTags: {

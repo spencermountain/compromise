@@ -1,3 +1,4 @@
+import { b as boldColor, dim as dimColor, cyan as cyanColor, green as greenColor, red as redColor, yellow as yellowColor } from '../../src/API/_color.js'
 /* eslint-disable no-console */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -246,13 +247,13 @@ const previousResult = () => {
 }
 
 const useColor = Boolean(process.stdout.isTTY) && !Object.prototype.hasOwnProperty.call(process.env, 'NO_COLOR')
-const color = (code, text) => (useColor ? `\x1b[${code}m${text}\x1b[0m` : text)
-const bold = text => color(1, text)
-const dim = text => color(2, text)
-const cyan = text => color(36, text)
-const green = text => color(32, text)
-const red = text => color(31, text)
-const yellow = text => color(33, text)
+const color = (style, text) => (useColor ? style(text) : text)
+const bold = text => color(boldColor, text)
+const dim = text => color(dimColor, text)
+const cyan = text => color(cyanColor, text)
+const green = text => color(greenColor, text)
+const red = text => color(redColor, text)
+const yellow = text => color(yellowColor, text)
 
 const maxSlowdownPercent = () => {
   const value = process.env.BENCH_MAX_SLOWDOWN_PERCENT

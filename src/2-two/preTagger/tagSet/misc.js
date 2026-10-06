@@ -8,6 +8,7 @@ const anything = [NN, V, JJ, RB, Value, QuestionWord]
 
 export default {
   Adjective: {
+    aliases: ['JJ'],
     not: [NN, V, RB, Value],
     alias: 'Adj'
   },
@@ -15,19 +16,25 @@ export default {
     is: JJ,
   },
   Comparative: {
+    aliases: ['Comp', 'JJR'],
     is: JJ,
   },
   Superlative: {
+    aliases: ['Sup', 'JJS'],
     is: JJ,
     not: [JJR],
   },
-  NumberRange: {},
+  NumberRange: {
+    aliases: ['NumRange'],
+  },
   Adverb: {
+    aliases: ['RB'],
     not: [NN, V, JJ, Value],
     alias: 'Adv'
   },
 
   Determiner: {
+    aliases: ['DT'],
     not: [NN, V, JJ, RB, QuestionWord, Conj], //allow 'a' to be a Determiner/Value
     alias: 'Det'
   },
@@ -35,16 +42,19 @@ export default {
     not: [NN, V, JJ, RB, QuestionWord, Det],
   },
   Conjunction: {
+    aliases: ['CC'],
     is: Connector,
     not: anything.concat([IN]),
     alias: 'Conj'
   },
   Preposition: {
+    aliases: ['IN'],
     is: Connector,
     not: [NN, V, JJ, RB, QuestionWord, Det, Conj],
     alias: 'Prep'
   },
   QuestionWord: {
+    aliases: ['QW'],
     not: [Det],
   },
   Currency: {
@@ -84,6 +94,7 @@ export default {
     not: [RomanNumeral, PRP, Date],
   },
   Negative: {
+    aliases: ['Neg'],
     not: [NN, JJ, Value, Expression],
   },
   Condition: {

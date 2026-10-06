@@ -1,17 +1,12 @@
+import tags from '../../tagSet/aliases.js'
+
+const {
+  JJ: Adj, VB: Inf, Pres, Sing, VBD: Past, RB: Adverb, Expression: Exp, Actor,
+  V: Verb, NN: Noun, Last
+} = tags
 //regex suffix patterns and their most common parts of speech,
 //built using wordnet, by spencer kelly.
 //this mapping shrinks-down the uglified build
-const Adj = 'Adjective'
-const Inf = 'Infinitive'
-const Pres = 'PresentTense'
-const Sing = 'Singular'
-const Past = 'PastTense'
-const Adverb = 'Adverb'
-const Exp = 'Expression'
-const Actor = 'Actor'
-const Verb = 'Verb'
-const Noun = 'Noun'
-const Last = 'LastName'
 
 export default {
   a: [

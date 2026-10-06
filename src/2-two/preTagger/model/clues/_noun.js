@@ -1,4 +1,6 @@
-const n = 'Singular'
+import tags from '../../tagSet/aliases.js'
+
+const { Sing: n } = tags
 export default {
   beforeTags: {
     Determiner: n, //the date

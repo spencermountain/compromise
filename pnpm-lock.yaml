@@ -94,11 +94,11 @@ importers:
         specifier: workspace:^
         version: link:../..
       spacetime:
-        specifier: ^7.14.0
-        version: 7.15.0
+        specifier: ^7.16.0
+        version: 7.16.0
       spacetime-holiday:
         specifier: 0.3.0
-        version: 0.3.0(spacetime@7.15.0)
+        version: 0.3.0(spacetime@7.16.0)
     devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: 'catalog:'
@@ -1405,8 +1405,9 @@ packages:
     peerDependencies:
       spacetime: '>=6.3.0'
 
-  spacetime@7.15.0:
-    resolution: {integrity: sha512-B3UuJ+3MNAbep6Ag3lEC+/KieZTY1F0QXznMAR4yERiUhlhXHoWRtf7HatOuxm5Wy7kOe9bKqpDfelXEvTk5Jw==}
+  spacetime@7.16.0:
+    resolution: {integrity: sha512-cPdUij56eMHjPXYG9oregln8OzgxBMH+L+nyXqXG5TH/W9aqYyXo4uTpmqw7/Mzl06RvD+h3vtO5JP4ScXTAag==}
+    engines: {node: '>=18.0.0'}
 
   stop-iteration-iterator@1.1.0:
     resolution: {integrity: sha512-eLoXW/DHyl62zxY4SCaIgnRhuMr6ri4juEYARS8E6sCEqzKpOiE521Ucofdx+KnDZl5xmvGYaaKCk5FEOxJCoQ==}
@@ -2753,11 +2754,11 @@ snapshots:
 
   source-map@0.6.1: {}
 
-  spacetime-holiday@0.3.0(spacetime@7.15.0):
+  spacetime-holiday@0.3.0(spacetime@7.16.0):
     dependencies:
-      spacetime: 7.15.0
+      spacetime: 7.16.0
 
-  spacetime@7.15.0: {}
+  spacetime@7.16.0: {}
 
   stop-iteration-iterator@1.1.0:
     dependencies:

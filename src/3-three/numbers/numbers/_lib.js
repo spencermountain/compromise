@@ -14,7 +14,8 @@ const convert = (view, tag, skip, getFormat) => {
     }
     const str = format(obj, getFormat(val))
     val.replaceWith(str, { tags: true })
-    val.tag(tag)
+    // Generated currency words keep their noun tags.
+    val.not('#Currency').tag(tag)
     if (tag === 'Ordinal' || tag === 'Cardinal') {
       agree(val, tag === 'Ordinal' || obj.num === 1)
     }

@@ -4,6 +4,8 @@ import format from './format/index.js'
 import isUnit from './isUnit.js'
 import convert from './_lib.js'
 import toFraction from './toFraction.js'
+import toPercentage from './toPercentage.js'
+import toDecimal from './toDecimal.js'
 
 const addMethod = function (View) {
   /**   */
@@ -96,7 +98,13 @@ const addMethod = function (View) {
         val => val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal')
     }
     toFraction() {
-      return toFraction(this.percentages())
+      return toFraction(this)
+    }
+    toPercentage() {
+      return toPercentage(this)
+    }
+    toDecimal() {
+      return toDecimal(this.percentages())
     }
 
     /** return only numbers that are == n */

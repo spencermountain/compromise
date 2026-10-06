@@ -33,7 +33,7 @@ const stepBack = function (m, cb) {
 }
 
 const coreference = function (view) {
-  const pronouns = view.pronouns().if('(he|him|his|she|her|hers|they|their|theirs|it|its)')
+  const pronouns = view.pronouns().if('(he|him|his|she|her|hers|they|them|their|theirs|it|its)')
   pronouns.forEach(pron => {
     let res = null
     // connect pronoun to its reference
@@ -41,7 +41,7 @@ const coreference = function (view) {
       res = stepBack(pron, (m) => getPerson(m, 'm'))
     } else if (pron.has('(she|her|hers)')) {
       res = stepBack(pron, (m) => getPerson(m, 'f'))
-    } else if (pron.has('(they|their|theirs)')) {
+    } else if (pron.has('(they|them|their|theirs)')) {
       res = stepBack(pron, getThey)
     }
     if (res && res.found) {

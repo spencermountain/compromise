@@ -124,8 +124,12 @@ export interface Numbers extends View {
   toCardinal: () => View
   /** convert number to `fifth` or `5th` */
   toOrdinal: () => View
-  /** convert a percentage to a fraction with denominator 100 */
+  /** convert decimals to reduced fractions, or percentages to fractions over 100 */
   toFraction: () => Fractions
+  /** convert decimals to percentages */
+  toPercentage: () => Numbers
+  /** convert percentages to decimals */
+  toDecimal: () => Numbers
   /** return numbers with this value */
   isEqual: (n?: number) => View
   /** return numbers bigger than n */
@@ -156,7 +160,7 @@ export interface MoneyJson {
   [key: string]: unknown
 }
 
-export interface Money extends Omit<Numbers, 'toOrdinal' | 'toCardinal' | 'toFraction'> {
+export interface Money extends Omit<Numbers, 'toOrdinal' | 'toCardinal' | 'toFraction' | 'toPercentage' | 'toDecimal'> {
   parse: (n?: number) => MoneyValue[]
   get: (n?: number) => number[]
   json: (n?: number | JsonProps | string) => MoneyJson[]
@@ -201,12 +205,14 @@ export interface Fractions extends View {
   toDecimal: () => View
   /** convert 'one fourth' to `1/4` */
   toFraction: () => View
-  /** convert '1/4' to '1/4th' */
+  /** convert '1/4' to 'one fourth' */
   toOrdinal: () => View
-  /** convert '1/4th' to '1/4' */
+  /** convert '1/4' to 'one out of four' */
   toCardinal: () => View
+  /** convert '1/4' to 'one fourth' */
+  toText: () => Three
   /** convert '1/4' to `25%` */
-  toPercentage: (n?: number) => View
+  toPercentage: (n?: number) => Three
   first: (n?: number) => this
   last: (n?: number) => this
   eq: (n: number) => this

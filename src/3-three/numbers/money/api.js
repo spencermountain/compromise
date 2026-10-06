@@ -1,28 +1,6 @@
-import symbols from './currencies.js'
+import find from './find.js'
+import parse from './parse.js'
 import mapNumbers from './_lib.js'
-
-const find = function (doc) {
-  return doc.match('#Money+ #Currency? (#Money+ #Currency?)?')
-}
-
-
-const parse = function (m) {
-  m = m.clone()
-  let currency = m.match('#Currency').nouns().toSingular().text('normal')
-  const num = m.match('#Money').numbers().get()[0]
-  if (!currency) {
-    // look for currency in symbol
-    const str = m.text()
-    const found = symbols.find(([sym]) => str.includes(sym))
-    if (found) {
-      currency = found[1]
-    }
-  }
-  return {
-    currency,
-    num,
-  }
-}
 
 const plugin = function (View, Numbers) {
   /**
@@ -36,24 +14,22 @@ const plugin = function (View, Numbers) {
       return mapNumbers(this, fn)
     }
     parse(n) {
-      return this.getNth(n).map(parse)
+      return this.getNth(n).map(parse, [])
     }
     get(n) {
-      return this.getNth(n).map(parse).map(p => p.num)
+      return this.parse(n).map(p => p.num)
     }
     json(n) {
+      const opts = typeof n === 'object' ? n : {}
       return this.getNth(n).map(p => {
-        const json = p.toView().json(n)[0]
+        const json = p.toView().json(opts)[0]
         const parsed = parse(p)
         json.money = parsed
         return json
       }, [])
     }
     currency(n) {
-      return this.getNth(n).map(p => {
-        const parsed = parse(p)
-        return parsed.currency
-      })
+      return this.parse(n).map(p => p.currency)
     }
   }
 
@@ -62,6 +38,8 @@ const plugin = function (View, Numbers) {
     toOrdinal: undefined,
     toCardinal: undefined,
     toFraction: undefined,
+    toPercentage: undefined,
+    toDecimal: undefined,
   })
 
   View.prototype.money = function (n) {

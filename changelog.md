@@ -11,7 +11,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - filter verbose mode output by word
 - **[new]** - `"debug:word"`, `"debug:hooks"`, and  `"debug:filesize"` scripts
 - **[new]** - `money().add()` and other arithmetic methods
-- **[new]** - `percentages().toFraction()` and `fractions().toPercentage()` method
+- **[new]** - add roundtrip `decimal → fraction → percentage → decimal` methods
 - **[new]** - behaviour options to `fromSpec()` method
 - **[change]** - add term-length test to `.testSpec()`
 - **[change]** - more unicode punctuation normalization

@@ -1,19 +1,21 @@
 import parse from './parse/index.js'
+import { decimalFraction, isPercent, replaceNumber } from './_conversion.js'
 
-const toFraction = percentages => {
-  const result = percentages.map(value => {
-    const { num } = parse(value)
-    if (!Number.isFinite(num)) {
+const toFraction = numbers => {
+  const result = numbers.map(value => {
+    if (value.has('#Fraction')) {
       return value
     }
-    // Include a spelled-out unit, while keeping the numeric parse separate.
-    const phrase = value.growRight('(percent|percentage|per cent)')
-    // A leading decimal point is stored as pre-punctuation.
-    const first = phrase.docs[0][0]
-    if (/\.$/.test(first.pre) && /^\d/.test(first.text)) {
-      first.pre = first.pre.slice(0, -1)
+    const { num } = parse(value)
+    if (!Number.isFinite(num) || value.has('#Money')) {
+      return value.none()
     }
-    phrase.replaceWith(`${num}/100`)
+    let str = decimalFraction(num)
+    if (isPercent(value)) {
+      str = `${num}/100`
+      value = value.growRight('(percent|percentage|per cent)')
+    }
+    const phrase = replaceNumber(value, str)
     phrase.unTag('Percent').tag(['Fraction', 'NumericValue'])
     return phrase
   })

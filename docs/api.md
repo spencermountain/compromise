@@ -219,7 +219,9 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.toText()`** — convert number to `five` or `fifth`
 - **`.toCardinal()`** — convert number to `five` or `5`
 - **`.toOrdinal()`** — convert number to `fifth` or `5th`
-- **`.toFraction()`** — convert selected percentages to fractions over 100, such as `4.5%` → `4.5/100`; returns a Fractions selection
+- **`.toFraction()`** — convert decimals to reduced fractions, such as `0.25` → `1/4`, or percentages to fractions over 100, such as `4.5%` → `4.5/100`; returns a Fractions selection
+- **`.toPercentage()`** — convert decimals to percentages, such as `0.25` → `25%`; existing percentages remain unchanged. Returns a Numbers selection of percentages.
+- **`.toDecimal()`** — convert selected percentages to decimals, such as `25%` → `0.25`; returns a Numbers selection of the converted values
 - **`.isEqual()`** — return numbers with this value
 - **`.greaterThan(min)`** — return numbers bigger than n
 - **`.lessThan(max)`** — return numbers smaller than n
@@ -240,6 +242,16 @@ const fractions = doc.percentages().toFraction()
 fractions.eq(0).toPercentage()
 doc.text() // 'We saved 25% on books and 50/100 on pens.'
 ```
+
+Conversions can round-trip through all three forms:
+
+```js
+const doc = nlp('0.25')
+doc.numbers().toPercentage().toFraction().toDecimal()
+doc.text() // '0.25'
+```
+
+Fraction-to-percentage conversion rounds to two decimal places except for fractions over 100, so some round trips lose precision.
 
 ### `.money()` →
 
@@ -278,15 +290,12 @@ doc.text() // 'i paid $6.32 for a pizza slice'
 
 Comparisons use numeric values without currency conversion. Arithmetic operates in
 the written unit: adding 1 to `50 cents` produces `51 cents`. Compound amounts such
-as `5 dollars and 32 cents` are currently left unchanged by arithmetic and formatting;
-parsing currently returns only the first numeric component. Arithmetic inherits
-Numbers' floating-point behavior and does not preserve trailing decimal zeros.
-
-Known output gaps covered by regression tests: `.json(n)` can throw for a nonzero
-index, and empty `.parse()`, `.get()`, and `.currency()` currently return a view
-instead of the intended empty array. Converting a symbol amount such as `$5` with
-`.toText()` produces `five dollars`, but subsequent `.currency()` can return an empty
-string because the generated currency word is not recognized.
+as `5 dollars and 32 cents` parse as one amount (`5.32`) when the major and minor
+units are compatible. Dollars/euros with cents and pounds with pence/pennies are
+supported; different currencies remain separate selections. Standalone `50 cents`
+returns `50`. Compound amounts are still left unchanged by arithmetic and formatting.
+Monetary amounts can have more than two decimal places. Arithmetic inherits Numbers'
+floating-point behavior and does not preserve trailing decimal zeros.
 
 ### `.fractions()` →
 
@@ -294,8 +303,9 @@ string because the generated currency word is not recognized.
 - **`.get(n?)`** — grab the parsed number
 - **`.toDecimal()`** — convert '1/4' to `0.25`
 - **`.toFraction()`** — convert 'one fourth' to `1/4`
-- **`.toOrdinal()`** — convert '1/4' to '1/4th'
-- **`.toCardinal()`** — convert '1/4th' to '1/4'
+- **`.toOrdinal()`** — convert `1/4` to `one fourth`
+- **`.toCardinal()`** — convert `1/4` to `one out of four`
+- **`.toText()`** — convert `1/4` to `one fourth`
 - **`.toPercentage(n?)`** — convert fractions such as `1/4` or `one half` to `25%` or `50%`; optionally convert only the nth fraction. Mutates the document and returns a View of the processed selection. Fractions over 100 preserve the numerator's precision; other denominators round to two decimal places. Unparseable fractions and zero denominators remain unchanged.
 
 ### `.sentences()` →

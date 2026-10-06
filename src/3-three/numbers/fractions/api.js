@@ -70,7 +70,7 @@ const plugin = function (View) {
         const obj = parse(m)
         const str = toOrdinal(obj)
         if (str) {
-          m.replaceWith(str)
+          m.replaceWith(m.fromText(str).tag('Fraction'))
         }
       })
       return this

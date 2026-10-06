@@ -10,7 +10,7 @@ const getThey = function (s) {
     return things.last()
   }
   // re-use existing pronoun reference
-  const chain = findChained('(they|their|theirs)', s)
+  const chain = findChained('(they|them|their|theirs)', s)
   if (chain.found) {
     return chain
   }

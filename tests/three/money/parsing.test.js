@@ -2,37 +2,6 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[three/money/parsing] '
 
-// test('get currency ', function (t) {
-//   let arr = [
-//     ['50 canadian dollars', 'CAD'],
-//     ['10.5 kronor', 'SEK'],
-//     ['100 öre', 'SEK'],
-//     ['$50 CAD', 'CAD'],
-//     ['50 WON', 'KRW'],
-//     ['£30.50', 'GBP'],
-//     ['₩50', 'KRW'],
-//     ['$50', 'USD'],
-//     ['$50CAD', 'CAD'],
-//   ]
-//   arr.forEach((a) => {
-//     let doc = nlp(a[0])
-//     let json = doc.money().json()[0]
-//     t.equal(a[1], json.iso, here + a[0])
-//   })
-//   t.end()
-// })
-
-// test('money formats', function (t) {
-//   let doc = nlp('£30.50')
-//   let str = doc.money().toText()
-//   t.equal(str, 'thirty point five pounds', here)
-
-//   doc = nlp('9 WON')
-//   str = doc.money().toText()
-//   t.equal(str, 'nine won', '9 won', here)
-//   t.end()
-// })
-
 test('money-parse:', function (t) {
   const arr = [
     ['i paid $5.32 for a pizza slice', 5.32],

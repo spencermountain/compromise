@@ -61,12 +61,3 @@ test('reindex on concat:', function (t) {
   t.deepEqual(json.terms[1].index, [5, 1], here + 'reindex after concat')
   t.end()
 })
-
-// test('reindex on unique:', function (t) {
-//   let doc = nlp('one two one two three').terms()
-//   doc = doc.unique()
-//   t.equal(doc.text(), 'one two three', here+'unique smoketest')
-//   let json = doc.json()
-//   t.deepEqual(json[2].terms[0].index, [2, 0], here+'reindex after unique')
-//   t.end()
-// })

@@ -125,7 +125,6 @@ test('clone-partial :', function (t) {
   t.end()
 })
 
-
 test('remove full-sentence', function (t) {
   const doc = nlp(`extra. one two.`)
   doc.remove('extra')
@@ -142,8 +141,6 @@ test('remove doc by index :', function (t) {
   t.equal(doc.text(), 'one two three', here + 'pointer index')
   t.end()
 })
-
-
 
 test('remove-everything-basic', function (t) {
   const doc = nlp(`2pm`)
@@ -224,7 +221,6 @@ test('remove-bug-1', function (t) {
   t.end()
 })
 
-
 // weird remove issue
 test('remove-bug-2', function (t) {
   let doc = nlp('two three')
@@ -243,7 +239,6 @@ test('remove-bug-2', function (t) {
 
   t.end()
 })
-
 
 test('remove-bug-3', function (t) {
   const txt = `
@@ -280,16 +275,6 @@ test('remove-with-contractions', function (t) {
   t.end()
 })
 
-// test('remove-self-keep-splits', function (t) {
-//   let m = nlp('one two three. four.')
-//   m = m.terms()
-//   // [one, two, three, four]
-//   m = m.match('three').remove()
-//   // [one, two, four]
-//   t.deepEqual(m.out('array'), ['one', 'two.', 'four'])
-//   t.end()
-// })
-
 test('remove-keep-splits', function (t) {
   let m = nlp('one two three. four.')
   m = m.terms()
@@ -299,7 +284,6 @@ test('remove-keep-splits', function (t) {
   t.deepEqual(m.out('array'), ['one', 'two.', 'four.'], here + 'keep-splits')
   t.end()
 })
-
 
 test('double-self becomes empty', function (t) {
   const txt = `zero foo. one match foo. two foo.`

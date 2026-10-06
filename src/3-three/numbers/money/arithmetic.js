@@ -41,6 +41,10 @@ const replace = (part, amount, negative = amount < 0) => {
         digits += '.' + fraction
       }
     }
+    const code = number.text().match(/(cad|usd)\b/i)?.[0]
+    if (code) {
+      obj.suffix = obj.suffix.replace(/cad|usd/i, code)
+    }
     str = obj.prefix + digits + obj.suffix
     if (negative) {
       str = '-' + str

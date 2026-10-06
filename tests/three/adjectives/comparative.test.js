@@ -18,7 +18,6 @@ test('toComparative misc', function (t) {
   t.end()
 })
 
-
 test('.toComparative():', function (t) {
   const arr = [
     ["high", "higher"],
@@ -380,7 +379,6 @@ test('.toComparative():', function (t) {
     ['young', 'younger'],
     ['zany', 'zanier'],
 
-
   ]
   arr.forEach(a => {
     const doc = nlp(a[0]).tag('Adjective')
@@ -389,93 +387,3 @@ test('.toComparative():', function (t) {
   })
   t.end()
 })
-
-
-
-
-
-// test('.unchanged:', function (t) {
-//   let arr = [
-//     'energetic',
-//     'compassionate',
-//     'generous',
-//     'ambitious',
-//     'considerate',
-//     'thorough',
-//     'dependable',
-//     'patient',
-//     'successful',
-//     'industrious',
-//     'talented',
-//     'diligent',
-//     'skillful',
-//     'supportive',
-//     'adaptable',
-//     'dynamic',
-//     'imaginative',
-//     'conscientious',
-//     'organized',
-//     'polished',
-//     'polished',
-//     'energetic',
-//     'affectionate',
-//     'determined',
-//     'motivated',
-//     'persistent',
-//     'ingenious',
-//     'thoughtful',
-//     'popular',
-//     'capable',
-//     'loyal',
-//     'flexible',
-//     'dignified',
-//     'skillful',
-//     'amusing',
-//     'meticulous',
-//     'sensitive',
-//     'balanced',
-//     'sensible',
-//     'honorable',
-//     'enthusiastic',
-//     'reliable',
-//     'obedient',
-//     'devoted',
-//     'affable',
-//     'adventurous',
-//     'talented',
-//     'creative',
-//     'confident',
-//     'thrifty',
-//     'intuitive',
-//     'resourceful',
-//     'helpful',
-//     'courageous',
-//     'gentlemanly',
-//     'considerate',
-//     'energized',
-//     'dominant',
-//     'eloquent',
-//     'resilient',
-//     'insightful',
-//     'practical',
-//     'consistent',
-//     'realistic',
-//     'independent',
-//     'discreet',
-//     'diligent',
-//     'mature',
-//     'responsive',
-//     'grateful',
-//     'youthful',
-//     'upbeat',
-//     'gifted',
-//     'united',
-//     'optimistic',
-//     'selfless',
-//     'amiable',
-//     'detail-oriented',
-//     'positive',
-//   ]
-//   t.end()
-// })
-

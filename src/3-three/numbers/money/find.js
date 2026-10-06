@@ -1,27 +1,31 @@
 import { isMinor, decimalName } from './_currency.js'
 
 // Numbers already groups multiword values and separates adjacent numeric amounts.
-const parts = doc => doc.numbers().map(value => {
-  let number = value.not('^and').not('and$')
-  if (number.text('reduced') === 'minus') {
-    return number.none()
-  }
-  number = number.growLeft('minus')
-  if (!number.found) {
-    return number
-  }
-  let amount = number.growRight('#Currency+')
-  const [sentence, start, end] = number.fullPointer[0]
-  const next = number.document[sentence][end]
-  const configured = next && decimalName(next.normal, number.world)
-  if (configured) {
-    amount = number.toView([[sentence, start, end + 1]]).growRight('#Currency+')
-  }
-  if (!configured && !number.has('#Money') && !amount.has('#Currency') && !number.text().includes('¢')) {
-    return number.none()
-  }
-  return amount.growRight('(pound|pounds)')
-})
+const parts = doc => {
+  // Normalization turns prefix ¢ into c, hiding its monetary spelling.
+  doc.terms().filter(term => /^¢[0-9]/.test(term.text())).tag(['Money', 'Value'])
+  return doc.numbers().map(value => {
+    let number = value.not('^and').not('and$')
+    if (number.text('reduced') === 'minus') {
+      return number.none()
+    }
+    number = number.growLeft('minus')
+    if (!number.found) {
+      return number
+    }
+    let amount = number.growRight('(#Currency|cad|usd)+').growLeft('(cad|usd)')
+    const [sentence, start, end] = number.fullPointer[0]
+    const next = number.document[sentence][end]
+    const configured = next && decimalName(next.normal, number.world)
+    if (configured) {
+      amount = number.toView([[sentence, start, end + 1]]).growRight('(#Currency|cad|usd)+').growLeft('(cad|usd)')
+    }
+    if (!configured && !number.has('#Money') && !amount.has('(#Currency|cad|usd)') && !number.text().includes('¢')) {
+      return number.none()
+    }
+    return amount.growRight('(pound|pounds)').growRight('(cad|usd)')
+  })
+}
 
 const find = doc => {
   const pointers = []
@@ -47,7 +51,7 @@ const find = doc => {
 }
 
 const numberOf = amount => {
-  let number = amount.not('#Currency').not('(pound|pounds)$')
+  let number = amount.not('(#Currency|cad|usd)').not('(pound|pounds)$')
   const last = number.lastTerm()
   if (decimalName(last.text('normal'), amount.world)) {
     number = number.not(last)

@@ -92,8 +92,8 @@ test('verb-tagger context (regression):', function (t) {
   t.end()
 })
 
-const knownGaps = [
-  // imperative after a reporting verb — the "simon says run" bug
+const contextualVerbs = [
+  // imperative after a reporting verb
   ['simon says run', 'run'],
   ['simon says jump', 'jump'],
   ['simon says walk', 'walk'],
@@ -121,8 +121,8 @@ const knownGaps = [
   ['a man who fights', 'fights'],
 ]
 
-test('verb-tagger known gaps (mistagged as Noun):', function (t) {
-  knownGaps.forEach(([fragment, word]) => {
+test('verbs after reporting verbs, particles and in clauses:', function (t) {
+  contextualVerbs.forEach(([fragment, word]) => {
     const got = isVerb(fragment, word)
     const msg = `${here}'${word}' should be a Verb in "${fragment}"`
     t.ok(got, msg)

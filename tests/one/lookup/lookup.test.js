@@ -33,7 +33,6 @@ test('lookup-basic', function (t) {
   t.end()
 })
 
-
 test('lookup-tricky', function (t) {
   const doc = nlp('one two three four five. no here results.')
   let res = doc.lookup(['zero one two'])
@@ -79,7 +78,6 @@ test('lookup-repeat', function (t) {
   t.end()
 })
 
-
 test('lookup-fallback', function (t) {
   let trie = nlp.buildTrie(['a b c d e f', 'a b'])
   let doc = nlp('one two a b three')
@@ -103,7 +101,6 @@ test('lookup-fallback', function (t) {
 
   t.end()
 })
-
 
 test('lookup-input', function (t) {
   const doc = nlp('captain of the football team.')
@@ -140,7 +137,6 @@ test('lookup-reserved', function (t) {
   t.end()
 })
 
-
 test('lookup no-contractions', function (t) {
   const arr = [
     'foobar',
@@ -154,7 +150,6 @@ test('lookup no-contractions', function (t) {
   t.equal(res.has('afghanistan'), true, 'no-contraction got first one')
   t.end()
 })
-
 
 test('lookup array', function (t) {
   let doc = nlp("he isn't AT Spencer's house of pain. The haunted house of not pain. Third sentence spencer.")
@@ -174,7 +169,6 @@ test('lookup array', function (t) {
   t.end()
 })
 
-
 test('lookup backtrack', function (t) {
   let doc = nlp('first one one one two.')
   let res = doc.lookup(['two three', 'one', 'blah'])
@@ -190,44 +184,3 @@ test('lookup backtrack', function (t) {
 
   t.end()
 })
-
-
-// test('obj-scan', function(t) {
-//   let doc = nlp('one one two three four five.  here one result.')
-//   let trie = nlp.buildTrie({ two: 'Fun', here: 'Fun' })
-//   let res = doc.lookup(trie)
-//   t.equal(res['Fun'].length, 2, 'two single results')
-
-//   doc = nlp('one one two three four five.  here one result.')
-//   trie = nlp.buildTrie({ one: 'One', 'not here': 'Missing' })
-//   res = doc.lookup(trie)
-//   t.equal(res['One'].length, 3, 'three one results')
-//   t.equal(res['Missing'], undefined, 'no missing results')
-
-//   trie = nlp.buildTrie({})
-//   res = doc.lookup(trie)
-//   t.equal(Object.keys(res).length, 0, 'no results')
-
-//   t.end()
-// })
-
-// test('lookup object', function (t) {
-//   let doc = nlp('spencer kelly is working here')
-//   let res = doc.lookup({
-//     'spencer kelly': 'Cool',
-//     working: 'Uncool',
-//     miss: 'None',
-//   })
-//   t.equal(Object.keys(res).length, 2, 'found two keys')
-//   t.equal(res.Cool.text(), 'spencer kelly', 'obj text-one')
-//   t.equal(res.Uncool.text(), 'working', 'obj text-two')
-
-//   doc = nlp('one two three four')
-//   res = doc.lookup({ 'two three four': 'yes', one: 'single', blah: 'no', 'three four five': 'nope' })
-//   let keys = Object.keys(res)
-//   t.equal(keys.length, 2, 'found obj single, multi')
-//   t.equal(res['single'].text(), 'one', 'found single')
-//   t.equal(res['yes'].text(), 'two three four', 'found multi')
-
-//   t.end()
-// })

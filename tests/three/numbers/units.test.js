@@ -81,16 +81,3 @@ test('isUnits:', function (t) {
   t.deepEqual(m.out('array'), ['300gb', '600'], 'unit-normalized')
   t.end()
 })
-// test('implicit units', function (t) {
-//   let arr = [
-//     // ['99%', '99%'],
-//     // ['99%', '99 percent'],
-//     // ['99%', '%'],
-//     ['9ft', 'feet'],
-//   ]
-//   arr.forEach(a => {
-//     let doc = nlp(a[0])
-//     t.ok(doc.has(a[1]), here + a[1])
-//   })
-//   t.end()
-// })

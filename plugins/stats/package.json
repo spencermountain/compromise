@@ -56,7 +56,7 @@
     "tap-dancer": "catalog:"
   },
   "peerDependencies": {
-    "compromise": "workspace:*"
+    "compromise": "workspace:^"
   },
   "unpkg": "./builds/compromise-stats.min.js"
 }

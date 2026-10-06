@@ -33,13 +33,6 @@ test('concat tag :', function (t) {
   t.end()
 })
 
-// test('concat tag :', function (t) {
-//   let doc = nlp('one here. two here. three here')
-//   let mid = doc.match('two here')
-//   mid.concat('cool times. oh yeah')
-//   t.end()
-// })
-
 test('concat pointers :', function (t) {
   let doc = nlp('one two three four')
   let a = doc.match('two three')
@@ -68,7 +61,6 @@ test('concat doc :', function (t) {
   doc.concat(doc2)
   t.equal(doc.text(), 'walk the plank foo bar', here + 'concat doc')
   t.equal(doc.match('plank foo').found, false, here + 'concat is two sentences')
-
 
   const a = nlp('before text. middle.')
   const b = nlp('after text.')

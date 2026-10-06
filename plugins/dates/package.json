@@ -49,7 +49,7 @@
     "spacetime-holiday": "0.3.0"
   },
   "peerDependencies": {
-    "compromise": "workspace:*"
+    "compromise": "workspace:^"
   },
   "unpkg": "./builds/compromise-dates.min.js",
   "devDependencies": {

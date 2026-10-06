@@ -10,25 +10,6 @@ test('matchOne', function (t) {
   t.end()
 })
 
-// test('match-from-array :', function (t) {
-//   let m = nlp('spencer is really cool').match(['spencer'])
-//   t.equal(m.out('normal'), 'spencer', 'just-spencer')
-//   t.equal(m.length, 1, 'one-result')
-
-//   m = nlp('spencer is really cool').match([])
-//   t.equal(m.out('normal'), '', 'empty match')
-//   t.equal(m.length, 0, 'zero-results')
-
-//   m = nlp('spencer is really cool')
-//   let r = m.match(['spencer', 'really']).toUpperCase()
-//   t.equal(r.out('text'), 'SPENCER REALLY', 'match-spencer-really')
-//   t.equal(r.length, 2, 'two-results')
-
-//   t.equal(m.out('text'), 'SPENCER is REALLY cool', 'match-spencer-really')
-//   t.equal(m.length, 1, 'still-one-result')
-//   t.end()
-// })
-
 test('greedy-capture', function (t) {
   let m = nlp('so ralf and really eats the glue').match('* [eats] the', 0)
   t.equal(m.out('normal'), 'eats', here + 'one-captures')

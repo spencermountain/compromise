@@ -16,7 +16,7 @@ catalog:
   'nlp-corpus': '4.4.0'
   'efrt': '2.9.0'
 
-linkWorkspacePackages: true
+linkWorkspacePackages: false
 
 minimumReleaseAgeExclude:
   - grad-school@0.0.9

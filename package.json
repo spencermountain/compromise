@@ -93,6 +93,7 @@
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "pnpm --filter \"./plugins/*\" run test",
     "test:dates": "pnpm --filter \"./plugins/dates\" run test",
+    "test:all": "tape \"./**/*.test.js\" | tap-dancer",
     "test:hmm": "tape \"./tests/hmm/**/*.hmm.js\" | tap-dancer",
     "testb:plugins": "pnpm --filter \"./plugins/*\" run testb",
     "build:plugins": "pnpm --filter \"./plugins/*\" run build",
@@ -104,8 +105,8 @@
     "stress": "node scripts/test/stress.js",
     "bench": "node ./scripts/bench/index.js",
     "bench:write": "node ./scripts/bench/index.js --write",
-    "lint": "eslint src && pnpm lint:tests",
-    "lint:tests": "eslint tests \"plugins/*/tests/**/*.js\""
+    "lint": "eslint src",
+    "lint:all": "eslint ."
   },
   "files": [
     "AGENTS.md",

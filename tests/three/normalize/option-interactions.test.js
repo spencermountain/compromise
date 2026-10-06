@@ -94,14 +94,6 @@ test('hyphen-whitespace:', function (t) {
   t.end()
 })
 
-// test('dash-whitespace:', function (t) {
-//   let str = `a dash seperates words - like that`
-//   let doc = nlp(str)
-//   doc.normalize({ whitespace: true, punctuation: false })
-//   t.equal(doc.text(), `a dash seperates words like that`, here + 'dont keep the dash')
-//   t.end()
-// })
-
 test('elipses-whitespace:', function (t) {
   let doc = nlp('about this ...').normalize()
   t.equal(doc.out('text'), 'about this', here + 'normalize seperate elipses')

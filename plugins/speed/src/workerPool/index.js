@@ -14,7 +14,7 @@ const workerPool = function (txt, reg) {
   const parts = rip(txt, nlp, workerCount)
   // console.log(parts.length)
   const results = []
-  const isRunning = workers.map(_ => true)// eslint-disable-line
+  const isRunning = workers.map(_ => true)
 
   // workers.foreach
   workers.forEach((worker, i) => {

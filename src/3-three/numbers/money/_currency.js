@@ -15,15 +15,17 @@ const decimalName = (word, world) => {
   return Object.hasOwn(rates, singular) ? singular : ''
 }
 
-const currency = value => {
+const qualifier = value => value.text().match(/(?:^|[^a-z])(cad|usd)(?=$|[^a-z])/i)?.[1].toUpperCase() || ''
+
+const unit = value => {
   const m = value.clone()
-  let name = m.match('#Currency').first().nouns().toSingular().text('normal')
+  let name = m.match('#Currency').not('(cad|usd)').first().nouns().toSingular().text('normal')
   // Pounds can be tagged as measurement units.
   if (!name) {
     name = m.match('(pound|pounds)').nouns().toSingular().text('normal')
   }
   if (!name) {
-    name = decimalName(m.docs[0]?.at(-1)?.normal || '', m.world)
+    name = decimalName(m.not('(cad|usd)').docs[0]?.at(-1)?.normal || '', m.world)
   }
   if (!name) {
     const str = m.text()
@@ -32,22 +34,24 @@ const currency = value => {
       name = found[1]
     }
   }
-  return name
+  return name || qualifier(value)
 }
 
 const isMinor = (major, minor) => {
-  const expected = minorUnits[currency(major).toLowerCase()]
-  let unit = currency(minor).toLowerCase()
-  if (unit === 'pence') {
-    unit = 'penny'
+  const expected = minorUnits[unit(major).toLowerCase()]
+  let minorUnit = unit(minor).toLowerCase()
+  if (minorUnit === 'pence') {
+    minorUnit = 'penny'
   }
-  return Boolean(expected && expected === unit)
+  return Boolean(expected && expected === minorUnit)
 }
 
 const multiplier = value => {
-  const name = currency(value).toLowerCase()
+  const name = unit(value).toLowerCase()
   const rate = value.world.model.three.decimalCurrencies[name]
   return Number.isFinite(rate) && rate > 0 ? rate : 1
 }
+
+const currency = value => qualifier(value) || unit(value)
 
 export { currency, isMinor, multiplier, decimalName }

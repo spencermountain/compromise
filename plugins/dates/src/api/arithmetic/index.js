@@ -12,7 +12,9 @@ const shiftRange = (range, amount, unit, text, opts) => {
   if (!shifted.isValid() || (end && !end.isValid())) {
     return null
   }
+  // Fractional calendar shifts can introduce a time even on a date-only input.
   const time = range.unit === 'time' || clockUnits.has(unit) ||
+    (!Number.isInteger(amount) && shifted.epoch !== shifted.startOf('day').epoch) ||
     (!range.unit && (start.epoch !== start.startOf('day').epoch ||
       (range.end && range.end.d.epoch !== range.end.d.endOf('day').epoch)))
   if (range.unit === 'day' && !time) {

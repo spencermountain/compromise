@@ -17,7 +17,7 @@ const parse = value => {
   if (negative && num !== 0) {
     num *= -1
   }
-  return { currency: currency(first), num }
+  return { currency: currency(value), num }
 }
 
 export default parse

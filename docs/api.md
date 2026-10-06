@@ -307,14 +307,24 @@ with their new amounts. Results still use JavaScript numbers and their precision
 Minor-unit multipliers live in `nlp.world().model.three.decimalCurrencies`.
 Defaults are `0.01` for `cent`, `penny`, `pence`, `centavo`, `centime`, `paisa`,
 `ore`, and `öre`. Names use lowercase keys; common plural forms are recognized.
-The cent symbol `¢` uses the `cent` entry. Currency names remain the written names
-(e.g. `cent`), since these units do not uniquely identify a national currency.
+The cent symbol `¢` uses the `cent` entry. Without an explicit qualifier, currency names remain the written names (e.g.
+`cent`), since these units do not uniquely identify a national currency.
 
 ```js
 const rates = nlp.world().model.three.decimalCurrencies
 rates.cent = 0.001 // affects subsequent parsing, comparisons, and arithmetic
 rates.token = 0.01 // recognize custom amounts such as '25 tokens'
 ```
+
+Explicit `CAD` and `USD` qualifiers take precedence over generic currency names.
+They can precede or follow an amount, or be attached to a numeric amount:
+`CAD $50`, `$50 CAD`, and `$50CAD` all report `CAD` from `.currency()`.
+Code matching is case-insensitive and reported codes are uppercase. Qualifiers are
+retained through arithmetic and conversions. `50 cents CAD` still parses as `0.5`,
+while a bare `$50` reports `dollar` without guessing a national currency.
+
+Cent amounts round-trip through words: `50¢` → `fifty cents` → `50 cents` retains
+its value of `0.5`. Configured custom units follow the same conversion behavior.
 
 Changes apply to existing views on their next operation as well. Multipliers must be
 positive finite numbers; missing or invalid values default to `1`. Removing a custom

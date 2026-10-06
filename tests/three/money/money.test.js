@@ -68,9 +68,9 @@ test('money-currency:', function (t) {
     ['about $5 million', 'dollar'],
     ['nearly £2.5m', 'GBP'],
     // iso-code suffixes
-    ['the fee is 100 USD', 'usd'],
-    ['$4.09CAD', 'dollar'],
-    ['$400usd', 'dollar'],
+    ['the fee is 100 USD', 'USD'],
+    ['$4.09CAD', 'CAD'],
+    ['$400usd', 'USD'],
     // localized currency word (russian rouble)
     ['the rent is 900 rub', 'rub'],
   ]

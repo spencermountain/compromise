@@ -115,20 +115,3 @@ test('tagset-tree', function (t) {
   t.equal(m.has('#Adjective'), false, here + 'no Adjective')
   t.end()
 })
-
-// test('tagset-tree-array', function (t) {
-//   nlp.addTags({
-//     One: {},
-//     Two: {},
-//     Three: { is: ['Two', 'One', 'FirstName'] },
-//   })
-//   let doc = nlp(`have fun in toronto`, { toronto: 'Three' })
-//   let m = doc.match('toronto')
-//   t.ok(m.has('#Three'), here + 'three')
-//   t.ok(m.has('#Two'), here + 'two')
-//   t.ok(m.has('#One'), here + 'one')
-//   t.ok(m.has('#FirstName'), here + 'FirstName')
-//   t.ok(m.has('#Person'), here + 'Person')
-//   t.ok(m.has('#Noun'), here + 'Noun')
-//   t.end()
-// })

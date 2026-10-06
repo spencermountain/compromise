@@ -66,7 +66,6 @@ test('clone does not leak', function (t) {
   t.end()
 })
 
-
 test('clone share pointer', function (t) {
   const doc = nlp('one two three')
   const tmp = doc.clone()
@@ -83,18 +82,3 @@ test('clone share pointer', function (t) {
 
   t.end()
 })
-
-
-
-// test('partial clone ', function (t) {
-//   let doc = nlp(`one two three. four five six`).tag('Value')
-
-//   // clone first sentence
-//   let a = doc.eq(0).clone()
-//   // tag the whole thing
-//   a = a.all().tag('Person')
-//   t.equal(a.if('#Person').length, 2, here + 'A has 2 sentences')
-//   t.equal(doc.if('#Person').length, 1, here + 'doc has 1 sentence')
-
-//   t.end()
-// })

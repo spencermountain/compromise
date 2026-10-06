@@ -91,7 +91,7 @@ importers:
   plugins/dates:
     dependencies:
       compromise:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../..
       spacetime:
         specifier: ^7.14.0
@@ -125,7 +125,7 @@ importers:
   plugins/paragraphs:
     dependencies:
       compromise:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../..
     devDependencies:
       '@rollup/plugin-node-resolve':
@@ -153,7 +153,7 @@ importers:
   plugins/payload:
     dependencies:
       compromise:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../..
     devDependencies:
       '@rollup/plugin-node-resolve':
@@ -181,7 +181,7 @@ importers:
   plugins/speech:
     dependencies:
       compromise:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../..
     devDependencies:
       '@rollup/plugin-node-resolve':
@@ -212,7 +212,7 @@ importers:
         specifier: 'catalog:'
         version: 26.6.4
       compromise:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../..
     devDependencies:
       '@rollup/plugin-node-resolve':
@@ -243,7 +243,7 @@ importers:
   plugins/stats:
     dependencies:
       compromise:
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../..
       efrt:
         specifier: 'catalog:'

@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
-import build from '../../builds/two/compromise-two.mjs'
-import src from '../../src/two.js'
-let nlp = src
-if (process.env.TESTENV === 'prod') {
+const production = process.env.TESTENV === 'prod'
+const path = production ? '../../builds/two/compromise-two.mjs' : '../../src/two.js'
+const { default: nlp } = await import(path)
+if (production) {
   console.warn('== production build test 🚀 ==')
-  nlp = build
 }
 export default nlp

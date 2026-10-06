@@ -2,18 +2,6 @@ import test from 'tape'
 import nlp from '../_lib.js'
 const here = '[one/match/encoding] '
 
-// test('encoding-match:', function (t) {
-//   let r = nlp('it is * nice')
-//   let str = r.match('is \\*').out().trim()
-//   t.equal(str, 'is *', 'encode asterix')
-
-//   r = nlp('it is + nice');
-//   str = r.match('is \\+ nice').trim().out();
-//   t.equal(str, 'is + nice', 'encode plus');
-
-//   t.end()
-// })
-
 test('reserved-word-in-src:', function (t) {
   const r = nlp('buy eggs constructor yeah prototype')
   t.equal(r.has(`backburner`), false, here + 'single')

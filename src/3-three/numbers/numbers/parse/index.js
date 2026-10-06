@@ -44,6 +44,9 @@ const parseNumber = function (m) {
     return { num: parseText(m) }
   }
   let str = m.text('reduced')
+  if (m.text().includes('¢')) {
+    str = str.replace(/^c|c$/g, '¢')
+  }
   // reach for '12 litres'
   const unit = m.growRight('#Unit').match('#Unit$').text('machine')
   // is it in '3,123' format?

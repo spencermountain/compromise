@@ -74,23 +74,3 @@ test('conjugate stable', function (t) {
   t.equal(res.FutureTense, 'will fish', here + 'FutureTense conj')
   t.end()
 })
-
-// test('was shocked looking at', function (t) {
-//   let doc = nlp('i was shocked looking at the race')
-//   let verbs = doc.verbs()
-//   t.equal(verbs.length, 2, 'split into two')
-//   t.equal(verbs.eq(0).text(), 'was shocked', 'first verb')
-//   t.equal(verbs.eq(1).text(), 'looking', 'first verb')
-//   t.end()
-// })
-// test('detect participle in past-tense', function (t) {
-//   let doc = nlp('everybody ought to swim.')
-//   doc.verbs().toPastTense()
-//   t.equal(doc.out(), 'everybody ought to have swam.', 'ought to swim')
-
-//   doc = nlp('i think he really could have.')
-//   doc.verbs().toPastTense()
-//   t.equal(doc.out(), 'i thought he really could have.', 'really could')
-
-//   t.end()
-// })

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/lookaround] '
+const here = '[one/match/lookaround] '
 
 test('before-basic:', function (t) {
   const doc = nlp('one two match three match four')

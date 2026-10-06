@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/coreference/base-coref] '
 
 const cases = [
   [
@@ -380,7 +381,7 @@ const cases = [
   ],
 ]
 
-test('[three/coreference] per-occurrence references', t => {
+test(here + 'per-occurrence references', t => {
   cases.forEach(([input, expected]) => {
     const pronouns = nlp(input).pronouns().hasReference()
     const actual = []

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/pointer] '
+const here = '[one/pointers/access] '
 
 test('basic pointer getters', function (t) {
   const txt = `one two three. four five six.`

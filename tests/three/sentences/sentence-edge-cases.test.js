@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/sentence-misc] '
+const here = '[three/sentences/sentence-edge-cases] '
 
 test('misc sentences', function (t) {
   let doc = nlp(`quickly, suddenly`)

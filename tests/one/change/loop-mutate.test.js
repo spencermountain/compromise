@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/loop-mutate] '
+const here = '[one/change/loop-mutate] '
 
 test('foreach replace', function (t) {
   let doc = nlp('guns and roses')

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../three/_lib.js'
-const here = '[three/more-coreference] '
+const here = '[ignored/more] '
 
 const arr = [
   `(Sarah) walked into the room. [She] immediately noticed the mess on the floor.`,

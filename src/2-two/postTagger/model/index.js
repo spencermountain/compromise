@@ -1866,6 +1866,8 @@ const multi = [
     t: 'VBN',
     r: 'coord-drunk',
   },
+  // officers and [kids] would leave
+  { m: '#Plur and [%Plural|Verb%] #Mod', g: 0, t: 'Plur', r: 'coordinated-modal-subject' },
 ]
 
 const matches = expandRules(rules)

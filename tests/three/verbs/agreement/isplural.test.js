@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-isPlural] '
+const here = '[three/verbs/agreement/isplural] '
 
 test('plural-verbs:', function (t) {
   let r = nlp('i look. Spencer looks.')

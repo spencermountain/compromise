@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-conversions] '
+const here = '[three/numbers/conversion-round-trip] '
 
 test(here + 'decimal to fraction', t => {
   const cases = [['0.25', '1/4'], ['0.5', '1/2'], ['0.125', '1/8'], ['1.5', '3/2'], ['-0.25', '-1/4'], ['0', '0/1'], ['2', '2/1'], ['0.001', '1/1000'], ['0.29', '29/100'], ['1.01', '101/100']]

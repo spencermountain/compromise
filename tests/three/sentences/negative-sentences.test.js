@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/sentence-negative] '
+const here = '[three/sentences/negative-sentences] '
 
 test('sentences.toPositive', function (t) {
   const doc = nlp(`do not use reverse psychology.`)

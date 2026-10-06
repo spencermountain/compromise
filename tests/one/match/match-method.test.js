@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/match-method] '
+const here = '[one/match/match-method] '
 
 test('match @functions', function (t) {
   let doc = nlp(`jamie's much, much better.`)

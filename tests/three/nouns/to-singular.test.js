@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/noun-toSingular] '
+const here = '[three/nouns/to-singular] '
 
 test('toSingular:', function (t) {
   const arr = [

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../three/_lib.js'
-const here = '[three/sentence-participle] '
+const here = '[ignored/sentence-participle] '
 
 test('toPast finds participle form', function (t) {
   let doc = nlp('i drive')

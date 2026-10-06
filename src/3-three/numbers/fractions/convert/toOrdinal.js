@@ -1,9 +1,10 @@
 import toText from '../../numbers/format/toText/index.js'
 import textOrdinal from '../../numbers/format/toOrdinal/textOrdinal.js'
+import { isValid } from '../_lib.js'
 
 const toOrdinal = function (obj) {
   // don't divide by zero!
-  if (!obj.numerator || !obj.denominator) {
+  if (!isValid(obj)) {
     return ''
   }
   // create [two] [fifths]
@@ -14,8 +15,8 @@ const toOrdinal = function (obj) {
     end = 'half'
   }
   if (start && end) {
-    if (obj.numerator !== 1) {
-      end += 's'
+    if (Math.abs(obj.numerator) !== 1) {
+      end = end === 'half' ? 'halves' : end + 's'
     }
     return `${start} ${end}`
   }

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/negative] '
+const here = '[one/match/negative-matching] '
 
 test('! negative match syntax :', function (t) {
   let doc = nlp.tokenize('one two three')

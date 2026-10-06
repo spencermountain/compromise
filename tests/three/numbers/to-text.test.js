@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-toText] '
+const here = '[three/numbers/to-text] '
 
 test('to_text:', function (t) {
   const arr = [

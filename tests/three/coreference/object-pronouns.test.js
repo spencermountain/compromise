@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/coreference/object-pronouns] '
 
-test('[three/coreference] plural object pronouns', t => {
+test(here + 'plural object pronouns', t => {
   const cases = [
     ['The children arrived. I greeted them.', 'the children'],
     ['The books arrived. I read them.', 'the books'],
@@ -14,7 +15,7 @@ test('[three/coreference] plural object pronouns', t => {
   t.end()
 })
 
-test('[three/coreference] gendered titles', t => {
+test(here + 'gendered titles', t => {
   const cases = [
     ['The lady arrived. He waved.', 'he', ''],
     ['The sultan arrived. She waved.', 'she', ''],

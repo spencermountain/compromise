@@ -1,6 +1,6 @@
 import test from 'tape'
 import assertSpec from '../two/_spec.js'
-const here = '[hmm/rule-examples]'
+const here = '[hmm/rule-examples] '
 
 const spec = `
 We each work here {Pronoun,Det,Inf,Adv}

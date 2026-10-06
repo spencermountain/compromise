@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/reindex] '
+const here = '[one/change/reindex] '
 
 const txt = `
 You'll be making radical changes in your work habits, but you'll be a lot happier for it, and in the end you'll know it was worth it.

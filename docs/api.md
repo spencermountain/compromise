@@ -293,9 +293,16 @@ the written unit: adding 1 to `50 cents` produces `51 cents`. Compound amounts s
 as `5 dollars and 32 cents` parse as one amount (`5.32`) when the major and minor
 units are compatible. Dollars/euros with cents and pounds with pence/pennies are
 supported; different currencies remain separate selections. Standalone `50 cents`
-returns `50`. Compound amounts are still left unchanged by arithmetic and formatting.
-Monetary amounts can have more than two decimal places. Arithmetic inherits Numbers'
-floating-point behavior and does not preserve trailing decimal zeros.
+returns `50`. Compound arithmetic preserves both parts and carries or borrows minor
+units: `5 dollars and 90 cents` plus `0.2` becomes `6 dollars and 10 cents`. A leading
+minus applies to the whole compound amount, including `-0 dollars and 68 cents`.
+Compound formatting conversions remain unchanged.
+
+Money arithmetic uses decimal addition to avoid binary rounding tails such as
+`0.30000000000000004`. Numeric output preserves existing decimal places and adds
+precision when needed: `$5.00 + 1` becomes `$6.00`, and `$1.00 + 0.001` becomes
+`$1.001`. Commas, currency symbols, and word forms are retained; currency words agree
+with their new amounts. Results still use JavaScript numbers and their precision limits.
 
 ### `.fractions()` →
 

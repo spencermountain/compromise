@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/normalize-more] '
+const here = '[three/normalize/option-interactions] '
 
 test('possessives', function (t) {
   let doc = nlp(`Corey Hart's pudding and Google's advertising`)

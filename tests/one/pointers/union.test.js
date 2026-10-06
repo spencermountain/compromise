@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/pointer-union] '
+const here = '[one/pointers/union] '
 
 test('pointer-union-basic :', function (t) {
   const doc = nlp('ooh. one two three four five six seven eight nine ten')

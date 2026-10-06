@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/places] '
+const here = '[three/topics/places] '
 
 test('known-regions:', function (t) {
   const arr = [

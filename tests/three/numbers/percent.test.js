@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-percent] '
+const here = '[three/numbers/percent] '
 
 test('percent-basic:', function (t) {
   const m = nlp('it is 33%').percentages()

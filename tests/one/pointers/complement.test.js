@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/pointer-complement] '
+const here = '[one/pointers/complement] '
 
 test('pointer-complement-basic :', function (t) {
   const doc = nlp('ooh. one two three four five six seven')

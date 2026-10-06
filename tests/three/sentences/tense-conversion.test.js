@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/misc-conjugate] '
+const here = '[three/sentences/tense-conversion] '
 
 test('copula-form', function (t) {
   const m = nlp('john is nice').sentences()

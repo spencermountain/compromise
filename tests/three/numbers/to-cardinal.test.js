@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-Cardinal] '
+const here = '[three/numbers/to-cardinal] '
 
 //tests 'borrowed' from Travis Savo's lib 💝 https://github.com/TSavo/english2number-js
 const cardinal = function (str) {

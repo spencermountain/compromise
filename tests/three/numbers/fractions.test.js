@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/fractions] '
+const here = '[three/numbers/fractions] '
 
 test('numerator-denominator parsing', function (t) {
   const arr = [
@@ -154,7 +154,7 @@ test('fraction-toText:', function (t) {
     ['4/10', 'four tenths'],
     ['3/5', 'three fifths'],
     ['3/8', 'three eighths'],
-    ['3/2', 'three halfs'],
+    ['3/2', 'three halves'],
     ['1/100', 'one one hundredth'],
     ['4/100', 'four one hundredths'],
     ['4/3', 'four thirds'],

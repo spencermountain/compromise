@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/hyphens] '
+const here = '[one/change/hyphenate] '
 
 test('hyphen-tokenize', function (t) {
   let r = nlp('super-cool work')

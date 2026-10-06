@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/whitespace] '
+const here = '[one/change/whitespace] '
 
 test('whitespace-out', function (t) {
   const str = 'one, two three. One, two, four?'

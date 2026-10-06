@@ -1,7 +1,7 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 
-const here = '[three/money arithmetic] '
+const here = '[three/money/money-arithmetic] '
 
 test('money arithmetic preserves currency and class', t => {
   const cases = [
@@ -70,8 +70,19 @@ test('money inherits Numbers and retains separate selections', t => {
   t.deepEqual(result.currency(), ['dollar', 'euro'], here + 'multiple currencies')
   t.deepEqual(result.subtract(16).out('array'), ['five dollars', 'six euros'], here + 'shrinking spans')
   const compound = nlp('i paid 5 dollars and 32 cents')
-  const unchanged = compound.money().add(1)
-  t.equal(compound.text(), 'i paid 5 dollars and 32 cents', here + 'compound left intact')
-  t.equal(unchanged.viewType, 'Money', here + 'compound class')
+  const changed = compound.money().add(1)
+  t.equal(compound.text(), 'i paid 6 dollars and 32 cents', here + 'compound increment')
+  t.equal(changed.viewType, 'Money', here + 'compound class')
+  t.end()
+})
+
+test('money-transform:', function (t) {
+  let doc = nlp('i paid $5.32 for a pizza slice')
+  doc.money().add(1)
+  t.equal(doc.text(), 'i paid $6.32 for a pizza slice', here + 'money-add-one')
+
+  doc = nlp('i paid fifty eight dollars')
+  doc.money().add(1)
+  t.equal(doc.text(), 'i paid fifty nine dollars', here + 'text-add-one')
   t.end()
 })

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/split] '
+const here = '[one/change/split] '
 
 test('splitAfter', function (t) {
   const arr = [

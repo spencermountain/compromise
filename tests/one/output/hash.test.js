@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/hash] '
+const here = '[one/output/hash] '
 
 test('json-hash', function (t) {
   const doc = nlp('fruit salad. food-safety')

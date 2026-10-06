@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/isQuestion] '
+const here = '[three/sentences/is-question] '
 
 test('selects questions from mixed sentences', function (t) {
   const txt = `He is cool. Do you agree? I do.`

@@ -1,6 +1,6 @@
 import test from 'tape'
 import assertSpec from '../_spec.js'
-const here = '[two/hanging-adverb]'
+const here = '[two/postTagger/hanging-adverb] '
 
 const spec = `
 The gardener waters the roses daily. {Det,Singular,Pres,Det,Plural,Adv}

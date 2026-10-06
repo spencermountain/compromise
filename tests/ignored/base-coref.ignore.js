@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../three/_lib.js'
+const here = '[ignored/base-coref] '
 
 const cases = [
   // Nearest plural object wins over the intended subject.
@@ -44,7 +45,7 @@ const cases = [
   ],
 ]
 
-test('[three/coreference-backlog] deferred references', t => {
+test(here + 'deferred references', t => {
   cases.forEach(([input, expected]) => {
     const pronouns = nlp(input).pronouns().hasReference()
     const actual = []

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/slash] '
+const here = '[one/tokenize/slash] '
 
 test('slash whitespace', t => {
   const cases = [

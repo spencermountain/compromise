@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/percent-to-fraction] '
+const here = '[three/numbers/percent-to-fraction] '
 
 test(here + 'integer and decimal percentages', t => {
   const cases = [

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/noun-find] '
+const here = '[three/nouns/noun-find] '
 
 //(from https://brenocon.com/JustesonKatz1995.pdf)
 // AN: linear function; lexical ambiguity; mobile phase

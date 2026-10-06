@@ -4,6 +4,26 @@ const shiftDecimal = (num, places) => {
   return Number(`${coefficient}e${Number(exponent) + places}`)
 }
 
+// Keep generated values readable by the number parser.
+const decimalText = num => {
+  const str = String(num)
+  if (!str.includes('e')) {
+    return str
+  }
+  const [coefficient, exponent] = str.split('e')
+  const sign = num < 0 ? '-' : ''
+  const unsigned = coefficient.replace('-', '')
+  const digits = unsigned.replace('.', '')
+  const point = unsigned.split('.')[0].length + Number(exponent)
+  if (point <= 0) {
+    return `${sign}0.${'0'.repeat(-point)}${digits}`
+  }
+  if (point >= digits.length) {
+    return sign + digits + '0'.repeat(point - digits.length)
+  }
+  return `${sign}${digits.slice(0, point)}.${digits.slice(point)}`
+}
+
 const decimalFraction = num => {
   const [coefficient, exponent = '0'] = String(num).split('e')
   const places = (coefficient.split('.')[1] || '').length - Number(exponent)
@@ -34,4 +54,4 @@ const replaceNumber = (value, str) => {
   return value.replaceWith(str).firstTerm()
 }
 
-export { shiftDecimal, decimalFraction, isPercent, replaceNumber }
+export { shiftDecimal, decimalText, decimalFraction, isPercent, replaceNumber }

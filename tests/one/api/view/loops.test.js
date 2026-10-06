@@ -2,7 +2,7 @@ import test from 'tape'
 import nlp from '../../_lib.js'
 const here = '[one/api/view/loops] '
 
-test('map-stuff', function (t) {
+test(here + 'map returns matches from each sentence', function (t) {
   // let doc = nlp('and').map(d => {
   //   return d.replaceWith('or')
   // })
@@ -17,7 +17,7 @@ test('map-stuff', function (t) {
   t.end()
 })
 
-test('foreach-stuff', function (t) {
+test(here + 'forEach transforms every sentence', function (t) {
   const doc = nlp('one two three. three four five.').forEach(p => {
     p.toUpperCase()
   })
@@ -25,7 +25,7 @@ test('foreach-stuff', function (t) {
   t.end()
 })
 
-test('filter-stuff', function (t) {
+test(here + 'filter selects matching sentences and terms', function (t) {
   let doc = nlp('one two three. three four five.').filter(p => {
     return p.has('four')
   })
@@ -47,16 +47,16 @@ test('filter-stuff', function (t) {
   t.end()
 })
 
-test('find-stuff', function (t) {
+test(here + 'find returns a matching or empty selection', function (t) {
   let doc = nlp('one two three. three four five.').find(m => m.has('four'))
-  t.equal(doc && doc.out('normal') === 'three four five.', true, here + 'found four')
+  t.equal(doc.out('normal'), 'three four five.', here + 'found four')
 
   doc = nlp('one two three. three four five.').find(m => m.has('asdf'))
-  t.equal(doc.found, false, here + 'undefined find result') //change?!
+  t.equal(doc.found, false, here + 'empty find result')
   t.end()
 })
 
-test('some-stuff', function (t) {
+test(here + 'some reports whether a sentence matches', function (t) {
   let bool = nlp('one two three. three four five.').some(m => m.has('three'))
   t.equal(bool, true, here + 'found-three')
 
@@ -65,7 +65,7 @@ test('some-stuff', function (t) {
   t.end()
 })
 
-test('map array return', function (t) {
+test(here + 'map returns an array of text values', function (t) {
   const doc = nlp('Larry, Curly, and Moe')
   let people = doc.match('!and') // (any one noun)
   people = people.sort('alpha')

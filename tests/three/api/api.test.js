@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/api] '
+const here = '[three/api/api] '
 
 test('api:', function (t) {
   const arr = [`He's really good. we were walking. Tony Hawk's swimming pool will dry-up.`, '', '...........?']

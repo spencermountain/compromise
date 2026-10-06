@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/hyphens] '
+const here = '[one/tokenize/hyphens] '
 
 test('nums-punctuation', function (t) {
   const doc = nlp('10-ounce (12-ounce)')

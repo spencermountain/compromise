@@ -202,9 +202,9 @@ export interface Fractions extends View {
   /** grab the parsed number */
   get: (n?: number) => number | number[]
   /** convert '1/4' to `0.25` */
-  toDecimal: () => View
+  toDecimal: () => Numbers
   /** convert 'one fourth' to `1/4` */
-  toFraction: () => View
+  toFraction: () => Fractions
   /** convert '1/4' to 'one fourth' */
   toOrdinal: () => View
   /** convert '1/4' to 'one out of four' */

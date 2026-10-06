@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/adj-superlative] '
+const here = '[three/adjectives/superlative] '
 
 test('toSuperlative misc', function (t) {
   let doc = nlp('he is really cool')

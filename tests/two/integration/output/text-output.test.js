@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[two/integration/output/two-text-output] '
+const here = '[two/integration/output/text-output] '
 
 test('text-formats', function (t) {
   const doc = nlp(`Toronto's citizens LOVE toronto! they come here for food.`)

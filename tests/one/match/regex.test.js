@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/regex] '
+const here = '[one/match/regex] '
 
 test('prefix/infix/suffix basic', function (t) {
   const r = nlp('it is funny and weird')

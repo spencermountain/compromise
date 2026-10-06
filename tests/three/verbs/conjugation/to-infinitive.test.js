@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-toInfinitive] '
+const here = '[three/verbs/conjugation/to-infinitive] '
 
 test('toInfinitive-phrase:', function (t) {
   const arr = [

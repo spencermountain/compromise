@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/syntax] '
+const here = '[one/match/syntax] '
 
 test('negative parentheses', function (t) {
   let doc = nlp.tokenize('if he does. does he?')

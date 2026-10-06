@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-parts]'
+const here = '[three/verbs/parsing/parts] '
 
 test('verb-parts:', function (t) {
   const tests = [

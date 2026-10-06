@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-subjects]'
+const here = '[three/verbs/parsing/subject] '
 
 test('get verb subject', function (t) {
   const arr = [

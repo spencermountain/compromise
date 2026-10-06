@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/noun-isPlural] '
+const here = '[three/nouns/is-plural] '
 
 test('isPlural:', function (t) {
   const arr = [

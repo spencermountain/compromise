@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[one/api/constructor/reservedwords] '
+const here = '[one/api/constructor/reserved-words] '
 
 test('reserved words:', function (t) {
   const reserved = [

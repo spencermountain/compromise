@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/hyphen-matrix] '
+const here = '[one/tokenize/hyphen-matrix] '
 
 test('hyphen-input', (t) => {
   const doc = nlp(`before follow-up after`)

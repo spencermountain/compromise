@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/verb-misc] '
+const here = '[three/verbs/verb-edge-cases] '
 
 test('verbs.json', function (t) {
   const json = nlp('She has called twice, not the tv').verbs().json()

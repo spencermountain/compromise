@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/pointer-difference] '
+const here = '[one/pointers/difference] '
 
 test('pointer-difference-basic :', function (t) {
   const doc = nlp('ooh. one two three four five six seven eight nine ten')

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/fuzzy] '
+const here = '[one/match/fuzzy] '
 
 test('fuzzy matches', function (t) {
   const doc = nlp('i went on a talk')
@@ -95,5 +95,13 @@ test('edit-distance by string length', function (t) {
   m = doc.match('~abaaaaaa~', null, { fuzzy: 0.9 })
   t.equal(m.text(), '', here + '8-letters out')
 
+  t.end()
+})
+
+test(here + 'fuzzy matching preserves a zero threshold', t => {
+  const doc = nlp('talk')
+  t.equal(doc.match('~walk~', null, { fuzzy: 0 }).text(), 'talk', 'accepts an explicit zero')
+  t.equal(doc.match('~walk~', null, {}).text(), '', 'omitted threshold retains the default')
+  t.equal(doc.match('~walk~', null, { fuzzy: null }).text(), '', 'null threshold retains the default')
   t.end()
 })

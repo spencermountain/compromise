@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/splitOn] '
+const here = '[one/change/split-on] '
 
 test('one split, one sentence', function (t) {
   const doc = nlp('before before match, after after.')

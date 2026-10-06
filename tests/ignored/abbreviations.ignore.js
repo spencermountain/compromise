@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../three/_lib.js'
-const here = '[three/abbreviation] '
+const here = '[ignored/abbreviations] '
 
 test('abbreviations', function (t) {
   const doc = nlp(`mr. and Mrs. Kelly live on Shoreditch st. in Canada`)

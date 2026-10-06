@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-toPositive] '
+const here = '[three/verbs/negation/to-positive] '
 
 test('inline verb toPositive:', function (t) {
   const arr = [

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-toPastParticiple] '
+const here = '[three/verbs/conjugation/to-past-participle] '
 
 test('toPastParticiple:', function (t) {
   const arr = [

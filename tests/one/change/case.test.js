@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/case] '
+const here = '[one/change/case] '
 
 test('sanity-check case:', function (t) {
   let str = 'John xoo, John fredman'

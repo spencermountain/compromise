@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/normalize-one] '
+const here = '[three/normalize/options] '
 
 test('normalize defaults', function (t) {
   const doc = nlp.tokenize(` it's   coöl, (i think) .    He is   cool;  i said .`)

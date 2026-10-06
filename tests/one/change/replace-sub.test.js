@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/replace-sub] '
+const here = '[one/change/replace-sub] '
 
 test('replace-sub-num :', function (t) {
   let doc = nlp('walk the plank')

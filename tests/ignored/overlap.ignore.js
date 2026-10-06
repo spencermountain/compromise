@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../three/_lib.js'
-const here = '[three/number-overlap] '
+const here = '[ignored/overlap] '
 
 test('number-fraction overlap', function (t) {
   const arr = [

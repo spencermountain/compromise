@@ -1,6 +1,6 @@
 import test from 'tape'
 import assertSpec from '../two/_spec.js'
-const here = '[hmm/al18ner-tests]'
+const here = '[hmm/al18ner-tests] '
 
 const spec = `
 That was a mistake. {Det,Vb,Det,Noun}

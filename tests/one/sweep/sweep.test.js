@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/sweep] '
+const here = '[one/sweep/sweep] '
 
 test('sweep retains distinct actions for identical patterns', t => {
   const net = nlp.buildNet([

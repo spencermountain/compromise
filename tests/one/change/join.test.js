@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/join] '
+const here = '[one/change/join] '
 
 test('sanity-check join:', function (t) {
   const doc = nlp(`John smith and John Franklin`)

@@ -1,5 +1,5 @@
 import parse from './parse/index.js'
-import { decimalFraction, isPercent, replaceNumber } from './_conversion.js'
+import { decimalFraction, decimalText, isPercent, replaceNumber } from './_conversion.js'
 
 const toFraction = numbers => {
   const result = numbers.map(value => {
@@ -12,7 +12,7 @@ const toFraction = numbers => {
     }
     let str = decimalFraction(num)
     if (isPercent(value)) {
-      str = `${num}/100`
+      str = `${decimalText(num)}/100`
       value = value.growRight('(percent|percentage|per cent)')
     }
     const phrase = replaceNumber(value, str)

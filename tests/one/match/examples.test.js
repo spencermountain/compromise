@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/match] '
+const here = '[one/match/examples] '
 
 const arr = [
   ['toronto', 'toronto'],

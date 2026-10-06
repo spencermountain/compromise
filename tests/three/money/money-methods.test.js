@@ -1,7 +1,7 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 
-const here = '[three/money methods] '
+const here = '[three/money/money-methods] '
 const input = 'i paid 5 dollars for lunch and 10 euros for dinner'
 
 test('money output methods', t => {

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/adj-comparative] '
+const here = '[three/adjectives/comparative] '
 
 test('toComparative misc', function (t) {
   let doc = nlp('he is really cool')

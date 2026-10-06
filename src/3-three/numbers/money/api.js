@@ -1,6 +1,7 @@
 import find from './find.js'
 import parse from './parse.js'
 import mapNumbers from './_lib.js'
+import { add } from './_decimal.js'
 
 const plugin = function (View, Numbers) {
   /**
@@ -10,8 +11,11 @@ const plugin = function (View, Numbers) {
       super(document, pointer, groups)
       this.viewType = 'Money'
     }
-    _mapNumbers(fn) {
-      return mapNumbers(this, fn)
+    _add(a, b) {
+      return add(a, b)
+    }
+    _mapNumbers(fn, operation) {
+      return mapNumbers(this, fn, operation)
     }
     parse(n) {
       return this.getNth(n).map(parse, [])

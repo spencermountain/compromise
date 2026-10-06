@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/noun-adjectives] '
+const here = '[three/nouns/noun-adjectives] '
 
 test('.adjectives():', function (t) {
   let doc = nlp('the really cute cat')

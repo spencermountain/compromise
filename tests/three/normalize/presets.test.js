@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/normalize-preset] '
+const here = '[three/normalize/presets] '
 
 test('normalize - light', function (t) {
   const arr = [

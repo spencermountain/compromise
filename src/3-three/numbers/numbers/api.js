@@ -104,7 +104,7 @@ const addMethod = function (View) {
       return toPercentage(this)
     }
     toDecimal() {
-      return toDecimal(this.percentages())
+      return toDecimal(this)
     }
 
     /** return only numbers that are == n */
@@ -160,7 +160,7 @@ const addMethod = function (View) {
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
         return val
-      })
+      }, () => n)
       return this.update(res.pointer)
     }
     add(n) {
@@ -176,7 +176,7 @@ const addMethod = function (View) {
         if (obj.num === null) {
           return val
         }
-        obj.num += n
+        obj.num = this._add(obj.num, n)
         let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
         if (obj.isText) {
           fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
@@ -186,7 +186,7 @@ const addMethod = function (View) {
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
         return val
-      })
+      }, num => this._add(num, n))
       return this.update(res.pointer)
     }
     /** decrease each number by n*/
@@ -200,6 +200,10 @@ const addMethod = function (View) {
     /** decrease each number by 1 */
     decrement(agree) {
       return this.add(-1, agree)
+    }
+    // Subclasses may supply decimal arithmetic.
+    _add(a, b) {
+      return a + b
     }
     // Let subclasses select the numeric portion of each phrase.
     _mapNumbers(fn) {

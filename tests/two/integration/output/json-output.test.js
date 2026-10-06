@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[two/integration/output/two-json-output] '
+const here = '[two/integration/output/json-output] '
 
 const hasTag = function (term, want) {
   if (!term || !term.tags) {

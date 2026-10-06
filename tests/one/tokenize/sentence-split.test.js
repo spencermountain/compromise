@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/sentence-split] '
+const here = '[one/tokenize/sentence-split] '
 
 test('sentence tokenizer', function (t) {
   const arr = [

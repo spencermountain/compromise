@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/freeze] '
+const here = '[one/freeze/mutation] '
 
 test('freeze-match :', function (t) {
   const doc = nlp(`yeah. one extra two match here three`)

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/coreference-gender] '
+const here = '[three/coreference/gender-number] '
 
 test(here + 'common person gender and number', t => {
   const cases = [

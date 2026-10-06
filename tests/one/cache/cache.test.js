@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/cache] '
+const here = '[one/cache/cache] '
 
 test('no sneaky cache', function (t) {
   const doc = nlp('one two three four')

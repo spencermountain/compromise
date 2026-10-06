@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-value] '
+const here = '[three/numbers/value] '
 
 test('value-lumper-splitter:', function (t) {
   let r = nlp('202 199')

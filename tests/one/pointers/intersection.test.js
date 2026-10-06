@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/pointer-intersection] '
+const here = '[one/pointers/intersection] '
 
 test('pointer-intersection-basic :', function (t) {
   const doc = nlp('ooh. one two three four five six seven eight nine ten')

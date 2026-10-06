@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/redact] '
+const here = '[three/redact/redact] '
 
 const blockStr = '██████████'
 

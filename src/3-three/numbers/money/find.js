@@ -2,7 +2,11 @@ import { isMinor } from './_currency.js'
 
 // Numbers already groups multiword values and separates adjacent numeric amounts.
 const parts = doc => doc.numbers().map(value => {
-  const number = value.not('^and').not('and$')
+  let number = value.not('^and').not('and$')
+  if (number.text('reduced') === 'minus') {
+    return number.none()
+  }
+  number = number.growLeft('minus')
   if (!number.found) {
     return number
   }
@@ -36,5 +40,7 @@ const find = doc => {
   return doc.toView(pointers)
 }
 
-export { parts }
+const numberOf = amount => amount.not('#Currency').not('(pound|pounds)$')
+
+export { parts, numberOf }
 export default find

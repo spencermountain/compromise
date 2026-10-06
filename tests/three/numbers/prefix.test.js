@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-prefix] '
+const here = '[three/numbers/prefix] '
 
 test('prefix:', function (t) {
   const doc = nlp('it was almost $400')

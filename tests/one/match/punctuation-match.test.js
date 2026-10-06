@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/punctuation-match] '
+const here = '[one/match/punctuation-match] '
 
 test('punctuation-match :', function (t) {
   let regs = [{ word: 'may' }, { pre: '(' }]

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/topics] '
+const here = '[three/topics/topic-selections] '
 
 test('topics:', function (t) {
   const list = [

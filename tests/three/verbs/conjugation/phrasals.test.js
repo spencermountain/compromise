@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/phrasals]'
+const here = '[three/verbs/conjugation/phrasals] '
 
 test('get phrasal infinitive', function (t) {
   const arr = [

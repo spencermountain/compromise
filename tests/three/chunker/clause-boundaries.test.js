@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/clause] '
+const here = '[three/chunker/clause-boundaries] '
 
 test('clauses-parentheses:', function (t) {
   const m = nlp("i said, 'did you have to do that' and then left, like nothing happened (which it didn't).").clauses()

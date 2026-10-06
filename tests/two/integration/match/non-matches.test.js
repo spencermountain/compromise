@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[two/integration/match/two-match-no-match] '
+const here = '[two/integration/match/non-matches] '
 
 const arr = [
   [`coolcom`, '#Url'],

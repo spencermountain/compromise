@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-toNegative] '
+const here = '[three/verbs/negation/to-negative] '
 
 test('inline verb negate:', function (t) {
   const arr = [

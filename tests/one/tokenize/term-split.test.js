@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/term-split] '
+const here = '[one/tokenize/term-split] '
 
 
 test('term tokenizer', function (t) {

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-find] '
+const here = '[three/verbs/selection/verb-find] '
 
 test('verb-splitter:', function (t) {
   const arr = [

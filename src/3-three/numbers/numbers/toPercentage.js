@@ -1,5 +1,5 @@
 import parse from './parse/index.js'
-import { shiftDecimal, isPercent, replaceNumber } from './_conversion.js'
+import { shiftDecimal, decimalText, isPercent, replaceNumber } from './_conversion.js'
 
 const toPercentage = numbers => {
   const result = numbers.map(value => {
@@ -10,7 +10,7 @@ const toPercentage = numbers => {
     if (!Number.isFinite(num) || value.has('#Money')) {
       return value.none()
     }
-    return replaceNumber(value, `${num}%`).tag(['Percent', 'NumericValue'])
+    return replaceNumber(value, `${decimalText(num)}%`).tag(['Percent', 'NumericValue'])
   })
   return result.percentages()
 }

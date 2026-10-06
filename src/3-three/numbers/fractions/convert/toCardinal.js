@@ -1,7 +1,8 @@
 import toText from '../../numbers/format/toText/index.js'
+import { isValid } from '../_lib.js'
 
 const toCardinal = function (obj) {
-  if (!obj.numerator || !obj.denominator) {
+  if (!isValid(obj)) {
     return ''
   }
   const a = toText({ num: obj.numerator })

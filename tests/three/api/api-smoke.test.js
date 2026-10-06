@@ -1,7 +1,7 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 import isolateModel from '../../_lib/isolate-model.js'
-const here = '[three/full-api] '
+const here = '[three/api/api-smoke] '
 
 //run every method once, and check against runtime errors
 test('constructor api', function (t) {
@@ -97,13 +97,7 @@ test('constructor api', function (t) {
     // debug: () => { nlp('foo').debug() },
   }
   Object.keys(fns).forEach(k => {
-    t.doesNotThrow(() => {
-      try {
-        fns[k]()
-      } catch (e) {
-        t.fail(here + k + e)
-      }
-    }, k)
+    t.doesNotThrow(fns[k], here + k)
   })
   t.end()
 })

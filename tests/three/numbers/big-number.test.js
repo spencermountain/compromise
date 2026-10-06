@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-big] '
+const here = '[three/numbers/big-number] '
 
 const cardinal = function (str) {
   return nlp(str).values().json()[0].number.num

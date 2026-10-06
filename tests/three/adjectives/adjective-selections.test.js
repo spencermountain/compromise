@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/adjectives] '
+const here = '[three/adjectives/adjective-selections] '
 
 test('adjectives misc', function (t) {
 

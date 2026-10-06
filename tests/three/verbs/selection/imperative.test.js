@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/imperative] '
+const here = '[three/verbs/selection/imperative] '
 
 test('isImperative:', function (t) {
   const arr = [

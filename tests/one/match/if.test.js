@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/if] '
+const here = '[one/match/if] '
 
 test('if-basic:', function (t) {
   let r = nlp('spencer is here')

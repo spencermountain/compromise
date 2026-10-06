@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/remove] '
+const here = '[one/change/remove] '
 
 test('remove-basic :', function (t) {
   let m = nlp('the brown cat played').match('brown').remove().all()

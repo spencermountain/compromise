@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/output/punctuation] '
+const here = '[three/integration/output/punctuation] '
 
 test('preserve unicode ellipsis', function (t) {
   const str = `[hello] spencęr…`

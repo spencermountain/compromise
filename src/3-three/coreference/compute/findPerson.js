@@ -1,5 +1,6 @@
 import { findChained } from './lib.js'
 import compatibleActor from './actorGender.js'
+import personBoundary from './personBoundary.js'
 
 // only filter if we know a gender
 // ambiguous names like 'jamie smith' will refer to either he or she
@@ -21,7 +22,7 @@ const getPerson = function (s, gender) {
     return people.last()
   }
   // non-named people, like 'the cowboy'
-  people = s.nouns('#Actor').filter(person => compatibleActor(person, gender))
+  people = s.nouns('#Actor').map(personBoundary).filter(person => compatibleActor(person, gender))
   if (people.found) {
     return people.last()
   }

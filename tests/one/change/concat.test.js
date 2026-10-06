@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/concat] '
+const here = '[one/change/concat] '
 
 test('concat misc :', function (t) {
   let found = nlp('')

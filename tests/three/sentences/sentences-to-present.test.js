@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/sentence-toPresent] '
+const here = '[three/sentences/sentences-to-present] '
 
 test('sentence-toPresent', function (t) {
   const arr = [

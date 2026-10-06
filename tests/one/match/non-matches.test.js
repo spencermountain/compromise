@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/miss] '
+const here = '[one/match/non-matches] '
 
 const arr = [
   // no tags

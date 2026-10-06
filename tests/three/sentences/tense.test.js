@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/sentence-conjugate] '
+const here = '[three/sentences/tense] '
 
 test('sentence-change-tense: bit', function (t) {
   const doc = nlp('she bit her tongue')

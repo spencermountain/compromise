@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/unicode-punctuation] '
+const here = '[three/normalize/unicode-punctuation] '
 
 test(here + 'ellipsis and comma output', t => {
   const cases = [

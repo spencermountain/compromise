@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/encoding] '
+const here = '[one/match/encoding] '
 
 // test('encoding-match:', function (t) {
 //   let r = nlp('it is * nice')

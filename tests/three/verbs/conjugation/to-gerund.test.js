@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/gerund]'
+const here = '[three/verbs/conjugation/to-gerund] '
 
 test('verb-to-gerund:', function (t) {
   const arr = [

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/svo] '
+const here = '[three/sentences/svo] '
 
 test('svo parser', function (t) {
   const arr = [

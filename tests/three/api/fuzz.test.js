@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/fuzz] '
+const here = '[three/api/fuzz] '
 
 
 const subsets = [

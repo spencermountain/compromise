@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/auxilary] '
+const here = '[three/verbs/conjugation/auxiliary] '
 
 test('participle/auxiliary toPast', function (t) {
   // let doc = nlp('i am being driven')

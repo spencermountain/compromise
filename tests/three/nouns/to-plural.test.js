@@ -1,7 +1,7 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 import isolateModel from '../../_lib/isolate-model.js'
-const here = '[three/noun-toPlural] '
+const here = '[three/nouns/to-plural] '
 
 test('toPlural:', function (t) {
   const arr = [

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/misc] '
+const here = '[one/pointers/lazy-pointers] '
 
 test('lazy-pointer-issue', function (t) {
   const doc = nlp.tokenize(`four two five`)

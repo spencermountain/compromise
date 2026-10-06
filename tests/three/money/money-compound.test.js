@@ -1,7 +1,7 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 
-const here = '[three/money compound] '
+const here = '[three/money/money-compound] '
 
 test('money multiword and compound amounts', t => {
   const cases = [
@@ -53,6 +53,6 @@ test('compound money currency and comparisons', t => {
   t.deepEqual(money.currency(), ['dollar'], here + 'major currency')
   t.equal(money.greaterThan(5).text(), 'five dollars and thirty five cents', here + 'comparison')
   t.deepEqual(money.json()[0].money, {currency: 'dollar', num: 5.35}, here + 'json')
-  t.equal(money.add(1).text(), 'five dollars and thirty five cents', here + 'compound arithmetic stays unchanged')
+  t.equal(money.add(1).text(), 'six dollars and thirty five cents', here + 'compound arithmetic')
   t.end()
 })

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-conjugate] '
+const here = '[three/verbs/conjugation/conjugate] '
 
 const arr = [
   {

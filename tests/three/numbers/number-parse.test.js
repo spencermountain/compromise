@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-parse] '
+const here = '[three/numbers/number-parse] '
 
 test('parse numbers', function (t) {
   const arr = [

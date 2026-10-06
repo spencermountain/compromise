@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/html] '
+const here = '[one/output/html] '
 
 test('html-match', function (t) {
   let doc = nlp(`match one two. one match two. one two match.`)

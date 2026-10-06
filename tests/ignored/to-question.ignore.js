@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../three/_lib.js'
-const here = '[three/toQuestion] '
+const here = '[ignored/to-question] '
 
 test('simple chanage-punct', function (t) {
   const statement = `I can't believe it's a law firm.`

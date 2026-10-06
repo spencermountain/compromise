@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/number-agreement] '
+const here = '[three/numbers/ordinal-agreement] '
 
 test(here + 'ordinal and cardinal round trips', t => {
   const cases = [

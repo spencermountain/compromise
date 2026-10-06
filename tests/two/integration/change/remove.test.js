@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[two/integration/change/two-remove] '
+const here = '[two/integration/change/remove] '
 
 test('remove-bug-1:', function (t) {
   const txt = `before SW1A 2AA Remove me after`

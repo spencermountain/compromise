@@ -1,7 +1,7 @@
 import test from 'tape'
 import nlp from '../_lib.js'
 import isolateModel from '../../_lib/isolate-model.js'
-const here = '[one/lexicon] '
+const here = '[one/lexicon/core-lexicon] '
 
 test('addWords side-load:', function (t) {
   isolateModel(t, nlp.model().one, ['lexicon', '_multiCache'])
@@ -105,5 +105,19 @@ test('long lexicon:', function (t) {
   doc = nlp('the new york yankees are cool and not bad')
   t.equal(doc.has('#Long'), true, here + 'found-long')
 
+  t.end()
+})
+
+test(here + 'lexicon membership does not depend on inherited methods', t => {
+  const model = nlp.model().one
+  const original = model.lexicon
+  t.teardown(() => {
+    model.lexicon = original
+  })
+  for (const lexicon of [{ hasOwnProperty: 'Noun' }, Object.create(null)]) {
+    lexicon.zorb = 'Noun'
+    model.lexicon = lexicon
+    t.equal(nlp('zorb').compute('lexicon').has('#Noun'), true, 'accepts shadowed methods and null prototypes')
+  }
   t.end()
 })

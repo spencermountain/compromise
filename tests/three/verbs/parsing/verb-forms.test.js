@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../../_lib.js'
-const here = '[three/verb-forms] '
+const here = '[three/verbs/parsing/verb-forms] '
 
 test('verb form names', function (t) {
   const forms = {

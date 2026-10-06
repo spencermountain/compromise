@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = ' [one/doc-match]'
+const here = '[one/match/doc-match] '
 
 test('doc-as-input', function (t) {
   const doc = nlp('if so, he is the best, that i see. he is the greatest')

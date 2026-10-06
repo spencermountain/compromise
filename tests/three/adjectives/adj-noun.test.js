@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/adj-noun] '
+const here = '[three/adjectives/adj-noun] '
 
 const arr = [
   ['abject', 'abjection'],

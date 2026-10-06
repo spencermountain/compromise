@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/insert] '
+const here = '[one/change/insert] '
 
 test('insert-basic :', function (t) {
   let m = nlp('the dog sat').insertBefore('and')

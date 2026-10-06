@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/lookup-long] '
+const here = '[one/lookup/lookup-long] '
 
 const text = `The Toronto Marlborough Athletic Club, commonly known as the Toronto Marlboros, was founded in 1903. It operated junior ice hockey and senior ice hockey teams in the Ontario Hockey Association and later the Ontario Hockey League. The Marlboros were a farm team to the Toronto Maple Leafs and one of the dominant junior teams in history, winning seven Memorial Cup championships. The senior team competed for the Stanley Cup in 1904, and won the Allan Cup in 1950.
 Their heritage has been perpetuated by the Toronto Marlboros Hockey Club, which operates several minor ice hockey teams in the Greater Toronto Hockey League; and the Toronto Marlies of the American Hockey League.

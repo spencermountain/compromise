@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/coreference/tricky-coref] '
 
 const cases = [
   // Deferred: Needs discourse salience: prices, not the nearer polls.
@@ -264,7 +265,7 @@ const cases = [
   // ],
 ]
 
-test('[three/coreference] reviewed tricky cases', t => {
+test(here + 'reviewed tricky cases', t => {
   cases.forEach(([input, expected]) => {
     const actual = []
     nlp(input).pronouns().hasReference().forEach(pronoun => {

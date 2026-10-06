@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/clauses] '
+const here = '[three/chunker/clauses] '
 
 test('clauses-count', function (t) {
   const arr = [

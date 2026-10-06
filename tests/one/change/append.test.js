@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/append] '
+const here = '[one/change/append] '
 
 test('append parent', function (t) {
   const doc = nlp(`one two three`)

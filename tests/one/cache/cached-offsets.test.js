@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/offset] '
+const here = '[one/cache/cached-offsets] '
 
 test('offset-whitespace', function (t) {
   let doc = nlp(`one two two more `).compute('offset')

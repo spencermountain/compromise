@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/sentence] '
+const here = '[three/sentences/sentence] '
 
 test('get full sentence:', function (t) {
   const doc = nlp('one two foo four five. i saw foo house. I ate a sandwhich. Foo was nice')

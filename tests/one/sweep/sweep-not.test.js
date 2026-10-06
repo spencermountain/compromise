@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[one/sweep] '
+const here = '[one/sweep/sweep-not] '
 
 test('sweep-not:', function (t) {
   let doc = nlp('The service is fast really')

@@ -288,12 +288,12 @@ doc.text() // 'i paid $6.32 for a pizza slice'
 - **`.clone()`** — create an independent Money view and document
 - **`.numbers(n?)`**, **`.values(n?)`** — explicitly select the numeric portions as Numbers
 
-Comparisons use numeric values without currency conversion. Arithmetic operates in
-the written unit: adding 1 to `50 cents` produces `51 cents`. Compound amounts such
+Comparisons and arithmetic use major-unit values. `50 cents` parses as `0.5`;
+adding `0.01` produces `51 cents`, while adding `1` produces `150 cents`.
+`.numbers()` still returns the written numeric value (`50`). Compound amounts such
 as `5 dollars and 32 cents` parse as one amount (`5.32`) when the major and minor
 units are compatible. Dollars/euros with cents and pounds with pence/pennies are
-supported; different currencies remain separate selections. Standalone `50 cents`
-returns `50`. Compound arithmetic preserves both parts and carries or borrows minor
+supported; different currencies remain separate selections. Compound arithmetic preserves both parts and carries or borrows minor
 units: `5 dollars and 90 cents` plus `0.2` becomes `6 dollars and 10 cents`. A leading
 minus applies to the whole compound amount, including `-0 dollars and 68 cents`.
 Compound formatting conversions remain unchanged.
@@ -303,6 +303,23 @@ Money arithmetic uses decimal addition to avoid binary rounding tails such as
 precision when needed: `$5.00 + 1` becomes `$6.00`, and `$1.00 + 0.001` becomes
 `$1.001`. Commas, currency symbols, and word forms are retained; currency words agree
 with their new amounts. Results still use JavaScript numbers and their precision limits.
+
+Minor-unit multipliers live in `nlp.world().model.three.decimalCurrencies`.
+Defaults are `0.01` for `cent`, `penny`, `pence`, `centavo`, `centime`, `paisa`,
+`ore`, and `öre`. Names use lowercase keys; common plural forms are recognized.
+The cent symbol `¢` uses the `cent` entry. Currency names remain the written names
+(e.g. `cent`), since these units do not uniquely identify a national currency.
+
+```js
+const rates = nlp.world().model.three.decimalCurrencies
+rates.cent = 0.001 // affects subsequent parsing, comparisons, and arithmetic
+rates.token = 0.01 // recognize custom amounts such as '25 tokens'
+```
+
+Changes apply to existing views on their next operation as well. Multipliers must be
+positive finite numbers; missing or invalid values default to `1`. Removing a custom
+unit also removes recognition supplied by this table. Compound carry/borrow uses the
+configured minor-unit multiplier. No exchange-rate conversion is performed.
 
 ### `.fractions()` →
 

@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-import isolateModel from '../../_lib/isolate-model.js'
+import isolateModel from '../../_isolate-model.js'
 const here = '[one/tokenize/punctuation] '
 
 

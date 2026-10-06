@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+const here = '[three/money/compound-arithmetic] '
 
-const cases = [
+const compoundCases = [
   ['5 dollars and 32 cents', 'add', 1, '6 dollars and 32 cents', 6.32],
   ['5 dollars and 90 cents', 'add', 0.2, '6 dollars and 10 cents', 6.1],
   ['5 dollars and 10 cents', 'subtract', 0.2, '4 dollars and 90 cents', 4.9],
@@ -17,8 +18,8 @@ const cases = [
   ['$5 and 32 cents', 'minus', 1, '$4 and 32 cents', 4.32],
 ]
 
-test('compound money arithmetic', t => {
-  cases.forEach(([input, method, operand, expected, value]) => {
+test(here + 'compound money arithmetic', t => {
+  compoundCases.forEach(([input, method, operand, expected, value]) => {
     const doc = nlp(`i paid ${input} for lunch`)
     const result = doc.money()[method](operand)
     t.equal(doc.text(), `i paid ${expected} for lunch`, input + ' ' + method)
@@ -33,7 +34,7 @@ test('compound money arithmetic', t => {
   t.end()
 })
 
-test('money decimal formatting and signed arithmetic', t => {
+test(here + 'money decimal formatting and signed arithmetic', t => {
   const cases = [
     ['$5.00', 'add', 1, '$6.00', 6],
     ['$0.10', 'add', 0.2, '$0.30', 0.3],
@@ -60,7 +61,7 @@ test('money decimal formatting and signed arithmetic', t => {
   t.end()
 })
 
-test('compound negative and fractional-cent round trips', t => {
+test(here + 'compound negative and fractional-cent round trips', t => {
   const negative = nlp('minus zero dollars and sixty eight cents').money().add(1)
   t.equal(negative.text(), 'zero dollars and thirty two cents', 'negative text crosses zero')
   t.deepEqual(negative.get(), [0.32], 'negative text value')

@@ -50,6 +50,8 @@ export interface TimeJSON {
 export type DurationJSON = Record<string, number>
 
 interface DateView extends View {
+  add(amount: number, unit?: string): DateView
+  subtract(amount: number, unit?: string): DateView
   /** replace date-terms with a formatted date (a spacetime format string) */
   format(fmt: string): DateView
   /** get parsed date metadata */

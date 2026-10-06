@@ -1,6 +1,7 @@
 import fractions from './fractions/api.js'
 import numbers from './numbers/api.js'
 import money from './money/api.js'
+import decimalCurrencies from './money/decimalCurrencies.js'
 
 const api = function (View) {
   fractions(View)
@@ -9,5 +10,6 @@ const api = function (View) {
 }
 
 export default {
+  model: { three: { decimalCurrencies } },
   api
 }

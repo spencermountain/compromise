@@ -287,7 +287,7 @@ const matches = [
   //'spa day'
   { match: '^day$', unTag: 'Date', reason: 'spa-day' },
   // tomorrow's meeting
-  { match: '(in|of|by|for)? (#Possessive && #Date)', unTag: 'Date', reason: 'tomorrows meeting' },
+  { match: '(in|of|by|for)? (#Possessive && #Date) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
   //yesterday 7
   { match: `${knownDate} [#Value]$`, unTag: 'Date', group: 0, reason: 'yesterday-7' },
   //7 yesterday

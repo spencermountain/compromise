@@ -92,6 +92,7 @@
     "test:types": "tsc --project tsconfig.json && tsc --project tsconfig.json --module Node16 --moduleResolution Node16",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "pnpm --filter \"./plugins/*\" run test",
+    "test:dates": "pnpm --filter \"./plugins/dates\" run test",
     "test:hmm": "tape \"./tests/hmm/**/*.hmm.js\" | tap-dancer",
     "testb:plugins": "pnpm --filter \"./plugins/*\" run testb",
     "build:plugins": "pnpm --filter \"./plugins/*\" run build",
@@ -122,7 +123,7 @@
     "nlp"
   ],
   "dependencies": {
-    "efrt": "2.9.0",
+    "efrt": "catalog:",
     "grad-school": "0.0.9",
     "suffix-thumb": "6.0.0"
   },
@@ -136,7 +137,7 @@
     "nlp-corpus": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
-    "tap-dancer": "0.4.4",
+    "tap-dancer": "catalog:",
     "tape": "catalog:",
     "typescript": "7.0.2"
   },

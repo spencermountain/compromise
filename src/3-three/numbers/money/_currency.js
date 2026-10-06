@@ -6,12 +6,24 @@ const minorUnits = {
   pound: 'penny', gbp: 'penny',
 }
 
+const decimalName = (word, world) => {
+  const rates = world.model.three.decimalCurrencies
+  const singular = { pennies: 'penny', paise: 'paisa' }[word] || word.replace(/s$/, '')
+  if (Object.hasOwn(rates, word)) {
+    return word
+  }
+  return Object.hasOwn(rates, singular) ? singular : ''
+}
+
 const currency = value => {
   const m = value.clone()
   let name = m.match('#Currency').first().nouns().toSingular().text('normal')
   // Pounds can be tagged as measurement units.
   if (!name) {
     name = m.match('(pound|pounds)').nouns().toSingular().text('normal')
+  }
+  if (!name) {
+    name = decimalName(m.docs[0]?.at(-1)?.normal || '', m.world)
   }
   if (!name) {
     const str = m.text()
@@ -32,4 +44,10 @@ const isMinor = (major, minor) => {
   return Boolean(expected && expected === unit)
 }
 
-export { currency, isMinor }
+const multiplier = value => {
+  const name = currency(value).toLowerCase()
+  const rate = value.world.model.three.decimalCurrencies[name]
+  return Number.isFinite(rate) && rate > 0 ? rate : 1
+}
+
+export { currency, isMinor, multiplier, decimalName }

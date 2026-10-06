@@ -1,4 +1,4 @@
-import { isMinor } from './_currency.js'
+import { isMinor, decimalName } from './_currency.js'
 
 // Numbers already groups multiword values and separates adjacent numeric amounts.
 const parts = doc => doc.numbers().map(value => {
@@ -10,8 +10,14 @@ const parts = doc => doc.numbers().map(value => {
   if (!number.found) {
     return number
   }
-  const amount = number.growRight('#Currency+')
-  if (!number.has('#Money') && !amount.has('#Currency')) {
+  let amount = number.growRight('#Currency+')
+  const [sentence, start, end] = number.fullPointer[0]
+  const next = number.document[sentence][end]
+  const configured = next && decimalName(next.normal, number.world)
+  if (configured) {
+    amount = number.toView([[sentence, start, end + 1]]).growRight('#Currency+')
+  }
+  if (!configured && !number.has('#Money') && !amount.has('#Currency') && !number.text().includes('¢')) {
     return number.none()
   }
   return amount.growRight('(pound|pounds)')
@@ -40,7 +46,14 @@ const find = doc => {
   return doc.toView(pointers)
 }
 
-const numberOf = amount => amount.not('#Currency').not('(pound|pounds)$')
+const numberOf = amount => {
+  let number = amount.not('#Currency').not('(pound|pounds)$')
+  const last = number.lastTerm()
+  if (decimalName(last.text('normal'), amount.world)) {
+    number = number.not(last)
+  }
+  return number
+}
 
 export { parts, numberOf }
 export default find

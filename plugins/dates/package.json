@@ -31,8 +31,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
-    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "watch": "node --watch ./scratch.js",
     "perf": "node ./scripts/perf.js",
     "version": "node ./scripts/version.js",

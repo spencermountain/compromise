@@ -17,7 +17,7 @@ test('money multiword and compound amounts', t => {
     ['5 dollars 32 cents', 5.32],
     ['$5 and 32 cents', 5.32],
     ['zero dollars and five cents', 0.05],
-    ['50 cents', 50],
+    ['50 cents', 0.5],
     ['$7.003', 7.003],
     ['$12.0082', 12.0082],
   ]
@@ -36,8 +36,8 @@ test('money keeps unrelated amounts separate', t => {
     ['five dollars and ten euros', ['five dollars', 'ten euros'], [5, 10]],
     ['$5 and $10', ['$5', '$10'], [5, 10]],
     ['five dollars and ten dollars', ['five dollars', 'ten dollars'], [5, 10]],
-    ['five yen and ten cents', ['five yen', 'ten cents'], [5, 10]],
-    ['5 dollars for lunch and 32 cents for tax', ['5 dollars', '32 cents'], [5, 32]],
+    ['five yen and ten cents', ['five yen', 'ten cents'], [5, 0.1]],
+    ['5 dollars for lunch and 32 cents for tax', ['5 dollars', '32 cents'], [5, 0.32]],
   ]
   cases.forEach(([text, selections, values]) => {
     const money = nlp(text).money()

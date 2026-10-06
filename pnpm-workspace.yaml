@@ -1,6 +1,8 @@
 packages:
   - plugins/*
 
+catalogMode: prefer
+
 # Shared versions for the root library and maintained plugins.
 catalog:
   '@types/node': '^26.6.4'
@@ -8,11 +10,11 @@ catalog:
   '@rollup/plugin-terser': '1.0.0'
   'rollup': '4.64.0'
   'rollup-plugin-filesize-check': '2.0.1'
-  'tap-dancer': '0.4.2'
+  'tap-dancer': '0.4.4'
   'tape': '5.10.2'
   'cross-env': '10.1.0'
   'nlp-corpus': '4.4.0'
-  'efrt': '2.8.0'
+  'efrt': '2.9.0'
 
 linkWorkspacePackages: true
 

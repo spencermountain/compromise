@@ -1,4 +1,4 @@
-import { decimalText } from '../numbers/_conversion.js'
+import { decimalText, decimalFraction, shiftDecimal } from '../numbers/_conversion.js'
 
 const places = value => (String(value).split('.')[1] || '').length
 
@@ -25,4 +25,18 @@ const fixed = (num, precision) => {
   return whole
 }
 
-export { add, fixed, places }
+// Powers of ten can shift directly; other configured rates use decimal ratios.
+const scale = (num, rate, inverse = false) => {
+  const exponent = Math.log10(rate)
+  if (Number.isInteger(exponent)) {
+    return shiftDecimal(num, inverse ? -exponent : exponent)
+  }
+  const [a, b] = decimalFraction(num).split('/').map(BigInt)
+  const [c, d] = decimalFraction(rate).split('/').map(BigInt)
+  if (inverse) {
+    return Number(a * d) / Number(b * c)
+  }
+  return Number(a * c) / Number(b * d)
+}
+
+export { add, fixed, places, scale }

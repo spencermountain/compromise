@@ -17,7 +17,16 @@ declare namespace nlp {
   /** turn a match-string into json */
   export function parseMatch(match: string, opts?: matchOptions): object[]
   /** grab library internals */
-  export function world(): object
+  export function world(): {
+    model: {
+      one: object
+      two: object
+      three: { decimalCurrencies: Record<string, number>; [key: string]: unknown }
+    }
+    methods: object
+    compute: object
+    hooks: string[]
+  }
   /** grab library metadata */
   export function model(): object
   /** grab exposed library methods */

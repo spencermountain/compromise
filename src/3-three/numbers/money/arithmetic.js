@@ -2,8 +2,8 @@ import { parts, numberOf } from './find.js'
 import parseMoney from './parse.js'
 import parseNumber from '../numbers/parse/index.js'
 import format from '../numbers/format/index.js'
-import { shiftDecimal } from '../numbers/_conversion.js'
-import { add, fixed, places } from './_decimal.js'
+import { multiplier } from './_currency.js'
+import { add, fixed, places, scale } from './_decimal.js'
 
 const replace = (part, amount, negative = amount < 0) => {
   const number = numberOf(part)
@@ -19,7 +19,10 @@ const replace = (part, amount, negative = amount < 0) => {
       str = 'minus ' + str
     }
   } else {
-    const text = number.text('reduced')
+    let text = number.text('reduced')
+    if (number.text().includes('¢')) {
+      text = text.replace(/c$/, '¢')
+    }
     const original = text.match(/\d[\d,]*(?:\.\d+)?/)
     const precision = original ? places(original[0]) : 0
     if (original) {
@@ -30,8 +33,8 @@ const replace = (part, amount, negative = amount < 0) => {
     if (obj.hasComma) {
       const [whole, fraction] = digits.split('.')
       const groups = []
-      for (let end = whole.length; end > 0; end -= 3) {
-        groups.unshift(whole.slice(Math.max(0, end - 3), end))
+      for (let offset = whole.length; offset > 0; offset -= 3) {
+        groups.unshift(whole.slice(Math.max(0, offset - 3), offset))
       }
       digits = groups.join(',')
       if (fraction !== undefined) {
@@ -68,10 +71,10 @@ const arithmetic = (value, operation) => {
     return
   }
   if (amounts.length === 1) {
-    replace(amounts.eq(0), num)
+    replace(amounts.eq(0), scale(num, multiplier(amounts.eq(0)), true))
   } else if (amounts.length === 2) {
     const major = Math.trunc(Math.abs(num))
-    const minor = shiftDecimal(add(Math.abs(num), -major), 2)
+    const minor = scale(add(Math.abs(num), -major), multiplier(amounts.eq(1)), true)
     // Work backwards so resizing the major part cannot move the minor selection.
     replace(amounts.eq(1), minor)
     replace(amounts.eq(0), major, num < 0)

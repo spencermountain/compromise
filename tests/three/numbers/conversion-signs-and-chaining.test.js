@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[three/conversion-signs-and-chaining] '
+const here = '[three/numbers/conversion-signs-and-chaining] '
 
 test(here + 'negative fractions in words', t => {
   const cases = [

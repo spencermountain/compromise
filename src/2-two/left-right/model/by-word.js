@@ -483,6 +483,10 @@ const rules = {
 }
 
 const compounds = {
+  // deserving such [praise]
+  praise: 'such _ -> #Noun',
+  // spoke [concerning] the budget
+  concerning: '(spoke|talked|wrote) _ #Det -> #Prep',
   // is [lasting] [longer]
   lasting: '#Cop _ longer -> #Ger',
   longer: 'lasting _ $ -> #Adv',

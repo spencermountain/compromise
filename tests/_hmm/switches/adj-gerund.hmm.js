@@ -294,7 +294,7 @@ He is depressing the pedal. {Pronoun,Aux,Ger,Det,Noun}
 
 # deserving
 We discussed her deserving cause. {Pronoun,Past,Poss,Adj,Noun}
-Anyone deserving such praise must be talented. {Noun,Ger,Det,Noun,Modal,Copula,Adj}
+Anyone deserving such praise must be talented. {Noun,Ger,Det,Noun,Modal,Inf,Adj}
 
 # devastating
 The devastating flood surprised us. {Det,Adj,Noun,Past,Pronoun}

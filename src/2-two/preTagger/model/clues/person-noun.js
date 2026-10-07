@@ -1,7 +1,7 @@
 import person from './_person.js'
 import noun from './_noun.js'
 
-// 'babling brook' vs 'brook sheilds'
+// 'babbling brook' vs 'Brooke Shields'
 
 const clue = {
   beforeTags: { ...noun.beforeTags, ...person.beforeTags },

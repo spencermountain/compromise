@@ -115,7 +115,18 @@ const adhoc = {
     return isCapital(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
   },
   'Person|Noun': (terms, i) => {
-    return isCapital(terms, i)
+    // A robin sang; her faith never wavered.
+    const before = terms[i - 1]
+    if (before?.tags.has('Determiner') || before?.tags.has('Possessive')) {
+      return 'Singular'
+    }
+    // My friend Art arrived; Alfredo handed me the keys.
+    if (isTitleCase.test(terms[i].text)) {
+      if (i > 0 || (terms[i + 1]?.tags.has('Verb') && !terms[i + 1].tags.has('Copula') && terms[i + 2]?.tags.has('Pronoun'))) {
+        return 'Person'
+      }
+    }
+    return null
   },
   'Person|Verb': (terms, i) => {
     if (i !== 0) {

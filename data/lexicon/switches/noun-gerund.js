@@ -205,7 +205,6 @@ export default [
   'rendering',
   'reporting',
   'responding',
-  'restructruing',
   'restructuring',
   'riding',
   'roofing',

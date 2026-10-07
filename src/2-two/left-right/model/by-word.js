@@ -490,6 +490,15 @@ const compounds = {
   // is [decaying] in the rain; is [smiling] at the baby
   'decaying|fading|flaming|gleaming|maturing|sparkling|swelling|thriving': '#Cop _ in -> #Ger',
   'glaring|remaining|roaring|smiling': '#Cop _ at -> #Ger',
+  // is [appealing] against the verdict; is [trembling] with fear
+  'appealing|conspiring|intriguing|leaning|raging': '#Cop _ against -> #Ger',
+  'conflicting|corresponding|trembling|trifling': '#Cop _ with -> #Ger',
+  'agonizing|reigning': '#Cop _ over -> #Ger',
+  'aching|ensuing': '#Cop _ after -> #Ger',
+  bustling: '#Cop _ around -> #Ger',
+  dissenting: '#Cop _ from -> #Ger',
+  living: '#Cop _ near -> #Ger',
+  prevailing: '#Cop _ despite -> #Ger',
   plunging: '#Cop _ into -> #Ger',
   emerging: '#Cop _ from -> #Ger',
   flowing: '#Cop _ under -> #Ger',

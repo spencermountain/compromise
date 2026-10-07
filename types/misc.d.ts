@@ -114,14 +114,7 @@ export interface MatchEvent {
   matches: { text: string, index?: number[], length: number }[]
 }
 
-export interface HooksEvent {
-  type: 'hooks'
-  hook: string
-  spec: string
-  terms: (Omit<Term, 'tags'> & { tags: string[] })[][]
-}
-
-export interface VerboseOptions<Event = TaggerEvent | MatchEvent | HooksEvent> {
+export interface VerboseOptions<Event = TaggerEvent | MatchEvent> {
   color?: boolean
   word?: string
   pattern?: string

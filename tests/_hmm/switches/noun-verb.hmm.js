@@ -2217,6 +2217,8 @@ I pivot toward the door. {Pronoun,Inf,Prep,Det,Noun}
 # place
 I noticed the place. {Pronoun,Past,Det,Noun}
 He might place the vase here. {Pronoun,Modal,Inf,Det,Noun,Adv}
+The place surprised us. {Det,Noun,Past,Pronoun}
+We place the vase here. {Pronoun,Inf,Det,Noun,Adv}
 
 # plan
 The plan surprised us. {Det,Noun,Past,Pronoun}
@@ -2229,11 +2231,6 @@ They plant the seeds. {Pronoun,Inf,Det,Plural}
 # play
 They described the play. {Pronoun,Past,Det,Noun}
 You can play the violin. {Pronoun,Modal,Inf,Det,Noun}
-
-# plce
-# Dictionary spelling retained; intended senses of place.
-The plce surprised us. {Det,Noun,Past,Pronoun}
-We plce the vase here. {Pronoun,Inf,Det,Noun,Adv}
 
 # plead
 # No ordinary noun sense; plea is a different word.
@@ -2879,10 +2876,9 @@ You can shave my beard. {Pronoun,Modal,Inf,Poss,Noun}
 The shed stores garden tools. {Det,Noun,Pres,Noun,Plural}
 She will shed the disguise. {Pronoun,Modal,Inf,Det,Noun}
 
-# sheild
-# Dictionary spelling retained; intended senses of shield.
-The sheild surprised us. {Det,Noun,Past,Pronoun}
-We sheild the children from the rain. {Pronoun,Inf,Det,Noun,Prep,Det,Noun}
+# shield
+The shield surprised us. {Det,Noun,Past,Pronoun}
+We shield the children from the rain. {Pronoun,Inf,Det,Noun,Prep,Det,Noun}
 
 # shelter
 Her shelter was memorable. {Poss,Noun,Copula,Adj}

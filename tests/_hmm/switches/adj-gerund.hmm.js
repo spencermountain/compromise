@@ -25,11 +25,7 @@ My shoulder is aching after the game. {Poss,Noun,Aux,Ger,Prep,Det,Noun}
 # agonizing
 The agonizing decision surprised us. {Det,Adj,Noun,Past,Pronoun}
 He is agonizing over the choice. {Pronoun,Aux,Ger,Prep,Det,Noun}
-
-# agonzing
-# Dictionary spelling retained; intended senses of agonizing.
-I noticed the agonzing decision. {Pronoun,Past,Det,Adj,Noun}
-He is agonzing over the choice. {Pronoun,Aux,Ger,Prep,Det,Noun}
+I noticed the agonizing decision. {Pronoun,Past,Det,Adj,Noun}
 
 # alarming
 They described the alarming report. {Pronoun,Past,Det,Adj,Noun}

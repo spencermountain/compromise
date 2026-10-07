@@ -43,7 +43,12 @@ const log = (term, previous, reason = '') => {
     })
     .join(' ')
   const word = `'${b(yellow(event.text) + "'").padEnd(30)}  ${dim(index)}`
-  console.log(`${debug.prefix || '   '}${word.padEnd(50)} ${dim(`(${reason})`).padEnd(25)} ${tags}`) // eslint-disable-line no-console
+  const prefix = debug.prefix || '   '
+  if (debug.rule !== reason) {
+    console.log(`${prefix}├─ ${dim(reason || 'tag change')}`) // eslint-disable-line no-console
+    debug.rule = reason
+  }
+  console.log(`${prefix}│  ${word.padEnd(50)} ${tags}`) // eslint-disable-line no-console
 }
 
 debug.before = before

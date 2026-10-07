@@ -1075,10 +1075,9 @@ She satisfied the requirements. {Pronoun,Past,Det,Plural}
 The saturated solution surprised us. {Det,Adj,Noun,Past,Pronoun}
 She saturated the cloth. {Pronoun,Past,Det,Noun}
 
-# sauted
-# Dictionary spelling retained; intended senses of sauteed.
-I noticed the sauted onion. {Pronoun,Past,Det,Adj,Noun}
-She sauted the mushrooms. {Pronoun,Past,Det,Plural}
+# sauteed
+I noticed the sauteed onion. {Pronoun,Past,Det,Adj,Noun}
+She sauteed the mushrooms. {Pronoun,Past,Det,Plural}
 
 # scared
 They described the scared child. {Pronoun,Past,Det,Adj,Noun}

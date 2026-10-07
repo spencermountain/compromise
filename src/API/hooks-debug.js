@@ -61,6 +61,8 @@ const hooksDebug = (options, headings) => (doc, hooks) => {
   hooks.forEach(hook => {
     const nested = headings && !options.emit
     const prefix = debug.prefix
+    const rule = debug.rule
+    debug.rule = undefined
     if (nested) {
       console.log(`  ${color ? cli.b(cli.ul(hook + ':')) : hook}`) // eslint-disable-line no-console
       debug.prefix = cli.dim('   │  ')
@@ -71,6 +73,7 @@ const hooksDebug = (options, headings) => (doc, hooks) => {
       snapshot(hook, nested)
     } finally {
       debug.prefix = prefix
+      debug.rule = rule
     }
   })
 }

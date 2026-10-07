@@ -843,12 +843,9 @@ He is reporting the accident. {Pronoun,Aux,Ger,Det,Noun}
 We discussed the responding. {Pronoun,Past,Det,Noun}
 She is responding to the letter. {Pronoun,Aux,Ger,Prep,Det,Noun}
 
-# restructruing
-# Dictionary spelling retained; intended senses of restructuring.
-They described the restructruing. {Pronoun,Past,Det,Noun}
-He is restructruing the company. {Pronoun,Aux,Ger,Det,Noun}
-
 # restructuring
+They described the restructuring. {Pronoun,Past,Det,Noun}
+He is restructuring the company. {Pronoun,Aux,Ger,Det,Noun}
 The restructuring continued for hours. {Det,Noun,Past,Prep,Plural}
 She is restructuring the department. {Pronoun,Aux,Ger,Det,Noun}
 

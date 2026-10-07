@@ -14,6 +14,8 @@ const verbose = function (set = true, options = {}) {
   const env = globalThis.process?.env ?? globalThis.env ?? {} //use window, in browser
   debug.hooks = set === 'hooks' || set === true ? hooksDebug(options, set === true) : undefined
   debug.word = options.word?.toLowerCase()
+  debug.contractions = set === 'contractions' || set === true
+  debug.rule = undefined
   debug.emit = options.emit
   debug.tags = set === 'tagger' || set === true
   env.DEBUG_TAGS = debug.tags ? true : ''

@@ -45,6 +45,7 @@ const matchDebug = (world, options) => {
     if (options.emit) {
       options.emit(event)
     } else {
+      debug.rule = undefined
       const status = event.matched ? green('✓') : red('✗')
       const spans = matches.map(span => `${span.index?.join(':') || '?'} "${span.text}"`).join(', ')
       console.log(`${debug.prefix || '   '}${status}  ${cyan("'" + pattern + "'").padEnd(32)}   ${dim(spans)}`) // eslint-disable-line no-console

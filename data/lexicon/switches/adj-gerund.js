@@ -6,7 +6,6 @@ export default [
   'accompanying',
   'aching',
   'agonizing',
-  'agonzing',
   'alarming',
   'alluring',
   'amazing',

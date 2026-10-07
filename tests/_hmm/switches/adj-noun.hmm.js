@@ -98,10 +98,9 @@ A constituent wrote to her. {Det,Noun,Past,Prep,Pronoun}
 They described the contemporary art. {Pronoun,Past,Det,Adj,Noun}
 He was a contemporary of mine. {Pronoun,Copula,Det,Noun,Prep,Pronoun}
 
-# convertable
-# Dictionary spelling retained; intended senses of convertible.
-We discussed her convertable roof. {Pronoun,Past,Poss,Adj,Noun}
-She drove a convertable. {Pronoun,Past,Det,Noun}
+# convertible
+We discussed her convertible roof. {Pronoun,Past,Poss,Adj,Noun}
+She drove a convertible. {Pronoun,Past,Det,Noun}
 
 # cooperative
 The cooperative attitude surprised us. {Det,Adj,Noun,Past,Pronoun}
@@ -200,10 +199,9 @@ The future looks bright. {Det,Noun,Pres,Adj}
 We discussed her general advice. {Pronoun,Past,Poss,Adj,Noun}
 The general saluted. {Det,Actor,Past}
 
-# genious
-# Dictionary spelling retained; intended informal genius senses.
-The genious idea surprised us. {Det,Adj,Noun,Past,Pronoun}
-He is a genious. {Pronoun,Copula,Det,Noun}
+# genius
+The genius idea surprised us. {Det,Adj,Noun,Past,Pronoun}
+He is a genius. {Pronoun,Copula,Det,Noun}
 
 # gold
 I noticed the gold ring. {Pronoun,Past,Det,Adj,Noun}

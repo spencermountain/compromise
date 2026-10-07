@@ -270,7 +270,7 @@ export default [
   'rotted',
   'satisfied',
   'saturated',
-  'sauted',
+  'sauteed',
   'scared',
   'scattered',
   'scorched',

@@ -1,6 +1,7 @@
 // clues: [adj, past],
 // fallback: 'Adjective',
 export default [
+  'thatched',
   'woke',
   'abandoned',
   'absorbed',

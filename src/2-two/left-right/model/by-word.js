@@ -40,6 +40,8 @@ const rules = {
   under: [
     // looked [under] the bed
     '#V _ (#Det|#Poss|#Pron) -> #Prep',
+    // labor [under] difficult conditions; panic [under] pressure
+    '(labor|labour|panic|labors|labours|panics|labored|laboured|panicked|laboring|labouring|panicking) _ (#Adj|#Noun) -> #Prep',
     // wimp out [under] pressure
     '#Particle _ #NN -> #Prep',
   ],
@@ -483,6 +485,12 @@ const rules = {
 }
 
 const compounds = {
+  // travel by [train]; benefit from [exercise]
+  train: 'by _ -> #Noun',
+  exercise: '(after|from) _ -> #Noun',
+  // zoom [past] the house; rage [against] injustice
+  past: '#V _ #Det -> #Prep',
+  against: '#V _ #Noun -> #Prep',
   // deserving such [praise]
   praise: 'such _ -> #Noun',
   // spoke [concerning] the budget

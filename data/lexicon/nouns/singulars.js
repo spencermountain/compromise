@@ -3,6 +3,7 @@
 // they are all inflected to add their plural form
 
 export default [
+  'animal',
   'sapling',
   'backend',
   'frontend',

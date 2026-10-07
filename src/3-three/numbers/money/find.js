@@ -1,10 +1,14 @@
 import { isMinor, decimalName } from './_currency.js'
+import { tagCents, isCandidate } from './_candidates.js'
 
 // Numbers already groups multiword values and separates adjacent numeric amounts.
 const parts = doc => {
   // Normalization turns prefix ¢ into c, hiding its monetary spelling.
-  doc.terms().filter(term => /^¢[0-9]/.test(term.text())).tag(['Money', 'Value'])
+  tagCents(doc)
   return doc.numbers().map(value => {
+    if (!isCandidate(value)) {
+      return value.none()
+    }
     let number = value.not('^and').not('and$')
     if (number.text('reduced') === 'minus') {
       return number.none()

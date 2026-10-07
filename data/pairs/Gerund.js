@@ -1,4 +1,5 @@
 export default [
+  ['droning', 'drone'],
   ['including', 'include'],
   ['following', 'follow'],
   ['being', 'is'],

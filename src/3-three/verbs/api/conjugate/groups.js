@@ -14,6 +14,9 @@ const groups = function (verbs, finite = false) {
     const previous = entries[i - 1]
     if (!previous || entry.parsed.auxiliary.found) return
     const head = previous.head || previous
+    if (!finite && !head.parsed.auxiliary.found) {
+      return
+    }
     const info = getGrammar(head.vb, head.parsed)
     const bare = finite && !head.parsed.auxiliary.found && !info.copula && /^(simple-present|simple-past)$/.test(info.form)
     const doSupport = finite && head.parsed.auxiliary.has('^(do|does|did)$')

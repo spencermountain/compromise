@@ -603,7 +603,7 @@ The team is lacking a goalkeeper. {Det,Noun,Aux,Ger,Det,Noun}
 
 # lagging
 The lagging indicator surprised us. {Det,Adj,Noun,Past,Pronoun}
-He is lagging behind the others. {Pronoun,Aux,Ger,Prep,Det,Pronoun}
+He is lagging behind the others. {Pronoun,Aux,Ger,Prep,Det,Noun}
 
 # lasting
 I noticed the lasting impression. {Pronoun,Past,Det,Adj,Noun}

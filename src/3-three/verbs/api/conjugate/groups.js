@@ -5,7 +5,7 @@ import readAuxiliary from '../parse/auxiliary.js'
 // Snapshot coordination before any edit changes tags or term positions. Only
 // adjacent, compatible roots can inherit an auxiliary; a new subject, object,
 // comma, sentence boundary, or explicit auxiliary starts an independent phrase.
-const groups = function (verbs) {
+const groups = function (verbs, finite = false) {
   const entries = verbs.map(vb => {
     const parsed = parseVerb(vb)
     return { vb, parsed, root: vb.match(parsed.root).harden() }
@@ -14,16 +14,18 @@ const groups = function (verbs) {
     const previous = entries[i - 1]
     if (!previous || entry.parsed.auxiliary.found) return
     const head = previous.head || previous
-    if (!head.parsed.auxiliary.found) return
     const info = getGrammar(head.vb, head.parsed)
+    const bare = finite && !head.parsed.auxiliary.found && !info.copula && /^(simple-present|simple-past)$/.test(info.form)
+    if (!head.parsed.auxiliary.found && !bare) return
     if (info.isInfinitive) return
     const chain = readAuxiliary(head.parsed, info.form)
-    if ((!chain && info.form !== 'simple-future') || (chain && chain.prospective)) return
+    if ((!chain && info.form !== 'simple-future' && !bare) || (chain && chain.prospective)) return
     head.chain = chain
     head.form = info.form
     const root = entry.parsed.root
     const headRoot = head.parsed.root
     let compatible = headRoot.has('#Infinitive') && root.has('#Infinitive')
+    if (bare && headRoot.has('#PresentTense')) compatible = root.has('#PresentTense')
     if (headRoot.has('(#PastTense|#Participle)')) compatible = root.has('(#PastTense|#Participle)')
     if (headRoot.has('#Gerund')) compatible = root.has('#Gerund')
     if (!compatible || previous.vb.has('@hasComma$')) return

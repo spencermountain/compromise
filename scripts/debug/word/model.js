@@ -1,4 +1,5 @@
 import sources from './sources.js'
+import context from './context.js'
 import patterns from './patterns.js'
 import adhoc from '../../../src/2-two/preTagger/compute/tagger/3rd-pass/_adhoc.js'
 
@@ -79,14 +80,7 @@ const inspect = (nlp, word, sentence) => {
     report.notes.push('No literal source hit: this entry may be generated, or its source may be outside the scanned files.')
   }
   if (sentence !== undefined) {
-    const events = []
-    let doc
-    try {
-      nlp.verbose('tagger', { word, emit: event => events.push(event) })
-      doc = nlp(sentence)
-    } finally {
-      nlp.verbose(false)
-    }
+    const { doc, events } = context(nlp, word, sentence)
     report.context = {
       sentence,
       events,

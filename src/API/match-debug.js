@@ -1,4 +1,4 @@
-import { green, red, cyan, dim } from './_color.js'
+import { green, red, dim, i } from './_color.js'
 import debug from './debug.js'
 
 // Install only while verbose matching is enabled; restore the original hot path.
@@ -36,20 +36,12 @@ const matchDebug = (world, options) => {
     if (word && result.ptrs.length && !matches.length) {
       return result
     }
-    const event = {
-      type: 'match',
-      pattern,
-      matched: result.ptrs.length > 0,
-      matches,
-    }
-    if (options.emit) {
-      options.emit(event)
-    } else {
-      debug.rule = undefined
-      const status = event.matched ? green('✓') : red('✗')
-      const spans = matches.map(span => `${span.index?.join(':') || '?'} "${span.text}"`).join(', ')
-      console.log(`${debug.prefix || '   '}${status}  ${cyan("'" + pattern + "'").padEnd(32)}   ${dim(spans)}`) // eslint-disable-line no-console
-    }
+    debug.rule = undefined
+    const status = result.ptrs.length ? green('✓') : red('✗')
+    const spans = matches.map(span => `${green("'" + span.text + "'")} ${dim(span.index?.join(':') || '?')}`).join(', ')
+    const rule = pattern.length > 80 ? pattern.slice(0, 79) + '…' : pattern
+    const words = spans ? spans + '  ' : ' ---         '
+    console.log(`${debug.prefix || '   '}${status} ${words}${dim(i(rule))}`) // eslint-disable-line no-console
     return result
   }
   one.parseMatch = parseLogged

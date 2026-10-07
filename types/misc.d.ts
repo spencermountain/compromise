@@ -98,25 +98,7 @@ export interface Net {
 
 export type ParsedMatch = object[]
 
-export interface TaggerEvent {
-  text: string
-  normal?: string
-  index?: number[]
-  reason: string
-  added: string[]
-  removed: string[]
-}
-
-export interface MatchEvent {
-  type: 'match'
-  pattern: string
-  matched: boolean
-  matches: { text: string, index?: number[], length: number }[]
-}
-
-export interface VerboseOptions<Event = TaggerEvent | MatchEvent> {
-  color?: boolean
+export interface VerboseOptions {
   word?: string
   pattern?: string
-  emit?: (event: Event) => void
 }

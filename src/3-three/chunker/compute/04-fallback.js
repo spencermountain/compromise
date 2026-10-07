@@ -1,15 +1,3 @@
-import { blue, dim } from '../../../API/_color.js'
-import debug from '../../../API/debug.js'
-
-const setChunk = function (term, chunk) {
-  const env = globalThis.process?.env ?? globalThis.env ?? {}
-  if (env.DEBUG_CHUNKS) {
-    const str = (term.normal + "'").padEnd(8)
-    console.log(`${debug.prefix || '  | '}'${str}  →  ${blue(chunk.padEnd(12))} ${dim(' -fallback- ')}`) // eslint-disable-line
-  }
-  term.chunk = chunk
-}
-
 // ensure everything has a chunk
 const fallback = function (document) {
   for (let n = 0; n < document.length; n += 1) {
@@ -18,19 +6,19 @@ const fallback = function (document) {
       if (term.chunk === undefined) {
         // conjunctions stand alone
         if (term.tags.has('Conjunction')) {
-          setChunk(term, 'Pivot')
+          term.chunk = 'Pivot'
         } else if (term.tags.has('Preposition')) {
-          setChunk(term, 'Pivot')
+          term.chunk = 'Pivot'
         } else if (term.tags.has('Adverb')) {
-          setChunk(term, 'Verb')
+          term.chunk = 'Verb'
         }
         // just take the chunk on the right?
         // else if (document[n][t + 1] && document[n][t + 1].chunk) {
-        //   setChunk(term, document[n][t + 1].chunk)
+        //   term.chunk = document[n][t + 1].chunk
         // }
         // // or take the chunk on the left
         // else if (document[n][t - 1] && document[n][t - 1].chunk) {
-        //   setChunk(term, document[n][t - 1].chunk)
+        //   term.chunk = document[n][t - 1].chunk
         else {
           //  ¯\_(ツ)_/¯
           term.chunk = 'Noun'

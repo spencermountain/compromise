@@ -1,4 +1,4 @@
-import { red, green, b, yellow, dim } from './_color.js'
+import { red, green, dim, white } from './_color.js'
 const env = globalThis.process?.env ?? globalThis.env ?? {}
 const debug = { tags: Boolean(env.DEBUG_TAGS) }
 
@@ -10,7 +10,7 @@ const before = term => {
   return null
 }
 
-// Both console output and JSON consumers see actual changes, including conflicts.
+// Show actual changes, including conflict removals.
 const log = (term, previous, reason = '') => {
   if (!previous) {
     return
@@ -20,35 +20,24 @@ const log = (term, previous, reason = '') => {
   if (!added.length && !removed.length) {
     return
   }
-  const event = {
-    text: term.text || term.implicit || '',
-    normal: term.normal,
-    index: term.index?.slice(),
-    reason,
-    added,
-    removed,
-  }
-  if (debug.emit) {
-    debug.emit(event)
-    return
-  }
-  const changes = [...removed.map(tag => `-#${tag}`), ...added.map(tag => `#${tag}`)]
-  const index = `${event.index?.join(':') || '?'}`
-  const tags = changes
-    .map(tag => {
-      if (tag.startsWith('-')) {
-        return red(tag)
-      }
-      return green(tag)
-    })
-    .join(' ')
-  const word = `'${b(yellow(event.text) + "'").padEnd(30)}  ${dim(index)}`
+  const text = term.text || term.implicit || ''
+  const index = term.index?.join(':') || '?'
   const prefix = debug.prefix || '   '
   if (debug.rule !== reason) {
-    console.log(`${prefix}├─ ${dim(reason || 'tag change')}`) // eslint-disable-line no-console
+    const headingPrefix = debug.prefix ? prefix.replace('│  ', '│ ') : '  '
+    console.log(`${headingPrefix}${dim(white((reason || 'tag change') + ':'))}`) // eslint-disable-line no-console
     debug.rule = reason
   }
-  console.log(`${prefix}│  ${word.padEnd(50)} ${tags}`) // eslint-disable-line no-console
+  const print = (tags, sign, color) => {
+    if (!tags.length) {
+      return
+    }
+    const word = color(`'${text}'`)
+    const changes = tags.map(tag => color(`#${tag}`)).join(' ')
+    console.log(`${prefix}${color(sign)} ${word} ${dim(index.padEnd(9))} ${changes}`) // eslint-disable-line no-console
+  }
+  print(removed, '−', red)
+  print(added, '+', green)
 }
 
 debug.before = before

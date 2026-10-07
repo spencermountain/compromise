@@ -483,6 +483,21 @@ const rules = {
 }
 
 const compounds = {
+  // attempts at [escape]; waited [pending] approval
+  escape: 'at _ -> #Noun',
+  pending: '#Past _ #Noun -> #Prep',
+  // is [lagging] behind
+  lagging: '#Cop _ behind -> #Ger',
+  // anyone [owing] money; was sadly [lacking]
+  owing: '_ #Noun -> #Ger',
+  lacking: '(sadly|sorely) _ $ -> #Adj',
+  // is [absorbing] water
+  'absorbing|baffling|contributing|exacting|foreboding': '#Cop _ #Noun -> #Ger',
+  // is [booming] again; is flowering [early]
+  'booming|skyrocketing': '#Cop _ again -> #Ger',
+  'budding|flowering': '#Cop _ early -> #Ger',
+  screeching: '#Cop _ outside -> #Ger',
+  early: '(budding|flowering) _ $ -> #Adv',
   // is [drifting] toward the shore
   'accelerating|dashing|drifting|rushing|sloping|staggering': '#Cop _ toward -> #Ger',
   // is [meandering] through the village

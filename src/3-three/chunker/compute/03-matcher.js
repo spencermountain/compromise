@@ -57,6 +57,8 @@ const rules = [
   { match: '#Value+ #Adv? #Adj', chunk: 'Noun' },
   // the last russian tsar
   { match: 'the [#Adj] #NN', chunk: 'Noun' },
+  // the happy and playful dog
+  { match: '#Det? #Adj+ (and|or) #Adj+ #NN', chunk: 'Noun' },
   // breakfast in bed
   { match: '#Sing in #Det? #Sing', chunk: 'Noun' },
   // Some citizens in this Canadian capital

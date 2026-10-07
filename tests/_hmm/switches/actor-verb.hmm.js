@@ -28,7 +28,7 @@ I bully the younger children. {Pronoun,Inf,Det,Adj,Plural}
 
 # boss
 I noticed the boss. {Pronoun,Past,Det,Actor}
-He might boss everyone around. {Pronoun,Modal,Inf,Pronoun,Particle}
+He might boss everyone around. {Pronoun,Modal,Inf,Noun,Adv}
 
 # captain
 The captain surprised us. {Det,Actor,Past,Pronoun}
@@ -43,7 +43,7 @@ They described the chauffeur. {Pronoun,Past,Det,Actor}
 You can chauffeur the guests home. {Pronoun,Modal,Inf,Det,Noun,Adv}
 
 # coach
-That coach seemed unusual. {Det,Actor,Past,Adj}
+That coach taught the players. {Det,Actor,Past,Det,Plural}
 She will coach a local team. {Pronoun,Modal,Inf,Det,Adj,Noun}
 
 # cook
@@ -85,7 +85,7 @@ We groom the horse. {Pronoun,Inf,Det,Noun}
 The groom waited beside the bride. {Det,Actor,Past,Prep,Det,Noun}
 
 # guide
-We discussed the guide. {Pronoun,Past,Det,Actor}
+The guide greeted the tourists. {Det,Actor,Past,Det,Plural}
 They guide visitors through the museum. {Pronoun,Inf,Noun,Prep,Det,Noun}
 
 # host
@@ -132,7 +132,7 @@ He might pioneer a new technique. {Pronoun,Modal,Inf,Det,Adj,Noun}
 
 # recruit
 The recruit surprised us. {Det,Actor,Past,Pronoun}
-We recruit more volunteers. {Pronoun,Inf,Det,Plural}
+We recruit more volunteers. {Pronoun,Inf,Adj,Plural}
 
 # scout
 We discussed the scout. {Pronoun,Past,Det,Actor}

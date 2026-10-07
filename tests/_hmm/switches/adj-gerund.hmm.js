@@ -77,7 +77,7 @@ He is astounding the crowd. {Pronoun,Aux,Ger,Det,Noun}
 
 # baffling
 I noticed the baffling puzzle. {Pronoun,Past,Det,Adj,Noun}
-The problem is baffling everyone. {Det,Noun,Aux,Ger,Pronoun}
+The problem is baffling everyone. {Det,Noun,Aux,Ger,Noun}
 
 # becoming
 They described the becoming dress. {Pronoun,Past,Det,Adj,Noun}
@@ -298,7 +298,7 @@ He is depressing the pedal. {Pronoun,Aux,Ger,Det,Noun}
 
 # deserving
 We discussed her deserving cause. {Pronoun,Past,Poss,Adj,Noun}
-Anyone deserving such praise must be talented. {Pronoun,Ger,Det,Noun,Modal,Copula,Adj}
+Anyone deserving such praise must be talented. {Noun,Ger,Det,Noun,Modal,Copula,Adj}
 
 # devastating
 The devastating flood surprised us. {Det,Adj,Noun,Past,Pronoun}
@@ -740,7 +740,7 @@ She is overwhelming the opposition. {Pronoun,Aux,Ger,Det,Noun}
 
 # owing
 The balance remains owing. {Det,Noun,Pres,Adj}
-Anyone owing money should contact us. {Pronoun,Ger,Noun,Modal,Inf,Pronoun}
+Anyone owing money should contact us. {Noun,Ger,Noun,Modal,Inf,Pronoun}
 
 # paying
 I noticed the paying customer. {Pronoun,Past,Det,Adj,Noun}

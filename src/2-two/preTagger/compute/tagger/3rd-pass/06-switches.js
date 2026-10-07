@@ -85,6 +85,10 @@ const doSwitches = function (terms, i, world) {
   if (adhoc[form]) {
     tag = adhoc[form](terms, i) || tag
   }
+  // Shared noun clues must retain the actor reading.
+  if (form === 'Actor|Verb' && tag === 'Singular') {
+    tag = 'Actor'
+  }
   // Choosing a lexical reading must retain its inflection.
   if (form === 'Person|Noun' && tag === 'Singular' && looksPlural(str)) {
     tag = 'Plural'

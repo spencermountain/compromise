@@ -21,10 +21,17 @@ const rules = {
   ],
   rights: [
     '_ of -> #NN',
+    'equal _ -> #Plural',
+  ],
+  over: [
+    // geek out [over] computers
+    '#Particle _ #NN -> #Prep',
   ],
   under: [
     // looked [under] the bed
     '#V _ (#Det|#Poss|#Pron) -> #Prep',
+    // wimp out [under] pressure
+    '#Particle _ #NN -> #Prep',
   ],
   am: [
     // five [am]
@@ -466,6 +473,8 @@ const rules = {
 }
 
 const compounds = {
+  // is [drifting] toward the shore
+  'accelerating|dashing|drifting|rushing|sloping|staggering': '#Cop _ toward -> #Ger',
   // [1st] lieutenant
   '1st|2nd|3rd': '_ lieutenant -> #Hon',
   // is [when] he left

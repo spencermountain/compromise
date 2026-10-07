@@ -342,6 +342,7 @@ export default [
   'go round',
   'go through',
   'go under',
+  'goof around',
   'goof off',
   'goof up',
   'grind down',

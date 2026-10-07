@@ -1,5 +1,6 @@
 // most are generated from adjective list at runtime
 export default [
+  'indoors',
   'a lot',
   'a posteriori',
   'abroad',

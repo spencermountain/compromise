@@ -357,12 +357,18 @@ test('spec slots support negative tags and one-term wildcards', t => {
 
 test('spec assertions report one simple spec per failing sentence', t => {
   const results = []
-  const capture = { equal: (actual, expected, message) => results.push({ actual, expected, message }) }
+  const capture = {
+    fail: message => results.push({ passed: false, message }),
+    pass: message => results.push({ passed: true, message }),
+  }
   assertSpec(capture, 'the cat slept {.,!Noun,Adj}')
   t.equal(results.length, 1, 'multiple mismatches produce one assertion')
-  t.equal(results[0].actual, true, 'failed assertion recorded')
-  t.equal(results[0].expected, false, 'assertion expects passing spec')
-  t.equal(results[0].message, 'the cat slept {Det,Noun,Vb}', 'failure message shows actual tagging in spec format')
+  t.equal(results[0].passed, false, 'failed assertion recorded')
+  t.equal(results[0].message, "the cat slept {Det,Noun,Vb} - !='cat', 'slept'", 'failure message shows actual tagging and failing words')
+  assertSpec(capture, 'the cat slept {Det,Noun,Vb}')
+  t.equal(results.length, 2, 'passing spec produces one assertion')
+  t.equal(results[1].passed, true, 'passing assertion recorded')
+  t.equal(results[1].message, 'the cat slept {Det,Noun,Vb}', 'passing message preserves the spec')
   t.end()
 })
 

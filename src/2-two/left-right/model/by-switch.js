@@ -2,6 +2,8 @@ const rules = {
   '%Adj|Gerund%': [
     // [boring] the audience
     '_ #Det -> #Ger',
+    // is [assuring] us; was [boggling] my mind
+    '#Cop _ (#Pron|#Poss|#Reflexive) -> #Ger',
     // world's [leading] manufacturer
     '#Poss _ #NN -> #Adj',
   ],

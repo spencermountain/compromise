@@ -19,6 +19,16 @@ const rules = [
     m: '(go|goes|went|walk|walked|walks|work|works|worked|come|came|comes|going|walking|working|coming) [(home|downtown)] (together|#Date|#Adv)+?$',
     g: 0, t: 'Adv', r: 'direction-adverb',
   },
+  // chauffeur the guests [home]; leave home purchases as nouns
+  ...['#Pron', object].map(between => ({
+    m: `(chauffeur|chauffeurs|chauffeured|chauffeuring|drive|drives|drove|driven|driving|escort|escorts|escorted|escorting) ${between} [home] ${tail}`,
+    g: 0, t: 'Adv', r: 'transport-home',
+  })),
+  // boss everyone [around], with a separated object
+  {
+    m: `(boss|bosses|bossed|bossing) ${object} [around] ${tail}`,
+    g: 0, t: 'Adv', r: 'boss-around',
+  },
   // come here [now]
   { m: 'here [now]$', g: 0, t: 'Adv', r: 'here-now' },
 ]

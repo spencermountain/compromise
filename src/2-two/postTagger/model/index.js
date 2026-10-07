@@ -372,7 +372,7 @@ const rules = [
   },
   // dance coach
   {
-    m: `#NN+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`,
+    m: `(#NN && !#Pron)+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`,
     t: 'Actor',
     r: 'dance-coach',
   },
@@ -1156,7 +1156,7 @@ const rules = [
   // verb-prefixes - '[co] write'
   // [co] write
   {
-    m: '[(co|mis|de|inter|intra|pre|re|un|counter)] #V',
+    m: '[((co|mis|de|inter|intra|pre|re|un|counter) && !#Acronym)] #V',
     g: 0,
     t: ['V', 'Prefix'],
     n: '(#Cop|#PhrV)',

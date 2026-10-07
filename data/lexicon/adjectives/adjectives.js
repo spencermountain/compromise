@@ -1,5 +1,6 @@
 //adjectives that don't conjugate to superlative/adverb/verb forms
 export default [
+  'forthcoming',
   'holy',
   'brushlike',
   'polyunsaturated',

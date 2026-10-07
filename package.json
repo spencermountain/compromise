@@ -99,7 +99,6 @@
     "build:plugins": "pnpm --filter \"./plugins/*\" run build",
     "debug:rules": "node scripts/debug/rules/index.js",
     "debug:word": "node scripts/debug/word/index.js",
-    "debug:hooks": "node scripts/debug/hooks/index.js",
     "debug:memory": "node --expose-gc scripts/debug/memory/index.js",
     "debug:filesize": "node scripts/debug/filesize/index.js",
     "stress": "node scripts/test/stress.js",

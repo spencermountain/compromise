@@ -9,14 +9,15 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 #### 14.19.0 [Oct 2026]
 - **[change]** - proper end-to-end tag aliases support
 - **[change]** - filter verbose mode output by word
+- **[new]** - `verbose('hooks')`
 - **[new]** - `money().add()` and other arithmetic methods
 - **[new]** - `dates().add()` and other arithmetic methods (in date-plugin)
 - **[new]** - add roundtrip `decimal → fraction → percentage → decimal` methods
-- **[new]** - `"debug:word"`, `"debug:hooks"`, and  `"debug:filesize"` scripts
+- **[new]** - `"debug:word"`, and  `"debug:filesize"` scripts
 - **[new]** - behaviour options to `fromSpec()` method
 - **[change]** - add term-length test to `.testSpec()`
 - **[change]** - more unicode punctuation normalization
-
+- **[fix]** - many tagging fixes for switches dictionary
 
 #### 14.18.0 [Oct 2026]
 - **[perf]** - 12% faster and 30% smaller

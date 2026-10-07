@@ -1,5 +1,8 @@
 export default {
   better: 'Comparative',
+  colder: 'Comparative',
+  coldest: 'Superlative',
+  coldly: 'Adverb',
   farther: 'Comparative',
   finer: 'Comparative',
   fewer: 'Comparative',

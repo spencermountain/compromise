@@ -140,6 +140,7 @@ export default [
   'fragmented',
   'framed',
   'fried',
+  'frightened',
   'frozen',
   'gifted',
   'gratified',

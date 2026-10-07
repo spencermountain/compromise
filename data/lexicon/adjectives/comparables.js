@@ -29,7 +29,6 @@ export default [
   'clever',
   'cloudy',
   'coarse',
-  'cold',
   'common',
   'costly',
   'cowardly',

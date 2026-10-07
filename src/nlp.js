@@ -3,6 +3,7 @@ import tmpWrld from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
 import { verbose } from './API/_lib.js'
+import debug from './API/debug.js'
 import handleInputs from './API/inputs.js'
 
 const world = { ...tmpWrld }
@@ -13,7 +14,11 @@ const nlp = function (input, lex) {
   }
   const doc = handleInputs(input, View, world)
   if (input) {
-    doc.compute(world.hooks)
+    if (debug.hooks) {
+      debug.hooks(doc, world.hooks)
+    } else {
+      doc.compute(world.hooks)
+    }
   }
   return doc
 }
@@ -32,7 +37,9 @@ nlp.tokenize = function (input, lex) {
   // run the tokenizer
   const doc = handleInputs(input, View, world)
   // give contractions a shot, at least
-  if (compute.contractions) {
+  if (debug.hooks) {
+    debug.hooks(doc, compute.contractions ? ['alias', 'normal', 'machine', 'contractions'] : [])
+  } else if (compute.contractions) {
     doc.compute(['alias', 'normal', 'machine', 'contractions']) //run it if we've got it
   }
   return doc

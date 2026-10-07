@@ -1,4 +1,14 @@
 const rules = {
+  cold: [
+    // a bit [cold]; ice [cold]
+    '(bit|ice) _ -> #Adj',
+  ],
+  lunatic: [
+    '_ fringe -> #Adj',
+  ],
+  fringe: [
+    'lunatic _ -> #Noun',
+  ],
   here: [
     // come [here], leave the bowls [here], is [here]
     '(#Verb|#Noun) _ $ -> #Adv',

@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import nlp from './src/two.js'
+import nlp from './src/three.js'
 // const book = fs.readFileSync(new URL('./scripts/bench/infinite-jest.txt', import.meta.url), 'utf8')
 
 // lexicon:        512ms
@@ -9,8 +9,7 @@ import nlp from './src/two.js'
 // main-sweep:    2731ms
 // second-sweep:   696ms
 
-// const doc = nlp('dude we should').debug()
-// const doc = nlp('the poor eat rice').debug()
+nlp.verbose(true)
+const doc = nlp('work your magic').debug()
 
-// nlp.verbose(true)
-const doc = nlp.fromSpec('This is my favorite song. {Det,Vb,Noun,Adj,Noun}', { failures: 'log' })
+// const doc = nlp.fromSpec('This is my favorite song. {Det,Vb,Noun,Adj,Noun}', { failures: 'log' })

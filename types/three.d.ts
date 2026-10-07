@@ -1,4 +1,4 @@
-import type { Lexicon, Plugin, VerboseOptions, TaggerEvent, MatchEvent, matchOptions, Match, Net } from './misc.d.ts'
+import type { Lexicon, Plugin, VerboseOptions, TaggerEvent, MatchEvent, HooksEvent, matchOptions, Match, Net } from './misc.d.ts'
 import type View from './view/three.d.ts'
 
 /** parse a given text */
@@ -35,6 +35,7 @@ declare namespace nlp {
   export function hooks(): string[]
   /**  log our decision-making for debugging */
   export function verbose(toLog: 'tagger', options?: VerboseOptions<TaggerEvent>): any
+  export function verbose(toLog: 'hooks', options?: VerboseOptions<HooksEvent>): any
   export function verbose(toLog: 'match', options?: VerboseOptions<MatchEvent>): any
   export function verbose(toLog?: boolean | string, options?: VerboseOptions): any
   /**  current semver version of the library */

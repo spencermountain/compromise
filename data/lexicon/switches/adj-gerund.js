@@ -116,7 +116,6 @@ export default [
   'flowering',
   'flowing',
   'foreboding',
-  'forthcoming',
   'founding',
   'freezing',
   'frightening',

@@ -1,4 +1,5 @@
 import * as cli from './_color.js'
+import debug from './debug.js'
 
 const colorSpec = doc => {
   const tagSet = doc.model.one.tagSet
@@ -8,16 +9,17 @@ const colorSpec = doc => {
         .map(t => t.pre + t.text + t.post)
         .join('')
         .trim()
-      const text = terms
+      let text = terms
         .map(term => {
           const tag = [...term.tags][0]
-          const color = tag ? tagSet[tag]?.color || 'blue' : 'dim'
+          const color = tag ? tagSet[tag]?.color || 'blue' : 'grey'
           return term.pre + (term.text ? cli[color](term.text) : '') + term.post
         })
         .join('')
         .trim()
+      text = cli.grey("'") + text + cli.grey("'")
       const spec = doc.update([[i]]).out('spec')
-      return text + cli.dim(spec.slice(plain.length))
+      return text + cli.grey(cli.i(spec.slice(plain.length)))
     })
     .join('\n')
 }
@@ -27,7 +29,7 @@ const hooksDebug = (options, headings) => (doc, hooks) => {
   const env = globalThis.process?.env ?? globalThis.env ?? {}
   const color = options.color !== false && !Object.hasOwn(env, 'NO_COLOR') && env.FORCE_COLOR !== '0'
   const width = Math.max('tokenize'.length, ...hooks.map(hook => hook.length))
-  const snapshot = hook => {
+  const snapshot = (hook, nested = false) => {
     if (options.emit) {
       options.emit({
         type: 'hooks',
@@ -45,19 +47,31 @@ const hooksDebug = (options, headings) => (doc, hooks) => {
       return
     }
     const output = color ? colorSpec(doc) : doc.out('spec')
-    output.split('\n').forEach((line, i) => {
+    output.split('\n').forEach((line, i, lines) => {
+      if (nested) {
+        const branch = i === lines.length - 1 ? ' ╰─' : '│ '
+        console.log(`  ${color ? cli.dim(branch) : branch} ${line}`) // eslint-disable-line no-console
+        return
+      }
       const label = (i === 0 ? hook : '').padEnd(width)
       console.log(`  ${color ? cli.dim(label) : label}  ${line}`) // eslint-disable-line no-console
     })
   }
   snapshot('tokenize')
   hooks.forEach(hook => {
-    if (headings && !options.emit) {
-      const heading = `--${hook}--`
-      console.log(`  ${color ? cli.dim(heading) : heading}`) // eslint-disable-line no-console
+    const nested = headings && !options.emit
+    const prefix = debug.prefix
+    if (nested) {
+      console.log(`  ${color ? cli.b(cli.ul(hook + ':')) : hook}`) // eslint-disable-line no-console
+      debug.prefix = cli.dim('   │  ')
     }
-    doc.compute(hook)
-    snapshot(hook)
+    // Restore the log prefix even when a plugin hook throws.
+    try {
+      doc.compute(hook)
+      snapshot(hook, nested)
+    } finally {
+      debug.prefix = prefix
+    }
   })
 }
 

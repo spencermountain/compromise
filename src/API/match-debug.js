@@ -1,4 +1,5 @@
 import { green, red, cyan, dim } from './_color.js'
+import debug from './debug.js'
 
 // Install only while verbose matching is enabled; restore the original hot path.
 const matchDebug = (world, options) => {
@@ -46,7 +47,7 @@ const matchDebug = (world, options) => {
     } else {
       const status = event.matched ? green('✓') : red('✗')
       const spans = matches.map(span => `${span.index?.join(':') || '?'} "${span.text}"`).join(', ')
-      console.log(`   ${status}  ${cyan("'" + pattern + "'").padEnd(32)}   ${dim(spans)}`) // eslint-disable-line no-console
+      console.log(`${debug.prefix || '   '}${status}  ${cyan("'" + pattern + "'").padEnd(32)}   ${dim(spans)}`) // eslint-disable-line no-console
     }
     return result
   }

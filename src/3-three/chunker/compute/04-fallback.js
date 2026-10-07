@@ -1,10 +1,11 @@
 import { blue, dim } from '../../../API/_color.js'
+import debug from '../../../API/debug.js'
 
 const setChunk = function (term, chunk) {
   const env = globalThis.process?.env ?? globalThis.env ?? {}
   if (env.DEBUG_CHUNKS) {
     const str = (term.normal + "'").padEnd(8)
-    console.log(`  | '${str}  →  ${blue(chunk.padEnd(12))} ${dim(' -fallback- ')}`) // eslint-disable-line
+    console.log(`${debug.prefix || '  | '}'${str}  →  ${blue(chunk.padEnd(12))} ${dim(' -fallback- ')}`) // eslint-disable-line
   }
   term.chunk = chunk
 }

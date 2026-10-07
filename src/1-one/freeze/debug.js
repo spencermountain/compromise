@@ -3,7 +3,7 @@ import { blue, dim, i } from '../../API/_color.js'
 
 const debug = function (view) {
   view.docs.forEach(terms => {
-    console.log(blue('\n  ┌─────────'))
+    console.log(blue('\n  ╭─────────'))
     terms.forEach(t => {
       let str = `  ${i(dim('│'))}  `
       const txt = t.implicit || t.text || '-'

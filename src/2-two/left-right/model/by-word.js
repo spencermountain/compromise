@@ -487,6 +487,9 @@ const compounds = {
   'accelerating|dashing|drifting|rushing|sloping|staggering': '#Cop _ toward -> #Ger',
   // is [meandering] through the village
   'meandering|rambling|speeding|surging': '#Cop _ through -> #Ger',
+  // is [decaying] in the rain; is [smiling] at the baby
+  'decaying|fading|flaming|gleaming|maturing|sparkling|swelling|thriving': '#Cop _ in -> #Ger',
+  'glaring|remaining|roaring|smiling': '#Cop _ at -> #Ger',
   plunging: '#Cop _ into -> #Ger',
   emerging: '#Cop _ from -> #Ger',
   flowing: '#Cop _ under -> #Ger',

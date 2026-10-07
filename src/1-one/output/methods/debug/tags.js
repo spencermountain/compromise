@@ -20,7 +20,7 @@ const showTags = function (view) {
     console.log(cli.blue('\n     ──────'))
   }
   docs.forEach(terms => {
-    console.log(cli.blue('\n  ┌─────────'))
+    console.log(cli.blue('\n  ╭─────────'))
     terms.forEach(t => {
       const tags = [...(t.tags || [])]
       let text = t.text || '-'

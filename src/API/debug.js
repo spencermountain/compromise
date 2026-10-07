@@ -43,7 +43,7 @@ const log = (term, previous, reason = '') => {
     })
     .join(' ')
   const word = `'${b(yellow(event.text) + "'").padEnd(30)}  ${dim(index)}`
-  console.log(`   ${word.padEnd(50)} ${dim(`(${reason})`).padEnd(25)} ${tags}`) // eslint-disable-line no-console
+  console.log(`${debug.prefix || '   '}${word.padEnd(50)} ${dim(`(${reason})`).padEnd(25)} ${tags}`) // eslint-disable-line no-console
 }
 
 debug.before = before

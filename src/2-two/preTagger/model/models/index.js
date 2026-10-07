@@ -1,4 +1,4 @@
-import data from './_data.js'
+import data from '../../../_built/conjugations.js'
 import { reverse, uncompress } from 'suffix-thumb'
 const fromPast = uncompress(data.PastTense)
 const fromPresent = uncompress(data.PresentTense)

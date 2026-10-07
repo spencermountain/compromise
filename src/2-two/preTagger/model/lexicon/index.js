@@ -1,4 +1,4 @@
-import lexData from './_data.js'
+import lexData from '../../../_built/lexicon.js'
 import { unpack } from 'efrt'
 import misc from './misc.js'
 import frozenLex from './frozenLex.js'

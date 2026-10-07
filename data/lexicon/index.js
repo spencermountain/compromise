@@ -1,4 +1,4 @@
-//directory of files to pack with `node scripts/pack.js`
+//directory of files to pack with `pnpm run pack`
 //they are stored in compressed form
 import misc from './misc.js'
 import { addWords } from '../validate.js'

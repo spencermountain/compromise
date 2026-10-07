@@ -85,7 +85,7 @@
   "scripts": {
     "build": "node ./scripts/version.js && rollup -c --silent",
     "watch": "node --watch ./scratch.js",
-    "pack": "node ./scripts/pack.js",
+    "pack": "node ./scripts/pack/index.js",
     "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "tape \"./scripts/test/smoke.test.js\" | tap-dancer && cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",

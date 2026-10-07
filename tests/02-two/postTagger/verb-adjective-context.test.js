@@ -1,5 +1,5 @@
 import test from 'tape'
-import assertSpec from '../_spec.js'
+import assertSpec from '../../lib/spec.js'
 const here = '[two/postTagger/verb-adjective-context] '
 
 test(here + 'verbs and adjective/verb ambiguity', t => {

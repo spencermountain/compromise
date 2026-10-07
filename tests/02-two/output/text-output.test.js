@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/output/text-output] '
 
 test('text-formats', function (t) {

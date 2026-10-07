@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/api/term-ids] '
 
 const txt = `The hours have passed like stones being pushed up a mountain. For all of the luxury that surrounds us, I can't shake this feeling of unease that's slowly creeping in through the back of my mind. I can tell that Johna and Temmy have noticed it as well—it's just something about the air here that makes me uneasy. Joanna feigns disinterest but behind her shades she's studying the surroundings like the seasoned detective she is.`

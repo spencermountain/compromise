@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../two/_lib.js'
-import isolateModel from '../_isolate-model.js'
+import nlp from '../lib/two.js'
+import isolateModel from '../lib/isolate-model.js'
 const here = '[ignored/tag-inheritance-array] '
 
 // Deferred: Array-valued tag inheritance does not currently propagate these parent tags.

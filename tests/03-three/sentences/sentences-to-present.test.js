@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/three.js'
 const here = '[three/sentences/sentences-to-present] '
 
 test('sentence-toPresent', function (t) {

@@ -1,5 +1,5 @@
 import test from 'tape'
-import assertSpec from '../_spec.js'
+import assertSpec from '../../lib/spec.js'
 const here = '[two/postTagger/lexical-context] '
 
 test(here + 'lexical ambiguity in sentence context', t => {

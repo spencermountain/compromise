@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/postTagger/connectors] '
 
 test(here + 'connectors distinguish nominal objects from finite clauses', t => {

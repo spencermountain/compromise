@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/one.js'
 const here = '[one/sweep/sweep-fixed-pattern] '
 
 test(here + 'fixed patterns preserve matches and captures', t => {

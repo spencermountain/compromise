@@ -1,5 +1,5 @@
 import test from 'tape'
-import assertSpec from '../_spec.js'
+import assertSpec from '../../lib/spec.js'
 const here = '[two/left-right/neighbour-context] '
 
 test(here + 'left/right dates, units and local prepositions', t => {

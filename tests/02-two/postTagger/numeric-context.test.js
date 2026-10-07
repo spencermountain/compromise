@@ -1,5 +1,5 @@
 import test from 'tape'
-import assertSpec from '../_spec.js'
+import assertSpec from '../../lib/spec.js'
 const here = '[two/postTagger/numeric-context] '
 
 test(here + 'numbers, money and units', t => {

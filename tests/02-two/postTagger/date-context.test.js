@@ -1,5 +1,5 @@
 import test from 'tape'
-import assertSpec from '../_spec.js'
+import assertSpec from '../../lib/spec.js'
 const here = '[two/postTagger/date-context] '
 
 test(here + 'written date values', t => {

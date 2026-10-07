@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-import penn from './penn-sample.js'
+import nlp from '../../lib/two.js'
+import penn from '../../lib/penn-sample.js'
 const here = '[two/misc/penn] '
 
 const softMapping = {

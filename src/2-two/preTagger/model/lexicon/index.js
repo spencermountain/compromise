@@ -11,6 +11,7 @@ import irregularPlurals from '../irregulars/plurals.js'
 // more clever things are done on the data later
 //  - once the plugin is applied
 const hasSwitch = /\|/
+const countryAcronyms = ['uk', 'usa', 'ussr']
 const lexicon = { ...misc }
 const switches = {}
 
@@ -41,6 +42,11 @@ Object.keys(lexData).forEach(tag => {
 })
 // Keep the conditional tag alongside the packed conjunction entry.
 lexicon.if = ['Conjunction', 'Condition']
+
+// Keep country initialisms out of the generic acronym retagging pass.
+countryAcronyms.forEach(word => {
+  lexicon[word] = ['Country', 'Acronym']
+})
 
 // add ':)'
 emoticons.forEach(str => (lexicon[str] = 'Emoticon'))

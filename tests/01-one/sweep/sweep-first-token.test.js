@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/one.js'
 const here = '[one/sweep/sweep-first-token] '
 
 test(here + 'sweep finds matches after rejected starting terms', t => {

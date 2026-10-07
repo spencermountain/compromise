@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/three.js'
 const here = '[three/money/decimal-currencies] '
 
 test(here + 'minor currencies parse in major units', t => {

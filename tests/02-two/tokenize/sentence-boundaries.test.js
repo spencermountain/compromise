@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/tokenize/sentence-boundaries] '
 
 test(here + 'sentence boundary preservation', t => {

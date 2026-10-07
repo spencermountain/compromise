@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/misc/this-subject] '
 
 test(here + 'this is a pronoun before a finite predicate', t => {

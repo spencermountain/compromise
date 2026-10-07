@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/one.js'
 const here = '[one/match/doc-match] '
 
 test('doc-as-input', function (t) {

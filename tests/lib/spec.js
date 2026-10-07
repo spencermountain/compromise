@@ -1,4 +1,4 @@
-import nlp from './_lib.js'
+import nlp from './two.js'
 
 // One Tape assertion per spec line; leave t.end() to the caller.
 const assertSpec = (t, spec, message = '') => {

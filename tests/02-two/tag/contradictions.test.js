@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 
 const here = '[two/tag/contradictions] '
 const compile = nlp.world().methods.one.addTags

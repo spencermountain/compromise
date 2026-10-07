@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-import isolateModel from '../../_isolate-model.js'
+import nlp from '../../lib/two.js'
+import isolateModel from '../../lib/isolate-model.js'
 const here = '[two/preTagger/tagger-lexicon] '
 
 test('adjusted lexicon:', function (t) {

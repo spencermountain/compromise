@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/one.js'
 const here = '[one/api/loops] '
 
 test(here + 'map returns matches from each sentence', function (t) {

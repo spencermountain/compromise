@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-import isolateModel from '../../_isolate-model.js'
+import nlp from '../../lib/three.js'
+import isolateModel from '../../lib/isolate-model.js'
 const here = '[three/api/api-smoke] '
 
 //run every method once, and check against runtime errors

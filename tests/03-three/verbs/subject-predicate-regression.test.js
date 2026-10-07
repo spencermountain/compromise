@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/three.js'
 const here = '[three/verbs/subject-predicate-regression] '
 
 test(here + 'recover predicates after coordinated names and locative modifiers', t => {

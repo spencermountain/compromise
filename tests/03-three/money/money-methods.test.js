@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/three.js'
 
 const here = '[three/money/money-methods] '
 const input = 'i paid 5 dollars for lunch and 10 euros for dinner'

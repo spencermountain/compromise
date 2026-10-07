@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/postTagger/predicate-context] '
 
 test(here + 'work takes the base form in modal and do-support questions', t => {

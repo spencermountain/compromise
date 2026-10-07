@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/one.js'
 const here = '[one/pointers/difference] '
 
 test('pointer-difference-basic :', function (t) {

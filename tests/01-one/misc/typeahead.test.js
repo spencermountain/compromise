@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-import isolateModel from '../../_isolate-model.js'
+import nlp from '../../lib/one.js'
+import isolateModel from '../../lib/isolate-model.js'
 const here = '[one/misc/typeahead] '
 
 test('typeahead test', function (t) {

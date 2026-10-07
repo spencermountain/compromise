@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/three.js'
 const here = '[three/coreference/antecedent-boundaries] '
 
 test(here + 'person spans exclude possessions and measurements', t => {

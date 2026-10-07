@@ -1,7 +1,7 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/api/lazy-constructor] '
-import penn from '../misc/penn-sample.js'
+import penn from '../../lib/penn-sample.js'
 const txt = penn.map(a => a.text).join('\n')
 
 test('lazy matches are equal', function (t) {

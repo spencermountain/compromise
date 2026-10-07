@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/api/tag-aliases] '
 
 test(here + 'plugins add aliases to existing and new tags', t => {

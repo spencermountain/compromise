@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/postTagger/post-tagger-hooks] '
 
 test(here + 'specific alternatives retain their post-tagger behavior', t => {

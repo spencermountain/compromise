@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../three/_lib.js'
+import nlp from '../lib/three.js'
 const here = '[ignored/participle-verb-selection] '
 
 // Deferred: The participial phrase is not selected as the separate verb expected here.

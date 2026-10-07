@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/three.js'
 const here = '[three/misc/regex-cleanup] '
 
 test(here + 'regex cleanup: removal repairs only the first qualifying run', t => {

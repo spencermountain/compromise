@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/match/regex-state] '
 
 test(here + 'captures and reusable compiled expressions', t => {

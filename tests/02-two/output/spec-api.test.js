@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-import assertSpec from '../_spec.js'
+import nlp from '../../lib/two.js'
+import assertSpec from '../../lib/spec.js'
 const here = '[two/output/spec-api] '
 
 // behavioural tests for out('spec') / fromSpec / testSpec.

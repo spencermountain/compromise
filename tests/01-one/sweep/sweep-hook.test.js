@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/one.js'
 const here = '[one/sweep/sweep-hook] '
 
 test(here + 'explicit hooks choose a required word or tag', t => {

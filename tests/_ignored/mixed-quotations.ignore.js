@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../three/_lib.js'
+import nlp from '../lib/three.js'
 const here = '[ignored/mixed-quotations] '
 
 // Deferred: Mixed single and double quotes do not produce these normalized quote selections.

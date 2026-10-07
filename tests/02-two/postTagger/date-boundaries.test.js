@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/postTagger/date-boundaries] '
 
 test(here + 'second-pass cleanup: date numbers do not leak into other sentences', t => {

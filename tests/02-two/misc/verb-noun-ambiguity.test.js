@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/misc/verb-noun-ambiguity] '
 
 // Verbs that the tagger should recognise, in sentence-fragments designed to trip it up.

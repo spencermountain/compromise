@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/two.js'
 const here = '[two/postTagger/hyphen-phrasal] '
 
 test(here + 'phrasal verbs do not consume half of off-white', t => {

@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-import cases from './tag-match-cases.js'
+import nlp from '../../lib/two.js'
+import cases from '../../lib/tag-match-cases.js'
 const here = '[two/misc/tag-match] '
 
 test(here + 'tag patterns match the complete input', t => {

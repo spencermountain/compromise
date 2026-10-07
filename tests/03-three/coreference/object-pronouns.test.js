@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/three.js'
 const here = '[three/coreference/object-pronouns] '
 
 test(here + 'plural object pronouns', t => {

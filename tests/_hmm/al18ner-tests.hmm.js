@@ -1,5 +1,5 @@
 import test from 'tape'
-import assertSpec from '../two/_spec.js'
+import assertSpec from '../lib/spec.js'
 const here = '[hmm/al18ner-tests] '
 
 const spec = `

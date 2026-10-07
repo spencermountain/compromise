@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from '../../lib/three.js'
 
 test('minor currency round trips preserve value', t => {
   const cases = [

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../three/_lib.js'
+import nlp from '../lib/three.js'
 const here = '[ignored/implicit-unit-aliases] '
 
 // Deferred: Literal matching does not expand the ft suffix to feet.

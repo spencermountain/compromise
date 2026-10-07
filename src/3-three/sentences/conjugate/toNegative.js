@@ -1,8 +1,15 @@
 import groups from '../../verbs/api/conjugate/groups.js'
 import { inflect } from '../../verbs/api/conjugate/inflect.js'
 
+const mainVerbs = (s, parsed) => {
+  if (!parsed.verb.found) {
+    return s.none().verbs()
+  }
+  return parsed.verb.growRight('.*').verbs()
+}
+
 const toNegative = function (s, parsed) {
-  const entries = groups(parsed.verb.verbs(), true)
+  const entries = groups(mainVerbs(s, parsed), true)
   const head = entries[0]
   if (!head) {
     return s
@@ -21,7 +28,7 @@ const toNegative = function (s, parsed) {
   return s
 }
 const toPositive = function (s, parsed) {
-  const entries = groups(parsed.verb.verbs())
+  const entries = groups(mainVerbs(s, parsed), true)
   const head = entries[0]
   if (!head) {
     return s

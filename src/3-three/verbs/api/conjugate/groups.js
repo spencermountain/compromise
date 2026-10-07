@@ -16,16 +16,19 @@ const groups = function (verbs, finite = false) {
     const head = previous.head || previous
     const info = getGrammar(head.vb, head.parsed)
     const bare = finite && !head.parsed.auxiliary.found && !info.copula && /^(simple-present|simple-past)$/.test(info.form)
+    const doSupport = finite && head.parsed.auxiliary.has('^(do|does|did)$')
     if (!head.parsed.auxiliary.found && !bare) return
     if (info.isInfinitive) return
     const chain = readAuxiliary(head.parsed, info.form)
-    if ((!chain && info.form !== 'simple-future' && !bare) || (chain && chain.prospective)) return
+    if ((!chain && info.form !== 'simple-future' && !bare && !doSupport) || (chain && chain.prospective)) return
     head.chain = chain
     head.form = info.form
     const root = entry.parsed.root
     const headRoot = head.parsed.root
     let compatible = headRoot.has('#Infinitive') && root.has('#Infinitive')
-    if (bare && headRoot.has('#PresentTense')) compatible = root.has('#PresentTense')
+    if (bare && headRoot.has('#PresentTense')) {
+      compatible = root.has('#PresentTense')
+    }
     if (headRoot.has('(#PastTense|#Participle)')) compatible = root.has('(#PastTense|#Participle)')
     if (headRoot.has('#Gerund')) compatible = root.has('#Gerund')
     if (!compatible || previous.vb.has('@hasComma$')) return

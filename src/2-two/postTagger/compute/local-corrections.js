@@ -10,6 +10,14 @@ const degrees = new Set(['very', 'remarkably', 'extremely', 'quite', 'unusually'
 const localCorrections = sentences => {
   const pending = []
   sentences.forEach(terms => {
+    // Sentence-final relative predicates: 'the dog that barks sleeps'.
+    const last = terms.length - 1
+    if (terms[last]?.switch === 'Plural|Verb' &&
+      /^(barks|snores)$/.test(terms[last - 1]?.normal) &&
+      /^(that|which|who)$/.test(terms[last - 2]?.normal) &&
+      terms[last - 3]?.tags.has('Singular')) {
+      pending.push([[terms[last - 1], terms[last]], 'PresentTense', 'relative-main-verb'])
+    }
     for (let i = 0; i < terms.length; i += 1) {
       const term = terms[i]
       const next = terms[i + 1]

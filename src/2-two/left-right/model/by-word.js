@@ -483,6 +483,11 @@ const rules = {
 }
 
 const compounds = {
+  // is [lasting] [longer]
+  lasting: '#Cop _ longer -> #Ger',
+  longer: 'lasting _ $ -> #Adv',
+  // is [empowering] local women
+  empowering: '#Cop _ #Adj -> #Ger',
   // attempts at [escape]; waited [pending] approval
   escape: 'at _ -> #Noun',
   pending: '#Past _ #Noun -> #Prep',

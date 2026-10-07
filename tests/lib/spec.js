@@ -10,9 +10,14 @@ const assertSpec = (t, spec, message = '') => {
     }
     const failing = nlp.testSpec(line, false)
     const prefix = message ? message + ' ' : ''
-    const failed = failing.failures.length > 0
-    const label = failed ? failing.out('spec') : line
-    t.equal(failed, false, prefix + label)
+    if (failing.failures.length > 0) {
+      const words = failing.failures.map(failure => {
+        return failure.word ? `'${failure.word}'` : failure.message
+      }).join(', ')
+      t.fail(prefix + failing.out('spec') + ' - !=' + words)
+    } else {
+      t.pass(prefix + line)
+    }
   })
 }
 

@@ -1,126 +1,128 @@
 import test from 'tape'
 import assertSpec from '../../lib/spec.js'
+import assertNoOverlap from './_lib.js'
 const here = '[hmm/switches/person-verb] '
 
 const spec = `
-# Independently authored whole-sentence expectations; not checked against the tagger.
+# Independently authored whole-sentence expectations.
 
 # biff
 Biff handed me the keys. {Person,Past,Pronoun,Det,Plural}
-We biff the ball. {Pronoun,Inf|!Person,Det,Noun}
+We biff the ball. {Pronoun,Inf,Det,Noun}
 
 # bill
 I spoke with Bill after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-They bill the client. {Pronoun,Inf|!Person,Det,Noun}
+They bill the client. {Pronoun,Inf,Det,Noun}
 The bill arrived after lunch. {Det,Noun|!Person,Past,Prep,Noun}
 
 # blaze
 My friend Blaze arrived early. {Poss,Noun,Person,Past,Adv}
-You can blaze a trail. {Pronoun,Modal,Inf|!Person,Det,Noun}
+You can blaze a trail. {Pronoun,Modal,Inf,Det,Noun}
 
 # blossom
 We invited Blossom to dinner. {Pronoun,Past,Person,Prep,Noun}
-The trees blossom in spring. {Det,Noun,Inf|!Person,Prep,Noun}
+The trees blossom in spring. {Det,Noun,Inf,Prep,Noun}
 
 # bob
 Bob handed me the keys. {Person,Past,Pronoun,Det,Plural}
-I bob on the waves. {Pronoun,Inf|!Person,Prep,Det,Plural}
+I bob on the waves. {Pronoun,Inf,Prep,Det,Plural}
 Her bob framed her face. {Poss,Noun|!Person,Past,Poss,Noun}
 
 # buck
 I spoke with Buck after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-He might buck the trend. {Pronoun,Modal,Inf|!Person,Det,Noun}
+He might buck the trend. {Pronoun,Modal,Inf,Det,Noun}
 
 # chase
 My friend Chase arrived early. {Poss,Noun,Person,Past,Adv}
-We chase the ball. {Pronoun,Inf|!Person,Det,Noun}
+We chase the ball. {Pronoun,Inf,Det,Noun}
 
 # chuck
 We invited Chuck to dinner. {Pronoun,Past,Person,Prep,Noun}
-They chuck the rubbish outside. {Pronoun,Inf|!Person,Det,Noun,Adv}
+They chuck the rubbish outside. {Pronoun,Inf,Det,Noun,Adv}
 
 # drew
 Drew handed me the keys. {Person,Past,Pronoun,Det,Plural}
-She drew a map. {Pronoun,Past|!Person,Det,Noun}
+She drew a map. {Pronoun,Past,Det,Noun}
 
 # foster
 I spoke with Foster after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-You can foster a child. {Pronoun,Modal,Inf|!Person,Det,Noun}
+You can foster a child. {Pronoun,Modal,Inf,Det,Noun}
 
 # grace
 My friend Grace arrived early. {Poss,Noun,Person,Past,Adv}
-She will grace the occasion. {Pronoun,Modal,Inf|!Person,Det,Noun}
+She will grace the occasion. {Pronoun,Modal,Inf,Det,Noun}
 
 # grant
 We invited Grant to dinner. {Pronoun,Past,Person,Prep,Noun}
-I grant the request. {Pronoun,Inf|!Person,Det,Noun}
+I grant the request. {Pronoun,Inf,Det,Noun}
 
 # jack
 Jack handed me the keys. {Person,Past,Pronoun,Det,Plural}
-He might jack up the car. {Pronoun,Modal,Inf|!Person,Particle,Det,Noun}
+He might jack up the car. {Pronoun,Modal,Inf,Particle,Det,Noun}
 
 # lance
 I spoke with Lance after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-We lance the boil. {Pronoun,Inf|!Person,Det,Noun}
+We lance the boil. {Pronoun,Inf,Det,Noun}
 
 # mack
 My friend Mack arrived early. {Poss,Noun,Person,Past,Adv}
-They mack on her at the party. {Pronoun,Inf|!Person,Prep,Pronoun,Prep,Det,Noun}
+They mack on her at the party. {Pronoun,Inf,Prep,Pronoun,Prep,Det,Noun}
 
 # mark
 We invited Mark to dinner. {Pronoun,Past,Person,Prep,Noun}
-You can mark the page. {Pronoun,Modal,Inf|!Person,Det,Noun}
+You can mark the page. {Pronoun,Modal,Inf,Det,Noun}
 
 # marshal
 Marshal handed me the keys. {Person,Past,Pronoun,Det,Plural}
-She will marshal the evidence. {Pronoun,Modal,Inf|!Person,Det,Noun}
+She will marshal the evidence. {Pronoun,Modal,Inf,Det,Noun}
 
 # nick
 I spoke with Nick after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-I nick the paint. {Pronoun,Inf|!Person,Det,Noun}
+I nick the paint. {Pronoun,Inf,Det,Noun}
 
 # ollie
 My friend Ollie arrived early. {Poss,Noun,Person,Past,Adv}
-He might ollie over the curb. {Pronoun,Modal,Inf|!Person,Prep,Det,Noun}
+He might ollie over the curb. {Pronoun,Modal,Inf,Prep,Det,Noun}
 
 # pat
 We invited Pat to dinner. {Pronoun,Past,Person,Prep,Noun}
-We pat the dog. {Pronoun,Inf|!Person,Det,Noun}
+We pat the dog. {Pronoun,Inf,Det,Noun}
 
 # peg
 Peg handed me the keys. {Person,Past,Pronoun,Det,Plural}
-They peg the tent. {Pronoun,Inf|!Person,Det,Noun}
+They peg the tent. {Pronoun,Inf,Det,Noun}
 
 # pierce
 I spoke with Pierce after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-You can pierce the fabric. {Pronoun,Modal,Inf|!Person,Det,Noun}
+You can pierce the fabric. {Pronoun,Modal,Inf,Det,Noun}
 
 # rob
 My friend Rob arrived early. {Poss,Noun,Person,Past,Adv}
-She will rob the bank. {Pronoun,Modal,Inf|!Person,Det,Noun}
+She will rob the bank. {Pronoun,Modal,Inf,Det,Noun}
 
 # spike
 We invited Spike to dinner. {Pronoun,Past,Person,Prep,Noun}
-I spike the punch. {Pronoun,Inf|!Person,Det,Noun}
+I spike the punch. {Pronoun,Inf,Det,Noun}
 
 # stew
 Stew handed me the keys. {Person,Past,Pronoun,Det,Plural}
-He might stew the apples. {Pronoun,Modal,Inf|!Person,Det,Plural}
+He might stew the apples. {Pronoun,Modal,Inf,Det,Plural}
 
 # sue
 I spoke with Sue after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-We sue the company. {Pronoun,Inf|!Person,Det,Noun}
+We sue the company. {Pronoun,Inf,Det,Noun}
 
 # skip
 My friend Skip arrived early. {Poss,Noun,Person,Past,Adv}
-They skip the introduction. {Pronoun,Inf|!Person,Det,Noun}
+They skip the introduction. {Pronoun,Inf,Det,Noun}
 
 # wade
 We invited Wade to dinner. {Pronoun,Past,Person,Prep,Noun}
-You can wade across the stream. {Pronoun,Modal,Inf|!Person,Prep,Det,Noun}
+You can wade across the stream. {Pronoun,Modal,Inf,Prep,Det,Noun}
 `
 
 test(here, t => {
   assertSpec(t, spec, here)
+  assertNoOverlap(t, spec, here, ['(#Person && #Verb)'])
   t.end()
 })

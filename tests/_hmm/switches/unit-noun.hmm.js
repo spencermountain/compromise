@@ -1,9 +1,10 @@
 import test from 'tape'
 import assertSpec from '../../lib/spec.js'
+import assertNoOverlap from './_lib.js'
 const here = '[hmm/switches/unit-noun] '
 
 const spec = `
-# Independently authored whole-sentence expectations; not checked against the tagger.
+# Independently authored whole-sentence expectations.
 
 # cm
 # No distinct ordinary non-unit noun sense supplied; measurement use only.
@@ -37,7 +38,7 @@ That gal knows the answer. {Det,Noun|!Unit,Pres,Det,Noun}
 # gb
 # Capitalization distinguishes the non-unit name, symbol, or abbreviation.
 The drive stores eight gb of data. {Det,Noun,Pres,Value,Unit,Prep,Noun}
-The athlete represents GB. {Det,Noun,Pres,Place|!Unit}
+The athlete represents GB. {Det,Noun,Pres,Place}
 
 # hg
 # Capitalization distinguishes the non-unit name, symbol, or abbreviation.
@@ -134,7 +135,7 @@ The Newtons invited us to dinner. {Det,Person,Past,Pronoun,Prep,Noun}
 
 # oz
 The package weighs two oz. {Det,Noun,Pres,Value,Unit}
-The travelers reached Oz. {Det,Noun,Past,Place|!Unit}
+The travelers reached Oz. {Det,Noun,Past,Place}
 
 # pa
 The pressure rose by ten pa. {Det,Noun,Past,Prep,Value,Unit}
@@ -200,5 +201,7 @@ The cloth measures one yd. {Det,Noun,Pres,Value,Unit}
 
 test(here, t => {
   assertSpec(t, spec, here)
+  // Unit is a noun subtype; its overlap with Noun is valid.
+  assertNoOverlap(t, spec, here, ['(#Unit && #Verb)', '(#Unit && #Adjective)'])
   t.end()
 })

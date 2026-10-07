@@ -1,9 +1,10 @@
 import test from 'tape'
 import assertSpec from '../../lib/spec.js'
+import assertNoOverlap from './_lib.js'
 const here = '[hmm/switches/person-noun] '
 
 const spec = `
-# Independently authored whole-sentence expectations; not checked against the tagger.
+# Independently authored whole-sentence expectations.
 
 # alfredo
 Alfredo handed me the keys. {Person,Past,Pronoun,Det,Plural}
@@ -271,7 +272,7 @@ Come here, sonny. {Imperative,Adv,Noun|!Person}
 
 # summer
 I spoke with Summer after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-The summer was hot. {Det,Date|!Person,Copula,Adj}
+The summer was hot. {Det,Date,Copula,Adj}
 
 # trinity
 My friend Trinity arrived early. {Poss,Noun,Person,Past,Adv}
@@ -335,7 +336,7 @@ The mat lay beside the door. {Det,Noun|!Person,Past,Prep,Det,Noun}
 
 # mats
 I spoke with Mats after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-The mats covered the floor. {Det,Plural|!Person,Past,Det,Noun}
+The mats covered the floor. {Det,Plural,Past,Det,Noun}
 
 # nat
 My friend Nat arrived early. {Poss,Noun,Person,Past,Adv}
@@ -360,20 +361,20 @@ She measured one gill of cream. {Pronoun,Past,Value,Unit,Prep,Noun}
 
 # chambers
 We invited Chambers to dinner. {Pronoun,Past,Person,Prep,Noun}
-The chambers were empty. {Det,Plural|!Person,Copula,Adj}
+The chambers were empty. {Det,Plural,Copula,Adj}
 
 # watts
 Watts handed me the keys. {Person,Past,Pronoun,Det,Plural}
-The lamp consumes sixty watts. {Det,Noun,Pres,Value,Unit|!Person}
+The lamp consumes sixty watts. {Det,Noun,Pres,Value,Unit}
 
 # banks
 I spoke with Banks after lunch. {Pronoun,Past,Prep,Person,Prep,Noun}
-The banks closed early. {Det,Plural|!Person,Past,Adv}
-The banks of the river flooded. {Det,Plural|!Person,Prep,Det,Noun,Past}
+The banks closed early. {Det,Plural,Past,Adv}
+The banks of the river flooded. {Det,Plural,Prep,Det,Noun,Past}
 
 # fields
 My friend Fields arrived early. {Poss,Noun,Person,Past,Adv}
-The fields were green. {Det,Plural|!Person,Copula,Adj}
+The fields were green. {Det,Plural,Copula,Adj}
 
 # potter
 We invited Potter to dinner. {Pronoun,Past,Person,Prep,Noun}
@@ -382,5 +383,7 @@ The potter shaped the clay. {Det,Actor,Past,Det,Noun}
 
 test(here, t => {
   assertSpec(t, spec, here)
+  // Person is a noun subtype; its overlap with Noun is valid.
+  assertNoOverlap(t, spec, here, ['(#Person && #Verb)', '(#Person && #Adjective)'])
   t.end()
 })

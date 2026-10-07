@@ -2,6 +2,7 @@
 // use noun-verb for sometimes-actors, like 'target', or 'star'
 export default [
   'addict',
+  'delegate',
   'architect',
   'author',
   'affiliate',

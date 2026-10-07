@@ -1,6 +1,7 @@
 // gerunds can be adjectives 'striking example'
 // or nouns 'arguing', or 'operating room'
 export default [
+  'stocking',
   'abandoning',
   'accounting',
   'acting',

@@ -1,5 +1,6 @@
 //adjectives that convert to superlative/comparative form
 export default [
+  'fruity',
   'absurd',
   'angry',
   'awesome',

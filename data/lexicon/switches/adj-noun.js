@@ -1,6 +1,7 @@
 // the commercial market
 // watching the commercial
 export default [
+  'intent',
   'academic',
   'adolescent',
   'adult',

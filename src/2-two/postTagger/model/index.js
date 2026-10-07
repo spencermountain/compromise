@@ -1156,10 +1156,10 @@ const rules = [
   // verb-prefixes - '[co] write'
   // [co] write
   {
-    m: '[((co|mis|de|inter|intra|pre|re|un|counter) && !#Acronym)] #V',
+    m: '[(co|mis|de|inter|intra|pre|re|un|counter)] (#V && !#Cop && !#PhrV)',
     g: 0,
     t: ['V', 'Prefix'],
-    n: '(#Cop|#PhrV)',
+    n: '(#Acronym && @isUpperCase)',
     r: 'co-write',
   },
   // Keep verb prefixes late: early tagging hides prepositions in left-out-type.

@@ -475,6 +475,14 @@ const rules = {
 const compounds = {
   // is [drifting] toward the shore
   'accelerating|dashing|drifting|rushing|sloping|staggering': '#Cop _ toward -> #Ger',
+  // is [meandering] through the village
+  'meandering|rambling|speeding|surging': '#Cop _ through -> #Ger',
+  plunging: '#Cop _ into -> #Ger',
+  emerging: '#Cop _ from -> #Ger',
+  flowing: '#Cop _ under -> #Ger',
+  soaring: '#Cop _ above -> #Ger',
+  sprawling: '#Cop _ across -> #Ger',
+  revolving: '#Cop _ around -> #Ger',
   // [1st] lieutenant
   '1st|2nd|3rd': '_ lieutenant -> #Hon',
   // is [when] he left

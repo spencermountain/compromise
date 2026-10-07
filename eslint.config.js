@@ -80,5 +80,12 @@ export default [
         }],
       }],
     },
+  },
+  {
+    files: ['tests/**/*.js'],
+    rules: {
+      'no-async-promise-executor': 'error',
+      'no-promise-executor-return': 'error',
+    }
   }
 ]

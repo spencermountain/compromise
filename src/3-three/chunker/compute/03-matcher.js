@@ -15,7 +15,7 @@ const rules = [
   // was nice
   // { match: '#Copula [#Adjective]', group: 0, chunk: 'Adjective' },
   // nice and cool
-  { match: '#Adj and #Adj', chunk: 'Adjective' },
+  { match: '#Adj and #Adj #NN?', notIf: '#NN', chunk: 'Adjective' },
   // really nice
   // { match: '#Adverb+ #Adjective', chunk: 'Adjective' },
 

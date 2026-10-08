@@ -94,7 +94,7 @@
     "test:plugins": "pnpm --filter \"./plugins/*\" run test",
     "test:dates": "pnpm --filter \"./plugins/dates\" run test",
     "test:all": "pnpm test && pnpm test:plugins && pnpm test:smoke && pnpm test:types",
-    "test:hmm": "tape \"./tests/_hmm/**/*.hmm.js\" | tap-dancer",
+    "test:hmm": "node ./tests/_hmm/run.js",
     "testb:plugins": "pnpm --filter \"./plugins/*\" run testb",
     "build:plugins": "pnpm --filter \"./plugins/*\" run build",
     "debug:rules": "node scripts/debug/rules/index.js",

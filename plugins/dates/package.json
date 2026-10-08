@@ -33,6 +33,7 @@
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
+    "test:hmm": "node ../../tests/_hmm/run.js --dates",
     "watch": "node --watch ./scratch.js",
     "perf": "node ./scripts/perf.js",
     "version": "node ./scripts/version.js",

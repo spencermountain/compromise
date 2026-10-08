@@ -410,6 +410,7 @@ const arr = [
   ['nov 42nd', null],
   ['222nd of august', null],
   ['32:14pm', null],
+  ['February 30, 2026', null],
 ]
 
 test(here, t => {

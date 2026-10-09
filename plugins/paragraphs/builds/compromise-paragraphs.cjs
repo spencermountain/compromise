@@ -4,6 +4,8 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseParagraphs = factory());
 })(this, (function () { 'use strict';
 
+  var version = '0.1.0';
+
   const concatArr = function (views, fn) {
     const arr = [];
     views.forEach(m => {
@@ -149,6 +151,7 @@
   };
 
   var plugin = {
+    version,
     api,
   };
 

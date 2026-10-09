@@ -89,6 +89,6 @@ export interface DatesMethods {
 }
 
 /** extended compromise lib **/
-declare const nlpDates: nlp.TypedPlugin<DatesMethods>
+declare const nlpDates: nlp.TypedPlugin<DatesMethods> & { version: string }
 
 export default nlpDates

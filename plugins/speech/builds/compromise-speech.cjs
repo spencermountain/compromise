@@ -4,6 +4,8 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseSpeech = factory());
 })(this, (function () { 'use strict';
 
+  var version = '0.1.1';
+
   //individual manipulations of the text
   const transformations = {
     dedup: (s) => {
@@ -176,7 +178,7 @@
       const first_is_open =
         (arr[0].length === 1 || arr[0].match(starts_with_consonant_vowel$1)) &&
         arr[0].match(ends_with_vowel$1);
-      const second_is_joining = arr[1].match(joining_consonant_vowel);
+      const second_is_joining = arr[1].match(joining_consonant_vowel) && ones.every(re => !arr[1].match(re));
 
       if (first_is_open && second_is_joining) {
         const possible_combination = arr[0] + arr[1];
@@ -367,6 +369,7 @@
   };
 
   var plugin = {
+    version,
     api,
     compute
   };

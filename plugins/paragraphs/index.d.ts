@@ -10,6 +10,6 @@ export interface ParagraphMethods {
 }
 
 /** extended compromise lib **/
-declare const nlpParagraphs: nlp.TypedPlugin<ParagraphMethods>
+declare const nlpParagraphs: nlp.TypedPlugin<ParagraphMethods> & { version: string }
 
 export default nlpParagraphs

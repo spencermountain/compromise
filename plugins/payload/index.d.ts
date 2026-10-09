@@ -13,6 +13,6 @@ export interface PayloadMethods {
 }
 
 /** extended compromise lib **/
-declare const nlpPayload: nlp.TypedPlugin<PayloadMethods>
+declare const nlpPayload: nlp.TypedPlugin<PayloadMethods> & { version: string }
 
 export default nlpPayload

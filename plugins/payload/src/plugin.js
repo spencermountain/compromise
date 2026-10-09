@@ -1,3 +1,4 @@
+import version from './_version.js'
 import debug from './debug.js'
 
 // payloads are stored by sentence index, which goes stale after a .remove()
@@ -44,6 +45,7 @@ const getPayloads = function (view) {
 }
 
 export default {
+  version,
   //establish payload db
   mutate: function (world) {
     world.model.one.db = {}

@@ -26,6 +26,6 @@ export interface StatsMethods {
 }
 
 /** extended compromise lib **/
-declare const nlpStats: nlp.TypedPlugin<StatsMethods>
+declare const nlpStats: nlp.TypedPlugin<StatsMethods> & { version: string }
 
 export default nlpStats

@@ -8,6 +8,6 @@ export interface SpeechMethods {
 }
 
 /** extended compromise lib **/
-declare const nlpSpeech: nlp.TypedPlugin<SpeechMethods>
+declare const nlpSpeech: nlp.TypedPlugin<SpeechMethods> & { version: string }
 
 export default nlpSpeech

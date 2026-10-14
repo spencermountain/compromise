@@ -73,7 +73,7 @@ const parseToken = function (w, opts, aliases) {
       }
     }
     //back-flags
-    if (end(w) === '+') {
+    if (end(w) === '+' && !w.endsWith('\\+')) {
       obj.greedy = true
       w = stripEnd(w)
     }
@@ -98,7 +98,7 @@ const parseToken = function (w, opts, aliases) {
     }
 
     //regex
-    if (start(w) === '/' && end(w) === '/') {
+    if (start(w) === '/' && end(w) === '/' && w.length > 2) {
       w = stripBoth(w)
       if (opts.caseSensitive) {
         obj.use = 'text'
@@ -225,6 +225,8 @@ const parseToken = function (w, opts, aliases) {
     //somehow handle encoded-chars?
     w = w.replace('\\*', '*')
     w = w.replace('\\.', '.')
+    w = w.replace('\\+', '+')
+    w = w.replace('\\/', '/')
     if (opts.caseSensitive) {
       obj.use = 'text'
     } else {

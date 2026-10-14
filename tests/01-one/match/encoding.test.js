@@ -2,6 +2,22 @@ import test from 'tape'
 import nlp from '../../lib/one.js'
 const here = '[one/match/encoding] '
 
+test('encoding-match:', function (t) {
+  let doc = nlp('it is + nice')
+  t.equal(doc.match('is \\+ nice').text(), 'is + nice', here + 'encode plus')
+  t.deepEqual(doc.match('\\+').out('array'), ['+'], here + 'plus alone')
+  t.deepEqual(doc.match('!\\+').out('array'), ['it', 'is', 'nice'], here + 'negative plus')
+
+  doc = nlp('a / b c d')
+  t.deepEqual(doc.match('\\/').out('array'), ['/'], here + 'encode slash')
+  t.deepEqual(doc.match('/').out('array'), ['/'], here + 'slash is not a regex')
+  t.equal(doc.match('a \\/ b').text(), 'a / b', here + 'slash in sequence')
+
+  doc = nlp('4 / 2 + 1')
+  t.deepEqual(doc.match('(\\+|\\/)').out('array'), ['/', '+'], here + 'encoded choices')
+  t.end()
+})
+
 test('reserved-word-in-src:', function (t) {
   const r = nlp('buy eggs constructor yeah prototype')
   t.equal(r.has(`backburner`), false, here + 'single')

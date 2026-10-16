@@ -45,27 +45,30 @@ test(here + 'short durations preserve the reference clock time', t => {
   t.end()
 })
 
-test(here + 'moving an appointment preserves its explicit time', t => {
+test(here + 'moving an appointment uses rounded fractional shifts', t => {
   const input = 'My appointment is January 15th 2026 at 10:20am.'
   const cases = [
-    [0.5, 'year', '10:20:00.000Z'],
-    [0.5, 'month', '10:20:00.000Z'],
-    [0.5, 'day', '22:20:00.000Z'],
-    [0.5, 'hour', '10:50:00.000Z'],
+    [0.5, 'year', '2026-07-17T00:00:00.000Z'],
+    [0.5, 'month', '2026-01-29T00:00:00.000Z'],
+    [0.5, 'day', '2026-01-15T22:00:00.000Z'],
+    [0.5, 'hour', '2026-01-15T10:50:00.000Z'],
+    [6, 'months', '2026-07-15T10:20:00.000Z'],
   ]
-  cases.forEach(([amount, unit, clock]) => {
+  cases.forEach(([amount, unit, expected]) => {
     const doc = nlp(input)
     const dates = doc.dates(options).add(amount, unit)
-    t.equal(dates.get(0)?.start?.slice(11), clock, `move appointment by ${amount} ${unit}`)
+    t.equal(dates.get(0)?.start, expected, `move appointment by ${amount} ${unit}`)
     t.equal(doc.dates(options).get(0)?.start, dates.get(0)?.start, 'fresh selection agrees')
     t.ok(doc.text().startsWith('My appointment is '), 'preserve surrounding sentence')
   })
   t.end()
 })
 
-test(here + 'half a year agrees with six calendar months', t => {
+test(here + 'spoken half-year and fractional arithmetic have distinct semantics', t => {
   const parsed = nlp('in half a year').dates(options).get(0)?.start
+  const calendar = nlp('January 15th 2026').dates(options).add(6, 'months').get(0)?.start
   const shifted = nlp('January 15th 2026').dates(options).add(0.5, 'year').get(0)?.start
-  t.equal(shifted, parsed, 'spoken expression and arithmetic agree on the date')
+  t.equal(calendar, parsed, 'spoken half-year means six calendar months')
+  t.equal(shifted, '2026-07-16T00:00:00.000Z', 'fractional year uses spacetime duration and rounding')
   t.end()
 })

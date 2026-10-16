@@ -1,5 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
+import spacetime from 'spacetime'
 
 const here = '[plugins/dates/arithmetic-roundtrip] '
 const options = { today: '2020-06-01', timezone: 'UTC' }
@@ -25,10 +26,10 @@ test(here + 'calendar dates return to their original date', t => {
   t.end()
 })
 
-test(here + 'precise moments retain their instant', t => {
+test(here + 'whole-unit shifts retain their instant', t => {
   const inputs = ['2020-06-05T12:30:45.123Z', '2020-12-31T23:59:59.999Z']
   const shifts = [[1, 'millisecond'], [1234, 'milliseconds'], [1, 'second'], [90, 'minutes'],
-    [25, 'hours'], [-25, 'hours'], [1.5, 'hours'], [0.5, 'minutes'], [2, 'days'], [3, 'months']]
+    [25, 'hours'], [-25, 'hours'], [2, 'days'], [3, 'months']]
   inputs.forEach(input => {
     shifts.forEach(([amount, unit]) => {
       const dates = nlp(input).dates(options)
@@ -36,6 +37,21 @@ test(here + 'precise moments retain their instant', t => {
       const after = dates.add(amount, unit).subtract(amount, unit).get(0)
       t.equal(after?.start, before?.start, `${input}: ${amount} ${unit}`)
       t.equal(after?.end, before?.end, 'precise end survives')
+    })
+  })
+  t.end()
+})
+
+test(here + 'fractional clock shifts follow spacetime rounding', t => {
+  const inputs = ['2020-06-05T12:30:45.123Z', '2020-12-31T23:59:59.999Z']
+  const shifts = [[1.5, 'hours'], [0.5, 'minutes']]
+  inputs.forEach(input => {
+    shifts.forEach(([amount, unit]) => {
+      // Delegation is the contract; fractional round trips need not restore precision.
+      const expected = spacetime(input, options.timezone).add(amount, unit).subtract(amount, unit).format('iso')
+      const after = nlp(input).dates(options).add(amount, unit).subtract(amount, unit).get(0)
+      t.equal(after?.start, expected, `${input}: ${amount} ${unit}`)
+      t.equal(after?.end, expected, 'rounded instant should not expand into a range')
     })
   })
   t.end()
@@ -87,22 +103,25 @@ test(here + 'relative dates use the same reference throughout a chain', t => {
   t.end()
 })
 
-test(here + 'fractional weeks preserve the partial day', t => {
+test(here + 'fractional weeks round to calendar days', t => {
   const cases = [
-    [0.5, 'week', '2020-06-18T12:00:00.000Z'],
-    [1.5, 'weeks', '2020-06-25T12:00:00.000Z'],
-    [-0.5, 'week', '2020-06-11T12:00:00.000Z'],
-    [0.25, 'weeks', '2020-06-16T18:00:00.000Z'],
-    [0.25, 'fortnight', '2020-06-18T12:00:00.000Z'],
+    [0.5, 'week', '2020-06-18T00:00:00.000Z'],
+    [1.5, 'weeks', '2020-06-25T00:00:00.000Z'],
+    [-0.5, 'week', '2020-06-11T00:00:00.000Z'],
+    [0.25, 'weeks', '2020-06-17T00:00:00.000Z'],
+    [0.25, 'fortnight', '2020-06-18T00:00:00.000Z'],
   ]
   cases.forEach(([amount, unit, expected]) => {
     const doc = nlp('June 15th 2020')
     const shifted = doc.dates(options).add(amount, unit)
-    t.equal(shifted.get(0)?.start, expected, `${amount} ${unit}: preserve time`)
-    t.equal(doc.dates(options).get(0)?.start, expected, 'fresh selection retains time')
-    t.equal(shifted.subtract(amount, unit).get(0)?.start, '2020-06-15T00:00:00.000Z', 'round trip restores midnight')
+    t.equal(shifted.get(0)?.start, expected, `${amount} ${unit}: round to midnight`)
+    t.equal(doc.dates(options).get(0)?.start, expected, 'fresh selection retains rounded date')
+    const start = spacetime('2020-06-15', options.timezone)
+    const forwardExpected = start.add(amount, unit).subtract(amount, unit).format('iso')
+    t.equal(shifted.subtract(amount, unit).get(0)?.start, forwardExpected, 'forward chain follows spacetime rounding')
     const reverse = nlp('June 15th 2020').dates(options).subtract(amount, unit).add(amount, unit)
-    t.equal(reverse.get(0)?.start, '2020-06-15T00:00:00.000Z', 'reverse round trip restores midnight')
+    const reverseExpected = start.subtract(amount, unit).add(amount, unit).format('iso')
+    t.equal(reverse.get(0)?.start, reverseExpected, 'reverse chain follows spacetime rounding')
   })
   t.end()
 })

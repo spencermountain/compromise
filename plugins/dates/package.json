@@ -46,8 +46,8 @@
     "src/"
   ],
   "dependencies": {
-    "spacetime": "^7.16.0",
-    "spacetime-holiday": "0.3.0"
+    "spacetime": "^7.17.0",
+    "spacetime-holiday": "0.4.0"
   },
   "peerDependencies": {
     "compromise": "workspace:^"

@@ -19,4 +19,5 @@ catalog:
 linkWorkspacePackages: false
 
 minimumReleaseAgeExclude:
-  - grad-school@0.0.9
+  - spacetime-holiday@0.4.0
+  - spacetime@7.17.0

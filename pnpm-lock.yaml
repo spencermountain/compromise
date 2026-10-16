@@ -94,11 +94,11 @@ importers:
         specifier: workspace:^
         version: link:../..
       spacetime:
-        specifier: ^7.16.0
-        version: 7.16.0
+        specifier: ^7.17.0
+        version: 7.17.0
       spacetime-holiday:
-        specifier: 0.3.0
-        version: 0.3.0(spacetime@7.16.0)
+        specifier: 0.4.0
+        version: 0.4.0(spacetime@7.17.0)
     devDependencies:
       '@rollup/plugin-node-resolve':
         specifier: 'catalog:'
@@ -1400,13 +1400,14 @@ packages:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
 
-  spacetime-holiday@0.3.0:
-    resolution: {integrity: sha512-rp4HRFJXxFL7CeKBFBMO2Xar2IyJyUpxY1ssAWCyf0iOvckwknvDgK04KwToASHX9vgd+4yQnTpytzJAs81R8g==}
+  spacetime-holiday@0.4.0:
+    resolution: {integrity: sha512-VP4b3ZqUdCuaObEpjlZWtqOtnID8RoDe7+RaV2c3+uSYa+CtuG2JilnsfFfLCvGvt5UV9R9oQtK+ObCNeV95+g==}
+    engines: {node: '>=18.0.0'}
     peerDependencies:
-      spacetime: '>=6.3.0'
+      spacetime: '>=7.0.0'
 
-  spacetime@7.16.0:
-    resolution: {integrity: sha512-cPdUij56eMHjPXYG9oregln8OzgxBMH+L+nyXqXG5TH/W9aqYyXo4uTpmqw7/Mzl06RvD+h3vtO5JP4ScXTAag==}
+  spacetime@7.17.0:
+    resolution: {integrity: sha512-DIM3Kr6xyk84O2163pKQPc0WsworRDOc+ztbUr2DZY7bVixvq6Ppwt2av2YaYXhSKha+gMIDPgLektwQaISLgw==}
     engines: {node: '>=18.0.0'}
 
   stop-iteration-iterator@1.1.0:
@@ -2754,11 +2755,11 @@ snapshots:
 
   source-map@0.6.1: {}
 
-  spacetime-holiday@0.3.0(spacetime@7.16.0):
+  spacetime-holiday@0.4.0(spacetime@7.17.0):
     dependencies:
-      spacetime: 7.16.0
+      spacetime: 7.17.0
 
-  spacetime@7.16.0: {}
+  spacetime@7.17.0: {}
 
   stop-iteration-iterator@1.1.0:
     dependencies:

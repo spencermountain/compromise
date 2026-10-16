@@ -1,15 +1,13 @@
 import parseDates from '../parse/index.js'
 import { calendarFormat, explicitFormat, preciseFormat } from './_lib.js'
-import shift from './shift.js'
 
 const units = new Set(['millisecond', 'second', 'minute', 'hour', 'day', 'week', 'fortnight', 'month', 'quarter', 'season', 'year', 'decade', 'century'])
 const clockUnits = new Set(['millisecond', 'second', 'minute', 'hour'])
-const milliseconds = { millisecond: 1, second: 1000, minute: 60000, hour: 3600000 }
 
 const shiftRange = (range, amount, unit, text, opts) => {
   const start = range.start.d
-  const shifted = shift(start, amount, unit)
-  const end = range.end && shift(range.end.d, amount, unit)
+  const shifted = start.add(amount, unit)
+  const end = range.end && range.end.d.add(amount, unit)
   if (!shifted.isValid() || (end && !end.isValid())) {
     return null
   }
@@ -55,11 +53,6 @@ const arithmetic = (view, amount, unit) => {
   unit = unit.toLowerCase().trim().replace(/ies$/, 'y').replace(/s$/, '')
   if (!units.has(unit)) {
     return view
-  }
-  // Spacetime rounds fractional clock units; use their exact elapsed duration.
-  if (clockUnits.has(unit) && !Number.isInteger(amount)) {
-    amount *= milliseconds[unit]
-    unit = 'millisecond'
   }
   return view.map(m => {
     const ranges = parseDates(m, view.opts)

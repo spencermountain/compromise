@@ -24,13 +24,10 @@ test(here + 'units', function (t) {
     ['3:30pm', 'time'],
     // ['3:30pm-5pm', 'time'],
   ]
-  arr.forEach((a) => {
+  arr.forEach(a => {
     const doc = nlp(a[0])
-    const found = doc.dates({ today: a[0] }).get()[0]
-    if (!found) {
-      console.log(a[0])//eslint-disable-line
-    }
-    t.equal(found.unit, a[1], '[unit] ' + a[0])
+    const found = doc.dates({ today: '2020-06-15', timezone: 'UTC' }).get(0)
+    t.equal(found?.unit, a[1], '[unit] ' + a[0])
   })
   t.end()
 })

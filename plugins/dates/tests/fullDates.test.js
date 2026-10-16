@@ -185,7 +185,7 @@ const tests = [
       ['armistice day', 'on Fri, Nov 11th'],
       ['bastille day', 'on Fri, Jul 14th, 2017'],
       ['canada day', 'on Sat, Jul 1st, 2017'],
-      ['victoria day', 'on Mon, May 24th, 2017'],
+      ['victoria day', 'on Mon, May 22nd, 2017'],
       ['epiphany', 'on Fri, Jan 6th, 2017'],
       ['kwanzaa', 'on Mon, Dec 26th'],
       ['all saints day', 'on Tue, Nov 1st'],

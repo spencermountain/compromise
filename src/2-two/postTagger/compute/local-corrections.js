@@ -99,6 +99,10 @@ const localCorrections = sentences => {
       if (term.normal === 'will' && /^\p{Lu}[a-z'\u00C0-\u00FF]/u.test(term.text) && next.tags.has('PastTense')) {
         pending.push([[term], 'FirstName', 'will-past-subj'])
       }
+      // modal 'will' is never followed by 'is' - 'Will is tall'
+      if (term.normal === 'will' && /^\p{Lu}[a-z'\u00C0-\u00FF]/u.test(term.text) && (next.machine || next.normal) === 'is') {
+        pending.push([[term], 'FirstName', 'will-is-subj'])
+      }
       if (term.switch === 'Adj|Noun' && next.tags.has('Actor') &&
         degrees.has(terms[i - 1]?.normal) && terms[i - 2]?.tags.has('Determiner')) {
         pending.push([[term], 'Adjective', 'degree-actor'])

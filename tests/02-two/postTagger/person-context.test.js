@@ -57,6 +57,8 @@ test(here + 'Will inside sentences and modal contrasts', t => {
 yesterday Will walked home {Date,FirstName|!Modal,Past,Adv}
 after lunch Will called {Prep,Noun,FirstName|!Modal,Past}
 Mary smiled, and Will waved {Person,Past,Conj,FirstName|!Modal,Past}
+Will is tall {FirstName|!Modal,Copula,Adj}
+I think Will is right {Pronoun,Verb,FirstName|!Modal,Copula,Adj}
 Will you help? {Modal|!FirstName,Pronoun,Inf}
 Will she call? {Modal|!FirstName,Pronoun,Inf}
 Will they leave? {Modal|!FirstName,Pronoun,Inf}

@@ -1,6 +1,6 @@
 {
   "name": "compromise-speech",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Syllable counting and pronunciation estimates for compromise",
   "license": "MIT",
   "repository": {
@@ -33,6 +33,7 @@
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "test:hmm": "tape \"./tests/**/*.hmm.js\" | tap-dancer --color always",
     "watch": "node --watch ./scratch.js",
     "version": "node ./scripts/version.js",
     "build": "node ./scripts/version.js && rollup -c --silent"

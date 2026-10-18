@@ -29,7 +29,6 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - github issues - thanks dualfroz!
   - #1155 'will' ambiguity
   - #1214 hyphenated word matching
-  - #1188 payloads after removal
   - #1170 trailing date dashes
   - #1142 original whitespace preservation
   - #1126 'wanna' before nouns
@@ -48,7 +47,10 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
   - #578 title-case adjective tagging
   - #156 quantity word parsing
   - #96 contraction expansion symmetry
-- **[new]** - update plugins
+- **[change]** - plugin updates:
+  - **[payload:fix]** - #1188 support payloads after removal
+  - **[dates:change]** - support fractional date arithmeetic
+  - **[speech:change]** - split syllables on text, not normalised
 - **[update]** - dependencies
 
 #### 14.18.0 [Oct 2026]

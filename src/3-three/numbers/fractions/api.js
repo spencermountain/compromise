@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 import find from './find.js'
 import parse from './parse.js'
 import toCardinal from './convert/toCardinal.js'
@@ -107,11 +108,7 @@ const plugin = function (View) {
     }
   }
 
-  View.prototype.fractions = function (n) {
-    let m = find(this)
-    m = m.getNth(n)
-    return new Fractions(this.document, m.pointer)
-  }
+  View.prototype.fractions = select(Fractions, find, true)
 }
 
 export default plugin

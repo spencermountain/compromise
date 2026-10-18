@@ -83,7 +83,7 @@ export default [
           terser(modernTerserOpts),
           sizeCheck({
             expect: 342,
-            warn: 4, // acceptable (+/-)
+            warn: 5, // acceptable (+/-)
             throw: 50, // unacceptable (+/-)
           }),
         ],

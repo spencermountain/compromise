@@ -1,26 +1,21 @@
 /* eslint-disable no-console */
 import { blue, green, yellow, red } from '../../../../API/_color.js'
 
-const showChunks = function (view) {
-  const { docs } = view
+const colors = { Noun: blue, Verb: green, Adjective: yellow, Pivot: red }
+
+const showChunks = view => {
   console.log('')
-  docs.forEach(terms => {
-    const out = []
-    terms.forEach(term => {
-      if (term.chunk === 'Noun') {
-        out.push(blue(term.implicit || term.normal))
-      } else if (term.chunk === 'Verb') {
-        out.push(green(term.implicit || term.normal))
-      } else if (term.chunk === 'Adjective') {
-        out.push(yellow(term.implicit || term.normal))
-      } else if (term.chunk === 'Pivot') {
-        out.push(red(term.implicit || term.normal))
-      } else {
-        out.push(term.implicit || term.normal)
+  view.docs.forEach(terms => {
+    const out = terms.map(term => {
+      const text = term.implicit || term.normal
+      if (Object.hasOwn(colors, term.chunk)) {
+        return colors[term.chunk](text)
       }
+      return text
     })
     console.log(out.join(' '), '\n')
   })
   console.log('\n')
 }
+
 export default showChunks

@@ -1,20 +1,13 @@
 const isClientSide = () => typeof window !== 'undefined' && window.document
 
-//output some helpful stuff to the console
+// Output the requested format, or the platform's default console view.
 const debug = function (fmt) {
   const debugMethods = this.methods.one.debug || {}
-  // see if method name exists
-  if (fmt && Object.hasOwn(debugMethods, fmt)) {
-    debugMethods[fmt](this)
-    return this
+  if (!fmt || !Object.hasOwn(debugMethods, fmt)) {
+    fmt = isClientSide() ? 'clientSide' : 'tags'
   }
-  // log default client-side view
-  if (isClientSide()) {
-    debugMethods.clientSide(this)
-    return this
-  }
-  // else, show regular server-side tags view
-  debugMethods.tags(this)
+  debugMethods[fmt](this)
   return this
 }
+
 export default debug

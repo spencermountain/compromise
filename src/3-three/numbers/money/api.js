@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 import find from './find.js'
 import parse from './parse.js'
 import mapNumbers from './_lib.js'
@@ -46,11 +47,7 @@ const plugin = function (View, Numbers) {
     toDecimal: undefined,
   })
 
-  View.prototype.money = function (n) {
-    let m = find(this)
-    m = m.getNth(n)
-    return new Money(this.document, m.pointer)
-  }
+  View.prototype.money = select(Money, find, true)
 }
 
 export default plugin

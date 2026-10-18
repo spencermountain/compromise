@@ -1,19 +1,10 @@
 /* eslint-disable no-console */
 import { blue } from '../../../../API/_color.js'
 
-const split = (txt, offset, index) => {
-  const buff = index * 9 //there are 9 new chars addded to each highlight
-  const start = offset.start + buff
+const spliceIn = (txt, offset, index) => {
+  const start = offset.start + index * 9 // Each highlight adds nine ANSI characters.
   const end = start + offset.length
-  const pre = txt.substring(0, start)
-  const mid = txt.substring(start, end)
-  const post = txt.substring(end, txt.length)
-  return [pre, mid, post]
-}
-
-const spliceIn = function (txt, offset, index) {
-  const parts = split(txt, offset, index)
-  return `${parts[0]}${blue(parts[1])}${parts[2]}`
+  return txt.substring(0, start) + blue(txt.substring(start, end)) + txt.substring(end)
 }
 
 const showHighlight = function (doc) {

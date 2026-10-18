@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 // return the nth elem of a doc
 const apostropheS = /'s$/
 
@@ -35,10 +36,6 @@ const api = function (View) {
     }
   }
 
-  View.prototype.possessives = function (n) {
-    let m = find(this)
-    m = m.getNth(n)
-    return new Possessives(m.document, m.pointer)
-  }
+  View.prototype.possessives = select(Possessives, find)
 }
 export default api

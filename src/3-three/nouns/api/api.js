@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 import find from '../find.js'
 import parseNoun from './parse.js'
 import toJSON from './toJSON.js'
@@ -85,10 +86,6 @@ const api = function (View) {
       return m
     }
   }
-  View.prototype.nouns = function (n) {
-    let m = find(this)
-    m = m.getNth(n)
-    return new Nouns(this.document, m.pointer)
-  }
+  View.prototype.nouns = select(Nouns, find, true)
 }
 export default api

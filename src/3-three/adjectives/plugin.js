@@ -1,3 +1,4 @@
+import select from '../_select.js'
 const transforms = ['toComparative', 'toSuperlative', 'toAdverb', 'toNoun']
 
 // guard against superlative+comparative forms
@@ -72,20 +73,8 @@ const api = function (View) {
     })
   })
 
-  View.prototype.adjectives = function (n) {
-    let m = this.match('#Adjective')
-    m = m.getNth(n)
-    return new Adjectives(m.document, m.pointer)
-  }
-  View.prototype.superlatives = function (n) {
-    let m = this.match('#Superlative')
-    m = m.getNth(n)
-    return new Adjectives(m.document, m.pointer)
-  }
-  View.prototype.comparatives = function (n) {
-    let m = this.match('#Comparative')
-    m = m.getNth(n)
-    return new Adjectives(m.document, m.pointer)
-  }
+  View.prototype.adjectives = select(Adjectives, '#Adjective')
+  View.prototype.superlatives = select(Adjectives, '#Superlative')
+  View.prototype.comparatives = select(Adjectives, '#Comparative')
 }
 export default { api }

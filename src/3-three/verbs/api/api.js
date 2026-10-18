@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 import find from '../find.js'
 import coordinate from './conjugate/coordinate.js'
 import toJSON from './toJSON.js'
@@ -177,10 +178,6 @@ const api = function (View) {
   Verbs.prototype.toPresent = Verbs.prototype.toPresentTense
   Verbs.prototype.toFuture = Verbs.prototype.toFutureTense
 
-  View.prototype.verbs = function (n) {
-    let vb = find(this)
-    vb = vb.getNth(n)
-    return new Verbs(this.document, vb.pointer)
-  }
+  View.prototype.verbs = select(Verbs, find, true)
 }
 export default api

@@ -20,13 +20,13 @@ const hooksDebug = headings => (doc, hooks) => {
   const width = Math.max('tokenize'.length, ...hooks.map(hook => hook.length))
   const snapshot = (hook, nested = false) => {
     const output = colorSpec(doc)
-    output.split('\n').forEach((line, i, lines) => {
+    output.split('\n').forEach((line, index, lines) => {
       if (nested) {
-        const branch = i === lines.length - 1 ? ' ╰─' : '│ '
+        const branch = index === lines.length - 1 ? ' ╰─' : '│ '
         console.log(`  ${dim(branch)} ${line}`) // eslint-disable-line no-console
         return
       }
-      const label = (i === 0 ? hook : '').padEnd(width)
+      const label = (index === 0 ? hook : '').padEnd(width)
       console.log(`  ${dim(label)}  ${line}`) // eslint-disable-line no-console
     })
   }

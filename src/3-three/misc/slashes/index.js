@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 const hasSlash = /\//
 
 const api = function (View) {
@@ -17,10 +18,6 @@ const api = function (View) {
     }
   }
 
-  View.prototype.slashes = function (n) {
-    let m = this.match('#SlashedTerm')
-    m = m.getNth(n)
-    return new Slashes(m.document, m.pointer)
-  }
+  View.prototype.slashes = select(Slashes, '#SlashedTerm')
 }
 export default api

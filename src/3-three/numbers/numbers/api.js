@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 import { Numeric, Ord, Card, TxtNum } from '../../../2-two/preTagger/tagSet/_lib.js'
 import find from './find.js'
 import parse from './parse/index.js'
@@ -230,11 +231,7 @@ const addMethod = function (View) {
   Numbers.prototype.plus = Numbers.prototype.add
   Numbers.prototype.equals = Numbers.prototype.isEqual
 
-  View.prototype.numbers = function (n) {
-    let m = find(this)
-    m = m.getNth(n)
-    return new Numbers(this.document, m.pointer)
-  }
+  View.prototype.numbers = select(Numbers, find, true)
   View.prototype.percentages = function (n) {
     let m = find(this)
     m = m.filter(v => v.has('#Percent') || v.after('^per cent').found)

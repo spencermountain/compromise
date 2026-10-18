@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 import clauses from './clauses.js'
 import getChunks from './chunks.js'
 
@@ -33,11 +34,7 @@ const api = function (View) {
     }
   }
 
-  View.prototype.chunks = function (n) {
-    let m = getChunks(this)
-    m = m.getNth(n)
-    return new Chunks(this.document, m.pointer)
-  }
+  View.prototype.chunks = select(Chunks, getChunks, true)
   View.prototype.clauses = clauses
 }
 export default api

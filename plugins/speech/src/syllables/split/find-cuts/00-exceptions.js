@@ -11,6 +11,7 @@ const exceptions = {
   every: [3], //'eve ry',
   everything: [3, 5], // 'eve ry thing',
   everybody: [3, 5, 7], //'eve ry bo dy',
+  ilyich: [2], // 'il yich': consonantal y in this name
 }
 
 export default exceptions

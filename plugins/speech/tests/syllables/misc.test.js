@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 const here = '[plugins/speech/tests/syllables] '
 
 const words = [
@@ -74,5 +74,14 @@ test(here + 'test length', function (t) {
     const want = sep.split(/ /g)
     t.equal(have.length, want.length, str)
   })
+  t.end()
+})
+
+test(here + 'normalize', function (t) {
+  const doc = nlp('Calgary')
+  let out = doc.syllables()
+  t.deepEqual(out, [['Cal', 'ga', 'ry']], 'non-normalized')
+  out = doc.syllables({ normalize: true })
+  t.deepEqual(out, [['cal', 'ga', 'ry']], 'normalized')
   t.end()
 })

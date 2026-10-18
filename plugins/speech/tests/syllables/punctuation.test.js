@@ -1,6 +1,6 @@
 import test from 'tape'
-import nlp from './_lib.js'
-import splitTerm from '../src/syllables/split/index.js'
+import nlp from '../_lib.js'
+import splitTerm from '../../src/syllables/split/index.js'
 
 test('speech: punctuation preserves word spelling', t => {
   // Include straight/curly apostrophes and repeated separators without losing text.
@@ -27,7 +27,10 @@ test('speech: punctuation preserves word spelling', t => {
     const parts = splitTerm({ text })
     t.deepEqual(parts, expected, text)
     t.equal(parts.join(''), text, `${text}: reconstruction`)
-    t.ok(parts.every(part => /[\p{L}\p{N}]/u.test(part)), `${text}: no punctuation-only chunks`)
+    t.ok(
+      parts.every(part => /[\p{L}\p{N}]/u.test(part)),
+      `${text}: no punctuation-only chunks`
+    )
   })
   // Preserve standalone punctuation, symbols, and whitespace instead of hiding them.
   t.deepEqual(splitTerm({ text: '' }), [], 'empty text has no chunks')

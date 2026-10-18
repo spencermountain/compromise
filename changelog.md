@@ -51,6 +51,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
   - **[payload:fix]** - #1188 support payloads after removal
   - **[dates:change]** - support fractional date arithmeetic
   - **[speech:change]** - split syllables on text, not normalised
+- **[change]** - allow 2nd param passthrough for `.compute(name, opts?)`
 - **[update]** - dependencies
 
 #### 14.18.0 [Oct 2026]

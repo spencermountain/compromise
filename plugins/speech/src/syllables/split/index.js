@@ -16,7 +16,7 @@ const splitTerm = (term, options = {}) => {
   if (prefix && prefix.length > 0) {
     cuts = pushCutsBack(cuts, prefix)
   }
-  return applyCuts(term.text, cuts)
+  return applyCuts(str, cuts)
 }
 
 export default splitTerm

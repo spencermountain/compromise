@@ -12,5 +12,5 @@ txt = 'seventh millenium. white collar'
 // let doc = nlp(txt).compute(['soundsLike', 'syllables'])
 // console.dir(doc.json()[0], { depth: 5 })
 
-const doc = nlp('calgary')
-console.log(doc.syllables())
+const doc = nlp('Calgary')
+console.log(doc.syllables({ normalize: true }))

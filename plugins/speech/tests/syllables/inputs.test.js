@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from './_lib.js'
+import nlp from '../_lib.js'
 
 // Flatten sentence results when checking individual inputs and reconstruction.
 const syllables = word => {

@@ -1,21 +1,21 @@
 import expandTags from './_lib.js'
 
-const keys = { m: 'match', g: 'group', t: 'tag', n: 'notIf', u: 'unTag' }
+const keys = { n: 'notIf', u: 'unTag' }
 
-// Expand both passes with the same compact keys and tag aliases.
-const expandRules = rules => {
-  rules.forEach(rule => {
-    Object.keys(rule).forEach(key => {
-      rule[key] = expandTags(rule[key], key === 't' || key === 'u')
-      const name = keys[key]
-      if (name) {
-        rule[name] = rule[key]
-        delete rule[key]
-      }
-    })
-    rule.reason = rule.match
+// Expand tuples once; null tag/group placeholders leave those fields absent.
+const expandRules = rules => rules.map(([match, tag, group, options = {}]) => {
+  const rule = { match: expandTags(match) }
+  if (tag != null) {
+    rule.tag = expandTags(tag, true)
+  }
+  if (group != null) {
+    rule.group = group
+  }
+  Object.keys(options).forEach(key => {
+    rule[keys[key] || key] = expandTags(options[key], key === 'u')
   })
-  return rules
-}
+  rule.reason = rule.match
+  return rule
+})
 
 export default expandRules

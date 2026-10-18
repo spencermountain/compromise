@@ -1,5 +1,42 @@
 import {
-  WeekDay, Date, Timezone, Actor, Val, PhoneNumber, Unit, Acronym, SportsTeam, Region, Place, Uncountable,
+  Inf,
+  Cop,
+  Adj,
+  NN,
+  Adv,
+  Pres,
+  Vb,
+  Sing,
+  Poss,
+  Plur,
+  Ger,
+  Conj,
+  Past,
+  Frac,
+  First,
+  Pers,
+  Last,
+  Org,
+  Prep,
+  Mod,
+  Phrasal,
+  Det,
+  Pron,
+  Prop,
+  Expr,
+  Participle,
+  WeekDay,
+  Date,
+  Timezone,
+  Actor,
+  Val,
+  PhoneNumber,
+  Unit,
+  Acronym,
+  SportsTeam,
+  Region,
+  Place,
+  Uncountable,
 } from '../../preTagger/tagSet/_lib.js'
 import expandRules from './expand-rules.js'
 
@@ -9,11 +46,7 @@ const infNouns =
 const notIf = '(i|we|they)' //we do not go
 const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
 
-/*
-{ m: match
-  g: group,
-  t: tag}
-*/
+// [match, tag, group, options]; omit group to tag the full match.
 
 // order matters top-matches can get overwritten
 const noun = '(#NN && !#Poss && !@hasComma)'
@@ -22,168 +55,116 @@ const subject = `${modifiers} ${noun}+`
 const predicate = '#Adv+? not? (#V && !#Ger && !#Particle)'
 
 const rules = [
-  // let the dough [rest] overnight
-  {
-    m: 'let (#Det|#Poss)? #Adj+? #NN [(%Noun|Verb% && !#Plur)] (overnight|outside|inside|here)$',
-    g: 0, t: 'Inf',
-  },
+  // let the dough [rest] overnight → Infinitive
+  ['let (#Det|#Poss)? #Adj+? #NN [(%Noun|Verb% && !#Plur)] (overnight|outside|inside|here)$', Inf, 0],
   // === verbs/passive.js ===
 
-  // got walked
-  { m: 'got (#Past|#VBN)', t: 'Pass' },
-  // Share the pattern while keeping cheap word-specific hooks.
-  ...['were', 'was', 'is', 'are', 'am'].map(word => ({
-    m: `${word} (#Past|#VBN)`,
-    t: 'Pass',
-  })),
-  // was being walked
-  { m: '(was|were|is|are|am) being (#Past|#VBN)', t: 'Pass' },
-  // had been walked
-  { m: '(had|have|has) been (#Past|#VBN)', t: 'Pass' },
-  // will be cleaned
-  { m: 'will be being? (#Past|#VBN)', t: 'Pass' },
-  // dog was [walked] by the man
-  {
-    m: '#NN (am|is|are|was|were) #Adv? [(#Past|#VBN)] by (the|a) #NN',
-    g: 0,
-    t: 'Pass',
-  },
+  // got walked → Passive
+  ['got (#Past|#VBN)', 'Pass'],
+  // was walked; were walked → Passive (keep word-specific hooks)
+  ...['were', 'was', 'is', 'are', 'am'].map(word => [`${word} (#Past|#VBN)`, 'Pass']),
+  // was being walked → Passive
+  ['(was|were|is|are|am) being (#Past|#VBN)', 'Pass'],
+  // had been walked → Passive
+  ['(had|have|has) been (#Past|#VBN)', 'Pass'],
+  // will be cleaned → Passive
+  ['will be being? (#Past|#VBN)', 'Pass'],
+  // dog was [walked] by the man → Passive
+  ['#NN (am|is|are|was|were) #Adv? [(#Past|#VBN)] by (the|a) #NN', 'Pass', 0],
 
   // === adjective/adjective.js ===
 
   // Restore the copula when the colour is written without a hyphen.
-  // [is] off white
-  {
-    m: '[(is|are|am|was|were)] off white$',
-    g: 0,
-    u: 'PhrV',
-    t: 'Cop',
-  },
-  // is [off white]
-  { m: '(is|are|am|was|were) [off white]$', g: 0, t: 'Adj' },
-  // [all] the dogs
-  { m: '[(all|both)] #Det #NN', g: 0, t: 'NN' },
-  // the door is [closed]
-  { m: '#Sing is #Adv? [%Adj|Past%]$', g: 0, t: 'Adj' },
-  // [forgotten] art is rediscovered
-  { m: '[#Past] #Sing is', g: 0, t: 'Adj' },
-  // [forgotten] stories are lost
-  { m: '[#Past] #Plur are', g: 0, t: 'Adj' },
-  // is [fucked up]
-  { m: '#Cop [fucked up?]', g: 0, t: 'Adj' },
-  // the door seems [opened]
-  { m: '#Sing (seems|appears) #Adv? [#Past$]', g: 0, t: 'Adj' },
+  // [is] off white → Copula; remove PhrasalVerb
+  ['[(is|are|am|was|were)] off white$', Cop, 0, { u: 'PhrV' }],
+  // is [off white] → Adjective
+  ['(is|are|am|was|were) [off white]$', Adj, 0],
+  // [all] the dogs → Noun
+  ['[(all|both)] #Det #NN', NN, 0],
+  // the door is [closed] → Adjective
+  ['#Sing is #Adv? [%Adj|Past%]$', Adj, 0],
+  // [forgotten] art is rediscovered → Adjective
+  ['[#Past] #Sing is', Adj, 0],
+  // [forgotten] stories are lost → Adjective
+  ['[#Past] #Plur are', Adj, 0],
+  // is [fucked up] → Adjective
+  ['#Cop [fucked up?]', Adj, 0],
+  // the door seems [opened] → Adjective
+  ['#Sing (seems|appears) #Adv? [#Past$]', Adj, 0],
   // jury is out - preposition ➔ adjective
-  // jury is [out]
-  { m: '#Cop #Adj? [(out|in|through)]$', g: 0, t: 'Adj' },
-  // [quiet] the room
-  {
-    m: '^[(#Adj && !near && !inside && !outside && !opposite)] (the|your) #NN',
-    g: 0,
-    n: '(all|even)',
-    t: 'Inf',
-  },
-  // blue-[tinted]
-  {
-    m: '(#Adj && #Hyphenated) [(#Hyphenated && #Past)]$',
-    g: 0,
-    t: 'Adj',
-  },
-  // [blue-tinted] glasses
-  {
-    m: '[#Hyphenated (#Hyphenated && #Past)] (#NN|#Conj)',
-    g: 0,
-    t: 'Adj',
-    n: '#Adv',
-  },
-  // [non-breaking] spaces
-  {
-    m: '[#Hyphenated (#Hyphenated && #Ger)] (#NN|#Conj)',
-    g: 0,
-    t: 'Adj',
-    n: '#Adv',
-  },
-  // [dammed-up] river
-  {
-    m: '[#Past (#Hyphenated && #PhrV)] (#NN|#Conj)',
-    g: 0,
-    t: 'Adj',
-  },
+  // jury is [out] → Adjective
+  ['#Cop #Adj? [(out|in|through)]$', Adj, 0],
+  // [quiet] the room → Infinitive
+  ['^[(#Adj && !near && !inside && !outside && !opposite)] (the|your) #NN', Inf, 0, { n: '(all|even)' }],
+  // blue-[tinted] → Adjective
+  ['(#Adj && #Hyphenated) [(#Hyphenated && #Past)]$', Adj, 0],
+  // [blue-tinted] glasses → Adjective
+  ['[#Hyphenated (#Hyphenated && #Past)] (#NN|#Conj)', Adj, 0, { n: '#Adv' }],
+  // [non-breaking] spaces → Adjective
+  ['[#Hyphenated (#Hyphenated && #Ger)] (#NN|#Conj)', Adj, 0, { n: '#Adv' }],
+  // [dammed-up] river → Adjective
+  ['[#Past (#Hyphenated && #PhrV)] (#NN|#Conj)', Adj, 0],
 
   // === adjective/adj-adverb.js ===
 
-  // is [far too] cold
-  { m: `#Cop [far too] #Adj`, g: 0, t: 'Adv' },
-  // shops [direct]
-  {
-    m: `#V [${noLy}] !#NN?`,
-    g: 0,
-    n: '(#Cop|be|been|being|get|got|getting|become|became|becoming|feel|feels|feeling|#Det|#Prep)',
-    t: 'Adv',
-  },
+  // is [far too] cold → Adverb
+  [`#Cop [far too] #Adj`, Adv, 0],
+  // shops [direct] → Adverb
+  [
+    `#V [${noLy}] !#NN?`,
+    Adv,
+    0,
+    { n: '(#Cop|be|been|being|get|got|getting|become|became|becoming|feel|feels|feeling|#Det|#Prep)' },
+  ],
   // Bare 'be' may still be Infinitive rather than Copula in commands.
-  // be [late]
-  { m: '(be|been|being) (#Adv|not)+? [late]', g: 0, t: 'Adj' },
-  // be [early]
-  { m: '(be|been|being) (#Adv|not)+? [early]', g: 0, t: 'Adj' },
-  // [moons] a lot
-  { m: `[#Plur] a lot !like?`, g: 0, t: 'Pres' },
+  // be [late] → Adjective
+  ['(be|been|being) (#Adv|not)+? [late]', Adj, 0],
+  // be [early] → Adjective
+  ['(be|been|being) (#Adv|not)+? [early]', Adj, 0],
+  // [moons] a lot → PresentTense
+  [`[#Plur] a lot !like?`, Pres, 0],
 
   // === adjective/adj-gerund.js ===
   // Gerund-Adjectives - 'amusing, annoying'
 
-  // found it [interesting]
-  { m: 'found it #Adv? [%Adj|Gerund%]', g: 0, t: 'Adj' },
-  // found it [isolating], but found it isolating cells
-  { m: 'found it #Adv? [isolating]$', g: 0, t: 'Adj' },
-  // a little [fuming]
-  { m: 'a (little|bit|wee) bit? [#Ger]', g: 0, t: 'Adj' },
-  // repairing [crumbling] roads
-  {
-    m: '#Ger [#Ger] #NN',
-    g: 0,
-    t: 'Adj',
-    n: '(impersonating|practicing|considering|assuming|enjoying|avoiding|stopping|starting|finishing)',
-  },
-  // looked [amazing]
-  {
-    m: '(looked|look|looks) #Adv? [%Adj|Gerund%]',
-    g: 0,
-    t: 'Adj',
-    n: '(impersonating|practicing|considering|assuming)',
-  },
-  // meaning alluring
-  { m: '%Noun|Gerund% %Adj|Gerund%', t: 'Ger #Adj' },
+  // found it [interesting] → Adjective
+  ['found it #Adv? [%Adj|Gerund%]', Adj, 0],
+  // found it [isolating], but found it isolating cells → Adjective
+  ['found it #Adv? [isolating]$', Adj, 0],
+  // a little [fuming] → Adjective
+  ['a (little|bit|wee) bit? [#Ger]', Adj, 0],
+  // repairing [crumbling] roads → Adjective
+  [
+    '#Ger [#Ger] #NN',
+    Adj,
+    0,
+    { n: '(impersonating|practicing|considering|assuming|enjoying|avoiding|stopping|starting|finishing)' },
+  ],
+  // looked [amazing] → Adjective
+  ['(looked|look|looks) #Adv? [%Adj|Gerund%]', Adj, 0, { n: '(impersonating|practicing|considering|assuming)' }],
+  // meaning alluring → Gerund Adjective
+  ['%Noun|Gerund% %Adj|Gerund%', 'Ger #Adj'],
 
   // === adjective/adj-noun.js ===
 
-  // his [fine]
-  { m: '(his|its) [%Adj|Noun%] !#NN?', g: 0, t: 'NN', n: '#Hyphenated' },
-  // is [all]
-  { m: '#Cop #Adv? [all]', g: 0, t: 'NN' },
-  // have [fun] with it
-  { m: `(have|had) [#Adj] #Prep .`, g: 0, t: 'NN' },
-  // brewing giant
-  { m: `#Ger (giant|capital|center|zone|application)`, t: 'NN' },
-  // in a [perfect]
-  { m: `#Prep (a|an) [#Adj]$`, g: 0, t: 'NN' },
-  // [brand] new
-  { m: `[brand #Ger?] new`, g: 0, t: 'Adv' },
-  // must-win
-  { m: `(must && #Hyphenated) .`, t: 'Adj' },
-  // the [present]
-  {
-    m: `#Det [#Adj]$`,
-    g: 0,
-    t: 'NN',
-    n: '(this|that|#Comp|#Sup)',
-  }, //are that crazy.
-  // company-wide
-  {
-    m: `(#NN && #Hyphenated) (#Adj && #Hyphenated)`,
-    t: 'Adj',
-    n: '(this|that|#Comp|#Sup)',
-  },
+  // his [fine] → Noun
+  ['(his|its) [%Adj|Noun%] !#NN?', NN, 0, { n: '#Hyphenated' }],
+  // is [all] → Noun
+  ['#Cop #Adv? [all]', NN, 0],
+  // have [fun] with it → Noun
+  [`(have|had) [#Adj] #Prep .`, NN, 0],
+  // brewing giant → Noun
+  [`#Ger (giant|capital|center|zone|application)`, NN],
+  // in a [perfect] → Noun
+  [`#Prep (a|an) [#Adj]$`, NN, 0],
+  // [brand] new → Adverb
+  [`[brand #Ger?] new`, Adv, 0],
+  // must-win → Adjective
+  [`(must && #Hyphenated) .`, Adj],
+  // the [present] → Noun
+  [`#Det [#Adj]$`, NN, 0, { n: '(this|that|#Comp|#Sup)' }], //are that crazy.
+  // company-wide → Adjective
+  [`(#NN && #Hyphenated) (#Adj && #Hyphenated)`, Adj, null, { n: '(this|that|#Comp|#Sup)' }],
   // the [poor] were
   // {
   //   m: `#Det [#Adj] (#Cop|#Det)`,
@@ -191,329 +172,266 @@ const rules = [
   //   g: 0,
   //   t: 'NN',
   // },
-  // [professional] bodybuilder
-  {
-    m: `[(%Adj|Noun% && !#Timezone && !#Value)] #NN`,
-    n: '(#Pron|#Prop)',
-    g: 0,
-    t: 'Adj',
-  },
+  // [professional] bodybuilder → Adjective
+  [`[(%Adj|Noun% && !#Timezone && !#Value)] #NN`, Adj, 0, { n: '(#Pron|#Prop)' }],
 
   // === adverb.js ===
 
-  // [way] too hot
-  { m: '[way] #Adv #Adj', g: 0, t: 'Adv' },
-  // sing [like] an angel
-  { m: '#V  [like]', g: 0, n: '(#Mod|#PhrV)', t: 'Adv' },
-  // even left
-  { m: 'even left', t: '#Adv #V' },
-  // cheering [hard]
-  {
-    m: '#Pres [(hard|quick|bright|slow|fast|backwards|forwards)]',
-    n: '(#Cop|feel|feels|look|looks|seem|seems|appear|appears|sound|sounds|smell|smells|taste|tastes|become|becomes|grow|grows|get|gets|stay|stays|remain|remains)',
-    g: 0,
-    t: 'Adv',
-  },
-  // a [bit] cold
-  { m: 'a [(little|bit|wee) bit?] #Adj', g: 0, t: 'Adv' },
-  // become overly [weakened]
-  { m: '(become|fall|grow) #Adv? [#Past]', g: 0, t: 'Adj' },
-  // a completely [beaten] man
-  { m: '(a|an) #Adv [#VBN] #NN', g: 0, t: 'Adj' },
+  // [way] too hot → Adverb
+  ['[way] #Adv #Adj', Adv, 0],
+  // sing [like] an angel → Adverb
+  ['#V  [like]', Adv, 0, { n: '(#Mod|#PhrV)' }],
+  // even left → Adverb Verb
+  ['even left', '#Adv #V'],
+  // cheering [hard] → Adverb
+  [
+    '#Pres [(hard|quick|bright|slow|fast|backwards|forwards)]',
+    Adv,
+    0,
+    {
+      n: '(#Cop|feel|feels|look|looks|seem|seems|appear|appears|sound|sounds|smell|smells|taste|tastes|become|becomes|grow|grows|get|gets|stay|stays|remain|remains)',
+    },
+  ],
+  // a [bit] cold → Adverb
+  ['a [(little|bit|wee) bit?] #Adj', Adv, 0],
+  // become overly [weakened] → Adjective
+  ['(become|fall|grow) #Adv? [#Past]', Adj, 0],
+  // a completely [beaten] man → Adjective
+  ['(a|an) #Adv [#VBN] #NN', Adj, 0],
   // a [close] friend
   // { m: '#Det #Adv? [close] #NN', g: 0, t: 'Adj' },
-  // does [better]
-  { m: '(do|does|did) #Adv? [(better|worse)]', g: 0, t: 'Adv' },
-  // walking [close]
-  {
-    m: '#Ger #Adv? [close]',
-    g: 0,
-    t: 'Adv',
-    n: '(getting|becoming|feeling)',
-  },
-  // charged [back]
-  {
-    m: '(#Pres|#Past) [back]',
-    g: 0,
-    t: 'Adv',
-    n: '(#PhrV|#Cop)',
-  },
-  // the [well]
-  { m: '#Det [well] !#Past?', g: 0, t: 'NN', n: 'well made' },
-  // sees [well]
-  { m: '(#Pres && !#Cop) [well]', g: 0, t: 'Adv' },
+  // does [better] → Adverb
+  ['(do|does|did) #Adv? [(better|worse)]', Adv, 0],
+  // walking [close] → Adverb
+  ['#Ger #Adv? [close]', Adv, 0, { n: '(getting|becoming|feeling)' }],
+  // charged [back] → Adverb
+  ['(#Pres|#Past) [back]', Adv, 0, { n: '(#PhrV|#Cop)' }],
+  // the [well] → Noun
+  ['#Det [well] !#Past?', NN, 0, { n: 'well made' }],
+  // sees [well] → Adverb
+  ['(#Pres && !#Cop) [well]', Adv, 0],
 
   // === dates/date.js ===
 
   // ==== WeekDay ====
-  // [sun] the 5th
-  { m: '[sun] the #Ord', g: 0, t: WeekDay },
-  // 1pm next [sun]
-  { m: '#Date (on|this|next|last|during)? [sun]', g: 0, t: WeekDay },
+  // [sun] the 5th → WeekDay
+  ['[sun] the #Ord', WeekDay, 0],
+  // 1pm next [sun] → WeekDay
+  ['#Date (on|this|next|last|during)? [sun]', WeekDay, 0],
 
   // ==== Month ====
-  // this march
-  { m: '(this|next|last) march !#Inf?', t: '#Date #Month' },
-  // this may
-  { m: '(this|next|last) may !#Inf?', t: '#Date #Month' },
-  // march 5th
-  { m: `(march|may) the? #Value`, t: '#Month #Date #Date' },
-  // 5th of march
-  { m: `#Value of? (march|may)`, t: '#Date #Date #Month' },
-  // [march] and feb
-  { m: `[(march|may)] .? #Date`, g: 0, t: 'Month' },
-  // feb to [march]
-  { m: `#Date .? [(march|may)]`, g: 0, t: 'Month' },
-  // quickly [march]
-  { m: `#Adv [(march|may)]`, g: 0, t: 'V', n: '(early|late)' },
+  // this march → Date Month
+  ['(this|next|last) march !#Inf?', '#Date #Month'],
+  // this may → Date Month
+  ['(this|next|last) may !#Inf?', '#Date #Month'],
+  // march 5th → Month Date Date
+  [`(march|may) the? #Value`, '#Month #Date #Date'],
+  // 5th of march → Date Date Month
+  [`#Value of? (march|may)`, '#Date #Date #Month'],
+  // [march] and feb → Month
+  [`[(march|may)] .? #Date`, 'Month', 0],
+  // feb to [march] → Month
+  [`#Date .? [(march|may)]`, 'Month', 0],
+  // quickly [march] → Verb
+  [`#Adv [(march|may)]`, Vb, 0, { n: '(early|late)' }],
 
   // === dates/date-phrase.js ===
 
-  // 5th of June
-  { m: '#Value of #Month', t: Date },
+  // 5th of June → Date
+  ['#Value of #Month', Date],
   // 5 June
   // { m: '#Card #Month', t: 'Date' },
-  // June 5 to 7
-  { m: '#Month #Value to #Value', t: Date },
-  // June the 12th
-  { m: '#Month the #Value', t: Date },
-  // june 7
-  { m: '(#WeekDay|#Month) #Value', t: Date },
-  // 7 june
-  { m: '#Value (#WeekDay|#Month)', t: Date },
-  // aug 5th 2021
-  { m: `#Month #Ord #Card`, t: Date },
+  // June 5 to 7 → Date
+  ['#Month #Value to #Value', Date],
+  // June the 12th → Date
+  ['#Month the #Value', Date],
+  // june 7 → Date
+  ['(#WeekDay|#Month) #Value', Date],
+  // 7 june → Date
+  ['#Value (#WeekDay|#Month)', Date],
+  // aug 5th 2021 → Date
+  [`#Month #Ord #Card`, Date],
 
   // === timezones ===
-  // china standard time
-  { m: `(#Place|#Dem) (standard|daylight|central|mountain)? time`, t: Timezone },
+  // china standard time → Timezone
+  [`(#Place|#Dem) (standard|daylight|central|mountain)? time`, Timezone],
 
   // === nouns/nouns.js ===
 
   //'more' is not always an adverb
-  // due to [weather]
-  { m: 'due to [#V]', g: 0, t: 'NN' },
+  // due to [weather] → Noun
+  ['due to [#V]', NN, 0],
 
-  // my first [thought]
-  { m: '#Poss #Ord [#Past]', g: 0, t: 'NN' },
-  // the nice [walk]
-  {
-    m: '(the|this|those|these) #Adj [%Noun|Verb%]',
-    g: 0,
-    t: 'NN',
-    n: '#Cop',
-  },
-  // the truly nice [swim]
-  { m: '(the|this|those|these) #Adv #Adj [#V]', g: 0, t: 'NN' },
-  // the [message] from Danny
-  { m: 'the [#V] #Prep .', g: 0, t: 'NN' },
-  // a type of [shout]
-  { m: '#Det #NN of [#V]', g: 0, t: 'NN', n: '#Ger' },
-  // waited until [release]
-  {
-    m: '#Past #Prep [#Pres]',
-    g: 0,
-    n: '#Ger',
-    t: 'NN',
-  },
-  // water-flows
-  { m: '(#Sing && @hasHyphen && !must) #Pres', t: 'NN' },
-  // is no [going] back
-  { m: 'is no [#V]', g: 0, t: 'NN' },
-  // and check this out! a [walk-in] microwave.
-  {
-    m: '(the|those|these|a|an) #Adj? [(#Pres && !#Ger && !#Cop && !seem && !appear && !include) #Particle?]',
-    g: 0,
-    t: 'NN',
-    n: 'the (poor|rich|young|old|elderly|unemployed|homeless|disabled)',
-  },
+  // my first [thought] → Noun
+  ['#Poss #Ord [#Past]', NN, 0],
+  // the nice [walk] → Noun
+  ['(the|this|those|these) #Adj [%Noun|Verb%]', NN, 0, { n: '#Cop' }],
+  // the truly nice [swim] → Noun
+  ['(the|this|those|these) #Adv #Adj [#V]', NN, 0],
+  // the [message] from Danny → Noun
+  ['the [#V] #Prep .', NN, 0],
+  // a type of [shout] → Noun
+  ['#Det #NN of [#V]', NN, 0, { n: '#Ger' }],
+  // waited until [release] → Noun
+  ['#Past #Prep [#Pres]', NN, 0, { n: '#Ger' }],
+  // water-flows → Noun
+  ['(#Sing && @hasHyphen && !must) #Pres', NN],
+  // is no [going] back → Noun
+  ['is no [#V]', NN, 0],
+  // and check this out! a [walk-in] microwave. → Noun
+  [
+    '(the|those|these|a|an) #Adj? [(#Pres && !#Ger && !#Cop && !seem && !appear && !include) #Particle?]',
+    NN,
+    0,
+    { n: 'the (poor|rich|young|old|elderly|unemployed|homeless|disabled)' },
+  ],
 
   // ==== Actor ====
-  // Aircraft designer
-  { m: '#NN #Actor', t: Actor, n: '(#Pers|#Pron)' },
-  // lighting designer
-  { m: '#Ger #Actor', t: Actor },
+  // Aircraft designer → Actor
+  ['#NN #Actor', Actor, null, { n: '(#Pers|#Pron)' }],
+  // lighting designer → Actor
+  ['#Ger #Actor', Actor],
   // captain sanders
   // { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific' },
-  // co founder
-  { m: `co #Sing`, t: Actor },
-  // [aircraft] designer
-  {
-    m: `[#NN+] #Actor`,
-    g: 0,
-    t: Actor,
-    n: '(#Hon|#Pron|#Poss)',
-  },
-  // fine-artist
-  {
-    m: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #NN? #Actor`,
-    t: Actor,
-  },
-  // dance coach
-  {
-    m: `(#NN && !#Pron)+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`,
-    t: Actor,
-  },
-  // chief design officer
-  { m: `chief . officer`, t: Actor },
-  // chief of police
-  { m: `chief of #NN+`, t: Actor },
-  // president of marketing
-  { m: `senior? vice? president of #NN+`, t: Actor },
+  // co founder → Actor
+  [`co #Sing`, Actor],
+  // [aircraft] designer → Actor
+  [`[#NN+] #Actor`, Actor, 0, { n: '(#Hon|#Pron|#Poss)' }],
+  // fine-artist → Actor
+  [
+    `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #NN? #Actor`,
+    Actor,
+  ],
+  // dance coach → Actor
+  [`(#NN && !#Pron)+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`, Actor],
+  // chief design officer → Actor
+  [`chief . officer`, Actor],
+  // chief of police → Actor
+  [`chief of #NN+`, Actor],
+  // president of marketing → Actor
+  [`senior? vice? president of #NN+`, Actor],
 
   // ==== Singular ====
-  // did a [900], paid a [20]
-  { m: '#V (a|an) [#Value]$', g: 0, t: 'Sing' },
+  // did a [900], paid a [20] → Singular
+  ['#V (a|an) [#Value]$', Sing, 0],
 
   // ==== Possessive ====
-  // John Smith's
-  { m: '#First #Acronym? (#Poss && #Last)', t: 'Poss' },
-  // Microsoft Research's office
-  { m: '#Org+ #Poss', t: 'Poss' },
-  // Los Angeles's fundraiser
-  { m: '#Place+ #Poss', t: 'Poss' },
-  // my butt smells
-  { m: '#Poss #Pres #Particle?', n: '(#Ger|#Copula|her)', t: 'NN' }, // anna's eating vs anna's eating lunch
-  // my [teachers] dog
-  { m: '(my|our|their|her|his|its) [(#Plur && #Actor)] #NN', g: 0, t: 'Poss' },
+  // John Smith's → Possessive
+  ['#First #Acronym? (#Poss && #Last)', Poss],
+  // Microsoft Research's office → Possessive
+  ['#Org+ #Poss', Poss],
+  // Los Angeles's fundraiser → Possessive
+  ['#Place+ #Poss', Poss],
+  // my butt smells → Noun
+  ['#Poss #Pres #Particle?', NN, null, { n: '(#Ger|#Copula|her)' }], // anna's eating vs anna's eating lunch
+  // my [teachers] dog → Possessive
+  ['(my|our|their|her|his|its) [(#Plur && #Actor)] #NN', Poss, 0],
 
-  // 10th of a [second]
-  { m: '#Value of a [second]', g: 0, u: Val, t: 'Sing' },
-  // the euro [sense]
-  {
-    m: `#Det #NN [${infNouns}] !(#Prep|to|#Adv)?`,
-    g: 0,
-    t: 'NN',
-  },
-  // [thanks] for the gift are overdue
-  { m: '[#Pres] (of|by|for) (a|an|the) #NN #Cop', g: 0, t: 'Plur' },
-  // You eat and [sleep]
-  { m: '#Inf and [%Noun|Verb%]', g: 0, t: 'Inf' },
-  // dogs and [running] and cats
-  { m: '#NN and [#V] and #NN', g: 0, t: 'NN' },
-  // the 1992 [classic]
-  { m: 'the #Card [%Adj|Noun%]', g: 0, t: 'NN' },
-  // This is the [premier] university in Virginia
-  { m: '#Cop the [%Adj|Noun%] #NN', g: 0, t: 'Adj' },
+  // 10th of a [second] → Singular; remove Value
+  ['#Value of a [second]', Sing, 0, { u: Val }],
+  // the euro [sense] → Noun
+  [`#Det #NN [${infNouns}] !(#Prep|to|#Adv)?`, NN, 0],
+  // [thanks] for the gift are overdue → Plural
+  ['[#Pres] (of|by|for) (a|an|the) #NN #Cop', Plur, 0],
+  // You eat and [sleep] → Infinitive
+  ['#Inf and [%Noun|Verb%]', Inf, 0],
+  // dogs and [running] and cats → Noun
+  ['#NN and [#V] and #NN', NN, 0],
+  // the 1992 [classic] → Noun
+  ['the #Card [%Adj|Noun%]', NN, 0],
+  // This is the [premier] university in Virginia → Adjective
+  ['#Cop the [%Adj|Noun%] #NN', Adj, 0],
 
   // i ate [me] sandwich (scottish slang)
   // { m: 'i #V [me] #NN', g: 0, t: 'Poss' },
-  // He bowed his [head] in prayer
-  { m: '#Past #Poss [#V]', g: 0, t: 'NN', n: '(saw|made)' },
-  // 35 [signs]
-  { m: '#Value [%Plural|Verb%]', g: 0, t: 'Plur', n: '(one|1|a|an)' },
-  // had [time]
-  { m: 'had [%Noun|Verb%]', g: 0, t: 'NN', n: '(#Ger|come|become)' },
-  // instant access
-  { m: '(%Adj|Noun% && !#Timezone) %Noun|Verb%', t: '#Adj #NN', n: '#Prop #NN' },
-  // near death experiences, ambitious sales [targets]
-  {
-    m: '#Adj #NN [%Plural|Verb%]$',
-    g: 0,
-    t: 'Plur',
-    n: '#Pron',
-  },
-  // your guild [colors]
-  { m: '#Poss #NN [(colors|colours)]$', g: 0, t: 'Plur' },
+  // He bowed his [head] in prayer → Noun
+  ['#Past #Poss [#V]', NN, 0, { n: '(saw|made)' }],
+  // 35 [signs] → Plural
+  ['#Value [%Plural|Verb%]', Plur, 0, { n: '(one|1|a|an)' }],
+  // had [time] → Noun
+  ['had [%Noun|Verb%]', NN, 0, { n: '(#Ger|come|become)' }],
+  // instant access → Adjective Noun
+  ['(%Adj|Noun% && !#Timezone) %Noun|Verb%', '#Adj #NN', null, { n: '#Prop #NN' }],
+  // near death experiences, ambitious sales [targets] → Plural
+  ['#Adj #NN [%Plural|Verb%]$', Plur, 0, { n: '#Pron' }],
+  // your guild [colors] → Plural
+  ['#Poss #NN [(colors|colours)]$', Plur, 0],
 
   // === verbs/noun-gerund.js ===
 
-  // the [upcoming thank]-you
-  { m: '(this|that|the|a|an) [#Ger #Inf]', g: 0, t: 'Sing' },
-  // the [upcoming thank]-you
-  { m: '(that|the) [#Ger #Pres]', g: 0, ifNo: '#Cop', t: 'Plur' },
-  // lexical [tagging]
-  { m: '#Adj [#Ger]', g: 0, t: 'NN', n: '(still|even|just)' },
-  // [walking] is cool
-  { m: '[#Ger] #Adv? not? #Cop', g: 0, t: 'Activity' },
-  // are [doing] is
-  { m: '#Cop [(#Ger|#Activity)] #Cop', g: 0, t: 'Ger' },
-  // responsibility for [setting]
-  { m: '#Sing for [%Noun|Gerund%]', g: 0, t: 'Ger' },
-  // better for [training]
-  { m: '#Comp (for|at) [%Noun|Gerund%]', g: 0, t: 'Ger' },
-  // apologized for [shouting]
-  {
-    m: '(#Past|#Pres) for [%Noun|Gerund%]',
-    g: 0,
-    t: 'Ger',
-  },
-  // he reads the [upcoming]
-  { m: '#Pres the [#Ger]', g: 0, t: 'NN' },
+  // the [upcoming thank]-you → Singular
+  ['(this|that|the|a|an) [#Ger #Inf]', Sing, 0],
+  // the [upcoming thank]-you → Plural
+  ['(that|the) [#Ger #Pres]', Plur, 0, { ifNo: '#Cop' }],
+  // lexical [tagging] → Noun
+  ['#Adj [#Ger]', NN, 0, { n: '(still|even|just)' }],
+  // [walking] is cool → Activity
+  ['[#Ger] #Adv? not? #Cop', 'Activity', 0],
+  // are [doing] is → Gerund
+  ['#Cop [(#Ger|#Activity)] #Cop', Ger, 0],
+  // responsibility for [setting] → Gerund
+  ['#Sing for [%Noun|Gerund%]', Ger, 0],
+  // better for [training] → Gerund
+  ['#Comp (for|at) [%Noun|Gerund%]', Ger, 0],
+  // apologized for [shouting] → Gerund
+  ['(#Past|#Pres) for [%Noun|Gerund%]', Ger, 0],
+  // he reads the [upcoming] → Noun
+  ['#Pres the [#Ger]', NN, 0],
 
   // === verbs/verb-noun.js ===
 
-  // A final button label is an object, not a second verb.
-  ...['click', 'clicks', 'selects', 'pick', 'picks'].map(word => ({
-    m: `(#Pron|#Sing|#Plur) [${word} (submit|save|cancel)]$`,
-    g: 0,
-    t: 'Pres NN',
-  })),
+  // A final button label is an object, not a second verb. → PresentTense Noun
+  ...['click', 'clicks', 'selects', 'pick', 'picks'].map(word => [
+    `(#Pron|#Sing|#Plur) [${word} (submit|save|cancel)]$`,
+    'Pres NN',
+    0,
+  ]),
   // Common intransitive predicates after a singular subject. Keep arbitrary
   // plural/verb switches conservative: 'the dog treats' is a noun phrase.
-  // the dog [runs]
-  ...['runs', 'walks', 'barks', 'swims', 'sleeps'].map(word => ({
-    m: `^(#Det|#Poss) #Adj+? #Sing #Adv+? [${word}] #Adv+?$`,
-    g: 0,
-    t: 'Pres',
-  })),
+  // the dog [runs] → PresentTense
+  ...['runs', 'walks', 'barks', 'swims', 'sleeps'].map(word => [
+    `^(#Det|#Poss) #Adj+? #Sing #Adv+? [${word}] #Adv+?$`,
+    Pres,
+    0,
+  ]),
   // with heads and [arms] rolling around
   // { m: '#Prep #Plur and [%Plural|Verb%] #Ger', g: 0, t: 'Plur' },
-  // he can solve the [puzzle]
-  { m: '#Inf (this|that|the) [#Inf]', g: 0, t: 'NN' },
-  // keeping the [matter] a secret
-  { m: '#Ger #Det [#Inf]', g: 0, t: 'NN' },
-  // the-only-[reason]
-  {
-    m: '#Det (only|further|just|more|backward) [#Inf]',
-    g: 0,
-    t: 'NN',
-  },
-  // the [slide] makes noise
-  { m: '(the|this|a|an) [#Inf] #Adv? #V', g: 0, t: 'NN' },
-  // Use a pointed [stick] (a pencil) or a similar tool
-  {
-    m: '#Det #Adj #Adj? [#Inf]',
-    g: 0,
-    t: 'NN',
-    n: 'the (poor|rich|young|old|elderly|unemployed|homeless|disabled)',
-  },
-  // the American [thank]-you letter
-  { m: '#Det #Dem [#Pres]', g: 0, t: 'NN' },
-  // the next career [read] is brief
-  { m: '#Adj #NN+ [#Inf] #Cop', g: 0, t: 'NN' },
-  // at some [thank]-you party
-  { m: 'at some [#Inf]', g: 0, t: 'NN' },
-  // goes [to sleep]
-  { m: '(go|goes|went) [to (sleep|work)]', g: 0, t: 'Prep NN' },
-  // a dog [retrieve] in the field
-  ...['a', 'an'].map(word => ({
-    m: `${word} #Adj? #NN [#Inf] (#Prep|#NN)`,
-    g: 0,
-    n: 'from',
-    t: 'NN',
-  })),
-  // a software [reinstall]
-  { m: '(a|an) #NN [#Inf]$', g: 0, t: 'NN' },
-  // working for [thank]-you letters
-  { m: '#Ger #Adj? for [#Inf]', g: 0, t: 'NN' },
-  // artists on [thank]-you cards
-  { m: '#Plur on [#Inf]', g: 0, t: 'NN' },
-  // number of [thank]-yous
-  { m: 'number of [#Pres]', g: 0, t: 'NN' },
-  // make [sense]
-  {
-    m: '(try|use|attempt|build|make) [%Noun|Verb% #Particle?]',
-    n: '(#Cop|#NN|sure|fun|up)',
-    g: 0,
-    t: 'NN',
-  }, //make sure of
-  // [append] is cloned
-  { m: '^[#Inf] (is|was)', g: 0, t: 'NN' },
+  // he can solve the [puzzle] → Noun
+  ['#Inf (this|that|the) [#Inf]', NN, 0],
+  // keeping the [matter] a secret → Noun
+  ['#Ger #Det [#Inf]', NN, 0],
+  // the-only-[reason] → Noun
+  ['#Det (only|further|just|more|backward) [#Inf]', NN, 0],
+  // the [slide] makes noise → Noun
+  ['(the|this|a|an) [#Inf] #Adv? #V', NN, 0],
+  // Use a pointed [stick] (a pencil) or a similar tool → Noun
+  ['#Det #Adj #Adj? [#Inf]', NN, 0, { n: 'the (poor|rich|young|old|elderly|unemployed|homeless|disabled)' }],
+  // the American [thank]-you letter → Noun
+  ['#Det #Dem [#Pres]', NN, 0],
+  // the next career [read] is brief → Noun
+  ['#Adj #NN+ [#Inf] #Cop', NN, 0],
+  // at some [thank]-you party → Noun
+  ['at some [#Inf]', NN, 0],
+  // goes [to sleep] → Preposition Noun
+  ['(go|goes|went) [to (sleep|work)]', 'Prep NN', 0],
+  // a dog [retrieve] in the field → Noun
+  ...['a', 'an'].map(word => [`${word} #Adj? #NN [#Inf] (#Prep|#NN)`, NN, 0, { n: 'from' }]),
+  // a software [reinstall] → Noun
+  ['(a|an) #NN [#Inf]$', NN, 0],
+  // working for [thank]-you letters → Noun
+  ['#Ger #Adj? for [#Inf]', NN, 0],
+  // artists on [thank]-you cards → Noun
+  ['#Plur on [#Inf]', NN, 0],
+  // number of [thank]-yous → Noun
+  ['number of [#Pres]', NN, 0],
+  // make [sense] → Noun
+  ['(try|use|attempt|build|make) [%Noun|Verb% #Particle?]', NN, 0, { n: '(#Cop|#NN|sure|fun|up)' }], //make sure of
+  // [append] is cloned → Noun
+  ['^[#Inf] (is|was)', NN, 0],
   // get much [thank]-you mail
   // { m: '#Inf much [#Inf]', g: 0, t: 'NN' },
-  // [cause] i gotta
-  { m: '[cause] #Pron #V', g: 0, t: 'Conj' },
+  // [cause] i gotta → Conjunction
+  ['[cause] #Pron #V', Conj, 0],
   // the US [air] force
   // {
   //   m: 'the #Sing [#Inf] (#NN && !#Poss)',
@@ -521,914 +439,615 @@ const rules = [
   //   t: 'NN',
   //   n: '#Pron',
   // },
-  // this [rocks]
-  { m: 'this [#Plur]', g: 0, t: 'Pres', n: '(#Prep|#Date)' },
-  // the thing [that runs]
-  {
-    m: '#NN [that %Plural|Verb%]',
-    g: 0,
-    t: 'Conj Pres',
-    n: '(#Prep|#Pron|way)',
-  },
+  // this [rocks] → PresentTense
+  ['this [#Plur]', Pres, 0, { n: '(#Prep|#Date)' }],
+  // the thing [that runs] → Conjunction PresentTense
+  ['#NN [that %Plural|Verb%]', 'Conj Pres', 0, { n: '(#Prep|#Pron|way)' }],
   // that [leads] to
   // { m: 'that [#Plur] to', g: 0, t: 'Pres', n: '#Prep' },
-  // let him [father] a child
-  ...['let', 'make', 'made'].map(word => ({
-    m: `${word} (him|her|it|#Pers|#Place|#Org)+ [#Sing] (a|an|the|it)`,
-    g: 0,
-    t: 'Inf',
-  })),
-  // assign all [tasks]
-  {
-    m: '#V (all|every|each|most|some|no) [#Pres]',
-    n: '#Mod',
-    g: 0,
-    t: 'NN',
-  }, // PresentTense/Noun ambiguities
-  // Possession and copulas; other past verbs use wide-support below.
-  {
-    m: '(had|have|was|were) #Adj [#Pres]',
-    g: 0,
-    t: 'NN',
-    n: 'better',
-  },
-  // one big [thank]-you
-  { m: '#Value #Adj [#Pres]', g: 0, t: 'NN', n: '#Cop' },
-  // found all [upcoming] words
-  {
-    m: '#Past #Adj+ [#Pres]',
-    g: 0,
-    t: 'NN',
-    n: '(#Cop|better)',
-  },
-  // many [thanks]
-  { m: '(many|few|several|couple) [#Pres]', g: 0, t: 'NN', n: '#Cop' },
-  // a very big [dream]
-  {
-    m: '#Det #Adv #Adj [%Noun|Verb%]',
-    g: 0,
-    t: 'NN',
-    n: '#Cop',
-  },
-  // from start to [finish]
-  { m: 'from #NN to [%Noun|Verb%]', g: 0, t: 'NN' },
-  // for comparison or [contrast]
-  {
-    m: '(for|with|of) #NN (and|or|not) [%Noun|Verb%]',
-    g: 0,
-    t: 'NN',
-    n: '#Pron',
-  },
-  // cute little [thank]-you bags
-  { m: '#Adj #Adj [#Pres]', g: 0, t: 'NN', n: '#Cop' },
-  // writing bigger [thank]-you notes
-  {
-    m: '#Ger #Adv? #Comp [#Pres]',
-    g: 0,
-    t: 'NN',
-    n: '#Cop',
-  },
-  // to write people [thanks] for helping
-  { m: `to #Pres #NN [#Pres] #Prep`, g: 0, t: 'NN' },
+  // let him [father] a child → Infinitive
+  ...['let', 'make', 'made'].map(word => [`${word} (him|her|it|#Pers|#Place|#Org)+ [#Sing] (a|an|the|it)`, Inf, 0]),
+  // assign all [tasks] → Noun
+  ['#V (all|every|each|most|some|no) [#Pres]', NN, 0, { n: '#Mod' }], // PresentTense/Noun ambiguities
+  // Possession and copulas; other past verbs use wide-support below. → Noun
+  ['(had|have|was|were) #Adj [#Pres]', NN, 0, { n: 'better' }],
+  // one big [thank]-you → Noun
+  ['#Value #Adj [#Pres]', NN, 0, { n: '#Cop' }],
+  // found all [upcoming] words → Noun
+  ['#Past #Adj+ [#Pres]', NN, 0, { n: '(#Cop|better)' }],
+  // many [thanks] → Noun
+  ['(many|few|several|couple) [#Pres]', NN, 0, { n: '#Cop' }],
+  // a very big [dream] → Noun
+  ['#Det #Adv #Adj [%Noun|Verb%]', NN, 0, { n: '#Cop' }],
+  // from start to [finish] → Noun
+  ['from #NN to [%Noun|Verb%]', NN, 0],
+  // for comparison or [contrast] → Noun
+  ['(for|with|of) #NN (and|or|not) [%Noun|Verb%]', NN, 0, { n: '#Pron' }],
+  // cute little [thank]-you bags → Noun
+  ['#Adj #Adj [#Pres]', NN, 0, { n: '#Cop' }],
+  // writing bigger [thank]-you notes → Noun
+  ['#Ger #Adv? #Comp [#Pres]', NN, 0, { n: '#Cop' }],
+  // to write people [thanks] for helping → Noun
+  [`to #Pres #NN [#Pres] #Prep`, NN, 0],
   // waited until [release]
   // {
   //   m: `#Past (until|as|through|without) [(#Pres && !#Ger && !#Cop)]`,
   //   g: 0,
   //   t: 'NN',
   // },
-  // selling like hot [thank]-you cards
-  { m: `#Ger like #Adj? [#Pres]`, g: 0, t: 'Plur' },
-  // some nice [thank]-you notes
-  { m: `some #Adj [#Pres]`, g: 0, t: 'NN' },
-  // for some [thank]-you letters
-  { m: `for some [#Pres]`, g: 0, t: 'NN' },
-  // same kind of [shouts]
-  { m: `(same|some|the|that|a) kind of [#Pres]`, g: 0, t: 'NN' },
-  // a type of [shout]
-  { m: `(same|some|the|that|a) type of [#Pres]`, g: 0, t: 'NN' },
-  // looking good in [thank]-you photos
-  { m: `#Ger #Adj #Prep [#Pres]`, g: 0, t: 'NN' },
-  // get better [thank]-you notes
-  { m: `(get|got|have) #Comp [#Pres]`, g: 0, t: 'NN' },
-  // give up on [thank]-you letters
-  { m: `#PhrV #Particle #Prep [#Pres]`, g: 0, t: 'NN' },
-  // there are [thank]-you notes
-  { m: 'there (are|were) #Adj? [#Pres]', g: 0, t: 'Plur' },
-  // a thousand [thanks] of gratitude
-  {
-    m: '#Value [#Pres] of',
-    g: 0,
-    n: '(one|1|#Cop|#Inf)',
-    t: 'Plur',
-  },
-  // [thanks] are appreciated
-  { m: '[#Pres] (are|were) #Adj', g: 0, t: 'Plur' },
-  // [hope] i helped
-  { m: '^[(hope|guess|thought|think)] #Pron #V', g: 0, t: 'Inf' },
-  // its proper [functioning]
-  { m: '#Poss #Adj [#V]', g: 0, t: 'NN', n: '#Cop' },
-  // [tastes] good
-  { m: '[(tastes|smells)] #Adv? #Adj', g: 0, t: 'Pres' },
+  // selling like hot [thank]-you cards → Plural
+  [`#Ger like #Adj? [#Pres]`, Plur, 0],
+  // some nice [thank]-you notes → Noun
+  [`some #Adj [#Pres]`, NN, 0],
+  // for some [thank]-you letters → Noun
+  [`for some [#Pres]`, NN, 0],
+  // same kind of [shouts] → Noun
+  [`(same|some|the|that|a) kind of [#Pres]`, NN, 0],
+  // a type of [shout] → Noun
+  [`(same|some|the|that|a) type of [#Pres]`, NN, 0],
+  // looking good in [thank]-you photos → Noun
+  [`#Ger #Adj #Prep [#Pres]`, NN, 0],
+  // get better [thank]-you notes → Noun
+  [`(get|got|have) #Comp [#Pres]`, NN, 0],
+  // give up on [thank]-you letters → Noun
+  [`#PhrV #Particle #Prep [#Pres]`, NN, 0],
+  // there are [thank]-you notes → Plural
+  ['there (are|were) #Adj? [#Pres]', Plur, 0],
+  // a thousand [thanks] of gratitude → Plural
+  ['#Value [#Pres] of', Plur, 0, { n: '(one|1|#Cop|#Inf)' }],
+  // [thanks] are appreciated → Plural
+  ['[#Pres] (are|were) #Adj', Plur, 0],
+  // [hope] i helped → Infinitive
+  ['^[(hope|guess|thought|think)] #Pron #V', Inf, 0],
+  // its proper [functioning] → Noun
+  ['#Poss #Adj [#V]', NN, 0, { n: '#Cop' }],
+  // [tastes] good → PresentTense
+  ['[(tastes|smells)] #Adv? #Adj', Pres, 0],
   // Being introduces a predicate rather than a direct object.
-  // she is writing [thank]-you letters
-  {
-    m: '#Cop (#Ger && !being) [(#Pres && !#Ger && !#Cop)] !by?',
-    g: 0,
-    t: 'NN',
-    n: 'going',
-  },
-  // the [shed]
-  { m: '#Det #Adj? [(shed|thought|rose|bid|saw|spelt)]', g: 0, t: 'NN' },
-  // how to [watch]
-  { m: 'how to [%Noun|Verb%]', g: 0, t: 'Inf' },
-  // ready to [stream]
-  {
-    m: '(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]',
-    g: 0,
-    t: 'Inf',
-  },
-  // bring [to market]
-  {
-    m: '(bring|went|go|drive|run|bike) [to (market|work|court|school|bed|church|prison)]',
-    g: 0,
-    t: 'Prep NN',
-  },
-  // can i [sleep], would you [look]
-  { m: '#Mod #NN [%Noun|Verb%]', g: 0, t: 'Inf' },
-  // is just [spam]
-  { m: '#Cop just [#Inf]', g: 0, t: 'NN' },
-  // request copies
-  { m: '^%Noun|Verb% %Plural|Verb%', t: 'Imp #Plur' },
-  // homemade pickles and [drinks]
-  { m: '#Adj #Plur and [%Plural|Verb%]', g: 0, t: '#Plur' },
-  // the 1968 [stand]-off
-  { m: '#Det #Year [#V]', g: 0, t: 'NN' },
-  // the [break up]
-  { m: '#Det [(#PhrV && !#Past) #Particle]', g: 0, t: 'NN' },
-  // the [individual] goals
-  {
-    m: '#Det [(%Adj|Noun% && !#Value)] #NN',
-    g: 0,
-    t: 'Adj',
-    n: '(#Pron|#Poss|#Prop)',
-  },
-  // [work] or prepare
-  { m: '^[%Noun|Verb%] or #Inf', g: 0, t: 'Inf' },
-  // to give [thanks]
-  {
-    m: 'to #Inf [#Pres]',
-    g: 0,
-    t: 'NN',
-    n: '(#Ger|#Cop|help)',
-  },
-  // [Google] me
-  { m: '[(#NN && !#Pron)] me', g: 0, t: 'V' },
-  // removes wrinkles
-  { m: '%Plural|Verb% %Plural|Verb%', t: '#Pres #Plur' },
-  // i [Google] the answer
-  { m: 'i [#NN] the #NN', g: 0, t: 'Inf' },
-  // did the engine [stop]
-  {
-    m: '(did|does|will) the #NN [%Noun|Verb%]',
-    g: 0,
-    t: 'Inf',
-  },
-  // 40 gallons of [water]
-  {
-    m: '#Value #NN of [%Noun|Verb%]',
-    g: 0,
-    t: 'NN',
-  },
+  // she is writing [thank]-you letters → Noun
+  ['#Cop (#Ger && !being) [(#Pres && !#Ger && !#Cop)] !by?', NN, 0, { n: 'going' }],
+  // the [shed] → Noun
+  ['#Det #Adj? [(shed|thought|rose|bid|saw|spelt)]', NN, 0],
+  // how to [watch] → Infinitive
+  ['how to [%Noun|Verb%]', Inf, 0],
+  // ready to [stream] → Infinitive
+  ['(ready|available|difficult|hard|easy|made|attempt|try) to [%Noun|Verb%]', Inf, 0],
+  // bring [to market] → Preposition Noun
+  ['(bring|went|go|drive|run|bike) [to (market|work|court|school|bed|church|prison)]', 'Prep NN', 0],
+  // can i [sleep], would you [look] → Infinitive
+  ['#Mod #NN [%Noun|Verb%]', Inf, 0],
+  // is just [spam] → Noun
+  ['#Cop just [#Inf]', NN, 0],
+  // request copies → Imperative Plural
+  ['^%Noun|Verb% %Plural|Verb%', 'Imp #Plur'],
+  // homemade pickles and [drinks] → Plural
+  ['#Adj #Plur and [%Plural|Verb%]', '#Plur', 0],
+  // the 1968 [stand]-off → Noun
+  ['#Det #Year [#V]', NN, 0],
+  // the [break up] → Noun
+  ['#Det [(#PhrV && !#Past) #Particle]', NN, 0],
+  // the [individual] goals → Adjective
+  ['#Det [(%Adj|Noun% && !#Value)] #NN', Adj, 0, { n: '(#Pron|#Poss|#Prop)' }],
+  // [work] or prepare → Infinitive
+  ['^[%Noun|Verb%] or #Inf', Inf, 0],
+  // to give [thanks] → Noun
+  ['to #Inf [#Pres]', NN, 0, { n: '(#Ger|#Cop|help)' }],
+  // [Google] me → Verb
+  ['[(#NN && !#Pron)] me', Vb, 0],
+  // removes wrinkles → PresentTense Plural
+  ['%Plural|Verb% %Plural|Verb%', '#Pres #Plur'],
+  // i [Google] the answer → Infinitive
+  ['i [#NN] the #NN', Inf, 0],
+  // did the engine [stop] → Infinitive
+  ['(did|does|will) the #NN [%Noun|Verb%]', Inf, 0],
+  // 40 gallons of [water] → Noun
+  ['#Value #NN of [%Noun|Verb%]', NN, 0],
   // When the rain [stops], we will leave. Whenever the bell [rings], the dog barks.
-  // when the dog [looks]
-  ...['stops', 'looks', 'rings'].map(word => ({
-    m: `(when|whenever|before|after|until|since|as|while|than) (#Det|#Poss) #Adj+? #NN [(%Plural|Verb% && ${word})]$`,
-    g: 0,
-    t: 'Pres',
-  })),
-  // The sun [rose]. The river [rose] quickly.
-  {
-    m: '(sun|moon|river|water|tide|temperature|prices|he|she|we|they|i) [rose] #Adv+?$',
-    g: 0,
-    t: 'Past',
-  },
+  // when the dog [looks] → PresentTense
+  ...['stops', 'looks', 'rings'].map(word => [
+    `(when|whenever|before|after|until|since|as|while|than) (#Det|#Poss) #Adj+? #NN [(%Plural|Verb% && ${word})]$`,
+    Pres,
+    0,
+  ]),
+  // The sun [rose]. The river [rose] quickly. → PastTense
+  ['(sun|moon|river|water|tide|temperature|prices|he|she|we|they|i) [rose] #Adv+?$', Past, 0],
 
   // === numbers/money.js ===
 
-  // $5 and $6
-  { m: '#Money and #Money #Currency?', t: 'Money' },
-  // 6 dollars [and] 5 cents
-  { m: '#Value #Currency [and] #Value (cents|ore|centavos|sens)', g: 0, t: 'Money' },
-  // 5 rand
-  { m: '#Value (mark|rand|won|rub|ore)', t: '#Money #Currency' },
-  // a pound
-  { m: 'a pound', t: '#Money #Unit' },
-  // 3 pounds
-  { m: '#Value (pound|pounds)', t: '#Money #Unit' },
+  // $5 and $6 → Money
+  ['#Money and #Money #Currency?', 'Money'],
+  // 6 dollars [and] 5 cents → Money
+  ['#Value #Currency [and] #Value (cents|ore|centavos|sens)', 'Money', 0],
+  // 5 rand → Money Currency
+  ['#Value (mark|rand|won|rub|ore)', '#Money #Currency'],
+  // a pound → Money Unit
+  ['a pound', '#Money #Unit'],
+  // 3 pounds → Money Unit
+  ['#Value (pound|pounds)', '#Money #Unit'],
 
   // === numbers/fractions.js ===
 
-  // [half] a penny
-  { m: '[(a|one)? half] of? (a|an|the)', g: 0, t: 'Frac' },
-  // [quarter] of a dollar
-  { m: '[(a|one)? quarter] of? (a|an|the)', g: 0, t: 'Frac' },
-  // two and a half
-  { m: '#Card and a half', t: 'Frac' },
-  // two-halves
-  { m: '#Value (halves|halfs|quarters)', t: 'Frac' },
+  // [half] a penny → Fraction
+  ['[(a|one)? half] of? (a|an|the)', Frac, 0],
+  // [quarter] of a dollar → Fraction
+  ['[(a|one)? quarter] of? (a|an|the)', Frac, 0],
+  // two and a half → Fraction
+  ['#Card and a half', Frac],
+  // two-halves → Fraction
+  ['#Value (halves|halfs|quarters)', Frac],
 
-  // [seven] fifths
-  { m: '[#Card+] (#Frac && /s$/)', g: 0, t: 'Frac' },
-  // [one third] of it
-  { m: '[#Card+ #Ord] of .', g: 0, t: 'Frac' },
-  // [100th] of it
-  { m: '[(#Numeric && #Ord)] of .', g: 0, t: 'Frac' },
-  // [a twenty fifth] of it
-  { m: '[(a|one) #Card?+ #Ord] of', g: 0, t: 'Frac' },
+  // [seven] fifths → Fraction
+  ['[#Card+] (#Frac && /s$/)', Frac, 0],
+  // [one third] of it → Fraction
+  ['[#Card+ #Ord] of .', Frac, 0],
+  // [100th] of it → Fraction
+  ['[(#Numeric && #Ord)] of .', Frac, 0],
+  // [a twenty fifth] of it → Fraction
+  ['[(a|one) #Card?+ #Ord] of', Frac, 0],
 
-  // a sixteenth, one twenty fifth (without a following noun)
-  {
-    m: '[(a|one) #Card+? (#Ord && !first && !second)]$',
-    g: 0,
-    t: 'Frac',
-  },
-  { m: '(a|one) (half|quarter)$', t: 'Frac' },
+  // a sixteenth, one twenty fifth (without a following noun) → Fraction
+  ['[(a|one) #Card+? (#Ord && !first && !second)]$', Frac, 0],
+  ['(a|one) (half|quarter)$', Frac],
 
-  // 3 out of 5
-  { m: '#Card+ out? of every? #Card', t: 'Frac' },
+  // 3 out of 5 → Fraction
+  ['#Card+ out? of every? #Card', Frac],
 
   // === numbers/numbers.js ===
 
   // ==== Ambiguous numbers ====
-  // with [a] hundred jobs
-  {
-    m: '!once? [(a|an)] hundred',
-    g: 0,
-    t: Val,
-  },
-  // with [a] thousand jobs
-  {
-    m: '!once? [(a|an)] thousand',
-    g: 0,
-    t: Val,
-  },
-  // with [a] million jobs
-  {
-    m: '!once? [(a|an)] million',
-    g: 0,
-    t: Val,
-  },
-  // with [a] billion jobs
-  {
-    m: '!once? [(a|an)] billion',
-    g: 0,
-    t: Val,
-  },
-  // with [a] trillion jobs
-  {
-    m: '!once? [(a|an)] trillion',
-    g: 0,
-    t: Val,
-  },
-  // with [a] dozen eggs
-  {
-    match: '!once? [a] dozen',
-    hook: 'dozen',
-    group: 0,
-    tag: Val,
-  },
+  // with [a] hundred jobs → Value
+  ['!once? [(a|an)] hundred', Val, 0],
+  // with [a] thousand jobs → Value
+  ['!once? [(a|an)] thousand', Val, 0],
+  // with [a] million jobs → Value
+  ['!once? [(a|an)] million', Val, 0],
+  // with [a] billion jobs → Value
+  ['!once? [(a|an)] billion', Val, 0],
+  // with [a] trillion jobs → Value
+  ['!once? [(a|an)] trillion', Val, 0],
+  // with [a] dozen eggs → Value
+  ['!once? [a] dozen', Val, 0, { hook: 'dozen' }],
   // ==== PhoneNumber ====
-  // 1 800 555-1234
-  { m: '(1|+1) #Value #PhoneNumber', t: PhoneNumber },
-  // (454) 232-9873
-  { m: '#Numeric #PhoneNumber', t: PhoneNumber },
+  // 1 800 555-1234 → PhoneNumber
+  ['(1|+1) #Value #PhoneNumber', PhoneNumber],
+  // (454) 232-9873 → PhoneNumber
+  ['#Numeric #PhoneNumber', PhoneNumber],
 
   // ==== Currency ====
-  // chinese yuan
-  { m: '#Dem #Currency', t: 'Currency' },
+  // chinese yuan → Currency
+  ['#Dem #Currency', 'Currency'],
   // ==== Money ====
-  // [5] dollars
-  { m: '[#Value+] #Currency', g: 0, t: 'Money' },
+  // [5] dollars → Money
+  ['[#Value+] #Currency', 'Money', 0],
 
   // ==== Ordinal ====
 
   // ==== Units ====
   // Currency can be assigned by left/right rules, so keep this correction late.
-  // 5 [dollars]
-  { m: '#Value+ [#Currency]', g: 0, t: Unit },
-  // kilometers an hour
-  { m: '#Unit an hour', t: Unit },
+  // 5 [dollars] → Unit
+  ['#Value+ [#Currency]', Unit, 0],
+  // kilometers an hour → Unit
+  ['#Unit an hour', Unit],
 
   // ==== Magnitudes ====
-  // thousand and two
-  { m: `#Multiple+ and #Value`, t: Val },
-  // 5 miles [per hour]
-  { m: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', g: 0, t: Unit },
-  // twelve percent
-  { m: '#Card percent', t: '#Percent #Unit' },
+  // thousand and two → Value
+  [`#Multiple+ and #Value`, Val],
+  // 5 miles [per hour] → Unit
+  ['#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', Unit, 0],
+  // twelve percent → Percent Unit
+  ['#Card percent', '#Percent #Unit'],
 
   // === person/person-phrase.js ===
 
   // ==== FirstNames ====
-  // is [foo] Smith
-  {
-    m: '#Cop [(#NN|#Pres)] #Last',
-    g: 0,
-    t: 'First',
-    n: '#Ger',
-  },
-  // pope francis
-  {
-    m: '(sister|pope|brother|father|aunt|uncle|grandpa|grandfather|grandma) #Prop',
-    t: 'Pers',
-    safe: true,
-  },
+  // is [foo] Smith → FirstName
+  ['#Cop [(#NN|#Pres)] #Last', First, 0, { n: '#Ger' }],
+  // pope francis → Person
+  ['(sister|pope|brother|father|aunt|uncle|grandpa|grandfather|grandma) #Prop', Pers, null, { safe: true }],
 
   // ==== Nickname ====
-  // Dwayne '[the rock]' Johnson
-  { m: '#First [#Det #NN] #Last', g: 0, t: 'Pers' },
-  // John b Smith
-  {
-    m: '#Prop (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #Prop',
-    t: 'Pers',
-    safe: true,
-  },
-  // J. Smith
-  { m: '#Acronym #Last', t: 'Pers', safe: true },
-  // John jr
-  { m: '#Pers (jr|sr|md)', t: 'Pers' },
-  // Dr. J.
-  { m: '#Hon #Acronym', t: 'Pers' },
-  // John [b]
-  { m: '#First [/^[bdefghjlmnopqstvwxyz]$/]', g: 0, t: [Acronym, 'Pers'] },
-  // Ludwig van Beethoven
-  { m: '#NN van der? #NN', t: 'Pers', safe: true },
-  // king of spain
-  { m: '(king|queen|prince|saint|lady) of #NN', t: 'Pers', safe: true },
-  // prince Paris
-  { m: '(prince|lady) #Place', t: 'Pers' },
-  // saint Foo
-  { m: '(king|queen|prince|saint) #Prop', t: 'Pers', n: '#Place' },
+  // Dwayne '[the rock]' Johnson → Person
+  ['#First [#Det #NN] #Last', Pers, 0],
+  // John b Smith → Person
+  ['#Prop (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #Prop', Pers, null, { safe: true }],
+  // J. Smith → Person
+  ['#Acronym #Last', Pers, null, { safe: true }],
+  // John jr → Person
+  ['#Pers (jr|sr|md)', Pers],
+  // Dr. J. → Person
+  ['#Hon #Acronym', Pers],
+  // John [b] → [Acronym, 'Pers']
+  ['#First [/^[bdefghjlmnopqstvwxyz]$/]', [Acronym, 'Pers'], 0],
+  // Ludwig van Beethoven → Person
+  ['#NN van der? #NN', Pers, null, { safe: true }],
+  // king of spain → Person
+  ['(king|queen|prince|saint|lady) of #NN', Pers, null, { safe: true }],
+  // prince Paris → Person
+  ['(prince|lady) #Place', Pers],
+  // saint Foo → Person
+  ['(king|queen|prince|saint) #Prop', Pers, null, { n: '#Place' }],
 
-  // al Smith
-  { m: 'al (#Pers|#Prop)', t: 'Pers', safe: true },
-  // ferdinand de almar
-  { m: '#First de #NN', t: 'Pers' },
-  // Osama bin Laden
-  { m: '#First (bin|al) #NN', t: 'Pers' },
-  // John L. Foo
-  { m: '#First #Acronym #Prop', t: 'Pers' },
-  // Mr Foo
-  { m: '#Hon #First? #Prop', t: 'Pers' },
-  // peter the great
-  { m: '#First the #Adj', t: 'Pers' },
+  // al Smith → Person
+  ['al (#Pers|#Prop)', Pers, null, { safe: true }],
+  // ferdinand de almar → Person
+  ['#First de #NN', Pers],
+  // Osama bin Laden → Person
+  ['#First (bin|al) #NN', Pers],
+  // John L. Foo → Person
+  ['#First #Acronym #Prop', Pers],
+  // Mr Foo → Person
+  ['#Hon #First? #Prop', Pers],
+  // peter the great → Person
+  ['#First the #Adj', Pers],
 
-  // John van Smith
-  { m: '#Prop (van|al|bin) #Prop', t: 'Pers', safe: true },
-  // jose de Sucre
-  { m: '#Prop (de|du) la? #Prop', t: 'Pers', n: '#Place' },
-  // Jani K. Smith
-  { m: '#Sing #Acronym #Last', t: '#First #Pers .', safe: true },
-  // [Toronto] John
-  { m: '[#Prop] #Pers', g: 0, t: 'Pers', safe: true },
-  // john [keith jones]
-  {
-    m: '#Pers [#Prop #Prop]',
-    g: 0,
-    t: 'Pers',
-    n: '#Poss',
-    safe: true,
-  },
-  // John [Foo]
-  {
-    m: '#First #Acronym? [#Prop]',
-    g: 0,
-    t: 'Last',
-    n: '#Poss',
-  },
-  // Joe K. Sombrero
-  { m: '#First #Acronym #NN', t: 'Pers', safe: true },
-  // Anthony [de] Marco
-  { m: '#First [(de|di|du|van|von)] #Pers', g: 0, t: 'Last' },
+  // John van Smith → Person
+  ['#Prop (van|al|bin) #Prop', Pers, null, { safe: true }],
+  // jose de Sucre → Person
+  ['#Prop (de|du) la? #Prop', Pers, null, { n: '#Place' }],
+  // Jani K. Smith → FirstName Person .
+  ['#Sing #Acronym #Last', '#First #Pers .', null, { safe: true }],
+  // [Toronto] John → Person
+  ['[#Prop] #Pers', Pers, 0, { safe: true }],
+  // john [keith jones] → Person
+  ['#Pers [#Prop #Prop]', Pers, 0, { n: '#Poss', safe: true }],
+  // John [Foo] → LastName
+  ['#First #Acronym? [#Prop]', Last, 0, { n: '#Poss' }],
+  // Joe K. Sombrero → Person
+  ['#First #Acronym #NN', Pers, null, { safe: true }],
+  // Anthony [de] Marco → LastName
+  ['#First [(de|di|du|van|von)] #Pers', Last, 0],
 
   // baker jenna smith
   // { match: '[#Actor+] #Person', group: 0, tag: 'Person' },
-  // [sergeant] major Harold
-  {
-    m: '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #Prop',
-    g: 0,
-    t: 'Hon',
-  },
+  // [sergeant] major Harold → Honorific
+  [
+    '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #Prop',
+    'Hon',
+    0,
+  ],
   // ==== Honorics ====
-  // [general] John
-  {
-    m: '[(private|general|major|rear|prime|field|count)] #Hon? #Pers',
-    g: 0,
-    t: ['Hon', 'Pers'],
-  },
-  // [Miss] John
-  { m: '[(miss && @isTitleCase)] #Pers', g: 0, t: ['Hon', 'Pers'] },
-  // dr john [foobar]
-  {
-    m: '#Hon #First [#Sing]',
-    g: 0,
-    t: 'Last',
-    n: '#Poss',
-    safe: true,
-  },
-  // [his excellency] John
-  {
-    m: '[(his|her) (majesty|honour|worship|excellency|honorable)] #Pers',
-    g: 0,
-    t: 'Hon',
-  },
-  // Dr teacher
-  { m: '#Hon #Actor', t: 'Hon' },
-  // [first lady] michelle obama
-  { m: '[first lady] #Pers', g: 0, t: 'Hon' },
-  // Louis IV
-  { m: '#Pers the? #RomanNumeral', t: 'Pers' },
+  // [general] John → ['Hon', 'Pers']
+  ['[(private|general|major|rear|prime|field|count)] #Hon? #Pers', ['Hon', 'Pers'], 0],
+  // [Miss] John → ['Hon', 'Pers']
+  ['[(miss && @isTitleCase)] #Pers', ['Hon', 'Pers'], 0],
+  // dr john [foobar] → LastName
+  ['#Hon #First [#Sing]', Last, 0, { n: '#Poss', safe: true }],
+  // [his excellency] John → Honorific
+  ['[(his|her) (majesty|honour|worship|excellency|honorable)] #Pers', 'Hon', 0],
+  // Dr teacher → Honorific
+  ['#Hon #Actor', 'Hon'],
+  // [first lady] michelle obama → Honorific
+  ['[first lady] #Pers', 'Hon', 0],
+  // Louis IV → Person
+  ['#Pers the? #RomanNumeral', Pers],
 
   // === person/ambig-name.js ===
   // const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
 
-  // ebenezer scrooge
-  {
-    m: '#First #NN$',
-    t: '. #Last',
-    n: '(#Poss|#Org|#Place|#Pron|@hasTitleCase)',
-  },
+  // ebenezer scrooge → . LastName
+  ['#First #NN$', '. #Last', null, { n: '(#Poss|#Org|#Place|#Pron|@hasTitleCase)' }],
 
-  // June Smith
-  { m: '%Person|Date% #Acronym? #Prop', t: 'Pers' },
+  // June Smith → Person
+  ['%Person|Date% #Acronym? #Prop', Pers],
   // ===person-noun===
-  // Cliff Clavin
-  { m: '%Person|Noun% #Acronym? #Prop', t: 'Pers', safe: true },
-  // Rose Microsoft
-  { m: '%Person|Noun% #Org', t: 'Org' },
+  // Cliff Clavin → Person
+  ['%Person|Noun% #Acronym? #Prop', Pers, null, { safe: true }],
+  // Rose Microsoft → Organization
+  ['%Person|Noun% #Org', Org],
   // ===person-verb===
-  // Ollie Faroo
-  { m: '(%Person|Verb% && #Pers) #Acronym? #Prop', t: 'Pers', ifNo: '#Actor' },
+  // Ollie Faroo → Person
+  ['(%Person|Verb% && #Pers) #Acronym? #Prop', Pers, null, { ifNo: '#Actor' }],
 
   // ===person-verb===
-  // really [wade]
-  { m: `#Adv [(%Person|Verb% && !@isTitleCase)]`, g: 0, t: 'V' },
-  // [drew] closer
-  { m: `[%Person|Verb%] (#Adv|#Comp)`, g: 0, t: 'V' },
-  // wade smith
-  { m: `(%Person|Verb% && #Pers) #Pers`, t: 'Pers' },
-  // Wade G. Slapgoop
-  { m: `%Person|Verb% #Acronym #Prop`, t: 'Pers' },
-  // Will Smith
-  { m: '(will && @isTitleCase) #Prop', t: 'Pers' },
-  // jack [layton] won
-  {
-    m: '(#First && !#Poss) [#Sing] #V',
-    g: 0,
-    safe: true,
-    t: 'Last',
-  },
-  // [captain] John walks
-  { m: '^[#Sing] #Pers #V', g: 0, safe: true, t: 'Pers' },
+  // really [wade] → Verb
+  [`#Adv [(%Person|Verb% && !@isTitleCase)]`, Vb, 0],
+  // [drew] closer → Verb
+  [`[%Person|Verb%] (#Adv|#Comp)`, Vb, 0],
+  // wade smith → Person
+  [`(%Person|Verb% && #Pers) #Pers`, Pers],
+  // Wade G. Slapgoop → Person
+  [`%Person|Verb% #Acronym #Prop`, Pers],
+  // Will Smith → Person
+  ['(will && @isTitleCase) #Prop', Pers],
+  // jack [layton] won → LastName
+  ['(#First && !#Poss) [#Sing] #V', Last, 0, { safe: true }],
+  // [captain] John walks → Person
+  ['^[#Sing] #Pers #V', Pers, 0, { safe: true }],
 
   // === verbs/verbs.js ===
 
-  // is [pretty] good
-  {
-    m: '#Cop [(pretty|dead|full|well|sure)] #Adj',
-    g: 0,
-    t: 'Adv',
-  },
+  // is [pretty] good → Adverb
+  ['#Cop [(pretty|dead|full|well|sure)] #Adj', Adv, 0],
   // adj -> gerund
-  // i [like]
-  { m: '(#Mod|i|they|we|do) not? [like]', g: 0, t: 'Pres' },
+  // i [like] → PresentTense
+  ['(#Mod|i|they|we|do) not? [like]', Pres, 0],
   // ==== Tense ====
-  // he [left]
-  { m: '(#NN && !#Poss) #Adv? [left]', g: 0, t: 'Past' },
-  // she [bit] her tongue
-  { m: '#NN #Adv? [(bit && #Inf)]', g: 0, t: 'Past' },
-  // will [be] running
-  { m: 'will #Adv? not? #Adv? [be] #Ger', g: 0, t: 'Cop' },
-  // will [be] nice
-  { m: 'will #Adv? not? #Adv? [be] #Adj', g: 0, t: 'Cop' },
-  // [march] up
-  { m: '[march] (up|down|back|toward)', n: '#Date', g: 0, t: 'Inf' },
-  // birds [home] to their nest
-  { m: '(#Pron|#Plur|#Mod) #Adv+? [home] to', g: 0, t: 'Inf' },
-  // is [home] to birds
-  { m: '(#Cop|be|been|being) #Adv+? [home] to', g: 0, t: 'NN' },
-  // is [subject] to change
-  {
-    m: '(#Cop|be|been|being|remain|remains|remained) #Adv+? [subject] to',
-    g: 0,
-    t: 'Adj',
-  },
-  // is subject [to]
-  {
-    m: '(#Cop|be|been|being|remain|remains|remained) #Adv+? subject [to]',
-    g: 0,
-    u: 'Conj',
-    t: 'Prep',
-  },
-  // is subject to [change]
-  {
-    m: '(#Cop|be|been|being|remain|remains|remained) #Adv+? subject to [%Noun|Verb%]',
-    g: 0,
-    t: 'NN',
-  },
+  // he [left] → PastTense
+  ['(#NN && !#Poss) #Adv? [left]', Past, 0],
+  // she [bit] her tongue → PastTense
+  ['#NN #Adv? [(bit && #Inf)]', Past, 0],
+  // will [be] running → Copula
+  ['will #Adv? not? #Adv? [be] #Ger', Cop, 0],
+  // will [be] nice → Copula
+  ['will #Adv? not? #Adv? [be] #Adj', Cop, 0],
+  // [march] up → Infinitive
+  ['[march] (up|down|back|toward)', Inf, 0, { n: '#Date' }],
+  // birds [home] to their nest → Infinitive
+  ['(#Pron|#Plur|#Mod) #Adv+? [home] to', Inf, 0],
+  // is [home] to birds → Noun
+  ['(#Cop|be|been|being) #Adv+? [home] to', NN, 0],
+  // is [subject] to change → Adjective
+  ['(#Cop|be|been|being|remain|remains|remained) #Adv+? [subject] to', Adj, 0],
+  // is subject [to] → Preposition; remove Conjunction
+  ['(#Cop|be|been|being|remain|remains|remained) #Adv+? subject [to]', Prep, 0, { u: 'Conj' }],
+  // is subject to [change] → Noun
+  ['(#Cop|be|been|being|remain|remains|remained) #Adv+? subject to [%Noun|Verb%]', NN, 0],
 
-  // is home [to] dogs
-  {
-    m: '(#Cop|be|been|being) #Adv+? home [to] #Adj+? #NN',
-    g: 0,
-    u: 'Conj',
-    t: 'Prep',
-  },
+  // is home [to] dogs → Preposition; remove Conjunction
+  ['(#Cop|be|been|being) #Adv+? home [to] #Adj+? #NN', Prep, 0, { u: 'Conj' }],
 
   // === misc==
-  // were being [run]
-  { m: `(were|was) being [#Pres]`, g: 0, t: 'Past' },
-  // had [been broken]
-  {
-    m: `(had|has|have) [been (#Past && /en$/)]`,
-    g: 0,
-    t: 'Aux VBN',
-  },
-  // had [been] eaten
-  { m: `(had|has) #Adv? [been] #Adv? #Past`, g: 0, t: 'Aux' },
-  // had to [Google] the answer
-  ...['had', 'has'].map(word => ({
-    m: `${word} to [#NN] (#Det|#Poss)`,
-    g: 0,
-    t: 'Inf',
-  })),
-  // does that [work]
-  {
-    m: `(do|does|did|#Mod) (this|that|these|those) [work]`,
-    g: 0,
-    t: 'Inf',
-  },
-  // have read
-  { m: `(has|have|had) read`, t: 'Aux VBN' },
-  // jobs that fit
-  { m: '#Plur that %Noun|Verb%', t: '. #Prep #Inf' },
-  // [works] for me
-  { m: '[works] for me', g: 0, t: 'Pres' },
-  // as we [please]
-  { m: 'as #Pron [please]', g: 0, t: 'Inf' },
+  // were being [run] → PastTense
+  [`(were|was) being [#Pres]`, Past, 0],
+  // had [been broken] → Auxiliary Participle
+  [`(had|has|have) [been (#Past && /en$/)]`, 'Aux VBN', 0],
+  // had [been] eaten → Auxiliary
+  [`(had|has) #Adv? [been] #Adv? #Past`, 'Aux', 0],
+  // had to [Google] the answer → Infinitive
+  ...['had', 'has'].map(word => [`${word} to [#NN] (#Det|#Poss)`, Inf, 0]),
+  // does that [work] → Infinitive
+  [`(do|does|did|#Mod) (this|that|these|those) [work]`, Inf, 0],
+  // have read → Auxiliary Participle
+  [`(has|have|had) read`, 'Aux VBN'],
+  // jobs that fit → . Preposition Infinitive
+  ['#Plur that %Noun|Verb%', '. #Prep #Inf'],
+  // [works] for me → PresentTense
+  ['[works] for me', Pres, 0],
+  // as we [please] → Infinitive
+  ['as #Pron [please]', Inf, 0],
   // verb-prefixes - '[co] write'
-  // [co] write
-  {
-    m: '[(co|mis|de|inter|intra|pre|re|un|counter)] (#V && !#Cop && !#PhrV)',
-    g: 0,
-    t: ['V', 'Prefix'],
-    n: '(#Acronym && @isUpperCase)',
-  },
+  // [co] write → ['V', 'Prefix']
+  [
+    '[(co|mis|de|inter|intra|pre|re|un|counter)] (#V && !#Cop && !#PhrV)',
+    ['V', 'Prefix'],
+    0,
+    { n: '(#Acronym && @isUpperCase)' },
+  ],
   // Keep verb prefixes late: early tagging hides prepositions in left-out-type.
-  // [out] run
-  { m: '[(out|under|over)] #Inf', g: 0, t: ['V', 'Prefix'] },
-  // dressed and [left]
-  { m: '#Past and [%Adj|Past%]', g: 0, t: 'Past' },
-  // [melted] and fallen
-  { m: '[(%Adj|Past% && !#Adj)] and #Past', g: 0, t: 'Past' },
-  // is he [stoked]
-  { m: '#Cop #Pron [%Adj|Past%]', g: 0, t: 'Adj' },
+  // [out] run → ['V', 'Prefix']
+  ['[(out|under|over)] #Inf', ['V', 'Prefix'], 0],
+  // dressed and [left] → PastTense
+  ['#Past and [%Adj|Past%]', Past, 0],
+  // [melted] and fallen → PastTense
+  ['[(%Adj|Past% && !#Adj)] and #Past', Past, 0],
+  // is he [stoked] → Adjective
+  ['#Cop #Pron [%Adj|Past%]', Adj, 0],
 
   // === adjective/adj-verb.js ===
 
-  // Resume fragments: developed [scalable React] architecture.
-  {
-    m: '^[developed] (#Adj|#Prop)+? (backend|frontend|software|architecture|applications|apps|systems)',
-    g: 0,
-    t: 'Past',
-    n: '(#Pres|#Cop|#Mod)',
-  },
-  // does [mean]
-  { m: 'does (#Adv|not)? [%Adj|Present%]', g: 0, t: 'Inf' },
-  // [okay] by me
-  { m: '[(fine|okay|cool|ok)] by me', g: 0, t: 'Adj' },
-  // i [mean]
-  { m: 'i (#Adv|do)? not? [mean]', g: 0, t: 'Pres' },
-  // the ship will near the coast
-  { m: 'will #Adj', t: 'Aux Inf' },
-  // I [frequent] this restaurant
-  { m: '#Pron [#Adj] #Det #Adj? #NN', g: 0, t: 'V' },
-  // rude and [insulting]
-  {
-    m: '#Adj and [(%Adj|Gerund% && #Ger)] !#Prep?',
-    g: 0,
-    t: 'Adj',
-  },
-  // got [tired] of
-  { m: 'got #Adv? [%Adj|Past%] of', g: 0, t: 'Adj' },
-  // felt [cheated]
-  {
-    m: '(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adv|#Adj)? [#Past]',
-    g: 0,
-    t: 'Adj',
-  },
+  // Resume fragments: developed [scalable React] architecture. → PastTense
+  [
+    '^[developed] (#Adj|#Prop)+? (backend|frontend|software|architecture|applications|apps|systems)',
+    Past,
+    0,
+    { n: '(#Pres|#Cop|#Mod)' },
+  ],
+  // does [mean] → Infinitive
+  ['does (#Adv|not)? [%Adj|Present%]', Inf, 0],
+  // [okay] by me → Adjective
+  ['[(fine|okay|cool|ok)] by me', Adj, 0],
+  // i [mean] → PresentTense
+  ['i (#Adv|do)? not? [mean]', Pres, 0],
+  // the ship will near the coast → Auxiliary Infinitive
+  ['will #Adj', 'Aux Inf'],
+  // I [frequent] this restaurant → Verb
+  ['#Pron [#Adj] #Det #Adj? #NN', Vb, 0],
+  // rude and [insulting] → Adjective
+  ['#Adj and [(%Adj|Gerund% && #Ger)] !#Prep?', Adj, 0],
+  // got [tired] of → Adjective
+  ['got #Adv? [%Adj|Past%] of', Adj, 0],
+  // felt [cheated] → Adjective
+  ['(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adv|#Adj)? [#Past]', Adj, 0],
   // felt [cheated]
   // { m: '(seem|feel|seemed|felt) [#Past #Particle?]', g: 0, t: 'Adj' },
-  // a bit [confused]
-  { m: 'a (bit|little|tad) [#Past #Particle?]', g: 0, t: 'Adj' },
-  // do not be [embarrassed]
-  { m: 'not be [%Adj|Past% #Particle?]', g: 0, t: 'Adj' },
-  // is just [tired]
-  { m: '#Cop just [%Adj|Past% #Particle?]', g: 0, t: 'Adj' },
-  // [failed] and oppressive
-  { m: '[%Adj|Past%] and #Adj', g: 0, t: 'Adj' },
-  // the fear or [heightened] emotion
-  {
-    m: '(#Det|#Prep) #Adj? #NN or [#Past] #NN',
-    g: 0,
-    t: 'Adj',
-    n: '(#Cop|#Pron)',
-  },
-  // tired and overworked describes a state after a copula
-  {
-    m: '#Cop #Adv? #Adj and [(overworked|overwhelmed|overpaid|underpaid|overqualified|underqualified|understaffed)]$',
-    g: 0,
-    t: 'Adj',
-  },
-  // their [declared] intentions
-  { m: '#Poss [#Past] #NN', g: 0, n: '#Cop', t: 'Adj' },
-  // is he [cool]
-  { m: '#Cop #Pron [%Adj|Present%]', g: 0, t: 'Adj' },
-  // is [crowded] with
-  {
-    m: '#Cop [%Adj|Past%] with',
-    g: 0,
-    t: 'Adj',
-    n: '(associated|worn|baked|aged|armed|bound|fried|loaded|mixed|packed|pumped|filled|sealed)',
-  },
-  // is [empty]
-  { m: '#Cop #Adv? [%Adj|Present%]$', g: 0, t: 'Adj' },
-  // she is being [cool]
-  { m: 'being #Adv? [%Adj|Present%]', g: 0, t: 'Adj' },
-  // does the store [open]
-  {
-    m: '(does|will) #Det #NN [%Adj|Present%]$',
-    g: 0,
-    t: 'Inf',
-  },
+  // a bit [confused] → Adjective
+  ['a (bit|little|tad) [#Past #Particle?]', Adj, 0],
+  // do not be [embarrassed] → Adjective
+  ['not be [%Adj|Past% #Particle?]', Adj, 0],
+  // is just [tired] → Adjective
+  ['#Cop just [%Adj|Past% #Particle?]', Adj, 0],
+  // [failed] and oppressive → Adjective
+  ['[%Adj|Past%] and #Adj', Adj, 0],
+  // the fear or [heightened] emotion → Adjective
+  ['(#Det|#Prep) #Adj? #NN or [#Past] #NN', Adj, 0, { n: '(#Cop|#Pron)' }],
+  // tired and overworked describes a state after a copula → Adjective
+  [
+    '#Cop #Adv? #Adj and [(overworked|overwhelmed|overpaid|underpaid|overqualified|underqualified|understaffed)]$',
+    Adj,
+    0,
+  ],
+  // their [declared] intentions → Adjective
+  ['#Poss [#Past] #NN', Adj, 0, { n: '#Cop' }],
+  // is he [cool] → Adjective
+  ['#Cop #Pron [%Adj|Present%]', Adj, 0],
+  // is [crowded] with → Adjective
+  [
+    '#Cop [%Adj|Past%] with',
+    Adj,
+    0,
+    { n: '(associated|worn|baked|aged|armed|bound|fried|loaded|mixed|packed|pumped|filled|sealed)' },
+  ],
+  // is [empty] → Adjective
+  ['#Cop #Adv? [%Adj|Present%]$', Adj, 0],
+  // she is being [cool] → Adjective
+  ['being #Adv? [%Adj|Present%]', Adj, 0],
+  // does the store [open] → Infinitive
+  ['(does|will) #Det #NN [%Adj|Present%]$', Inf, 0],
 
   // === verbs/auxiliary.js ===
   // these are some of our heaviest-used matches
 
-  // ought not [to] walk
-  {
-    m: 'ought (#Adv|not)+? [to] (#Adv|not)+? #V',
-    g: 0,
-    t: 'Aux',
-  },
-  // ought to [be] walking
-  {
-    m: 'ought (#Adv|not)+? to (#Adv|not)+? [be] (#Adv|not)+? #V',
-    g: 0,
-    t: 'Aux',
-  },
-  // will [have] walked
-  { m: `will (#Adv|not)+? [have] (#Adv|not)+? #V`, g: 0, t: 'Aux' },
-  // [was] walking
-  { m: `[#Cop] (#Adv|not)+? (#Ger|#Past)`, g: 0, t: 'Aux' },
-  // [would] walk
-  { m: `[(#Mod|did)+] (#Adv|not)+? #V`, g: 0, t: 'Aux' },
-  // would [have] [had] to go
-  {
-    m: `#Mod (#Adv|not)+? [have] (#Adv|not)+? [had] (#Adv|not)+? #V`,
-    g: 1,
-    t: 'Aux',
-  },
-  // [will] walk
-  {
-    m: '[(do|does|did|will|have|had|has|got)] (not|#Adv)+? #V',
-    g: 0,
-    t: 'Aux',
-    n: '#Prop',
-  },
-  // [about to] go
-  { m: '[about to] #Adv? #V', g: 0, t: ['Aux', 'V'] },
-  // would [be] walking
-  { m: `#Mod (#Adv|not)+? [be] (#Adv|not)+? #V`, g: 0, t: 'Aux' },
-  // was [being] driven
-  { m: '[(be|being|been)] #VBN', g: 0, t: 'Aux' },
-  // was [being] walked
-  {
-    m: '#Cop (#Adv|not)+? [(be|being|been)] #Adv+? #Past',
-    g: 0,
-    t: 'Aux',
-  },
-  // [been] walking
-  { m: '[(be|been)] (#Adv|not)+? #Ger', g: 0, t: 'Aux' },
-  // [used to] walk
-  { m: '[used to] #Pres', g: 0, t: 'Aux' },
-  // was [going to] walk
-  {
-    m: '#Cop (#Adv|not)+? [going to] #Adv+? #Pres',
-    g: 0,
-    t: 'Aux',
-  },
-  // going to [be] watched
-  {
-    m: 'going to (#Adv|not)+? [be] (#Adv|not)+? #Past',
-    g: 0,
-    t: 'Aux',
-  },
-  // there is [no] x
-  { m: '(is|was) #Adv? [no]', g: 0, t: 'Neg' },
-  // [been] told
-  {
-    m: '[(been|had|became|came)] #Past',
-    g: 0,
-    n: '#PhrV',
-    t: 'Aux',
-  },
-  // [being] born
-  { m: '[(being|having|getting)] #V', g: 0, t: 'Aux' },
-  // [better] go
-  { m: '[better] #Pres', g: 0, t: 'Mod', n: '(#Cop|#Ger)' },
+  // ought not [to] walk → Auxiliary
+  ['ought (#Adv|not)+? [to] (#Adv|not)+? #V', 'Aux', 0],
+  // ought to [be] walking → Auxiliary
+  ['ought (#Adv|not)+? to (#Adv|not)+? [be] (#Adv|not)+? #V', 'Aux', 0],
+  // will [have] walked → Auxiliary
+  [`will (#Adv|not)+? [have] (#Adv|not)+? #V`, 'Aux', 0],
+  // [was] walking → Auxiliary
+  [`[#Cop] (#Adv|not)+? (#Ger|#Past)`, 'Aux', 0],
+  // [would] walk → Auxiliary
+  [`[(#Mod|did)+] (#Adv|not)+? #V`, 'Aux', 0],
+  // would [have] [had] to go → Auxiliary
+  [`#Mod (#Adv|not)+? [have] (#Adv|not)+? [had] (#Adv|not)+? #V`, 'Aux', 1],
+  // [will] walk → Auxiliary
+  ['[(do|does|did|will|have|had|has|got)] (not|#Adv)+? #V', 'Aux', 0, { n: '#Prop' }],
+  // [about to] go → ['Aux', 'V']
+  ['[about to] #Adv? #V', ['Aux', 'V'], 0],
+  // would [be] walking → Auxiliary
+  [`#Mod (#Adv|not)+? [be] (#Adv|not)+? #V`, 'Aux', 0],
+  // was [being] driven → Auxiliary
+  ['[(be|being|been)] #VBN', 'Aux', 0],
+  // was [being] walked → Auxiliary
+  ['#Cop (#Adv|not)+? [(be|being|been)] #Adv+? #Past', 'Aux', 0],
+  // [been] walking → Auxiliary
+  ['[(be|been)] (#Adv|not)+? #Ger', 'Aux', 0],
+  // [used to] walk → Auxiliary
+  ['[used to] #Pres', 'Aux', 0],
+  // was [going to] walk → Auxiliary
+  ['#Cop (#Adv|not)+? [going to] #Adv+? #Pres', 'Aux', 0],
+  // going to [be] watched → Auxiliary
+  ['going to (#Adv|not)+? [be] (#Adv|not)+? #Past', 'Aux', 0],
+  // there is [no] x → Negative
+  ['(is|was) #Adv? [no]', 'Neg', 0],
+  // [been] told → Auxiliary
+  ['[(been|had|became|came)] #Past', 'Aux', 0, { n: '#PhrV' }],
+  // [being] born → Auxiliary
+  ['[(being|having|getting)] #V', 'Aux', 0],
+  // [better] go → Modal
+  ['[better] #Pres', Mod, 0, { n: '(#Cop|#Ger)' }],
 
   // === verbs/phrasal.js ===
 
-  // walk-up
-  { m: '(#V && @hasHyphen && !#Past) up', t: 'PhrV' },
-  // walk-off
-  { m: '(#V && @hasHyphen) off', t: 'PhrV' },
-  // walk-over
-  { m: '(#V && @hasHyphen) over', t: 'PhrV' },
-  // walk-out
-  { m: '(#V && @hasHyphen) out', t: 'PhrV' },
-  // [walk in] on
-  {
-    m: '[#V (in|out|up|down|off|back)] (on|in)',
-    g: 0,
-    n: '#Cop',
-    t: 'PhrV Particle',
-  },
-  // went [on] for
-  { m: '(lived|went|crept|go) [on] for', g: 0, t: 'PhrV' },
-  // the curtains come down
-  { m: '#V (up|down|in|on|for)$', t: 'PhrV #Particle', n: '#PhrV' },
-  // work in the office
-  {
-    m: '#PhrV (in && #Particle) #Det',
-    t: '#V #Prep #Det',
-    u: 'PhrV',
-  },
-  // back it [up]
-  ...['up', 'down'].map(word => ({
-    m: `#V (him|her|it|us|himself|herself|itself|everything|something) [${word}]`,
-    g: 0,
-    t: 'Adv',
-  })),
-  // runs [around] the lake
-  {
-    m: '#PhrV [around] the #NN',
-    g: 0,
-    t: 'Prep', //(breaks the phrasal)
-  },
+  // walk-up → PhrasalVerb
+  ['(#V && @hasHyphen && !#Past) up', Phrasal],
+  // walk-off → PhrasalVerb
+  ['(#V && @hasHyphen) off', Phrasal],
+  // walk-over → PhrasalVerb
+  ['(#V && @hasHyphen) over', Phrasal],
+  // walk-out → PhrasalVerb
+  ['(#V && @hasHyphen) out', Phrasal],
+  // [walk in] on → PhrasalVerb Particle
+  ['[#V (in|out|up|down|off|back)] (on|in)', 'PhrV Particle', 0, { n: '#Cop' }],
+  // went [on] for → PhrasalVerb
+  ['(lived|went|crept|go) [on] for', Phrasal, 0],
+  // the curtains come down → PhrasalVerb Particle
+  ['#V (up|down|in|on|for)$', 'PhrV #Particle', null, { n: '#PhrV' }],
+  // work in the office → Verb Preposition Determiner; remove PhrasalVerb
+  ['#PhrV (in && #Particle) #Det', '#V #Prep #Det', null, { u: 'PhrV' }],
+  // back it [up] → Adverb
+  ...['up', 'down'].map(word => [`#V (him|her|it|us|himself|herself|itself|everything|something) [${word}]`, Adv, 0]),
+  // runs [around] the lake → Preposition
+  ['#PhrV [around] the #NN', Prep, 0],
 
   // === verbs/imperative.js ===
   // this is really hard to do
   //we do not go
 
-  // do not [go]
-  { m: '^do not? [#Inf #Particle?]', n: notIf, g: 0, t: 'Imp' },
-  // please [go]
-  { m: '^please do? not? [#Inf #Particle?]', g: 0, t: 'Imp' },
-  // just [go]
-  { m: '^just do? not? [#Inf #Particle?]', g: 0, t: 'Imp' },
-  // [go] quickly.
-  {
-    m: '^[(#Inf && !#Hyphenated)] (#Adj|#Adv|hard|high|fast|slow)$',
-    g: 0,
-    t: 'Imp',
-    n: '(so|such|rather|enough)',
-  },
-  // [turn] down the noise
-  { m: '^[#Inf] (up|down|over) #Det', g: 0, t: 'Imp' },
-  // [eat] my shorts
-  {
-    m: '^[#Inf] (your|my|the|a|an|any|each|every|some|more|with|on)',
-    g: 0,
-    n: 'like',
-    t: 'Imp',
-  },
+  // do not [go] → Imperative
+  ['^do not? [#Inf #Particle?]', 'Imp', 0, { n: notIf }],
+  // please [go] → Imperative
+  ['^please do? not? [#Inf #Particle?]', 'Imp', 0],
+  // just [go] → Imperative
+  ['^just do? not? [#Inf #Particle?]', 'Imp', 0],
+  // [go] quickly. → Imperative
+  ['^[(#Inf && !#Hyphenated)] (#Adj|#Adv|hard|high|fast|slow)$', 'Imp', 0, { n: '(so|such|rather|enough)' }],
+  // [turn] down the noise → Imperative
+  ['^[#Inf] (up|down|over) #Det', 'Imp', 0],
+  // [eat] my shorts → Imperative
+  ['^[#Inf] (your|my|the|a|an|any|each|every|some|more|with|on)', 'Imp', 0, { n: 'like' }],
   // Wait for word-specific corrections such as 'wit me' before tagging commands.
-  // [tell] him the story
-  { m: '^[#Inf] (him|her|it|us|me|there)', g: 0, t: 'Imp' },
-  // [avoid] loud noises
-  { m: '^[#Inf] #Adj #NN$', g: 0, t: 'Imp' },
-  // [come] and have a drink
-  { m: '^[#Inf] (#Adj|#Adv)? (and|or) #Inf', g: 0, t: 'Imp' },
-  // Keep isolated commands here: pre-tagging also runs on replacement words.
-  { m: '^[go] please?$', g: 0, t: 'Imp' },
-  { m: '^[stop] please?$', g: 0, t: 'Imp' },
-  { m: '^[wait] please?$', g: 0, t: 'Imp' },
-  { m: '^[hurry] please?$', g: 0, t: 'Imp' },
-  // let's [leave]
-  { m: '^let (us|me) [#Inf]', g: 0, t: 'Imp' },
-  // [shut] the door
-  {
-    m: '^[(shut|close|open|start|stop|end|keep)] #Det #NN',
-    g: 0,
-    t: 'Imp',
-  },
-  // [turn off] the light
-  { m: '^[#PhrV #Particle] #Det #NN', g: 0, t: 'Imp' },
+  // [tell] him the story → Imperative
+  ['^[#Inf] (him|her|it|us|me|there)', 'Imp', 0],
+  // [avoid] loud noises → Imperative
+  ['^[#Inf] #Adj #NN$', 'Imp', 0],
+  // [come] and have a drink → Imperative
+  ['^[#Inf] (#Adj|#Adv)? (and|or) #Inf', 'Imp', 0],
+  // Keep isolated commands here: pre-tagging also runs on replacement words. → Imperative
+  ['^[go] please?$', 'Imp', 0],
+  ['^[stop] please?$', 'Imp', 0],
+  ['^[wait] please?$', 'Imp', 0],
+  ['^[hurry] please?$', 'Imp', 0],
+  // let's [leave] → Imperative
+  ['^let (us|me) [#Inf]', 'Imp', 0],
+  // [shut] the door → Imperative
+  ['^[(shut|close|open|start|stop|end|keep)] #Det #NN', 'Imp', 0],
+  // [turn off] the light → Imperative
+  ['^[#PhrV #Particle] #Det #NN', 'Imp', 0],
   // A modal question alone may ask about ability or knowledge. Require an
   // explicit request marker before treating it as an imperative.
-  // can you please [walk]
-  {
-    m: '^(can|could|will|would) you (#Adv|not)+? please (#Adv|not)+? [#Inf]',
-    g: 0,
-    t: 'Imp',
-  },
-  // please can you [walk]
-  {
-    m: '^please (can|could|will|would) you (#Adv|not)+? [#Inf]',
-    g: 0,
-    t: 'Imp',
-  },
-  // can you [walk] please
-  {
-    m: '^(can|could|will|would) you (#Adv|not)+? [#Inf] .+? please$',
-    g: 0,
-    t: 'Imp',
-  },
-  // come have a drink
-  { m: '^come #Inf', t: 'Imp', n: 'on' },
-  // come and have a drink
-  { m: '^come and #Inf', t: 'Imp . Imp' },
-  // [allow] yourself
-  {
-    m: '^(and|but)? (then|please)? [#Inf] (yourself|yourselves)',
-    g: 0,
-    t: 'Imp',
-  },
-  // [look] what happened
-  { m: '^[#Inf] what .', g: 0, t: 'Imp' },
-  // [go] to it
-  { m: '^[#Inf] (to|for|into|toward|here|there)', g: 0, t: 'Imp' },
-  // [maintain] eye contact
-  { m: '^[#Inf] #Adj? #Sing #Sing', g: 0, t: 'Imp' },
-  // don't forget to [clean]
-  { m: '^do not (forget|omit|neglect) to [#Inf]', g: 0, t: 'Imp' },
-  // [add] 2 eggs
-  { m: '^[#Inf] #Value #NN', g: 0, t: 'Imp' },
+  // can you please [walk] → Imperative
+  ['^(can|could|will|would) you (#Adv|not)+? please (#Adv|not)+? [#Inf]', 'Imp', 0],
+  // please can you [walk] → Imperative
+  ['^please (can|could|will|would) you (#Adv|not)+? [#Inf]', 'Imp', 0],
+  // can you [walk] please → Imperative
+  ['^(can|could|will|would) you (#Adv|not)+? [#Inf] .+? please$', 'Imp', 0],
+  // come have a drink → Imperative
+  ['^come #Inf', 'Imp', null, { n: 'on' }],
+  // come and have a drink → Imperative . Imperative
+  ['^come and #Inf', 'Imp . Imp'],
+  // [allow] yourself → Imperative
+  ['^(and|but)? (then|please)? [#Inf] (yourself|yourselves)', 'Imp', 0],
+  // [look] what happened → Imperative
+  ['^[#Inf] what .', 'Imp', 0],
+  // [go] to it → Imperative
+  ['^[#Inf] (to|for|into|toward|here|there)', 'Imp', 0],
+  // [maintain] eye contact → Imperative
+  ['^[#Inf] #Adj? #Sing #Sing', 'Imp', 0],
+  // don't forget to [clean] → Imperative
+  ['^do not (forget|omit|neglect) to [#Inf]', 'Imp', 0],
+  // [add] 2 eggs → Imperative
+  ['^[#Inf] #Value #NN', 'Imp', 0],
 
   // === verbs/adj-gerund.js ===
 
-  // The station was [closing]. The shop is [closing] soon.
-  { m: '#Cop #Adv+? [closing] (#Adv|soon)+?$', g: 0, t: 'Ger' },
-  // that were [growing]
-  { m: '(that|which) were [%Adj|Gerund%]', g: 0, t: 'Ger' },
+  // The station was [closing]. The shop is [closing] soon. → Gerund
+  ['#Cop #Adv+? [closing] (#Adv|soon)+?$', Ger, 0],
+  // that were [growing] → Gerund
+  ['(that|which) were [%Adj|Gerund%]', Ger, 0],
 
   // === _misc.js ===
   // order matters
 
-  // the captain [who]
-  { m: '#NN [(who|whom)]', g: 0, t: 'Det' },
-  // who is [that]?
-  {
-    m: '^#QW #Adv+? #Cop #Adv+? [(this|that|these|those)] #Adv+?$',
-    g: 0,
-    t: 'Pron',
-  },
-  // I like [this]
-  {
-    m: '#V [(this|that|these|those)] #Adv+? (yesterday|today|tonight|tomorrow)?$',
-    g: 0,
-    t: 'Pron',
-  },
-  // some sort of
-  { m: 'some sort of', t: 'Det NN Prep' },
-  // of some sort
-  { m: 'of some sort', t: 'Prep Det NN' },
-  // [some] eat apples
-  { m: '^[some] #Inf #NN', g: 0, t: 'Pron' },
-  // put it [there]
-  {
-    m: '(put|puts|putting|place|placed|leave|left) #Pron [there]',
-    g: 0,
-    t: 'Adv',
-  },
-  // [such] skill
-  { m: '[such] (a|an|is)? #NN', g: 0, t: 'Det' },
-  // [there] she is
-  { m: '[there] (#Adv|#Pron)? #Cop', g: 0, t: 'There' },
-  // is [there] food
-  { m: '#Cop [there] .', g: 0, t: 'There' },
-  // should [there]
-  { m: '#Mod #Adv? [there]', g: 0, t: 'There' },
-  // the person [who] runs
-  { m: '#Det #NN+ [who] #V', g: 0, t: 'Prep' },
-  // the person [which] eats
-  { m: '#Det #NN+ [which] #V', g: 0, t: 'Prep' },
-  // guess who
-  { m: 'guess who', t: '#Inf #QW' },
-  // [fucking] ridiculous
-  { m: '[fucking] !#V', g: 0, t: '#Ger' },
+  // the captain [who] → Determiner
+  ['#NN [(who|whom)]', Det, 0],
+  // who is [that]? → Pronoun
+  ['^#QW #Adv+? #Cop #Adv+? [(this|that|these|those)] #Adv+?$', Pron, 0],
+  // I like [this] → Pronoun
+  ['#V [(this|that|these|those)] #Adv+? (yesterday|today|tonight|tomorrow)?$', Pron, 0],
+  // some sort of → Determiner Noun Preposition
+  ['some sort of', 'Det NN Prep'],
+  // of some sort → Preposition Determiner Noun
+  ['of some sort', 'Prep Det NN'],
+  // [some] eat apples → Pronoun
+  ['^[some] #Inf #NN', Pron, 0],
+  // put it [there] → Adverb
+  ['(put|puts|putting|place|placed|leave|left) #Pron [there]', Adv, 0],
+  // [such] skill → Determiner
+  ['[such] (a|an|is)? #NN', Det, 0],
+  // [there] she is → There
+  ['[there] (#Adv|#Pron)? #Cop', 'There', 0],
+  // is [there] food → There
+  ['#Cop [there] .', 'There', 0],
+  // should [there] → There
+  ['#Mod #Adv? [there]', 'There', 0],
+  // the person [who] runs → Preposition
+  ['#Det #NN+ [who] #V', Prep, 0],
+  // the person [which] eats → Preposition
+  ['#Det #NN+ [which] #V', Prep, 0],
+  // guess who → Infinitive QuestionWord
+  ['guess who', '#Inf #QW'],
+  // [fucking] ridiculous → Gerund
+  ['[fucking] !#V', '#Ger', 0],
 
   // === nouns/organizations.js ===
   // import orgWords from './_orgWords.js'
@@ -1448,103 +1067,86 @@ const multi = [
 ]
 */
 
-  // university of Toronto
-  { m: 'university of #Place', t: 'Org' },
-  // Name pairs can be business names without a known organization suffix.
-  { m: '#Prop & #Prop', t: 'Prop' },
-  // John & Mary Ltd
-  { m: `#Pers & #Pers ${companySuffix}`, t: 'Org' },
-  // Smith & Rogers
-  { m: '#Last & #Last', t: 'Org' },
+  // university of Toronto → Organization
+  ['university of #Place', Org],
+  // Name pairs can be business names without a known organization suffix. → ProperNoun
+  ['#Prop & #Prop', Prop],
+  // John & Mary Ltd → Organization
+  [`#Pers & #Pers ${companySuffix}`, Org],
+  // Smith & Rogers → Organization
+  ['#Last & #Last', Org],
   // Microsoft of Canada
   // { m: '#Org of the? #Prop', t: 'Org', safe: true },
-  // walmart USA
-  { m: '#Org #Country', t: 'Org' },
-  // Toronto Microsoft
-  { m: '#Prop #Org', t: 'Org', n: '#First' },
-  // FitBit Inc
-  { m: '#Prop (ltd|co|inc|dept|assn|bros)', t: 'Org' },
-  // the [XYZ corporation]
-  { m: `the [#Acronym ${companySuffix}]`, g: 0, t: 'Org', safe: true },
-  // [government of india]
-  { m: '[government of the? #Place+]', g: 0, t: 'Org' },
-  // global Microsoft
-  {
-    m: '(world|global|international|national|#Dem) #Org',
-    t: 'Org',
-  },
-  // Toronto public school
-  { m: '#NN+ (public|private) school', t: 'School' },
-  // Toronto Yankees
-  { m: '#Place+ #SportsTeam', t: SportsTeam },
-  // 'toronto fc'
-  { m: '#Place+ fc', t: SportsTeam },
+  // walmart USA → Organization
+  ['#Org #Country', Org],
+  // Toronto Microsoft → Organization
+  ['#Prop #Org', Org, null, { n: '#First' }],
+  // FitBit Inc → Organization
+  ['#Prop (ltd|co|inc|dept|assn|bros)', Org],
+  // the [XYZ corporation] → Organization
+  [`the [#Acronym ${companySuffix}]`, Org, 0, { safe: true }],
+  // [government of india] → Organization
+  ['[government of the? #Place+]', Org, 0],
+  // global Microsoft → Organization
+  ['(world|global|international|national|#Dem) #Org', Org],
+  // Toronto public school → School
+  ['#NN+ (public|private) school', 'School'],
+  // Toronto Yankees → SportsTeam
+  ['#Place+ #SportsTeam', SportsTeam],
+  // 'toronto fc' → SportsTeam
+  ['#Place+ fc', SportsTeam],
 
-  // the new orleans basketball team
-  {
-    m: '#Place+ #NN{0,2} (club|society|group|team|committee|commission|association|guild|crew)',
-    t: 'Org',
-  },
+  // the new orleans basketball team → Organization
+  ['#Place+ #NN{0,2} (club|society|group|team|committee|commission|association|guild|crew)', Org],
 
   // === nouns/places.js ===
 
   // ==== Region ====
-  // west Toronto
-  { m: '(west|north|south|east|western|northern|southern|eastern)+ #Place', t: Region },
+  // west Toronto → Region
+  ['(west|north|south|east|western|northern|southern|eastern)+ #Place', Region],
   //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
-  // Toronto [ca]
-  {
-    m: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|pa|sc|tn|tx|ut|vt|pr)]',
-    g: 0,
-    t: Region,
-  },
-  // Portland [OR]
-  { m: 'portland [(or && @isUpperCase)]', g: 0, t: Region },
-  // with [turkey]
-  { m: 'with [(turkey && !@isTitleCase)]', g: 0, u: Place, t: Uncountable },
-  // Toronto point
-  {
-    m: '#Prop+ (cliff|place|range|pit|place|point|room|grounds|ruins)',
-    t: Place,
-  },
-  // 123 main street
-  {
-    m: '#Value #NN+ (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway|way)',
-    t: 'Address',
-  },
-  // port dover
-  { m: '(port|mount|mt) #Prop', t: Place },
+  // Toronto [ca] → Region
+  ['#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|pa|sc|tn|tx|ut|vt|pr)]', Region, 0],
+  // Portland [OR] → Region
+  ['portland [(or && @isUpperCase)]', Region, 0],
+  // with [turkey] → Uncountable; remove Place
+  ['with [(turkey && !@isTitleCase)]', Uncountable, 0, { u: Place }],
+  // Toronto point → Place
+  ['#Prop+ (cliff|place|range|pit|place|point|room|grounds|ruins)', Place],
+  // 123 main street → Address
+  [
+    '#Value #NN+ (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway|way)',
+    'Address',
+  ],
+  // port dover → Place
+  ['(port|mount|mt) #Prop', Place],
 
   // === conjunctions.js ===
 
-  // [how] he is driving
-  ...['who', 'what', 'where', 'why', 'how', 'when'].map(word => ({
-    m: `[${word}] #NN #Cop #Adv? (#V|#Adj)`,
-    g: 0,
-    t: 'Conj',
-  })),
-  // things [that] seem cool
-  { m: '#NN [that] #V #Adj', g: 0, t: 'Conj' },
-  // he was [that] wide
-  { m: '#NN #Cop not? [that] #Adj', g: 0, t: 'Adv' },
-  // [to] lunch
-  { m: '[to] (#NN && !#V)', g: 0, u: 'Conj', t: 'Prep' },
-  // I heard rumors [that] drivers save gas
-  { m: '#V #Adv? #NN [(that|which)]', g: 0, t: 'Prep' },
-  // Tuesday, [which] he liked
-  { m: '@hasComma [which] (#Pron|#V)', g: 0, t: 'Prep' },
-  // treated them [like] sons
-  { m: '(me|him|her|us|them|it) [like] #NN', g: 0, t: 'Prep' },
-  // a day [like] this
-  { m: 'a #NN [like] (#NN|#Det)', g: 0, t: 'Prep' },
-  // really [like]
-  { m: '(#Adv && !lot) [like]', g: 0, t: 'V' },
-  // is not [like] me
-  { m: '(#Cop|be|been|being) (not|never) [like]', g: 0, t: 'Prep' },
-  // a lot [like] ours
-  { m: 'a lot [like] #NN', g: 0, t: 'Prep' },
-  // treat them [like]
-  { m: '#Inf #Pron [like]', g: 0, t: 'Prep' },
+  // [how] he is driving → Conjunction
+  ...['who', 'what', 'where', 'why', 'how', 'when'].map(word => [`[${word}] #NN #Cop #Adv? (#V|#Adj)`, Conj, 0]),
+  // things [that] seem cool → Conjunction
+  ['#NN [that] #V #Adj', Conj, 0],
+  // he was [that] wide → Adverb
+  ['#NN #Cop not? [that] #Adj', Adv, 0],
+  // [to] lunch → Preposition; remove Conjunction
+  ['[to] (#NN && !#V)', Prep, 0, { u: 'Conj' }],
+  // I heard rumors [that] drivers save gas → Preposition
+  ['#V #Adv? #NN [(that|which)]', Prep, 0],
+  // Tuesday, [which] he liked → Preposition
+  ['@hasComma [which] (#Pron|#V)', Prep, 0],
+  // treated them [like] sons → Preposition
+  ['(me|him|her|us|them|it) [like] #NN', Prep, 0],
+  // a day [like] this → Preposition
+  ['a #NN [like] (#NN|#Det)', Prep, 0],
+  // really [like] → Verb
+  ['(#Adv && !lot) [like]', Vb, 0],
+  // is not [like] me → Preposition
+  ['(#Cop|be|been|being) (not|never) [like]', Prep, 0],
+  // a lot [like] ours → Preposition
+  ['a lot [like] #NN', Prep, 0],
+  // treat them [like] → Preposition
+  ['#Inf #Pron [like]', Prep, 0],
   // ==== Questions ====
   // where
   // why
@@ -1556,15 +1158,15 @@ const multi = [
   // which
   //the word 'how many'
   // { match: '^(how|which)', tag: 'QuestionWord' },
-  // [how] he
-  { m: '[(#QW && !do && !does)] (#Pron|#Det) !#Cop', g: 0, t: 'Prep', n: 'what the (hell|heck)' },
-  // children [who] dance
-  { m: '#Plur [(who|which|when)] .', g: 0, t: 'Prep' },
+  // [how] he → Preposition
+  ['[(#QW && !do && !does)] (#Pron|#Det) !#Cop', Prep, 0, { n: 'what the (hell|heck)' }],
+  // children [who] dance → Preposition
+  ['#Plur [(who|which|when)] .', Prep, 0],
 
   // === expressions.js ===
 
-  // come on
-  { m: '^come on', t: 'Expr' },
+  // come on → Expression
+  ['^come on', Expr],
   // // [well]..
   // { m: '^[well] !#Adj?', g: 0, t: 'Expr' },
   // // [so]
@@ -1586,157 +1188,82 @@ const multi = [
 
   // Which chair did she [sit] [on]?
 
-  // veggies, [like] kale
-  {
-    m: '(#NN && @hasComma) [like] #NN',
-    g: 0,
-    t: 'Prep',
-  },
-  // Everyone [but] me agreed.
-  ...['everyone', 'everybody', 'everything', 'anyone', 'anybody', 'anything', 'nobody', 'nothing', 'all'].map(word => ({
-    m: `${word} [but] (me|him|her|us|them|#Det|#Poss|#Prop)`,
-    g: 0,
-    t: 'Prep',
-  })),
-  // images on a screen [like] humans do
-  { m: '#NN [like] #NN+ (do|does|did)$', g: 0, t: 'Prep' },
-  // cities [like] New York, Boston
-  ...['', '#Place ', '#Place #Place '].map(prefix => ({
-    m: `#Plur [like] ${prefix}(#Place && @hasComma) #Place`,
-    g: 0,
-    t: 'Prep',
-  })),
-  // [Like] his brother, he enjoys chess
-  {
-    m: '^[like] (#Det|#Poss)? #Adj+? (#NN && @hasComma)',
-    g: 0,
-    t: 'Prep',
-  },
-  // I like tea, [like] my sister does.
-  { m: `@hasComma [like] ${subject} ${predicate}`, g: 0, t: 'Conj' },
-  // We talked about the fact [that] she resigned.
-  { m: `#NN [that] ${subject} ${predicate}`, g: 0, t: 'Conj' },
-  // I have heard that story [before]
-  {
-    m: '#V (#Det|#Poss)? #NN+? [(before|since)]$',
-    g: 0,
-    t: 'Adv',
-    n: '@hasQuestionMark',
-  },
-  // Who did she arrive [before]?
-  {
-    m: '^(who|whom) #V #Pron #V [before]$',
-    g: 0,
-    t: 'Prep',
-  },
-  // We will leave [when] the rain stops.
-  {
-    m: '#Mod #Inf [when] #Det',
-    g: 0,
-    t: 'Conj',
-  },
-
-  // Possession of running water and enduring noun phrases are not progressives.
-  { m: '[(have|has|had)] running water', g: 0, u: 'Aux' },
-  { m: '[#Cop] (enduring && #Adj) #NN', g: 0, u: 'Aux' },
-  // Although he [was] [tired], he smiled. He [was] [tired].
-  ...[
-    // He [was] [tired].
-    '[(#Cop|been)] #Adv+? [tired]$',
-    // Although he [was] [tired], he smiled.
-    '[(#Cop|been)] #Adv+? [(tired && @hasComma)]',
-  ].flatMap(match => [
-    // Although he [was] [tired], he smiled. He [was] [tired].
-    { m: match, g: 0, t: 'Cop', u: 'Pass' },
-    // Although he [was] [tired], he smiled. He [was] [tired].
-    { m: match, g: 0, u: 'Aux' },
-    // Although he [was] [tired], he smiled. He [was] [tired].
-    { m: match, g: 1, t: 'Adj' },
+  // veggies, [like] kale → Preposition
+  ['(#NN && @hasComma) [like] #NN', Prep, 0],
+  // Everyone [but] me agreed. → Preposition
+  ...['everyone', 'everybody', 'everything', 'anyone', 'anybody', 'anything', 'nobody', 'nothing', 'all'].map(word => [
+    `${word} [but] (me|him|her|us|them|#Det|#Poss|#Prop)`,
+    Prep,
+    0,
   ]),
-  // had been tired
-  { m: '(has|have|had) (#Adv|not)+? been #Adv+? tired$', u: 'Pass' },
-  // 23 Main Street in Toronto
-  { m: '#Address in #Place', t: Place },
-  // the [sleeping] dog
-  {
-    m: '#Det [sleeping] (#Actor|#Pers|puppy|kitten|dog|cat|baby|babies|child|children)',
-    g: 0,
-    t: 'Adj',
-  },
-  // [water] broke the pipe
-  {
-    m: '^[%Noun|Verb%] #Past (#Det|#Poss) #Adj+? #NN',
-    g: 0,
-    t: 'NN',
-  },
-  // the [present] immediately
-  { m: '#Det [present] #Adv+$', g: 0, t: 'NN' },
-  // [falls in] June
-  { m: '[(fall|falls|fell) in] #Month', g: 0, t: '#V #Prep' },
-  // [had] he walked
-  {
-    m: '^[had] #NN+ (#Adv|not)+? #Past',
-    g: 0,
-    t: 'Condition',
-    n: '@hasQuestionMark',
-  },
-  // [were] he to walk
-  {
-    m: '^[were] #NN+ to #Inf *$',
-    g: 0,
-    t: 'Condition',
-    n: '@hasQuestionMark',
-  },
-  // [had] he walked?
-  {
-    m: '^[had] #NN+ (#Adv|not)+? (#Past && @hasQuestionMark)$',
-    g: 0,
-    t: 'Aux',
-    n: '@hasComma',
-  },
-  // [had] he walked the dog?
-  {
-    m: '^[had] #NN+ (#Adv|not)+? #Past * @hasQuestionMark$',
-    g: 0,
-    t: 'Aux',
-    n: '@hasComma',
-  },
-  // [This] will be one sentence. [This] might help.
-  { m: '[this] #Adv+? #Mod #Adv+? #Inf', g: 0, t: 'Pron' },
-  // has [read], had [put]
-  ...['read', 'put'].map(word => ({
-    m: `(has|have|had) (#Adv|not)+? [${word}]`,
-    g: 0,
-    t: 'VBN',
-  })),
-  // John and Mary [walk]
-  {
-    m: '#Pers and #Pers [(%Noun|Verb% && !@isTitleCase && !@isUpperCase)]$',
-    g: 0,
-    t: 'Inf',
-  },
+  // images on a screen [like] humans do → Preposition
+  ['#NN [like] #NN+ (do|does|did)$', Prep, 0],
+  // cities [like] New York, Boston → Preposition
+  ...['', '#Place ', '#Place #Place '].map(prefix => [`#Plur [like] ${prefix}(#Place && @hasComma) #Place`, Prep, 0]),
+  // [Like] his brother, he enjoys chess → Preposition
+  ['^[like] (#Det|#Poss)? #Adj+? (#NN && @hasComma)', Prep, 0],
+  // I like tea, [like] my sister does. → Conjunction
+  [`@hasComma [like] ${subject} ${predicate}`, Conj, 0],
+  // We talked about the fact [that] she resigned. → Conjunction
+  [`#NN [that] ${subject} ${predicate}`, Conj, 0],
+  // I have heard that story [before] → Adverb
+  ['#V (#Det|#Poss)? #NN+? [(before|since)]$', Adv, 0, { n: '@hasQuestionMark' }],
+  // Who did she arrive [before]? → Preposition
+  ['^(who|whom) #V #Pron #V [before]$', Prep, 0],
+  // We will leave [when] the rain stops. → Conjunction
+  ['#Mod #Inf [when] #Det', Conj, 0],
+
+  // [has] running water → remove Auxiliary; possession is not progressive
+  ['[(have|has|had)] running water', null, 0, { u: 'Aux' }],
+  // [is] enduring art → remove Auxiliary; enduring modifies the noun
+  ['[#Cop] (enduring && #Adj) #NN', null, 0, { u: 'Aux' }],
+  // Although he [was] [tired], he smiled. He [was] [tired].
+  ...['[(#Cop|been)] #Adv+? [tired]$', '[(#Cop|been)] #Adv+? [(tired && @hasComma)]'].flatMap(match => [
+    // Although he [was] [tired], he smiled. He [was] [tired]. → Copula; remove Passive
+    [match, Cop, 0, { u: 'Pass' }],
+    // Although he [was] [tired], he smiled. He [was] [tired]. → remove Auxiliary
+    [match, null, 0, { u: 'Aux' }],
+    // Although he was [tired], he smiled. He was [tired]. → Adjective (second capture)
+    [match, Adj, 1],
+  ]),
+  // had been tired → remove Passive
+  ['(has|have|had) (#Adv|not)+? been #Adv+? tired$', null, null, { u: 'Pass' }],
+  // 23 Main Street in Toronto → Place
+  ['#Address in #Place', Place],
+  // the [sleeping] dog → Adjective
+  ['#Det [sleeping] (#Actor|#Pers|puppy|kitten|dog|cat|baby|babies|child|children)', Adj, 0],
+  // [water] broke the pipe → Noun
+  ['^[%Noun|Verb%] #Past (#Det|#Poss) #Adj+? #NN', NN, 0],
+  // the [present] immediately → Noun
+  ['#Det [present] #Adv+$', NN, 0],
+  // [falls in] June → Verb Preposition
+  ['[(fall|falls|fell) in] #Month', '#V #Prep', 0],
+  // [had] he walked → Condition
+  ['^[had] #NN+ (#Adv|not)+? #Past', 'Condition', 0, { n: '@hasQuestionMark' }],
+  // [were] he to walk → Condition
+  ['^[were] #NN+ to #Inf *$', 'Condition', 0, { n: '@hasQuestionMark' }],
+  // [had] he walked? → Auxiliary
+  ['^[had] #NN+ (#Adv|not)+? (#Past && @hasQuestionMark)$', 'Aux', 0, { n: '@hasComma' }],
+  // [had] he walked the dog? → Auxiliary
+  ['^[had] #NN+ (#Adv|not)+? #Past * @hasQuestionMark$', 'Aux', 0, { n: '@hasComma' }],
+  // [This] will be one sentence. [This] might help. → Pronoun
+  ['[this] #Adv+? #Mod #Adv+? #Inf', Pron, 0],
+  // has [read], had [put] → Participle
+  ...['read', 'put'].map(word => [`(has|have|had) (#Adv|not)+? [${word}]`, Participle, 0]),
+  // John and Mary [walk] → Infinitive
+  ['#Pers and #Pers [(%Noun|Verb% && !@isTitleCase && !@isUpperCase)]$', Inf, 0],
   // dogs [near] the house [bark]
   // near|on|under|beside|behind
   ...['near', 'on', 'under', 'beside', 'behind'].flatMap(word => [
-    {
-      m: `#Plur [${word}] #Det #Adj+? #NN [%Noun|Verb%]$`,
-      g: 0,
-      t: 'Prep',
-    },
-    {
-      m: `#Plur [${word}] #Det #Adj+? #NN [%Noun|Verb%]$`,
-      g: 1,
-      t: 'Inf',
-    },
+    // dogs [near] the house bark → Preposition
+    [`#Plur [${word}] #Det #Adj+? #NN [%Noun|Verb%]$`, Prep, 0],
+    // dogs near the house [bark] → Infinitive (second capture)
+    [`#Plur [${word}] #Det #Adj+? #NN [%Noun|Verb%]$`, Inf, 1],
   ]),
-  // has eaten and [drunk]
-  {
-    m: '(has|have|had) (#Adv|not)+? #Past (and|or) #Adv+? [drunk]',
-    g: 0,
-    t: 'VBN',
-  },
-  // officers and [kids] would leave
-  { m: '#Plur and [%Plural|Verb%] #Mod', g: 0, t: 'Plur' },
+  // has eaten and [drunk] → Participle
+  ['(has|have|had) (#Adv|not)+? #Past (and|or) #Adv+? [drunk]', Participle, 0],
+  // officers and [kids] would leave → Plural
+  ['#Plur and [%Plural|Verb%] #Mod', Plur, 0],
 ]
 
 const matches = expandRules(rules)

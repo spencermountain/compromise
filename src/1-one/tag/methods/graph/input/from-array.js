@@ -4,8 +4,9 @@ import checkCycles from './check-cycles.js'
 // turn parent-index rows into nested json
 const fromArray = function (rows) {
   const index = new Map()
-  rows = rows.map(node => validate({ ...node, children: [] }))
+  // addTags allocates these rows for this graph, so initialize them in place.
   rows.forEach(node => {
+    validate(node)
     index.set(node.id, node)
   })
   const root = validate({})

@@ -1,13 +1,8 @@
 import byDepth from '../crawl/crawl.js'
 
 const toArray = function (json) {
-  let nodes = byDepth(json)
-  nodes = nodes.map((node, i) => {
-    const { children: _children, ...row } = node
-    const parents = row._cache.parents
-    row.parent = i > 0 && parents.length > 0 ? parents[parents.length - 1] : null
-    return row
-  })
+  // The tag formatter only reads these graph-owned nodes.
+  const nodes = byDepth(json)
   // should we show the root?
   const root = nodes[0]
   if (root && !root.id && Object.keys(root.props).length === 0) {

@@ -1,5 +1,5 @@
 // Whole-word splits that override the vowel-span and boundary rules.
-// Keys are lowercase; remove spaces from each value to recover its key exactly.
+// Keys are lowercase; values are interior cut offsets, excluding the word's end.
 const exceptions = {
   people: [3], //'peo ple',
   queue: [], //'queue',

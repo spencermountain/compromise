@@ -29,9 +29,10 @@ test('speech: punctuation preserves word spelling', t => {
     t.equal(parts.join(''), text, `${text}: reconstruction`)
     t.ok(parts.every(part => /[\p{L}\p{N}]/u.test(part)), `${text}: no punctuation-only chunks`)
   })
-  // Standalone symbols must not inflate a sentence's syllable count.
-  for (const text of ['', ' ', '...', '—', '#', '🎉', "'", '?!']) {
-    t.deepEqual(splitTerm({ text }), [], `${text}: no syllables`)
+  // Preserve standalone punctuation, symbols, and whitespace instead of hiding them.
+  t.deepEqual(splitTerm({ text: '' }), [], 'empty text has no chunks')
+  for (const text of [' ', '...', '—', '#', '🎉', "'", '?!']) {
+    t.deepEqual(splitTerm({ text }), [text], `${text}: unchanged text`)
   }
   t.end()
 })

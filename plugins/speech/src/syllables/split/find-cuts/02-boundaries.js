@@ -11,13 +11,16 @@ const onset = new Set([
 // Applied in order after onset placement; later rules take precedence.
 // left/right are offsets from the surrounding vowel groups' edges.
 // minLeft only moves a boundary forward, preserving a longer consonant cluster.
-// gap matches intervening letters; tail matches from the next vowel (up to five chars).
+// gap matches intervening letters; tail matches the complete remaining spelling.
 const adjustments = [
   { minGap: 1, maxGap: 1, gap: /^x$/, left: 1 }, // box-es
   { minGap: 2, gap: /^(.)\1/, minLeft: 1 }, // rab-bit
   { minGap: 2, tail: /^ed$/, right: -1 }, // res-ted
   { minGap: 2, gap: /^sh$/, tail: /^(es|ing)$/, right: 0 }, // wish-ing
   { minGap: 2, gap: /l$/, tail: /^e(?:[sd]|['’](?:s|d|ll|re|ve))?$/, right: -2 }, // bot-tle, ta-bles, bub-bled
+  { minGap: 2, gap: /l$/, tail: /^e(?:ments?|ships?|ness(?:es)?|less|ful(?:ly)?|ly)(?:['’]s)?$/, right: -2 }, // set-tle-ment, bat-tle-ships
+  { minGap: 1, gap: /l$/, tail: /^ess(?:ly|ness(?:es)?)?$/, right: -1 }, // help-less: keep the suffix intact
+  { minGap: 3, gap: /^ssl$/, tail: /^y$/, right: -1 }, // help-less-ly, not help-les-sly
   { minGap: 1, gap: /^(?:s|th)$/, tail: /^m(?:s|['’]s)?$/, right: 0 }, // chas-m, rhyth-m
   { minGap: 1, tail: /^n['’]t$/, right: 0 }, // could-n't: keep the base consonants together
   { minGap: 1, gap: /^[-‐‑–—]+$/, right: 0 }, // re-enter: keep the hyphen on the left
@@ -36,8 +39,8 @@ const pickBoundaries = (word, vowelSpans) => {
     const left = vowelSpans[i - 1].end
     const right = vowelSpans[i].start
     const gap = word.slice(left, right)
-    // Include a fifth character so four-character endings like e've must really end.
-    const tail = word.slice(right, right + 5)
+    // Match full suffixes so long endings are not mistaken for shorter ones.
+    const tail = word.slice(right)
     // Adjacent vowels split directly; a single consonant starts the next chunk.
     let cut = left
     if (gap.length > 1) {

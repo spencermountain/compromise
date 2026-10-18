@@ -16,6 +16,7 @@ const examples = [
 ]
 
 test('speech: readable syllable boundaries', t => {
+  // A correct count alone cannot detect awkward cuts or dropped characters.
   examples.forEach(example => {
     const expected = example.split(' ')
     const word = expected.join('')
@@ -29,17 +30,19 @@ test('speech: readable syllable boundaries', t => {
 })
 
 test('speech: syllables stay within terms and sentences', t => {
+  // Exercise sentence grouping and the per-term metadata through the public API.
   const doc = nlp('A boat. People wanted tables.')
-  t.deepEqual(doc.syllables(), [['a', 'boat'], ['peo', 'ple', 'wan', 'ted', 'ta', 'bles']])
+  t.deepEqual(doc.syllables(), [['A', 'boat'], ['Peo', 'ple', 'wan', 'ted', 'ta', 'bles']])
   doc.json().forEach(sentence => {
     sentence.terms.forEach(term => {
-      t.equal(term.syllables.join(''), term.normal, `${term.text}: reconstruction`)
+      t.equal(term.syllables.join(''), term.text, `${term.text}: reconstruction`)
     })
   })
   t.end()
 })
 
 test('speech: vowel and ending contrasts', t => {
+  // Contrasting word families guard against applying a spelling rule too broadly.
   const contrasts = [
     'suit', 'fruit', 'juice', 'guide', 'build', 'guilt',
     'flu id', 'flu ids', 'ru in', 'ru ined',

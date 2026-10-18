@@ -1,11 +1,10 @@
 import splitTerm from './split/index.js'
 
-// const defaultObj = { normal: true, text: true, terms: false }
-
+// Store syllables on each term; the public API collects them by sentence.
 const syllables = function (view) {
   view.docs.forEach(terms => {
     terms.forEach(term => {
-      term.syllables = splitTerm(term.normal || term.text)
+      term.syllables = splitTerm(term)
     })
   })
 }

@@ -1,13 +1,14 @@
-import splitWord from './split.js'
+import findCuts from './find-cuts.js'
+import { applyCuts } from './_lib.js'
 
-const syllables = text => {
-  if (!text) {
+// Pass the original term text through; the tokenizer owns pre/post punctuation.
+const splitTerm = term => {
+  if (!term.text) {
     return []
   }
-  // pull-apart word into identifiable segments, first
-  const parts = text.split(/\s+/).filter(Boolean)
-  // then split each segment into syllables
-  return parts.flatMap(splitWord)
+  const cuts = findCuts(term.text)
+  console.log(cuts)
+  return applyCuts(term.text, cuts)
 }
 
-export default syllables
+export default splitTerm

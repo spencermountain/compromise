@@ -105,6 +105,8 @@ individual plugin objects passed to `nlp.extend()`. `lazyParse` installs
 `nlp.lazy(text, match)`. For CommonJS, the complete plugin is
 `require('compromise-speed').default`.
 
+---
+
 #### In the browser:
 
 Use `compromise-speed/browser` for `keyPress` and lazy parsing without Node.js
@@ -118,17 +120,6 @@ nlp.extend(speed)
 const doc = nlp.keyPress('The cat sleeps.')
 const matches = nlp.lazy('The cat sleeps.', 'cat')
 ```
-
-You can also import the individual `keyPress` and `lazyParse` plugins from this
-entry point. Bundlers that honor the `browser` export condition select it
-automatically for `compromise-speed`. File streaming and worker pools are only
-available from the Node.js entry point.
-
-For TypeScript, import `SpeedNlp` from `compromise-speed/browser` and use
-`const fast = nlp as SpeedNlp` after extending the library. These declarations
-do not require Node.js types.
-
-For a script tag, use the standalone browser build:
 
 ```html
 <textarea>Chocolate microscopes? Double guitars?</textarea>

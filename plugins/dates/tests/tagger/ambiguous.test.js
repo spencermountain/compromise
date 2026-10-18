@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[plugins/dates/tests/tagger/ambiguous] '
+const here = '[dates/tagger/ambiguous] '
 
 test(here + 'negative-ambiguous-dates', t => {
   const noDates = [
@@ -77,5 +77,21 @@ test(here + 'date-tagger', function (t) {
       t.equal(found, true, term.text + ' ' + tag)
     })
   })
+  t.end()
+})
+
+test(here + 'march/may as verbs', (t) => {
+  const context = {
+    today: '2026-07-11', //saturday
+    timezone: 'America/New_York',
+  }
+  const getStart = (str, ctx = context) => {
+    const res = nlp(str).dates(ctx).get()[0]
+    return res ? res.start : null
+  }
+  t.equal(getStart('the soldiers march tomorrow'), '2026-07-12T00:00:00.000-04:00', 'march tomorrow → tomorrow')
+  t.equal(getStart('you may tomorrow find peace'), '2026-07-12T00:00:00.000-04:00', 'may tomorrow → tomorrow')
+  t.equal(getStart('may 2020'), '2020-05-01T00:00:00.000-04:00', 'may 2020 still works')
+  t.equal(getStart('march 5th'), '2027-03-05T00:00:00.000-05:00', 'march 5th still works')
   t.end()
 })

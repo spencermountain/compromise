@@ -4,157 +4,60 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseStats = factory());
 })(this, (function () { 'use strict';
 
-  var version = '0.1.1';
+  var version = '0.2.0';
 
-  const defaults$2 = {
-    max: 4,
-    min: 1,
-  };
+  const defaults = { min: 1, max: 4 };
 
-  const oneSize$2 = function (list, size) {
-    const grams = Object.create(null);
-    // count each instance
-    list.forEach(terms => {
-      for (let i = 0; i < terms.length; i += 1) {
-        const slice = terms.slice(i, i + size);
-        if (slice.length === size) {
-          const str = slice.join(' ');
-          if (Object.hasOwn(grams, str)) {
-            grams[str].count += 1;
-          } else {
-            grams[str] = {
-              size: size,
-              count: 1,
-            };
-          }
-        }
-      }
-    });
-    // turn them into an array
-    const arr = Object.keys(grams).map(k => {
-      grams[k].normal = k;
-      return grams[k]
-    });
-    return arr
-  };
-
-  const allGrams = function (list, options) {
-    // support {size:2} syntax
-    if (options.size > 0) {
-      options.min = options.size;
-      options.max = options.size;
+  const getRange = (list, options) => {
+    const min = options.size ?? options.min ?? defaults.min;
+    const max = options.size ?? options.max ?? defaults.max;
+    if (!Number.isSafeInteger(min) || min < 1 || !Number.isSafeInteger(max) || max < 1) {
+      throw new RangeError('N-gram sizes must be positive safe integers')
     }
-    const max = options.max || defaults$2.max;
-    const min = options.min || defaults$2.min;
-    let arr = [];
+    const longest = list.reduce((length, terms) => Math.max(length, terms.length), 0);
+    return { min, max: Math.min(max, longest) }
+  };
+
+  const countGram = (grams, terms, start, size) => {
+    const normal = terms.slice(start, start + size).join(' ');
+    if (Object.hasOwn(grams, normal)) {
+      grams[normal].count += 1;
+    } else {
+      grams[normal] = { size, count: 1, normal };
+    }
+  };
+
+  const getGrams = (list, options, edge) => {
+    const { min, max } = getRange(list, options);
+    const arr = [];
     for (let size = min; size <= max; size += 1) {
-      arr = arr.concat(oneSize$2(list, size));
-    }
-    return arr
-  };
-
-  const defaults$1 = {
-    max: 4,
-    min: 1,
-  };
-
-  const oneSize$1 = function (list, size) {
-    const grams = Object.create(null);
-    // count each instance
-    list.forEach(terms => {
-      for (let i = 0; i <= terms.length; i += 1) {
-        const slice = terms.slice(0, i);
-        if (slice.length === size) {
-          const str = slice.join(' ');
-          if (Object.hasOwn(grams, str)) {
-            grams[str].count += 1;
-          } else {
-            grams[str] = {
-              size: size,
-              count: 1,
-            };
+      const grams = Object.create(null);
+      list.forEach(terms => {
+        const last = terms.length - size;
+        if (last < 0) {
+          return
+        }
+        // Edges need only one slice per segment and size.
+        if (edge) {
+          const start = edge === 'end' ? last : 0;
+          countGram(grams, terms, start, size);
+        } else {
+          for (let i = 0; i <= last; i += 1) {
+            countGram(grams, terms, i, size);
           }
         }
-      }
-    });
-    // turn them into an array
-    const arr = Object.keys(grams).map(k => {
-      grams[k].normal = k;
-      return grams[k]
-    });
-    return arr
-  };
-
-  const startGrams = function (list, options) {
-    // support {size:2} syntax
-    if (options.size > 0) {
-      options.min = options.size;
-      options.max = options.size;
-    }
-    const max = options.max || defaults$1.max;
-    const min = options.min || defaults$1.min;
-    let arr = [];
-    for (let size = min; size <= max; size++) {
-      arr = arr.concat(oneSize$1(list, size));
+      });
+      Object.values(grams).forEach(gram => arr.push(gram));
     }
     return arr
   };
 
-  const defaults = {
-    max: 4,
-    min: 1,
-  };
+  const startGrams = (list, options) => getGrams(list, options, 'start');
 
-  const oneSize = function (list, size) {
-    const grams = Object.create(null);
-    // count each instance
-    list.forEach(terms => {
-      const len = terms.length;
-      for (let i = 0; i <= terms.length; i += 1) {
-        const slice = terms.slice(len - i, len);
-        if (slice.length === size) {
-          const str = slice.join(' ');
-          if (Object.hasOwn(grams, str)) {
-            grams[str].count += 1;
-          } else {
-            grams[str] = {
-              size: size,
-              count: 1,
-            };
-          }
-        }
-      }
-    });
-    // turn them into an array
-    const arr = Object.keys(grams).map(k => {
-      grams[k].normal = k;
-      return grams[k]
-    });
-    return arr
-  };
+  const endGrams = (list, options) => getGrams(list, options, 'end');
 
-  const endGrams = function (list, options) {
-    // support {size:2} syntax
-    if (options.size > 0) {
-      options.min = options.size;
-      options.max = options.size;
-    }
-    const max = options.max || defaults.max;
-    const min = options.min || defaults.min;
-    let arr = [];
-    for (let size = min; size <= max; size++) {
-      arr = arr.concat(oneSize(list, size));
-    }
-    return arr
-  };
-
-  // tokenize by term
-  const tokenize = function (doc) {
-    const list = doc.json({ text: false }).map(o => {
-      return o.terms.map(t => t.normal)
-    });
-    return list
-  };
+  // Preserve each selected segment as an n-gram boundary.
+  const tokenize = doc => doc.docs.map(terms => terms.map(term => term.normal));
 
   const sort = function (arr) {
     arr = arr.sort((a, b) => {
@@ -181,7 +84,7 @@
     /** list all repeating sub-phrases, by word-count */
     View.prototype.ngrams = function (obj) {
       const list = tokenize(this);
-      let arr = allGrams(list, obj || {});
+      let arr = getGrams(list, obj || {});
       arr = sort(arr);
       return arr
     };
@@ -190,7 +93,7 @@
 
     /** n-grams with one word */
     View.prototype.unigrams = function (n) {
-      let arr = allGrams(tokenize(this), { max: 1, min: 1 });
+      let arr = getGrams(tokenize(this), { max: 1, min: 1 });
       arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];
@@ -201,7 +104,7 @@
 
     /** n-grams with two words */
     View.prototype.bigrams = function (n) {
-      let arr = allGrams(tokenize(this), { max: 2, min: 2 });
+      let arr = getGrams(tokenize(this), { max: 2, min: 2 });
       arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];
@@ -212,7 +115,7 @@
 
     /** n-grams with three words */
     View.prototype.trigrams = function (n) {
-      let arr = allGrams(tokenize(this), { max: 3, min: 3 });
+      let arr = getGrams(tokenize(this), { max: 3, min: 3 });
       arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];

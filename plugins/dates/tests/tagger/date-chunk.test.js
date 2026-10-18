@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-const here = '[plugins/dates/tests/tagger/date-chunk] '
+const here = '[dates/tagger/date-chunk] '
 
 test(here + 'date-chunk :', function (t) {
   const arr = [
@@ -49,5 +49,17 @@ test(here + 'date-chunk :', function (t) {
       .out('reduced')
     t.equal(str, a[1], a[0])
   })
+  t.end()
+})
+
+test(here + 'a trailing dash is not part of the date', (t) => {
+  const context = {
+    today: '2026-07-11', //saturday
+    timezone: 'America/New_York',
+  }
+  const doc = nlp('2025-05-11 - They have taken the bridge and the Second Hall')
+  t.equal(doc.dates(context).text(), '2025-05-11', 'iso date before a dash')
+  t.equal(nlp('june 5 - june 7').dates(context).text(), 'june 5 - june 7', 'dash range')
+
   t.end()
 })

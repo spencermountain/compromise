@@ -56,22 +56,22 @@ If you want to return the individual words, or any other custom splitting:
 
 ```js
 const doc = nlp(`Calgary Flames`)
-doc.terms().syllables()
+const byTerm = doc.terms().syllables()
 // [ [ 'Cal', 'ga', 'ry' ], [ 'Flames' ] ]
 
 const doc = nlp(`it stars Alicia Silverstone and Paul Rudd`)
-doc.people().syllables()
+const pronounceNames = doc.people().syllables()
 //[
-// [ 'A', 'li', 'ci', 'a', 'Sil', 'ver', 'stone' ],
+// [ 'A', 'li', 'cia', 'Sil', 'ver', 'stone' ],
 // [ 'Paul', 'Rudd' ]
 // ]
 ```
 
-you can operate on normalized words as well:
+you can have it operate on normalized words as well:
 
 ```js
 const doc = nlp(`BACK to Winnipeg!`)
-console.log(doc.syllables({ normalize: true }))
+doc.syllables({ normalize: true })
 // [ [ 'back', 'to', 'win', 'ni', 'peg' ] ]
 ```
 
@@ -80,7 +80,7 @@ if you'd like to combine syllable information with other properties, you can use
 ```js
 let doc = nlp('edmonton oilers')
 doc.compute('syllables')
-doc.json()
+const json = doc.json()
 /*[{
   "terms": [
     {
@@ -136,6 +136,14 @@ doc.json()
 }]
 */
 ```
+
+<!-- spacer -->
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+### Note
+
+Pronunciation is regional, cultural, and even varies person-to-person. Some efforts have been made to support a wide variety of linguistic interpretations, but this may not be very wide indeed.
+Please refer to more sophisticated libraries if your application requires it, or help us improve.
 
 ### See also
 

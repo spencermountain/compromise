@@ -1,6 +1,8 @@
 // Whole-word splits that override the vowel-span and boundary rules.
 // Keys are lowercase; values are interior cut offsets, excluding the word's end.
 const exceptions = {
+  acre: [1], // a-cre: the final re carries a syllable
+  acres: [1], // a-cres: the plural retains the same split
   people: [3], //'peo ple',
   queue: [], //'queue',
   business: [4], //'busi ness',

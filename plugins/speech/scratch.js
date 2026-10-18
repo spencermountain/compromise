@@ -1,16 +1,10 @@
-/* eslint-disable no-console, no-unused-vars */
 import nlp from '../../src/three.js'
-
 import speechPlugin from './src/plugin.js'
 nlp.plugin(speechPlugin)
-// nlp.verbose(true)
-// nlp.verbose('date')
 
-let txt = ''
-txt = 'seventh millenium. white collar'
+// const doc = nlp(`Calgary Flames. Louisville`)
+// const doc = nlp(`sidewalk`)
 
-// let doc = nlp(txt).compute(['soundsLike', 'syllables'])
-// console.dir(doc.json()[0], { depth: 5 })
-
-const doc = nlp('Calgary')
+const doc = nlp(`BACK to Winnipeg!`)
 console.log(doc.syllables({ normalize: true }))
+// [ [ 'back', 'to', 'win', 'ni', 'peg' ] ]

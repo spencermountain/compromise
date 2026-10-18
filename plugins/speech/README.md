@@ -33,8 +33,46 @@ We use a custom rule-based alortithm for this, to split the words into intuitive
 import plg from 'compromise-speech'
 nlp.extend(plg)
 
-let doc = nlp('seventh millenium. white collar')
-doc.syllables()[(['se', 'venth', 'mil', 'le', 'nium'], ['white', 'col', 'lar'])]
+const doc = nlp(`Albertville, Saskatchewan`)
+doc.syllables()
+/*
+[
+  [
+    'Al',
+    'bert',
+    'ville,',
+    'Sa',
+    'skat',
+    'che',
+    'wan'
+  ]
+]
+*/
+```
+
+Results are returned as an array of sentences, split by syllable.
+
+If you want to return the individual words, or any other custom splitting:
+
+```js
+const doc = nlp(`Calgary Flames`)
+doc.terms().syllables()
+// [ [ 'Cal', 'ga', 'ry' ], [ 'Flames' ] ]
+
+const doc = nlp(`it stars Alicia Silverstone and Paul Rudd`)
+doc.people().syllables()
+//[
+// [ 'A', 'li', 'ci', 'a', 'Sil', 'ver', 'stone' ],
+// [ 'Paul', 'Rudd' ]
+// ]
+```
+
+you can operate on normalized words as well:
+
+```js
+const doc = nlp(`BACK to Winnipeg!`)
+console.log(doc.syllables({ normalize: true }))
+// [ [ 'back', 'to', 'win', 'ni', 'peg' ] ]
 ```
 
 if you'd like to combine syllable information with other properties, you can use `.compute('syllables')`

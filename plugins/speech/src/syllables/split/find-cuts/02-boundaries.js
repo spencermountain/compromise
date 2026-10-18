@@ -1,3 +1,5 @@
+import compoundPrefixes from './_compound-prefixes.js'
+
 // Turn vowel spans into cut positions by assigning the consonants between them.
 // Consonant clusters allowed to start a chunk; the picker checks longest first.
 const onset = new Set([
@@ -16,12 +18,19 @@ const adjustments = [
   { minGap: 2, tail: /^ed$/, right: -1 }, // res-ted
   { minGap: 2, gap: /^sh$/, tail: /^(es|ing)$/, right: 0 }, // wish-ing
   { minGap: 2, gap: /l$/, tail: /^e(?:[sd]|['’](?:s|d|ll|re|ve))?$/, right: -2 }, // bot-tle, ta-bles, bub-bled
+  { minGap: 1, gap: /^(?:s|th)$/, tail: /^m(?:s|['’]s)?$/, right: 0 }, // chas-m, rhyth-m
+  { minGap: 1, tail: /^n['’]t$/, right: 0 }, // could-n't: keep the base consonants together
   { minGap: 1, gap: /^[-‐‑–—]+$/, right: 0 }, // re-enter: keep the hyphen on the left
 ]
 
 // Choose one cut between each pair of vowel spans, preserving their count.
 const pickBoundaries = (word, vowelSpans) => {
   const cuts = []
+  // Keep recognized compound components intact, such as side-walk and some-one.
+  const compoundCuts = compoundPrefixes.flatMap(pattern => {
+    const match = pattern.exec(word)
+    return match ? [match[0].length] : []
+  })
   for (let i = 1; i < vowelSpans.length; i += 1) {
     // The gap contains the letters not assigned to either vowel span.
     const left = vowelSpans[i - 1].end
@@ -58,6 +67,12 @@ const pickBoundaries = (word, vowelSpans) => {
         cut = right + rule.right
       } else {
         cut = Math.max(cut, left + rule.minLeft)
+      }
+    })
+    // A compound boundary overrides ordinary consonant placement within this gap.
+    compoundCuts.forEach(boundary => {
+      if (boundary >= left && boundary <= right) {
+        cut = boundary
       }
     })
     cuts.push(cut)

@@ -8,6 +8,6 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 #### 0.2.0 [Oct 2026]
 
-- **[change]** - tokenize on text, not normal
+- **[change]** - tokenize on real text, not normalized by default
 - **[fix]** - agreement with `words/syllable`
 - **[update]** - dependencies

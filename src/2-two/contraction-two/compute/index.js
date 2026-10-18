@@ -4,7 +4,7 @@ import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
 import isPossessive from './isPossessive.js'
 import wannaNoun from './wanna.js'
-import contractionDebug from '../../../API/contractions-debug.js'
+import contractionDebug from '../../../API/debug/contractions-debug.js'
 
 const byApostrophe = /'/
 

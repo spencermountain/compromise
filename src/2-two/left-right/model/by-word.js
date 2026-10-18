@@ -1,3 +1,8 @@
+const adverbBeforeAdjective = '_ #Adj -> #Adv'
+const imperativeBeforeAdjective = '^ _ #Adj -> #Imp'
+const imperativeBeforeNoun = '^ _ #NN -> #Imp'
+const infinitiveBeforeGerund = '_ #Ger -> #Inf'
+
 const rules = {
   cold: [
     // a bit [cold]; ice [cold]
@@ -18,7 +23,7 @@ const rules = {
     '_ much -> #Adv',
   ],
   much: [
-    '_ #Adj -> #Adv',
+    adverbBeforeAdjective,
     '(too|bit) _ -> #Adj',
   ],
   bit: [
@@ -120,7 +125,7 @@ const rules = {
   ],
   so: [
     // [so] hot
-    '_ #Adj -> #Adv',
+    adverbBeforeAdjective,
     // do [so]
     'do _ -> #Adv',
     // [so] he
@@ -158,7 +163,7 @@ const rules = {
   ],
   least: [
     // [least] expensive
-    '_ #Adj -> #Adv',
+    adverbBeforeAdjective,
     // the [least]
     '#Det _ -> #Adv',
   ],
@@ -234,7 +239,7 @@ const rules = {
     // will [be] walked
     'will _ #Past -> #Aux',
     // [stay] cool
-    '^ _ #Adj -> #Imp',
+    imperativeBeforeAdjective,
   ],
   about: [
     // at [about]
@@ -293,17 +298,17 @@ const rules = {
     // [look] good
     '_ #Adj -> #Pres',
     // [pay] attention
-    '^ _ #NN -> #Imp',
+    imperativeBeforeNoun,
   ],
   finish: [
     // [start] listening
-    '_ #Ger -> #Inf',
+    infinitiveBeforeGerund,
   ],
   help: [
     // [start] listening
-    '_ #Ger -> #Inf',
+    infinitiveBeforeGerund,
     // [pay] attention
-    '^ _ #NN -> #Imp',
+    imperativeBeforeNoun,
   ],
   right: [
     // [right] after
@@ -359,11 +364,11 @@ const rules = {
     // [stay] away
     '^ _ (out|away|back) -> #Imp',
     // [stay] cool
-    '^ _ #Adj -> #Imp',
+    imperativeBeforeAdjective,
   ],
   keep: [
     // [stay] cool
-    '^ _ #Adj -> #Imp',
+    imperativeBeforeAdjective,
   ],
   shoot: [
     // shoot
@@ -542,7 +547,7 @@ const compounds = {
   // is [when] he left
   'who|what|where|why|how|when': '#Cop _ #NN -> #Conj',
   // [dark] green
-  'dark|bright|flat|light|soft|pale|dead|dim|faux|little|wee|sheer|most|near|good|extra|all': '_ #Adj -> #Adv',
+  'dark|bright|flat|light|soft|pale|dead|dim|faux|little|wee|sheer|most|near|good|extra|all': adverbBeforeAdjective,
   // in [march]
   'march|may': '#Prep _ -> #Month',
   // what the [hell]
@@ -556,7 +561,7 @@ const compounds = {
   // [damn] them
   'shit|damn': '^ _ them -> #Inf',
   // [super] strong
-  'super|pretty': '_ #Adj -> #Adv',
+  'super|pretty': adverbBeforeAdjective,
   // a [must]
   // a [while]
   'must|while': 'a _ -> #Sing',
@@ -571,9 +576,9 @@ const compounds = {
   // help [stop]
   'start|stop|end|make': 'help _ -> #Inf',
   // [start] listening
-  'start|stop': '_ #Ger -> #Inf',
+  'start|stop': infinitiveBeforeGerund,
   // [pay] attention
-  'start|stop|ask|wear|pay|show|watch|act|fix|kill|turn|try|win': '^ _ #NN -> #Imp',
+  'start|stop|ask|wear|pay|show|watch|act|fix|kill|turn|try|win': imperativeBeforeNoun,
   // 5pm [central]
   'eastern|mountain|pacific|central|est|pst|gmt': '#Time _ -> #Timezone | #Singular',
   // [dance] music

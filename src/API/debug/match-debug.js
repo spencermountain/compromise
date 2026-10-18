@@ -1,4 +1,4 @@
-import { green, red, dim, i } from './_color.js'
+import { green, red, dim, i } from '../_color.js'
 import debug from './debug.js'
 
 // Install only while verbose matching is enabled; restore the original hot path.

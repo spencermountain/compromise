@@ -3,7 +3,7 @@ import tmpWrld from './API/world.js'
 import version from './_version.js'
 import extend from './API/extend.js'
 import { verbose } from './API/_lib.js'
-import debug from './API/debug.js'
+import debug from './API/debug/debug.js'
 import handleInputs from './API/inputs.js'
 
 const world = { ...tmpWrld }

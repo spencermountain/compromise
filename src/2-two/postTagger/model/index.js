@@ -1,3 +1,6 @@
+import {
+  WeekDay, Date, Timezone, Actor, Val, PhoneNumber, Unit, Acronym, SportsTeam, Region, Place, Uncountable,
+} from '../../preTagger/tagSet/_lib.js'
 import expandRules from './expand-rules.js'
 
 const noLy = '(hard|fast|late|early|high|right|deep|close|direct)'
@@ -244,9 +247,9 @@ const rules = [
 
   // ==== WeekDay ====
   // [sun] the 5th
-  { m: '[sun] the #Ord', g: 0, t: 'WeekDay' },
+  { m: '[sun] the #Ord', g: 0, t: WeekDay },
   // 1pm next [sun]
-  { m: '#Date (on|this|next|last|during)? [sun]', g: 0, t: 'WeekDay' },
+  { m: '#Date (on|this|next|last|during)? [sun]', g: 0, t: WeekDay },
 
   // ==== Month ====
   // this march
@@ -267,23 +270,23 @@ const rules = [
   // === dates/date-phrase.js ===
 
   // 5th of June
-  { m: '#Value of #Month', t: 'Date' },
+  { m: '#Value of #Month', t: Date },
   // 5 June
   // { m: '#Card #Month', t: 'Date' },
   // June 5 to 7
-  { m: '#Month #Value to #Value', t: 'Date' },
+  { m: '#Month #Value to #Value', t: Date },
   // June the 12th
-  { m: '#Month the #Value', t: 'Date' },
+  { m: '#Month the #Value', t: Date },
   // june 7
-  { m: '(#WeekDay|#Month) #Value', t: 'Date' },
+  { m: '(#WeekDay|#Month) #Value', t: Date },
   // 7 june
-  { m: '#Value (#WeekDay|#Month)', t: 'Date' },
+  { m: '#Value (#WeekDay|#Month)', t: Date },
   // aug 5th 2021
-  { m: `#Month #Ord #Card`, t: 'Date' },
+  { m: `#Month #Ord #Card`, t: Date },
 
   // === timezones ===
   // china standard time
-  { m: `(#Place|#Dem) (standard|daylight|central|mountain)? time`, t: 'Timezone' },
+  { m: `(#Place|#Dem) (standard|daylight|central|mountain)? time`, t: Timezone },
 
   // === nouns/nouns.js ===
 
@@ -327,36 +330,36 @@ const rules = [
 
   // ==== Actor ====
   // Aircraft designer
-  { m: '#NN #Actor', t: 'Actor', n: '(#Pers|#Pron)' },
+  { m: '#NN #Actor', t: Actor, n: '(#Pers|#Pron)' },
   // lighting designer
-  { m: '#Ger #Actor', t: 'Actor' },
+  { m: '#Ger #Actor', t: Actor },
   // captain sanders
   // { match: '[#Actor+] #ProperNoun', group: 0, tag: 'Honorific' },
   // co founder
-  { m: `co #Sing`, t: 'Actor' },
+  { m: `co #Sing`, t: Actor },
   // [aircraft] designer
   {
     m: `[#NN+] #Actor`,
     g: 0,
-    t: 'Actor',
+    t: Actor,
     n: '(#Hon|#Pron|#Poss)',
   },
   // fine-artist
   {
     m: `(urban|cardiac|cardiovascular|respiratory|medical|clinical|visual|graphic|creative|dental|exotic|fine|certified|registered|technical|virtual|professional|amateur|junior|senior|special|pharmaceutical|theoretical)+ #NN? #Actor`,
-    t: 'Actor',
+    t: Actor,
   },
   // dance coach
   {
     m: `(#NN && !#Pron)+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`,
-    t: 'Actor',
+    t: Actor,
   },
   // chief design officer
-  { m: `chief . officer`, t: 'Actor' },
+  { m: `chief . officer`, t: Actor },
   // chief of police
-  { m: `chief of #NN+`, t: 'Actor' },
+  { m: `chief of #NN+`, t: Actor },
   // president of marketing
-  { m: `senior? vice? president of #NN+`, t: 'Actor' },
+  { m: `senior? vice? president of #NN+`, t: Actor },
 
   // ==== Singular ====
   // did a [900], paid a [20]
@@ -375,7 +378,7 @@ const rules = [
   { m: '(my|our|their|her|his|its) [(#Plur && #Actor)] #NN', g: 0, t: 'Poss' },
 
   // 10th of a [second]
-  { m: '#Value of a [second]', g: 0, u: 'Value', t: 'Sing' },
+  { m: '#Value of a [second]', g: 0, u: Val, t: 'Sing' },
   // the euro [sense]
   {
     m: `#Det #NN [${infNouns}] !(#Prep|to|#Adv)?`,
@@ -761,44 +764,44 @@ const rules = [
   {
     m: '!once? [(a|an)] hundred',
     g: 0,
-    t: 'Value',
+    t: Val,
   },
   // with [a] thousand jobs
   {
     m: '!once? [(a|an)] thousand',
     g: 0,
-    t: 'Value',
+    t: Val,
   },
   // with [a] million jobs
   {
     m: '!once? [(a|an)] million',
     g: 0,
-    t: 'Value',
+    t: Val,
   },
   // with [a] billion jobs
   {
     m: '!once? [(a|an)] billion',
     g: 0,
-    t: 'Value',
+    t: Val,
   },
   // with [a] trillion jobs
   {
     m: '!once? [(a|an)] trillion',
     g: 0,
-    t: 'Value',
+    t: Val,
   },
   // with [a] dozen eggs
   {
     match: '!once? [a] dozen',
     hook: 'dozen',
     group: 0,
-    tag: 'Value',
+    tag: Val,
   },
   // ==== PhoneNumber ====
   // 1 800 555-1234
-  { m: '(1|+1) #Value #PhoneNumber', t: 'PhoneNumber' },
+  { m: '(1|+1) #Value #PhoneNumber', t: PhoneNumber },
   // (454) 232-9873
-  { m: '#Numeric #PhoneNumber', t: 'PhoneNumber' },
+  { m: '#Numeric #PhoneNumber', t: PhoneNumber },
 
   // ==== Currency ====
   // chinese yuan
@@ -812,15 +815,15 @@ const rules = [
   // ==== Units ====
   // Currency can be assigned by left/right rules, so keep this correction late.
   // 5 [dollars]
-  { m: '#Value+ [#Currency]', g: 0, t: 'Unit' },
+  { m: '#Value+ [#Currency]', g: 0, t: Unit },
   // kilometers an hour
-  { m: '#Unit an hour', t: 'Unit' },
+  { m: '#Unit an hour', t: Unit },
 
   // ==== Magnitudes ====
   // thousand and two
-  { m: `#Multiple+ and #Value`, t: 'Value' },
+  { m: `#Multiple+ and #Value`, t: Val },
   // 5 miles [per hour]
-  { m: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', g: 0, t: 'Unit' },
+  { m: '#Value #Unit [(per|an) (hr|hour|sec|second|min|minute)]', g: 0, t: Unit },
   // twelve percent
   { m: '#Card percent', t: '#Percent #Unit' },
 
@@ -857,7 +860,7 @@ const rules = [
   // Dr. J.
   { m: '#Hon #Acronym', t: 'Pers' },
   // John [b]
-  { m: '#First [/^[bdefghjlmnopqstvwxyz]$/]', g: 0, t: ['Acronym', 'Pers'] },
+  { m: '#First [/^[bdefghjlmnopqstvwxyz]$/]', g: 0, t: [Acronym, 'Pers'] },
   // Ludwig van Beethoven
   { m: '#NN van der? #NN', t: 'Pers', safe: true },
   // king of spain
@@ -1473,9 +1476,9 @@ const multi = [
   // Toronto public school
   { m: '#NN+ (public|private) school', t: 'School' },
   // Toronto Yankees
-  { m: '#Place+ #SportsTeam', t: 'SportsTeam' },
+  { m: '#Place+ #SportsTeam', t: SportsTeam },
   // 'toronto fc'
-  { m: '#Place+ fc', t: 'SportsTeam' },
+  { m: '#Place+ fc', t: SportsTeam },
 
   // the new orleans basketball team
   {
@@ -1487,22 +1490,22 @@ const multi = [
 
   // ==== Region ====
   // west Toronto
-  { m: '(west|north|south|east|western|northern|southern|eastern)+ #Place', t: 'Region' },
+  { m: '(west|north|south|east|western|northern|southern|eastern)+ #Place', t: Region },
   //some us-state acronyms (exlude: al, in, la, mo, hi, me, md, ok..)
   // Toronto [ca]
   {
     m: '#City [(al|ak|az|ar|ca|ct|dc|fl|ga|id|il|nv|nh|nj|ny|oh|pa|sc|tn|tx|ut|vt|pr)]',
     g: 0,
-    t: 'Region',
+    t: Region,
   },
   // Portland [OR]
-  { m: 'portland [(or && @isUpperCase)]', g: 0, t: 'Region' },
+  { m: 'portland [(or && @isUpperCase)]', g: 0, t: Region },
   // with [turkey]
-  { m: 'with [(turkey && !@isTitleCase)]', g: 0, u: 'Place', t: 'Uncountable' },
+  { m: 'with [(turkey && !@isTitleCase)]', g: 0, u: Place, t: Uncountable },
   // Toronto point
   {
     m: '#Prop+ (cliff|place|range|pit|place|point|room|grounds|ruins)',
-    t: 'Place',
+    t: Place,
   },
   // 123 main street
   {
@@ -1510,7 +1513,7 @@ const multi = [
     t: 'Address',
   },
   // port dover
-  { m: '(port|mount|mt) #Prop', t: 'Place' },
+  { m: '(port|mount|mt) #Prop', t: Place },
 
   // === conjunctions.js ===
 
@@ -1653,7 +1656,7 @@ const multi = [
   // had been tired
   { m: '(has|have|had) (#Adv|not)+? been #Adv+? tired$', u: 'Pass' },
   // 23 Main Street in Toronto
-  { m: '#Address in #Place', t: 'Place' },
+  { m: '#Address in #Place', t: Place },
   // the [sleeping] dog
   {
     m: '#Det [sleeping] (#Actor|#Pers|puppy|kitten|dog|cat|baby|babies|child|children)',

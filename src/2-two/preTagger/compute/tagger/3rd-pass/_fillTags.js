@@ -1,7 +1,7 @@
 import fastTag from '../_fastTag.js'
 import looksPlural from '../../../methods/looksPlural.js'
 import getTense from '../../../methods/transform/verbs/getTense/index.js'
-import debug from '../../../../../API/debug.js'
+import debug from '../../../../../API/debug/debug.js'
 // tags that are neither plural or singular
 const uncountable = [
   'Acronym',

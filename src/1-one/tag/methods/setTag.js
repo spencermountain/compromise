@@ -1,4 +1,4 @@
-import debug from '../../../API/debug.js'
+import debug from '../../../API/debug/debug.js'
 import getConflicts from './_lib.js'
 const isMulti = / /
 

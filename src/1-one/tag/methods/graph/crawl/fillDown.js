@@ -1,54 +1,27 @@
-import { isSet, isObject, isArray } from '../_lib.js'
 import byDepth from './crawl.js'
 
-// Only compatible collections are merged; explicit child values take precedence.
-const kind = value => {
-  if (isSet(value)) {
-    return 'set'
+// addTags supplies only exclusions, additional parents, and these scalar flags.
+const inherit = (props, parent) => {
+  if (parent.not) {
+    props.not = new Set([...props.not, ...parent.not])
   }
-  if (isArray(value)) {
-    return 'array'
+  if (Array.isArray(parent.also) && (props.also === undefined || Array.isArray(props.also))) {
+    props.also = parent.also.concat(props.also || [])
+  } else if (props.also === undefined) {
+    props.also = parent.also
   }
-  if (isObject(value)) {
-    return 'object'
+  if (props.is === undefined) {
+    props.is = parent.is
   }
-  return 'scalar'
-}
-
-const mergeDeep = (props, parent) => {
-  Object.keys(parent).forEach(k => {
-    if (props[k] !== undefined && kind(props[k]) !== kind(parent[k])) {
-      return
-    }
-    // merge sets
-    if (isSet(parent[k])) {
-      const set = props[k] || new Set()
-      props[k] = new Set([...set, ...parent[k]])
-      return
-    }
-    // merge an object
-    if (isObject(parent[k])) {
-      const obj = props[k] || {}
-      props[k] = Object.assign({}, parent[k], obj)
-      return
-    }
-    //  concat an array
-    if (isArray(parent[k])) {
-      props[k] = parent[k].concat(props[k] || [])
-      return
-    }
-
-    // just overwrite it
-    if (props[k] === undefined) {
-      props[k] = parent[k]
-    }
-  })
+  if (props.novel === undefined) {
+    props.novel = parent.novel
+  }
   return props
 }
 
 const fillDown = root => {
   byDepth(root, (parent, child) => {
-    child.props = mergeDeep(child.props, parent.props)
+    child.props = inherit(child.props, parent.props)
   }, false)
 }
 

@@ -1,4 +1,4 @@
-import debug from '../../../src/API/debug.js'
+import debug from '../../../src/API/debug/debug.js'
 
 // Keep structured capture in the inspector, outside the runtime verbose API.
 const context = (nlp, word, sentence) => {

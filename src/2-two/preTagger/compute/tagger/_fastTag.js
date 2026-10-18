@@ -1,4 +1,4 @@
-import debug from '../../../../API/debug.js'
+import debug from '../../../../API/debug/debug.js'
 
 // a faster version than the user-facing one in ./methods
 const fastTag = function (term, tag, reason) {

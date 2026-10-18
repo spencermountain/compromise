@@ -1,7 +1,7 @@
 // The tag-inheritance subset of grad-school;
 // https://github.com/spencermountain/grad-school
 import fromArray from './input/from-array.js'
-import { cacheUp, cacheDown } from './crawl/cache.js'
+import cacheParents from './crawl/cache.js'
 import fillDown from './crawl/fillDown.js'
 import out from './out/index.js'
 
@@ -14,7 +14,7 @@ class Graph {
     })
   }
   cache() {
-    cacheUp(this.json)
+    cacheParents(this.json)
     return this
   }
   fillDown() {
@@ -22,8 +22,7 @@ class Graph {
     return this
   }
   out(fmt) {
-    // The full API refreshes parent caches before flattening the graph.
-    cacheDown(this.json)
+    // fillDown changes properties, so the cached graph relationships still hold.
     return out(this.json, fmt)
   }
 }

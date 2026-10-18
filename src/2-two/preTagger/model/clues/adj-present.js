@@ -1,10 +1,11 @@
+import { Adj } from '../../tagSet/_lib.js'
 import adj from './_adj.js'
 import verb from './_verb.js'
 
 // 'would mean' vs 'is mean'
 const misc = {
   afterTags: {
-    Noun: 'Adjective',//ruling party
+    Noun: Adj,//ruling party
     Conjunction: undefined //clean and excellent
   }
 }
@@ -22,15 +23,15 @@ const clue = {
     // have seperate contracts
     have: undefined, had: undefined, not: undefined,
     //went wrong, got wrong
-    went: 'Adjective', goes: 'Adjective', got: 'Adjective',
+    went: Adj, goes: Adj, got: Adj,
     // be sure
-    be: 'Adjective'
+    be: Adj
   },
   afterWords: {
     ...adj.afterWords,
     ...verb.afterWords,
     to: undefined,//slick to the touch
-    as: 'Adjective',//pale as
+    as: Adj,//pale as
   },
 }
 // console.log(clue.beforeWords)

@@ -1,3 +1,4 @@
+import { Participle, Ger, Conj } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { infinitive, inflect } from './inflect.js'
 import convertAuxiliary from './auxiliary.js'
 import { noop, haveHas } from '../lib.js'
@@ -18,7 +19,7 @@ const simple = (vb, parsed) => {
     return vb
   }
   // 'driven' || 'drove'
-  str = inflect(root, 'Participle', { keepPunct: false })
+  str = inflect(root, Participle, { keepPunct: false })
 
   // Replace emphatic do in place, retaining intervening adverbs and negation.
   if (auxiliary.has('(do|does|did)')) {
@@ -49,7 +50,7 @@ const forms = {
 
   // he will walk -> he walked
   'simple-future': (vb, parsed) => {
-    vb.replace(parsed.root, inflect(parsed.root, 'Participle'))
+    vb.replace(parsed.root, inflect(parsed.root, Participle))
     return vb.replace('will', haveHas(vb, parsed))
   },
 
@@ -67,14 +68,14 @@ const forms = {
     vb.match('(have|has|been|be)').tag('Auxiliary')
     // The new perfect head governs 'going'; its infinitival complement must
     // remain separate on subsequent conversions, just as on a fresh parse.
-    vb.match('going').unTag('Auxiliary').tag('Gerund')
-    vb.match('to').unTag('Auxiliary').tag('Conjunction')
+    vb.match('going').unTag('Auxiliary').tag(Ger)
+    vb.match('to').unTag('Auxiliary').tag(Conj)
     return vb
   },
 
   // must walk -> 'must have walked'
   'modal-infinitive': (vb, parsed) => {
-    vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, 'Participle'))
+    vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, Participle))
     vb.match('have').tag('Auxiliary')
     return vb
   },

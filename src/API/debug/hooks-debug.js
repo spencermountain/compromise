@@ -1,16 +1,16 @@
-import * as cli from './_color.js'
+import { blue, grey, dim, i, b, ul } from '../_color.js'
 import debug from './debug.js'
 
 const colorSpec = doc => {
   return doc.docs
-    .map((terms, i) => {
+    .map((terms, index) => {
       const plain = terms
         .map(t => t.pre + t.text + t.post)
         .join('')
         .trim()
-      const text = cli.dim("'" + plain + "'")
-      const spec = doc.update([[i]]).out('spec')
-      return text + cli.grey(cli.i(spec.slice(plain.length)))
+      const text = dim("'" + plain + "'")
+      const spec = doc.update([[index]]).out('spec')
+      return text + grey(i(spec.slice(plain.length)))
     })
     .join('\n')
 }
@@ -23,11 +23,11 @@ const hooksDebug = headings => (doc, hooks) => {
     output.split('\n').forEach((line, i, lines) => {
       if (nested) {
         const branch = i === lines.length - 1 ? ' ╰─' : '│ '
-        console.log(`  ${cli.dim(branch)} ${line}`) // eslint-disable-line no-console
+        console.log(`  ${dim(branch)} ${line}`) // eslint-disable-line no-console
         return
       }
       const label = (i === 0 ? hook : '').padEnd(width)
-      console.log(`  ${cli.dim(label)}  ${line}`) // eslint-disable-line no-console
+      console.log(`  ${dim(label)}  ${line}`) // eslint-disable-line no-console
     })
   }
   snapshot('tokenize')
@@ -37,8 +37,8 @@ const hooksDebug = headings => (doc, hooks) => {
     const rule = debug.rule
     debug.rule = undefined
     if (nested) {
-      console.log(`  ${cli.blue(cli.b(cli.ul(hook + ':')))}`) // eslint-disable-line no-console
-      debug.prefix = cli.dim('   │  ')
+      console.log(`  ${blue(b(ul(hook + ':')))}`) // eslint-disable-line no-console
+      debug.prefix = dim('   │  ')
     }
     // Restore the log prefix even when a plugin hook throws.
     try {

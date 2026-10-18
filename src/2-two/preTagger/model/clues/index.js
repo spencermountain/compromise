@@ -1,3 +1,4 @@
+import { Inf, Pres, Plur } from '../../tagSet/_lib.js'
 import actorVerb from './actor-verb.js'
 import adjGerund from './adj-gerund.js'
 import adjNoun from './adj-noun.js'
@@ -30,7 +31,7 @@ const clues = {
 
 const copy = (obj, more) => {
   const res = Object.keys(obj).reduce((h, k) => {
-    h[k] = obj[k] === 'Infinitive' ? 'PresentTense' : 'Plural'
+    h[k] = obj[k] === Inf ? Pres : Plur
     return h
   }, {})
   return Object.assign(res, more)
@@ -39,24 +40,24 @@ const copy = (obj, more) => {
 // make a copy of this one
 clues['Plural|Verb'] = {
   beforeWords: copy(clues['Noun|Verb'].beforeWords, {
-    had: 'Plural', //had tears
-    have: 'Plural',
+    had: Plur, //had tears
+    have: Plur,
   }),
   afterWords: copy(clues['Noun|Verb'].afterWords, {
-    his: 'PresentTense', her: 'PresentTense', its: 'PresentTense',
+    his: Pres, her: Pres, its: Pres,
     in: null, to: null,
-    is: 'PresentTense', //the way it works is
-    by: 'PresentTense', //it works by
+    is: Pres, //the way it works is
+    by: Pres, //it works by
   }),
   beforeTags: copy(clues['Noun|Verb'].beforeTags, {
-    Conjunction: 'PresentTense', //and changes
+    Conjunction: Pres, //and changes
     Noun: undefined, //the century demands
-    ProperNoun: 'PresentTense'//john plays
+    ProperNoun: Pres//john plays
   }),
   afterTags: copy(clues['Noun|Verb'].afterTags, {
-    Gerund: 'Plural',//ice caps disappearing
-    Noun: 'PresentTense', //changes gears
-    Value: 'PresentTense' //changes seven gears
+    Gerund: Plur,//ice caps disappearing
+    Noun: Pres, //changes gears
+    Value: Pres //changes seven gears
   }),
 }
 // add some custom plural clues

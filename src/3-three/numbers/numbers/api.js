@@ -1,3 +1,4 @@
+import { Numeric, Ord, Card, TxtNum } from '../../../2-two/preTagger/tagSet/_lib.js'
 import find from './find.js'
 import parse from './parse/index.js'
 import format from './format/index.js'
@@ -6,6 +7,11 @@ import convert from './_lib.js'
 import toFraction from './toFraction.js'
 import toPercentage from './toPercentage.js'
 import toDecimal from './toDecimal.js'
+
+const ordinalMatch = '#Ordinal'
+const textValueMatch = '#TextValue'
+const textOrdinal = 'TextOrdinal'
+const textCardinal = 'TextCardinal'
 
 const addMethod = function (View) {
   /**   */
@@ -47,7 +53,7 @@ const addMethod = function (View) {
     }
     /** return only ordinal numbers */
     isOrdinal() {
-      return this.if('#Ordinal')
+      return this.if(ordinalMatch)
     }
     /** return only cardinal numbers*/
     isCardinal() {
@@ -56,9 +62,9 @@ const addMethod = function (View) {
 
     /** convert to numeric form like '8' or '8th' */
     toNumber() {
-      return convert(this, 'NumericValue',
-        () => !this.has('#TextValue'),
-        val => val.has('#Ordinal') ? 'Ordinal' : 'Cardinal')
+      return convert(this, Numeric,
+        () => !this.has(textValueMatch),
+        val => val.has(ordinalMatch) ? Ord : Card)
     }
     /** add commas, or nicer formatting for numbers */
     toLocaleString() {
@@ -70,8 +76,8 @@ const addMethod = function (View) {
         }
         let num = obj.num.toLocaleString()
         // support ordinal ending, too
-        if (val.has('#Ordinal')) {
-          num += format(obj, 'Ordinal').slice(obj.prefix.length).match(/[a-z]+/)[0]
+        if (val.has(ordinalMatch)) {
+          num += format(obj, Ord).slice(obj.prefix.length).match(/[a-z]+/)[0]
         }
         val.replaceWith(obj.prefix + num + obj.suffix, { tags: true })
         return val
@@ -81,21 +87,21 @@ const addMethod = function (View) {
 
     /** convert to numeric form like 'eight' or 'eighth' */
     toText() {
-      return convert(this, 'TextValue',
-        val => val.has('#TextValue'),
-        val => val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal')
+      return convert(this, TxtNum,
+        val => val.has(textValueMatch),
+        val => val.has(ordinalMatch) ? textOrdinal : textCardinal)
     }
     /** convert ordinal to cardinal form, like 'eight', or '8' */
     toCardinal() {
-      return convert(this, 'Cardinal',
-        val => !val.has('#Ordinal'),
-        val => val.has('#TextValue') ? 'TextCardinal' : 'Cardinal')
+      return convert(this, Card,
+        val => !val.has(ordinalMatch),
+        val => val.has(textValueMatch) ? textCardinal : Card)
     }
     /** convert cardinal to ordinal form, like 'eighth', or '8th' */
     toOrdinal() {
-      return convert(this, 'Ordinal',
-        val => val.has('#Ordinal'),
-        val => val.has('#TextValue') ? 'TextOrdinal' : 'Ordinal')
+      return convert(this, Ord,
+        val => val.has(ordinalMatch),
+        val => val.has(textValueMatch) ? textOrdinal : Ord)
     }
     toFraction() {
       return toFraction(this)
@@ -150,9 +156,9 @@ const addMethod = function (View) {
         if (obj.num === null) {
           return val
         }
-        let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
-        if (val.has('#TextValue')) {
-          fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
+        let fmt = val.has(ordinalMatch) ? Ord : Card
+        if (val.has(textValueMatch)) {
+          fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
         }
         const str = format(obj, fmt)
         val = val.not('#Currency')
@@ -177,9 +183,9 @@ const addMethod = function (View) {
           return val
         }
         obj.num = this._add(obj.num, n)
-        let fmt = val.has('#Ordinal') ? 'Ordinal' : 'Cardinal'
+        let fmt = val.has(ordinalMatch) ? Ord : Card
         if (obj.isText) {
-          fmt = val.has('#Ordinal') ? 'TextOrdinal' : 'TextCardinal'
+          fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
         }
         const str = format(obj, fmt)
         val.replaceWith(str, { tags: true })

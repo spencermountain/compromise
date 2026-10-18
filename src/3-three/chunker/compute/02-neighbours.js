@@ -1,3 +1,4 @@
+import { Adj, Cop, Det, NN, Adv, Vb } from '../../../2-two/preTagger/tagSet/_lib.js'
 // simply chunk Nouns as <Noun>
 const byNeighbour = function (document) {
   for (let n = 0; n < document.length; n += 1) {
@@ -12,41 +13,41 @@ const byNeighbour = function (document) {
       const onLeft = document[n][t - 1]
 
       //'is cool' vs 'the cool dog'
-      if (term.tags.has('Adjective')) {
+      if (term.tags.has(Adj)) {
         // 'is cool'
-        if (onLeft && onLeft.tags.has('Copula')) {
-          term.chunk = 'Adjective'
+        if (onLeft && onLeft.tags.has(Cop)) {
+          term.chunk = Adj
           continue
         }
         // 'the cool'
-        if (onLeft && onLeft.tags.has('Determiner')) {
-          term.chunk = 'Noun'
+        if (onLeft && onLeft.tags.has(Det)) {
+          term.chunk = NN
           continue
         }
         // 'cool dog'
-        if (onRight && onRight.tags.has('Noun')) {
-          term.chunk = 'Noun'
+        if (onRight && onRight.tags.has(NN)) {
+          term.chunk = NN
           continue
         }
         continue
       }
       // 'really swimming' vs 'really cool'
-      if (term.tags.has('Adverb') || term.tags.has('Negative')) {
-        if (onLeft && onLeft.tags.has('Adjective')) {
-          term.chunk = 'Adjective'
+      if (term.tags.has(Adv) || term.tags.has('Negative')) {
+        if (onLeft && onLeft.tags.has(Adj)) {
+          term.chunk = Adj
           continue
         }
-        if (onLeft && onLeft.tags.has('Verb')) {
-          term.chunk = 'Verb'
+        if (onLeft && onLeft.tags.has(Vb)) {
+          term.chunk = Vb
           continue
         }
 
-        if (onRight && onRight.tags.has('Adjective')) {
-          term.chunk = 'Adjective'
+        if (onRight && onRight.tags.has(Adj)) {
+          term.chunk = Adj
           continue
         }
-        if (onRight && onRight.tags.has('Verb')) {
-          term.chunk = 'Verb'
+        if (onRight && onRight.tags.has(Vb)) {
+          term.chunk = Vb
           continue
         }
       }

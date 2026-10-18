@@ -1,4 +1,4 @@
-import { red, green, dim, white } from './_color.js'
+import { red, green, dim, white } from '../_color.js'
 const env = globalThis.process?.env ?? globalThis.env ?? {}
 const debug = { tags: Boolean(env.DEBUG_TAGS) }
 

@@ -1,6 +1,6 @@
-import debug from './debug.js'
-import matchDebug from './match-debug.js'
-import hooksDebug from './hooks-debug.js'
+import debug from './debug/debug.js'
+import matchDebug from './debug/match-debug.js'
+import hooksDebug from './debug/hooks-debug.js'
 
 let restoreMatch
 

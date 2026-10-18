@@ -1,4 +1,4 @@
-import debug from '../../../API/debug.js'
+import debug from '../../../API/debug/debug.js'
 import getChildren from './_lib.js'
 
 // remove this tag, and its children, from these terms

@@ -1,5 +1,5 @@
 import debug from './debug.js'
-import { yellow } from './_color.js'
+import { yellow } from '../_color.js'
 
 // Log decisions before splicing replaces the original term.
 const contractionDebug = (term, expansion) => {

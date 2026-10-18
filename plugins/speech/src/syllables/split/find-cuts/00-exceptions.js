@@ -42,6 +42,24 @@ const exceptions = {
   ilyich: [2], // 'il yich': consonantal y in this name
   juan: [], // 'juan':
   wyatt: [2], // 'wy att'
+  // Place names retain their recognizable compound boundaries.
+  batesville: [5], // bates-ville
+  belleville: [5], // belle-ville
+  bridgeport: [6], // bridge-port
+  cambridgeport: [3, 9], // cam-bridge-port
+  cambridgeside: [3, 9], // cam-bridge-side
+  janesville: [5], // janes-ville
+  roseberry: [4, 7], // rose-ber-ry
+  roseville: [4], // rose-ville
+  // These names retain vowels that the general spelling rules suppress or blend.
+  belge: [3], // bel-ge
+  canadienne: [2, 4, 6], // ca-na-di-enne
+  mildred: [3], // mil-dred
+  nietzsche: [5], // nietz-sche
+  odea: [1, 3], // o-de-a
+  // The two written o's belong to separate syllables in these words.
+  zoologist: [2, 4, 5], // zo-ol-o-gist
+  zoology: [2, 4, 5], // zo-ol-o-gy
 }
 
 const checkExceptions = str => {

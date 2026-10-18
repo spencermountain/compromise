@@ -1,6 +1,6 @@
 import test from 'tape'
 import nlp from '../_lib.js'
-import data from './worm-test.js'
+import data from './test-data.js'
 const here = '[plugins/speech/tests/worm] '
 
 test(here, function (t) {

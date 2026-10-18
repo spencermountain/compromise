@@ -28,14 +28,7 @@ const nodeBuild = {
       file: 'builds/compromise-speed.min.js',
       format: 'umd',
       name: 'compromiseSpeed',
-      plugins: [
-        terser({ keep_classnames: true }),
-        sizeCheck({
-          expect: 2,
-          warn: 5, // acceptable (+/-)
-          throw: 10, // unacceptable (+/-)
-        }),
-      ],
+      plugins: [terser({ keep_classnames: true })],
     },
     {
       file: 'builds/compromise-speed.mjs',
@@ -54,7 +47,14 @@ const browserBuild = {
       file: 'builds/compromise-speed.browser.min.js',
       format: 'umd',
       name: 'compromiseSpeed',
-      plugins: [terser()],
+      plugins: [
+        terser(),
+        sizeCheck({
+          expect: 2,
+          warn: 5, // acceptable (+/-)
+          throw: 10, // unacceptable (+/-)
+        }),
+      ],
     },
   ],
 }

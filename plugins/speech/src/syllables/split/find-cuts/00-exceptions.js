@@ -40,6 +40,8 @@ const exceptions = {
   everything: [3, 5], // 'eve ry thing',
   everybody: [3, 5, 7], //'eve ry bo dy',
   ilyich: [2], // 'il yich': consonantal y in this name
+  juan: [], // 'juan':
+  wyatt: [2], // 'wy att'
 }
 
 const checkExceptions = str => {

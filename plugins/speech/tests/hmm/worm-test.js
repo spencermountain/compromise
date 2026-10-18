@@ -1837,7 +1837,7 @@ export default {
   herrlinger: 3,
   hesse: 1,
   hessian: 2,
-  heterogeneous: 5,
+  heterogeneous: 6, // Adjusted from 5: Cambridge pronunciation has six syllables (https://dictionary.cambridge.org/us/pronunciation/english/heterogeneous).
   hicksville: 2,
   hideo: 3,
   hille: 1,
@@ -3909,7 +3909,7 @@ export default {
   surmises: 3,
   surpluses: 3,
   surprises: 3,
-  surrealisms: 4,
+  surrealisms: 5, // Adjusted from 4: use Cambridge's five-syllable US surrealism; the UK variant has four (https://dictionary.cambridge.org/pronunciation/english/surrealism).
   surrette: 2,
   surrounded: 3,
   surtaxes: 3,

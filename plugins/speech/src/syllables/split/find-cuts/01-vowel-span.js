@@ -63,6 +63,9 @@ const separate = [
   /^ide(?=a)/, // idea, ideal; not deal
   /^sovi(?=et)/, // Soviet and its derivatives retain separate i and e sounds
   /^soci(?=et)/, // society, societies, societal; not social
+  /i(?=ell[aoi])/, // Gabriella, Gabrielli, -iello names; not field
+  /i(?=et(?:te)?s?$)/, // Juliet, Henriette
+  /^qui(?=et)/, // quiet keeps its separate vowels in quietly and quieter
   /^acre(?=age)/, // acreage retains the vowel of acre before -age
   /^sci(?=on)/, // scion has two vowels, unlike the ending in vision
   /^intra(?=[aeiou])/, // intrauterine, intraocular
@@ -82,6 +85,7 @@ const joined = [
   { before: 1, after: 1, match: /^(ai|au|ay|ea|ee|ei|eu|ey|ie|oa|oe|oi|oo|ou|oy|ue|ui)$/ },
   { before: 3, after: 2, match: /^llion/ }, // million, unlike lion
   { before: 2, after: 3, match: /^[cst]i(?:on|an|al|ous)/ }, // nation, special, musician
+  { before: 2, after: 4, match: /^cia(?:s|['’]s)?$/ }, // final -cia blends; association and glaciation keep separate vowels
   { before: 2, after: 1, match: /^eau$/ }, // extend ea to eau in beautiful
   { before: 1, after: 3, match: /^ae(?:r|st)/ }, // aerospace, aesthetic
   { before: 2, after: 3, match: /^[cg]eous/ }, // gorgeous, herbaceous; not courteous

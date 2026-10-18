@@ -1,6 +1,7 @@
 import find from './find/index.js'
 import parseDates from './parse/index.js'
 import toJSON from './toJSON.js'
+import arithmetic from './arithmetic/index.js'
 
 const quickDate = function (view, str) {
   const tmp = view.fromText(str)
@@ -68,6 +69,18 @@ const api = function (View) {
         return m
       })
       return new Dates(this.document, res.pointer, null, this.opts)
+    }
+
+    add(amount, unit = 'day') {
+      const res = arithmetic(this, amount, unit)
+      return new Dates(this.document, res.pointer, null, this.opts)
+    }
+
+    subtract(amount, unit = 'day') {
+      if (!Number.isFinite(amount)) {
+        return this
+      }
+      return this.add(-amount, unit)
     }
 
     /** return only dates occuring before a given date  */

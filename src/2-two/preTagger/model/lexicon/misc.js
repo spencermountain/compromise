@@ -1,23 +1,23 @@
 import {
-  Poss, PRP, Organization, SportsTeam, Date, Unit, Conj, Cop, VBD, Pres, Abbreviation, JJR, JJS,
-  MD, VBG,
+  Poss, Pron, Org, SportsTeam, Date, Unit, Conj, Cop, Past, Pres, Abbr, Comp, Sup,
+  Mod, Ger,
 } from '../../tagSet/_lib.js'
 
-const prp = [Poss, PRP]
+const prp = [Poss, Pron]
 // Unpacked spellings and explicit multi-tag entries, plus conjugation exceptions.
 // Ordinary words supplied by data/lexicon must not be repeated here.
 const misc = {
   // numbers
-  '20th century fox': Organization,
-  '7 eleven': Organization,
-  'motel 6': Organization,
-  '23andme': Organization,
-  '4chan': Organization,
-  'yahoo!': Organization,
+  '20th century fox': Org,
+  '7 eleven': Org,
+  'motel 6': Org,
+  '23andme': Org,
+  '4chan': Org,
+  'yahoo!': Org,
 
-  u2: Organization,
-  g8: Organization,
-  vh1: Organization,
+  u2: Org,
+  g8: Org,
+  vh1: Org,
   '76ers': SportsTeam,
   '49ers': SportsTeam,
 
@@ -43,20 +43,20 @@ const misc = {
   yd3: Unit,
 
   // ampersands
-  'at&t': Organization,
-  'black & decker': Organization,
-  'h & m': Organization,
-  'johnson & johnson': Organization,
-  'procter & gamble': Organization,
-  "ben & jerry's": Organization,
+  'at&t': Org,
+  'black & decker': Org,
+  'h & m': Org,
+  'johnson & johnson': Org,
+  'procter & gamble': Org,
+  "ben & jerry's": Org,
   '&': Conj,
 
   // copulas
-  was: [Cop, VBD],
+  was: [Cop, Past],
   is: [Cop, Pres],
   are: [Cop, Pres],
   am: [Cop, Pres],
-  were: [Cop, VBD],
+  were: [Cop, Past],
 
   // possessive pronouns
   her: prp,
@@ -67,27 +67,27 @@ const misc = {
   your: prp,
 
   // misc
-  vs: [Conj, Abbreviation],
-  closer: JJR,
-  closest: JJS,
-  may: MD,
+  vs: [Conj, Abbr],
+  closer: Comp,
+  closest: Sup,
+  may: Mod,
 
   // irregular conjugations with two forms
-  babysat: VBD,
-  blew: VBD,
-  drank: VBD,
-  drove: VBD,
-  forgave: VBD,
-  skiied: VBD,
-  stung: VBD,
-  swam: VBD,
-  swung: VBD,
-  guaranteed: VBD,
+  babysat: Past,
+  blew: Past,
+  drank: Past,
+  drove: Past,
+  forgave: Past,
+  skiied: Past,
+  stung: Past,
+  swam: Past,
+  swung: Past,
+  guaranteed: Past,
 
   // support 'near', 'nears', 'nearing'
   nears: Pres,
-  nearing: VBG,
-  neared: VBD,
+  nearing: Ger,
+  neared: Past,
 
 }
 export default misc

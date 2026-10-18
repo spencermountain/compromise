@@ -3,6 +3,7 @@ export default [
   // clues: [person, verb],
   // fallback: 'PresentTense', //maybe?
   'biff',
+  'bill',
   'blaze',
   'blossom',
   'bob',
@@ -31,7 +32,6 @@ export default [
   'wade',
   // 'hope',
   // 'trace',
-  // 'bill',
   // 'will',
   // 'sung'
   // 'may'

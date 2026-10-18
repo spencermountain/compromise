@@ -1,8 +1,8 @@
+import tags from '../../tagSet/aliases.js'
+
+const { JJ: Adj, NN: Noun, V: Verb } = tags
 //prefixes give very-little away, in general.
 // more-often for scientific terms, etc.
-const Adj = 'Adjective'
-const Noun = 'Noun'
-const Verb = 'Verb'
 
 export default [
   null,

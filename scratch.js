@@ -1,15 +1,36 @@
-import fs from 'node:fs'
-import nlp from './src/two.js'
+/* eslint-disable no-console */
+import nlp from './src/three.js'
+
+const section = name => console.log(`\n── ${name} ──\n`)
+
+section('hooks: spec snapshots after each stage')
+nlp.verbose('hooks')
+nlp("She won't work your magic.")
+
+section('tagger: changes grouped by rule')
 nlp.verbose('tagger')
-// const book = fs.readFileSync(new URL('./scripts/bench/infinite-jest.txt', import.meta.url), 'utf8')
+nlp('work your magic')
 
-// lexicon:        512ms
-// preTagger:      968ms
-// contractionTwo: 155ms
-// left-right:     104ms
-// main-sweep:    2731ms
-// second-sweep:   696ms
+section('tagger: focus on one word')
+nlp.verbose('tagger', { word: 'work' })
+nlp('work your magic')
 
-// const doc = nlp('dude we should').debug()
-const doc = nlp('the poor eat rice').debug()
-// console.log(`${doc.docs.length.toLocaleString()} sentences; ${doc.wordCount().toLocaleString()} words`)
+section('contractions: expansions, possessives, and revisions')
+nlp.verbose('contractions')
+nlp("She's walking. John's car won't start. I wanna pickle.")
+
+section('match: successful and unsuccessful patterns')
+// Parse quietly so only our explicit matches are logged.
+nlp.verbose(false)
+const doc = nlp('The red boat sailed away.')
+nlp.verbose('match')
+doc.match('#Determiner #Adjective #Noun')
+doc.match('#Noun #Adjective')
+
+section('true: all traces nested inside their hooks')
+nlp.verbose(true) // nlp.verbose() does the same thing
+nlp("She won't work your magic.")
+
+section('false: tracing disabled')
+nlp.verbose(false)
+console.log(nlp('work your magic').text())

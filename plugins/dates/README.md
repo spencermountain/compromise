@@ -1,30 +1,33 @@
 <div align="center">
-  <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
-
+  <div><b>compromise-dates</b></div>
   <div>date-parsing plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
-
-  <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-dates">
+  <div><code>npm install compromise-dates</code></div>
+  <div align="center">
+    <sub>
+      by
+      <a href="https://github.com/spencermountain">Spencer Kelly</a>
+    </sub>
+  </div>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
+</div>
+<!--2nd row-->
+<div align="center">
+  <div>
+    <a href="https://npmjs.org/package/compromise-dates">
     <img src="https://img.shields.io/npm/v/compromise-dates.svg?style=flat-square" />
   </a>
-
-  <!-- file size -->
-  <a href="https://unpkg.com/compromise-dates/builds/compromise-dates.min.js">
-    <img src="https://img.shields.io/bundlephobia/min/compromise-dates" />
+  <a href="https://bundlephobia.com/result?p=compromise-dates">
+    <img src="https://badgen.net/bundlejs/min/compromise-dates" />
   </a>
-
-  <div align="center">
-    <code>npm install compromise-dates</code>
   </div>
 </div>
-
 <!-- spacer -->
-<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-This library is an earnest attempt to get date information out of text, in a clear way -
+This library is a very-earnest attempt to parse date information out of text, in a clear way -
 
 <div >
-<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>- including all informal text formats, and folksy shorthands.
+<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/><i>- including all informal text formats, and folksy shorthands.</i>
 </div>
 
 <!-- spacer -->
@@ -54,13 +57,13 @@ doc.dates().get()[0]
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Tokenization</i></b> and <b><i>disambiguation</i></b> with compromise</i>.
 </div>
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Timezone</i></b> and <b><i>DST</i></b> reckoning with <a href="https://github.com/spencermountain/spacetime">spacetime <sup>[1]</sup></a>
-</div>
-<div align="left">
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Number-parsing</i></b> with <i><a href="https://github.com/spencermountain/compromise/tree/master/plugins/numbers">compromise-numbers <sup>[1]</sup></a></i>
 </div>
 <div align="left">
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Timezone reconciliation</i></b> with <a href="https://github.com/spencermountain/spacetime-informal">spacetime-informal <sup>[1]</sup></a>
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Timezone</i></b> and <b><i>DST</i></b> reckoning with <a href="https://github.com/spencermountain/spacetime">spacetime <sup>[1]</sup></a>
+</div>
+<div align="left">
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>• <b><i>Timezone reconciliation</i></b> with <a href="https://github.com/spencermountain/timezone-soft">timezone-soft <sup>[1]</sup></a>
 </div>
 
 <img height="55px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -69,8 +72,8 @@ doc.dates().get()[0]
 
 <img height="35px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-<div align="center">
-<h2><a href="http://compromise.cool/dates/">Demo</a></h2>
+<div align="left">
+  <h3><a href="https://work.spencermountain.dev/compromise/plugins/dates/">Demo</a></h3>
 </div>
 
 <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -213,7 +216,7 @@ const context = {
   punt: { weeks: 2 }, // the implied duration to use for 'after june 2nd'
   dayStart: '8:00am',
   dayEnd: '5:30pm',
-  dmy : false //assume british-format dates, when unclear
+  dmy: false, //assume british-format dates, when unclear
 }
 
 nlp('in two days').dates(context).get()
@@ -301,10 +304,12 @@ As expected, _first monday of January_ will always be in January.
 by default, we use the same interpretation of dates as javascript does - we assume `01/02/2020` is Jan 2nd, (US-version) but allow `13/01/2020` to be Jan 13th (UK-version).
 
 if you want to co-erce an interpretation of `02/03/1999`, you can set it with the `dmy:true` option:
+
 ```js
 nlp('02/03/1999').dates().get() //February 3
-nlp('02/03/1999').dates({dmy:true}).get() // March 2
+nlp('02/03/1999').dates({ dmy: true }).get() // March 2
 ```
+
 ISO dates, (like `1999-03-02`) are unaffected by the change.
 
 ### _Seasons:_
@@ -372,9 +377,6 @@ nlp.extend(function (Doc, world) {
 
 ### _About:_
 
-<!-- spacer -->
-<img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
 <div align="left">
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>1 - <b>Regular-expressions</b> are too-brittle to parse dates.
 </div>
@@ -408,10 +410,9 @@ The _[match-syntax](https://observablehq.com/@spencermountain/compromise-match-s
 - [rrule](https://github.com/jakubroztocil/rrule) - repeating date-interval handler (js)
 - [ParseDateTime](https://pypi.org/project/parsedatetime/) by Mike Taylor (Python)
 
-<div align="center">
-  <img height="40px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</div>
+<!-- spacer -->
+<img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-compromise-date is sponsored by <a href="https://www.simform.com/"><img src="https://user-images.githubusercontent.com/399657/107404468-4f3de700-6ad4-11eb-9d60-7a90625b57d6.png" width="150px"/></a>
+PRs welcome
 
-**MIT** licenced
+MIT

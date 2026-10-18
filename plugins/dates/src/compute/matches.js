@@ -105,8 +105,8 @@ const matches = [
   { match: '#Value #Duration of #Date', tag: 'Date', reason: 'third week of may' },
   //two days after
   { match: '#Value+ #Duration (after|before|into|later|afterwards|ago)?', tag: 'Date', reason: 'two days after' },
-  //two days
-  { match: '#Value #Date', tag: 'Date', reason: 'two days' },
+  //two days - don't absorb amounts before 'yesterday'
+  { match: '#Value #Date', notIf: '(#Money|#Percentage)', tag: 'Date', reason: 'two days' },
   //june 5th
   { match: '#Date #Value', tag: 'Date', reason: 'june 5th' },
   //tuesday at 5
@@ -287,7 +287,7 @@ const matches = [
   //'spa day'
   { match: '^day$', unTag: 'Date', reason: 'spa-day' },
   // tomorrow's meeting
-  { match: '(in|of|by|for)? (#Possessive && #Date)', unTag: 'Date', reason: 'tomorrows meeting' },
+  { match: '(in|of|by|for)? (#Possessive && #Date) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
   //yesterday 7
   { match: `${knownDate} [#Value]$`, unTag: 'Date', group: 0, reason: 'yesterday-7' },
   //7 yesterday

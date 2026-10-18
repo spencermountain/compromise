@@ -1,5 +1,6 @@
 //adjectives that convert to superlative/comparative form
 export default [
+  'fruity',
   'absurd',
   'angry',
   'awesome',
@@ -16,7 +17,6 @@ export default [
   'bold',
   'bouncy',
   'brash',
-  'brave',
   'bright',
   'brilliant',
   'broad',
@@ -30,7 +30,6 @@ export default [
   'clever',
   'cloudy',
   'coarse',
-  'cold',
   'common',
   'costly',
   'cowardly',
@@ -201,7 +200,6 @@ export default [
   'rapid',
   'rare',
   'raw',
-  'ready',
   'real',
   'red',
   'remote',
@@ -275,7 +273,6 @@ export default [
   'tame',
   'tart',
   'tawdry',
-  'tense',
   'thick',
   'thirsty',
   'tidy',

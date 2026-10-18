@@ -110,6 +110,6 @@ Anchors refer to the current input span:
 
 For experiments, use `nlp.verbose(true)` to inspect tagging decisions and
 `doc.debug()` to inspect final tags. Regression examples belong in
-`tests/two/regression/oct-rule-cleanup.hmm.js`. Compare representative text as well
+`tests/02-two/regression/oct-rule-cleanup.hmm.js`. Compare representative text as well
 as focused examples when moving rules between stages: earlier changes can alter
 which later rules match.

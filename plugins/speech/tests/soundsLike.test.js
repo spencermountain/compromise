@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/speech/tests/soundsLike] '
 
-test('soundsLike-tests', function (t) {
+test(here + 'soundsLike-tests', function (t) {
   const arr = [
     ['phil collins', 'fil kolins'],
     ['Philadelphia freedom', 'filatelfia fretom'],

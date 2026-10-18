@@ -7,7 +7,7 @@ const apply = (term, rule, world) => {
   for (let i = 0; i < actions.length; i += 1) {
     const action = actions[i]
     if (action.unTag) {
-      unTag(terms, action.unTag, world.model.one.tagSet)
+      unTag(terms, action.unTag, world.model.one.tagSet, reason)
       continue
     }
     setTag(terms, action.tag, world, rule.safe, reason)

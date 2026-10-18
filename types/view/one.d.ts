@@ -1,4 +1,14 @@
-import type { Document, Pointer, Groups, JsonProps, outMethods, matchOptions, Term, Net, ParsedMatch } from '../misc.d.ts'
+import type {
+  Document,
+  Pointer,
+  Groups,
+  JsonProps,
+  outMethods,
+  matchOptions,
+  Term,
+  Net,
+  ParsedMatch,
+} from '../misc.d.ts'
 
 export type Matchable = string | View | Net | ParsedMatch
 
@@ -44,7 +54,7 @@ declare class View {
   termList: () => Term[]
 
   /** run a named operation on the document */
-  compute: (method: string | string[]) => View
+  compute: (method: string | string[], options?: any) => View
   /** deep-copy the document, so that no references remain */
   clone: (shallow?: boolean) => View
 
@@ -122,7 +132,7 @@ declare class View {
   /** expand the view with any left-or-right matches*/
   grow: (match: Matchable, group?: string | number, options?: matchOptions) => View
   /** apply a sequence of match objects to the document */
-  sweep: (match: Net, opts?: object) => { view: View, found: object[] }
+  sweep: (match: Net, opts?: object) => { view: View; found: object[] }
 
   /** .split() [alias] */
   splitOn: (match?: Matchable, group?: string | number) => View
@@ -198,7 +208,6 @@ declare class View {
   /** add parentheses around selections */
   toParentheses: (start?: string, end?: string) => View
 
-
   // Output
   /** return the document as text */
   text: (options?: string | object) => string
@@ -212,7 +221,6 @@ declare class View {
   html: (toHighlight: object) => string
   /** produce an html string */
   wrap: (matches: object) => string
-
 
   // ### Pointers
   /** return all matches without duplicates */
@@ -229,7 +237,6 @@ declare class View {
   complement: (match: Matchable) => View
   /** remove overlaps in matches */
   settle: (match: Matchable) => View
-
 
   // Tag
   /** Give all terms the given tag */
@@ -256,7 +263,6 @@ declare class View {
   lookup: (trie: object | string[], opts?: object) => View
   /** assume any type-ahead prefixes */
   autoFill: () => View
-
 }
 
 export default View

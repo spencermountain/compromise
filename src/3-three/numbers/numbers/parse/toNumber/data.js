@@ -83,5 +83,6 @@ export default {
     sextillion: 1e21,
     septillion: 1e24,
     grand: 1000,
+    dozen: 12,
   },
 }

@@ -1,4 +1,7 @@
-const v = 'Infinitive'
+import tagWords from '../_lib.js'
+import tags from '../../tagSet/aliases.js'
+
+const { Inf: v } = tags
 
 export default {
   beforeTags: {
@@ -21,82 +24,31 @@ export default {
     Superlative: v, //feel greatest
   },
   beforeWords: {
-    i: v, //i date
-    we: v, //we date
-    you: v, //you date
-    they: v, //they date
-    to: v, //to date
-    please: v, //please check
-    will: v, //will check
-    have: v,
-    had: v,
-    would: v,
-    could: v,
-    come: v,
-    should: v,
-    do: v,
-    did: v,
-    does: v,
-    can: v,
-    must: v,
-    us: v,
-    me: v,
-    let: v,
-    even: v,
-    when: v,
-    help: v, //help combat
+    // i date; we date; you date; they date; to date; please check; will check; help combat
+    ...tagWords(
+      'i we you they to please will have had would could come should do did does can must us me ' +
+      'let even when help',
+      v
+    ),
     // them: v,
-    he: v,
-    she: v,
-    it: v,
-    being: v,
+    ...tagWords('he she it being', v),
     // prefixes
-    bi: v,
-    co: v,
-    contra: v,
-    de: v,
-    inter: v,
-    intra: v,
-    mis: v,
-    pre: v,
-    out: v,
-    counter: v,
-    nobody: v,
-    somebody: v,
-    anybody: v,
-    everybody: v,
+    ...tagWords('bi co contra de inter intra mis pre out counter nobody somebody anybody everybody', v),
     // un: v,
     // over: v,
     // under: v,
-    now: v, //now dance
-    go: v, //go dance
-    said: v, //he said run
-    says: v, //simon says run
-    say: v, //they say run
-    who: v, //who runs faster
-    what: v, //what runs faster
+    // now dance; go dance; he said run; simon says run; they say run; who runs faster; what runs faster
+    ...tagWords('now go said says say who what', v),
     // most: v, //most run faster
     // some: v, //some run faster
   },
   afterWords: {
-    the: v, //echo the
-    me: v, //date me
-    you: v, //date you
-    him: v, //loves him
-    us: v, //cost us
-    her: v, //
-    his: v, //
-    them: v, //
-    they: v, //
-    it: v, //hope it
-    himself: v,
-    herself: v,
-    itself: v,
-    myself: v,
-    ourselves: v,
-    themselves: v,
-    something: v,
-    anything: v,
+    // echo the; date me; date you; loves him; cost us; hope it
+    ...tagWords(
+      'the me you him us her his them they it himself herself itself myself ourselves themselves ' +
+      'something anything',
+      v
+    ),
 
     a: v, //covers a
     an: v, //covers an
@@ -119,16 +71,7 @@ export default {
     although: v, //
     // after: v,
     // before: v,//
-    how: v, //
-    otherwise: v, //
-    together: v, //fit together
-    though: v, //
-    into: v, //
-    yet: v, //
-    more: v, //kill more
-    here: v, // look here
-    there: v, //
-    away: v, //float away
-    now: v, //dance now
+    // fit together; kill more; look here; float away; dance now
+    ...tagWords('how otherwise together though into yet more here there away now', v),
   },
 }

@@ -1,4 +1,5 @@
 export default [
+  ['¢', 'cent'],
   ['$', 'dollar'],
   ['€', 'EUR'],
   ['£', 'GBP'],

@@ -1,17 +1,17 @@
 const fns = {
   /** add metadata to term objects */
-  compute: function (input) {
+  compute: function (input, options) {
     const { world } = this
     const compute = world.compute
     // do one method
     if (typeof input === 'string' && Object.hasOwn(compute, input)) {
-      compute[input](this)
+      compute[input](this, options)
     }
     // allow a list of methods
     else if (Array.isArray(input)) {
       input.forEach(name => {
         if (Object.hasOwn(world.compute, name)) {
-          compute[name](this)
+          compute[name](this, options)
         } else {
           console.warn('no compute:', input) // eslint-disable-line
         }
@@ -19,7 +19,7 @@ const fns = {
     }
     // allow a custom compute function
     else if (typeof input === 'function') {
-      input(this)
+      input(this, options)
     } else {
       console.warn('no compute:', input) // eslint-disable-line
     }

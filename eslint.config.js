@@ -69,5 +69,23 @@ export default [
       'regexp/prefer-range': 'off',
       'regexp/no-unused-capturing-group': 'off',
     },
+  },
+  {
+    files: ['tests/**/*.test.js'],
+    rules: {
+      'no-restricted-imports': ['error', {
+        patterns: [{
+          group: ['**/src/one.js', '**/src/two.js', '**/src/three.js', '**/builds/**'],
+          message: 'Import the tier’s tests/_lib.js so TESTENV=prod exercises the build.',
+        }],
+      }],
+    },
+  },
+  {
+    files: ['tests/**/*.js'],
+    rules: {
+      'no-async-promise-executor': 'error',
+      'no-promise-executor-return': 'error',
+    }
   }
 ]

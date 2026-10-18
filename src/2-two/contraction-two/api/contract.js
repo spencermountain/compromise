@@ -1,10 +1,6 @@
 const postPunct = /[,)"';:\-–—.…]/
 
-const setContraction = function (m, suffix) {
-  if (!m.found) {
-    return
-  }
-  const terms = m.termList()
+const contractTerms = function (terms, suffix) {
   //avoid any problematic punctuation
   for (let i = 0; i < terms.length - 1; i++) {
     const t = terms[i]
@@ -27,6 +23,11 @@ const setContraction = function (m, suffix) {
   }
 }
 
+// contract each match on its own
+const setContraction = function (m, suffix) {
+  m.docs.forEach(terms => contractTerms(terms, suffix))
+}
+
 /** turn 'i am' into i'm */
 const contract = function () {
   const doc = this.not('@hasContraction')
@@ -45,9 +46,12 @@ const contract = function () {
   // spencer would -> spencer'd
   m = doc.match('#Person would')
   setContraction(m, `'d`)
-  // would not -> wouldn't
-  m = doc.match('(is|was|had|would|should|could|do|does|have|has|can) not')
+  // would not -> wouldn't (skip words already contracted above, like he's)
+  m = doc.match('(is|was|were|had|would|should|could|do|does|did|have|has) not').ifNo('@hasContraction')
   setContraction(m, `n't`)
+  // can not -> can't
+  m = doc.match('can not')
+  setContraction(m, `'t`)
   // i have -> i've
   m = doc.match('(i|we|they) have')
   setContraction(m, `'ve`)

@@ -1,3 +1,4 @@
+import resolveAliases from './aliases.js'
 import { canCheck, getBoundary } from './_lib.js'
 import { isFixed } from '../../../match/methods/match/_fixed.js'
 
@@ -81,15 +82,12 @@ const getWants = function (regs) {
 const parse = function (matches, world) {
   const parseMatch = world.methods.one.parseMatch
   matches.forEach(obj => {
+    resolveAliases(obj, world.model.one.tagAliases)
     obj.regs = parseMatch(obj.match, {}, world)
     obj.fixed = isFixed(obj.regs)
     obj.checkFirst = canCheck(obj.regs[0])
     obj.startTerm = getBoundary(obj.regs[0], 'start')
     obj.endTerm = getBoundary(obj.regs[obj.regs.length - 1], 'end')
-    // wrap these ifNo properties into an array
-    if (typeof obj.ifNo === 'string') {
-      obj.ifNo = [obj.ifNo]
-    }
     if (obj.notIf) {
       obj.notIf = parseMatch(obj.notIf, {}, world)
     }

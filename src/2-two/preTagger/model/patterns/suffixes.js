@@ -1,19 +1,11 @@
+import tagWords from '../_lib.js'
+import tags from '../../tagSet/aliases.js'
+
+const {
+  JJ: Adj, Inf, Pres, Sing, VBD: Past, RB: Avb, NNS: Plrl, Actor,
+  V: Vb, NN: Noun, NNP: Prop, Last, Modal, Place, VBN: Participle
+} = tags
 //just a foolish lookup of known suffixes
-const Adj = 'Adjective'
-const Inf = 'Infinitive'
-const Pres = 'PresentTense'
-const Sing = 'Singular'
-const Past = 'PastTense'
-const Avb = 'Adverb'
-const Plrl = 'Plural'
-const Actor = 'Actor'
-const Vb = 'Verb'
-const Noun = 'Noun'
-const Prop = 'ProperNoun'
-const Last = 'LastName'
-const Modal = 'Modal'
-const Place = 'Place'
-const Prt = 'Participle'
 
 export default [
   null,
@@ -53,16 +45,12 @@ export default [
     que: Adj,
     ger: Noun,
     ber: Noun,
-    rol: Sing,
-    sis: Sing,
-    ogy: Sing,
-    oid: Sing,
-    ian: Sing,
+    ...tagWords('rol sis ogy oid ian', Sing),
     zes: Pres,
     eld: Past,
-    ken: Prt, //awoken
-    ven: Prt, //woven
-    ten: Prt, //brighten
+    ken: Participle, //awoken
+    ven: Participle, //woven
+    ten: Participle, //brighten
     ect: Inf,
     ict: Inf,
     // ide: Inf,
@@ -75,13 +63,7 @@ export default [
   },
   {
     //4-letter
-    amed: Past,
-    aped: Past,
-    ched: Past,
-    lked: Past,
-    rked: Past,
-    reed: Past,
-    nded: Past,
+    ...tagWords('amed aped ched lked rked reed nded', Past),
     mned: Adj,
     cted: Past,
     dged: Past,
@@ -104,11 +86,7 @@ export default [
     ices: Plrl,
     ints: Plrl,
     ruct: Inf,
-    ines: Plrl,
-    ions: Plrl,
-    ners: Plrl,
-    pers: Plrl,
-    lers: Plrl,
+    ...tagWords('ines ions ners pers lers', Plrl),
     less: Adj,
     llen: Adj,
     made: Adj,
@@ -129,22 +107,8 @@ export default [
     fier: Sing,
     wned: Past,
     gent: Sing,
-    tist: Actor,
-    pist: Actor,
-    rist: Actor,
-    mist: Actor,
-    yist: Actor,
-    vist: Actor,
-    ists: Actor,
-    lite: Sing,
-    site: Sing,
-    rite: Sing,
-    mite: Sing,
-    bite: Sing,
-    mate: Sing,
-    date: Sing,
-    ndal: Sing,
-    vent: Sing,
+    ...tagWords('tist pist rist mist yist vist ists', Actor),
+    ...tagWords('lite site rite mite bite mate date ndal vent', Sing),
     uist: Actor,
     gist: Actor,
     note: Sing,
@@ -152,29 +116,14 @@ export default [
     ence: Sing, //absence
     wide: Adj, //nationwide
     // side: Adj,//alongside
-    vide: Inf, //provide
-    ract: Inf,
-    duce: Inf,
-    pose: Inf,
-    eive: Inf,
-    lyze: Inf,
-    lyse: Inf,
-    iant: Adj,
-    nary: Adj,
-    ghty: Adj,
-    uent: Adj,
+    // provide
+    ...tagWords('vide ract duce pose eive lyze lyse', Inf),
+    ...tagWords('iant nary ghty uent', Adj),
     erer: Actor, //caterer
     bury: Place,
     dorf: Noun,
     esty: Noun,
-    wych: Place,
-    dale: Place,
-    folk: Place,
-    vale: Place,
-    abad: Place,
-    sham: Place,
-    wick: Place,
-    view: Place,
+    ...tagWords('wych dale folk vale abad sham wick view', Place),
   },
   {
     //5-letter
@@ -202,38 +151,17 @@ export default [
     tures: Plrl,
     wards: Avb,
     where: Avb,
-    archy: Noun,
-    pathy: Noun,
-    opoly: Noun,
-    embly: Noun,
-    phate: Noun,
+    ...tagWords('archy pathy opoly embly phate', Noun),
     ndent: Sing,
     scent: Sing,
-    onist: Actor,
-    anist: Actor,
-    alist: Actor,
-    olist: Actor,
-    icist: Actor,
+    ...tagWords('onist anist alist olist icist', Actor),
     ounce: Inf,
-    iable: Adj,
-    borne: Adj,
-    gnant: Adj,
-    inant: Adj,
-    igent: Adj,
-    atory: Adj,
+    ...tagWords('iable borne gnant inant igent atory', Adj),
     // ctory: Adj,
     rient: Sing,
     dient: Sing,
     maker: Actor,
-    burgh: Place,
-    mouth: Place,
-    ceter: Place,
-    ville: Place,
-    hurst: Place,
-    stead: Place,
-    endon: Place,
-    brook: Place,
-    shire: Place,
+    ...tagWords('burgh mouth ceter ville hurst stead endon brook shire', Place),
     worth: Noun,
     field: Prop,
     ridge: Place,
@@ -241,10 +169,7 @@ export default [
   {
     //6-letter
     auskas: Last,
-    parent: Sing,
-    cedent: Sing,
-    ionary: Sing,
-    cklist: Sing,
+    ...tagWords('parent cedent ionary cklist', Sing),
     brooke: Place,
     keeper: Actor,
     logist: Actor,
@@ -252,11 +177,7 @@ export default [
     worker: Actor,
     master: Actor,
     writer: Actor,
-    brough: Place,
-    cester: Place,
-    ington: Place,
-    cliffe: Place,
-    ingham: Place,
+    ...tagWords('brough cester ington cliffe ingham', Place),
   },
   {
     //7-letter

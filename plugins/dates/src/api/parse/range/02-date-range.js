@@ -63,16 +63,15 @@ export default [
     desc: 'june 5 to june 7',
     parse: (m, context) => {
       const res = m.groups()
-      let start = res.from
-      if (res.year) {
-        start = start.append(res.year)
+      let start = res.from.clone()
+      let end = res.to.clone()
+      const year = res.year?.text('reduced')
+      if (year) {
+        start.append(year)
+        end.append(year)
       }
       start = parseDate(start, context)
       if (start) {
-        let end = res.to
-        if (res.year) {
-          end = end.append(res.year)
-        }
         end = parseDate(end, context)
         if (end) {
           // assume end is after start

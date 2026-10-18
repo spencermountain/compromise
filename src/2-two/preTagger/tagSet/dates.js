@@ -1,6 +1,19 @@
 import {
-  V, RB, JJ, Date, NN, WeekDay, Year, FinancialQuarter, Season, Time, Timezone, RomanNumeral,
-  Fraction, NNP, AtMention,
+  Vb,
+  Adv,
+  Adj,
+  Date,
+  NN,
+  WeekDay,
+  Year,
+  FinancialQuarter,
+  Season,
+  Time,
+  Timezone,
+  RomanNumeral,
+  Frac,
+  Prop,
+  AtMention,
 } from './_lib.js'
 
 // Calendar/clock components are distinct. Holiday and Duration describe spans
@@ -8,7 +21,7 @@ import {
 // Each exclusion pair is declared once; the tag compiler supplies reciprocity.
 export default {
   Date: {
-    not: [V, RB, JJ],
+    not: [Vb, Adv, Adj],
   },
   Month: {
     is: Date,
@@ -26,7 +39,8 @@ export default {
   },
   FinancialQuarter: {
     is: Date,
-    not: [Fraction, Season, Time, Timezone],
+    aliases: [null, 'Quarter'],
+    not: [Frac, Season, Time, Timezone],
   },
   // 'easter'
   Holiday: {
@@ -40,8 +54,9 @@ export default {
   },
   Timezone: {
     is: Date,
+    aliases: [null, 'Tz'],
     also: [NN],
-    not: [NNP],
+    not: [Prop],
   },
   Time: {
     is: Date,
@@ -49,6 +64,7 @@ export default {
   },
   // 'months'
   Duration: {
+    aliases: [null, 'Dur'],
     is: Date,
     also: [NN],
   },

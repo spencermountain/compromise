@@ -10,18 +10,25 @@ export default {
       file: 'builds/compromise-payload.cjs',
       format: 'umd',
       name: 'compromisePayload',
-      plugins: [sizeCheck()],
+      plugins: [],
     },
     {
       file: 'builds/compromise-payload.min.js',
       format: 'umd',
       name: 'compromisePayload',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [
+        terser({ keep_classnames: true }),
+        sizeCheck({
+          expect: 2,
+          warn: 5, // acceptable (+/-)
+          throw: 10, // unacceptable (+/-)
+        }),
+      ],
     },
     {
       file: 'builds/compromise-payload.mjs',
       format: 'esm',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [terser({ keep_classnames: true })],
     },
   ],
 }

@@ -30,12 +30,13 @@ export default {
   // remove commas, semicolons - but keep sentence-ending punctuation
   'punctuation': (doc) => {
     termLoop(doc, (term) => {
+      term.pre = term.pre.replace(/[,،]/g, '')
       // turn dashes to spaces
       term.post = term.post.replace(/[–—-]/g, ' ')
       // remove comma, etc 
-      term.post = term.post.replace(/[,:;]/g, '')
+      term.post = term.post.replace(/[,،:;]/g, '')
       // remove elipses
-      term.post = term.post.replace(/\.{2,}/g, '')
+      term.post = term.post.replace(/…|\.{2,}/g, '')
       // remove repeats
       term.post = term.post.replace(/\?{2,}/g, '?')
       term.post = term.post.replace(/!{2,}/g, '!')

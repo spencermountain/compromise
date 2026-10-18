@@ -78,11 +78,10 @@ const getHooks = function (docCaches, net, document) {
     }
     return maybe
   })
-  // Unindexed rules only use the length check and still run last.
+  // Apply the same exclusions to unindexed rules, preserving their final position.
   lists.forEach((list, n) => {
-    const termCount = document[n].length
     for (let i = 0; i < always.length; i += 1) {
-      if (termCount >= always[i].minWords) {
+      if (canMatch(always[i], docCaches[n], document[n])) {
         list.push(always[i])
       }
     }

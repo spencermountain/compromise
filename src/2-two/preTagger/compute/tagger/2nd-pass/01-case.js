@@ -1,3 +1,4 @@
+import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 import fillTags from '../3rd-pass/_fillTags.js'
 
@@ -32,6 +33,10 @@ const checkCase = function (terms, i, model) {
     if (notProper.find(tag => term.tags.has(tag))) {
       return null
     }
+    // known comparative - 'is Higher than 16'
+    if (term.tags.has('Comparative') && terms[i + 1]?.normal === 'than') {
+      return null
+    }
     // A heading can start a new clause: 'Tutorial: Creating a cake'.
     if (i === 0 && term.tags.has('Gerund') && terms[i + 1]?.tags.has('Determiner')) {
       return null
@@ -45,7 +50,7 @@ const checkCase = function (terms, i, model) {
     }
     fillTags(terms, i, model)
     if (!term.tags.has('Noun') && !term.frozen) {
-      term.tags.clear()
+      unTag([term], '*', model.one.tagSet, '2-titlecase')
     }
     fastTag(term, 'ProperNoun', '2-titlecase')
     return true

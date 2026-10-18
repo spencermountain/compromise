@@ -66,9 +66,9 @@ and how hard it is to actually <b>parse</b> and <i>use</i>?
 
  <!--
   it is
-  <a href="https://docs.compromise.cool/compromise-filesize">small,
-  <a href="https://docs.compromise.cool/compromise-performance">quick</a>,
-  and often <i><a href="https://docs.compromise.cool/compromise-accuracy">good-enough</a></i>.
+  <a href="https://observablehq.com/@spencermountain/compromise-filesize">small,
+  <a href="https://observablehq.com/@spencermountain/compromise-performance">quick</a>,
+  and often <i><a href="https://observablehq.com/@spencermountain/compromise-accuracy">good-enough</a></i>.
   <br/> -->
 </div>
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -112,7 +112,7 @@ doc.match('the #Adjective of times').text()
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-match">match docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-match">match docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
@@ -141,7 +141,7 @@ doc.places().json()
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-json">json docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-json">json docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
@@ -165,7 +165,7 @@ doc.text()
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-contractions">contraction docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-contractions">contraction docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
@@ -183,7 +183,7 @@ doc.text()
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-values">number docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-values">number docs</a>
 </div>
 
 <div align="center">
@@ -202,7 +202,7 @@ doc.text()
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/nouns">noun docs</a>
+  <a href="https://observablehq.com/@spencermountain/nouns">noun docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
@@ -298,7 +298,7 @@ let data = doc.json()
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-tokenization">tokenizer docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-tokenization">tokenizer docs</a>
 </div>
 
 <b>compromise/one</b> splits your text up, wraps it in a handy API,
@@ -340,7 +340,7 @@ let str = doc.match('#Possessive #Noun').text()
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-tagger">tagger docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-tagger">tagger docs</a>
 </div>
 
 <p>
@@ -392,7 +392,7 @@ let str = doc.people().normalize().text()
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-selections">selection docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-selections">selection docs</a>
 </div>
 
 <b>compromise/three</b> is a set of tooling to <i>zoom into</i> and operate on parts of a text.
@@ -482,7 +482,7 @@ Plain-text, copy-paste docs that render without JavaScript live in this repo:
 
 ##### Match
 
-_(match methods use the [match-syntax](https://docs.compromise.cool/compromise-match-syntax).)_
+_(match methods use the [match-syntax](https://observablehq.com/@spencermountain/compromise-match-syntax).)_
 
 - **[.match('')](https://observablehq.com/@spencermountain/compromise-match)** - return a new Doc, with this one as a parent
 - **[.not('')](https://observablehq.com/@spencermountain/compromise-match)** - return all results except for this
@@ -793,7 +793,7 @@ nlp.extend({
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-plugins">.plugin() docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-plugins">.plugin() docs</a>
 </div>
 <div align="center">
   <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
@@ -808,9 +808,9 @@ nlp.extend({
 
 ##### gentle introduction:
 
-- **[#1) Input → output](https://docs.compromise.cool/tutorial-1)**
-- **[#2) Match & transform](https://docs.compromise.cool/compromise-tutorial-2)**
-- **[#3) Making a chat-bot](https://docs.compromise.cool/compromise-making-a-bot)**
+- **[#1) Input → output](https://observablehq.com/@spencermountain/tutorial-1)**
+- **[#2) Match & transform](https://observablehq.com/@spencermountain/compromise-tutorial-2)**
+- **[#3) Making a chat-bot](https://observablehq.com/@spencermountain/compromise-making-a-bot)**
   <!-- * **[Tutorial #4]()**  -  Making a plugin -->
 
 <div >
@@ -958,7 +958,7 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
 ```
 
 <div align="right">
-  <a href="https://docs.compromise.cool/compromise-typescript">typescript docs</a>
+  <a href="https://observablehq.com/@spencermountain/compromise-typescript">typescript docs</a>
 </div>
 
 <div >

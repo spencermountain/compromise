@@ -14,6 +14,7 @@ const prefixes = {
 }
 const suffixes = {
   '%': 'percent',
+  '¢': 'cents',
   // s: 'seconds',
   // cm: 'centimetres',
   // km: 'kilometres',
@@ -37,6 +38,9 @@ const addSuffix = function (obj) {
   }
   if (res.suffix && obj.num === 1) {
     res.suffix = res.suffix.replace(/s$/, '')
+  }
+  if (res.suffix && /^(cad|usd)$/i.test(obj.suffix)) {
+    res.suffix += ' ' + obj.suffix.toUpperCase()
   }
   // misc other suffixes
   if (!res.suffix && obj.suffix) {

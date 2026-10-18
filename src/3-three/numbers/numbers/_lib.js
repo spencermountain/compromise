@@ -1,9 +1,10 @@
 import parse from './parse/index.js'
 import format from './format/index.js'
+import agree from './agree.js'
 
 // Keep conversion skips and format choices specific to each public method.
-const convert = (view, Numbers, tag, skip, getFormat) => {
-  const res = view.map(val => {
+const convert = (view, tag, skip, getFormat) => {
+  const res = view._mapNumbers(val => {
     if (skip(val)) {
       return val
     }
@@ -13,10 +14,14 @@ const convert = (view, Numbers, tag, skip, getFormat) => {
     }
     const str = format(obj, getFormat(val))
     val.replaceWith(str, { tags: true })
-    val.tag(tag)
+    // Generated currency words keep their noun tags.
+    val.not('#Currency').tag(tag)
+    if (tag === 'Ordinal' || tag === 'Cardinal') {
+      agree(val, tag === 'Ordinal' || obj.num === 1)
+    }
     return val
   })
-  return new Numbers(res.document, res.pointer)
+  return view.update(res.pointer)
 }
 
 export default convert

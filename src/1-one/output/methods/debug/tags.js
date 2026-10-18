@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import cli from './_color.js'
+import * as cli from '../../../../API/_color.js'
 
 const tagString = function (tags, model) {
   if (model.one.tagSet) {
@@ -20,7 +20,7 @@ const showTags = function (view) {
     console.log(cli.blue('\n     ──────'))
   }
   docs.forEach(terms => {
-    console.log(cli.blue('\n  ┌─────────'))
+    console.log(cli.blue('\n  ╭─────────'))
     terms.forEach(t => {
       const tags = [...(t.tags || [])]
       let text = t.text || '-'

@@ -166,7 +166,6 @@ export default [
   'preamble',
   'premises',
   'presense',
-  'pressure',
   'pretense',
   'putty',
   'rabies',

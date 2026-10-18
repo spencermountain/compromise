@@ -48,12 +48,17 @@ export default [
   },
   {
     // 'jan 5 or 8'  - (one month, shared dates)
-    match: '^#Month #Value+ (or|and)? #Value$',
+    match: '^#Month #Value+ (or|and)? #Value #Year?$',
     desc: 'jan 5 or 8',
     parse: (m, context) => {
-      m = m.not('(or|and)')
+      const year = m.match('#Year$').text('reduced')
+      m = m.not('(or|and|#Year)')
       const before = m.match('^#Month #Value')
-      const start = parseDate(before, context)
+      const first = before.clone()
+      if (year) {
+        first.append(year)
+      }
+      const start = parseDate(first, context)
       if (start) {
         const result = [
           {
@@ -67,7 +72,10 @@ export default [
         if (more.found) {
           const month = m.match('#Month').text('reduced')
           more.match('#Value').forEach((v) => {
-            const thisD = v.prepend(month)
+            const thisD = v.clone().prepend(month)
+            if (year) {
+              thisD.append(year)
+            }
             const startDate = parseDate(thisD, context)
             if (startDate) {
               result.push({

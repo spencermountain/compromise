@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 const api = function (View) {
 
   class Pronouns extends View {
@@ -36,10 +37,6 @@ const api = function (View) {
     }
   }
 
-  View.prototype.pronouns = function (n) {
-    let m = this.match('#Pronoun')
-    m = m.getNth(n)
-    return new Pronouns(m.document, m.pointer)
-  }
+  View.prototype.pronouns = select(Pronouns, '#Pronoun')
 }
 export default api

@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
 import fillTags from './_fillTags.js'
 import looksPlural from '../../../methods/looksPlural.js'
-import debug from '../../../../../API/debug.js'
 import adhoc from './_adhoc.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
@@ -13,9 +11,6 @@ const checkWord = (term, obj) => {
   let found = null
   if (Object.hasOwn(obj, str)) {
     found = obj[str]
-  }
-  if (found && debug.tags) {
-    console.log(`\n  \x1b[2m\x1b[3m     ↓ - '${str}' \x1b[0m`)
   }
   return found
 }
@@ -36,9 +31,6 @@ const checkTag = (term, obj = {}, tagSet) => {
       }
     }
   }
-  if (found && debug.tags) {
-    console.log(`  \x1b[2m\x1b[3m      ↓ - '${term.normal || term.implicit}' (#${found})  \x1b[0m`)
-  }
   found = obj[found]
   return found
 }
@@ -52,6 +44,10 @@ const pickTag = function (terms, i, clues, model) {
   // Skip 'also' when looking for clues in the preceding term.
   if (previousTerm && previousTerm.text === 'also') {
     beforeIndex = Math.max(0, i - 2)
+  }
+  // In 'we each pay', each separates the subject from its predicate.
+  if (previousTerm?.normal === 'each' && /^(we|they)$/.test(terms[i - 2]?.normal)) {
+    beforeIndex = i - 2
   }
   const tagSet = model.one.tagSet
   // look -> right word, first
@@ -81,7 +77,7 @@ const doSwitches = function (terms, i, world) {
   }
   const form = term.switch
   // skip propernouns, acronyms, etc
-  if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb')) {
+  if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb') || term.tags.has('SportsTeam')) {
     return
   }
   let tag = pickTag(terms, i, clues[form], model)
@@ -89,9 +85,17 @@ const doSwitches = function (terms, i, world) {
   if (adhoc[form]) {
     tag = adhoc[form](terms, i) || tag
   }
+  // Shared noun clues must retain the actor reading.
+  if (form === 'Actor|Verb' && tag === 'Singular') {
+    tag = 'Actor'
+  }
   // Choosing a lexical reading must retain its inflection.
   if (form === 'Person|Noun' && tag === 'Singular' && looksPlural(str)) {
     tag = 'Plural'
+  }
+  // Drew is also a name; only its verbal reading carries past tense.
+  if (str === 'drew' && (tag === 'Verb' || tag === 'Infinitive' || tag === 'PresentTense')) {
+    tag = 'PastTense'
   }
   // did we find anything?
   if (tag) {
@@ -99,8 +103,6 @@ const doSwitches = function (terms, i, world) {
     setTag([term], tag, world, null, `3-[switch] (${form})`)
     // add plural/singular etc.
     fillTags(terms, i, model)
-  } else if (debug.tags) {
-    console.log(`\n -> X  - '${str}'  : (${form})  `)
   }
 }
 export default doSwitches

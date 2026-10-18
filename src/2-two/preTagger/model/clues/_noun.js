@@ -1,4 +1,7 @@
-const n = 'Singular'
+import tagWords from '../_lib.js'
+import tags from '../../tagSet/aliases.js'
+
+const { Sing: n } = tags
 export default {
   beforeTags: {
     Determiner: n, //the date
@@ -33,104 +36,34 @@ export default {
     without: n, //
     // was:n, //was time  -- was working
     // is:n, //
-    of: n, //of power
-    for: n, //for rats
-    any: n, //any rats
-    all: n, //all tips
-    on: n, //on time
+    // of power; for rats; any rats; all tips; on time
+    ...tagWords('of for any all on', n),
     // thing-ish verbs
-    cut: n, //cut spending
-    cuts: n, //cut spending
-    increase: n, // increase funding
-    decrease: n, //
-    raise: n, //
-    drop: n, //
+    // cut spending; cut spending; increase funding
+    ...tagWords('cut cuts increase decrease raise drop', n),
     // give: n,//give parents
-    save: n, //
-    saved: n, //
-    saves: n, //
-    make: n, //
-    makes: n, //
-    made: n, //
-    minus: n, //minus laughing
-    plus: n, //
-    than: n, //more than age
-    another: n, //
-    versus: n, //
-    neither: n, //
-    about: n, //about claims
+    // minus laughing; more than age; about claims
+    ...tagWords('save saved saves make makes made minus plus than another versus neither about', n),
     // strong adjectives
-    favorite: n, //
-    best: n, //
-    daily: n, //
-    weekly: n, //
-    linear: n, //
-    binary: n, //
-    mobile: n, //
-    lexical: n, //
-    technical: n, //
-    computer: n, //
-    scientific: n, //
-    security: n, //
-    government: n, //
-    popular: n, //
-    formal: n,
-    no: n, //no worries
-    more: n, //more details
-    one: n, //one flood
-    let: n, //let fear
-    her: n, //her boots
-    his: n, //
-    their: n, //
-    our: n, //
+    // no worries; more details; one flood; let fear; her boots
+    ...tagWords(
+      'favorite best daily weekly linear binary mobile lexical technical computer scientific ' +
+      'security government popular formal no more one let her his their our',
+      n
+    ),
     // us: n, //served us drinks
     sheer: n,
 
-    monthly: n,
-    yearly: n,
-    current: n,
-    previous: n,
-    upcoming: n,
-    last: n,
-    next: n,
-    main: n,
-    initial: n,
-    final: n,
-    beginning: n,
-    end: n,
-    top: n,
-    bottom: n,
-    future: n,
-    past: n,
-    major: n,
-    minor: n,
-    side: n,
-    central: n,
-    peripheral: n,
-    public: n,
-    private: n,
+    ...tagWords(
+      'monthly yearly current previous upcoming last next main initial final beginning end top ' +
+      'bottom future past major minor side central peripheral public private',
+      n
+    ),
   },
-  afterWords: {
-    of: n, //date of birth (preposition)
-    system: n,
-    aid: n,
-    method: n,
-    utility: n,
-    tool: n,
-    reform: n,
-    therapy: n,
-    philosophy: n,
-    room: n,
-    authority: n,
-    says: n,
-    said: n,
-    wants: n,
-    wanted: n,
-    is: n,
-    did: n,
-    do: n,
-    can: n, //parents can
-    wise: n, //service-wise
+  afterWords: tagWords(
+    // date of birth (preposition); parents can; service-wise
     // they: n,//snakes they
-  },
+    'of system aid method utility tool reform therapy philosophy room authority says said wants ' +
+      'wanted is did do can wise', n,
+  ),
 }

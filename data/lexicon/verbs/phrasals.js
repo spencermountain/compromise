@@ -6,6 +6,14 @@
 // many credits to http://www.allmyphrasalverbs.com/
 
 export default [
+  'jack up',
+  'hollow out',
+  'slick back',
+  'dish out',
+  'drone on',
+  'gas up',
+  'phase out',
+  'shore up',
   'act out',
   'air out',
   'act up',
@@ -342,6 +350,7 @@ export default [
   'go round',
   'go through',
   'go under',
+  'goof around',
   'goof off',
   'goof up',
   'grind down',

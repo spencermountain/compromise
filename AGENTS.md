@@ -65,6 +65,8 @@ const str = doc.text() // 'she sold seashells by the seashore.'
 
 ## Debugging a wrong result
 
+Before diagnosing or changing POS tagging, read [skills/internal/pos-tagging-fixes/SKILL.md](skills/internal/pos-tagging-fixes/SKILL.md).
+
 ```js
 doc.debug()        // prints how every word was tagged — start here
 nlp.verbose(true)  // log the tagger's decision-making

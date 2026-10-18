@@ -3,6 +3,8 @@ import apostropheS from './apostrophe-s.js'
 import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
 import isPossessive from './isPossessive.js'
+import wannaNoun from './wanna.js'
+import contractionDebug from '../../../API/debug/contractions-debug.js'
 
 const byApostrophe = /'/
 
@@ -42,13 +44,15 @@ const byEnd = {
   s: (terms, i, world) => {
     // [bob's house] vs [bob's cool]
     if (isPossessive(terms, i)) {
+      contractionDebug(terms[i])
       return world.methods.one.setTag([terms[i]], 'Possessive', world, null, '2-contraction')
     }
     return apostropheS(terms, i)
   },
 }
 
-const toDocs = function (words, view) {
+const toDocs = function (words, view, term) {
+  contractionDebug(term, words)
   const doc = view.fromText(words.join(' '))
   doc.compute('id')
   return doc.docs[0]
@@ -61,6 +65,11 @@ const contractionTwo = view => {
   document.forEach((terms, n) => {
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {
+      if (wannaNoun(terms, i)) {
+        contractionDebug(terms[i], ['want'])
+        reIndex(terms)
+        continue
+      }
       // is it already a contraction
       if (terms[i].implicit) {
         continue
@@ -76,7 +85,7 @@ const contractionTwo = view => {
       }
       // actually insert the new terms
       if (words) {
-        words = toDocs(words, view)
+        words = toDocs(words, view, terms[i])
         splice(document, [n, i], words)
         reTag(document[n], view, i, words.length)
         continue

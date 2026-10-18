@@ -44,6 +44,9 @@ const parseNumber = function (m) {
     return { num: parseText(m) }
   }
   let str = m.text('reduced')
+  if (m.text().includes('¢')) {
+    str = str.replace(/^c|c$/g, '¢')
+  }
   // reach for '12 litres'
   const unit = m.growRight('#Unit').match('#Unit$').text('machine')
   // is it in '3,123' format?
@@ -74,7 +77,11 @@ const parseNumber = function (m) {
   }
   let num = 0
   if (str) {
-    num = parseText(str) || 0
+    let end = str.length
+    for (; end > 0 && /[.!?]/.test(str[end - 1]); end -= 1) {
+      // Sentence punctuation is not part of the number.
+    }
+    num = parseText(str.slice(0, end)) || 0
   }
   // apply numeric fraction
   if (fraction && fraction.decimal) {

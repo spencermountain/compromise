@@ -1,20 +1,23 @@
 packages:
   - plugins/*
 
+catalogMode: prefer
+
 # Shared versions for the root library and maintained plugins.
 catalog:
-  '@types/node': '^26.6.4'
+  '@types/node': '^26.6.5'
   '@rollup/plugin-node-resolve': '16.0.3'
   '@rollup/plugin-terser': '1.0.0'
-  'rollup': '4.64.0'
+  'rollup': '4.64.8'
   'rollup-plugin-filesize-check': '2.0.1'
-  'tap-dancer': '0.4.2'
-  'tape': '5.10.2'
+  'tap-dancer': '0.4.4'
+  'tape': '5.10.3'
   'cross-env': '10.1.0'
   'nlp-corpus': '4.4.0'
-  'efrt': '2.8.0'
+  'efrt': '2.9.0'
+  eslint: 10.13.0
 
-linkWorkspacePackages: true
+linkWorkspacePackages: false
 
 minimumReleaseAgeExclude:
-  - grad-school@0.0.9
+  - spacetime@7.17.0

@@ -10,18 +10,25 @@ export default {
       file: 'builds/compromise-speech.cjs',
       format: 'umd',
       name: 'compromiseSpeech',
-      plugins: [sizeCheck()],
+      plugins: [],
     },
     {
       file: 'builds/compromise-speech.min.js',
       format: 'umd',
       name: 'compromiseSpeech',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [
+        terser({ keep_classnames: true }),
+        sizeCheck({
+          expect: 7,
+          warn: 5, // acceptable (+/-)
+          throw: 10, // unacceptable (+/-)
+        }),
+      ],
     },
     {
       file: 'builds/compromise-speech.mjs',
       format: 'esm',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [terser({ keep_classnames: true })],
     },
   ],
 }

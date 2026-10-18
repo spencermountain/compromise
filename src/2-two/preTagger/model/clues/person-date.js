@@ -1,9 +1,11 @@
+import tagWords from '../_lib.js'
 import person from './_person.js'
+import tags from '../../tagSet/aliases.js'
+
+const { Month: m, Person: p } = tags
 
 // 'april o'neil'  -  'april 1st'
 
-const m = 'Month'
-const p = 'Person'
 const month = {
   beforeTags: {
     Date: m,
@@ -14,32 +16,19 @@ const month = {
     Value: m,
   },
   beforeWords: {
-    by: m,
-    in: m,
-    on: m,
-    during: m,
-    after: m,
-    before: m,
-    between: m,
-    until: m,
-    til: m,
-    sometime: m,
-    of: m, //5th of april
-    this: m, //this april
-    next: m,
-    last: m,
-    previous: m,
-    following: m,
+    // 5th of april; this april
+    ...tagWords(
+      'by in on during after before between until til sometime of this next last previous ' +
+      'following',
+      m
+    ),
     with: p,
     // for: p,
   },
-  afterWords: {
-    sometime: m,
-    in: m,
-    of: m,
-    until: m,
-    the: m, //june the 4th
-  },
+  afterWords: tagWords(
+    // june the 4th
+    'sometime in of until the', m,
+  ),
 }
 export default {
   beforeTags: { ...person.beforeTags, ...month.beforeTags },

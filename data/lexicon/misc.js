@@ -1,5 +1,8 @@
 export default {
   better: 'Comparative',
+  colder: 'Comparative',
+  coldest: 'Superlative',
+  coldly: 'Adverb',
   farther: 'Comparative',
   finer: 'Comparative',
   fewer: 'Comparative',
@@ -16,6 +19,7 @@ export default {
   did: 'PastTense',
   meant: 'PastTense',
   went: 'PastTense',
+  stories: 'Plural',
   lied: 'PastTense',
 
   going: 'Gerund',
@@ -64,7 +68,6 @@ export default {
 
 
   // 
-  'come here': 'Imperative',
   'beware': 'Imperative',
   // 'go away': 'Imperative',
   // 'hurry up': 'Imperative',
@@ -79,5 +82,34 @@ export default {
   'bests': 'PresentTense',
 
   // funny switches
+  'contents': 'Plural|Verb',
+  'squares': 'Plural|Verb',
+  'authors': 'Plural|Verb',
+  'bullies': 'Plural|Verb',
+  'captains': 'Plural|Verb',
+  'champions': 'Plural|Verb',
+  'coaches': 'Plural|Verb',
+  'cooks': 'Plural|Verb',
+  'doctors': 'Plural|Verb',
+  'engineers': 'Plural|Verb',
+  'fools': 'Plural|Verb',
+  'graduates': 'Plural|Verb',
+  'grooms': 'Plural|Verb',
+  'guides': 'Plural|Verb',
+  'hosts': 'Plural|Verb',
+  'judges': 'Plural|Verb',
+  'mentors': 'Plural|Verb',
+  'parents': 'Plural|Verb',
+  'partners': 'Plural|Verb',
+  'pioneers': 'Plural|Verb',
+  'pilots': 'Plural|Verb',
+  'recruits': 'Plural|Verb',
+  'scouts': 'Plural|Verb',
+  'shepherds': 'Plural|Verb',
+  'tutors': 'Plural|Verb',
+  'ushers': 'Plural|Verb',
+  'volunteers': 'Plural|Verb',
+  'witnesses': 'Plural|Verb',
+  'bills': 'Plural|Verb',
   'leaves': 'Plural|Verb'
 }

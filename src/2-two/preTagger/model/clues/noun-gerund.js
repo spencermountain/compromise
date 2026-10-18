@@ -1,42 +1,36 @@
+import tagWords from '../_lib.js'
+import { Ger } from '../../tagSet/_lib.js'
 import noun from './_noun.js'
 import gerund from './_gerund.js'
 
 // 'operating the crane', or 'operating room'
 const misc = {
   beforeTags: {
-    Copula: 'Gerund',
-    PastTense: 'Gerund',
-    PresentTense: 'Gerund',
-    Infinitive: 'Gerund',
+    Copula: Ger,
+    PastTense: Ger,
+    PresentTense: Ger,
+    Infinitive: Ger,
   },
   afterTags: {
-    Value: 'Gerund', //maintaining 500
+    Value: Ger, //maintaining 500
   },
   beforeWords: {
-    are: 'Gerund',
-    were: 'Gerund',
-    be: 'Gerund',
-    no: 'Gerund',
-    without: 'Gerund',
+    ...tagWords('are were be no without', Ger),
     //are you playing
-    you: 'Gerund',
-    we: 'Gerund',
-    they: 'Gerund',
-    he: 'Gerund',
-    she: 'Gerund',
+    ...tagWords('you we they he she', Ger),
     //stop us playing
-    us: 'Gerund',
-    them: 'Gerund',
+    us: Ger,
+    them: Ger,
   },
   afterWords: {
     // offering the
-    the: 'Gerund',
-    this: 'Gerund',
-    that: 'Gerund',
+    the: Ger,
+    this: Ger,
+    that: Ger,
     //got me thinking
-    me: 'Gerund',
-    us: 'Gerund',
-    them: 'Gerund',
+    me: Ger,
+    us: Ger,
+    them: Ger,
   },
 }
 const clue = {

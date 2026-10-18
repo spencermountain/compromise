@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/_experiments/wikipedia/tests/misc] '
 
-test('true-positive', function (t) {
+test(here + 'true-positive', function (t) {
   let doc = nlp('i learned css')
   let res = doc.wikipedia().json()
   t.equal(res.length, 1, 'found-1 result')
@@ -14,7 +15,7 @@ test('true-positive', function (t) {
   t.end()
 })
 
-test('true-negative', function (t) {
+test(here + 'true-negative', function (t) {
   const doc = nlp('i learned the csss grid layout')
   const res = doc.wikipedia().json()
   t.equal(res.length, 0, 'found 0 results')

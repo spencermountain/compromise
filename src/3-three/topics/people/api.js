@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 import find from './find.js'
 import parse from './parse.js'
 import gender from './gender.js'
@@ -48,10 +49,6 @@ const addMethod = function (View) {
     }
   }
 
-  View.prototype.people = function (n) {
-    let m = find(this)
-    m = m.getNth(n)
-    return new People(this.document, m.pointer)
-  }
+  View.prototype.people = select(People, find, true)
 }
 export default addMethod

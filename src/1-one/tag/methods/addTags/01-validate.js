@@ -1,3 +1,4 @@
+import compileAliases from '../../_aliases.js'
 
 const toArr = function (input) {
   if (!input) {
@@ -10,6 +11,8 @@ const toArr = function (input) {
 }
 
 const addImplied = function (tags) {
+  const aliases = compileAliases(tags)
+  const resolve = tag => aliases[tag] || tag
   Object.keys(tags).forEach(k => {
     // support deprecated fmts
     if (tags[k].isA) {
@@ -17,6 +20,15 @@ const addImplied = function (tags) {
     }
     if (tags[k].notA) {
       tags[k].not = tags[k].notA
+    }
+    if (typeof tags[k].is === 'string') {
+      tags[k].is = resolve(tags[k].is)
+    }
+    if (tags[k].also) {
+      tags[k].also = toArr(tags[k].also).map(resolve)
+    }
+    if (tags[k].not) {
+      tags[k].not = toArr(tags[k].not).map(resolve)
     }
     // add any implicit 'is' tags
     if (tags[k].is && typeof tags[k].is === 'string') {
@@ -44,11 +56,14 @@ const addImplied = function (tags) {
 const validate = function (tags, already) {
   // Reciprocal links must reach previously registered tags too. Copy entries
   // before normalization so the existing compiled model remains untouched.
-  tags = Object.fromEntries(Object.entries({ ...already, ...tags }).map(([tag, definition]) => [tag, { ...definition }]))
+  tags = Object.fromEntries(Object.keys({ ...already, ...tags }).map(tag => [tag, { ...already[tag], ...tags[tag] }]))
   tags = addImplied(tags)
 
   // property validation
   Object.keys(tags).forEach(k => {
+    if (tags[k].aliases !== undefined) {
+      tags[k].aliases = toArr(tags[k].aliases)
+    }
     tags[k].children = toArr(tags[k].children)
     tags[k].not = toArr(tags[k].not)
     if (tags[k].also) {

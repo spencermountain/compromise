@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-unused-vars */
+/* eslint-disable no-console*/
 import corpus from 'nlp-corpus'
 import nlp from '../../../src/one.js'
 import plugin from '../src/plugin.js'

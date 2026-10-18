@@ -1,4 +1,4 @@
-import type { Lexicon, Plugin, matchOptions, Match, Net } from './misc.d.ts'
+import type { Lexicon, Plugin, VerboseOptions, matchOptions, Match, Net } from './misc.d.ts'
 import type View from './view/three.d.ts'
 
 /** parse a given text */
@@ -17,7 +17,16 @@ declare namespace nlp {
   /** turn a match-string into json */
   export function parseMatch(match: string, opts?: matchOptions): object[]
   /** grab library internals */
-  export function world(): object
+  export function world(): {
+    model: {
+      one: object
+      two: object
+      three: { decimalCurrencies: Record<string, number>; [key: string]: unknown }
+    }
+    methods: object
+    compute: object
+    hooks: string[]
+  }
   /** grab library metadata */
   export function model(): object
   /** grab exposed library methods */
@@ -25,7 +34,7 @@ declare namespace nlp {
   /** which compute functions run automatically */
   export function hooks(): string[]
   /**  log our decision-making for debugging */
-  export function verbose(toLog?: boolean | string): any
+  export function verbose(toLog?: boolean | string, options?: VerboseOptions): any
   /**  current semver version of the library */
   export const version: string
   /** connect new tags to tagset graph */

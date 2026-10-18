@@ -1,6 +1,6 @@
 // some opinionated-but-common-sense timezone abbreviations
 // these timezone abbreviations are wholly made-up by me, Spencer Kelly, with no expertise in geography
-// generated humbly from https://github.com/spencermountain/spacetime-informal
+// generated humbly from https://github.com/spencermountain/timezone-soft
 import spacetime from 'spacetime'
 
 const america = 'America/'
@@ -136,7 +136,7 @@ const informal = {
   ndt: america + 'St_Johns',
   'brazil time': america + 'Sao_Paulo',
   brt: america + 'Sao_Paulo',
-  'brasília': america + 'Sao_Paulo',
+  brasília: america + 'Sao_Paulo',
   brasilia: america + 'Sao_Paulo',
   'brazilian time': america + 'Sao_Paulo',
   'argentina time': america + 'Buenos_Aires',
@@ -263,7 +263,6 @@ const informal = {
   'papua new guinea time': pac + 'Bougainville',
   pgt: pac + 'Bougainville',
 }
-
 
 //add the official iana zonefile names, like 'canada/eastern'
 const iana = spacetime().timezones

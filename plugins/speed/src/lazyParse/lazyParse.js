@@ -1,17 +1,16 @@
 import maybeMatch from './maybeMatch.js'
+import getNet from './_lib.js'
 
-// tokenize first, then only tag sentences required
+// Tokenize first, then only tag sentences required.
 const lazyParse = function (input, reg) {
-  let net = reg
-  if (typeof reg === 'string') {
-    net = this.buildNet([{ match: reg }])
-  }
+  const net = getNet(this, reg)
   const doc = this.tokenize(input)
   const m = maybeMatch(doc, net)
   if (m.found) {
-    m.compute(['index', 'tagger'])
+    m.uncache().compute(this.hooks())
     return m.match(reg)
   }
   return doc.none()
 }
+
 export default lazyParse

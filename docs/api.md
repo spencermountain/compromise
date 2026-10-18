@@ -189,7 +189,7 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.nouns(n?, opts?)`** — return noun phrases in the view
 - **`.numbers(n?, opts?)`** — return any numbers in the view
 - **`.percentages(n?, opts?)`** — return any percentages in the view
-- **`.money(n?, opts?)`** — return any money in the view
+- **`.money(n?)`** — return monetary amounts as a Money view
 - **`.fractions(n?, opts?)`** — return any fractions in the view
 - **`.sentences(n?, opts?)`** — return full sentences in the view
 - **`.questions(n?, opts?)`** — find full sentences of any questions in the view
@@ -219,6 +219,9 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.toText()`** — convert number to `five` or `fifth`
 - **`.toCardinal()`** — convert number to `five` or `5`
 - **`.toOrdinal()`** — convert number to `fifth` or `5th`
+- **`.toFraction()`** — convert decimals to reduced fractions, such as `0.25` → `1/4`, or percentages to fractions over 100, such as `4.5%` → `4.5/100`; returns a Fractions selection
+- **`.toPercentage()`** — convert decimals to percentages, such as `0.25` → `25%`; existing percentages remain unchanged. Returns a Numbers selection of percentages.
+- **`.toDecimal()`** — convert selected percentages to decimals, such as `25%` → `0.25`; returns a Numbers selection of the converted values
 - **`.isEqual()`** — return numbers with this value
 - **`.greaterThan(min)`** — return numbers bigger than n
 - **`.lessThan(max)`** — return numbers smaller than n
@@ -229,15 +232,115 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.increment()`** — increase number by 1
 - **`.decrement()`** — decrease number by 1
 
+### `.percentages()` →
+
+Uses the Numbers methods above. `.toFraction()` mutates the document and returns only the converted fractions, retaining their fraction methods on subsets:
+
+```js
+const doc = nlp('We saved 25% on books and 50% on pens.')
+const fractions = doc.percentages().toFraction()
+fractions.eq(0).toPercentage()
+doc.text() // 'We saved 25% on books and 50/100 on pens.'
+```
+
+Conversions can round-trip through all three forms:
+
+```js
+const doc = nlp('0.25')
+doc.numbers().toPercentage().toFraction().toDecimal()
+doc.text() // '0.25'
+```
+
+Fraction-to-percentage conversion rounds to two decimal places except for fractions over 100, so some round trips lose precision.
+
+### `.money()` →
+
+Money extends Numbers. Arithmetic, formatting, comparisons, and the selections listed
+below return Money views, so methods can chain with `.currency()`. Transformations
+mutate the original document while retaining currency symbols and words.
+
+```js
+const doc = nlp('i paid $5.32 for a pizza slice')
+const amount = doc.money().add(1)
+amount.text() // '$6.32'
+amount.currency() // ['dollar']
+doc.text() // 'i paid $6.32 for a pizza slice'
+```
+
+- **`.parse(n?)`** — array of `{ currency, num }` objects
+- **`.get(n?)`** — array of numeric amounts, including when selecting one index
+- **`.currency(n?)`** — array of currency names or codes; these are not normalized to a single standard
+- **`.json(n?)`** — ordinary JSON records with an additional `money: { currency, num }` property; also accepts JSON output options
+- **`.set(n)`** — set each amount; accepts a number or number words
+- **`.add(n)`**, **`.plus(n)`** — increase each amount; accepts a number or number words
+- **`.subtract(n)`**, **`.minus(n)`** — decrease each amount by a number
+- **`.increment()`**, **`.decrement()`** — increase or decrease each amount by one
+- **`.isEqual(n)`**, **`.equals(n)`** — select amounts equal to n
+- **`.greaterThan(n)`**, **`.lessThan(n)`** — select amounts strictly above or below n
+- **`.between(min, max)`**, **`.isBetween(min, max)`** — select amounts strictly between the bounds
+- **`.toNumber()`** — convert number words to digits, retaining the currency
+- **`.toText()`** — convert digits to number words; recognized prefix symbols become currency words, such as `$5` → `five dollars`
+- **`.toLocaleString()`**, **`.toNice()`** — format amounts using the runtime's default locale, retaining the currency
+- **`.isOrdinal()`**, **`.isCardinal()`** — select by the number's ordinal/cardinal tags
+- **`.units()`** — select words tagged as units, including currency words such as `dollars`
+- **`.isUnit(units)`** — filter by unit text, using the same arguments as Numbers
+- **`.first(n?)`**, **`.last(n?)`**, **`.eq(n)`**, **`.slice(start, end?)`**, **`.filter(fn)`** — retain the Money class when selecting amounts
+- **`.clone()`** — create an independent Money view and document
+- **`.numbers(n?)`**, **`.values(n?)`** — explicitly select the numeric portions as Numbers
+
+Comparisons and arithmetic use major-unit values. `50 cents` parses as `0.5`;
+adding `0.01` produces `51 cents`, while adding `1` produces `150 cents`.
+`.numbers()` still returns the written numeric value (`50`). Compound amounts such
+as `5 dollars and 32 cents` parse as one amount (`5.32`) when the major and minor
+units are compatible. Dollars/euros with cents and pounds with pence/pennies are
+supported; different currencies remain separate selections. Compound arithmetic preserves both parts and carries or borrows minor
+units: `5 dollars and 90 cents` plus `0.2` becomes `6 dollars and 10 cents`. A leading
+minus applies to the whole compound amount, including `-0 dollars and 68 cents`.
+Compound formatting conversions remain unchanged.
+
+Money arithmetic uses decimal addition to avoid binary rounding tails such as
+`0.30000000000000004`. Numeric output preserves existing decimal places and adds
+precision when needed: `$5.00 + 1` becomes `$6.00`, and `$1.00 + 0.001` becomes
+`$1.001`. Commas, currency symbols, and word forms are retained; currency words agree
+with their new amounts. Results still use JavaScript numbers and their precision limits.
+
+Minor-unit multipliers live in `nlp.world().model.three.decimalCurrencies`.
+Defaults are `0.01` for `cent`, `penny`, `pence`, `centavo`, `centime`, `paisa`,
+`ore`, and `öre`. Names use lowercase keys; common plural forms are recognized.
+The cent symbol `¢` uses the `cent` entry. Without an explicit qualifier, currency names remain the written names (e.g.
+`cent`), since these units do not uniquely identify a national currency.
+
+```js
+const rates = nlp.world().model.three.decimalCurrencies
+rates.cent = 0.001 // affects subsequent parsing, comparisons, and arithmetic
+rates.token = 0.01 // recognize custom amounts such as '25 tokens'
+```
+
+Explicit `CAD` and `USD` qualifiers take precedence over generic currency names.
+They can precede or follow an amount, or be attached to a numeric amount:
+`CAD $50`, `$50 CAD`, and `$50CAD` all report `CAD` from `.currency()`.
+Code matching is case-insensitive and reported codes are uppercase. Qualifiers are
+retained through arithmetic and conversions. `50 cents CAD` still parses as `0.5`,
+while a bare `$50` reports `dollar` without guessing a national currency.
+
+Cent amounts round-trip through words: `50¢` → `fifty cents` → `50 cents` retains
+its value of `0.5`. Configured custom units follow the same conversion behavior.
+
+Changes apply to existing views on their next operation as well. Multipliers must be
+positive finite numbers; missing or invalid values default to `1`. Removing a custom
+unit also removes recognition supplied by this table. Compound carry/borrow uses the
+configured minor-unit multiplier. No exchange-rate conversion is performed.
+
 ### `.fractions()` →
 
 - **`.parse(n?)`** — grab the parsed number
 - **`.get(n?)`** — grab the parsed number
 - **`.toDecimal()`** — convert '1/4' to `0.25`
 - **`.toFraction()`** — convert 'one fourth' to `1/4`
-- **`.toOrdinal()`** — convert '1/4' to '1/4th'
-- **`.toCardinal()`** — convert '1/4th' to '1/4'
-- **`.toPercentage()`** — convert '1/4' to `25%`
+- **`.toOrdinal()`** — convert `1/4` to `one fourth`
+- **`.toCardinal()`** — convert `1/4` to `one out of four`
+- **`.toText()`** — convert `1/4` to `one fourth`
+- **`.toPercentage(n?)`** — convert fractions such as `1/4` or `one half` to `25%` or `50%`; optionally convert only the nth fraction. Mutates the document and returns a View of the processed selection. Fractions over 100 preserve the numerator's precision; other denominators round to two decimal places. Unparseable fractions and zero denominators remain unchanged.
 
 ### `.sentences()` →
 

@@ -4,155 +4,60 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseStats = factory());
 })(this, (function () { 'use strict';
 
-  const defaults$2 = {
-    max: 4,
-    min: 1,
-  };
+  var version = '0.2.0';
 
-  const oneSize$2 = function (list, size) {
-    const grams = Object.create(null);
-    // count each instance
-    list.forEach(terms => {
-      for (let i = 0; i < terms.length; i += 1) {
-        const slice = terms.slice(i, i + size);
-        if (slice.length === size) {
-          const str = slice.join(' ');
-          if (Object.hasOwn(grams, str)) {
-            grams[str].count += 1;
-          } else {
-            grams[str] = {
-              size: size,
-              count: 1,
-            };
-          }
-        }
-      }
-    });
-    // turn them into an array
-    const arr = Object.keys(grams).map(k => {
-      grams[k].normal = k;
-      return grams[k]
-    });
-    return arr
-  };
+  const defaults = { min: 1, max: 4 };
 
-  const allGrams = function (list, options) {
-    // support {size:2} syntax
-    if (options.size > 0) {
-      options.min = options.size;
-      options.max = options.size;
+  const getRange = (list, options) => {
+    const min = options.size ?? options.min ?? defaults.min;
+    const max = options.size ?? options.max ?? defaults.max;
+    if (!Number.isSafeInteger(min) || min < 1 || !Number.isSafeInteger(max) || max < 1) {
+      throw new RangeError('N-gram sizes must be positive safe integers')
     }
-    const max = options.max || defaults$2.max;
-    const min = options.min || defaults$2.min;
-    let arr = [];
+    const longest = list.reduce((length, terms) => Math.max(length, terms.length), 0);
+    return { min, max: Math.min(max, longest) }
+  };
+
+  const countGram = (grams, terms, start, size) => {
+    const normal = terms.slice(start, start + size).join(' ');
+    if (Object.hasOwn(grams, normal)) {
+      grams[normal].count += 1;
+    } else {
+      grams[normal] = { size, count: 1, normal };
+    }
+  };
+
+  const getGrams = (list, options, edge) => {
+    const { min, max } = getRange(list, options);
+    const arr = [];
     for (let size = min; size <= max; size += 1) {
-      arr = arr.concat(oneSize$2(list, size));
-    }
-    return arr
-  };
-
-  const defaults$1 = {
-    max: 4,
-    min: 1,
-  };
-
-  const oneSize$1 = function (list, size) {
-    const grams = Object.create(null);
-    // count each instance
-    list.forEach(terms => {
-      for (let i = 0; i <= terms.length; i += 1) {
-        const slice = terms.slice(0, i);
-        if (slice.length === size) {
-          const str = slice.join(' ');
-          if (Object.hasOwn(grams, str)) {
-            grams[str].count += 1;
-          } else {
-            grams[str] = {
-              size: size,
-              count: 1,
-            };
+      const grams = Object.create(null);
+      list.forEach(terms => {
+        const last = terms.length - size;
+        if (last < 0) {
+          return
+        }
+        // Edges need only one slice per segment and size.
+        if (edge) {
+          const start = edge === 'end' ? last : 0;
+          countGram(grams, terms, start, size);
+        } else {
+          for (let i = 0; i <= last; i += 1) {
+            countGram(grams, terms, i, size);
           }
         }
-      }
-    });
-    // turn them into an array
-    const arr = Object.keys(grams).map(k => {
-      grams[k].normal = k;
-      return grams[k]
-    });
-    return arr
-  };
-
-  const startGrams = function (list, options) {
-    // support {size:2} syntax
-    if (options.size > 0) {
-      options.min = options.size;
-      options.max = options.size;
-    }
-    const max = options.max || defaults$1.max;
-    const min = options.min || defaults$1.min;
-    let arr = [];
-    for (let size = min; size <= max; size++) {
-      arr = arr.concat(oneSize$1(list, size));
+      });
+      Object.values(grams).forEach(gram => arr.push(gram));
     }
     return arr
   };
 
-  const defaults = {
-    max: 4,
-    min: 1,
-  };
+  const startGrams = (list, options) => getGrams(list, options, 'start');
 
-  const oneSize = function (list, size) {
-    const grams = Object.create(null);
-    // count each instance
-    list.forEach(terms => {
-      const len = terms.length;
-      for (let i = 0; i <= terms.length; i += 1) {
-        const slice = terms.slice(len - i, len);
-        if (slice.length === size) {
-          const str = slice.join(' ');
-          if (Object.hasOwn(grams, str)) {
-            grams[str].count += 1;
-          } else {
-            grams[str] = {
-              size: size,
-              count: 1,
-            };
-          }
-        }
-      }
-    });
-    // turn them into an array
-    const arr = Object.keys(grams).map(k => {
-      grams[k].normal = k;
-      return grams[k]
-    });
-    return arr
-  };
+  const endGrams = (list, options) => getGrams(list, options, 'end');
 
-  const endGrams = function (list, options) {
-    // support {size:2} syntax
-    if (options.size > 0) {
-      options.min = options.size;
-      options.max = options.size;
-    }
-    const max = options.max || defaults.max;
-    const min = options.min || defaults.min;
-    let arr = [];
-    for (let size = min; size <= max; size++) {
-      arr = arr.concat(oneSize(list, size));
-    }
-    return arr
-  };
-
-  // tokenize by term
-  const tokenize = function (doc) {
-    const list = doc.json({ text: false }).map(o => {
-      return o.terms.map(t => t.normal)
-    });
-    return list
-  };
+  // Preserve each selected segment as an n-gram boundary.
+  const tokenize = doc => doc.docs.map(terms => terms.map(term => term.normal));
 
   const sort = function (arr) {
     arr = arr.sort((a, b) => {
@@ -179,7 +84,7 @@
     /** list all repeating sub-phrases, by word-count */
     View.prototype.ngrams = function (obj) {
       const list = tokenize(this);
-      let arr = allGrams(list, obj || {});
+      let arr = getGrams(list, obj || {});
       arr = sort(arr);
       return arr
     };
@@ -188,7 +93,7 @@
 
     /** n-grams with one word */
     View.prototype.unigrams = function (n) {
-      let arr = allGrams(tokenize(this), { max: 1, min: 1 });
+      let arr = getGrams(tokenize(this), { max: 1, min: 1 });
       arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];
@@ -199,7 +104,7 @@
 
     /** n-grams with two words */
     View.prototype.bigrams = function (n) {
-      let arr = allGrams(tokenize(this), { max: 2, min: 2 });
+      let arr = getGrams(tokenize(this), { max: 2, min: 2 });
       arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];
@@ -210,7 +115,7 @@
 
     /** n-grams with three words */
     View.prototype.trigrams = function (n) {
-      let arr = allGrams(tokenize(this), { max: 3, min: 3 });
+      let arr = getGrams(tokenize(this), { max: 3, min: 3 });
       arr = sort(arr);
       if (typeof n === 'number') {
         arr = arr[n];
@@ -812,7 +717,7 @@
     let range = BASE;
     let s = '';
     for (; n >= range; n -= range, places++, range *= BASE) {}
-    while (places--) {
+    for (; places > 0; places--) {
       const d = n % BASE;
       s = String.fromCharCode((d < 10 ? 48 : 55) + d) + s;
       n = (n - d) / BASE;
@@ -858,8 +763,41 @@
     }
     t.symCount = t.syms.length;
     t.nodes = t.nodes.slice(t.symCount);
-    if (!t.nodes.length || t.syms.some((index) => !Number.isSafeInteger(index) || index >= t.nodes.length)) {
+    if (t.nodes.length === 0 || t.syms.some((index) => !Number.isSafeInteger(index) || index >= t.nodes.length)) {
       throw new SyntaxError('Invalid efrt packed data: symbol target')
+    }
+  };
+
+  const unescapeLabel = function (text) {
+    return text.replace(/\\([\s\S]|$)/g, (match, char) => {
+      if (char === '\\') {
+        return '\\'
+      }
+      if (char >= 'a' && char <= 'j') {
+        return String(char.charCodeAt(0) - 97)
+      }
+      throw new SyntaxError('Invalid efrt packed data: label escape')
+    })
+  };
+
+  const dictionary = function (trie) {
+    if (!trie.nodes[0].startsWith('!1:')) {
+      return
+    }
+    const header = trie.nodes.shift().split(':');
+    const tokens = Array.from(header[1]);
+    const fragments = (header[2] || '').split(',');
+    if (header.length !== 3 || tokens.length === 0 || tokens.length !== fragments.length ||
+      new Set(tokens).size !== tokens.length || trie.nodes.length === 0 ||
+      tokens.some((token) => token.length !== 1 || token.charCodeAt(0) < 33 ||
+        token.charCodeAt(0) > 126 || /[A-Za-z0-9,;!:|]/.test(token) ||
+        (trie.versioned && token === '\\')) ||
+      fragments.some((text) => !text || /[A-Z0-9,;!:|¦]/.test(text))) {
+      throw new SyntaxError('Invalid efrt packed data: fragment dictionary')
+    }
+    trie.dictionary = Object.create(null);
+    for (let i = 0; i < tokens.length; i++) {
+      trie.dictionary[tokens[i]] = trie.versioned ? unescapeLabel(fragments[i]) : fragments[i];
     }
   };
 
@@ -883,19 +821,22 @@
       const terminal = node[0] === '!';
       const body = terminal ? node.slice(1) : node;
       const edges = [];
-      const token = /([^A-Z0-9,;!:|¦]+)([A-Z0-9]+|,|$)/g;
-      let offset = 0;
-      while (offset < body.length) {
+      // Match only at the current offset. Searching later positions would
+      // repeatedly rescan a long malformed fragment before rejecting it.
+      const token = /([^A-Z0-9,;!:|¦]+)([A-Z0-9]+|,|$)/y;
+      for (let offset = 0; offset < body.length; offset = token.lastIndex) {
         const match = token.exec(body);
         if (!match || match.index !== offset || (match[2] === ',' && token.lastIndex === body.length)) {
           throw new SyntaxError('Invalid efrt packed data: node syntax')
         }
         const ref = match[2];
+        const label = trie.versioned ? unescapeLabel(match[1]) : match[1];
+        const text = trie.dictionary ? Array.from(label,
+          (char) => trie.dictionary[char] || char).join('') : label;
         edges.push({
-          text: match[1],
+          text,
           target: ref === '' || ref === ',' ? -1 : indexFromRef(trie, ref, index)
         });
-        offset = token.lastIndex;
       }
       return { terminal, edges }
     })
@@ -905,7 +846,7 @@
     const nodes = parseNodes(trie);
     const all = [];
     const stack = [{ index: 0, pref: '', edge: -1 }];
-    while (stack.length) {
+    for (; stack.length > 0;) {
       const frame = stack[stack.length - 1];
       const node = nodes[frame.index];
       if (frame.edge === -1) {
@@ -930,12 +871,14 @@
   };
 
   //PackedTrie - Trie traversal of the Trie packed-string representation.
-  const unpack$1 = function (str) {
+  const unpack$1 = function (str, versioned = false) {
     const trie = {
       nodes: str.split(';'),
       syms: [],
-      symCount: 0
+      symCount: 0,
+      versioned
     };
+    dictionary(trie);
     //process symbols, if they have them
     if (str.match(':')) {
       symbols(trie);
@@ -961,17 +904,28 @@
     }, Object.create(null));
     const all = {};
     Object.keys(obj).forEach(function (cat) {
-      const arr = unpack$1(obj[cat]);
+      let data = obj[cat];
+      const versioned = data.startsWith('!2;');
+      if (versioned) {
+        data = data.slice(3);
+        if (!data || data === ':') {
+          throw new SyntaxError('Invalid efrt packed data: missing versioned trie')
+        }
+      }
+      const reversed = data[0] === ':';
+      const arr = unpack$1(reversed ? data.slice(1) : data, versioned);
       //special case, for botched-boolean
       if (cat === 'true') {
         cat = true;
       }
       for (let i = 0; i < arr.length; i++) {
-        const k = arr[i];
+        const k = reversed ? Array.from(arr[i]).reverse().join('') : arr[i];
         if (Object.prototype.hasOwnProperty.call(all, k)) {
           if (Array.isArray(all[k]) === false) {
-            all[k] = [all[k], cat];
-          } else {
+            if (all[k] !== cat) {
+              all[k] = [all[k], cat];
+            }
+          } else if (!all[k].includes(cat)) {
             all[k].push(cat);
           }
         } else {
@@ -1059,6 +1013,7 @@
   };
 
   var plugin = {
+    version,
     compute,
     api
   };

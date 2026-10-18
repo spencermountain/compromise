@@ -34,6 +34,10 @@ const parseDate = function (doc, context) {
   }
   // decide on a root date object
   let unit = parse(doc, context, parts)
+  // ISO offsets identify the instant; an explicit named zone retains DST rules.
+  if (unit && parts.tz) {
+    unit.d = unit.d.goto(parts.tz)
+  }
   // apply all our parts
   unit = transform(unit, context, parts)
   return unit

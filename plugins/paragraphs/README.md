@@ -1,23 +1,28 @@
 <div align="center">
-  <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
-
-  <div>a plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
-  
-  <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-paragraphs">
+  <div><b>compromise-paragraphs</b></div>
+  <div>paragraph support for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
+  <div><code>npm install compromise-paragraphs</code></div>
+  <div align="center">
+    <sub>
+      by
+      <a href="https://github.com/spencermountain">Spencer Kelly</a>
+    </sub>
+  </div>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
+</div>
+<!--2nd row-->
+<div align="center">
+  <div>
+    <a href="https://npmjs.org/package/compromise-paragraphs">
     <img src="https://img.shields.io/npm/v/compromise-paragraphs.svg?style=flat-square" />
   </a>
-  v
-  <!-- file size -->
-  <a href="https://unpkg.com/compromise-paragraphs/builds/compromise-paragraphs.min.js">
-    <img src="https://img.shields.io/bundlephobia/min/compromise-paragraphs" />
+  <a href="https://bundlephobia.com/result?p=compromise-paragraphs">
+    <img src="https://badgen.net/bundlejs/min/compromise-paragraphs" />
   </a>
-   <hr/>
+  </div>
 </div>
-
-<div align="center">
-  <code>npm install compromise-paragraphs</code>
-</div>
+<!-- spacer -->
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ```js
 let str = `What's with these homies dissin' my girl? Why do they gotta front? 
@@ -35,27 +40,26 @@ doc.length
 // 3
 
 doc.json(options)
-/*[
-  {text:'What's with these ...', sentences:[{},{}]}
-  {text:'What did we ever ...', sentences:[{}]}
-]*/
+/*
+[
+  { text: 'What's with these ...', sentences: [{}, {}] },
+  { text: 'What did we ever ...', sentences: [{}] }
+]
+*/
 
 // get the second paragraph
 doc.eq(1).text()
 // 'What did we ever ...'
 
 // get the first two sentences of the first paragraph
-doc
-  .first()
-  .sentences()
-  .slice(0, 2)
+doc.first().sentences().slice(0, 2)
 ```
 
-This is a tentative implementation of `.paragraphs()` and associated methods, for compromise.
+This obvious-seeming feature is tricky because a sentence is a top-level structure to compromise, _(and english grammar!)_, so concatenating sentences together into one thing would have consequences for grammatical tags.
 
-This is tricky because a sentence is a top-level structure to compromise, (and english grammar!), and combining sentences together would have some consequences about grammatical tags.
+This is a implementation of `.paragraphs()` and associated wrapper methods, for compromise.
 
-Instead, this plugin is a (partially-complete) wrapper for sentence objects, so that you can call things like `.text()` and `.json()` on a paragraph, but then drop back down to `.sentences()` after, and work as normal.
+This plugin is a (partially-complete) wrapper for sentence objects, so that you can call things like `.text()` and `.json()` on a paragraph, but then drop back down to `.sentences()` after, and work as normal.
 
 The term objects passed into `.paragraphs()` are mutable, so they will actually change when you transform them:
 
@@ -72,34 +76,33 @@ doc = doc.filter(p => {
 
 ## API:
 
-outputs:
+```js
+// outputs:
+doc.text()
+doc.json()
 
-- .text()
-- .json()
+// matches:
+doc.match()
+doc.not()
+doc.if()
+doc.ifNo()
+doc.has()
 
-matches:
+// selectors:
+doc.sentences()
+doc.terms()
 
-- .match()
-- .not()
-- .if()
-- .ifNo()
-- .has()
+// accessors:
+doc.eq()
+doc.first()
+doc.last()
 
-selectors:
+// loops:
+doc.forEach()
+doc.map()
+doc.filter()
+```
 
-- .sentences()
-- .terms()
-
-accessors:
-
-- .eq()
-- .first()
-- .last()
-
-loops:
-
-- .forEach()
-- .map()
-- .filter()
+PRs welcome
 
 MIT

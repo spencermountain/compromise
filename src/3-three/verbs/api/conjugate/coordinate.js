@@ -1,3 +1,4 @@
+import { Inf, Participle, Ger, Past, Pres } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { inflect } from './inflect.js'
 import groups from './groups.js'
 export { firstGroup } from './groups.js'
@@ -6,20 +7,20 @@ import { isAreAm } from '../lib.js'
 
 const resultTense = function (head, target) {
   const { chain, parsed, form } = head
-  if (target === 'infinitive') return 'Infinitive'
-  if (target === 'gerund') return chain && chain.passive ? 'Participle' : 'Gerund'
-  if (parsed.root.has('#Gerund')) return 'Gerund'
-  if (target === 'participle') return 'Participle'
-  if (chain && chain.passive) return 'Participle'
+  if (target === 'infinitive') return Inf
+  if (target === 'gerund') return chain && chain.passive ? Participle : Ger
+  if (parsed.root.has('#Gerund')) return Ger
+  if (target === 'participle') return Participle
+  if (chain && chain.passive) return Participle
   if (chain && chain.perfect) {
-    return target === 'present' && form === 'modal-past' ? 'Infinitive' : 'Participle'
+    return target === 'present' && form === 'modal-past' ? Inf : Participle
   }
   if (chain && chain.modal) {
-    return target === 'past' && form === 'modal-infinitive' && chain.finite !== 'can' ? 'Participle' : 'Infinitive'
+    return target === 'past' && form === 'modal-infinitive' && chain.finite !== 'can' ? Participle : Inf
   }
-  if (target === 'future') return 'Infinitive'
-  if (target === 'past') return 'PastTense'
-  return isAreAm(head.vb, parsed) === 'is' ? 'PresentTense' : 'Infinitive'
+  if (target === 'future') return Inf
+  if (target === 'past') return Past
+  return isAreAm(head.vb, parsed) === 'is' ? Pres : Inf
 }
 
 const coordinateNormal = function (verbs, target, convert) {

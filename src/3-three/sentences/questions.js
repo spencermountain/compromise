@@ -1,7 +1,5 @@
 //is this sentence asking a question?
-const isQuestion = function (doc) {
-  const clauses = doc.clauses()
-
+const isQuestion = function (doc, terms) {
   // Has ellipsis at the end means it's probably not a question
   // e.g., Is this just fantasy...
   if (/\.\.$/.test(doc.out('text'))) {
@@ -10,7 +8,8 @@ const isQuestion = function (doc) {
 
   // Starts with question word, but has a comma, so probably not a question
   // e.g., Why are we caught in a land slide, no escape from reality
-  if (doc.has('^#QuestionWord') && doc.has('@hasComma')) {
+  const startsQuestion = terms[0].tags.has('QuestionWord')
+  if (startsQuestion && terms.some(term => term.post.includes(','))) {
     return false
   }
 
@@ -21,7 +20,7 @@ const isQuestion = function (doc) {
 
   // Starts with a #QuestionWord
   // e.g., What open your eyes look up to the skies and see
-  if (doc.has('^#QuestionWord')) {
+  if (startsQuestion) {
     return true
   }
 
@@ -49,7 +48,8 @@ const isQuestion = function (doc) {
   // }
 
   //is wayne gretskzy alive
-  if (clauses.has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
+  if (doc.has('(do|does|is|was)') &&
+    doc.clauses().has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
     return true
   }
 
@@ -72,7 +72,7 @@ const findQuestions = function (view) {
       return true
     }
     // try to guess a sentence without a question-mark
-    return isQuestion(m)
+    return isQuestion(m, terms)
   })
 }
 export default findQuestions

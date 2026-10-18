@@ -108,8 +108,8 @@ const verbForms = {
 
   // ==== Passive ===
   'passive-past': [
-    ['^(was|were) being? (#Past|#Part)$', [past, passive]],
-    ['^had been being? (#Past|#Part)$', [past, passive]],
+    ['^(was|were) being? (#Past|#VBN)$', [past, passive]],
+    ['^had been being? (#Past|#VBN)$', [past, passive]],
     // got walked, was walked, were walked
     ['(got|were|was) #Pass', [past, passive]],
     // was being walked
@@ -118,8 +118,8 @@ const verbForms = {
     ['^had been #Pass', [past, passive]],
   ],
   'passive-present': [
-    ['^(is|are|am) being? (#Past|#Part)$', [present, passive]],
-    ['^(has|have) been being? (#Past|#Part)$', [present, passive]],
+    ['^(is|are|am) being? (#Past|#VBN)$', [present, passive]],
+    ['^(has|have) been being? (#Past|#VBN)$', [present, passive]],
     // is walked, are stolen
     ['^(is|are|am) #Pass', [present, passive]],
     // is being walked
@@ -128,8 +128,8 @@ const verbForms = {
     ['^(has|have) been #Pass', [present, passive]],
   ],
   'passive-future': [
-    ['^will have been being? (#Past|#Part)$', [future, passive, conditional]],
-    ['^will be being? (#Past|#Part)$', [future, passive, conditional]],
+    ['^will have been being? (#Past|#VBN)$', [future, passive, conditional]],
+    ['^will be being? (#Past|#VBN)$', [future, passive, conditional]],
     // will have been walked
     ['will have been #Pass', [future, passive, conditional]],
     // will be cleaned

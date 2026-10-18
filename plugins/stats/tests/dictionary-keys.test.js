@@ -1,7 +1,8 @@
 import test from 'tape'
 import nlp from './_lib.js'
+const here = '[plugins/stats/tests/dictionary-keys] '
 
-test('statistics handle inherited dictionary keys', t => {
+test(here + 'statistics handle inherited dictionary keys', t => {
   const doc = nlp('constructor constructor apple')
   t.equal(doc.buildIDF().constructor, '0.176', 'IDF counts constructor as a word')
   t.ok(doc.tfidf().every(([, score]) => Number.isFinite(score)), 'default TF-IDF weights stay numeric')

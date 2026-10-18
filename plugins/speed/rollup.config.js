@@ -1,27 +1,62 @@
 import terser from '@rollup/plugin-terser'
 import sizeCheck from 'rollup-plugin-filesize-check'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import { readFileSync } from 'node:fs'
 
-export default {
+const workerAsset = {
+  name: 'speed-worker',
+  generateBundle() {
+    this.emitFile({
+      type: 'asset',
+      fileName: 'worker.js',
+      source: readFileSync(new URL('./src/workerPool/pool/worker.js', import.meta.url), 'utf8'),
+    })
+  },
+}
+
+const nodeBuild = {
   input: 'src/plugin.js',
-  plugins: [nodeResolve()],
+  plugins: [nodeResolve(), workerAsset],
   output: [
     {
       file: 'builds/compromise-speed.cjs',
       format: 'umd',
       name: 'compromiseSpeed',
-      plugins: [sizeCheck()],
+      plugins: [],
     },
     {
       file: 'builds/compromise-speed.min.js',
       format: 'umd',
       name: 'compromiseSpeed',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [terser({ keep_classnames: true })],
     },
     {
       file: 'builds/compromise-speed.mjs',
       format: 'esm',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [terser({ keep_classnames: true })],
     },
   ],
 }
+
+const browserBuild = {
+  input: 'src/browser.js',
+  output: [
+    { file: 'builds/compromise-speed.browser.cjs', format: 'cjs' },
+    { file: 'builds/compromise-speed.browser.mjs', format: 'esm', plugins: [terser()] },
+    {
+      file: 'builds/compromise-speed.browser.min.js',
+      format: 'umd',
+      name: 'compromiseSpeed',
+      plugins: [
+        terser(),
+        sizeCheck({
+          expect: 2,
+          warn: 5, // acceptable (+/-)
+          throw: 10, // unacceptable (+/-)
+        }),
+      ],
+    },
+  ],
+}
+
+export default [nodeBuild, browserBuild]

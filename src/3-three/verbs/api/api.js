@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 import find from '../find.js'
 import coordinate from './conjugate/coordinate.js'
 import toJSON from './toJSON.js'
@@ -12,6 +13,8 @@ import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
 import toNegative from './conjugate/toNegative.js'
 import { getTense } from './lib.js'
+import { inflect } from './conjugate/inflect.js'
+const keep = { tags: true }
 
 
 const api = function (View) {
@@ -146,6 +149,15 @@ const api = function (View) {
       if (m.found) {
         m.remove('do not')
       }
+      // 'does not walk' -> 'walks'
+      this.forEach(vb => {
+        const { root, auxiliary, negative } = parseVerb(vb)
+        if (negative.found && auxiliary.has('^(does|did)$')) {
+          const tense = auxiliary.has('did') ? 'PastTense' : 'PresentTense'
+          vb.replace(root, inflect(root, tense), keep).unTag('Infinitive').tag(tense)
+          vb.remove(auxiliary)
+        }
+      })
       return this.remove('#Negative')
     }
     toNegative(n) {
@@ -166,10 +178,6 @@ const api = function (View) {
   Verbs.prototype.toPresent = Verbs.prototype.toPresentTense
   Verbs.prototype.toFuture = Verbs.prototype.toFutureTense
 
-  View.prototype.verbs = function (n) {
-    let vb = find(this)
-    vb = vb.getNth(n)
-    return new Verbs(this.document, vb.pointer)
-  }
+  View.prototype.verbs = select(Verbs, find, true)
 }
 export default api

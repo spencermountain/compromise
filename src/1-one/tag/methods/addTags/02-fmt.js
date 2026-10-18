@@ -29,7 +29,9 @@ const fmt = function (nodes) {
       parents,
       children: [],
       color: getColor(node),
-      alias: node.alias,
+      // Retain the preferred output name for legacy model consumers.
+      alias: node.aliases === undefined ? node.alias : node.aliases[0],
+      aliases: node.aliases,
     }
   })
   // `also` is another inheritance edge. Resolve its ancestors before building

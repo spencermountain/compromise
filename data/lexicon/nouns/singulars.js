@@ -1,8 +1,10 @@
-//most nouns do not nead to be listed
+//most nouns do not need to be listed
 // for whatever reasons, these look like not-nouns
 // they are all inflected to add their plural form
 
 export default [
+  'animal',
+  'sapling',
   'backend',
   'frontend',
   // -ic
@@ -197,7 +199,6 @@ export default [
   'civil war',
 
   // -er
-  'number',
   'wafer',
   'glacier',
   'grenadier',

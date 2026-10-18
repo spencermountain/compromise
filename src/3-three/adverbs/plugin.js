@@ -1,3 +1,4 @@
+import select from '../_select.js'
 // guard against superlative+comparative forms
 const toRoot = function (adj) {
   const str = adj.compute('root').text('root')
@@ -34,10 +35,6 @@ const api = function (View) {
     }
   }
 
-  View.prototype.adverbs = function (n) {
-    let m = this.match('#Adverb')
-    m = m.getNth(n)
-    return new Adverbs(m.document, m.pointer)
-  }
+  View.prototype.adverbs = select(Adverbs, '#Adverb')
 }
 export default { api }

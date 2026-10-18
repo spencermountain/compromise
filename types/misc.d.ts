@@ -97,3 +97,8 @@ export interface Net {
 }
 
 export type ParsedMatch = object[]
+
+export interface VerboseOptions {
+  word?: string
+  pattern?: string
+}

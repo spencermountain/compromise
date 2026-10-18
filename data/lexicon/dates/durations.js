@@ -22,6 +22,8 @@ export default [
   'weekend',
   'week',
   'weeks',
+  'fortnight',
+  'fortnights',
   'wk',
   'wks',
   'year',

@@ -1,9 +1,11 @@
+import { b as boldColor, dim as dimColor, cyan as cyanColor, green as greenColor, red as redColor, yellow as yellowColor } from '../../src/API/_color.js'
 /* eslint-disable no-console */
 import fs from 'node:fs'
 import path from 'node:path'
 import { performance } from 'node:perf_hooks'
 import { fileURLToPath } from 'node:url'
 import nlp from '../../src/three.js'
+import metadata from './_lib.js'
 
 // Keep this input local and fixed so scores remain comparable between runs.
 const SENTENCES = [
@@ -46,6 +48,7 @@ const MAX_ITERATIONS = 16384
 const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const resultsFile = path.join(scriptDir, 'results.jsonl')
 const noSave = process.argv.includes('--no-save')
+const write = process.argv.includes('--write')
 
 // Some package managers consume `--quiet` themselves and expose only their
 // lifecycle log level. Supporting argv keeps direct execution identical.
@@ -246,13 +249,13 @@ const previousResult = () => {
 }
 
 const useColor = Boolean(process.stdout.isTTY) && !Object.prototype.hasOwnProperty.call(process.env, 'NO_COLOR')
-const color = (code, text) => (useColor ? `\x1b[${code}m${text}\x1b[0m` : text)
-const bold = text => color(1, text)
-const dim = text => color(2, text)
-const cyan = text => color(36, text)
-const green = text => color(32, text)
-const red = text => color(31, text)
-const yellow = text => color(33, text)
+const color = (style, text) => (useColor ? style(text) : text)
+const bold = text => color(boldColor, text)
+const dim = text => color(dimColor, text)
+const cyan = text => color(cyanColor, text)
+const green = text => color(greenColor, text)
+const red = text => color(redColor, text)
+const yellow = text => color(yellowColor, text)
 
 const maxSlowdownPercent = () => {
   const value = process.env.BENCH_MAX_SLOWDOWN_PERCENT
@@ -291,7 +294,6 @@ const main = () => {
 
   const measurement = benchmarkSuite(tests)
   const result = {
-    timestamp: new Date().toISOString(),
     libraryVersion: nlp.version,
     score: Number(measurement.score.toFixed(4)),
   }
@@ -307,9 +309,17 @@ const main = () => {
   } else {
     console.log(comparisonText(previous, result))
 
-    if (noSave || isQuiet) {
+    if (!write) {
+      console.log(dim('not saved (use --write to profile and save)'))
+    } else if (noSave || isQuiet) {
       console.log(dim(`not saved (${noSave ? '--no-save' : '--quiet'})`))
     } else {
+      console.log(dim('measuring memory and building file sizes…'))
+      Object.assign(result, metadata())
+      console.log(dim(`${result.timestamp} · ${result.commit}`))
+      console.log(`Memory: init ${result.memoryKB.init} kB · freshPrince ${result.memoryKB.freshPrince} kB`)
+      console.log(`Filesize (three): ${(result.filesizeBytes / 1024).toFixed(2)} KiB`)
+      console.log('desc: ""')
       fs.appendFileSync(resultsFile, `${JSON.stringify(result)}\n`, 'utf8')
       console.log(dim(`saved to ${path.relative(process.cwd(), resultsFile)}`))
     }

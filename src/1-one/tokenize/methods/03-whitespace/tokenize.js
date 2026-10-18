@@ -6,6 +6,21 @@ const isNumber = /[\p{Number}\p{Currency_Symbol}]/u
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const chillin = /[sn]['’]$/
 const isFullNumber = /^[(+\-]?\d+(th|st|nd|rd)?[)+\-]?$/
+const openers = { ')': '(', ']': '[', '}': '{' }
+
+// does this closing bracket close one inside the word, like 'foo(bar)'
+const closesInside = function (chars, start, end) {
+  const close = chars[end - 1]
+  let depth = 0
+  for (let i = start; i < end - 1; i += 1) {
+    if (chars[i] === openers[close]) {
+      depth += 1
+    } else if (chars[i] === close) {
+      depth -= 1
+    }
+  }
+  return depth > 0
+}
 
 const normalizePunctuation = function (str, model) {
   // quick lookup for allowed pre/post punctuation
@@ -67,6 +82,9 @@ const normalizePunctuation = function (str, model) {
     // keep '+' or ')' only for a number like (800) or 500+
     if ((c === '+' || c === ')') && isFullNumber.test(str.trim())) {
       break//done
+    }
+    if (Object.hasOwn(openers, c) && closesInside(chars, start, end)) {
+      break//keep it
     }
     // punctuation
     end--

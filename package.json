@@ -1,6 +1,6 @@
 {
   "name": "compromise",
-  "version": "14.18.0",
+  "version": "14.19.0",
   "description": "modest natural language processing",
   "license": "MIT",
   "repository": "github:spencermountain/compromise",
@@ -85,23 +85,27 @@
   "scripts": {
     "build": "node ./scripts/version.js && rollup -c --silent",
     "watch": "node --watch ./scratch.js",
-    "pack": "node ./scripts/pack.js",
+    "pack": "node ./scripts/pack/index.js",
     "version": "node ./scripts/version.js",
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer",
     "testb": "tape \"./scripts/test/smoke.test.js\" | tap-dancer && cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "test:types": "tsc --project tsconfig.json && tsc --project tsconfig.json --module Node16 --moduleResolution Node16",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
     "test:plugins": "pnpm --filter \"./plugins/*\" run test",
-    "test:hmm": "tape \"./tests/**/*.hmm.js\" | tap-dancer",
-    "test:sweep": "node scripts/bench/post-tagger/sweep-profile.js",
+    "test:dates": "pnpm --filter \"./plugins/dates\" run test",
+    "test:all": "pnpm test && pnpm test:plugins && pnpm test:smoke && pnpm test:types",
+    "test:hmm": "node ./tests/_hmm/run.js",
     "testb:plugins": "pnpm --filter \"./plugins/*\" run testb",
     "build:plugins": "pnpm --filter \"./plugins/*\" run build",
+    "debug:rules": "node scripts/debug/rules/index.js",
+    "debug:word": "node scripts/debug/word/index.js",
+    "debug:memory": "node --expose-gc scripts/debug/memory/index.js",
+    "debug:filesize": "node scripts/debug/filesize/index.js",
     "stress": "node scripts/test/stress.js",
-    "debug": "node ./scripts/debug.js",
-    "match": "node ./scripts/match.js",
-    "bench": "node ./scripts/bench/index.js --no-save",
-    "bench:write": "node ./scripts/bench/index.js",
-    "lint": "eslint src"
+    "bench": "node ./scripts/bench/index.js",
+    "bench:write": "node ./scripts/bench/index.js --write",
+    "lint": "eslint src",
+    "lint:all": "eslint ."
   },
   "files": [
     "AGENTS.md",
@@ -119,8 +123,7 @@
     "nlp"
   ],
   "dependencies": {
-    "efrt": "2.9.0",
-    "grad-school": "0.0.9",
+    "efrt": "catalog:",
     "suffix-thumb": "6.0.0"
   },
   "devDependencies": {
@@ -128,12 +131,12 @@
     "@rollup/plugin-terser": "catalog:",
     "@types/node": "catalog:",
     "cross-env": "catalog:",
-    "eslint": "10.12.0",
+    "eslint": "catalog:",
     "eslint-plugin-regexp": "3.3.1",
     "nlp-corpus": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
-    "tap-dancer": "0.4.4",
+    "tap-dancer": "catalog:",
     "tape": "catalog:",
     "typescript": "7.0.2"
   },

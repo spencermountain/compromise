@@ -1,34 +1,19 @@
-const fastSplit = function (str, numChunks = 1) {
-  const size = Math.ceil(str.length / numChunks)
-  const chunks = new Array(numChunks)
-  for (let i = 0, o = 0; i < numChunks; ++i, o += size) {
-    chunks[i] = str.substr(o, size)
+import { splitSentences } from '../_lib/sentences.js'
+
+const rip = (text, nlp, batchSize) => {
+  const batches = []
+  let batch = ''
+  splitSentences(text, nlp).forEach(sentence => {
+    if (batch && batch.length + sentence.length > batchSize) {
+      batches.push(batch)
+      batch = ''
+    }
+    batch += sentence
+  })
+  if (batch) {
+    batches.push(batch)
   }
-  return chunks
+  return batches
 }
 
-const pluckStarts = function (arr, nlp) {
-  const world = nlp.world()
-  const splitSentences = nlp.methods().one.tokenize.splitSentences
-
-  for (let i = 1; i < arr.length; i += 1) {
-    const top = arr[i].substr(0, 200)
-    const first = splitSentences(top, world)[0]
-    // move the first (part) sentence onto the end of the last one
-    const len = first.length
-    arr[i - 1] += first
-    arr[i] = arr[i].substring(len)
-  }
-  return arr
-}
-
-// split a text quickly, then repair splits by sentence
-const rip = function (txt, nlp, parts = 1) {
-  let arr = fastSplit(txt, parts)
-  arr = pluckStarts(arr, nlp)
-  return arr
-}
 export default rip
-
-// let res = rip('one, two, three. four five six. seven eight nine', 4)
-// console.log(JSON.stringify(res, null, 2))

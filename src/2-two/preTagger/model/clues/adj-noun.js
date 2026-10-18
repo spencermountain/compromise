@@ -1,3 +1,5 @@
+import tagWords from '../_lib.js'
+import { NN, Adj } from '../../tagSet/_lib.js'
 import adj from './_adj.js'
 import noun from './_noun.js'
 // the commercial market
@@ -6,8 +8,8 @@ import noun from './_noun.js'
 const misc = {
   beforeTags: {
     Determiner: undefined, //the premier university
-    Cardinal: 'Noun',//1950 convertable
-    PhrasalVerb: 'Adjective'//starts out fine
+    Cardinal: NN,//1950 convertable
+    PhrasalVerb: Adj//starts out fine
   },
   afterTags: {
     // Pronoun: 'Noun'//as an adult i
@@ -20,10 +22,10 @@ const clue = {
     ...adj.beforeWords,
     ...noun.beforeWords,
     // are representative
-    are: 'Adjective', is: 'Adjective', was: 'Adjective', be: 'Adjective',
+    ...tagWords('are is was be', Adj),
     // phrasals
-    off: 'Adjective',//start off fine
-    out: 'Adjective',//comes out fine
+    off: Adj,//start off fine
+    out: Adj,//comes out fine
   },
   afterWords: { ...adj.afterWords, ...noun.afterWords },
 }

@@ -16,7 +16,7 @@ const syntax = function (input, opts, world) {
   }
   let tokens = parseBlocks(input)
   //turn them into objects
-  tokens = tokens.map(str => parseToken(str, opts))
+  tokens = tokens.map(str => parseToken(str, opts, world.model.one.tagAliases))
   // '~re-do~'
   tokens = splitHyphens(tokens, world)
   // '{walk}'

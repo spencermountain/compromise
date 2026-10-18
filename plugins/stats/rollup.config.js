@@ -10,18 +10,25 @@ export default {
       file: 'builds/compromise-stats.cjs',
       format: 'umd',
       name: 'compromiseStats',
-      plugins: [sizeCheck()],
+      plugins: [],
     },
     {
       file: 'builds/compromise-stats.min.js',
       format: 'umd',
       name: 'compromiseStats',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [
+        terser({ keep_classnames: true }),
+        sizeCheck({
+          expect: 69,
+          warn: 5, // acceptable (+/-)
+          throw: 10, // unacceptable (+/-)
+        }),
+      ],
     },
     {
       file: 'builds/compromise-stats.mjs',
       format: 'esm',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [terser({ keep_classnames: true })],
     },
   ],
 }

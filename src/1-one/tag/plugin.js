@@ -6,7 +6,7 @@ import tagRank from './compute/tagRank.js'
 
 export default {
   model: {
-    one: { tagSet: {} }
+    one: { tagSet: {}, tagAliases: Object.create(null) }
   },
   compute: {
     tagRank

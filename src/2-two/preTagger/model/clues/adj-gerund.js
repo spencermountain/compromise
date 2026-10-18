@@ -1,7 +1,9 @@
+import tagWords from '../_lib.js'
 import adj from './_adj.js'
 import gerund from './_gerund.js'
-const g = 'Gerund'
-const jj = 'Adjective'
+import tags from '../../tagSet/aliases.js'
+
+const { VBG: g, JJ: jj } = tags
 
 // rallying the troops
 // her rallying cry
@@ -56,14 +58,7 @@ const clue = {
 
     except: jj,
     accept: jj,
-    assess: g,
-    explore: g,
-    fear: g,
-    fears: g,
-    appreciate: g,
-    question: g,
-    help: g,
-    embrace: g,
+    ...tagWords('assess explore fear fears appreciate question help embrace', g),
     with: jj, //filled with daring
   },
 

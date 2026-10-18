@@ -1,3 +1,4 @@
+import select from '../../_select.js'
 // return the nth elem of a doc
 const hasPeriod = /\./g
 
@@ -22,18 +23,16 @@ const api = function (View) {
         terms.forEach(term => {
           term.text = term.text.replace(hasPeriod, '')
           term.normal = term.normal.replace(hasPeriod, '')
-          term.text = term.text.split('').join('.') + '.'
-          term.normal = term.normal.split('').join('.') + '.'
+          // Reuse the sentence period so strip() still preserves punctuation.
+          const ending = term.post.startsWith('.') ? '' : '.'
+          term.text = term.text.split('').join('.') + ending
+          term.normal = term.normal.split('').join('.') + ending
         })
       })
       return this
     }
   }
 
-  View.prototype.acronyms = function (n) {
-    let m = this.match('#Acronym')
-    m = m.getNth(n)
-    return new Acronyms(m.document, m.pointer)
-  }
+  View.prototype.acronyms = select(Acronyms, '#Acronym')
 }
 export default api

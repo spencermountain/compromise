@@ -147,11 +147,16 @@
     year: true,
   };
 
-  const aliases = {
+  const aliases$1 = {
     wk: 'week',
     min: 'minute',
     sec: 'second',
     weekend: 'week', //for now...
+  };
+
+  // units made of other units
+  const multiples = {
+    fortnight: [2, 'week'],
   };
 
   // half of a unit, in smaller whole units
@@ -168,10 +173,11 @@
 
   const parseUnit = function (m) {
     let unit = m.match('#Duration').text('normal');
-    unit = unit.replace(/s$/, '');
+    // 'weeks', or "a month's time"
+    unit = unit.replace(/'?s$/, '');
     // support shorthands like 'min'
-    if (Object.hasOwn(aliases, unit)) {
-      unit = aliases[unit];
+    if (Object.hasOwn(aliases$1, unit)) {
+      unit = aliases$1[unit];
     }
     return unit
   };
@@ -189,9 +195,14 @@
 
     // '5 weeks'
     shift.match('#Cardinal #Duration').forEach((ts) => {
-      const num = ts.match('#Cardinal').numbers().get()[0];
+      let num = ts.match('#Cardinal').numbers().get()[0];
       if (num && typeof num === 'number') {
-        const unit = parseUnit(ts);
+        let unit = parseUnit(ts);
+        // '1 fortnight' is 2 weeks
+        if (Object.hasOwn(multiples, unit)) {
+          num *= multiples[unit][0];
+          unit = multiples[unit][1];
+        }
         if (knownUnits[unit] === true) {
           result[unit] = isNegative ? num * -1 : num;
         }
@@ -330,7 +341,7 @@
     return { result: null, m: doc.none() }
   };
 
-  const e=(e,t,n)=>{const[r,a]=e.split("/"),[o,s]=a.split(":");return Date.UTC(n,r-1,o,s)-36e5*t},t=(t,n,r,a,o)=>{const s=new Date(t).getUTCFullYear(),i=e(n,o,s),u=e(r,a,s);return t>=i&&t<u};var n=e=>"australia/lord_howe"===e?.5:"antarctica/troll"===e?2:1;var r={"9|s":"2/dili,2/jayapura","9|n":"2/chita,2/khandyga,2/pyongyang,2/seoul,2/tokyo,2/yakutsk,11/palau,japan,rok","9.5|s|04/05:03->10/04:02":"4/adelaide,4/broken_hill,4/south,4/yancowinna","9.5|s":"4/darwin,4/north","8|s":"12/casey,2/kuala_lumpur,2/makassar,2/singapore,4/perth,2/ujung_pandang,4/west,singapore","8|n":"2/brunei,2/hong_kong,2/irkutsk,2/kuching,2/macau,2/manila,2/shanghai,2/taipei,2/ulaanbaatar,2/chongqing,2/chungking,2/harbin,2/macao,2/ulan_bator,2/choibalsan,hongkong,prc,roc","8.75|s":"4/eucla","7|s":"12/davis,2/jakarta,9/christmas","7|n":"2/bangkok,2/barnaul,2/hovd,2/krasnoyarsk,2/novokuznetsk,2/novosibirsk,2/phnom_penh,2/pontianak,2/ho_chi_minh,2/tomsk,2/vientiane,2/saigon","6|n":"2/bishkek,2/dhaka,2/omsk,2/thimphu,2/urumqi,9/chagos,2/dacca,2/kashgar,2/thimbu","6.5|n":"2/yangon,9/cocos,2/rangoon","5|s":"12/mawson,12/vostok,9/kerguelen","5|n":"2/almaty,2/aqtau,2/aqtobe,2/ashgabat,2/atyrau,2/dushanbe,2/karachi,2/oral,2/qyzylorda,2/qostanay,2/samarkand,2/tashkent,2/yekaterinburg,9/maldives,2/ashkhabad","5.75|n":"2/kathmandu,2/katmandu","5.5|n":"2/kolkata,2/colombo,2/calcutta","4|s":"9/reunion","4|n":"2/baku,2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk,9/mahe,9/mauritius","4.5|n":"2/kabul","3|s":"12/syowa,9/antananarivo","3|n|04/24:00->10/29:24":"0/cairo,egypt","3|n|03/29:03->10/25:04":"2/famagusta,2/nicosia,8/athens,8/bucharest,8/chisinau,8/helsinki,8/kyiv,8/mariehamn,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye,8/nicosia,8/tiraspol,8/kiev,eet","3|n|03/29:00->10/24:24":"2/beirut","3|n|03/28:02->10/24:02":"2/gaza,2/hebron","3|n|03/27:02->10/25:02":"2/jerusalem,2/tel_aviv,israel","3|n":"0/addis_ababa,0/asmara,0/asmera,0/dar_es_salaam,0/djibouti,0/kampala,0/mogadishu,0/nairobi,2/aden,2/amman,2/baghdad,2/bahrain,2/damascus,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,8/volgograd,9/comoro,9/mayotte,2/volgograd,2/istanbul,turkey,w-su","3.5|n":"2/tehran,iran","2|s":"0/gaborone,0/harare,0/johannesburg,0/lubumbashi,0/lusaka,0/maputo,0/maseru,0/mbabane,0/windhoek","2|n|03/29:02->10/25:03":"0/ceuta,arctic/longyearbyen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich,3/jan_mayen,poland,cet,met","2|n|03/29:01->10/25:03":"12/troll","2|n":"0/blantyre,0/bujumbura,0/juba,0/khartoum,0/kigali,0/tripoli,8/kaliningrad,libya","1|s":"0/brazzaville,0/kinshasa,0/luanda","1|n|03/29:01->10/25:02":"3/canary,3/faroe,3/madeira,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london,3/faeroe,eire,8/belfast,gb-eire,gb,portugal,wet","1|n":"0/algiers,0/bangui,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis","14|n":"11/kiritimati","13|s":"11/apia,11/tongatapu","13|n":"11/enderbury,11/kanton,11/fakaofo","12|s|04/05:03->09/27:02":"12/mcmurdo,11/auckland,12/south_pole,nz","12|s":"11/fiji","12|n":"2/anadyr,2/kamchatka,11/funafuti,11/kwajalein,11/majuro,11/nauru,11/tarawa,11/wake,11/wallis,kwajalein","12.75|s|04/05:03->09/27:02":"11/chatham,nz-chat","11|s|04/05:03->10/04:02":"11/norfolk","11|s":"11/bougainville","11|n":"2/magadan,2/sakhalin,2/srednekolymsk,11/efate,11/guadalcanal,11/kosrae,11/noumea,11/pohnpei,11/ponape","10|s|04/05:03->10/04:02":"12/macquarie,4/currie,4/hobart,4/melbourne,4/sydney,4/act,4/canberra,4/nsw,4/tasmania,4/victoria","10|s":"12/dumontdurville,4/brisbane,4/lindeman,11/port_moresby,4/queensland","10|n":"2/ust-nera,2/vladivostok,11/guam,11/saipan,11/chuuk,11/truk,11/yap","10.5|s|04/05:02->10/04:02":"4/lord_howe,4/lhi","0|s|02/15:03->09/20:02":"0/casablanca","0|s|02/15:03->03/22:02":"0/el_aaiun","0|n|03/29:00->10/25:01":"3/azores","0|n":"0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,1/danmarkshavn,3/reykjavik,3/st_helena,13/gmt,13/utc,0/timbuktu,13/greenwich,13/uct,13/universal,13/zulu,gmt-0,gmt+0,gmt0,greenwich,iceland,uct,universal,utc,zulu,13/unknown,factory","-9|n|03/08:02->11/01:02":"1/adak,1/atka,us/aleutian","-9|n":"11/gambier","-9.5|n":"11/marquesas","-8|n|03/08:02->11/01:02":"1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat,us/alaska","-8|n":"11/pitcairn","-7|n|03/08:02->12/31:23":"1/vancouver,6/pacific","-7|n|03/08:02->11/01:02":"1/los_angeles,1/santa_isabel,1/tijuana,1/ensenada,10/bajanorte,us/pacific-new,us/pacific","-7|n":"1/creston,1/dawson,1/dawson_creek,1/fort_nelson,1/hermosillo,1/mazatlan,1/phoenix,1/whitehorse,6/yukon,10/bajasur,us/arizona,mst","-6|s|04/04:22->09/05:22":"11/easter,7/easterisland","-6|n|03/08:02->12/31:23":"1/edmonton,1/yellowknife,6/mountain","-6|n|03/08:02->11/01:02":"1/boise,1/cambridge_bay,1/denver,1/inuvik,1/north_dakota,1/ciudad_juarez,1/shiprock,navajo,us/mountain","-6|n":"1/bahia_banderas,1/belize,1/chihuahua,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/merida,1/mexico_city,1/monterrey,1/regina,1/swift_current,1/tegucigalpa,11/galapagos,6/east-saskatchewan,6/saskatchewan,10/general","-5|s":"1/lima,1/rio_branco,1/porto_acre,5/acre","-5|n|03/08:02->11/01:02":"1/chicago,1/matamoros,1/menominee,1/ojinaga,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,1/indiana/knox,1/indiana/tell_city,1/north_dakota/beulah,1/north_dakota/center,1/north_dakota/new_salem,1/knox_in,6/central,us/central,us/indiana-starke","-5|n":"1/bogota,1/cancun,1/cayman,1/coral_harbour,1/eirunepe,1/guayaquil,1/jamaica,1/panama,1/atikokan,jamaica,est","-4|s|04/04:24->09/06:00":"1/santiago,7/continental","-4|s":"1/campo_grande,1/cuiaba,1/la_paz,1/manaus,5/west","-4|n|03/08:02->11/01:02":"1/detroit,1/grand_turk,1/indiana,1/indianapolis,1/iqaluit,1/kentucky,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,1/indiana/marengo,1/indiana/petersburg,1/indiana/vevay,1/indiana/vincennes,1/indiana/winamac,1/kentucky/monticello,1/fort_wayne,1/indiana/indianapolis,1/kentucky/louisville,6/eastern,us/east-indiana,us/eastern,us/michigan","-4|n|03/08:00->11/01:01":"1/havana,cuba","-4|n":"1/anguilla,1/antigua,1/aruba,1/barbados,1/blanc-sablon,1/boa_vista,1/caracas,1/curacao,1/dominica,1/grenada,1/guadeloupe,1/guyana,1/kralendijk,1/lower_princes,1/marigot,1/martinique,1/montserrat,1/port_of_spain,1/porto_velho,1/puerto_rico,1/santo_domingo,1/st_barthelemy,1/st_kitts,1/st_lucia,1/st_thomas,1/st_vincent,1/tortola,1/virgin","-3|s":"1/argentina,1/asuncion,1/buenos_aires,1/catamarca,1/cordoba,1/coyhaique,1/fortaleza,1/jujuy,1/mendoza,1/montevideo,1/punta_arenas,1/sao_paulo,12/palmer,12/rothera,3/stanley,1/argentina/la_rioja,1/argentina/rio_gallegos,1/argentina/salta,1/argentina/san_juan,1/argentina/san_luis,1/argentina/tucuman,1/argentina/ushuaia,1/argentina/comodrivadavia,1/argentina/buenos_aires,1/argentina/catamarca,1/argentina/cordoba,1/argentina/jujuy,1/argentina/mendoza,1/argentina/rosario,1/rosario,5/east","-3|n|03/08:02->11/01:02":"1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic","-3|n":"1/araguaina,1/bahia,1/belem,1/cayenne,1/maceio,1/paramaribo,1/recife,1/santarem","-2|n|03/08:02->11/01:02":"1/miquelon","-2|n":"1/noronha,3/south_georgia,5/denoronha","-2.5|n|03/08:02->11/01:02":"1/st_johns,6/newfoundland","-1|n|03/28:23->10/24:24":"1/nuuk,1/scoresbysund,1/godthab","-1|n":"3/cape_verde","-11|n":"11/midway,11/niue,11/pago_pago,11/samoa,us/samoa","-10|n":"11/honolulu,11/johnston,11/rarotonga,11/tahiti,us/hawaii,hst"},a=["africa","america","asia","atlantic","australia","brazil","canada","chile","europe","indian","mexico","pacific","antarctica","etc"];const o={};Object.keys(r).forEach(e=>{const t=e.split("|"),n={offset:Number(t[0]),hem:t[1]};t[2]&&(n.dst=t[2]);r[e].split(",").forEach(e=>{e=e.replace(/(^[0-9]+)\//,(e,t)=>(t=Number(t),a[t]+"/")),o[e]=n;});}),o.utc={offset:0,hem:"n"};for(let e=-14;e<=14;e+=.5){let t=e;t>0&&(t="+"+t);let n="etc/gmt"+t;o[n]={offset:-1*e,hem:"n"},n="utc/gmt"+t,o[n]={offset:-1*e,hem:"n"};}const s=/(-?[0-9]+)h(rs)?/i,i=/(-?[0-9]+)/,u=/utc([\-+]?[0-9]+)/i,c=/gmt([\-+]?[0-9]+)/i,h=function(e){return (e=Number(e))>=-13&&e<=13?"etc/gmt"+(e=((e*=-1)>0?"+":"")+e):null};let l=(()=>{const e=(()=>{if("undefined"==typeof Intl||void 0===Intl.DateTimeFormat)return null;const e=Intl.DateTimeFormat();if(void 0===e||void 0===e.resolvedOptions)return null;const t=e.resolvedOptions().timeZone;return t?t.toLowerCase():null})();return null===e?"utc":e})();const m=Object.keys(o).reduce((e,t)=>{let n=t.split("/")[1]||"";return n=n.replace(/_/g," "),e[n]=t,e},{}),d=(e,t)=>{if(!e)return t.hasOwnProperty(l)||(console.warn(`Unrecognized IANA id '${l}'. Setting fallback tz to UTC.`),l="utc"),l;"string"!=typeof e&&console.error("Timezone must be a string - recieved: '",e,"'\n");let n=e.trim();if(n=n.toLowerCase(),true===t.hasOwnProperty(n))return n;if(n=(e=>(e=(e=(e=(e=(e=e.replace(/ time/g,"")).replace(/ (standard|daylight|summer)/g,"")).replace(/\b(east|west|north|south)ern/g,"$1")).replace(/\b(africa|america|australia)n/g,"$1")).replace(/\beuropean/g,"europe")).replace(/islands/g,"island"))(n),true===t.hasOwnProperty(n))return n;if(true===m.hasOwnProperty(n))return m[n];if(true===/[0-9]/.test(n)){const e=function(e){let t=e.match(s);if(null!==t)return h(t[1]);if(t=e.match(u),null!==t)return h(t[1]);if(t=e.match(c),null!==t){const e=-1*Number(t[1]);return h(e)}return t=e.match(i),null!==t?h(t[1]):null}(n);if(e)return e}throw new Error("Spacetime: Cannot find timezone named: '"+e+"'. Please enter an IANA timezone id.")};function f(e){return e%4==0&&e%100!=0||e%400==0}function p(e){return "[object Date]"===Object.prototype.toString.call(e)&&!isNaN(e.valueOf())}function y(e){return "[object Object]"===Object.prototype.toString.call(e)}function g(e,t=2){return (e+="").length>=t?e:new Array(t-e.length+1).join("0")+e}function b(e){const t=e%10,n=e%100;return 1===t&&11!==n?e+"st":2===t&&12!==n?e+"nd":3===t&&13!==n?e+"rd":e+"th"}function w(e){return e=(e=String(e)).replace(/([0-9])(st|nd|rd|th)$/i,"$1"),parseInt(e,10)}function k(e=""){return "day"===(e=(e=(e=(e=e.toLowerCase().trim()).replace(/ies$/,"y")).replace(/s$/,"")).replace(/-/g,""))||"days"===e?"date":"min"===e||"mins"===e?"minute":e}function v(e){return "number"==typeof e?e:p(e)?e.getTime():e.epoch||0===e.epoch?e.epoch:null}function z(e,t){return  false===y(e)?t.clone().set(e):e}function _(e,t=""){const n=e>0?"+":"-",r=Math.abs(e);return `${n}${g(parseInt(""+r,10))}${t}${g(r%1*60)}`}const $={year:(new Date).getFullYear(),month:0,date:1},j=["year","month","date","hour","minute","second","millisecond"];var O={parseArray:(e,t,n)=>{if(0===t.length)return e;for(let r=0;r<j.length;r++){const a=t[r]||n[j[r]]||$[j[r]]||0;e=e[j[r]](a);}return e},parseObject:(e,t)=>{if(0===Object.keys(t).length)return e;(t=Object.assign({},$,t)).timezone&&(e.tz=t.timezone);for(let n=0;n<j.length;n++){const r=j[n];void 0!==t[r]&&(e=e[r](t[r]));}return e},parseNumber:function(e,t){return t>0&&t<25e8&&false===e.silent&&(console.warn("  - Warning: You are setting the date to January 1970."),console.warn("       -   did input seconds instead of milliseconds?")),e.epoch=t,e}};const D=function(e){return e.epoch=Date.now(),Object.keys(e._today||{}).forEach(t=>{"function"==typeof e[t]&&(e=e[t](e._today[t]));}),e},M={now:e=>D(e),today:e=>D(e),tonight:e=>e=(e=D(e)).hour(18),tomorrow:e=>e=(e=(e=D(e)).add(1,"day")).startOf("day"),yesterday:e=>e=(e=(e=D(e)).subtract(1,"day")).startOf("day"),christmas:e=>{const t=D(e).year();return e=e.set([t,11,25,18,0,0])},"new years":e=>{const t=D(e).year();return e=e.set([t,11,31,18,0,0])}};M["new years eve"]=M["new years"];const S={millisecond:1,second:1e3,minute:6e4,hour:36e5,day:864e5};S.date=S.day,S.month=25488e5,S.week=6048e5,S.year=3154e7,Object.keys(S).forEach(e=>{S[e+"s"]=S[e];});const q=(e,t,n,r,a)=>{const o=e.d[n]();if(o===t)return;const s=null===a?null:e.d[a](),i=e.epoch,u=t-o;e.epoch+=S[r]*u,"day"===r&&Math.abs(u)>28&&t<28&&(e.epoch+=S.hour),null!==a&&s!==e.d[a]()&&(e.epoch=i);const c=S[r]/2;for(;e.d[n]()<t;)e.epoch+=c;for(;e.d[n]()>t;)e.epoch-=c;null!==a&&s!==e.d[a]()&&(e.epoch=i);},N={year:{valid:e=>e>-4e3&&e<4e3,walkTo:(e,t)=>q(e,t,"getFullYear","year",null)},month:{valid:e=>e>=0&&e<=11,walkTo:(e,t)=>{const n=e.d,r=n.getMonth(),a=e.epoch,o=n.getFullYear();if(r===t)return;const s=t-r;for(e.epoch+=S.day*(28*s),o!==e.d.getFullYear()&&(e.epoch=a);e.d.getMonth()<t;)e.epoch+=S.day;for(;e.d.getMonth()>t;)e.epoch-=S.day;}},date:{valid:e=>e>0&&e<=31,walkTo:(e,t)=>q(e,t,"getDate","day","getMonth")},hour:{valid:e=>e>=0&&e<24,walkTo:(e,t)=>q(e,t,"getHours","hour","getDate")},minute:{valid:e=>e>=0&&e<60,walkTo:(e,t)=>q(e,t,"getMinutes","minute","getHours")},second:{valid:e=>e>=0&&e<60,walkTo:(e,t)=>{e.epoch=e.seconds(t).epoch;}},millisecond:{valid:e=>e>=0&&e<1e3,walkTo:(e,t)=>{e.epoch=e.milliseconds(t).epoch;}}},I=(e,t)=>{const n=Object.keys(N),r=e.clone();for(let a=0;a<n.length;a++){const o=n[a];let s=t[o];if(void 0===s&&(s=r[o]()),"string"==typeof s&&(s=parseInt(s,10)),!N[o].valid(s))return e.epoch=null,void(false===e.silent&&console.warn("invalid "+o+": "+s));N[o].walkTo(e,s);}},T=[31,28,31,30,31,30,31,31,30,31,30,31];let C=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"],E=["january","february","march","april","may","june","july","august","september","october","november","december"];function A(){return C}function x(){return function(){const e={sep:8};for(let t=0;t<C.length;t++)e[C[t]]=t;for(let t=0;t<E.length;t++)e[E[t]]=t;return e}()}const Y=(e,t)=>{if(!t)return e;t=t.trim().toLowerCase();let n=0;if(/^[+-]?[0-9]{2}:[0-9]{2}$/.test(t)&&(true===/:00/.test(t)&&(t=t.replace(/:00/,"")),true===/:30/.test(t)&&(t=t.replace(/:30/,".5"))),/^[+-]?[0-9]{4}$/.test(t)&&(t=t.replace(/30$/,".5")),n=parseFloat(t),Math.abs(n)>100&&(n/=100),0===n||"Z"===t||"z"===t)return e.tz="etc/gmt",e;n*=-1,n>=0&&(n="+"+n);const r="etc/gmt"+n;return e.timezones[r]&&(e.tz=r),e},F=(e,t="")=>{let n=(t=t.replace(/^\s+/,"").toLowerCase()).match(/([0-9]{1,2}):([0-9]{1,2}):?([0-9]{1,2})?[:.]?([0-9]{1,4})?/);if(null!==n){let[,r,a,o,s]=n;if(r=Number(r),r<0||r>24)return e.startOf("day");if(a=Number(a),n[2].length<2||a<0||a>59)return e.startOf("day");e=(e=(e=(e=e.hour(r)).minute(a)).seconds(o||0)).millisecond(function(e=""){return (e=String(e)).length>3?e=e.substring(0,3):1===e.length?e+="00":2===e.length&&(e+="0"),Number(e)||0}(s));const i=t.match(/[0-9] ?(am|pm)\b/);return null!==i&&i[1]&&(e=e.ampm(i[1])),e}if(n=t.match(/([0-9]+) ?(am|pm)/),null!==n&&n[1]){const t=Number(n[1]);return t>12||t<1?e.startOf("day"):e=(e=(e=e.hour(n[1]||0)).ampm(n[2])).startOf("hour")}return e=e.startOf("day")},P=x(),L=e=>{if(true!==T.hasOwnProperty(e.month))return  false;if(1===e.month)return !!(f(e.year)&&e.date<=29)||e.date<=28;const t=T[e.month]||0;return e.date<=t},U=(e="",t)=>{if(e=e.trim(),true===/^'[0-9][0-9]$/.test(e)){const t=Number(e.replace(/'/,""));return t>50?1900+t:2e3+t}let n=parseInt(e,10);return !n&&t&&(n=t.year),n=n||(new Date).getFullYear(),n},B=function(e){return "sept"===(e=e.toLowerCase().trim())?P.sep:P[e]};var H=[{reg:/^([0-9]{1,2})[-/.]([0-9]{1,2})[\-/.]?([0-9]{4})?( [0-9]{1,2}:[0-9]{2}:?[0-9]{0,2} ?(am|pm|gmt))?$/i,parse:(e,t)=>{let n=parseInt(t[1],10)-1,r=parseInt(t[2],10);(e.british||n>=12)&&(r=parseInt(t[1],10),n=parseInt(t[2],10)-1);const a={date:r,month:n,year:U(t[3],e._today)||(new Date).getFullYear()};return  false===L(a)?(e.epoch=null,e):(I(e,a),e=F(e,t[4]))}},{reg:/^([a-z]+)[\-/. ]([0-9]{1,2})[\-/. ]?([0-9]{4}|'[0-9]{2})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(e,t)=>{const n={year:U(t[3],e._today),month:B(t[1]),date:w(t[2]||"")};return  false===L(n)?(e.epoch=null,e):(I(e,n),e=F(e,t[4]))}},{reg:/^([a-z]+) ([0-9]{1,2})( [0-9]{4})?( ([0-9:]+( ?am| ?pm| ?gmt)?))?$/i,parse:(e,t)=>{const n={year:U(t[3],e._today),month:B(t[1]),date:w(t[2]||"")};return  false===L(n)?(e.epoch=null,e):(I(e,n),e=F(e,t[4]))}},{reg:/^([a-z]+) ([0-9]{1,2}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2})( \+[0-9]{4})?( [0-9]{4})?$/i,parse:(e,t)=>{const[,n,r,a,o,s]=t,i={year:U(s,e._today),month:B(n),date:w(r||"")};return  false===L(i)?(e.epoch=null,e):(e=Y(e,o),I(e,i),e=F(e,a))}},{reg:/^([a-z]+) ([0-9]{1,2}) ([0-9]{4}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}) (?:gmt)?([+-][0-9]{4})/i,parse:(e,t)=>{const[,n,r,a,o,s]=t,i={year:U(a,e._today),month:B(n),date:w(r||"")};return  false===L(i)?(e.epoch=null,e):(e=Y(e,s),I(e,i),e=F(e,o))}}],Z=[{reg:/^([0-9]{4})[\-/]([0-9]{2})$/,parse:(e,t)=>{const n={year:t[1],month:parseInt(t[2],10)-1,date:1};return  false===L(n)?(e.epoch=null,e):(I(e,n),e=F(e,t[4]))}},{reg:/^([a-z]+) ([0-9]{4})$/i,parse:(e,t)=>{const n={year:U(t[2],e._today),month:B(t[1]),date:e._today.date||1};return  false===L(n)?(e.epoch=null,e):(I(e,n),e=F(e,t[4]))}},{reg:/^(q[0-9])( of)?( [0-9]{4})?/i,parse:(e,t)=>{const n=t[1]||"";e=e.quarter(n);let r=t[3]||"";return r&&(r=r.trim(),e=e.year(r)),e}},{reg:/^(spring|summer|winter|fall|autumn)( of)?( [0-9]{4})?/i,parse:(e,t)=>{const n=t[1]||"";e=e.season(n);let r=t[3]||"";return r&&(r=r.trim(),e=e.year(r)),e}},{reg:/^[0-9,]+ ?b\.?c\.?$/i,parse:(e,t)=>{let n=t[0]||"";n=n.replace(/^([0-9,]+) ?b\.?c\.?$/i,"-$1");const r=new Date,a={year:parseInt(n.trim(),10),month:r.getMonth(),date:r.getDate()};return  false===L(a)?(e.epoch=null,e):(I(e,a),e=F(e))}},{reg:/^[0-9,]+ ?(a\.?d\.?|c\.?e\.?)$/i,parse:(e,t)=>{let n=t[0]||"";n=n.replace(/,/g,"");const r=new Date,a={year:parseInt(n.trim(),10),month:r.getMonth(),date:r.getDate()};return  false===L(a)?(e.epoch=null,e):(I(e,a),e=F(e))}},{reg:/^[0-9]{4}( ?a\.?d\.?)?$/i,parse:(e,t)=>{const n=e._today;n.month&&!n.date&&(n.date=1);const r=new Date,a={year:U(t[0],n),month:n.month||r.getMonth(),date:n.date||r.getDate()};return  false===L(a)?(e.epoch=null,e):(I(e,a),e=F(e))}}],Q=[].concat([{reg:/^(-?0{0,2}[0-9]{3,4})-([0-9]{1,2})-([0-9]{1,2})[T| ]([0-9.:]+)(Z|[+-][0-9:]+)?(\[.*?\])?(\[.*?\])?$/i,parse:(e,t)=>{const n={year:t[1],month:parseInt(t[2],10)-1,date:t[3]};if(false===L(n))return e.epoch=null,e;if(t[6]){const n=t[6].trim().replace(/[[\]]/g,"");n&&(e=e.timezone(n));}else Y(e,t[5]);return I(e,n),e=F(e,t[4])}},{reg:/^([0-9]{4})[\-/. ]([0-9]{1,2})[\-/. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(e,t)=>{const n={year:t[1],month:parseInt(t[2],10)-1,date:parseInt(t[3],10)};return n.month>=12&&(n.date=parseInt(t[2],10),n.month=parseInt(t[3],10)-1),false===L(n)?(e.epoch=null,e):(I(e,n),e=F(e,t[4]))}},{reg:/^([0-9]{4})[\-/. ]([a-z]+)[\-/. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(e,t)=>{const n={year:U(t[1],e._today),month:B(t[2]),date:w(t[3]||"")};return  false===L(n)?(e.epoch=null,e):(I(e,n),e=F(e,t[4]))}}],H,[{reg:/^([0-9]{1,2})[-/]([a-z]+)[\-/]?([0-9]{4})?$/i,parse:(e,t)=>{const n={year:U(t[3],e._today),month:B(t[2]),date:w(t[1]||"")};return  false===L(n)?(e.epoch=null,e):(I(e,n),e=F(e,t[4]))}},{reg:/^([0-9]{1,2})( [a-z]+)( [0-9]{4}| '[0-9]{2})? ?([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2} ?(am|pm|gmt))?$/i,parse:(e,t)=>{const n={year:U(t[3],e._today),month:B(t[2]),date:w(t[1])};return n.month&&false!==L(n)?(I(e,n),e=F(e,t[4])):(e.epoch=null,e)}},{reg:/^([0-9]{1,2})[. \-/]([a-z]+)[. \-/]([0-9]{4})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(e,t)=>{const n={date:Number(t[1]),month:B(t[2]),year:Number(t[3])};return  false===L(n)?(e.epoch=null,e):(I(e,n),e=e.startOf("day"),e=F(e,t[4]))}}],Z);const{parseArray:G,parseObject:V,parseNumber:W}=O,J={year:(new Date).getFullYear(),month:0,date:1},K=(e,t)=>{const n=e._today||J;if("number"==typeof t)return W(e,t);if(e.epoch=Date.now(),e._today&&y(e._today)&&Object.keys(e._today).length>0){const t=V(e,n);t.isValid()&&(e.epoch=t.epoch);}if(null==t||""===t)return e;if(true===p(t))return e.epoch=t.getTime(),e;if(true===function(e){return "[object Array]"===Object.prototype.toString.call(e)}(t))return e=G(e,t,n);if(true===y(t)){if(t.epoch)return e.epoch=t.epoch,e.tz=t.tz,e;const r=Object.assign({},n,t);return e=V(e,r)}return "string"!=typeof t?e:(t=t.replace(/\b(mon|tues?|wed|wednes|thur?s?|fri|sat|satur|sun)(day)?\b/i,"").replace(/([0-9])(th|rd|st|nd)/,"$1").replace(/,/g,"").replace(/ +/g," ").trim(),true===M.hasOwnProperty(t)?e=M[t](e):function(e,t,n){for(let r=0;r<Q.length;r++){const a=t.match(Q[r].reg);if(a){const t=Q[r].parse(e,a,n);if(null!==t&&t.isValid())return t}}return  false===e.silent&&console.warn("Warning: couldn't parse date-string: '"+t+"'"),e.epoch=null,e}(e,t))};let R=["sun","mon","tue","wed","thu","fri","sat"],X=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];function ee(){return R}function te(){return X}const ne={mo:1,tu:2,we:3,th:4,fr:5,sa:6,su:7,tues:2,weds:3,wedn:3,thur:4,thurs:4};let re=true;const ae=e=>{const t=e.timezone().current.offset;return t?_(t,":"):"Z"},oe=e=>re?function(e){return e?e[0].toUpperCase()+e.substr(1):""}(e):e,se={day:e=>oe(e.dayName()),"day-short":e=>oe(ee()[e.day()]),"day-number":e=>e.day(),"day-ordinal":e=>b(e.day()),"day-pad":e=>g(e.day()),date:e=>e.date(),"date-ordinal":e=>b(e.date()),"date-pad":e=>g(e.date()),month:e=>oe(e.monthName()),"month-short":e=>oe(A()[e.month()]),"month-number":e=>e.month(),"month-ordinal":e=>b(e.month()),"month-pad":e=>g(e.month()),"iso-month":e=>g(e.month()+1),year:e=>{let t=e.year();return t>0?t:(t=Math.abs(t),t+" BC")},"year-short":e=>{let t=e.year();return t>0?`'${String(e.year()).substr(2,4)}`:(t=Math.abs(t),t+" BC")},"iso-year":e=>{const t=e.year(),n=t<0;let r=g(Math.abs(t),4);return n&&(r=g(r,6),r="-"+r),r},time:e=>e.time(),"time-24":e=>`${e.hour24()}:${g(e.minute())}`,hour:e=>e.hour12(),"hour-pad":e=>g(e.hour12()),"hour-24":e=>e.hour24(),"hour-24-pad":e=>g(e.hour24()),minute:e=>e.minute(),"minute-pad":e=>g(e.minute()),second:e=>e.second(),"second-pad":e=>g(e.second()),millisecond:e=>e.millisecond(),"millisecond-pad":e=>g(e.millisecond(),3),ampm:e=>e.ampm(),AMPM:e=>e.ampm().toUpperCase(),quarter:e=>"Q"+e.quarter(),season:e=>e.season(),era:e=>e.era(),json:e=>e.json(),timezone:e=>e.timezone().name,offset:e=>ae(e),numeric:e=>`${e.year()}/${g(e.month()+1)}/${g(e.date())}`,"numeric-us":e=>`${g(e.month()+1)}/${g(e.date())}/${e.year()}`,"numeric-uk":e=>`${g(e.date())}/${g(e.month()+1)}/${e.year()}`,"mm/dd":e=>`${g(e.month()+1)}/${g(e.date())}`,iso:e=>`${e.format("iso-year")}-${g(e.month()+1)}-${g(e.date())}T${g(e.h24())}:${g(e.minute())}:${g(e.second())}.${g(e.millisecond(),3)}${ae(e)}`,"iso-short":e=>{const t=g(e.month()+1),n=g(e.date());var r;return `${(r=e.year())>=0?g(r,4):"-"+g(r=Math.abs(r),4)}-${t}-${n}`},"iso-utc":e=>new Date(e.epoch).toISOString(),"iso-full":e=>{let t=e.format("iso");const n=e.timezone().name;return n&&(t+=`[${n}]`),t},sql:e=>`${e.format("iso-year")}-${g(e.month()+1)}-${g(e.date())} ${g(e.h24())}:${g(e.minute())}:${g(e.second())}`,nice:e=>`${A()[e.month()]} ${b(e.date())}, ${e.time()}`,"nice-24":e=>`${A()[e.month()]} ${b(e.date())}, ${e.hour24()}:${g(e.minute())}`,"nice-year":e=>`${A()[e.month()]} ${b(e.date())}, ${e.year()}`,"nice-day":e=>`${ee()[e.day()]} ${oe(A()[e.month()])} ${b(e.date())}`,"nice-full":e=>`${e.dayName()} ${oe(e.monthName())} ${b(e.date())}, ${e.time()}`,"nice-full-24":e=>`${e.dayName()} ${oe(e.monthName())} ${b(e.date())}, ${e.hour24()}:${g(e.minute())}`},ie={"day-name":"day","month-name":"month","iso 8601":"iso","iso 9075":"sql","time-h24":"time-24","time-12":"time","time-h12":"time",tz:"timezone",iana:"timezone","day-num":"day-number","month-num":"month-number","month-iso":"iso-month","year-iso":"iso-year","nice-short":"nice","nice-short-24":"nice-24",mdy:"numeric-us",dmy:"numeric-uk",ymd:"numeric","yyyy/mm/dd":"numeric","mm/dd/yyyy":"numeric-us","dd/mm/yyyy":"numeric-us","little-endian":"numeric-uk","big-endian":"numeric","day-nice":"nice-day"};Object.keys(ie).forEach(e=>se[e]=se[ie[e]]);const ue=(e,t="")=>{if(true!==e.isValid())return "";if(se.hasOwnProperty(t)){let n=se[t](e)||"";return "json"!==t&&(n=String(n),"ampm"!==t.toLowerCase()&&(n=oe(n))),n}if(-1!==t.indexOf("{")){const n=/\{(.+?)\}/g;return t=t.replace(n,(t,n)=>{if("AMPM"!==(n=n.trim())&&(n=n.toLowerCase()),se.hasOwnProperty(n)){const t=String(se[n](e));return "ampm"!==n.toLowerCase()?oe(t):t}return ""}),t}return e.format("iso-short")},ce={G:e=>e.era(),GG:e=>e.era(),GGG:e=>e.era(),GGGG:e=>"AD"===e.era()?"Anno Domini":"Before Christ",y:e=>e.year(),yy:e=>g(Number(String(e.year()).substr(2,4))),yyy:e=>e.year(),yyyy:e=>e.year(),yyyyy:e=>"0"+e.year(),Q:e=>e.quarter(),QQ:e=>e.quarter(),QQQ:e=>e.quarter(),QQQQ:e=>e.quarter(),M:e=>e.month()+1,MM:e=>g(e.month()+1),MMM:e=>e.format("month-short"),MMMM:e=>e.format("month"),w:e=>e.week(),ww:e=>g(e.week()),d:e=>e.date(),dd:e=>g(e.date()),D:e=>e.dayOfYear(),DD:e=>g(e.dayOfYear()),DDD:e=>g(e.dayOfYear(),3),E:e=>e.format("day-short"),EE:e=>e.format("day-short"),EEE:e=>e.format("day-short"),EEEE:e=>e.format("day"),EEEEE:e=>e.format("day")[0],e:e=>e.day(),ee:e=>e.day(),eee:e=>e.format("day-short"),eeee:e=>e.format("day"),eeeee:e=>e.format("day")[0],a:e=>e.ampm().toUpperCase(),aa:e=>e.ampm().toUpperCase(),aaa:e=>e.ampm().toUpperCase(),aaaa:e=>e.ampm().toUpperCase(),h:e=>e.h12(),hh:e=>g(e.h12()),H:e=>e.hour(),HH:e=>g(e.hour()),m:e=>e.minute(),mm:e=>g(e.minute()),s:e=>e.second(),ss:e=>g(e.second()),SSS:e=>g(e.millisecond(),3),A:e=>e.epoch-e.startOf("day").epoch,z:e=>e.timezone().name,zz:e=>e.timezone().name,zzz:e=>e.timezone().name,zzzz:e=>e.timezone().name,Z:e=>_(e.timezone().current.offset),ZZ:e=>_(e.timezone().current.offset),ZZZ:e=>_(e.timezone().current.offset),ZZZZ:e=>_(e.timezone().current.offset,":")},he=(e,t,n)=>{let r=e,a=t;for(let o=0;o<n;o+=1)ce[r]=ce[a],r+=e,a+=t;};he("q","Q",4),he("L","M",4),he("Y","y",4),he("c","e",4),he("k","H",2),he("K","h",2),he("S","s",2),he("v","z",4),he("V","Z",4);const le=["year","season","quarter","month","week","day","quarterHour","hour","minute"],me=function(e,t){const n=e.clone().startOf(t),r=e.clone().endOf(t).epoch-n.epoch,a=(e.epoch-n.epoch)/r;return parseFloat(a.toFixed(2))},de=(e,t,n)=>{let r=0;for(e=e.clone();e.isBefore(t);)e=e.add(1,n),r+=1;return e.isAfter(t,n)&&(r-=1),r},fe=(e,t,n)=>e.isBefore(t)?de(e,t,n):-1*de(t,e,n),pe=function(e,t,n){t=z(t,e);let r=false;if(e.isAfter(t)){const n=e;e=t,t=n,r=true;}let a=function(e,t){const n=t.epoch-e.epoch,r={milliseconds:n,seconds:parseInt(n/1e3,10)};r.minutes=parseInt(r.seconds/60,10),r.hours=parseInt(r.minutes/60,10);let a=e.clone();return r.years=((e,t)=>{let n=t.year()-e.year();return (e=e.year(t.year())).isAfter(t)&&(n-=1),n})(a,t),a=e.add(r.years,"year"),r.months=12*r.years,a=e.add(r.months,"month"),r.months+=fe(a,t,"month"),r.quarters=4*r.years,r.quarters+=parseInt(r.months%12/3,10),r.weeks=52*r.years,a=e.add(r.weeks,"week"),r.weeks+=fe(a,t,"week"),r.days=7*r.weeks,a=e.add(r.days,"day"),r.days+=fe(a,t,"day"),r}(e,t);return r&&(a=function(e){return Object.keys(e).forEach(t=>{e[t]*=-1;}),e}(a)),n?(n=k(n),true!==/s$/.test(n)&&(n+="s"),"dates"===n&&(n="days"),a[n]):a},ye=e=>Math.abs(e)||0;let ge={second:"second",seconds:"seconds",minute:"minute",minutes:"minutes",hour:"hour",hours:"hours",day:"day",days:"days",month:"month",months:"months",year:"year",years:"years"};function be(e){return ge[e]||""}let we="past",ke="future",ve="present",ze="now",_e="almost",$e="over",je=e=>`${e} ago`,Oe=e=>`in ${e}`;function De(e){return je(e)}function Me(e){return Oe(e)}function Se(){return ze}const qe={months:{almost:10,over:4},days:{almost:25,over:10},hours:{almost:20,over:8},minutes:{almost:50,over:20},seconds:{almost:50,over:20}};function Ne(e,t){return 1===e?e+" "+be(t.slice(0,-1)):e+" "+be(t)}const Ie=function(e){let t=null,n=null;const r=[],a=[];return Object.keys(e).forEach((o,s,i)=>{const u=Math.abs(e[o]);if(0===u)return;r.push(u+o[0]);const c=Ne(u,o);if(a.push(c),!t){if(t=c,n=c,s>4)return;const r=i[s+1],a=Math.abs(e[r]);a>qe[r].almost?(t=Ne(u+1,o),n=_e+" "+t):a>qe[r].over&&(n=$e+" "+c);}}),{qualified:n,rounded:t,abbreviated:r,englishValues:a}},Te=(e,t)=>{const n=function(e,t){const n=e.isBefore(t),r=n?t:e;let a=n?e:t;a=a.clone();const o={years:0,months:0,days:0,hours:0,minutes:0,seconds:0};return Object.keys(o).forEach(e=>{if(a.isSame(r,e))return;const t=a.diff(r,e);a=a.add(t,e),o[e]=t;}),n&&Object.keys(o).forEach(e=>{0!==o[e]&&(o[e]*=-1);}),o}(e,t=z(t,e));if(true===Object.keys(n).every(e=>!n[e]))return {diff:n,rounded:Se(),qualified:Se(),precise:Se(),abbreviated:[],iso:"P0Y0M0DT0H0M0S",direction:ve};let r,a=ke,{rounded:o,qualified:s}=Ie(n);const{englishValues:i,abbreviated:u}=Ie(n);r=i.splice(0,2).join(", "),true===e.isAfter(t)?(o=De(o),s=De(s),r=De(r),a=we):(o=Me(o),s=Me(s),r=Me(r));const c=function(e){let t="P";return t+=ye(e.years)+"Y",t+=ye(e.months)+"M",t+=ye(e.days)+"DT",t+=ye(e.hours)+"H",t+=ye(e.minutes)+"M",t+=ye(e.seconds)+"S",t}(n);return {diff:n,rounded:o,qualified:s,precise:r,abbreviated:u,iso:c,direction:a}};var Ce={north:[["spring",2,1],["summer",5,1],["fall",8,1],["autumn",8,1],["winter",11,1]],south:[["fall",2,1],["autumn",2,1],["winter",5,1],["spring",8,1],["summer",11,1]]},Ee=[null,[0,1],[3,1],[6,1],[9,1]];const Ae={second:e=>(I(e,{millisecond:0}),e),minute:e=>(I(e,{second:0,millisecond:0}),e),quarterhour:e=>{const t=e.minutes();return e=t>=45?e.minutes(45):t>=30?e.minutes(30):t>=15?e.minutes(15):e.minutes(0),I(e,{second:0,millisecond:0}),e},hour:e=>(I(e,{minute:0,second:0,millisecond:0}),e),day:e=>(I(e,{hour:0,minute:0,second:0,millisecond:0}),e),week:e=>{const t=e.clone();return (e=e.day(e._weekStart)).isAfter(t)&&(e=e.subtract(1,"week")),I(e,{hour:0,minute:0,second:0,millisecond:0}),e},month:e=>(I(e,{date:1,hour:0,minute:0,second:0,millisecond:0}),e),quarter:e=>{const t=e.quarter();return Ee[t]&&I(e,{month:Ee[t][0],date:Ee[t][1],hour:0,minute:0,second:0,millisecond:0}),e},season:e=>{const t=e.season();let n="north";"South"===e.hemisphere()&&(n="south");for(let r=0;r<Ce[n].length;r++)if(Ce[n][r][0]===t){let a=e.year();return "winter"===t&&e.month()<3&&(a-=1),I(e,{year:a,month:Ce[n][r][1],date:Ce[n][r][2],hour:0,minute:0,second:0,millisecond:0}),e}return e},year:e=>(I(e,{month:0,date:1,hour:0,minute:0,second:0,millisecond:0}),e),decade:e=>{const t=(e=e.startOf("year")).year(),n=10*parseInt(t/10,10);return e=e.year(n)},century:e=>{const t=(e=e.startOf("year")).year(),n=100*parseInt(t/100,10);return e=e.year(n)}};Ae.date=Ae.day;const xe=function(e,t,n,r=1){if(!t||!n)return [];if(t=k(t),n=e.clone().set(n),e.isAfter(n)){const t=e;e=n,n=t;}if(e.diff(n,t)<r)return [];let a=e.clone();if(function(e){return !!ee().find(t=>t===e)||!!te().find(t=>t===e)}(t))a=a.next(t),t="week";else {a.startOf(t).isBefore(e)&&(a=a.next(t));}const o=[];for(;a.isBefore(n);)o.push(a),a=a.add(r,t);return o},Ye=e=>{const r=e.timezones;let a=e.tz;if(false===r.hasOwnProperty(a)&&(a=d(e.tz,r)),null===a)return  false===e.silent&&console.warn("Warn: could not find given or local timezone - '"+e.tz+"'"),{current:{epochShift:0}};const o=r[a],s={name:(i=a,"Utc"===(i=(i=(i=(i=(i=(i=(i=(i=i[0].toUpperCase()+i.substr(1)).replace(/[/_-]([a-z])/gi,e=>e.toUpperCase())).replace(/_(of|es)_/i,e=>e.toLowerCase())).replace(/\/gmt/i,"/GMT")).replace(/\/utc/i,"/UTC")).replace(/\/Dumontdurville$/i,"/DumontDUrville")).replace(/\/Mcmurdo$/i,"/McMurdo")).replace(/\/Port-au-prince$/i,"/Port-au-Prince"))&&(i="UTC"),i),hasDst:Boolean(o.dst),default_offset:o.offset,hemisphere:"s"===o.hem?"South":"North",current:{}};var i,u;if(s.hasDst){const e=(u=o.dst)?u.split("->"):[];s.change={start:e[0],back:e[1]};}const c=o.offset;let h=c;const l=n(a);return  true===s.hasDst&&(h="North"===s.hemisphere?c-l:o.offset+l),false===s.hasDst?(s.current.offset=c,s.current.isDST=false):true===t(e.epoch,s.change.start,s.change.back,c,h)?(s.current.offset=c,s.current.isDST="North"===s.hemisphere):(s.current.offset=h,s.current.isDST="South"===s.hemisphere),s},Fe=["century","decade","year","month","date","day","hour","minute","second","millisecond"],Pe={set:function(e,t){let n=this.clone();return n=K(n,e),t&&(n.tz=d(t,n.timezones)),n},timezone:function(e){if(void 0!==e){const t=this.json();return t.timezone=e,this.set(t,e)}return Ye(this)},isDST:function(){return Ye(this).current.isDST},hasDST:function(){return Ye(this).hasDst},offset:function(){return 60*Ye(this).current.offset},hemisphere:function(){return Ye(this).hemisphere},format:function(e){return ue(this,e)},unixFmt:function(e){return ((e,t)=>{let n=t.split("");return n=function(e){for(let t=0;t<e.length;t+=1)if("'"===e[t])for(let n=t+1;n<e.length;n+=1){if(e[n]&&(e[t]+=e[n]),"'"===e[n]){e[n]=null;break}e[n]=null;}return e.filter(e=>e)}(n),n=function(e){for(let t=0;t<e.length;t+=1){const n=e[t];for(let r=t+1;r<e.length&&e[r]===n;r+=1)e[t]+=e[r],e[r]=null;}return (e=e.filter(e=>e)).map(e=>("''"===e&&(e="'"),e))}(n),n.reduce((t,n)=>(void 0!==ce[n]?t+=ce[n](e)||"":(/^'.+'$/.test(n)&&(n=n.replace(/'/g,"")),t+=n),t),"")})(this,e)},startOf:function(e){return ((e,t)=>{let n=e.clone();return t=k(t),Ae[t]?Ae[t](n):"summer"===t||"winter"===t?(n=n.season(t),Ae.season(n)):n})(this,e)},endOf:function(e){return ((e,t)=>{let n=e.clone();return t=k(t),Ae[t]?(n=Ae[t](n),n=n.add(1,t),n=n.subtract(1,"millisecond"),n):n})(this,e)},leapYear:function(){return f(this.year())},progress:function(e){return ((e,t)=>{if(t)return t=k(t),me(e,t);const n={};return le.forEach(t=>{n[t]=me(e,t);}),n})(this,e)},nearest:function(e){return ((e,t)=>{const n=e.progress();return "quarterhour"===(t=k(t))&&(t="quarterHour"),void 0!==n[t]?(n[t]>.5&&(e=e.add(1,t)),e=e.startOf(t)):false===e.silent&&console.warn("no known unit '"+t+"'"),e})(this,e)},diff:function(e,t){return pe(this,e,t)},since:function(e){return e||(e=this.clone().set()),Te(this,e)},next:function(e){return this.add(1,e).startOf(e)},last:function(e){return this.subtract(1,e).startOf(e)},isValid:function(){return !(!this.epoch&&0!==this.epoch)&&!isNaN(this.d.getTime())},goto:function(e){const t=this.clone();return t.tz=d(e,t.timezones),t},every:function(e,t,n){if("object"==typeof e&&"string"==typeof t){const n=t;t=e,e=n;}return xe(this,e,t,n)},isAwake:function(){const e=this.hour();return !(e<8||e>22)},isAsleep:function(){return !this.isAwake()},daysInMonth:function(){switch(this.month()){case 0:case 2:case 4:case 6:case 7:case 9:case 11:return 31;case 1:return this.leapYear()?29:28;case 3:case 5:case 8:case 10:return 30;default:throw new Error("Invalid Month state.")}},log:function(){return console.log(""),console.log(ue(this,"nice-short")),this},logYear:function(){return console.log(""),console.log(ue(this,"full-short")),this},json:function(e){if(void 0!==e){let t=this.clone();e.timezone&&(t.tz=e.timezone);for(let n=0;n<Fe.length;n++){const r=Fe[n];void 0!==e[r]&&(t=t[r](e[r]));}return t}const t=Fe.reduce((e,t)=>(e[t]=this[t](),e),{});return t.offset=this.timezone().current.offset,t.timezone=this.tz,t},debug:function(){const e=this.timezone();let t=this.format("MM")+" "+this.format("date-ordinal")+" "+this.year();return t+="\n     - "+this.format("time"),console.log("\n\n",t+"\n     - "+e.name+" ("+e.current.offset+")"),this},from:function(e){return (e=this.clone().set(e)).since(this)},fromNow:function(){return this.clone().set(Date.now()).since(this)},weekStart:function(e){if("number"==typeof e)return this._weekStart=e,this;if("string"==typeof e){e=e.toLowerCase().trim();let t=ee().indexOf(e);-1===t&&(t=te().indexOf(e)),-1===t&&(t=1),this._weekStart=t;}else console.warn("Spacetime Error: Cannot understand .weekStart() input:",e);return this}};Pe.inDST=Pe.isDST,Pe.round=Pe.nearest,Pe.each=Pe.every;const Le=function(e,t){return 1===e&&f(t)?29:T[e]},Ue=(e,t)=>{if(e.month>0){const n=parseInt(e.month/12,10);e.year=t.year()+n,e.month=e.month%12;}else if(e.month<0){const n=Math.abs(e.month);let r=parseInt(n/12,10);n%12!=0&&(r+=1),e.year=t.year()-r,e.month=e.month%12,e.month=e.month+12,12===e.month&&(e.month=0);}return e},Be=(e,t,n)=>{let r=t.year(),a=t.month(),o=Le(a,r);for(;n>o;)n-=o,a+=1,a>=12&&(a-=12,r+=1),o=Le(a,r);return e.month=a,e.date=n,e},He=(e,t,n)=>{e.year=t.year(),e.month=t.month();const r=t.date();for(e.date=r-Math.abs(n);e.date<1;){e.month-=1,e.month<0&&(e.month=11,e.year-=1);const t=Le(e.month,e.year);e.date+=t;}return e},Ze=e=>("string"==typeof e&&(e=parseInt(e,10)),e),Qe=["year","month","date","hour","minute","second","millisecond"],Ge=(e,t,n)=>{const r=Qe.indexOf(n),a=Qe.slice(r,Qe.length);for(let n=0;n<a.length;n++){const r=t[a[n]]();e[a[n]](r);}return e},Ve=function(e,t,n,r){return  true===n&&e.isBefore(t)?e=e.add(1,r):false===n&&e.isAfter(t)&&(e=e.minus(1,r)),e},We=function(e,t,n){t=Ze(t);const r=e.clone(),a=(e.minute()-t)*S.minute;return e.epoch-=a,Ge(e,r,"second"),(e=Ve(e,r,n,"hour")).epoch},Je=function(e,t,n){(t=Ze(t))>=24?t=23:t<0&&(t=0);const r=e.clone();let a=e.hour()-t,o=a*S.hour;return e.epoch-=o,e.date()!==r.date()&&(e=r.clone(),a>1&&(a-=1),a<1&&(a+=1),o=a*S.hour,e.epoch-=o),I(e,{hour:t}),Ge(e,r,"minute"),(e=Ve(e,r,n,"day")).epoch},Ke=function(e,t){return "string"==typeof t&&/^'[0-9]{2}$/.test(t)&&(t=t.replace(/'/,"").trim(),t=(t=Number(t))>30?1900+t:2e3+t),t=Ze(t),I(e,{year:t}),e.epoch},Re=function(e,t,n){const r=e.clone();return 1===(t=Ze(t))&&"december"===e.monthName()&&e.date()>=29&&1===e.week()?e:("december"===(e=(e=(e=e.month(0)).date(1)).day("monday",false)).monthName()&&e.date()<29&&(e=e.add(1,"week")),t-=1,e=e.add(t,"weeks"),e=Ve(e,r,n,"year"))};let Xe="am",et="pm";const tt={millisecond:function(e){if(void 0!==e){const t=this.clone();return t.epoch=function(e,t){t=Ze(t);const n=e.millisecond()-t;return e.epoch-n}(t,e),t}return this.d.getMilliseconds()},second:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){t=Ze(t);const r=e.clone(),a=(e.second()-t)*S.second;return e.epoch=e.epoch-a,(e=Ve(e,r,n,"minute")).epoch}(n,e,t),n}return this.d.getSeconds()},minute:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=We(n,e,t),n}return this.d.getMinutes()},hour:function(e,t){const n=this.d;if(void 0!==e){const n=this.clone();return n.epoch=Je(n,e,t),n}return n.getHours()},hourFloat:function(e,t){if(void 0!==e){const n=this.clone();let r=e%1;r*=60;const a=parseInt(e,10);return n.epoch=Je(n,a,t),n.epoch=We(n,r,t),n}const n=this.d,r=n.getHours();let a=n.getMinutes();return a/=60,r+a},hour12:function(e,t){const n=this.d;if(void 0!==e){const n=this.clone(),r=(e=""+e).match(/^([0-9]+)(am|pm)$/);if(r){let e=parseInt(r[1],10);"pm"===r[2]&&(e+=12),n.epoch=Je(n,e,t);}return n}let r=n.getHours();return r>12&&(r-=12),0===r&&(r=12),r},time:function(e,t){if(void 0!==e){const n=this.clone();return e=e.toLowerCase().trim(),n.epoch=function(e,t,n){let r=t.match(/([0-9]{1,2})[:h]([0-9]{1,2})(:[0-9]{1,2})? ?(am|pm)?/);if(!r){if(r=t.match(/([0-9]{1,2}) ?(am|pm)/),!r)return null;r.splice(2,0,"0"),r.splice(3,0,"");}let a=false,o=parseInt(r[1],10),s=parseInt(r[2],10);s>=60&&(s=59),o>12&&(a=true),false===a&&("am"===r[4]&&12===o&&(o=0),"pm"===r[4]&&o<12&&(o+=12)),r[3]=r[3]||"",r[3]=r[3].replace(/:/,"");const i=parseInt(r[3],10)||0,u=e.clone();return e=(e=(e=(e=e.hour(o)).minute(s)).second(i)).millisecond(0),(e=Ve(e,u,n,"day")).epoch}(n,e,t),n}return `${this.h12()}:${g(this.minute())}${this.ampm()}`},ampm:function(e,t){let n=Xe,r=this.hour();if(r>=12&&(n=et),"string"!=typeof e)return n;const a=this.clone();return e=e.toLowerCase().trim(),r>=12&&"am"===e?(r-=12,a.hour(r,t)):r<12&&"pm"===e?(r+=12,a.hour(r,t)):a},dayTime:function(e,t){if(void 0!==e){const n={morning:"7:00",breakfast:"7:00",noon:"12:00",lunch:"12:00",afternoon:"14:00",evening:"18:00",dinner:"18:00",night:"23:00",midnight:"00:00"};let r=this.clone();return e=(e=e||"").toLowerCase(),true===n.hasOwnProperty(e)&&(r=r.time(n[e],t)),r}const n=this.hour();return n<6?"night":n<12?"morning":n<17?"afternoon":n<22?"evening":"night"},iso:function(e){return void 0!==e?this.set(e):this.format("iso")},isoFull:function(e){return void 0!==e?this.set(e):this.format("iso-full")},epochSeconds:function(e){return void 0!==e?(this.epoch=1e3*e,this):Math.floor(this.epoch/1e3)}},nt={date:function(e,t){if(void 0!==e){const n=this.clone();return (e=parseInt(e,10))&&(n.epoch=function(e,t,n){if((t=Ze(t))>28){const n=Le(e.month(),e.year());t>n&&(t=n);}t<=0&&(t=1);const r=e.clone();return I(e,{date:t}),(e=Ve(e,r,n,"month")).epoch}(n,e,t)),n}return this.d.getDate()},day:function(e,t){if(void 0===e)return this.d.getDay();const n=this.clone();let r=e;"string"==typeof e&&(e=e.toLowerCase(),ne.hasOwnProperty(e)?r=ne[e]:(r=ee().indexOf(e),-1===r&&(r=te().indexOf(e))));let a=this.d.getDay()-r;true===t&&a>0&&(a-=7),false===t&&a<0&&(a+=7);const o=this.subtract(a,"days");return I(o,{hour:n.hour(),minute:n.minute(),second:n.second()}),o},dayName:function(e,t){if(void 0===e)return te()[this.day()];let n=this.clone();return n=n.day(e,t),n}},rt=e=>e=(e=(e=e.minute(0)).second(0)).millisecond(1),at=function(e){if(void 0!==e){if("string"==typeof e&&(e=e.replace(/([0-9])(th|rd|st|nd)/,"$1"),e=Number(e),isNaN(e)))return console.warn("Spacetime: Invalid millennium input"),this;e>0&&(e-=1);let t=1e3*e;return 0===t&&(t=1),this.year(t)}let t=Math.floor(this.year()/1e3);return t>=0&&(t+=1),t},ot={dayOfYear:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){t=Ze(t);const r=e.clone();return (t-=1)<=0?t=0:t>=365&&(t=f(e.year())?365:364),e=(e=e.startOf("year")).add(t,"day"),Ge(e,r,"hour"),(e=Ve(e,r,n,"year")).epoch}(n,e,t),n}let n=0;const r=this.d.getMonth();let a;for(let e=1;e<=r;e++)a=new Date,a.setDate(1),a.setFullYear(this.d.getFullYear()),a.setHours(1),a.setMinutes(1),a.setMonth(e),a.setHours(-2),n+=a.getDate();return n+this.d.getDate()},week:function(e,t){if(void 0!==e){let n=this.clone();return n=Re(n,e,t),n=rt(n),n}const n=this.epoch;let r=this.clone();if("december"===r.monthName()&&r.date()>=29){if(Re(r.add(15,"days"),1,false).epoch<=r.epoch)return 1}if(r=r.month(0),r=r.date(1),r=rt(r),r=r.day("monday",false),"december"===r.monthName()&&r.date()<29&&(r=r.add(1,"week")),r=r.minus(2,"hours"),r.epoch>n)return 1;let a=0;const o=4*this.month();for(r.epoch+=S.week*o,a+=o;a<=52;a++){if(r.epoch>n)return a;r=r.add(1,"week");}return 52},month:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){"string"==typeof t&&("sept"===t&&(t="sep"),t=x()[t.toLowerCase()]),(t=Ze(t))>=12&&(t=11),t<=0&&(t=0);let r=e.date();const a=Le(t,e.year());r>a&&(r=a);const o=e.clone();return I(e,{month:t,date:r}),(e=Ve(e,o,n,"year")).epoch}(n,e,t),n}return this.d.getMonth()},monthName:function(e,t){if(void 0!==e){let n=this.clone();return n=n.month(e,t),n}return E[this.month()]},quarter:function(e,t){if(void 0!==e&&("string"==typeof e&&(e=e.replace(/^q/i,""),e=parseInt(e,10)),Ee[e])){let n=this.clone();const r=Ee[e][0];return n=n.month(r,t),n=n.date(1,t),n=n.startOf("day"),n}const n=this.d.getMonth();for(let e=1;e<Ee.length;e++)if(n<Ee[e][0])return e-1;return 4},season:function(e,t){let n="north";if("South"===this.hemisphere()&&(n="south"),void 0!==e){let r=this.clone();for(let a=0;a<Ce[n].length;a++)e===Ce[n][a][0]&&(r=r.month(Ce[n][a][1],t),r=r.date(1),r=r.startOf("day"));return r}const r=this.d.getMonth();for(let e=0;e<Ce[n].length-1;e++)if(r>=Ce[n][e][1]&&r<Ce[n][e+1][1])return Ce[n][e][0];return "north"===n?"winter":"summer"},year:function(e){if(void 0!==e){const t=this.clone();return t.epoch=Ke(t,e),t}return this.d.getFullYear()},era:function(e){if(void 0!==e){const t=this.clone();e=e.toLowerCase();const n=t.d.getFullYear();return "bc"===e&&n>0&&(t.epoch=Ke(t,-1*n)),"ad"===e&&n<0&&(t.epoch=Ke(t,-1*n)),t}return this.d.getFullYear()<0?"BC":"AD"},decade:function(e){if(void 0!==e){if(!(e=(e=(e=String(e)).replace(/([0-9])'?s$/,"$1")).replace(/([0-9])(th|rd|st|nd)/,"$1")))return console.warn("Spacetime: Invalid decade input"),this;2===e.length&&/[0-9][0-9]/.test(e)&&(e="19"+e);let t=Number(e);return isNaN(t)?this:(t=10*Math.floor(t/10),this.year(t))}return this.startOf("decade").year()},century:function(e){if(void 0!==e){"string"==typeof e&&(e=(e=(e=e.replace(/([0-9])(th|rd|st|nd)/,"$1")).replace(/([0-9]+) ?(b\.?c\.?|a\.?d\.?)/i,(e,t,n)=>(n.match(/b\.?c\.?/i)&&(t="-"+t),t))).replace(/c$/,""));let t=Number(e);return isNaN(e)?(console.warn("Spacetime: Invalid century input"),this):(0===t&&(t=1),t=t>=0?100*(t-1):100*(t+1),this.year(t))}let t=this.startOf("century").year();return t=Math.floor(t/100),t<0?t-1:t+1},millenium:at,millennium:at},st=Object.assign({},tt,nt,ot);st.milliseconds=st.millisecond,st.seconds=st.second,st.minutes=st.minute,st.hours=st.hour,st.hour24=st.hour,st.h12=st.hour12,st.h24=st.hour24,st.days=st.day;const it=["millisecond","second","minute","hour","date","month"],ut={second:it.slice(0,1),minute:it.slice(0,2),quarterhour:it.slice(0,2),hour:it.slice(0,3),date:it.slice(0,4),month:it.slice(0,4),quarter:it.slice(0,4),season:it.slice(0,4),year:it,decade:it,century:it};ut.week=ut.hour,ut.season=ut.date,ut.quarter=ut.date;const ct={year:true,quarter:true,season:true,month:true,week:true,date:true},ht={month:true,quarter:true,season:true,year:true},lt={millisecond:e=>e.epoch,second:e=>[e.year(),e.month(),e.date(),e.hour(),e.minute(),e.second()].join("-"),minute:e=>[e.year(),e.month(),e.date(),e.hour(),e.minute()].join("-"),hour:e=>[e.year(),e.month(),e.date(),e.hour()].join("-"),day:e=>[e.year(),e.month(),e.date()].join("-"),week:e=>[e.year(),e.week()].join("-"),month:e=>[e.year(),e.month()].join("-"),quarter:e=>[e.year(),e.quarter()].join("-"),year:e=>e.year()};lt.date=lt.day;let mt=o;const dt=function(e,r,a={}){this.epoch=null,this.tz=d(r,mt),this.silent=void 0===a.silent||a.silent,this.british=a.dmy||a.british,this._weekStart=1,void 0!==a.weekStart&&(this._weekStart=a.weekStart),this._today={},void 0!==a.today&&(this._today=a.today),Object.defineProperty(this,"d",{get:function(){const e=(e=>{const r=e.timezones[e.tz];if(void 0===r)return console.warn("Warning: couldn't find timezone "+e.tz),0;if(void 0===r.dst)return r.offset;const a=r.offset,o=n(e.tz);let s=r.offset+o;"n"===r.hem&&(s=a-o);const i=r.dst.split("->");return  true===t(e.epoch,i[0],i[1],a,s)?a:s})(this);let r=(new Date(this.epoch).getTimezoneOffset()||0)+60*e;r=60*r*1e3;const a=this.epoch+r;return new Date(a)}}),Object.defineProperty(this,"timezones",{get:()=>mt,set:e=>(mt=e,e)});const o=K(this,e);this.epoch=o.epoch,o.tz&&(this.tz=o.tz);};var ft;Object.keys(Pe).forEach(e=>{dt.prototype[e]=Pe[e];}),dt.prototype.clone=function(){return new dt(this.epoch,this.tz,{silent:this.silent,weekStart:this._weekStart,today:this._today,parsers:this.parsers})},dt.prototype.toLocalDate=function(){return this.toNativeDate()},dt.prototype.toNativeDate=function(){return new Date(this.epoch)},ft=dt,Object.keys(st).forEach(e=>{ft.prototype[e]=st[e];}),(e=>{e.prototype.add=function(e,t){let n=this.clone();if(!t||0===e)return n;const r=this.clone();if("millisecond"===(t=k(t)))return n.epoch+=e,n;"fortnight"===t&&(e*=2,t="week"),S[t]?n.epoch+=S[t]*e:"week"===t||"weekend"===t?n.epoch+=S.day*(7*e):"quarter"===t||"season"===t?n.epoch+=S.month*(3*e):"quarterhour"===t&&(n.epoch+=15*S.minute*e);let a={};if(ut[t]&&ut[t].forEach(e=>{a[e]=r[e]();}),ct[t]){const e=r.timezone().current.offset-n.timezone().current.offset;n.epoch+=3600*e*1e3;}if("month"===t&&(a.month=r.month()+e,a=Ue(a,r)),"week"===t){const t=r.date()+7*e;t<=28&&t>1&&(a.date=t);}if("weekend"===t&&"saturday"!==n.dayName())n=n.day("saturday",true);else if("date"===t){if(e<0)a=He(a,r,e);else {const t=r.date()+e;a=Be(a,r,t);}0!==e&&r.isSame(n,"day")&&(a.date=r.date()+e);}else if("quarter"===t){if(a.month=r.month()+3*e,a.year=r.year(),a.month<0){const e=Math.floor(a.month/12),t=a.month+12*Math.abs(e);a.month=t,a.year+=e;}else if(a.month>=12){const e=Math.floor(a.month/12);a.month=a.month%12,a.year+=e;}a.date=r.date();}else if("year"===t){const t=r.year()+e,a=n.year();if(a<t){const t=Math.floor(e/4)||1;n.epoch+=Math.abs(S.day*t);}else if(a>t){const t=Math.floor(e/4)||1;n.epoch+=S.day*t;}}else "decade"===t?a.year=n.year()+10:"century"===t&&(a.year=n.year()+100);if(ht[t]){const e=void 0!==a.year?a.year:r.year(),t=Le(a.month,e);a.date=r.date(),a.date>t&&(a.date=t);}return Object.keys(a).length>1&&I(n,a),n},e.prototype.subtract=function(e,t){return this.clone().add(-1*e,t)},e.prototype.minus=e.prototype.subtract,e.prototype.plus=e.prototype.add;})(dt),(e=>{e.prototype.isSame=function(t,n,r=true){const a=this;if(!n)return null;if("string"==typeof t&&"object"==typeof n){const e=t;t=n,n=e;}return "string"!=typeof t&&"number"!=typeof t||(t=new e(t,this.timezone.name)),n=n.replace(/s$/,""),true===r&&a.tz!==t.tz&&((t=t.clone()).tz=a.tz),lt[n]?lt[n](a)===lt[n](t):null};})(dt),(e=>{const t={isAfter:function(e){const t=v(e=z(e,this));return null===t?null:this.epoch>t},isBefore:function(e){const t=v(e=z(e,this));return null===t?null:this.epoch<t},isEqual:function(e){const t=v(e=z(e,this));return null===t?null:this.epoch===t},isBetween:function(e,t,n=false){e=z(e,this),t=z(t,this);const r=v(e);if(null===r)return null;const a=v(t);return null===a?null:n?this.isBetween(e,t)||this.isEqual(e)||this.isEqual(t):r<this.epoch&&this.epoch<a}};Object.keys(t).forEach(n=>{e.prototype[n]=t[n];});})(dt),(e=>{const t={i18n:function(e){var t,n,r;return y(e.days)&&(t=e.days,R=t.short||R,X=t.long||X),y(e.months)&&function(e){C=e.short||C,E=e.long||E;}(e.months),r=e.useTitleCase,"[object Boolean]"===Object.prototype.toString.call(r)&&(n=e.useTitleCase,re=n),y(e.ampm)&&function(e){Xe=e.am||Xe,et=e.pm||et;}(e.ampm),y(e.distance)&&function(e){je=e.pastDistance||je,Oe=e.futureDistance||Oe,we=e.past||we,ke=e.future||ke,ve=e.present||ve,ze=e.now||ze,_e=e.almost||_e,$e=e.over||$e;}(e.distance),y(e.units)&&function(e={}){ge={second:e.second||ge.second,seconds:e.seconds||ge.seconds,minute:e.minute||ge.minute,minutes:e.minutes||ge.minutes,hour:e.hour||ge.hour,hours:e.hours||ge.hours,day:e.day||ge.day,days:e.days||ge.days,month:e.month||ge.month,months:e.months||ge.months,year:e.year||ge.year,years:e.years||ge.years};}(e.units),this}};Object.keys(t).forEach(n=>{e.prototype[n]=t[n];});})(dt);const pt=(e,t,n)=>new dt(e,t,n),yt=function(e){const t=e._today||{};return Object.keys(t).forEach(n=>{e=e[n](t[n]);}),e};pt.now=(e,t)=>{let n=new dt((new Date).getTime(),e,t);return n=yt(n),n},pt.today=(e,t)=>{let n=new dt((new Date).getTime(),e,t);return n=yt(n),n.startOf("day")},pt.tomorrow=(e,t)=>{let n=new dt((new Date).getTime(),e,t);return n=yt(n),n.add(1,"day").startOf("day")},pt.yesterday=(e,t)=>{let n=new dt((new Date).getTime(),e,t);return n=yt(n),n.subtract(1,"day").startOf("day")},pt.fromUnixSeconds=(e,t,n)=>new dt(1e3*e,t,n),pt.extend=function(e={}){return Object.keys(e).forEach(t=>{dt.prototype[t]=e[t];}),this},pt.timezones=function(){return (new dt).timezones},pt.max=function(e,t){const n=new dt(null,e,t);return n.epoch=864e13,n},pt.min=function(e,t){const n=new dt(null,e,t);return n.epoch=-864e13,n},pt.whereIts=(e,t)=>{let n=new dt(null),r=new dt(null);n=n.time(e),r=t?r.time(t):n.add(59,"minutes");const a=n.hour(),o=r.hour();return Object.keys(n.timezones).filter(e=>{if(-1===e.indexOf("/"))return  false;const t=new dt(null,e),s=t.hour();return s>=a&&s<=o&&(!(s===a&&t.minute()<n.minute())&&!(s===o&&t.minute()>r.minute()))})},pt.version="7.15.0",pt.plugin=pt.extend;
+  const e=e=>e%4==0&&e%100!=0||e%400==0,t=e=>"[object Object]"===Object.prototype.toString.call(e),n=(e,t=2)=>(e+="").length>=t?e:new Array(t-e.length+1).join("0")+e,a=e=>{const t=e%10,n=e%100;return 1===t&&11!==n?e+"st":2===t&&12!==n?e+"nd":3===t&&13!==n?e+"rd":e+"th"},r=e=>(e=(e=String(e)).replace(/([0-9])(st|nd|rd|th)$/i,"$1"),parseInt(e,10)),o=(e="")=>"day"===(e=(e=(e=(e=e.toLowerCase().trim()).replace(/ies$/,"y")).replace(/s$/,"")).replace(/-/g,""))||"days"===e?"date":"min"===e||"mins"===e?"minute":e,s=e=>{return "number"==typeof e?e:(t=e,"[object Date]"!==Object.prototype.toString.call(t)||isNaN(t.valueOf())?e.epoch||0===e.epoch?e.epoch:null:e.getTime());var t;},i=(e,n)=>false===t(e)?n.clone().set(e):e,u=(e,t="")=>{const a=e>0?"+":"-",r=Math.abs(e);return `${a}${n(parseInt(""+r,10))}${t}${n(r%1*60)}`},c=(e,t)=>{ false===e.silent&&console.warn(`Warn: ${t}`);},h=(e,t)=>"iso8601"!==t.calendarId?(c(e,`Temporal calendar "${t.calendarId}" converted to iso8601`),t.withCalendar("iso8601")):t,l=e=>{const t=e.tz.match(/^etc\/gmt([+-][0-9]+(?:\.[0-9]+)?)$/i);return t?u(-Number(t[1]),":"):e.timezone().name},m=(e,t)=>{const n=globalThis.Temporal;if(!n)return null;if(t instanceof n.ZonedDateTime||t instanceof n.Instant){t instanceof n.ZonedDateTime&&(t=h(e,t)),t.epochNanoseconds%1000000n!=0n&&c(e,"Temporal sub-millisecond precision discarded; use spacetime/temporal to preserve it"),e.epoch=t.epochMilliseconds;const a=t instanceof n.Instant?t.toZonedDateTimeISO(l(e)):t.withTimeZone(l(e));return Math.round(6e10*e.offset())!==a.offsetNanoseconds&&c(e,"Spacetime timezone rules differ from Temporal at this instant; use spacetime/temporal for native wall-clock values"),e}return t instanceof n.PlainDate||t instanceof n.PlainDateTime?m(e,h(e,t).toZonedDateTime(l(e))):((e,t)=>e instanceof t.PlainTime||e instanceof t.PlainYearMonth||e instanceof t.PlainMonthDay||e instanceof t.Duration)(t,n)?(c(e,"Temporal input requires a complete date; convert it to a PlainDateTime or ZonedDateTime first"),e.epoch=null,e):null},d=(e,t,n)=>{const[a,r]=e.split("/"),[o,s,i=0]=r.split(":");return Date.UTC(n,a-1,o,s,i)-36e5*t},f=(e,t,n,a,r)=>{const o=new Date(e).getUTCFullYear(),s=d(t,r,o),i=d(n,a,o);return e>=s&&e<i};var p=e=>"australia/lord_howe"===e||"australia/lhi"===e?.5:"antarctica/troll"===e?2:1;var y={"9|s":"2/dili,2/jayapura","9|n":"2/chita,2/khandyga,2/pyongyang,2/seoul,2/tokyo,2/yakutsk,11/palau,japan,rok","9.5|s|04/05:03->10/04:02":"4/adelaide,4/broken_hill,4/south,4/yancowinna","9.5|s":"4/darwin,4/north","8|s":"12/casey,2/makassar,4/perth,2/ujung_pandang,4/west","8|n":"2/brunei,2/hong_kong,2/irkutsk,2/kuala_lumpur,2/kuching,2/macau,2/manila,2/shanghai,2/singapore,2/taipei,2/ulaanbaatar,2/chongqing,2/chungking,2/harbin,2/macao,2/ulan_bator,2/choibalsan,hongkong,prc,roc,singapore","8.75|s":"4/eucla","7|s":"12/davis,2/jakarta,2/pontianak,9/christmas","7|n":"2/bangkok,2/barnaul,2/hovd,2/krasnoyarsk,2/novokuznetsk,2/novosibirsk,2/phnom_penh,2/ho_chi_minh,2/tomsk,2/vientiane,2/saigon","6|s":"9/chagos","6|n":"2/bishkek,2/dhaka,2/omsk,2/thimphu,2/urumqi,2/dacca,2/kashgar,2/thimbu","6.5|s":"9/cocos","6.5|n":"2/yangon,2/rangoon","5|s":"12/mawson,12/vostok,9/kerguelen","5|n":"2/almaty,2/aqtau,2/aqtobe,2/ashgabat,2/atyrau,2/dushanbe,2/karachi,2/oral,2/qyzylorda,2/qostanay,2/samarkand,2/tashkent,2/yekaterinburg,9/maldives,2/ashkhabad","5.75|n":"2/kathmandu,2/katmandu","5.5|n":"2/kolkata,2/colombo,2/calcutta","4|s":"9/mahe,9/mauritius,9/reunion","4|n":"2/baku,2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk","4.5|n":"2/kabul","3|s":"0/dar_es_salaam,0/nairobi,12/syowa,9/antananarivo,9/comoro,9/mayotte","3|n|04/24:00->10/29:24":"0/cairo,egypt","3|n|03/29:03->10/25:04":"2/famagusta,2/nicosia,8/athens,8/bucharest,8/chisinau,8/helsinki,8/kyiv,8/mariehamn,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye,8/nicosia,8/tiraspol,8/kiev,eet","3|n|03/29:00->10/24:24":"2/beirut","3|n|03/28:02->10/24:02":"2/gaza,2/hebron","3|n|03/27:02->10/25:02":"2/jerusalem,2/tel_aviv,israel","3|n":"0/addis_ababa,0/asmara,0/asmera,0/djibouti,0/kampala,0/mogadishu,2/aden,2/amman,2/baghdad,2/bahrain,2/damascus,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,8/volgograd,2/volgograd,2/istanbul,turkey,w-su","3.5|n":"2/tehran,iran","2|s":"0/blantyre,0/bujumbura,0/gaborone,0/harare,0/johannesburg,0/kigali,0/lubumbashi,0/lusaka,0/maputo,0/maseru,0/mbabane,0/windhoek","2|n|03/29:02->10/25:03":"0/ceuta,arctic/longyearbyen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich,3/jan_mayen,poland,cet,met","2|n|03/29:01->10/25:03":"12/troll","2|n":"0/juba,0/khartoum,0/tripoli,8/kaliningrad,libya","1|s":"0/brazzaville,0/kinshasa,0/luanda","1|n|03/29:01->10/25:02":"3/canary,3/faroe,3/madeira,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london,3/faeroe,eire,8/belfast,gb-eire,gb,portugal,wet","1|n":"0/algiers,0/bangui,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis","14|n":"11/kiritimati","13|s":"11/apia,11/enderbury,11/kanton,11/fakaofo,11/tongatapu","12|s|04/05:03->09/27:02":"12/mcmurdo,11/auckland,12/south_pole,nz","12|s":"11/fiji,11/funafuti,11/nauru,11/wallis","12|n":"2/anadyr,2/kamchatka,11/kwajalein,11/majuro,11/tarawa,11/wake,kwajalein","12.75|s|04/05:03:45->09/27:02:45":"11/chatham,nz-chat","11|s|04/05:03->10/04:02":"11/norfolk","11|s":"11/bougainville,11/efate,11/guadalcanal,11/noumea","11|n":"2/magadan,2/sakhalin,2/srednekolymsk,11/kosrae,11/pohnpei,11/ponape","10|s|04/05:03->10/04:02":"12/macquarie,4/currie,4/hobart,4/melbourne,4/sydney,4/act,4/canberra,4/nsw,4/tasmania,4/victoria","10|s":"12/dumontdurville,4/brisbane,4/lindeman,11/port_moresby,4/queensland","10|n":"2/ust-nera,2/vladivostok,11/guam,11/saipan,11/chuuk,11/truk,11/yap","10.5|s|04/05:02->10/04:02":"4/lord_howe,4/lhi","0|s|02/15:03->09/20:02":"0/casablanca","0|s|02/15:03->03/22:02":"0/el_aaiun","0|s":"3/st_helena","0|n|03/29:00->10/25:01":"3/azores","0|n":"0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,1/danmarkshavn,3/reykjavik,13/gmt,13/utc,0/timbuktu,13/greenwich,13/uct,13/universal,13/zulu,gmt-0,gmt+0,gmt0,greenwich,iceland,uct,universal,utc,zulu,13/unknown,factory","-9|s":"11/gambier","-9|n|03/08:02->11/01:02":"1/adak,1/atka,us/aleutian","-9.5|s":"11/marquesas","-8|s":"11/pitcairn","-8|n|03/08:02->11/01:02":"1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat,us/alaska","-7|n|03/08:02->12/31:23":"1/vancouver,6/pacific","-7|n|03/08:02->11/01:02":"1/los_angeles,1/santa_isabel,1/tijuana,1/ensenada,10/bajanorte,us/pacific-new,us/pacific,pst8pdt","-7|n":"1/creston,1/dawson,1/dawson_creek,1/fort_nelson,1/hermosillo,1/mazatlan,1/phoenix,1/whitehorse,6/yukon,10/bajasur,us/arizona,mst","-6|s|04/04:22->09/05:22":"11/easter,7/easterisland","-6|s":"11/galapagos","-6|n|03/08:02->12/31:23":"1/edmonton,1/yellowknife,6/mountain","-6|n|03/08:02->11/01:02":"1/boise,1/cambridge_bay,1/denver,1/inuvik,1/ciudad_juarez,1/shiprock,navajo,us/mountain,mst7mdt","-6|n":"1/bahia_banderas,1/belize,1/chihuahua,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/merida,1/mexico_city,1/monterrey,1/regina,1/swift_current,1/tegucigalpa,6/east-saskatchewan,6/saskatchewan,10/general","-5|s":"1/eirunepe,1/guayaquil,1/lima,1/rio_branco,1/porto_acre,5/acre","-5|n|03/08:02->11/01:02":"1/chicago,1/matamoros,1/menominee,1/north_dakota,1/ojinaga,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,1/indiana/knox,1/indiana/tell_city,1/north_dakota/beulah,1/north_dakota/center,1/north_dakota/new_salem,1/knox_in,6/central,us/central,us/indiana-starke,cst6cdt","-5|n":"1/bogota,1/cancun,1/cayman,1/coral_harbour,1/jamaica,1/panama,1/atikokan,jamaica,est","-4|s|04/04:24->09/06:00":"1/santiago,7/continental","-4|s":"1/campo_grande,1/cuiaba,1/la_paz,1/manaus,1/porto_velho,5/west","-4|n|03/08:02->11/01:02":"1/detroit,1/grand_turk,1/indiana,1/indianapolis,1/iqaluit,1/kentucky,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,1/indiana/marengo,1/indiana/petersburg,1/indiana/vevay,1/indiana/vincennes,1/indiana/winamac,1/kentucky/monticello,1/fort_wayne,1/indiana/indianapolis,1/kentucky/louisville,6/eastern,us/east-indiana,us/eastern,us/michigan,est5edt","-4|n|03/08:00->11/01:01":"1/havana,cuba","-4|n":"1/anguilla,1/antigua,1/aruba,1/barbados,1/blanc-sablon,1/boa_vista,1/caracas,1/curacao,1/dominica,1/grenada,1/guadeloupe,1/guyana,1/kralendijk,1/lower_princes,1/marigot,1/martinique,1/montserrat,1/port_of_spain,1/puerto_rico,1/santo_domingo,1/st_barthelemy,1/st_kitts,1/st_lucia,1/st_thomas,1/st_vincent,1/tortola,1/virgin","-3|s":"1/araguaina,1/argentina,1/asuncion,1/bahia,1/belem,1/buenos_aires,1/catamarca,1/cordoba,1/coyhaique,1/fortaleza,1/jujuy,1/maceio,1/mendoza,1/montevideo,1/punta_arenas,1/recife,1/santarem,1/sao_paulo,12/palmer,12/rothera,3/stanley,1/argentina/la_rioja,1/argentina/rio_gallegos,1/argentina/salta,1/argentina/san_juan,1/argentina/san_luis,1/argentina/tucuman,1/argentina/ushuaia,1/argentina/comodrivadavia,1/argentina/buenos_aires,1/argentina/catamarca,1/argentina/cordoba,1/argentina/jujuy,1/argentina/mendoza,1/argentina/rosario,1/rosario,5/east","-3|n|03/08:02->11/01:02":"1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic","-3|n":"1/cayenne,1/paramaribo","-2|s":"1/noronha,3/south_georgia,5/denoronha","-2|n|03/08:02->11/01:02":"1/miquelon","-2.5|n|03/08:02->11/01:02":"1/st_johns,6/newfoundland","-1|n|03/28:23->10/24:24":"1/nuuk,1/scoresbysund,1/godthab","-1|n":"3/cape_verde","-11|s":"11/niue,11/pago_pago,11/samoa,us/samoa","-11|n":"11/midway","-10|s":"11/rarotonga,11/tahiti","-10|n":"11/honolulu,11/johnston,us/hawaii,hst"},g=["africa","america","asia","atlantic","australia","brazil","canada","chile","europe","indian","mexico","pacific","antarctica","etc"];const b={};Object.keys(y).forEach(e=>{const t=e.split("|"),n={offset:Number(t[0]),hem:t[1]};t[2]&&(n.dst=t[2]);y[e].split(",").forEach(e=>{e=e.replace(/(^[0-9]+)\//,(e,t)=>(t=Number(t),g[t]+"/")),b[e]=n;});}),b.utc={offset:0,hem:"n"};for(let e=-14;e<=14;e+=.25){let t=e;t>0&&(t="+"+t);let n="etc/gmt"+t;b[n]={offset:-1*e,hem:"n"},n="utc/gmt"+t,b[n]={offset:-1*e,hem:"n"};}const w=/^(?:(utc|gmt)\s*)?([+-]?)(\d+)(?:(\.\d+)|:([0-5]\d))?(?:\s*(?:h|hrs?|hours?))?$/i,k=/(?:^|\s)([+-]?\d+(?:\.\d+|:[0-5]\d)?\s*(?:h|hrs?|hours?))$/i;let v=(()=>{const e=(()=>{if("undefined"==typeof Intl||void 0===Intl.DateTimeFormat)return null;const e=Intl.DateTimeFormat();if(void 0===e||void 0===e.resolvedOptions)return null;const t=e.resolvedOptions().timeZone;return t?t.toLowerCase():null})();return null===e?"utc":e})();const z=Object.keys(b).reduce((e,t)=>{let n=t.split("/").pop();return n=n.replace(/_/g," "),e[n]=t,e},{}),$=(e,t)=>{if(!e)return t.hasOwnProperty(v)||(console.warn(`Unrecognized IANA id '${v}'. Setting fallback tz to UTC.`),v="utc"),v;"string"!=typeof e&&console.error("Timezone must be a string - recieved: '",e,"'\n");let n=e.trim();if(n=n.toLowerCase(),true===t.hasOwnProperty(n))return n;if(n=(e=>(e=(e=(e=(e=(e=e.replace(/ time/g,"")).replace(/ (standard|daylight|summer)/g,"")).replace(/\b(east|west|north|south)ern/g,"$1")).replace(/\b(africa|america|australia)n/g,"$1")).replace(/\beuropean/g,"europe")).replace(/islands/g,"island"))(n),true===t.hasOwnProperty(n))return n;if(true===z.hasOwnProperty(n))return z[n];if(true===/[0-9]/.test(n)){const e=(e=>{const t=e.trim();let n=t.match(w);if(!n){const e=t.match(k);e&&(n=e[1].match(w));}if(!n)return null;const[,a,r,o,s="0",i="0"]=n;let u=Number(o)+Number(s)+Number(i)/60;return u>14||!Number.isInteger(4*u)?null:("-"===r&&(u*=-1),"gmt"!==a?.toLowerCase()&&(u*=-1),"etc/gmt"+(u>0?"+":"")+u)})(n);if(e)return e}throw new Error("Spacetime: Cannot find timezone named: '"+e+"'. Please enter an IANA timezone id.")},_={year:(new Date).getFullYear(),month:0,date:1},j=["year","month","date","hour","minute","second","millisecond"];var O={parseArray:(e,t,n)=>{if(0===t.length)return e;for(let a=0;a<j.length;a++){const r=t[a]??n[j[a]]??_[j[a]]??0;e=e[j[a]](r);}return e},parseObject:(e,t)=>{if(0===Object.keys(t).length)return e;(t=Object.assign({},_,t)).timezone&&(e.tz=t.timezone);for(let n=0;n<j.length;n++){const a=j[n];void 0!==t[a]&&(e=e[a](t[a]));}return e},parseNumber:function(e,t){return t>0&&t<25e8&&false===e.silent&&(console.warn("  - Warning: You are setting the date to January 1970."),console.warn("       -   did input seconds instead of milliseconds?")),e.epoch=t,e}};const T=function(e){return e.epoch=Date.now(),Object.keys(e._today||{}).forEach(t=>{"function"==typeof e[t]&&(e=e[t](e._today[t]));}),e},D={now:e=>T(e),today:e=>T(e),tonight:e=>e=(e=T(e)).hour(18),tomorrow:e=>e=(e=(e=T(e)).add(1,"day")).startOf("day"),yesterday:e=>e=(e=(e=T(e)).subtract(1,"day")).startOf("day"),christmas:e=>{const t=T(e).year();return e=e.set([t,11,25,18,0,0])},"new years":e=>{const t=T(e).year();return e=e.set([t,11,31,18,0,0])}};D["new years eve"]=D["new years"];const N=[31,28,31,30,31,30,31,31,30,31,30,31],M=(e,t="")=>{if(!(t=t.trim().toLowerCase()))return e.startOf("day");let n=t.match(/^([0-9]{1,2}):([0-9]{2})(?::([0-9]{1,2}))?(?:[:.]([0-9]+))?(?: ?(am|pm|gmt))?$/);if(null!==n){const[,t,a,r,o,s]=n,i=Number(t),u=Number(a),c="am"===s||"pm"===s;return i>23||u>59||Number(r||0)>59||c&&(i<1||i>12)?(e.epoch=null,e):(e=(e=(e=(e=e.hour(i)).minute(u)).seconds(r||0)).millisecond(function(e=""){return (e=String(e)).length>3?e=e.substring(0,3):1===e.length?e+="00":2===e.length&&(e+="0"),Number(e)||0}(o)),c&&(e=e.ampm(s)),e)}if(n=t.match(/^([0-9]{1,2}) ?(am|pm)$/),null!==n&&n[1]){const t=Number(n[1]);return t>12||t<1?(e.epoch=null,e):e=(e=(e=e.hour(n[1]||0)).ampm(n[2])).startOf("hour")}return e.epoch=null,e};let C=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"],q=["january","february","march","april","may","june","july","august","september","october","november","december"];function S(){return C}function I(){return function(){const e={sep:8};for(let t=0;t<C.length;t++)e[C[t]]=t;for(let t=0;t<q.length;t++)e[q[t]]=t;return e}()}const U=I(),E=t=>{if(true!==N.hasOwnProperty(t.month)||t.date<1)return  false;if(1===t.month)return !!(e(t.year)&&t.date<=29)||t.date<=28;const n=N[t.month]||0;return t.date<=n},P=(e="",t)=>{if(e=e.trim(),true===/^'?[0-9][0-9]$/.test(e)){const t=Number(e.replace(/'/,""));return t>50?1900+t:2e3+t}let n=parseInt(e,10);return !n&&t&&(n=t.year),n=n||(new Date).getFullYear(),n},A=function(e){return "sept"===(e=e.toLowerCase().trim())?U.sep:U[e]},x={millisecond:1,second:1e3,minute:6e4,hour:36e5,day:864e5};x.date=x.day,x.month=25488e5,x.week=6048e5,x.year=3154e7,Object.keys(x).forEach(e=>{x[e+"s"]=x[e];});const V=(e,t,n,a,r)=>{const o=e.d[n]();if(o===t)return;const s=null===r?null:e.d[r](),i=e.epoch,u=t-o;e.epoch+=x[a]*u,"day"===a&&Math.abs(u)>28&&t<28&&(e.epoch+=x.hour),null!==r&&s!==e.d[r]()&&(e.epoch=i);const c=x[a]/2;for(;e.d[n]()<t;)e.epoch+=c;for(;e.d[n]()>t;)e.epoch-=c;null!==r&&s!==e.d[r]()&&(e.epoch=i);},Y={year:{valid:e=>e>-4e3&&e<4e3,walkTo:(e,t)=>V(e,t,"getUTCFullYear","year",null)},month:{valid:e=>e>=0&&e<=11,walkTo:(e,t)=>{const n=e.d,a=n.getUTCMonth(),r=e.epoch,o=n.getUTCFullYear();if(a===t)return;const s=t-a;for(e.epoch+=x.day*(28*s),o!==e.d.getUTCFullYear()&&(e.epoch=r);e.d.getUTCMonth()<t;)e.epoch+=x.day;for(;e.d.getUTCMonth()>t;)e.epoch-=x.day;}},date:{valid:e=>e>0&&e<=31,walkTo:(e,t)=>V(e,t,"getUTCDate","day","getUTCMonth")},hour:{valid:e=>e>=0&&e<24,walkTo:(e,t)=>V(e,t,"getUTCHours","hour","getUTCDate")},minute:{valid:e=>e>=0&&e<60,walkTo:(e,t)=>V(e,t,"getUTCMinutes","minute","getUTCHours")},second:{valid:e=>e>=0&&e<60,walkTo:(e,t)=>{e.epoch=e.seconds(t).epoch;}},millisecond:{valid:e=>e>=0&&e<1e3,walkTo:(e,t)=>{e.epoch=e.milliseconds(t).epoch;}}},F=(e,t)=>{const n=Object.keys(Y),a=e.clone();for(let r=0;r<n.length;r++){const o=n[r];let s=t[o];if(void 0===s&&(s=a[o]()),"string"==typeof s&&(s=parseInt(s,10)),!Y[o].valid(s))return e.epoch=null,void(false===e.silent&&console.warn("invalid "+o+": "+s));Y[o].walkTo(e,s);}},Z=(e,t)=>{if(!t)return e;if("z"===(t=t.trim().toLowerCase()))return e.tz="etc/gmt",e;const n=t.match(/^([+-]?)([0-9]{2})(?::?([0-9]{2}))?$/);if(!n)return e;const a=Number(n[2]),r=Number(n[3]||0);if(r>59)return e;let o=(a+r/60)*("-"===n[1]?-1:1);if(0===o)return e.tz="etc/gmt",e;o*=-1,o>=0&&(o="+"+o);const s="etc/gmt"+o;return e.timezones[s]&&(e.tz=s),e};var L=[].concat(((e,t)=>[{reg:/^(-?0{0,2}[0-9]{3,4})-([0-9]{1,2})-([0-9]{1,2})[T ]([0-9.:]+)(Z|[+-][0-9:]+)?(\[[^[\]]*\])?(\[[^[\]]*\])?$/i,parse:(n,a)=>{const r={year:a[1],month:parseInt(a[2],10)-1,date:a[3]};if(false===E(r))return n.epoch=null,n;if(a[6]){const e=a[6].trim().replace(/[[\]]/g,"");e&&(n=n.timezone(e));}else t(n,a[5]);return e(n,r),n=M(n,a[4])}},{reg:/^([0-9]{4})[\-/. ]([0-9]{1,2})[\-/. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(t,n)=>{const a={year:n[1],month:parseInt(n[2],10)-1,date:parseInt(n[3],10)};return a.month>=12&&(a.date=parseInt(n[2],10),a.month=parseInt(n[3],10)-1),false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([0-9]{4})[\-/. ]([a-z]+)[\-/. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(t,n)=>{const a={year:P(n[1],t._today),month:A(n[2]),date:r(n[3]||"")};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}}])(F,Z),((e,t)=>[{reg:/^([0-9]{1,2})[-/.]([0-9]{1,2})(?:[\-/.]([0-9]{4}|[0-9]{2}))?( [0-9]{1,2}:[0-9]{2}:?[0-9]{0,2} ?(am|pm|gmt))?$/i,parse:(t,n)=>{let a=parseInt(n[1],10)-1,r=parseInt(n[2],10);(t.british||a>=12)&&(r=parseInt(n[1],10),a=parseInt(n[2],10)-1);const o={date:r,month:a,year:P(n[3],t._today)||(new Date).getFullYear()};return  false===E(o)?(t.epoch=null,t):(e(t,o),t=M(t,n[4]))}},{reg:/^([a-z]+)[\-/. ]([0-9]{1,2})[\-/. ]?([0-9]{4}|'[0-9]{2})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(t,n)=>{const a={year:P(n[3],t._today),month:A(n[1]),date:r(n[2]||"")};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([a-z]+) ([0-9]{1,2})( [0-9]{4})?( ([0-9:]+( ?am| ?pm| ?gmt)?))?$/i,parse:(t,n)=>{const a={year:P(n[3],t._today),month:A(n[1]),date:r(n[2]||"")};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([a-z]+) ([0-9]{1,2}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2})( \+[0-9]{4})?( [0-9]{4})?$/i,parse:(n,a)=>{const[,o,s,i,u,c]=a,h={year:P(c,n._today),month:A(o),date:r(s||"")};return  false===E(h)?(n.epoch=null,n):(n=t(n,u),e(n,h),n=M(n,i))}},{reg:/^([a-z]+) ([0-9]{1,2}) ([0-9]{4}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}) (?:gmt)?([+-][0-9]{4})/i,parse:(n,a)=>{const[,o,s,i,u,c]=a,h={year:P(i,n._today),month:A(o),date:r(s||"")};return  false===E(h)?(n.epoch=null,n):(n=t(n,c),e(n,h),n=M(n,u))}}])(F,Z),(e=>[{reg:/^([0-9]{1,2})[-/]([a-z]+)[\-/]?([0-9]{4})?$/i,parse:(t,n)=>{const a={year:P(n[3],t._today),month:A(n[2]),date:r(n[1]||"")};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([0-9]{1,2})( [a-z]+)( [0-9]{4}| '[0-9]{2})? ?([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2} ?(am|pm|gmt))?$/i,parse:(t,n)=>{const a={year:P(n[3],t._today),month:A(n[2]),date:r(n[1])};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([0-9]{1,2})[. \-/]([a-z]+)[. \-/]([0-9]{4})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(t,n)=>{const a={date:Number(n[1]),month:A(n[2]),year:Number(n[3])};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=t.startOf("day"),t=M(t,n[4]))}}])(F),(e=>[{reg:/^([0-9]{4})[\-/]([0-9]{2})$/,parse:(t,n)=>{const a={year:n[1],month:parseInt(n[2],10)-1,date:1};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([a-z]+) ([0-9]{4})$/i,parse:(t,n)=>{const a={year:P(n[2],t._today),month:A(n[1]),date:t._today.date||1};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^(q[1-4])( of)?( [0-9]{4})?$/i,parse:(e,t)=>{const n=t[1]||"";e=e.quarter(n);let a=t[3]||"";return a&&(a=a.trim(),e=e.year(a)),e}},{reg:/^(spring|summer|winter|fall|autumn)( of)?( [0-9]{4})?$/i,parse:(e,t)=>{const n=t[1]||"";e=e.season(n);let a=t[3]||"";return a&&(a=a.trim(),e=e.year(a)),e}},{reg:/^[0-9,]+ ?b\.?c\.?$/i,parse:(t,n)=>{let a=n[0]||"";a=a.replace(/^([0-9,]+) ?b\.?c\.?$/i,"-$1");const r=new Date,o={year:parseInt(a.trim(),10),month:r.getMonth(),date:r.getDate()};return  false===E(o)?(t.epoch=null,t):(e(t,o),t=M(t))}},{reg:/^[0-9,]+ ?(a\.?d\.?|c\.?e\.?)$/i,parse:(t,n)=>{let a=n[0]||"";a=a.replace(/,/g,"");const r=new Date,o={year:parseInt(a.trim(),10),month:r.getMonth(),date:r.getDate()};return  false===E(o)?(t.epoch=null,t):(e(t,o),t=M(t))}},{reg:/^[0-9]{4}( ?a\.?d\.?)?$/i,parse:(t,n)=>{const a=t._today;a.month&&!a.date&&(a.date=1);const r=new Date,o={year:P(n[0],a),month:a.month||r.getMonth(),date:a.date||r.getDate()};return  false===E(o)?(t.epoch=null,t):(e(t,o),t=M(t))}}])(F));const{parseArray:B,parseObject:H,parseNumber:Q}=O,G={year:(new Date).getFullYear(),month:0,date:1},W=(e,n,a)=>{const r=e._today||G;if("number"==typeof n)return Q(e,n);if(e.epoch=Date.now(),e._today&&t(e._today)&&Object.keys(e._today).length>0){const t=H(e,r);t.isValid()&&(e.epoch=t.epoch);}if(null==n||""===n)return e;const o=m(e,n);if(o)return o;if("[object Date]"===Object.prototype.toString.call(n))return e.epoch=n.getTime(),e;if(true===(e=>"[object Array]"===Object.prototype.toString.call(e))(n))return e=B(e,n,r);if(true===t(n)){if("epoch"in n)return e.epoch="number"==typeof n.epoch?n.epoch:NaN,null==a&&n.tz&&(e.tz=n.tz),e;const t=Object.assign({},r,n);return e=H(e,t)}return "string"!=typeof n?e:(n=n.replace(/\b(mon|tues?|wed|wednes|thur?s?|fri|sat|satur|sun)(day)?\b/i,"").replace(/([0-9])(th|rd|st|nd)/,"$1").replace(/,/g,"").replace(/ +/g," ").trim(),true===D.hasOwnProperty(n)?e=D[n](e):function(e,t,n){for(let a=0;a<L.length;a++){const r=t.match(L[a].reg);if(r){const t=L[a].parse(e.clone(),r,n);if(null!==t&&t.isValid())return t}}return  false===e.silent&&console.warn("Warning: couldn't parse date-string: '"+t+"'"),e.epoch=null,e}(e,n))};let J=["sun","mon","tue","wed","thu","fri","sat"],K=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];function R(){return J}function X(){return K}const ee={mo:1,tu:2,we:3,th:4,fr:5,sa:6,su:7,tues:2,weds:3,wedn:3,thur:4,thurs:4};let te=true;const ne=e=>{const t=e.timezone().current.offset;return t?u(t,":"):"Z"},ae=e=>te?(e=>e?e[0].toUpperCase()+e.substr(1):"")(e):e,re={day:e=>ae(e.dayName()),"day-short":e=>ae(R()[e.day()]),"day-number":e=>e.day(),"day-ordinal":e=>a(e.day()),"day-pad":e=>n(e.day()),date:e=>e.date(),"date-ordinal":e=>a(e.date()),"date-pad":e=>n(e.date()),month:e=>ae(e.monthName()),"month-short":e=>ae(S()[e.month()]),"month-number":e=>e.month(),"month-ordinal":e=>a(e.month()),"month-pad":e=>n(e.month()),"iso-month":e=>n(e.month()+1),year:e=>{let t=e.year();return t>0?t:(t=Math.abs(t),t+" BC")},"year-short":e=>{let t=e.year();return t>0?`'${String(e.year()).substr(2,4)}`:(t=Math.abs(t),t+" BC")},"iso-year":e=>{const t=e.year(),a=t<0;let r=n(Math.abs(t),4);return a&&(r=n(r,6),r="-"+r),r},time:e=>e.time(),"time-24":e=>`${e.hour24()}:${n(e.minute())}`,hour:e=>e.hour12(),"hour-pad":e=>n(e.hour12()),"hour-24":e=>e.hour24(),"hour-24-pad":e=>n(e.hour24()),minute:e=>e.minute(),"minute-pad":e=>n(e.minute()),second:e=>e.second(),"second-pad":e=>n(e.second()),millisecond:e=>e.millisecond(),"millisecond-pad":e=>n(e.millisecond(),3),ampm:e=>e.ampm(),AMPM:e=>e.ampm().toUpperCase(),quarter:e=>"Q"+e.quarter(),season:e=>e.season(),era:e=>e.era(),json:e=>e.json(),timezone:e=>e.timezone().name,offset:e=>ne(e),numeric:e=>`${e.year()}/${n(e.month()+1)}/${n(e.date())}`,"numeric-us":e=>`${n(e.month()+1)}/${n(e.date())}/${e.year()}`,"numeric-uk":e=>`${n(e.date())}/${n(e.month()+1)}/${e.year()}`,"mm/dd":e=>`${n(e.month()+1)}/${n(e.date())}`,iso:e=>`${e.format("iso-year")}-${n(e.month()+1)}-${n(e.date())}T${n(e.h24())}:${n(e.minute())}:${n(e.second())}.${n(e.millisecond(),3)}${ne(e)}`,"iso-short":e=>{const t=n(e.month()+1),a=n(e.date());var r;return `${(r=e.year())>=0?n(r,4):(r=Math.abs(r),"-"+n(r,4))}-${t}-${a}`},"iso-utc":e=>new Date(e.epoch).toISOString(),"iso-full":e=>{let t=e.format("iso");const n=e.timezone().name;return n&&(t+=`[${n}]`),t},sql:e=>`${e.format("iso-year")}-${n(e.month()+1)}-${n(e.date())} ${n(e.h24())}:${n(e.minute())}:${n(e.second())}`,nice:e=>`${S()[e.month()]} ${a(e.date())}, ${e.time()}`,"nice-24":e=>`${S()[e.month()]} ${a(e.date())}, ${e.hour24()}:${n(e.minute())}`,"nice-year":e=>`${S()[e.month()]} ${a(e.date())}, ${e.year()}`,"nice-day":e=>`${R()[e.day()]} ${ae(S()[e.month()])} ${a(e.date())}`,"nice-full":e=>`${e.dayName()} ${ae(e.monthName())} ${a(e.date())}, ${e.time()}`,"nice-full-24":e=>`${e.dayName()} ${ae(e.monthName())} ${a(e.date())}, ${e.hour24()}:${n(e.minute())}`},oe={"day-name":"day","month-name":"month","iso 8601":"iso","iso 9075":"sql","time-h24":"time-24","time-12":"time","time-h12":"time",tz:"timezone",iana:"timezone","day-num":"day-number","month-num":"month-number","month-iso":"iso-month","year-iso":"iso-year","nice-short":"nice","nice-short-24":"nice-24",mdy:"numeric-us",dmy:"numeric-uk",ymd:"numeric","yyyy/mm/dd":"numeric","mm/dd/yyyy":"numeric-us","dd/mm/yyyy":"numeric-us","little-endian":"numeric-uk","big-endian":"numeric","day-nice":"nice-day"};Object.keys(oe).forEach(e=>re[e]=re[oe[e]]);const se=(e,t="",n)=>{if(true!==e.isValid())return "";const a=re;if(a.hasOwnProperty(t)){let n=a[t](e)||"";return "json"!==t&&(n=String(n),"ampm"!==t.toLowerCase()&&(n=ae(n))),n}if(-1!==t.indexOf("{")){const n=/\{(.[^}\r\n\u2028\u2029]*)(\})?/g;return t=t.replace(n,(t,n,r)=>{if(!r)return t;if("AMPM"!==(n=n.trim())&&(n=n.toLowerCase()),a.hasOwnProperty(n)){const t=String(a[n](e));return "ampm"!==n.toLowerCase()?ae(t):t}return ""}),t}return e.format("iso-short")},ie={G:e=>e.era(),GG:e=>e.era(),GGG:e=>e.era(),GGGG:e=>"AD"===e.era()?"Anno Domini":"Before Christ",y:e=>e.year(),yy:e=>n(Number(String(e.year()).substr(2,4))),yyy:e=>e.year(),yyyy:e=>e.year(),yyyyy:e=>"0"+e.year(),Q:e=>e.quarter(),QQ:e=>e.quarter(),QQQ:e=>e.quarter(),QQQQ:e=>e.quarter(),M:e=>e.month()+1,MM:e=>n(e.month()+1),MMM:e=>e.format("month-short"),MMMM:e=>e.format("month"),w:e=>e.week(),ww:e=>n(e.week()),d:e=>e.date(),dd:e=>n(e.date()),D:e=>e.dayOfYear(),DD:e=>n(e.dayOfYear()),DDD:e=>n(e.dayOfYear(),3),E:e=>e.format("day-short"),EE:e=>e.format("day-short"),EEE:e=>e.format("day-short"),EEEE:e=>e.format("day"),EEEEE:e=>e.format("day")[0],e:e=>e.day(),ee:e=>e.day(),eee:e=>e.format("day-short"),eeee:e=>e.format("day"),eeeee:e=>e.format("day")[0],a:e=>e.ampm().toUpperCase(),aa:e=>e.ampm().toUpperCase(),aaa:e=>e.ampm().toUpperCase(),aaaa:e=>e.ampm().toUpperCase(),h:e=>e.h12(),hh:e=>n(e.h12()),H:e=>e.hour(),HH:e=>n(e.hour()),m:e=>e.minute(),mm:e=>n(e.minute()),s:e=>e.second(),ss:e=>n(e.second()),SSS:e=>n(e.millisecond(),3),A:e=>e.epoch-e.startOf("day").epoch,z:e=>e.timezone().name,zz:e=>e.timezone().name,zzz:e=>e.timezone().name,zzzz:e=>e.timezone().name,Z:e=>u(e.timezone().current.offset),ZZ:e=>u(e.timezone().current.offset),ZZZ:e=>u(e.timezone().current.offset),ZZZZ:e=>u(e.timezone().current.offset,":")},ue=(e,t,n)=>{let a=e,r=t;for(let o=0;o<n;o+=1)ie[a]=ie[r],a+=e,r+=t;};ue("q","Q",4),ue("L","M",4),ue("Y","y",4),ue("c","e",4),ue("k","H",2),ue("K","h",2),ue("S","s",2),ue("v","z",4),ue("V","Z",4);const ce=["year","season","quarter","month","week","day","quarterHour","hour","minute"],he=function(e,t){const n=e.clone().startOf(t),a=e.clone().endOf(t).epoch-n.epoch,r=(e.epoch-n.epoch)/a;return parseFloat(r.toFixed(2))},le=["year","season","quarter","month","week","date","quarterhour","hour","minute"],me=(e,t,n)=>{let a=0;for(e=e.clone();e.isBefore(t);)e=e.add(1,n),a+=1;return e.isAfter(t,n)&&(a-=1),a},de=(e,t,n)=>e.isBefore(t)?me(e,t,n):-1*me(t,e,n),fe=function(e,t,n){t=i(t,e);let a=false;if(e.isAfter(t)){const n=e;e=t,t=n,a=true;}let r=function(e,t){const n=t.epoch-e.epoch,a={milliseconds:n,seconds:parseInt(n/1e3,10)};a.minutes=parseInt(a.seconds/60,10),a.hours=parseInt(a.minutes/60,10);let r=e.clone();return a.years=((e,t)=>{let n=t.year()-e.year();return (e=e.year(t.year())).isAfter(t)&&(n-=1),n})(r,t),r=e.add(a.years,"year"),a.months=12*a.years,r=e.add(a.months,"month"),a.months+=de(r,t,"month"),a.quarters=4*a.years,a.quarters+=parseInt(a.months%12/3,10),a.weeks=52*a.years,r=e.add(a.weeks,"week"),a.weeks+=de(r,t,"week"),a.days=7*a.weeks,r=e.add(a.days,"day"),a.days+=de(r,t,"day"),a}(e,t);return a&&(r=function(e){return Object.keys(e).forEach(t=>{e[t]*=-1;}),e}(r)),n?(n=o(n),true!==/s$/.test(n)&&(n+="s"),"dates"===n&&(n="days"),r[n]):r},pe=e=>Math.abs(e)||0;let ye={second:"second",seconds:"seconds",minute:"minute",minutes:"minutes",hour:"hour",hours:"hours",day:"day",days:"days",month:"month",months:"months",year:"year",years:"years"};function ge(e){return ye[e]||""}let be="past",we="future",ke="present",ve="now",ze="almost",$e="over",_e=e=>`${e} ago`,je=e=>`in ${e}`;function Oe(e){return _e(e)}function Te(e){return je(e)}function De(){return ve}const Ne={months:{almost:10,over:4},days:{almost:25,over:10},hours:{almost:20,over:8},minutes:{almost:50,over:20},seconds:{almost:50,over:20}};function Me(e,t){return 1===e?e+" "+ge(t.slice(0,-1)):e+" "+ge(t)}const Ce=function(e){let t=null,n=null;const a=[],r=[];return Object.keys(e).forEach((o,s,i)=>{const u=Math.abs(e[o]);if(0===u)return;a.push(u+o[0]);const c=Me(u,o);if(r.push(c),!t){if(t=c,n=c,s>4)return;const a=i[s+1],r=Math.abs(e[a]);r>Ne[a].almost?(t=Me(u+1,o),n=ze+" "+t):r>Ne[a].over&&(n=$e+" "+c);}}),{qualified:n,rounded:t,abbreviated:a,englishValues:r}},qe=(e,t)=>{const n=function(e,t){const n=e.isBefore(t),a=n?t:e;let r=n?e:t;r=r.clone();const o={years:0,months:0,days:0,hours:0,minutes:0,seconds:0};return Object.keys(o).forEach(e=>{if(r.isSame(a,e))return;const t=r.diff(a,e);r=r.add(t,e),o[e]=t;}),n&&Object.keys(o).forEach(e=>{0!==o[e]&&(o[e]*=-1);}),o}(e,t=i(t,e));if(true===Object.keys(n).every(e=>!n[e]))return {diff:n,rounded:De(),qualified:De(),precise:De(),abbreviated:[],iso:"P0Y0M0DT0H0M0S",direction:ke};let a,r=we,{rounded:o,qualified:s}=Ce(n);const{englishValues:u,abbreviated:c}=Ce(n);a=u.splice(0,2).join(", "),true===e.isAfter(t)?(o=Oe(o),s=Oe(s),a=Oe(a),r=be):(o=Te(o),s=Te(s),a=Te(a));const h=function(e){let t="P";return t+=pe(e.years)+"Y",t+=pe(e.months)+"M",t+=pe(e.days)+"DT",t+=pe(e.hours)+"H",t+=pe(e.minutes)+"M",t+=pe(e.seconds)+"S",t}(n);return {diff:n,rounded:o,qualified:s,precise:a,abbreviated:c,iso:h,direction:r}};var Se={north:[["spring",2,1],["summer",5,1],["fall",8,1],["autumn",8,1],["winter",11,1]],south:[["fall",2,1],["autumn",2,1],["winter",5,1],["spring",8,1],["summer",11,1]]},Ie=[null,[0,1],[3,1],[6,1],[9,1]];const Ue={second:e=>(F(e,{millisecond:0}),e),minute:e=>(F(e,{second:0,millisecond:0}),e),quarterhour:e=>{const t=e.minutes();return e=t>=45?e.minutes(45):t>=30?e.minutes(30):t>=15?e.minutes(15):e.minutes(0),F(e,{second:0,millisecond:0}),e},hour:e=>(F(e,{minute:0,second:0,millisecond:0}),e),day:e=>(F(e,{hour:0,minute:0,second:0,millisecond:0}),e),week:e=>{const t=e.clone();return (e=e.day(e._weekStart)).isAfter(t)&&(e=e.subtract(1,"week")),F(e,{hour:0,minute:0,second:0,millisecond:0}),e},month:e=>(F(e,{date:1,hour:0,minute:0,second:0,millisecond:0}),e),quarter:e=>{const t=e.quarter();return Ie[t]&&F(e,{month:Ie[t][0],date:Ie[t][1],hour:0,minute:0,second:0,millisecond:0}),e},season:e=>{const t=e.season();let n="north";"South"===e.hemisphere()&&(n="south");for(let a=0;a<Se[n].length;a++)if(Se[n][a][0]===t){let r=e.year();return "winter"===t&&e.month()<3&&(r-=1),F(e,{year:r,month:Se[n][a][1],date:Se[n][a][2],hour:0,minute:0,second:0,millisecond:0}),e}return e},year:e=>(F(e,{month:0,date:1,hour:0,minute:0,second:0,millisecond:0}),e),decade:e=>{const t=(e=e.startOf("year")).year(),n=10*parseInt(t/10,10);return e=e.year(n)},century:e=>{const t=(e=e.startOf("year")).year(),n=100*parseInt(t/100,10);return e=e.year(n)}};Ue.date=Ue.day;const Ee=function(e,t,n,a=1){if(!t||!n||!Number.isInteger(a)||a<=0)return [];if(t=o(t),n=e.clone().set(n),!e.isValid()||!n.isValid())return [];if(e.isAfter(n)){const t=e;e=n,n=t;}if(e.diff(n,t)<a)return [];let r=e.clone();if(function(e){return !!R().find(t=>t===e)||!!X().find(t=>t===e)}(t))r=r.next(t),t="week";else {r.startOf(t).isBefore(e)&&(r=r.next(t));}const s=[];for(;r.isBefore(n);){s.push(r);const e=r.add(a,t);if(!e.isValid()||e.epoch<=r.epoch)break;r=e;}return s},Pe=e=>("Utc"===(e=(e=(e=(e=(e=(e=(e=(e=e[0].toUpperCase()+e.substr(1)).replace(/[/_-]([a-z])/gi,e=>e.toUpperCase())).replace(/_(of|es)_/i,e=>e.toLowerCase())).replace(/\/gmt/i,"/GMT")).replace(/\/utc/i,"/UTC")).replace(/\/Dumontdurville$/i,"/DumontDUrville")).replace(/\/Mcmurdo$/i,"/McMurdo")).replace(/\/Port-au-prince$/i,"/Port-au-Prince"))&&(e="UTC"),e),Ae=e=>{const t=e.timezones;let n=e.tz;if(false===t.hasOwnProperty(n)&&(n=$(e.tz,t)),null===n)return  false===e.silent&&console.warn("Warn: could not find given or local timezone - '"+e.tz+"'"),{current:{epochShift:0}};const a=t[n],r={name:Pe(n),hasDst:Boolean(a.dst),default_offset:a.offset,hemisphere:"s"===a.hem?"South":"North",current:{}};if(r.hasDst){const e=(o=a.dst)?o.split("->"):[];r.change={start:e[0],back:e[1]};}var o;const s=a.offset;let i=s;const u=p(n);return  true===r.hasDst&&(i="North"===r.hemisphere?s-u:a.offset+u),false===r.hasDst?(r.current.offset=s,r.current.isDST=false):true===f(e.epoch,r.change.start,r.change.back,s,i)?(r.current.offset=s,r.current.isDST="North"===r.hemisphere):(r.current.offset=i,r.current.isDST="South"===r.hemisphere),r},xe=["century","decade","year","month","date","day","hour","minute","second","millisecond"],Ve={set:function(e,t){let n=this.clone();return n=W(n,e,null),t&&(n.tz=$(t,n.timezones)),n},timezone:function(e){if(void 0!==e){const t=this.json();return t.timezone=e,this.set(t,e)}return Ae(this)},isDST:function(){return Ae(this).current.isDST},hasDST:function(){return Ae(this).hasDst},offset:function(){return 60*Ae(this).current.offset},hemisphere:function(){return Ae(this).hemisphere},format:function(e){return se(this,e)},unixFmt:function(e){return ((e,t)=>{let n=t.split("");return n=function(e){for(let t=0;t<e.length;t+=1)if("'"===e[t])for(let n=t+1;n<e.length;n+=1){if(e[n]&&(e[t]+=e[n]),"'"===e[n]){e[n]=null;break}e[n]=null;}return e.filter(e=>e)}(n),n=function(e){for(let t=0;t<e.length;t+=1){const n=e[t];for(let a=t+1;a<e.length&&e[a]===n;a+=1)e[t]+=e[a],e[a]=null;}return (e=e.filter(e=>e)).map(e=>("''"===e&&(e="'"),e))}(n),n.reduce((t,n)=>(void 0!==ie[n]?t+=ie[n](e)||"":(/^'.+'$/.test(n)&&(n=n.replace(/'/g,"")),t+=n),t),"")})(this,e)},startOf:function(e){return ((e,t)=>{let n=e.clone();return n.isValid()?(t=o(t),Ue[t]?Ue[t](n):"summer"===t||"winter"===t?(n=n.season(t),Ue.season(n)):n):n})(this,e)},endOf:function(e){return ((e,t)=>{let n=e.clone();return n.isValid()?(t=o(t),Ue[t]?(n=Ue[t](n),n=n.add(1,t),n=n.subtract(1,"millisecond"),n):n):n})(this,e)},leapYear:function(){const t=this.year();return e(t)},progress:function(e){return ((e,t)=>{if(t)return t=o(t),he(e,t);const n={};return ce.forEach(t=>{n[t]=he(e,t);}),n})(this,e)},nearest:function(e){return ((e,t)=>{if(t=o(t),!le.includes(t))return  false===e.silent&&console.warn("no known unit '"+t+"'"),e;const n=e.startOf(t),a=n.add(1,t);return e.epoch-n.epoch>a.epoch-e.epoch?a:n})(this,e)},diff:function(e,t){return fe(this,e,t)},since:function(e){return e||(e=this.clone().set()),qe(this,e)},next:function(e){return this.add(1,e).startOf(e)},last:function(e){return this.subtract(1,e).startOf(e)},isValid:function(){return !(!this.epoch&&0!==this.epoch)&&(Number.isFinite(this.epoch)&&!isNaN(new Date(this.epoch).getTime()))},goto:function(e){const t=this.clone();return t.tz=$(e,t.timezones),t},every:function(e,t,n){if("object"==typeof e&&"string"==typeof t){const n=t;t=e,e=n;}return Ee(this,e,t,n)},isAwake:function(){const e=this.hour();return !(e<8||e>22)},isAsleep:function(){return !this.isAwake()},daysInMonth:function(){switch(this.month()){case 0:case 2:case 4:case 6:case 7:case 9:case 11:return 31;case 1:return this.leapYear()?29:28;case 3:case 5:case 8:case 10:return 30;default:throw new Error("Invalid Month state.")}},log:function(){return console.log("\n"+se(this,"nice-short")),this},logYear:function(){return console.log("\n"+se(this,"full-short")),this},json:function(e){if(void 0!==e){let t=this.clone();e.timezone&&(t.tz=e.timezone);for(let n=0;n<xe.length;n++){const a=xe[n];void 0!==e[a]&&(t=t[a](e[a]));}return t}const t=xe.reduce((e,t)=>(e[t]=this[t](),e),{});return t.offset=this.timezone().current.offset,t.timezone=this.tz,t},debug:function(){const e=this.timezone();let t=this.format("MM")+" "+this.format("date-ordinal")+" "+this.year();return t+="\n     - "+this.format("time"),console.log("\n\n",t+"\n     - "+e.name+" ("+e.current.offset+")"),this},from:function(e){return (e=this.clone().set(e)).since(this)},fromNow:function(){return this.clone().set(Date.now()).since(this)},weekStart:function(e){if("number"==typeof e)return this._weekStart=e,this;if("string"==typeof e){e=e.toLowerCase().trim();let t=R().indexOf(e);-1===t&&(t=X().indexOf(e)),-1===t&&(t=1),this._weekStart=t;}else console.warn("Spacetime Error: Cannot understand .weekStart() input:",e);return this}};Ve.inDST=Ve.isDST,Ve.round=Ve.nearest,Ve.each=Ve.every;const Ye=function(t,n){return 1===t&&e(n)?29:N[t]},Fe=(e,t)=>{if(e.month>0){const n=parseInt(e.month/12,10);e.year=t.year()+n,e.month=e.month%12;}else if(e.month<0){const n=Math.abs(e.month);let a=parseInt(n/12,10);n%12!=0&&(a+=1),e.year=t.year()-a,e.month=e.month%12,e.month=e.month+12,12===e.month&&(e.month=0);}return e},Ze=(e,t,n)=>{let a=t.year(),r=t.month(),o=Ye(r,a);for(;n>o;)n-=o,r+=1,r>=12&&(r-=12,a+=1),o=Ye(r,a);return e.month=r,e.date=n,e},Le=(e,t,n)=>{e.year=t.year(),e.month=t.month();const a=t.date();for(e.date=a-Math.abs(n);e.date<1;){e.month-=1,e.month<0&&(e.month=11,e.year-=1);const t=Ye(e.month,e.year);e.date+=t;}return e},Be=e=>("string"==typeof e&&(e=parseInt(e,10)),e),He=["year","month","date","hour","minute","second","millisecond"],Qe=(e,t,n)=>{const a=He.indexOf(n),r=He.slice(a,He.length);for(let n=0;n<r.length;n++){const a=t[r[n]]();e[r[n]](a);}return e},Ge=function(e,t,n,a){return  true===n&&e.isBefore(t)?e=e.add(1,a):false===n&&e.isAfter(t)&&(e=e.minus(1,a)),e},We=function(e,t,n){t=Be(t);const a=e.clone(),r=(e.minute()-t)*x.minute;return e.epoch-=r,Qe(e,a,"second"),(e=Ge(e,a,n,"hour")).epoch},Je=function(e,t,n){(t=Be(t))>=24?t=23:t<0&&(t=0);const a=e.clone();let r=e.hour()-t,o=r*x.hour;return e.epoch-=o,e.date()!==a.date()&&(e=a.clone(),r>1&&(r-=1),r<1&&(r+=1),o=r*x.hour,e.epoch-=o),F(e,{hour:t}),Qe(e,a,"minute"),(e=Ge(e,a,n,"day")).epoch},Ke=function(e,t){"string"==typeof t&&/^'[0-9]{2}$/.test(t)&&(t=t.replace(/'/,"").trim(),t=(t=Number(t))>30?1900+t:2e3+t),t=Be(t);const n=e.month(),a=Math.min(e.date(),Ye(n,t));return F(e,{year:t,month:n,date:a}),e.epoch},Re=function(e,t,n){const a=e.clone();return 1===(t=Be(t))&&"december"===e.monthName()&&e.date()>=29&&1===e.week()?e:("december"===(e=(e=(e=e.month(0)).date(1)).day("monday",false)).monthName()&&e.date()<29&&(e=e.add(1,"week")),t-=1,e=e.add(t,"weeks"),e=Ge(e,a,n,"year"))};let Xe="am",et="pm";const tt={millisecond:function(e){if(void 0!==e){const t=this.clone();return t.epoch=function(e,t){t=Be(t);const n=e.millisecond()-t;return e.epoch-n}(t,e),t}return this.d.getUTCMilliseconds()},second:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){t=Be(t);const a=e.clone(),r=(e.second()-t)*x.second;return e.epoch=e.epoch-r,(e=Ge(e,a,n,"minute")).epoch}(n,e,t),n}return this.d.getUTCSeconds()},minute:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=We(n,e,t),n}return this.d.getUTCMinutes()},hour:function(e,t){const n=this.d;if(void 0!==e){const n=this.clone();return n.epoch=Je(n,e,t),n}return n.getUTCHours()},hourFloat:function(e,t){if(void 0!==e){const n=this.clone();let a=e%1;a*=60;const r=parseInt(e,10);return n.epoch=Je(n,r,t),n.epoch=We(n,a,t),n}const n=this.d,a=n.getUTCHours();let r=n.getUTCMinutes();return r/=60,a+r},hour12:function(e,t){const n=this.d;if(void 0!==e){const n=this.clone(),a=(e=""+e).match(/^([0-9]+)(am|pm)$/);if(a){let e=parseInt(a[1],10);12===e&&(e=0),"pm"===a[2]&&(e+=12),n.epoch=Je(n,e,t);}return n}let a=n.getUTCHours();return a>12&&(a-=12),0===a&&(a=12),a},time:function(e,t){if(void 0!==e){const n=this.clone();return e=e.toLowerCase().trim(),n.epoch=function(e,t,n){let a=t.match(/([0-9]{1,2})[:h]([0-9]{1,2})(:[0-9]{1,2})? ?(am|pm)?/);if(!a){if(a=t.match(/([0-9]{1,2}) ?(am|pm)/),!a)return null;a.splice(2,0,"0"),a.splice(3,0,"");}let r=false,o=parseInt(a[1],10),s=parseInt(a[2],10);s>=60&&(s=59),o>12&&(r=true),false===r&&("am"===a[4]&&12===o&&(o=0),"pm"===a[4]&&o<12&&(o+=12)),a[3]=a[3]||"",a[3]=a[3].replace(/:/,"");const i=parseInt(a[3],10)||0,u=e.clone();return e=(e=(e=(e=e.hour(o)).minute(s)).second(i)).millisecond(0),(e=Ge(e,u,n,"day")).epoch}(n,e,t),n}return `${this.h12()}:${n(this.minute())}${this.ampm()}`},ampm:function(e,t){let n=Xe,a=this.hour();if(a>=12&&(n=et),"string"!=typeof e)return n;const r=this.clone();return e=e.toLowerCase().trim(),a>=12&&"am"===e?(a-=12,r.hour(a,t)):a<12&&"pm"===e?(a+=12,r.hour(a,t)):r},dayTime:function(e,t){if(void 0!==e){const n={morning:"7:00",breakfast:"7:00",noon:"12:00",lunch:"12:00",afternoon:"14:00",evening:"18:00",dinner:"18:00",night:"23:00",midnight:"00:00"};let a=this.clone();return e=(e=e||"").toLowerCase(),true===n.hasOwnProperty(e)&&(a=a.time(n[e],t)),a}const n=this.hour();return n<6?"night":n<12?"morning":n<17?"afternoon":n<22?"evening":"night"},iso:function(e){return void 0!==e?this.set(e):this.format("iso")},isoFull:function(e){return void 0!==e?this.set(e):this.format("iso-full")},epochSeconds:function(e){return void 0!==e?(this.epoch=1e3*e,this):this.isValid()?Math.floor(this.epoch/1e3):null}},nt={date:function(e,t){if(void 0!==e){const n=this.clone();return e=parseInt(e,10),Number.isNaN(e)||(n.epoch=function(e,t,n){if((t=Be(t))>28){const n=Ye(e.month(),e.year());t>n&&(t=n);}t<=0&&(t=1);const a=e.clone();return F(e,{date:t}),(e=Ge(e,a,n,"month")).epoch}(n,e,t)),n}return this.d.getUTCDate()},day:function(e,t){if(void 0===e)return this.d.getUTCDay();const n=this.clone();let a=e;"string"==typeof e&&(e=e.toLowerCase(),ee.hasOwnProperty(e)?a=ee[e]:(a=R().indexOf(e),-1===a&&(a=X().indexOf(e))));let r=this.d.getUTCDay()-a;true===t&&r>0&&(r-=7),false===t&&r<0&&(r+=7);const o=this.subtract(r,"days");return F(o,{hour:n.hour(),minute:n.minute(),second:n.second()}),o},dayName:function(e,t){if(void 0===e)return X()[this.day()];let n=this.clone();return n=n.day(e,t),n}},at=e=>e=(e=(e=e.minute(0)).second(0)).millisecond(1),rt=function(e){if(void 0!==e){if("string"==typeof e&&(e=e.replace(/([0-9])(th|rd|st|nd)/,"$1"),e=Number(e),isNaN(e)))return console.warn("Spacetime: Invalid millennium input"),this;e>0&&(e-=1);let t=1e3*e;return 0===t&&(t=1),this.year(t)}let t=Math.floor(this.year()/1e3);return t>=0&&(t+=1),t},ot={dayOfYear:function(t,n){if(void 0!==t){const a=this.clone();return a.epoch=function(t,n,a){n=Be(n);const r=t.clone();return (n-=1)<=0?n=0:n>=365&&(n=e(t.year())?365:364),t=(t=t.startOf("year")).add(n,"day"),Qe(t,r,"hour"),(t=Ge(t,r,a,"year")).epoch}(a,t,n),a}const a=this.d;let r=a.getUTCDate();const o=a.getUTCMonth(),s=a.getUTCFullYear();for(let e=0;e<o;e++)r+=Ye(e,s);return r},week:function(e,t){if(void 0!==e){let n=this.clone();return n=Re(n,e,t),n=at(n),n}const n=this.epoch;let a=this.clone();if("december"===a.monthName()&&a.date()>=29){if(Re(a.add(15,"days"),1,false).epoch<=a.epoch)return 1}if(a=a.month(0),a=a.date(1),a=at(a),a=a.day("monday",false),"december"===a.monthName()&&a.date()<29&&(a=a.add(1,"week")),a=a.minus(2,"hours"),a.epoch>n)return 1;let r=0;const o=4*this.month();for(a.epoch+=x.week*o,r+=o;r<=52;r++){if(a.epoch>n)return r;a=a.add(1,"week");}return 52},month:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){"string"==typeof t&&("sept"===t&&(t="sep"),t=I()[t.toLowerCase()]),(t=Be(t))>=12&&(t=11),t<=0&&(t=0);let a=e.date();const r=Ye(t,e.year());a>r&&(a=r);const o=e.clone();return F(e,{month:t,date:a}),(e=Ge(e,o,n,"year")).epoch}(n,e,t),n}return this.d.getUTCMonth()},monthName:function(e,t){if(void 0!==e){let n=this.clone();return n=n.month(e,t),n}return q[this.month()]},quarter:function(e,t){if(void 0!==e&&("string"==typeof e&&(e=e.replace(/^q/i,""),e=parseInt(e,10)),Ie[e])){let n=this.clone();const a=Ie[e][0];return n=n.month(a,t),n=n.date(1,t),n=n.startOf("day"),n}const n=this.d.getUTCMonth();for(let e=1;e<Ie.length;e++)if(n<Ie[e][0])return e-1;return 4},season:function(e,t){let n="north";if("South"===this.hemisphere()&&(n="south"),void 0!==e){let a=this.clone();for(let r=0;r<Se[n].length;r++)e===Se[n][r][0]&&(a=a.month(Se[n][r][1],t),a=a.date(1),a=a.startOf("day"));return a}const a=this.d.getUTCMonth();for(let e=0;e<Se[n].length-1;e++)if(a>=Se[n][e][1]&&a<Se[n][e+1][1])return Se[n][e][0];return "north"===n?"winter":"summer"},year:function(e){if(void 0!==e){const t=this.clone();return t.epoch=Ke(t,e),t}return this.d.getUTCFullYear()},era:function(e){if(void 0!==e){const t=this.clone();e=e.toLowerCase();const n=t.d.getUTCFullYear();return "bc"===e&&n>0&&(t.epoch=Ke(t,-1*n)),"ad"===e&&n<0&&(t.epoch=Ke(t,-1*n)),t}return this.d.getUTCFullYear()<0?"BC":"AD"},decade:function(e){if(void 0!==e){if(!(e=(e=(e=String(e)).replace(/([0-9])'?s$/,"$1")).replace(/([0-9])(th|rd|st|nd)/,"$1")))return console.warn("Spacetime: Invalid decade input"),this;2===e.length&&/[0-9][0-9]/.test(e)&&(e="19"+e);let t=Number(e);return isNaN(t)?this:(t=10*Math.floor(t/10),this.year(t))}return this.startOf("decade").year()},century:function(e){if(void 0!==e){"string"==typeof e&&(e=(e=(e=e.replace(/([0-9])(th|rd|st|nd)/,"$1")).replace(/(?<![0-9])([0-9]+) ?(b\.?c\.?|a\.?d\.?)/i,(e,t,n)=>(/b\.?c\.?/i.test(n)&&(t="-"+t),t))).replace(/c$/,""));let t=Number(e);return isNaN(e)?(console.warn("Spacetime: Invalid century input"),this):(0===t&&(t=1),t=t>=0?100*(t-1):100*(t+1),this.year(t))}let t=this.startOf("century").year();return t=Math.floor(t/100),t<0?t-1:t+1},millenium:rt,millennium:rt},st=Object.assign({},tt,nt,ot);st.milliseconds=st.millisecond,st.seconds=st.second,st.minutes=st.minute,st.hours=st.hour,st.hour24=st.hour,st.h12=st.hour12,st.h24=st.hour24,st.days=st.day;const it={second:"millisecond",minute:"second",quarterhour:"minute",hour:"minute",date:"hour",week:"day",month:"day",quarter:"day",season:"day",year:"day"},ut={decade:10,century:100},ct=["millisecond","second","minute","hour","date","month"],ht={second:ct.slice(0,1),minute:ct.slice(0,2),quarterhour:ct.slice(0,2),hour:ct.slice(0,3),date:ct.slice(0,4),month:ct.slice(0,4),quarter:ct.slice(0,4),season:ct.slice(0,4),year:ct,decade:ct,century:ct};ht.week=ht.hour,ht.season=ht.date,ht.quarter=ht.date;const lt={year:true,quarter:true,season:true,month:true,week:true,date:true},mt={month:true,quarter:true,season:true,year:true,decade:true,century:true},dt={millisecond:e=>e.epoch,second:e=>[e.year(),e.month(),e.date(),e.hour(),e.minute(),e.second()].join("-"),minute:e=>[e.year(),e.month(),e.date(),e.hour(),e.minute()].join("-"),hour:e=>[e.year(),e.month(),e.date(),e.hour()].join("-"),day:e=>[e.year(),e.month(),e.date()].join("-"),week:e=>[e.year(),e.week()].join("-"),month:e=>[e.year(),e.month()].join("-"),quarter:e=>[e.year(),e.quarter()].join("-"),year:e=>e.year()};dt.date=dt.day;const ft=e=>Number.isFinite(e)&&!isNaN(new Date(e).getTime());let pt=b;const yt=function(e,t,n={}){this.epoch=null,this.tz=$(t??(e=>{const t=globalThis.Temporal;return t&&e instanceof t.ZonedDateTime?e.timeZoneId:void 0})(e),pt),this.silent=void 0===n.silent||n.silent,this.british=n.dmy||n.british,this._weekStart=1,void 0!==n.weekStart&&(this._weekStart=n.weekStart),this._today={},void 0!==n.today&&(this._today=n.today),Object.defineProperty(this,"d",{get:function(){if(!Number.isFinite(this.epoch))return new Date(NaN);const e=(e=>{const t=e.timezones[e.tz];if(void 0===t)return console.warn("Warning: couldn't find timezone "+e.tz),0;if(void 0===t.dst)return t.offset;const n=t.offset,a=p(e.tz);let r=t.offset+a;"n"===t.hem&&(r=n-a);const o=t.dst.split("->");return  true===f(e.epoch,o[0],o[1],n,r)?n:r})(this);return new Date(this.epoch+36e5*e)}}),Object.defineProperty(this,"timezones",{get:()=>pt,set:e=>(pt=e,e)});const a=W(this,e,t);this.epoch=a.epoch,a.tz&&(this.tz=a.tz);};var gt;Object.keys(Ve).forEach(e=>{yt.prototype[e]=Ve[e];}),yt.prototype.clone=function(){return new yt(this.isValid()?this.epoch:NaN,this.tz,{silent:this.silent,dmy:this.british,weekStart:this._weekStart,today:this._today,parsers:this.parsers})},yt.prototype.toLocalDate=function(){return this.toNativeDate()},yt.prototype.toNativeDate=function(){return new Date(this.isValid()?this.epoch:NaN)},yt.prototype.toTemporal=function(){return (e=>{const t=globalThis.Temporal;if(!t)throw new Error("toTemporal() requires native Temporal (or a globally installed polyfill)");return e.isValid()?t.Instant.fromEpochMilliseconds(Math.trunc(e.epoch)).toZonedDateTimeISO(l(e)):null})(this)},gt=yt,Object.keys(st).forEach(e=>{gt.prototype[e]=st[e];}),(e=>{e.prototype.add=function(e,t){let n=this.clone();if(!n.isValid()||!t||0===e)return n;const a=this.clone(),r=t;if("millisecond"===(t=o(t)))return n.epoch+=e,n;if("fortnight"===t&&(e*=2,t="week"),"millennium"===t)return n.add(1e3*e,"year");if(Number.isFinite(e)&&!Number.isInteger(e)){const a=((e,t,n)=>{if(Object.hasOwn(ut,n))return e.add(t*ut[n],"year");if(!Object.hasOwn(it,n))return null;let a=x[n];"month"===n||"quarter"===n||"season"===n||"year"===n?(e=e.add(Math.trunc(t),n),t%=1,a=e.add(1,n).epoch-e.epoch,"month"===n&&(a=28*x.day)):"quarterhour"===n&&(a=15*x.minute),e.epoch+=t*a;const r=it[n];if("millisecond"===r)return e.epoch=Math.round(e.epoch),e;const o=e.startOf(r),s=o.add(1,r);return e.epoch-o.epoch<=s.epoch-e.epoch?o:s})(n,e,t);if(a)return a}if(!Object.hasOwn(x,t)&&!Object.hasOwn(ht,t)&&"weekend"!==t)return  false===n.silent&&console.warn(`Warn: unsupported arithmetic unit "${r}"`),n;x[t]?n.epoch+=x[t]*e:"week"===t||"weekend"===t?n.epoch+=x.day*(7*e):"quarter"===t||"season"===t?n.epoch+=x.month*(3*e):"quarterhour"===t&&(n.epoch+=15*x.minute*e);let s={};if(ht[t]&&ht[t].forEach(e=>{s[e]=a[e]();}),lt[t]){const e=a.timezone().current.offset-n.timezone().current.offset;n.epoch+=3600*e*1e3;}if("month"===t&&(s.month=a.month()+e,s=Fe(s,a)),"week"===t){const t=a.date()+7*e;t<=28&&t>1&&(s.date=t);}if("weekend"===t&&"saturday"!==n.dayName())n=n.day("saturday",true);else if("date"===t){if(e<0)s=Le(s,a,e);else {const t=a.date()+e;s=Ze(s,a,t);}0!==e&&a.isSame(n,"day")&&(s.date=a.date()+e);}else if("quarter"===t){if(s.month=a.month()+3*e,s.year=a.year(),s.month<0){const e=Math.floor(s.month/12),t=s.month+12*Math.abs(e);s.month=t,s.year+=e;}else if(s.month>=12){const e=Math.floor(s.month/12);s.month=s.month%12,s.year+=e;}s.date=a.date();}else if("year"===t){const t=a.year()+e,r=n.year();if(r<t){const t=Math.floor(e/4)||1;n.epoch+=Math.abs(x.day*t);}else if(r>t){const t=Math.floor(e/4)||1;n.epoch+=x.day*t;}}else "decade"===t?s.year=a.year()+10*e:"century"===t&&(s.year=a.year()+100*e);if(mt[t]){const e=void 0!==s.year?s.year:a.year(),t=Ye(s.month,e);s.date=a.date(),s.date>t&&(s.date=t);}return Object.keys(s).length>1&&F(n,s),n},e.prototype.subtract=function(e,t){return this.clone().add(-1*e,t)},e.prototype.minus=e.prototype.subtract,e.prototype.plus=e.prototype.add;})(yt),(e=>{e.prototype.isSame=function(t,n,a=true){const r=this;if(!n)return null;if("string"==typeof t&&"object"==typeof n){const e=t;t=n,n=e;}return "string"!=typeof t&&"number"!=typeof t||(t=new e(t,this.timezone.name)),!(!r.isValid()||!t?.isValid?.())&&(n=n.replace(/s$/,""),true===a&&r.tz!==t.tz&&((t=t.clone()).tz=r.tz),dt[n]?dt[n](r)===dt[n](t):null)};})(yt),(e=>{const t={isAfter:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!ft(t))&&this.epoch>t},isBefore:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!ft(t))&&this.epoch<t},isEqual:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!ft(t))&&this.epoch===t},isBetween:function(e,t,n=false){e=i(e,this),t=i(t,this);const a=s(e);if(!this.isValid()||!ft(a))return  false;const r=s(t);return !!ft(r)&&(n?this.isBetween(e,t)||this.isEqual(e)||this.isEqual(t):a<this.epoch&&this.epoch<r)}};Object.keys(t).forEach(n=>{e.prototype[n]=t[n];});})(yt),(e=>{const n={i18n:function(e){var n,a,r;return t(e.days)&&(n=e.days,J=n.short||J,K=n.long||K),t(e.months)&&function(e){C=e.short||C,q=e.long||q;}(e.months),r=e.useTitleCase,"[object Boolean]"===Object.prototype.toString.call(r)&&(a=e.useTitleCase,te=a),t(e.ampm)&&function(e){Xe=e.am||Xe,et=e.pm||et;}(e.ampm),t(e.distance)&&function(e){_e=e.pastDistance||_e,je=e.futureDistance||je,be=e.past||be,we=e.future||we,ke=e.present||ke,ve=e.now||ve,ze=e.almost||ze,$e=e.over||$e;}(e.distance),t(e.units)&&function(e={}){ye={second:e.second||ye.second,seconds:e.seconds||ye.seconds,minute:e.minute||ye.minute,minutes:e.minutes||ye.minutes,hour:e.hour||ye.hour,hours:e.hours||ye.hours,day:e.day||ye.day,days:e.days||ye.days,month:e.month||ye.month,months:e.months||ye.months,year:e.year||ye.year,years:e.years||ye.years};}(e.units),this}};Object.keys(n).forEach(t=>{e.prototype[t]=n[t];});})(yt);const bt=(e,t,n)=>new yt(e,t,n),wt=function(e){const t=e._today||{};return Object.keys(t).forEach(n=>{e=e[n](t[n]);}),e};bt.now=(e,t)=>{let n=new yt((new Date).getTime(),e,t);return n=wt(n),n},bt.today=(e,t)=>{let n=new yt((new Date).getTime(),e,t);return n=wt(n),n.startOf("day")},bt.tomorrow=(e,t)=>{let n=new yt((new Date).getTime(),e,t);return n=wt(n),n.add(1,"day").startOf("day")},bt.yesterday=(e,t)=>{let n=new yt((new Date).getTime(),e,t);return n=wt(n),n.subtract(1,"day").startOf("day")},bt.fromUnixSeconds=(e,t,n)=>new yt(1e3*e,t,n),bt.extend=function(e={}){return Object.keys(e).forEach(t=>{yt.prototype[t]=e[t];}),this},bt.timezones=function(){return (new yt).timezones},bt.max=function(e,t){const n=new yt(null,e,t);return n.epoch=864e13,n},bt.min=function(e,t){const n=new yt(null,e,t);return n.epoch=-864e13,n},bt.whereIts=(e,t)=>{let n=new yt(null),a=new yt(null);n=n.time(e),a=t?a.time(t):n.add(59,"minutes");const r=n.hour(),o=a.hour();return Object.keys(n.timezones).filter(e=>{if(-1===e.indexOf("/"))return  false;const t=new yt(null,e),s=t.hour();return s>=r&&s<=o&&(!(s===r&&t.minute()<n.minute())&&!(s===o&&t.minute()>a.minute()))}).map(Pe)},bt.version="7.17.0",bt.tzdbVersion="2026c",bt.plugin=bt.extend;
 
   // these should be added to model
   const hardCoded = {
@@ -399,7 +410,7 @@
     time = time.not('sharp');
     time = time.not('on the dot');
 
-    let s = pt(context.today || null, context.timezone);
+    let s = bt(context.today || null, context.timezone);
     // sentinel-millisecond, so a no-op parse won't equal `now` below
     s = s.millisecond(123);
     const now = s.clone();
@@ -439,7 +450,7 @@
     m = time.match('[<min>(half|quarter|25|20|15|10|5)] (past|after)');
     if (m.found) {
       let min = m.groups('min').text('reduced');
-      let d = pt(context.today);
+      let d = bt(context.today);
       // support 'quarter', etc.
       if (Object.hasOwn(minMap, min)) {
         min = minMap[min];
@@ -453,7 +464,7 @@
     m = time.match('[<min>(half|quarter|25|20|15|10|5)] to');
     if (m.found) {
       let min = m.groups('min').text('reduced');
-      let d = pt(context.today);
+      let d = bt(context.today);
       // support 'quarter', etc.
       if (Object.hasOwn(minMap, min)) {
         min = minMap[min];
@@ -607,7 +618,7 @@
 
   // some opinionated-but-common-sense timezone abbreviations
   // these timezone abbreviations are wholly made-up by me, Spencer Kelly, with no expertise in geography
-  // generated humbly from https://github.com/spencermountain/spacetime-informal
+  // generated humbly from https://github.com/spencermountain/timezone-soft
 
   const america = 'America/';
   const asia = 'Asia/';
@@ -742,7 +753,7 @@
     ndt: america + 'St_Johns',
     'brazil time': america + 'Sao_Paulo',
     brt: america + 'Sao_Paulo',
-    'brasília': america + 'Sao_Paulo',
+    brasília: america + 'Sao_Paulo',
     brasilia: america + 'Sao_Paulo',
     'brazilian time': america + 'Sao_Paulo',
     'argentina time': america + 'Buenos_Aires',
@@ -870,9 +881,8 @@
     pgt: pac + 'Bougainville',
   };
 
-
   //add the official iana zonefile names, like 'canada/eastern'
-  const iana = pt().timezones;
+  const iana = bt().timezones;
   const formal = Object.keys(iana).reduce((h, k) => {
     h[k] = k;
     return h
@@ -1048,7 +1058,7 @@
         input.month = 'sep';
       }
       // set it to the beginning of the given unit
-      const d = pt(input, context.timezone, { today: today, dmy: context.dmy });
+      const d = bt(input, context.timezone, { today: today, dmy: context.dmy });
       Object.defineProperty(this, 'd', {
         enumerable: false,
         writable: true,
@@ -1255,7 +1265,7 @@
       this.isWeekDay = true; //cool.
       // is the input just a weekday?
       if (typeof input === 'string') {
-        this.d = pt(context.today, context.timezone);
+        this.d = bt(context.today, context.timezone);
         this.d = this.d.day(input);
         // assume a wednesday in the future
         if (this.d.isBefore(context.today)) {
@@ -1592,6 +1602,8 @@
     return unit
   };
 
+  var version$1 = '0.4.0';
+
   //yep,
   const jan$1 = 'january';
   const feb$1 = 'february';
@@ -1628,7 +1640,6 @@
     'cinco de mayo': [may$1, 5],
     'national nurses day': [may$1, 6],
     'harvey milk day': [may$1, 22],
-    'victoria day': [may$1, 24],
     juneteenth: [jun$1, 19],
     'canada day': [jul, 1],
     'independence day': [jul, 4],
@@ -1649,7 +1660,7 @@
     'all saints day': [nov$1, 1],
     'all sts day': [nov$1, 1],
     'armistice day': [nov$1, 11],
-    'rememberance day': [nov$1, 11],
+    'remembrance day': [nov$1, 11],
     'christmas eve': [dec, 24],
     christmas: [dec, 25],
     xmas: [dec, 25],
@@ -1678,10 +1689,10 @@
   };
 
   // holidays that are the same date every year
-  const fixedDates$1 = function (str, normal, year, tz) {
+  const fixedDates = function (str, normal, year, tz) {
     if (fixed.hasOwnProperty(str) || fixed.hasOwnProperty(normal)) {
-      let arr = fixed[str] || fixed[normal] || [];
-      let s = pt.now(tz);
+      const arr = fixed[str] || fixed[normal] || [];
+      let s = bt.now(tz);
       s = s.year(year);
       s = s.startOf('year');
       s = s.month(arr[0]);
@@ -1692,7 +1703,6 @@
     }
     return null
   };
-  var fixedDates$2 = fixedDates$1;
 
   //these are holidays on the 'nth weekday of month'
   const jan = 'january';
@@ -1712,11 +1722,10 @@
   // const tues = 'tuesday'
   // const wed = 'wednesday'
   const thurs = 'thursday';
-  const fri = 'friday';
   // const sat = 'saturday'
   const sun = 'sunday';
 
-  let holidays$3 = {
+  const holidays$1 = {
     'martin luther king day': [3, mon, jan], //[third monday in january],
     'presidents day': [3, mon, feb], //[third monday in february],
 
@@ -1727,57 +1736,61 @@
     'columbus day': [2, mon, oct], //[second monday in october],
     'canadian thanksgiving': [2, mon, oct], //[second monday in october],
     thanksgiving: [4, thurs, nov], // [fourth Thursday in November],
-    'black friday': [4, fri, nov] //[fourth friday in november],
+    'black friday': { after: 'thanksgiving', days: 1 },
+    'cyber monday': { after: 'thanksgiving', days: 4 },
+    'memorial day': [-1, mon, may], // last Monday in May
+    'victoria day': { weekday: mon, before: [may, 25] },
 
-    // 'memorial day': [may], //[last monday in may],
     // 'us election': [nov], // [Tuesday following the first Monday in November],
-    // 'cyber monday': [nov]
     // 'advent': [] // fourth Sunday before Christmas
   };
 
   // add aliases
-  holidays$3['turday day'] = holidays$3.thanksgiving;
-  holidays$3['indigenous peoples day'] = holidays$3['columbus day'];
-  holidays$3['mlk day'] = holidays$3['martin luther king day'];
-  var calendar = holidays$3;
+  holidays$1['turday day'] = holidays$1.thanksgiving;
+  holidays$1['indigenous peoples day'] = holidays$1['columbus day'];
+  holidays$1['mlk day'] = holidays$1['martin luther king day'];
 
-  // holidays that are the same date every year
-  const fixedDates = function (str, normal, year, tz) {
-    if (calendar.hasOwnProperty(str) || calendar.hasOwnProperty(normal)) {
-      let arr = calendar[str] || calendar[normal] || [];
-      let s = pt.now(tz);
-      s = s.year(year);
-
-      // [3rd, 'monday', 'january']
-      s = s.month(arr[2]);
-      s = s.startOf('month');
-      // make it january
-      let month = s.month();
-
-      // make it the 1st monday
-      s = s.day(arr[1]);
-      if (s.month() !== month) {
-        s = s.add(1, 'week');
-      }
-      // make it nth monday
-      if (arr[0] > 1) {
-        s = s.add(arr[0] - 1, 'week');
-      }
-      if (s.isValid()) {
-        return s
-      }
+  const calendarDates = (str, normal, year, tz, lookup) => {
+    const rule = holidays$1[str] ?? holidays$1[normal];
+    if (!rule) {
+      return null
     }
-
-    return null
+    if (rule.after) {
+      const base = lookup(rule.after, year, tz);
+      return base ? base.add(rule.days, 'day') : null
+    }
+    const start = bt.now(tz).year(year).startOf('year');
+    if (rule.before) {
+      const anchor = start.month(rule.before[0]).date(rule.before[1]);
+      let result = anchor.day(rule.weekday);
+      if (result.epoch >= anchor.epoch) {
+        result = result.subtract(1, 'week');
+      }
+      return result
+    }
+    const [nth, weekday, month] = rule;
+    let anchor = start.month(month).startOf('month');
+    if (nth < 0) {
+      anchor = anchor.endOf('month').startOf('day');
+      let result = anchor.day(weekday);
+      if (result.epoch > anchor.epoch) {
+        result = result.subtract(1, 'week');
+      }
+      return result.add(nth + 1, 'week')
+    }
+    let result = anchor.day(weekday);
+    if (result.epoch < anchor.epoch) {
+      result = result.add(1, 'week');
+    }
+    return result.add(nth - 1, 'week')
   };
-  var nthWeekday = fixedDates;
 
   // https://www.timeanddate.com/calendar/determining-easter-date.html
 
-  let dates$2 = {
+  const dates$2 = {
     easter: 0,
     'ash wednesday': -46, // (46 days before easter)
-    'palm sunday': 7, // (1 week before easter)
+    'palm sunday': -7, // (1 week before easter)
     'maundy thursday': -3, // (3 days before easter)
     'good friday': -2, // (2 days before easter)
     'holy saturday': -1, // (1 days before easter)
@@ -1786,7 +1799,7 @@
     'ascension day': 39, // (39 days after easter)
     'whit sunday': 49, // / pentecost (49 days after easter)
     'whit monday': 50, // (50 days after easter)
-    'trinity sunday': 65, // (56 days after easter)
+    'trinity sunday': 56, // (56 days after easter)
     'corpus christi': 60, // (60 days after easter)
 
     'mardi gras': -47 //(47 days before easter)
@@ -1795,212 +1808,169 @@
   dates$2.pentecost = dates$2['whit sunday'];
   dates$2.whitsun = dates$2['whit sunday'];
 
-  var holidays$2 = dates$2;
-
   // by John Dyer
   // based on the algorithm by Oudin (1940) from http://www.tondering.dk/claus/cal/easter.php
   const calcEaster = function (year) {
-    let f = Math.floor,
-      // Golden Number - 1
-      G = year % 19,
-      C = f(year / 100),
-      // related to Epact
-      H = (C - f(C / 4) - f((8 * C + 13) / 25) + 19 * G + 15) % 30,
-      // number of days from 21 March to the Paschal full moon
-      I = H - f(H / 28) * (1 - f(29 / (H + 1)) * f((21 - G) / 11)),
-      // weekday for the Paschal full moon
-      J = (year + f(year / 4) + I + 2 - C + f(C / 4)) % 7,
-      // number of days from 21 March to the Sunday on or before the Paschal full moon
-      L = I - J,
-      month = 3 + f((L + 40) / 44),
-      date = L + 28 - 31 * f(month / 4);
-
-    month = month === 4 ? 'April' : 'March';
-    return month + ' ' + date
+    const f = Math.floor;
+    // Golden Number - 1
+    const G = year % 19;
+    const C = f(year / 100);
+    // related to Epact
+    const H = (C - f(C / 4) - f((8 * C + 13) / 25) + 19 * G + 15) % 30;
+    // number of days from 21 March to the Paschal full moon
+    const I = H - f(H / 28) * (1 - f(29 / (H + 1)) * f((21 - G) / 11));
+    // weekday for the Paschal full moon
+    const J = (year + f(year / 4) + I + 2 - C + f(C / 4)) % 7;
+    // number of days from 21 March to the Sunday on or before the Paschal full moon
+    const L = I - J;
+    const month = 3 + f((L + 40) / 44);
+    const date = L + 28 - 31 * f(month / 4);
+    const monthName = month === 4 ? 'April' : 'March';
+    return monthName + ' ' + date
   };
-
-  var calcEaster$1 = calcEaster;
 
   //calculate any holidays based on easter
   const easterDates = function (str, normal, year, tz) {
-    if (holidays$2.hasOwnProperty(str) || holidays$2.hasOwnProperty(normal)) {
-      let days = holidays$2[str] || holidays$2[normal] || [];
+    if (dates$2.hasOwnProperty(str) || dates$2.hasOwnProperty(normal)) {
+      const days = dates$2[str] ?? dates$2[normal];
 
-      let date = calcEaster$1(year);
+      const date = calcEaster(year);
       if (!date) {
         return null //no easter for this year
       }
-      let e = pt(date, tz);
+      let e = bt(date, tz);
       e = e.year(year);
 
-      let s = e.add(days, 'day');
+      const s = e.add(days, 'day');
       if (s.isValid()) {
         return s
       }
     }
     return null
   };
-  var easterDates$1 = easterDates;
 
-  // http://www.astropixels.com/ephemeris/soleq2001.html
+  // USNO UT event times, 2000–2100; minutes from March/June/September/December 1.
+  // Source: https://aa.usno.navy.mil/api/seasons; regenerate with scripts/update-seasons.js.
+  const seasons$1 = [
+    [27815, 28908, 31288, 29617],
+    [28171, 29258, 31624, 29962],
+    [28516, 29604, 31975, 30314],
+    [28860, 29950, 32327, 30664],
+    [27769, 28857, 31230, 29562],
+    [28113, 29206, 31583, 29915],
+    [28466, 29546, 31923, 30262],
+    [28807, 29886, 32271, 30608],
+    [27708, 28799, 31184, 29524],
+    [28064, 29145, 31519, 29867],
+    [28412, 29488, 31869, 30218],
+    [28761, 29836, 32225, 30570],
+    [27674, 28749, 31129, 29472],
+    [28022, 29104, 31484, 29831],
+    [28377, 29451, 31829, 30183],
+    [28725, 29798, 32180, 30528],
+    [27630, 28714, 31101, 29444],
+    [27989, 29064, 31442, 29788],
+    [28335, 29407, 31794, 30143],
+    [28678, 29754, 32150, 30499],
+    [27590, 28664, 31051, 29402],
+    [27937, 29012, 31401, 29759],
+    [28293, 29354, 31744, 30108],
+    [28644, 29698, 32090, 30447],
+    [27546, 28611, 31004, 29360],
+    [27901, 28962, 31339, 29703],
+    [28246, 29304, 31685, 30050],
+    [28585, 29651, 32042, 30402],
+    [27497, 28562, 30945, 29299],
+    [27842, 28908, 31298, 29654],
+    [28192, 29251, 31647, 30009],
+    [28541, 29597, 31995, 30355],
+    [27442, 28509, 30911, 29276],
+    [27802, 28861, 31251, 29626],
+    [28157, 29204, 31599, 29974],
+    [28502, 29553, 31959, 30331],
+    [27423, 28472, 30863, 29233],
+    [27770, 28822, 31213, 29587],
+    [28120, 29169, 31562, 29942],
+    [28472, 29517, 31909, 30280],
+    [27371, 28426, 30825, 29193],
+    [27727, 28776, 31166, 29538],
+    [28073, 29116, 31511, 29884],
+    [28407, 29458, 31867, 30241],
+    [27320, 28371, 30768, 29143],
+    [27667, 28714, 31113, 29495],
+    [28018, 29054, 31461, 29848],
+    [28372, 29403, 31808, 30187],
+    [27274, 28314, 30720, 29102],
+    [27628, 28667, 31062, 29452],
+    [27979, 29013, 31408, 29798],
+    [28319, 29358, 31767, 30154],
+    [27236, 28276, 30675, 29057],
+    [27587, 28624, 31026, 29410],
+    [27934, 28967, 31379, 29770],
+    [28288, 29320, 31729, 30115],
+    [27191, 28228, 30639, 29032],
+    [27548, 28579, 30983, 29383],
+    [27905, 28924, 31328, 29725],
+    [28244, 29267, 31683, 30078],
+    [27158, 28186, 30588, 28981],
+    [27506, 28532, 30931, 29329],
+    [27847, 28871, 31280, 29683],
+    [28199, 29222, 31628, 30021],
+    [27099, 28126, 30537, 28929],
+    [27448, 28473, 30883, 29281],
+    [27800, 28817, 31227, 29626],
+    [28134, 29156, 31580, 29983],
+    [27049, 28074, 30487, 28893],
+    [27405, 28421, 30832, 29242],
+    [27755, 28763, 31185, 29600],
+    [28115, 29121, 31538, 29944],
+    [27021, 28034, 30448, 28856],
+    [27374, 28387, 30796, 29211],
+    [27729, 28739, 31144, 29556],
+    [28067, 29081, 31499, 29907],
+    [26979, 27997, 30411, 28814],
+    [27331, 28344, 30756, 29161],
+    [27671, 28678, 31105, 29518],
+    [28021, 29030, 31454, 29864],
+    [26925, 27935, 30357, 28773],
+    [27275, 28277, 30698, 29123],
+    [27631, 28624, 31044, 29465],
+    [27971, 28964, 31392, 29814],
+    [26880, 27881, 30300, 28722],
+    [27234, 28233, 30644, 29069],
+    [27576, 28570, 30993, 29423],
+    [27929, 28927, 31349, 29769],
+    [26838, 27837, 30259, 28677],
+    [27187, 28184, 30608, 29033],
+    [27543, 28537, 30960, 29384],
+    [27883, 28880, 31312, 29739],
+    [26795, 27796, 30223, 28653],
+    [27156, 28148, 30570, 29002],
+    [27503, 28483, 30918, 29354],
+    [27856, 28840, 31272, 29702],
+    [26764, 27752, 30176, 28607],
+    [27109, 28094, 30517, 28959],
+    [27462, 28444, 30865, 29302],
+    [27799, 28783, 31212, 29645],
+    [28145, 29133, 31562, 29992]
+  ];
 
-  // years 2000-2100
-  const exceptions = {
-    spring: [
-      2003,
-      2007,
-      2044,
-      2048,
-      2052,
-      2056,
-      2060,
-      2064,
-      2068,
-      2072,
-      2076,
-      2077,
-      2080,
-      2081,
-      2084,
-      2085,
-      2088,
-      2089,
-      2092,
-      2093,
-      2096,
-      2097
-    ],
-    summer: [
-      2021,
-      2016,
-      2020,
-      2024,
-      2028,
-      2032,
-      2036,
-      2040,
-      2041,
-      2044,
-      2045,
-      2048,
-      2049,
-      2052,
-      2053,
-      2056,
-      2057,
-      2060,
-      2061,
-      2064,
-      2065,
-      2068,
-      2069,
-      2070,
-      2072,
-      2073,
-      2074,
-      2076,
-      2077,
-      2078,
-      2080,
-      2081,
-      2082,
-      2084,
-      2085,
-      2086,
-      2088,
-      2089,
-      2090,
-      2092,
-      2093,
-      2094,
-      2096,
-      2097,
-      2098,
-      2099
-    ],
-    fall: [
-      2002,
-      2003,
-      2004,
-      2006,
-      2007,
-      2010,
-      2011,
-      2014,
-      2015,
-      2018,
-      2019,
-      2022,
-      2023,
-      2026,
-      2027,
-      2031,
-      2035,
-      2039,
-      2043,
-      2047,
-      2051,
-      2055,
-      2059,
-      2092,
-      2096
-    ],
-    winter: [
-      2002,
-      2003,
-      2006,
-      2007,
-      2011,
-      2015,
-      2019,
-      2023,
-      2027,
-      2031,
-      2035,
-      2039,
-      2043,
-      2080,
-      2084,
-      2088,
-      2092,
-      2096
-    ]
+  const names = ['spring', 'summer', 'fall', 'winter'];
+  const seasons$2 = (year) => {
+    if (!Number.isInteger(year) || year < 2000 || year > 2100) {
+      return null
+    }
+    const events = {};
+    for (let index = 0; index < names.length; index += 1) {
+      events[names[index]] = Date.UTC(year, index * 3 + 2, 1) + seasons$1[year - 2000][index] * 60000;
+    }
+    return events
   };
-
-  const winter20th = [2080, 2084, 2088, 2092, 2096];
-
-  const calcSeasons = function (year) {
-    // most common defaults
-    let res = {
-      spring: 'March 20 ' + year,
-      summer: 'June 21 ' + year,
-      fall: 'Sept 22 ' + year,
-      winter: 'Dec 21 ' + year
-    };
-    if (exceptions.spring.indexOf(year) !== -1) {
-      res.spring = 'March 19 ' + year;
-    }
-    if (exceptions.summer.indexOf(year) !== -1) {
-      res.summer = 'June 20 ' + year;
-    }
-    if (exceptions.fall.indexOf(year) !== -1) {
-      res.fall = 'Sept 21 ' + year;
-    }
-    // winter can be 20th, 21st, or 22nd
-    if (exceptions.winter.indexOf(year) !== -1) {
-      res.winter = 'Dec 22 ' + year;
-    }
-    if (winter20th.indexOf(year) !== -1) {
-      res.winter = 'Dec 20 ' + year;
-    }
-    return res
-  };
-  var calcSeasons$1 = calcSeasons;
 
   // these are properly calculated in ./lib/seasons
-  let dates$1 = {
+  const dates$1 = {
     'spring equinox': 'spring',
-    'summer solistice': 'summer',
+    'summer solstice': 'summer',
     'fall equinox': 'fall',
     'winter solstice': 'winter'
   };
@@ -2010,8 +1980,9 @@
   dates$1['vernal equinox'] = dates$1['spring equinox'];
   dates$1['ostara'] = dates$1['spring equinox'];
 
-  dates$1['june solstice'] = dates$1['summer solistice'];
-  dates$1['litha'] = dates$1['summer solistice'];
+  dates$1['summer solistice'] = dates$1['summer solstice'];
+  dates$1['june solstice'] = dates$1['summer solstice'];
+  dates$1['litha'] = dates$1['summer solstice'];
 
   dates$1['autumn equinox'] = dates$1['fall equinox'];
   dates$1['autumnal equinox'] = dates$1['fall equinox'];
@@ -2019,111 +1990,202 @@
   dates$1['sept equinox'] = dates$1['fall equinox'];
   dates$1['mabon'] = dates$1['fall equinox'];
 
-  dates$1['december solstice'] = dates$1['winter solistice'];
-  dates$1['dec solstice'] = dates$1['winter solistice'];
-  dates$1['yule'] = dates$1['winter solistice'];
+  dates$1['december solstice'] = dates$1['winter solstice'];
+  dates$1['dec solstice'] = dates$1['winter solstice'];
+  dates$1['yule'] = dates$1['winter solstice'];
 
-  var holidays$1 = dates$1;
+  const astroDates = (str, normal, year, tz) => {
+    const name = Object.hasOwn(dates$1, str) ? str : normal;
+    if (!Object.hasOwn(dates$1, name)) {
+      return null
+    }
+    const events = seasons$2(year);
+    if (!events) {
+      return null
+    }
+    // Convert the event instant before selecting its local calendar date.
+    return bt(events[dates$1[name]], tz).startOf('day')
+  };
 
-  const astroDates = function (str, normal, year, tz) {
-    if (holidays$1.hasOwnProperty(str) || holidays$1.hasOwnProperty(normal)) {
-      let season = holidays$1[str] || holidays$1[normal];
-      let seasons = calcSeasons$1(year);
-      if (!season || !seasons || !seasons[season]) {
-        return null // couldn't figure it out
-      }
-      let s = pt(seasons[season], tz);
-      if (s.isValid()) {
-        return s
+  // Islamic month (1-based) and day, using the tabular civil calendar.
+  const dates$3 = {
+    'isra and miraj': [7, 27],
+    'lailat al-qadr': [9, 27],
+    'eid al-fitr': [10, 1],
+    'id al-Fitr': [10, 1],
+    'eid ul-Fitr': [10, 1],
+    ramadan: [9, 1],
+    'eid al-adha': [12, 10],
+    muharram: [1, 1],
+    'prophets birthday': [3, 12]
+  };
+
+  // Tabular Islamic civil calendar: Friday epoch, 30-year leap-year cycle.
+  // Dates are daytime civil dates, not the preceding sunset or local sightings.
+  const epoch = 1948439.5;
+  const unixEpoch = 2440587.5;
+  const dayMs = 86400000;
+
+  const toJulianDay = (year, month, day) => {
+    return epoch - 1 + day + Math.ceil(29.5 * (month - 1)) +
+      (year - 1) * 354 + Math.floor((3 + 11 * year) / 30)
+  };
+
+  const occurrences = (year, month, day) => {
+    if (!Number.isInteger(year) || year < 622 || year > 9999) {
+      return []
+    }
+    const january = Date.UTC(year, 0, 1) / dayMs + unixEpoch;
+    const islamicYear = Math.floor((30 * (january - epoch) + 10646) / 10631);
+    const dates = [];
+    for (let candidate = Math.max(1, islamicYear); candidate <= islamicYear + 2; candidate += 1) {
+      const date = new Date((toJulianDay(candidate, month, day) - unixEpoch) * dayMs);
+      if (date.getUTCFullYear() === year) {
+        dates.push([year, date.getUTCMonth(), date.getUTCDate()]);
       }
     }
+    return dates
+  };
 
+  const lunarOccurrences = (name, year, tz) => {
+    if (!Object.hasOwn(dates$3, name)) {
+      return []
+    }
+    const [month, day] = dates$3[name];
+    return occurrences(year, month, day).map((date) => bt(date, tz).startOf('day'))
+  };
+
+  // The singular lookup returns the first occurrence in the Gregorian year.
+  const lunarDates = (str, normal, year, tz) => {
+    const name = Object.hasOwn(dates$3, str) ? str : normal;
+    return lunarOccurrences(name, year, tz)[0] ?? null
+  };
+
+  // Explicit aliases keep unrelated holidays on the same date distinct.
+  const aliases = {
+    'new years': 'new years day',
+    'saint valentines day': 'valentines day',
+    'st valentines day': 'valentines day',
+    'st patricks day': 'saint patricks day',
+    'april fools': 'april fools day',
+    'independents day': 'independence day',
+    '16 de septiembre': 'grito de dolores',
+    'dieciseis de septiembre': 'grito de dolores',
+    'all hallows eve': 'halloween',
+    'dia de muertos': 'day of the dead',
+    'st andrews day': 'saint andrews day',
+    'all sts day': 'all saints day',
+    'rememberance day': 'remembrance day',
+    xmas: 'christmas',
+    'st stephens day': 'saint stephens day',
+    'turday day': 'thanksgiving',
+    'turkey day': 'thanksgiving',
+    'mlk day': 'martin luther king day',
+    'easter sunday': 'easter',
+    'easter saturday': 'holy saturday',
+    pentecost: 'whit sunday',
+    whitsun: 'whit sunday',
+    'march equinox': 'spring equinox',
+    'vernal equinox': 'spring equinox',
+    ostara: 'spring equinox',
+    'summer solistice': 'summer solstice',
+    'june solstice': 'summer solstice',
+    litha: 'summer solstice',
+    'autumn equinox': 'fall equinox',
+    'autumnal equinox': 'fall equinox',
+    'september equinox': 'fall equinox',
+    'sept equinox': 'fall equinox',
+    mabon: 'fall equinox',
+    'december solstice': 'winter solstice',
+    'dec solstice': 'winter solstice',
+    yule: 'winter solstice',
+    'id al-fitr': 'eid al-fitr',
+    'eid ul-fitr': 'eid al-fitr'
+  };
+
+  const normalize$2 = (name) => String(name ?? '').trim().toLowerCase().replace(/['’]/g, '').replace(/\s+/g, ' ').replace(/^the /, '');
+  const catalog = {};
+  Object.keys({ ...fixed, ...holidays$1, ...dates$2, ...dates$1, ...dates$3 }).forEach((key) => {
+    const normalized = normalize$2(key);
+    const name = aliases[normalized] ?? normalized;
+    if (!Object.hasOwn(catalog, name)) {
+      catalog[name] = { name, aliases: [] };
+    }
+  });
+  Object.entries(aliases).forEach(([alias, name]) => {
+    if (Object.hasOwn(catalog, name)) {
+      catalog[name].aliases.push(alias);
+    }
+  });
+
+  const resolveName = (input) => {
+    const name = normalize$2(input);
+    const candidates = [name, name.replace(/ day$/, '')];
+    for (let i = 0; i < candidates.length; i += 1) {
+      const candidate = aliases[candidates[i]] ?? candidates[i];
+      if (Object.hasOwn(catalog, candidate)) {
+        return candidate
+      }
+    }
     return null
   };
-  var astroDates$1 = astroDates;
 
-  let dates$3 = {
-    // Muslim holidays
-    'isra and miraj': 'april 13',
-    'lailat al-qadr': 'june 10',
-    'eid al-fitr': 'june 15',
-    'id al-Fitr': 'june 15',
-    'eid ul-Fitr': 'june 15',
-    ramadan: 'may 16', // Range holiday
-    'eid al-adha': 'sep 22',
-    muharram: 'sep 12',
-    'prophets birthday': 'nov 21'
-  };
-  var holidays$4 = dates$3;
-
-  // (lunar year is 354.36 days)
-  const dayDiff = -10.64;
-
-  const lunarDates = function (str, normal, year, tz) {
-    if (holidays$4.hasOwnProperty(str) || holidays$4.hasOwnProperty(normal)) {
-      let date = holidays$4[str] || holidays$4[normal] || [];
-      if (!date) {
-        return null
-      }
-      // start at 2018
-      let s = pt(date + ' 2018', tz);
-      let diff = year - 2018;
-      let toAdd = diff * dayDiff;
-      s = s.add(toAdd, 'day');
-      s = s.startOf('day');
-
-      // now set the correct year
-      s = s.year(year);
-
-      if (s.isValid()) {
-        return s
+  const resolvers = [fixedDates, calendarDates, easterDates, astroDates, lunarDates];
+  const lookup = (input, year, tz) => {
+    const name = resolveName(input);
+    if (!name) {
+      return null
+    }
+    year = year ?? bt.now(tz).year();
+    for (let i = 0; i < resolvers.length; i += 1) {
+      const date = resolvers[i](name, name, year, tz, lookup);
+      if (date !== null) {
+        return date
       }
     }
     return null
   };
-  var lunarDates$1 = lunarDates;
 
-  const nowYear = pt.now().year();
+  const list = (options = {}) => {
+    return Object.keys(catalog).sort().map((name) => {
+      const entry = { name, aliases: [...catalog[name].aliases].sort() };
+      if (options.year !== undefined) {
+        entry.date = lookup(name, options.year, options.timezone);
+      }
+      return entry
+    })
+  };
 
-  const spacetimeHoliday = function (str, year, tz) {
-    year = year || nowYear;
-    str = str || '';
-    str = String(str);
-    str = str.trim().toLowerCase();
-    str = str.replace(/'s/, 's'); // 'mother's day'
-
-    let normal = str.replace(/ day$/, '');
-    normal = normal.replace(/^the /, '');
-    normal = normal.replace(/^orthodox /, ''); //orthodox good friday
-
-    // try easier, unmoving holidays
-    let s = fixedDates$2(str, normal, year, tz);
-    if (s !== null) {
-      return s
+  const next = (name, options = {}) => {
+    name = resolveName(name);
+    if (!name) {
+      return null
     }
-    // try 'nth monday' holidays
-    s = nthWeekday(str, normal, year, tz);
-    if (s !== null) {
-      return s
+    const from = options.from ?? Date.now();
+    const timezone = options.timezone ?? from?.tz;
+    const input = from?.epoch ?? from;
+    const reference = bt(input, timezone).startOf('day');
+    if (!reference.isValid()) {
+      return null
     }
-    // easter-based holidays
-    s = easterDates$1(str, normal, year, tz);
-    if (s !== null) {
-      return s
+    // Holidays are calendar dates: today counts even after midnight.
+    for (let year = reference.year(); year <= reference.year() + 1; year += 1) {
+      let candidates = lunarOccurrences(name, year, reference.tz);
+      if (candidates.length === 0) {
+        candidates = [lookup(name, year, reference.tz)];
+      }
+      for (const result of candidates) {
+        if (result && result.epoch >= reference.epoch) {
+          return result
+        }
+      }
     }
-    // solar-based holidays
-    s = astroDates$1(str, normal, year, tz);
-    if (s !== null) {
-      return s
-    }
-    // mostly muslim holidays
-    s = lunarDates$1(str, normal, year, tz);
-    if (s !== null) {
-      return s
-    }
-
     return null
   };
+
+  lookup.version = version$1;
+  lookup.list = list;
+  lookup.next = next;
 
   const parseHoliday = function (doc, context) {
     let unit = null;
@@ -2137,11 +2199,11 @@
       year = Number(m.groups('year').text('reduced')) || year;
     }
     const str = m.groups('holiday').text('reduced');
-    let s = spacetimeHoliday(str, year, context.timezone);
+    let s = lookup(str, year, context.timezone);
     if (s !== null) {
       // no explicit year given - assume the holiday is in the future
       if (!hasYear && s.isBefore(context.today.startOf('day'))) {
-        s = spacetimeHoliday(str, year + 1, context.timezone);
+        s = lookup(str, year + 1, context.timezone);
       }
       unit = new Holiday(s, null, context);
     }
@@ -2224,7 +2286,7 @@
     let m = doc.match('[<season>(spring|summer|winter|fall|autumn)] of? [<year>(#Year|#Cardinal)?]');
     if (m.found) {
       const str = m.groups('season').text('reduced');
-      let s = pt(str, context.timezone, { today: fmtToday(context) });
+      let s = bt(str, context.timezone, { today: fmtToday(context) });
       const yr = m.groups('year');
       if (yr.found) {
         const num = fixYear$1(yr.text('reduced'));
@@ -2242,7 +2304,7 @@
     m = doc.match('[<q>#FinancialQuarter] [<year>#Year?]');
     if (m.found) {
       const str = m.groups('q').text('reduced');
-      let s = pt(str, context.timezone, { today: fmtToday(context) });
+      let s = bt(str, context.timezone, { today: fmtToday(context) });
       if (m.groups('year').found) {
         const year = Number(m.groups('year').text()) || context.today.year();
         s = s.year(year);
@@ -2256,7 +2318,7 @@
     m = doc.match('[<q>#Value] quarter (of|in)? [<year>#Year?]');
     if (m.found) {
       const q = m.groups('q').text('reduced');
-      let s = pt(`q${q}`, context.timezone, { today: fmtToday(context) });
+      let s = bt(`q${q}`, context.timezone, { today: fmtToday(context) });
       if (m.groups('year').found) {
         const year = Number(m.groups('year').text()) || context.today.year();
         s = s.year(year);
@@ -2270,7 +2332,7 @@
     m = doc.match('^#Year$');
     if (m.found) {
       const str = doc.text('reduced');
-      let s = pt(null, context.timezone, { today: fmtToday(context) });
+      let s = bt(null, context.timezone, { today: fmtToday(context) });
       s = s.year(str);
       const unit = new Year(s, null, context);
       if (unit.d.isValid() === true) {
@@ -2494,7 +2556,7 @@
     return unit
   };
 
-  const units = {
+  const units$1 = {
     day: Day,
     week: Week,
     weekend: WeekEnd,
@@ -2545,7 +2607,7 @@
     if (counter.unit === 'weekday' && counter.day) {
       return nthWeekDay(unit, counter)
     }
-    const Unit = units[counter.unit];
+    const Unit = units$1[counter.unit];
     if (!Unit) {
       return unit
     }
@@ -2662,6 +2724,10 @@
     }
     // decide on a root date object
     let unit = parse$3(doc, context, parts);
+    // ISO offsets identify the instant; an explicit named zone retains DST rules.
+    if (unit && parts.tz) {
+      unit.d = unit.d.goto(parts.tz);
+    }
     // apply all our parts
     unit = transform(unit, context, parts);
     return unit
@@ -2959,12 +3025,17 @@
     },
     {
       // 'jan 5 or 8'  - (one month, shared dates)
-      match: '^#Month #Value+ (or|and)? #Value$',
+      match: '^#Month #Value+ (or|and)? #Value #Year?$',
       desc: 'jan 5 or 8',
       parse: (m, context) => {
-        m = m.not('(or|and)');
+        const year = m.match('#Year$').text('reduced');
+        m = m.not('(or|and|#Year)');
         const before = m.match('^#Month #Value');
-        const start = parseDate(before, context);
+        const first = before.clone();
+        if (year) {
+          first.append(year);
+        }
+        const start = parseDate(first, context);
         if (start) {
           const result = [
             {
@@ -2978,7 +3049,10 @@
           if (more.found) {
             const month = m.match('#Month').text('reduced');
             more.match('#Value').forEach((v) => {
-              const thisD = v.prepend(month);
+              const thisD = v.clone().prepend(month);
+              if (year) {
+                thisD.append(year);
+              }
               const startDate = parseDate(thisD, context);
               if (startDate) {
                 result.push({
@@ -3153,16 +3227,15 @@
       desc: 'june 5 to june 7',
       parse: (m, context) => {
         const res = m.groups();
-        let start = res.from;
-        if (res.year) {
-          start = start.append(res.year);
+        let start = res.from.clone();
+        let end = res.to.clone();
+        const year = res.year?.text('reduced');
+        if (year) {
+          start.append(year);
+          end.append(year);
         }
         start = parseDate(start, context);
         if (start) {
-          let end = res.to;
-          if (res.year) {
-            end = end.append(res.year);
-          }
           end = parseDate(end, context);
           if (end) {
             // assume end is after start
@@ -3531,9 +3604,10 @@
   const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate);
 
   const env = globalThis.process?.env ?? globalThis.env ?? {};
+  const green = str => '\x1b[32m' + str + '\x1b[0m';
   const log = msg => {
     if (env.DEBUG_DATE) {
-      console.log(`\n  \x1b[32m ${msg} \x1b[0m`); // eslint-disable-line
+      console.log(`\n  ${green(` ${msg} `)}`); // eslint-disable-line
     }
   };
 
@@ -3673,8 +3747,8 @@
     }
     // the implied duration of 'after june 2nd'
     context.punt ||= { weeks: 2 };
-    context.today ||= pt.now(context.timezone);
-    context.today = pt(context.today, context.timezone);
+    context.today ||= bt.now(context.timezone);
+    context.today = bt(context.today, context.timezone);
 
     doc = normalize(doc);
 
@@ -3736,6 +3810,155 @@
       out.repeat = range.repeat;
     }
     return out
+  };
+
+  const month = 'jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?';
+  const named = new RegExp(`^(${month})(\\.?\\s+)(\\d{1,2})(st|nd|rd|th)?(,?\\s+\\d{4})?$`, 'i');
+  const reversed = new RegExp(`^(\\d{1,2})(st|nd|rd|th)?(\\s+(?:of\\s+)?)(${month})(\\.?)(,?\\s+\\d{4})?$`, 'i');
+
+  const matchCase = (str, model) => {
+    if (model === model.toLowerCase()) {
+      return str.toLowerCase()
+    }
+    if (model === model.toUpperCase()) {
+      return str.toUpperCase()
+    }
+    return str
+  };
+
+  const monthName = (d, model) => {
+    const short = model.length <= 4 && model.toLowerCase() !== 'june' && model.toLowerCase() !== 'july';
+    return matchCase(d.format(short ? 'month-short' : 'month'), model)
+  };
+
+  const yearSuffix = (suffix, start, shifted) => {
+    if (suffix) {
+      return suffix.replace(/\d{4}/, shifted.year())
+    }
+    if (start.year() !== shifted.year()) {
+      return ' ' + shifted.year()
+    }
+    return ''
+  };
+
+  // Keep the spelling, ordering and ordinal style of common calendar dates.
+  const calendarFormat = (text, start, shifted, opts) => {
+    let m = text.match(named);
+    if (m) {
+      const date = matchCase(shifted.format(m[4] ? 'date-ordinal' : 'date'), m[4] || '');
+      return monthName(shifted, m[1]) + m[2] + date + yearSuffix(m[5], start, shifted)
+    }
+    m = text.match(reversed);
+    if (m) {
+      const date = matchCase(shifted.format(m[2] ? 'date-ordinal' : 'date'), m[2] || '');
+      return date + m[3] + monthName(shifted, m[4]) + m[5] + yearSuffix(m[6], start, shifted)
+    }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
+      return shifted.format('iso-short')
+    }
+    m = text.match(/^(\d{1,2})([/.\-])(\d{1,2})\2(\d{4})$/);
+    if (m) {
+      let parts = [shifted.month() + 1, shifted.date()];
+      if (opts.dmy || Number(m[1]) > 12) {
+        parts = parts.reverse();
+      }
+      return String(parts[0]).padStart(m[1].length, '0') + m[2] +
+        String(parts[1]).padStart(m[3].length, '0') + m[2] + shifted.year()
+    }
+    return null
+  };
+
+  // Keep the named zone as well as the offset for subsequent calendar arithmetic.
+  const preciseFormat = d => d.format('iso') + ' ' + d.format('timezone');
+
+  const explicitFormat = (d, time) => {
+    if (time) {
+      if (d.second() === 0 && d.millisecond() === 0) {
+        return d.format('{month} {date-ordinal} {year} at {time} {timezone}')
+      }
+      return preciseFormat(d)
+    }
+    return d.format('{month} {date-ordinal} {year}')
+  };
+
+  const units = new Set(['millisecond', 'second', 'minute', 'hour', 'day', 'week', 'fortnight', 'month', 'quarter', 'season', 'year', 'decade', 'century']);
+  const clockUnits = new Set(['millisecond', 'second', 'minute', 'hour']);
+
+  const shiftRange = (range, amount, unit, text, opts) => {
+    const start = range.start.d;
+    const shifted = start.add(amount, unit);
+    const end = range.end && range.end.d.add(amount, unit);
+    if (!shifted.isValid() || (end && !end.isValid())) {
+      return null
+    }
+    // Fractional calendar shifts can introduce a time even on a date-only input.
+    const time = range.unit === 'time' || clockUnits.has(unit) ||
+      (!Number.isInteger(amount) && shifted.epoch !== shifted.startOf('day').epoch) ||
+      (!range.unit && (start.epoch !== start.startOf('day').epoch ||
+        (range.end && range.end.d.epoch !== range.end.d.endOf('day').epoch)));
+    if (range.unit === 'day' && !time) {
+      return calendarFormat(text, start, shifted, opts) || explicitFormat(shifted, false)
+    }
+    if (range.unit === 'time' && (!range.end ||
+      range.end.d.epoch === range.start.clone().end().d.epoch)) {
+      return explicitFormat(shifted, true)
+    }
+    // A calendar period shifted by whole calendar units keeps its full span.
+    if (['month', 'year'].includes(range.unit) && end &&
+      Number.isInteger(amount) && ['month', 'quarter', 'season', 'year', 'decade', 'century'].includes(unit) &&
+      shifted.epoch === shifted.startOf(range.unit).epoch) {
+      return shifted.format(range.unit === 'month' ? '{month} {year}' : 'year')
+    }
+    if (range.unit === 'day') {
+      return explicitFormat(shifted, time)
+    }
+    let str = explicitFormat(shifted, time);
+    if (!time && end && shifted.isSame(end, 'day')) {
+      return str
+    }
+    if (end && shifted.epoch !== end.epoch) {
+      // ISO endpoints avoid the parser extending a written end-time to midnight.
+      if (time) {
+        return preciseFormat(shifted) + ' to ' + preciseFormat(end)
+      }
+      str += ' to ' + explicitFormat(end, time);
+    }
+    return str
+  };
+
+  const arithmetic = (view, amount, unit) => {
+    if (!Number.isFinite(amount) || amount === 0 || typeof unit !== 'string') {
+      return view
+    }
+    unit = unit.toLowerCase().trim().replace(/ies$/, 'y').replace(/s$/, '');
+    if (!units.has(unit)) {
+      return view
+    }
+    return view.map(m => {
+      const ranges = parse$2(m, view.opts);
+      // Recurrences and unparsed dates have no unambiguous shifted expression.
+      if (!ranges.length || ranges.some(r => !r.start || r.repeat)) {
+        return m
+      }
+      const original = m.text();
+      const prefix = original.match(/^(on|in|at|during)\s+/i)?.[0] || '';
+      const text = original.slice(prefix.length).replace(/\b[,.!?]+$/, '');
+      if (ranges.length === 1 && ranges[0].unit === 'day' && /\b(and|or)\b/i.test(text)) {
+        return m
+      }
+      const results = ranges.map(r => {
+        // Fully qualified ISO dates keep shared-month lists unambiguous.
+        const model = ranges.length > 1 ? r.start.d.format('iso-short') : text;
+        return shiftRange(r, amount, unit, model, view.opts)
+      });
+      if (results.every(str => str !== null)) {
+        const join = /\bor\b/i.test(text) ? ' or ' : ' and ';
+        m.replaceWith(prefix + results.join(join));
+        m.compute(['postTagger', 'dates']);
+        return m.dates(view.opts)
+      }
+      return m
+    })
   };
 
   const quickDate = function (view, str) {
@@ -3806,6 +4029,18 @@
         return new Dates(this.document, res.pointer, null, this.opts)
       }
 
+      add(amount, unit = 'day') {
+        const res = arithmetic(this, amount, unit);
+        return new Dates(this.document, res.pointer, null, this.opts)
+      }
+
+      subtract(amount, unit = 'day') {
+        if (!Number.isFinite(amount)) {
+          return this
+        }
+        return this.add(-amount, unit)
+      }
+
       /** return only dates occuring before a given date  */
       isBefore(iso) {
         const pivot = quickDate(this, iso);
@@ -3848,7 +4083,7 @@
     if (!res.result) {
       return { time: null, '24h': null }
     }
-    const s = pt.now().time(res.result);
+    const s = bt.now().time(res.result);
     return {
       time: res.result,
       '24h': s.format('time-24'),
@@ -3872,7 +4107,7 @@
         const res = found.map(m => {
           const obj = parse$1(m) || {};
           if (obj.time) {
-            const s = pt.now().time(obj.time);
+            const s = bt.now().time(obj.time);
             let str = obj.time;
             if (fmt === '24h') {
               str = s.format('time-24');
@@ -4372,8 +4607,8 @@
     { match: '#Value #Duration of #Date', tag: 'Date', reason: 'third week of may' },
     //two days after
     { match: '#Value+ #Duration (after|before|into|later|afterwards|ago)?', tag: 'Date', reason: 'two days after' },
-    //two days
-    { match: '#Value #Date', tag: 'Date', reason: 'two days' },
+    //two days - don't absorb amounts before 'yesterday'
+    { match: '#Value #Date', notIf: '(#Money|#Percentage)', tag: 'Date', reason: 'two days' },
     //june 5th
     { match: '#Date #Value', tag: 'Date', reason: 'june 5th' },
     //tuesday at 5
@@ -4554,7 +4789,7 @@
     //'spa day'
     { match: '^day$', unTag: 'Date', reason: 'spa-day' },
     // tomorrow's meeting
-    { match: '(in|of|by|for)? (#Possessive && #Date)', unTag: 'Date', reason: 'tomorrows meeting' },
+    { match: '(in|of|by|for)? (#Possessive && #Date) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
     //yesterday 7
     { match: `${knownDate} [#Value]$`, unTag: 'Date', group: 0, reason: 'yesterday-7' },
     //7 yesterday
@@ -4992,23 +5227,15 @@
 
   ];
 
-  var version = '3.9.0';
+  var version = '3.10.0';
 
   /* eslint-disable no-console */
 
-  const fmt = iso => (iso ? pt(iso).format('{nice-day} {year}') : '-');
+  const magenta = str => '\x1b[35m' + str + '\x1b[0m';
+  const dim = str => '\x1b[2m' + str + '\x1b[0m';
+  const cyan = str => '\x1b[36m' + str + '\x1b[0m';
 
-  // https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
-  const reset = '\x1b[0m';
-
-  //cheaper than requiring chalk
-  const cli = {
-    magenta: str => '\x1b[35m' + str + reset,
-    cyan: str => '\x1b[36m' + str + reset,
-    yellow: str => '\x1b[33m' + str + reset,
-    dim: str => '\x1b[2m' + str + reset,
-    i: str => '\x1b[3m' + str + reset,
-  };
+  const fmt = iso => (iso ? bt(iso).format('{nice-day} {year}') : '-');
 
   const debug = function (view) {
     view.dates().forEach(m => {
@@ -5019,10 +5246,10 @@
 
       let msg = '';
       if (res && res.start) {
-        msg = '   ' + cli.magenta(fmt(res.start));
+        msg = '   ' + magenta(fmt(res.start));
       }
       if (res && res.end) {
-        msg += cli.dim('   →   ') + cli.cyan(fmt(res.end));
+        msg += dim('   →   ') + cyan(fmt(res.end));
       }
       console.log(msg + '\n');
     });

@@ -1,4 +1,4 @@
-import type { Lexicon, Plugin, matchOptions, Match, Net, ParsedMatch } from './misc.d.ts'
+import type { Lexicon, Plugin, VerboseOptions, matchOptions, Match, Net, ParsedMatch } from './misc.d.ts'
 import type View from './view/one.d.ts'
 
 /** parse a given text */
@@ -25,7 +25,7 @@ declare namespace nlp {
   /** which compute functions run automatically */
   export function hooks(): string[]
   /**  log our decision-making for debugging */
-  export function verbose(toLog?: boolean | string): any
+  export function verbose(toLog?: boolean | string, options?: VerboseOptions): any
   /**  current semver version of the library */
   export const version: string
   /** connect new tags to tagset graph */
@@ -38,10 +38,25 @@ declare namespace nlp {
   export function buildNet(matches: Match[]): Net
   /** add words to the autoFill dictionary */
   export function typeahead(words: Lexicon): any
-  /** parse the tagged text output of out('spec') */
-  export function fromSpec(spec: string): View
-  /** test the given tagging of a spec-formatted output - returns untagged sentences and failing tagged lines */
-  export function testSpec(spec: string, verbose?: boolean, throwError?: boolean): View
+  export interface SpecOptions {
+    tags?: 'ignore' | 'use'
+    failures?: 'ignore' | 'throw' | 'retain' | 'log'
+    verbose?: boolean
+  }
+  /** parse spec text, optionally applying tags or validating its constraints */
+  export function fromSpec(spec: string, options?: SpecOptions): View & { failures: SpecFailure[] }
+  export interface SpecFailure {
+    code: 'length' | 'tags' | 'syntax' | 'match'
+    line: number
+    text: string
+    message: string
+    term?: number
+    word?: string
+    expected?: string[] | number
+    actual?: string[] | number
+  }
+  /** returns untagged sentences and failing tagged lines, with validation failures */
+  export function testSpec(spec: string, verbose?: boolean, throwError?: boolean): View & { failures: SpecFailure[] }
   /** export internal methods for plugins */
   export interface TypedPlugin<Methods extends object> extends Plugin { methods: Methods }
 }

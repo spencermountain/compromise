@@ -1,3 +1,4 @@
+import { Participle } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { inflect } from './inflect.js'
 import readAuxiliary from '../parse/auxiliary.js'
 import parseVerb from '../parse/index.js'
@@ -113,7 +114,7 @@ const convertAuxiliary = function (vb, parsed, form, target) {
   const root = vb.match(live.root).harden()
   write(vb, live, chain.words, words, chain.passive)
   if (target === 'participle' && chain.modal && !chain.perfect && !chain.passive && !chain.progressive) {
-    root.replaceWith(inflect(live.root, 'Participle'))
+    root.replaceWith(inflect(live.root, Participle))
   }
   vb.fullSentence().compute(['tagger', 'chunks'])
   return vb

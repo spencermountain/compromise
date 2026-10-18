@@ -1,7 +1,9 @@
 const rules = {
   '%Adj|Gerund%': [
-    // [boring] the audience
-    '_ #Det -> #Ger',
+    // is [boring] the audience
+    '#Cop _ #Det -> #Ger',
+    // is [assuring] us; was [boggling] my mind
+    '#Cop _ (#Pron|#Poss|#Reflexive) -> #Ger',
     // world's [leading] manufacturer
     '#Poss _ #NN -> #Adj',
   ],
@@ -14,10 +16,11 @@ const rules = {
   '%Noun|Verb%': [
     // to [dream] of
     'to _ #Prep -> #Inf',
-    // what [work] he did
-    '(which|what|whose) _ #Pron -> #NN',
     // which [boost] it
     'which _ #NN -> #Inf',
+    // Pronouns are nouns too; prefer the embedded object reading.
+    // what [work] he did
+    '(which|what|whose) _ #Pron -> #NN',
     // [visit] https://example.com
     '^ _ #Url -> #Imp',
     // [commit] to

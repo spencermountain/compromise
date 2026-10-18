@@ -1,3 +1,4 @@
+import { Pres, Inf, Ger } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { infinitive, inflect } from './inflect.js'
 import convertAuxiliary from './auxiliary.js'
 import { noop, isPlural, isAreAm, doDoes, getSubject } from '../lib.js'
@@ -10,7 +11,7 @@ const simple = (vb, parsed) => {
   // 'i walk' vs 'he walks'
   const plural = isPlural(vb, parsed)
   if (plural === false) {
-    str = inflect(root, 'PresentTense')
+    str = inflect(root, Pres)
   }
   // handle copula
   if (root.has('#Copula')) {
@@ -18,8 +19,8 @@ const simple = (vb, parsed) => {
   }
   if (str) {
     vb = vb.replace(root, str, keep)
-    if (!plural) vb.not('#Particle').unTag('Infinitive')
-    vb.not('#Particle').tag('PresentTense')
+    if (!plural) vb.not('#Particle').unTag(Inf)
+    vb.not('#Particle').tag(Pres)
   }
   // vb.replace('not ' + str, str + ' not')
   return vb
@@ -27,10 +28,10 @@ const simple = (vb, parsed) => {
 
 const toGerund = (vb, parsed) => {
   const root = parsed.root
-  const str = inflect(root, 'Gerund')
+  const str = inflect(root, Ger)
   if (str) {
     vb = vb.replace(root, str, keep)
-    vb.not('#Particle').tag('Gerund')
+    vb.not('#Particle').tag(Ger)
   }
   return vb
 }
@@ -64,7 +65,7 @@ const forms = {
       const str = root.text('normal')
       const pres = conjugate(str, vb.model).PresentTense
       if (str !== pres) {
-        vb.replace(root, pres, keep).not('#Particle').unTag('Infinitive').tag('PresentTense')
+        vb.replace(root, pres, keep).not('#Particle').unTag(Inf).tag(Pres)
       }
     } else {
       return simple(vb, parsed)

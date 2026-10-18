@@ -1,7 +1,7 @@
 const api = function (View) {
   /** */
-  View.prototype.syllables = function () {
-    this.compute('syllables')
+  View.prototype.syllables = function (options = {}) {
+    this.compute('syllables', options)
     const all = []
     this.docs.forEach(terms => {
       let some = []

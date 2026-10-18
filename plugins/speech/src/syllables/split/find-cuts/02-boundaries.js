@@ -16,6 +16,7 @@ const adjustments = [
   { minGap: 2, tail: /^ed$/, right: -1 }, // res-ted
   { minGap: 2, gap: /^sh$/, tail: /^(es|ing)$/, right: 0 }, // wish-ing
   { minGap: 2, gap: /l$/, tail: /^e(?:s|['’](?:s|d|ll|re|ve))?$/, right: -2 }, // bot-tle, ta-bles
+  { minGap: 1, gap: /^[-‐‑–—]+$/, right: 0 }, // re-enter: keep the hyphen on the left
 ]
 
 // Choose one cut between each pair of vowel spans, preserving their count.

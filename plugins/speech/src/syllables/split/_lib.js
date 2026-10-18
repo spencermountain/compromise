@@ -1,12 +1,14 @@
+const trailingPunct = /(?<!\p{Punctuation})\p{Punctuation}+$/u
+const leadingPunct = /^[\p{Punctuation}$]+/u
+
 // Prepare spelling for rule matching; cuts are still applied to the original text.
 const normalize = input => {
   let txt = input.toLowerCase()
-  // Because cut begins from the start, we are safe to remove all noisy suffixes
-  txt = txt.replace(/["'.,]$/, '')
-  // (Keep apostrophe suffixes intact)
-  const isPrefix = /^["'@#$“]+/
-  const clean = txt.replace(isPrefix, '')
-  const prefix = txt.match(isPrefix)?.[0] || ''
+  // Ignore trailing punctuation runs for analysis; internal apostrophes stay intact.
+  txt = txt.replace(trailingPunct, '')
+  // Keep the prefix length so cuts still align with the original spelling.
+  const prefix = txt.match(leadingPunct)?.[0] || ''
+  const clean = txt.slice(prefix.length)
   return { clean, prefix }
 }
 

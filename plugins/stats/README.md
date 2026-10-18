@@ -1,45 +1,50 @@
 <div align="center">
-  <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
-
-  <div>nlp statistics plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div> 
-
-  <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-stats">
+  <div><b>compromise-stats</b></div>
+  <div>wordnet as a parquet file</div>
+  <div>nlp statistics plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
+  <div align="center">
+    <sub>
+      by
+      <a href="https://github.com/spencermountain">Spencer Kelly</a>
+    </sub>
+  </div>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
+</div>
+<!--2nd row-->
+<div align="center">
+  <div>
+    <a href="https://npmjs.org/package/compromise-stats">
     <img src="https://img.shields.io/npm/v/compromise-stats.svg?style=flat-square" />
   </a>
-  
-  <!-- file size -->
-  <a href="https://unpkg.com/compromise-stats/builds/compromise-stats.min.js">
-    <img src="https://img.shields.io/bundlephobia/min/compromise-stats" />
+  <a href="https://bundlephobia.com/result?p=compromise-stats">
+    <img src="https://badgen.net/bundlejs/min/compromise-stats" />
   </a>
-
-  <div align="center">
-    <code>npm install compromise-stats</code>
   </div>
 </div>
-
 <!-- spacer -->
-<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ##### TFIDF
+
 [tf-idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) is a type of word-analysis that can discover the most-characteristic, or unique words in a text.
 It combines uniqueness of words, and their frequency in the document.
 This plugin comes pre-built with a standard english model, so you can fingerprint an arbitrary text with `.tfidif()`
 
-- **.tfidf(opts, model?)** - 
+- **.tfidf(opts, model?)** -
 
 alternatively, you can build your own model, from a compromise document:
-- **.buildIDF()** - 
+
+- **.buildIDF()** -
 
 ```js
-let model=nlp(shakespeareWords)
+let model = nlp(shakespeareWords)
 let doc = nlp('thou art so sus.')
 doc.tfidf()
 // [ [ 'sus', 5.78 ], [ 'thou', 2.3 ], [ 'art', 1.75 ], [ 'so', 0.44 ] ]
 ```
 
 if you want to combine tfidf with other analysis, you can add numbers to individual terms, like this:
+
 ```js
 let doc = nlp('no, my son is also named Bort')
 doc.compute('tfidf')
@@ -61,6 +66,7 @@ TF-IDF values are scaled, but have an unbounded maximum. The result for 'foo foo
 - **[.edgegrams()](https://observablehq.com/@spencermountain/compromise-ngram)** - n-grams including the first or last term of a phrase
 
 all methods support the same option params:
+
 ```js
 let doc = nlp('one two three. one two foo.')
 doc.ngrams({ size: 2 }) // only two-word grams
@@ -73,6 +79,7 @@ doc.ngrams({ size: 2 }) // only two-word grams
 ```
 
 or all gram-sizes under/over a limit:
+
 ```js
 let doc = nlp('one two three. one two foo.')
 let res = doc.ngrams({ min: 3 }) // or max:2
@@ -82,5 +89,7 @@ let res = doc.ngrams({ min: 3 }) // or max:2
 ]
 */
 ```
+
+PRs welcomed
 
 MIT

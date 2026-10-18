@@ -1,6 +1,6 @@
 {
   "name": "compromise-stats",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "N-grams and text statistics for compromise",
   "license": "MIT",
   "repository": {
@@ -14,18 +14,18 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./index.d.ts",
+        "types": "./types/index.d.ts",
         "default": "./src/plugin.js"
       },
       "require": {
-        "types": "./index.d.cts",
+        "types": "./types/index.d.cts",
         "default": "./builds/compromise-stats.cjs"
       }
     }
   },
   "main": "./builds/compromise-stats.cjs",
   "module": "./builds/compromise-stats.mjs",
-  "types": "./index.d.ts",
+  "types": "./types/index.d.ts",
   "sideEffects": false,
   "engines": {
     "node": ">=18"
@@ -39,8 +39,7 @@
     "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
-    "index.d.ts",
-    "index.d.cts",
+    "types/",
     "builds/",
     "src/"
   ],

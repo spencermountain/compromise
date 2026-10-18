@@ -1,6 +1,6 @@
 {
   "name": "compromise-speed",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Streaming, parallel parsing, and performance helpers for compromise",
   "license": "MIT",
   "repository": {
@@ -14,18 +14,18 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./index.d.ts",
+        "types": "./types/index.d.ts",
         "default": "./src/plugin.js"
       },
       "require": {
-        "types": "./index.d.cts",
+        "types": "./types/index.d.cts",
         "default": "./builds/compromise-speed.cjs"
       }
     }
   },
   "main": "./builds/compromise-speed.cjs",
   "module": "./builds/compromise-speed.mjs",
-  "types": "./index.d.ts",
+  "types": "./types/index.d.ts",
   "sideEffects": false,
   "engines": {
     "node": ">=18"
@@ -33,13 +33,12 @@
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
-    "watch": "node --watch ./scratch.js",
+    "watch": "node ./scratch.js",
     "version": "node ./scripts/version.js",
     "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
-    "index.d.ts",
-    "index.d.cts",
+    "types/",
     "builds/",
     "src/"
   ],

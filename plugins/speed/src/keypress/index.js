@@ -1,49 +1,29 @@
-const sentenceCache = {}
+import { splitSentences } from '../_lib/sentences.js'
+import fromDocs from '../_lib/document.js'
+import getCache from './_lib.js'
 
-/** memoize tagger per-sentence */
 const keyPress = function (text, lex, opts = {}) {
-  const nlp = this
-  const splitSentences = this.methods().one.tokenize.splitSentences
-  const arr = splitSentences(text, this.world())
-
-  const list = []
-  arr.forEach(str => {
-    //do we already have it parsed?
-    if (Object.hasOwn(sentenceCache, str) === true) {
-      //use the cache
-      list.push(sentenceCache[str].data)
-      sentenceCache[str].used = true
-      // console.log('used cache: ', str, '\n')
-    } else {
-      //otherwise, parse it!
+  const cache = getCache(this, lex, opts)
+  const next = new Map()
+  const docs = []
+  splitSentences(text, this).forEach(str => {
+    let parsed = next.get(str) || cache.sentences.get(str)
+    if (!parsed) {
       if (opts.verbose) {
-        console.log(`parsing: '${str}'\n`)//eslint-disable-line
+        console.log(`parsing: '${str}'`)// eslint-disable-line no-console
       }
-      const json = nlp(str, lex).json(0)
-      //cache it
-      sentenceCache[str] = {
-        data: json,
-        used: true,
-      }
-      list.push(json)
+      parsed = this(str).document
     }
+    next.set(str, parsed)
+    // Clone each occurrence separately, including duplicate sentences.
+    const copy = globalThis.structuredClone(parsed)
+    copy.forEach(terms => docs.push(terms))
   })
-  // delete any unused cache
-  Object.keys(sentenceCache).forEach(k => {
-    if (sentenceCache[k].used !== true) {
-      delete sentenceCache[k]
-    } else {
-      sentenceCache[k].used = null
-    }
-  })
+  cache.sentences = next
   if (opts.verbose) {
-    console.log(`${Object.keys(sentenceCache).length}' sentences in cache\n`)//eslint-disable-line
+    console.log(`${next.size} sentences in cache`)// eslint-disable-line no-console
   }
-  return nlp(list)
+  return fromDocs(this, docs, true)
 }
 
-export default {
-  lib: {
-    keyPress
-  }
-}
+export default { lib: { keyPress } }

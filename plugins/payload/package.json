@@ -14,17 +14,17 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./index.d.ts",
+        "types": "./types/index.d.ts",
         "default": "./src/plugin.js"
       },
       "require": {
-        "types": "./index.d.cts",
+        "types": "./types/index.d.cts",
         "default": "./builds/compromise-payload.cjs"
       }
     }
   },
   "main": "./builds/compromise-payload.cjs",
-  "types": "./index.d.ts",
+  "types": "./types/index.d.ts",
   "sideEffects": false,
   "engines": {
     "node": ">=18"
@@ -37,8 +37,7 @@
     "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
-    "index.d.ts",
-    "index.d.cts",
+    "types/",
     "builds/",
     "src/"
   ],

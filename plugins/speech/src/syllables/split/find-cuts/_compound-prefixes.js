@@ -3,6 +3,8 @@
 const compoundPrefixes = [
   /^side(?=kick|line|show|step|stream|track|walk|water|way|winder|wise)/,
   /^some(?=bod|one|time|where)/,
+  /^none(?=such)/, // none-such retains the silent e of none
+  /^goose(?=berr)/, // goose-berry and goose-berries
   /^above(?=board|ground)/,
   /^a?fore(?=clos|taste|said|mentioned)/,
   /^ware(?=house|housing)/,

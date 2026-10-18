@@ -45,6 +45,7 @@ const syllabicConsonants = [
   /[ai]s(m)(?:s|['’]s)?$/, // chasm, criticism, and plurals/possessives
   /[iy]th(m)(?:s|['’]s)?$/, // algorithm, rhythms
   /[^aeiouyn](n)['’]t$/, // couldn't, wasn't; not can't or hasn't
+  /^(?:could|should|would|might|must)['’](v)e$/, // modal + have: would-'ve, unlike we've
 ]
 
 // Keep a boundary after these matched prefixes, even inside a vowel group.

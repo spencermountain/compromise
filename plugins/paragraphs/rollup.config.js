@@ -10,18 +10,25 @@ export default {
       file: 'builds/compromise-paragraphs.cjs',
       format: 'umd',
       name: 'compromiseParagraphs',
-      plugins: [sizeCheck()],
+      plugins: [],
     },
     {
       file: 'builds/compromise-paragraphs.min.js',
       format: 'umd',
       name: 'compromiseParagraphs',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [
+        terser({ keep_classnames: true }),
+        sizeCheck({
+          expect: 2,
+          warn: 5, // acceptable (+/-)
+          throw: 10, // unacceptable (+/-)
+        }),
+      ],
     },
     {
       file: 'builds/compromise-paragraphs.mjs',
       format: 'esm',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [terser({ keep_classnames: true })],
     },
   ],
 }

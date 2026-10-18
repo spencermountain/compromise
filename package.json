@@ -132,7 +132,7 @@
     "@rollup/plugin-terser": "catalog:",
     "@types/node": "catalog:",
     "cross-env": "catalog:",
-    "eslint": "10.12.0",
+    "eslint": "catalog:",
     "eslint-plugin-regexp": "3.3.1",
     "nlp-corpus": "catalog:",
     "rollup": "catalog:",

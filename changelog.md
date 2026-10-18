@@ -7,24 +7,53 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 #### 14.19.0 [Oct 2026]
-- **[change]** - proper end-to-end tag aliases support
-- **[change]** - filter verbose mode output by word
-- **[new]** - `verbose('hooks')`
-- **[new]** - `money().add()` and other arithmetic methods
-- **[new]** - `dates().add()` and other arithmetic methods (in date-plugin)
-- **[new]** - add roundtrip `decimal → fraction → percentage → decimal` methods
-- **[new]** - `"debug:word"`, and  `"debug:filesize"` scripts
-- **[new]** - behaviour options to `fromSpec()` method
-- **[change]** - add term-length test to `.testSpec()`
+
+- **[change]** - verbose mode/inspection
+  - **[new]** - filter verbose mode output by word
+  - **[new]** - `verbose('hooks')`
+  - **[new]** - `"debug:word"`, and `"debug:filesize"` scripts
+- **[new]** - Numbers improvements
+  - **[new]** - `money().add()` and other arithmetic methods
+  - **[new]** - `dates().add()` and other arithmetic methods (in date-plugin)
+  - **[new]** - add roundtrip `decimal → fraction → percentage → decimal` methods
+- **[change]** - end-to-end support for tag aliases (for i18n)
 - **[change]** - more unicode punctuation normalization
-- **[fix]** - many tagging fixes for switches dictionary
+- **[new]** - spec syntax features:
+  - **[new]** - behaviour options to `fromSpec()` method
+  - **[new]** - add term-length test to `.testSpec()`
+- **[fix]** - automated tagging fixes for switches dictionary
+- **[fix]** - github issues - thanks dualfroz!
+  - #1155 'will' ambiguity
+  - #1214 hyphenated word matching
+  - #1188 payloads after removal
+  - #1170 trailing date dashes
+  - #1142 original whitespace preservation
+  - #1126 'wanna' before nouns
+  - #1117 possessive date parsing
+  - #1114 'fortnight' date detection
+  - #1113 toNumbers() return selection
+  - #896 non-English parentheses tokenization
+  - #888 hashtag lexicon matching
+  - #858 preposition recognition
+  - #855 toSingular() preserves case
+  - #814 'silent' syllable splitting
+  - #806 toInfinitive() preserves negation
+  - #777 contraction matching whitespace
+  - #753 toPositive() auxiliary removal
+  - #621 possessive pronoun tagging
+  - #578 title-case adjective tagging
+  - #156 quantity word parsing
+  - #96 contraction expansion symmetry
+- **[new]** - update plugins
+- **[update]** - dependencies
 
 #### 14.18.0 [Oct 2026]
+
 - **[perf]** - 12% faster and 30% smaller
 - **[change]** - include acronyms in .topics(), without duplicating existing entities
 - **[change]** - tag Name & Name phrases as #ProperNoun
 - **[change]** - manage plugins with pnpm workspace
-- **[change]** - improved regex edge-cases 
+- **[change]** - improved regex edge-cases
 - **[change]** - improved verb conjugation
 - **[change]** - improved tagging
 - **[change]** - support block-comments, untagged sentences in spec format
@@ -38,7 +67,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - #Connector tag between #Preposition and #Conjunction
 - **[new]** - .adjectives().toRoot() converts comparative and superlative adjectives to their base form #1186
 - **[new]** - internal left-right rules for faster-tagging
-- **[fix]** - tagging fixes #1190  #1189 and  #1169
+- **[fix]** - tagging fixes #1190 #1189 and #1169
 - **[fix]** - Penn tags for standalone mathematical and currency symbols #1192
 - **[fix]** - add missing Node 18 runtime checks for source and bundles #1207
 - **[fix]** - verb conjugation regression #1226
@@ -50,6 +79,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.17.0 [Sept 2026]
+
 - **[change]** - remove redundant re-tagging #1218
 - **[change]** - split japanese/chinese sentences on 。！？ without trailing whitespace
 - **[change]** - support fullwidth ？ in .questions()
@@ -62,6 +92,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - cleanup of match-logic code
 
 #### 14.16.0 [July 2026]
+
 - **[new]** - apply redaction to #Organization, #Address, #Url etc tags in .redact() method
 - **[new]** - apply #Redacted tag
 - **[change]** - .redact() method now untags specific tags when redacting
@@ -77,40 +108,47 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[update]** - dependencies
 
 #### 14.15.1 [May 2026]
+
 - **[fix]** - better textual time parsing - "one thirty am"
-- **[fix]** - ignore postinstall scripts 
+- **[fix]** - ignore postinstall scripts
 - **[update]** - github action for publish providence
 - **[update]** - dependencies + audit fixes
 
 #### 14.15.0 [Feb 2026]
+
 - **[update]** - support for Typescript 7 #1198
 - **[update]** - dependencies
 
 #### 14.14.5 [Dec 2025]
-- **[fix]** - update types #1181 
-- **[update]** - add nelissa and gert #1180 
+
+- **[fix]** - update types #1181
+- **[update]** - add nelissa and gert #1180
 - **[fix]** - sentence tokenization issues #1194 and #1193
 - **[update]** - prefer const to let
 - **[new]** - experimental cmd-k plugin
 - **[update]** - dependencies
 
 #### 14.14.4 [Jan 2025]
+
 - **[fix]** - TypeScript & esm resolution #1165
 
 #### 14.14.3 [Dec 2024]
+
 - **[fix]** - another runtime error in punctuation replace #1150
 - **[update]** - dependencies
 
 #### 14.14.2 [Oct 2024]
+
 - **[fix]** - runtime error in punctuation replace #1150
 
 #### 14.14.1 [Oct 2024]
+
 - **[update]** - compromise-dates 3.7.0
 - **[fix]** - runtime error in number parser #1145
 - **[update]** - dependencies
 
-
 #### 14.14.0 [July 2024]
+
 - **[new]** - .slashes() and .slashes().split() methods #1100
 - **[fix]** - multiple contraction issue #1128
 - **[fix]** - toNumbers() return values #1113

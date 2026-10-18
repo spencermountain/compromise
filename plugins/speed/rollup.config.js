@@ -10,18 +10,25 @@ export default {
       file: 'builds/compromise-speed.cjs',
       format: 'umd',
       name: 'compromiseSpeed',
-      plugins: [sizeCheck()],
+      plugins: [],
     },
     {
       file: 'builds/compromise-speed.min.js',
       format: 'umd',
       name: 'compromiseSpeed',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [
+        terser({ keep_classnames: true }),
+        sizeCheck({
+          expect: 2,
+          warn: 5, // acceptable (+/-)
+          throw: 10, // unacceptable (+/-)
+        }),
+      ],
     },
     {
       file: 'builds/compromise-speed.mjs',
       format: 'esm',
-      plugins: [terser({ keep_classnames: true }), sizeCheck()],
+      plugins: [terser({ keep_classnames: true })],
     },
   ],
 }

@@ -22,7 +22,6 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[new]** - left-right tagging stage:
   - **[fix]** - tagging fixes for switches dictionary
   - **[perf]** - speed improvements
-  - **[perf]** - filesize improvements
 - **[new]** - spec syntax features:
   - **[new]** - behaviour options to `fromSpec()` method
   - **[new]** - add term-length test to `.testSpec()`
@@ -52,6 +51,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
   - **[dates:change]** - support fractional date arithmeetic
   - **[speech:change]** - split syllables on text, not normalised
 - **[change]** - allow 2nd param passthrough for `.compute(name, opts?)`
+- **[change]** - mainline the `grad-school` dependency
+- **[change]** - remove 'reason' from post-tagger net
 - **[update]** - dependencies
 
 #### 14.18.0 [Oct 2026]

@@ -1,6 +1,6 @@
 import expandTags from './_lib.js'
 
-const keys = { m: 'match', g: 'group', t: 'tag', r: 'reason', n: 'notIf', u: 'unTag' }
+const keys = { m: 'match', g: 'group', t: 'tag', n: 'notIf', u: 'unTag' }
 
 // Expand both passes with the same compact keys and tag aliases.
 const expandRules = rules => {
@@ -13,6 +13,7 @@ const expandRules = rules => {
         delete rule[key]
       }
     })
+    rule.reason = rule.match
   })
   return rules
 }

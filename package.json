@@ -124,7 +124,6 @@
   ],
   "dependencies": {
     "efrt": "catalog:",
-    "grad-school": "0.0.9",
     "suffix-thumb": "6.0.0"
   },
   "devDependencies": {

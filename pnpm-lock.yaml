@@ -47,9 +47,6 @@ importers:
       efrt:
         specifier: 'catalog:'
         version: 2.9.0
-      grad-school:
-        specifier: 0.0.9
-        version: 0.0.9
       suffix-thumb:
         specifier: 6.0.0
         version: 6.0.0
@@ -1000,10 +997,6 @@ packages:
   gopd@1.2.0:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
     engines: {node: '>= 0.4'}
-
-  grad-school@0.0.9:
-    resolution: {integrity: sha512-/aoG9CJz/1gB7x5XKp9i7ggA4k+MqZD7Neph3crfrOLWERkeJFXDXzNefvPW0j97iGTNYqTL+rpBEcz83MTmZw==}
-    engines: {node: '>=12'}
 
   has-bigints@1.1.0:
     resolution: {integrity: sha512-R3pbpkcIqv2Pm3dUwgjclDRVmWpTJW2DcMzcIhEXEx1oh/CEMObMm3KLmRJOdvhM7o4uQBnwr8pzRK2sJWIqfg==}
@@ -2284,8 +2277,6 @@ snapshots:
       gopd: 1.2.0
 
   gopd@1.2.0: {}
-
-  grad-school@0.0.9: {}
 
   has-bigints@1.1.0: {}
 

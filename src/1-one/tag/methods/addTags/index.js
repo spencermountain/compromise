@@ -1,4 +1,4 @@
-import grad from 'grad-school'
+import grad from '../graph/index.js'
 import fmt from './02-fmt.js'
 import validate from './01-validate.js'
 

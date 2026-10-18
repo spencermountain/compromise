@@ -21,7 +21,6 @@ const rules = [
     g: 0,
     t: 'NN',
     n: '#Cop',
-    r: 'noun-list',
   })),
 
   // === connectors.js (second pass) ===
@@ -36,7 +35,6 @@ const rules = [
     {
       m: `[${word}] ${subject} ${predicate}`, g: 0, t: 'Conj',
       n: `${word} (#NN && !#Pron && !#Prop && !#Actor) #Prop`,
-      r: `${word}-clause`,
     },
     // [Before] the guests from the village arrived, we ate.
     // [After] the guests from the village arrived, we ate.
@@ -45,7 +43,6 @@ const rules = [
       m: `[${word}] ${subject} (from|of|with|in|on|at|beside|near) ${subject} ${predicate}`,
       g: 0,
       t: 'Conj',
-      r: `${word}-mod-subj`,
     },
   ]),
   // [Before] the dog and the cat woke, she left.
@@ -55,74 +52,65 @@ const rules = [
     m: `^[${word}] ${subject} and ${subject} ${predicate}`,
     g: 0,
     t: 'Conj',
-    r: `${word}-joint-subj`,
   })),
   // She bought flowers, [for] I was ill.
-  { m: `@hasComma [for] ${subject} ${predicate}`, g: 0, t: 'Conj', r: 'causal-for' },
+  { m: `@hasComma [for] ${subject} ${predicate}`, g: 0, t: 'Conj' },
 
   // She sings [like] her mother
   {
     m: '(#V && !#Aux && !#Mod && !do && !does && !did && !have && !has && !had) [like] (#NN|#Det|#Poss)',
     g: 0,
     t: 'Prep',
-    r: 'like-like',
   },
   // She sings [like] her mother does
   {
     m: `(#V && !#Aux && !#Mod && !do && !does && !did && !have && !has && !had) [like] ${subject} ${predicate}`,
     g: 0,
     t: 'Conj',
-    r: 'manner-like',
   },
   // Which chair did she [sit] [on]? What cushion can he [sit] [on]?
-  { m: seatedQuestion, g: 0, u: 'PhrV', r: 'sit-q-unphr' },
+  { m: seatedQuestion, g: 0, u: 'PhrV' },
   // Which chair did she [sit] [on]? What cushion can he [sit] [on]?
-  { m: seatedQuestion, g: 1, t: 'Prep', r: 'sit-q-prep' },
+  { m: seatedQuestion, g: 1, t: 'Prep' },
   // he ate, and [left]
   {
     m: '(#Past && @hasComma) and [%Adj|Past%] #Adv+?$',
     g: 0,
     t: 'Past',
-    r: 'past-list',
   },
-  // { match: locative, group: 0, tag: 'Preposition', reason: 'subj-loc' },
-  // { match: locative, group: 1, tag: 'Infinitive', reason: 'subj-loc-verb' },
+  // { match: locative, group: 0, tag: 'Preposition' },
+  // { match: locative, group: 1, tag: 'Infinitive' },
   // being [injured] and treated
   {
     m: 'being #Adv+? [%Adj|Past%] (and|or) #Adv+? (#Past|#VBN)',
     g: 0,
     t: 'Past',
-    r: 'coord-pass',
   },
   // dogs, [including] the poodle
   {
     m: '(#NN && @hasComma) [including] all? #Det? #Card+? #Adv+? #Adj+? #NN',
     g: 0,
     t: 'Prep',
-    r: 'including-list',
   },
   // can you [walk], please?
   {
     m: '^(can|could|will|would) you (#Adv|not)+? [(#Inf && @hasComma)] please$',
     g: 0,
     t: 'Imp',
-    r: 'req-verb-comma',
   },
   // can you [walk] the dog, please?
   {
     m: '^(can|could|will|would) you (#Adv|not)+? [#Inf] * @hasComma please$',
     g: 0,
     t: 'Imp',
-    r: 'req-obj-comma',
   },
   // jack the ripper
-  { m: '%Person|Verb% (the && #Pers) #Pers', t: 'Pers', r: 'known-nickname' },
+  { m: '%Person|Verb% (the && #Pers) #Pers', t: 'Pers' },
   // keep the lid [closed]
   {
     m: '#Imp #Det #NN+ [%Adj|Past%]',
     g: 0,
     t: 'Adj',
-    r: 'lid-closed',
   },
   // console.log('  ', rules.length, 'matches second-pass\n\n')
 ]

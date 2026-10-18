@@ -1,6 +1,6 @@
 {
   "name": "compromise-payload",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Attach custom data to text matches in compromise",
   "license": "MIT",
   "repository": {

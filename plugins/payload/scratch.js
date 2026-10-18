@@ -5,9 +5,23 @@ import nlp from '../../src/three.js'
 import plugin from './builds/compromise-payload.mjs'
 nlp.extend(plugin)
 
-const doc = nlp('i saw John Lennon, and john smith and bob dylan')
+// three sentences
+let doc = nlp('One is red. Two is blue. Three is green.')
+// add payload to each color
+doc.match('(red|blue|green)').forEach(m => m.addPayload({ color: m.text() }))
 
-doc.match('(john|bob|dave) .').addPayload(m => {
-  return { lastName: m.terms().last().text() }
+doc.getPayloads().forEach(p => {
+  console.log(p.match.text(), p.val.color)
 })
-console.log(doc.getPayloads())
+// red red
+// blue blue
+// green green
+
+// remove the sentence
+doc.remove('two is blue')
+
+doc.getPayloads().forEach(p => {
+  console.log(p.match.text(), p.val.color)
+})
+// red red
+// green green

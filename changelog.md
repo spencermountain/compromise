@@ -16,12 +16,16 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
   - **[new]** - `money().add()` and other arithmetic methods
   - **[new]** - `dates().add()` and other arithmetic methods (in date-plugin)
   - **[new]** - add roundtrip `decimal → fraction → percentage → decimal` methods
-- **[change]** - end-to-end support for tag aliases (for i18n)
-- **[change]** - more unicode punctuation normalization
+- **[change]** - queued-up i18n library improvements
+  - **[change]** - end-to-end support for tag aliases (for i18n)
+  - **[change]** - more unicode punctuation normalization
+- **[new]** - left-right tagging stage:
+  - **[fix]** - tagging fixes for switches dictionary
+  - **[perf]** - speed improvements
+  - **[perf]** - filesize improvements
 - **[new]** - spec syntax features:
   - **[new]** - behaviour options to `fromSpec()` method
   - **[new]** - add term-length test to `.testSpec()`
-- **[fix]** - automated tagging fixes for switches dictionary
 - **[fix]** - github issues - thanks dualfroz!
   - #1155 'will' ambiguity
   - #1214 hyphenated word matching
@@ -31,15 +35,15 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
   - #1126 'wanna' before nouns
   - #1117 possessive date parsing
   - #1114 'fortnight' date detection
-  - #1113 toNumbers() return selection
+  - #1113 `toNumbers()` return selection
   - #896 non-English parentheses tokenization
   - #888 hashtag lexicon matching
   - #858 preposition recognition
-  - #855 toSingular() preserves case
+  - #855 `toSingular()` preserves case
   - #814 'silent' syllable splitting
-  - #806 toInfinitive() preserves negation
+  - #806 `toInfinitive()` preserves negation
   - #777 contraction matching whitespace
-  - #753 toPositive() auxiliary removal
+  - #753 `toPositive()` auxiliary removal
   - #621 possessive pronoun tagging
   - #578 title-case adjective tagging
   - #156 quantity word parsing

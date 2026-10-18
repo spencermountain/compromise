@@ -1,6 +1,6 @@
 <div align="center">
   <div><b>compromise-paragraphs</b></div>
-  <div>a plugin for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
+  <div>paragraph support for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
   <div><code>npm install compromise-paragraphs</code></div>
   <div align="center">
     <sub>
@@ -40,10 +40,12 @@ doc.length
 // 3
 
 doc.json(options)
-/*[
-  {text:'What's with these ...', sentences:[{},{}]}
-  {text:'What did we ever ...', sentences:[{}]}
-]*/
+/*
+[
+  { text: 'What's with these ...', sentences: [{}, {}] },
+  { text: 'What did we ever ...', sentences: [{}] }
+]
+*/
 
 // get the second paragraph
 doc.eq(1).text()
@@ -53,11 +55,11 @@ doc.eq(1).text()
 doc.first().sentences().slice(0, 2)
 ```
 
-This is a implementation of `.paragraphs()` and associated methods, for compromise.
+This obvious-seeming feature is tricky because a sentence is a top-level structure to compromise, _(and english grammar!)_, so concatenating sentences together into one thing would have consequences for grammatical tags.
 
-This is tricky because a sentence is a top-level structure to compromise, (and english grammar!), and combining sentences together would have some consequences about grammatical tags.
+This is a implementation of `.paragraphs()` and associated wrapper methods, for compromise.
 
-Instead, this plugin is a (partially-complete) wrapper for sentence objects, so that you can call things like `.text()` and `.json()` on a paragraph, but then drop back down to `.sentences()` after, and work as normal.
+This plugin is a (partially-complete) wrapper for sentence objects, so that you can call things like `.text()` and `.json()` on a paragraph, but then drop back down to `.sentences()` after, and work as normal.
 
 The term objects passed into `.paragraphs()` are mutable, so they will actually change when you transform them:
 

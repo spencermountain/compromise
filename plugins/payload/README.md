@@ -1,29 +1,32 @@
 <div align="center">
-  <img src="https://cloud.githubusercontent.com/assets/399657/23590290/ede73772-01aa-11e7-8915-181ef21027bc.png" />
-
+  <div><b>compromise-payload</b></div>
   <div>An ad-hoc datastore for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
-
-  <!-- npm version -->
-  <a href="https://npmjs.org/package/compromise-payload">
+  <div><code>npm install compromise-payload</code></div>
+  <div align="center">
+    <sub>
+      by
+      <a href="https://github.com/spencermountain">Spencer Kelly</a>
+    </sub>
+  </div>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221824-09809d80-ffb8-11e9-9ef0-6ed3574b0ce8.png"/>
+</div>
+<!--2nd row-->
+<div align="center">
+  <div>
+    <a href="https://npmjs.org/package/compromise-payload">
     <img src="https://img.shields.io/npm/v/compromise-payload.svg?style=flat-square" />
   </a>
-  
-  <!-- file size -->
-  <a href="https://unpkg.com/compromise-payload/builds/compromise-payload.min.js">
-    <img src="https://img.shields.io/bundlephobia/min/compromise-payload" />
+  <a href="https://bundlephobia.com/result?p=compromise-payload">
+    <img src="https://badgen.net/bundlejs/min/compromise-payload" />
   </a>
-
-  <div align="center">
-    <code>npm install compromise-payload</code>
   </div>
 </div>
-
 <!-- spacer -->
-<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 This plugin provides a facilty for storing a retreiving more complex data than tags, for compromise documents and matches.
 
-### Payload
+### Usage
 
 ```js
 import plg from 'compromise-payload'
@@ -73,5 +76,34 @@ doc.getPayloads().length // now 2
 doc.clearPayloads()
 doc.getPayloads().length // now 0
 ```
+
+### Modifications
+
+It's difficult to index payloads to specific parts of a document, because compromise documents [can change](https://observablehq.com/@spencermountain/compromise-mutation). For this reason, we take care to find payloads with stale references, after a document is modified:
+
+```js
+// three sentences
+let doc = nlp('One is red. Two is blue. Three is green.')
+// add payload to each color
+doc.match('(red|blue|green)').forEach(m => m.addPayload({ color: m.text() }))
+
+doc.getPayloads().forEach(p => {
+  console.log(p.match.text(), p.val.color)
+})
+// red red
+// blue blue
+// green green
+
+// remove the sentence
+doc.remove('two is blue')
+
+doc.getPayloads().forEach(p => {
+  console.log(p.match.text(), p.val.color)
+})
+// red red
+// green green
+```
+
+Is it still a heuristic, so you're advised to keep document modifications light while using this plugin.
 
 MIT

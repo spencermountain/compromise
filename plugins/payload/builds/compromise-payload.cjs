@@ -4,7 +4,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromisePayload = factory());
 })(this, (function () { 'use strict';
 
-  var version = '0.0.3';
+  var version = '0.1.0';
 
   /* eslint-disable no-console */
 

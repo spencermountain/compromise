@@ -1,3 +1,4 @@
+import tagWords from '../_lib.js'
 import tags from '../../tagSet/aliases.js'
 
 const { Unit: un } = tags
@@ -5,20 +6,13 @@ const { Unit: un } = tags
 const clues = {
   beforeTags: { Value: un },
   afterTags: {},
-  beforeWords: {
-    per: un,
-    every: un,
-    each: un,
-    square: un, //square km
-    cubic: un,
-    sq: un,
-    metric: un //metric ton
-  },
-  afterWords: {
-    per: un,
-    squared: un,
-    cubed: un,
-    long: un //foot long
-  },
+  beforeWords: tagWords(
+    // square km; metric ton
+    'per every each square cubic sq metric', un,
+  ),
+  afterWords: tagWords(
+    // foot long
+    'per squared cubed long', un,
+  ),
 }
 export default clues

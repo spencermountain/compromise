@@ -1,3 +1,4 @@
+import tagWords from '../_lib.js'
 import adj from './_adj.js'
 import tags from '../../tagSet/aliases.js'
 
@@ -27,42 +28,21 @@ const adjPast = {
     be: past, //be hooked vs be embarrassed
     who: past, //who lost
     get: jj, //get charged
-    had: past,
-    has: past,
-    have: past,
-    been: past,
-    being: past, //being watched
-    it: past, //it intoxicated him
-    as: past, //as requested
+    // being watched; it intoxicated him; as requested
+    ...tagWords('had has have been being it as', past),
     for: jj, //for discounted items
     more: jj, //more broken promises
     always: jj,
   },
   afterWords: {
-    by: past, //damaged by
-    back: past, //charged back
-    out: past, //charged out
-    in: past, //crowded in
-    up: past, //heated up
-    down: past, //hammered down
-    before: past, //
-    after: past, //
-    for: past, //settled for
-    the: past, //settled the
-    with: past, //obsessed with
-    as: past, //known as
-    on: past, //focused on
-    at: past, //recorded at
-    between: past, //settled between
-    to: past, //dedicated to
-    into: past, //pumped into
-    us: past, //charged us
-    them: past, //charged us
-    his: past, //shared his
-    her: past, //
-    their: past, //
-    our: past, //
-    me: past, //
+    // damaged by; charged back; charged out; crowded in; heated up; hammered down; settled for; settled the
+    // obsessed with; known as; focused on; recorded at; settled between; dedicated to; pumped into
+    // charged us; charged us; shared his
+    ...tagWords(
+      'by back out in up down before after for the with as on at between to into us them his her ' +
+      'their our me',
+      past
+    ),
     about: jj,
   },
 }

@@ -3,6 +3,13 @@ import { nodeResolve } from '@rollup/plugin-node-resolve'
 import sizeCheck from 'rollup-plugin-filesize-check'
 
 const terserOpts = { keep_classnames: true, compress: { passes: 2 } }
+const modernTerserOpts = {
+  ...terserOpts,
+  ecma: 2022,
+  // Keep the public entry point constructible when other functions become arrows.
+  keep_fnames: /^nlp$/,
+  compress: { passes: 2, unsafe_arrows: true },
+}
 
 export default [
   // === One ==
@@ -15,7 +22,7 @@ export default [
         format: 'umd',
         name: 'nlp',
         plugins: [
-          terser(terserOpts),
+          terser(modernTerserOpts),
           sizeCheck({
             expect: 92,
             warn: 5, // acceptable (+/-)
@@ -26,7 +33,7 @@ export default [
       {
         file: 'builds/one/compromise-one.mjs',
         format: 'esm',
-        plugins: [terser(terserOpts)],
+        plugins: [terser(modernTerserOpts)],
       },
     ],
   },
@@ -41,7 +48,7 @@ export default [
         format: 'umd',
         name: 'nlp',
         plugins: [
-          terser(terserOpts),
+          terser(modernTerserOpts),
           sizeCheck({
             expect: 273,
             warn: 5, // acceptable (+/-)
@@ -52,7 +59,7 @@ export default [
       {
         file: 'builds/two/compromise-two.mjs',
         format: 'esm',
-        plugins: [terser(terserOpts)],
+        plugins: [terser(modernTerserOpts)],
       },
     ],
   },
@@ -73,7 +80,7 @@ export default [
         format: 'umd',
         name: 'nlp',
         plugins: [
-          terser(terserOpts),
+          terser(modernTerserOpts),
           sizeCheck({
             expect: 342,
             warn: 4, // acceptable (+/-)

@@ -10,10 +10,12 @@ const toFraction = numbers => {
     if (!Number.isFinite(num) || value.has('#Money')) {
       return value.none()
     }
-    let str = decimalFraction(num)
+    let str
     if (isPercent(value)) {
       str = `${decimalText(num)}/100`
       value = value.growRight('(percent|percentage|per cent)')
+    } else {
+      str = decimalFraction(num).join('/')
     }
     const phrase = replaceNumber(value, str)
     phrase.unTag('Percent').tag(['Fraction', 'NumericValue'])

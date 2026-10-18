@@ -31,8 +31,8 @@ const scale = (num, rate, inverse = false) => {
   if (Number.isInteger(exponent)) {
     return shiftDecimal(num, inverse ? -exponent : exponent)
   }
-  const [a, b] = decimalFraction(num).split('/').map(BigInt)
-  const [c, d] = decimalFraction(rate).split('/').map(BigInt)
+  const [a, b] = decimalFraction(num)
+  const [c, d] = decimalFraction(rate)
   if (inverse) {
     return Number(a * d) / Number(b * c)
   }

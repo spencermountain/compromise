@@ -1,3 +1,4 @@
+import tagWords from '../_lib.js'
 import { Ger } from '../../tagSet/_lib.js'
 import noun from './_noun.js'
 import gerund from './_gerund.js'
@@ -14,17 +15,9 @@ const misc = {
     Value: Ger, //maintaining 500
   },
   beforeWords: {
-    are: Ger,
-    were: Ger,
-    be: Ger,
-    no: Ger,
-    without: Ger,
+    ...tagWords('are were be no without', Ger),
     //are you playing
-    you: Ger,
-    we: Ger,
-    they: Ger,
-    he: Ger,
-    she: Ger,
+    ...tagWords('you we they he she', Ger),
     //stop us playing
     us: Ger,
     them: Ger,

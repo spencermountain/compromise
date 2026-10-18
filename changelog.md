@@ -53,6 +53,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - allow 2nd param passthrough for `.compute(name, opts?)`
 - **[change]** - mainline the `grad-school` dependency
 - **[change]** - remove 'reason' from post-tagger net
+- **[change]** - add terser `unsafe_arrows` compression
 - **[update]** - dependencies
 
 #### 14.18.0 [Oct 2026]

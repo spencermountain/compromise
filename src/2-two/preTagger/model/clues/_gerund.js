@@ -1,3 +1,4 @@
+import tagWords from '../_lib.js'
 import tags from '../../tagSet/aliases.js'
 
 const { VBG: g } = tags
@@ -22,49 +23,22 @@ export default {
     Comparative: g, //growing shorter
   },
   beforeWords: {
-    been: g,
-    keep: g,//keep going
-    continue: g,//
-    stop: g,//
-    am: g,//am watching
-    be: g,//be timing
-    me: g,//got me thinking
+    // keep going; am watching; be timing; got me thinking
+    ...tagWords('been keep continue stop am be me', g),
     // action-words
-    began: g,
-    start: g,
-    starts: g,
-    started: g,
-    stops: g,
-    stopped: g,
-    help: g,
-    helps: g,
-    avoid: g,
-    avoids: g,
-    love: g,//love painting
-    loves: g,
-    loved: g,
-    hate: g,
-    hates: g,
-    hated: g,
+    // love painting
+    ...tagWords(
+      'began start starts started stops stopped help helps avoid avoids love loves loved hate ' +
+      'hates hated',
+      g
+    ),
     // was:g,//was working
     // is:g,
     // be:g,
   },
-  afterWords: {
-    you: g, //telling you
-    me: g, //
-    her: g, //
-    him: g, //
-    his: g, //
-    them: g, //
-    their: g, // fighting their
-    it: g, //dumping it
-    this: g, //running this
-    there: g, // swimming there
-    on: g, // landing on
-    about: g, // talking about
-    for: g, // paying for
-    up: g, //speeding up
-    down: g, //
-  },
+  afterWords: tagWords(
+    // telling you; fighting their; dumping it; running this; swimming there; landing on; talking about
+    // paying for; speeding up
+    'you me her him his them their it this there on about for up down', g,
+  ),
 }

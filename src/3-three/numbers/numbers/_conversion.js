@@ -40,7 +40,7 @@ const decimalFraction = num => {
     divisor = remainder
     remainder = next
   }
-  return `${numerator / divisor}/${denominator / divisor}`
+  return [numerator / divisor, denominator / divisor]
 }
 
 const isPercent = value => value.has('#Percent') || value.after('^per cent').found

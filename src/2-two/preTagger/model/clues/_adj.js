@@ -1,3 +1,4 @@
+import tagWords from '../_lib.js'
 import tags from '../../tagSet/aliases.js'
 
 const { JJ: jj } = tags
@@ -16,48 +17,24 @@ export default {
   },
 
   beforeWords: {
-    seem: jj, //seem prepared
-    seemed: jj,
-    seems: jj,
-    feel: jj, //feel prepared
-    feels: jj,
-    felt: jj,
-    stay: jj,
-    appear: jj,
-    appears: jj,
-    appeared: jj,
-    also: jj,
-    over: jj, //over cooked
-    under: jj,
-    too: jj, //too insulting
-    it: jj, //find it insulting
-    but: jj, //nothing but frustrating
-    still: jj, //still scared
+    // seem prepared; feel prepared; over cooked; too insulting; find it insulting; nothing but frustrating
+    // still scared
+    ...tagWords(
+      'seem seemed seems feel feels felt stay appear appears appeared also over under too it but ' +
+      'still',
+      jj
+    ),
     // adverbs that are adjective-ish
-    really: jj, //really damaged
-    quite: jj,
-    well: jj,
-    very: jj,
-    truly: jj,
-    how: jj, //how slow
-    deeply: jj,
-    hella: jj,
+    // really damaged; how slow
+    ...tagWords('really quite well very truly how deeply hella', jj),
     // always: jj,
     // never: jj,
-    profoundly: jj,
-    extremely: jj,
-    so: jj,
-    badly: jj,
-    mostly: jj,
-    totally: jj,
-    awfully: jj,
-    rather: jj,
-    nothing: jj, //nothing secret,
-    something: jj, //something wrong
-    anything: jj,
-    not: jj, //not swell
-    me: jj, //called me swell
-    is: jj,
+    // nothing secret,; something wrong; not swell; called me swell
+    ...tagWords(
+      'profoundly extremely so badly mostly totally awfully rather nothing something anything not ' +
+      'me is',
+      jj
+    ),
 
     face: jj, //faces shocking revelations
     faces: jj,
@@ -71,39 +48,21 @@ export default {
     reveals: jj,
     revealed: jj,
 
-    sound: jj,
-    sounded: jj,
-    sounds: jj,
-    remains: jj,
-    remained: jj,
-    prove: jj, //would prove shocking
-    proves: jj,
-    proved: jj,
+    // would prove shocking
+    ...tagWords('sound sounded sounds remains remained prove proves proved', jj),
 
-    becomes: jj,
-    stays: jj,
-    tastes: jj,
-    taste: jj,
-    smells: jj,
-    smell: jj,
-    gets: jj, //gets shocking snowfall
-    grows: jj,
-    as: jj,
-    rings: jj,
-    radiates: jj,
-    conveys: jj,
-    convey: jj,
-    conveyed: jj,
-    of: jj,
+    // gets shocking snowfall
+    ...tagWords(
+      'becomes stays tastes taste smells smell gets grows as rings radiates conveys convey ' +
+      'conveyed of',
+      jj
+    ),
     // 'smacks of': jj,
     // 'reeks of': jj,
   },
-  afterWords: {
-    too: jj, //insulting too
-    also: jj, //insulting too
-    or: jj, //insulting or
-    enough: jj, //cool enough
-    as: jj, //as shocking as
+  afterWords: tagWords(
+    // insulting too; insulting too; insulting or; cool enough; as shocking as
     //about: jj, //cool about
-  },
+    'too also or enough as', jj,
+  ),
 }

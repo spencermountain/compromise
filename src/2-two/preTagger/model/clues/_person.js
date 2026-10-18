@@ -1,3 +1,4 @@
+import tagWords from '../_lib.js'
 import tags from '../../tagSet/aliases.js'
 
 const { Person: p } = tags
@@ -19,34 +20,11 @@ export default {
   ownTags: {
     ProperNoun: p, //capital letter
   },
-  beforeWords: {
-    hi: p,
-    hey: p,
-    yo: p,
-    dear: p,
-    hello: p,
-  },
-  afterWords: {
+  beforeWords: tagWords('hi hey yo dear hello', p),
+  afterWords: tagWords(
     // person-usually verbs
-    said: p,
-    says: p,
-    told: p,
-    tells: p,
-    feels: p,
-    felt: p,
-    seems: p,
-    thinks: p,
-    thought: p,
-    spends: p,
-    spendt: p,
-    plays: p,
-    played: p,
-    sing: p,
-    sang: p,
-    learn: p,
-    learned: p,
-    wants: p,
-    wanted: p
     // and:true, //sue and jeff
-  },
+    'said says told tells feels felt seems thinks thought spends spendt plays played sing sang ' +
+      'learn learned wants wanted', p,
+  ),
 }

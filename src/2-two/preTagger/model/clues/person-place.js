@@ -1,3 +1,4 @@
+import tagWords from '../_lib.js'
 import person from './_person.js'
 import tags from '../../tagSet/aliases.js'
 
@@ -12,24 +13,8 @@ const place = {
     Place: p,
     Abbreviation: p
   },
-  beforeWords: {
-    in: p,
-    by: p,
-    near: p,
-    from: p,
-    to: p,
-  },
-  afterWords: {
-    in: p,
-    by: p,
-    near: p,
-    from: p,
-    to: p,
-    government: p,
-    council: p,
-    region: p,
-    city: p,
-  },
+  beforeWords: tagWords('in by near from to', p),
+  afterWords: tagWords('in by near from to government council region city', p),
 }
 
 const clue = {

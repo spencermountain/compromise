@@ -28,17 +28,15 @@ const matchDebug = (world, options) => {
     const matches = result.ptrs
       .map(([n, start, end]) => docs[n].slice(start, end))
       .filter(includesWord)
-      .map(terms => ({
-        text: terms.map(term => term.text || term.implicit).join(' '),
-        index: terms[0]?.index?.slice(),
-        length: terms.length,
-      }))
     if (word && result.ptrs.length && !matches.length) {
       return result
     }
     debug.rule = undefined
     const status = result.ptrs.length ? green('✓') : red('✗')
-    const spans = matches.map(span => `${green("'" + span.text + "'")} ${dim(span.index?.join(':') || '?')}`).join(', ')
+    const spans = matches.map(terms => {
+      const text = terms.map(term => term.text || term.implicit).join(' ')
+      return `${green("'" + text + "'")} ${dim(terms[0]?.index?.join(':') || '?')}`
+    }).join(', ')
     const rule = pattern.length > 80 ? pattern.slice(0, 79) + '…' : pattern
     const words = spans ? spans + '  ' : ' ---         '
     console.log(`${debug.prefix || '   '}${status} ${words}${dim(i(rule))}`) // eslint-disable-line no-console

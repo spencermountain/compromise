@@ -1,3 +1,4 @@
+import tagWords from '../_lib.js'
 import { NN, Adj } from '../../tagSet/_lib.js'
 import adj from './_adj.js'
 import noun from './_noun.js'
@@ -21,7 +22,7 @@ const clue = {
     ...adj.beforeWords,
     ...noun.beforeWords,
     // are representative
-    are: Adj, is: Adj, was: Adj, be: Adj,
+    ...tagWords('are is was be', Adj),
     // phrasals
     off: Adj,//start off fine
     out: Adj,//comes out fine

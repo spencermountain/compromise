@@ -8,7 +8,7 @@ import handleInputs from './API/inputs.js'
 
 const world = { ...tmpWrld }
 
-const nlp = function (input, lex) {
+const nlp = function nlp(input, lex) {
   if (lex) {
     nlp.addWords(lex)
   }

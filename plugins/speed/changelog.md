@@ -9,10 +9,9 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 #### 0.2.0 [Oct 2026]
 
 - **[change]** - reuse parsed sentences in `keyPress`, with isolated editor caches and lexicon invalidation
-- **[change]** - reuse worker pools with configurable batching, local fallback, and `closeWorkerPool()`
+- **[change]** - reuse worker pools with batching, local fallback, and `closeWorkerPool()`
 - **[add]** - `streamFileIterator()`, async callbacks, and `{ collect: false }` for streaming without retaining results
 - **[fix]** - preserve long sentences and multibyte characters across stream chunks
-- **[fix]** - preserve worker result order, clean up failures, and load workers outside the repository
-- **[fix]** - keep lazy matching correct for mixed rules and contractions; cache compiled filters
-- **[test]** - expand source and build coverage to 234 assertions for caching, matching, streaming, and workers
+- **[fix]** - preserve worker result order
+- **[fix]** - keep lazy matching correct for mixed rules and contractions
 - **[update]** - dependencies

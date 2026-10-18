@@ -4,6 +4,9 @@ import type nlp from 'compromise'
 import type { Lexicon, Net, ParsedMatch } from 'compromise/misc'
 import type BaseView from 'compromise/view/one'
 import type { createReadStream, PathLike } from 'node:fs'
+import type { SpeedMethods as BrowserMethods } from './browser.js'
+
+export type { KeyPressOptions } from './browser.js'
 
 type View = ReturnType<typeof nlp>
 
@@ -11,15 +14,6 @@ type ReadStreamOptions = Exclude<Parameters<typeof createReadStream>[1], string 
 
 /** File options, with optional suppression of collected matches. */
 export type StreamFileOptions = BufferEncoding | (ReadStreamOptions & { collect?: boolean })
-
-export interface KeyPressOptions {
-  /** Log which sentences are parsed and how many remain cached. */
-  verbose?: boolean
-  /** Reuse a separate object for each editor's cache. */
-  cache?: object
-  /** Discard this editor's cached sentences before parsing. */
-  reset?: boolean
-}
 
 export interface WorkerPoolOptions {
   /** Maximum workers in this pool; defaults to at most four available CPUs. */
@@ -33,7 +27,7 @@ export interface WorkerPoolOptions {
 type StreamResult = BaseView | void | null | false
 
 /** Methods added to the nlp library, not to document Views. */
-export interface SpeedMethods {
+export interface SpeedMethods extends BrowserMethods {
   /** Read complete sentence batches and optionally collect filtered Views. */
   streamFile(
     path: PathLike,
@@ -46,10 +40,6 @@ export interface SpeedMethods {
   workerPool(text: string, match: string | Net | ParsedMatch, options?: WorkerPoolOptions): Promise<View>
   /** Terminate this library's pools and reject unfinished jobs. */
   closeWorkerPool(): Promise<void>
-  /** Reuse cached sentences while parsing edited text. */
-  keyPress(text: string, lexicon?: Lexicon, options?: KeyPressOptions): View
-  /** Tokenize first, then tag only sentences that could contain the match. */
-  lazy(text: string, match: string | Net): View
 }
 
 /** The callable compromise library after installing the complete speed plugin. */

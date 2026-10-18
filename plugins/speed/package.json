@@ -13,6 +13,16 @@
   "type": "module",
   "exports": {
     ".": {
+      "browser": {
+        "import": {
+          "types": "./types/browser.d.ts",
+          "default": "./src/browser.js"
+        },
+        "require": {
+          "types": "./types/browser.d.cts",
+          "default": "./builds/compromise-speed.browser.cjs"
+        }
+      },
       "import": {
         "types": "./types/index.d.ts",
         "default": "./src/plugin.js"
@@ -20,6 +30,16 @@
       "require": {
         "types": "./types/index.d.cts",
         "default": "./builds/compromise-speed.cjs"
+      }
+    },
+    "./browser": {
+      "import": {
+        "types": "./types/browser.d.ts",
+        "default": "./src/browser.js"
+      },
+      "require": {
+        "types": "./types/browser.d.cts",
+        "default": "./builds/compromise-speed.browser.cjs"
       }
     }
   },
@@ -55,7 +75,7 @@
   "peerDependencies": {
     "compromise": "workspace:^"
   },
-  "unpkg": "./builds/compromise-speed.min.js",
+  "unpkg": "./builds/compromise-speed.browser.min.js",
   "dependencies": {
     "@types/node": "catalog:"
   }

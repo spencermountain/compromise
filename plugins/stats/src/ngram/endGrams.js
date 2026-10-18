@@ -1,48 +1,5 @@
-const defaults = {
-  max: 4,
-  min: 1,
-}
+import getGrams from './getGrams.js'
 
-const oneSize = function (list, size) {
-  const grams = Object.create(null)
-  // count each instance
-  list.forEach(terms => {
-    const len = terms.length
-    for (let i = 0; i <= terms.length; i += 1) {
-      const slice = terms.slice(len - i, len)
-      if (slice.length === size) {
-        const str = slice.join(' ')
-        if (Object.hasOwn(grams, str)) {
-          grams[str].count += 1
-        } else {
-          grams[str] = {
-            size: size,
-            count: 1,
-          }
-        }
-      }
-    }
-  })
-  // turn them into an array
-  const arr = Object.keys(grams).map(k => {
-    grams[k].normal = k
-    return grams[k]
-  })
-  return arr
-}
+const endGrams = (list, options) => getGrams(list, options, 'end')
 
-const endGrams = function (list, options) {
-  // support {size:2} syntax
-  if (options.size > 0) {
-    options.min = options.size
-    options.max = options.size
-  }
-  const max = options.max || defaults.max
-  const min = options.min || defaults.min
-  let arr = []
-  for (let size = min; size <= max; size++) {
-    arr = arr.concat(oneSize(list, size))
-  }
-  return arr
-}
 export default endGrams

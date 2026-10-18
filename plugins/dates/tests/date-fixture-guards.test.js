@@ -1,6 +1,6 @@
 import test from 'tape'
 import { isDeepStrictEqual } from 'node:util'
-import checkDate from './dates.js'
+import checkDate from './_date-fixture.js'
 
 const day = '2026-09-10'
 const start = `${day}T10:00:00.000Z`

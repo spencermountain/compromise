@@ -378,11 +378,6 @@ nlp.extend(function (Doc, world) {
 ### _About:_
 
 <div align="left">
-<!-- spacer -->
-<img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</div>
-
-<div align="left">
   <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>1 - <b>Regular-expressions</b> are too-brittle to parse dates.
 </div>
 
@@ -414,6 +409,9 @@ The _[match-syntax](https://observablehq.com/@spencermountain/compromise-match-s
 - [Natty](http://natty.joestelmach.com/) - by Joe Stelmach (Java)
 - [rrule](https://github.com/jakubroztocil/rrule) - repeating date-interval handler (js)
 - [ParseDateTime](https://pypi.org/project/parsedatetime/) by Mike Taylor (Python)
+
+<!-- spacer -->
+<img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 PRs welcome
 

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
+import nlp from './_lib.js'
 
 const here = '[plugins/dates/arithmetic] '
 const options = { today: '2020-06-01', timezone: 'UTC' }

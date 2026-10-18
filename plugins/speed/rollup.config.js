@@ -14,7 +14,7 @@ const workerAsset = {
   },
 }
 
-export default {
+const nodeBuild = {
   input: 'src/plugin.js',
   plugins: [nodeResolve(), workerAsset],
   output: [
@@ -44,3 +44,19 @@ export default {
     },
   ],
 }
+
+const browserBuild = {
+  input: 'src/browser.js',
+  output: [
+    { file: 'builds/compromise-speed.browser.cjs', format: 'cjs' },
+    { file: 'builds/compromise-speed.browser.mjs', format: 'esm', plugins: [terser()] },
+    {
+      file: 'builds/compromise-speed.browser.min.js',
+      format: 'umd',
+      name: 'compromiseSpeed',
+      plugins: [terser()],
+    },
+  ],
+}
+
+export default [nodeBuild, browserBuild]

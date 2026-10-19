@@ -17,23 +17,28 @@ const plugin = {
   onReplace: onTransfer,
   mutate: world => {
     world.methods.one.debug ||= {}
-    world.methods.one.debug.ast = debugAst
+    const previous = world.methods.one.debug.ast
+    world.methods.one.debug.ast = view => {
+      if (view.document.unist || !previous) {
+        return debugAst(view)
+      }
+      return previous(view)
+    }
   },
   lib: {
-    fromAst: function (tree, options = {}) {
+    fromMdast: function (tree, options = {}) {
       return readTree(tree, this, options)
     },
     fromMarkdown: function (md, options = {}) {
-      // Parsing is fixed here; callers with another parser can use fromAst().
+      // Parsing is fixed here; callers with another parser can use fromMdast().
       const tree = fromMarkdown(md, {
         extensions: [gfm(), frontmatter(matter)],
         mdastExtensions: [gfmFromMarkdown(), frontmatterFromMarkdown(matter)],
       })
-      return this.fromAst(tree, options)
+      return readTree(tree, this, options)
     },
   },
   api: View => {
-    // write our terms back to the tree
     View.prototype.updateTree = function () {
       return writeTree(this)
     }

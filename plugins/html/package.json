@@ -1,0 +1,62 @@
+{
+  "name": "compromise-html",
+  "version": "0.0.1",
+  "description": "parse and transform text inside HTML",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./types/index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./types/index.d.cts",
+        "default": "./builds/compromise-html.cjs"
+      }
+    }
+  },
+  "main": "./builds/compromise-html.cjs",
+  "types": "./types/index.d.ts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "watch": "node --watch ./scratch.js",
+    "version": "node ./scripts/version.js",
+    "build": "node ./scripts/version.js && rollup -c --silent"
+  },
+  "files": [
+    "types/",
+    "builds/",
+    "src/"
+  ],
+  "dependencies": {
+    "hast-util-from-html": "catalog:",
+    "hast-util-to-html": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/html"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/html",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
+  "module": "./builds/compromise-html.mjs",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "cross-env": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tap-dancer": "catalog:",
+    "tape": "catalog:"
+  },
+  "peerDependencies": {
+    "compromise": "workspace:^"
+  },
+  "unpkg": "./builds/compromise-html.min.js"
+}

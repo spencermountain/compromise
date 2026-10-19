@@ -24,6 +24,8 @@ catalog:
   mdast-util-gfm: ^3.1.0
   micromark-extension-frontmatter: ^2.0.0
   mdast-util-frontmatter: ^2.0.1
+  hast-util-from-html: ^2.0.3
+  hast-util-to-html: ^9.0.5
 
 linkWorkspacePackages: false
 

@@ -41,10 +41,10 @@ test('markdown - YAML and TOML frontmatter modes', t => {
 
 test('markdown - externally parsed trees', t => {
   const tree = { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', value: 'External prose.' }] }] }
-  const doc = nlp.fromAst(tree)
+  const doc = nlp.fromMdast(tree)
   doc.match('External').replaceWith('Updated')
   doc.updateTree()
-  t.equal(tree.children[0].children[0].value, 'Updated prose.', 'fromAst updates caller-owned nodes')
-  t.throws(() => nlp.fromAst({ type: 'customUnsupported', value: 'hello' }), /Unsupported Markdown node/, 'unknown extensions need a node handler')
+  t.equal(tree.children[0].children[0].value, 'Updated prose.', 'fromMdast updates caller-owned nodes')
+  t.throws(() => nlp.fromMdast({ type: 'customUnsupported', value: 'hello' }), /Unsupported Markdown node/, 'unknown extensions need a node handler')
   t.end()
 })

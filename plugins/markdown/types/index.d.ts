@@ -77,7 +77,7 @@ export type MarkdownDocument = ReturnType<typeof nlp> & MarkdownMethods
 export interface MarkdownLib {
   fromMarkdown(text: string, options?: MarkdownOptions): MarkdownDocument
   /** Connect to caller-owned mdast nodes. No custom parser is invoked. */
-  fromAst(tree: MarkdownNode, options?: MarkdownOptions): MarkdownDocument
+  fromMdast(tree: MarkdownNode, options?: MarkdownOptions): MarkdownDocument
 }
 
 /** Use the result of nlp.plugin(markdown) as this type after registration. */

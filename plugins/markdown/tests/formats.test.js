@@ -42,8 +42,8 @@ test('markdown - tables default to skip', t => {
       },
     ],
   }
-  t.equal(nlp.fromAst(tree).text(), '', 'table omitted by default')
-  t.equal(nlp.fromAst(tree, { tables: 'inline' }).text(), 'cell', 'table text can be included')
-  t.ok(nlp.fromAst(tree, { tables: 'keep' }).text().includes('|'), 'kept table includes separators')
+  t.equal(nlp.fromMdast(tree).text(), '', 'table omitted by default')
+  t.equal(nlp.fromMdast(tree, { tables: 'inline' }).text(), 'cell', 'table text can be included')
+  t.ok(nlp.fromMdast(tree, { tables: 'keep' }).text().includes('|'), 'kept table includes separators')
   t.end()
 })

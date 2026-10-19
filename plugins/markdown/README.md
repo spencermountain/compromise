@@ -98,7 +98,7 @@ Registering the plugin adds the following methods:
 // we parse the markdown for you
 nlp.fromMarkdown('hello [world](./world)')
 // use your own parser to produce an mdast tree
-nlp.fromAst(tree)
+nlp.fromMdast(tree)
 
 // update the tree, after an edit
 doc.updateTree()
@@ -112,7 +112,7 @@ By default, the library supports the following Markdown forms:
 - [GitHub Flavored Markdown](https://github.com/micromark/micromark-extension-gfm) — _Tables, task lists, strikethrough, footnotes, and bare URLs_
 - [Frontmatter](https://github.com/micromark/micromark-extension-frontmatter) — _YAML (`---`) and TOML (`+++`) metadata blocks at the start of a document._
 
-To use another parser, pass its mdast tree to `nlp.fromAst(tree, options)`. This accepts supported Markdown node types, not arbitrary Unist trees. Custom node types require reader and serializer support.
+To use another parser, pass its mdast tree to `nlp.fromMdast(tree, options)`. This accepts supported Markdown node types, not arbitrary Unist trees. Custom node types require reader and serializer support.
 
 #### Configuration
 
@@ -142,7 +142,7 @@ const doc = nlp.fromMarkdown(md, {
 })
 ````
 
-Both `nlp.fromMarkdown(md, options)` and `nlp.fromAst(tree, options)` accept these modes:
+Both `nlp.fromMarkdown(md, options)` and `nlp.fromMdast(tree, options)` accept these modes:
 
 - `'skip'`: exclude the node and its descendants
 - `'inline'`: include readable content.

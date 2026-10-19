@@ -8,19 +8,22 @@ const opts = {
   // headings: 'skip',
 }
 
-let md = `## Walking to class
+let md = `
+- Apples are fresh.
+- Oranges are sweet.
+  - Lemons are sour.
 
-She **walked** to [school](https://school.org). He walked home.
+1. Open the notebook.
+2. Write a sentence.
 
-They walk*ed* together. We enjoy **strong words**, *gentle emphasis*, and **nested *formatting***.
-
-A punctuation example: foo *bar*! Another example: foo *bar!*.
-
-Visit [the library][library] or <https://example.org>. An escaped \*asterisk\* is ordinary text.
-
+> A thoughtful quotation.
+>
+> Another paragraph with **important words**.
+>
+> > A nested quotation.
   `
 
 // let md = readFile('full-page')
 
-const doc = nlp.fromMarkdown(md, opts)
+const doc = nlp.fromMarkdown(md, { lists: 'skip', quotations: 'skip' })
 console.log(doc.text())

@@ -26,3 +26,24 @@ Visit [the library][library] or https://example.org. An escaped asterisk is ordi
   t.equal(doc.text(), want, 'plaintext basic')
   t.end()
 })
+
+test('markdown - hide-headings', t => {
+  const md = `
+### A smaller heading
+
+#### Fourth level
+
+##### Fifth level
+
+###### Sixth level
+
+Setext heading
+--------------
+
+## Lists and quotations
+
+  `
+  const doc = nlp.fromMarkdown(md, { headings: 'skip' })
+  t.equal(doc.text(), '', 'hide-headings')
+  t.end()
+})

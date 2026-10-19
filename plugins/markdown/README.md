@@ -24,73 +24,102 @@
 <!-- spacer -->
 <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-### Usage
+This plugin lets you read, and modify a **markdown** document, using compromise.
+
+It uses the [unified/remark](https://unifiedjs.com/explore/package/remark/) parser, and aligns the compromise document with the AST nodes.
+
+When the document changes, it allows writing the modified document back to original markdown.
+
+There are admittedly some complexities, but first:
 
 ```js
 import nlp from 'compromise'
 import mdPlugin from 'compromise-markdown'
 nlp.plugin(mdPlugin)
 
-const md = 'She **walked** to [school](https://school.org)'
+const md = 'She **walks** to [school](./link)'
 const doc = nlp.fromMarkdown(md)
 
-doc.has('walked to') // true
+// match across a formatting block:
+doc.has('walks to')
+// true
 
-doc.verbs().toPresentTense()
+// convert the document
+doc.verbs().toPastTense()
+// write it back to the AST,
 doc.updateTree()
-
+// letsgoo
 doc.markdown()
-// 'She **walks** to [school](https://school.org)'
+// 'She **walked** to [school](./link)'
 ```
 
-### Default plaintext options
+<!-- spacer -->
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+### Usage
+
+applying the compromise plugin gives you the following methods:
+
+```js
+// we parse the markdown for you
+nlp.fromMarkdown('hello [world](./world)')
+//use your own remark workflow
+nlp.fromAst(tree)
+
+// update the tree, after an edit
+doc.updateTree()
+// output document back to markdown
+doc.markdown()
+```
+
+By default, the library supports the following Markdown forms:
+
+- [CommonMark](https://spec.commonmark.org/) — _Headings, paragraphs, emphasis, strong text, links, images, lists, blockquotes, code, thematic breaks, and raw HTML_.
+- [GitHub Flavored Markdown](https://github.com/micromark/micromark-extension-gfm) — _Tables, task lists, strikethrough, footnotes, and bare URLs_
+- [Frontmatter](https://github.com/micromark/micromark-extension-frontmatter) — _YAML (`---`) and TOML (`+++`) metadata blocks at the start of a document._
+
+If you want something more, you can generate a unist tree yourself and use `.fromTree()`.
+Note that some markdown syntaxes will gladly pass-through, and compromise wont mind having them.
+
+#### Configuration
+
+There are subjective decisions when making plaintext, and we've allowed configuring these carefully:
+
+````js
+const doc = nlp.fromMarkdown(md, {
+  headings: 'inline', // ### hello
+  strongs: 'inline', // **hello**
+  emphases: 'inline', // *hello*
+  deletions: 'inline', // ~~hello~~
+  links: 'inline', // [hello](./world)
+  blockquotes: 'inline', // > hello
+  lists: 'inline', // - hello
+  paragraphs: 'inline', // hello\nworld
+  tables: 'skip', // | Name |\n| --- |\n| hello |
+  codeBlocks: 'skip', // ``` ...
+  inlineCodes: 'skip', // `hello`
+  htmlBlocks: 'skip', // <b>hello</b>
+  images: 'skip', // ![hello](hello.jpg)
+  thematicBreaks: 'skip', // ---
+  breaks: 'skip', // hello \n
+  definitions: 'skip', // [hello]: https://example.com
+  footnoteDefinitions: 'inline', // [^hello]: A footnote explanation.
+  footnoteReferences: 'skip', // hello[^hello]
+  yamlBlocks: 'skip', // --- ...
+  tomlBlocks: 'skip', // +++ ...
+})
+````
 
 Both `nlp.fromMarkdown(md, options)` and `nlp.fromAst(tree, options)` accept these modes:
 
-- `'skip'`: exclude the node and its descendants from plaintext, preserving them in the tree.
-- `'inline'`: include readable content without Markdown wrappers, retaining block boundaries.
-- `'keep'`: include approximate Markdown syntax. Generated syntax is protected during write-back.
+- `'skip'`: exclude the node and its descendants
+- `'inline'`: include readable content.
+- `'keep'`: include re-constructed markdown syntax
 
-```js
-const doc = nlp.fromMarkdown(md, {
-  headings: 'inline',
-  strongs: 'inline',
-  emphases: 'inline',
-  deletions: 'inline',
-  links: 'inline',
-  blockquotes: 'inline',
-  lists: 'inline',
-  paragraphs: 'inline',
-  footnoteDefinitions: 'inline',
-  tables: 'skip',
-  codeBlocks: 'skip',
-  inlineCodes: 'skip',
-  htmlBlocks: 'skip',
-  images: 'skip',
-  definitions: 'skip',
-  thematicBreaks: 'skip',
-  breaks: 'skip',
-  footnoteReferences: 'skip',
-  yamlBlocks: 'skip',
-  tomlBlocks: 'skip',
-})
-```
+<!-- spacer -->
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-Option names are plural. `links` controls both links and link references; `images`
-controls both images and image references. The AST itself still uses singular node types.
-Legacy singular option names are accepted, but plural options take precedence.
-`true` and `false` remain aliases for `'keep'` and `'skip'`.
-
-List items inherit the list mode; table rows and cells inherit their parent mode unless
-overridden. Tables are skipped as a whole by default. Other node types default to
-`'inline'`. See [defaults.js](src/markdown/read-tree/defaults.js) for the complete mapping.
-
-Table options apply when the input AST contains table nodes; parsing GFM tables requires
-the corresponding Markdown parser extensions.
-
----
-
-## Details
+## Parser pedantics
 
 ### many nodes, one term:
 
@@ -138,3 +167,7 @@ Node C: " to school. He "
   completed: "She walked to school." → bind its Terms
   remainder: "He "                   → hold
 ```
+
+PRs welcome
+
+MIT

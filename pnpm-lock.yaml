@@ -48,6 +48,12 @@ catalogs:
     micromark-extension-gfm:
       specifier: ^3.0.0
       version: 3.0.0
+    nlcst-test:
+      specifier: ^4.0.0
+      version: 4.0.0
+    nlcst-to-string:
+      specifier: ^4.0.0
+      version: 4.0.0
     nlp-corpus:
       specifier: 4.4.0
       version: 4.4.0
@@ -63,6 +69,9 @@ catalogs:
     tape:
       specifier: 5.10.3
       version: 5.10.3
+    unist-util-inspect:
+      specifier: ^8.1.0
+      version: 8.1.0
 
 importers:
 
@@ -390,6 +399,12 @@ importers:
       cross-env:
         specifier: 'catalog:'
         version: 10.1.0
+      nlcst-test:
+        specifier: 'catalog:'
+        version: 4.0.0
+      nlcst-to-string:
+        specifier: 'catalog:'
+        version: 4.0.0
       rollup:
         specifier: 'catalog:'
         version: 4.64.8
@@ -402,6 +417,9 @@ importers:
       tape:
         specifier: 'catalog:'
         version: 5.10.3
+      unist-util-inspect:
+        specifier: 'catalog:'
+        version: 8.1.0
 
 packages:
 
@@ -693,6 +711,9 @@ packages:
 
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
+
+  '@types/nlcst@2.0.3':
+    resolution: {integrity: sha512-vSYNSDe6Ix3q+6Z7ri9lyWqgGhJTmzRjZRqyq15N0Z/1/UnVsno9G/N40NBijoYx2seFDIl0+B2mgAb9mezUCA==}
 
   '@types/node@26.6.5':
     resolution: {integrity: sha512-uMzsv9stDdofIZBx4UGh4Z9ZgXnGC9seRDscilBcTHAeOFk67MZg/k9bWVfO+bk4qZmG+l52hRnLwUiH2LnJTg==}
@@ -1397,6 +1418,9 @@ packages:
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
 
+  mapz@2.0.1:
+    resolution: {integrity: sha512-iusf49TIvCee35rRqAbTBMNhc3iSYflkRbzhxyuiXALO+cDlhVlPv3l4V9Hn109moI+2/6VVOMnBAgGn1xNyCw==}
+
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
 
@@ -1552,6 +1576,12 @@ packages:
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
+
+  nlcst-test@4.0.0:
+    resolution: {integrity: sha512-FhY0iXFdgl+ZidsnNQgognoV/SDrq8OcYz0euqdfWgXoySLxyFGwja5lUPzte3FtS0ebEUV3r4+kY7D0L+EIjQ==}
+
+  nlcst-to-string@4.0.0:
+    resolution: {integrity: sha512-YKLBCcUYKAg0FNlOBT6aI91qFmSiFKiluk655WzPF+DDMA02qIyy8uiRqI8QXtcFpEvll12LpL5MXqEmAZ+dcA==}
 
   nlp-corpus@4.4.0:
     resolution: {integrity: sha512-1vOdUcAoOi1p85iZTC5SZWiIB1H3sDQxgyb4wTF0bZ9QgAVSJjl/Bck0lC5sG4quFgJ6Bz2K5mTaknhBlfEmvw==}
@@ -1845,6 +1875,12 @@ packages:
 
   undici-types@8.9.0:
     resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
+
+  unist-util-assert@4.0.0:
+    resolution: {integrity: sha512-nbwm6surl6V5b43j5mdEICGFhuee3ZAmVpM7leHxDy3EGOBlDzoq0E7R/T4NmsRMPGJjqEC9Dr1oGPOHFbpG6Q==}
+
+  unist-util-inspect@8.1.0:
+    resolution: {integrity: sha512-mOlg8Mp33pR0eeFpo5d2902ojqFFOKMMG2hF8bmH7ZlhnmjFgh0NI3/ZDwdaBJNbvrS7LZFVrBVtIE9KZ9s7vQ==}
 
   unist-util-is@6.0.1:
     resolution: {integrity: sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==}
@@ -2149,6 +2185,10 @@ snapshots:
       '@types/unist': 3.0.3
 
   '@types/ms@2.1.0': {}
+
+  '@types/nlcst@2.0.3':
+    dependencies:
+      '@types/unist': 3.0.3
 
   '@types/node@26.6.5':
     dependencies:
@@ -2958,6 +2998,8 @@ snapshots:
 
   longest-streak@3.1.0: {}
 
+  mapz@2.0.1: {}
+
   markdown-table@3.0.4: {}
 
   math-intrinsics@1.1.0: {}
@@ -3317,6 +3359,18 @@ snapshots:
   ms@2.1.3: {}
 
   natural-compare@1.4.0: {}
+
+  nlcst-test@4.0.0:
+    dependencies:
+      '@types/nlcst': 2.0.3
+      '@types/unist': 3.0.3
+      mapz: 2.0.1
+      unist-util-assert: 4.0.0
+      zwitch: 2.0.4
+
+  nlcst-to-string@4.0.0:
+    dependencies:
+      '@types/nlcst': 2.0.3
 
   nlp-corpus@4.4.0: {}
 
@@ -3745,6 +3799,14 @@ snapshots:
       which-boxed-primitive: 1.1.1
 
   undici-types@8.9.0: {}
+
+  unist-util-assert@4.0.0:
+    dependencies:
+      '@types/unist': 3.0.3
+
+  unist-util-inspect@8.1.0:
+    dependencies:
+      '@types/unist': 3.0.3
 
   unist-util-is@6.0.1:
     dependencies:

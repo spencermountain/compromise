@@ -4,35 +4,53 @@ const connectNodes = (doc, nodes, binding) => {
   nodes.forEach(node => layout.set(node, []))
   let index = 0
   let cursor = 0
-  // Cursors only align original characters; they are never stored on a Term.
+  // Temporary source cursors align normalized text without changing AST values.
+  const current = () => {
+    for (; index < nodes.length && cursor === nodes[index].value.length; index += 1) {
+      cursor = 0
+    }
+    return nodes[index]
+  }
+  const append = (node, text, source) => {
+    const entries = layout.get(node)
+    const last = entries.at(-1)
+    if (source) {
+      // One word owns one part per contributing node, not one part per character.
+      if (last && typeof last !== 'string' && last.source === source) {
+        last.text += text
+      } else {
+        const part = { node, text, source }
+        source.parts.push(part)
+        entries.push(part)
+      }
+    } else if (typeof last === 'string') {
+      entries[entries.length - 1] += text
+    } else {
+      entries.push(text)
+    }
+    cursor += text.length
+  }
   const consume = (value, source, whitespace = false) => {
-    for (let remaining = value; remaining.length > 0;) {
-      const node = nodes[index]
+    for (let i = 0; i < value.length; i += 1) {
+      let node = current()
       // Some tokenizer paths invent trailing whitespace (for example, <3).
-      if (!node && whitespace && !remaining.trim()) {
+      if (!node && whitespace && !value.slice(i).trim()) {
         return true
       }
       if (!node) {
         return false
       }
-      const text = node.value.slice(cursor, cursor + remaining.length)
-      if (!remaining.startsWith(text)) {
-        return false
-      }
-      if (text) {
-        if (source) {
-          const part = { node, text, source }
-          source.parts.push(part)
-          layout.get(node).push(part)
-        } else {
-          layout.get(node).push(text)
+      if (whitespace && value[i] === ' ' && /[\t\n\f\r ]/.test(node.value[cursor])) {
+        // A single NLP space can cover a source run spanning several text nodes.
+        for (; node && /[\t\n\f\r ]/.test(node.value[cursor]); node = current()) {
+          const text = node.value.slice(cursor).match(/^[\t\n\f\r ]+/)[0]
+          append(node, text, null)
         }
-      }
-      remaining = remaining.slice(text.length)
-      cursor += text.length
-      if (cursor === node.value.length) {
-        index += 1
-        cursor = 0
+      } else {
+        if (node.value[cursor] !== value[i]) {
+          return false
+        }
+        append(node, value[i], source)
       }
     }
     return true

@@ -6,6 +6,9 @@ const blocks = new Set([
   'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'tbody', 'td', 'tfoot',
   'th', 'thead', 'tr', 'ul', 'br',
 ])
-const skipped = new Set(['head', 'script', 'style', 'template', 'table', 'pre', 'code'])
+const skipped = new Set([
+  'head', 'script', 'style', 'template', 'table', 'pre', 'code',
+  'select', 'textarea', 'svg', 'math',
+])
 
 export { blocks, skipped }

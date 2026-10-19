@@ -26,6 +26,9 @@ catalog:
   mdast-util-frontmatter: ^2.0.1
   hast-util-from-html: ^2.0.3
   hast-util-to-html: ^9.0.5
+  nlcst-test: ^4.0.0
+  nlcst-to-string: ^4.0.0
+  unist-util-inspect: ^8.1.0
 
 linkWorkspacePackages: false
 

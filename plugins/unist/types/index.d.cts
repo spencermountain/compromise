@@ -6,6 +6,11 @@ declare namespace plugin {
   export type Root = types.Root
   export type Options = types.Options
   export type UnistMethods = types.UnistMethods
+  export type AstNode = types.AstNode
+  export type ImportOptions = types.ImportOptions
+  export type UnistDocument = types.UnistDocument
+  export type UnistLib = types.UnistLib
+  export type UnistNlp = types.UnistNlp
 }
 
 export = plugin

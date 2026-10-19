@@ -45,14 +45,18 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "catalog:",
     "@rollup/plugin-terser": "catalog:",
+    "cross-env": "catalog:",
+    "nlcst-test": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
+    "tap-dancer": "catalog:",
     "tape": "catalog:",
-    "cross-env": "catalog:",
-    "tap-dancer": "catalog:"
+    "nlcst-to-string": "catalog:",
+    "unist-util-inspect": "catalog:"
   },
   "peerDependencies": {
     "compromise": "workspace:^"
   },
-  "unpkg": "./builds/compromise-unist.min.js"
+  "unpkg": "./builds/compromise-unist.min.js",
+  "dependencies": {}
 }

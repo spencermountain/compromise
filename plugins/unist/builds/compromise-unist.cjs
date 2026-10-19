@@ -51,17 +51,18 @@
   const whitespace = /^\s/u;
   const source = /^(?:https?:\/\/|www\.)\S+$/i;
 
-  const split = (text, make) => (text.match(pieces) || []).map(value => {
-    let type = 'SymbolNode';
-    if (whitespace.test(value)) {
-      type = 'WhiteSpaceNode';
-    } else if (punctuation.test(value)) {
-      type = 'PunctuationNode';
-    } else if (letters.test(value)) {
-      type = 'TextNode';
-    }
-    return make.literal(type, value)
-  });
+  const split = (text, make) =>
+    (text.match(pieces) || []).map(value => {
+      let type = 'SymbolNode';
+      if (whitespace.test(value)) {
+        type = 'WhiteSpaceNode';
+      } else if (punctuation.test(value)) {
+        type = 'PunctuationNode';
+      } else if (letters.test(value)) {
+        type = 'TextNode';
+      }
+      return make.literal(type, value)
+    });
 
   const terms = (sentence, make, tags) => {
     const nodes = [];
@@ -149,15 +150,98 @@
     return make.parent('RootNode', paragraphs)
   };
 
-  const api = View => {
-    View.prototype.toAst = function (options) {
-      return toAst(this, options)
+  const literals = ['TextNode', 'PunctuationNode', 'WhiteSpaceNode', 'SymbolNode', 'SourceNode'];
+  const children = {
+    RootNode: ['ParagraphNode', 'SentenceNode', 'WordNode', ...literals],
+    ParagraphNode: ['SentenceNode', 'WhiteSpaceNode', 'SourceNode'],
+    SentenceNode: ['WordNode', 'PunctuationNode', 'WhiteSpaceNode', 'SymbolNode', 'SourceNode'],
+    WordNode: ['TextNode', 'PunctuationNode', 'SymbolNode', 'SourceNode'],
+  };
+
+  // Read values, not positions: callers may have edited the tree.
+  const read = (tree, useTags) => {
+    const parts = [];
+    const spans = [];
+    const ancestors = new Set();
+    let offset = 0;
+    const visit = node => {
+      if (!node || typeof node !== 'object' || ancestors.has(node)) {
+        throw new TypeError('Invalid NLCST node or cyclic tree')
+      }
+      const start = offset;
+      if (Object.hasOwn(children, node.type)) {
+        if (!Array.isArray(node.children)) {
+          throw new TypeError(`${node.type} requires children`)
+        }
+        ancestors.add(node);
+        node.children.forEach(child => {
+          if (!child || !children[node.type].includes(child.type)) {
+            throw new TypeError(`Invalid child of ${node.type}`)
+          }
+          visit(child);
+        });
+        ancestors.delete(node);
+      } else if (literals.includes(node.type) && typeof node.value === 'string') {
+        parts.push(node.value);
+        offset += node.value.length;
+      } else {
+        throw new TypeError('Invalid NLCST node type or literal value')
+      }
+      const tags = node.data?.compromise?.tags;
+      if (useTags && node.type === 'WordNode' && tags !== undefined) {
+        if (!Array.isArray(tags) || tags.some(tag => typeof tag !== 'string' || !tag.trim())) {
+          throw new TypeError('WordNode tags must be an array of nonempty strings')
+        }
+        spans.push({ start, end: offset, tags });
+      }
     };
+    if (tree?.type !== 'RootNode') {
+      throw new TypeError('fromAst requires an NLCST RootNode')
+    }
+    visit(tree);
+    return { text: parts.join(''), spans }
+  };
+
+  // Match written terms to word spans, without relying on token counts or spelling.
+  const applyTags = (doc, spans) => {
+    let offset = 0;
+    let index = 0;
+    doc.docs.forEach((sentence, n) => {
+      sentence.forEach((term, i) => {
+        const start = offset + term.pre.length;
+        const end = start + term.text.length;
+        offset = end + term.post.length;
+        if (!term.text) {
+          return
+        }
+        for (; index < spans.length && spans[index].end <= start; index += 1) {
+          // Discard spans behind this term.
+        }
+        for (let s = index; s < spans.length && spans[s].start < end; s += 1) {
+          if (spans[s].start <= start && spans[s].end >= end) {
+            doc.update([[n, i, i + 1]]).tag(spans[s].tags, 'fromAst');
+          }
+        }
+      });
+    });
+  };
+
+  const fromAst = function (tree, options = {}) {
+    const { text, spans } = read(tree, options.tags !== false);
+    const doc = this(text);
+    applyTags(doc, spans);
+    return doc
   };
 
   var plugin = {
     version,
-    api,
+    lib: { fromAst },
+    api: function (View) {
+      // turn compromise document into nlcst AST
+      View.prototype.toAst = function (options) {
+        return toAst(this, options)
+      };
+    },
   };
 
   return plugin;

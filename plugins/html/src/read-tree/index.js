@@ -18,7 +18,9 @@ const readTree = function (tree, nlp, options = {}) {
   }
   groups.forEach(group => {
     // Finish parsing before binding: contraction processing may replace Term objects.
-    const part = nlp(group.map(node => node.value).join(''))
+    // Collapse HTML source whitespace across inline nodes, leaving NBSP intact.
+    const text = group.map(node => node.value).join('').replace(/[\t\n\f\r ]+/g, ' ')
+    const part = nlp(text)
     connectNodes(part, group, binding)
     if (part.document.length) {
       // Readable plaintext separation only; write-back retains original AST separators.

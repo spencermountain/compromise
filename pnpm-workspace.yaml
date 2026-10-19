@@ -29,6 +29,7 @@ catalog:
   nlcst-test: ^4.0.0
   nlcst-to-string: ^4.0.0
   unist-util-inspect: ^8.1.0
+  parse-english: ^7.0.0
 
 linkWorkspacePackages: false
 

@@ -56,7 +56,7 @@ test('fromAst round-trips current exported text', t => {
   t.end()
 })
 
-test('fromAst restores word tags by text spans', t => {
+test('fromAst restores word tags directly', t => {
   const ast = root([sentence([
     word('same', ['FirstMarker']), literal('WhiteSpaceNode', ' '),
     word('same', ['SecondMarker']), literal('WhiteSpaceNode', ' '),
@@ -70,7 +70,7 @@ test('fromAst restores word tags by text spans', t => {
   t.ok(doc.terms().eq(0).has('#FirstMarker'), 'first occurrence tagged')
   t.notOk(doc.terms().eq(1).has('#FirstMarker'), 'first tag does not leak')
   t.ok(doc.terms().eq(1).has('#SecondMarker'), 'second occurrence tagged')
-  t.equal(doc.match('#PhraseMarker+').text(), 'two words', 'all terms inside a word span tagged')
+  t.equal(doc.match('#PhraseMarker+').text(), 'two words', 'word with spaces retains its tag')
   t.notOk(nlp.fromAst(ast, { tags: false }).has('#FirstMarker'), 'tag restoration can be disabled')
   ast.children[0].children[0].children[0].data.compromise.tags.push('LaterMarker')
   t.notOk(doc.has('#LaterMarker'), 'imported tags detached')
@@ -113,13 +113,13 @@ test('fromAst restores tags after Unicode and contraction spans', t => {
     word('go', ['LastMarker']), literal('PunctuationNode', '.'),
   ])])
   const doc = nlp.fromAst(ast)
-  t.ok(doc.match('can').has('#ContractionMarker'), 'written contraction term receives tags')
+  t.ok(doc.match("can't").has('#ContractionMarker'), 'written contraction term receives tags')
   t.equal(doc.match('#LastMarker').text(), 'go', 'later term uses UTF-16 offsets')
   t.notOk(doc.match('go').has('#ContractionMarker'), 'contraction tag stays within its span')
   t.end()
 })
 
-test('fromAst runs normal parsing and restores custom tags on full builds', async t => {
+test('fromAst restores supplied tags without inference on full builds', async t => {
   const production = process.env.TESTENV === 'prod'
   const nlpPath = production ? '../../../builds/three/compromise-three.mjs' : '../../../src/three.js'
   const pluginPath = production ? '../builds/compromise-unist.mjs' : '../src/plugin.js'
@@ -133,6 +133,6 @@ test('fromAst runs normal parsing and restores custom tags on full builds', asyn
   t.ok(restored.has('#Noun'), 'normal tags available')
   const plain = full.fromAst(original.toAst(), { tags: false })
   t.notOk(plain.has('#RoundTripMarker'), 'custom tags skipped')
-  t.ok(plain.has('#Noun'), 'tags false still parses the text normally')
+  t.notOk(plain.has('#Noun'), 'tags false does not infer tags')
   t.end()
 })

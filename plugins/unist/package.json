@@ -47,16 +47,16 @@
     "@rollup/plugin-terser": "catalog:",
     "cross-env": "catalog:",
     "nlcst-test": "catalog:",
+    "nlcst-to-string": "catalog:",
+    "parse-english": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
     "tap-dancer": "catalog:",
     "tape": "catalog:",
-    "nlcst-to-string": "catalog:",
     "unist-util-inspect": "catalog:"
   },
   "peerDependencies": {
     "compromise": "workspace:^"
   },
-  "unpkg": "./builds/compromise-unist.min.js",
-  "dependencies": {}
+  "unpkg": "./builds/compromise-unist.min.js"
 }

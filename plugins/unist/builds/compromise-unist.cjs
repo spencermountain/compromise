@@ -64,7 +64,7 @@
       return make.literal(type, value)
     });
 
-  const terms = (sentence, make, tags) => {
+  const terms$1 = (sentence, make, tags) => {
     const nodes = [];
     const append = text => {
       split(text, make).forEach(node => {
@@ -135,7 +135,7 @@
           run = [];
         }
       };
-      terms(sentence, make, options.tags !== false).forEach(node => {
+      terms$1(sentence, make, options.tags !== false).forEach(node => {
         if (node.type === 'WhiteSpaceNode' && blankLine.test(node.value.replace(/\r\n?/g, '\n'))) {
           flushSentence();
           paragraph.push(node);
@@ -150,6 +150,43 @@
     return make.parent('RootNode', paragraphs)
   };
 
+  const terms = () => {
+    const document = [];
+    let sentence = [];
+    let prefix = '';
+    const word = (text, tags = []) => {
+      sentence.push({ text, pre: prefix, post: '', tags: new Set(tags) });
+      prefix = '';
+    };
+    const affix = (value, inSentence) => {
+      let previous = sentence.at(-1);
+      if (!previous && !inSentence) {
+        previous = document.at(-1)?.at(-1);
+      }
+      if (previous) {
+        previous.post += value;
+      } else {
+        prefix += value;
+      }
+    };
+    const flush = (force = false) => {
+      // An empty carrier retains whitespace-only or empty sentences.
+      if (!sentence.length && (prefix || force)) {
+        word('');
+      }
+      if (sentence.length) {
+        document.push(sentence);
+        sentence = [];
+      }
+    };
+    const start = () => {
+      if (sentence.length) {
+        flush();
+      }
+    };
+    return { document, word, affix, flush, start }
+  };
+
   const literals = ['TextNode', 'PunctuationNode', 'WhiteSpaceNode', 'SymbolNode', 'SourceNode'];
   const children = {
     RootNode: ['ParagraphNode', 'SentenceNode', 'WordNode', ...literals],
@@ -158,78 +195,68 @@
     WordNode: ['TextNode', 'PunctuationNode', 'SymbolNode', 'SourceNode'],
   };
 
-  // Read values, not positions: callers may have edited the tree.
+  // Construct terms from node boundaries; source positions may be stale.
   const read = (tree, useTags) => {
-    const parts = [];
-    const spans = [];
-    const ancestors = new Set();
-    let offset = 0;
-    const visit = node => {
-      if (!node || typeof node !== 'object' || ancestors.has(node)) {
-        throw new TypeError('Invalid NLCST node or cyclic tree')
+    const output = terms();
+    const visit = (node, parent) => {
+      if (!node || typeof node !== 'object') {
+        throw new TypeError('Invalid NLCST node')
       }
-      const start = offset;
       if (Object.hasOwn(children, node.type)) {
         if (!Array.isArray(node.children)) {
           throw new TypeError(`${node.type} requires children`)
         }
-        ancestors.add(node);
+        const boundary = node.type === 'ParagraphNode' || node.type === 'SentenceNode';
+        if (boundary) {
+          output.start();
+        }
         node.children.forEach(child => {
           if (!child || !children[node.type].includes(child.type)) {
             throw new TypeError(`Invalid child of ${node.type}`)
           }
-          visit(child);
+          visit(child, node.type);
         });
-        ancestors.delete(node);
+        if (node.type === 'WordNode') {
+          let tags = [];
+          if (useTags && node.data?.compromise?.tags !== undefined) {
+            tags = node.data.compromise.tags;
+            if (!Array.isArray(tags) || tags.some(tag => typeof tag !== 'string' || !tag.trim())) {
+              throw new TypeError('WordNode tags must be an array of nonempty strings')
+            }
+          }
+          output.word(node.children.map(child => child.value).join(''), tags);
+        }
+        if (boundary) {
+          output.flush(node.type === 'SentenceNode');
+        }
       } else if (literals.includes(node.type) && typeof node.value === 'string') {
-        parts.push(node.value);
-        offset += node.value.length;
+        // Word children are combined into exactly one term by their parent.
+        if (parent === 'WordNode') {
+          return
+        }
+        if (node.type === 'WhiteSpaceNode' || node.type === 'PunctuationNode') {
+          output.affix(node.value, parent === 'SentenceNode');
+        } else {
+          output.word(node.value);
+        }
       } else {
         throw new TypeError('Invalid NLCST node type or literal value')
-      }
-      const tags = node.data?.compromise?.tags;
-      if (useTags && node.type === 'WordNode' && tags !== undefined) {
-        if (!Array.isArray(tags) || tags.some(tag => typeof tag !== 'string' || !tag.trim())) {
-          throw new TypeError('WordNode tags must be an array of nonempty strings')
-        }
-        spans.push({ start, end: offset, tags });
       }
     };
     if (tree?.type !== 'RootNode') {
       throw new TypeError('fromAst requires an NLCST RootNode')
     }
     visit(tree);
-    return { text: parts.join(''), spans }
-  };
-
-  // Match written terms to word spans, without relying on token counts or spelling.
-  const applyTags = (doc, spans) => {
-    let offset = 0;
-    let index = 0;
-    doc.docs.forEach((sentence, n) => {
-      sentence.forEach((term, i) => {
-        const start = offset + term.pre.length;
-        const end = start + term.text.length;
-        offset = end + term.post.length;
-        if (!term.text) {
-          return
-        }
-        for (; index < spans.length && spans[index].end <= start; index += 1) {
-          // Discard spans behind this term.
-        }
-        for (let s = index; s < spans.length && spans[s].start < end; s += 1) {
-          if (spans[s].start <= start && spans[s].end >= end) {
-            doc.update([[n, i, i + 1]]).tag(spans[s].tags, 'fromAst');
-          }
-        }
-      });
-    });
+    output.flush();
+    return output.document
   };
 
   const fromAst = function (tree, options = {}) {
-    const { text, spans } = read(tree, options.tags !== false);
-    const doc = this(text);
-    applyTags(doc, spans);
+    const document = read(tree, options.tags !== false);
+    const doc = this('');
+    doc.document = document;
+    // Initialize matching metadata without tagger or contraction hooks.
+    doc.compute(['normal', 'index', 'id']);
     return doc
   };
 

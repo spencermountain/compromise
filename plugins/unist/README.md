@@ -122,11 +122,48 @@ doc.match('#Verb').text()
 // 'afford'
 ```
 
+The tree is taken faithfully - and its tokenization decisions are respected, even if it is not what compromise would have preferred.
+
 If the AST comes from compromise, it will grab the tags for the terms, and set them automatically.
-If not, you may want to run `.tagger()`
+If not, you may want to run `.tagger()` on the document, after creating it:
 
 ```js
-const otherTree
+import { ParseEnglish } from 'parse-english'
+import nlp from 'compromise'
+import plugin from 'compromise-unist'
+nlp.plugin(plugin)
+
+// use wooorm's parser
+const tree = new ParseEnglish().parse(`wow windows! I don't think I can afford this place`)
+// ship it to compromise (no tags)
+const doc = nlp.fromTree(tree)
+// ╭─────────
+// │ 'wow'      -
+// │ 'windows'  -
+// ╭─────────
+// │ 'I'        -
+// │ 'don't'    -
+// │ 'think'    -
+// │ 'I'        -
+// │ 'can'      -
+// │ 'afford'   -
+// │ 'this'     -
+// │ 'place'    -
+
+// (tag it)
+doc.tagger()
+// ╭─────────
+// │ 'wow'      - Expression
+// │ 'windows'  - Noun, Plural
+// ╭─────────
+// │ 'I'        - Noun, Pronoun
+// │ 'don't'    - Verb, PresentTense, Infinitive
+// │ 'think'    - Verb, PresentTense, Infinitive
+// │ 'I'        - Noun, Pronoun
+// │ 'can'      - Verb, Modal, Auxiliary
+// │ 'afford'   - Verb, PresentTense, Infinitive
+// │ 'this'     - Determiner
+// │ 'place'    - Noun, Singular
 ```
 
 PRs welcome

@@ -6,7 +6,7 @@ const update = doc => {
     throw new Error('This document is not connected to an HTML tree')
   }
   const { tree, nodes, values, layout, terms } = unist
-  const { nodes: current, groups } = collect(tree, unist.readOptions)
+  const { nodes: current, groups } = collect(tree, unist.readOptions, unist.attributes)
   // Moving text across block boundaries also invalidates the imported structure.
   const sameGroups = groups.length === unist.groups.length && groups.every((group, i) =>
     group.length === unist.groups[i].length && group.every((node, j) => node === unist.groups[i][j]))

@@ -1,6 +1,15 @@
 import blocks from './blocks.js'
+import attributeSource from './_lib.js'
 
-const walk = (tree, options = {}) => {
+// HAST uses camelCase property names for HTML attributes such as aria-label.
+const textAttributes = [
+  ['altText', 'alt'],
+  ['titleAttribute', 'title'],
+  ['ariaLabel', 'ariaLabel'],
+  ['placeholder', 'placeholder'],
+]
+
+const walk = (tree, options = {}, attributes = new WeakMap()) => {
   const nodes = []
   const groups = []
   let group = []
@@ -9,6 +18,11 @@ const walk = (tree, options = {}) => {
       groups.push(group)
       group = []
     }
+  }
+  const separate = node => {
+    flush()
+    nodes.push(node)
+    groups.push([node])
   }
   // Iterative traversal avoids growing the call stack for deeply nested markup.
   const stack = [{ node: tree }]
@@ -23,8 +37,11 @@ const walk = (tree, options = {}) => {
       group.push(node)
       continue
     }
-    // Comments and doctypes have no visible text and must not split inline words.
+    // Disabled comments stay transparent so walk<!-- note -->ed remains one word.
     if (node.type === 'comment' || node.type === 'doctype') {
+      if (node.type === 'comment' && options.comments) {
+        separate(node)
+      }
       continue
     }
     if (node.type !== 'root' && node.type !== 'element') {
@@ -36,6 +53,13 @@ const walk = (tree, options = {}) => {
       // Omitted subtrees are barriers, so their neighbours cannot form one word.
       flush()
       continue
+    }
+    if (node.type === 'element') {
+      textAttributes.forEach(([option, property]) => {
+        if (options[option] && typeof node.properties?.[property] === 'string') {
+          separate(attributeSource(node, property, attributes))
+        }
+      })
     }
     if (blocks.has(node.tagName)) {
       flush()

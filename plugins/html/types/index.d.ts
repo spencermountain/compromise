@@ -6,6 +6,16 @@ export interface HtmlOptions {
   [tagName: string]: boolean | undefined
   /** Defaults to true; use false to parse a complete HTML document. */
   fragment?: boolean
+  /** Include alt attributes as separate prose blocks. Defaults to false. */
+  altText?: boolean
+  /** Include title attributes as separate prose blocks. Defaults to false. */
+  titleAttribute?: boolean
+  /** Include aria-label attributes as separate prose blocks. Defaults to false. */
+  ariaLabel?: boolean
+  /** Include placeholder attributes as separate prose blocks. Defaults to false. */
+  placeholder?: boolean
+  /** Include comments as separate prose blocks. Defaults to false. */
+  comments?: boolean
 }
 
 export interface HtmlOutputOptions {

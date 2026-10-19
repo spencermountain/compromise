@@ -2,6 +2,11 @@
 // Skipped elements remain in the source tree and serialized HTML.
 const defaults = {
   fragment: true, // Parser option: false parses a complete document.
+  altText: false, // Include alt attributes as separate prose blocks.
+  titleAttribute: false,
+  ariaLabel: false,
+  placeholder: false,
+  comments: false, // Include comment values as separate prose blocks.
   h1: true,
   h2: true,
   h3: true,
@@ -32,6 +37,9 @@ const defaults = {
   textarea: false,
   svg: false,
   math: false,
+  audio: false,
+  video: false,
+  button: false,
 }
 
 export default defaults

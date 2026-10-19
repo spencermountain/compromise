@@ -76,6 +76,53 @@ The default, `doc.toHtml()` (or `{ format: false }`), keeps existing source whit
 
 #### Configuration
 
+Some subjective, but sensible decisions have been made regarding which html tags should be used to generate plaintext for a compromise document.
+
+You can configure them easily:
+
+```js
+let doc = nlp.fromHtml('hello <button>world</button>')
+console.log(doc.text())
+// 'hello'
+
+// turn-off tags we have on:
+doc = nlp.fromHtml('<h3>hello world</h3>', { h3: false })
+console.log(doc.text())
+// ''
+
+// turn-on tags have have off:
+doc = nlp.fromHtml('hello <button>world</button>', { button: true })
+console.log(doc.text())
+// 'hello world'
+```
+
+we currently disable text from these elements, but allow everthing else:
+
+```yaml
+head: false,
+script: false,
+style: false,
+template: false,
+table: false,
+pre: false,
+code: false,
+select: false,
+textarea: false,
+svg: false,
+math: false,
+audio: false,
+video: false,
+button: false,
+comments: false,
+# other, potentially-useful plaintext sources:
+altText: false,
+titleAttribute: false,
+ariaLabel: false,
+placeholder: false,
+```
+
+there's also these settings:
+
 ```js
 // passing {fragment: false} ensures the input is wrapped in html/body tags
 const snippet = nlp.fromHtml('<p>Hello world.</p>', { fragment: false })
@@ -98,7 +145,6 @@ snippet.toHtml({ format: true })
 
 - Inline elements contribute their text without markup. Links contribute their labels, not their destinations.
 - Block elements such as paragraphs, headings, list items, and blockquotes separate prose. `<br>` and `<hr>` also create boundaries.
-- `head`, `script`, `style`, `template`, `table`, `pre`, `code`, `select`, `textarea`, `svg`, and `math` subtrees are excluded from the linguistic text.
 - Elements with the `hidden` attribute are excluded. CSS and browser layout are not evaluated.
 - Attributes such as `alt`, `title`, and form values are excluded. Comments and doctypes are preserved without contributing text.
 - Character references are decoded for matching and escaped as needed during serialization.
@@ -179,7 +225,7 @@ crossing text nodes are rejected when applying the edit.
 - Write-back validates all edits before changing text-node values. A failed update leaves the AST unchanged.
 - Original separators are retained; punctuation-only changes are not written back.
 - Cloned compromise documents are detached from the source tree.
-- Serialization preserves the parsed structure, not the exact original source spelling. Entity spelling, quote styles, and malformed markup may change.
+- Serialization preserves the parsed structure, but entity spelling, quote styles, and malformed markup may change.
 
 PRs welcome
 

@@ -5,11 +5,14 @@ import defaults from './defaults.js'
 const readTree = function (tree, nlp, options = {}) {
   // Snapshot read options so later caller changes cannot alter write-back traversal.
   const readOptions = { ...defaults, ...options }
-  const { nodes, groups } = walk(tree, readOptions)
+  // Attribute sources keep stable identities for validation on subsequent updates.
+  const attributes = new WeakMap()
+  const { nodes, groups } = walk(tree, readOptions, attributes)
   const doc = nlp.tokenize('')
   const binding = {
     tree,
     readOptions,
+    attributes,
     nodes,
     groups,
     layout: new Map(),

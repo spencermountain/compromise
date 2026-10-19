@@ -16152,7 +16152,37 @@
     'th', 'thead', 'tr', 'ul', 'br',
   ]);
 
-  const walk = (tree, options = {}) => {
+  // Present an attribute as a text source without adding nodes to the HAST tree.
+  const attributeSource = (node, property, sources) => {
+    if (!sources.has(node)) {
+      sources.set(node, new Map());
+    }
+    const attributes = sources.get(node);
+    if (!attributes.has(property)) {
+      attributes.set(property, {
+        type: 'attribute',
+        node,
+        property,
+        get value() {
+          return node.properties[property]
+        },
+        set value(text) {
+          node.properties[property] = text;
+        },
+      });
+    }
+    return attributes.get(property)
+  };
+
+  // HAST uses camelCase property names for HTML attributes such as aria-label.
+  const textAttributes = [
+    ['altText', 'alt'],
+    ['titleAttribute', 'title'],
+    ['ariaLabel', 'ariaLabel'],
+    ['placeholder', 'placeholder'],
+  ];
+
+  const walk = (tree, options = {}, attributes = new WeakMap()) => {
     const nodes = [];
     const groups = [];
     let group = [];
@@ -16161,6 +16191,11 @@
         groups.push(group);
         group = [];
       }
+    };
+    const separate = node => {
+      flush();
+      nodes.push(node);
+      groups.push([node]);
     };
     // Iterative traversal avoids growing the call stack for deeply nested markup.
     const stack = [{ node: tree }];
@@ -16175,8 +16210,11 @@
         group.push(node);
         continue
       }
-      // Comments and doctypes have no visible text and must not split inline words.
+      // Disabled comments stay transparent so walk<!-- note -->ed remains one word.
       if (node.type === 'comment' || node.type === 'doctype') {
+        if (node.type === 'comment' && options.comments) {
+          separate(node);
+        }
         continue
       }
       if (node.type !== 'root' && node.type !== 'element') {
@@ -16188,6 +16226,13 @@
         // Omitted subtrees are barriers, so their neighbours cannot form one word.
         flush();
         continue
+      }
+      if (node.type === 'element') {
+        textAttributes.forEach(([option, property]) => {
+          if (options[option] && typeof node.properties?.[property] === 'string') {
+            separate(attributeSource(node, property, attributes));
+          }
+        });
       }
       if (blocks.has(node.tagName)) {
         flush();
@@ -16294,6 +16339,11 @@
   // Skipped elements remain in the source tree and serialized HTML.
   const defaults = {
     fragment: true, // Parser option: false parses a complete document.
+    altText: false, // Include alt attributes as separate prose blocks.
+    titleAttribute: false,
+    ariaLabel: false,
+    placeholder: false,
+    comments: false, // Include comment values as separate prose blocks.
     h1: true,
     h2: true,
     h3: true,
@@ -16324,16 +16374,22 @@
     textarea: false,
     svg: false,
     math: false,
+    audio: false,
+    video: false,
+    button: false,
   };
 
   const readTree = function (tree, nlp, options = {}) {
     // Snapshot read options so later caller changes cannot alter write-back traversal.
     const readOptions = { ...defaults, ...options };
-    const { nodes, groups } = walk(tree, readOptions);
+    // Attribute sources keep stable identities for validation on subsequent updates.
+    const attributes = new WeakMap();
+    const { nodes, groups } = walk(tree, readOptions, attributes);
     const doc = nlp.tokenize('');
     const binding = {
       tree,
       readOptions,
+      attributes,
       nodes,
       groups,
       layout: new Map(),
@@ -16411,7 +16467,7 @@
       throw new Error('This document is not connected to an HTML tree')
     }
     const { tree, nodes, values, layout, terms } = unist;
-    const { nodes: current, groups } = walk(tree, unist.readOptions);
+    const { nodes: current, groups } = walk(tree, unist.readOptions, unist.attributes);
     // Moving text across block boundaries also invalidates the imported structure.
     const sameGroups = groups.length === unist.groups.length && groups.every((group, i) =>
       group.length === unist.groups[i].length && group.every((node, j) => node === unist.groups[i][j]));

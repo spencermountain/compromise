@@ -12,7 +12,8 @@ test('markdown - full page reading', t => {
   t.ok(doc.has('nested quotation'), 'reads nested blockquotes')
   t.ok(doc.has('farewellToken'), 'reaches the end of the document')
   t.notOk(doc.has('alpha Standalone'), 'paragraph boundaries prevent cross-block matches')
-  const excluded = ['inlineSecret', 'fencedSecret', 'indentedSecret', 'imageSecret', 'referenceImageSecret', 'htmlSecret']
+  t.ok(doc.has('inlineSecret'), 'inline code is included by default')
+  const excluded = ['fencedSecret', 'indentedSecret', 'imageSecret', 'referenceImageSecret', 'htmlSecret']
   excluded.forEach(word => {
     t.notOk(doc.has(word), `${word} is excluded by default`)
   })

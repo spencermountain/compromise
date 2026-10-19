@@ -1,14 +1,14 @@
 {
   "name": "compromise-markdown",
   "version": "0.0.1",
-  "description": "AST input support for compromise",
+  "description": "parse and transform text inside markdown",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/spencermountain/compromise.git",
-    "directory": "plugins/unist"
+    "directory": "plugins/markdown"
   },
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/unist",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/markdown",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
   "exports": {

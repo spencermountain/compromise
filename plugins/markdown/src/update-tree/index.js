@@ -28,8 +28,16 @@ const update = doc => {
     ),
   ]
   const allTerms = doc.document.flat()
+  const present = new Set(allTerms)
+  // Internal and unalignable terms may pass through, but must remain untouched.
+  unist.protectedTerms.forEach((original, term) => {
+    if (!present.has(term) || term.text !== original.text || term.implicit !== original.implicit) {
+      throw new Error('Cannot update tree: an implicit or unalignable term was edited')
+    }
+  })
+  const visible = allTerms.filter(term => !unist.protectedTerms.has(term) || terms.get(term)?.parts.length)
   const words = new Map()
-  allTerms.forEach((term, i) => {
+  visible.forEach((term, i) => {
     const source = terms.get(term)
     if (!source) {
       throw new Error('Cannot update tree: inserted or replaced text has ambiguous ownership')
@@ -43,7 +51,7 @@ const update = doc => {
     }
     words.set(source, term.text)
   })
-  if (allTerms.length !== expected.length) {
+  if (visible.length !== expected.length) {
     throw new Error('Cannot update tree: deleted words require structural editing')
   }
   // Literal separators stay as imported; punctuation-only edits are deliberately ignored.

@@ -22076,6 +22076,19 @@
     tomlBlocks: 'skip',
   };
 
+  // mdast uses `link` for explicit links and autolinks. Parser positions distinguish
+  // bare/angle links from [labels](destinations), even when their visible text agrees.
+  const isAutolink = node => {
+    if (node.type !== 'link' || node.children?.length !== 1 || node.children[0].type !== 'text') {
+      return false
+    }
+    const outer = node.position;
+    const inner = node.children[0].position;
+    const start = inner?.start.offset - outer?.start.offset;
+    const end = outer?.end.offset - inner?.end.offset;
+    return (start === 0 && end === 0) || (start === 1 && end === 1)
+  };
+
   // Public options describe collections; AST node types remain singular.
   const optionNames = {
     text: 'texts',
@@ -22107,9 +22120,22 @@
     toml: 'tomlBlocks',
   };
 
-  const modeFor = (type, options, inherited) => {
+  const modeFor = (node, options, inherited) => {
+    const { type } = node;
     const name = optionNames[type];
-    let mode = options[name] ?? options[type] ?? inherited ?? defaults[name] ?? 'inline';
+    let group;
+    if (type === 'footnoteDefinition' || type === 'footnoteReference') {
+      group = options.footnotes;
+    } else if (type === 'yaml' || type === 'toml') {
+      group = options.frontmatter;
+    }
+    let specific = options[name] ?? options[type];
+    if (type === 'listItem' && typeof node.checked === 'boolean') {
+      specific = options.taskLists ?? specific;
+    } else if (isAutolink(node)) {
+      specific = options.autolinks ?? specific;
+    }
+    let mode = specific ?? group ?? inherited ?? defaults[name] ?? 'inline';
     if (mode === true) {
       mode = 'keep';
     } else if (mode === false) {
@@ -22234,8 +22260,10 @@
       if (!Object.hasOwn(fmtNode, node.type)) {
         throw new Error(`Unsupported Markdown node: ${node.type}`)
       }
-      const mode = modeFor(node.type, options, inherited);
-      if (mode === 'skip') {
+      const mode = modeFor(node, options, inherited);
+      // Let task items override a skipped ordinary list without exposing other items.
+      const inspectTasks = node.type === 'list' && options.taskLists != null;
+      if (mode === 'skip' && !inspectTasks) {
         flush();
         continue
       }

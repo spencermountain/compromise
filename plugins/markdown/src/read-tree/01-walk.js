@@ -33,8 +33,10 @@ const walk = (tree, options = {}) => {
     if (!Object.hasOwn(fmtNode, node.type)) {
       throw new Error(`Unsupported Markdown node: ${node.type}`)
     }
-    const mode = modeFor(node.type, options, inherited)
-    if (mode === 'skip') {
+    const mode = modeFor(node, options, inherited)
+    // Let task items override a skipped ordinary list without exposing other items.
+    const inspectTasks = node.type === 'list' && options.taskLists != null
+    if (mode === 'skip' && !inspectTasks) {
       flush()
       continue
     }

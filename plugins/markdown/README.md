@@ -24,11 +24,11 @@
 <!-- spacer -->
 <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-This plugin lets you read, and modify a **markdown** document, using compromise.
+This plugin lets you read and modify a **Markdown** document using compromise.
 
-It uses the [unified/remark](https://unifiedjs.com/explore/package/remark/) parser, and aligns the compromise document with the AST nodes.
+It uses [mdast-util-from-markdown](https://github.com/syntax-tree/mdast-util-from-markdown) to parse Markdown and connects compromise terms to the resulting AST nodes.
 
-When the document changes, it allows writing the modified document back to original markdown.
+After editing the compromise document, call `updateTree()` to apply supported changes to the AST and `markdown()` to serialize it.
 
 There are admittedly some complexities, but first:
 
@@ -48,22 +48,56 @@ doc.has('walks to')
 doc.verbs().toPastTense()
 // write it back to the AST,
 doc.updateTree()
-// letsgoo
+// serialize the updated tree
 doc.markdown()
-// 'She **walked** to [school](./link)'
+// 'She **walked** to [school](./link)\n'
 ```
 
 <!-- spacer -->
 <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
+### In the browser
+
+Load compromise first, then register the Markdown plugin. No bundler is required:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>compromise-markdown example</title>
+  </head>
+  <body>
+    <pre id="output"></pre>
+
+    <script src="https://unpkg.com/compromise/builds/compromise.js"></script>
+    <script src="https://unpkg.com/compromise-markdown/builds/compromise-markdown.min.js"></script>
+    <script>
+      nlp.plugin(compromiseMarkdown)
+
+      const doc = nlp.fromMarkdown('She **walks** to [school](./link)')
+      doc.verbs().toPastTense()
+      doc.updateTree()
+
+      document.getElementById('output').textContent = doc.markdown()
+      // She **walked** to [school](./link)
+    </script>
+  </body>
+</html>
+```
+
+These URLs use the latest published packages. For deployment, pin compatible package
+versions using `package-name@version` in each URL. Write-back requires a compromise
+release with the `onReplace` plugin hook.
+
 ### Usage
 
-applying the compromise plugin gives you the following methods:
+Registering the plugin adds the following methods:
 
 ```js
 // we parse the markdown for you
 nlp.fromMarkdown('hello [world](./world)')
-//use your own remark workflow
+// use your own parser to produce an mdast tree
 nlp.fromAst(tree)
 
 // update the tree, after an edit
@@ -78,8 +112,7 @@ By default, the library supports the following Markdown forms:
 - [GitHub Flavored Markdown](https://github.com/micromark/micromark-extension-gfm) — _Tables, task lists, strikethrough, footnotes, and bare URLs_
 - [Frontmatter](https://github.com/micromark/micromark-extension-frontmatter) — _YAML (`---`) and TOML (`+++`) metadata blocks at the start of a document._
 
-If you want something more, you can generate a unist tree yourself and use `.fromTree()`.
-Note that some markdown syntaxes will gladly pass-through, and compromise wont mind having them.
+To use another parser, pass its mdast tree to `nlp.fromAst(tree, options)`. This accepts supported Markdown node types, not arbitrary Unist trees. Custom node types require reader and serializer support.
 
 #### Configuration
 
@@ -92,21 +125,20 @@ const doc = nlp.fromMarkdown(md, {
   emphases: 'inline', // *hello*
   deletions: 'inline', // ~~hello~~
   links: 'inline', // [hello](./world)
+  autolinks: 'inline', // www.example.com
   blockquotes: 'inline', // > hello
-  lists: 'inline', // - hello
-  paragraphs: 'inline', // hello\nworld
+  lists: 'keep', // - hello
+  taskLists: 'keep', // - [x] hello
   tables: 'skip', // | Name |\n| --- |\n| hello |
   codeBlocks: 'skip', // ``` ...
-  inlineCodes: 'skip', // `hello`
+  inlineCode: 'inline', // `hello`
   htmlBlocks: 'skip', // <b>hello</b>
   images: 'skip', // ![hello](hello.jpg)
   thematicBreaks: 'skip', // ---
-  breaks: 'skip', // hello \n
-  definitions: 'skip', // [hello]: https://example.com
-  footnoteDefinitions: 'inline', // [^hello]: A footnote explanation.
-  footnoteReferences: 'skip', // hello[^hello]
-  yamlBlocks: 'skip', // --- ...
-  tomlBlocks: 'skip', // +++ ...
+  breaks: 'keep', // two trailing spaces followed by a newline
+  definitions: 'inline', // [hello]: https://example.com
+  footnotes: 'inline', // sets both footnote modes unless specifically overridden
+  frontmatter: 'skip', // sets YAML/TOML modes unless specifically overridden
 })
 ````
 
@@ -114,7 +146,29 @@ Both `nlp.fromMarkdown(md, options)` and `nlp.fromAst(tree, options)` accept the
 
 - `'skip'`: exclude the node and its descendants
 - `'inline'`: include readable content.
-- `'keep'`: include re-constructed markdown syntax
+- `'keep'`: include approximate Markdown syntax
+
+The example above shows the defaults. `footnoteDefinitions`
+and `footnoteReferences` override `footnotes`; `yamlBlocks` and `tomlBlocks` override
+`frontmatter`. To use a group setting, omit the corresponding specific settings.
+`taskLists` overrides task items, while `autolinks` overrides automatically recognized links.
+Autolink detection relies on parser positions; external trees without positions use `links`.
+`true` and `false` remain aliases for `'keep'` and `'skip'`.
+
+### TypeScript
+
+```ts
+import nlp from 'compromise'
+import markdown, { type MarkdownNlp, type MarkdownOptions } from 'compromise-markdown'
+
+const mdNlp: MarkdownNlp = nlp.plugin(markdown)
+const options: MarkdownOptions = { headings: 'inline', taskLists: 'keep' }
+const doc = mdNlp.fromMarkdown('She **walks** home.', options)
+
+doc.verbs().toPastTense()
+doc.updateTree()
+const output: string = doc.markdown()
+```
 
 <!-- spacer -->
 <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -129,18 +183,18 @@ const doc = nlp.fromMarkdown('She walk*ed* to school')
 doc.match('walked') // found
 
 // punctuation
-const doc = nlp.fromMarkdown('foo _bar_! and foo _bar!_')
-doc.text()
-// foo bar! foo bar!
+const punctuation = nlp.fromMarkdown('foo _bar_! and foo _bar!_')
+punctuation.text()
+// 'foo bar! and foo bar!'
 ```
 
-updates on these terms will fail:
+Editing a word split across nodes currently fails at write-back:
 
 ```js
 const doc = nlp.fromMarkdown('She walk*ed*')
 doc.match('walked').replaceWith('ran')
 
-doc.updateTree() // fails, or struggles
+doc.updateTree() // throws; the AST is unchanged
 ```
 
 ### many terms, between-nodes
@@ -150,23 +204,15 @@ const doc = nlp.fromMarkdown('She **walked** to school')
 
 doc.match('walked to').replaceWith('ran toward') // (works)
 
-doc.updateTree() // fails, or struggles
+doc.updateTree() // throws; the AST is unchanged
 ```
 
-buffering while walking tree:
+### Current limitations
 
-```
-Node A: "She walk"
-  buffer: "She walk"                 → hold
-
-Node B: "ed"
-  buffer: "She walked"               → hold
-
-Node C: " to school. He "
-  buffer: "She walked to school. He "
-  completed: "She walked to school." → bind its Terms
-  remainder: "He "                   → hold
-```
+- Deletion, reordering, unbound insertions, and ambiguous cross-node edits throw at `updateTree()`.
+- Write-back validates all edits before changing text-node values. A failed update leaves the AST unchanged.
+- Original spaces and punctuation are preserved; punctuation-only changes are not written back.
+- Cloned compromise documents are detached from the source tree.
 
 PRs welcome
 

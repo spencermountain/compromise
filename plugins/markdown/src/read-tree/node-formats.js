@@ -1,4 +1,5 @@
 import defaults from './defaults.js'
+import isAutolink from './_lib.js'
 
 // Public options describe collections; AST node types remain singular.
 const optionNames = {
@@ -19,7 +20,7 @@ const optionNames = {
   tableCell: 'tableCells',
   footnoteDefinition: 'footnoteDefinitions',
   code: 'codeBlocks',
-  inlineCode: 'inlineCodes',
+  inlineCode: 'inlineCode',
   html: 'htmlBlocks',
   image: 'images',
   imageReference: 'images',
@@ -31,9 +32,27 @@ const optionNames = {
   toml: 'tomlBlocks',
 }
 
-const modeFor = (type, options, inherited) => {
+const modeFor = (node, options, inherited) => {
+  const { type } = node
   const name = optionNames[type]
-  let mode = options[name] ?? options[type] ?? inherited ?? defaults[name] ?? 'inline'
+  let group
+  let fallback = defaults[name]
+  if (type === 'footnoteDefinition' || type === 'footnoteReference') {
+    group = options.footnotes
+    fallback = defaults.footnotes ?? fallback
+  } else if (type === 'yaml' || type === 'toml') {
+    group = options.frontmatter
+    fallback = defaults.frontmatter ?? fallback
+  }
+  let specific = options[name] ?? options[type]
+  if (type === 'listItem' && typeof node.checked === 'boolean') {
+    specific = options.taskLists ?? specific
+    fallback = defaults.taskLists ?? fallback
+  } else if (isAutolink(node)) {
+    specific = options.autolinks ?? specific
+    fallback = defaults.autolinks ?? fallback
+  }
+  let mode = specific ?? group ?? inherited ?? fallback ?? 'inline'
   if (mode === true) {
     mode = 'keep'
   } else if (mode === false) {
@@ -109,7 +128,8 @@ const fmtNode = {
   tableCell: (_node, mode) => ({ block: mode !== 'keep', suffix: mode === 'keep' ? ' | ' : '' }),
   footnoteDefinition: (node, mode) => ({ block: true, prefix: mode === 'keep' ? `[^${node.identifier}]: ` : '' }),
   code: (node, mode) => ({
-    text: true, block: true,
+    text: true,
+    block: true,
     prefix: mode === 'keep' ? '```' + (node.lang || '') + '\n' : '',
     suffix: mode === 'keep' ? '\n```' : '',
   }),
@@ -117,7 +137,10 @@ const fmtNode = {
   html: literal,
   image,
   imageReference: image,
-  definition: (node, mode) => ({ block: true, generated: mode === 'keep' ? `[${node.identifier}]: ${node.url}` : node.url }),
+  definition: (node, mode) => ({
+    block: true,
+    generated: mode === 'keep' ? `[${node.identifier}]: ${node.url}` : node.url,
+  }),
   thematicBreak: (_node, mode) => ({ block: true, generated: mode === 'keep' ? '---' : '' }),
   break: () => ({ generated: '\n' }),
   footnoteReference: (node, mode) => ({ generated: mode === 'keep' ? `[^${node.identifier}]` : node.identifier }),

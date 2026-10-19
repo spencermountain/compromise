@@ -1,27 +1,26 @@
 const connectNodes = (doc, nodes, binding) => {
-  // All prose runs contribute to the same document-owned lookup and node layouts.
-  const { terms, layout } = binding
+  const { terms, layout, protectedTerms } = binding
+  const allTerms = doc.termList()
   nodes.forEach(node => layout.set(node, []))
-  if (!doc.termList().length) {
-    nodes.forEach(node => layout.set(node, [node.value]))
-    return
-  }
   let index = 0
   let cursor = 0
-  // Temporary import cursors align text in order; no moving offsets are retained.
-  const consume = (value, source) => {
+  // Cursors only align original characters; they are never stored on a Term.
+  const consume = (value, source, whitespace = false) => {
     for (let remaining = value; remaining.length > 0;) {
       const node = nodes[index]
+      // Some tokenizer paths invent trailing whitespace (for example, <3).
+      if (!node && whitespace && !remaining.trim()) {
+        return true
+      }
       if (!node) {
-        throw new Error('Cannot align tokenized text with the Markdown tree')
+        return false
       }
       const text = node.value.slice(cursor, cursor + remaining.length)
       if (!remaining.startsWith(text)) {
-        throw new Error('Cannot align tokenized text with the Markdown tree')
+        return false
       }
       if (text) {
         if (source) {
-          // walk*ed* has two word fragments; **walked** followed by a space has one.
           const part = { node, text, source }
           source.parts.push(part)
           layout.get(node).push(part)
@@ -36,16 +35,32 @@ const connectNodes = (doc, nodes, binding) => {
         cursor = 0
       }
     }
+    return true
   }
-  doc.termList().forEach(term => {
-    const source = { parts: [] }
-    consume(term.pre)
-    consume(term.text, source)
-    consume(term.post)
+  const protect = term => {
+    protectedTerms.set(term, { text: term.text, implicit: term.implicit })
+  }
+  const aligned = allTerms.every(term => {
+    const source = { parts: [], readOnly: Boolean(term.implicit) }
+    if (!consume(term.pre, null, true) || !consume(term.text, source) || !consume(term.post, null, true)) {
+      return false
+    }
     terms.set(term, source)
+    // Implicit terms have no independent source spelling; leave them untouched.
+    if (term.implicit || !source.parts.length) {
+      protect(term)
+    }
+    return true
   })
-  if (nodes.slice(index).some((node, i) => node.value.length > (i === 0 ? cursor : 0))) {
-    throw new Error('Tokenization did not preserve all Markdown text')
+  const remaining = nodes.slice(index).some((node, i) => node.value.length > (i === 0 ? cursor : 0))
+  if (!aligned || remaining) {
+    // No guessing/searching: preserve an unalignable run verbatim and allow reading.
+    // Other prose runs remain editable; edits to this run fail during write-back.
+    nodes.forEach(node => layout.set(node, [node.value]))
+    allTerms.forEach(term => {
+      terms.set(term, { parts: [], readOnly: true })
+      protect(term)
+    })
   }
 }
 

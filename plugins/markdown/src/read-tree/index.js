@@ -13,11 +13,12 @@ const readTree = function (tree, nlp, options = {}) {
     groups,
     layout: new Map(),
     terms: new WeakMap(),
+    protectedTerms: new Map(),
     values: nodes.map(node => node.value),
   }
   groups.forEach(group => {
-    // Tokenize a whole prose run so inline markup cannot split words or matches.
-    const part = nlp.tokenize(group.map(node => node.value).join(''))
+    // Finish parsing before binding: contraction processing may replace Term objects.
+    const part = nlp(group.map(node => node.value).join(''))
     connectNodes(part, group, binding)
     if (part.document.length) {
       // Readable plaintext separation only; write-back retains original AST separators.
@@ -29,7 +30,8 @@ const readTree = function (tree, nlp, options = {}) {
   })
   // One shared document owns all bindings, including those reached through selections.
   Object.defineProperty(doc.document, 'unist', { value: binding })
-  doc.compute(nlp.hooks())
+  // Parsing already ran once per prose run; only repair combined sentence indexes.
+  doc.compute('index')
   return doc
 }
 

@@ -25,15 +25,23 @@ test('markdown - nested wrappers and code modes', t => {
   t.equal(kept.text(), 'A **very *nice*** day.', 'nested wrappers are ordered')
   kept.updateTree()
   t.equal(kept.markdown().trim(), 'A **very *nice*** day.', 'generated syntax does not change AST')
-  t.equal(nlp.fromMarkdown('`hello`', { inlineCodes: 'inline' }).text(), 'hello', 'inline code can expose content')
-  t.equal(nlp.fromMarkdown('`hello`', { inlineCodes: 'keep' }).text(), '`hello`', 'kept code has delimiters')
+  t.equal(nlp.fromMarkdown('`hello`', { inlineCode: 'inline' }).text(), 'hello', 'inline code can expose content')
+  t.equal(nlp.fromMarkdown('`hello`', { inlineCode: 'keep' }).text(), '`hello`', 'kept code has delimiters')
   t.end()
 })
 
 test('markdown - tables default to skip', t => {
-  const tree = { type: 'root', children: [{ type: 'table', children: [{ type: 'tableRow', children: [
-    { type: 'tableCell', children: [{ type: 'text', value: 'cell' }] },
-  ] }] }] }
+  const tree = {
+    type: 'root',
+    children: [
+      {
+        type: 'table',
+        children: [
+          { type: 'tableRow', children: [{ type: 'tableCell', children: [{ type: 'text', value: 'cell' }] }] },
+        ],
+      },
+    ],
+  }
   t.equal(nlp.fromAst(tree).text(), '', 'table omitted by default')
   t.equal(nlp.fromAst(tree, { tables: 'inline' }).text(), 'cell', 'table text can be included')
   t.ok(nlp.fromAst(tree, { tables: 'keep' }).text().includes('|'), 'kept table includes separators')

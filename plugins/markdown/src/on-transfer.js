@@ -6,7 +6,7 @@ const onTransfer = ({ oldTerms, newTerms, document }) => {
   }
   const { terms } = binding
   const sources = oldTerms.map(term => terms.get(term))
-  if (!sources.length || !newTerms.length || sources.some(source => !source)) {
+  if (!sources.length || !newTerms.length || sources.some(source => !source || source.readOnly)) {
     return
   }
   const owners = new Set(sources.flatMap(source => source.parts.map(part => part.node)))

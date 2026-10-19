@@ -31,7 +31,7 @@ export interface HtmlMethods {
   /** Apply supported edits atomically; throws when ownership is ambiguous. */
   updateHast(): this
   /** Serialize the last successfully updated tree, including skipped content. */
-  html(options?: HtmlOutputOptions): string
+  toHtml(options?: HtmlOutputOptions): string
 }
 
 export type HtmlDocument = Omit<ReturnType<typeof nlp>, keyof HtmlMethods> & HtmlMethods

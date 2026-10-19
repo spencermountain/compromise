@@ -28,7 +28,7 @@ This plugin lets you read and modify text in an **HTML** document, using comprom
 
 It uses [hast-util-from-html](https://github.com/syntax-tree/hast-util-from-html) to parse HTML and connects compromise terms to the resulting HAST text nodes.
 
-After editing the compromise document, call `updateHast()` to apply supported changes to the AST and `html()` to serialize it.
+After editing the compromise document, call `updateHast()` to apply supported changes to the AST and `toHtml()` to serialize it.
 
 ```js
 import nlp from 'compromise'
@@ -42,7 +42,7 @@ doc.has('walks to') // true
 
 doc.verbs().toPastTense()
 doc.updateHast()
-doc.html()
+doc.toHtml()
 // 'She <strong>walked</strong> to <a href="./link">school</a>'
 ```
 
@@ -57,7 +57,7 @@ const other = nlp.fromHast(tree)
 
 doc.match('world').replaceWith('everyone')
 doc.updateHast()
-doc.html() // '<p>Hello <em>everyone</em>.</p>'
+doc.toHtml() // '<p>Hello <em>everyone</em>.</p>'
 
 // Inspect which text nodes own the selected terms.
 doc.match('everyone').debug('ast')
@@ -65,7 +65,11 @@ doc.match('everyone').debug('ast')
 
 `fromHast()` accepts supported HAST nodes, not browser DOM nodes or arbitrary Unist trees.
 It connects to the supplied nodes directly; `updateHast()` changes their text values.
-`html()` serializes the last successfully updated tree, without automatically applying edits.
+`toHtml()` serializes the last successfully updated tree, without automatically applying edits.
+
+For indented output, use `doc.toHtml({ format: true })`. Formatting operates on a copy,
+so the original tree and its term bindings remain available for subsequent edits.
+The default, `doc.toHtml()` (or `{ format: false }`), keeps existing source whitespace.
 
 <!-- spacer -->
 <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -75,16 +79,17 @@ It connects to the supplied nodes directly; `updateHast()` changes their text va
 ```js
 // passing {fragment: false} ensures the input is wrapped in html/body tags
 const snippet = nlp.fromHtml('<p>Hello world.</p>', { fragment: false })
-console.log(snippet.html())
+console.log(snippet.toHtml())
 // <html><head></head><body><p>Hello world.</p></body></html>
 ```
 
 - Inline elements contribute their text without markup. Links contribute their labels, not their destinations.
 - Block elements such as paragraphs, headings, list items, and blockquotes separate prose. `<br>` and `<hr>` also create boundaries.
-- `head`, `script`, `style`, `template`, `table`, `pre`, and `code` subtrees are excluded from the linguistic text.
+- `head`, `script`, `style`, `template`, `table`, `pre`, `code`, `select`, `textarea`, `svg`, and `math` subtrees are excluded from the linguistic text.
 - Elements with the `hidden` attribute are excluded. CSS and browser layout are not evaluated.
 - Attributes such as `alt`, `title`, and form values are excluded. Comments and doctypes are preserved without contributing text.
 - Character references are decoded for matching and escaped as needed during serialization.
+- Runs of spaces, tabs, and line breaks collapse to one space for matching, including across inline elements. Write-back preserves the original separators; non-breaking spaces are not collapsed by this normalization.
 
 Skipped content remains in the source tree and serialized output. Matches do not cross
 block boundaries or skipped subtrees.
@@ -104,7 +109,7 @@ const doc = htmlNlp.fromHtml('She <strong>walks</strong> home.', options)
 
 doc.verbs().toPastTense()
 doc.updateHast()
-const output: string = doc.html()
+const output: string = doc.toHtml()
 ```
 
 Types are provided for both ESM and CommonJS imports, including `HtmlNode` for HAST input.
@@ -112,6 +117,11 @@ Types are provided for both ESM and CommonJS imports, including `HtmlNode` for H
 ### In the browser
 
 Load compromise first, then register the HTML plugin:
+
+Requires **compromise ^14.20.0**, which will include the `onReplace` plugin hook.
+The published `14.19.0` release does not include it; use a compatible development
+build until `14.20.0` is published. The unpkg example below requires that
+compatible release to be available on npm.
 
 ```html
 <!doctype html>
@@ -129,7 +139,7 @@ Load compromise first, then register the HTML plugin:
       const doc = nlp.fromHtml('She <strong>walks</strong> home.')
       doc.verbs().toPastTense()
       doc.updateHast()
-      document.getElementById('output').textContent = doc.html()
+      document.getElementById('output').textContent = doc.toHtml()
       // She <strong>walked</strong> home.
     </script>
   </body>

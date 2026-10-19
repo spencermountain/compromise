@@ -31,7 +31,7 @@ const plugin = {
     },
   },
   api: View => {
-    View.prototype.html = function (options = {}) {
+    View.prototype.toHtml = function (options = {}) {
       const binding = this.document.htmlAst
       if (!binding) {
         throw new Error('This document is not connected to an HTML tree')

@@ -163,9 +163,6 @@ importers:
 
   plugins/html:
     dependencies:
-      compromise:
-        specifier: workspace:^
-        version: link:../..
       hast-util-format:
         specifier: 'catalog:'
         version: 1.1.0
@@ -182,6 +179,9 @@ importers:
       '@rollup/plugin-terser':
         specifier: 'catalog:'
         version: 1.0.0(rollup@4.64.8)
+      compromise:
+        specifier: workspace:^
+        version: link:../..
       cross-env:
         specifier: 'catalog:'
         version: 10.1.0

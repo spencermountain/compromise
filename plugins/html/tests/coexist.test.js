@@ -12,14 +12,14 @@ test('html and markdown - either registration order', t => {
     mdDoc.verbs().toPastTense()
     htmlDoc.updateHast()
     mdDoc.updateTree()
-    t.equal(htmlDoc.html(), '<p>She walked.</p>', 'HTML write-back works')
+    t.equal(htmlDoc.toHtml(), '<p>She walked.</p>', 'HTML write-back works')
     t.equal(mdDoc.markdown().trim(), 'She **walked**.', 'Markdown write-back works')
     const hast = { type: 'root', children: [{ type: 'element', tagName: 'p', properties: {}, children: [{ type: 'text', value: 'Hello.' }] }] }
     const mdast = { type: 'root', children: [{ type: 'paragraph', children: [{ type: 'text', value: 'Hello.' }] }] }
-    t.equal(nlp.fromHast(hast).html(), '<p>Hello.</p>', 'reads HAST')
+    t.equal(nlp.fromHast(hast).toHtml(), '<p>Hello.</p>', 'reads HAST')
     t.equal(nlp.fromMdast(mdast).markdown().trim(), 'Hello.', 'reads mdast')
     const plain = { type: 'root', children: [{ type: 'text', value: 'Hello.' }] }
-    t.equal(nlp.fromHast(plain).html(), 'Hello.', 'reads text-only HAST without format detection')
+    t.equal(nlp.fromHast(plain).toHtml(), 'Hello.', 'reads text-only HAST without format detection')
   })
   t.end()
 })

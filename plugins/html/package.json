@@ -48,6 +48,7 @@
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "module": "./builds/compromise-html.mjs",
   "devDependencies": {
+    "compromise": "workspace:^",
     "@rollup/plugin-node-resolve": "catalog:",
     "@rollup/plugin-terser": "catalog:",
     "cross-env": "catalog:",
@@ -57,7 +58,7 @@
     "tape": "catalog:"
   },
   "peerDependencies": {
-    "compromise": "workspace:^"
+    "compromise": "^14.20.0"
   },
   "unpkg": "./builds/compromise-html.min.js"
 }

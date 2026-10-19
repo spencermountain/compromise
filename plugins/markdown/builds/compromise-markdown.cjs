@@ -22057,21 +22057,25 @@
     emphases: 'inline',
     deletions: 'inline',
     links: 'inline',
+    autolinks: 'inline',
     blockquotes: 'inline',
-    lists: 'inline',
+    lists: 'keep',
+    taskLists: 'keep',
     listItems: 'inline',
     tables: 'skip',
     tableRows: 'inline',
     tableCells: 'inline',
+    footnotes: 'inline',
     footnoteDefinitions: 'inline',
     codeBlocks: 'skip',
-    inlineCodes: 'skip',
+    inlineCode: 'inline',
     htmlBlocks: 'skip',
     images: 'skip',
-    definitions: 'skip',
+    definitions: 'inline',
     thematicBreaks: 'skip',
-    breaks: 'skip',
-    footnoteReferences: 'skip',
+    breaks: 'keep',
+    footnoteReferences: 'inline',
+    frontmatter: 'skip',
     yamlBlocks: 'skip',
     tomlBlocks: 'skip',
   };
@@ -22108,7 +22112,7 @@
     tableCell: 'tableCells',
     footnoteDefinition: 'footnoteDefinitions',
     code: 'codeBlocks',
-    inlineCode: 'inlineCodes',
+    inlineCode: 'inlineCode',
     html: 'htmlBlocks',
     image: 'images',
     imageReference: 'images',
@@ -22124,18 +22128,23 @@
     const { type } = node;
     const name = optionNames[type];
     let group;
+    let fallback = defaults[name];
     if (type === 'footnoteDefinition' || type === 'footnoteReference') {
       group = options.footnotes;
+      fallback = defaults.footnotes;
     } else if (type === 'yaml' || type === 'toml') {
       group = options.frontmatter;
+      fallback = defaults.frontmatter;
     }
     let specific = options[name] ?? options[type];
     if (type === 'listItem' && typeof node.checked === 'boolean') {
       specific = options.taskLists ?? specific;
+      fallback = defaults.taskLists;
     } else if (isAutolink(node)) {
       specific = options.autolinks ?? specific;
+      fallback = defaults.autolinks;
     }
-    let mode = specific ?? group ?? inherited ?? defaults[name] ?? 'inline';
+    let mode = specific ?? group ?? inherited ?? fallback ?? 'inline';
     if (mode === true) {
       mode = 'keep';
     } else if (mode === false) {
@@ -22211,7 +22220,8 @@
     tableCell: (_node, mode) => ({ block: mode !== 'keep', suffix: mode === 'keep' ? ' | ' : '' }),
     footnoteDefinition: (node, mode) => ({ block: true, prefix: mode === 'keep' ? `[^${node.identifier}]: ` : '' }),
     code: (node, mode) => ({
-      text: true, block: true,
+      text: true,
+      block: true,
       prefix: mode === 'keep' ? '```' + (node.lang || '') + '\n' : '',
       suffix: mode === 'keep' ? '\n```' : '',
     }),
@@ -22219,7 +22229,10 @@
     html: literal,
     image,
     imageReference: image,
-    definition: (node, mode) => ({ block: true, generated: mode === 'keep' ? `[${node.identifier}]: ${node.url}` : node.url }),
+    definition: (node, mode) => ({
+      block: true,
+      generated: mode === 'keep' ? `[${node.identifier}]: ${node.url}` : node.url,
+    }),
     thematicBreak: (_node, mode) => ({ block: true, generated: mode === 'keep' ? '---' : '' }),
     break: () => ({ generated: '\n' }),
     footnoteReference: (node, mode) => ({ generated: mode === 'keep' ? `[^${node.identifier}]` : node.identifier }),
@@ -22296,29 +22309,28 @@
   };
 
   const connectNodes = (doc, nodes, binding) => {
-    // All prose runs contribute to the same document-owned lookup and node layouts.
-    const { terms, layout } = binding;
+    const { terms, layout, protectedTerms } = binding;
+    const allTerms = doc.termList();
     nodes.forEach(node => layout.set(node, []));
-    if (!doc.termList().length) {
-      nodes.forEach(node => layout.set(node, [node.value]));
-      return
-    }
     let index = 0;
     let cursor = 0;
-    // Temporary import cursors align text in order; no moving offsets are retained.
-    const consume = (value, source) => {
+    // Cursors only align original characters; they are never stored on a Term.
+    const consume = (value, source, whitespace = false) => {
       for (let remaining = value; remaining.length > 0;) {
         const node = nodes[index];
+        // Some tokenizer paths invent trailing whitespace (for example, <3).
+        if (!node && whitespace && !remaining.trim()) {
+          return true
+        }
         if (!node) {
-          throw new Error('Cannot align tokenized text with the Markdown tree')
+          return false
         }
         const text = node.value.slice(cursor, cursor + remaining.length);
         if (!remaining.startsWith(text)) {
-          throw new Error('Cannot align tokenized text with the Markdown tree')
+          return false
         }
         if (text) {
           if (source) {
-            // walk*ed* has two word fragments; **walked** followed by a space has one.
             const part = { node, text, source };
             source.parts.push(part);
             layout.get(node).push(part);
@@ -22333,16 +22345,32 @@
           cursor = 0;
         }
       }
+      return true
     };
-    doc.termList().forEach(term => {
-      const source = { parts: [] };
-      consume(term.pre);
-      consume(term.text, source);
-      consume(term.post);
+    const protect = term => {
+      protectedTerms.set(term, { text: term.text, implicit: term.implicit });
+    };
+    const aligned = allTerms.every(term => {
+      const source = { parts: [], readOnly: Boolean(term.implicit) };
+      if (!consume(term.pre, null, true) || !consume(term.text, source) || !consume(term.post, null, true)) {
+        return false
+      }
       terms.set(term, source);
+      // Implicit terms have no independent source spelling; leave them untouched.
+      if (term.implicit || !source.parts.length) {
+        protect(term);
+      }
+      return true
     });
-    if (nodes.slice(index).some((node, i) => node.value.length > (i === 0 ? cursor : 0))) {
-      throw new Error('Tokenization did not preserve all Markdown text')
+    const remaining = nodes.slice(index).some((node, i) => node.value.length > (i === 0 ? cursor : 0));
+    if (!aligned || remaining) {
+      // No guessing/searching: preserve an unalignable run verbatim and allow reading.
+      // Other prose runs remain editable; edits to this run fail during write-back.
+      nodes.forEach(node => layout.set(node, [node.value]));
+      allTerms.forEach(term => {
+        terms.set(term, { parts: [], readOnly: true });
+        protect(term);
+      });
     }
   };
 
@@ -22358,11 +22386,12 @@
       groups,
       layout: new Map(),
       terms: new WeakMap(),
+      protectedTerms: new Map(),
       values: nodes.map(node => node.value),
     };
     groups.forEach(group => {
-      // Tokenize a whole prose run so inline markup cannot split words or matches.
-      const part = nlp.tokenize(group.map(node => node.value).join(''));
+      // Finish parsing before binding: contraction processing may replace Term objects.
+      const part = nlp(group.map(node => node.value).join(''));
       connectNodes(part, group, binding);
       if (part.document.length) {
         // Readable plaintext separation only; write-back retains original AST separators.
@@ -22374,7 +22403,8 @@
     });
     // One shared document owns all bindings, including those reached through selections.
     Object.defineProperty(doc.document, 'unist', { value: binding });
-    doc.compute(nlp.hooks());
+    // Parsing already ran once per prose run; only repair combined sentence indexes.
+    doc.compute('index');
     return doc
   };
 
@@ -22386,7 +22416,7 @@
     }
     const { terms } = binding;
     const sources = oldTerms.map(term => terms.get(term));
-    if (!sources.length || !newTerms.length || sources.some(source => !source)) {
+    if (!sources.length || !newTerms.length || sources.some(source => !source || source.readOnly)) {
       return
     }
     const owners = new Set(sources.flatMap(source => source.parts.map(part => part.node)));
@@ -22449,8 +22479,16 @@
       ),
     ];
     const allTerms = doc.document.flat();
+    const present = new Set(allTerms);
+    // Internal and unalignable terms may pass through, but must remain untouched.
+    unist.protectedTerms.forEach((original, term) => {
+      if (!present.has(term) || term.text !== original.text || term.implicit !== original.implicit) {
+        throw new Error('Cannot update tree: an implicit or unalignable term was edited')
+      }
+    });
+    const visible = allTerms.filter(term => !unist.protectedTerms.has(term) || terms.get(term)?.parts.length);
     const words = new Map();
-    allTerms.forEach((term, i) => {
+    visible.forEach((term, i) => {
       const source = terms.get(term);
       if (!source) {
         throw new Error('Cannot update tree: inserted or replaced text has ambiguous ownership')
@@ -22464,7 +22502,7 @@
       }
       words.set(source, term.text);
     });
-    if (allTerms.length !== expected.length) {
+    if (visible.length !== expected.length) {
       throw new Error('Cannot update tree: deleted words require structural editing')
     }
     // Literal separators stay as imported; punctuation-only edits are deliberately ignored.
@@ -22533,23 +22571,28 @@
     onReplace: onTransfer,
     mutate: world => {
       world.methods.one.debug ||= {};
-      world.methods.one.debug.ast = debug;
+      const previous = world.methods.one.debug.ast;
+      world.methods.one.debug.ast = view => {
+        if (view.document.unist || !previous) {
+          return debug(view)
+        }
+        return previous(view)
+      };
     },
     lib: {
-      fromAst: function (tree, options = {}) {
+      fromMdast: function (tree, options = {}) {
         return readTree(tree, this, options)
       },
       fromMarkdown: function (md, options = {}) {
-        // Parsing is fixed here; callers with another parser can use fromAst().
+        // Parsing is fixed here; callers with another parser can use fromMdast().
         const tree = fromMarkdown(md, {
           extensions: [gfm(), frontmatter(matter)],
           mdastExtensions: [gfmFromMarkdown(), frontmatterFromMarkdown(matter)],
         });
-        return this.fromAst(tree, options)
+        return readTree(tree, this, options)
       },
     },
     api: View => {
-      // write our terms back to the tree
       View.prototype.updateTree = function () {
         return update(this)
       };

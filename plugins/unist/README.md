@@ -43,6 +43,52 @@ doc.markdown()
 // 'She **walks** to [school](https://school.org)'
 ```
 
+
+### Default plaintext options
+
+Both `nlp.fromMarkdown(md, options)` and `nlp.fromAst(tree, options)` accept these modes:
+
+- `'skip'`: exclude the node and its descendants from plaintext, preserving them in the tree.
+- `'inline'`: include readable content without Markdown wrappers, retaining block boundaries.
+- `'keep'`: include approximate Markdown syntax. Generated syntax is protected during write-back.
+
+```js
+const doc = nlp.fromMarkdown(md, {
+  headings: 'inline',
+  strongs: 'inline',
+  emphases: 'inline',
+  deletions: 'inline',
+  links: 'inline',
+  blockquotes: 'inline',
+  lists: 'inline',
+  paragraphs: 'inline',
+  footnoteDefinitions: 'inline',
+  tables: 'skip',
+  codeBlocks: 'skip',
+  inlineCodes: 'skip',
+  htmlBlocks: 'skip',
+  images: 'skip',
+  definitions: 'skip',
+  thematicBreaks: 'skip',
+  breaks: 'skip',
+  footnoteReferences: 'skip',
+  yamlBlocks: 'skip',
+  tomlBlocks: 'skip',
+})
+```
+
+Option names are plural. `links` controls both links and link references; `images`
+controls both images and image references. The AST itself still uses singular node types.
+Legacy singular option names are accepted, but plural options take precedence.
+`true` and `false` remain aliases for `'keep'` and `'skip'`.
+
+List items inherit the list mode; table rows and cells inherit their parent mode unless
+overridden. Tables are skipped as a whole by default. Other node types default to
+`'inline'`. See [defaults.js](src/markdown/read-tree/defaults.js) for the complete mapping.
+
+Table options apply when the input AST contains table nodes; parsing GFM tables requires
+the corresponding Markdown parser extensions.
+
 ---
 
 ## Details

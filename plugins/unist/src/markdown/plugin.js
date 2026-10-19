@@ -14,11 +14,11 @@ const plugin = {
     world.methods.one.debug.ast = debugAst
   },
   lib: {
-    fromAst: function (tree) {
-      return readTree(tree, this)
+    fromAst: function (tree, options = {}) {
+      return readTree(tree, this, options)
     },
     fromMarkdown: function (md, options = {}) {
-      const tree = fromMarkdown(md)
+      const tree = fromMarkdown(md, options)
       return this.fromAst(tree, options)
     },
   },

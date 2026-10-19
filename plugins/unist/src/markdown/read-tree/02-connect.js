@@ -1,7 +1,11 @@
-const connectNodes = (doc, nodes) => {
-  // Each document owns its Term lookup; nothing is retained at module scope.
-  const terms = new WeakMap()
-  const layout = new Map(nodes.map(node => [node, []]))
+const connectNodes = (doc, nodes, binding) => {
+  // All prose runs contribute to the same document-owned lookup and node layouts.
+  const { terms, layout } = binding
+  nodes.forEach(node => layout.set(node, []))
+  if (!doc.termList().length) {
+    nodes.forEach(node => layout.set(node, [node.value]))
+    return
+  }
   let index = 0
   let cursor = 0
   // Temporary import cursors align text in order; no moving offsets are retained.
@@ -43,7 +47,6 @@ const connectNodes = (doc, nodes) => {
   if (nodes.slice(index).some((node, i) => node.value.length > (i === 0 ? cursor : 0))) {
     throw new Error('Tokenization did not preserve all Markdown text')
   }
-  return { layout, terms }
 }
 
 export default connectNodes

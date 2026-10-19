@@ -6,8 +6,14 @@ const update = doc => {
     throw new Error('This document is not connected to a Markdown tree')
   }
   const { tree, nodes, values, layout, terms } = unist
-  const current = collect(tree)
-  if (current.length !== nodes.length || current.some((node, i) => node !== nodes[i] || node.value !== values[i])) {
+  const { nodes: current, groups } = collect(tree, unist.readOptions)
+  // Generated wrappers are recreated during traversal, so compare their values.
+  const sameNode = (node, previous) => node === previous ||
+    (node.generated === true && previous?.generated === true && node.value === previous.value)
+  // Moving text across block boundaries also invalidates the imported structure.
+  const sameGroups = groups.length === unist.groups.length && groups.every((group, i) =>
+    group.length === unist.groups[i].length && group.every((node, j) => sameNode(node, unist.groups[i][j])))
+  if (!sameGroups || current.length !== nodes.length || current.some((node, i) => !sameNode(node, nodes[i]) || node.value !== values[i])) {
     throw new Error('Markdown tree changed since import or last update')
   }
   // Slots describe word order independently of compromise's pre/post storage.
@@ -55,8 +61,16 @@ const update = doc => {
       })
       .join('')
   )
+  // Generated Markdown is read-only: edits must not leak syntax into source nodes.
+  if (nodes.some((node, i) => node.generated && output[i] !== values[i])) {
+    throw new Error('Cannot update tree: generated Markdown syntax was edited')
+  }
   // No AST mutation happens until every word has passed validation.
-  nodes.forEach((node, i) => (node.value = output[i]))
+  nodes.forEach((node, i) => {
+    if (!node.generated) {
+      node.value = output[i]
+    }
+  })
   unist.values = output
   return doc
 }

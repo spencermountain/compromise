@@ -1,25 +1,34 @@
 import walk from './01-walk.js'
 import connectNodes from './02-connect.js'
 
-const readTree = function (tree, nlp) {
-  if (tree.type === 'root' && tree.children.length > 1) {
-    throw new Error('The Markdown proof of concept supports one prose block')
+const readTree = function (tree, nlp, options = {}) {
+  // Snapshot read options so later caller changes cannot alter write-back traversal.
+  const readOptions = { ...options }
+  const { nodes, groups } = walk(tree, readOptions)
+  const doc = nlp.tokenize('')
+  const binding = {
+    tree,
+    readOptions,
+    nodes,
+    groups,
+    layout: new Map(),
+    terms: new WeakMap(),
+    values: nodes.map(node => node.value),
   }
-  const nodes = walk(tree)
-  // Join before tokenizing so inline markup cannot split a word or a match.
-  const doc = nlp.tokenize(nodes.map(node => node.value).join(''))
-  // Establish source ownership before running the full tagging pipeline.
-  const { layout, terms } = connectNodes(doc, nodes)
-  // Selections share this array. Cloning copies its sentences, not this metadata.
-  Object.defineProperty(doc.document, 'unist', {
-    value: {
-      tree,
-      nodes,
-      layout,
-      terms,
-      values: nodes.map(node => node.value),
-    },
+  groups.forEach(group => {
+    // Tokenize a whole prose run so inline markup cannot split words or matches.
+    const part = nlp.tokenize(group.map(node => node.value).join(''))
+    connectNodes(part, group, binding)
+    if (part.document.length) {
+      // Readable plaintext separation only; write-back retains original AST separators.
+      if (doc.document.length) {
+        doc.document.at(-1).at(-1).post += '\n\n'
+      }
+      part.document.forEach(sentence => doc.document.push(sentence))
+    }
   })
+  // One shared document owns all bindings, including those reached through selections.
+  Object.defineProperty(doc.document, 'unist', { value: binding })
   doc.compute(nlp.hooks())
   return doc
 }

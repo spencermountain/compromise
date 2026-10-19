@@ -1,0 +1,30 @@
+// Public option defaults. Explicit options and inherited modes take precedence.
+const defaults = {
+  texts: 'inline',
+  roots: 'inline',
+  paragraphs: 'inline',
+  headings: 'inline',
+  strongs: 'inline',
+  emphases: 'inline',
+  deletions: 'inline',
+  links: 'inline',
+  blockquotes: 'inline',
+  lists: 'inline',
+  listItems: 'inline',
+  tables: 'skip',
+  tableRows: 'inline',
+  tableCells: 'inline',
+  footnoteDefinitions: 'inline',
+  codeBlocks: 'skip',
+  inlineCodes: 'skip',
+  htmlBlocks: 'skip',
+  images: 'skip',
+  definitions: 'skip',
+  thematicBreaks: 'skip',
+  breaks: 'skip',
+  footnoteReferences: 'skip',
+  yamlBlocks: 'skip',
+  tomlBlocks: 'skip',
+}
+
+export default defaults

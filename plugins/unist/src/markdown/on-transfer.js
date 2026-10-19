@@ -1,5 +1,5 @@
 // called every doc.replace() so we can shuffle our metadata around
-const transfer = ({ oldTerms, newTerms, document }) => {
+const onTransfer = ({ oldTerms, newTerms, document }) => {
   const binding = document.unist
   if (!binding) {
     return // Ordinary compromise documents have no AST connection.
@@ -40,4 +40,4 @@ const transfer = ({ oldTerms, newTerms, document }) => {
   })
   entries.splice(start, end - start + 1, ...replacement)
 }
-export default transfer
+export default onTransfer

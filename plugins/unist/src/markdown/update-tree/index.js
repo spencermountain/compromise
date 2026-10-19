@@ -1,4 +1,4 @@
-import collect from '../read/01-walk.js'
+import collect from '../read-tree/01-walk.js'
 
 const update = doc => {
   const unist = doc.document.unist

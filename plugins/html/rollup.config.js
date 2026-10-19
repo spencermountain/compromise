@@ -23,7 +23,7 @@ export default {
       plugins: [
         terser(),
         sizeCheck({
-          expect: 214, // Includes HTML parsing and serialization.
+          expect: 222, // Includes HTML parsing, serialization, and optional formatting.
           warn: 5,
           throw: 10,
         }),

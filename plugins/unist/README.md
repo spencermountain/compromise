@@ -26,7 +26,7 @@
 
 This plugin allows reading and writing Abstract Syntax Trees in [Unist](https://github.com/syntax-tree/unist)-style [NLCST Format](https://github.com/syntax-tree/nlcst)
 
-These are cool because they provide a standard way for machines to share parsed documents, and to operate on them in consistent and collabertaive ways.
+These are cool because they provide a standard way for machines to share parsed documents, and to operate on them in consistent and collaborative ways.
 
 The NLCST format is a natural-language specific AST, with support for defining tokenization, offsets, and word metadata.
 
@@ -37,7 +37,7 @@ nlp.plugin(plugin)
 
 const doc = nlp(`Bernardo: Who's there?`)
 const tree = doc.toAst()
-/* 
+/*
 {
   type: 'RootNode',
   children: [{
@@ -54,7 +54,7 @@ const tree = doc.toAst()
               end: { line: 1, column: 9, offset: 8 },
             },
           }],
-          data: { compromise: { tags: ['Noun','Person','FirstName'] } },
+          data: { compromise: { tags: ['Expression'] } },
         },
         { type: 'PunctuationNode', value: ':' },
         { type: 'WhiteSpaceNode', value: ' ' },
@@ -65,16 +65,15 @@ const tree = doc.toAst()
             { type: 'PunctuationNode', value: "'" },
             { type: 'TextNode', value: 's' },
           ],
-          ... (details ommitted)
+          ... (details omitted)
 */
 
 // ↓ convert it back to compromise
 const doc2 = nlp.fromAst(tree)
 doc2.debug()
 // ╭─────────
-// │ 'Bernardo'  - Person, FirstName, Noun
-// │ '[who]'    - ProperNoun, Noun
-// │ '[is]'     - Verb, Copula, PresentTense
+// │ 'Bernardo' - Expression
+// │ 'Who's'    - ProperNoun, Noun
 // │ 'there'    - Noun, Uncountable
 ```
 
@@ -114,17 +113,17 @@ const tree = nlp('Hello world!').toAst({ tags: false, positions: false })
 Likewise, NLCST trees can be ingested into compromise, like so:
 
 ```js
-const doc1 = nlp(`wow windows! I don't think I can afford this place`)
-const tree.toAst()
+const doc = nlp(`wow windows! I don't think I can afford this place`)
+const tree = doc.toAst()
 
-const doc = nlp.fromAst(myTree)
-doc.match('#Verb').text()
-// 'afford'
+const doc2 = nlp.fromAst(tree)
+doc2.match('#Verb').text()
+// "don't think can afford"
 ```
 
-The tree is taken faithfully - and its tokenization decisions are respected, even if it is not what compromise would have preferred.
+Import preserves the tree’s word and sentence boundaries, even if they differ from compromise’s usual tokenization. It does not run the tokenizer or tagger. Re-exporting is not yet a structurally identical round-trip.
 
-If the AST comes from compromise, it will grab the tags for the terms, and set them automatically.
+Tags in `WordNode.data.compromise.tags` are copied onto the imported terms. Pass `{ tags: false }` to skip them.
 If not, you may want to run `.tagger()` on the document, after creating it:
 
 ```js
@@ -136,7 +135,7 @@ nlp.plugin(plugin)
 // use wooorm's parser
 const tree = new ParseEnglish().parse(`wow windows! I don't think I can afford this place`)
 // ship it to compromise (no tags)
-const doc = nlp.fromTree(tree)
+const doc = nlp.fromAst(tree)
 // ╭─────────
 // │ 'wow'      -
 // │ 'windows'  -
@@ -165,6 +164,21 @@ doc.tagger()
 // │ 'this'     - Determiner
 // │ 'place'    - Noun, Singular
 ```
+
+## Known limitations
+
+Contraction text survives export and import, but implicit expansion terms and their tags do not. For example, compromise represents `can't` with an implicit `not` term tagged `Negative`. That term has no written text and is omitted from the tree, so the imported document loses that tag:
+
+```js
+const original = nlp("I can't go.")
+const restored = nlp.fromAst(original.toAst())
+
+restored.text()             // "I can't go."
+original.has('#Negative')  // true
+restored.has('#Negative')  // false
+```
+
+The importer keeps the supplied `WordNode` boundaries; it does not recreate implicit contraction terms. Until expansion metadata is preserved, text round-trips should not be treated as preserving all linguistic analysis.
 
 PRs welcome
 

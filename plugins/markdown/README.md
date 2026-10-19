@@ -24,7 +24,7 @@
 <!-- spacer -->
 <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-This plugin lets you read and modify a **Markdown** document using compromise.
+This plugin lets you read and modify text in a **Markdown** document, using compromise.
 
 It uses [mdast-util-from-markdown](https://github.com/syntax-tree/mdast-util-from-markdown) to parse Markdown and connects compromise terms to the resulting AST nodes.
 

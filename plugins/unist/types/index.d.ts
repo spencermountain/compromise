@@ -1,4 +1,6 @@
 import nlp from 'compromise'
+import type { Plugin } from 'compromise/misc'
+import type {} from 'compromise/view/one'
 
 type Point = { line: number; column: number; offset: number }
 type Position = { start: Point; end: Point }
@@ -31,13 +33,18 @@ interface UnistMethods {
   toAst(options?: Options): Root
 }
 
+// All selections and specialized views inherit the plugin's runtime method.
+declare module 'compromise/view/one' {
+  export default interface View extends UnistMethods {}
+}
+
 type UnistDocument = ReturnType<typeof nlp> & UnistMethods
 interface UnistLib {
   fromAst(tree: AstNode, options?: ImportOptions): UnistDocument
 }
 type UnistNlp = typeof nlp & UnistLib
 
-declare const plugin: nlp.TypedPlugin<UnistMethods> & { version: string; lib: UnistLib }
+declare const plugin: { version: string; lib: UnistLib; api: NonNullable<Plugin['api']> }
 
 export {
   Point,

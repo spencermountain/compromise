@@ -30,6 +30,7 @@ catalog:
   nlcst-to-string: ^4.0.0
   unist-util-inspect: ^8.1.0
   parse-english: ^7.0.0
+  hast-util-format: ^1.1.0
 
 linkWorkspacePackages: false
 

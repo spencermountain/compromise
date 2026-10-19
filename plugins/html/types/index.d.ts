@@ -6,6 +6,11 @@ export interface HtmlOptions {
   fragment?: boolean
 }
 
+export interface HtmlOutputOptions {
+  /** Format a copy of the tree for output. Defaults to false. */
+  format?: boolean
+}
+
 /** Structural HAST input, compatible with trees from hast-util-from-html. */
 export interface HtmlNode {
   type: string
@@ -26,10 +31,10 @@ export interface HtmlMethods {
   /** Apply supported edits atomically; throws when ownership is ambiguous. */
   updateHast(): this
   /** Serialize the last successfully updated tree, including skipped content. */
-  html(): string
+  html(options?: HtmlOutputOptions): string
 }
 
-export type HtmlDocument = ReturnType<typeof nlp> & HtmlMethods
+export type HtmlDocument = Omit<ReturnType<typeof nlp>, keyof HtmlMethods> & HtmlMethods
 
 export interface HtmlLib {
   fromHtml(text: string, options?: HtmlOptions): HtmlDocument

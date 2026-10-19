@@ -4,7 +4,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseHtml = factory());
 })(this, (function () { 'use strict';
 
-  function ok() {}
+  function ok$1() {}
 
   /**
    * @import {Schema as SchemaType, Space} from 'property-information'
@@ -2000,7 +2000,7 @@
    */
 
 
-  const own$3 = {}.hasOwnProperty;
+  const own$4 = {}.hasOwnProperty;
   /** @type {unknown} */
   // type-coverage:ignore-next-line
   const proto = Object.prototype;
@@ -2066,7 +2066,7 @@
 
         result = {
           type: 'root',
-          children: all$1(state, node.childNodes),
+          children: all$2(state, node.childNodes),
           data: {quirksMode}
         };
 
@@ -2100,7 +2100,7 @@
       // Element.
       default: {
         const reference = /** @type {DefaultTreeAdapterMap['element']} */ (node);
-        result = element$1(state, reference);
+        result = element$2(state, reference);
         return result
       }
     }
@@ -2116,7 +2116,7 @@
    * @returns {Array<RootContent>}
    *   hast nodes.
    */
-  function all$1(state, nodes) {
+  function all$2(state, nodes) {
     let index = -1;
     /** @type {Array<RootContent>} */
     const results = [];
@@ -2140,7 +2140,7 @@
    * @returns {Element}
    *   hast node.
    */
-  function element$1(state, node) {
+  function element$2(state, node) {
     const schema = state.schema;
 
     state.schema = node.namespaceURI === webNamespaces.svg ? svg : html$2;
@@ -2154,14 +2154,14 @@
       const attribute = node.attrs[index];
       const name =
         (attribute.prefix ? attribute.prefix + ':' : '') + attribute.name;
-      if (!own$3.call(proto, name)) {
+      if (!own$4.call(proto, name)) {
         properties[name] = attribute.value;
       }
     }
 
     // Build.
     const x = state.schema.space === 'svg' ? s : h;
-    const result = x(node.tagName, properties, all$1(state, node.childNodes));
+    const result = x(node.tagName, properties, all$2(state, node.childNodes));
     patch(state, node, result);
 
     // Switch content.
@@ -2247,7 +2247,7 @@
 
         if (location.attrs) {
           for (key in location.attrs) {
-            if (own$3.call(location.attrs, key)) {
+            if (own$4.call(location.attrs, key)) {
               properties[find(state.schema, key).property] = position$1(
                 location.attrs[key]
               );
@@ -2255,7 +2255,7 @@
           }
         }
 
-        ok(location.startTag);
+        ok$1(location.startTag);
         const opening = position$1(location.startTag);
         const closing = location.endTag ? position$1(location.endTag) : undefined;
         /** @type {ElementData['position']} */
@@ -12495,7 +12495,7 @@
   const fatalities = {2: true, 1: false, 0: null};
 
   /** @type {Readonly<Options>} */
-  const emptyOptions$1 = {};
+  const emptyOptions$3 = {};
 
   /**
    * Turn serialized HTML into a hast tree.
@@ -12508,7 +12508,7 @@
    *   Tree.
    */
   function fromHtml(value, options) {
-    const settings = options || emptyOptions$1;
+    const settings = options || emptyOptions$3;
     const onerror = settings.onerror;
     const file = value instanceof VFile ? value : new VFile(value);
     const parseFunction = settings.fragment ? parseFragment : parse;
@@ -12736,7 +12736,7 @@
    *   Handlers to use.
    */
 
-  const own$2 = {}.hasOwnProperty;
+  const own$3 = {}.hasOwnProperty;
 
   /**
    * Handle values based on a field.
@@ -12786,11 +12786,11 @@
       let fn = one.invalid;
       const handlers = one.handlers;
 
-      if (value && own$2.call(value, key)) {
+      if (value && own$3.call(value, key)) {
         // @ts-expect-error Indexable.
         const id = String(value[key]);
         // @ts-expect-error Indexable.
-        fn = own$2.call(handlers, id) ? handlers[id] : one.unknown;
+        fn = own$3.call(handlers, id) ? handlers[id] : one.unknown;
       }
 
       if (fn) {
@@ -13349,7 +13349,7 @@
     'times'
   ];
 
-  const own$1 = {}.hasOwnProperty;
+  const own$2 = {}.hasOwnProperty;
 
   /**
    * `characterEntitiesHtml4` but inverted.
@@ -13362,7 +13362,7 @@
   let key;
 
   for (key in characterEntitiesHtml4) {
-    if (own$1.call(characterEntitiesHtml4, key)) {
+    if (own$2.call(characterEntitiesHtml4, key)) {
       characters[characterEntitiesHtml4[key]] = key;
     }
   }
@@ -13381,7 +13381,7 @@
   function toNamed(code, next, omit, attribute) {
     const character = String.fromCharCode(code);
 
-    if (own$1.call(characters, character)) {
+    if (own$2.call(characters, character)) {
       const name = characters[character];
       const value = '&' + name;
 
@@ -13620,16 +13620,16 @@
   function whitespace(thing) {
     return typeof thing === 'object'
       ? thing.type === 'text'
-        ? empty(thing.value)
+        ? empty$1(thing.value)
         : false
-      : empty(thing)
+      : empty$1(thing)
   }
 
   /**
    * @param {string} value
    * @returns {boolean}
    */
-  function empty(value) {
+  function empty$1(value) {
     return value.replace(re, '') === ''
   }
 
@@ -13701,7 +13701,7 @@
    *
    */
 
-  const own = {}.hasOwnProperty;
+  const own$1 = {}.hasOwnProperty;
 
   /**
    * Factory to check if a given node can have a tag omitted.
@@ -13722,7 +13722,7 @@
      */
     function omit(node, index, parent) {
       return (
-        own.call(handlers, node.tagName) &&
+        own$1.call(handlers, node.tagName) &&
         handlers[node.tagName](node, index, parent)
       )
     }
@@ -14281,7 +14281,7 @@
    * @returns {string}
    *   Serialized node.
    */
-  function element(node, index, parent, state) {
+  function element$1(node, index, parent, state) {
     const schema = state.schema;
     const omit = schema.space === 'svg' ? false : state.settings.omitOptionalTags;
     let selfClosing =
@@ -14588,7 +14588,7 @@
   const handle = zwitch('type', {
     invalid,
     unknown,
-    handlers: {comment, doctype, element, raw, root, text}
+    handlers: {comment, doctype, element: element$1, raw, root, text}
   });
 
   /**
@@ -14625,7 +14625,7 @@
 
 
   /** @type {Options} */
-  const emptyOptions = {};
+  const emptyOptions$2 = {};
 
   /** @type {CharacterReferences} */
   const emptyCharacterReferences = {};
@@ -14644,7 +14644,7 @@
    *   Serialized HTML.
    */
   function toHtml(tree, options) {
-    const options_ = emptyOptions;
+    const options_ = emptyOptions$2;
     const quote = options_.quote || '"';
     const alternative = quote === '"' ? "'" : '"';
 
@@ -14655,7 +14655,7 @@
     /** @type {State} */
     const state = {
       one,
-      all,
+      all: all$1,
       settings: {
         omitOptionalTags: options_.omitOptionalTags || false,
         allowParseErrors: options_.allowParseErrors || false,
@@ -14715,7 +14715,7 @@
    *   Parent whose children to serialize.
    * @returns {string}
    */
-  function all(parent) {
+  function all$1(parent) {
     /** @type {Array<string>} */
     const results = [];
     const children = (parent && parent.children) || emptyChildren;
@@ -14726,6 +14726,1419 @@
     }
 
     return results.join('')
+  }
+
+  /**
+   * @typedef {import('hast').Element} Element
+   * @typedef {import('hast').Parents} Parents
+   */
+
+  /**
+   * @template Fn
+   * @template Fallback
+   * @typedef {Fn extends (value: any) => value is infer Thing ? Thing : Fallback} Predicate
+   */
+
+  /**
+   * @callback Check
+   *   Check that an arbitrary value is an element.
+   * @param {unknown} this
+   *   Context object (`this`) to call `test` with
+   * @param {unknown} [element]
+   *   Anything (typically a node).
+   * @param {number | null | undefined} [index]
+   *   Position of `element` in its parent.
+   * @param {Parents | null | undefined} [parent]
+   *   Parent of `element`.
+   * @returns {boolean}
+   *   Whether this is an element and passes a test.
+   *
+   * @typedef {Array<TestFunction | string> | TestFunction | string | null | undefined} Test
+   *   Check for an arbitrary element.
+   *
+   *   * when `string`, checks that the element has that tag name
+   *   * when `function`, see `TestFunction`
+   *   * when `Array`, checks if one of the subtests pass
+   *
+   * @callback TestFunction
+   *   Check if an element passes a test.
+   * @param {unknown} this
+   *   The given context.
+   * @param {Element} element
+   *   An element.
+   * @param {number | undefined} [index]
+   *   Position of `element` in its parent.
+   * @param {Parents | undefined} [parent]
+   *   Parent of `element`.
+   * @returns {boolean | undefined | void}
+   *   Whether this element passes the test.
+   *
+   *   Note: `void` is included until TS sees no return as `undefined`.
+   */
+
+  /**
+   * Check if `element` is an `Element` and whether it passes the given test.
+   *
+   * @param element
+   *   Thing to check, typically `element`.
+   * @param test
+   *   Check for a specific element.
+   * @param index
+   *   Position of `element` in its parent.
+   * @param parent
+   *   Parent of `element`.
+   * @param context
+   *   Context object (`this`) to call `test` with.
+   * @returns
+   *   Whether `element` is an `Element` and passes a test.
+   * @throws
+   *   When an incorrect `test`, `index`, or `parent` is given; there is no error
+   *   thrown when `element` is not a node or not an element.
+   */
+  const isElement =
+    // Note: overloads in JSDoc can’t yet use different `@template`s.
+    /**
+     * @type {(
+     *   (<Condition extends TestFunction>(element: unknown, test: Condition, index?: number | null | undefined, parent?: Parents | null | undefined, context?: unknown) => element is Element & Predicate<Condition, Element>) &
+     *   (<Condition extends string>(element: unknown, test: Condition, index?: number | null | undefined, parent?: Parents | null | undefined, context?: unknown) => element is Element & {tagName: Condition}) &
+     *   ((element?: null | undefined) => false) &
+     *   ((element: unknown, test?: null | undefined, index?: number | null | undefined, parent?: Parents | null | undefined, context?: unknown) => element is Element) &
+     *   ((element: unknown, test?: Test, index?: number | null | undefined, parent?: Parents | null | undefined, context?: unknown) => boolean)
+     * )}
+     */
+    (
+      /**
+       * @param {unknown} [element]
+       * @param {Test | undefined} [test]
+       * @param {number | null | undefined} [index]
+       * @param {Parents | null | undefined} [parent]
+       * @param {unknown} [context]
+       * @returns {boolean}
+       */
+      // eslint-disable-next-line max-params
+      function (element, test, index, parent, context) {
+        const check = convertElement(test);
+
+        return looksLikeAnElement(element)
+          ? check.call(context, element, index, parent)
+          : false
+      }
+    );
+
+  /**
+   * Generate a check from a test.
+   *
+   * Useful if you’re going to test many nodes, for example when creating a
+   * utility where something else passes a compatible test.
+   *
+   * The created function is a bit faster because it expects valid input only:
+   * an `element`, `index`, and `parent`.
+   *
+   * @param test
+   *   A test for a specific element.
+   * @returns
+   *   A check.
+   */
+  const convertElement =
+    // Note: overloads in JSDoc can’t yet use different `@template`s.
+    /**
+     * @type {(
+     *   (<Condition extends TestFunction>(test: Condition) => (element: unknown, index?: number | null | undefined, parent?: Parents | null | undefined, context?: unknown) => element is Element & Predicate<Condition, Element>) &
+     *   (<Condition extends string>(test: Condition) => (element: unknown, index?: number | null | undefined, parent?: Parents | null | undefined, context?: unknown) => element is Element & {tagName: Condition}) &
+     *   ((test?: null | undefined) => (element?: unknown, index?: number | null | undefined, parent?: Parents | null | undefined, context?: unknown) => element is Element) &
+     *   ((test?: Test) => Check)
+     * )}
+     */
+    (
+      /**
+       * @param {Test | null | undefined} [test]
+       * @returns {Check}
+       */
+      function (test) {
+        if (test === null || test === undefined) {
+          return element
+        }
+
+        if (typeof test === 'string') {
+          return tagNameFactory(test)
+        }
+
+        // Assume array.
+        if (typeof test === 'object') {
+          return anyFactory$1(test)
+        }
+
+        if (typeof test === 'function') {
+          return castFactory$1(test)
+        }
+
+        throw new Error('Expected function, string, or array as `test`')
+      }
+    );
+
+  /**
+   * Handle multiple tests.
+   *
+   * @param {Array<TestFunction | string>} tests
+   * @returns {Check}
+   */
+  function anyFactory$1(tests) {
+    /** @type {Array<Check>} */
+    const checks = [];
+    let index = -1;
+
+    while (++index < tests.length) {
+      checks[index] = convertElement(tests[index]);
+    }
+
+    return castFactory$1(any)
+
+    /**
+     * @this {unknown}
+     * @type {TestFunction}
+     */
+    function any(...parameters) {
+      let index = -1;
+
+      while (++index < checks.length) {
+        if (checks[index].apply(this, parameters)) return true
+      }
+
+      return false
+    }
+  }
+
+  /**
+   * Turn a string into a test for an element with a certain type.
+   *
+   * @param {string} check
+   * @returns {Check}
+   */
+  function tagNameFactory(check) {
+    return castFactory$1(tagName)
+
+    /**
+     * @param {Element} element
+     * @returns {boolean}
+     */
+    function tagName(element) {
+      return element.tagName === check
+    }
+  }
+
+  /**
+   * Turn a custom test into a test for an element that passes that test.
+   *
+   * @param {TestFunction} testFunction
+   * @returns {Check}
+   */
+  function castFactory$1(testFunction) {
+    return check
+
+    /**
+     * @this {unknown}
+     * @type {Check}
+     */
+    function check(value, index, parent) {
+      return Boolean(
+        looksLikeAnElement(value) &&
+          testFunction.call(
+            this,
+            value,
+            typeof index === 'number' ? index : undefined,
+            parent || undefined
+          )
+      )
+    }
+  }
+
+  /**
+   * Make sure something is an element.
+   *
+   * @param {unknown} element
+   * @returns {element is Element}
+   */
+  function element(element) {
+    return Boolean(
+      element &&
+        typeof element === 'object' &&
+        'type' in element &&
+        element.type === 'element' &&
+        'tagName' in element &&
+        typeof element.tagName === 'string'
+    )
+  }
+
+  /**
+   * @param {unknown} value
+   * @returns {value is Element}
+   */
+  function looksLikeAnElement(value) {
+    return (
+      value !== null &&
+      typeof value === 'object' &&
+      'type' in value &&
+      'tagName' in value
+    )
+  }
+
+  /**
+   * Check if a node is a *embedded content*.
+   *
+   * @param value
+   *   Thing to check (typically `Node`).
+   * @returns
+   *   Whether `value` is an element considered embedded content.
+   *
+   *   The elements `audio`, `canvas`, `embed`, `iframe`, `img`, `math`,
+   *   `object`, `picture`, `svg`, and `video` are embedded content.
+   */
+  const embedded = convertElement(
+    /**
+     * @param element
+     * @returns {element is {tagName: 'audio' | 'canvas' | 'embed' | 'iframe' | 'img' | 'math' | 'object' | 'picture' | 'svg' | 'video'}}
+     */
+    function (element) {
+      return (
+        element.tagName === 'audio' ||
+        element.tagName === 'canvas' ||
+        element.tagName === 'embed' ||
+        element.tagName === 'iframe' ||
+        element.tagName === 'img' ||
+        element.tagName === 'math' ||
+        element.tagName === 'object' ||
+        element.tagName === 'picture' ||
+        element.tagName === 'svg' ||
+        element.tagName === 'video'
+      )
+    }
+  );
+
+  /**
+   * @import {Node, Parent} from 'unist'
+   */
+
+
+  /**
+   * Generate an assertion from a test.
+   *
+   * Useful if you’re going to test many nodes, for example when creating a
+   * utility where something else passes a compatible test.
+   *
+   * The created function is a bit faster because it expects valid input only:
+   * a `node`, `index`, and `parent`.
+   *
+   * @param {Test} test
+   *   *   when nullish, checks if `node` is a `Node`.
+   *   *   when `string`, works like passing `(node) => node.type === test`.
+   *   *   when `function` checks if function passed the node is true.
+   *   *   when `object`, checks that all keys in test are in node, and that they have (strictly) equal values.
+   *   *   when `array`, checks if any one of the subtests pass.
+   * @returns {Check}
+   *   An assertion.
+   */
+  const convert =
+    // Note: overloads in JSDoc can’t yet use different `@template`s.
+    /**
+     * @type {(
+     *   (<Condition extends string>(test: Condition) => (node: unknown, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & {type: Condition}) &
+     *   (<Condition extends Props>(test: Condition) => (node: unknown, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & Condition) &
+     *   (<Condition extends TestFunction>(test: Condition) => (node: unknown, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node & Predicate<Condition, Node>) &
+     *   ((test?: null | undefined) => (node?: unknown, index?: number | null | undefined, parent?: Parent | null | undefined, context?: unknown) => node is Node) &
+     *   ((test?: Test) => Check)
+     * )}
+     */
+    (
+      /**
+       * @param {Test} [test]
+       * @returns {Check}
+       */
+      function (test) {
+        if (test === null || test === undefined) {
+          return ok
+        }
+
+        if (typeof test === 'function') {
+          return castFactory(test)
+        }
+
+        if (typeof test === 'object') {
+          return Array.isArray(test)
+            ? anyFactory(test)
+            : // Cast because `ReadonlyArray` goes into the above but `isArray`
+              // narrows to `Array`.
+              propertiesFactory(/** @type {Props} */ (test))
+        }
+
+        if (typeof test === 'string') {
+          return typeFactory(test)
+        }
+
+        throw new Error('Expected function, string, or object as test')
+      }
+    );
+
+  /**
+   * @param {Array<Props | TestFunction | string>} tests
+   * @returns {Check}
+   */
+  function anyFactory(tests) {
+    /** @type {Array<Check>} */
+    const checks = [];
+    let index = -1;
+
+    while (++index < tests.length) {
+      checks[index] = convert(tests[index]);
+    }
+
+    return castFactory(any)
+
+    /**
+     * @this {unknown}
+     * @type {TestFunction}
+     */
+    function any(...parameters) {
+      let index = -1;
+
+      while (++index < checks.length) {
+        if (checks[index].apply(this, parameters)) return true
+      }
+
+      return false
+    }
+  }
+
+  /**
+   * Turn an object into a test for a node with a certain fields.
+   *
+   * @param {Props} check
+   * @returns {Check}
+   */
+  function propertiesFactory(check) {
+    const checkAsRecord = /** @type {Record<string, unknown>} */ (check);
+
+    return castFactory(all)
+
+    /**
+     * @param {Node} node
+     * @returns {boolean}
+     */
+    function all(node) {
+      const nodeAsRecord = /** @type {Record<string, unknown>} */ (
+        /** @type {unknown} */ (node)
+      );
+
+      /** @type {string} */
+      let key;
+
+      for (key in check) {
+        if (nodeAsRecord[key] !== checkAsRecord[key]) return false
+      }
+
+      return true
+    }
+  }
+
+  /**
+   * Turn a string into a test for a node with a certain type.
+   *
+   * @param {string} check
+   * @returns {Check}
+   */
+  function typeFactory(check) {
+    return castFactory(type)
+
+    /**
+     * @param {Node} node
+     */
+    function type(node) {
+      return node && node.type === check
+    }
+  }
+
+  /**
+   * Turn a custom test into a test for a node that passes that test.
+   *
+   * @param {TestFunction} testFunction
+   * @returns {Check}
+   */
+  function castFactory(testFunction) {
+    return check
+
+    /**
+     * @this {unknown}
+     * @type {Check}
+     */
+    function check(value, index, parent) {
+      return Boolean(
+        looksLikeANode(value) &&
+          testFunction.call(
+            this,
+            value,
+            typeof index === 'number' ? index : undefined,
+            parent || undefined
+          )
+      )
+    }
+  }
+
+  function ok() {
+    return true
+  }
+
+  /**
+   * @param {unknown} value
+   * @returns {value is Node}
+   */
+  function looksLikeANode(value) {
+    return value !== null && typeof value === 'object' && 'type' in value
+  }
+
+  // See: <https://html.spec.whatwg.org/#the-css-user-agent-style-sheet-and-presentational-hints>
+  const blocks$1 = [
+    'address', // Flow content.
+    'article', // Sections and headings.
+    'aside', // Sections and headings.
+    'blockquote', // Flow content.
+    'body', // Page.
+    'br', // Contribute whitespace intrinsically.
+    'caption', // Similar to block.
+    'center', // Flow content, legacy.
+    'col', // Similar to block.
+    'colgroup', // Similar to block.
+    'dd', // Lists.
+    'dialog', // Flow content.
+    'dir', // Lists, legacy.
+    'div', // Flow content.
+    'dl', // Lists.
+    'dt', // Lists.
+    'figcaption', // Flow content.
+    'figure', // Flow content.
+    'footer', // Flow content.
+    'form', // Flow content.
+    'h1', // Sections and headings.
+    'h2', // Sections and headings.
+    'h3', // Sections and headings.
+    'h4', // Sections and headings.
+    'h5', // Sections and headings.
+    'h6', // Sections and headings.
+    'head', // Page.
+    'header', // Flow content.
+    'hgroup', // Sections and headings.
+    'hr', // Flow content.
+    'html', // Page.
+    'legend', // Flow content.
+    'li', // Block-like.
+    'li', // Similar to block.
+    'listing', // Flow content, legacy
+    'main', // Flow content.
+    'menu', // Lists.
+    'nav', // Sections and headings.
+    'ol', // Lists.
+    'optgroup', // Similar to block.
+    'option', // Similar to block.
+    'p', // Flow content.
+    'plaintext', // Flow content, legacy
+    'pre', // Flow content.
+    'section', // Sections and headings.
+    'summary', // Similar to block.
+    'table', // Similar to block.
+    'tbody', // Similar to block.
+    'td', // Block-like.
+    'td', // Similar to block.
+    'tfoot', // Similar to block.
+    'th', // Block-like.
+    'th', // Similar to block.
+    'thead', // Similar to block.
+    'tr', // Similar to block.
+    'ul', // Lists.
+    'wbr', // Contribute whitespace intrinsically.
+    'xmp' // Flow content, legacy
+  ];
+
+  const content$1 = [
+    // Form.
+    'button',
+    'input',
+    'select',
+    'textarea'
+  ];
+
+  const skippable$1 = [
+    'area',
+    'base',
+    'basefont',
+    'dialog',
+    'datalist',
+    'head',
+    'link',
+    'meta',
+    'noembed',
+    'noframes',
+    'param',
+    'rp',
+    'script',
+    'source',
+    'style',
+    'template',
+    'track',
+    'title'
+  ];
+
+  /**
+   * @import {Nodes, Parents, Text} from 'hast'
+   */
+
+
+  /** @type {Options} */
+  const emptyOptions$1 = {};
+  const ignorableNode = convert(['comment', 'doctype']);
+
+  /**
+   * Minify whitespace.
+   *
+   * @param {Nodes} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (optional).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function minifyWhitespace(tree, options) {
+    const settings = options || emptyOptions$1;
+
+    minify(tree, {
+      collapse: collapseFactory(
+        settings.newlines ? replaceNewlines : replaceWhitespace
+      ),
+      whitespace: 'normal'
+    });
+  }
+
+  /**
+   * @param {Nodes} node
+   *   Node.
+   * @param {State} state
+   *   Info passed around.
+   * @returns {Result}
+   *   Result.
+   */
+  function minify(node, state) {
+    if ('children' in node) {
+      const settings = {...state};
+
+      if (node.type === 'root' || blocklike(node)) {
+        settings.before = true;
+        settings.after = true;
+      }
+
+      settings.whitespace = inferWhiteSpace(node, state);
+
+      return all(node, settings)
+    }
+
+    if (node.type === 'text') {
+      if (state.whitespace === 'normal') {
+        return minifyText(node, state)
+      }
+
+      // Naïve collapse, but no trimming:
+      if (state.whitespace === 'nowrap') {
+        node.value = state.collapse(node.value);
+      }
+
+      // The `pre-wrap` or `pre` whitespace settings are neither collapsed nor
+      // trimmed.
+    }
+
+    return {ignore: ignorableNode(node), stripAtStart: false, remove: false}
+  }
+
+  /**
+   * @param {Text} node
+   *   Node.
+   * @param {State} state
+   *   Info passed around.
+   * @returns {Result}
+   *   Result.
+   */
+  function minifyText(node, state) {
+    const value = state.collapse(node.value);
+    const result = {ignore: false, stripAtStart: false, remove: false};
+    let start = 0;
+    let end = value.length;
+
+    if (state.before && removable(value.charAt(0))) {
+      start++;
+    }
+
+    if (start !== end && removable(value.charAt(end - 1))) {
+      if (state.after) {
+        end--;
+      } else {
+        result.stripAtStart = true;
+      }
+    }
+
+    if (start === end) {
+      result.remove = true;
+    } else {
+      node.value = value.slice(start, end);
+    }
+
+    return result
+  }
+
+  /**
+   * @param {Parents} parent
+   *   Node.
+   * @param {State} state
+   *   Info passed around.
+   * @returns {Result}
+   *   Result.
+   */
+  function all(parent, state) {
+    let before = state.before;
+    const after = state.after;
+    const children = parent.children;
+    let length = children.length;
+    let index = -1;
+
+    while (++index < length) {
+      const result = minify(children[index], {
+        ...state,
+        after: collapsableAfter(children, index, after),
+        before
+      });
+
+      if (result.remove) {
+        children.splice(index, 1);
+        index--;
+        length--;
+      } else if (!result.ignore) {
+        before = result.stripAtStart;
+      }
+
+      // If this element, such as a `<select>` or `<img>`, contributes content
+      // somehow, allow whitespace again.
+      if (content(children[index])) {
+        before = false;
+      }
+    }
+
+    return {ignore: false, stripAtStart: Boolean(before || after), remove: false}
+  }
+
+  /**
+   * @param {Array<Nodes>} nodes
+   *   Nodes.
+   * @param {number} index
+   *   Index.
+   * @param {boolean | undefined} [after]
+   *   Whether there is a break after `nodes` (default: `false`).
+   * @returns {boolean | undefined}
+   *   Whether there is a break after the node at `index`.
+   */
+  function collapsableAfter(nodes, index, after) {
+    while (++index < nodes.length) {
+      const node = nodes[index];
+      let result = inferBoundary(node);
+
+      if (result === undefined && 'children' in node && !skippable(node)) {
+        result = collapsableAfter(node.children, -1);
+      }
+
+      if (typeof result === 'boolean') {
+        return result
+      }
+    }
+
+    return after
+  }
+
+  /**
+   * Infer two types of boundaries:
+   *
+   * 1. `true` — boundary for which whitespace around it does not contribute
+   *    anything
+   * 2. `false` — boundary for which whitespace around it *does* contribute
+   *
+   * No result (`undefined`) is returned if it is unknown.
+   *
+   * @param {Nodes} node
+   *   Node.
+   * @returns {boolean | undefined}
+   *   Boundary.
+   */
+  function inferBoundary(node) {
+    if (node.type === 'element') {
+      if (content(node)) {
+        return false
+      }
+
+      if (blocklike(node)) {
+        return true
+      }
+
+      // Unknown: either depends on siblings if embedded or metadata, or on
+      // children.
+    } else if (node.type === 'text') {
+      if (!whitespace(node)) {
+        return false
+      }
+    } else if (!ignorableNode(node)) {
+      return false
+    }
+  }
+
+  /**
+   * Infer whether a node is skippable.
+   *
+   * @param {Nodes} node
+   *   Node.
+   * @returns {boolean}
+   *   Whether `node` is skippable.
+   */
+  function content(node) {
+    return embedded(node) || isElement(node, content$1)
+  }
+
+  /**
+   * See: <https://html.spec.whatwg.org/#the-css-user-agent-style-sheet-and-presentational-hints>
+   *
+   * @param {Nodes} node
+   *   Node.
+   * @returns {boolean}
+   *   Whether `node` is block-like.
+   */
+  function blocklike(node) {
+    return isElement(node, blocks$1)
+  }
+
+  /**
+   * @param {Parents} node
+   *   Node.
+   * @returns {boolean}
+   *   Whether `node` is skippable.
+   */
+  function skippable(node) {
+    return (
+      Boolean(node.type === 'element' && node.properties.hidden) ||
+      ignorableNode(node) ||
+      isElement(node, skippable$1)
+    )
+  }
+
+  /**
+   * @param {string} character
+   *   Character.
+   * @returns {boolean}
+   *   Whether `character` is removable.
+   */
+  function removable(character) {
+    return character === ' ' || character === '\n'
+  }
+
+  /**
+   * @type {Collapse}
+   */
+  function replaceNewlines(value) {
+    const match = /\r?\n|\r/.exec(value);
+    return match ? match[0] : ' '
+  }
+
+  /**
+   * @type {Collapse}
+   */
+  function replaceWhitespace() {
+    return ' '
+  }
+
+  /**
+   * @param {Collapse} replace
+   * @returns {Collapse}
+   *   Collapse.
+   */
+  function collapseFactory(replace) {
+    return collapse
+
+    /**
+     * @type {Collapse}
+     */
+    function collapse(value) {
+      return String(value).replace(/[\t\n\v\f\r ]+/g, replace)
+    }
+  }
+
+  /**
+   * We don’t need to support void elements here (so `nobr wbr` -> `normal` is
+   * ignored).
+   *
+   * @param {Parents} node
+   *   Node.
+   * @param {State} state
+   *   Info passed around.
+   * @returns {Whitespace}
+   *   Whitespace.
+   */
+  function inferWhiteSpace(node, state) {
+    if ('tagName' in node && node.properties) {
+      switch (node.tagName) {
+        // Whitespace in script/style, while not displayed by CSS as significant,
+        // could have some meaning in JS/CSS, so we can’t touch them.
+        case 'listing':
+        case 'plaintext':
+        case 'script':
+        case 'style':
+        case 'xmp': {
+          return 'pre'
+        }
+
+        case 'nobr': {
+          return 'nowrap'
+        }
+
+        case 'pre': {
+          return node.properties.wrap ? 'pre-wrap' : 'pre'
+        }
+
+        case 'td':
+        case 'th': {
+          return node.properties.noWrap ? 'nowrap' : state.whitespace
+        }
+
+        case 'textarea': {
+          return 'pre-wrap'
+        }
+      }
+    }
+
+    return state.whitespace
+  }
+
+  /**
+   * @typedef {import('hast').Element} Element
+   * @typedef {import('hast').Nodes} Nodes
+   */
+
+  const own = {}.hasOwnProperty;
+
+  /**
+   * Check if `node` is an element and has a `name` property.
+   *
+   * @template {string} Key
+   *   Type of key.
+   * @param {Nodes} node
+   *   Node to check (typically `Element`).
+   * @param {Key} name
+   *   Property name to check.
+   * @returns {node is Element & {properties: Record<Key, Array<number | string> | number | string | true>}}}
+   *   Whether `node` is an element that has a `name` property.
+   *
+   *   Note: see <https://github.com/DefinitelyTyped/DefinitelyTyped/blob/27c9274/types/hast/index.d.ts#L37C29-L37C98>.
+   */
+  function hasProperty(node, name) {
+    const value =
+      node.type === 'element' &&
+      own.call(node.properties, name) &&
+      node.properties[name];
+
+    return value !== null && value !== undefined && value !== false
+  }
+
+  /**
+   * @import {Nodes} from 'hast'
+   */
+
+  const list = new Set(['pingback', 'prefetch', 'stylesheet']);
+
+  /**
+   * Checks whether a node is a “body OK” link.
+   *
+   * @param {Nodes} node
+   *   Node to check.
+   * @returns {boolean}
+   *   Whether `node` is a “body OK” link.
+   */
+  function isBodyOkLink(node) {
+    if (node.type !== 'element' || node.tagName !== 'link') {
+      return false
+    }
+
+    if (node.properties.itemProp) {
+      return true
+    }
+
+    const value = node.properties.rel;
+    let index = -1;
+
+    if (!Array.isArray(value) || value.length === 0) {
+      return false
+    }
+
+    while (++index < value.length) {
+      if (!list.has(String(value[index]))) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  /**
+   * @typedef {import('hast').Nodes} Nodes
+   */
+
+
+  const basic = convertElement([
+    'a',
+    'abbr',
+    // `area` is in fact only phrasing if it is inside a `map` element.
+    // However, since `area`s are required to be inside a `map` element, and it’s
+    // a rather involved check, it’s ignored here for now.
+    'area',
+    'b',
+    'bdi',
+    'bdo',
+    'br',
+    'button',
+    'cite',
+    'code',
+    'data',
+    'datalist',
+    'del',
+    'dfn',
+    'em',
+    'i',
+    'input',
+    'ins',
+    'kbd',
+    'keygen',
+    'label',
+    'map',
+    'mark',
+    'meter',
+    'noscript',
+    'output',
+    'progress',
+    'q',
+    'ruby',
+    's',
+    'samp',
+    'script',
+    'select',
+    'small',
+    'span',
+    'strong',
+    'sub',
+    'sup',
+    'template',
+    'textarea',
+    'time',
+    'u',
+    'var',
+    'wbr'
+  ]);
+
+  const meta = convertElement('meta');
+
+  /**
+   * Check if the given value is *phrasing* content.
+   *
+   * @param {Nodes} value
+   *   Node to check.
+   * @returns {boolean}
+   *   Whether `value` is phrasing content.
+   */
+  function phrasing(value) {
+    return Boolean(
+      value.type === 'text' ||
+        basic(value) ||
+        embedded(value) ||
+        isBodyOkLink(value) ||
+        (meta(value) && hasProperty(value, 'itemProp'))
+    )
+  }
+
+  /**
+   * List of HTML tag names that are whitespace sensitive.
+   */
+  const whitespaceSensitiveTagNames = [
+    'pre',
+    'script',
+    'style',
+    'textarea'
+  ];
+
+  /**
+   * @param {string} d
+   * @returns {string}
+   */
+  function color(d) {
+    return d
+  }
+
+  /**
+   * @import {Node as UnistNode, Parent as UnistParent} from 'unist'
+   */
+
+
+  /** @type {Readonly<ActionTuple>} */
+  const empty = [];
+
+  /**
+   * Continue traversing as normal.
+   */
+  const CONTINUE = true;
+
+  /**
+   * Stop traversing immediately.
+   */
+  const EXIT = false;
+
+  /**
+   * Do not traverse this node’s children.
+   */
+  const SKIP = 'skip';
+
+  /**
+   * Visit nodes, with ancestral information.
+   *
+   * This algorithm performs *depth-first* *tree traversal* in *preorder*
+   * (**NLR**) or if `reverse` is given, in *reverse preorder* (**NRL**).
+   *
+   * You can choose for which nodes `visitor` is called by passing a `test`.
+   * For complex tests, you should test yourself in `visitor`, as it will be
+   * faster and will have improved type information.
+   *
+   * Walking the tree is an intensive task.
+   * Make use of the return values of the visitor when possible.
+   * Instead of walking a tree multiple times, walk it once, use `unist-util-is`
+   * to check if a node matches, and then perform different operations.
+   *
+   * You can change the tree.
+   * See `Visitor` for more info.
+   *
+   * @overload
+   * @param {Tree} tree
+   * @param {Check} check
+   * @param {BuildVisitor<Tree, Check>} visitor
+   * @param {boolean | null | undefined} [reverse]
+   * @returns {undefined}
+   *
+   * @overload
+   * @param {Tree} tree
+   * @param {BuildVisitor<Tree>} visitor
+   * @param {boolean | null | undefined} [reverse]
+   * @returns {undefined}
+   *
+   * @param {UnistNode} tree
+   *   Tree to traverse.
+   * @param {Visitor | Test} test
+   *   `unist-util-is`-compatible test
+   * @param {Visitor | boolean | null | undefined} [visitor]
+   *   Handle each node.
+   * @param {boolean | null | undefined} [reverse]
+   *   Traverse in reverse preorder (NRL) instead of the default preorder (NLR).
+   * @returns {undefined}
+   *   Nothing.
+   *
+   * @template {UnistNode} Tree
+   *   Node type.
+   * @template {Test} Check
+   *   `unist-util-is`-compatible test.
+   */
+  function visitParents(tree, test, visitor, reverse) {
+    /** @type {Test} */
+    let check;
+
+    if (typeof test === 'function' && typeof visitor !== 'function') {
+      reverse = visitor;
+      // @ts-expect-error no visitor given, so `visitor` is test.
+      visitor = test;
+    } else {
+      // @ts-expect-error visitor given, so `test` isn’t a visitor.
+      check = test;
+    }
+
+    const is = convert(check);
+    const step = reverse ? -1 : 1;
+
+    factory(tree, undefined, [])();
+
+    /**
+     * @param {UnistNode} node
+     * @param {number | undefined} index
+     * @param {Array<UnistParent>} parents
+     */
+    function factory(node, index, parents) {
+      const value = /** @type {Record<string, unknown>} */ (
+        node && typeof node === 'object' ? node : {}
+      );
+
+      if (typeof value.type === 'string') {
+        const name =
+          // `hast`
+          typeof value.tagName === 'string'
+            ? value.tagName
+            : // `xast`
+              typeof value.name === 'string'
+              ? value.name
+              : undefined;
+
+        Object.defineProperty(visit, 'name', {
+          value:
+            'node (' + color(node.type + (name ? '<' + name + '>' : '')) + ')'
+        });
+      }
+
+      return visit
+
+      function visit() {
+        /** @type {Readonly<ActionTuple>} */
+        let result = empty;
+        /** @type {Readonly<ActionTuple>} */
+        let subresult;
+        /** @type {number} */
+        let offset;
+        /** @type {Array<UnistParent>} */
+        let grandparents;
+
+        if (!test || is(node, index, parents[parents.length - 1] || undefined)) {
+          // @ts-expect-error: `visitor` is now a visitor.
+          result = toResult(visitor(node, parents));
+
+          if (result[0] === EXIT) {
+            return result
+          }
+        }
+
+        if ('children' in node && node.children) {
+          const nodeAsParent = /** @type {UnistParent} */ (node);
+
+          if (nodeAsParent.children && result[0] !== SKIP) {
+            offset = (reverse ? nodeAsParent.children.length : -1) + step;
+            grandparents = parents.concat(nodeAsParent);
+
+            while (offset > -1 && offset < nodeAsParent.children.length) {
+              const child = nodeAsParent.children[offset];
+
+              subresult = factory(child, offset, grandparents)();
+
+              if (subresult[0] === EXIT) {
+                return subresult
+              }
+
+              offset =
+                typeof subresult[1] === 'number' ? subresult[1] : offset + step;
+            }
+          }
+        }
+
+        return result
+      }
+    }
+  }
+
+  /**
+   * Turn a return value into a clean result.
+   *
+   * @param {VisitorResult} value
+   *   Valid return values from visitors.
+   * @returns {Readonly<ActionTuple>}
+   *   Clean result.
+   */
+  function toResult(value) {
+    if (Array.isArray(value)) {
+      return value
+    }
+
+    if (typeof value === 'number') {
+      return [CONTINUE, value]
+    }
+
+    return value === null || value === undefined ? empty : [value]
+  }
+
+  /**
+   * @import {Nodes, RootContent, Root} from 'hast'
+   * @import {BuildVisitor} from 'unist-util-visit-parents'
+   * @import {Options, State} from './types.js'
+   */
+
+
+  /** @type {Options} */
+  const emptyOptions = {};
+
+  /**
+   * Format whitespace in HTML.
+   *
+   * @param {Root} tree
+   *   Tree.
+   * @param {Options | null | undefined} [options]
+   *   Configuration (optional).
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function format(tree, options) {
+    const settings = emptyOptions;
+
+    /** @type {State} */
+    const state = {
+      blanks: settings.blanks || [],
+      head: false,
+      indentInitial: settings.indentInitial !== false,
+      indent:
+        typeof settings.indent === 'number'
+          ? ' '.repeat(settings.indent)
+          : typeof settings.indent === 'string'
+            ? settings.indent
+            : '  '
+    };
+
+    minifyWhitespace(tree, {newlines: true});
+
+    visitParents(tree, visitor);
+
+    /**
+     * @type {BuildVisitor<Root>}
+     */
+    function visitor(node, parents) {
+      if (!('children' in node)) {
+        return
+      }
+
+      if (node.type === 'element' && node.tagName === 'head') {
+        state.head = true;
+      }
+
+      if (state.head && node.type === 'element' && node.tagName === 'body') {
+        state.head = false;
+      }
+
+      if (
+        node.type === 'element' &&
+        whitespaceSensitiveTagNames.includes(node.tagName)
+      ) {
+        return SKIP
+      }
+
+      // Don’t indent content of whitespace-sensitive nodes / inlines.
+      if (node.children.length === 0 || !padding(state, node)) {
+        return
+      }
+
+      let level = parents.length;
+
+      if (!state.indentInitial) {
+        level--;
+      }
+
+      let eol = false;
+
+      // Indent newlines in `text`.
+      for (const child of node.children) {
+        if (child.type === 'comment' || child.type === 'text') {
+          if (child.value.includes('\n')) {
+            eol = true;
+          }
+
+          child.value = child.value.replace(
+            / *\n/g,
+            '$&' + state.indent.repeat(level)
+          );
+        }
+      }
+
+      /** @type {Array<RootContent>} */
+      const result = [];
+      /** @type {RootContent | undefined} */
+      let previous;
+
+      for (const child of node.children) {
+        if (padding(state, child) || (eol && !previous)) {
+          addBreak(result, level, child);
+          eol = true;
+        }
+
+        previous = child;
+        result.push(child);
+      }
+
+      if (previous && (eol || padding(state, previous))) {
+        // Ignore trailing whitespace (if that already existed), as we’ll add
+        // properly indented whitespace.
+        if (whitespace(previous)) {
+          result.pop();
+          previous = result[result.length - 1];
+        }
+
+        addBreak(result, level - 1);
+      }
+
+      node.children = result;
+    }
+
+    /**
+     * @param {Array<RootContent>} list
+     *   Nodes.
+     * @param {number} level
+     *   Indentation level.
+     * @param {RootContent | undefined} [next]
+     *   Next node.
+     * @returns {undefined}
+     *   Nothing.
+     */
+    function addBreak(list, level, next) {
+      const tail = list[list.length - 1];
+      const previous = tail && whitespace(tail) ? list[list.length - 2] : tail;
+      const replace =
+        (blank(state, previous) && blank(state, next) ? '\n\n' : '\n') +
+        state.indent.repeat(Math.max(level, 0));
+
+      if (tail && tail.type === 'text') {
+        tail.value = whitespace(tail) ? replace : tail.value + replace;
+      } else {
+        list.push({type: 'text', value: replace});
+      }
+    }
+  }
+
+  /**
+   * @param {State} state
+   *   Info passed around.
+   * @param {Nodes | undefined} node
+   *   Node.
+   * @returns {boolean}
+   *   Whether `node` is a blank.
+   */
+  function blank(state, node) {
+    return Boolean(
+      node &&
+        node.type === 'element' &&
+        state.blanks.length > 0 &&
+        state.blanks.includes(node.tagName)
+    )
+  }
+
+  /**
+   * @param {State} state
+   *   Info passed around.
+   * @param {Nodes} node
+   *   Node.
+   * @returns {boolean}
+   *   Whether `node` should be padded.
+   */
+  function padding(state, node) {
+    return (
+      node.type === 'root' ||
+      (node.type === 'element'
+        ? state.head ||
+          node.tagName === 'script' ||
+          embedded(node) ||
+          !phrasing(node)
+        : false)
+    )
   }
 
   var version = '0.0.1';
@@ -15085,10 +16498,16 @@
       },
     },
     api: View => {
-      View.prototype.html = function () {
+      View.prototype.html = function (options = {}) {
         const binding = this.document.htmlAst;
         if (!binding) {
           throw new Error('This document is not connected to an HTML tree')
+        }
+        if (options.format) {
+          // Formatting changes whitespace nodes; keep those changes out of our bindings.
+          const tree = globalThis.structuredClone(binding.tree);
+          format(tree);
+          return toHtml(tree)
         }
         return toHtml(binding.tree)
       };

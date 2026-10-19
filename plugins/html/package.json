@@ -35,6 +35,7 @@
     "src/"
   ],
   "dependencies": {
+    "hast-util-format": "catalog:",
     "hast-util-from-html": "catalog:",
     "hast-util-to-html": "catalog:"
   },

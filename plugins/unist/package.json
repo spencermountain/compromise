@@ -33,6 +33,7 @@
   "scripts": {
     "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
     "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "test:types": "tsc --project ./tests/types/tsconfig.json",
     "watch": "node --watch ./scratch.js",
     "version": "node ./scripts/version.js",
     "build": "node ./scripts/version.js && rollup -c --silent"

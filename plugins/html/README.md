@@ -24,7 +24,7 @@
 <!-- spacer -->
 <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-This plugin lets you read and modify an **HTML** document using compromise.
+This plugin lets you read and modify text in an **HTML** document, using compromise.
 
 It uses [hast-util-from-html](https://github.com/syntax-tree/hast-util-from-html) to parse HTML and connects compromise terms to the resulting HAST text nodes.
 
@@ -45,37 +45,6 @@ doc.updateHast()
 doc.html()
 // 'She <strong>walked</strong> to <a href="./link">school</a>'
 ```
-
-### In the browser
-
-Load compromise first, then register the HTML plugin:
-
-```html
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>compromise-html example</title>
-  </head>
-  <body>
-    <pre id="output"></pre>
-    <script src="https://unpkg.com/compromise/builds/compromise.js"></script>
-    <script src="https://unpkg.com/compromise-html/builds/compromise-html.min.js"></script>
-    <script>
-      nlp.plugin(compromiseHtml)
-      const doc = nlp.fromHtml('She <strong>walks</strong> home.')
-      doc.verbs().toPastTense()
-      doc.updateHast()
-      document.getElementById('output').textContent = doc.html()
-      // She <strong>walked</strong> home.
-    </script>
-  </body>
-</html>
-```
-
-These unpkg URLs target published packages. They require a published HTML plugin
-and a compatible compromise release with the `onReplace` plugin hook. For deployment,
-pin package versions using `package-name@version` in each URL.
 
 ### Usage
 
@@ -98,20 +67,17 @@ doc.match('everyone').debug('ast')
 It connects to the supplied nodes directly; `updateHast()` changes their text values.
 `html()` serializes the last successfully updated tree, without automatically applying edits.
 
+<!-- spacer -->
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
 #### Configuration
 
 ```js
-// Default: parse a fragment without adding html/head/body wrappers.
-const snippet = nlp.fromHtml('<p>Hello world.</p>', { fragment: true })
-
-// Parse a complete page, retaining its document structure.
-const page = nlp.fromHtml(
-  '<!doctype html><html><head><title>Example</title></head><body><p>Hello.</p></body></html>',
-  { fragment: false }
-)
+// passing {fragment: false} ensures the input is wrapped in html/body tags
+const snippet = nlp.fromHtml('<p>Hello world.</p>', { fragment: false })
+console.log(snippet.html())
+// <html><head></head><body><p>Hello world.</p></body></html>
 ```
-
-`fragment` is currently the only parsing option. Text extraction uses these fixed rules:
 
 - Inline elements contribute their text without markup. Links contribute their labels, not their destinations.
 - Block elements such as paragraphs, headings, list items, and blockquotes separate prose. `<br>` and `<hr>` also create boundaries.
@@ -121,8 +87,10 @@ const page = nlp.fromHtml(
 - Character references are decoded for matching and escaped as needed during serialization.
 
 Skipped content remains in the source tree and serialized output. Matches do not cross
-block boundaries or skipped subtrees. HTML does not currently expose Markdown's
-`skip`, `keep`, and `inline` configuration modes.
+block boundaries or skipped subtrees.
+
+<!-- spacer -->
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ### TypeScript
 
@@ -140,6 +108,36 @@ const output: string = doc.html()
 ```
 
 Types are provided for both ESM and CommonJS imports, including `HtmlNode` for HAST input.
+
+### In the browser
+
+Load compromise first, then register the HTML plugin:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>compromise-html example</title>
+  </head>
+  <body>
+    <pre id="output"></pre>
+    <script src="https://unpkg.com/compromise/builds/compromise.js"></script>
+    <script src="https://unpkg.com/compromise-html/builds/compromise-html.min.js"></script>
+    <script>
+      nlp.plugin(compromiseHtml)
+      const doc = nlp.fromHtml('She <strong>walks</strong> home.')
+      doc.verbs().toPastTense()
+      doc.updateHast()
+      document.getElementById('output').textContent = doc.html()
+      // She <strong>walked</strong> home.
+    </script>
+  </body>
+</html>
+```
+
+<!-- spacer -->
+<img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
 ## Parser pedantics
 
@@ -174,13 +172,7 @@ crossing text nodes are rejected when applying the edit.
 - Original separators are retained; punctuation-only changes are not written back.
 - Cloned compromise documents are detached from the source tree.
 - Serialization preserves the parsed structure, not the exact original source spelling. Entity spelling, quote styles, and malformed markup may change.
-- This plugin edits a HAST tree, not a live browser DOM.
-
-For a larger example, run `node plugins/html/scratch.js` from the repository root.
-It reads [the full-page fixture](tests/examples/full-page.html), prints the linguistic text,
-and applies edits before serializing the page.
 
 PRs welcome
 
 MIT
-

@@ -79,8 +79,21 @@ The default, `doc.toHtml()` (or `{ format: false }`), keeps existing source whit
 ```js
 // passing {fragment: false} ensures the input is wrapped in html/body tags
 const snippet = nlp.fromHtml('<p>Hello world.</p>', { fragment: false })
-console.log(snippet.toHtml())
+const output = snippet.toHtml())
 // <html><head></head><body><p>Hello world.</p></body></html>
+
+// beautify html output with { format: true }
+const snippet = nlp.fromHtml(output)
+snippet.toHtml({ format: true })
+/*
+<html>
+  <head></head>
+  <body>
+    <p>Hello world.</p>
+  </body>
+</html>
+*/
+
 ```
 
 - Inline elements contribute their text without markup. Links contribute their labels, not their destinations.
@@ -116,35 +129,20 @@ Types are provided for both ESM and CommonJS imports, including `HtmlNode` for H
 
 ### In the browser
 
-Load compromise first, then register the HTML plugin:
-
-Requires **compromise ^14.20.0**, which will include the `onReplace` plugin hook.
-The published `14.19.0` release does not include it; use a compatible development
-build until `14.20.0` is published. The unpkg example below requires that
-compatible release to be available on npm.
-
 ```html
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>compromise-html example</title>
-  </head>
-  <body>
-    <pre id="output"></pre>
-    <script src="https://unpkg.com/compromise/builds/compromise.js"></script>
-    <script src="https://unpkg.com/compromise-html/builds/compromise-html.min.js"></script>
-    <script>
-      nlp.plugin(compromiseHtml)
-      const doc = nlp.fromHtml('She <strong>walks</strong> home.')
-      doc.verbs().toPastTense()
-      doc.updateHast()
-      document.getElementById('output').textContent = doc.toHtml()
-      // She <strong>walked</strong> home.
-    </script>
-  </body>
-</html>
+<script src="https://unpkg.com/compromise/builds/compromise.js"></script>
+<script src="https://unpkg.com/compromise-html/builds/compromise-html.min.js"></script>
+<script>
+  nlp.plugin(compromiseHtml)
+  const doc = nlp.fromHtml('She <strong>walks</strong> home.')
+  doc.verbs().toPastTense()
+  doc.updateHast()
+  document.getElementById('output').textContent = doc.toHtml()
+  // She <strong>walked</strong> home.
+</script>
 ```
+
+note that this library does not operate on active DOM nodes, but html strings
 
 <!-- spacer -->
 <img height="20px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>

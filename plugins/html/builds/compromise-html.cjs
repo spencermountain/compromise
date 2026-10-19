@@ -16151,12 +16151,8 @@
     'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'tbody', 'td', 'tfoot',
     'th', 'thead', 'tr', 'ul', 'br',
   ]);
-  const skipped = new Set([
-    'head', 'script', 'style', 'template', 'table', 'pre', 'code',
-    'select', 'textarea', 'svg', 'math',
-  ]);
 
-  const walk = tree => {
+  const walk = (tree, options = {}) => {
     const nodes = [];
     const groups = [];
     let group = [];
@@ -16187,7 +16183,8 @@
         throw new Error(`Unsupported HTML node: ${node.type}`)
       }
       const hidden = node.properties?.hidden;
-      if (skipped.has(node.tagName) || (hidden != null && hidden !== false)) {
+      const excluded = Object.hasOwn(options, node.tagName) && options[node.tagName] === false;
+      if (excluded || (hidden != null && hidden !== false)) {
         // Omitted subtrees are barriers, so their neighbours cannot form one word.
         flush();
         continue
@@ -16196,11 +16193,13 @@
         flush();
         stack.push({ exit: true });
       }
-      if (!Array.isArray(node.children)) {
+      // HAST stores template descendants in a separate root, not in children.
+      const children = node.tagName === 'template' ? node.content?.children : node.children;
+      if (!Array.isArray(children)) {
         throw new Error(`Expected children for HTML node: ${node.tagName || node.type}`)
       }
-      for (let i = node.children.length - 1; i >= 0; i -= 1) {
-        stack.push({ node: node.children[i] });
+      for (let i = children.length - 1; i >= 0; i -= 1) {
+        stack.push({ node: children[i] });
       }
     }
     flush();
@@ -16291,10 +16290,46 @@
     }
   };
 
+  // Tag names map to inclusion in NLP text. Unlisted tags default to true.
+  // Skipped elements remain in the source tree and serialized HTML.
+  const defaults = {
+    fragment: true, // Parser option: false parses a complete document.
+    h1: true,
+    h2: true,
+    h3: true,
+    h4: true,
+    h5: true,
+    h6: true,
+    p: true,
+    div: true,
+    span: true,
+    a: true,
+    strong: true,
+    em: true,
+    nav: true,
+    header: true,
+    footer: true,
+    blockquote: true,
+    ul: true,
+    ol: true,
+    li: true,
+    head: false,
+    script: false,
+    style: false,
+    template: false,
+    table: false,
+    pre: false,
+    code: false,
+    select: false,
+    textarea: false,
+    svg: false,
+    math: false,
+  };
+
   const readTree = function (tree, nlp, options = {}) {
     // Snapshot read options so later caller changes cannot alter write-back traversal.
-    const readOptions = { ...options };
-    const { nodes, groups } = walk(tree);
+    const readOptions = { ...defaults, ...options };
+    const { nodes, groups } = walk(tree, readOptions);
     const doc = nlp.tokenize('');
     const binding = {
       tree,
@@ -16493,7 +16528,7 @@
       },
       fromHtml: function (input, options = {}) {
         // Fragment mode avoids adding html/head/body wrappers to snippets.
-        const tree = fromHtml(input, { fragment: options.fragment ?? true });
+        const tree = fromHtml(input, { fragment: options.fragment ?? defaults.fragment });
         return readTree(tree, this, options)
       },
     },

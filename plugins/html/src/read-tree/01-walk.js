@@ -1,6 +1,6 @@
-import { blocks, skipped } from './defaults.js'
+import blocks from './blocks.js'
 
-const walk = tree => {
+const walk = (tree, options = {}) => {
   const nodes = []
   const groups = []
   let group = []
@@ -31,7 +31,8 @@ const walk = tree => {
       throw new Error(`Unsupported HTML node: ${node.type}`)
     }
     const hidden = node.properties?.hidden
-    if (skipped.has(node.tagName) || (hidden != null && hidden !== false)) {
+    const excluded = Object.hasOwn(options, node.tagName) && options[node.tagName] === false
+    if (excluded || (hidden != null && hidden !== false)) {
       // Omitted subtrees are barriers, so their neighbours cannot form one word.
       flush()
       continue
@@ -40,11 +41,13 @@ const walk = tree => {
       flush()
       stack.push({ exit: true })
     }
-    if (!Array.isArray(node.children)) {
+    // HAST stores template descendants in a separate root, not in children.
+    const children = node.tagName === 'template' ? node.content?.children : node.children
+    if (!Array.isArray(children)) {
       throw new Error(`Expected children for HTML node: ${node.tagName || node.type}`)
     }
-    for (let i = node.children.length - 1; i >= 0; i -= 1) {
-      stack.push({ node: node.children[i] })
+    for (let i = children.length - 1; i >= 0; i -= 1) {
+      stack.push({ node: children[i] })
     }
   }
   flush()

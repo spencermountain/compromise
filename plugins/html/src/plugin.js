@@ -3,6 +3,7 @@ import { toHtml } from 'hast-util-to-html'
 import { format } from 'hast-util-format'
 import version from './_version.js'
 import readTree from './read-tree/index.js'
+import defaults from './read-tree/defaults.js'
 import onTransfer from './on-transfer.js'
 import writeTree from './update-tree/index.js'
 import debugAst from './debug.js'
@@ -26,7 +27,7 @@ const plugin = {
     },
     fromHtml: function (input, options = {}) {
       // Fragment mode avoids adding html/head/body wrappers to snippets.
-      const tree = fromHtml(input, { fragment: options.fragment ?? true })
+      const tree = fromHtml(input, { fragment: options.fragment ?? defaults.fragment })
       return readTree(tree, this, options)
     },
   },

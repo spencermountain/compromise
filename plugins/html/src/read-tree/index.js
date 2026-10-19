@@ -1,9 +1,10 @@
 import walk from './01-walk.js'
 import connectNodes from './02-connect.js'
+import defaults from './defaults.js'
 
 const readTree = function (tree, nlp, options = {}) {
   // Snapshot read options so later caller changes cannot alter write-back traversal.
-  const readOptions = { ...options }
+  const readOptions = { ...defaults, ...options }
   const { nodes, groups } = walk(tree, readOptions)
   const doc = nlp.tokenize('')
   const binding = {

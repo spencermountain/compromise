@@ -2,6 +2,8 @@ import type nlp from 'compromise'
 import type { Plugin } from 'compromise/misc'
 
 export interface HtmlOptions {
+  /** Tag names include (true) or skip (false) their subtree; omitted tags use defaults. */
+  [tagName: string]: boolean | undefined
   /** Defaults to true; use false to parse a complete HTML document. */
   fragment?: boolean
 }
@@ -18,7 +20,7 @@ export interface HtmlNode {
   tagName?: string
   properties?: Record<string, unknown>
   children?: HtmlNode[]
-  /** Template contents are preserved but excluded from linguistic text. */
+  /** Template contents are preserved and excluded from linguistic text by default. */
   content?: HtmlNode
   data?: object
   position?: {
@@ -39,7 +41,7 @@ export type HtmlDocument = Omit<ReturnType<typeof nlp>, keyof HtmlMethods> & Htm
 export interface HtmlLib {
   fromHtml(text: string, options?: HtmlOptions): HtmlDocument
   /** Connect directly to caller-owned HAST nodes. */
-  fromHast(tree: HtmlNode): HtmlDocument
+  fromHast(tree: HtmlNode, options?: HtmlOptions): HtmlDocument
 }
 
 /** Use the result of nlp.plugin(html) as this type after registration. */

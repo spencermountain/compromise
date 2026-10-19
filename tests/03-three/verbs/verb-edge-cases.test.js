@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/verbs/verb-edge-cases] '
 
 test('verbs.json', function (t) {

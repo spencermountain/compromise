@@ -1,7 +1,5 @@
 import test from 'tape'
-import nlp from '../../../../src/three.js'
-import markdown from '../../src/markdown/plugin.js'
-nlp.plugin(markdown)
+import nlp from './_lib.js'
 
 test('markdown - named heading modes', t => {
   t.equal(nlp.fromMarkdown('### heading', { headings: 'keep' }).text(), '### heading', 'keep retains syntax')

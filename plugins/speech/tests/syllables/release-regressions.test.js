@@ -1,6 +1,5 @@
 import test from 'tape'
-import splitTerm from '../../src/syllables/split/index.js'
-import checkExceptions from '../../src/syllables/split/find-cuts/00-exceptions.js'
+import { splitTerm } from '../_lib.js'
 
 // Human-readable boundaries cover the exception, suffix, and compound interactions.
 const examples = [
@@ -88,11 +87,11 @@ test('speech: release pronunciation contrasts', t => {
 
 test('speech: exception precedence and repeated lookups', t => {
   // Exact entries beat plural inference; derived cuts cannot change their base.
-  t.deepEqual(checkExceptions('concierges'), [3, 5], 'exact plural override')
-  t.deepEqual(checkExceptions('sciences'), [3, 5], 'extra plural syllable')
-  t.deepEqual(checkExceptions('science'), [3], 'singular stays unchanged')
-  t.deepEqual(checkExceptions('sciences'), [3, 5], 'repeatable plural lookup')
-  t.deepEqual(checkExceptions('aisles'), [], 'empty cuts are a valid exception')
-  t.equal(checkExceptions('unlistedword'), null, 'missing exception')
+  t.deepEqual(splitTerm({ text: 'concierges' }), ['con', 'ci', 'erges'], 'exact plural override')
+  t.deepEqual(splitTerm({ text: 'sciences' }), ['sci', 'en', 'ces'], 'extra plural syllable')
+  t.deepEqual(splitTerm({ text: 'science' }), ['sci', 'ence'], 'singular stays unchanged')
+  t.deepEqual(splitTerm({ text: 'sciences' }), ['sci', 'en', 'ces'], 'repeatable plural lookup')
+  t.deepEqual(splitTerm({ text: 'aisles' }), ['aisles'], 'single syllable exception')
+  t.equal(splitTerm({ text: 'unlistedword' }).join(''), 'unlistedword', 'missing exception preserves spelling')
   t.end()
 })

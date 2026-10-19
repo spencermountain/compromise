@@ -1,10 +1,16 @@
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { toMarkdown } from 'mdast-util-to-markdown'
-import version from '../_version.js'
+import { gfm } from 'micromark-extension-gfm'
+import { gfmFromMarkdown, gfmToMarkdown } from 'mdast-util-gfm'
+import { frontmatter } from 'micromark-extension-frontmatter'
+import { frontmatterFromMarkdown, frontmatterToMarkdown } from 'mdast-util-frontmatter'
+import version from './_version.js'
 import readTree from './read-tree/index.js'
 import onTransfer from './on-transfer.js'
 import writeTree from './update-tree/index.js'
 import debugAst from './debug.js'
+
+const matter = ['yaml', 'toml']
 
 const plugin = {
   version,
@@ -18,7 +24,11 @@ const plugin = {
       return readTree(tree, this, options)
     },
     fromMarkdown: function (md, options = {}) {
-      const tree = fromMarkdown(md, options)
+      // Parsing is fixed here; callers with another parser can use fromAst().
+      const tree = fromMarkdown(md, {
+        extensions: [gfm(), frontmatter(matter)],
+        mdastExtensions: [gfmFromMarkdown(), frontmatterFromMarkdown(matter)],
+      })
       return this.fromAst(tree, options)
     },
   },
@@ -30,7 +40,7 @@ const plugin = {
     // Serialize back to markdown
     View.prototype.markdown = function () {
       const tree = this.document.unist?.tree
-      return toMarkdown(tree)
+      return toMarkdown(tree, { extensions: [gfmToMarkdown(), frontmatterToMarkdown(matter)] })
     }
   },
 }

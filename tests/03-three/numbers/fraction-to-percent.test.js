@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/numbers/fraction-to-percent] '
 
 test(here + 'numeric fractions', t => {

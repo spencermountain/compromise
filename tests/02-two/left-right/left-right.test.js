@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/two.js'
+import nlp from '../lib.js'
 const here = '[two/left-right/left-right] '
 
 test(here + 'left/right dates, units and local prepositions: re-tagging', t => {

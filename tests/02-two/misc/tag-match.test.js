@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/two.js'
+import nlp from '../lib.js'
 import cases from '../../lib/tag-match-cases.js'
 const here = '[two/misc/tag-match] '
 

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/one.js'
+import nlp from '../lib.js'
 const here = '[one/sweep/sweep-order] '
 
 test(here + 'sweep preserves hook order independently of input order', t => {

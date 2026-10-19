@@ -1,7 +1,5 @@
 import test from 'tape'
-import nlp from '../../../../src/three.js'
-import markdown from '../../src/markdown/plugin.js'
-nlp.plugin(markdown)
+import nlp from './_lib.js'
 
 test('markdown - match across inline nodes', t => {
   const doc = nlp.fromMarkdown('She **walked** to [school](https://school.org).')

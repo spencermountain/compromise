@@ -1,7 +1,7 @@
 <div align="center">
-  <div><b>compromise-unist</b></div>
-  <div>parse and transform text in markdown/html</div>
-  <div><code>npm install compromise-unist</code></div>
+  <div><b>compromise-markdown</b></div>
+  <div>parse and transform text inside markdown</div>
+  <div><code>npm install compromise-markdown</code></div>
   <div align="center">
     <sub>
       by
@@ -13,11 +13,11 @@
 <!--2nd row-->
 <div align="center">
   <div>
-    <a href="https://npmjs.org/package/compromise-unist">
-    <img src="https://img.shields.io/npm/v/compromise-unist.svg?style=flat-square" />
+    <a href="https://npmjs.org/package/compromise-markdown">
+    <img src="https://img.shields.io/npm/v/compromise-markdown.svg?style=flat-square" />
   </a>
-  <a href="https://bundlephobia.com/result?p=compromise-unist">
-    <img src="https://badgen.net/bundlejs/min/compromise-unist" />
+  <a href="https://bundlephobia.com/result?p=compromise-markdown">
+    <img src="https://badgen.net/bundlejs/min/compromise-markdown" />
   </a>
   </div>
 </div>
@@ -28,7 +28,7 @@
 
 ```js
 import nlp from 'compromise'
-import mdPlugin from 'compromise-unist/markdown'
+import mdPlugin from 'compromise-markdown'
 nlp.plugin(mdPlugin)
 
 const md = 'She **walked** to [school](https://school.org)'
@@ -42,7 +42,6 @@ doc.updateTree()
 doc.markdown()
 // 'She **walks** to [school](https://school.org)'
 ```
-
 
 ### Default plaintext options
 

@@ -1,7 +1,5 @@
 import test from 'tape'
-import nlp from '../../../../src/three.js'
-import markdown from '../../src/markdown/plugin.js'
-nlp.plugin(markdown)
+import nlp from './_lib.js'
 
 test('markdown - fragmented replacement fails only at write-back', t => {
   const doc = nlp.fromMarkdown('She walk*ed* to school.')

@@ -1,4 +1,4 @@
-import nlp from '../../lib/two.js'
+import nlp from '../../02-two/lib.js'
 
 const assertNoOverlap = (t, spec, here, patterns) => {
   const overlaps = []

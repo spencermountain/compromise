@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/money/selection] '
 
 test('money text', function (t) {

@@ -94,11 +94,20 @@ const fmtNode = {
   },
   blockquote: (_node, mode) => ({ block: true, prefix: mode === 'keep' ? '> ' : '' }),
   list: (_node, mode) => ({ block: true, childMode: mode }),
-  listItem: (_node, mode) => ({ block: true, prefix: mode === 'keep' ? '- ' : '' }),
+  listItem: (node, mode) => {
+    let prefix = ''
+    if (mode === 'keep') {
+      prefix = '- '
+      if (typeof node.checked === 'boolean') {
+        prefix += node.checked ? '[x] ' : '[ ] '
+      }
+    }
+    return { block: true, prefix }
+  },
   table: (_node, mode) => ({ block: true, childMode: mode }),
   tableRow: (_node, mode) => ({ block: true, childMode: mode, prefix: mode === 'keep' ? '| ' : '' }),
   tableCell: (_node, mode) => ({ block: mode !== 'keep', suffix: mode === 'keep' ? ' | ' : '' }),
-  footnoteDefinition: block,
+  footnoteDefinition: (node, mode) => ({ block: true, prefix: mode === 'keep' ? `[^${node.identifier}]: ` : '' }),
   code: (node, mode) => ({
     text: true, block: true,
     prefix: mode === 'keep' ? '```' + (node.lang || '') + '\n' : '',
@@ -112,8 +121,8 @@ const fmtNode = {
   thematicBreak: (_node, mode) => ({ block: true, generated: mode === 'keep' ? '---' : '' }),
   break: () => ({ generated: '\n' }),
   footnoteReference: (node, mode) => ({ generated: mode === 'keep' ? `[^${node.identifier}]` : node.identifier }),
-  yaml: literal,
-  toml: literal,
+  yaml: (_node, mode) => ({ text: true, block: true, ...wrap('---\n', '\n---')(null, mode) }),
+  toml: (_node, mode) => ({ text: true, block: true, ...wrap('+++\n', '\n+++')(null, mode) }),
 }
 
 export { modeFor }

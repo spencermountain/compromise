@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/one.js'
+import nlp from '../lib.js'
 const here = '[one/sweep/sweep-index-needs] '
 
 test(here + 'sweep index shortcuts preserve repeated needs and alternatives', t => {

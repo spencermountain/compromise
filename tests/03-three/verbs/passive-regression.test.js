@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/verbs/passive-regression] '
 
 test(here + 'passive past tense agrees with the subject', t => {

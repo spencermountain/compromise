@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/misc/clause-context] '
 
 test(here + 'inverted questions retain auxiliaries rather than conditions', t => {

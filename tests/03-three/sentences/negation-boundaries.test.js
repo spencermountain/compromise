@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/sentences/negation-boundaries] '
 
 test(here + 'coordinated verbs share negation without changing their subject', t => {

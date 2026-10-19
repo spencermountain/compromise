@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/numbers/conversion-edge-cases] '
 
 test(here + 'small decimals and exponent boundaries', t => {

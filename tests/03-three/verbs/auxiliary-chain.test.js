@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/verbs/auxiliary-chain] '
 
 // Explicit expected sentences: these do not reuse the converter's planner.

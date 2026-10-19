@@ -1,5 +1,5 @@
 {
-  "name": "compromise-unist",
+  "name": "compromise-markdown",
   "version": "0.0.1",
   "description": "AST input support for compromise",
   "license": "MIT",
@@ -19,18 +19,12 @@
       },
       "require": {
         "types": "./types/index.d.cts",
-        "default": "./builds/compromise-unist.cjs"
+        "default": "./builds/compromise-markdown.cjs"
       }
-    },
-    "./markdown": {
-      "import": "./src/markdown/plugin.js"
-    },
-    "./mdast": {
-      "import": "./src/markdown/plugin.js"
     }
   },
-  "main": "./builds/compromise-unist.cjs",
-  "module": "./builds/compromise-unist.mjs",
+  "main": "./builds/compromise-markdown.cjs",
+  "module": "./builds/compromise-markdown.mjs",
   "types": "./types/index.d.ts",
   "sideEffects": false,
   "engines": {
@@ -60,9 +54,13 @@
   "peerDependencies": {
     "compromise": "workspace:^"
   },
-  "unpkg": "./builds/compromise-unist.min.js",
+  "unpkg": "./builds/compromise-markdown.min.js",
   "dependencies": {
     "mdast-util-from-markdown": "catalog:",
-    "mdast-util-to-markdown": "catalog:"
+    "mdast-util-frontmatter": "catalog:",
+    "mdast-util-gfm": "catalog:",
+    "mdast-util-to-markdown": "catalog:",
+    "micromark-extension-frontmatter": "catalog:",
+    "micromark-extension-gfm": "catalog:"
   }
 }

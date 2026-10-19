@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/two.js'
+import nlp from '../lib.js'
 const here = '[two/postTagger/connector-predicates] '
 
 test(here + 'connector predicates and their competing word senses', t => {

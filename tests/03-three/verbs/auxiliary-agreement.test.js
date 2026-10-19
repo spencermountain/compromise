@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/verbs/auxiliary-agreement] '
 
 test(here + 'future, modal and perfect auxiliary regressions', t => {

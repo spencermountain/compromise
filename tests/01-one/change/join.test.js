@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/one.js'
+import nlp from '../lib.js'
 const here = '[one/change/join] '
 
 test('sanity-check join:', function (t) {

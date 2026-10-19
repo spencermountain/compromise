@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/verbs/to-negative] '
 
 test('inline verb negate:', function (t) {

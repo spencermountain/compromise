@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 import isolateModel from '../../lib/isolate-model.js'
 const here = '[three/api/api-smoke] '
 

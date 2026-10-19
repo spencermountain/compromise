@@ -1,15 +1,8 @@
-import build from '../../../builds/three/compromise-three.mjs'
-import src from 'compromise'
-import plgBuild from '../builds/compromise-dates.mjs'
-import plg from '../src/plugin.js'
-let nlp;
+import nlp from '../../../tests/03-three/lib.js'
 
-if (process.env.TESTENV === 'prod') {
-  console.warn('== production build test 🚀 ==')  // eslint-disable-line
-  nlp = build
-  nlp.plugin(plgBuild)
-} else {
-  nlp = src
-  nlp.plugin(plg)
-}
+const production = process.env.TESTENV === 'prod'
+const path = production ? '../builds/compromise-dates.mjs' : '../src/plugin.js'
+const { default: plugin } = await import(path)
+nlp.plugin(plugin)
+
 export default nlp

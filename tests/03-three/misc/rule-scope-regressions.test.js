@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/misc/rule-scope-regressions] '
 
 test(here + 'standalone fractions preserve ordinal noun modifiers', t => {

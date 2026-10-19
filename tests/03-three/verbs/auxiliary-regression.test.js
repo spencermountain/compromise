@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/verbs/auxiliary-regression] '
 
 test(here + 'auxiliary conversions preserve agreement and grammatical forms', t => {

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/one.js'
+import nlp from '../01-one/lib.js'
 const here = '[ignored/match-escaped-symbols] '
 
 // Deferred: Escaped literal asterisks and plus signs do not match these punctuation terms.

@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/two.js'
+import nlp from '../lib.js'
 const here = '[two/tag/aliases-spec-preference] '
 
 test(here + 'alias order selects spec output', t => {

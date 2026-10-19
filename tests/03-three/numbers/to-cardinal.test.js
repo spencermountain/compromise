@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/numbers/to-cardinal] '
 
 //tests 'borrowed' from Travis Savo's lib 💝 https://github.com/TSavo/english2number-js

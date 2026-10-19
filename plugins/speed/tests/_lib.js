@@ -1,14 +1,8 @@
-import build from '../../../builds/one/compromise-one.mjs'
-import src from 'compromise/one'
-import { streamFile as sourceStreamFile } from '../src/plugin.js'
-import { streamFile as builtStreamFile } from '../builds/compromise-speed.mjs'
-export const streamFile = process.env.TESTENV === 'prod' ? builtStreamFile : sourceStreamFile
-let nlp;
+import nlp from '../../../tests/01-one/lib.js'
 
-if (process.env.TESTENV === 'prod') {
-  console.warn('== production build test 🚀 ==')  // eslint-disable-line
-  nlp = build
-} else {
-  nlp = src
-}
+const production = process.env.TESTENV === 'prod'
+const path = production ? '../builds/compromise-speed.mjs' : '../src/plugin.js'
+const { streamFile } = await import(path)
+
+export { streamFile }
 export default nlp

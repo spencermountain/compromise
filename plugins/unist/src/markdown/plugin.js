@@ -1,43 +1,35 @@
 import { fromMarkdown } from 'mdast-util-from-markdown'
 import { toMarkdown } from 'mdast-util-to-markdown'
 import version from '../_version.js'
-import { documents, bind, transfer } from './_bindings.js'
-import collect from './_tree.js'
-import { getBinding, update } from './_update.js'
+import readTree from './read/index.js'
+import transfer from './transfer.js'
+import update from './update/index.js'
+import debug from './debug.js'
 
 const plugin = {
   version,
   onReplace: transfer,
+  mutate: world => {
+    world.methods.one.debug ||= {}
+    world.methods.one.debug.ast = debug
+  },
   lib: {
-    fromAst: function (tree, options = {}) {
-      if (tree.type === 'root' && tree.children.length > 1) {
-        throw new Error('The Markdown proof of concept supports one prose block')
-      }
-      const nodes = collect(tree)
-      // Join before tokenizing so inline markup cannot split a word or a match.
-      const doc = this.tokenize(nodes.map(node => node.value).join(''))
-      // Establish source ownership before running the full tagging pipeline.
-      bind(doc, nodes)
-      documents.set(doc.document, { tree, nodes, values: nodes.map(node => node.value), stringify: options.stringify || toMarkdown })
-      doc.compute(this.hooks())
-      return doc
+    fromAst: function (tree) {
+      return readTree(tree, this)
     },
     fromMarkdown: function (md, options = {}) {
-      const parse = options.parse || fromMarkdown
-      return this.fromAst(parse(md), options)
+      const tree = fromMarkdown(md)
+      return this.fromAst(tree, options)
     },
   },
   api: View => {
     View.prototype.updateTree = function () {
       return update(this)
     }
+    // Serialize back to markdown
     View.prototype.markdown = function () {
-      const { tree, stringify } = getBinding(this)
-      if (!stringify) {
-        throw new Error('markdown requires a Markdown stringify callback')
-      }
-      // Serialize the last successfully updated tree; this does not apply pending edits.
-      return stringify(tree)
+      const tree = this.document.unist?.tree
+      return toMarkdown(tree)
     }
   },
 }

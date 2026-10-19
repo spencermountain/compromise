@@ -4,6 +4,7 @@ nlp.plugin(mdPlugin)
 
 const md = 'She **walked** to [school](https://school.org)'
 const doc = nlp.fromMarkdown(md)
+doc.debug('ast')
 
 console.log(doc.has('walked to')) // want rue
 

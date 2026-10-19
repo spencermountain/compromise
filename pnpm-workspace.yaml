@@ -16,6 +16,8 @@ catalog:
   'nlp-corpus': '4.4.0'
   'efrt': '2.9.0'
   eslint: 10.13.0
+  mdast-util-from-markdown: ^2.1.0
+  mdast-util-to-markdown: ^2.2.0
 
 linkWorkspacePackages: false
 

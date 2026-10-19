@@ -107,6 +107,10 @@ const extend = function (plugin, world, View, nlp) {
   if (hooks) {
     world.hooks = hooks.concat(plugin.hooks || [])
   }
+  // Notify plugins when replacement creates new terms.
+  if (plugin.onReplace) {
+    methods.one.onReplace = (methods.one.onReplace || []).concat(plugin.onReplace)
+  }
   // assign new class methods
   if (plugin.api) {
     plugin.api(View)

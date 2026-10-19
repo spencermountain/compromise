@@ -2,9 +2,9 @@ const dollarStub = /\$[0-9a-z]+/g
 const fns = {}
 
 // case logic
-const isTitleCase = (str) => /^\p{Lu}[\p{Ll}'’]/u.test(str) || /^\p{Lu}$/u.test(str)
-const toTitleCase = (str) => str.replace(/^\p{Ll}/u, x => x.toUpperCase())
-const toLowerCase = (str) => str.replace(/^\p{Lu}/u, x => x.toLowerCase())
+const isTitleCase = str => /^\p{Lu}[\p{Ll}'’]/u.test(str) || /^\p{Lu}$/u.test(str)
+const toTitleCase = str => str.replace(/^\p{Ll}/u, x => x.toUpperCase())
+const toLowerCase = str => str.replace(/^\p{Lu}/u, x => x.toLowerCase())
 
 // doc.replace('foo', (m)=>{})
 const replaceByFn = function (main, fn, keep) {
@@ -53,6 +53,14 @@ fns.replaceWith = function (input, keep = {}) {
   // support 'foo $0' replacements
   input = subDollarSign(input, main)
 
+  // Preserve old Term identities for plugins before insertion/deletion changes the view.
+  const replacements =
+    this.world.methods.one.onReplace &&
+    this.fullPointer.map(([n, start, end]) => ({
+      sentence: this.document[n],
+      before: new Set(this.document[n]),
+      oldTerms: this.document[n].slice(start, end),
+    }))
   const original = this.update(ptrs)
   // soften-up pointer
   ptrs = ptrs.map(ptr => ptr.slice(0, 3))
@@ -65,6 +73,16 @@ fns.replaceWith = function (input, keep = {}) {
     input = this.fromText(input).compute('id')
   }
   main.insertAfter(input)
+  // New terms follow each old match; stop at an existing term to separate nearby matches.
+  if (replacements) {
+    replacements.forEach(group => {
+      const start = group.sentence.indexOf(group.oldTerms.at(-1)) + 1
+      group.newTerms = []
+      for (let i = start; i < group.sentence.length && !group.before.has(group.sentence[i]); i += 1) {
+        group.newTerms.push(group.sentence[i])
+      }
+    })
+  }
   // are we replacing part of a contraction?
   if (original.has('@hasContraction') && main.contractions) {
     const more = main.grow('@hasContraction+')
@@ -116,6 +134,12 @@ fns.replaceWith = function (input, keep = {}) {
   if (keep.case) {
     const transformCase = isOriginalTitleCase ? toTitleCase : toLowerCase
     m.docs[0][0].text = transformCase(m.docs[0][0].text)
+  }
+  // Transfer plugin metadata after replacement text, punctuation, and case are finalized.
+  if (m.world.methods.one.onReplace) {
+    replacements.forEach(({ oldTerms, newTerms }) => {
+      m.world.methods.one.onReplace.forEach(fn => fn({ oldTerms, newTerms, document: m.document }))
+    })
   }
   return m
 }

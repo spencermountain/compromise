@@ -36,6 +36,8 @@ const parse = function (str) {
   const modifier = findModifiers(str)
   str = modifier.str
   let last_mult = null
+  // the sum after the last thousand-or-bigger multiple, like 'two million'
+  let last_big = null
   let has = {}
   let sum = 0
   let isNegative = false
@@ -124,8 +126,17 @@ const parse = function (str) {
         //maybe hundred .. thousand
         sum += section_sum(has)
         last_mult = mult
-        sum = (sum || 1) * mult
+        // only multiply what came after a bigger multiple
+        // 'two million [three hundred five] thousand'
+        let base = 0
+        if (last_big !== null && last_big.mult > mult) {
+          base = last_big.sum
+        }
+        sum = base + (sum - base || 1) * mult
         has = {}
+      }
+      if (mult >= 1000) {
+        last_big = { sum, mult }
       }
     }
   }

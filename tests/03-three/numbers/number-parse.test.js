@@ -60,3 +60,22 @@ test('parse dozen', function (t) {
   })
   t.end()
 })
+
+test('parse hundreds after a bigger multiple', function (t) {
+  const arr = [
+    ['one million nine hundred ninety-four thousand', 1994000],
+    ['two million three hundred forty five thousand six hundred and seven', 2345607],
+    ['five million two hundred five thousand', 5205000],
+    ['one billion two hundred thirty million', 1230000000],
+    ['nine billion one hundred twelve million two hundred five thousand and six', 9112205006],
+    // unchanged
+    ['two hundred fifty thousand', 250000],
+    ['one million two hundred thousand', 1200000],
+    ['seven million nine hundred thousand two hundred and five', 7900205],
+  ]
+  arr.forEach(function (a) {
+    const num = nlp(a[0]).numbers().get()[0]
+    t.equal(num, a[1], here + a[0])
+  })
+  t.end()
+})

@@ -29,6 +29,11 @@ test('to_text:', function (t) {
     [900000000, 'nine hundred million'],
     [900000080, 'nine hundred million and eighty'],
     [250, 'two hundred and fifty'],
+    [123456, 'one hundred twenty three thousand four hundred and fifty six'],
+    [110000, 'one hundred ten thousand'],
+    [120000000, 'one hundred twenty million'],
+    [2345607, 'two million three hundred forty five thousand six hundred and seven'],
+    [305000000000, 'three hundred five billion'],
   ]
   arr.forEach(function (a) {
     const str = nlp(a[0]).values().toText().out('text')
@@ -69,5 +74,11 @@ test('big number:', function (t) {
 
   // str = nlp('nine quintillion two hundred').values().toText().out();
   // t.equal(str, 'nine quintillion two hundred', 'quantillion');
+  t.end()
+})
+
+test('to-text keeps hundreds in their group:', function (t) {
+  const str = nlp('1994683').values().toText().toOrdinal().text()
+  t.equal(str, 'one million nine hundred ninety four thousand six hundred and eighty third', here + '1994683rd')
   t.end()
 })

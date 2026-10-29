@@ -90,6 +90,11 @@ const toText = function (obj) {
         arr.push('and')
       }
     }
+    // 'seven hundred' + 'forty nine thousand' -> 'seven hundred forty nine thousand'
+    const next = units[i + 1]
+    if (next && unit_name === 'hundred ' + next.unit) {
+      unit_name = 'hundred'
+    }
     arr = arr.concat(breakdown_hundred(units[i].count))
     arr.push(unit_name)
   }

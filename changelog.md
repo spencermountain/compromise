@@ -9,6 +9,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!--#### 14.20.0 [Oct 2026]
 - **[new]** - html, markdown, and unist plugins
 - **[new]** - add plugin callback for .replace() events
+- **[fix]** - #1254 issues parsing large numbers
 -->
 
 #### 14.19.0 [Oct 2026]

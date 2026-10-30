@@ -79,3 +79,20 @@ test('parse hundreds after a bigger multiple', function (t) {
   })
   t.end()
 })
+
+test('parse a dropped-hundred next to a bigger multiple', function (t) {
+  const arr = [
+    ['five thousand two fifty', 5250],
+    ['a thousand two fifty', 1250],
+    ['seven thousand nine ninety nine', 7999],
+    ['one million two fifty', 1000250],
+    ['two fifty thousand', 250000],
+    ['nine ninety nine thousand', 999000],
+    ['one million two fifty thousand', 1250000],
+  ]
+  arr.forEach(function (a) {
+    const num = nlp(a[0]).numbers().get()[0]
+    t.equal(num, a[1], here + a[0])
+  })
+  t.end()
+})

@@ -578,8 +578,9 @@ const rules = [
 
   // [seven] fifths → Fraction
   ['[#Card+] (#Frac && /s$/)', Frac, 0],
-  // [one third] of it → Fraction
-  ['[#Card+ #Ord] of .', Frac, 0],
+  // [two thirds] of it → Fraction
+  // (a singular one is an ordinal: the twenty first of may)
+  ['[#Card+ (#Ord && /s$/)] of .', Frac, 0],
   // [100th] of it → Fraction
   ['[(#Numeric && #Ord)] of .', Frac, 0],
   // [a twenty fifth] of it → Fraction

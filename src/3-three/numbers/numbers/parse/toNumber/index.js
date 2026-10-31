@@ -80,8 +80,8 @@ const parse = function (str) {
     // try to support 'two fifty'
     if (Object.hasOwn(words.tens, w)) {
       if (has.ones && Object.keys(has).length === 1) {
-        sum = has.ones * 100
-        has = {}
+        // keep it in this section, so 'five thousand' before it survives
+        has = { hundreds: has.ones * 100 }
       }
     }
 

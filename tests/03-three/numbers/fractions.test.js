@@ -189,3 +189,20 @@ test('fraction ordinal/cardinal:', function (t) {
   t.equal(doc.text(), 'three out of five senators', here + 'unchanged toCardinal')
   t.end()
 })
+
+test('compound ordinal before of is not a fraction', function (t) {
+  const arr = [
+    ['the twenty first of may', 21],
+    ['the twenty-third of june', 23],
+    ['the thirty third of them', 33],
+    ['twenty fifth of the month', 25],
+  ]
+  arr.forEach(a => {
+    const doc = nlp(a[0])
+    t.equal(doc.numbers().get()[0], a[1], here + a[0])
+    t.equal(doc.fractions().found, false, here + 'no fraction - ' + a[0])
+  })
+  // a plural one is still a fraction
+  t.equal(nlp('three fifths of the vote').numbers().get()[0], 0.6, here + 'three fifths')
+  t.end()
+})

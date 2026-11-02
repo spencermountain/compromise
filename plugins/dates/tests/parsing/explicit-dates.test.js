@@ -459,3 +459,15 @@ test(here + 'year windows', (t) => {
   t.equal(getStart('may 97'), '1997-05-01T00:00:00.000-04:00', 'may 97')
   t.end()
 })
+
+test(here + 'spelled-out compound ordinals before of — today=2026-01-01, timezone=Etc/UTC', t => {
+  const context = { today: '2026-01-01', timezone: 'Etc/UTC' }
+  const rows = [
+    ['the twenty fifth of December', '2026-12-25'],
+    ['the twenty-first of May', '2026-05-21'],
+    ['the twenty third of June', '2026-06-23'],
+    ['on the thirty first of March', '2026-03-31'],
+  ]
+  rows.forEach(row => checkDate(t, nlp, context, row))
+  t.end()
+})

@@ -6,10 +6,13 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
-<!--#### 14.20.0 [Oct 2026]
+<!--#### 14.20.0 [Nov 2026]
 - **[new]** - html, markdown, and unist plugins
 - **[new]** - add plugin callback for .replace() events
-- **[fix]** - #1254 issues parsing large numbers
+- **[fix]** - #1254 #1255 #1256 issues parsing large numbers
+- **[fix]** - #1257 fraction/ordinal date interpretation
+- **[fix]** - #1258 verb normalization
+- **[fix]** - #1259 number-splitter bug
 -->
 
 #### 14.19.0 [Oct 2026]

@@ -94,7 +94,15 @@ export default {
   },
   // turn all verbs into Infinitive form - "I walked" → "I walk"
   'verbs': (doc) => {
-    doc.verbs().toInfinitive()
+    const normalized = doc.map(view => {
+      // Verb replacements invalidate the selection's term IDs and can change its length.
+      const ptr = view.fullPointer[0].slice(0, 3)
+      const before = view.document[ptr[0]].length
+      view.verbs().toInfinitive()
+      ptr[2] += view.document[ptr[0]].length - before
+      return view.update([ptr]).harden()
+    })
+    doc.ptrs = normalized.ptrs
   },
   // turn "fifty" into "50"
   'numbers': (doc) => {

@@ -60,11 +60,9 @@ const findNumbers = function (doc) {
     }
 
     //seventh fifth
+    // an ordinal ends its number, so this keeps 'twenty first' whole
     if (m.match('#Ordinal #Ordinal').match('#TextValue').found && !m.has('#Multiple')) {
-      //the one proper way, 'twenty first'
-      if (!m.has('(' + tens + ') #Ordinal')) {
-        m = m.splitAfter('#Ordinal')
-      }
+      m = m.splitAfter('#Ordinal')
     }
     // one thirty am != 130
     if (m.has('#Time')) {

@@ -85,3 +85,19 @@ test('prefix/suffix:', function (t) {
   t.equal(doc.text(), '34th', here + 'add ordinal')
   t.end()
 })
+
+test('split a list of text ordinals', function (t) {
+  const arr = [
+    ['the fifth, sixth and twenty-seventh', [5, 6, 27]],
+    ['first, second and twenty third', [1, 2, 23]],
+    ['the twenty-first, tenth and thirty-third sessions', [21, 10, 33]],
+    ['twenty first fifth', [21, 5]],
+    // unchanged
+    ['seventh fifth', [7, 5]],
+    ['one hundred and twenty first', [121]],
+  ]
+  arr.forEach(a => {
+    t.deepEqual(nlp(a[0]).numbers().get(), a[1], here + a[0])
+  })
+  t.end()
+})

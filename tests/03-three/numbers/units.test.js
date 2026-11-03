@@ -81,3 +81,25 @@ test('isUnits:', function (t) {
   t.deepEqual(m.out('array'), ['300gb', '600'], 'unit-normalized')
   t.end()
 })
+
+test('a tens word before second is an ordinal', function (t) {
+  const arr = [
+    ['eighty second', 82],
+    ['eighty-second', 82],
+    ['he finished forty-second', 42],
+    ['one hundred and twenty second', 122],
+    // still a unit
+    ['twenty seconds', 20],
+    ['one second', 1],
+    ['30 second', 30],
+  ]
+  arr.forEach(a => {
+    t.equal(nlp(a[0]).numbers().get()[0], a[1], here + a[0])
+  })
+  t.equal(nlp('one second').numbers().units().text('root'), 'second', here + 'one second is a unit')
+  // toOrdinal() output parses back
+  const doc = nlp('22')
+  doc.numbers().toText().toOrdinal()
+  t.equal(nlp(doc.text()).numbers().get()[0], 22, here + 'twenty second round-trip')
+  t.end()
+})

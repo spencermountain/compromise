@@ -204,6 +204,8 @@ const rules = {
     '(half|quarter) _ -> #Unit | #Singular',
     // one [second]
     '#Card _ -> #Unit',
+    // twenty [second] - a unit after it would be 'seconds'
+    '(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety) _ -> #Ord',
     // [second] dog
     '_ #NN -> #Ord',
   ],

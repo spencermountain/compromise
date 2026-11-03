@@ -27,3 +27,13 @@ test(here + 'dates inside sentences — today=2026-09-10T10:00:00, timezone=Etc/
   rows.forEach(row => checkDate(t, nlp, context, row))
   t.end()
 })
+
+test(here + 'spelled-out 22nd and 32nd — today=2026-01-01, timezone=Etc/UTC', t => {
+  const context = { today: '2026-01-01', timezone: 'Etc/UTC' }
+  const rows = [
+    ['We fly out on May twenty-second.', '2026-05-22'],
+    ['The party is on June twenty second.', '2026-06-22'],
+  ]
+  rows.forEach(row => checkDate(t, nlp, context, row))
+  t.end()
+})

@@ -2,6 +2,7 @@
 
 //we have slightly different rules for start/end - like #hashtags.
 const isLetter = /\p{Letter}/u
+const isMark = /\p{Mark}/u
 const isNumber = /[\p{Number}\p{Currency_Symbol}]/u
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const chillin = /[sn]['’]$/
@@ -70,6 +71,18 @@ const normalizePunctuation = function (str, model) {
     // start of word
     if (isLetter.test(c) || isNumber.test(c)) {
       break //done
+    }
+    // Keep marks attached to letters, but not variation selectors after symbols.
+    if (isMark.test(c)) {
+      let base = end - 2
+      while (base >= start && isMark.test(chars[base])) {
+        base--
+      }
+      if (base >= start && isLetter.test(chars[base])) {
+        break
+      }
+      end = base + 1
+      continue
     }
     // F.B.I.
     if (c === '.' && hasAcronym.test(original) === true) {

@@ -1,6 +1,6 @@
 {
   "name": "compromise",
-  "version": "14.19.0",
+  "version": "14.20.0",
   "description": "modest natural language processing",
   "license": "MIT",
   "repository": "github:spencermountain/compromise",
@@ -124,7 +124,7 @@
   ],
   "dependencies": {
     "efrt": "catalog:",
-    "suffix-thumb": "6.0.0"
+    "suffix-thumb": "6.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "catalog:",
@@ -132,7 +132,7 @@
     "@types/node": "catalog:",
     "cross-env": "catalog:",
     "eslint": "catalog:",
-    "eslint-plugin-regexp": "3.3.1",
+    "eslint-plugin-regexp": "catalog:",
     "nlp-corpus": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
@@ -158,5 +158,5 @@
     "printWidth": 120,
     "arrowParens": "avoid"
   },
-  "packageManager": "pnpm@11.5.0"
+  "packageManager": "pnpm@12.16.1"
 }

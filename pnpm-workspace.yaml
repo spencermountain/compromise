@@ -5,10 +5,10 @@ catalogMode: prefer
 
 # Shared versions for the root library and maintained plugins.
 catalog:
-  '@types/node': '^26.6.5'
+  '@types/node': '^26.6.6'
   '@rollup/plugin-node-resolve': '16.0.3'
-  '@rollup/plugin-terser': '1.0.0'
-  'rollup': '4.64.8'
+  '@rollup/plugin-terser': '1.0.2'
+  'rollup': '4.67.4'
   'rollup-plugin-filesize-check': '2.0.1'
   'tap-dancer': '0.4.4'
   'tape': '5.10.3'
@@ -31,8 +31,10 @@ catalog:
   unist-util-inspect: ^8.1.0
   parse-english: ^7.0.0
   hast-util-format: ^1.1.0
+  eslint-plugin-regexp: 3.3.3
 
 linkWorkspacePackages: false
 
 minimumReleaseAgeExclude:
   - spacetime@7.17.0
+  - suffix-thumb@6.1.0

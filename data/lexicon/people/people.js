@@ -6,7 +6,6 @@ export default [
   'ashton kutcher',
   'barack obama',
   'cardinal wolsey',
-  'carson palmer',
   'denzel washington',
   'dick wolf',
   'emeril lagasse',

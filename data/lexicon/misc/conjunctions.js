@@ -15,7 +15,6 @@ export default [
   'even',
   'even if',
   'even though',
-  'how',
   'however',
   'if',
   'if only',

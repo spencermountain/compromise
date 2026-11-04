@@ -4,7 +4,6 @@ export default [
   'awaken',
   'awoken',
   'beaten',
-  'been',
   'begun',
   'bitten',
   'blown',

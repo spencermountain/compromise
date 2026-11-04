@@ -810,7 +810,6 @@ export default [
   'armstrong',
   'gibson',
   'krishna',
-  'burns',
   'browne',
   'lang',
   'mann',

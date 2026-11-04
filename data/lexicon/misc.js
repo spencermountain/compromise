@@ -1,32 +1,15 @@
 export default {
   better: 'Comparative',
   colder: 'Comparative',
-  coldest: 'Superlative',
-  coldly: 'Adverb',
   farther: 'Comparative',
-  finer: 'Comparative',
   fewer: 'Comparative',
   earlier: 'Superlative',
-  sounds: 'PresentTense',
 
   unless: 'Condition',
   lest: 'Condition',
 
-  said: 'PastTense',
-  had: 'PastTense',
-  began: 'PastTense',
-  came: 'PastTense',
-  did: 'PastTense',
-  meant: 'PastTense',
-  went: 'PastTense',
   stories: 'Plural',
-  lied: 'PastTense',
 
-  going: 'Gerund',
-  being: 'Gerund',
-  according: 'Gerund',
-  resulting: 'Gerund',
-  staining: 'Gerund',
   doin: 'Gerund',
 
   no: 'Expression',
@@ -76,8 +59,6 @@ export default {
   // 'subpar': 'Adjective'
 
   // double-conjugations
-  'kneeled': 'PastTense',
-  'leaped': 'PastTense',
   'msged': 'PastTense',
   'bests': 'PresentTense',
 
@@ -111,5 +92,6 @@ export default {
   'volunteers': 'Plural|Verb',
   'witnesses': 'Plural|Verb',
   'bills': 'Plural|Verb',
-  'leaves': 'Plural|Verb'
+  'leaves': 'Plural|Verb',
+  'khakis': 'Plural',
 }

@@ -1,5 +1,4 @@
 export default [
-  '¢',
   '$',
   '£',
   '¥',
@@ -79,10 +78,10 @@ export default [
   'yen',
   'yuan',
   'yuans',
-  'zł',
   'zloty',
   'zlotys',
-  'ден',
-  'лв',
-  'руб',
+  // the normalized forms of zł, руб, ден
+  'zl',
+  'pyб',
+  'дeh',
 ]

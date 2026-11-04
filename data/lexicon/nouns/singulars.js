@@ -192,7 +192,6 @@ export default [
   'cousin',
   'gelatin',
   'tax return',
-  'home run',
   'cellar',
   'us dollar',
   'exemplar',
@@ -247,7 +246,6 @@ export default [
   'extent',
   'event',
 
-  'head start',
   'breakfast',
 
   // -ist
@@ -302,7 +300,6 @@ export default [
   'city',
   'school',
   'prediction',
-  'pie',
   'rerun',
   'menu',
 
@@ -417,4 +414,12 @@ export default [
   'video game',
   'layer',
   'canton',
+  // would match a suffix rule
+  'cartridge',
+  'fridge',
+  'lesson',
+  'pirate',
+  'porridge',
+  'terrier',
+  'wrist',
 ]

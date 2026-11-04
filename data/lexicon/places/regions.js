@@ -163,7 +163,6 @@ export default [
   'lincolnshire',
   'midlands',
   'normandy',
-  'north yorkshire',
   'northamptonshire',
   'nottinghamshire',
   'oxfordshire',

@@ -1,7 +1,7 @@
 import lexData from '../../../_built/lexicon.js'
 import { unpack } from 'efrt'
 import misc from './misc.js'
-import frozenLex from './frozenLex.js'
+import frozenLex, { shared } from './frozenLex.js'
 import emoticons from './emoticons.js'
 import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import irregularPlurals from '../irregulars/plurals.js'
@@ -12,7 +12,7 @@ import irregularPlurals from '../irregulars/plurals.js'
 //  - once the plugin is applied
 const hasSwitch = /\|/
 const countryAcronyms = ['uk', 'usa', 'ussr']
-const lexicon = { ...misc }
+const lexicon = { ...misc, ...shared }
 const switches = {}
 
 const tmpModel = { two: { irregularPlurals, uncountable: {} } }

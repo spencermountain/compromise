@@ -10,7 +10,7 @@ export default [
 
   //names
   [/^ma?c'[a-z]{3}/, 'LastName', "mc'neil"],
-  [/^o'[a-z]{3}/, 'LastName', "o'connor"],
+  [/^o'(?!clock)[a-z]{3}/, 'LastName', "o'connor"],
   [/^ma?cd[aeiou][a-z]{3}/, 'LastName', 'mcdonald'],
 
   //slang things

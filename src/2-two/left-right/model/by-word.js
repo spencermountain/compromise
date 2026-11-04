@@ -8,6 +8,10 @@ const rules = {
     // a bit [cold]; ice [cold]
     '(bit|ice) _ -> #Adj',
   ],
+  unknown: [
+    // entirely [unknown], from the un-known switch
+    '#Adv _ -> #Adj',
+  ],
   lunatic: [
     '_ fringe -> #Adj',
   ],

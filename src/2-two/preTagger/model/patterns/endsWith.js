@@ -114,8 +114,7 @@ export default {
     [/.[rln]ates$/, Pres],
     [/.[^z]ens$/, Verb],
     [/.[lstrn]us$/, Sing],
-    [/.[aeiou]sks$/, Pres],
-    [/.[aeiou]kes$/, Pres],
+    [/.(ok|wak)es$/, Pres],
     [/[aeiou][^aeiou]is$/, Sing],
     [/[a-z]'s$/, Noun],
     [/^yes+$/, Exp], //yessss

@@ -38,7 +38,6 @@ export default [
     ibe: Inf,
     lar: Adj,
     mum: Adj,
-    nes: Pres,
     nny: Adj,
     // oid: Adj,
     ous: Adj,
@@ -91,7 +90,6 @@ export default [
     llen: Adj,
     made: Adj,
     nsen: Last,
-    oses: Pres,
     ould: Modal,
     some: Adj,
     sson: Last,
@@ -123,10 +121,11 @@ export default [
     bury: Place,
     dorf: Noun,
     esty: Noun,
-    ...tagWords('wych dale folk vale abad sham wick view', Place),
+    ...tagWords('wych dale folk vale abad sham wick', Place),
   },
   {
     //5-letter
+    poses: Pres,
     elist: Actor,
     holic: Sing,
     phite: Sing,

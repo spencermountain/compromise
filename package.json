@@ -124,6 +124,7 @@
   ],
   "dependencies": {
     "efrt": "catalog:",
+    "eslint-plugin-redos": "catalog:",
     "suffix-thumb": "6.1.0"
   },
   "devDependencies": {

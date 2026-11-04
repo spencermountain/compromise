@@ -44,20 +44,23 @@ clues['Plural|Verb'] = {
     have: Plur,
   }),
   afterWords: copy(clues['Noun|Verb'].afterWords, {
-    his: Pres, her: Pres, its: Pres,
-    in: null, to: null,
+    his: Pres,
+    her: Pres,
+    its: Pres,
+    in: null,
+    to: null,
     is: Pres, //the way it works is
     by: Pres, //it works by
   }),
   beforeTags: copy(clues['Noun|Verb'].beforeTags, {
     Conjunction: Pres, //and changes
     Noun: undefined, //the century demands
-    ProperNoun: Pres//john plays
+    ProperNoun: Pres, //john plays
   }),
   afterTags: copy(clues['Noun|Verb'].afterTags, {
-    Gerund: Plur,//ice caps disappearing
+    Gerund: Plur, //ice caps disappearing
     Noun: Pres, //changes gears
-    Value: Pres //changes seven gears
+    Value: Pres, //changes seven gears
   }),
 }
 // add some custom plural clues

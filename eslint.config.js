@@ -1,8 +1,15 @@
 import * as regexpPlugin from 'eslint-plugin-regexp'
+import redos from 'eslint-plugin-redos'
 
 export default [
   { ignores: ['**/builds/*', '**/scratch.js', '**/rollup.config.js'] },
+  // regex scanning
   regexpPlugin.configs['flat/recommended'],
+  // specific regexDos vulnerability scanner
+  {
+    plugins: { redos },
+    rules: { 'redos/no-vulnerable': 'error' },
+  },
   {
     languageOptions: {
       ecmaVersion: 2022,
@@ -25,7 +32,7 @@ export default [
         fetch: 'readonly',
         URL: 'readonly',
         Event: 'readonly',
-      }
+      },
     },
     // custom rules setup
     rules: {
@@ -73,12 +80,17 @@ export default [
   {
     files: ['tests/**/*.test.js'],
     rules: {
-      'no-restricted-imports': ['error', {
-        patterns: [{
-          group: ['**/src/one.js', '**/src/two.js', '**/src/three.js', '**/builds/**'],
-          message: 'Import the tier’s tests/_lib.js so TESTENV=prod exercises the build.',
-        }],
-      }],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['**/src/one.js', '**/src/two.js', '**/src/three.js', '**/builds/**'],
+              message: 'Import the tier’s tests/_lib.js so TESTENV=prod exercises the build.',
+            },
+          ],
+        },
+      ],
     },
   },
   {
@@ -86,6 +98,6 @@ export default [
     rules: {
       'no-async-promise-executor': 'error',
       'no-promise-executor-return': 'error',
-    }
-  }
+    },
+  },
 ]

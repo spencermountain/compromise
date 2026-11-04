@@ -3,8 +3,8 @@ import {
   Region, Place, Adv, Conj, Plur, Past, Pres, Ger, Participle, NN, Unit,
 } from '../../tagSet/_lib.js'
 
-// These phrases also seed the packed lexicon and its derived forms.
-// Imported by data/lexicon/index.js: edit their tags here only.
+// These phrases also seed the regular lexicon and its derived forms, at load-time.
+// data/lexicon/index.js keeps them unique: edit their tags here only.
 export const shared = {
   'first lieutenant': 'Honorific',
   'second lieutenant': 'Honorific',
@@ -116,4 +116,6 @@ export default {
   'rush hour': NN,
   'fluid ounce': Unit,
   'the rolling stones': Org,
+  // keep out of the mcd- surname regex
+  mcdonalds: Org,
 }

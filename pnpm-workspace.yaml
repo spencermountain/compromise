@@ -32,6 +32,7 @@ catalog:
   parse-english: ^7.0.0
   hast-util-format: ^1.1.0
   eslint-plugin-regexp: 3.3.3
+  eslint-plugin-redos: ^4.6.2
 
 linkWorkspacePackages: false
 

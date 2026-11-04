@@ -8,6 +8,15 @@ const api = function (View) {
       super(document, pointer, groups)
       this.viewType = 'Possessives'
     }
+    text(fmt) {
+      if (!fmt || fmt === 'text') {
+        return super.text({ keepEndPunct: true })
+      }
+      if (typeof fmt === 'object') {
+        return super.text({ keepEndPunct: true, ...fmt })
+      }
+      return super.text(fmt)
+    }
     strip() {
       return strip(this)
     }

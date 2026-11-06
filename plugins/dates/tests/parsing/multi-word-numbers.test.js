@@ -60,6 +60,8 @@ test(here + 'an article and a number, without a shift', t => {
     t.deepEqual(found, [], here + `no shift: '${str}'`)
     t.notOk(nlp(str).has('#DateShift'), here + `no #DateShift: '${str}'`)
   })
+  // an idiom, and too far away to be a date
+  t.equal(nlp('he would never go in a million years').dates(context).json()[0]?.dates.start ?? null, null, here + 'a million years')
   t.end()
 })
 

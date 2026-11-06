@@ -4,4 +4,8 @@ import nlp from './src/three.js'
 
 const d = nlp("Isn't he happy (again)?")
 d.sentences().toFutureTense() // fine
-d.sentences().json() // out of heap, exit 134
+d.sentences().debug()
+// const json = d.sentences().json() // out of heap, exit 134
+// console.log(json)
+
+console.log('done')

@@ -248,7 +248,7 @@ const matches = [
   // in two weeks
   { match: 'in (around|about|maybe|perhaps)? #Cardinal+ #Duration', tag: 'DateShift', reason: 'in two weeks' },
   // in a hundred years - but not 'in a 12-hour day', or 'in a hundred-year flood'
-  { match: 'in (around|about|maybe|perhaps)? (a|an) #Multiple (#Duration && #Plural)', tag: 'DateShift', reason: 'in a hundred years' },
+  { match: 'in (around|about|maybe|perhaps)? (a|an) (hundred|thousand|dozen) (#Duration && #Plural)', tag: 'DateShift', reason: 'in a hundred years' },
   { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
   // an hour from now
   { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },

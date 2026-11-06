@@ -678,8 +678,8 @@ const rules = [
   ['[#Prop] #Pers', Pers, 0, { safe: true }],
   // john [keith jones] → Person
   ['#Pers [#Prop #Prop]', Pers, 0, { n: '#Poss', safe: true }],
-  // John [Foo] → LastName
-  ['#First #Acronym? [#Prop]', Last, 0, { n: '#Poss' }],
+  // John [Foo] → LastName - but not John's [Honda]
+  ['(#First && !#Poss) #Acronym? [#Prop]', Last, 0],
   // Joe K. Sombrero → Person
   ['#First #Acronym #NN', Pers, null, { safe: true }],
   // Anthony [de] Marco → LastName
@@ -693,8 +693,8 @@ const rules = [
     'Hon',
     0,
   ],
-  // [vice] president Harold → Honorific
-  ['[vice] president #Prop', 'Hon', 0],
+  // [vice chairman] Harold → Honorific
+  ['[vice (#Actor|premier|chair|principal)] #Prop', 'Hon', 0],
   // ==== Honorics ====
   // [general] John → ['Hon', 'Pers']
   ['[(private|general|major|rear|prime|field|count)] #Hon? #Pers', ['Hon', 'Pers'], 0],

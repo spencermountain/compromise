@@ -1,6 +1,6 @@
 import {
   Sing, Pres, NN, Vb, Past, Plur, Det, Phrasal, Adj, Prop, Adv, Pron, Poss, Prep,
-  Inf, Mod, Conj, Ger, First, Actor, TxtNum, Date,
+  Inf, Mod, Conj, Ger, First, Actor, TxtNum, Date, Year,
 } from '../../preTagger/tagSet/_lib.js'
 const spatial = new Set([
   'above', 'below', 'under', 'over', 'beside', 'behind', 'against',
@@ -111,7 +111,8 @@ const localCorrections = sentences => {
         degrees.has(terms[i - 1]?.normal) && terms[i - 2]?.tags.has(Det)) {
         pending.push([[term], Adj, 'degree-actor'])
       }
-      if (term.tags.has(TxtNum) && term.tags.has(Date) && next.tags.has(TxtNum)) {
+      // a spoken year may still be un-tagged, when followed by a unit
+      if (term.tags.has(TxtNum) && term.tags.has(Date) && !term.tags.has(Year) && next.tags.has(TxtNum)) {
         pending.push([[term, next], Date, 'textvalue-date'])
       }
     }

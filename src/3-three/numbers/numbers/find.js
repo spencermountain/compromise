@@ -4,9 +4,7 @@ const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eightee
 
 // this is a bit of a mess
 // segment consecutive number-words into sensible chunks
-const findNumbers = function (doc) {
-  let m = doc.match('#Value+')
-
+const splitNumbers = function (m) {
   //"50 83"
   if (m.has('#NumericValue #NumericValue')) {
     //a comma may mean two numbers
@@ -81,6 +79,17 @@ const findNumbers = function (doc) {
   // june 5th 1999
   m = m.splitBefore('#Year')
   return m
+}
+
+const findNumbers = function (doc) {
+  const m = doc.match('#Value+')
+  // spoken years are already whole - 'twenty twenty six'
+  const years = m.match('#TextValue+').match('#Year+').splitAfter('(@hasComma|@hasDash)')
+  if (!years.found) {
+    return splitNumbers(m)
+  }
+  const ptrs = splitNumbers(m.not(years)).fullPointer.concat(years.fullPointer)
+  return m.toView(ptrs.sort((a, b) => a[0] - b[0] || a[1] - b[1]))
 }
 
 export default findNumbers

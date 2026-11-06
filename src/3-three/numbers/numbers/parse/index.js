@@ -1,5 +1,9 @@
 import parseText from './toNumber/index.js'
 import parseFraction from '../../fractions/parse.js'
+import spokenYear from '../../../../2-two/preTagger/methods/spokenYear.js'
+
+// 'twenty twenty-six'
+const parseYear = str => spokenYear(str.split(/[ -]/))
 
 const parseNumeric = function (str, m) {
   str = str.replace(/,/g, '')
@@ -41,7 +45,7 @@ const parseNumeric = function (str, m) {
 // get a numeric value from this phrase
 const parseNumber = function (m) {
   if (typeof m === 'string') {
-    return { num: parseText(m) }
+    return { num: parseYear(m) ?? parseText(m) }
   }
   let str = m.text('reduced')
   if (m.text().includes('¢')) {
@@ -81,7 +85,10 @@ const parseNumber = function (m) {
     for (; end > 0 && /[.!?]/.test(str[end - 1]); end -= 1) {
       // Sentence punctuation is not part of the number.
     }
-    num = parseText(str.slice(0, end)) || 0
+    const text = str.slice(0, end)
+    // the tagger already decided if this is a year
+    const year = m.has('#Year') ? parseYear(text) : null
+    num = year ?? (parseText(text) || 0)
   }
   // apply numeric fraction
   if (fraction && fraction.decimal) {

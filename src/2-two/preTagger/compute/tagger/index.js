@@ -2,6 +2,7 @@ import colons from './1st-pass/01-colons.js'
 import hyphens from './1st-pass/02-hyphens.js'
 
 import tagSwitch from './2nd-pass/00-tagSwitch.js'
+import spokenYear from './2nd-pass/00-spokenYear.js'
 import checkCase from './2nd-pass/01-case.js'
 import checkSuffix from './2nd-pass/02-suffix.js'
 import checkRegex from './2nd-pass/03-regex.js'
@@ -46,6 +47,8 @@ const secondPass = function (terms, model, world, isYelling) {
     }
     // mark Noun|Verb on term metadata
     tagSwitch(terms, i, model)
+    // turn 'twenty twenty-six' into a year
+    spokenYear(terms, i)
     //  is it titlecased?
     if (isYelling === false) {
       checkCase(terms, i, model)

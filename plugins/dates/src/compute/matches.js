@@ -226,7 +226,7 @@ const matches = [
 
   // around four thirty
   {
-    match: '(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]',
+    match: '(at|around|near|#Date) [(#Cardinal && !#Year) (thirty|fifteen) (am|pm)?]',
     group: 0,
     tag: 'Time',
     reason: 'around four thirty',
@@ -234,7 +234,7 @@ const matches = [
   // four thirty am
   { match: '#Cardinal (thirty|fifteen) (am|pm)', tag: 'Time', reason: 'four thirty am' },
   // four thirty tomorrow
-  { match: '[#Cardinal (thirty|fifteen)] #Date', group: 0, tag: 'Time', reason: 'four thirty tomorrow' },
+  { match: '[(#Cardinal && !#Year) (thirty|fifteen)] #Date', group: 0, tag: 'Time', reason: 'four thirty tomorrow' },
   //anytime around 3
   { match: '(anytime|sometime) (before|after|near) [#Cardinal]', group: 0, tag: 'Time', reason: 'antime-after-3' },
 

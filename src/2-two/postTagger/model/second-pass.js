@@ -64,8 +64,18 @@ const rules = [
   ['^(can|could|will|would) you (#Adv|not)+? [#Inf] * @hasComma please$', 'Imp', 0],
   // jack the ripper → Person
   ['%Person|Verb% (the && #Pers) #Pers', Pers],
+  // President [Biden], President Hosni [Mubarak] → Person, for titles found in the main sweep
+  // not 'Major [League]', or 'the President's [Cup]'
+  ...['', '(#Prop && !#Hon && !#Poss && !@hasComma) '].map(first => [
+    `#Hon ${first}[(#Prop && !#Hon && @isTitleCase)]`,
+    Pers,
+    0,
+    { n: '(major|#Poss #Prop|@hasColon)', safe: true },
+  ]),
   // keep the lid [closed] → Adjective
   ['#Imp #Det #NN+ [%Adj|Past%]', Adj, 0],
+  // [twenty ten] km → not a year, once the unit is known
+  ['[(twenty && #Year) #Year #Year?] #Unit', null, 0, { u: 'Date' }],
   // console.log('  ', rules.length, 'matches second-pass\n\n')
 ]
 

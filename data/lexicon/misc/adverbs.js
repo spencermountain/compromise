@@ -88,4 +88,5 @@ export default [
   "outright",
   'fucking',
   'now',
+  'still',
 ]

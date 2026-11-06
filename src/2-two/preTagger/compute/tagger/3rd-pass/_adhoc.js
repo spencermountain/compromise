@@ -191,7 +191,11 @@ const adhoc = {
     return isCapital(terms, i)
   },
   'Noun|Verb': (terms, i) => {
-    if (terms[i - 1]?.normal === 'even' && terms[i - 2]?.tags.has('Determiner')) {
+    // 'the even split', 'this still water', "the pond's still water" - a bare verb can't follow 'is still'
+    const adverb = terms[i - 1]?.normal
+    const owner = terms[i - 2]
+    const isOwned = adverb === 'still' && owner?.normal.endsWith("'s")
+    if (((adverb === 'even' || adverb === 'still') && owner?.tags.has('Determiner')) || isOwned) {
       return 'Singular'
     }
     return isQuestionVerb(terms, i) || (i > 0 && isCapital(terms, i)) || isAlone(terms, i, 'Infinitive')
@@ -201,6 +205,10 @@ const adhoc = {
     const subject = terms[i - 2]?.normal
     if (terms[i - 1]?.normal === 'still' && (subject === 'this' || subject === 'that')) {
       return 'PresentTense'
+    }
+    // A plural demonstrative can't take an -s verb: 'these still waters'.
+    if (terms[i - 1]?.normal === 'still' && (subject === 'these' || subject === 'those')) {
+      return 'Plural'
     }
     return isCapital(terms, i) || isSingularSubject(terms, i) || isPluralCompound(terms, i) || isBeforeAre(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
   },

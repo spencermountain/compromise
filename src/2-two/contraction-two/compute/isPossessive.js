@@ -79,6 +79,10 @@ const isPossessive = (terms, i) => {
     }
     return false
   }
+  // a question already has its verb - Is Wendy's still open?
+  if (i > 0 && i < 3 && terms[0].tags.has('Copula')) {
+    return true
+  }
   if (afterVerb.has(nextTerm.normal)) {
     return false
   }
@@ -241,18 +245,23 @@ const isPossessive = (terms, i) => {
       o += 1
     }
     const twoTerm = terms[o]
-    //the rocket's red, the car's still here - but not Germany's only hope
-    if (!twoTerm || (isAdv && o === i + 2 && nextTerm.normal !== 'only')) {
+    //the rocket's red
+    if (!twoTerm) {
       return false
     }
-    // John's only human, John's still king
-    const isRole = twoTerm.tags.has('Actor') || twoTerm.switch === 'Person|Noun'
-    if ((nextTerm.normal === 'only' && twoTerm.normal === 'human') || (nextTerm.normal === 'still' && isRole)) {
+    // an adverb, then a word that isn't describing - but not Germany's only hope
+    if (isAdv && o === i + 2 && nextTerm.normal !== 'only') {
+      // the pond's still water was cold - but the car's still here, John's still king
+      const three = terms[o + 1]
+      return isOneThing(twoTerm) && Boolean(three) && ['Modal', 'Copula', 'PastTense'].some(tag => three.tags.has(tag))
+    }
+    // John's only human
+    if (nextTerm.normal === 'only' && twoTerm.normal === 'human') {
       return false
     }
     // America's poor climbed, our nation's elderly would - but Mama's messy isn't she
     const isVerb = ['Modal', 'PastTense', 'Copula'].some(tag => twoTerm.tags.has(tag)) || twoTerm.normal === 'have'
-    if (!isAdv && o === i + 2 && isVerb && !twoTerm.implicit && nextTerm.normal !== 'still') {
+    if (!isAdv && o === i + 2 && isVerb && !twoTerm.implicit) {
       return true
     }
     // rocket's red nozzle - but not John's still here

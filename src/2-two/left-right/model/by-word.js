@@ -121,11 +121,8 @@ const rules = {
     'the _ #NN -> #Adj',
   ],
   still: [
-    // was [still] in
-    '#Cop _ (in|#Ger|#Adj) -> #Adv',
-    // [still] good
-    // [still] make
-    '_ (#Adj|#V) -> #Adv',
+    // this [still] water, the pond's [still] water
+    '(#Determiner|#Possessive) _ #Noun -> #Adjective',
   ],
   so: [
     // [so] hot

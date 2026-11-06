@@ -244,7 +244,6 @@ export default [
   'civil',
   'all',
   'overall',
-  'still',
   'old school',
 
   // -ful

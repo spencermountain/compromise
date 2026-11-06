@@ -11,6 +11,7 @@ import checkYear from './2nd-pass/05-year.js'
 import verbType from './3rd-pass/07-verb-type.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
+import attributive from './3rd-pass/00-attributive.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
@@ -67,6 +68,8 @@ const secondPass = function (terms, model, world, isYelling) {
 // neighbour-based tagging
 const thirdPass = function (terms, model, world, isYelling) {
   for (let i = 0; i < terms.length; i += 1) {
+    // a still night
+    attributive(terms, i, model)
     // let these tags get layered
     let found = checkAcronym(terms, i, model)
     // deduce parent tags

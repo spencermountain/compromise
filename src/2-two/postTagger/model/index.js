@@ -176,7 +176,9 @@ const rules = [
   // === adverb.js ===
 
   // [way] too hot → Adverb
-  ['[way] #Adv (#Adj|#Adv)', Adv, 0],
+  ['[way] #Adv #Adj', Adv, 0],
+  // [way] too soon → Adverb (not: on his way up)
+  ['[way] (too|more|less|so) #Adv', Adv, 0],
   // sing [like] an angel → Adverb
   ['#V  [like]', Adv, 0, { n: '(#Mod|#PhrV)' }],
   // even left → Adverb Verb

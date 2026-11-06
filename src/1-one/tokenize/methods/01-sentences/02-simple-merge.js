@@ -4,6 +4,7 @@ const hasSomething = /\S/
 
 const notEmpty = function (splits) {
   const chunks = []
+  let lead = '' // whitespace+punctuation, before the first chunk
   for (let i = 0; i < splits.length; i++) {
     const s = splits[i]
     if (s === undefined || s === '') {
@@ -17,12 +18,13 @@ const notEmpty = function (splits) {
         continue
       } else if (splits[i + 1]) {
         //add it to the next one
-        splits[i + 1] = s + splits[i + 1]
+        lead += s
         continue
       }
     }
     //else, only whitespace, no terms, no sentence
-    chunks.push(s)
+    chunks.push(lead + s)
+    lead = ''
   }
   return chunks
 }

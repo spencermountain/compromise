@@ -1,12 +1,12 @@
 const lastBrace = /\{(?=[^{]*$)/ // split on the last { only
-const comment = /\}[ \t]*#.*$/ // an optional '# comment' after the last {tags} block
+const comment = /\}[ \t]*#.*$/s // an optional '# comment' after the last {tags} block
 
 
 // parse the spec output
 const parseLine = function (line = '') {
   let [text, tags] = line.split(lastBrace) // eslint-disable-line prefer-const
   if (tags === undefined) {
-    return { text: text.replace(/\s#.*$/, '').trimEnd(), tags: null } // no {tags} block on this line
+    return { text: text.replace(/\s#.*$/s, '').trimEnd(), tags: null } // no {tags} block on this line
   }
   tags = tags.replace(comment, '}') // drop the comment - only ever one, always last
   tags = tags.split(',').map(tag => tag.trim())

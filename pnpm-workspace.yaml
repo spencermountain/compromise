@@ -8,14 +8,14 @@ catalog:
   '@types/node': '^26.6.6'
   '@rollup/plugin-node-resolve': '16.0.3'
   '@rollup/plugin-terser': '1.0.2'
-  'rollup': '4.67.4'
+  'rollup': 4.67.5
   'rollup-plugin-filesize-check': '2.0.1'
   'tap-dancer': '0.4.4'
   'tape': '5.10.3'
   'cross-env': '10.1.0'
   'nlp-corpus': '4.4.0'
   'efrt': '2.9.0'
-  eslint: 10.13.0
+  eslint: 10.14.0
   mdast-util-from-markdown: ^2.1.0
   mdast-util-to-markdown: ^2.2.0
   micromark-extension-gfm-table: ^2.1.2
@@ -37,5 +37,5 @@ catalog:
 linkWorkspacePackages: false
 
 minimumReleaseAgeExclude:
-  - spacetime@7.17.0
+  - spacetime@7.17.1
   - suffix-thumb@6.1.0

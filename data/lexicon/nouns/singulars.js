@@ -422,4 +422,11 @@ export default [
   'porridge',
   'terrier',
   'wrist',
+  // would match a surname suffix
+  'casanova',
+  'dev',
+  'lederhosen',
+  'linen',
+  'nova',
+  'supernova',
 ]

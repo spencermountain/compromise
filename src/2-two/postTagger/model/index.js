@@ -89,8 +89,6 @@ const rules = [
   ['[#Past] #Plur are', Adj, 0],
   // is [fucked up] → Adjective
   ['#Cop [fucked up?]', Adj, 0],
-  // the door seems [opened] → Adjective
-  ['#Sing (seems|appears) #Adv? [#Past$]', Adj, 0],
   // jury is out - preposition ➔ adjective
   // jury is [out] → Adjective
   ['#Cop #Adj? [(out|in|through)]$', Adj, 0],
@@ -117,18 +115,12 @@ const rules = [
     { n: '(#Cop|be|been|being|get|got|getting|become|became|becoming|feel|feels|feeling|#Det|#Prep)' },
   ],
   // Bare 'be' may still be Infinitive rather than Copula in commands.
-  // be [late] → Adjective
-  ['(be|been|being) (#Adv|not)+? [late]', Adj, 0],
-  // be [early] → Adjective
-  ['(be|been|being) (#Adv|not)+? [early]', Adj, 0],
   // [moons] a lot → PresentTense
   [`[#Plur] a lot !like?`, Pres, 0],
 
   // === adjective/adj-gerund.js ===
   // Gerund-Adjectives - 'amusing, annoying'
 
-  // found it [interesting] → Adjective
-  ['found it #Adv? [%Adj|Gerund%]', Adj, 0],
   // found it [isolating], but found it isolating cells → Adjective
   ['found it #Adv? [isolating]$', Adj, 0],
   // a little [fuming] → Adjective
@@ -232,8 +224,6 @@ const rules = [
   [`[(march|may)] .? #Date`, 'Month', 0],
   // feb to [march] → Month
   [`#Date .? [(march|may)]`, 'Month', 0],
-  // quickly [march] → Verb
-  [`#Adv [(march|may)]`, Vb, 0, { n: '(early|late)' }],
 
   // === dates/date-phrase.js ===
 
@@ -381,7 +371,7 @@ const rules = [
   // === verbs/verb-noun.js ===
 
   // A final button label is an object, not a second verb. → PresentTense Noun
-  ...['click', 'clicks', 'selects', 'pick', 'picks'].map(word => [
+  ...['click', 'clicks'].map(word => [
     `(#Pron|#Sing|#Plur) [${word} (submit|save|cancel)]$`,
     'Pres NN',
     0,
@@ -389,7 +379,7 @@ const rules = [
   // Common intransitive predicates after a singular subject. Keep arbitrary
   // plural/verb switches conservative: 'the dog treats' is a noun phrase.
   // the dog [runs] → PresentTense
-  ...['runs', 'walks', 'barks', 'swims', 'sleeps'].map(word => [
+  ...['runs', 'walks', 'barks', 'sleeps'].map(word => [
     `^(#Det|#Poss) #Adj+? #Sing #Adv+? [${word}] #Adv+?$`,
     Pres,
     0,
@@ -580,7 +570,6 @@ const rules = [
   ['[#Card+] (#Frac && /s$/)', Frac, 0],
   // [two thirds] of it → Fraction
   // (a singular one is an ordinal: the twenty first of may)
-  ['[#Card+ (#Ord && /s$/)] of .', Frac, 0],
   // [100th] of it → Fraction
   ['[(#Numeric && #Ord)] of .', Frac, 0],
   // [a twenty fifth] of it → Fraction
@@ -653,8 +642,6 @@ const rules = [
   ['#Prop (b|c|d|e|f|g|h|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z) #Prop', Pers, null, { safe: true }],
   // J. Smith → Person
   ['#Acronym #Last', Pers, null, { safe: true }],
-  // John jr → Person
-  ['#Pers (jr|sr|md)', Pers],
   // Dr. J. → Person
   ['#Hon #Acronym', Pers],
   // John [b] → [Acronym, 'Pers']
@@ -706,6 +693,8 @@ const rules = [
     'Hon',
     0,
   ],
+  // [vice] president Harold → Honorific
+  ['[vice] president #Prop', 'Hon', 0],
   // ==== Honorics ====
   // [general] John → ['Hon', 'Pers']
   ['[(private|general|major|rear|prime|field|count)] #Hon? #Pers', ['Hon', 'Pers'], 0],
@@ -726,7 +715,16 @@ const rules = [
   // const personAdj = '(misty|rusty|dusty|rich|randy|sandy|young|earnest|frank|brown)'
 
   // ebenezer scrooge → . LastName
-  ['#First #NN$', '. #Last', null, { n: '(#Poss|#Org|#Place|#Pron|@hasTitleCase)' }],
+  // not 'we saw John there' - only the first name is capitalized
+  // not 'i gave john money' - this verb needs a person and a thing
+  [
+    '(give|gives|gave|giving|lend|lends|lent|hand|hands|handed|buy|buys|bought)? #First [#NN]$',
+    Last,
+    0,
+    { n: '(#Poss|#Org|#Place|#Pron|there|/thing$/|@isTitleCase !@isTitleCase|#Verb . !@isTitleCase)' },
+  ],
+  // Jack [D.], Yong-[hwa]
+  ['#First (#Acronym|#Hyphenated)$', '. #Last', null, { n: '(#Poss|#Org|#Place|#Pron|!#NN)' }],
 
   // June Smith → Person
   ['%Person|Date% #Acronym? #Prop', Pers],
@@ -740,14 +738,8 @@ const rules = [
   ['(%Person|Verb% && #Pers) #Acronym? #Prop', Pers, null, { ifNo: '#Actor' }],
 
   // ===person-verb===
-  // really [wade] → Verb
-  [`#Adv [(%Person|Verb% && !@isTitleCase)]`, Vb, 0],
   // [drew] closer → Verb
   [`[%Person|Verb%] (#Adv|#Comp)`, Vb, 0],
-  // wade smith → Person
-  [`(%Person|Verb% && #Pers) #Pers`, Pers],
-  // Wade G. Slapgoop → Person
-  [`%Person|Verb% #Acronym #Prop`, Pers],
   // Will Smith → Person
   ['(will && @isTitleCase) #Prop', Pers],
   // jack [layton] won → LastName
@@ -775,8 +767,6 @@ const rules = [
   ['[march] (up|down|back|toward)', Inf, 0, { n: '#Date' }],
   // birds [home] to their nest → Infinitive
   ['(#Pron|#Plur|#Mod) #Adv+? [home] to', Inf, 0],
-  // is [home] to birds → Noun
-  ['(#Cop|be|been|being) #Adv+? [home] to', NN, 0],
   // is [subject] to change → Adjective
   ['(#Cop|be|been|being|remain|remains|remained) #Adv+? [subject] to', Adj, 0],
   // is subject [to] → Preposition; remove Conjunction
@@ -845,8 +835,6 @@ const rules = [
   ['#Pron [#Adj] #Det #Adj? #NN', Vb, 0],
   // rude and [insulting] → Adjective
   ['#Adj and [(%Adj|Gerund% && #Ger)] !#Prep?', Adj, 0],
-  // got [tired] of → Adjective
-  ['got #Adv? [%Adj|Past%] of', Adj, 0],
   // felt [cheated] → Adjective
   ['(seem|seems|seemed|appear|appeared|appears|feel|feels|felt|sound|sounds|sounded) (#Adv|#Adj)? [#Past]', Adj, 0],
   // felt [cheated]
@@ -1011,10 +999,6 @@ const rules = [
 
   // === verbs/adj-gerund.js ===
 
-  // The station was [closing]. The shop is [closing] soon. → Gerund
-  ['#Cop #Adv+? [closing] (#Adv|soon)+?$', Ger, 0],
-  // that were [growing] → Gerund
-  ['(that|which) were [%Adj|Gerund%]', Ger, 0],
 
   // === _misc.js ===
   // order matters
@@ -1084,16 +1068,12 @@ const multi = [
   ['#Prop #Org', Org, null, { n: '#First' }],
   // FitBit Inc → Organization
   ['#Prop (ltd|co|inc|dept|assn|bros)', Org],
-  // the [XYZ corporation] → Organization
-  [`the [#Acronym ${companySuffix}]`, Org, 0, { safe: true }],
   // [government of india] → Organization
   ['[government of the? #Place+]', Org, 0],
   // global Microsoft → Organization
   ['(world|global|international|national|#Dem) #Org', Org],
   // Toronto public school → School
   ['#NN+ (public|private) school', 'School'],
-  // Toronto Yankees → SportsTeam
-  ['#Place+ #SportsTeam', SportsTeam],
   // 'toronto fc' → SportsTeam
   ['#Place+ fc', SportsTeam],
 
@@ -1192,7 +1172,7 @@ const multi = [
   // veggies, [like] kale → Preposition
   ['(#NN && @hasComma) [like] #NN', Prep, 0],
   // Everyone [but] me agreed. → Preposition
-  ...['everyone', 'everybody', 'everything', 'anyone', 'anybody', 'anything', 'nobody', 'nothing', 'all'].map(word => [
+  ...['everyone', 'everything', 'anyone', 'anybody', 'anything', 'nobody', 'nothing', 'all'].map(word => [
     `${word} [but] (me|him|her|us|them|#Det|#Poss|#Prop)`,
     Prep,
     0,
@@ -1200,7 +1180,7 @@ const multi = [
   // images on a screen [like] humans do → Preposition
   ['#NN [like] #NN+ (do|does|did)$', Prep, 0],
   // cities [like] New York, Boston → Preposition
-  ...['', '#Place ', '#Place #Place '].map(prefix => [`#Plur [like] ${prefix}(#Place && @hasComma) #Place`, Prep, 0]),
+  ...['', '#Place '].map(prefix => [`#Plur [like] ${prefix}(#Place && @hasComma) #Place`, Prep, 0]),
   // [Like] his brother, he enjoys chess → Preposition
   ['^[like] (#Det|#Poss)? #Adj+? (#NN && @hasComma)', Prep, 0],
   // I like tea, [like] my sister does. → Conjunction
@@ -1214,12 +1194,8 @@ const multi = [
   // We will leave [when] the rain stops. → Conjunction
   ['#Mod #Inf [when] #Det', Conj, 0],
 
-  // [has] running water → remove Auxiliary; possession is not progressive
-  ['[(have|has|had)] running water', null, 0, { u: 'Aux' }],
-  // [is] enduring art → remove Auxiliary; enduring modifies the noun
-  ['[#Cop] (enduring && #Adj) #NN', null, 0, { u: 'Aux' }],
   // Although he [was] [tired], he smiled. He [was] [tired].
-  ...['[(#Cop|been)] #Adv+? [tired]$', '[(#Cop|been)] #Adv+? [(tired && @hasComma)]'].flatMap(match => [
+  ...['[(#Cop|been)] #Adv+? [tired]$'].flatMap(match => [
     // Although he [was] [tired], he smiled. He [was] [tired]. → Copula; remove Passive
     [match, Cop, 0, { u: 'Pass' }],
     // Although he [was] [tired], he smiled. He [was] [tired]. → remove Auxiliary
@@ -1227,10 +1203,6 @@ const multi = [
     // Although he was [tired], he smiled. He was [tired]. → Adjective (second capture)
     [match, Adj, 1],
   ]),
-  // had been tired → remove Passive
-  ['(has|have|had) (#Adv|not)+? been #Adv+? tired$', null, null, { u: 'Pass' }],
-  // 23 Main Street in Toronto → Place
-  ['#Address in #Place', Place],
   // the [sleeping] dog → Adjective
   ['#Det [sleeping] (#Actor|#Pers|puppy|kitten|dog|cat|baby|babies|child|children)', Adj, 0],
   // [water] broke the pipe → Noun

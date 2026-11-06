@@ -177,11 +177,38 @@ nlp('i saw mary and john').lookup(['mary', 'john']).out('array')   // ['mary','j
 `nlp.parseMatch(str)` turns a pattern into reusable JSON; `nlp.buildNet([...])` compiles many
 patterns into one fast net for `.sweep()`. Use these in hot loops.
 
+## Untrusted input
+
+> ⚠️ Treat a match string as code, like SQL or `new RegExp()`. Never build one from user input.
+
+- A `/regex/` token runs as written, on your thread. A hostile pattern can hang it indefinitely, even
+  on ordinary text, and a timeout on the same thread can't interrupt it.
+- An invalid pattern throws a `SyntaxError`, like `'/(/'` or `'[<>foo]'`.
+- Removing `/regex/` tokens isn't enough: stacked repeats like `(a|.)+ (b|.)+` get much slower on
+  long sentences.
+
+Text from users is a different case: it can be parsed and matched, as long as your own `/regex/`
+tokens avoid nested repeats like `/^(a+)+$/`.
+
+To search for words that a user typed, use `.lookup()`, which treats them as plain text:
+
+```js
+nlp('i saw mary').lookup(['mary', '/(/', '#Verb']).out('array')   // ['mary']
+```
+
+To run a regex that a user wrote, pass a parsed token. Its `regex` can be any object with a
+`.test()` method, so you can use an engine that doesn't backtrack:
+
+```js
+const safe = { test: str => str === 'dog' }
+nlp('the big dog').match([{ regex: safe }]).out('array')   // ['dog']
+```
+
 ## What is NOT supported
 
 - **Nested groups**: `'(modern (major|minor))? general'` — flatten or chain `.match()` calls.
 - **Cross-sentence matching** — use the paragraphs plugin.
 - **Character-level regex inside a term** — use a real `/regex/` token instead:
-  `nlp('color colour').match('/colou?r/').out('array')`.
+  `nlp('color colour').match('/colou?r/').out('array')`. See [untrusted input](#untrusted-input).
 
 See [concepts.md](concepts.md) for the document model and [api.md](api.md) for every method.

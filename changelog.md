@@ -20,7 +20,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - #1259 number-splitter bug
 - **[fix]** - #1253 fix match escaping for + and /
 - **[fix]** - #1262 Preserve punctuation in quotation text output
-- **[fix]** - regex fixes
+- **[fix]** - problematic regex fixes
+- **[fix]** - whitespace tokenization in match strings
 
 #### 14.19.0 [Oct 2026]
 

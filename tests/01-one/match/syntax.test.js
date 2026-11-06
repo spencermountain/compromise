@@ -107,7 +107,7 @@ test('regex tokenization', function (t) {
     ['(snooze|wait|delay|punt|later|sleep) (up to) [<snooze_to>#Date+]', 3],
     ['(snooze sleep) (up to) [<snooze_to>#Date+]?', 3],
     ['(snooze sleep) (up|to) [<snooze_to>#Date+]? (fourth)?', 4],
-    // ['/snooze sleep/ /up to/ [<snooze_to>#Date+]?', 3], //known issue
+    ['/snooze sleep/ /up to/ [<snooze_to>#Date+]?', 3],
   ]
   arr.forEach(a => {
     const regs = nlp.parseMatch(a[0])

@@ -1,7 +1,6 @@
 export default [
   //some of the busiest airports in the world from
   //https://www.world-airport-codes.com/world-top-30-airports.html
-  'ams',
   'atl',
   'bcn',
   'bkk',
@@ -17,15 +16,11 @@ export default [
   'hnd',
   'iax',
   'icn',
-  'ist',
   'kul',
-  'las',
-  'lax',
   'lgw',
   'lhr',
   'mco',
   'muc',
-  'ord',
   'pek',
   'phl',
   'phx',
@@ -347,4 +342,7 @@ export default [
   'woolwich',
   'wycombe',
   'york',
+  // would match a surname suffix
+  'negev',
+  'suez',
 ]

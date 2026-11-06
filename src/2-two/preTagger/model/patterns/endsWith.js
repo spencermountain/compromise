@@ -1,7 +1,7 @@
 import tags from '../../tagSet/aliases.js'
 
 const {
-  JJ: Adj, Inf, Pres, Sing, VBD: Past, RB: Adverb, Expression: Exp, Actor,
+  JJ: Adj, Inf, Pres, Sing, VBD: Past, Expression: Exp, Actor,
   V: Verb, NN: Noun, Last
 } = tags
 //regex suffix patterns and their most common parts of speech,
@@ -15,7 +15,6 @@ export default {
     [/.[^aeiou]ica$/, Sing, 'harmonica'],
     [/^([hyj]a+)+$/, Exp, 'haha'], //hahah
   ],
-  c: [[/.[^aeiou]ic$/, Adj]],
   d: [
     //==-ed==
     //double-consonant
@@ -54,7 +53,6 @@ export default {
     [/.[cdflmnprstv]ied$/, Past, 'emptied'],
   ],
   e: [
-    [/.[lnr]ize$/, Inf, 'antagonize'],
     [/.[^aeiou]ise$/, Inf, 'antagonise'],
     [/.[aeiou]te$/, Inf, 'bite'],
     [/.[^aeiou][ai]ble$/, Adj, 'fixable'],
@@ -67,7 +65,6 @@ export default {
     [/.v[iy]ch$/, Last, '..ovich'],
     [/^ug?h+$/, Exp, 'ughh'],
     [/^uh[ -]?oh$/, Exp, 'uhoh'],
-    [/[a-z]-ish$/, Adj, 'cartoon-ish'],
   ],
   i: [[/.[oau][wvl]ski$/, Last, 'polish-male']],
   k: [
@@ -75,7 +72,6 @@ export default {
   ],
   l: [
     [/.[gl]ial$/, Adj, 'familial'],
-    [/.[^aeiou]ful$/, Adj, 'fitful'],
     [/.[nrtumcd]al$/, Adj, 'natal'],
     [/.[^aeiou][ei]al$/, Adj, 'familial'],
   ],
@@ -86,9 +82,6 @@ export default {
     [/^\d+ ?[ap]m$/, 'Date', '3am'],
   ],
   n: [
-    [/.[lsrnpb]ian$/, Adj, 'republican'],
-    [/[^aeiou]ician$/, Actor, 'musician'],
-    [/[aeiou][ktrp]in'$/, 'Gerund', "cookin'"], // 'cookin', 'hootin'
   ],
   o: [
     [/^no+$/, Exp, 'noooo'],
@@ -119,17 +112,11 @@ export default {
     [/[a-z]'s$/, Noun],
     [/^yes+$/, Exp], //yessss
   ],
-  v: [
-    [/.[^aeiou][ai][kln]ov$/, Last], //east-europe
-  ],
   y: [
     [/.[cts]hy$/, Adj],
     [/.[st]ty$/, Adj],
     [/.[tnl]ary$/, Adj],
     [/.[oe]ry$/, Sing],
-    [/[rdntkbhs]ly$/, Adverb],
-    [/.(gg|bb|zz)ly$/, Adj],
-    [/...lly$/, Adverb],
     [/.[gk]y$/, Adj],
     [/[bszmp]{2}y$/, Adj],
     [/.[ai]my$/, Adj],

@@ -698,4 +698,12 @@ export default [
   'pointy',
   'testy',
   'sold out',
+  // would match a surname suffix
+  'civic',
+  'laissez',
+  'pelvic',
+  'prev',
+  'slavic',
+  // not an airport code
+  'lax',
 ]

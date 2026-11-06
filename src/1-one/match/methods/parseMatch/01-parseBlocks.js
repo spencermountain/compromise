@@ -1,9 +1,8 @@
 import splitGroups from './splitGroups.js'
+import splitRegs from './splitRegs.js'
 
-// match  'foo /yes/' and not 'foo/no/bar'
-const bySlashes = /(?:^|\s)([![^]*(?:<[^<]*>)?\/.*?[^\\/]\/[?\]+*$~]*)(?:\s|$)/
-// okay
-const byWord = / /g
+// any whitespace separates terms, the same as the tokenizer
+const byWord = /\s+/
 
 const isBlock = str => {
   return /^[![^]*(<[^<]*>)?\(/.test(str) && /\)[?\]+*$~]*$/.test(str)
@@ -20,7 +19,7 @@ const cleanUp = function (arr) {
 
 const parseBlocks = function (txt) {
   // parse by /regex/ first
-  const arr = txt.split(bySlashes)
+  const arr = splitRegs(txt)
   let res = []
   // parse by (blocks), next
   arr.forEach(str => {

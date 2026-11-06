@@ -117,6 +117,8 @@ export default [
   'woode',
 
   'al capone',
+  'al gore',
+  'tipper gore',
   'al pacino',
   'archimedes',
   'avril lavigne',

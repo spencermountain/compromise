@@ -38,7 +38,7 @@ const rules = [
   // [Before] the dog and the cat woke, she left.
   // [before] the dog and the cat woke
   // [after] the dog and the cat woke... → Conjunction
-  ...['before', 'after', 'until', 'when', 'while'].map(word => [`^[${word}] ${subject} and ${subject} ${predicate}`, Conj, 0]),
+  ...['before', 'after', 'until', 'when'].map(word => [`^[${word}] ${subject} and ${subject} ${predicate}`, Conj, 0]),
   // She bought flowers, [for] I was ill. → Conjunction
   [`@hasComma [for] ${subject} ${predicate}`, Conj, 0],
 

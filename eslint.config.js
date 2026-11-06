@@ -8,7 +8,7 @@ export default [
   // specific regexDos vulnerability scanner
   {
     plugins: { redos },
-    rules: { 'redos/no-vulnerable': 'error' },
+    rules: { 'redos/no-vulnerable': ['error', { ignoreErrors: false }] },
   },
   {
     languageOptions: {

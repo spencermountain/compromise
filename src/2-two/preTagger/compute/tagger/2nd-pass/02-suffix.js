@@ -48,6 +48,14 @@ const tagBySuffix = function (terms, i, model) {
     //   }
     // }
   }
+  // titlecase surnames - 'Novakovic'
+  const str = term.machine || term.normal
+  if (term.tags.size === 1 && term.tags.has('ProperNoun') && !Object.hasOwn(model.one.lexicon, str)) {
+    if (suffixLoop(str, model.two.suffixPatterns) === 'LastName') {
+      fastTag(term, 'LastName', '2-suffix-lastname')
+      return true
+    }
+  }
   return null
 }
 export default tagBySuffix

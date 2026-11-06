@@ -12,6 +12,7 @@ export default [
   null,
   {
     //2-letter
+    ...tagWords('ov ez ev', Last),
     ea: Sing,
     ia: Noun,
     ic: Adj,
@@ -21,6 +22,7 @@ export default [
   },
   {
     //3-letter
+    ...tagWords('sen vic nen ova', Last),
     oed: Past,
     ued: Past,
     xed: Past,
@@ -89,7 +91,6 @@ export default [
     less: Adj,
     llen: Adj,
     made: Adj,
-    nsen: Last,
     ould: Modal,
     some: Adj,
     sson: Last,
@@ -116,7 +117,7 @@ export default [
     // side: Adj,//alongside
     // provide
     ...tagWords('vide ract duce pose eive lyze lyse', Inf),
-    ...tagWords('iant nary ghty uent', Adj),
+    ...tagWords('iant nary ghty uent ggly bbly zzly', Adj),
     erer: Actor, //caterer
     bury: Place,
     dorf: Noun,
@@ -139,7 +140,6 @@ export default [
     ishes: Pres,
     ities: Plrl,
     marek: Last,
-    nssen: Last,
     ology: Noun,
     osome: Sing,
     tment: Sing,

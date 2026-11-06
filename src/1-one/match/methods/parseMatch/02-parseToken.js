@@ -156,7 +156,7 @@ const parseToken = function (w, opts, aliases) {
       obj.choices = obj.choices.filter(s => s)
       //recursion alert!
       obj.choices = obj.choices.map(str => {
-        return str.split(/ /g).map(s => parseToken(s, opts, aliases))
+        return str.split(/\s+/).map(s => parseToken(s, opts, aliases))
       })
       w = ''
     }

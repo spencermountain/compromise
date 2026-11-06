@@ -4,10 +4,10 @@ const hasLetter = /\p{L}/u
 const hasPeriod = /\. *$/
 const leadInit = /^[A-Z]\. $/ // "W. Kensington"
 
-/** does this look like a sentence? */
-const isSentence = function (str, abbrevs) {
+/** does this look like a sentence? - str can be the end of it, if foundLetter is given */
+const isSentence = function (str, abbrevs, foundLetter = hasLetter.test(str)) {
   // must have a letter
-  if (hasLetter.test(str) === false) {
+  if (foundLetter === false) {
     return false
   }
   // check for 'F.B.I.'

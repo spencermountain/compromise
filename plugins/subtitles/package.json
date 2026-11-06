@@ -1,14 +1,14 @@
 {
-  "name": "compromise-subtitles",
+  "name": "compromise-subtitle",
   "version": "0.0.1",
   "description": "match and transform text in subtitle",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/spencermountain/compromise.git",
-    "directory": "plugins/subtitles"
+    "directory": "plugins/subtitle"
   },
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/subtitles",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/subtitle",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
   "exports": {
@@ -19,12 +19,12 @@
       },
       "require": {
         "types": "./types/index.d.cts",
-        "default": "./builds/compromise-subtitles.cjs"
+        "default": "./builds/compromise-subtitle.cjs"
       }
     }
   },
-  "main": "./builds/compromise-subtitles.cjs",
-  "module": "./builds/compromise-subtitles.mjs",
+  "main": "./builds/compromise-subtitle.cjs",
+  "module": "./builds/compromise-subtitle.mjs",
   "types": "./types/index.d.ts",
   "sideEffects": false,
   "engines": {
@@ -54,7 +54,7 @@
   "peerDependencies": {
     "compromise": "workspace:^"
   },
-  "unpkg": "./builds/compromise-subtitles.min.js",
+  "unpkg": "./builds/compromise-subtitle.min.js",
   "dependencies": {
     "vttpeg": "catalog:"
   }

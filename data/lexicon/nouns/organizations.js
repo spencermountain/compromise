@@ -345,4 +345,5 @@ export default [
   'smirnoff',
   'wikileaks',
   'wikipedia',
+  'sunday times',
 ]

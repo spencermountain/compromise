@@ -7,15 +7,15 @@ export default {
   plugins: [nodeResolve()],
   output: [
     {
-      file: 'builds/compromise-subtitles.cjs',
+      file: 'builds/compromise-subtitle.cjs',
       format: 'umd',
-      name: 'compromiseSubtitles',
+      name: 'compromiseSubtitle',
       plugins: [],
     },
     {
-      file: 'builds/compromise-subtitles.min.js',
+      file: 'builds/compromise-subtitle.min.js',
       format: 'umd',
-      name: 'compromiseSubtitles',
+      name: 'compromiseSubtitle',
       plugins: [
         terser({ keep_classnames: true }),
         sizeCheck({
@@ -26,7 +26,7 @@ export default {
       ],
     },
     {
-      file: 'builds/compromise-subtitles.mjs',
+      file: 'builds/compromise-subtitle.mjs',
       format: 'esm',
       plugins: [terser({ keep_classnames: true })],
     },

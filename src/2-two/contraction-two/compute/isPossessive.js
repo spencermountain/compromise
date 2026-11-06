@@ -101,6 +101,17 @@ const isPossessive = (terms, i) => {
     if (nextTerm.tags.has('PresentTense')) {
       return true
     }
+    // a describing word, then a thing - Fiona's planned attack, Bush's proposed risky plans
+    const two = terms[i + 2]
+    const three = terms[i + 3]
+    if (two && /ed$/.test(nextTerm.normal)) {
+      if (two.tags.has('Singular') && !two.tags.has('ProperNoun')) {
+        return true
+      }
+      if (three && two.tags.has('Adjective') && three.tags.has('Noun') && !three.tags.has('Pronoun')) {
+        return true
+      }
+    }
     return false
   }
 

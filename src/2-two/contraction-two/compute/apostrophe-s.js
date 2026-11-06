@@ -12,6 +12,8 @@ const isWords = new Set([
   'too',
 ])
 const adjLike = new Set(['too', 'also', 'enough'])
+// passive, nearly every time - it's called, he's supposed to
+const passive = new Set(['called', 'supposed', 'meant', 'located', 'allowed', 'headed'])
 
 // the big clue is the tense of the following verb
 const isOrHas = (terms, i) => {
@@ -36,24 +38,26 @@ const isOrHas = (terms, i) => {
     if (t.tags.has('Adjective')) {
       return 'is'
     }
-    // the car's parked
-    if (t.switch === 'Adj|Past') {
-      if (terms[o + 1]) {
-        // car's parked too ..
-        if (adjLike.has(terms[o + 1].normal)) {
-          return 'is'
-        }
-        // car's parked on ..
-        if (terms[o + 1].tags.has('Preposition')) {
-          return 'is'
-        }
+    const next = terms[o + 1]
+    // it's called x - but he's called me
+    if (passive.has(t.normal) && !(next && next.tags.has('Pronoun'))) {
+      return 'is'
+    }
+    // the car's parked - but he's left
+    if (t.switch === 'Adj|Past' && t.normal !== 'left') {
+      // she's tired. she's tired, and ..
+      if (!next || /[,;:]/.test(t.post) || next.tags.has('Conjunction')) {
+        return 'is'
       }
-      // return 'is'
+      // car's parked too, car's parked on ..
+      if (adjLike.has(next.normal) || next.tags.has('Preposition')) {
+        return 'is'
+      }
     }
     // The meeting's scheduled vs The plane's landed
     if (t.tags.has('PastTense')) {
-      // meeting's scheduled for
-      if (terms[o + 1] && terms[o + 1].normal === 'for') {
+      // meeting's scheduled for, cake's made by
+      if (next && (next.normal === 'for' || next.normal === 'by')) {
         return 'is'
       }
       return 'has'

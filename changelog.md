@@ -12,7 +12,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 #### 14.20.0 [Nov 2026]
 
-- **[new]** - html, markdown, and unist plugins
+- **[new]** - html, markdown, unist, and subtitle plugins
 - **[new]** - add plugin callback for .replace() events
 - **[fix]** - #1254 #1255 #1256 issues parsing large numbers
 - **[fix]** - #1257 fraction/ordinal date interpretation
@@ -25,7 +25,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[change]** - interpret 'twenty twenty six' as year (from 2010-2040)
 - **[change]** - concatenated number-parsing - "sixty fifteen and thirty five"
 - **[change]** - greedy and-block `(a && b)+` support in match-syntax
-- **[change]** - greedy or-block `(a|b)+ z` now consistent with `a+ z`
+- **[change]** - lookahead fix: `the * (#Noun|#Verb)` now matches 'the big dog'
+- **[change]** - improvements to isPossessive()
 - **[plugin]** - compromise-dates 3.11.0
 
 #### 14.19.0 [Oct 2026]

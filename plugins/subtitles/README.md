@@ -1,7 +1,7 @@
 <div align="center">
-  <div><b>compromise-subtitles</b></div>
+  <div><b>compromise-subtitle</b></div>
   <div>paragraph support for <a href="https://github.com/spencermountain/compromise/">compromise</a></div>
-  <div><code>npm install compromise-subtitles</code></div>
+  <div><code>npm install compromise-subtitle</code></div>
   <div align="center">
     <sub>
       by
@@ -13,11 +13,11 @@
 <!--2nd row-->
 <div align="center">
   <div>
-    <a href="https://npmjs.org/package/compromise-subtitles">
-    <img src="https://img.shields.io/npm/v/compromise-subtitles.svg?style=flat-square" />
+    <a href="https://npmjs.org/package/compromise-subtitle">
+    <img src="https://img.shields.io/npm/v/compromise-subtitle.svg?style=flat-square" />
   </a>
-  <a href="https://bundlephobia.com/result?p=compromise-subtitles">
-    <img src="https://badgen.net/bundlejs/min/compromise-subtitles" />
+  <a href="https://bundlephobia.com/result?p=compromise-subtitle">
+    <img src="https://badgen.net/bundlejs/min/compromise-subtitle" />
   </a>
   </div>
 </div>

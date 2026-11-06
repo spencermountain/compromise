@@ -24,6 +24,10 @@ const after = [
   ' (8|9)',
   ' (8|dogs)',
   ' (#Noun|8)',
+  ' (#Noun|#Cardinal)',
+  ' (#Cardinal && 8)',
+  ' (8 9|dogs)',
+  ' !(#Noun|8)',
   ' 8?',
   ' 8? dogs',
   ' !8',
@@ -114,6 +118,59 @@ test('an optional group still takes its own terms', function (t) {
     ['dogs 8', 'dogs (#NumericValue && #Cardinal)?', ['dogs 8']],
     // the next token is not there
     ['8 dogs', '(#NumericValue|#Cardinal)? cats', []],
+  ]
+  arr.forEach(([text, reg, want]) => {
+    t.deepEqual(run(text, reg), want, here + `'${text}' ${reg}`)
+  })
+  t.end()
+})
+
+// the next token can be a group, and should be treated like any other token
+test('looking ahead to a group', function (t) {
+  const arr = [
+    // a repeat stops for it
+    ['5 8 9', '#NumericValue+ 8', ['5 8']],
+    ['5 8 9', '#NumericValue+ (#Noun|8)', ['5 8']],
+    ['5 8 9', '(#NumericValue|#Cardinal)+ (#Noun|8)', ['5 8']],
+    ['5 8 9', '(#NumericValue && #Cardinal)+ (#Noun|8)', ['5 8']],
+    ['5 8 9', '#NumericValue+ (#Cardinal && 8)', ['5 8']],
+    ['5 8 9', '(#NumericValue|#Cardinal)+ (#Cardinal && 8)', ['5 8']],
+    ['5 8 9', '(#NumericValue && #Cardinal)+ (#Cardinal && 8)', ['5 8']],
+    ['5 6 8 9', '#NumericValue{2,} (#Noun|8)', ['5 6 8']],
+    // an optional token leaves its term for it
+    ['8 dogs', '#NumericValue? 8 dogs', ['8 dogs']],
+    ['8 dogs', '#NumericValue? (#Cardinal|#Verb) dogs', ['8 dogs']],
+    ['8 dogs', '(#NumericValue|#Cardinal)? (#Cardinal|#Verb) dogs', ['8 dogs']],
+    ['8 dogs', '(#NumericValue && #Cardinal)? (#Cardinal|#Verb) dogs', ['8 dogs']],
+    ['8 dogs', '#NumericValue? (8 && #Value) dogs', ['8 dogs']],
+    ['8 dogs', '(#NumericValue|#Cardinal)? (8 && #Value) dogs', ['8 dogs']],
+    ['8 dogs', '(#NumericValue && #Cardinal)? (8 && #Value) dogs', ['8 dogs']],
+    ['8 dogs', '#NumericValue? (#Cardinal|#Verb)? 8', ['8']],
+    ['8 dogs', '(#NumericValue|#Cardinal)? (#Cardinal|#Verb)? 8', ['8']],
+    // unless the next token could use the following term, too
+    ['8 dogs', '#NumericValue? . dogs', []],
+    ['8 dogs', '#NumericValue? (#Cardinal|#Noun) dogs', []],
+    ['8 dogs', '(#NumericValue|#Cardinal)? (#Cardinal|#Noun) dogs', []],
+    ['8 dogs', '(#NumericValue && #Cardinal)? (#Cardinal|#Noun) dogs', []],
+    // wildcards go up to it
+    ['the big dog ran', 'the * #Noun', ['the big dog']],
+    ['the big dog ran', 'the * (#Noun|#Verb)', ['the big dog']],
+    ['the big dog ran', 'the * (#Noun && dog)', ['the big dog']],
+    ['the big dog ran', 'the .+ #Noun', ['the big dog']],
+    ['the big dog ran', 'the .+ (#Noun|#Verb)', ['the big dog']],
+    ['the big dog ran', 'the .+ (#Noun && dog)', ['the big dog']],
+    // and so do negative repeats
+    ['the big dog ran', 'the !#Verb+ #Noun', ['the big dog']],
+    ['the big dog ran', 'the !#Verb+ (#Noun|#Verb)', ['the big dog']],
+    // a group of many words starts at its first word
+    ['5 8 9 dogs', '#NumericValue+ 8 9', ['5 8 9']],
+    ['5 8 9 dogs', '#NumericValue+ (8 9|#Noun)', ['5 8 9']],
+    ['8 9', '#NumericValue? 8 9', ['8 9']],
+    ['8 9', '#NumericValue? (8 9|dogs)', ['8 9']],
+    // the next token is not there
+    ['5 8 9', '#NumericValue+ (#Noun|#Verb)', []],
+    ['the big dog', 'the * (#Verb|#Adverb)', []],
+    ['8 dogs', '#NumericValue? (#Verb|#Adverb)', []],
   ]
   arr.forEach(([text, reg, want]) => {
     t.deepEqual(run(text, reg), want, here + `'${text}' ${reg}`)

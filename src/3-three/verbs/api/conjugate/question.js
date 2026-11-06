@@ -41,10 +41,34 @@ const copulaEnd = function (terms, words, { start, end, finite, wh, asked }) {
   return found ? at : end
 }
 
+const whStart = /^(?:(?:in|on|at|to|for|from|with|about|by)\s+)?(?:why|when|where|how|what|who|whom|which|whose)\b/i
+const auxStart = /^(?:do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must|won|shan)(?:n['’]t)?\b/i
+const isStart = str => whStart.test(str) || auxStart.test(str)
+
+// Count the terms before a question: 'Well, did she walk?', 'Mr. Burns, is it?', 'please could you?'
+const leadLength = function (list) {
+  const comma = list.slice(0, 3).findIndex(term => term.post.includes(','))
+  // More words with a verb are a statement, with a question tagged on: 'you walk, do you?'
+  const opener = comma === 0 || (comma > 0 && !list.slice(0, comma + 1).some(term => term.tags.has('Verb')))
+  const n = opener ? comma + 1 : 0
+  return list[n]?.normal === 'please' ? n + 1 : n
+}
+
 const parseQuestion = function (sentence, target) {
-  const text = trimLead(sentence.text())
-  const wh = /^(?:(?:in|on|at|to|for|from|with|about|by)\s+)?(?:why|when|where|how|what|who|whom|which|whose)\b/i.test(text)
-  if (!wh && !/^(?:do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must|won|shan)(?:n['’]t)?\b/i.test(text)) return null
+  let text = trimLead(sentence.text())
+  let lead = 0
+  if (!isStart(text)) {
+    // Statements can have a lead too, so this needs a '?': 'Well, she walks.'
+    lead = sentence.has('@hasQuestionMark$') ? leadLength(sentence.docs[0]) : 0
+    if (lead === 0) {
+      return null
+    }
+    text = trimLead(sentence.terms().slice(lead).text())
+    if (!isStart(text)) {
+      return null
+    }
+  }
+  const wh = whStart.test(text)
   const expanded = sentence.clone()
   expanded.contractions().expand()
   const terms = expanded.terms()
@@ -52,7 +76,7 @@ const parseQuestion = function (sentence, target) {
   // An object wh-phrase may contain several words ('which books', 'in which
   // city'). Its finite auxiliary still precedes a separate subject. Subject
   // wh-phrases fail the subject check below and stay on the ordinary path.
-  const finite = wh ? words.findIndex((word, i) => i > 0 && auxiliary.test(word)) : 0
+  const finite = wh ? words.findIndex((word, i) => i > lead && auxiliary.test(word)) : lead
   if (finite < 0) return null
   if (!auxiliary.test(words[finite]) || (words[finite] === 'will' && terms.eq(finite).has('#Person'))) return null
   const copula = /^(is|are|am|was|were)$/.test(words[finite])
@@ -62,7 +86,7 @@ const parseQuestion = function (sentence, target) {
   const pronoun = terms.eq(start).has('#Pronoun') && !possessive.test(words[start])
   const polar = isPolar(target)
   const asked = sentence.has('@hasQuestionMark$')
-  const command = sentence.has('^#Imperative')
+  const command = terms.eq(lead).has('#Imperative')
   // Without a '?', only 'is he happy' is clearly inverted. The rest could be commands,
   // clauses or fragments: 'Do the dishes now', 'When he is late, they walk', 'Had I known, ...'
   if (polar && !asked && (!pronoun || finite > 1 || command || sentence.has('@hasComma'))) {
@@ -138,9 +162,13 @@ const parseQuestion = function (sentence, target) {
   while (terms.eq(verb).has('(#Adverb|#Negative)')) {
     verb += 1
   }
+  // Without a verb, this asks for something: 'please do the dishes?', but 'please do they know?'
+  if (words[lead - 1] === 'please' && /^(do|have)$/.test(words[finite]) && !terms.eq(verb).has('#Verb')) {
+    return null
+  }
   // But 'do it?' is a command, and in 'who did it?' the pronoun is an object.
   const doIt = words[start] === 'it' && /^(do|have)$/.test(words[finite])
-  const hasObject = finite > 0 && !/^(why|when|where|how)$/.test(words[finite - 1])
+  const hasObject = finite > lead && !/^(why|when|where|how)$/.test(words[finite - 1])
   const elided = !copula && !doIt && !hasObject && verb >= words.length && subjectPronoun.test(words[start]) && asked
   // Polite questions have a predicate past the 'please': 'Could you please leave?'
   const optional = copula || bare || elided || (polar && words[end] === 'please')

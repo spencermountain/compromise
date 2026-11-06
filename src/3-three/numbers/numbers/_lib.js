@@ -13,7 +13,7 @@ const convert = (view, tag, skip, getFormat) => {
       return val
     }
     const str = format(obj, getFormat(val))
-    val.replaceWith(str, { tags: true })
+    val.replaceWith(str, { tags: true, possessives: true })
     // Generated currency words keep their noun tags.
     val.not('#Currency').tag(tag)
     if (tag === 'Ordinal' || tag === 'Cardinal') {

@@ -142,7 +142,7 @@ test('broadcast speaker marks are not words', function (t) {
   t.equal(doc.terms().has('>>'), false, here + 'not a term')
   t.equal(doc.nouns().has('>>'), false, here + 'not a noun')
   t.equal(doc.match('^what').has('#QuestionWord'), true, here + 'tags the next word')
-  t.equal(doc.people().text('normal'), 'john', here + 'second speaker')
+  t.equal(doc.match('john').has('#Person'), true, here + 'second speaker')
   t.equal(doc.subtitle(), vttpeg(oneCue(...lines)).out(), here + 'written back')
   // on its own or mid-line, there's nothing to tag instead
   const alone = oneCue('>>')
@@ -201,7 +201,7 @@ test('removing text keeps the file parseable', function (t) {
 
   // a blank line in the middle would end the cue
   const middle = nlp.fromSubtitle(oneCue('-one', '-two', '-three'))
-  middle.views[0].replace('two', 'a\n\nb')
+  middle.match('two').post('\n\n')
   t.ok(middle.views[0].text().includes('\n\n'), here + 'has a blank line')
   t.deepEqual(vttpeg(middle.subtitle()).json()[0].text.at(-1), '-three', here + 'keeps the last line')
   t.end()
@@ -226,6 +226,15 @@ test('files with no cues', function (t) {
     t.equal(doc.cues.length, 0, here + 'no cues')
     t.equal(doc.subtitle(), 'WEBVTT', here + 'empty file')
   })
+  t.end()
+})
+
+test('cleaning up a file first, with vttpeg', function (t) {
+  const str = oneCue('<i>John walked to</i>', 'the <b>big</b> store.')
+  const doc = nlp.fromSubtitle(vttpeg(str).normalize().out())
+  t.equal(doc.match('john').has('#Person'), true, here + 'finds the word')
+  t.equal(doc.has('big store'), true, here + 'finds the phrase')
+  t.equal(doc.views[0].text(), 'John walked to\nthe big store.', here + 'tags are gone')
   t.end()
 })
 

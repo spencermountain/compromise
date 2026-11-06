@@ -43,6 +43,8 @@ const normalize = function (doc, opts = {}) {
   // convert 'two' to 2
   const num = doc.numbers()
   doc = toNumbers(doc, num)
+  // '2020's election' - the possessive isn't part of the year
+  doc.match('#Year').possessives().strip()
   if (opts.times) {
     num.toCardinal(false)
   }

@@ -14,7 +14,7 @@ const addMethod = function (View) {
       this.viewType = 'People'
     }
     parse(n) {
-      return this.getNth(n).map(parse)
+      return this.getNth(n).map(parse, [])
     }
     json(n) {
       const opts = typeof n === 'object' ? n : {}

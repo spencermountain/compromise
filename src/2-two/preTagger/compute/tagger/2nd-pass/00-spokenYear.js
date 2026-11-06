@@ -61,7 +61,8 @@ const tagSpokenYear = function (terms, i) {
   if (year === null || isCountLeft(terms, i) || isCountRight(year, terms[i + year.length])) {
     return null
   }
-  year.forEach(term => fastTag(term, ['Year', 'Date'], '2-spoken-year'))
+  // the lexicon doesn't know a possessive, like 'twenty's'
+  year.forEach(term => fastTag(term, ['Year', 'Date', 'Value', 'TextValue', 'Cardinal'], '2-spoken-year'))
   return true
 }
 

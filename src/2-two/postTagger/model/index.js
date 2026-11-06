@@ -45,8 +45,8 @@ const infNouns =
   '(feel|sense|process|rush|side|bomb|bully|challenge|cover|crush|dump|exchange|flow|function|issue|lecture|limit|march|process)'
 const notIf = '(i|we|they)' //we do not go
 const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
-const streets = '(st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway)'
 const fractionNoun = '(the|this|that|each|every|last|final|next|#Ord|#Poss)'
+const singularDet = 'a|an|this|that|each|every|another'
 
 // [match, tag, group, options]; omit group to tag the full match.
 
@@ -345,7 +345,8 @@ const rules = [
   // instant access → Adjective Noun
   ['(%Adj|Noun% && !#Timezone) %Noun|Verb%', '#Adj #NN', null, { n: '#Prop #NN' }],
   // near death experiences, ambitious sales [targets] → Plural
-  ['#Adj #NN [%Plural|Verb%]$', Plur, 0, { n: '#Pron' }],
+  // (not 'a good plan helps', where a singular determiner leads the noun)
+  [`(${singularDet})? #Adv+? #Adj+ #NN [%Plural|Verb%]$`, Plur, 0, { n: `(#Pron|${singularDet})` }],
   // your guild [colors] → Plural
   ['#Poss #NN [(colors|colours)]$', Plur, 0],
 
@@ -561,7 +562,8 @@ const rules = [
 
   // [half] a penny, [quarter] of a dollar → Fraction
   // (not the third quarter of the game, or my half of the deal)
-  [`${fractionNoun}? #Adj? [(a|one)? (half|quarter)] of? (a|an|the)`, Frac, 0, { n: `^${fractionNoun}` }],
+  ['[(a|one) (half|quarter)] of? (a|an|the)', Frac, 0],
+  [`${fractionNoun}? #Adj? [(half|quarter)] of? (a|an|the)`, Frac, 0, { n: `${fractionNoun} #Adj? (half|quarter)` }],
   // two and a half → Fraction
   ['#Card and a half', Frac],
   // two-halves → Fraction
@@ -1098,9 +1100,10 @@ const multi = [
   // Toronto point → Place
   ['#Prop+ (cliff|place|range|pit|place|point|room|grounds|ruins)', Place],
   // 123 main street → Address
-  [`#Value #NN+ ${streets}`, 'Address'],
-  // 12 march Street → remove Date (but not '12 March road closures')
-  [`#Value #NN+ ${streets}`, null, null, { n: '!@isTitleCase$', u: Date }],
+  [
+    '#Value #NN+ (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway|way)',
+    'Address',
+  ],
   // port dover → Place
   ['(port|mount|mt) #Prop', Place],
 

@@ -1,6 +1,9 @@
 import fastTag from '../_fastTag.js'
 const min = 1400
 const max = 2100
+const possessive = /^[0-9]{4}'s$/
+// 'the 2020's', 'the early 2020's'
+const beforeDecade = new Set(['the', 'early', 'mid', 'late'])
 
 const dateWords = new Set([
   'in',
@@ -69,9 +72,25 @@ const seemsFine = function (term) {
   return term && (term.tags.has('Date') || term.tags.has('Month') || term.tags.has('WeekDay') || term.tags.has('Year'))
 }
 
+// a possessive is good evidence for a year, like '2020's election'
+const tagPossessive = function (terms, i) {
+  const num = parseInt(terms[i].normal, 10)
+  if (num <= min || num >= max) {
+    return null
+  }
+  // but these are decades - '1980's music', 'the 2020's'
+  if (num % 10 === 0 && (num < 2000 || beforeDecade.has(terms[i - 1]?.normal))) {
+    return null
+  }
+  return fastTag(terms[i], ['Value', 'Cardinal', 'NumericValue', 'Year', 'Date'], '2-tagYear-possessive')
+}
+
 // recognize '1993' as a year
 const tagYear = function (terms, i) {
   const term = terms[i]
+  if (term.normal.length === 6 && possessive.test(term.normal)) {
+    return tagPossessive(terms, i)
+  }
   if (term.tags.has('NumericValue') && term.tags.has('Cardinal') && term.normal.length === 4) {
     const num = Number(term.normal)
     // number between 1400 and 2100

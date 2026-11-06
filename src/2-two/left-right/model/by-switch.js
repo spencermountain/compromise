@@ -12,6 +12,8 @@ const rules = {
     '#Poss _ #NN -> #Adj',
     // a [representative] to
     '#Det _ #Conj -> #NN',
+    // a [routine] helps
+    '#Det _ #Pres -> #NN',
   ],
   '%Noun|Verb%': [
     // to [dream] of

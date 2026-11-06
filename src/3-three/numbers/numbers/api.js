@@ -13,6 +13,7 @@ const ordinalMatch = '#Ordinal'
 const textValueMatch = '#TextValue'
 const textOrdinal = 'TextOrdinal'
 const textCardinal = 'TextCardinal'
+const keep = { tags: true, possessives: true }
 
 const addMethod = function (View) {
   /**   */
@@ -22,11 +23,11 @@ const addMethod = function (View) {
       this.viewType = 'Numbers'
     }
     parse(n) {
-      return this.getNth(n).map(parse)
+      return this.getNth(n).map(parse, [])
     }
     get(n) {
       return this.getNth(n)
-        .map(parse)
+        .map(parse, [])
         .map(o => o.num)
     }
     json(n) {
@@ -80,7 +81,7 @@ const addMethod = function (View) {
         if (val.has(ordinalMatch)) {
           num += format(obj, Ord).slice(obj.prefix.length).match(/[a-z]+/)[0]
         }
-        val.replaceWith(obj.prefix + num + obj.suffix, { tags: true })
+        val.replaceWith(obj.prefix + num + obj.suffix, keep)
         return val
       })
       return this.update(res.pointer)
@@ -163,7 +164,7 @@ const addMethod = function (View) {
         }
         const str = format(obj, fmt)
         val = val.not('#Currency')
-        val.replaceWith(str, { tags: true })
+        val.replaceWith(str, keep)
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
         return val
@@ -189,7 +190,7 @@ const addMethod = function (View) {
           fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
         }
         const str = format(obj, fmt)
-        val.replaceWith(str, { tags: true })
+        val.replaceWith(str, keep)
         // handle plural/singular unit
         // agreeUnits(agree, val, obj)
         return val

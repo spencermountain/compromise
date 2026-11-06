@@ -286,8 +286,8 @@ const matches = [
   { match: '[(wed|sat)] (#Month|#Year|on|between|during|from)', group: 0, tag: 'WeekDay', reason: 'wed' },
   //'spa day'
   { match: '^day$', unTag: 'Date', reason: 'spa-day' },
-  // tomorrow's meeting
-  { match: '(in|of|by|for)? (#Possessive && #Date) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
+  // tomorrow's meeting - but not 2020's election
+  { match: '(in|of|by|for)? (#Possessive && #Date && !#Year) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
   //yesterday 7
   { match: `${knownDate} [#Value]$`, unTag: 'Date', group: 0, reason: 'yesterday-7' },
   //7 yesterday
@@ -310,6 +310,8 @@ const matches = [
   { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
   // second quarter of 2020
   { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+  // third quarter of the game, a quarter of the pie (but not of the fiscal year)
+  { match: '[(#Ordinal|a|one)? quarter] of #Determiner #Adjective? (#Noun && !#Date && !#Possessive)', group: 0, unTag: 'Date', reason: 'quarter-of-noun' },
   // a month from now
   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
   // 18th next month

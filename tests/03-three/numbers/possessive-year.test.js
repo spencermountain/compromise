@@ -123,18 +123,41 @@ test('converting keeps the possessive', function (t) {
     [`we saw twenty ten's results`, doc => doc.numbers().toNumber(), `we saw 2010's results`],
     [`2020's election`, doc => doc.numbers().toNumber(), `2020's election`],
     [`2020's election`, doc => doc.numbers().set(2030), `2030's election`],
-    [`twenty twenty's election`, doc => doc.numbers().set(2030), `two thousand and thirty's election`],
     [`2020's election`, doc => doc.numbers().add(1), `2021's election`],
-    [`2020's election`, doc => doc.numbers().toLocaleString(), `2,020's election`],
-    [`2020's election`, doc => doc.numbers().toText(), `two thousand and twenty's election`],
   ]
   arr.forEach(([str, fn, want]) => {
     const doc = nlp(str)
     fn(doc)
     t.equal(doc.text(), want, here + `${str} -> ${want}`)
-    t.ok(doc.has('#Possessive'), here + `still #Possessive: '${want}'`)
-    t.ok(doc.has('#Year'), here + `still #Year: '${want}'`)
-    t.ok(doc.has('(#Year && #Possessive)'), here + `same term: '${want}'`)
+    t.ok(doc.has('(#Year && #Possessive)'), here + `still a possessive year: '${want}'`)
+    t.deepEqual(doc.numbers().length, 1, here + `still one number: '${want}'`)
+  })
+  // these are no longer in a year's format, so only the words need to survive
+  const words = [
+    [`2020's election`, doc => doc.numbers().toLocaleString(), `2,020's election`],
+    [`2020's election`, doc => doc.numbers().toText(), `two thousand and twenty's election`],
+    [`twenty twenty's election`, doc => doc.numbers().set(2030), `two thousand and thirty's election`],
+    [`twenty twenty's election`, doc => doc.numbers().toLocaleString(), `2,020's election`],
+  ]
+  words.forEach(([str, fn, want]) => {
+    const doc = nlp(str)
+    fn(doc)
+    t.equal(doc.text(), want, here + `${str} -> ${want}`)
+  })
+  t.end()
+})
+
+test('every selection can find it', function (t) {
+  const arr = [`2020's election`, `twenty twenty's election`, `twenty twenty-six's budget`]
+  arr.forEach(str => {
+    const doc = nlp(str)
+    t.equal(doc.numbers().length, 1, here + `numbers: '${str}'`)
+    t.equal(doc.possessives().length, 1, here + `possessives: '${str}'`)
+    t.ok(doc.has('#Value+ #Noun'), here + `#Value: '${str}'`)
+    t.ok(doc.has('#Year+ #Noun'), here + `#Year: '${str}'`)
+    t.ok(doc.has('#Date+ #Noun'), here + `#Date: '${str}'`)
+    // the thing it owns is still a noun
+    t.equal(doc.nouns().length > 0, true, here + `nouns: '${str}'`)
   })
   t.end()
 })
@@ -156,6 +179,6 @@ test('no numbers to return', function (t) {
   t.deepEqual(nlp('two cats and five dogs').numbers().get(1), [5], here + 'get(n)')
   t.equal(nlp('two cats').numbers().parse()[0].num, 2, here + 'parse')
   t.equal(nlp('two thirds').fractions().get()[0].numerator, 2, here + 'fraction')
-  t.equal(nlp('john smith').people().parse()[0].firstName, 'john', here + 'person')
+  t.equal(nlp('john smith').people().parse()[0].firstName.text(), 'john', here + 'person')
   t.end()
 })

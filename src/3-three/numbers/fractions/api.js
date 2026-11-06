@@ -15,10 +15,10 @@ const plugin = function (View) {
       this.viewType = 'Fractions'
     }
     parse(n) {
-      return this.getNth(n).map(parse)
+      return this.getNth(n).map(parse, [])
     }
     get(n) {
-      return this.getNth(n).map(parse)
+      return this.getNth(n).map(parse, [])
     }
     json(n) {
       return this.getNth(n).map(p => {

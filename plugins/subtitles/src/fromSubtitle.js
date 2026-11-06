@@ -4,7 +4,7 @@ import SubtitleDoc from './SubtitleDoc.js'
 // a new speaker, rather than a long line wrapping around
 const newSpeaker = /^(?:[-–—]|>>)/
 // broadcast captions mark a speaker like this, and the tagger would read it as a word
-const speakerMark = /^>>+\s*(?=\S)/
+const speakerMark = /^>{2,}\s*(?=\S)/
 
 // the lines of a cue are only display-wrapping, so they are parsed as one text.
 // each wrap is kept as whitespace on the term before it, so it's written back out the same

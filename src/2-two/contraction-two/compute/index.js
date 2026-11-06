@@ -45,6 +45,11 @@ const byEnd = {
     // [bob's house] vs [bob's cool]
     if (isPossessive(terms, i)) {
       contractionDebug(terms[i])
+      // [2020's election] stays a number - setTag would remove it, for being a noun
+      if (terms[i].tags.has('Year')) {
+        terms[i].tags.add('Possessive')
+        return null
+      }
       return world.methods.one.setTag([terms[i]], 'Possessive', world, null, '2-contraction')
     }
     return apostropheS(terms, i)
@@ -85,9 +90,14 @@ const contractionTwo = view => {
       }
       // actually insert the new terms
       if (words) {
+        const isYear = terms[i].tags.has('Year')
         words = toDocs(words, view, terms[i])
         splice(document, [n, i], words)
         reTag(document[n], view, i, words.length)
+        // [twenty twenty-six's] over - it may only be a year as a whole
+        if (isYear) {
+          world.methods.one.setTag([document[n][i]], 'Year', world, null, '2-contraction')
+        }
         continue
       }
     }

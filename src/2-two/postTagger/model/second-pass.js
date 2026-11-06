@@ -12,6 +12,8 @@ const rules = [
   ...hangingAdverbs,
   // === second-pass.js ===
   // Corrections matched against the main sweep's output, before any are applied.
+  // 12 March Street → remove Date (but not '12 March road closures')
+  ['#Address+', null, null, { n: '(#NN && !@isTitleCase)$', u: 'Date' }],
   // Keep comma context, but don't turn unambiguous verbs into list items.
   // food, drinks and [thanks] → Noun
   ...[

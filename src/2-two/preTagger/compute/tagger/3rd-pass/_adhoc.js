@@ -63,26 +63,28 @@ const isQuestionVerb = (terms, i) => {
 }
 
 // A singular determiner cannot lead a plural head: 'a good morning routine helps'.
-// Mid-clause, the word may modify a noun: 'a fantasy sports league'.
 const singularDet = new Set(['a', 'an', 'this', 'that', 'each', 'every', 'another'])
-const hasSingularSubject = (terms, i) => {
-  if (terms[i + 1] || !terms[i - 1]?.tags.has('Noun') && !terms[i - 1]?.tags.has('Time')) {
-    return false
+const isNounLike = term => term.tags.has('Noun') || term.tags.has('Time') || term.switch === 'Adj|Noun'
+
+const isSingularSubject = (terms, i) => {
+  // Mid-clause, the word may modify a noun: 'a fantasy sports league'.
+  if (terms[i + 1] || !terms[i - 1] || !isNounLike(terms[i - 1])) {
+    return null
   }
   for (let n = i - 1; n >= 0; n -= 1) {
-    const { tags, normal } = terms[n]
-    if (singularDet.has(normal)) {
-      return true
+    const term = terms[n]
+    if (singularDet.has(term.normal)) {
+      return 'PresentTense'
     }
-    // These can head a plural: 'a friend's plans', 'once a week updates', 'a couple plans'.
-    if (normal.endsWith("'s") || normal === 'couple' || tags.has('Duration')) {
-      return false
+    // These allow a plural head: a friend's plans, once a week updates, a couple plans.
+    if (term.normal.endsWith("'s") || term.normal === 'couple' || term.tags.has('Duration')) {
+      return null
     }
-    if (!tags.has('Noun') && !tags.has('Adjective') && !tags.has('Adverb') && !tags.has('Time')) {
-      return false
+    if (!isNounLike(term) && !term.tags.has('Adjective') && !term.tags.has('Adverb')) {
+      return null
     }
   }
-  return false
+  return null
 }
 
 const adhoc = {
@@ -135,10 +137,7 @@ const adhoc = {
     if (terms[i - 1]?.normal === 'still' && (subject === 'this' || subject === 'that')) {
       return 'PresentTense'
     }
-    if (hasSingularSubject(terms, i) && !isCapital(terms, i)) {
-      return 'PresentTense'
-    }
-    return isCapital(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
+    return isCapital(terms, i) || isSingularSubject(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
   },
   'Person|Noun': (terms, i) => {
     // A robin sang; her faith never wavered.

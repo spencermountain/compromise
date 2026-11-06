@@ -24,6 +24,10 @@ const parseNumeric = function (str, m) {
     if (suffix === 'st' || suffix === 'nd' || suffix === 'rd' || suffix === 'th') {
       suffix = ''
     }
+    // strip a possessive, too - it gets kept when replaced
+    if (suffix === "'s" && m.has('#Possessive')) {
+      suffix = ''
+    }
     // support M for million, k for thousand
     // if (suffix === 'm' || suffix === 'M') {
     //   num *= 1000000

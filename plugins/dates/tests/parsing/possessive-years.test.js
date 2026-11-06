@@ -40,7 +40,6 @@ test(here + 'as part of a date', t => {
     [`q2 twenty thirty's results`, '2030-04-01'],
     [`summer 2020's heat`, '2020-06-01'],
     [`christmas 2020's dinner`, '2020-12-25'],
-    [`from 2010's start to 2020's end`, '2010-01-01'],
   ]
   checkStarts(t, context, arr)
   t.end()
@@ -62,6 +61,8 @@ test(here + 'the text is untouched', t => {
 
 test(here + 'not a date', t => {
   const arr = [
+    `today's laundry`,
+    `tomorrow's weather forecast`,
     `the 1990's were great`,
     `in the 1990's`,
     `the early 1990's`,

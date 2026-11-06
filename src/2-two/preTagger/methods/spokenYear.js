@@ -16,10 +16,13 @@ const tens = {
   fourty: 40,
 }
 
+const possessive = /['’]s$/
+
 // ['twenty', 'twenty', 'six'] -> 2026
 // only supports 'twenty ten' to 'twenty forty'
 const spokenYear = function (words) {
-  const [first, second, third] = words
+  // only the last word can be possessive - 'twenty twenty's election'
+  const [first, second, third] = [...words.slice(0, -1), words.at(-1).replace(possessive, '')]
   if (first !== 'twenty' || !Object.hasOwn(tens, second)) {
     return null
   }

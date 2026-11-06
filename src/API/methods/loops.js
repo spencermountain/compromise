@@ -59,6 +59,9 @@ const find = function (cb) {
     const view = this.update([ptr])
     return cb(view, i)
   })
+  if (found === undefined) {
+    return this.update([])
+  }
   return this.update([found])
 }
 

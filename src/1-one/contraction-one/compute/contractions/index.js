@@ -9,6 +9,15 @@ import numberUnit from './number-unit.js'
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
+// poor-mans reindexing of this sentence only
+const reIndex = function (terms) {
+  terms.forEach((t, i) => {
+    if (t.index) {
+      t.index[1] = i
+    }
+  })
+}
+
 // run tagger on our new implicit terms
 const reTag = function (terms, view, start, len) {
   const tmp = view.update()
@@ -90,8 +99,13 @@ const contractions = view => {
   // let units = new Set(model.one.units || [])
   // each sentence
   document.forEach((terms, n) => {
+    const len = terms.length
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {
+      // already expanded - this runs on the whole document, and must be re-runnable
+      if (terms[i].implicit) {
+        continue
+      }
       let before = null
       let after = null
       if (byApostrophe.test(terms[i].normal) === true) {
@@ -142,6 +156,10 @@ const contractions = view => {
         splice(document, [n, i], words)
         methods.one.setTag([words[1]], 'Unit', world, null, 'contraction-unit')
       }
+    }
+    // new terms shift the indexes of any terms after them
+    if (terms.length !== len) {
+      reIndex(terms)
     }
   })
 }

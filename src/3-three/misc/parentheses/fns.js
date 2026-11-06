@@ -4,9 +4,7 @@ const hasClosed = /\)/
 const findEnd = function (terms, i) {
   for (; i < terms.length; i += 1) {
     if (terms[i].post && hasClosed.test(terms[i].post)) {
-      let [, index] = terms[i].index
-      index ||= 0
-      return index
+      return i
     }
   }
   return null
@@ -22,7 +20,8 @@ const find = function (doc) {
         const end = findEnd(terms, i)
         if (end !== null) {
           const [n, start] = terms[i].index
-          ptrs.push([n, start, end + 1, terms[i].id])
+          // i and end are relative to this view, but start is not
+          ptrs.push([n, start, start + end - i + 1, terms[i].id])
           i = end
         }
       }

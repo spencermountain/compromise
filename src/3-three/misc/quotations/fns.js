@@ -50,7 +50,8 @@ const find = function (doc) {
         const end = findEnd(terms, i)
         if (end !== null) {
           const [n, start] = terms[i].index
-          ptrs.push([n, start, end + 1, terms[i].id])
+          // i and end are relative to this view, but start is not
+          ptrs.push([n, start, start + end - i + 1, terms[i].id])
           i = end
         }
       }

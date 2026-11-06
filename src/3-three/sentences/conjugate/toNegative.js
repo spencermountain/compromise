@@ -1,5 +1,6 @@
 import groups from '../../verbs/api/conjugate/groups.js'
 import { inflect } from '../../verbs/api/conjugate/inflect.js'
+import question from '../../verbs/api/conjugate/question.js'
 
 const mainVerbs = (s, parsed) => {
   if (!parsed.verb.found) {
@@ -9,6 +10,10 @@ const mainVerbs = (s, parsed) => {
 }
 
 const toNegative = function (s, parsed) {
+  const inverted = question(s, 'negative')
+  if (inverted) {
+    return inverted
+  }
   const entries = groups(mainVerbs(s, parsed), true)
   const head = entries[0]
   if (!head) {
@@ -23,11 +28,13 @@ const toNegative = function (s, parsed) {
     })
   }
   head.vb.toNegative()
-  // Include inserted terms outside the original verb selection.
-  s.compute('chunks')
   return s
 }
 const toPositive = function (s, parsed) {
+  const inverted = question(s, 'positive')
+  if (inverted) {
+    return inverted
+  }
   const entries = groups(mainVerbs(s, parsed), true)
   const head = entries[0]
   if (!head) {

@@ -2,7 +2,7 @@ import { Inf, Participle, Ger, Past, Pres } from '../../../../2-two/preTagger/ta
 import { inflect } from './inflect.js'
 import groups from './groups.js'
 export { firstGroup } from './groups.js'
-import question, { isInverted, questionSelection } from './question.js'
+import question, { isInverted, isPolar, questionSelection } from './question.js'
 import { isAreAm } from '../lib.js'
 
 const resultTense = function (head, target) {
@@ -24,7 +24,10 @@ const resultTense = function (head, target) {
 }
 
 const coordinateNormal = function (verbs, target, convert) {
-  if (verbs.length < 2) return verbs.map(convert)
+  // A 'not' has no tense to share, so each verb converts on its own.
+  if (verbs.length < 2 || isPolar(target)) {
+    return verbs.map(convert)
+  }
   const entries = groups(verbs)
   entries.forEach(entry => {
     if (entry.head) entry.tense = resultTense(entry.head, target)
@@ -45,18 +48,21 @@ const coordinateNormal = function (verbs, target, convert) {
 }
 const coordinate = function (verbs, target, convert) {
   const sentences = verbs.fullSentence().settle()
-  if (!sentences.some(s => isInverted(s))) return coordinateNormal(verbs, target, convert)
+  if (!sentences.some(s => isInverted(s, target))) return coordinateNormal(verbs, target, convert)
   return sentences.map(sentence => {
     const index = sentence.fullPointer[0][0]
     const selected = verbs.filter(vb => vb.fullPointer[0][0] === index)
-    const required = questionSelection(sentence)
+    const required = questionSelection(sentence, target)
     if (!required) return coordinateNormal(selected, target, convert)
     const outside = selected.not(required)
     const inside = selected.not(outside).harden()
     const others = coordinateNormal(outside, target, convert)
     if (!inside.found) return others
-    // Partial selections cannot reconstruct the whole question.
-    if (required.terms().not(inside.terms()).not('#Negative').found) return inside.concat(others).settle()
+    // Partial selections cannot reconstruct the whole question, but can still drop a 'not'.
+    if (required.terms().not(inside.terms()).not('#Negative').found) {
+      const kept = target === 'positive' ? inside.map(convert) : inside
+      return kept.concat(others).settle()
+    }
     // Question reconstruction changes term IDs. Track other selected phrases
     // from the sentence end, since the unchanged trailing clauses keep their
     // lengths even when the main auxiliary chain grows or shrinks.
@@ -66,7 +72,7 @@ const coordinate = function (verbs, target, convert) {
     const newEnd = result.fullPointer[0][2]
     const remaining = result.update(trailing.map(ptr => [ptr[0], newEnd - ptr[1], newEnd - ptr[2]]))
     // The new sentence may no longer read as a question.
-    return (questionSelection(result) || result).concat(remaining).settle()
+    return (questionSelection(result, target) || result).concat(remaining).settle()
   })
 }
 export default coordinate

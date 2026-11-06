@@ -8,8 +8,12 @@ const methods = {
 const auxiliary = /^(do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must)$/
 // Punctuation before the first word: '-What is it?', '"Did you?"'
 const trimLead = str => str.replace(/^[^\p{L}\p{N}]+/u, '')
+// These start a longer subject: 'your dog'
+const possessive = /^(my|your|his|her|its|our|their)$/
+// These only add or drop a 'not', and don't rebuild the question.
+export const isPolar = target => target === 'negative' || target === 'positive'
 
-const parseQuestion = function (sentence) {
+const parseQuestion = function (sentence, target) {
   const text = trimLead(sentence.text())
   const wh = /^(?:(?:in|on|at|to|for|from|with|about|by)\s+)?(?:why|when|where|how|what|who|whom|which|whose)\b/i.test(text)
   if (!wh && !/^(?:do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must|won|shan)(?:n['’]t)?\b/i.test(text)) return null
@@ -27,10 +31,19 @@ const parseQuestion = function (sentence) {
   let start = finite + 1
   const frontNegative = words[start] === 'not'
   if (frontNegative) start += 1
+  const pronoun = terms.eq(start).has('#Pronoun') && !possessive.test(words[start])
+  const polar = isPolar(target)
+  const asked = sentence.has('@hasQuestionMark$')
+  const command = sentence.has('^#Imperative')
+  // Without a '?', only 'is he happy' is clearly inverted. The rest could be commands,
+  // clauses or fragments: 'Do the dishes now', 'When he is late, they walk', 'Had I known, ...'
+  if (polar && !asked && (!pronoun || finite > 1 || command || sentence.has('@hasComma'))) {
+    return null
+  }
   let end = start
   // Pronouns and ordinary noun subjects, including coordinated names and
   // prepositional modifiers. Stop at the lexical verb/remaining auxiliaries.
-  if (terms.eq(end).has('#Pronoun')) {
+  if (pronoun) {
     end += 1
   } else {
     if (terms.eq(end).has('#Preposition')) return null
@@ -38,22 +51,47 @@ const parseQuestion = function (sentence) {
     for (; end < words.length; end += 1) {
       if (!terms.eq(end).has('(#Determiner|#Adjective|#Noun|#Preposition|#Conjunction)') || terms.eq(end).has('#Verb')) break
       if (noun && copula && (terms.eq(end).has('#Adjective') || /ing$/.test(words[end]))) break
-      noun ||= terms.eq(end).has('#Noun')
+      noun ||= terms.eq(end).has('#Noun') && !possessive.test(words[end])
     }
     if (!noun) return null
   }
-  if (end === start || (end >= words.length && !copula)) return null
-  if (!terms.eq(end).has('(#Verb|#Adverb|#Negative)') && !copula) return null
+  // Where does a negative go, when the subject seems to reach the end?
+  if (polar && copula && end >= words.length) {
+    // The wh-word can be the subject: 'Who is there?'
+    if (/^(who|what|which)$/.test(words[finite - 1])) {
+      return null
+    }
+    // Otherwise a phrase can be the predicate: 'Is Tom a doctor?', 'Is the book on the table?'
+    const predicate = words.findIndex((word, i) => i > start && (possessive.test(word) || (word !== 'of' && terms.eq(i).has('(#Determiner|#Preposition)'))))
+    if (!wh && predicate > -1) {
+      // Leave an unclear subject to the ordinary path: 'Is this your dog?'
+      if (!terms.slice(start, predicate).has('#Noun')) {
+        return null
+      }
+      end = predicate
+    }
+  }
+  // Adding a 'not' can go without a predicate: 'Did you?' -> 'Did you not?'
+  const bare = polar && asked && !command && end >= words.length
+  // Polite questions have a predicate past the 'please': 'Could you please leave?'
+  const optional = copula || bare || (polar && words[end] === 'please')
+  if (end === start || (end >= words.length && !optional)) return null
+  if (!terms.eq(end).has('(#Verb|#Adverb|#Negative)') && !optional) return null
   return { terms, words, finite, start, end, frontNegative }
 }
 
-export const isInverted = sentence => Boolean(parseQuestion(sentence))
+export const isInverted = (sentence, target) => Boolean(parseQuestion(sentence, target))
 
-export const questionSelection = function (sentence) {
-  const q = parseQuestion(sentence)
+export const questionSelection = function (sentence, target) {
+  const q = parseQuestion(sentence, target)
   if (!q) return null
   const offset = sentence.fullPointer[0][1]
-  const at = offset + q.end
+  // These can sit outside the verb chunk: 'do the walls not really need', 'could you please leave'
+  let end = q.end
+  while (q.terms.eq(end).has('(#Negative|please)')) {
+    end += 1
+  }
+  const at = offset + end
   let predicate = sentence.verbs().filter(vb => vb.fullPointer.some(ptr => ptr[1] <= at && ptr[2] > at))
   // Include directly coordinated dependents, but never a new subject/clause.
   for (let i = 0; i < q.words.length && predicate.found; i += 1) {
@@ -65,11 +103,52 @@ export const questionSelection = function (sentence) {
   return sentence.terms().slice(q.finite, q.start).concat(predicate.not('#Conjunction')).settle()
 }
 
+// Index of a negative in the main predicate. 'not only' tags its 'not' as an adverb.
+const predicateNot = function (terms, end) {
+  for (let i = end; terms.eq(i).has('(#Verb|#Adverb|#Negative|please)'); i += 1) {
+    if (terms.eq(i).has('(#Negative|not)')) {
+      return i
+    }
+  }
+  return -1
+}
+
+// The auxiliary is already fronted, so 'not' just follows the subject.
+const negate = function (sentence, { terms, end, frontNegative }) {
+  if (frontNegative || predicateNot(terms, end) > -1) {
+    return sentence
+  }
+  // Prepending keeps the subject's punctuation, unless nothing follows it.
+  const all = sentence.terms()
+  if (all.eq(end).found) {
+    all.eq(end).prepend('not')
+  } else {
+    all.eq(end - 1).append('not')
+  }
+  return sentence.fullSentence().compute('chunks')
+}
+
+// The auxiliary stays fronted, so only the 'not' goes: 'Does he not walk?' -> 'Does he walk?'
+const affirm = function (sentence, { terms, start, end, frontNegative }) {
+  const not = frontNegative ? start - 1 : predicateNot(terms, end)
+  if (not < 0) {
+    return sentence
+  }
+  sentence.terms().eq(not).remove()
+  return sentence.fullSentence().compute('chunks')
+}
+
 // Convert a declarative copy, then put only its finite auxiliary back before
 // the subject. The copy uses the same world and existing conversion policies.
 const question = function (sentence, target) {
-  const q = parseQuestion(sentence)
+  const q = parseQuestion(sentence, target)
   if (!q) return null
+  if (target === 'negative') {
+    return negate(sentence, q)
+  }
+  if (target === 'positive') {
+    return affirm(sentence, q)
+  }
   const { terms, words, finite, start, end, frontNegative } = q
   const subject = terms.slice(start, end).text()
   // replaceWith() puts the leading punctuation back

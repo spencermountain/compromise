@@ -112,7 +112,9 @@ const forms = {
 
 const toNegative = function (vb, parsed, form) {
   // console.log(form)
-  if (vb.has('#Negative')) {
+  // The 'not' in 'not only' is tagged as an adverb.
+  // 'to walk' is negated through the verb before it.
+  if (vb.has('(#Negative|not)') || vb.lookBehind('#Verb .* to$').found) {
     return vb
   }
   if (Object.hasOwn(forms, form)) {

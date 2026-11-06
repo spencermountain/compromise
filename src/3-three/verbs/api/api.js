@@ -145,26 +145,34 @@ const api = function (View) {
     }
     /** remove 'not' from these verbs */
     toPositive() {
-      const m = this.match('do not #Verb')
-      if (m.found) {
-        m.remove('do not')
-      }
-      // 'does not walk' -> 'walks'
-      this.forEach(vb => {
+      return coordinate(this, 'positive', vb => {
+        const m = vb.match('do not #Verb')
+        if (m.found) {
+          m.remove('do not')
+        }
+        // The 'not' in 'not only' is tagged as an adverb.
+        vb.match('not').tag('Negative')
+        // 'does not walk' -> 'walks'
         const { root, auxiliary, negative } = parseVerb(vb)
         if (negative.found && auxiliary.has('^(does|did)$')) {
           const tense = auxiliary.has('did') ? 'PastTense' : 'PresentTense'
           vb.replace(root, inflect(root, tense), keep).unTag('Infinitive').tag(tense)
           vb.remove(auxiliary)
         }
+        return vb.remove('#Negative')
       })
-      return this.remove('#Negative')
     }
     toNegative(n) {
-      return this.getNth(n).map(vb => {
+      return coordinate(this.getNth(n), 'negative', vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
-        return toNegative(vb, parsed, info.form)
+        const res = toNegative(vb, parsed, info.form)
+        // An inserted 'does not' needs its auxiliary tag, and a place in the next verb selection.
+        // Re-running the tagger here would let a repeat reach into other clauses.
+        const sentence = vb.fullSentence()
+        sentence.match('[(do|does|did)] not', 0).tag('Auxiliary')
+        sentence.compute('chunks')
+        return res
       })
     }
     // overloaded - keep Verb class

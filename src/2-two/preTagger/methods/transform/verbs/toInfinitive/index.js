@@ -40,8 +40,10 @@ const toInfinitive = function (str, model, tense) {
   if (!tense) {
     tense = getTense(str)
   }
-  if (Object.hasOwn(copulaMap, str)) {
-    inf = copulaMap[str]
+  // a sentence-start can keep its case: 'Is happy'
+  const lower = str.toLowerCase()
+  if (Object.hasOwn(copulaMap, lower)) {
+    inf = copulaMap[lower]
   } else if (tense === 'Participle') {
     inf = convert(verb, fromParticiple)
   } else if (tense === 'PastTense') {

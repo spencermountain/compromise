@@ -12,6 +12,29 @@ const trimLead = str => str.replace(/^[^\p{L}\p{N}]+/u, '')
 const possessive = /^(my|your|his|her|its|our|their)$/
 // These only add or drop a 'not', and don't rebuild the question.
 export const isPolar = target => target === 'negative' || target === 'positive'
+// These open a new clause, instead of extending a subject: 'do the dishes [before] you leave'
+const clause = /^(before|after|when|since|until|till|as|while|if|because|though|although|but|yet)$/
+
+// A copula's subject can seem to swallow its predicate: 'is the book on the table?'
+// The last preposition with an object usually divides them. Returns null if there is no subject.
+const copulaEnd = function (terms, words, { start, end, finite, wh, asked }) {
+  let at = end - 2
+  while (at > start && (words[at] === 'of' || !terms.eq(at).has('#Preposition'))) {
+    at -= 1
+  }
+  const found = at > start
+  // The wh-word is often the predicate: 'where is the book on the table?'
+  if (wh) {
+    return found && words[finite - 1] === 'why' ? at : end
+  }
+  // These are fragments: 'is the dog', 'is back on track', 'is back on?'
+  const bare = !terms.eq(start).has('(#Determiner|#ProperNoun|#Possessive)')
+  const stranded = terms.eq(end - 1).has('#Preposition')
+  if ((!asked && !found) || (bare && (!asked || stranded))) {
+    return null
+  }
+  return found ? at : end
+}
 
 const parseQuestion = function (sentence, target) {
   const text = trimLead(sentence.text())
@@ -48,12 +71,44 @@ const parseQuestion = function (sentence, target) {
   } else {
     if (terms.eq(end).has('#Preposition')) return null
     let noun = false
+    let modified = false
     for (; end < words.length; end += 1) {
-      if (!terms.eq(end).has('(#Determiner|#Adjective|#Noun|#Preposition|#Conjunction)') || terms.eq(end).has('#Verb')) break
-      if (noun && copula && (terms.eq(end).has('#Adjective') || /ing$/.test(words[end]))) break
-      noun ||= terms.eq(end).has('#Noun') && !possessive.test(words[end])
+      const term = terms.eq(end)
+      if (clause.test(words[end]) || !term.has('(#Determiner|#Adjective|#Noun|#Preposition|#Conjunction)') || term.has('#Verb')) {
+        break
+      }
+      if (noun && copula) {
+        if (term.has('#Adjective') || /ing$/.test(words[end])) {
+          break
+        }
+        // A new noun phrase starts the predicate: 'is Tom [a doctor]', but 'is all the food'
+        const prev = terms.eq(end - 1)
+        if (term.has('(#Determiner|#Pronoun|#Possessive)') && prev.has('#Noun') && !prev.has('(#Possessive|@hasComma|all|both)')) {
+          break
+        }
+      }
+      // A modifier can't provide the head noun: 'is wrong about him', but 'are some of them'
+      noun ||= !modified && term.has('#Noun') && !possessive.test(words[end])
+      modified ||= term.has('#Preposition') && words[end] !== 'of'
     }
     if (!noun) return null
+    // Nothing ended the subject. Adding a 'not' has its own rules for this, below.
+    const open = clause.test(words[end]) || (end >= words.length && !polar)
+    if (copula && open) {
+      end = copulaEnd(terms, words, { start, end, finite, wh, asked })
+      if (end === null) {
+        return null
+      }
+    } else if (end < words.length && terms.eq(end - 1).has('(#Conjunction|#Preposition)')) {
+      // A verb can't follow a dangling word: 'do the dishes and walk the dog'
+      if (!copula) {
+        return null
+      }
+      // 'is dinner [at six]', but not 'some sort of hovercraft'
+      if (words[end - 1] !== 'of') {
+        end -= 1
+      }
+    }
   }
   // Where does a negative go, when the subject seems to reach the end?
   if (polar && copula && end >= words.length) {
@@ -76,7 +131,22 @@ const parseQuestion = function (sentence, target) {
   // Polite questions have a predicate past the 'please': 'Could you please leave?'
   const optional = copula || bare || (polar && words[end] === 'please')
   if (end === start || (end >= words.length && !optional)) return null
-  if (!terms.eq(end).has('(#Verb|#Adverb|#Negative)') && !optional) return null
+  if (!optional) {
+    // A lexical verb can follow adverbs: 'do the walls really need paint'
+    let verb = end
+    while (terms.eq(verb).has('(#Adverb|#Negative)')) {
+      verb += 1
+    }
+    const lexical = terms.eq(verb).has('#Verb')
+    // Without a '?', these are commands: 'do the dishes quickly', 'do the dishes, walk the dog'
+    if (!asked && (!lexical || terms.eq(end - 1).has('@hasComma'))) {
+      return null
+    }
+    // Asked, an adverb alone can be enough: 'did she really?'
+    if (asked && !lexical && verb === end) {
+      return null
+    }
+  }
   return { terms, words, finite, start, end, frontNegative }
 }
 
@@ -156,11 +226,12 @@ const question = function (sentence, target) {
   const tail = terms.slice(end).text()
   const negative = frontNegative ? ' not' : ''
   const source = subject + ' ' + words[finite] + negative + ' ' + tail
-  let work = sentence.fromText(source).compute(['tagger', 'chunks'])
+  // The scratch copies need ids, so that hardened pointers can survive their edits.
+  let work = sentence.fromText(source).compute(['id', 'tagger', 'chunks'])
   // Subject-first order keeps the scratch copy on the ordinary conversion path.
   firstGroup(work.verbs())[methods[target]]()
   if (work.text('normal') === sentence.fromText(source).text('normal')) return sentence
-  work = sentence.fromText(work.text()).compute(['tagger', 'chunks'])
+  work = sentence.fromText(work.text()).compute(['id', 'tagger', 'chunks'])
   const subjectLength = end - start
   let rest = work.terms().slice(subjectLength)
   let head = rest.eq(0).text('normal')

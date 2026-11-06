@@ -63,12 +63,18 @@ const coordinate = function (verbs, target, convert) {
       const kept = target === 'positive' ? inside.map(convert) : inside
       return kept.concat(others).settle()
     }
+    // Converting the others can change the sentence length: 'were' -> 'have been'.
+    const current = sentence.fullSentence()
     // Question reconstruction changes term IDs. Track other selected phrases
     // from the sentence end, since the unchanged trailing clauses keep their
     // lengths even when the main auxiliary chain grows or shrinks.
-    const end = sentence.fullPointer[0][2]
+    const end = current.fullPointer[0][2]
     const trailing = others.fullPointer.map(ptr => [ptr[0], end - ptr[1], end - ptr[2]])
-    const result = question(sentence, target)
+    const result = question(current, target)
+    // Converting the others can stop it reading as inverted: 'what I want is a dog'
+    if (!result) {
+      return inside.concat(others).settle()
+    }
     const newEnd = result.fullPointer[0][2]
     const remaining = result.update(trailing.map(ptr => [ptr[0], newEnd - ptr[1], newEnd - ptr[2]]))
     // The new sentence may no longer read as a question.

@@ -14,7 +14,8 @@ const cleanup = function (doc) {
   }
   //
   doc = doc.not('#Preposition$')
-  doc = doc.not('#Conjunction$')
+  // a trailing 'now' is not a moment - 'a year from now'
+  doc = doc.not('(#Conjunction|now)$')
   doc = doc.not('sharp')
   doc = doc.not('on the dot')
   doc = doc.not('^(on|of|due)')

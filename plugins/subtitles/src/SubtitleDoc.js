@@ -22,7 +22,7 @@ class SubtitleDoc extends WrapDoc {
     return this.vtt.json()
   }
   /** produce the whole subtitle file, including any changes to the text */
-  subtitle(opts) {
+  toSubtitle(opts) {
     this.cues.forEach((cue, i) => {
       cue.text = toLines(this.views[i].all().text())
     })

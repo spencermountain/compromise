@@ -47,6 +47,7 @@ const notIf = '(i|we|they)' //we do not go
 const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
 const fractionNoun = '(the|this|that|each|every|last|final|next|#Ord|#Poss)'
 const singularDet = 'a|an|this|that|each|every|another'
+const afterModal = '#Inf|have|not' // may [be], may [have], may [not]
 
 // [match, tag, group, options]; omit group to tag the full match.
 
@@ -216,16 +217,20 @@ const rules = [
   // ==== Month ====
   // this march → Date Month
   ['(this|next|last) march !#Inf?', '#Date #Month'],
-  // this may → Date Month
-  ['(this|next|last) may !#Inf?', '#Date #Month'],
+  // this may → Date Month (not: this may not be true)
+  [`[(this|next|last) may] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
   // march 5th → Month Date Date
   [`(march|may) the? #Value`, '#Month #Date #Date'],
   // 5th of march → Date Date Month
-  [`#Value of? (march|may)`, '#Date #Date #Month'],
-  // [march] and feb → Month
-  [`[(march|may)] .? #Date`, 'Month', 0],
-  // feb to [march] → Month
-  [`#Date .? [(march|may)]`, 'Month', 0],
+  [`#Value of (march|may)`, '#Date #Date #Month'],
+  // 12 march → Date Month (not: these 5 may leave, $5 may help, the first march)
+  [`[/^([0-9]{1,2}(st|nd|rd|th)?|(1[0-9]|20)[0-9]{2})$/ (march|may)] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
+  // [march] and feb → Month (not: you may leave tomorrow, they march on monday)
+  ['(#Pron|#Plur)? [(march|may)] (#Conj|#Prep|this|that|next|last)? #Date', 'Month', 0, { n: '(#Pron|#Plur) (march|may)' }],
+  // feb to [march] → Month (not: tomorrow may be better, tomorrow we march)
+  [`#Date (#Conj|#Prep)? [(march|may)] #Adv? (${afterModal}|#Pron)?`, 'Month', 0, { n: `may #Adv? (${afterModal}|#Pron)` }],
+  // as [may] be necessary → Modal (not: as may approaches)
+  [`(as|than) [may] #Adv? (${afterModal})`, Mod, 0],
 
   // === dates/date-phrase.js ===
 

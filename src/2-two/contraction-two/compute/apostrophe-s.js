@@ -4,7 +4,9 @@ const hasContraction = /'/
 const hasWords = new Set([
   'been', //the meeting's been ..
   'become', //my son's become
-  ...'got gotten gone come had left fallen arrived lived worked moved looked talked happened stayed appeared'.split(' '),
+  ...'got gotten gone come had left fallen arrived lived worked moved looked talked happened stayed appeared'.split(
+    ' '
+  ),
   ...'improved increased failed escaped expanded developed turned'.split(' '),
   ...'reacted responded listened agreed returned'.split(' '),
 ])
@@ -28,6 +30,11 @@ const isOrHas = (terms, i) => {
   // scan ahead for the next verb or adjective
   for (let o = i + 1; o < terms.length; o += 1) {
     const t = terms[o]
+    // he's kind of given up
+    if ((t.normal === 'kind' || t.normal === 'sort') && terms[o + 1] && terms[o + 1].normal === 'of') {
+      o += 1
+      continue
+    }
     if (hasWords.has(t.normal)) {
       return 'has'
     }

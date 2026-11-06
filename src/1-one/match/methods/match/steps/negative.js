@@ -14,7 +14,13 @@ const doNegative = function (state) {
   // found it? if so, we die here
   const found = matchTerm(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length)
   if (found) {
-    return false//bye
+    // but '!foo*' can match nothing - '!foo?' stays a lookahead
+    return reg.optional === true && reg.greedy === true
+  }
+  // negative greedy - !foo+  - super hard!
+  if (reg.greedy) {
+    // like getGreedy, anchors should not apply to the repeated terms
+    return negGreedy(state, { ...tmpReg, start: false, end: false }, regs[state.r + 1])
   }
   // should we skip the term too?
   if (reg.optional) {
@@ -35,10 +41,6 @@ const doNegative = function (state) {
         }
       }
     }
-  }
-  // negative greedy - !foo+  - super hard!
-  if (reg.greedy) {
-    return negGreedy(state, tmpReg, regs[state.r + 1])
   }
   state.t += 1
   return true

@@ -1,6 +1,7 @@
 import { doAndBlock } from './logic/and-or.js'
 import { getGroup } from '../_lib.js'
 import leaveForNext from './optional-match.js'
+import negGreedy from './logic/negative-greedy.js'
 
 // '(foo && #Noun)' - require all matches on the term
 const andBlock = function (state) {
@@ -9,9 +10,9 @@ const andBlock = function (state) {
 
   const skipNum = doAndBlock(state)
   if (skipNum) {
-    // handle 'not' logic
+    // handle 'not' logic - but '!(a && b)*' can match nothing
     if (reg.negative === true) {
-      return null // die
+      return reg.optional === true && reg.greedy === true
     }
     // '(a && b)? a' - go on to the next token, without using this term
     if (reg.optional === true && leaveForNext(state)) {
@@ -34,6 +35,10 @@ const andBlock = function (state) {
   }
   // we didn't find it - for a negative-block, that's good news
   if (reg.negative === true) {
+    // '!(a && b)+' keeps going
+    if (reg.greedy === true) {
+      return negGreedy(state, { ...reg, negative: false, start: false, end: false }, regs[state.r + 1])
+    }
     // a '!(a && b)?' can pass-through without consuming anything
     if (!reg.optional) {
       state.t += 1

@@ -6,14 +6,17 @@ const methods = {
   participle: 'toPastParticiple', gerund: 'toGerund', infinitive: 'toInfinitive',
 }
 const auxiliary = /^(do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must)$/
+// Punctuation before the first word: '-What is it?', '"Did you?"'
+const trimLead = str => str.replace(/^[^\p{L}\p{N}]+/u, '')
 
 const parseQuestion = function (sentence) {
-  const wh = /^(?:(?:in|on|at|to|for|from|with|about|by)\s+)?(?:why|when|where|how|what|who|whom|which|whose)\b/i.test(sentence.text())
-  if (!wh && !/^(?:do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must|won|shan)(?:n['’]t)?\b/i.test(sentence.text())) return null
+  const text = trimLead(sentence.text())
+  const wh = /^(?:(?:in|on|at|to|for|from|with|about|by)\s+)?(?:why|when|where|how|what|who|whom|which|whose)\b/i.test(text)
+  if (!wh && !/^(?:do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must|won|shan)(?:n['’]t)?\b/i.test(text)) return null
   const expanded = sentence.clone()
   expanded.contractions().expand()
   const terms = expanded.terms()
-  const words = terms.map(t => t.text('normal'), [])
+  const words = terms.map(t => trimLead(t.text('normal')), [])
   // An object wh-phrase may contain several words ('which books', 'in which
   // city'). Its finite auxiliary still precedes a separate subject. Subject
   // wh-phrases fail the subject check below and stay on the ordinary path.
@@ -69,7 +72,8 @@ const question = function (sentence, target) {
   if (!q) return null
   const { terms, words, finite, start, end, frontNegative } = q
   const subject = terms.slice(start, end).text()
-  const prefix = finite > 0 ? terms.slice(0, finite).text() : ''
+  // replaceWith() puts the leading punctuation back
+  const prefix = finite > 0 ? trimLead(terms.slice(0, finite).text()) : ''
   const tail = terms.slice(end).text()
   const negative = frontNegative ? ' not' : ''
   const source = subject + ' ' + words[finite] + negative + ' ' + tail
@@ -99,9 +103,12 @@ const question = function (sentence, target) {
       rest = rest.not(not)
     }
   }
-  if (!prefix && /^[A-Z]/.test(sentence.text())) head = head[0].toUpperCase() + head.slice(1)
+  if (!prefix && /^[A-Z]/.test(trimLead(sentence.text()))) head = head[0].toUpperCase() + head.slice(1)
   const result = [prefix, head, subject, rest.text()].filter(Boolean).join(' ')
+  // Partial text can lose or mangle the ending: '?"'
+  const ending = sentence.docs.at(-1).at(-1).post
   const changed = sentence.replaceWith(result).fullSentence().compute(['contractions', 'tagger', 'contractionTwo', 'chunks'])
+  changed.docs.at(-1).at(-1).post = ending
   // The wh-prefix is unchanged. Preserve its analysis too, so a reconstructed
   // 'Which books ...' cannot acquire a spurious verb tag on the next conversion.
   for (let i = 0; i < finite; i += 1) {

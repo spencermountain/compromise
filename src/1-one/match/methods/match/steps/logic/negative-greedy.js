@@ -22,8 +22,9 @@ const negGreedy = function (state, reg, nextReg) {
       break
     }
   }
+  // '!foo* after' can match nothing, and leave this term for the next token
   if (skip === 0) {
-    return false //dead
+    return reg.optional === true //dead, otherwise
   }
   // did we satisfy min for !foo{min,max}
   if (reg.min && reg.min > skip) {

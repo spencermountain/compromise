@@ -216,6 +216,126 @@ test('a star can match nothing', function (t) {
   t.end()
 })
 
+// a negative group should repeat in the same way as a negative token
+const negGroups = {
+  or: '!(#Noun|#Pronoun)',
+  and: '!(#Noun && !#Pronoun)',
+  words: '!(dogs|cats)',
+}
+const findNegDifferent = function (group, repeat) {
+  const different = []
+  const negTexts = ['the big red dogs ran', 'the dogs ran', 'big dogs ran', 'dogs ran']
+  const negAfter = ['', ' dogs', ' dogs ran', ' dogs$', ' cats', ' (dogs|cats)', ' (#Noun|#Verb)', ' #Noun', ' #Verb']
+  for (const text of negTexts) {
+    for (const pre of ['', '^', 'the ']) {
+      for (const post of negAfter) {
+        const reg = pre + group + repeat + post
+        const res = JSON.stringify(run(text, reg))
+        const want = JSON.stringify(run(text, pre + '!#Noun' + repeat + post))
+        if (res !== want) {
+          different.push(`'${text}' ${reg} - got ${res} want ${want}`)
+        }
+      }
+    }
+  }
+  return different
+}
+Object.keys(negGroups).forEach(name => {
+  ;['', '+', '*', '+?', '{0,}', '{2}', '{1,2}', '{2,}', '{,2}'].forEach(repeat => {
+    test(`negative ${name} group${repeat} acts like a negative token`, function (t) {
+      t.deepEqual(findNegDifferent(negGroups[name], repeat), [], here + `negative ${name}${repeat}`)
+      t.end()
+    })
+  })
+})
+
+test('a negative star can match nothing', function (t) {
+  const tokens = ['!#Noun', '!(dogs|cats)', '!(#Noun|#Pronoun)', '!(#Noun && dogs)']
+  tokens.forEach(tok => {
+    ;['*', '+?', '{0,}'].forEach(op => {
+      const reg = tok + op
+      // nothing before the next token
+      t.deepEqual(run('the dogs ran', `the ${reg} dogs`), ['the dogs'], here + `zero: the ${reg} dogs`)
+      // many before the next token
+      t.deepEqual(run('the big red dogs ran', `the ${reg} dogs`), ['the big red dogs'], here + `many: the ${reg} dogs`)
+      // nothing, and no next token
+      t.deepEqual(run('the dogs', `the ${reg}`), ['the'], here + `end: the ${reg}`)
+      // many, and no next token
+      t.deepEqual(run('the big red dogs', `the ${reg}`), ['the big red'], here + `many end: the ${reg}`)
+      // still needs its next token
+      t.deepEqual(run('the dogs ran', `the ${reg} cats`), [], here + `next: the ${reg} cats`)
+      t.deepEqual(run('the big dogs ran', `the ${reg} cats`), [], here + `next many: the ${reg} cats`)
+    })
+  })
+  // it should not repeat, after leaving its term for the next token
+  const arr = [
+    ['the dogs and cats ran', 'the !#Verb* dogs', ['the dogs']],
+    ['the dogs and cats ran', 'the !#Verb+? dogs', ['the dogs']],
+    ['the dogs and cats ran', 'the !(ran|walked)* dogs', ['the dogs']],
+    ['the dogs and cats ran', 'the !(#Verb|#Adverb)* dogs', ['the dogs']],
+    ['the dogs and cats ran', 'the !(#Verb && ran)* dogs', ['the dogs']],
+    ['the big dogs and cats ran', 'the !#Verb* dogs', ['the big dogs']],
+    ['the big dogs and cats ran', 'the !(#Verb|#Adverb)* dogs', ['the big dogs']],
+  ]
+  arr.forEach(([text, reg, want]) => {
+    t.deepEqual(run(text, reg), want, here + `'${text}' ${reg}`)
+  })
+  t.end()
+})
+
+test('a negative plus needs at least one', function (t) {
+  const tokens = ['!#Noun', '!(dogs|cats)', '!(#Noun|#Pronoun)', '!(#Noun && dogs)']
+  tokens.forEach(tok => {
+    t.deepEqual(run('the dogs ran', `the ${tok}+ dogs`), [], here + `zero: ${tok}+`)
+    t.deepEqual(run('the big dogs ran', `the ${tok}+ dogs`), ['the big dogs'], here + `one: ${tok}+`)
+    t.deepEqual(run('the big red dogs ran', `the ${tok}+ dogs`), ['the big red dogs'], here + `many: ${tok}+`)
+    t.deepEqual(run('the big red dogs ran', `the ${tok}{2} dogs`), ['the big red dogs'], here + `exactly: ${tok}{2}`)
+    t.deepEqual(run('the big red dogs ran', `the ${tok}{3} dogs`), [], here + `too few: ${tok}{3}`)
+    t.deepEqual(run('the big red dogs ran', `the ${tok}{1} dogs`), [], here + `too many: ${tok}{1}`)
+  })
+  t.end()
+})
+
+// many rules rely on this, as 'not followed by a noun'
+test('a negative optional still acts as a lookahead', function (t) {
+  const tokens = ['!#Noun', '!(dog|cat)', '!(#Noun|#Pronoun)', '!(#Noun && dog)']
+  tokens.forEach(tok => {
+    t.deepEqual(run('his fine dog', `his fine ${tok}?`), [], here + `found: ${tok}?`)
+    t.deepEqual(run('his fine', `his fine ${tok}?`), ['his fine'], here + `end of sentence: ${tok}?`)
+    t.deepEqual(run('the dogs ran', `the ${tok}? dogs`), tok === '!#Noun' || tok === '!(#Noun|#Pronoun)' ? [] : ['the dogs'], here + `next: ${tok}?`)
+  })
+  t.end()
+})
+
+// the compiled path should agree, for anything that repeats
+test('sweep agrees with match', function (t) {
+  const regs = [
+    'the (#Adjective && !#Noun)* dogs',
+    'the (#Adjective && !#Noun)+? dogs',
+    'the (#Adjective && !#Noun){0,} dogs',
+    'the (#Adjective && !#Noun)? dogs',
+    'the #Adjective* dogs',
+    'the (#Adjective|#Value)* dogs',
+    'the (big|red)* dogs',
+    '#Adjective* dogs',
+    'the !#Noun* dogs',
+    'the !(#Noun|#Pronoun)* dogs',
+    'the !(#Noun && dogs)* dogs',
+    'the !(dogs|cats)* dogs',
+  ]
+  const sweep = (text, match) => {
+    const net = nlp.buildNet([{ match }])
+    return nlp(text).sweep(net, { tagger: false }).view.out('array')
+  }
+  ;['the dogs ran', 'the big dogs ran', 'the big red dogs ran'].forEach(text => {
+    regs.forEach(reg => {
+      t.deepEqual(sweep(text, reg), run(text, reg), here + `sweep: '${text}' ${reg}`)
+    })
+  })
+  t.deepEqual(sweep('the dogs ran', 'the (#Adjective && !#Noun)* dogs'), ['the dogs'], here + 'sweep zero')
+  t.end()
+})
+
 // the term goes to the next token, and so should any capture
 test('an optional group in a capture', function (t) {
   const arr = [

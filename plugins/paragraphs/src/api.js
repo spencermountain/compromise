@@ -7,14 +7,6 @@ const concatArr = function (views, fn) {
   return arr
 }
 
-const concatStr = function (views, cb) {
-  let str = []
-  views.forEach(m => {
-    str += cb(m)
-  })
-  return str
-}
-
 const concatDoc = function (views, cb) {
   let ptrs = []
   views.forEach(m => {
@@ -46,7 +38,8 @@ const api = function (View) {
     }
 
     text(fmt) {
-      return concatStr(this.views, (m) => m.text(fmt))
+      // each view trims its trailing whitespace, so re-separate the paragraphs
+      return this.views.map(m => m.text(fmt)).filter(str => str).join('\n\n')
     }
     json() {
       return concatArr(this.views, 'json')
@@ -55,7 +48,7 @@ const api = function (View) {
       return concatDoc(this.views, (view) => view.match(reg))
     }
     not(reg) {
-      return concatDoc(this.views, (view) => view.match(reg))
+      return concatDoc(this.views, (view) => view.not(reg))
     }
     sentences() {
       return concatDoc(this.views, (view) => view)

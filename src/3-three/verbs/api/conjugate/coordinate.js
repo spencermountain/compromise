@@ -65,7 +65,8 @@ const coordinate = function (verbs, target, convert) {
     const result = question(sentence, target)
     const newEnd = result.fullPointer[0][2]
     const remaining = result.update(trailing.map(ptr => [ptr[0], newEnd - ptr[1], newEnd - ptr[2]]))
-    return questionSelection(result).concat(remaining).settle()
+    // The new sentence may no longer read as a question.
+    return (questionSelection(result) || result).concat(remaining).settle()
   })
 }
 export default coordinate

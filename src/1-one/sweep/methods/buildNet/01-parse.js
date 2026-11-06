@@ -39,8 +39,8 @@ const getNeeds = function (regs) {
   const needs = []
   regs.forEach(reg => {
     needs.push(getTokenNeeds(reg))
-    // support AND (foo && tag)
-    if (reg.operator === 'and' && reg.choices) {
+    // support AND (foo && tag) - but an optional or negative block requires nothing
+    if (reg.operator === 'and' && reg.choices && !reg.optional && !reg.negative) {
       reg.choices.forEach(oneSide => {
         oneSide.forEach(r => {
           needs.push(getTokenNeeds(r))

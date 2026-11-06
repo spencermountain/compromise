@@ -78,7 +78,7 @@ const parseToken = function (w, opts, aliases) {
       w = stripEnd(w)
     }
     // 'foo*' is zero or more
-    if (w !== '*' && end(w) === '*' && w !== '\\*') {
+    if (w !== '*' && end(w) === '*' && !w.endsWith('\\*')) {
       obj.greedy = true
       obj.optional = true
       w = stripEnd(w)

@@ -59,7 +59,7 @@ test('cue data lines up with each doc', function (t) {
 })
 
 test('unchanged output is the same as vttpeg', function (t) {
-  t.equal(nlp.fromSubtitle(file).subtitle(), vttpeg(file).out(), here + 'whole file')
+  t.equal(nlp.fromSubtitle(file).toSubtitle(), vttpeg(file).out(), here + 'whole file')
   // awkward things around a line-break
   const arr = [
     ['It was the best of times,', 'it was the worst of times.'],
@@ -85,7 +85,7 @@ test('unchanged output is the same as vttpeg', function (t) {
   ]
   arr.forEach(lines => {
     const str = oneCue(...lines)
-    t.equal(nlp.fromSubtitle(str).subtitle(), vttpeg(str).out(), here + lines.join(' / '))
+    t.equal(nlp.fromSubtitle(str).toSubtitle(), vttpeg(str).out(), here + lines.join(' / '))
   })
   t.end()
 })
@@ -103,8 +103,8 @@ test('samples from the vttpeg readme', function (t) {
 00:34.204 --> 00:39.278
 -What the hell are you wearing?
 -This is the mirror ball suit.`
-  t.equal(nlp.fromSubtitle(compact).subtitle(), vttpeg(compact).out(), here + 'compact timestamps')
-  t.ok(nlp.fromSubtitle(compact).subtitle().includes('00:34.204'), here + 'style is kept')
+  t.equal(nlp.fromSubtitle(compact).toSubtitle(), vttpeg(compact).out(), here + 'compact timestamps')
+  t.ok(nlp.fromSubtitle(compact).toSubtitle().includes('00:34.204'), here + 'style is kept')
 
   const inline = `WEBVTT
 1
@@ -114,7 +114,7 @@ When the moon <00:17.500>hits your eye
 1
 00:00:18.500 --> 00:00:20.500
 Like a <00:19.000>big-a <00:19.500>pizza <00:20.000>pie`
-  t.equal(nlp.fromSubtitle(inline).subtitle(), vttpeg(inline).out(), here + 'inline timestamps')
+  t.equal(nlp.fromSubtitle(inline).toSubtitle(), vttpeg(inline).out(), here + 'inline timestamps')
   t.end()
 })
 
@@ -143,12 +143,26 @@ test('broadcast speaker marks are not words', function (t) {
   t.equal(doc.nouns().has('>>'), false, here + 'not a noun')
   t.equal(doc.match('^what').has('#QuestionWord'), true, here + 'tags the next word')
   t.equal(doc.match('john').has('#Person'), true, here + 'second speaker')
-  t.equal(doc.subtitle(), vttpeg(oneCue(...lines)).out(), here + 'written back')
+  t.equal(doc.toSubtitle(), vttpeg(oneCue(...lines)).out(), here + 'written back')
   // on its own or mid-line, there's nothing to tag instead
   const alone = oneCue('>>')
-  t.equal(nlp.fromSubtitle(alone).subtitle(), vttpeg(alone).out(), here + 'alone')
+  t.equal(nlp.fromSubtitle(alone).toSubtitle(), vttpeg(alone).out(), here + 'alone')
   const mid = oneCue('one >> two')
-  t.equal(nlp.fromSubtitle(mid).subtitle(), vttpeg(mid).out(), here + 'mid-line')
+  t.equal(nlp.fromSubtitle(mid).toSubtitle(), vttpeg(mid).out(), here + 'mid-line')
+  t.end()
+})
+
+test('questions from a speaker are still questions', function (t) {
+  const str = oneCue('-Did you want', 'some coffee?', '>> What are you wearing?')
+  const doc = nlp.fromSubtitle(str)
+  doc.verbs().toPastTense()
+  t.deepEqual(
+    vttpeg(doc.toSubtitle()).json()[0].text,
+    ['-Did you want', 'some coffee?', '>> What were you wearing?'],
+    here + 'past tense',
+  )
+  doc.verbs().toPresentTense()
+  t.ok(doc.toSubtitle().includes('-Do you'), here + 'present tense')
   t.end()
 })
 
@@ -175,15 +189,15 @@ the big store.
 00:00:08.000 --> 00:00:10.000
 Mary didn't buy
 3 red apples &amp; pears.`
-  t.equal(doc.subtitle(), want, here + 'whole file')
-  t.equal(doc.match('mary').subtitle(), want, here + 'from a selection')
-  t.equal(vttpeg(doc.subtitle()).lint({ silent: true }).length, 0, here + 'is valid')
+  t.equal(doc.toSubtitle(), want, here + 'whole file')
+  t.equal(doc.match('mary').toSubtitle(), want, here + 'from a selection')
+  t.equal(vttpeg(doc.toSubtitle()).lint({ silent: true }).length, 0, here + 'is valid')
   t.end()
 })
 
 test('options go to vttpeg', function (t) {
   const doc = nlp.fromSubtitle(file)
-  t.ok(doc.subtitle({ showZeroHours: false }).includes('00:01.000 --> 00:03.000'), here + 'showZeroHours')
+  t.ok(doc.toSubtitle({ showZeroHours: false }).includes('00:01.000 --> 00:03.000'), here + 'showZeroHours')
   t.end()
 })
 
@@ -192,18 +206,18 @@ test('removing text keeps the file parseable', function (t) {
   // the last line of one cue, and all of the next
   doc.match('This is a mirror ball suit').remove()
   doc.views[2].all().remove()
-  const res = vttpeg(doc.subtitle()).json()
+  const res = vttpeg(doc.toSubtitle()).json()
   t.equal(res.length, 4, here + 'same cues')
   t.deepEqual(res[1].text, ['-Who is here?'], here + 'no blank line')
   t.deepEqual(res[2].text, [], here + 'emptied cue')
   t.equal(res[3].startTime, 8, here + 'next cue is safe')
-  t.equal(vttpeg(doc.subtitle()).normalize().json().length, 3, here + 'vttpeg can remove it')
+  t.equal(vttpeg(doc.toSubtitle()).normalize().json().length, 3, here + 'vttpeg can remove it')
 
   // a blank line in the middle would end the cue
   const middle = nlp.fromSubtitle(oneCue('-one', '-two', '-three'))
   middle.match('two').post('\n\n')
   t.ok(middle.views[0].text().includes('\n\n'), here + 'has a blank line')
-  t.deepEqual(vttpeg(middle.subtitle()).json()[0].text.at(-1), '-three', here + 'keeps the last line')
+  t.deepEqual(vttpeg(middle.toSubtitle()).json()[0].text.at(-1), '-three', here + 'keeps the last line')
   t.end()
 })
 
@@ -211,8 +225,8 @@ test('clones write their own text', function (t) {
   const doc = nlp.fromSubtitle(file)
   const copy = doc.clone()
   copy.match('john').replaceWith('Mary')
-  t.ok(copy.subtitle().includes('Mary'), here + 'copy')
-  t.equal(doc.subtitle(), vttpeg(file).out(), here + 'original')
+  t.ok(copy.toSubtitle().includes('Mary'), here + 'copy')
+  t.equal(doc.toSubtitle(), vttpeg(file).out(), here + 'original')
   t.equal(copy.cues[3].startTime, 8, here + 'timing')
   t.end()
 })
@@ -224,7 +238,7 @@ test('files with no cues', function (t) {
     t.equal(doc.text(), '', here + 'no text')
     t.equal(doc.match('foo').found, false, here + 'still chainable')
     t.equal(doc.cues.length, 0, here + 'no cues')
-    t.equal(doc.subtitle(), 'WEBVTT', here + 'empty file')
+    t.equal(doc.toSubtitle(), 'WEBVTT', here + 'empty file')
   })
   t.end()
 })

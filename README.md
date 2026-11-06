@@ -932,14 +932,14 @@ These are some helpful extensions:
 - **[.syllables()](https://observablehq.com/@spencermountain/compromise-syllables)** - split each term by its typical pronunciation
 - **[.soundsLike()](https://observablehq.com/@spencermountain/compromise-soundsLike)** - produce a estimated pronunciation
 
-##### Subtitles
+##### Subtitle Input
 
 `npm install compromise-subtitle`
 
 - **nlp.fromSubtitle(vttText)** - parses and interprets a .vtt subtitle text
 - **.toVtt()** - reproduces a valid subtitle output
 
-##### Html
+##### Html Input
 
 `npm install compromise-html`
 
@@ -949,7 +949,7 @@ These are some helpful extensions:
 - **.toHtml({})** - serializes the last-updated tree to an html string, indented with `{format:true}`
 - **.debug('ast')** - prints which text nodes own the selected terms
 
-##### Markdown
+##### Markdown Input
 
 `npm install compromise-markdown`
 
@@ -959,7 +959,7 @@ These are some helpful extensions:
 - **.markdown()** - serializes the last-updated tree to a markdown string
 - **.debug('ast')** - prints which text nodes own the selected terms
 
-##### Unist
+##### AST-Tree ouput
 
 `npm install compromise-unist`
 
@@ -971,11 +971,12 @@ These are some helpful extensions:
 `npm install compromise-paragraphs`
 
 - **.paragraphs()** - groups sentences into paragraphs, split on blank lines
-  - **.paragraphs().text()** - returns the text of every paragraph
+  - **.paragraphs().text()** - returns the text of every paragraph, separated by a blank line
   - **.paragraphs().json()** - returns an array of sentence json for each paragraph
   - **.paragraphs().sentences()** - returns a normal view of every sentence
   - **.paragraphs().terms()** - returns a normal view of every term
   - **.paragraphs().match('')** - returns a normal view of the matches
+  - **.paragraphs().not('')** - returns a normal view of everything but the matches
   - **.paragraphs().has('')** - returns true if any paragraph has the match
   - **.paragraphs().if('')** - keeps only the paragraphs with the match
   - **.paragraphs().ifNo('')** - removes the paragraphs with the match

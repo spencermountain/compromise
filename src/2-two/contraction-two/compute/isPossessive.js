@@ -1,3 +1,5 @@
+import { hasBreak, isCapital, isUpperCase } from './_lib.js'
+
 const banList = {
   that: true,
   there: true,
@@ -16,12 +18,16 @@ const adjLike = new Set(['too', 'also', 'enough', 'about'])
 const nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must', 'had', 'have'])
 // "is was" or "has was" can't happen, so a copula means the 's is possessive
 const copulas = new Set(['is', 'are', 'was', 'were', 'am'])
+// these only follow 'is' or 'has' - the man in black's gonna
+const afterVerb = new Set(['gonna', 'gotta', 'got', 'been'])
+// past words that don't describe a thing - the team's made progress
+const lightVerbs = new Set('made had done did took taken gave given saw seen went came said'.split(' '))
 
 // one countable thing can't be the object of 'is making' or 'has made' - so it is owned
 const isOneThing = t => {
   const not = ['ProperNoun', 'Pronoun', 'Uncountable', 'Date']
   // not 'watching TV'
-  const isWord = Boolean(t) && !bareObject.has(t.normal) && !/^[A-Z]+$/.test(t.text)
+  const isWord = Boolean(t) && !bareObject.has(t.normal) && !isUpperCase(t)
   return isWord && t.tags.has('Singular') && !not.some(tag => t.tags.has(tag))
 }
 
@@ -34,7 +40,7 @@ const hasPredicate = (terms, n) => {
       return true
     }
     // a new clause - John's played football [and] won
-    if (t.tags.has('Conjunction') || t.tags.has('Pronoun') || /[,;:]/.test(t.post)) {
+    if (t.tags.has('Conjunction') || t.tags.has('Pronoun') || hasBreak(t)) {
       return false
     }
   }
@@ -73,16 +79,15 @@ const isPossessive = (terms, i) => {
     }
     return false
   }
-  // these only follow 'is' or 'has' - the man in black's gonna
-  if (/^(gonna|gotta|got|been)$/.test(nextTerm.normal)) {
+  if (afterVerb.has(nextTerm.normal)) {
     return false
   }
   // "Kathy's, not mine" and "Kathy's and Mary's"
-  if (/[,;:]/.test(term.post) || joiners.has(nextTerm.normal)) {
+  if (hasBreak(term) || joiners.has(nextTerm.normal)) {
     return true
   }
   // a title - Verne's The Mysterious Island
-  if (nextTerm.tags.has('Determiner') && /^[A-Z]/.test(nextTerm.text)) {
+  if (nextTerm.tags.has('Determiner') && isCapital(nextTerm)) {
     return true
   }
   // the world's largest - but John's happiest
@@ -91,7 +96,7 @@ const isPossessive = (terms, i) => {
   }
   // "of Enron's", or the rest of a name - "of Keli McCarthy's"
   let n = i - 1
-  const isName = t => term.tags.has('ProperNoun') && t.tags.has('ProperNoun') && !/[,;:]/.test(t.post)
+  const isName = t => term.tags.has('ProperNoun') && t.tags.has('ProperNoun') && !hasBreak(t)
   while (n > i - 3 && terms[n] && isName(terms[n])) {
     n -= 1
   }
@@ -147,7 +152,7 @@ const isPossessive = (terms, i) => {
     // a describing word, then a thing - Fiona's planned attack, Bush's proposed risky plans
     const two = terms[i + 2]
     const three = terms[i + 3]
-    if (two && /ed$/.test(nextTerm.normal)) {
+    if (two && nextTerm.tags.has('PastTense') && !lightVerbs.has(nextTerm.normal)) {
       // but not Mom's cooked dinner, Mary's visited Paris, John's finished today
       const isThing = two.tags.has('Noun') && !['ProperNoun', 'Pronoun', 'Date'].some(tag => two.tags.has(tag))
       // Mom's baked cookies. - a sentence with no other verb needs the 's to be one
@@ -187,12 +192,13 @@ const isPossessive = (terms, i) => {
     if (nextStr === 'here' || nextStr === 'there' || nextStr === 'everywhere') {
       return false
     }
-    // the chair's his - but not Hamlet's mother's
-    if (nextTerm.tags.has('Possessive') && !/['’]/.test(nextTerm.text)) {
+    // the chair's his - but not Hamlet's mother's, which is a singular or plural noun
+    const isNoun = nextTerm.tags.has('Singular') || nextTerm.tags.has('Plural')
+    if (nextTerm.tags.has('Possessive') && !isNoun) {
       return false
     }
     // the captain's John, my name's Dave - but not TV's John Wayne, or mama's angel
-    const isNamed = term.tags.has('Actor') || /^name/.test(term.normal)
+    const isNamed = term.tags.has('Actor') || term.machine === 'name'
     if (isNamed && nextTerm.tags.has('Person') && nextTerm.tags.has('ProperNoun') && !terms[i + 2]) {
       return false
     }
@@ -203,7 +209,8 @@ const isPossessive = (terms, i) => {
   const isAdv = nextTerm.tags.has('Adverb')
   if (nextTerm.tags.has('Adjective') || isAdv) {
     // John's busy writing
-    if (nextTerm.normal === 'busy' && terms[i + 2] && /ing$/.test(terms[i + 2].normal)) {
+    const two = terms[i + 2]
+    if (nextTerm.normal === 'busy' && two && (two.tags.has('Gerund') || two.switch === 'Noun|Gerund')) {
       return false
     }
     // skip ahead - rocket's big red nozzle, China's most trusted paper
@@ -218,7 +225,7 @@ const isPossessive = (terms, i) => {
         return false
       }
       // financial [and] economic crisis
-      if (/^(and|or|&)$/.test(t.normal)) {
+      if (['and', 'or', '&'].includes(t.normal)) {
         return after.tags.has('Adjective')
       }
       // lower [borrowing] costs helped - but time's just [playing] tricks
@@ -226,7 +233,8 @@ const isPossessive = (terms, i) => {
         return after.tags.has('Noun') && hasPredicate(terms, k + 2)
       }
       // highly [specialized] tissue
-      return isAdv && /ed$/.test(t.normal) && isOneThing(after) && (!isPerson || hasPredicate(terms, k + 2))
+      const isPast = t.tags.has('PastTense') && !lightVerbs.has(t.normal)
+      return isAdv && isPast && isOneThing(after) && (!isPerson || hasPredicate(terms, k + 2))
     }
     let o = i + 2
     while (o < i + 4 && terms[o] && isMore(o)) {
@@ -248,7 +256,7 @@ const isPossessive = (terms, i) => {
       return true
     }
     // rocket's red nozzle - but not John's still here
-    if (twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun') && !/^t?here$/.test(twoTerm.normal)) {
+    if (twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun') && twoTerm.normal !== 'here' && twoTerm.normal !== 'there') {
       //project's behind schedule
       const str = nextTerm.normal
       if (str === 'above' || str === 'below' || str === 'behind') {

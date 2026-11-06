@@ -13,7 +13,9 @@ const rules = [
   // === second-pass.js ===
   // Corrections matched against the main sweep's output, before any are applied.
   // 12 March Street → remove Date (but not '12 March road closures', or 'the 2011 film Drive')
-  ['(#Value && !#Year) #Address+', null, null, { n: '(#Address && !@isTitleCase)$', u: 'Date' }],
+  ['(#Value && !#Year) #Address+', null, null, { n: '(#Address && !@isTitleCase && !@isUpperCase)$', u: 'Date' }],
+  // at 12 march street → remove Date
+  ['at (#Value && !#Year) #Address+', null, null, { u: 'Date' }],
   // Keep comma context, but don't turn unambiguous verbs into list items.
   // food, drinks and [thanks] → Noun
   ...[

@@ -1,3 +1,5 @@
+import { hasBreak } from './_lib.js'
+
 const hasContraction = /'/
 
 // these take 'has', whatever follows - he's gone to, he's left for, it's improved
@@ -72,7 +74,7 @@ const isOrHas = (terms, i) => {
     // the car's parked
     if (t.switch === 'Adj|Past') {
       // she's tired. she's tired, and ..
-      if (!next || /[,;:]/.test(t.post) || next.tags.has('Conjunction')) {
+      if (!next || hasBreak(t) || next.tags.has('Conjunction')) {
         return 'is'
       }
       // car's parked too, car's parked on, car's parked outside

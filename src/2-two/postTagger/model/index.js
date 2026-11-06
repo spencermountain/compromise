@@ -48,6 +48,9 @@ const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
 const fractionNoun = '(the|this|that|each|every|last|final|next|#Ord|#Poss)'
 const singularDet = 'a|an|this|that|each|every|another'
 const afterModal = '#Inf|have|not' // may [be], may [have], may [not]
+const verbSubject = '(#Pron|#Plur) (/^(march|may)$/ && !@isTitleCase)' // they march, soldiers march
+const titles =
+  '(lieutenant|corporal|sergeant|captain|admiral|major|colonel|marshal|president|queen|king|minister|senator|governor|chancellor|mayor|judge|congressman|chairman|professor|ambassador)'
 
 // [match, tag, group, options]; omit group to tag the full match.
 
@@ -220,13 +223,13 @@ const rules = [
   // this may → Date Month (not: this may not be true)
   [`[(this|next|last) may] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
   // march 5th → Month Date Date
-  [`(march|may) the? #Value`, '#Month #Date #Date'],
+  ['(#Pron|#Plur)? [(march|may) the? #Value]', '#Month #Date #Date', 0, { n: verbSubject }],
   // 5th of march → Date Date Month
   [`#Value of (march|may)`, '#Date #Date #Month'],
   // 12 march → Date Month (not: these 5 may leave, $5 may help, the first march)
   [`[/^([0-9]{1,2}(st|nd|rd|th)?|(1[0-9]|20)[0-9]{2})$/ (march|may)] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
   // [march] and feb → Month (not: you may leave tomorrow, they march on monday)
-  ['(#Pron|#Plur)? [(march|may)] (#Conj|#Prep|this|that|next|last)? #Date', 'Month', 0, { n: '(#Pron|#Plur) (march|may)' }],
+  ['(#Pron|#Plur)? [(march|may)] (#Conj|#Prep|this|that|next|last)? #Date', 'Month', 0, { n: verbSubject }],
   // feb to [march] → Month (not: tomorrow may be better, tomorrow we march)
   [`#Date (#Conj|#Prep)? [(march|may)] #Adv? (${afterModal}|#Pron)?`, 'Month', 0, { n: `may #Adv? (${afterModal}|#Pron)` }],
   // as [may] be necessary → Modal (not: as may approaches)
@@ -688,8 +691,8 @@ const rules = [
   ['[#Prop] #Pers', Pers, 0, { safe: true }],
   // john [keith jones] → Person
   ['#Pers [#Prop #Prop]', Pers, 0, { n: '#Poss', safe: true }],
-  // John [Foo] → LastName - but not John's [Honda]
-  ['(#First && !#Poss) #Acronym? [#Prop]', Last, 0],
+  // John [Foo] → LastName - but not John's [Honda], or Herman [USA]
+  ['(#First && !#Poss) #Acronym? [(#Prop && !#Acronym)]', Last, 0],
   // Joe K. Sombrero → Person
   ['#First #Acronym #NN', Pers, null, { safe: true }],
   // Anthony [de] Marco → LastName
@@ -697,12 +700,9 @@ const rules = [
 
   // baker jenna smith
   // { match: '[#Actor+] #Person', group: 0, tag: 'Person' },
-  // [sergeant] major Harold → Honorific - but not [King] Street
-  [
-    '[(lieutenant|corporal|sergeant|captain|admiral|major|colonel|marshal|president|queen|king|minister|senator|governor|chancellor|mayor|judge|congressman|chairman|professor|ambassador)+] (#Prop && !#Place)',
-    'Hon',
-    0,
-  ],
+  // [sergeant major] Harold → Honorific - but not [King] Street
+  // a title is also #Prop, so a repeat would stop at the second one
+  [`[${titles} ${titles}?] (#Prop && !#Place)`, 'Hon', 0],
   // [vice chairman] Harold, [deputy prime minister] Harold → Honorific
   ['[(senior|executive|deputy)? (vice|prime|deputy) (#Actor|premier|chair|principal)] #Prop', 'Hon', 0],
   // ==== Honorics ====
@@ -1105,9 +1105,12 @@ const multi = [
   // Toronto point → Place
   ['#Prop+ (cliff|place|range|pit|place|point|room|grounds|ruins)', Place],
   // 123 main street → Address
+  // (not a 4 hour drive, 2,800 km road, or four wheel drive)
   [
-    '#Value #NN+ (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway|way)',
+    '#Value (#NN && !#Duration && !#Unit)+ (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway|way)',
     'Address',
+    null,
+    { n: '(#TextValue && !@isTitleCase)' },
   ],
   // port dover → Place
   ['(port|mount|mt) #Prop', Place],

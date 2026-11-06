@@ -14,3 +14,10 @@ export const getGroup = function (state, term_index) {
   }
   return state.groups[state.inGroup]
 }
+
+// add any terms used since startAt, to the current capture
+export const logGroup = function (state, startAt) {
+  if (state.hasGroup === true && state.t > startAt) {
+    getGroup(state, startAt).length += state.t - startAt
+  }
+}

@@ -1,7 +1,7 @@
 import { doOrBlock } from './logic/and-or.js'
 import { getGroup } from '../_lib.js'
 import leaveForNext from './optional-match.js'
-import negGreedy from './logic/negative-greedy.js'
+import negativeBlock from './logic/negative-block.js'
 
 const orBlock = function (state) {
   const { regs } = state
@@ -35,15 +35,7 @@ const orBlock = function (state) {
   }
   // we didn't find it - for a negative-block, that's good news
   if (reg.negative === true) {
-    // '!(a|b)+' keeps going
-    if (reg.greedy === true) {
-      return negGreedy(state, { ...reg, negative: false, start: false, end: false }, regs[state.r + 1])
-    }
-    // a '!(a b)?' can pass-through without consuming anything
-    if (!reg.optional) {
-      state.t += 1
-    }
-    return true
+    return negativeBlock(state)
   }
   if (!reg.optional) {
     return null //die

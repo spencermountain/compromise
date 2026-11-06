@@ -84,13 +84,22 @@ const isSingularSubject = (terms, i) => {
     if (term.normal.endsWith("'s") || term.normal === 'couple' || term.tags.has('Duration')) {
       return null
     }
-    // A verb can intervene: 'a job cleaning mirrors'.
-    if (term.switch === 'Noun|Gerund') {
+    // A verb can intervene: 'a job cleaning mirrors' (but not 'a good meeting helps').
+    if (term.switch === 'Noun|Gerund' && terms[n - 1]?.tags.has('Noun')) {
       return null
     }
     if (!isNounLike(term) && !term.tags.has('Adjective') && !term.tags.has('Adverb')) {
       return null
     }
+  }
+  return null
+}
+
+// 'sales [targets]' - mid-clause it could be a verb: 'rain in four decades hits delhi'.
+const isPluralCompound = (terms, i) => {
+  const prev = terms[i - 1]
+  if (!terms[i + 1] && prev?.tags.has('Plural') && !prev.tags.has('ProperNoun') && !/[^\s-]/.test(prev.post)) {
+    return 'Plural'
   }
   return null
 }
@@ -153,7 +162,7 @@ const adhoc = {
     if (terms[i - 1]?.normal === 'still' && (subject === 'this' || subject === 'that')) {
       return 'PresentTense'
     }
-    return isCapital(terms, i) || isSingularSubject(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
+    return isCapital(terms, i) || isSingularSubject(terms, i) || isPluralCompound(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
   },
   'Person|Noun': (terms, i) => {
     // A robin sang; her faith never wavered.

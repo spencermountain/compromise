@@ -22,6 +22,75 @@ test(here + 'shifts by a multi-word number', t => {
   t.end()
 })
 
+// these should act the same as '100 years ago'
+test(here + 'shifts by a number with an article', t => {
+  const arr = [
+    ['100 years ago', '1916-02-11'],
+    ['a hundred years ago', '1916-02-11'],
+    ['A hundred years ago', '1916-02-11'],
+    ['about a hundred years ago', '1916-02-11'],
+    ['a hundred years from now', '2116-02-11'],
+    ['A hundred years from tonight', '2116-02-11'],
+    ['maybe a hundred years from now', '2116-02-11'],
+    ['in a hundred years', '2116-02-11'],
+    ['in about a hundred years', '2116-02-11'],
+    ['a thousand days ago', '2013-05-17'],
+    ['a dozen days ago', '2016-01-30'],
+    ['in a dozen days', '2016-02-23'],
+    // no number to find
+    ['a year ago', '2015-02-11'],
+    ['in a week', '2016-02-18'],
+  ]
+  checkStarts(t, context, arr)
+  t.end()
+})
+
+// a number that describes something else is not a shift
+test(here + 'an article and a number, without a shift', t => {
+  const arr = [
+    `if you put in a 12-hour day`,
+    `in a 20-minute video`,
+    `In a 2008 weekend fire sale`,
+    `in a hundred-year flood`,
+    `in a two-week trial`,
+    `in a 5 year plan`,
+  ]
+  arr.forEach(str => {
+    const found = nlp(str).dates(context).json().filter(o => o.dates.start)
+    t.deepEqual(found, [], here + `no shift: '${str}'`)
+    t.notOk(nlp(str).has('#DateShift'), here + `no #DateShift: '${str}'`)
+  })
+  t.end()
+})
+
+// the year applies to each month
+test(here + 'a list of months', t => {
+  const arr = [
+    ['june or july 2019', '2019-06-01'],
+    ['during june or july 2019', '2019-06-01'],
+    ['in june or july 2019', '2019-06-01'],
+    ['in October and November 1993', '1993-10-01'],
+    ['in june or july', '2016-06-01'],
+  ]
+  checkStarts(t, context, arr)
+  const res = nlp('in October and November 1993').dates(context).get()
+  t.deepEqual(res.map(o => o.start.slice(0, 7)), ['1993-10', '1993-11'], here + 'each month')
+  t.end()
+})
+
+// these used to find the month of 'today', and not the month that was written
+test(here + 'a day before a month', t => {
+  const arr = [
+    ['24 November 1961', '1961-11-24'],
+    ['of 24 November 1961 and 16 December 1993', '1961-11-24'],
+    ['19 March 1992 and 22 December 1992', '1992-03-19'],
+    ['on 21 December 1990', '1990-12-21'],
+    ['(December 1993)', '1993-12-01'],
+  ]
+  checkStarts(t, context, arr)
+  t.end()
+})
+
 // these should act the same as '25 minutes'
 test(here + 'only a duration is not a date', t => {
   const arr = [
@@ -38,6 +107,19 @@ test(here + 'only a duration is not a date', t => {
   })
   const res = nlp('twenty five minutes on tuesday').dates(context)
   t.deepEqual(res.out('array'), ['tuesday'], here + 'only the weekday')
+  t.end()
+})
+
+// the weekday should survive a value after it
+test(here + 'a weekday before a value', t => {
+  const arr = [
+    ['tuesday 7 next week', '2016-02-16'],
+    ['meet me friday 7 next week', '2016-02-12'],
+    ['june 7 next year', '2017-06-07'],
+    ['on 7 this month', '2016-02-07'],
+  ]
+  checkStarts(t, context, arr)
+  t.deepEqual(nlp('meet me friday 7 next week').dates(context).out('array'), ['friday 7 next week'], here + 'whole phrase')
   t.end()
 })
 

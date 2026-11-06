@@ -959,8 +959,9 @@ These are some helpful extensions:
 - **.markdown()** - serializes the last-updated tree to a markdown string
 - **.debug('ast')** - prints which text nodes own the selected terms
 
-##### AST-Tree ouput
+##### AST ouput
 
+create a Abstract-Syntax-Tree in Unist (NLCST) format.
 `npm install compromise-unist`
 
 - **.toAst({})** - converts the document to an [nlcst](https://github.com/syntax-tree/nlcst) tree

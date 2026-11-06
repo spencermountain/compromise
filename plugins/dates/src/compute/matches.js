@@ -3,6 +3,7 @@ const thisNext = '(last|next|this|previous|current|upcoming|coming)' //2
 const sections = '(start|end|middle|starting|ending|midpoint|beginning|mid)' //2
 const seasons = '(spring|summer|winter|fall|autumn)'
 const knownDate = '(yesterday|today|tomorrow)'
+const verbSubject = '(#Pronoun|#Plural) (/^(march|may)$/ && !@isTitleCase)'
 
 // { match: '', tag: '', reason:'' },
 const matches = [
@@ -28,12 +29,12 @@ const matches = [
   { match: '#Month #Value (and|or|to)? #Value+', tag: 'Date', reason: 'value-to-value' },
   //march the 12th
   { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
-  // march to april - but not 'the soldiers march tomorrow'
-  { match: '[(march|may)] (to|through|thru|until|and|or) #Date', group: 0, tag: 'Month', reason: 'march-to' },
+  // march to april - but not 'the soldiers march tomorrow', or 'they march to monday'
+  { match: '(#Pronoun|#Plural)? [(march|may)] (to|through|thru|until|and|or) #Date', group: 0, tag: 'Month', notIf: verbSubject, reason: 'march-to' },
   // march 2020
   { match: '[(march|may)] of? #Year', group: 0, tag: 'Month', reason: 'march-year' },
-  // march 5th
-  { match: '[(march|may)] the? (#Value && !#Year)', group: 0, tag: 'Month', reason: 'march-value' },
+  // march 5th - but not 'they march 5 miles'
+  { match: '(#Pronoun|#Plural)? [(march|may)] the? (#Value && !#Year)', group: 0, tag: 'Month', notIf: verbSubject, reason: 'march-value' },
   // 'the soldiers march tomorrow' - not a month
   { match: '[(march|may)] (today|tomorrow|tonight|yesterday)', group: 0, unTag: 'Date', reason: 'march-tomorrow' },
   // 'march'
@@ -240,12 +241,14 @@ const matches = [
 
   //'two days before'/ 'nine weeks frow now'
   {
-    match: '(#Cardinal+|a|an) #Duration (before|after|ago|from|hence|back)',
+    match: '(a|an)? (#Cardinal+|a|an) #Duration (before|after|ago|from|hence|back)',
     tag: 'DateShift',
     reason: 'nine weeks frow now',
   },
   // in two weeks
   { match: 'in (around|about|maybe|perhaps)? #Cardinal+ #Duration', tag: 'DateShift', reason: 'in two weeks' },
+  // in a hundred years - but not 'in a 12-hour day', or 'in a hundred-year flood'
+  { match: 'in (around|about|maybe|perhaps)? (a|an) #Multiple (#Duration && #Plural)', tag: 'DateShift', reason: 'in a hundred years' },
   { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
   // an hour from now
   { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },
@@ -304,12 +307,12 @@ const matches = [
   { match: `^[#Value] (this|next|last)`, group: 0, unTag: 'Date', reason: '4 next' },
   //this month 7
   { match: `(last|this|next) #Duration [#Value]`, group: 0, unTag: 'Date', reason: 'this month 7' },
-  //7 this month
-  { match: `[!#Month] #Value (last|this|next) #Date`, group: 0, unTag: 'Date', reason: '7 this month' },
   // over the years
   { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
   // second quarter of 2020
   { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+  // a good morning routine, my evening class - a generic time is not a date
+  { match: '(a|an|#Possessive) #Adjective? [(morning|afternoon|evening|night)] (#Noun|#Adjective)', group: 0, tag: 'Singular', unTag: 'Date', reason: 'time-modifier' },
   // third quarter of the game, a quarter of the pie (but not of the fiscal year)
   { match: '[(#Ordinal|a|one)? quarter] of #Determiner #Adjective? (#Noun && !#Date && !#Possessive)', group: 0, unTag: 'Date', reason: 'quarter-of-noun' },
   // a month from now

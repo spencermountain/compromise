@@ -66,6 +66,9 @@ test('multi-not:', function (t) {
 
   doc = nlp('match foo one two three four')
   m = doc.match('match !(foo|bar){0,3}')
+  t.equal(m.text(), 'match', here + 'zero-match')
+
+  m = doc.match('match !(foo|bar){1,3}')
   t.equal(m.text(), '', here + 'no-match')
   t.end()
 })

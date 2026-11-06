@@ -43,7 +43,7 @@ const localCorrections = sentences => {
         pending.push([[terms[i - 2], prev], Adj, 'phrasal-type-adjective'])
       }
       // Resolve predicates after noun corrections from the main sweep.
-      if (term.switch === 'Plural|Verb' && prev?.tags.has(Sing) && !prev.tags.has(Prop)) {
+      if (term.switch === 'Plural|Verb' && prev?.tags.has(Sing) && !prev.tags.has(Prop) && !prev.tags.has(Poss)) {
         let before = i - 2
         for (; before >= 0; before -= 1) {
           if (!terms[before].tags.has(Adj) && !terms[before].tags.has(Adv)) {

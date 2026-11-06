@@ -25,8 +25,9 @@ const splitGroups = str => {
     if (str[i] === '<') {
       captureEnd[i] = capture
       capture = 0
-    } else if (str[i] === '>' && !capture && bodyEnd[i + 1]) {
-      capture = bodyEnd[i + 1]
+    } else if (str[i] === '>' && !capture) {
+      // the block may be negative - [<name>!(a|b)]
+      capture = bodyEnd[str[i + 1] === '!' ? i + 2 : i + 1] || 0
     }
   }
   const parts = []

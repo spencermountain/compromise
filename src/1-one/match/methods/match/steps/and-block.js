@@ -1,5 +1,6 @@
 import { doAndBlock } from './logic/and-or.js'
 import { getGroup } from '../_lib.js'
+import leaveForNext from './optional-match.js'
 
 // '(foo && #Noun)' - require all matches on the term
 const andBlock = function (state) {
@@ -11,6 +12,10 @@ const andBlock = function (state) {
     // handle 'not' logic
     if (reg.negative === true) {
       return null // die
+    }
+    // '(a && b)? a' - go on to the next token, without using this term
+    if (reg.optional === true && leaveForNext(state)) {
+      return true
     }
     if (state.hasGroup === true) {
       const g = getGroup(state, state.t)

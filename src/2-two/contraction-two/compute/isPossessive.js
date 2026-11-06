@@ -6,11 +6,10 @@ const banList = {
   everywhere: true,
 }
 
-const beforePossessive = {
-  in: true, //in sunday's
-  by: true, //by sunday's
-  for: true, //for sunday's
-}
+// an object can't be 'is' - "in sunday's", "of Enron's", "at Moe's"
+const beforePossessive = new Set(['in', 'by', 'for', 'of', 'at', 'with', 'to', 'on', 'from', 'about', 'into'])
+// "Kathy's and Mary's", "a master's of science"
+const joiners = new Set(['and', 'or', 'nor', 'but', '&', 'of'])
 const adjLike = new Set(['too', 'also', 'enough', 'about'])
 const nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must', 'had', 'have'])
 // "is was" or "has was" can't happen, so a copula means the 's is possessive
@@ -45,6 +44,22 @@ const isPossessive = (terms, i) => {
       return true
     }
     return false
+  }
+  // "Kathy's, not mine" and "Kathy's and Mary's"
+  if (/[,;:]/.test(term.post) || joiners.has(nextTerm.normal)) {
+    return true
+  }
+  // a title - Verne's The Mysterious Island
+  if (nextTerm.tags.has('Determiner') && /^[A-Z]/.test(nextTerm.text)) {
+    return true
+  }
+  // "of Enron's", or "of the region's"
+  let prev = terms[i - 1]
+  if (prev && prev.tags.has('Determiner') && terms[i - 2]) {
+    prev = terms[i - 2]
+  }
+  if (prev && beforePossessive.has(prev.normal)) {
+    return true
   }
   // the sun's setting vs the artist's painting
   // gerund = is,  noun = possessive
@@ -111,27 +126,28 @@ const isPossessive = (terms, i) => {
     if (nextStr === 'here' || nextStr === 'there' || nextStr === 'everywhere') {
       return false
     }
-    // the chair's his
-    if (nextTerm.tags.has('Possessive')) {
+    // the chair's his - but not Hamlet's mother's
+    if (nextTerm.tags.has('Possessive') && !/['’]/.test(nextTerm.text)) {
       return false
     }
-    // the captain's John
-    if (nextTerm.tags.has('ProperNoun') && !term.tags.has('ProperNoun')) {
+    // the captain's John - but not the king's Court
+    if (nextTerm.tags.has('Person') && !term.tags.has('ProperNoun')) {
       return false
     }
-    return true
-  }
-
-  // by sunday's final
-  if (terms[i - 1] && beforePossessive[terms[i - 1].normal] === true) {
     return true
   }
 
   // spencer's tired
-  if (nextTerm.tags.has('Adjective')) {
-    const twoTerm = terms[i + 2]
-    //the rocket's red
-    if (!twoTerm) {
+  const isAdv = nextTerm.tags.has('Adverb')
+  if (nextTerm.tags.has('Adjective') || isAdv) {
+    // skip ahead - rocket's big red nozzle, China's most trusted paper
+    let o = i + 2
+    while (o < i + 4 && terms[o] && terms[o].tags.has('Adjective')) {
+      o += 1
+    }
+    const twoTerm = terms[o]
+    //the rocket's red, the car's still here - but not Germany's only hope
+    if (!twoTerm || (isAdv && o === i + 2 && nextTerm.normal !== 'only')) {
       return false
     }
     // rocket's red nozzle

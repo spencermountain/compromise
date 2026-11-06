@@ -37,7 +37,8 @@ const nOutOfN = function (m) {
   }
   num = parseNumber(num)
   den = parseNumber(den)
-  if (!num || !den) {
+  // '0 out of 4' is allowed
+  if (!den) {
     return null
   }
   if (typeof num === 'number' && typeof den === 'number') {

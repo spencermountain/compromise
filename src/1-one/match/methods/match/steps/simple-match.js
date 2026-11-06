@@ -1,5 +1,5 @@
 import { getGroup } from '../_lib.js'
-import foundOptional from './optional-match.js'
+import leaveForNext from './optional-match.js'
 import greedyMatch from './greedy-match.js'
 import contractionSkip from './contraction-skip.js'
 
@@ -28,9 +28,9 @@ const simpleMatch = function (state) {
     return true
   }
   // okay, it was a match, but if it's optional too,
-  // we should check the next reg too, to skip it?
-  if (reg.optional && regs[state.r + 1]) {
-    foundOptional(state)
+  // go on to the next token, without using this term
+  if (reg.optional && leaveForNext(state)) {
+    return true
   }
   // Contraction skip:
   // did we match the first part of a contraction?

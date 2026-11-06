@@ -24,7 +24,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - whitespace tokenization in match strings
 - **[change]** - interpret 'twenty twenty six' as year (from 2010-2040)
 - **[change]** - concatenated number-parsing - "sixty fifteen and thirty five"
-- **[change]** - `(a && b)+` support in match-syntax
+- **[change]** - greedy and-block `(a && b)+` support in match-syntax
+- **[change]** - greedy or-block `(a|b)+ z` now consistent with `a+ z`
 - **[plugin]** - compromise-dates 3.11.0
 
 #### 14.19.0 [Oct 2026]

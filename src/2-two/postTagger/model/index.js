@@ -141,8 +141,8 @@ const rules = [
 
   // his [fine] → Noun
   ['(his|its) [%Adj|Noun%] !#NN?', NN, 0, { n: '#Hyphenated' }],
-  // is [all] → Noun
-  ['#Cop #Adv? [all]', NN, 0],
+  // is [all] → Noun, but not 'is all right'
+  ['#Cop #Adv? [(all && !#Adv)]', NN, 0],
   // have [fun] with it → Noun
   [`(have|had) [#Adj] #Prep .`, NN, 0],
   // brewing giant → Noun

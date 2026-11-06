@@ -31,9 +31,9 @@ const repairEnding = function (ptr, document) {
     ptr[2] = document[n].length
     ptr[4] = terms.length > 0 ? terms[terms.length - 1].id : null
   } else {
-    ptr[2] = newEnd // repair ending pointer
+    ptr[2] = newEnd + 1 // repair ending pointer, which is exclusive
   }
-  return document[n].slice(start, ptr[2] + 1)
+  return document[n].slice(start, ptr[2])
 }
 
 /** return a subset of the document, from a pointer */
@@ -60,7 +60,10 @@ const getDoc = function (ptrs, document) {
         terms = document[wild[0]].slice(wild[1], wild[1] + len)
         // actually change the pointer
         const startId = terms[0] ? terms[0].id : null
-        ptrs[i] = [wild[0], wild[1], wild[1] + len, startId]
+        // the ending may have moved too, if its term still exists
+        endId = document[wild[0]].some(term => term.id === endId) ? endId : undefined
+        ptr = [wild[0], wild[1], wild[1] + len, startId, endId]
+        ptrs[i] = ptr
       }
     } else {
       terms = terms.slice(start, end)

@@ -37,10 +37,11 @@ test('freeze-destroy-match :', function (t) {
   // m.freeze()
   doc.remove('extra')
   t.equal(m.text(), 'match here', here + 'broken-match')
-  // ensure it now removes nothing
+  // it removes everything that it reads
   doc.remove(m)
-  t.equal(doc.has('match'), false, here + 'removed some')
-  t.equal(doc.has('here'), true, here + 'kept some')
+  t.equal(doc.has('match'), false, here + 'removed start')
+  t.equal(doc.has('here'), false, here + 'removed end')
+  t.equal(doc.eq(1).text(), 'one two three', here + 'kept the rest')
   t.end()
 })
 

@@ -305,9 +305,10 @@ test(here + 'equivalent ranges — ' + JSON.stringify({ today: [2017, 0, 1], tim
 })
 
 test(here + 'equivalent expressions — ' + JSON.stringify({ today: '2020-01-21', timezone: 'Canada/Pacific' }), t => {
+  // spacetime has no tz history: Canada/Pacific is now fixed at -07:00 for every year
   const context = { today: '2020-01-21', timezone: 'Canada/Pacific' }
   const rows = [
-    [`tues march 2`, '2020-03-02T00:00:00.000-08:00'],
+    [`tues march 2`, '2020-03-02T00:00:00.000-07:00'],
     ['this fri, monday', 'fri jan 24 and mon jan 27'],
     ['next friday, this monday', 'fri jan 31 and mon jan 27'],
 
@@ -317,7 +318,7 @@ test(here + 'equivalent expressions — ' + JSON.stringify({ today: '2020-01-21'
     [`last sunday`, '2020-01-19'],
     [`last wednesday`, '2020-01-15'],
     [`last saturday`, '2020-01-18'],
-    [`wed march 4`, '2020-03-04T00:00:00.000-08:00'],
+    [`wed march 4`, '2020-03-04T00:00:00.000-07:00'],
     ['this fri, next monday', 'fri jan 24 and mon jan 31'],
     ['next friday, next monday', 'fri jan 31 and mon jan 31'],
 

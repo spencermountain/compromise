@@ -346,13 +346,14 @@ test(here + 'equivalent ranges — ' + JSON.stringify({ today: [2017, 0, 1], tim
 })
 
 test(here + 'equivalent expressions — ' + JSON.stringify({ today: '2020-01-21', timezone: 'Canada/Pacific' }), t => {
+  // spacetime has no tz history: Canada/Pacific is now fixed at -07:00 for every year
   const context = { today: '2020-01-21', timezone: 'Canada/Pacific' }
   const rows = [
     // explicit-dates
-    [`march 2nd`, '2020-03-02T00:00:00.000-08:00'],
-    [`2 march`, '2020-03-02T00:00:00.000-08:00'],
-    [`march the second`, '2020-03-02T00:00:00.000-08:00'],
-    [`on the 2nd of march`, '2020-03-02T00:00:00.000-08:00'],
+    [`march 2nd`, '2020-03-02T00:00:00.000-07:00'],
+    [`2 march`, '2020-03-02T00:00:00.000-07:00'],
+    [`march the second`, '2020-03-02T00:00:00.000-07:00'],
+    [`on the 2nd of march`, '2020-03-02T00:00:00.000-07:00'],
 
     // numerical-dates
     [`1999/03/02`, 'march 2 1999'],
@@ -365,10 +366,10 @@ test(here + 'equivalent expressions — ' + JSON.stringify({ today: '2020-01-21'
     ['second half of march', '2020-03-16 to 2020-03-30 '],
 
     // additional explicit-dates
-    [`march 3rd`, '2020-03-03T00:00:00.000-08:00'],
-    [`3 march`, '2020-03-03T00:00:00.000-08:00'],
-    [`march the third`, '2020-03-03T00:00:00.000-08:00'],
-    [`on the 3rd of march`, '2020-03-03T00:00:00.000-08:00'],
+    [`march 3rd`, '2020-03-03T00:00:00.000-07:00'],
+    [`3 march`, '2020-03-03T00:00:00.000-07:00'],
+    [`march the third`, '2020-03-03T00:00:00.000-07:00'],
+    [`on the 3rd of march`, '2020-03-03T00:00:00.000-07:00'],
 
     // additional numerical-dates
     [`1999/03/03`, 'march 3 1999'],
@@ -383,12 +384,12 @@ test(here + 'equivalent expressions — ' + JSON.stringify({ today: '2020-01-21'
     [`11 november`, `2020-11-11T00:00:00.000-07:00`],
     [`december 12th`, `2020-12-12T00:00:00.000-07:00`],
     [`12 december`, `2020-12-12T00:00:00.000-07:00`],
-    [`january 22nd`, `2020-01-22T00:00:00.000-08:00`],
-    [`22 january`, `2020-01-22T00:00:00.000-08:00`],
-    [`february 2nd`, `2020-02-02T00:00:00.000-08:00`],
-    [`2 february`, `2020-02-02T00:00:00.000-08:00`],
-    [`march 2nd 2020`, `2020-03-02T00:00:00.000-08:00`],
-    [`2 march 2020`, `2020-03-02T00:00:00.000-08:00`],
+    [`january 22nd`, `2020-01-22T00:00:00.000-07:00`],
+    [`22 january`, `2020-01-22T00:00:00.000-07:00`],
+    [`february 2nd`, `2020-02-02T00:00:00.000-07:00`],
+    [`2 february`, `2020-02-02T00:00:00.000-07:00`],
+    [`march 2nd 2020`, `2020-03-02T00:00:00.000-07:00`],
+    [`2 march 2020`, `2020-03-02T00:00:00.000-07:00`],
     [`2020/03/02`, `march 2 2020`],
     [`2020-03-02`, `march 2 2020`],
     [`03-02-2020`, `march 2nd 2020`],

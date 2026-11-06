@@ -5,6 +5,11 @@ const methods = {
   past: 'toPastTense', present: 'toPresentTense', future: 'toFutureTense',
   participle: 'toPastParticiple', gerund: 'toGerund', infinitive: 'toInfinitive',
 }
+// Partial views trim their outer punctuation by default
+const keepPunct = { keepEndPunct: true }
+// These are followed by a bare verb, the same as do-support
+const bareVerb = /^(do|does|did|will|would|can|could|shall|should|may|might|must)$/
+const subjectPronoun = /^(i|you|he|she|it|we|they)$/
 const auxiliary = /^(do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must)$/
 // Punctuation before the first word: '-What is it?', '"Did you?"'
 const trimLead = str => str.replace(/^[^\p{L}\p{N}]+/u, '')
@@ -128,15 +133,20 @@ const parseQuestion = function (sentence, target) {
   }
   // Adding a 'not' can go without a predicate: 'Did you?' -> 'Did you not?'
   const bare = polar && asked && !command && end >= words.length
+  // A question can elide its verb after a pronoun: 'did you?', 'why did you really?'
+  let verb = end
+  while (terms.eq(verb).has('(#Adverb|#Negative)')) {
+    verb += 1
+  }
+  // But 'do it?' is a command, and in 'who did it?' the pronoun is an object.
+  const doIt = words[start] === 'it' && /^(do|have)$/.test(words[finite])
+  const hasObject = finite > 0 && !/^(why|when|where|how)$/.test(words[finite - 1])
+  const elided = !copula && !doIt && !hasObject && verb >= words.length && subjectPronoun.test(words[start]) && asked
   // Polite questions have a predicate past the 'please': 'Could you please leave?'
-  const optional = copula || bare || (polar && words[end] === 'please')
+  const optional = copula || bare || elided || (polar && words[end] === 'please')
   if (end === start || (end >= words.length && !optional)) return null
   if (!optional) {
     // A lexical verb can follow adverbs: 'do the walls really need paint'
-    let verb = end
-    while (terms.eq(verb).has('(#Adverb|#Negative)')) {
-      verb += 1
-    }
     const lexical = terms.eq(verb).has('#Verb')
     // Without a '?', these are commands: 'do the dishes quickly', 'do the dishes, walk the dog'
     if (!asked && (!lexical || terms.eq(end - 1).has('@hasComma'))) {
@@ -147,7 +157,7 @@ const parseQuestion = function (sentence, target) {
       return null
     }
   }
-  return { terms, words, finite, start, end, frontNegative }
+  return { terms, words, finite, start, end, frontNegative, elided }
 }
 
 export const isInverted = (sentence, target) => Boolean(parseQuestion(sentence, target))
@@ -219,13 +229,21 @@ const question = function (sentence, target) {
   if (target === 'positive') {
     return affirm(sentence, q)
   }
-  const { terms, words, finite, start, end, frontNegative } = q
-  const subject = terms.slice(start, end).text()
+  const { terms, words, finite, start, end, frontNegative, elided } = q
+  // replaceWith restores the sentence's end-punctuation. All other punctuation stays.
+  terms.termList().at(-1).post = ''
+  const subject = terms.slice(start, end)
   // replaceWith() puts the leading punctuation back
-  const prefix = finite > 0 ? trimLead(terms.slice(0, finite).text()) : ''
-  const tail = terms.slice(end).text()
+  const prefix = finite > 0 ? trimLead(terms.slice(0, finite).text(keepPunct)) : ''
+  let tail = terms.slice(end).text(keepPunct)
+  // An elided verb converts through a stand-in, which is dropped afterwards.
+  if (elided) {
+    const standIn = /^ha/.test(words[finite]) ? 'walked' : 'walk'
+    tail = `${standIn} ${tail}`.trim()
+  }
   const negative = frontNegative ? ' not' : ''
-  const source = subject + ' ' + words[finite] + negative + ' ' + tail
+  // A trimmed subject reads as one clause with its verb, despite any comma.
+  const source = subject.text() + ' ' + words[finite] + negative + ' ' + tail
   // The scratch copies need ids, so that hardened pointers can survive their edits.
   let work = sentence.fromText(source).compute(['id', 'tagger', 'chunks'])
   // Subject-first order keeps the scratch copy on the ordinary conversion path.
@@ -234,14 +252,28 @@ const question = function (sentence, target) {
   work = sentence.fromText(work.text()).compute(['id', 'tagger', 'chunks'])
   const subjectLength = end - start
   let rest = work.terms().slice(subjectLength)
-  let head = rest.eq(0).text('normal')
+  // A copula can stay behind an adverb: 'he really is happy'
+  let at = 0
+  while (rest.eq(at).has('#Adverb')) {
+    at += 1
+  }
+  let verb = rest.eq(at)
+  if (!verb.has('#Copula')) {
+    verb = rest.eq(0)
+  }
+  let head = verb.text('normal')
   if (!auxiliary.test(head)) {
     // Simple lexical questions require do-support, even in positive forms.
     head = target === 'past' ? 'did' : doDoes(work.verbs(0))
-    firstGroup(work.verbs()).toInfinitive()
-    rest = work.terms().slice(subjectLength)
+    // The original verb is already bare. Tagging can miss the inflected one: 'really needed paint'
+    if (target !== 'infinitive' && bareVerb.test(words[finite])) {
+      rest = sentence.fromText(tail).terms()
+    } else {
+      firstGroup(work.verbs()).toInfinitive()
+      rest = work.terms().slice(subjectLength)
+    }
   } else {
-    rest = rest.slice(1)
+    rest = rest.not(verb)
   }
   const contracted = sentence.has('@hasContraction') && frontNegative
   const not = rest.match('not').eq(0)
@@ -254,7 +286,10 @@ const question = function (sentence, target) {
     }
   }
   if (!prefix && /^[A-Z]/.test(trimLead(sentence.text()))) head = head[0].toUpperCase() + head.slice(1)
-  const result = [prefix, head, subject, rest.text()].filter(Boolean).join(' ')
+  if (elided) {
+    rest = rest.not('(walk|walks|walked|walking)')
+  }
+  const result = [prefix, head, subject.text(keepPunct), rest.text(keepPunct)].filter(Boolean).join(' ')
   // Partial text can lose or mangle the ending: '?"'
   const ending = sentence.docs.at(-1).at(-1).post
   const changed = sentence.replaceWith(result).fullSentence().compute(['contractions', 'tagger', 'contractionTwo', 'chunks'])

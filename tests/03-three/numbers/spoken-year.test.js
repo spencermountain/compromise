@@ -165,6 +165,65 @@ test('counts, lists and clock-times', function (t) {
   t.end()
 })
 
+// not a year, and each is its own number
+test('false positives keep their values', function (t) {
+  const arr = [
+    // counted money and measures
+    ['twenty ten dollar bills', [20, 10]],
+    ['I ate twenty ten dollar bills', [20, 10]],
+    ['twenty twenty dollar bills', [20, 20]],
+    ['twenty ten pound notes', [20, 10]],
+    ['twenty ten euro notes', [20, 10]],
+    ['twenty ten cent coins', [20, 10]],
+    ['twenty ten minute walks', [20, 10]],
+    ['twenty ten foot poles', [20, 10]],
+    ['twenty ten metres', [20, 10]],
+    ['twenty ten degrees', [20, 10]],
+    ['twenty ten times', [20, 10]],
+    // a chain of spoken numbers
+    ['five twenty twenty', [520, 20]],
+    ['ten twenty thirty', [10, 20, 30]],
+    ['twenty twenty twenty', [20, 20, 20]],
+    // idioms
+    ['twenty twenty vision', [20, 20]],
+    ['twenty-twenty vision', [20, 20]],
+    ['twenty twenty hindsight', [20, 20]],
+    ['twenty twenty foresight', [20, 20]],
+    ['twenty twenty eyesight', [20, 20]],
+    ['twenty twenty cricket', [20, 20]],
+    // clock-times and game scores
+    ['at twenty thirty', [20, 30]],
+    ['tied at twenty twenty', [20, 20]],
+    ['we won twenty ten', [20, 10]],
+    ['they lost twenty twenty-one', [20, 21]],
+    ['they tied twenty twenty', [20, 20]],
+    ['they drew twenty twenty', [20, 20]],
+  ]
+  arr.forEach(a => {
+    const doc = nlp(a[0])
+    t.notOk(doc.has('#Year'), here + `no #Year: '${a[0]}'`)
+    t.deepEqual(doc.numbers().get(), a[1], here + a[0])
+  })
+  // title-cased words may be a name instead
+  t.notOk(nlp('Twenty Twenty Vision').has('#Year'), here + 'titlecase idiom')
+  t.end()
+})
+
+// the same words are still years, with other neighbours
+test('checks do not over-reach', function (t) {
+  const arr = [
+    ['the twenty thirty vision', 2030],
+    ['the twenty thirty hindsight', 2030],
+    ['we won in twenty ten', 2010],
+    ['we lost in twenty twenty-one', 2021],
+    ['the twenty ten results', 2010],
+    ['by twenty thirty', 2030],
+    ['until twenty thirty', 2030],
+  ]
+  arr.forEach(a => isYear(t, a[0], a[1]))
+  t.end()
+})
+
 // no reliable clue in the sentence - so the assumed reading is the year, while staying a number
 test('ambiguous scores are years', function (t) {
   isYear(t, 'the score was twenty twenty', 2020)

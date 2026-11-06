@@ -23,6 +23,8 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - problematic regex fixes
 - **[fix]** - whitespace tokenization in match strings
 - **[change]** - interpret 'twenty twenty six' as year (from 2010-2040)
+- **[change]** - concatenated number-parsing - "sixty fifteen and thirty five"
+- **[change]** - `(a && b)+` support in match-syntax
 - **[plugin]** - compromise-dates 3.11.0
 
 #### 14.19.0 [Oct 2026]

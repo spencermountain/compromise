@@ -51,7 +51,7 @@ const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
 // order matters top-matches can get overwritten
 const noun = '(#NN && !#Poss && !@hasComma)'
 const modifiers = '(#Det|#Poss)? #Adv+? #Adj+?'
-const subject = `${modifiers} ${noun}+`
+const subject = `${modifiers} ${noun}`
 const predicate = '#Adv+? not? (#V && !#Ger && !#Particle)'
 
 const rules = [
@@ -293,7 +293,7 @@ const rules = [
     Actor,
   ],
   // dance coach → Actor
-  [`(#NN && !#Pron)+ (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`, Actor],
+  [`(#NN && !#Pron) (coach|chef|king|engineer|fellow|personality|boy|girl|man|woman|master)`, Actor],
   // chief design officer → Actor
   [`chief . officer`, Actor],
   // chief of police → Actor
@@ -687,14 +687,14 @@ const rules = [
 
   // baker jenna smith
   // { match: '[#Actor+] #Person', group: 0, tag: 'Person' },
-  // [sergeant] major Harold → Honorific
+  // [sergeant] major Harold → Honorific - but not [King] Street
   [
-    '[(lieutenant|corporal|sergeant|captain|qeen|king|admiral|major|colonel|marshal|president|queen|king)+] #Prop',
+    '[(lieutenant|corporal|sergeant|captain|admiral|major|colonel|marshal|president|queen|king|minister|senator|governor|chancellor|mayor|judge|congressman|chairman|professor|ambassador)+] (#Prop && !#Place)',
     'Hon',
     0,
   ],
-  // [vice chairman] Harold → Honorific
-  ['[vice (#Actor|premier|chair|principal)] #Prop', 'Hon', 0],
+  // [vice chairman] Harold, [deputy prime minister] Harold → Honorific
+  ['[(senior|executive|deputy)? (vice|prime|deputy) (#Actor|premier|chair|principal)] #Prop', 'Hon', 0],
   // ==== Honorics ====
   // [general] John → ['Hon', 'Pers']
   ['[(private|general|major|rear|prime|field|count)] #Hon? #Pers', ['Hon', 'Pers'], 0],

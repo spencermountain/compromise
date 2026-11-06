@@ -109,7 +109,9 @@ fns.replaceWith = function (input, keep = {}) {
   // try to keep any post-punctuation
   if (originalPost && main.docs[0]) {
     const lastOne = main.docs[0].at(-1)
-    if (!lastOne.post.trim()) {
+    // the punctuation may have moved here without its spaces - ' - '
+    const post = lastOne.post.trim()
+    if (!post || post === originalPost.trim()) {
       lastOne.post = originalPost
     }
   }

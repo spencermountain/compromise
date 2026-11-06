@@ -63,7 +63,8 @@ const compoundOrdinal = (m) => {
 
 // parse 'five thirds'
 const nOrinalth = function (m) {
-  const found = m.match('[<num>(#Cardinal|a)+] [<den>#Fraction+]')
+  // the words of 'thirty five fifths' are all tagged as #Fraction
+  const found = m.match('[<num>(#Cardinal|a)+] [<den>(#Fraction && !#Cardinal)+]')
   if (found.found !== true) {
     return null
   }

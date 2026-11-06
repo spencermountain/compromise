@@ -5,6 +5,12 @@ import spokenYear from '../../../methods/spokenYear.js'
 const joined = /^( +|-)$/
 // these neighbours make it a count - some units are only found in the postTagger
 const counted = ['Value', 'Unit', 'Currency', 'Duration']
+// other measures, that are not tagged as units
+const measures = /^(times|euro|penny|quid|nickels|kms|kgs|lbs|metres?|tons|degrees?|calories|watts)$/
+// clock-times and game scores - 'at twenty thirty', 'we won twenty ten'
+const notBefore = /^(at|won|lost|tied|drew)$/
+// 'twenty twenty vision', but not 'twenty thirty vision'
+const idioms = /^(vision|hindsight|foresight|eyesight|cricket)$/
 
 // find the longest form of year, starting here
 const getYear = function (terms, i) {
@@ -23,8 +29,7 @@ const isCountLeft = function (terms, i) {
   if (!prev || !joined.test(prev.post)) {
     return false
   }
-  // the clock-time 'at twenty thirty'
-  if (prev.normal === 'at') {
+  if (notBefore.test(prev.normal)) {
     return true
   }
   // 'five twenty twenty', but not 'june five twenty twenty' - 'march' and 'may' aren't months yet
@@ -41,11 +46,10 @@ const isCountRight = function (year, next) {
   if (!next || !joined.test(last.post)) {
     return false
   }
-  if (counted.some(tag => next.tags.has(tag))) {
+  if (counted.some(tag => next.tags.has(tag)) || measures.test(next.normal)) {
     return true
   }
-  // 'twenty twenty vision', but not 'twenty thirty vision'
-  return year.length === 2 && year[1].normal === 'twenty' && /^(vision|hindsight)$/.test(next.normal)
+  return year.length === 2 && year[1].normal === 'twenty' && idioms.test(next.normal)
 }
 
 // recognize 'twenty twenty-six' as a year, before it can become a titlecase noun

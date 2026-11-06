@@ -240,12 +240,12 @@ const matches = [
 
   //'two days before'/ 'nine weeks frow now'
   {
-    match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)',
+    match: '(#Cardinal+|a|an) #Duration (before|after|ago|from|hence|back)',
     tag: 'DateShift',
     reason: 'nine weeks frow now',
   },
   // in two weeks
-  { match: 'in (around|about|maybe|perhaps)? #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
+  { match: 'in (around|about|maybe|perhaps)? #Cardinal+ #Duration', tag: 'DateShift', reason: 'in two weeks' },
   { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
   // an hour from now
   { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },

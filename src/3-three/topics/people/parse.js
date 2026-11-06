@@ -8,8 +8,8 @@ const parse = function (m) {
   const first = res.firstName
   if (!first.found || !last.found) {
     // let p = m.clone()
-    // assume 'Mr Springer' is a last-name
-    if (!first.found && !last.found && m.has('^#Honorific .$')) {
+    // assume 'Mr Springer', or 'Vice President Springer' is a last-name
+    if (!first.found && !last.found && m.has('^#Honorific #Honorific? .$')) {
       res.lastName = m.match('.$')
       return res
     }

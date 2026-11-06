@@ -29,8 +29,8 @@ const compute = function (view) {
   // sorry, one more - twice, to chain '2 years, 4 months and 5 days ago'
   if (view.has('#DateShift')) {
     for (let i = 0; i < 2; i += 1) {
-      view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before')
-      view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks')
+      view.match('#Cardinal+ #Duration and? #DateShift').tag('DateShift', 'three days before')
+      view.match('#DateShift and #Cardinal+ #Duration').tag('DateShift', 'three days and two weeks')
     }
   }
   // view.match('in #Adverb #DateShift').tag('Date', 'in-around-2-weeks')

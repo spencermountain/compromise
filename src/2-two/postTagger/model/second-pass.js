@@ -4,7 +4,7 @@ import hangingAdverbs from './hanging-adverbs.js'
 
 const noun = '(#NN && !#Poss && !@hasComma)'
 const modifiers = '(#Det|#Poss)? #Adv+? #Adj+?'
-const subject = `${modifiers} ${noun}+`
+const subject = `${modifiers} ${noun}`
 const predicate = '#Adv+? not? (#V && !#Ger && !#Particle)'
 const seatedQuestion = '^(which|what) #Adj+? #NN (did|does|do|#Mod) #Pron [sit] [on]$'
 

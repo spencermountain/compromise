@@ -1,7 +1,7 @@
 // Split parenthesized match blocks without retrying long rejected prefixes or
 // bodies. Preserve the original grammar, including its greedy capture header.
 const prefix = new Set('!~[^')
-const suffix = new Set('?]+*$~')
+const suffix = new Set('?]+*$~{},0123456789')
 const whitespace = /\s/
 
 const splitGroups = str => {

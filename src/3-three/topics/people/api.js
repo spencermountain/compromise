@@ -20,7 +20,10 @@ const addMethod = function (View) {
       const opts = typeof n === 'object' ? n : {}
       return this.getNth(n).map(p => {
         const json = p.toView().json(opts)[0]
-        const parsed = parse(p)
+        // read the names from a copy, without its possessive - "Biden's" → 'biden'
+        const tmp = p.clone()
+        tmp.possessives().strip()
+        const parsed = parse(tmp)
         json.person = {
           firstName: parsed.firstName.text('normal'),
           lastName: parsed.lastName.text('normal'),

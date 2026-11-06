@@ -5,7 +5,7 @@ import splitRegs from './splitRegs.js'
 const byWord = /\s+/
 
 const isBlock = str => {
-  return /^[![^]*(<[^<]*>)?\(/.test(str) && /\)[?\]+*$~]*$/.test(str)
+  return /^[![^]*(<[^<]*>)?\(/.test(str) && /\)[?\]+*$~{},0-9]*$/.test(str)
 }
 const isReg = str => {
   return /^[![^]*(<[^<]*>)?\//.test(str) && /\/[?\]+*$~]*$/.test(str)

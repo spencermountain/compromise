@@ -1,10 +1,17 @@
 const ones = 'one|two|three|four|five|six|seven|eight|nine'
 const tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty'
-const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen'
+const teens = 'ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen'
 
 // this is a bit of a mess
 // segment consecutive number-words into sensible chunks
 const splitNumbers = function (m) {
+  // two hundred - three hundred
+  m = m.splitAfter('@hasDash')
+  // a tens-word ends its number - 'sixty fifteen', 'twenty eighty two'
+  while (m.has(`(${tens}) (${tens}|${teens})`)) {
+    m = m.splitBefore(`(${tens}) [(${tens}|${teens})]`, 0)
+  }
+
   //"50 83"
   if (m.has('#NumericValue #NumericValue')) {
     //a comma may mean two numbers
@@ -30,10 +37,6 @@ const splitNumbers = function (m) {
     //june 21st 1992 is two seperate values
     if (m.has('#NumericValue #NumericValue')) {
       m = m.splitOn('#Year')
-    }
-    //sixty fifteen
-    if (m.has('(' + tens + ') (' + teens + ')')) {
-      m = m.splitAfter('(' + tens + ')')
     }
 
     //"72 82"
@@ -84,7 +87,7 @@ const splitNumbers = function (m) {
 const findNumbers = function (doc) {
   const m = doc.match('#Value+')
   // spoken years are already whole - 'twenty twenty six'
-  const years = m.match('#TextValue+').match('#Year+').splitAfter('(@hasComma|@hasDash)')
+  const years = m.match('(#Year && #TextValue)+').splitAfter('(@hasComma|@hasDash)')
   if (!years.found) {
     return splitNumbers(m)
   }

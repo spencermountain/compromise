@@ -10,6 +10,8 @@ const banList = {
 const beforePossessive = new Set(['in', 'by', 'for', 'of', 'at', 'with', 'to', 'on', 'from', 'about', 'into'])
 // "Kathy's and Mary's", "a master's of science"
 const joiners = new Set(['and', 'or', 'nor', 'but', '&', 'of'])
+// things that are done, and not owned - Mom's cooked dinner, John's parked here
+const bareObject = new Set(['dinner', 'lunch', 'breakfast', 'supper', 'work', 'school', 'college', 'home', 'here', 'there'])
 const adjLike = new Set(['too', 'also', 'enough', 'about'])
 const nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must', 'had', 'have'])
 // "is was" or "has was" can't happen, so a copula means the 's is possessive
@@ -43,6 +45,10 @@ const isPossessive = (terms, i) => {
     if (nextTerm.tags.has('#Noun')) {
       return true
     }
+    return false
+  }
+  // these only follow 'is' or 'has' - the man in black's gonna
+  if (/^(gonna|gotta|got|been)$/.test(nextTerm.normal)) {
     return false
   }
   // "Kathy's, not mine" and "Kathy's and Mary's"
@@ -105,7 +111,9 @@ const isPossessive = (terms, i) => {
     const two = terms[i + 2]
     const three = terms[i + 3]
     if (two && /ed$/.test(nextTerm.normal)) {
-      if (two.tags.has('Singular') && !two.tags.has('ProperNoun')) {
+      // but not Mom's cooked dinner, Mary's visited Paris, John's finished today
+      const isThing = two.tags.has('Noun') && !['ProperNoun', 'Pronoun', 'Date'].some(tag => two.tags.has(tag))
+      if (isThing && !bareObject.has(two.normal)) {
         return true
       }
       if (three && two.tags.has('Adjective') && three.tags.has('Noun') && !three.tags.has('Pronoun')) {
@@ -161,8 +169,8 @@ const isPossessive = (terms, i) => {
     if (!twoTerm || (isAdv && o === i + 2 && nextTerm.normal !== 'only')) {
       return false
     }
-    // rocket's red nozzle
-    if (twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun')) {
+    // rocket's red nozzle - but not John's still here
+    if (twoTerm.tags.has('Noun') && !twoTerm.tags.has('Pronoun') && !/^t?here$/.test(twoTerm.normal)) {
       //project's behind schedule
       const str = nextTerm.normal
       if (str === 'above' || str === 'below' || str === 'behind') {

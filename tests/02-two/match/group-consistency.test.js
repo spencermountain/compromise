@@ -178,6 +178,44 @@ test('looking ahead to a group', function (t) {
   t.end()
 })
 
+// 'foo*' is zero or more, like the wildcard '*'
+test('a star can match nothing', function (t) {
+  const arr = [
+    ['the dogs bark', 'the * dogs', ['the dogs']],
+    ['the dogs bark', 'the #Adjective* dogs', ['the dogs']],
+    ['the big dogs bark', 'the #Adjective* dogs', ['the big dogs']],
+    ['the big red dogs bark', 'the #Adjective* dogs', ['the big red dogs']],
+    ['the dogs bark', 'the (#Adjective|#Adverb)* dogs', ['the dogs']],
+    ['the very big dogs bark', 'the (#Adjective|#Adverb)* dogs', ['the very big dogs']],
+    ['the dogs bark', 'the (#Adjective && !#Adverb)* dogs', ['the dogs']],
+    ['the big red dogs bark', 'the (#Adjective && !#Adverb)* dogs', ['the big red dogs']],
+    ['the dogs bark', 'the #Adjective* #Adverb* dogs', ['the dogs']],
+    ['the very big dogs bark', 'the #Adverb* #Adjective* dogs', ['the very big dogs']],
+    ['dogs bark', '#Adjective* dogs', ['dogs']],
+    ['big dogs bark', '^#Adjective* dogs', ['big dogs']],
+    ['the dogs bark', 'the #Adjective*', ['the']],
+    ['the big dogs bark', 'the #Adjective*', ['the big']],
+    ['the dogs bark', 'the #Adjective*$', []],
+    ['the big big dogs', 'the #Adjective* big dogs', ['the big big dogs']],
+    // it still needs its neighbours
+    ['the dogs bark', 'the #Adjective* cats', []],
+    ['the dogs bark', 'the #Adjective* dogs$', []],
+    // it has nothing to match, on its own
+    ['the dogs bark', '#Adjective*', []],
+    // the same as '+?'
+    ['the dogs bark', 'the #Adjective+? dogs', ['the dogs']],
+    ['the big dogs bark', 'the #Adjective+? dogs', ['the big dogs']],
+  ]
+  arr.forEach(([text, reg, want]) => {
+    t.deepEqual(run(text, reg), want, here + `'${text}' ${reg}`)
+  })
+  // captures
+  t.deepEqual(nlp('the dogs').match('the [#Adjective*] dogs', 0).out('array'), [], here + 'empty capture')
+  t.deepEqual(nlp('the big dogs').match('the [#Adjective*] dogs', 0).out('array'), ['big'], here + 'capture')
+  t.deepEqual(nlp('the dogs').match('the #Adjective* [dogs]', 0).out('array'), ['dogs'], here + 'capture after')
+  t.end()
+})
+
 // the term goes to the next token, and so should any capture
 test('an optional group in a capture', function (t) {
   const arr = [

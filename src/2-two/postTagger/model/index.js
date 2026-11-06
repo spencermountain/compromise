@@ -45,6 +45,8 @@ const infNouns =
   '(feel|sense|process|rush|side|bomb|bully|challenge|cover|crush|dump|exchange|flow|function|issue|lecture|limit|march|process)'
 const notIf = '(i|we|they)' //we do not go
 const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
+const streets = '(st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway)'
+const fractionNoun = '(the|this|that|each|every|last|final|next|#Ord|#Poss)'
 
 // [match, tag, group, options]; omit group to tag the full match.
 
@@ -557,10 +559,9 @@ const rules = [
 
   // === numbers/fractions.js ===
 
-  // [half] a penny → Fraction
-  ['[(a|one)? half] of? (a|an|the)', Frac, 0],
-  // [quarter] of a dollar → Fraction
-  ['[(a|one)? quarter] of? (a|an|the)', Frac, 0],
+  // [half] a penny, [quarter] of a dollar → Fraction
+  // (not the third quarter of the game, or my half of the deal)
+  [`${fractionNoun}? #Adj? [(a|one)? (half|quarter)] of? (a|an|the)`, Frac, 0, { n: `^${fractionNoun}` }],
   // two and a half → Fraction
   ['#Card and a half', Frac],
   // two-halves → Fraction
@@ -584,6 +585,8 @@ const rules = [
 
   // === numbers/numbers.js ===
 
+  // version [10.11.12] → Singular; remove Date (but not release 15.03.2020)
+  ['(version|ver|v|build|patch|firmware|kernel|revision|rev|release) [(#Date && /\\.[0-9][0-9]?$/)]', Sing, 0, { u: Date }],
   // ==== Ambiguous numbers ====
   // with [a] hundred jobs → Value
   ['!once? [(a|an)] hundred', Val, 0],
@@ -1095,10 +1098,9 @@ const multi = [
   // Toronto point → Place
   ['#Prop+ (cliff|place|range|pit|place|point|room|grounds|ruins)', Place],
   // 123 main street → Address
-  [
-    '#Value #NN+ (st|street|rd|road|crescent|cr|way|tr|terrace|avenue|ave|lane|boulevard|blvd|drive|dr|parkway|way)',
-    'Address',
-  ],
+  [`#Value #NN+ ${streets}`, 'Address'],
+  // 12 march Street → remove Date (but not '12 March road closures')
+  [`#Value #NN+ ${streets}`, null, null, { n: '!@isTitleCase$', u: Date }],
   // port dover → Place
   ['(port|mount|mt) #Prop', Place],
 

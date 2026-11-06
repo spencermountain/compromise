@@ -62,6 +62,29 @@ const isQuestionVerb = (terms, i) => {
   return 'Infinitive'
 }
 
+// A singular determiner cannot lead a plural head: 'a good morning routine helps'.
+// Mid-clause, the word may modify a noun: 'a fantasy sports league'.
+const singularDet = new Set(['a', 'an', 'this', 'that', 'each', 'every', 'another'])
+const hasSingularSubject = (terms, i) => {
+  if (terms[i + 1] || !terms[i - 1]?.tags.has('Noun') && !terms[i - 1]?.tags.has('Time')) {
+    return false
+  }
+  for (let n = i - 1; n >= 0; n -= 1) {
+    const { tags, normal } = terms[n]
+    if (singularDet.has(normal)) {
+      return true
+    }
+    // These can head a plural: 'a friend's plans', 'once a week updates', 'a couple plans'.
+    if (normal.endsWith("'s") || normal === 'couple' || tags.has('Duration')) {
+      return false
+    }
+    if (!tags.has('Noun') && !tags.has('Adjective') && !tags.has('Adverb') && !tags.has('Time')) {
+      return false
+    }
+  }
+  return false
+}
+
 const adhoc = {
   'Adj|Gerund': (terms, i) => {
     return isCapital(terms, i)
@@ -110,6 +133,9 @@ const adhoc = {
     // A singular demonstrative makes 'this still helps' a predicate.
     const subject = terms[i - 2]?.normal
     if (terms[i - 1]?.normal === 'still' && (subject === 'this' || subject === 'that')) {
+      return 'PresentTense'
+    }
+    if (hasSingularSubject(terms, i) && !isCapital(terms, i)) {
       return 'PresentTense'
     }
     return isCapital(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')

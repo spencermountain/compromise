@@ -1,8 +1,11 @@
 const hasContraction = /'/
 
+// these take 'has', whatever follows - he's gone to, he's left for, it's improved
 const hasWords = new Set([
   'been', //the meeting's been ..
   'become', //my son's become
+  ...'got gotten gone come had left fallen arrived lived worked moved looked talked happened stayed appeared'.split(' '),
+  ...'improved increased failed escaped expanded developed turned'.split(' '),
 ])
 const isWords = new Set([
   'what', //it's what
@@ -11,9 +14,11 @@ const isWords = new Set([
   'if', //it's if
   'too',
 ])
-const adjLike = new Set(['too', 'also', 'enough'])
+const adjLike = new Set(['too', 'also', 'enough', 'outside', 'inside', 'here', 'there'])
 // passive, nearly every time - it's called, he's supposed to
-const passive = new Set(['called', 'supposed', 'meant', 'located', 'allowed', 'headed'])
+const passive = new Set(['called', 'supposed', 'meant', 'located', 'allowed', 'headed', 'married'])
+// a past word before these is passive - made by, derived from, attracted to
+const passivePrep = new Set(['for', 'by', 'to', 'from', 'with', 'as', 'at', 'in', 'into', 'around'])
 
 // the big clue is the tense of the following verb
 const isOrHas = (terms, i) => {
@@ -39,28 +44,36 @@ const isOrHas = (terms, i) => {
       return 'is'
     }
     const next = terms[o + 1]
-    // it's called x - but he's called me
-    if (passive.has(t.normal) && !(next && next.tags.has('Pronoun'))) {
-      return 'is'
+    if (passive.has(t.normal)) {
+      // it's called a peach - but he's called me, she's married a doctor
+      const hasObject = next && (next.tags.has('Pronoun') || (t.normal !== 'called' && next.tags.has('Determiner')))
+      if (!hasObject) {
+        return 'is'
+      }
     }
-    // the car's parked - but he's left
-    if (t.switch === 'Adj|Past' && t.normal !== 'left') {
+    // the car's parked
+    if (t.switch === 'Adj|Past') {
       // she's tired. she's tired, and ..
       if (!next || /[,;:]/.test(t.post) || next.tags.has('Conjunction')) {
         return 'is'
       }
-      // car's parked too, car's parked on ..
-      if (adjLike.has(next.normal) || next.tags.has('Preposition')) {
+      // car's parked too, car's parked on, car's parked outside
+      if (adjLike.has(next.normal) || next.tags.has('Preposition') || next.tags.has('Adverb')) {
         return 'is'
       }
     }
     // The meeting's scheduled vs The plane's landed
     if (t.tags.has('PastTense')) {
-      // meeting's scheduled for, cake's made by
-      if (next && (next.normal === 'for' || next.normal === 'by')) {
+      // meeting's scheduled for, cake's made by - but baby's learned to crawl
+      const two = terms[o + 2]
+      if (next && passivePrep.has(next.normal) && !(next.normal === 'to' && two && two.tags.has('Verb'))) {
         return 'is'
       }
       return 'has'
+    }
+    // a later verb is in another clause - it's because he left, but it's now been
+    if (t.tags.has('Noun') || t.tags.has('Preposition') || (t.tags.has('Conjunction') && t.normal !== 'now')) {
+      return 'is'
     }
   }
   return 'is'

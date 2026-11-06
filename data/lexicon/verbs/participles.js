@@ -6,6 +6,7 @@ export default [
   'beaten',
   'begun',
   'bitten',
+  'born',
   'blown',
   'built',
   'chosen',

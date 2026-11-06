@@ -243,7 +243,6 @@ export default [
   'soft',
   'solemn',
   'solid',
-  'soon',
   'sore',
   'special',
   'spicy',

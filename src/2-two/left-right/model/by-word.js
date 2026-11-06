@@ -164,6 +164,11 @@ const rules = {
   enough: [
     // high [enough]
     '#Adj _ -> #Adv',
+    'soon _ -> #Adv',
+  ],
+  pretty: [
+    // [pretty] soon
+    '_ soon -> #Adv',
   ],
   least: [
     // [least] expensive
@@ -320,6 +325,8 @@ const rules = {
     // [right] after
     '_ (before|after|in|into|to|toward|above|below|under|over) -> #Adv',
     '_ of -> #NN',
+    // the [right] to vote
+    '(#Det|#Poss) _ to -> #NN',
   ],
   there: [
     // always [there]
@@ -417,11 +424,6 @@ const rules = {
     // plants that were [growing]
     '#Cop _ -> #Ger',
   ],
-  soon: [
-    '_ after$ -> #Adv',
-    // the shop is closing [soon]
-    'closing _ $ -> #Adv',
-  ],
   penny: [
     // half a [penny]
     'a _ $ -> #Currency',
@@ -435,10 +437,14 @@ const rules = {
     'start _ finish -> #Prep',
     // [to] the store
     '_ (#Det|#Poss|#Pron|#Email|#Url) -> #Prep | !#Conj',
+    // went [to] 888 (but not 3 to 5)
+    '#V _ #Value -> #Prep | !#Conj',
   ],
   in: [
     // bowed his head [in] prayer
     '_ prayer -> #Prep',
+    // closed [in] july
+    '_ #Month -> #Prep',
   ],
   pope: [
     // [pope] francis

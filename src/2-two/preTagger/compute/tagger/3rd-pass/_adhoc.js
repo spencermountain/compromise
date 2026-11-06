@@ -104,6 +104,16 @@ const isPluralCompound = (terms, i) => {
   return null
 }
 
+// 'sports [records] are' - but not 'the cars he [drives] are'.
+const isBeforeAre = (terms, i) => {
+  const prev = terms[i - 1]
+  const hasSubject = prev?.tags.has('Pronoun') && !prev.tags.has('Possessive')
+  if (/^(are|were)$/.test(terms[i + 1]?.normal) && !hasSubject) {
+    return 'Plural'
+  }
+  return null
+}
+
 // 'a [routine] helps'
 const isSubjectNoun = (terms, i) => {
   if (singularDet.has(terms[i - 1]?.normal) && terms[i + 1]?.switch === 'Plural|Verb' && !terms[i + 2]) {
@@ -192,7 +202,7 @@ const adhoc = {
     if (terms[i - 1]?.normal === 'still' && (subject === 'this' || subject === 'that')) {
       return 'PresentTense'
     }
-    return isCapital(terms, i) || isSingularSubject(terms, i) || isPluralCompound(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
+    return isCapital(terms, i) || isSingularSubject(terms, i) || isPluralCompound(terms, i) || isBeforeAre(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
   },
   'Person|Noun': (terms, i) => {
     // A robin sang; her faith never wavered.

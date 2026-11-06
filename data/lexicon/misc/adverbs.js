@@ -18,6 +18,7 @@ export default [
   'apart',
   'aside',
   'as soon',
+  'soon',
   'at best',
   'at large',
   'at least',
@@ -86,4 +87,5 @@ export default [
   'altogether',
   "outright",
   'fucking',
+  'now',
 ]

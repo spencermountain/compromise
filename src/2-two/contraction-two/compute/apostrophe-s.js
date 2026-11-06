@@ -94,8 +94,8 @@ const isOrHas = (terms, i) => {
       }
       return 'has'
     }
-    // a later verb is in another clause - it's because he left, but it's now been
-    if (t.tags.has('Noun') || t.tags.has('Preposition') || (t.tags.has('Conjunction') && t.normal !== 'now')) {
+    // a later verb is in another clause - it's because he left
+    if (t.tags.has('Noun') || t.tags.has('Preposition') || t.tags.has('Conjunction')) {
       return 'is'
     }
   }

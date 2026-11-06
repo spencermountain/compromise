@@ -10,6 +10,7 @@ const dateWords = new Set([
   'on',
   'by',
   'until',
+  'since',
   'for',
   'to',
   'during',

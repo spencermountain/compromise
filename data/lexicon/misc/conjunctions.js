@@ -27,7 +27,6 @@ export default [
   'in order to',
   'just as',
   'nor',
-  'now',
   'now since',
   'now that',
   'now when',

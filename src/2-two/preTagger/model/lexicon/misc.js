@@ -62,6 +62,7 @@ const misc = {
   her: prp,
   his: prp,
   hers: prp,
+  ours: prp,
   their: prp,
   theirs: prp,
   your: prp,
@@ -70,6 +71,8 @@ const misc = {
   vs: [Conj, Abbr],
   closer: Comp,
   closest: Sup,
+  sooner: Comp,
+  soonest: Sup,
   may: Mod,
 
   // irregular conjugations with two forms

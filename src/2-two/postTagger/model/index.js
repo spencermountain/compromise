@@ -91,8 +91,8 @@ const rules = [
   ['#Sing is #Adv? [%Adj|Past%]$', Adj, 0],
   // [forgotten] art is rediscovered → Adjective
   ['[#Past] #Sing is', Adj, 0],
-  // [forgotten] stories are lost → Adjective
-  ['[#Past] #Plur are', Adj, 0],
+  // [forgotten] stories are lost → Adjective (not: i said times are changing)
+  ['(#NN && !#Poss)? [#Past] #Plur are', Adj, 0, { n: '(#NN && !#Poss) #Past' }],
   // is [fucked up] → Adjective
   ['#Cop [fucked up?]', Adj, 0],
   // jury is out - preposition ➔ adjective
@@ -176,7 +176,7 @@ const rules = [
   // === adverb.js ===
 
   // [way] too hot → Adverb
-  ['[way] #Adv #Adj', Adv, 0],
+  ['[way] #Adv (#Adj|#Adv)', Adv, 0],
   // sing [like] an angel → Adverb
   ['#V  [like]', Adv, 0, { n: '(#Mod|#PhrV)' }],
   // even left → Adverb Verb
@@ -229,7 +229,8 @@ const rules = [
   // 12 march → Date Month (not: these 5 may leave, $5 may help, the first march)
   [`[/^([0-9]{1,2}(st|nd|rd|th)?|(1[0-9]|20)[0-9]{2})$/ (march|may)] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
   // [march] and feb → Month (not: you may leave tomorrow, they march on monday)
-  ['(#Pron|#Plur)? [(march|may)] (#Conj|#Prep|this|that|next|last)? #Date', 'Month', 0, { n: verbSubject }],
+  // (nor: the march on monday)
+  ['(#Pron|#Plur|#Det)? [(march|may)] (#Conj|#Prep|this|that|next|last)? #Date', 'Month', 0, { n: '(#Pron|#Plur|#Det) (/^(march|may)$/ && !@isTitleCase)' }],
   // feb to [march] → Month (not: tomorrow may be better, tomorrow we march)
   [`#Date (#Conj|#Prep)? [(march|may)] #Adv? (${afterModal}|#Pron)?`, 'Month', 0, { n: `may #Adv? (${afterModal}|#Pron)` }],
   // as [may] be necessary → Modal (not: as may approaches)
@@ -348,6 +349,8 @@ const rules = [
   ['#Past #Poss [#V]', NN, 0, { n: '(saw|made)' }],
   // 35 [signs] → Plural
   ['#Value [%Plural|Verb%]', Plur, 0, { n: '(one|1|a|an)' }],
+  // a 4 hour [drive] → Noun
+  ['#Value (#Duration && #Sing) [%Noun|Verb%]', NN, 0],
   // had [time] → Noun
   ['had [%Noun|Verb%]', NN, 0, { n: '(#Ger|come|become)' }],
   // instant access → Adjective Noun
@@ -570,8 +573,9 @@ const rules = [
 
   // [half] a penny, [quarter] of a dollar → Fraction
   // (not the third quarter of the game, or my half of the deal)
-  ['[(a|one) (half|quarter)] of? (a|an|the)', Frac, 0],
-  [`${fractionNoun}? #Adj? [(half|quarter)] of? (a|an|the)`, Frac, 0, { n: `${fractionNoun} #Adj? (half|quarter)` }],
+  ['[(a|one) (half|quarter)] of? (a|an|the)', Frac, 0, { u: Date }],
+  [`${fractionNoun}? [(a|one)? (half|quarter)] of #Pron`, Frac, 0, { n: `${fractionNoun} (half|quarter)`, u: Date }],
+  [`${fractionNoun}? #Adj? [(half|quarter)] of? (a|an|the)`, Frac, 0, { n: `${fractionNoun} #Adj? (half|quarter)`, u: Date }],
   // two and a half → Fraction
   ['#Card and a half', Frac],
   // two-halves → Fraction
@@ -1121,6 +1125,8 @@ const multi = [
   ...['who', 'what', 'where', 'why', 'how', 'when'].map(word => [`[${word}] #NN #Cop #Adv? (#V|#Adj)`, Conj, 0]),
   // things [that] seem cool → Conjunction
   ['#NN [that] #V #Adj', Conj, 0],
+  // we found [that] eggs hatch → Conjunction (but not: he owns that sports car)
+  ['#V #Adv? [that] (#Plur && !#Prop && !%Plural|Verb%) #Sing?', Conj, 0, { n: 'that #Plur #Sing' }],
   // he was [that] wide → Adverb
   ['#NN #Cop not? [that] #Adj', Adv, 0],
   // [to] lunch → Preposition; remove Conjunction

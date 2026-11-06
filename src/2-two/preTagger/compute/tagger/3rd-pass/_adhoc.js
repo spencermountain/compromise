@@ -73,11 +73,19 @@ const isSingularSubject = (terms, i) => {
   }
   for (let n = i - 1; n >= 0; n -= 1) {
     const term = terms[n]
+    // Punctuation splits the phrase: '(a) in future reports'.
+    if (/[^\s-]/.test(term.post)) {
+      return null
+    }
     if (singularDet.has(term.normal)) {
       return 'PresentTense'
     }
-    // These allow a plural head: a friend's plans, once a week updates, a couple plans.
+    // These allow a plural head: a friend's plans, a couple plans, once a week updates.
     if (term.normal.endsWith("'s") || term.normal === 'couple' || term.tags.has('Duration')) {
+      return null
+    }
+    // A verb can intervene: 'a job cleaning mirrors'.
+    if (term.switch === 'Noun|Gerund') {
       return null
     }
     if (!isNounLike(term) && !term.tags.has('Adjective') && !term.tags.has('Adverb')) {
@@ -87,12 +95,20 @@ const isSingularSubject = (terms, i) => {
   return null
 }
 
+// 'a [routine] helps'
+const isSubjectNoun = (terms, i) => {
+  if (singularDet.has(terms[i - 1]?.normal) && terms[i + 1]?.switch === 'Plural|Verb' && !terms[i + 2]) {
+    return 'Noun'
+  }
+  return null
+}
+
 const adhoc = {
   'Adj|Gerund': (terms, i) => {
     return isCapital(terms, i)
   },
   'Adj|Noun': (terms, i) => {
-    return isCapital(terms, i) || isEndNoun(terms, i)
+    return isCapital(terms, i) || isEndNoun(terms, i) || isSubjectNoun(terms, i)
   },
   'Actor|Verb': (terms, i) => {
     return isCapital(terms, i)

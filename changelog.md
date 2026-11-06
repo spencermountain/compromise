@@ -13,7 +13,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 #### 14.20.0 [Nov 2026]
 
 - **[new]** - html, markdown, unist, and subtitle plugins
-- **[new]** - add plugin callback for .replace() events
+- **[new]** - - add plugin callback for .replace() events
 - **[fix]** - #1254 #1255 #1256 issues parsing large numbers
 - **[fix]** - #1257 fraction/ordinal date interpretation
 - **[fix]** - #1258 verb normalization
@@ -22,11 +22,15 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - #1262 Preserve punctuation in quotation text output
 - **[fix]** - problematic regex fixes
 - **[fix]** - whitespace tokenization in match strings
-- **[change]** - interpret 'twenty twenty six' as year (from 2010-2040)
-- **[change]** - concatenated number-parsing - "sixty fifteen and thirty five"
-- **[change]** - greedy and-block `(a && b)+` support in match-syntax
-- **[change]** - lookahead fix: `the * (#Noun|#Verb)` now matches 'the big dog'
 - **[change]** - improvements to isPossessive()
+- **[change]** - number parsing details
+  - - support possessive numbers like "2023's turmoil"
+  - - interpret 'twenty twenty six' as year (from 2010-2040)
+  - - concatenated number-parsing - "sixty fifteen and thirty five"
+- **[change]** - match-syntax fixes
+  - - `foo*` now consistantly means zero or more
+  - - greedy and-block `(a && b)+` support in match-syntax
+  - - lookahead fix: `the * (#Noun|#Verb)` now matches 'the big dog'
 - **[plugin]** - compromise-dates 3.11.0
 
 #### 14.19.0 [Oct 2026]

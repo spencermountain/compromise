@@ -33,7 +33,7 @@ test('is-has', function (t) {
     ["It's your turn to speak", 'is'],
     ["Jamaica's growing rapidly", 'is'],
     ["John's car is parked outside", '#Possessive'],
-    ["john's closed tasks", '#Possessive'],
+    ["john's closed tasks", 'has'],
     ["John's finished his homework", 'has'],
     ["John's guitar is in the corner", '#Possessive'],
     ["John's house is very warm", '#Possessive'],

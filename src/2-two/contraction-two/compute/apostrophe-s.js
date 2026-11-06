@@ -6,6 +6,7 @@ const hasWords = new Set([
   'become', //my son's become
   ...'got gotten gone come had left fallen arrived lived worked moved looked talked happened stayed appeared'.split(' '),
   ...'improved increased failed escaped expanded developed turned'.split(' '),
+  ...'reacted responded listened agreed returned'.split(' '),
 ])
 const isWords = new Set([
   'what', //it's what
@@ -17,6 +18,8 @@ const isWords = new Set([
 const adjLike = new Set(['too', 'also', 'enough', 'outside', 'inside', 'here', 'there'])
 // passive, nearly every time - it's called, he's supposed to
 const passive = new Set(['called', 'supposed', 'meant', 'located', 'allowed', 'headed', 'married'])
+// passive when reported - it's said that, he's said to be
+const reported = new Set(['said', 'believed', 'thought', 'reported', 'rumored', 'estimated', 'claimed'])
 // a past word before these is passive - made by, derived from, attracted to
 const passivePrep = new Set(['for', 'by', 'to', 'from', 'with', 'as', 'at', 'in', 'into', 'around'])
 
@@ -44,6 +47,14 @@ const isOrHas = (terms, i) => {
       return 'is'
     }
     const next = terms[o + 1]
+    const two = terms[o + 2]
+    // it's said that, he's said to be - but she's said enough, he's believed in her
+    if (reported.has(t.normal)) {
+      if (terms[i].normal === `it's` || (next && next.normal === 'to' && two && two.tags.has('Verb'))) {
+        return 'is'
+      }
+      return 'has'
+    }
     if (passive.has(t.normal)) {
       // it's called a peach - but he's called me, she's married a doctor
       const hasObject = next && (next.tags.has('Pronoun') || (t.normal !== 'called' && next.tags.has('Determiner')))
@@ -61,11 +72,14 @@ const isOrHas = (terms, i) => {
       if (adjLike.has(next.normal) || next.tags.has('Preposition') || next.tags.has('Adverb')) {
         return 'is'
       }
+      // store's closed early today - but she's lost many friends
+      if (next.tags.has('Adjective') && !(two && two.tags.has('Noun'))) {
+        return 'is'
+      }
     }
     // The meeting's scheduled vs The plane's landed
     if (t.tags.has('PastTense')) {
       // meeting's scheduled for, cake's made by - but baby's learned to crawl
-      const two = terms[o + 2]
       if (next && passivePrep.has(next.normal) && !(next.normal === 'to' && two && two.tags.has('Verb'))) {
         return 'is'
       }

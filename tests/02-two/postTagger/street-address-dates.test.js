@@ -32,6 +32,12 @@ test('other addresses are unchanged', function (t) {
   t.end()
 })
 
+test('only month-named addresses lose a date tag', function (t) {
+  t.ok(nlp('the soundtrack of the 2011 film Drive').match('2011').has('#Year'), here + 'year before a title')
+  t.ok(nlp('The nearest interstate is a 4 hour drive away.').match('hour').has('#Duration'), here + 'a lowercase drive')
+  t.end()
+})
+
 test('dates beside a month are still dates', function (t) {
   const arr = [
     ['I left on 12 March.', '12 March'],

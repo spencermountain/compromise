@@ -60,9 +60,23 @@ test('the plural reading is kept', function (t) {
     ['near death experiences', 'experiences'],
     // mid-clause modifier
     ['a fantasy sports league', 'sports'],
+    // a verb, or punctuation, splits the phrase
+    ["I'd love to have a job cleaning mirrors.", 'mirrors'],
+    ['(a) In future reports, the office should act.', 'reports'],
   ]
   arr.forEach(([str, word]) => {
     t.ok(nlp(str).match(word).has('#Plural'), here + `plural: '${str}'`)
+  })
+  t.end()
+})
+
+test('an adjective before a noun is unchanged', function (t) {
+  const arr = [
+    ['plug it into a classic port', 'classic'],
+    ['a general trend away from it', 'general'],
+  ]
+  arr.forEach(([str, word]) => {
+    t.ok(nlp(str).match(word).has('#Adjective'), here + `adjective: '${str}'`)
   })
   t.end()
 })

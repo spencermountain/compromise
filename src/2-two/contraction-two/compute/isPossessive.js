@@ -113,7 +113,9 @@ const isPossessive = (terms, i) => {
     if (two && /ed$/.test(nextTerm.normal)) {
       // but not Mom's cooked dinner, Mary's visited Paris, John's finished today
       const isThing = two.tags.has('Noun') && !['ProperNoun', 'Pronoun', 'Date'].some(tag => two.tags.has(tag))
-      if (isThing && !bareObject.has(two.normal)) {
+      // Mom's baked cookies. - a sentence with no other verb needs the 's to be one
+      const needsVerb = i === 0 && two.tags.has('Plural') && !terms.some((t, n) => n !== 1 && t.tags.has('Verb'))
+      if (isThing && !bareObject.has(two.normal) && !needsVerb) {
         return true
       }
       if (three && two.tags.has('Adjective') && three.tags.has('Noun') && !three.tags.has('Pronoun')) {
@@ -167,6 +169,11 @@ const isPossessive = (terms, i) => {
     const twoTerm = terms[o]
     //the rocket's red, the car's still here - but not Germany's only hope
     if (!twoTerm || (isAdv && o === i + 2 && nextTerm.normal !== 'only')) {
+      return false
+    }
+    // John's only human, John's still king
+    const isRole = twoTerm.tags.has('Actor') || twoTerm.switch === 'Person|Noun'
+    if ((nextTerm.normal === 'only' && twoTerm.normal === 'human') || (nextTerm.normal === 'still' && isRole)) {
       return false
     }
     // rocket's red nozzle - but not John's still here

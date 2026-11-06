@@ -112,6 +112,34 @@ const isSubjectNoun = (terms, i) => {
   return null
 }
 
+// Adjective-ish adverb clues that modify a verb just as readily.
+const verbAdverb = /^(really|truly|still|always|quite|badly|deeply|totally|rather|mostly|profoundly)$/
+// These pronouns are only ever a subject.
+const nominative = /^(i|he|she|we|they)$/
+
+// 'he really needed' - a subject, then an adverb, begins a predicate.
+const isAfterSubject = (terms, i, n) => {
+  const subject = terms[n]
+  if (!verbAdverb.test(terms[i - 1]?.normal) || !subject?.tags.has('Noun') || subject.tags.has('Possessive')) {
+    return null
+  }
+  // "it's really needed" may still hide a copula, and 'me' is never a subject
+  if (subject.normal.includes("'") || /^(me|him|us|them)$/.test(subject.normal)) {
+    return null
+  }
+  // Other nouns may be an object: 'made it really complicated', 'with the kids really excited'.
+  let isComplement = terms.slice(0, n).some(t => t.tags.has('Verb') || t.normal === 'with')
+  // or the head of a phrase: 'anyone really interested should', 'students still confused about'
+  const next = terms[i + 1]
+  isComplement ||= next?.tags.has('Modal') || next?.normal === 'about'
+  // A subject pronoun only follows an inverted copula: "isn't he really needed".
+  if (nominative.test(subject.normal)) {
+    const skip = terms[n - 1]?.tags.has('Negative') ? 2 : 1
+    isComplement = terms[n - skip]?.tags.has('Copula')
+  }
+  return isComplement ? null : 'PastTense'
+}
+
 const adhoc = {
   'Adj|Gerund': (terms, i) => {
     return isCapital(terms, i)
@@ -127,14 +155,16 @@ const adhoc = {
     let before = i - 1
     for (; before >= 0; before -= 1) {
       const term = terms[before]
-      if (!term.tags.has('Adverb') && !term.tags.has('Negative') && term.normal !== 'since') {
+      // 'still' is not an adverb, yet
+      const isAdverb = term.tags.has('Adverb') || term.normal === 'since' || term.normal === 'still'
+      if (!isAdverb && !term.tags.has('Negative')) {
         break
       }
     }
     if (/^(have|has|had)$/.test(terms[before]?.normal)) {
       return 'PastTense'
     }
-    return isCapital(terms, i)
+    return isAfterSubject(terms, i, before) || isCapital(terms, i)
   },
   'Adj|Present': (terms, i) => {
     // 'are ready for' and 'are not ready for' describe a state.

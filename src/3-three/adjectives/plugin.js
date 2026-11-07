@@ -5,10 +5,10 @@ const transforms = ['toComparative', 'toSuperlative', 'toAdverb', 'toNoun']
 const toRoot = function (adj) {
   const { fromComparative, fromSuperlative } = adj.methods.two.transform.adjective
   const str = adj.text('normal')
-  if (adj.has('#Comparative')) {
+  if (adj.has('#Comp')) {
     return fromComparative(str, adj.model)
   }
-  if (adj.has('#Superlative')) {
+  if (adj.has('#Sup')) {
     return fromSuperlative(str, adj.model)
   }
   return str
@@ -37,7 +37,7 @@ const api = function (View) {
       }, [])
     }
     adverbs() {
-      return this.before('#Adverb+$').concat(this.after('^#Adverb+'))
+      return this.before('#Adv+$').concat(this.after('^#Adv+'))
     }
     conjugate(n) {
       const { toComparative, toSuperlative, toNoun, toAdverb } = this.methods.two.transform.adjective
@@ -73,8 +73,8 @@ const api = function (View) {
     })
   })
 
-  View.prototype.adjectives = select(Adjectives, '#Adjective')
-  View.prototype.superlatives = select(Adjectives, '#Superlative')
-  View.prototype.comparatives = select(Adjectives, '#Comparative')
+  View.prototype.adjectives = select(Adjectives, '#Adj')
+  View.prototype.superlatives = select(Adjectives, '#Sup')
+  View.prototype.comparatives = select(Adjectives, '#Comp')
 }
 export default { api }

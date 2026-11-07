@@ -1,25 +1,19 @@
+import merge from './_lib.js'
 import { Adj } from '../../tagSet/_lib.js'
 import adj from './_adj.js'
 import verb from './_verb.js'
 
 // 'would mean' vs 'is mean'
 const misc = {
-  afterTags: {
-    Noun: Adj,//ruling party
-    Conjunction: undefined //clean and excellent
-  }
-}
-const clue = {
   beforeTags: {
-    ...adj.beforeTags,
-    ...verb.beforeTags,
     // always clean
     Adverb: undefined, Negative: undefined
   },
-  afterTags: { ...adj.afterTags, ...verb.afterTags, ...misc.afterTags },
+  afterTags: {
+    Noun: Adj,//ruling party
+    Conjunction: undefined //clean and excellent
+  },
   beforeWords: {
-    ...adj.beforeWords,
-    ...verb.beforeWords,
     // have seperate contracts
     have: undefined, had: undefined, not: undefined,
     //went wrong, got wrong
@@ -28,12 +22,8 @@ const clue = {
     be: Adj
   },
   afterWords: {
-    ...adj.afterWords,
-    ...verb.afterWords,
     to: undefined,//slick to the touch
     as: Adj,//pale as
   },
 }
-// console.log(clue.beforeWords)
-// console.log(clue)
-export default clue
+export default merge(adj, verb, misc)

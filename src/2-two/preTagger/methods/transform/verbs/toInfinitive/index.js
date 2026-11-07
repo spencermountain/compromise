@@ -1,5 +1,6 @@
 import { convert } from 'suffix-thumb'
 import getTense from '../getTense/index.js'
+import { Participle, Past, Pres, Ger } from '../../../../tagSet/_lib.js'
 
 const toParts = function (str, model) {
   let prefix = ''
@@ -44,13 +45,13 @@ const toInfinitive = function (str, model, tense) {
   const lower = str.toLowerCase()
   if (Object.hasOwn(copulaMap, lower)) {
     inf = copulaMap[lower]
-  } else if (tense === 'Participle') {
+  } else if (tense === Participle) {
     inf = convert(verb, fromParticiple)
-  } else if (tense === 'PastTense') {
+  } else if (tense === Past) {
     inf = convert(verb, fromPast)
-  } else if (tense === 'PresentTense') {
+  } else if (tense === Pres) {
     inf = convert(verb, fromPresent)
-  } else if (tense === 'Gerund') {
+  } else if (tense === Ger) {
     inf = convert(verb, fromGerund)
   } else {
     return str

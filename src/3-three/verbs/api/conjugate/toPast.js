@@ -1,6 +1,7 @@
 import { inflect } from './inflect.js'
 import convertAuxiliary from './auxiliary.js'
 import { noop, wasWere, noWill } from '../lib.js'
+import { Past, Participle } from '../../../../2-two/preTagger/tagSet/_lib.js'
 const keep = { tags: true }
 
 const fns = {
@@ -16,10 +17,10 @@ const fns = {
   simple: (vb, parsed) => {
     const root = parsed.root
     // 'i may'
-    if (root.has('#Modal')) {
+    if (root.has('#Mod')) {
       return vb
     }
-    let str = inflect(root, 'PastTense', { keepPunct: false })
+    let str = inflect(root, Past, { keepPunct: false })
     // but skip the 'is' participle..
     str = str === 'been' ? 'was' : str
     if (str === 'was') {
@@ -97,7 +98,7 @@ const forms = {
       // otherwise, 
       //  walk -> have walked
       //  drive -> have driven
-      vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, 'Participle'))
+      vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, Participle))
       vb.match('have').tag('Auxiliary')
     }
     return vb
@@ -115,7 +116,7 @@ const forms = {
 
   // started looking
   'gerund-phrase': (vb, parsed) => {
-    parsed.root = parsed.root.not('#Gerund$')
+    parsed.root = parsed.root.not('#Ger$')
     fns.simple(vb, parsed)
     noWill(vb)
     return vb

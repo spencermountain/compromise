@@ -1,4 +1,5 @@
 import select from '../../_select.js'
+import keepClass from '../../_lib.js'
 import find from '../find.js'
 import parseNoun from './parse.js'
 import toJSON from './toJSON.js'
@@ -79,13 +80,8 @@ const api = function (View) {
         return toSingular(m, res)
       })
     }
-    // create a new View, from this one
-    update(pointer) {
-      const m = new Nouns(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      return m
-    }
   }
+  keepClass(Nouns)
   View.prototype.nouns = select(Nouns, find, true)
 }
 export default api

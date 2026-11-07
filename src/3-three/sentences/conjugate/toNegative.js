@@ -1,6 +1,7 @@
 import groups from '../../verbs/api/conjugate/groups.js'
 import { inflect } from '../../verbs/api/conjugate/inflect.js'
 import question from '../../verbs/api/conjugate/question.js'
+import { Inf, Pres } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const mainVerbs = (s, parsed) => {
   if (!parsed.verb.found) {
@@ -23,7 +24,7 @@ const toNegative = function (s, parsed) {
   if (!head.parsed.auxiliary.found && !head.parsed.negative.found) {
     entries.forEach(entry => {
       if (entry.head === head) {
-        entry.root.replaceWith(inflect(entry.parsed.root, 'Infinitive')).tag('Infinitive')
+        entry.root.replaceWith(inflect(entry.parsed.root, Inf)).tag(Inf)
       }
     })
   }
@@ -42,7 +43,7 @@ const toPositive = function (s, parsed) {
   }
   const { auxiliary, negative } = head.parsed
   if (negative.found && auxiliary.has('^(does|did)$')) {
-    const tense = auxiliary.has('did') ? 'PastTense' : 'PresentTense'
+    const tense = auxiliary.has('did') ? 'PastTense' : Pres
     entries.forEach(entry => {
       if (entry.head === head) {
         entry.root.replaceWith(inflect(entry.parsed.root, tense)).tag(tense)

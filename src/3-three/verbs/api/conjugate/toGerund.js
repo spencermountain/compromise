@@ -2,13 +2,14 @@ import { infinitive, inflect } from './inflect.js'
 import { isAreAm } from '../lib.js'
 import convertAuxiliary from './auxiliary.js'
 import parseVerb from '../parse/index.js'
+import { Ger } from '../../../../2-two/preTagger/tagSet/_lib.js'
 const keep = { tags: true }
 
 // all verb forms are the same
 const toGerund = function (vb, parsed, form) {
   const converted = convertAuxiliary(vb, parsed, form, 'gerund')
   if (converted) return converted
-  if (vb.has('#Gerund')) {
+  if (vb.has('#Ger')) {
     return vb
   }
   vb.growLeft('@hasContraction+').contractions().expand()
@@ -17,7 +18,7 @@ const toGerund = function (vb, parsed, form) {
 
   // conjugate '-ing' verb
   const str = infinitive(root)
-  const gerund = inflect(root, 'Gerund')
+  const gerund = inflect(root, Ger)
   // 'are walking', 'is walking'
   if (gerund) {
     const aux = isAreAm(vb, parsed)

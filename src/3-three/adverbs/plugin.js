@@ -35,6 +35,6 @@ const api = function (View) {
     }
   }
 
-  View.prototype.adverbs = select(Adverbs, '#Adverb')
+  View.prototype.adverbs = select(Adverbs, '#Adv')
 }
 export default { api }

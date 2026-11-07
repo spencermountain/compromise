@@ -43,7 +43,7 @@ const decimalFraction = num => {
   return [numerator / divisor, denominator / divisor]
 }
 
-const isPercent = value => value.has('#Percent') || value.after('^per cent').found
+const isPercent = value => value.has('#Pct') || value.after('^per cent').found
 
 const replaceNumber = (value, str) => {
   // A leading decimal point is stored as pre-punctuation.

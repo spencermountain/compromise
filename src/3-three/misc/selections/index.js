@@ -23,10 +23,10 @@ const selections = [
   ['atMentions', '#AtMention'],
   ['urls', '#Url'],
   // ['pronouns', '#Pronoun'],
-  ['conjunctions', '#Conjunction'],
-  ['prepositions', '#Preposition'],
-  ['abbreviations', '#Abbreviation'],
-  ['honorifics', '#Honorific'],
+  ['conjunctions', '#Conj'],
+  ['prepositions', '#Prep'],
+  ['abbreviations', '#Abbr'],
+  ['honorifics', '#Hon'],
 ]
 
 // aliases

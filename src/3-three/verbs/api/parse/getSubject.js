@@ -17,11 +17,11 @@ const noSubClause = function (before) {
       return false
     }
     // bowed to her,
-    if (i > 0 && m.has('^#Verb . #Noun+$')) {
+    if (i > 0 && m.has('^#Verb . #NN+$')) {
       return false
     }
     // the fog, suddenly increasing in..
-    if (i > 0 && m.has('^#Adverb')) {
+    if (i > 0 && m.has('^#Adv')) {
       return false
     }
     return true
@@ -40,7 +40,7 @@ const lastNoun = function (vb) {
   before = noSubClause(before)
   // In a subject-first clause, a trailing prepositional modifier does not
   // replace the subject: 'the keys on the table' still agrees with 'keys'.
-  if (!before.has('(#Verb|@hasComma)') && before.has('#Noun (on|near|under|beside|behind)')) {
+  if (!before.has('(#Verb|@hasComma)') && before.has('#NN (on|near|under|beside|behind)')) {
     const head = before.splitBefore('(on|near|under|beside|behind)').first().nouns()
     if (head.found) return head
   }
@@ -90,7 +90,7 @@ const isPlural = function (subj, vb) {
   // Agreement belongs to the head, not the plural object of 'of':
   // 'the box of pencils' versus 'the boxes of pencils'. Keep partitives such
   // as 'some of the dogs' on the existing noun-phrase path.
-  if (subj.has('(#Singular|#Plural) of')) {
+  if (subj.has('(#Sing|#Plur) of')) {
     const head = subj.splitBefore('of').first().nouns()
     if (head.found) return head.isPlural().found
   }

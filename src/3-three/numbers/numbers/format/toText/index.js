@@ -1,5 +1,6 @@
 import toString from '../../_toString.js'
 import { sequence, ones_mapping, tens_mapping } from './data.js'
+import { ones } from '../../_words.js'
 /**
  * turns an integer/float into.ber, like 'fifty-five'
  */
@@ -44,7 +45,6 @@ const breakdown_hundred = function (num) {
 
 /** print-out 'point eight nine'*/
 const handle_decimal = num => {
-  const names = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
   const arr = []
   //parse it out like a string, because js math is such shit
   const str = toString(num)
@@ -55,7 +55,7 @@ const handle_decimal = num => {
   arr.push('point')
   const decimals = decimal[0].split('')
   for (let i = 0; i < decimals.length; i++) {
-    arr.push(names[decimals[i]])
+    arr.push(ones[decimals[i]])
   }
   return arr
 }

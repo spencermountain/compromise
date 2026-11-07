@@ -21,19 +21,19 @@ const toFuture = function (s) {
         return false
       }
       // is watching
-      if (vb.has('#Copula #Gerund')) {
+      if (vb.has('#Cop #Ger')) {
         return true
       }
       // keep -ing verbs
-      if (vb.has('#Gerund')) {
+      if (vb.has('#Ger')) {
         return false
       }
       // he is green and he is friendly
-      if (vb.has('#Copula')) {
+      if (vb.has('#Cop')) {
         return true
       }
       // 'he will see when he watches'
-      if (vb.has('#PresentTense') && !vb.has('#Infinitive') && vb.lookBefore('(he|she|it|that|which)$').found) {
+      if (vb.has('#Pres') && !vb.has('#Inf') && vb.lookBefore('(he|she|it|that|which)$').found) {
         return false
       }
       return true
@@ -42,7 +42,7 @@ const toFuture = function (s) {
     if (toChange.found) {
       toChange.forEach(m => {
         //extra rules for 'is'
-        if (m.has('#Copula')) {
+        if (m.has('#Cop')) {
           // when he was out..
           m.match('was').replaceWith('is')
           // when he is out

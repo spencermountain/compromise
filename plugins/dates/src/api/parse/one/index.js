@@ -23,6 +23,10 @@ const parseDate = function (doc, context) {
   doc = parts.doc
   // logger
   log(parts)
+  // 'tomorrow at 25:00' is not a date
+  if (parts.invalid) {
+    return null
+  }
 
   //apply our given timezone
   if (parts.tz) {

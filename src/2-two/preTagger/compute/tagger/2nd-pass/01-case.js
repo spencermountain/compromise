@@ -1,10 +1,11 @@
 import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 import fillTags from '../3rd-pass/_fillTags.js'
+import { Date, WeekDay, Unit, Expr, Comp, Ger, Det, NN, Prop, RomanNumeral } from '../../../tagSet/_lib.js'
 
 const titleCase = /^\p{Lu}[\p{Ll}'’]/u
 const hasNumber = /[0-9]/
-const notProper = ['Date', 'Month', 'WeekDay', 'Unit', 'Expression']
+const notProper = [Date, 'Month', WeekDay, Unit, Expr]
 
 // roman numeral by regex
 const hasIVX = /[IVX]/ // does it ~look like~ a roman numeral?
@@ -34,11 +35,11 @@ const checkCase = function (terms, i, model) {
       return null
     }
     // known comparative - 'is Higher than 16'
-    if (term.tags.has('Comparative') && terms[i + 1]?.normal === 'than') {
+    if (term.tags.has(Comp) && terms[i + 1]?.normal === 'than') {
       return null
     }
     // A heading can start a new clause: 'Tutorial: Creating a cake'.
-    if (i === 0 && term.tags.has('Gerund') && terms[i + 1]?.tags.has('Determiner')) {
+    if (i === 0 && term.tags.has(Ger) && terms[i + 1]?.tags.has(Det)) {
       return null
     }
     // first word in a quotation?
@@ -49,15 +50,15 @@ const checkCase = function (terms, i, model) {
       return null
     }
     fillTags(terms, i, model)
-    if (!term.tags.has('Noun') && !term.frozen) {
+    if (!term.tags.has(NN) && !term.frozen) {
       unTag([term], '*', model.one.tagSet, '2-titlecase')
     }
-    fastTag(term, 'ProperNoun', '2-titlecase')
+    fastTag(term, Prop, '2-titlecase')
     return true
   }
   //roman numberals - XVII
   if (str.length >= 2 && romanNumeral.test(str) && hasIVX.test(str) && romanNumValid.test(str) && !nope[term.normal]) {
-    fastTag(term, 'RomanNumeral', '2-xvii')
+    fastTag(term, RomanNumeral, '2-xvii')
     return true
   }
 

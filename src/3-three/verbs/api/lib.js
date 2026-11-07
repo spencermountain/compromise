@@ -1,4 +1,5 @@
 import getSubject from './parse/getSubject.js'
+import { Inf, Participle, Past, Ger, Pres } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const noop = vb => vb
 
@@ -61,27 +62,27 @@ const haveHas = function (vb, parsed) {
     return 'has'
   }
   // spencer has
-  if (m.has('he') || m.has('she') || m.has('#Person')) {
+  if (m.has('he') || m.has('she') || m.has('#Pers')) {
     return 'has'
   }
   return 'have'
 }
 
 const getTense = function (m) {
-  if (m.has('#Infinitive')) {
-    return 'Infinitive'
+  if (m.has('#Inf')) {
+    return Inf
   }
   if (m.has('#Participle')) {
-    return 'Participle'
+    return Participle
   }
-  if (m.has('#PastTense')) {
-    return 'PastTense'
+  if (m.has('#Past')) {
+    return Past
   }
-  if (m.has('#Gerund')) {
-    return 'Gerund'
+  if (m.has('#Ger')) {
+    return Ger
   }
-  if (m.has('#PresentTense')) {
-    return 'PresentTense'
+  if (m.has('#Pres')) {
+    return Pres
   }
   return undefined
 }

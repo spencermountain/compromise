@@ -1,4 +1,5 @@
 import hasPlural from './hasPlural.js'
+import { Plur } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const keep = { tags: true }
 
@@ -8,7 +9,7 @@ const nounToPlural = function (m, parsed) {
     return m
   }
   // handle "steve's"
-  if (parsed.root.has('#Possessive')) {
+  if (parsed.root.has('#Poss')) {
     parsed.root = parsed.root.possessives().strip()
   }
   // is a plural appropriate?
@@ -20,7 +21,7 @@ const nounToPlural = function (m, parsed) {
   // inflect the root noun
   const str = parsed.root.text({ keepPunct: false })
   const plural = toPlural(str, model)
-  m.match(parsed.root).replaceWith(plural, keep).tag('Plural', 'toPlural')
+  m.match(parsed.root).replaceWith(plural, keep).tag(Plur, 'toPlural')
   // should we change the determiner/article?
   if (parsed.determiner.has('(a|an)')) {
     // 'a captain' -> 'the captains'
@@ -28,7 +29,7 @@ const nounToPlural = function (m, parsed) {
     m.remove(parsed.determiner)
   }
   // should we change the following copula?
-  const copula = parsed.root.after('not? #Adverb+? [#Copula]', 0)
+  const copula = parsed.root.after('not? #Adv+? [#Cop]', 0)
   if (copula.found) {
     if (copula.has('is')) {
       m.replace(copula, 'are')

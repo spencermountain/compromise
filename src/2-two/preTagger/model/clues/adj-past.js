@@ -1,3 +1,4 @@
+import merge from './_lib.js'
 import tagWords from '../_lib.js'
 import adj from './_adj.js'
 import tags from '../../tagSet/aliases.js'
@@ -47,9 +48,4 @@ const adjPast = {
   },
 }
 
-export default {
-  beforeTags: { ...adj.beforeTags, ...adjPast.beforeTags },
-  afterTags: { ...adj.afterTags, ...adjPast.afterTags },
-  beforeWords: { ...adj.beforeWords, ...adjPast.beforeWords },
-  afterWords: { ...adj.afterWords, ...adjPast.afterWords },
-}
+export default merge(adj, adjPast)

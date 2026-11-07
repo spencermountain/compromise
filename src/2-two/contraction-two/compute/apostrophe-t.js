@@ -1,10 +1,11 @@
+import { NN, Pron, Plur, Sing } from '../../preTagger/tagSet/_lib.js'
 const lastNoun = function (terms, i) {
   for (let n = i - 1; n >= 0; n -= 1) {
     if (
-      terms[n].tags.has('Noun') ||
-      terms[n].tags.has('Pronoun') ||
-      terms[n].tags.has('Plural') ||
-      terms[n].tags.has('Singular')
+      terms[n].tags.has(NN) ||
+      terms[n].tags.has(Pron) ||
+      terms[n].tags.has(Plur) ||
+      terms[n].tags.has(Sing)
     ) {
       return terms[n]
     }
@@ -30,7 +31,7 @@ const apostropheT = function (terms, i) {
         return ['am', 'not']
       }
       // plural/singular tags
-      if (noun.tags && noun.tags.has('Plural')) {
+      if (noun.tags && noun.tags.has(Plur)) {
         return ['are', 'not']
       }
     }

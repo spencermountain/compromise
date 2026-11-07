@@ -3,16 +3,16 @@ import select from '../../_select.js'
 const apostropheS = /'s$/
 
 const find = function (doc) {
-  let m = doc.match('#Possessive+')
+  let m = doc.match('#Poss+')
   // expand it to include 'john smith's'
-  if (m.has('#Person')) {
-    m = m.growLeft('#Person+')
+  if (m.has('#Pers')) {
+    m = m.growLeft('#Pers+')
   }
   if (m.has('#Place')) {
     m = m.growLeft('#Place+')
   }
-  if (m.has('#Organization')) {
-    m = m.growLeft('#Organization+')
+  if (m.has('#Org')) {
+    m = m.growLeft('#Org+')
   }
   return m
 }

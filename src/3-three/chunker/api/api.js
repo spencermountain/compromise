@@ -1,4 +1,5 @@
 import select from '../../_select.js'
+import keepClass from '../../_lib.js'
 import clauses from './clauses.js'
 import getChunks from './chunks.js'
 
@@ -26,13 +27,8 @@ const api = function (View) {
       this.toView().debug('chunks')
       return this
     }
-    // overloaded - keep Sentences class
-    update(pointer) {
-      const m = new Chunks(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      return m
-    }
   }
+  keepClass(Chunks)
 
   View.prototype.chunks = select(Chunks, getChunks, true)
   View.prototype.clauses = clauses

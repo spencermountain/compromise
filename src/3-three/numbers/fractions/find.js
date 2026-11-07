@@ -1,14 +1,14 @@
 const findFractions = function (doc, n) {
   // five eighths
-  let m = doc.match('#Fraction+')
+  let m = doc.match('#Frac+')
   // Adjacent slash fractions are independent values.
   m = m.splitOn('/\\//')
   // remove 'two and five eights'
   m = m.filter(r => {
-    return !r.lookBehind('#Value and$').notIf('(#Fraction|#Percent)').found
+    return !r.lookBehind('#Val and$').notIf('(#Frac|#Pct)').found
   })
   // thirty seconds
-  m = m.notIf('#Value seconds')
+  m = m.notIf('#Val seconds')
 
   if (typeof n === 'number') {
     m = m.eq(n)

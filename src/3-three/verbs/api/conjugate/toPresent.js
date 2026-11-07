@@ -14,7 +14,7 @@ const simple = (vb, parsed) => {
     str = inflect(root, Pres)
   }
   // handle copula
-  if (root.has('#Copula')) {
+  if (root.has('#Cop')) {
     str = isAreAm(vb, parsed)
   }
   if (str) {
@@ -55,7 +55,7 @@ const forms = {
     const { conjugate } = vb.methods.two.transform.verb
     const { root } = parsed
     // is it *only* a infinitive? - 'we buy' etc
-    if (root.has('#Infinitive')) {
+    if (root.has('#Inf')) {
       const subj = getSubject(vb, parsed)
       const m = subj.subject
       if (isPlural(vb, parsed) || m.has('i')) {
@@ -107,7 +107,7 @@ const forms = {
   'auxiliary-future': (vb, parsed) => {
     const copula = isAreAm(vb, parsed)
     vb.replace('(was|were)', copula)
-    if (parsed.root.has('#Gerund') && vb.has('going to be')) {
+    if (parsed.root.has('#Ger') && vb.has('going to be')) {
       vb.remove('going to be')
       return vb
     }
@@ -143,7 +143,7 @@ const forms = {
 
   // started looking
   'gerund-phrase': (vb, parsed) => {
-    parsed.root = parsed.root.not('#Gerund$')
+    parsed.root = parsed.root.not('#Ger$')
     simple(vb, parsed)
     return vb.remove('(will|have)')
   },

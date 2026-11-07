@@ -1,4 +1,5 @@
 import select from '../../_select.js'
+import keepClass from '../../_lib.js'
 import find from './find.js'
 import parse from './parse.js'
 import gender from './gender.js'
@@ -44,13 +45,8 @@ const addMethod = function (View) {
         return m.has('(#FemaleName|mrs|miss|queen|princess|madam)')
       })
     }
-    // overloaded - keep People class
-    update(pointer) {
-      const m = new People(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      return m
-    }
   }
+  keepClass(People)
 
   View.prototype.people = select(People, find, true)
 }

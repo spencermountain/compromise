@@ -4,7 +4,7 @@ const getAdverbs = function (vb, root) {
     pre: vb.none(),
     post: vb.none(),
   }
-  if (!vb.has('#Adverb')) {
+  if (!vb.has('#Adv')) {
     return res
   }
   // pivot on the main verb

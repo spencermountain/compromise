@@ -1,3 +1,4 @@
+import { QW } from '../../2-two/preTagger/tagSet/_lib.js'
 //is this sentence asking a question?
 const isQuestion = function (doc, terms) {
   // Has ellipsis at the end means it's probably not a question
@@ -8,7 +9,7 @@ const isQuestion = function (doc, terms) {
 
   // Starts with question word, but has a comma, so probably not a question
   // e.g., Why are we caught in a land slide, no escape from reality
-  const startsQuestion = terms[0].tags.has('QuestionWord')
+  const startsQuestion = terms[0].tags.has(QW)
   if (startsQuestion && terms.some(term => term.post.includes(','))) {
     return false
   }
@@ -31,7 +32,7 @@ const isQuestion = function (doc, terms) {
 
   // is it, do you - start of sentence
   // e.g., Do I need no sympathy
-  if (doc.has('^(do|does|did|is|was|can|could|will|would|may) #Noun')) {
+  if (doc.has('^(do|does|did|is|was|can|could|will|would|may) #NN')) {
     return true
   }
 
@@ -49,7 +50,7 @@ const isQuestion = function (doc, terms) {
 
   //is wayne gretskzy alive
   if (doc.has('(do|does|is|was)') &&
-    doc.clauses().has('(do|does|is|was) #Noun+ #Adverb? (#Adjective|#Infinitive)$')) {
+    doc.clauses().has('(do|does|is|was) #NN+ #Adv? (#Adj|#Inf)$')) {
     return true
   }
 

@@ -18,7 +18,7 @@ const transform = function (unit, context, parts) {
     const shift = parts.shift
     unit.applyShift(shift)
     // allow shift to change our unit size
-    if (shift.hour || shift.minute) {
+    if (shift.hour || shift.minute || shift.second) {
       unit = new Moment(unit.d, null, unit.context)
     } else if (shift.week || shift.day || shift.month) {
       unit = new Day(unit.d, null, unit.context)
@@ -44,7 +44,7 @@ const transform = function (unit, context, parts) {
   }
   // apply counter
   if (parts.counter && parts.counter.unit) {
-    unit = addCounter(unit, parts.counter)
+    unit = addCounter(unit, parts.counter) // null when the period has no such day
   }
   return unit
 }

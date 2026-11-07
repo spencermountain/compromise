@@ -1,10 +1,11 @@
 import expandTags from '../../../../../2-two/postTagger/model/_lib.js'
+import { Pres, Fut, Past } from '../../../../../2-two/preTagger/tagSet/_lib.js'
 
-const present = { tense: 'PresentTense' }
+const present = { tense: Pres }
 const conditional = { conditional: true }
-const future = { tense: 'FutureTense' }
+const future = { tense: Fut }
 const prog = { progressive: true }
-const past = { tense: 'PastTense' }
+const past = { tense: Past }
 const complete = { complete: true, progressive: false }
 const passive = { passive: true }
 const plural = { plural: true }

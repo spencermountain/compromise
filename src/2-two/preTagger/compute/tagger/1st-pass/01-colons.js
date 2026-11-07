@@ -1,3 +1,4 @@
+import { Val, Email, PhoneNumber, Expr } from '../../../tagSet/_lib.js'
 const byPunctuation = function (terms, i, model, world) {
   const setTag = world.methods.one.setTag
   // colon following first word
@@ -9,11 +10,11 @@ const byPunctuation = function (terms, i, model, world) {
     if (hasColon.test(post)) {
       // phone: 555-2938
       const nextTerm = terms[1]
-      if (nextTerm.tags.has('Value') || nextTerm.tags.has('Email') || nextTerm.tags.has('PhoneNumber')) {
+      if (nextTerm.tags.has(Val) || nextTerm.tags.has(Email) || nextTerm.tags.has(PhoneNumber)) {
         return
       }
       //
-      setTag([terms[0]], 'Expression', world, null, `2-punct-colon''`)
+      setTag([terms[0]], Expr, world, null, `2-punct-colon''`)
     }
   }
 }

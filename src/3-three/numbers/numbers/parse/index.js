@@ -25,7 +25,7 @@ const parseNumeric = function (str, m) {
       suffix = ''
     }
     // strip a possessive, too - it gets kept when replaced
-    if (suffix === "'s" && m.has('#Possessive')) {
+    if (suffix === "'s" && m.has('#Poss')) {
       suffix = ''
     }
     // support M for million, k for thousand
@@ -60,7 +60,7 @@ const parseNumber = function (m) {
   // is it in '3,123' format?
   const hasComma = /[0-9],[0-9]/.test(m.text('text'))
   // parse a numeric-number like '$4.00'
-  if (m.terms().length === 1 && !m.has('#Multiple')) {
+  if (m.terms().length === 1 && !m.has('#Mult')) {
     const res = parseNumeric(str, m)
     if (res !== null) {
       res.hasComma = hasComma
@@ -70,12 +70,12 @@ const parseNumber = function (m) {
   }
   // -- parse text-formats --
   // Fractions: remove 'and a half' etc. from the end
-  let frPart = m.match('#Fraction{2,}$')
-  frPart = frPart.found === false ? m.match('^#Fraction$') : frPart
+  let frPart = m.match('#Frac{2,}$')
+  frPart = frPart.found === false ? m.match('^#Frac$') : frPart
   let fraction = null
   if (frPart.found) {
-    if (frPart.has('#Value and #Value #Fraction')) {
-      frPart = frPart.match('and #Value #Fraction')
+    if (frPart.has('#Val and #Val #Frac')) {
+      frPart = frPart.match('and #Val #Frac')
     }
     fraction = parseFraction(frPart)
     // remove it from our string
@@ -105,9 +105,9 @@ const parseNumber = function (m) {
     prefix: '',
     num,
     suffix: '',
-    isOrdinal: m.has('#Ordinal'),
-    isText: m.has('#TextValue'),
-    isFraction: m.has('#Fraction'),
+    isOrdinal: m.has('#Ord'),
+    isText: m.has('#TxtNum'),
+    isFraction: m.has('#Frac'),
     isMoney: m.has('#Money'),
     unit
   }

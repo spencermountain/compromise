@@ -1,12 +1,12 @@
-const notPlural = '(#Pronoun|#Place|#Value|#Person|#Uncountable|#Month|#WeekDay|#Holiday|#Possessive)'
+const notPlural = '(#Pron|#Place|#Val|#Pers|#Uncountable|#Month|#WeekDay|#Holiday|#Poss)'
 
 const isPlural = function (m, root) {
   // const { looksPlural } = m.world.methods.two
-  if (m.has('#Plural')) {
+  if (m.has('#Plur')) {
     return true
   }
   // two singular nouns are plural noun phrase
-  if (m.has('#Noun and #Noun')) {
+  if (m.has('#NN and #NN')) {
     return true
   }
   if (m.has('(we|they)')) {
@@ -16,7 +16,7 @@ const isPlural = function (m, root) {
   if (root.has(notPlural) === true) {
     return false
   }
-  if (m.has('#Singular')) {
+  if (m.has('#Sing')) {
     return false
   }
   // word-reg fallback

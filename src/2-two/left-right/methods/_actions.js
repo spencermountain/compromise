@@ -1,3 +1,4 @@
+import { NN, Sing } from '../../preTagger/tagSet/_lib.js'
 const apply = (term, rule, world) => {
   const { setTag, unTag } = world.methods.one
   const terms = [term]
@@ -12,8 +13,8 @@ const apply = (term, rule, world) => {
     }
     setTag(terms, action.tag, world, rule.safe, reason)
     // Preserve the noun number that the sweep's tagger supplies.
-    if (action.tag === 'Noun') {
-      const tag = world.methods.two.looksPlural(term.text) ? 'Plural' : 'Singular'
+    if (action.tag === NN) {
+      const tag = world.methods.two.looksPlural(term.text) ? 'Plural' : Sing
       setTag(terms, tag, world, rule.safe, reason)
     }
   }

@@ -1,4 +1,5 @@
 import select from '../../_select.js'
+import keepClass from '../../_lib.js'
 import find from '../find.js'
 import coordinate from './conjugate/coordinate.js'
 import toJSON from './toJSON.js'
@@ -14,8 +15,20 @@ import getGrammar from './parse/grammar/index.js'
 import toNegative from './conjugate/toNegative.js'
 import { getTense } from './lib.js'
 import { inflect } from './conjugate/inflect.js'
+import { Pres, Inf } from '../../../2-two/preTagger/tagSet/_lib.js'
 const keep = { tags: true }
 
+// convert each verb to a target form, leaving bare infinitives alone
+const convert = (target, fn) => function (n) {
+  return coordinate(this.getNth(n), target, vb => {
+    const parsed = parseVerb(vb)
+    const info = getGrammar(vb, parsed)
+    if (info.isInfinitive) {
+      return vb
+    }
+    return fn(vb, parsed, info.form)
+  })
+}
 
 const api = function (View) {
   class Verbs extends View {
@@ -42,7 +55,7 @@ const api = function (View) {
       })
     }
     adverbs(n) {
-      return this.getNth(n).map(vb => vb.match('#Adverb'))
+      return this.getNth(n).map(vb => vb.match('#Adv'))
     }
     isSingular(n) {
       return this.getNth(n).filter(vb => {
@@ -55,67 +68,7 @@ const api = function (View) {
       })
     }
     isImperative(n) {
-      return this.getNth(n).filter(vb => vb.has('#Imperative'))
-    }
-    toInfinitive(n) {
-      return coordinate(this.getNth(n), 'infinitive', vb => {
-        const parsed = parseVerb(vb)
-        const info = getGrammar(vb, parsed)
-        if (info.isInfinitive) {
-          return vb
-        }
-        return toInf(vb, parsed, info.form)
-      })
-    }
-    toPresentTense(n) {
-      return coordinate(this.getNth(n), 'present', vb => {
-        const parsed = parseVerb(vb)
-        const info = getGrammar(vb, parsed)
-        if (info.isInfinitive) {
-          return vb
-        }
-        return toPresent(vb, parsed, info.form)
-      })
-    }
-    toPastTense(n) {
-      return coordinate(this.getNth(n), 'past', vb => {
-        const parsed = parseVerb(vb)
-        const info = getGrammar(vb, parsed)
-        if (info.isInfinitive) {
-          return vb
-        }
-        return toPast(vb, parsed, info.form)
-      })
-    }
-    toFutureTense(n) {
-      return coordinate(this.getNth(n), 'future', vb => {
-        const parsed = parseVerb(vb)
-        const info = getGrammar(vb, parsed)
-        if (info.isInfinitive) {
-          return vb
-        }
-        return toFuture(vb, parsed, info.form)
-      })
-    }
-    toGerund(n) {
-      return coordinate(this.getNth(n), 'gerund', vb => {
-        const parsed = parseVerb(vb)
-        const info = getGrammar(vb, parsed)
-        if (info.isInfinitive) {
-          return vb
-        }
-        return toGerund(vb, parsed, info.form)
-      })
-    }
-    toPastParticiple(n) {
-      return coordinate(this.getNth(n), 'participle', vb => {
-        const parsed = parseVerb(vb)
-        const info = getGrammar(vb, parsed)
-        if (info.isInfinitive) {
-          return vb
-        }
-        return toParticiple(vb, parsed, info.form)
-      })
+      return this.getNth(n).filter(vb => vb.has('#Imp'))
     }
     conjugate(n) {
       const { conjugate, toInfinitive } = this.world.methods.two.transform.verb
@@ -127,7 +80,7 @@ const api = function (View) {
           info.form = 'simple-present'
         }
         let inf = parsed.root.text('normal')
-        if (!parsed.root.has('#Infinitive')) {
+        if (!parsed.root.has('#Inf')) {
           const tense = getTense(parsed.root)
           inf = toInfinitive(inf, vb.model, tense) || inf
         }
@@ -137,11 +90,11 @@ const api = function (View) {
 
     /** return only verbs with 'not'*/
     isNegative() {
-      return this.if('#Negative')
+      return this.if('#Neg')
     }
     /**  return only verbs without 'not'*/
     isPositive() {
-      return this.ifNo('#Negative')
+      return this.ifNo('#Neg')
     }
     /** remove 'not' from these verbs */
     toPositive() {
@@ -155,11 +108,11 @@ const api = function (View) {
         // 'does not walk' -> 'walks'
         const { root, auxiliary, negative } = parseVerb(vb)
         if (negative.found && auxiliary.has('^(does|did)$')) {
-          const tense = auxiliary.has('did') ? 'PastTense' : 'PresentTense'
-          vb.replace(root, inflect(root, tense), keep).unTag('Infinitive').tag(tense)
+          const tense = auxiliary.has('did') ? 'PastTense' : Pres
+          vb.replace(root, inflect(root, tense), keep).unTag(Inf).tag(tense)
           vb.remove(auxiliary)
         }
-        return vb.remove('#Negative')
+        return vb.remove('#Neg')
       })
     }
     toNegative(n) {
@@ -175,13 +128,16 @@ const api = function (View) {
         return res
       })
     }
-    // overloaded - keep Verb class
-    update(pointer) {
-      const m = new Verbs(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      return m
-    }
   }
+  keepClass(Verbs)
+  Object.assign(Verbs.prototype, {
+    toInfinitive: convert('infinitive', toInf),
+    toPresentTense: convert('present', toPresent),
+    toPastTense: convert('past', toPast),
+    toFutureTense: convert('future', toFuture),
+    toGerund: convert('gerund', toGerund),
+    toPastParticiple: convert('participle', toParticiple),
+  })
   Verbs.prototype.toPast = Verbs.prototype.toPastTense
   Verbs.prototype.toPresent = Verbs.prototype.toPresentTense
   Verbs.prototype.toFuture = Verbs.prototype.toFutureTense

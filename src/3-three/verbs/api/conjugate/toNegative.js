@@ -114,7 +114,7 @@ const toNegative = function (vb, parsed, form) {
   // console.log(form)
   // The 'not' in 'not only' is tagged as an adverb.
   // 'to walk' is negated through the verb before it.
-  if (vb.has('(#Negative|not)') || vb.lookBehind('#Verb .* to$').found) {
+  if (vb.has('(#Neg|not)') || vb.lookBehind('#Verb .* to$').found) {
     return vb
   }
   if (Object.hasOwn(forms, form)) {
@@ -134,7 +134,7 @@ const toNegative = function (vb, parsed, form) {
   }
 
   // 'would not'
-  m = vb.matchOne('(will|had|have|has|did|does|do|#Modal)')
+  m = vb.matchOne('(will|had|have|has|did|does|do|#Mod)')
   if (m.found) {
     m.append('not')
     return vb

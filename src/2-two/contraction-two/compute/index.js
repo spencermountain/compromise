@@ -5,6 +5,7 @@ import apostropheT from './apostrophe-t.js'
 import isPossessive from './isPossessive.js'
 import wannaNoun from './wanna.js'
 import contractionDebug from '../../../API/debug/contractions-debug.js'
+import { Year, Poss } from '../../preTagger/tagSet/_lib.js'
 
 const byApostrophe = /'/
 
@@ -46,11 +47,11 @@ const byEnd = {
     if (isPossessive(terms, i)) {
       contractionDebug(terms[i])
       // [2020's election] stays a number - setTag would remove it, for being a noun
-      if (terms[i].tags.has('Year')) {
-        terms[i].tags.add('Possessive')
+      if (terms[i].tags.has(Year)) {
+        terms[i].tags.add(Poss)
         return null
       }
-      return world.methods.one.setTag([terms[i]], 'Possessive', world, null, '2-contraction')
+      return world.methods.one.setTag([terms[i]], Poss, world, null, '2-contraction')
     }
     return apostropheS(terms, i)
   },
@@ -90,13 +91,13 @@ const contractionTwo = view => {
       }
       // actually insert the new terms
       if (words) {
-        const isYear = terms[i].tags.has('Year')
+        const isYear = terms[i].tags.has(Year)
         words = toDocs(words, view, terms[i])
         splice(document, [n, i], words)
         reTag(document[n], view, i, words.length)
         // [twenty twenty-six's] over - it may only be a year as a whole
         if (isYear) {
-          world.methods.one.setTag([document[n][i]], 'Year', world, null, '2-contraction')
+          world.methods.one.setTag([document[n][i]], Year, world, null, '2-contraction')
         }
         continue
       }

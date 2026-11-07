@@ -64,8 +64,8 @@ const predictGender = function (parsed, person) {
   }
   // offer used-pronouns as a signal
   const after = person.after()
-  if (!after.has('#Person') && after.has('#Pronoun')) {
-    const pro = after.match('#Pronoun')
+  if (!after.has('#Pers') && after.has('#Pron')) {
+    const pro = after.match('#Pron')
     // manual use of gender-neutral
     if (pro.has('(they|their)')) {
       return null

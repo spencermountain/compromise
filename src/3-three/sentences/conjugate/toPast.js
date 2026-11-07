@@ -8,7 +8,7 @@ const toPast = function (s) {
   // translate the first verb, no-stress
   const first = firstGroup(verbs)
   // A passive participle does not make its auxiliary past tense.
-  if (first.has('#PastTense') && !first.has('#Auxiliary')) {
+  if (first.has('#Past') && !first.has('#Aux')) {
     return s
   }
   first.toPastTense()
@@ -20,11 +20,11 @@ const toPast = function (s) {
     verbs = verbs.filter((v) => !v.lookBehind('to$').found)
 
     // keep -ing verbs
-    verbs = verbs.if('#PresentTense')
-    verbs = verbs.notIf('#Gerund')
+    verbs = verbs.if('#Pres')
+    verbs = verbs.notIf('#Ger')
 
     //run-on infinitive-list - 'to walk, sit and eat'
-    const list = s.match('to #Verb+ #Conjunction #Verb').terms()
+    const list = s.match('to #Verb+ #Conj #Verb').terms()
     verbs = verbs.not(list)
 
     // otherwise, I guess so?

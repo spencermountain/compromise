@@ -6,12 +6,12 @@ const getThey = function (s) {
   const nouns = s.nouns()
 
   // 'the bananas'
-  let things = nouns.isPlural().notIf('#Pronoun')
+  let things = nouns.isPlural().notIf('#Pron')
   if (things.found) {
     return things.last()
   }
   // A repeated determiner can separate two singular members of a group.
-  things = nouns.filter(pluralPhrase).notIf('#Pronoun')
+  things = nouns.filter(pluralPhrase).notIf('#Pron')
   if (things.found) {
     return things.last()
   }

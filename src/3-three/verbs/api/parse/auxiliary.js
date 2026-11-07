@@ -17,8 +17,8 @@ const readAuxiliary = function (parsed, form) {
       prospective,
       prefixLength,
       perfect: tail.includes('have'),
-      progressive: parsed.root.has('#Gerund') || tail.includes('being'),
-      passive: tail.length > 0 && !parsed.root.has('#Gerund') && tail.some(w => /^(be|been|being)$/.test(w)),
+      progressive: parsed.root.has('#Ger') || tail.includes('being'),
+      passive: tail.length > 0 && !parsed.root.has('#Ger') && tail.some(w => /^(be|been|being)$/.test(w)),
       form,
     }
   }

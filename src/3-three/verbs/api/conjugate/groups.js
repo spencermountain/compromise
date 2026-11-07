@@ -28,14 +28,14 @@ const groups = function (verbs, finite = false) {
     head.form = info.form
     const root = entry.parsed.root
     const headRoot = head.parsed.root
-    let compatible = headRoot.has('#Infinitive') && root.has('#Infinitive')
-    if (bare && headRoot.has('#PresentTense')) {
-      compatible = root.has('#PresentTense')
+    let compatible = headRoot.has('#Inf') && root.has('#Inf')
+    if (bare && headRoot.has('#Pres')) {
+      compatible = root.has('#Pres')
     }
-    if (headRoot.has('(#PastTense|#Participle)')) compatible = root.has('(#PastTense|#Participle)')
-    if (headRoot.has('#Gerund')) compatible = root.has('#Gerund')
+    if (headRoot.has('(#Past|#Participle)')) compatible = root.has('(#Past|#Participle)')
+    if (headRoot.has('#Ger')) compatible = root.has('#Ger')
     if (!compatible || previous.vb.has('@hasComma$')) return
-    const next = previous.vb.growRight('(and|or) #Adverb+? #Verb+ #Particle?')
+    const next = previous.vb.growRight('(and|or) #Adv+? #Verb+ #Particle?')
     if (next.match(entry.vb).wordCount() !== entry.vb.wordCount()) return
     entry.head = head
   })

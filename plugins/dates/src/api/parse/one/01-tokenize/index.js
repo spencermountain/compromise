@@ -46,6 +46,7 @@ const tokenize = function (doc, context) {
   // parse '2pm'
   res = doTime(doc, context)
   const time = res.result
+  const invalid = res.invalid === true // 'at 25:00'
   doc = doc.not(res.m)
 
   // parse 'tuesday'
@@ -70,6 +71,7 @@ const tokenize = function (doc, context) {
     counter,
     tz,
     time,
+    invalid,
     weekDay,
     section,
     rel,

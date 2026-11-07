@@ -1,4 +1,5 @@
 import tags from '../../tagSet/aliases.js'
+import { Date, Comp, Sup } from '../../tagSet/_lib.js'
 
 const {
   JJ: Adj, Inf, Pres, Sing, VBD: Past, Expression: Exp, Actor,
@@ -79,7 +80,7 @@ export default {
     [/.[^aeiou]ium$/, Sing, 'magnesium'],
     [/[^aeiou]ism$/, Sing, 'schism'],
     [/^[hu]m+$/, Exp, 'hmm'],
-    [/^\d+ ?[ap]m$/, 'Date', '3am'],
+    [/^\d+ ?[ap]m$/, Date, '3am'],
   ],
   n: [
   ],
@@ -94,10 +95,10 @@ export default {
     [/[^i]fer$/, Inf],
     [/.[^aeiou][ao]pher$/, Actor],
     [/.[lk]er$/, 'Noun'],
-    [/.ier$/, 'Comparative'],
+    [/.ier$/, Comp],
   ],
   t: [
-    [/.[di]est$/, 'Superlative'],
+    [/.[di]est$/, Sup],
     [/.[icldtgrv]ent$/, Adj],
     [/[aeiou][^aeiou\r\n\u2028\u2029]*ist$/, Adj],
     [/^[a-z]et$/, Verb],

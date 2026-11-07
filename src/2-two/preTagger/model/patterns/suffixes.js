@@ -1,5 +1,6 @@
 import tagWords from '../_lib.js'
 import tags from '../../tagSet/aliases.js'
+import { Cop, Ger, Ord, Val } from '../../tagSet/_lib.js'
 
 const {
   JJ: Adj, Inf, Pres, Sing, VBD: Past, RB: Avb, NNS: Plrl, Actor,
@@ -28,14 +29,14 @@ export default [
     xed: Past,
     ' so': Avb,
     "'ll": Modal,
-    "'re": 'Copula',
+    "'re": Cop,
     azy: Adj,
     eer: Noun,
     end: Vb,
     ped: Past,
     ffy: Adj,
     ify: Inf,
-    ing: 'Gerund',
+    ing: Ger,
     ize: Inf,
     ibe: Inf,
     lar: Adj,
@@ -146,7 +147,7 @@ export default [
     ports: Plrl,
     rough: Adj,
     tches: Pres,
-    tieth: 'Ordinal',
+    tieth: Ord,
     tures: Plrl,
     wards: Avb,
     where: Avb,
@@ -172,7 +173,7 @@ export default [
     brooke: Place,
     keeper: Actor,
     logist: Actor,
-    teenth: 'Value',
+    teenth: Val,
     worker: Actor,
     master: Actor,
     writer: Actor,

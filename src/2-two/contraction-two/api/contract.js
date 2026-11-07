@@ -41,10 +41,10 @@ const contract = function () {
   m = doc.match('(he|she|they|it|we) is')
   setContraction(m, `'s`)
   // spencer is -> spencer's
-  m = doc.match('#Person is')
+  m = doc.match('#Pers is')
   setContraction(m, `'s`)
   // spencer would -> spencer'd
-  m = doc.match('#Person would')
+  m = doc.match('#Pers would')
   setContraction(m, `'d`)
   // would not -> wouldn't (skip words already contracted above, like he's)
   m = doc.match('(is|was|were|had|would|should|could|do|does|did|have|has) not').ifNo('@hasContraction')

@@ -1,3 +1,4 @@
+import { Conj, Prop, Plur, Poss, Pron } from '../tagSet/_lib.js'
 // rough connection between compromise tagset and Penn Treebank
 // https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
 
@@ -11,7 +12,7 @@ const mapping = {
   Comparative: 'JJR',
   Superlative: 'JJS',
   Adjective: 'JJ',
-  TO: 'Conjunction',
+  TO: Conj,
 
   // verbs
   Modal: 'MD',
@@ -70,10 +71,10 @@ const toPenn = function (term) {
     return '#'
   }
   // try some ad-hoc ones
-  if (term.tags.has('ProperNoun') && term.tags.has('Plural')) {
+  if (term.tags.has(Prop) && term.tags.has(Plur)) {
     return 'NNPS'
   }
-  if (term.tags.has('Possessive') && term.tags.has('Pronoun')) {
+  if (term.tags.has(Poss) && term.tags.has(Pron)) {
     return 'PRP$'
   }
   if (term.normal === 'there') {

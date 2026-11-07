@@ -5,7 +5,7 @@ const female = new Set('woman girl mother mom mum daughter sister aunt wife girl
 
 // Common nouns encode grammatical gender without a named-person selection.
 const compatibleActor = (person, gender) => {
-  const head = person.splitBefore('#Preposition').first()
+  const head = person.splitBefore('#Prep').first()
   if (pluralPhrase(head)) {
     return false
   }

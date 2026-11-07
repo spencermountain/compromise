@@ -1,4 +1,5 @@
 import spacetime from 'spacetime'
+import { knownTimes } from '../_lib.js'
 
 class Unit {
   constructor(input, unit, context, setTime) {
@@ -46,7 +47,7 @@ class Unit {
   applyShift(obj = {}) {
     Object.keys(obj).forEach((unit) => {
       this.d = this.d.add(obj[unit], unit)
-      if (unit === 'hour' || unit === 'minute') {
+      if (unit === 'hour' || unit === 'minute' || unit === 'second') {
         this.setTime = true
       }
     })
@@ -54,6 +55,10 @@ class Unit {
   }
   applyTime(str) {
     if (str) {
+      // 'noon', 'midnight'
+      if (Object.hasOwn(knownTimes, str)) {
+        str = knownTimes[str]
+      }
       const justHour = /^[0-9]{1,2}$/
       if (justHour.test(str)) {
         this.d = this.d.hour(str)

@@ -1,13 +1,14 @@
 import findMain from './mainClause.js'
+import { Past, Fut, Pres } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const grammar = function (vb) {
   let tense = null
-  if (vb.has('#PastTense')) {
-    tense = 'PastTense'
+  if (vb.has('#Past')) {
+    tense = Past
   } else if (vb.has('#FutureTense')) {
-    tense = 'FutureTense'
-  } else if (vb.has('#PresentTense')) {
-    tense = 'PresentTense'
+    tense = Fut
+  } else if (vb.has('#Pres')) {
+    tense = Pres
   }
   return {
     tense,
@@ -29,7 +30,7 @@ const parse = function (s) {
     chunks.eq(1).has('^(who|whom|whose|which|that)$')
   if (relativeSubject) {
     // Adjacent finite predicates can share a chunk: 'that barks does not sleep'.
-    chunks = chunks.splitAfter('[(#PresentTense && !#Auxiliary && !#Copula && !#Infinitive)] #Verb', 0)
+    chunks = chunks.splitAfter('[(#Pres && !#Aux && !#Cop && !#Inf)] #Verb', 0)
   }
   const relative = relativeSubject && chunks.filter(ch => ch.has('<Verb>')).length > 1
   let isSkipped = false

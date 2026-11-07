@@ -83,6 +83,8 @@ const matches = [
   { match: '#Date [(by|before|after|at|@|about) #Cardinal]', group: 0, tag: 'Time', reason: 'date-before-Cardinal' },
   //feb to june
   { match: '#Date (#Preposition|to) #Date', ifNo: '#Duration', tag: 'Date', reason: 'date-prep-date' },
+  //at 2:62pm - an impossible clock-time still belongs to the date, so it can be rejected
+  { match: '(at|by|@) [/^[0-9]{1,2}:[0-9]{2}(:[0-9]{2})?(am|pm)?$/]', group: 0, tag: 'Time', reason: 'hh:mm' },
   //by 6pm
   { match: '(by|before|after|at|@|about) #Time', tag: 'Time', reason: 'preposition-time' },
   // in 20mins
@@ -120,6 +122,10 @@ const matches = [
   { match: '(#Value|a|an) #Duration and a half (before|after|ago|hence|back|from)', tag: 'DateShift', reason: 'year-and-a-half-ago' },
   //in a year and a half
   { match: 'in (#Value|a|an) #Duration and a half', tag: 'DateShift', reason: 'in-year-and-a-half' },
+  //in one and a half years
+  { match: 'in #Cardinal and a half #Duration', tag: 'DateShift', reason: 'in-one-and-a-half' },
+  //three and a half days from now
+  { match: '#Cardinal and a half #Duration (before|after|ago|hence|back|from)', tag: 'DateShift', reason: 'one-and-a-half-ago' },
   //5 and a half years
   { match: '#Value and a half (years|months|weeks|days)', tag: 'Date', reason: '5 and a half years' },
   //on the fifth

@@ -1,4 +1,5 @@
 import fastTag from '../_fastTag.js'
+import { Date, WeekDay, Year, Prop, Ord, Card, Val, Numeric, Det, Poss, NN, Plur } from '../../../tagSet/_lib.js'
 const min = 1400
 const max = 2100
 const possessive = /^[0-9]{4}'s$/
@@ -41,11 +42,11 @@ const seemsGood = function (term) {
   if (dateWords.has(str)) {
     return true
   }
-  if (term.tags.has('Date') || term.tags.has('Month') || term.tags.has('WeekDay') || term.tags.has('Year')) {
+  if (term.tags.has(Date) || term.tags.has('Month') || term.tags.has(WeekDay) || term.tags.has(Year)) {
     return true
   }
   // 1999 Film Festival
-  if (term.tags.has('ProperNoun')) {
+  if (term.tags.has(Prop)) {
     return true
   }
   return false
@@ -55,11 +56,11 @@ const seemsOkay = function (term) {
   if (!term) {
     return false
   }
-  if (term.tags.has('Ordinal')) {
+  if (term.tags.has(Ord)) {
     return true
   }
   // untagged 'june 13 2007'
-  if (term.tags.has('Cardinal') && term.normal.length < 3) {
+  if (term.tags.has(Card) && term.normal.length < 3) {
     return true
   }
   // 2020 was ..
@@ -70,7 +71,7 @@ const seemsOkay = function (term) {
 }
 
 const seemsFine = function (term) {
-  return term && (term.tags.has('Date') || term.tags.has('Month') || term.tags.has('WeekDay') || term.tags.has('Year'))
+  return term && (term.tags.has(Date) || term.tags.has('Month') || term.tags.has(WeekDay) || term.tags.has(Year))
 }
 
 // a possessive is good evidence for a year, like '2020's election'
@@ -83,7 +84,7 @@ const tagPossessive = function (terms, i) {
   if (num % 10 === 0 && (num < 2000 || beforeDecade.has(terms[i - 1]?.normal))) {
     return null
   }
-  return fastTag(terms[i], ['Value', 'Cardinal', 'NumericValue', 'Year', 'Date'], '2-tagYear-possessive')
+  return fastTag(terms[i], [Val, Card, Numeric, Year, Date], '2-tagYear-possessive')
 }
 
 // recognize '1993' as a year
@@ -92,7 +93,7 @@ const tagYear = function (terms, i) {
   if (term.normal.length === 6 && possessive.test(term.normal)) {
     return tagPossessive(terms, i)
   }
-  if (term.tags.has('NumericValue') && term.tags.has('Cardinal') && term.normal.length === 4) {
+  if (term.tags.has(Numeric) && term.tags.has(Card) && term.normal.length === 4) {
     const num = Number(term.normal)
     // number between 1400 and 2100
     if (num && !isNaN(num)) {
@@ -100,22 +101,22 @@ const tagYear = function (terms, i) {
         const lastTerm = terms[i - 1]
         const nextTerm = terms[i + 1]
         if (seemsGood(lastTerm) || seemsGood(nextTerm)) {
-          return fastTag(term, 'Year', '2-tagYear')
+          return fastTag(term, Year, '2-tagYear')
         }
         // or is it really-close to a year?
         if (num >= 1920 && num < 2025) {
           // look at neighbours
           if (seemsOkay(lastTerm) || seemsOkay(nextTerm)) {
-            return fastTag(term, 'Year', '2-tagYear-close')
+            return fastTag(term, Year, '2-tagYear-close')
           }
           // look at far-neighbours
           if (seemsFine(terms[i - 2]) || seemsFine(terms[i + 2])) {
-            return fastTag(term, 'Year', '2-tagYear-far')
+            return fastTag(term, Year, '2-tagYear-far')
           }
           // 'the 2002 hit', 'my 1950 convertable'
-          if (lastTerm && (lastTerm.tags.has('Determiner') || lastTerm.tags.has('Possessive'))) {
-            if (nextTerm && nextTerm.tags.has('Noun') && !nextTerm.tags.has('Plural')) {
-              return fastTag(term, 'Year', '2-tagYear-noun')
+          if (lastTerm && (lastTerm.tags.has(Det) || lastTerm.tags.has(Poss))) {
+            if (nextTerm && nextTerm.tags.has(NN) && !nextTerm.tags.has(Plur)) {
+              return fastTag(term, Year, '2-tagYear-noun')
             }
           }
         }

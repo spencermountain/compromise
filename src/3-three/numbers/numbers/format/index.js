@@ -2,13 +2,14 @@ import numOrdinal from './toOrdinal/numOrdinal.js'
 import textOrdinal from './toOrdinal/textOrdinal.js'
 import textCardinal from './toText/index.js'
 import makeSuffix from './suffix.js'
+import { Ord } from '../../../../2-two/preTagger/tagSet/_lib.js'
 
 const format = function (obj, fmt) {
   if (fmt === 'TextOrdinal') {
     const { prefix, suffix } = makeSuffix(obj)
     return prefix + textOrdinal(obj) + suffix
   }
-  if (fmt === 'Ordinal') {
+  if (fmt === Ord) {
     return obj.prefix + numOrdinal(obj) + obj.suffix
   }
   if (fmt === 'TextCardinal') {

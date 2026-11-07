@@ -1,4 +1,5 @@
 import { hasBreak } from './_lib.js'
+import { Ger, Det, Adj, Vb, Pron, Conj, Prep, Adv, NN, Past, Plur } from '../../preTagger/tagSet/_lib.js'
 
 const hasContraction = /'/
 
@@ -44,29 +45,29 @@ const isOrHas = (terms, i) => {
       return 'is'
     }
     // the cat's sleeping
-    if (t.tags.has('Gerund')) {
+    if (t.tags.has(Ger)) {
       return 'is'
     }
     // she's the one
-    if (t.tags.has('Determiner')) {
+    if (t.tags.has(Det)) {
       return 'is'
     }
     // the food's ready
-    if (t.tags.has('Adjective')) {
+    if (t.tags.has(Adj)) {
       return 'is'
     }
     const next = terms[o + 1]
     const two = terms[o + 2]
     // it's said that, he's said to be - but she's said enough, he's believed in her
     if (reported.has(t.normal)) {
-      if (terms[i].normal === `it's` || (next && next.normal === 'to' && two && two.tags.has('Verb'))) {
+      if (terms[i].normal === `it's` || (next && next.normal === 'to' && two && two.tags.has(Vb))) {
         return 'is'
       }
       return 'has'
     }
     if (passive.has(t.normal)) {
       // it's called a peach - but he's called me, she's married a doctor
-      const hasObject = next && (next.tags.has('Pronoun') || (t.normal !== 'called' && next.tags.has('Determiner')))
+      const hasObject = next && (next.tags.has(Pron) || (t.normal !== 'called' && next.tags.has(Det)))
       if (!hasObject) {
         return 'is'
       }
@@ -74,28 +75,28 @@ const isOrHas = (terms, i) => {
     // the car's parked
     if (t.switch === 'Adj|Past') {
       // she's tired. she's tired, and ..
-      if (!next || hasBreak(t) || next.tags.has('Conjunction')) {
+      if (!next || hasBreak(t) || next.tags.has(Conj)) {
         return 'is'
       }
       // car's parked too, car's parked on, car's parked outside
-      if (adjLike.has(next.normal) || next.tags.has('Preposition') || next.tags.has('Adverb')) {
+      if (adjLike.has(next.normal) || next.tags.has(Prep) || next.tags.has(Adv)) {
         return 'is'
       }
       // store's closed early today - but she's lost many friends
-      if (next.tags.has('Adjective') && !(two && two.tags.has('Noun'))) {
+      if (next.tags.has(Adj) && !(two && two.tags.has(NN))) {
         return 'is'
       }
     }
     // The meeting's scheduled vs The plane's landed
-    if (t.tags.has('PastTense')) {
+    if (t.tags.has(Past)) {
       // meeting's scheduled for, cake's made by - but baby's learned to crawl
-      if (next && passivePrep.has(next.normal) && !(next.normal === 'to' && two && two.tags.has('Verb'))) {
+      if (next && passivePrep.has(next.normal) && !(next.normal === 'to' && two && two.tags.has(Vb))) {
         return 'is'
       }
       return 'has'
     }
     // a later verb is in another clause - it's because he left
-    if (t.tags.has('Noun') || t.tags.has('Preposition') || t.tags.has('Conjunction')) {
+    if (t.tags.has(NN) || t.tags.has(Prep) || t.tags.has(Conj)) {
       return 'is'
     }
   }
@@ -113,7 +114,7 @@ const apostropheS = function (terms, i) {
   // allow slang "there's cookies" -> there are
   if (before === 'there') {
     const t = terms[i + 1]
-    if (t && t.tags.has('Plural')) {
+    if (t && t.tags.has(Plur)) {
       return [before, 'are']
     }
   }

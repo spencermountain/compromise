@@ -1,23 +1,5 @@
 import textValue from '../toText/index.js'
-
-const irregulars = {
-  one: 'first',
-  two: 'second',
-  three: 'third',
-  five: 'fifth',
-  eight: 'eighth',
-  nine: 'ninth',
-  twelve: 'twelfth',
-  twenty: 'twentieth',
-  thirty: 'thirtieth',
-  forty: 'fortieth',
-  fourty: 'fourtieth',
-  fifty: 'fiftieth',
-  sixty: 'sixtieth',
-  seventy: 'seventieth',
-  eighty: 'eightieth',
-  ninety: 'ninetieth',
-}
+import { ordinal } from '../../_words.js'
 
 /**
  * convert a javascript number to 'twentieth' format
@@ -25,12 +7,7 @@ const irregulars = {
 const textOrdinal = obj => {
   const words = textValue(obj).split(' ')
   //convert the last number to an ordinal
-  const last = words[words.length - 1]
-  if (Object.hasOwn(irregulars, last)) {
-    words[words.length - 1] = irregulars[last]
-  } else {
-    words[words.length - 1] = last.replace(/y$/, 'i') + 'th'
-  }
+  words[words.length - 1] = ordinal(words[words.length - 1])
   return words.join(' ')
 }
 

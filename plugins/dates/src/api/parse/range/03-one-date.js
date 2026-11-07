@@ -20,7 +20,8 @@ export default [
       if (from && to) {
         let obj = {
           start: from,
-          end: to.end(),
+          // 'to october 1 at 2am' ends at that time, not the end of the day
+          end: to.setTime ? to : to.end(),
         }
         obj = reverseMaybe(obj)
         return obj

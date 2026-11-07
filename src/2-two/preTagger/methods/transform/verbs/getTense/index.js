@@ -1,4 +1,5 @@
 import guess from './_guess.js'
+import { Pres } from '../../../../tagSet/_lib.js'
 
 /** it helps to know what we're conjugating from */
 const getTense = function (str) {
@@ -12,7 +13,7 @@ const getTense = function (str) {
   }
   const one = str.substring(str.length - 1)
   if (one === 's') {
-    return 'PresentTense'
+    return Pres
   }
   return null
 }

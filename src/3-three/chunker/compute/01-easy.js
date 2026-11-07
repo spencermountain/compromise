@@ -1,5 +1,6 @@
+import { NN, Vb, Det, Val, QW } from '../../../2-two/preTagger/tagSet/_lib.js'
 const byWord = {
-  this: 'Noun',
+  this: NN,
   then: 'Pivot'
 }
 
@@ -13,21 +14,21 @@ const easyMode = function (document) {
         term.chunk = byWord[term.normal]
         continue
       }
-      if (term.tags.has('Verb')) {
-        term.chunk = 'Verb'
+      if (term.tags.has(Vb)) {
+        term.chunk = Vb
         continue
       }
-      if (term.tags.has('Noun') || term.tags.has('Determiner')) {
-        term.chunk = 'Noun'
+      if (term.tags.has(NN) || term.tags.has(Det)) {
+        term.chunk = NN
         continue
       }
       // 100 cats
-      if (term.tags.has('Value')) {
-        term.chunk = 'Noun'
+      if (term.tags.has(Val)) {
+        term.chunk = NN
         continue
       }
       //
-      if (term.tags.has('QuestionWord')) {
+      if (term.tags.has(QW)) {
         term.chunk = 'Pivot'
         continue
       }

@@ -15,8 +15,8 @@ const byComma = function (doc) {
     more = more.ifNo('@hasComma (and|or) .') //cool, and fun
     more = more.ifNo('(#City && @hasComma) #Country') //'toronto, canada'
     more = more.ifNo('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
-    more = more.ifNo('(#Date+ && @hasComma) #Value') //'july 6, 1992'
-    more = more.ifNo('(#Adjective && @hasComma) #Adjective') //nice, pretty
+    more = more.ifNo('(#Date+ && @hasComma) #Val') //'july 6, 1992'
+    more = more.ifNo('(#Adj && @hasComma) #Adj') //nice, pretty
     // more = more.ifNo('@hasComma (too|also)$') //at end of sentence
     return more.found
   })
@@ -27,7 +27,7 @@ const byComma = function (doc) {
 const splitParentheses = function (doc) {
   let matches = doc.parentheses()
   matches = matches.filter(m => {
-    return m.wordCount() >= 3 && m.has('#Verb') && m.has('#Noun')
+    return m.wordCount() >= 3 && m.has('#Verb') && m.has('#NN')
   })
   return doc.splitOn(matches)
 }
@@ -36,7 +36,7 @@ const splitParentheses = function (doc) {
 const splitQuotes = function (doc) {
   let matches = doc.quotations()
   matches = matches.filter(m => {
-    return m.wordCount() >= 3 && m.has('#Verb') && m.has('#Noun')
+    return m.wordCount() >= 3 && m.has('#Verb') && m.has('#NN')
   })
   return doc.splitOn(matches)
 }
@@ -52,9 +52,9 @@ const clauses = function (n) {
   found = found.splitAfter('(@hasEllipses|@hasSemicolon|@hasDash|@hasColon)')
 
   // i said
-  found = found.splitAfter('^#Pronoun (said|says)')
+  found = found.splitAfter('^#Pron (said|says)')
   // ... said John.
-  found = found.splitBefore('(said|says) #ProperNoun$')
+  found = found.splitBefore('(said|says) #Prop$')
 
   // ... if it was
   found = found.splitBefore('. . if .{4}')

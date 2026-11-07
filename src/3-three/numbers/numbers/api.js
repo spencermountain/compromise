@@ -1,4 +1,5 @@
 import select from '../../_select.js'
+import keepClass from '../../_lib.js'
 import { Numeric, Ord, Card, TxtNum } from '../../../2-two/preTagger/tagSet/_lib.js'
 import find from './find.js'
 import parse from './parse/index.js'
@@ -9,8 +10,8 @@ import toFraction from './toFraction.js'
 import toPercentage from './toPercentage.js'
 import toDecimal from './toDecimal.js'
 
-const ordinalMatch = '#Ordinal'
-const textValueMatch = '#TextValue'
+const ordinalMatch = '#Ord'
+const textValueMatch = '#TxtNum'
 const textOrdinal = 'TextOrdinal'
 const textCardinal = 'TextCardinal'
 const keep = { tags: true, possessives: true }
@@ -59,7 +60,7 @@ const addMethod = function (View) {
     }
     /** return only cardinal numbers*/
     isCardinal() {
-      return this.if('#Cardinal')
+      return this.if('#Card')
     }
 
     /** convert to numeric form like '8' or '8th' */
@@ -217,14 +218,8 @@ const addMethod = function (View) {
     _mapNumbers(fn) {
       return this.map(fn)
     }
-    // overloaded - keep the current class
-    update(pointer) {
-      const m = new this.constructor(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      m.world = this.world
-      return m
-    }
   }
+  keepClass(Numbers)
   // aliases
   Numbers.prototype.toNice = Numbers.prototype.toLocaleString
   Numbers.prototype.isBetween = Numbers.prototype.between
@@ -235,7 +230,7 @@ const addMethod = function (View) {
   View.prototype.numbers = select(Numbers, find, true)
   View.prototype.percentages = function (n) {
     let m = find(this)
-    m = m.filter(v => v.has('#Percent') || v.after('^per cent').found)
+    m = m.filter(v => v.has('#Pct') || v.after('^per cent').found)
     m = m.getNth(n)
     return new Numbers(this.document, m.pointer)
   }

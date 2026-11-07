@@ -1,3 +1,4 @@
+import { Place, Date, Adj } from '../tagSet/_lib.js'
 // roughly, split a document by comma or semicolon
 
 const splitOn = function (terms, i) {
@@ -13,17 +14,17 @@ const splitOn = function (terms, i) {
     return false
   }
   // toronto, canada  - tuesday, march
-  if (term.tags.has('Place') || term.tags.has('Date')) {
+  if (term.tags.has(Place) || term.tags.has(Date)) {
     return false
   }
   if (terms[i - 1]) {
     const lastTerm = terms[i - 1]
     // thursday, june
-    if (lastTerm.tags.has('Date') || maybeDate.has(lastTerm.normal)) {
+    if (lastTerm.tags.has(Date) || maybeDate.has(lastTerm.normal)) {
       return false
     }
     // pretty, nice, and fun
-    if (lastTerm.tags.has('Adjective') || term.tags.has('Adjective')) {
+    if (lastTerm.tags.has(Adj) || term.tags.has(Adj)) {
       return false
     }
   }

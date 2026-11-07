@@ -1,12 +1,13 @@
 import { infinitive } from './inflect.js'
 import convertAuxiliary from './auxiliary.js'
 import { noop, isAreAm } from '../lib.js'
+import { Vb } from '../../../../2-two/preTagger/tagSet/_lib.js'
 const keep = { tags: true }
 
 const simple = (vb, parsed) => {
   const { root, auxiliary } = parsed
   // 'i may'
-  if (root.has('#Modal')) {
+  if (root.has('#Mod')) {
     return vb
   }
   const str = infinitive(root)
@@ -17,7 +18,7 @@ const simple = (vb, parsed) => {
   }
   if (str) {
     vb = vb.replace(root, str, keep)
-    vb.not('#Particle').tag('Verb')
+    vb.not('#Particle').tag(Vb)
   }
   vb.prepend('will').match('will').tag('Auxiliary')
   vb.remove(auxiliary)
@@ -63,7 +64,7 @@ const forms = {
   'modal-past': noop,
   // started looking
   'gerund-phrase': (vb, parsed) => {
-    parsed.root = parsed.root.not('#Gerund$')
+    parsed.root = parsed.root.not('#Ger$')
     simple(vb, parsed)
     return vb.remove('(had|have)')
   },

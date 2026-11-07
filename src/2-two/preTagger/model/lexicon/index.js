@@ -5,6 +5,7 @@ import frozenLex, { shared } from './frozenLex.js'
 import emoticons from './emoticons.js'
 import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import irregularPlurals from '../irregulars/plurals.js'
+import { Conj, Country, Acronym, Emoticon } from '../../tagSet/_lib.js'
 // unpack our lexicon of words
 // (found in ./lexicon/)
 
@@ -41,15 +42,15 @@ Object.keys(lexData).forEach(tag => {
   })
 })
 // Keep the conditional tag alongside the packed conjunction entry.
-lexicon.if = ['Conjunction', 'Condition']
+lexicon.if = [Conj, 'Condition']
 
 // Keep country initialisms out of the generic acronym retagging pass.
 countryAcronyms.forEach(word => {
-  lexicon[word] = ['Country', 'Acronym']
+  lexicon[word] = [Country, Acronym]
 })
 
 // add ':)'
-emoticons.forEach(str => (lexicon[str] = 'Emoticon'))
+emoticons.forEach(str => (lexicon[str] = Emoticon))
 
 // misc cleanup
 delete lexicon['']

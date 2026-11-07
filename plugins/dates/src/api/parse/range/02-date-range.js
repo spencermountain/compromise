@@ -266,17 +266,18 @@ export default [
 
   {
     // second half of march
-    match: '[<part>(1st|initial|2nd|latter)] half of [<month>#Month] [<year>#Year?]',
+    match: '(first|1st|initial|second|2nd|latter) half of #Month #Year?',
     desc: 'second half of march',
     parse: (m, context) => {
-      const { part, month, year } = m.groups()
+      // sub-matches, not groups - 'the second' may have shifted group pointers
+      const year = m.match('#Year')
       const obj = {
-        month: month.text('reduced'),
+        month: m.match('#Month').text('reduced'),
         date: 1, //assume 1st
-        year: year && year.found ? year.text('reduced') : context.today.year()
+        year: year.found ? year.text('reduced') : context.today.year()
       }
       const unit = new Month(obj, null, context)
-      if (part.has('(1st|initial)')) {
+      if (m.has('^(first|1st|initial)')) {
         return {
           start: unit.start(),
           end: unit.clone().middle(),

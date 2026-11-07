@@ -7,7 +7,7 @@ import { noop, haveHas } from '../lib.js'
 const simple = (vb, parsed) => {
   const { root, auxiliary } = parsed
   // 'i may'
-  if (root.has('#Modal')) {
+  if (root.has('#Mod')) {
     return vb
   }
   let str = infinitive(root, { keepPunct: false })

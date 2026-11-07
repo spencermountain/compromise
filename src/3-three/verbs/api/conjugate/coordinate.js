@@ -9,7 +9,7 @@ const resultTense = function (head, target) {
   const { chain, parsed, form } = head
   if (target === 'infinitive') return Inf
   if (target === 'gerund') return chain && chain.passive ? Participle : Ger
-  if (parsed.root.has('#Gerund')) return Ger
+  if (parsed.root.has('#Ger')) return Ger
   if (target === 'participle') return Participle
   if (chain && chain.passive) return Participle
   if (chain && chain.perfect) {
@@ -59,7 +59,7 @@ const coordinate = function (verbs, target, convert) {
     const others = coordinateNormal(outside, target, convert)
     if (!inside.found) return others
     // Partial selections cannot reconstruct the whole question, but can still drop a 'not'.
-    if (required.terms().not(inside.terms()).not('#Negative').found) {
+    if (required.terms().not(inside.terms()).not('#Neg').found) {
       const kept = target === 'positive' ? inside.map(convert) : inside
       return kept.concat(others).settle()
     }

@@ -2,7 +2,7 @@ import swapVerb from './swap-verb.js'
 
 const swapNoun = function (m, lemma) {
   let str = lemma
-  if (m.has('#Plural')) {
+  if (m.has('#Plur')) {
     const toPlural = m.methods.two.transform.noun.toPlural
     str = toPlural(lemma, m.model)
   }
@@ -20,9 +20,9 @@ const swapAdverb = function (m, lemma) {
 const swapAdjective = function (m, lemma) {
   const { toComparative, toSuperlative } = m.methods.two.transform.adjective
   let str = lemma
-  if (m.has('#Comparative')) {
+  if (m.has('#Comp')) {
     str = toComparative(str, m.model)
-  } else if (m.has('#Superlative')) {
+  } else if (m.has('#Sup')) {
     str = toSuperlative(str, m.model)
   }
   if (str) {
@@ -42,13 +42,13 @@ const swap = function (from, to, tag) {
   if (m.has('#Verb')) {
     return swapVerb(m, to)
   }
-  if (m.has('#Noun')) {
+  if (m.has('#NN')) {
     return swapNoun(m, to)
   }
-  if (m.has('#Adverb')) {
+  if (m.has('#Adv')) {
     return swapAdverb(m, to)
   }
-  if (m.has('#Adjective')) {
+  if (m.has('#Adj')) {
     return swapAdjective(m, to)
   }
   return this

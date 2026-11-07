@@ -1,6 +1,7 @@
 import fillTags from './_fillTags.js'
 import looksPlural from '../../../methods/looksPlural.js'
 import adhoc from './_adhoc.js'
+import { Acronym, Phrasal, SportsTeam, Sing, Actor, Plur, Vb, Inf, Pres, Past } from '../../../tagSet/_lib.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
 const checkWord = (term, obj) => {
@@ -77,7 +78,7 @@ const doSwitches = function (terms, i, world) {
   }
   const form = term.switch
   // skip propernouns, acronyms, etc
-  if (term.tags.has('Acronym') || term.tags.has('PhrasalVerb') || term.tags.has('SportsTeam')) {
+  if (term.tags.has(Acronym) || term.tags.has(Phrasal) || term.tags.has(SportsTeam)) {
     return
   }
   let tag = pickTag(terms, i, clues[form], model)
@@ -86,16 +87,16 @@ const doSwitches = function (terms, i, world) {
     tag = adhoc[form](terms, i) || tag
   }
   // Shared noun clues must retain the actor reading.
-  if (form === 'Actor|Verb' && tag === 'Singular') {
-    tag = 'Actor'
+  if (form === 'Actor|Verb' && tag === Sing) {
+    tag = Actor
   }
   // Choosing a lexical reading must retain its inflection.
-  if (form === 'Person|Noun' && tag === 'Singular' && looksPlural(str)) {
-    tag = 'Plural'
+  if (form === 'Person|Noun' && tag === Sing && looksPlural(str)) {
+    tag = Plur
   }
   // Drew is also a name; only its verbal reading carries past tense.
-  if (str === 'drew' && (tag === 'Verb' || tag === 'Infinitive' || tag === 'PresentTense')) {
-    tag = 'PastTense'
+  if (str === 'drew' && (tag === Vb || tag === Inf || tag === Pres)) {
+    tag = Past
   }
   // did we find anything?
   if (tag) {

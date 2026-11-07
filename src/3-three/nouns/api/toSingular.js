@@ -1,3 +1,4 @@
+import { Sing } from '../../../2-two/preTagger/tagSet/_lib.js'
 const keep = { tags: true }
 
 // give 'dane' the case of the word it replaced: 'Danes' -> 'Dane', 'DANES' -> 'DANE'
@@ -22,7 +23,7 @@ const nounToSingular = function (m, parsed) {
   const str = parsed.root.text('normal')
   const single = toSingular(str, model)
   const before = (parsed.root.docs[0] || []).map(term => term.text)
-  const after = m.replace(parsed.root, single, keep).tag('Singular', 'toPlural')
+  const after = m.replace(parsed.root, single, keep).tag(Sing, 'toPlural')
   // the conversion works on the normalized text, so put the original case back
   const terms = after.docs[0] || []
   if (terms.length === before.length) {

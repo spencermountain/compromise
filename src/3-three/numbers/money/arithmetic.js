@@ -13,7 +13,7 @@ const replace = (part, amount, negative = amount < 0) => {
   obj.num = Math.abs(amount)
   obj.prefix = obj.prefix.replace(/[-+]/g, '')
   let str
-  if (number.has('#TextValue')) {
+  if (number.has('#TxtNum')) {
     str = format(obj, 'TextCardinal')
     if (negative) {
       str = 'minus ' + str

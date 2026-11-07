@@ -5,6 +5,7 @@ import conjugate from '../../methods/transform/verbs/conjugate/index.js'
 import { toSuperlative, toComparative } from '../../methods/transform/adjectives/inflect.js'
 import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
 import models from '../models/index.js'
+import { Actor, Adj, Sing, Ger, NN, First, Pers, Plur, Uncountable, Past, Pres, Sup, Comp, Inf } from '../../tagSet/_lib.js'
 const tmpModel = {
   one: { lexicon: {} },
   two: { models }
@@ -13,33 +14,33 @@ const tmpModel = {
 // defaults for switches
 const switchDefaults = {
   // 'pilot'
-  'Actor|Verb': 'Actor', //
+  'Actor|Verb': Actor, //
   // 'amusing'
-  'Adj|Gerund': 'Adjective', //+conjugations
+  'Adj|Gerund': Adj, //+conjugations
   // 'standard'
-  'Adj|Noun': 'Adjective',
+  'Adj|Noun': Adj,
   // 'boiled'
-  'Adj|Past': 'Adjective', //+conjugations
+  'Adj|Past': Adj, //+conjugations
   // 'smooth'
-  'Adj|Present': 'Adjective',//+conjugations
+  'Adj|Present': Adj,//+conjugations
   // 'box'
-  'Noun|Verb': 'Singular', //+conjugations (no-present)
+  'Noun|Verb': Sing, //+conjugations (no-present)
   //'singing'
-  'Noun|Gerund': 'Gerund', //+conjugations
+  'Noun|Gerund': Ger, //+conjugations
   // 'hope'
-  'Person|Noun': 'Noun',
+  'Person|Noun': NN,
   // 'April'
   'Person|Date': 'Month',
   // 'rob'
-  'Person|Verb': 'FirstName',//+conjugations
+  'Person|Verb': First,//+conjugations
   // 'victoria'
-  'Person|Place': 'Person',
+  'Person|Place': Pers,
   // 'rusty'
   'Person|Adj': 'Comparable',
   // 'boxes'
-  'Plural|Verb': 'Plural', //(these are already derivative)
+  'Plural|Verb': Plur, //(these are already derivative)
   // 'miles'
-  'Unit|Noun': 'Noun',
+  'Unit|Noun': NN,
 }
 
 const expandLexicon = function (words, model) {
@@ -55,9 +56,9 @@ const expandLexicon = function (words, model) {
 // these words have no singular/plural conjugation
 const addUncountables = function (words, model) {
   Object.keys(words).forEach(k => {
-    if (words[k] === 'Uncountable') {
+    if (words[k] === Uncountable) {
       model.two.uncountable[k] = true
-      words[k] = 'Uncountable'
+      words[k] = Uncountable
     }
   })
   return model
@@ -65,24 +66,24 @@ const addUncountables = function (words, model) {
 
 const expandVerb = function (str, words, doPresent) {
   const obj = conjugate(str, tmpModel)
-  words[obj.PastTense] ||= 'PastTense'
-  words[obj.Gerund] ||= 'Gerund'
+  words[obj.PastTense] ||= Past
+  words[obj.Gerund] ||= Ger
   if (doPresent === true) {
     // is this plural noun, or present-tense?
-    words[obj.PresentTense] ||= 'PresentTense'
+    words[obj.PresentTense] ||= Pres
   }
 }
 
 const expandAdjective = function (str, words, model) {
   const sup = toSuperlative(str, model)
-  words[sup] ||= 'Superlative'
+  words[sup] ||= Sup
   const comp = toComparative(str, model)
-  words[comp] ||= 'Comparative'
+  words[comp] ||= Comp
 }
 
 const expandNoun = function (str, words, model) {
   const plur = toPlural(str, model)
-  words[plur] ||= 'Plural'
+  words[plur] ||= Plur
 }
 
 // harvest ambiguous words for any conjugations
@@ -98,7 +99,7 @@ const expandVariable = function (switchWords, model) {
     if (name === 'Actor|Verb') {
       const plural = toPlural(w, model)
       if (switchWords[plural] === 'Plural|Verb') {
-        actorPlurals[plural] = ['Plural', 'Actor']
+        actorPlurals[plural] = [Plur, Actor]
       }
     }
     // conjugate some verbs
@@ -114,9 +115,9 @@ const expandVariable = function (switchWords, model) {
     }
     // add infinitives for gerunds
     if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
-      const inf = toInfinitive(w, tmpModel, 'Gerund')
+      const inf = toInfinitive(w, tmpModel, Ger)
       if (!lex[inf]) {
-        words[inf] = 'Infinitive' //expand it later
+        words[inf] = Inf //expand it later
       }
     }
     // add plurals for nouns
@@ -124,10 +125,10 @@ const expandVariable = function (switchWords, model) {
       expandNoun(w, lex, model)
     }
     if (name === 'Adj|Past') {
-      const inf = toInfinitive(w, tmpModel, 'PastTense')
+      const inf = toInfinitive(w, tmpModel, Past)
       // An unchanged guess is not evidence that an adjective is an infinitive.
       if (inf !== w && !lex[inf]) {
-        words[inf] = 'Infinitive' //expand it later
+        words[inf] = Inf //expand it later
       }
     }
   })

@@ -10,7 +10,7 @@ const api = function (View) {
     return m.getNth(n)
   }
   View.prototype.organizations = function (n) {
-    const m = this.match('#Organization+')
+    const m = this.match('#Org+')
     return m.getNth(n)
   }
   topics(View)

@@ -1,10 +1,12 @@
 import select from '../../_select.js'
+import keepClass from '../../_lib.js'
 import find from './find.js'
 import parse from './parse.js'
 import toCardinal from './convert/toCardinal.js'
 import toOrdinal from './convert/toOrdinal.js'
 import { isValid, replaceFraction } from './_lib.js'
 import { decimalText, replaceNumber } from '../numbers/_conversion.js'
+import { Numeric, Frac } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const plugin = function (View) {
   /**
@@ -36,7 +38,7 @@ const plugin = function (View) {
           return m
         }
         const decimal = obj.numerator / obj.denominator
-        return replaceNumber(m, decimalText(decimal)).tag('NumericValue').unTag('Fraction')
+        return replaceNumber(m, decimalText(decimal)).tag(Numeric).unTag(Frac)
       })
       return result.numbers()
     }
@@ -58,7 +60,7 @@ const plugin = function (View) {
         if (!str) {
           return m
         }
-        if (m.after('^#Noun').found) {
+        if (m.after('^#NN').found) {
           str += ' of' // three fifths of dentists
         }
         return replaceFraction(m, str)
@@ -101,12 +103,8 @@ const plugin = function (View) {
         return replaceNumber(m, `${decimalText(percent)}%`)
       })
     }
-    update(pointer) {
-      const m = new Fractions(this.document, pointer)
-      m._cache = this._cache
-      return m
-    }
   }
+  keepClass(Fractions)
 
   View.prototype.fractions = select(Fractions, find, true)
 }

@@ -1,6 +1,7 @@
 import { infinitive } from './inflect.js'
 import { doDoes, isAreAm } from '../lib.js'
 import parseVerb from '../parse/index.js'
+import { Vb, Inf } from '../../../../2-two/preTagger/tagSet/_lib.js'
 const keep = { tags: true }
 
 // all verb forms are the same
@@ -25,7 +26,7 @@ const toInf = function (vb, parsed) {
     return vb
   }
   if (str) {
-    vb.replace(root, str, keep).tag('Verb').firstTerm().tag('Infinitive')
+    vb.replace(root, str, keep).tag(Vb).firstTerm().tag(Inf)
   }
   // remove any auxiliary terms
   if (aux.found) {

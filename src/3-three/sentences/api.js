@@ -1,3 +1,4 @@
+import keepClass from '../_lib.js'
 import isQuestion from './questions.js'
 import parse from './parse/index.js'
 import toPast from './conjugate/toPast.js'
@@ -73,13 +74,8 @@ const api = function (View) {
       const res = this.filter(s => !s.isExclamation().found && !s.isQuestion().found)
       return res.getNth(n)
     }
-    // overloaded - keep Sentences class
-    update(pointer) {
-      const m = new Sentences(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      return m
-    }
   }
+  keepClass(Sentences)
   // aliases
   Sentences.prototype.toPresent = Sentences.prototype.toPresentTense
   Sentences.prototype.toPast = Sentences.prototype.toPastTense

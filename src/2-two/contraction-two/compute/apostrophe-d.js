@@ -1,3 +1,4 @@
+import { Past, Pres, Inf, Adj } from '../../preTagger/tagSet/_lib.js'
 const hasContraction = /'/
 
 const hadWords = new Set([
@@ -29,18 +30,18 @@ const hadOrWould = (terms, i) => {
       return 'would'
     }
     // You'd mentioned -> you had mentioned
-    if (t.tags.has('PastTense') || t.switch === 'Adj|Past') {
+    if (t.tags.has(Past) || t.switch === 'Adj|Past') {
       return 'had'
     }
     // You'd mention -> you would mention
-    if (t.tags.has('PresentTense') || t.tags.has('Infinitive')) {
+    if (t.tags.has(Pres) || t.tags.has(Inf)) {
       return 'would'
     }
     // i'd an issue
-    if (t.tags.has('#Determiner')) {
+    if (t.tags.has('#Det')) {
       return 'had'
     }
-    if (t.tags.has('Adjective')) {
+    if (t.tags.has(Adj)) {
       return 'would'
     }
   }

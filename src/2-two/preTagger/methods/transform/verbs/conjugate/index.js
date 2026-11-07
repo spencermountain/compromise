@@ -1,4 +1,5 @@
 import { convert } from 'suffix-thumb'
+import { Adj } from '../../../../tagSet/_lib.js'
 
 // pull-apart phrasal verb 'fall over'
 const parse = (inf) => {
@@ -36,7 +37,7 @@ const conjugate = function (inf, model) {
   if (pastPrt !== inf && pastPrt !== found.PastTense) {
     // ensure it's a known participle
     const lex = model.one.lexicon || {}
-    if (lex[pastPrt] === 'Participle' || lex[pastPrt] === 'Adjective') {
+    if (lex[pastPrt] === 'Participle' || lex[pastPrt] === Adj) {
       // one exception
       if (inf === 'play') {
         pastPrt = 'played'

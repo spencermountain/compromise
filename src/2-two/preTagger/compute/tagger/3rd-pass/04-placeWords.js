@@ -1,3 +1,4 @@
+import { Org, Poss, Prop, Place, Sing } from '../../../tagSet/_lib.js'
 const isTitleCase = str => /^\p{Lu}[\p{Ll}'’]/u.test(str)
 const isPossessive = /'s$/
 
@@ -39,17 +40,17 @@ const isPlace = function (term, i, yelling) {
     return false
   }
   const tags = term.tags
-  if (tags.has('Organization') || tags.has('Possessive') || isPossessive.test(term.normal)) {
+  if (tags.has(Org) || tags.has(Poss) || isPossessive.test(term.normal)) {
     return false
   }
-  if (tags.has('ProperNoun') || tags.has('Place')) {
+  if (tags.has(Prop) || tags.has(Place)) {
     return true
   }
   // allow anything titlecased to be an org
   if (!yelling && isTitleCase(term.text)) {
     // only tag a titlecased first-word, if it checks-out
     if (i === 0) {
-      return tags.has('Singular')
+      return tags.has(Sing)
     }
     return true
   }
@@ -71,7 +72,7 @@ const tagOrgs = function (terms, i, world, yelling) {
         continue
       }
       if (isPlace(terms[n], n, yelling)) {
-        setTag(terms.slice(n, i + 1), 'Place', world, null, '3-[place-of-foo]')
+        setTag(terms.slice(n, i + 1), Place, world, null, '3-[place-of-foo]')
         continue
       }
       break
@@ -83,7 +84,7 @@ const tagOrgs = function (terms, i, world, yelling) {
     }
     for (let n = i + 1; n < terms.length; n += 1) {
       if (isPlace(terms[n], n, yelling)) {
-        setTag(terms.slice(i, n + 1), 'Place', world, null, '3-[foo-place]')
+        setTag(terms.slice(i, n + 1), Place, world, null, '3-[foo-place]')
         return true
       }
       // 'municipal ...'

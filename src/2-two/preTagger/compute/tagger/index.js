@@ -21,11 +21,12 @@ import switches from './3rd-pass/06-switches.js'
 import imperative from './3rd-pass/08-imperative.js'
 import firstWord from './3rd-pass/09-first-word.js'
 import ambigDate from './3rd-pass/10-ambig-date.js'
+import { Prop } from '../../tagSet/_lib.js'
 
 // is it all yelling-case?
 const ignoreCase = function (terms) {
   // allow 'John F Kennedy'
-  if (terms.filter(t => !t.tags.has('ProperNoun')).length <= 3) {
+  if (terms.filter(t => !t.tags.has(Prop)).length <= 3) {
     return false
   }
   const lowerCase = /^[a-z]/

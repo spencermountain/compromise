@@ -1,21 +1,22 @@
 import tags from '../../tagSet/aliases.js'
+import { Adj, Poss, Det, Adv, Pron, Val, Ord, Mod, Sup, Pers, Cop, Past, Conj } from '../../tagSet/_lib.js'
 
 const { V: vb, NN: nn } = tags
 
 export default {
   // looking at the previous word's tags:
   leftTags: [
-    ['Adjective', nn],
-    ['Possessive', nn],
-    ['Determiner', nn],
-    ['Adverb', vb],
-    ['Pronoun', vb],
-    ['Value', nn],
-    ['Ordinal', nn],
-    ['Modal', vb],
-    ['Superlative', nn],
+    [Adj, nn],
+    [Poss, nn],
+    [Det, nn],
+    [Adv, vb],
+    [Pron, vb],
+    [Val, nn],
+    [Ord, nn],
+    [Mod, vb],
+    [Sup, nn],
     ['Demonym', nn],
-    ['Honorific', 'Person'], //dr. Smith
+    ['Honorific', Pers], //dr. Smith
   ],
   // looking at the previous word:
   leftWords: [
@@ -32,7 +33,7 @@ export default {
     ['his', nn],
     ['when', nn],
     ['you', vb],
-    ['very', 'Adjective'],
+    ['very', Adj],
     ['old', nn],
     ['never', vb],
     ['before', nn],
@@ -43,16 +44,16 @@ export default {
 
   // looking at the next word's tags:
   rightTags: [
-    ['Copula', nn],
-    ['PastTense', nn],
-    ['Conjunction', nn],
-    ['Modal', nn],
+    [Cop, nn],
+    [Past, nn],
+    [Conj, nn],
+    [Mod, nn],
   ],
   // looking at the next word:
   rightWords: [
     ['there', vb],
     ['me', vb],
-    ['man', 'Adjective'],
+    ['man', Adj],
     // ['only', vb],
     ['him', vb],
     ['it', vb],//relaunch it
@@ -61,6 +62,6 @@ export default {
     ['himself', vb],
     ['went', nn],
     ['who', nn],
-    ['jr', 'Person'],
+    ['jr', Pers],
   ],
 }

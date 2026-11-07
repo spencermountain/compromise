@@ -1,6 +1,6 @@
 // if a clause starts with these, it's not a main clause
 // followed by a number, 'since' or 'once' is a preposition or an adverb ('since 2010', 'once upon a time')
-const subordinate = `(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once) !(#Value|upon|then|now)`
+const subordinate = `(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once) !(#Val|upon|then|now)`
 const relative = `(that|which|whichever|who|whoever|whom|whose|whomever)`
 
 // a subordinator or relative pronoun only makes the clause secondary when it
@@ -52,14 +52,14 @@ const mainClause = function (s) {
   }
 
   // check for clauses beginning with Gerund ("Taking ..., ...")
-  m = m.ifNo('^#Gerund')
+  m = m.ifNo('^#Ger')
   if (m.length === 1) {
     return m
   }
 
   // an infinitive or an inverted condition ('To win ...', 'Had I known ...')
-  m = m.ifNo('^to #Infinitive')
-  m = m.ifNo('^#Condition')
+  m = m.ifNo('^to #Inf')
+  m = m.ifNo('^#Cond')
   if (m.length === 1) {
     return m
   }

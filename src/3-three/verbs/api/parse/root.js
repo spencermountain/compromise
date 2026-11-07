@@ -2,7 +2,7 @@
 const getMain = function (vb) {
   let root = vb
   if (vb.wordCount() > 1) {
-    root = vb.not('(#Negative|#Auxiliary|#Modal|#Adverb|#Prefix)')
+    root = vb.not('(#Neg|#Aux|#Mod|#Adv|#Prefix)')
   }
   // fallback to just the last word, sometimes
   if (root.length > 1 && !root.has('#Phrasal #Particle')) {
@@ -13,7 +13,7 @@ const getMain = function (vb) {
 
   // fallback
   if (!root.found) {
-    root = vb.not('#Negative')
+    root = vb.not('#Neg')
     return root
   }
   return root

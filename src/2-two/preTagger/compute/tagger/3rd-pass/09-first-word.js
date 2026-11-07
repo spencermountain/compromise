@@ -1,3 +1,4 @@
+import { Adj, Expr } from '../../../tagSet/_lib.js'
 // come on
 const reason='3-[first-word]'
   // [well]..
@@ -17,17 +18,17 @@ const firstWord = function (terms, world) {
   const str = terms[0].normal
   // "[well] i lose"
   if (expressions.beforeAdj.has(str)) {
-    if (terms[1] && !terms[1].tags.has('Adjective')) {
-      setTag([terms[0]], 'Expression', world, null, reason)
+    if (terms[1] && !terms[1].tags.has(Adj)) {
+      setTag([terms[0]], Expr, world, null, reason)
     }
     if (terms.length === 1) {
-      setTag([terms[0]], 'Expression', world, null, reason)
+      setTag([terms[0]], Expr, world, null, reason)
     }
   }
   // "[say], do you"
   if (expressions.withComma.has(str)) {
     if (/,/.test(terms[0].post)) {
-      setTag([terms[0]], 'Expression', world, null, reason)
+      setTag([terms[0]], Expr, world, null, reason)
     }
   }
 }

@@ -21,7 +21,7 @@ const toPresent = function (s) {
 
     // keep -ing verbs
     // verbs = verbs.if('#PresentTense')
-    verbs = verbs.notIf('#Gerund')
+    verbs = verbs.notIf('#Ger')
 
     //run-on infinitive-list - 'to walk, sit and eat'
     // let list = s.match('to #Verb+ #Conjunction #Verb').terms()

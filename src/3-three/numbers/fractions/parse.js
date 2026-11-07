@@ -27,7 +27,7 @@ const slashForm = function (m) {
 
 // parse '4 out of 4'
 const nOutOfN = function (m) {
-  const found = m.match('[<num>#Value+] out of every? [<den>#Value+]')
+  const found = m.match('[<num>#Val+] out of every? [<den>#Val+]')
   if (found.found !== true) {
     return null
   }
@@ -52,7 +52,7 @@ const nOutOfN = function (m) {
 
 // Keep compound singular denominators together: a twenty fifth.
 const compoundOrdinal = (m) => {
-  if (!m.has('^(a|one) #Cardinal+ #Ordinal$')) {
+  if (!m.has('^(a|one) #Card+ #Ord$')) {
     return null
   }
   const denominator = parseNumber(m.terms().slice(1))
@@ -65,7 +65,7 @@ const compoundOrdinal = (m) => {
 // parse 'five thirds'
 const nOrinalth = function (m) {
   // the words of 'thirty five fifths' are all tagged as #Fraction
-  const found = m.match('[<num>(#Cardinal|a)+] [<den>(#Fraction && !#Cardinal)+]')
+  const found = m.match('[<num>(#Card|a)+] [<den>(#Frac && !#Card)+]')
   if (found.found !== true) {
     return null
   }
@@ -105,7 +105,7 @@ const nOrinalth = function (m) {
 
 // implied 1 in '100th of a', 'fifth of a'
 const oneNth = function (m) {
-  const found = m.match('^#Ordinal$')
+  const found = m.match('^#Ord$')
   if (found.found !== true) {
     return null
   }

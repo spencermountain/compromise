@@ -1,24 +1,6 @@
 import spacetime from 'spacetime'
+import { knownTimes as hardCoded } from '../_lib.js'
 
-// these should be added to model
-const hardCoded = {
-  daybreak: '7:00am', //ergh
-  breakfast: '8:00am',
-  morning: '9:00am',
-  noon: '12:00pm',
-  midday: '12:00pm',
-  afternoon: '2:00pm',
-  lunchtime: '12:00pm',
-  evening: '6:00pm',
-  dinnertime: '6:00pm',
-  night: '8:00pm',
-  eod: '10:00pm',
-  midnight: '12:00am',
-  am: '9:00am', //tomorow am
-  pm: '5:00pm',
-  'early day': '8:00am',
-  'late at night': '11:00pm'
-}
 const minMap = {
   quarter: 15,
   half: 30,
@@ -31,6 +13,30 @@ const ampmChooser = function (s) {
     return s.ampm('pm')
   }
   return s
+}
+
+// '25:00', '2:62pm', '13pm' - spacetime would clamp these, so reject them
+const isImpossible = function (str) {
+  const m = str.match(/^([0-9]{1,2})(?::([0-9]{2}))?(?::([0-9]{2}))? ?(am|pm)?$/)
+  if (!m) {
+    return false
+  }
+  const [hour, min, sec] = m.slice(1, 4).map(n => Number(n || 0))
+  if (m[4] && (hour < 1 || hour > 12)) {
+    return true
+  }
+  return hour > 23 || min > 59 || sec > 59
+}
+
+// '00:30' or '16:05' are already unambiguous
+const is24Hour = str => /^(0[0-9]|1[3-9]|2[0-3]):/.test(str)
+
+// keep seconds, when given
+const toTime = function (s) {
+  if (s.second() === 0) {
+    return s.time()
+  }
+  return s.format('{hour-24-pad}:{minute-pad}:{second-pad}')
 }
 
 // parse 'twenty past 2'
@@ -76,6 +82,9 @@ const parseTime = function (doc, context) {
   timeStr = timeStr.replace(/^@/, '')//@4pm
   if (Object.hasOwn(hardCoded, timeStr)) {
     return { result: hardCoded[timeStr], m: time }
+  }
+  if (isImpossible(timeStr)) {
+    return { result: null, m: time, invalid: true }
   }
   // '5 oclock'
   let m = time.match('^#Cardinal oclock (am|pm)?')
@@ -132,7 +141,7 @@ const parseTime = function (doc, context) {
     }
   }
   // '4 in the evening'
-  m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|evening|night|nighttime)]')
+  m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|afternoon|evening|night|nighttime)]')
   if (m.found) {
     const str = m.groups('time').text('normal')
     if (/^[0-9]{1,2}$/.test(str)) {
@@ -143,7 +152,7 @@ const parseTime = function (doc, context) {
     }
     if (s.isValid() && !s.isEqual(now)) {
       const desc = m.groups('desc').text('reduced')
-      if (desc === 'evening' || desc === 'night') {
+      if (desc === 'afternoon' || desc === 'evening' || desc === 'night') {
         s = s.ampm('pm')
       }
       return { result: s.time(), m }
@@ -212,10 +221,10 @@ const parseTime = function (doc, context) {
   s = s.time(str)
   if (s.isValid() && !s.isEqual(now)) {
     // choose ambiguous ampm
-    if (/(am|pm)/i.test(str) === false) {
+    if (/(am|pm)/i.test(str) === false && !is24Hour(str)) {
       s = ampmChooser(s)
     }
-    return { result: s.time(), m: time }
+    return { result: toTime(s), m: time }
   }
   // should we fallback to a dayStart default?
   if (context.dayStart) {

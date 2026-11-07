@@ -1,10 +1,11 @@
 import fastTag from '../_fastTag.js'
 import spokenYear from '../../../methods/spokenYear.js'
+import { Val, Unit, Card, Year, Date, TxtNum } from '../../../tagSet/_lib.js'
 
 // no punctuation between these words - not 'twenty, twenty one'
 const joined = /^( +|-)$/
 // these neighbours make it a count - some units are only found in the postTagger
-const counted = ['Value', 'Unit', 'Currency', 'Duration']
+const counted = [Val, Unit, 'Currency', 'Duration']
 // other measures, that are not tagged as units
 const measures = /^(times|euro|penny|quid|nickels|kms|kgs|lbs|metres?|tons|degrees?|calories|watts)$/
 // clock-times and game scores - 'at twenty thirty', 'we won twenty ten'
@@ -34,7 +35,7 @@ const isCountLeft = function (terms, i) {
   }
   // 'five twenty twenty', but not 'june five twenty twenty' - 'march' and 'may' aren't months yet
   const month = terms[i - 2]
-  return prev.tags.has('Cardinal') && !month?.tags.has('Month') && !/^(march|may)$/.test(month?.normal)
+  return prev.tags.has(Card) && !month?.tags.has('Month') && !/^(march|may)$/.test(month?.normal)
 }
 
 const isCountRight = function (year, next) {
@@ -62,7 +63,7 @@ const tagSpokenYear = function (terms, i) {
     return null
   }
   // the lexicon doesn't know a possessive, like 'twenty's'
-  year.forEach(term => fastTag(term, ['Year', 'Date', 'Value', 'TextValue', 'Cardinal'], '2-spoken-year'))
+  year.forEach(term => fastTag(term, [Year, Date, Val, TxtNum, Card], '2-spoken-year'))
   return true
 }
 

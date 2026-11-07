@@ -1,3 +1,4 @@
+import { Conj, Prep, Inf, Pron, Adv, Plur, Det, Val, Numeric, Date } from '../../../tagSet/_lib.js'
 // march/may are a month, a verb, or a modal - decided by their neighbours
 // (ported from postTagger match-rules, so it only runs on these two words)
 const reason = '3-[ambig-date]'
@@ -10,16 +11,16 @@ const toDate = new Set(['this', 'that', 'next', 'last'])
 const direction = new Set(['up', 'down', 'back', 'toward'])
 
 const has = (term, tag) => term?.tags.has(tag) === true
-const isLink = term => has(term, 'Conjunction') || has(term, 'Preposition')
+const isLink = term => has(term, Conj) || has(term, Prep)
 // may [be], may [have], may [not], (may [I])
 const isVerbAfter = (term, orPron) =>
-  has(term, 'Infinitive') || term?.normal === 'have' || term?.normal === 'not' || (orPron && has(term, 'Pronoun'))
+  has(term, Inf) || term?.normal === 'have' || term?.normal === 'not' || (orPron && has(term, Pron))
 // may [also] be
 const modalAfter = (terms, i, orPron) =>
-  isVerbAfter(terms[i + 1], orPron) || (has(terms[i + 1], 'Adverb') && isVerbAfter(terms[i + 2], orPron))
+  isVerbAfter(terms[i + 1], orPron) || (has(terms[i + 1], Adv) && isVerbAfter(terms[i + 2], orPron))
 // they march, soldiers march, (the march) - a lowercase word after its subject
 const hasSubject = (prev, term, orDet) =>
-  !titleCase.test(term.text) && (has(prev, 'Pronoun') || has(prev, 'Plural') || (orDet && has(prev, 'Determiner')))
+  !titleCase.test(term.text) && (has(prev, Pron) || has(prev, Plur) || (orDet && has(prev, Det)))
 
 const ambigDate = function (terms, i, world) {
   const term = terms[i]
@@ -34,7 +35,7 @@ const ambigDate = function (terms, i, world) {
   let month = false
   // this march → Date Month (not: this march begins, this may be true)
   if (prev && thisNext.has(prev.normal)) {
-    const verb = isMay ? modalAfter(terms, i) : has(next, 'Infinitive')
+    const verb = isMay ? modalAfter(terms, i) : has(next, Inf)
     if (!verb) {
       month = true
       dates.push(prev)
@@ -46,43 +47,43 @@ const ambigDate = function (terms, i, world) {
     if (next?.normal === 'the') {
       value = terms[i + 2]
     }
-    if (has(value, 'Value')) {
+    if (has(value, Val)) {
       month = true
       dates.push(next, value)
     }
   }
   // 5th of march → Date Date Month
-  if (prev?.normal === 'of' && has(terms[i - 2], 'Value')) {
+  if (prev?.normal === 'of' && has(terms[i - 2], Val)) {
     month = true
     dates.push(terms[i - 2], prev)
   }
   // 12 march → Date Month (not: these 5 may leave)
-  if (has(prev, 'NumericValue') && !(isMay && modalAfter(terms, i))) {
+  if (has(prev, Numeric) && !(isMay && modalAfter(terms, i))) {
     month = true
     dates.push(prev)
   }
   // [march] and feb, [may] next year → Month (not: you may leave tomorrow, the march on monday)
   if (!hasSubject(prev, term, true)) {
     let date = next
-    if (next && !has(next, 'Date') && (isLink(next) || toDate.has(next.normal))) {
+    if (next && !has(next, Date) && (isLink(next) || toDate.has(next.normal))) {
       date = terms[i + 2]
     }
-    month ||= has(date, 'Date')
+    month ||= has(date, Date)
   }
   // feb to [march], tomorrow in [may] → Month (not: tomorrow may be better, tomorrow we march)
   let date = prev
-  if (prev && !has(prev, 'Date') && isLink(prev)) {
+  if (prev && !has(prev, Date) && isLink(prev)) {
     date = terms[i - 2]
   }
-  if (has(date, 'Date') && !(isMay && modalAfter(terms, i, true))) {
+  if (has(date, Date) && !(isMay && modalAfter(terms, i, true))) {
     month = true
   }
   if (month) {
-    world.methods.one.setTag(dates, 'Date', world, null, reason)
+    world.methods.one.setTag(dates, Date, world, null, reason)
     world.methods.one.setTag([term], 'Month', world, null, reason)
-  } else if (!isMay && !has(term, 'Date') && next && direction.has(next.normal)) {
+  } else if (!isMay && !has(term, Date) && next && direction.has(next.normal)) {
     // [march] up the hill → Infinitive
-    world.methods.one.setTag([term], 'Infinitive', world, null, reason)
+    world.methods.one.setTag([term], Inf, world, null, reason)
   }
 }
 export default ambigDate

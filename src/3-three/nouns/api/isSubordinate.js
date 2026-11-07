@@ -39,7 +39,7 @@ const list = [
 
 const isSubordinate = function (m) {
   // athletes from toronto, days since december
-  if (m.before('#Preposition$').found) {
+  if (m.before('#Prep$').found) {
     return true
   }
   const leadIn = m.before()

@@ -35,7 +35,7 @@ npx compromise --input="the cat sat on the mat"  # an argument
 | `text`  | one line per sentence (or per match)                          |
 | `spec`  | the [spec format](spec-format.md) - one line per sentence      |
 | `debug` | the same coloured table as `doc.debug()`                      |
-| `highlight` | each matching sentence, match in green, the rest in grey   |
+| `highlight` | one line per match, in green, with its sentence in grey     |
 
 ```bash
 npx compromise --input="she sells seashells" --format=spec
@@ -101,14 +101,18 @@ npx compromise infinite-jest.txt --has='and but so' --text
 # and but so she left.
 ```
 
-`--format=highlight` prints every sentence that matches, with the match in green and its
-neighbours in grey. It takes its pattern from `--match`, `--if` or `--has`. Long sentences are
-trimmed from whichever side has more words until they fit `--width`, which defaults to the
-terminal width. The match itself is never trimmed. Set `NO_COLOR` to drop the colours:
+`--format=highlight` prints one line per match: its sentence, with the match in green and
+its neighbours in grey. It takes its pattern from `--match`, `--if` or `--has`, and a sentence
+with two matches prints twice, once for each. The match always starts at the middle column,
+so matches line up down the page: the words before it are trimmed or padded to half of
+`--width`, and the words after it are trimmed to the other half. `--width` defaults to 55
+characters, and the match itself is never trimmed. Set `NO_COLOR` to drop the colours:
 
 ```bash
-npx compromise infinite-jest.txt --highlight --match='and but so' --width=60
-# … and but so she left the Enfield Tennis Academy …
+npx compromise infinite-jest.txt --highlight --match='and but so'
+#       … Adult Undergarment and but so nobody at the …
+#           Hal said nothing and but so Mario went on …
+#                            And but so that was that.
 ```
 
 Matches stay within a sentence, like `.match()` does.
@@ -125,7 +129,7 @@ Matches stay within a sentence, like `.match()` does.
 --match=PATTERN  only output the matches
 --if=PATTERN     only output sentences containing a match
 --has=PATTERN    like --if, but stop after the first sentence
---width=N        trim highlight lines to N characters (default: terminal width)
+--width=N        trim highlight lines to N characters (default: 55)
 --input=TEXT     parse this text instead of a file (repeatable)
 --stream         process stdin line-by-line, as it arrives
 --version        print the library version

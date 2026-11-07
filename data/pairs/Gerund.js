@@ -2939,6 +2939,8 @@ export default [
   ["subpoenaing", "subpoena"],
   ["suiting", "suit"],
   ["trespassing", "trespass"],
+  ["condoning", "condone"],
+  ["panicking", "panic"],
 
 
   // ['', ''],

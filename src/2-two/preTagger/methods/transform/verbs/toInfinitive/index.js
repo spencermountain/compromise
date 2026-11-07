@@ -34,8 +34,15 @@ const copulaMap = {
   being: 'be',
 }
 
+// which model turns each tense into an infinitive
+const byTense = {
+  [Participle]: 'fromParticiple',
+  [Past]: 'fromPast',
+  [Pres]: 'fromPresent',
+  [Ger]: 'fromGerund',
+}
+
 const toInfinitive = function (str, model, tense) {
-  const { fromPast, fromPresent, fromGerund, fromParticiple } = model.two.models
   const { prefix, verb, particle } = toParts(str, model)
   let inf = ''
   if (!tense) {
@@ -45,14 +52,8 @@ const toInfinitive = function (str, model, tense) {
   const lower = str.toLowerCase()
   if (Object.hasOwn(copulaMap, lower)) {
     inf = copulaMap[lower]
-  } else if (tense === Participle) {
-    inf = convert(verb, fromParticiple)
-  } else if (tense === Past) {
-    inf = convert(verb, fromPast)
-  } else if (tense === Pres) {
-    inf = convert(verb, fromPresent)
-  } else if (tense === Ger) {
-    inf = convert(verb, fromGerund)
+  } else if (Object.hasOwn(byTense, tense)) {
+    inf = convert(verb, model.two.models[byTense[tense]])
   } else {
     return str
   }

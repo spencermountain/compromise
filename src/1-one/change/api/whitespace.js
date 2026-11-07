@@ -1,18 +1,33 @@
+// set or append the pre/post of the first/last term of each match
+const setSide = function (view, side, str, concat) {
+  view.docs.forEach(terms => {
+    const term = side === 'pre' ? terms[0] : terms.at(-1)
+    if (concat === true) {
+      term[side] += str
+    } else {
+      term[side] = str
+    }
+  })
+  return view
+}
+
+// put these characters around each match
+const wrap = function (view, start, end) {
+  view.docs.forEach(terms => {
+    terms[0].pre = start + terms[0].pre
+    const last = terms.at(-1)
+    last.post = end + last.post
+  })
+  return view
+}
+
 const methods = {
   /** add this punctuation or whitespace before each match: */
   pre: function (str, concat) {
     if (str === undefined && this.found) {
       return this.docs[0][0].pre
     }
-    this.docs.forEach(terms => {
-      const term = terms[0]
-      if (concat === true) {
-        term.pre += str
-      } else {
-        term.pre = str
-      }
-    })
-    return this
+    return setSide(this, 'pre', str, concat)
   },
 
   /** add this punctuation or whitespace after each match: */
@@ -21,15 +36,7 @@ const methods = {
       const last = this.docs.at(-1)
       return last.at(-1).post
     }
-    this.docs.forEach(terms => {
-      const term = terms.at(-1)
-      if (concat === true) {
-        term.post += str
-      } else {
-        term.post = str
-      }
-    })
-    return this
+    return setSide(this, 'post', str, concat)
   },
 
   /** remove whitespace from start/end */
@@ -78,26 +85,12 @@ const methods = {
 
   /** add quotations around these matches */
   toQuotations: function (start, end) {
-    start ||= `"`
-    end ||= `"`
-    this.docs.forEach(terms => {
-      terms[0].pre = start + terms[0].pre
-      const last = terms.at(-1)
-      last.post = end + last.post
-    })
-    return this
+    return wrap(this, start || '"', end || '"')
   },
 
   /** add brackets around these matches */
   toParentheses: function (start, end) {
-    start ||= `(`
-    end ||= `)`
-    this.docs.forEach(terms => {
-      terms[0].pre = start + terms[0].pre
-      const last = terms.at(-1)
-      last.post = end + last.post
-    })
-    return this
+    return wrap(this, start || '(', end || ')')
   },
 }
 

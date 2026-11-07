@@ -1,12 +1,8 @@
+import { hasAny } from '../../_lib.js'
 import { NN, Pron, Plur, Sing } from '../../preTagger/tagSet/_lib.js'
 const lastNoun = function (terms, i) {
   for (let n = i - 1; n >= 0; n -= 1) {
-    if (
-      terms[n].tags.has(NN) ||
-      terms[n].tags.has(Pron) ||
-      terms[n].tags.has(Plur) ||
-      terms[n].tags.has(Sing)
-    ) {
+    if (hasAny(terms[n], NN, Pron, Plur, Sing)) {
       return terms[n]
     }
   }

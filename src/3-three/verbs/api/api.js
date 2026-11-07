@@ -1,5 +1,5 @@
 import select from '../../_select.js'
-import keepClass from '../../_lib.js'
+import keepClass, { keepTags as keep } from '../../_lib.js'
 import find from '../find.js'
 import coordinate from './conjugate/coordinate.js'
 import toJSON from './toJSON.js'
@@ -13,10 +13,9 @@ import toGerund from './conjugate/toGerund.js'
 import getSubject from './parse/getSubject.js'
 import getGrammar from './parse/grammar/index.js'
 import toNegative from './conjugate/toNegative.js'
-import { getTense } from './lib.js'
-import { inflect } from './conjugate/inflect.js'
-import { Pres, Inf } from '../../../2-two/preTagger/tagSet/_lib.js'
-const keep = { tags: true }
+import { inflect, infinitive } from './conjugate/inflect.js'
+import { doTense } from './lib.js'
+import { Inf } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 // convert each verb to a target form, leaving bare infinitives alone
 const convert = (target, fn) => function (n) {
@@ -71,7 +70,7 @@ const api = function (View) {
       return this.getNth(n).filter(vb => vb.has('#Imp'))
     }
     conjugate(n) {
-      const { conjugate, toInfinitive } = this.world.methods.two.transform.verb
+      const { conjugate } = this.world.methods.two.transform.verb
       return this.getNth(n).map(vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
@@ -81,8 +80,7 @@ const api = function (View) {
         }
         let inf = parsed.root.text('normal')
         if (!parsed.root.has('#Inf')) {
-          const tense = getTense(parsed.root)
-          inf = toInfinitive(inf, vb.model, tense) || inf
+          inf = infinitive(parsed.root) || inf
         }
         return conjugate(inf, vb.model)
       }, [])
@@ -106,9 +104,10 @@ const api = function (View) {
         // The 'not' in 'not only' is tagged as an adverb.
         vb.match('not').tag('Negative')
         // 'does not walk' -> 'walks'
-        const { root, auxiliary, negative } = parseVerb(vb)
-        if (negative.found && auxiliary.has('^(does|did)$')) {
-          const tense = auxiliary.has('did') ? 'PastTense' : Pres
+        const parsed = parseVerb(vb)
+        const tense = doTense(parsed)
+        if (tense) {
+          const { root, auxiliary } = parsed
           vb.replace(root, inflect(root, tense), keep).unTag(Inf).tag(tense)
           vb.remove(auxiliary)
         }

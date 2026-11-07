@@ -1,9 +1,7 @@
 import { textFromDoc } from './_text.js'
 import fmts from './_fmts.js'
 
-const isObject = val => {
-  return Object.prototype.toString.call(val) === '[object Object]'
-}
+import isObject from '../../../API/_is.js'
 // a dash between two words, like '2025-05-11 - they'
 const spacedDash = /^\s+[-—]\s+$/
 

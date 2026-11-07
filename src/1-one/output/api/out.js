@@ -2,10 +2,7 @@ import debug from './debug.js'
 import wrap from './wrap.js'
 import hash from '../methods/hash.js'
 import toSpec from './_spec.js'
-
-const isObject = val => {
-  return Object.prototype.toString.call(val) === '[object Object]'
-}
+import isObject from '../../../API/_is.js'
 
 // sort by frequency
 const topk = function (arr) {
@@ -17,42 +14,24 @@ const topk = function (arr) {
   return res.sort((a, b) => b.count - a.count)
 }
 
-/** some named output formats */
-const out = function (method) {
-  // support custom outputs
-  if (isObject(method)) {
-    return wrap(this, method)
-  }
-  // text out formats
-  if (method === 'text') {
-    return this.text()
-  }
-  if (method === 'normal') {
-    return this.text('normal')
-  }
-  if (method === 'root') {
-    return this.text('root')
-  }
-  if (method === 'machine' || method === 'reduced') {
-    return this.text('machine')
-  }
-  if (method === 'hash' || method === 'md5') {
-    return hash(this.text())
-  }
+// named output formats
+const outputs = {
+  // text formats
+  text: view => view.text(),
+  normal: view => view.text('normal'),
+  root: view => view.text('root'),
+  machine: view => view.text('machine'),
+  hash: view => hash(view.text()),
   // tagged-sentence format for LLMs (see docs/spec-format.md)
-  if (method === 'spec') {
-    return toSpec(this, this.world)
-  }
+  spec: view => toSpec(view, view.world),
   // json data formats
-  if (method === 'json') {
-    return this.json()
-  }
-  if (method === 'offset' || method === 'offsets') {
-    this.compute('offset')
-    return this.json({ offset: true })
-  }
-  if (method === 'array') {
-    const arr = this.docs.map(terms => {
+  json: view => view.json(),
+  offset: view => {
+    view.compute('offset')
+    return view.json({ offset: true })
+  },
+  array: view => {
+    const arr = view.docs.map(terms => {
       return terms
         .reduce((str, t) => {
           return str + t.pre + t.text + t.post
@@ -60,34 +39,44 @@ const out = function (method) {
         .trim()
     })
     return arr.filter(str => str)
-  }
+  },
   // return terms sorted by frequency
-  if (method === 'freq' || method === 'frequency' || method === 'topk') {
-    return topk(this.json({ normal: true }).map(o => o.normal))
-  }
-
+  freq: view => topk(view.json({ normal: true }).map(o => o.normal)),
   // some handy ad-hoc outputs
-  if (method === 'terms') {
-    return this.docs.flatMap(terms => terms.map(t => t.text).filter(Boolean))
-  }
-  if (method === 'tags') {
-    return this.docs.map(terms => {
+  terms: view => view.docs.flatMap(terms => terms.map(t => t.text).filter(Boolean)),
+  tags: view => {
+    return view.docs.map(terms => {
       return terms.reduce((h, t) => {
         h[t.implicit || t.normal] = Array.from(t.tags)
         return h
       }, {})
     })
-  }
-  if (method === 'best-tag') {
-    this.compute('tagRank')
-    return this.docs
+  },
+  'best-tag': view => {
+    view.compute('tagRank')
+    return view.docs
       .map(ts => {
         return ts.map(t => (t.tagRank?.[0] ? `#${t.tagRank[0]}` : '')).join(' ')
       })
       .join('\n')
+  },
+  debug: view => view.debug(), //allow
+}
+// aliases
+outputs.reduced = outputs.machine
+outputs.md5 = outputs.hash
+outputs.offsets = outputs.offset
+outputs.frequency = outputs.freq
+outputs.topk = outputs.freq
+
+/** some named output formats */
+const out = function (method) {
+  // support custom outputs
+  if (isObject(method)) {
+    return wrap(this, method)
   }
-  if (method === 'debug') {
-    return this.debug() //allow
+  if (Object.hasOwn(outputs, method)) {
+    return outputs[method](this)
   }
   return this.text()
 }

@@ -5,9 +5,9 @@ import apostropheT from './apostrophe-t.js'
 import isPossessive from './isPossessive.js'
 import wannaNoun from './wanna.js'
 import contractionDebug from '../../../API/debug/contractions-debug.js'
+import { hasApostrophe } from './_lib.js'
+import { setTag } from '../../preTagger/compute/tagger/_lib.js'
 import { Year, Poss } from '../../preTagger/tagSet/_lib.js'
-
-const byApostrophe = /'/
 
 // poor-mans reindexing of this sentence only
 const reIndex = function (terms) {
@@ -38,9 +38,9 @@ const reTag = function (terms, view, start, len) {
 
 const byEnd = {
   // how'd
-  d: (terms, i) => apostropheD(terms, i),
+  d: apostropheD,
   // we ain't
-  t: (terms, i) => apostropheT(terms, i),
+  t: apostropheT,
   // bob's
   s: (terms, i, world) => {
     // [bob's house] vs [bob's cool]
@@ -51,7 +51,7 @@ const byEnd = {
         terms[i].tags.add(Poss)
         return null
       }
-      return world.methods.one.setTag([terms[i]], Poss, world, null, '2-contraction')
+      return setTag([terms[i]], Poss, world, '2-contraction')
     }
     return apostropheS(terms, i)
   },
@@ -81,8 +81,8 @@ const contractionTwo = view => {
         continue
       }
       let after = null
-      if (byApostrophe.test(terms[i].normal) === true) {
-        after = terms[i].normal.split(byApostrophe)[1]
+      if (hasApostrophe.test(terms[i].normal) === true) {
+        after = terms[i].normal.split(hasApostrophe)[1]
       }
       let words = null
       // any known-ones, like 'dunno'?
@@ -97,7 +97,7 @@ const contractionTwo = view => {
         reTag(document[n], view, i, words.length)
         // [twenty twenty-six's] over - it may only be a year as a whole
         if (isYear) {
-          world.methods.one.setTag([document[n][i]], Year, world, null, '2-contraction')
+          setTag([document[n][i]], Year, world, '2-contraction')
         }
         continue
       }

@@ -1,22 +1,14 @@
 import fastTag from '../_fastTag.js'
+import findAffix from '../../../methods/_lib.js'
 import { Prop, Last } from '../../../tagSet/_lib.js'
 
 //sweep-through all suffixes
 const suffixLoop = function (str = '', suffixes = []) {
-  const len = str.length
-  let max = 7
-  if (len <= max) {
-    max = len - 1
+  const suffix = findAffix(str, suffixes, Math.min(str.length - 1, 7), 2)
+  if (suffix === null) {
+    return null
   }
-  for (let i = max; i > 1; i -= 1) {
-    const suffix = str.substring(len - i, len)
-    if (Object.hasOwn(suffixes[suffix.length], suffix) === true) {
-      // console.log(suffix)
-      const tag = suffixes[suffix.length][suffix]
-      return tag
-    }
-  }
-  return null
+  return suffixes[suffix.length][suffix]
 }
 
 // decide tag from the ending of the word

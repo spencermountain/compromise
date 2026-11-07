@@ -1,10 +1,7 @@
+import { isTitleCase, toTitleCase, toLowerCase } from './lib/_case.js'
+import { retag } from '../../../API/_helpers.js'
 const dollarStub = /\$[0-9a-z]+/g
 const fns = {}
-
-// case logic
-const isTitleCase = str => /^\p{Lu}[\p{Ll}'’]/u.test(str) || /^\p{Lu}$/u.test(str)
-const toTitleCase = str => str.replace(/^\p{Ll}/u, x => x.toUpperCase())
-const toLowerCase = str => str.replace(/^\p{Lu}/u, x => x.toLowerCase())
 
 // doc.replace('foo', (m)=>{})
 const replaceByFn = function (main, fn, keep) {
@@ -128,11 +125,7 @@ fns.replaceWith = function (input, keep = {}) {
   main.docs.forEach((terms, i) => restoreOriginal(terms, originals[i], keep))
 
   // what should we return?
-  const m = main.toView().compute(['index', 'freeze', 'lexicon'])
-  if (m.world.compute.preTagger) {
-    m.compute('preTagger')
-  }
-  m.compute('unfreeze')
+  const m = retag(main.toView(), ['index'])
   // replace any old tags
   if (keep.tags) {
     m.forEach((match, i) => {

@@ -1,3 +1,7 @@
+// gendered pronouns
+const he = '(he|him|his)'
+const she = '(she|her|hers)'
+const they = '(they|them|their|theirs)'
 
 // borrow a reference from another pronoun
 // 'mike is tall, [he] climbs and [he] swims'
@@ -22,4 +26,4 @@ const prevSentence = function (m) {
   }
   return m.none()
 }
-export { prevSentence, findChained }
+export { prevSentence, findChained, he, she, they }

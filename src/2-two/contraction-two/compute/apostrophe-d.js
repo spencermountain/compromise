@@ -1,18 +1,11 @@
+import { hasApostrophe } from './_lib.js'
+import { hasAny, toSet } from '../../_lib.js'
 import { Past, Pres, Inf, Adj } from '../../preTagger/tagSet/_lib.js'
-const hasContraction = /'/
 
-const hadWords = new Set([
-  'better', //had better
-  'done', //had done
-  'before', // he'd _ before
-  'it', // he'd _ it
-  'had', //she'd had -> she would have..
-])
-
-const wouldWords = new Set([
-  'have', // 'i'd have' -> i would have..
-  'be', //' she'd be'
-])
+// had better, had done, he'd _ before, he'd _ it, she'd had -> she would have..
+const hadWords = toSet('better done before it had')
+// 'i'd have' -> i would have, 'she'd be'
+const wouldWords = toSet('have be')
 
 //look for a past-tense verb
 // You'd mentioned -> you had mentioned
@@ -34,7 +27,7 @@ const hadOrWould = (terms, i) => {
       return 'had'
     }
     // You'd mention -> you would mention
-    if (t.tags.has(Pres) || t.tags.has(Inf)) {
+    if (hasAny(t, Pres, Inf)) {
       return 'would'
     }
     // i'd an issue
@@ -52,7 +45,7 @@ const hadOrWould = (terms, i) => {
 // how'd -> did
 // he'd go -> would
 const _apostropheD = function (terms, i) {
-  const before = terms[i].normal.split(hasContraction)[0]
+  const before = terms[i].normal.split(hasApostrophe)[0]
   // what'd, how'd
   if (before === 'how' || before === 'what') {
     return [before, 'did']

@@ -1,6 +1,6 @@
 import { Participle, Ger, Conj } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { infinitive, inflect } from './inflect.js'
-import convertAuxiliary from './auxiliary.js'
+import byForm from './_lib.js'
 import { noop, haveHas } from '../lib.js'
 
 // walk-> has walked
@@ -89,19 +89,6 @@ const forms = {
   // 'gerund-phrase': noop,
 }
 
-const toParticiple = function (vb, parsed, form) {
-  const converted = convertAuxiliary(vb, parsed, form, 'participle')
-  if (converted) return converted
-  // console.log(form)
-  if (Object.hasOwn(forms, form)) {
-    vb = forms[form](vb, parsed)
-    vb.fullSentence().compute(['tagger', 'chunks'])
-    return vb
-  }
-  // do the simple form
-  vb = simple(vb, parsed, form)
-  vb.fullSentence().compute(['tagger', 'chunks'])
-  // do nothing, then
-  return vb
-}
+// do the simple form, if nothing else
+const toParticiple = byForm('participle', forms, simple)
 export default toParticiple

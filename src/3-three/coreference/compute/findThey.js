@@ -1,4 +1,4 @@
-import { findChained } from './lib.js'
+import { findChained, they } from './lib.js'
 import pluralPhrase from './pluralPhrase.js'
 
 // find best reference for 'they' & 'their'
@@ -16,7 +16,7 @@ const getThey = function (s) {
     return things.last()
   }
   // re-use existing pronoun reference
-  const chain = findChained('(they|them|their|theirs)', s)
+  const chain = findChained(they, s)
   if (chain.found) {
     return chain
   }

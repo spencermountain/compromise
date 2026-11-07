@@ -3,6 +3,7 @@
   this method makes many assumptions about gender-identity, in-order to assign grammatical gender.
   it should not be used for any other purposes, other than resolving pronouns in english
 */
+import { she } from '../../coreference/compute/lib.js'
 const m = 'male'
 const f = 'female'
 
@@ -71,7 +72,7 @@ const predictGender = function (parsed, person) {
       return null
     }
     const hasMasc = pro.has('(he|his)')
-    const hasFem = pro.has('(she|her|hers)')
+    const hasFem = pro.has(she)
     if (hasMasc && !hasFem) {
       return m
     }

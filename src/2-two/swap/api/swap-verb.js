@@ -10,9 +10,6 @@ const matchVerb = function (m, lemma) {
   if (m.has('#Pres')) {
     return all.PresentTense
   }
-  if (m.has('#Ger')) {
-    return all.Gerund
-  }
   return lemma
 }
 

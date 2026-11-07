@@ -1,37 +1,34 @@
 import { Plur, Sup, Comp, Adj, Fut, Phrasal, Inf, Card, Ord, Frac, TxtNum, Prop } from '../../tagSet/_lib.js'
+
+// add a derived form, unless the lexicon already knows it
+const addForm = (lex, model, form, tag) => {
+  if (!model.one.lexicon[form]) {
+    lex[form] ||= tag
+  }
+}
+// add the plural form of a noun
+const addPlural = (word, lex, methods, model, tag) => {
+  addForm(lex, model, methods.two.transform.noun.toPlural(word, model), tag)
+}
+
 // transformations to make on our lexicon
 export default {
   // add plural forms of singular nouns
   Singular: (word, lex, methods, model) => {
-    const already = model.one.lexicon
-    const plural = methods.two.transform.noun.toPlural(word, model)
-    if (!already[plural]) {
-      lex[plural] ||= Plur
-    }
+    addPlural(word, lex, methods, model, Plur)
   },
   // 'lawyer', 'manager' plural forms
   Actor: (word, lex, methods, model) => {
-    const already = model.one.lexicon
-    const plural = methods.two.transform.noun.toPlural(word, model)
-    if (!already[plural]) {
-      lex[plural] ||= [Plur, 'Actor']
-    }
+    addPlural(word, lex, methods, model, [Plur, 'Actor'])
   },
 
   // superlative/ comparative forms for adjectives
   Comparable: (word, lex, methods, model) => {
-    const already = model.one.lexicon
     const { toSuperlative, toComparative } = methods.two.transform.adjective
     // fast -> fastest
-    const sup = toSuperlative(word, model)
-    if (!already[sup]) {
-      lex[sup] ||= Sup
-    }
+    addForm(lex, model, toSuperlative(word, model), Sup)
     // fast -> faster
-    const comp = toComparative(word, model)
-    if (!already[comp]) {
-      lex[comp] ||= Comp
-    }
+    addForm(lex, model, toComparative(word, model), Comp)
     // overwrite
     lex[word] = Adj
   },

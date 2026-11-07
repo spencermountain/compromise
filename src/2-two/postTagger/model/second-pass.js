@@ -1,11 +1,10 @@
-import { NN, Conj, Prep, Past, Pers, Adj } from '../../preTagger/tagSet/_lib.js'
+import { NN, Conj, Prep, Past, Pers, Adj, Imp, Phrasal } from '../../preTagger/tagSet/_lib.js'
 import expandRules from './expand-rules.js'
 import hangingAdverbs from './hanging-adverbs.js'
+import { subject, predicate } from './_phrases.js'
 
-const noun = '(#NN && !#Poss && !@hasComma)'
-const modifiers = '(#Det|#Poss)? #Adv+? #Adj+?'
-const subject = `${modifiers} ${noun}`
-const predicate = '#Adv+? not? (#V && !#Ger && !#Particle)'
+// a lexical verb, not an auxiliary
+const lexVerb = '(#V && !#Aux && !#Mod && !do && !does && !did && !have && !has && !had)'
 const seatedQuestion = '^(which|what) #Adj+? #NN (did|does|do|#Mod) #Pron [sit] [on]$'
 
 const rules = [
@@ -47,11 +46,11 @@ const rules = [
   [`@hasComma [for] ${subject} ${predicate}`, Conj],
 
   // She sings [like] her mother → Preposition
-  ['(#V && !#Aux && !#Mod && !do && !does && !did && !have && !has && !had) [like] (#NN|#Det|#Poss)', Prep],
+  [`${lexVerb} [like] (#NN|#Det|#Poss)`, Prep],
   // She sings [like] her mother does → Conjunction
-  [`(#V && !#Aux && !#Mod && !do && !does && !did && !have && !has && !had) [like] ${subject} ${predicate}`, Conj],
+  [`${lexVerb} [like] ${subject} ${predicate}`, Conj],
   // Which chair did she [sit] on? → remove PhrasalVerb from sit
-  [seatedQuestion, null, { u: 'PhrV' }],
+  [seatedQuestion, null, { u: Phrasal }],
   // Which chair did she sit [on]? → Preposition (second capture)
   [seatedQuestion, Prep, 1],
   // he ate, and [left] → PastTense
@@ -63,9 +62,9 @@ const rules = [
   // dogs, [including] the poodle → Preposition
   ['(#NN && @hasComma) [including] all? #Det? #Card+? #Adv+? #Adj+? #NN', Prep],
   // can you [walk], please? → Imperative
-  ['^(can|could|will|would) you (#Adv|not)+? [(#Inf && @hasComma)] please$', 'Imp'],
+  ['^(can|could|will|would) you (#Adv|not)+? [(#Inf && @hasComma)] please$', Imp],
   // can you [walk] the dog, please? → Imperative
-  ['^(can|could|will|would) you (#Adv|not)+? [#Inf] * @hasComma please$', 'Imp'],
+  ['^(can|could|will|would) you (#Adv|not)+? [#Inf] * @hasComma please$', Imp],
   // jack the ripper → Person
   ['%Person|Verb% (the && #Pers) #Pers', Pers],
   // President [Biden], President Hosni [Mubarak] → Person, for titles found in the main sweep
@@ -74,7 +73,7 @@ const rules = [
     `#Hon ${first}[(#Prop && !#Hon && @isTitleCase)]`,
     Pers,
     0,
-    { n: '(major|#Poss #Prop|@hasColon)', safe: true },
+    { n: '(major|#Poss #Prop|@hasColon)', s: true },
   ]),
   // keep the lid [closed] → Adjective
   ['#Imp #Det #NN+ [%Adj|Past%]', Adj],

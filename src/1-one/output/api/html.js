@@ -1,14 +1,8 @@
 const isClass = /^\../
 const isId = /^#./
 
-const escapeXml = str => {
-  str = str.replaceAll('&', '&amp;')
-  str = str.replaceAll('<', '&lt;')
-  str = str.replaceAll('>', '&gt;')
-  str = str.replaceAll('"', '&quot;')
-  str = str.replaceAll("'", '&apos;')
-  return str
-}
+const escapes = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }
+const escapeXml = str => str.replace(/[&<>"']/g, c => escapes[c])
 
 // interpret .class, #id, tagName
 const toTag = function (k) {

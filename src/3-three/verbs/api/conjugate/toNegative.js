@@ -1,5 +1,15 @@
-import { doDoes, toInf } from '../lib.js'
-const keep = { tags: true }
+import { doDoes, getTense } from '../lib.js'
+import { keepTags as keep } from '../../../_lib.js'
+
+// walked -> walk, using the tense of the whole phrase
+const toInf = function (vb, parsed) {
+  const { toInfinitive } = vb.methods.two.transform.verb
+  const str = toInfinitive(parsed.root.text({ keepPunct: false }), vb.model, getTense(vb))
+  if (str) {
+    vb.replace(parsed.root, str)
+  }
+  return vb
+}
 
 // do/does not walk 
 const doesNot = function (vb, parsed) {
@@ -28,7 +38,6 @@ const hasCopula = (vb) => vb.has('(is|was|am|are|will|were|be)')
 
 //vaguely, turn 'he is cool' into 'he is not cool'
 const forms = {
-
 
   // he walks' -> 'he does not walk'
   'simple-present': (vb, parsed) => {

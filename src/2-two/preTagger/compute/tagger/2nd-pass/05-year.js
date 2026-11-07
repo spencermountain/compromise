@@ -1,38 +1,16 @@
 import fastTag from '../_fastTag.js'
+import { hasAny, toSet } from '../../../../_lib.js'
 import { Date, WeekDay, Year, Prop, Ord, Card, Val, Numeric, Det, Poss, NN, Plur } from '../../../tagSet/_lib.js'
 const min = 1400
 const max = 2100
 const possessive = /^[0-9]{4}'s$/
 // 'the 2020's', 'the early 2020's'
-const beforeDecade = new Set(['the', 'early', 'mid', 'late'])
+const beforeDecade = toSet('the early mid late')
 
-const dateWords = new Set([
-  'in',
-  'on',
-  'by',
-  'until',
-  'since',
-  'for',
-  'to',
-  'during',
-  'throughout',
-  'through',
-  'within',
-  'before',
-  'after',
-  'of',
-  'this',
-  'next',
-  'last',
-  'circa',
-  'around',
-  'post',
-  'pre',
-  'budget',
-  'classic',
-  'plan',
-  'may',
-])
+const dateWords = toSet('in on by until since for to during throughout through within before after of this next last circa around post pre budget classic plan may')
+
+// a date-ish neighbour
+const seemsFine = term => term && hasAny(term, Date, 'Month', WeekDay, Year)
 
 const seemsGood = function (term) {
   if (!term) {
@@ -42,7 +20,7 @@ const seemsGood = function (term) {
   if (dateWords.has(str)) {
     return true
   }
-  if (term.tags.has(Date) || term.tags.has('Month') || term.tags.has(WeekDay) || term.tags.has(Year)) {
+  if (seemsFine(term)) {
     return true
   }
   // 1999 Film Festival
@@ -68,10 +46,6 @@ const seemsOkay = function (term) {
     return true
   }
   return false
-}
-
-const seemsFine = function (term) {
-  return term && (term.tags.has(Date) || term.tags.has('Month') || term.tags.has(WeekDay) || term.tags.has(Year))
 }
 
 // a possessive is good evidence for a year, like '2020's election'
@@ -114,7 +88,7 @@ const tagYear = function (terms, i) {
             return fastTag(term, Year, '2-tagYear-far')
           }
           // 'the 2002 hit', 'my 1950 convertable'
-          if (lastTerm && (lastTerm.tags.has(Det) || lastTerm.tags.has(Poss))) {
+          if (lastTerm && hasAny(lastTerm, Det, Poss)) {
             if (nextTerm && nextTerm.tags.has(NN) && !nextTerm.tags.has(Plur)) {
               return fastTag(term, Year, '2-tagYear-noun')
             }

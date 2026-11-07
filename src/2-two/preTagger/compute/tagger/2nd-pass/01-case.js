@@ -1,9 +1,10 @@
 import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 import fillTags from '../3rd-pass/_fillTags.js'
+import { titleCase } from '../_lib.js'
+import { hasAny } from '../../../../_lib.js'
 import { Date, WeekDay, Unit, Expr, Comp, Ger, Det, NN, Prop, RomanNumeral } from '../../../tagSet/_lib.js'
 
-const titleCase = /^\p{Lu}[\p{Ll}'’]/u
 const hasNumber = /[0-9]/
 const notProper = [Date, 'Month', WeekDay, Unit, Expr]
 
@@ -31,7 +32,7 @@ const checkCase = function (terms, i, model) {
   // titlecase and not first word of sentence
   if (index !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
     // skip Dates and stuff
-    if (notProper.find(tag => term.tags.has(tag))) {
+    if (hasAny(term, ...notProper)) {
       return null
     }
     // known comparative - 'is Higher than 16'

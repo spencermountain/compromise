@@ -1,8 +1,6 @@
 import allPrefixes from './allPrefixes.js'
 
-const isObject = val => {
-  return Object.prototype.toString.call(val) === '[object Object]'
-}
+import isObject from '../../../API/_is.js'
 
 const defaults = {
   safe: true,

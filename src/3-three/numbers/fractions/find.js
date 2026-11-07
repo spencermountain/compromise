@@ -1,4 +1,4 @@
-const findFractions = function (doc, n) {
+const findFractions = function (doc) {
   // five eighths
   let m = doc.match('#Frac+')
   // Adjacent slash fractions are independent values.
@@ -9,10 +9,6 @@ const findFractions = function (doc, n) {
   })
   // thirty seconds
   m = m.notIf('#Val seconds')
-
-  if (typeof n === 'number') {
-    m = m.eq(n)
-  }
   return m
 }
 export default findFractions

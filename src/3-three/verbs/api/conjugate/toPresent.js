@@ -1,8 +1,8 @@
 import { Pres, Inf, Ger } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { infinitive, inflect } from './inflect.js'
-import convertAuxiliary from './auxiliary.js'
+import byForm from './_lib.js'
 import { noop, isPlural, isAreAm, doDoes, getSubject } from '../lib.js'
-const keep = { tags: true }
+import { keepTags as keep } from '../../../_lib.js'
 
 // walk->walked
 const simple = (vb, parsed) => {
@@ -160,15 +160,5 @@ const forms = {
   },
 }
 
-const toPresent = function (vb, parsed, form) {
-  const converted = convertAuxiliary(vb, parsed, form, 'present')
-  if (converted) return converted
-  // console.log(form)
-  if (Object.hasOwn(forms, form)) {
-    vb = forms[form](vb, parsed)
-    vb.fullSentence().compute(['tagger', 'chunks'])
-    return vb
-  }
-  return vb
-}
+const toPresent = byForm('present', forms)
 export default toPresent

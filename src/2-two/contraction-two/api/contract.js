@@ -28,41 +28,40 @@ const setContraction = function (m, suffix) {
   m.docs.forEach(terms => contractTerms(terms, suffix))
 }
 
+// [match, suffix] - in order, as earlier contractions hide words from later ones
+const contractions = [
+  // we are -> we're
+  ['(we|they|you) are', `'re`],
+  // they will -> they'll
+  ['(he|she|they|it|we|you) will', `'ll`],
+  // she is -> she's
+  ['(he|she|they|it|we) is', `'s`],
+  // spencer is -> spencer's
+  ['#Pers is', `'s`],
+  // spencer would -> spencer'd
+  ['#Pers would', `'d`],
+  // would not -> wouldn't (skip words already contracted above, like he's)
+  ['(is|was|were|had|would|should|could|do|does|did|have|has) not', `n't`, true],
+  // can not -> can't
+  ['can not', `'t`],
+  // i have -> i've
+  ['(i|we|they) have', `'ve`],
+  // would have -> would've
+  ['(would|should|could) have', `'ve`],
+  // i am -> i'm
+  ['i am', `'m`],
+]
+
 /** turn 'i am' into i'm */
 const contract = function () {
   const doc = this.not('@hasContraction')
-  // we are -> we're
-  let m = doc.match('(we|they|you) are')
-  setContraction(m, `'re`)
-  // they will -> they'll
-  m = doc.match('(he|she|they|it|we|you) will')
-  setContraction(m, `'ll`)
-  // she is -> she's
-  m = doc.match('(he|she|they|it|we) is')
-  setContraction(m, `'s`)
-  // spencer is -> spencer's
-  m = doc.match('#Pers is')
-  setContraction(m, `'s`)
-  // spencer would -> spencer'd
-  m = doc.match('#Pers would')
-  setContraction(m, `'d`)
-  // would not -> wouldn't (skip words already contracted above, like he's)
-  m = doc.match('(is|was|were|had|would|should|could|do|does|did|have|has) not').ifNo('@hasContraction')
-  setContraction(m, `n't`)
-  // can not -> can't
-  m = doc.match('can not')
-  setContraction(m, `'t`)
-  // i have -> i've
-  m = doc.match('(i|we|they) have')
-  setContraction(m, `'ve`)
-  // would have -> would've
-  m = doc.match('(would|should|could) have')
-  setContraction(m, `'ve`)
-  // i am -> i'm
-  m = doc.match('i am')
-  setContraction(m, `'m`)
-  // going to -> gonna
-  m = doc.match('going to')
+  contractions.forEach(([match, suffix, skipDone]) => {
+    let m = doc.match(match)
+    if (skipDone) {
+      m = m.ifNo('@hasContraction')
+    }
+    setContraction(m, suffix)
+  })
   return this
 }
 export default contract

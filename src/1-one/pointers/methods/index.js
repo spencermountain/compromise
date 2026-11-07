@@ -1,15 +1,12 @@
 import { indexN } from '../api/lib/_lib.js'
 import splitAll from '../api/lib/split.js'
 import getDoc from './getDoc.js'
+import eachTerm from '../../tokenize/compute/_lib.js'
 
 // flat list of terms from nested document
 const termList = function (docs) {
   const arr = []
-  for (let i = 0; i < docs.length; i += 1) {
-    for (let t = 0; t < docs[i].length; t += 1) {
-      arr.push(docs[i][t])
-    }
-  }
+  eachTerm(docs, term => arr.push(term))
   return arr
 }
 

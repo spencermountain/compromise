@@ -1,5 +1,6 @@
 import world from './world.js'
 import api from './methods/index.js'
+import { retag } from './_helpers.js'
 
 class View {
   constructor(document, pointer, groups = {}) {
@@ -103,12 +104,7 @@ class View {
     const document = methods.one.tokenize.fromString(input, this.world)
     const doc = new View(document)
     doc.world = this.world
-    doc.compute(['normal', 'freeze', 'lexicon'])
-    if (this.world.compute.preTagger) {
-      doc.compute('preTagger')
-    }
-    doc.compute('unfreeze')
-    return doc
+    return retag(doc, ['normal'])
   }
   clone() {
     // clone the whole document

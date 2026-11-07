@@ -18,35 +18,20 @@ const reIndex = function (terms) {
   })
 }
 
-// run tagger on our new implicit terms
-const reTag = function (terms, view, start, len) {
-  const tmp = view.update()
-  tmp.document = [terms]
-  // offer to re-tag neighbours, too
-  let end = start + len
-  if (start > 0) {
-    start -= 1
-  }
-  if (terms[end]) {
-    end += 1
-  }
-  tmp.ptrs = [[0, start, end]]
-}
-
 const byEnd = {
   // ain't
-  t: (terms, i) => apostropheT(terms, i),
+  t: apostropheT,
   // how'd
-  d: (terms, i) => apostropheD(terms, i),
+  d: apostropheD,
 }
 
 const byStart = {
   // j'aime
-  j: (terms, i) => french.preJ(terms, i),
+  j: french.preJ,
   // l'amour
-  l: (terms, i) => french.preL(terms, i),
+  l: french.preL,
   // d'amerique
-  d: (terms, i) => french.preD(terms, i),
+  d: french.preD,
 }
 
 // pull-apart known contractions from model
@@ -131,7 +116,6 @@ const contractions = view => {
       if (words) {
         words = toDocs(words, view, terms[i])
         splice(document, [n, i], words)
-        reTag(document[n], view, i, words.length)
         continue
       }
       // '44-2' has special care
@@ -145,7 +129,6 @@ const contractions = view => {
           if (words[2] && words[2].tags.has('Time')) {
             methods.one.setTag([words[0]], 'Time', world, null, 'time-range')
           }
-          reTag(document[n], view, i, words.length)
         }
         continue
       }

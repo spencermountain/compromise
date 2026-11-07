@@ -1,3 +1,4 @@
+import doesMatch from './term/doesMatch.js'
 
 
 export const getGroup = function (state, term_index) {
@@ -21,3 +22,9 @@ export const logGroup = function (state, startAt) {
     getGroup(state, startAt).length += state.t - startAt
   }
 }
+
+// test the reg against the term at array-index t
+export const matchAt = (state, reg, t) => doesMatch(state.terms[t], reg, state.start_i + t, state.phrase_length)
+
+// anchors should not apply to repeated terms
+export const noAnchors = reg => ({ ...reg, start: false, end: false })

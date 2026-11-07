@@ -1,7 +1,6 @@
 import hasPlural from './hasPlural.js'
 import { Plur } from '../../../2-two/preTagger/tagSet/_lib.js'
-
-const keep = { tags: true }
+import { keepTags as keep } from '../../_lib.js'
 
 const nounToPlural = function (m, parsed) {
   // already plural?

@@ -12,7 +12,7 @@ const table = (words, value) => {
   return h
 }
 
-export default {
+const words = {
   ones: table(ones, i => i),
   teens: table(teens, i => 10 + i),
   tens: table([...tens, 'fourty'], i => (i === 8 ? 4 : i + 2) * 10),
@@ -22,3 +22,7 @@ export default {
     dozen: 12,
   },
 }
+// every word under one hundred
+words.small = { ...words.ones, ...words.teens, ...words.tens }
+
+export default words

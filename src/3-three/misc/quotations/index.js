@@ -18,7 +18,7 @@ const api = function (View) {
       return super.text(fmt)
     }
     strip() {
-      return strip(this)
+      strip(this)
     }
   }
 

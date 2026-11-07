@@ -1,4 +1,5 @@
 import { hasBreak, isCapital, isUpperCase } from './_lib.js'
+import { hasAny, toSet } from '../../_lib.js'
 import { Prop, Pron, Uncountable, Date, Sing, Mod, Cop, Past, Pres, Conj, Pers, Actor, Poss, QW, Det, Sup, First, Vb, Inf, Ger, NN, Plur, Adj, Adv, Ord, Val } from '../../preTagger/tagSet/_lib.js'
 
 const banList = {
@@ -10,26 +11,25 @@ const banList = {
 }
 
 // an object can't be 'is' - "in sunday's", "of Enron's", "at Moe's"
-const beforePossessive = new Set(['in', 'by', 'for', 'of', 'at', 'with', 'to', 'on', 'from', 'about', 'into'])
+const beforePossessive = toSet('in by for of at with to on from about into')
 // "Kathy's and Mary's", "a master's of science", "Australia's per capita"
-const joiners = new Set(['and', 'or', 'nor', 'but', '&', 'of', 'per'])
+const joiners = toSet('and or nor but & of per')
 // things that are done, and not owned - Mom's cooked dinner, John's parked here
-const bareObject = new Set(['dinner', 'lunch', 'breakfast', 'supper', 'work', 'school', 'college', 'home', 'here', 'there'])
-const adjLike = new Set(['too', 'also', 'enough', 'about'])
-const nounLike = new Set(['is', 'are', 'did', 'were', 'could', 'should', 'must', 'had', 'have'])
+const bareObject = toSet('dinner lunch breakfast supper work school college home here there')
+const adjLike = toSet('too also enough about')
+const nounLike = toSet('is are did were could should must had have')
 // "is was" or "has was" can't happen, so a copula means the 's is possessive
-const copulas = new Set(['is', 'are', 'was', 'were', 'am'])
+const copulas = toSet('is are was were am')
 // these only follow 'is' or 'has' - the man in black's gonna
-const afterVerb = new Set(['gonna', 'gotta', 'got', 'been'])
+const afterVerb = toSet('gonna gotta got been')
 // past words that don't describe a thing - the team's made progress
-const lightVerbs = new Set('made had done did took taken gave given saw seen went came said'.split(' '))
+const lightVerbs = toSet('made had done did took taken gave given saw seen went came said')
 
 // one countable thing can't be the object of 'is making' or 'has made' - so it is owned
 const isOneThing = t => {
-  const not = [Prop, Pron, Uncountable, Date]
   // not 'watching TV'
   const isWord = Boolean(t) && !bareObject.has(t.normal) && !isUpperCase(t)
-  return isWord && t.tags.has(Sing) && !not.some(tag => t.tags.has(tag))
+  return isWord && t.tags.has(Sing) && !hasAny(t, Prop, Pron, Uncountable, Date)
 }
 
 // is there a verb for this phrase to be the subject of? - Toronto's housing market [set] a record
@@ -37,11 +37,11 @@ const hasPredicate = (terms, n) => {
   for (let k = n; k < terms.length; k += 1) {
     const t = terms[k]
     // or a thing 'of' something - Dynegy's planned acquisition [of] Enron
-    if ([Mod, Cop, Past, Pres].some(tag => t.tags.has(tag)) || (k === n && t.normal === 'of')) {
+    if (hasAny(t, Mod, Cop, Past, Pres) || (k === n && t.normal === 'of')) {
       return true
     }
     // a new clause - John's played football [and] won
-    if (t.tags.has(Conj) || t.tags.has(Pron) || hasBreak(t)) {
+    if (hasAny(t, Conj, Pron) || hasBreak(t)) {
       return false
     }
   }
@@ -51,7 +51,7 @@ const hasPredicate = (terms, n) => {
 const isPossessive = (terms, i) => {
   const term = terms[i]
   // a person can do things - John's played football
-  const isPerson = term.tags.has(Pers) || term.tags.has(Actor)
+  const isPerson = hasAny(term, Pers, Actor)
   // these can't be possessive
   if (Object.hasOwn(banList, term.machine || term.normal)) {
     return false
@@ -120,20 +120,14 @@ const isPossessive = (terms, i) => {
     const next2 = terms[i + 2]
     // the artist's painting.
     if (!next2) {
-      if (term.tags.has(Actor) || term.tags.has(Prop)) {
-        return true
-      }
-      return false
+      return hasAny(term, Actor, Prop)
     }
     // the artist's painting is.., Enron's rating would.., the IMF's managing director
-    const isVerb = [Cop, Mod, Past].some(tag => next2.tags.has(tag))
+    const isVerb = hasAny(next2, Cop, Mod, Past)
     if (isVerb || (isOneThing(next2) && hasPredicate(terms, i + 3))) {
       return true
     }
     // the cat's sleeping on ..
-    if (next2.normal === 'on' || next2.normal === 'in') {
-      return false
-    }
     return false
   }
   //a gerund suggests 'is walking'
@@ -159,7 +153,7 @@ const isPossessive = (terms, i) => {
     const three = terms[i + 3]
     if (two && nextTerm.tags.has(Past) && !lightVerbs.has(nextTerm.normal)) {
       // but not Mom's cooked dinner, Mary's visited Paris, John's finished today
-      const isThing = two.tags.has(NN) && ![Prop, Pron, Date].some(tag => two.tags.has(tag))
+      const isThing = two.tags.has(NN) && !hasAny(two, Prop, Pron, Date)
       // Mom's baked cookies. - a sentence with no other verb needs the 's to be one
       const needsVerb = i === 0 && two.tags.has(Plur) && !terms.some((t, k) => k !== 1 && t.tags.has(Vb))
       // John's played football, the company's raised money - but John's finished product sold well
@@ -198,7 +192,7 @@ const isPossessive = (terms, i) => {
       return false
     }
     // the chair's his - but not Hamlet's mother's, which is a singular or plural noun
-    const isNoun = nextTerm.tags.has(Sing) || nextTerm.tags.has(Plur)
+    const isNoun = hasAny(nextTerm, Sing, Plur)
     if (nextTerm.tags.has(Poss) && !isNoun) {
       return false
     }
@@ -223,7 +217,7 @@ const isPossessive = (terms, i) => {
       const t = terms[k]
       const after = terms[k + 1]
       // big [red] nozzle, original [first] name
-      if (t.tags.has(Adj) || t.tags.has(Ord)) {
+      if (hasAny(t, Adj, Ord)) {
         return true
       }
       if (!after) {
@@ -254,14 +248,14 @@ const isPossessive = (terms, i) => {
     if (isAdv && o === i + 2 && nextTerm.normal !== 'only') {
       // the pond's still water was cold - but the car's still here, John's still king
       const three = terms[o + 1]
-      return isOneThing(twoTerm) && Boolean(three) && [Mod, Cop, Past].some(tag => three.tags.has(tag))
+      return isOneThing(twoTerm) && Boolean(three) && hasAny(three, Mod, Cop, Past)
     }
     // John's only human
     if (nextTerm.normal === 'only' && twoTerm.normal === 'human') {
       return false
     }
     // America's poor climbed, our nation's elderly would - but Mama's messy isn't she
-    const isVerb = [Mod, Past, Cop].some(tag => twoTerm.tags.has(tag)) || twoTerm.normal === 'have'
+    const isVerb = hasAny(twoTerm, Mod, Past, Cop) || twoTerm.normal === 'have'
     if (!isAdv && o === i + 2 && isVerb && !twoTerm.implicit) {
       return true
     }

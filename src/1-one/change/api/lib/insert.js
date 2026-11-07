@@ -1,7 +1,4 @@
-// case logic
-const isTitleCase = (str) => /^\p{Lu}[\p{Ll}'’]/u.test(str) || /^\p{Lu}$/u.test(str)
-const toTitleCase = (str) => str.replace(/^\p{Ll}/u, x => x.toUpperCase())
-const toLowerCase = (str) => str.replace(/^\p{Lu}/u, x => x.toLowerCase())
+import { isTitleCase, toTitleCase, toLowerCase } from './_case.js'
 
 // splice an array into an array
 const spliceArr = (parent, index, child) => {

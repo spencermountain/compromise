@@ -1,31 +1,31 @@
 const rules = {
-  '#Value': [
+  '#Val': [
     // [five] pm
     '_ (am|pm) -> #Time',
   ],
-  '#QuestionWord': [
+  '#QW': [
     // [when] stolen
     '_ #VBN -> #Prep',
   ],
-  '#Adverb': [
+  '#Adv': [
     // is [well]
     '#Cop _ $ -> #Adj',
   ],
-  '#Person': [
+  '#Pers': [
     // bought a [warhol]
     '(a|an) _ $ -> !#Pers',
   ],
-  '#ProperNoun': [
+  '#Prop': [
     // in [#ProperNoun] -> #Place
     // in [Foo] California
     'in _ -> #Place',
   ],
-  '#PastTense': [
+  '#Past': [
     // well [made]
     'well _ -> #Adj',
     '(over|under) _ -> #Adj',
   ],
-  '#Gerund': [
+  '#Ger': [
     // as [entertaining] as
     'as _ as -> #Adj',
     // more [amusing] than
@@ -39,7 +39,7 @@ const rules = {
     // i think tipping sucks
     '#Inf _ #Pres -> #Noun',
   ],
-  '#Adjective': [
+  '#Adj': [
     // the [above] is clear
     // real [evil] is
     '(#Det|#Adj) _ #Cop -> #NN',
@@ -52,23 +52,23 @@ const rules = {
     // for the poor this
     'the _ #Det -> #NN',
   ],
-  '#Participle': [
+  '#VBN': [
     // a [blown] motor
     '(the|those|these|a|an) _ #NN -> #Adj',
   ],
-  '#Verb': [
+  '#V': [
     // the [manufacture] of perfume
     '(a|an|the) _ of -> #NN',
     // became [embroiled]
     '(become|became|becoming|becomes) _ -> #Adj',
   ],
-  '#Singular': [
+  '#Sing': [
     // the [staff] were
     '(the|these) _ (were|are) -> #Plur',
     // the [repairer] said
     '#Det _ said -> #Actor',
   ],
-  '#Infinitive': [
+  '#Inf': [
     // in [love]
     // about [thank]-you letters
     '(in|about) _ -> #Sing',
@@ -86,7 +86,7 @@ const rules = {
     // much [thank]-you mail
     'much _ -> #NN',
   ],
-  '#PresentTense': [
+  '#Pres': [
     // taught [thank]-you etiquette
     '(taught|teaches|learns|learned) _ -> #NN',
     // some [thanks] for helping
@@ -94,15 +94,15 @@ const rules = {
     // whose [thanks] are appreciated
     'whose _ #Cop -> #NN',
   ],
-  '#Abbreviation': [
+  '#Abbr': [
     // 500 fifth [ave]
     '#Value _ -> #Unit',
   ],
-  '#FirstName': [
+  '#First': [
     // john [stewart]
     '#First _ -> #Last',
   ],
-  '#Cardinal': [
+  '#Card': [
     //  5 June
     '_ #Month -> #Date',
   ],

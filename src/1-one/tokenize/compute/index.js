@@ -1,3 +1,4 @@
+import eachTerm from './_lib.js'
 import alias from './alias.js'
 import normal from './normal/index.js'
 import machine from './machine.js'
@@ -7,14 +8,7 @@ import index from './reindex.js'
 import wordCount from './wordCount.js'
 
 // cheat-method for a quick loop
-const termLoop = function (view, fn) {
-  const docs = view.docs
-  for (let i = 0; i < docs.length; i += 1) {
-    for (let t = 0; t < docs[i].length; t += 1) {
-      fn(docs[i][t], view.world)
-    }
-  }
-}
+const termLoop = (view, fn) => eachTerm(view.docs, term => fn(term, view.world))
 
 const methods = {
   alias: (view) => termLoop(view, alias),

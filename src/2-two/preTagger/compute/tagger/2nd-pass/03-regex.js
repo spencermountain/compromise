@@ -1,3 +1,4 @@
+import { setTag } from '../_lib.js'
 const hasApostrophe = /['‘’‛‵′`´]/
 
 // normal regexes
@@ -10,21 +11,9 @@ const doRegs = function (str, regs) {
   return null
 }
 // suffix-regexes, indexed by last-character
-const doEndsWith = function (str = '', byEnd) {
-  const char = str[str.length - 1]
-  if (Object.hasOwn(byEnd, char) === true) {
-    const regs = byEnd[char] || []
-    for (let r = 0; r < regs.length; r += 1) {
-      if (regs[r][0].test(str) === true) {
-        return regs[r]
-      }
-    }
-  }
-  return null
-}
+const doEndsWith = (str = '', byEnd) => doRegs(str, byEnd[str[str.length - 1]] || [])
 
 const checkRegex = function (terms, i, model, world) {
-  const setTag = world.methods.one.setTag
   const { regexText, regexNormal, regexNumbers, endsWith } = model.two
   const term = terms[i]
   const normal = term.machine || term.normal
@@ -51,7 +40,7 @@ const checkRegex = function (terms, i, model, world) {
   }
   if (arr) {
     // console.log(arr)
-    setTag([term], arr[1], world, null, `2-regex-'${arr[2] || arr[0]}'`)
+    setTag([term], arr[1], world, `2-regex-'${arr[2] || arr[0]}'`)
     term.confidence = 0.6
     return true
   }

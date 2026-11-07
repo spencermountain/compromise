@@ -1,6 +1,7 @@
+import { hasAny } from '../../_lib.js'
 import { Det, Pron, Poss, Vb, Adv } from '../../preTagger/tagSet/_lib.js'
 // 'i wanna pickle' is [want, pickle], not [want, to, pickle]
-const hasObject = term => term && [Det, Pron, Poss].some(tag => term.tags.has(tag))
+const hasObject = term => term && hasAny(term, Det, Pron, Poss)
 
 const wannaNoun = function (terms, i) {
   if (terms[i].normal !== 'wanna') {
@@ -11,7 +12,7 @@ const wannaNoun = function (terms, i) {
   if (!to || to.implicit !== 'to' || !next) {
     return false
   }
-  if (next.tags.has(Vb) || next.tags.has(Adv)) {
+  if (hasAny(next, Vb, Adv)) {
     return false
   }
   // 'wanna pickle the beets' is still a verb, before its object

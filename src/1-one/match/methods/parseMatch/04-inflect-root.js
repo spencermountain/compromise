@@ -1,31 +1,14 @@
-
-// add all conjugations of this verb
-const addVerbs = function (token, world) {
-  const { all } = world.methods.two.transform.verb || {}
-  const str = token.root
+// add all inflections of this verb/noun/adjective
+const inflect = function (token, world, kind, fallback) {
+  const { all } = world.methods.two.transform[kind] || {}
   if (!all) {
-    return []
-  }
-  return all(str, world.model)
-}
-
-// add all inflections of this noun
-const addNoun = function (token, world) {
-  const { all } = world.methods.two.transform.noun || {}
-  if (!all) {
-    return [token.root]
+    return fallback
   }
   return all(token.root, world.model)
 }
 
-// add all inflections of this adjective
-const addAdjective = function (token, world) {
-  const { all } = world.methods.two.transform.adjective || {}
-  if (!all) {
-    return [token.root]
-  }
-  return all(token.root, world.model)
-}
+// explicitly-set POS - '{sweet/adjective}'
+const byPos = { Verb: 'verb', Noun: 'noun', Adjective: 'adjective' }
 
 // turn '{walk}' into 'walking', 'walked', etc
 const inflectRoot = function (regs, world) {
@@ -36,20 +19,18 @@ const inflectRoot = function (regs, world) {
       // check if compromise/two is loaded
       if (world.methods.two && world.methods.two.transform) {
         let choices = []
-        // have explicitly set from POS - '{sweet/adjective}'
         if (token.pos) {
-          if (token.pos === 'Verb') {
-            choices = choices.concat(addVerbs(token, world))
-          } else if (token.pos === 'Noun') {
-            choices = choices.concat(addNoun(token, world))
-          } else if (token.pos === 'Adjective') {
-            choices = choices.concat(addAdjective(token, world))
+          if (Object.hasOwn(byPos, token.pos)) {
+            const kind = byPos[token.pos]
+            choices = inflect(token, world, kind, kind === 'verb' ? [] : [token.root])
           }
         } else {
           // do verb/noun/adj by default
-          choices = choices.concat(addVerbs(token, world))
-          choices = choices.concat(addNoun(token, world))
-          choices = choices.concat(addAdjective(token, world))
+          choices = [
+            ...inflect(token, world, 'verb', []),
+            ...inflect(token, world, 'noun', [token.root]),
+            ...inflect(token, world, 'adjective', [token.root]),
+          ]
         }
         choices = choices.filter(str => str)
         if (choices.length > 0) {

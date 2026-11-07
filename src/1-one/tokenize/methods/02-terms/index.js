@@ -1,38 +1,35 @@
 import { hasHyphen, splitHyphens } from './01-hyphens.js'
 import combineRanges from './03-ranges.js'
 import combineSlashes from './02-slashes.js'
+import { toList, toHash } from '../../model/_lib.js'
 
 const wordlike = /\S/
 const isBoundary = /^[!?.]+$/
 const naiiveSplit = /(\S+)/
 
-let notWord = [
-  '.',
-  '?',
-  '!',
-  ':',
-  ';',
-  '-',
-  '–',
-  '—',
-  '--',
-  '...',
-  '(',
-  ')',
-  '[',
-  ']',
-  '"',
-  "'",
-  '`',
-  '«',
-  '»',
-  '*',
-  '•',
+const notWord = toHash(toList(`
+.
+?
+!
+:
+;
+-
+–
+—
+--
+...
+(
+)
+[
 ]
-notWord = notWord.reduce((h, c) => {
-  h[c] = true
-  return h
-}, {})
+"
+'
+\`
+«
+»
+*
+•
+`))
 
 //turn a string into an array of strings (naiive for now, lumped later)
 const splitWords = function (str, model) {

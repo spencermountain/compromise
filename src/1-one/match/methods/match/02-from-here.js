@@ -4,7 +4,7 @@ import doAndBlock from './steps/and-block.js'
 import doNegative from './steps/negative.js'
 import simpleMatch from './steps/simple-match.js'
 import { isEndGreedy } from './steps/logic/greedy.js'
-import matchTerm from './term/doesMatch.js'
+import { matchAt } from './_lib.js'
 // i formally apologize for how complicated this is.
 
 /** 
@@ -108,7 +108,7 @@ const tryHere = function (terms, regs, start_i, phrase_length, offset = 0) {
       continue
     }
     // ok, finally test the term-reg
-    const hasMatch = matchTerm(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length)
+    const hasMatch = matchAt(state, reg, state.t)
     if (hasMatch === true) {
       const alive = simpleMatch(state)
       if (!alive) {

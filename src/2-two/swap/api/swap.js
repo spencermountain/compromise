@@ -11,8 +11,7 @@ const swapNoun = function (m, lemma) {
 
 const swapAdverb = function (m, lemma) {
   const { toAdverb } = m.methods.two.transform.adjective
-  const str = lemma
-  const adv = toAdverb(str)
+  const adv = toAdverb(lemma)
   if (adv) {
     m.replaceWith(adv)
   }
@@ -31,9 +30,7 @@ const swapAdjective = function (m, lemma) {
 }
 
 const swap = function (from, to, tag) {
-  let reg = from.split(/ /g).map(str => str.toLowerCase().trim())
-  reg = reg.filter(str => str)
-  reg = reg.map(str => `{${str}}`).join(' ')
+  const reg = from.split(/ /g).map(str => str.toLowerCase().trim()).filter(str => str).map(str => `{${str}}`).join(' ')
   let m = this.match(reg)
   // guard against some homonyms
   if (tag) {

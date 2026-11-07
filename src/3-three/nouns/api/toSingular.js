@@ -1,5 +1,5 @@
 import { Sing } from '../../../2-two/preTagger/tagSet/_lib.js'
-const keep = { tags: true }
+import { keepTags as keep } from '../../_lib.js'
 
 // give 'dane' the case of the word it replaced: 'Danes' -> 'Dane', 'DANES' -> 'DANE'
 const matchCase = function (original, str) {

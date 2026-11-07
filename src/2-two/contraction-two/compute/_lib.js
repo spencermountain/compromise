@@ -8,4 +8,7 @@ const hasBreak = term => methods.hasComma(term) || methods.hasSemicolon(term) ||
 // 'The', or 'THE'
 const isCapital = term => methods.isTitleCase(term) || isUpperCase(term)
 
-export { hasBreak, isCapital, isUpperCase }
+// "bob's"
+const hasApostrophe = /'/
+
+export { hasBreak, isCapital, isUpperCase, hasApostrophe }

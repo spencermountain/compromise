@@ -1,17 +1,18 @@
+import { setTag, titleCase } from '../_lib.js'
+import { hasAny, toSet } from '../../../../_lib.js'
 import { Conj, Prep, Inf, Pron, Adv, Plur, Det, Val, Numeric, Date } from '../../../tagSet/_lib.js'
 // march/may are a month, a verb, or a modal - decided by their neighbours
 // (ported from postTagger match-rules, so it only runs on these two words)
 const reason = '3-[ambig-date]'
-const titleCase = /^\p{Lu}[\p{Ll}'’]/u
 // [this] march
-const thisNext = new Set(['this', 'next', 'last'])
+const thisNext = toSet('this next last')
 // march [next] year
-const toDate = new Set(['this', 'that', 'next', 'last'])
+const toDate = toSet('this that next last')
 // march [up] the hill
-const direction = new Set(['up', 'down', 'back', 'toward'])
+const direction = toSet('up down back toward')
 
-const has = (term, tag) => term?.tags.has(tag) === true
-const isLink = term => has(term, Conj) || has(term, Prep)
+const has = (term, ...tags) => Boolean(term) && hasAny(term, ...tags)
+const isLink = term => has(term, Conj, Prep)
 // may [be], may [have], may [not], (may [I])
 const isVerbAfter = (term, orPron) =>
   has(term, Inf) || term?.normal === 'have' || term?.normal === 'not' || (orPron && has(term, Pron))
@@ -20,7 +21,7 @@ const modalAfter = (terms, i, orPron) =>
   isVerbAfter(terms[i + 1], orPron) || (has(terms[i + 1], Adv) && isVerbAfter(terms[i + 2], orPron))
 // they march, soldiers march, (the march) - a lowercase word after its subject
 const hasSubject = (prev, term, orDet) =>
-  !titleCase.test(term.text) && (has(prev, Pron) || has(prev, Plur) || (orDet && has(prev, Det)))
+  !titleCase.test(term.text) && (has(prev, Pron, Plur) || (orDet && has(prev, Det)))
 
 const ambigDate = function (terms, i, world) {
   const term = terms[i]
@@ -79,11 +80,11 @@ const ambigDate = function (terms, i, world) {
     month = true
   }
   if (month) {
-    world.methods.one.setTag(dates, Date, world, null, reason)
-    world.methods.one.setTag([term], 'Month', world, null, reason)
+    setTag(dates, Date, world, reason)
+    setTag([term], 'Month', world, reason)
   } else if (!isMay && !has(term, Date) && next && direction.has(next.normal)) {
     // [march] up the hill → Infinitive
-    world.methods.one.setTag([term], Inf, world, null, reason)
+    setTag([term], Inf, world, reason)
   }
 }
 export default ambigDate

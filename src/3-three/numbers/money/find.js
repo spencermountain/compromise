@@ -1,5 +1,8 @@
-import { isMinor, decimalName } from './_currency.js'
+import { isMinor, decimalName, codes, currencyMatch } from './_currency.js'
 import { tagCents, isCandidate } from './_candidates.js'
+
+// reach for the currency words around a number
+const grow = m => m.growRight(currencyMatch + '+').growLeft(codes)
 
 // Numbers already groups multiword values and separates adjacent numeric amounts.
 const parts = doc => {
@@ -17,17 +20,17 @@ const parts = doc => {
     if (!number.found) {
       return number
     }
-    let amount = number.growRight('(#Currency|cad|usd)+').growLeft('(cad|usd)')
+    let amount = grow(number)
     const [sentence, start, end] = number.fullPointer[0]
     const next = number.document[sentence][end]
     const configured = next && decimalName(next.normal, number.world)
     if (configured) {
-      amount = number.toView([[sentence, start, end + 1]]).growRight('(#Currency|cad|usd)+').growLeft('(cad|usd)')
+      amount = grow(number.toView([[sentence, start, end + 1]]))
     }
-    if (!configured && !number.has('#Money') && !amount.has('(#Currency|cad|usd)') && !number.text().includes('¢')) {
+    if (!configured && !number.has('#Money') && !amount.has(currencyMatch) && !number.text().includes('¢')) {
       return number.none()
     }
-    return amount.growRight('(pound|pounds)').growRight('(cad|usd)')
+    return amount.growRight('(pound|pounds)').growRight(codes)
   })
 }
 
@@ -55,7 +58,7 @@ const find = doc => {
 }
 
 const numberOf = amount => {
-  let number = amount.not('(#Currency|cad|usd)').not('(pound|pounds)$')
+  let number = amount.not(currencyMatch).not('(pound|pounds)$')
   const last = number.lastTerm()
   if (decimalName(last.text('normal'), amount.world)) {
     number = number.not(last)

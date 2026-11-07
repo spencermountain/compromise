@@ -19,7 +19,8 @@ const switches = {}
 const tmpModel = { two: { irregularPlurals, uncountable: {} } }
 
 Object.keys(lexData).forEach(tag => {
-  const wordsObj = unpack(lexData[tag])
+  // the packer strips the shared 'true¦' prefix
+  const wordsObj = unpack('true¦' + lexData[tag])
   // POS tag, or something fancier?
   if (!hasSwitch.test(tag)) {
     // set them as simple word key-value lookup

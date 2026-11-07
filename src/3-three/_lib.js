@@ -8,4 +8,11 @@ const keepClass = Cls => {
   }
 }
 
+// replace() option: keep the tags of the replaced words
+const keepTags = { tags: true }
+
+// the normalized text of each match
+const toArray = m => m.json({ normal: true, terms: false, text: false }).map(s => s.normal)
+
+export { keepTags, toArray }
 export default keepClass

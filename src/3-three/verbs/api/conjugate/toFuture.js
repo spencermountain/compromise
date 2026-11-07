@@ -1,8 +1,8 @@
 import { infinitive } from './inflect.js'
-import convertAuxiliary from './auxiliary.js'
+import byForm from './_lib.js'
 import { noop, isAreAm } from '../lib.js'
 import { Vb } from '../../../../2-two/preTagger/tagSet/_lib.js'
-const keep = { tags: true }
+import { keepTags as keep } from '../../../_lib.js'
 
 const simple = (vb, parsed) => {
   const { root, auxiliary } = parsed
@@ -75,19 +75,6 @@ const forms = {
   },
 }
 
-const toFuture = function (vb, parsed, form) {
-  const converted = convertAuxiliary(vb, parsed, form, 'future')
-  if (converted) return converted
-  // console.log(form)
-  // is it already future-tense?
-  if (vb.has('will')) {
-    return vb
-  }
-  if (Object.hasOwn(forms, form)) {
-    vb = forms[form](vb, parsed)
-    vb.fullSentence().compute(['tagger', 'chunks'])
-    return vb
-  }
-  return vb
-}
+// is it already future-tense?
+const toFuture = byForm('future', forms, null, vb => vb.has('will'))
 export default toFuture

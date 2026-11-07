@@ -2,13 +2,13 @@ import {
   Sing, Pres, NN, Vb, Past, Plur, Det, Phrasal, Adj, Prop, Adv, Pron, Poss, Prep,
   Inf, Mod, Conj, Ger, First, Actor, TxtNum, Date, Year,
 } from '../../preTagger/tagSet/_lib.js'
-const spatial = new Set([
-  'above', 'below', 'under', 'over', 'beside', 'behind', 'against',
-  'outside', 'inside', 'near', 'beneath', 'underneath', 'aboard',
-])
-const demonstratives = new Set(['this', 'that', 'these', 'those'])
-const doForms = new Set(['do', 'does', 'did'])
-const degrees = new Set(['very', 'remarkably', 'extremely', 'quite', 'unusually'])
+import { hasAny, toSet } from '../../_lib.js'
+const spatial = toSet('above below under over beside behind against outside inside near beneath underneath aboard')
+const demonstratives = toSet('this that these those')
+const doForms = toSet('do does did')
+const degrees = toSet('very remarkably extremely quite unusually')
+// Will, Wíll
+const titleCase = /^\p{Lu}[a-z'\u00C0-\u00FF]/u
 
 // Collect against the main sweep's output, before either correction pass tags it.
 const localCorrections = sentences => {
@@ -46,7 +46,7 @@ const localCorrections = sentences => {
       if (term.switch === 'Plural|Verb' && prev?.tags.has(Sing) && !prev.tags.has(Prop) && !prev.tags.has(Poss)) {
         let before = i - 2
         for (; before >= 0; before -= 1) {
-          if (!terms[before].tags.has(Adj) && !terms[before].tags.has(Adv)) {
+          if (!hasAny(terms[before], Adj, Adv)) {
             break
           }
         }
@@ -55,9 +55,7 @@ const localCorrections = sentences => {
         }
         // Each pay rise helps: allow noun modifiers before the singular head.
         for (; before >= 0; before -= 1) {
-          const tags = terms[before].tags
-          if (terms[before].post.includes(',') ||
-            (!tags.has(Sing) && !tags.has(Adj) && !tags.has(Adv))) {
+          if (terms[before].post.includes(',') || !hasAny(terms[before], Sing, Adj, Adv)) {
             break
           }
         }
@@ -79,11 +77,8 @@ const localCorrections = sentences => {
       if (!next) {
         continue
       }
-      if (spatial.has(term.normal) && !term.tags.has(Vb)) {
-        const tags = next.tags
-        if (tags.has(Det) || tags.has(Poss) || tags.has(Pron) || tags.has(Prop)) {
-          pending.push([[term], Prep, 'space-obj'])
-        }
+      if (spatial.has(term.normal) && !term.tags.has(Vb) && hasAny(next, Det, Poss, Pron, Prop)) {
+        pending.push([[term], Prep, 'space-obj'])
       }
       if (demonstratives.has(term.normal)) {
         let end = i + 1
@@ -95,20 +90,22 @@ const localCorrections = sentences => {
           pending.push([[term], Pron, 'dem-q'])
         }
         const subject = term.normal === 'this' || (term.normal === 'that' &&
-          (!prev || prev.tags.has(Conj) || prev.tags.has(Vb)))
-        if (subject && tags?.has(Pres) && !tags.has(Inf) && !tags.has(Ger)) {
+          (!prev || hasAny(prev, Conj, Vb)))
+        if (subject && tags?.has(Pres) && !hasAny(terms[end], Inf, Ger)) {
           pending.push([[term], Pron, 'this-finite-subj'])
         }
       }
-      if (term.normal === 'will' && /^\p{Lu}[a-z'\u00C0-\u00FF]/u.test(term.text) && next.tags.has(Past)) {
-        pending.push([[term], First, 'will-past-subj'])
-      }
-      // modal 'will' is never followed by 'is' - 'Will is tall'
-      if (term.normal === 'will' && /^\p{Lu}[a-z'\u00C0-\u00FF]/u.test(term.text) && (next.machine || next.normal) === 'is') {
-        pending.push([[term], First, 'will-is-subj'])
+      if (term.normal === 'will' && titleCase.test(term.text)) {
+        if (next.tags.has(Past)) {
+          pending.push([[term], First, 'will-past-subj'])
+        }
+        // modal 'will' is never followed by 'is' - 'Will is tall'
+        if ((next.machine || next.normal) === 'is') {
+          pending.push([[term], First, 'will-is-subj'])
+        }
       }
       if (term.switch === 'Adj|Noun' && next.tags.has(Actor) &&
-        degrees.has(terms[i - 1]?.normal) && terms[i - 2]?.tags.has(Det)) {
+        degrees.has(prev?.normal) && terms[i - 2]?.tags.has(Det)) {
         pending.push([[term], Adj, 'degree-actor'])
       }
       // a spoken year may still be un-tagged, when followed by a unit

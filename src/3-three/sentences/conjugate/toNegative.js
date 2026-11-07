@@ -1,7 +1,8 @@
 import groups from '../../verbs/api/conjugate/groups.js'
 import { inflect } from '../../verbs/api/conjugate/inflect.js'
 import question from '../../verbs/api/conjugate/question.js'
-import { Inf, Pres } from '../../../2-two/preTagger/tagSet/_lib.js'
+import { doTense } from '../../verbs/api/lib.js'
+import { Inf } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const mainVerbs = (s, parsed) => {
   if (!parsed.verb.found) {
@@ -41,9 +42,8 @@ const toPositive = function (s, parsed) {
   if (!head) {
     return s
   }
-  const { auxiliary, negative } = head.parsed
-  if (negative.found && auxiliary.has('^(does|did)$')) {
-    const tense = auxiliary.has('did') ? 'PastTense' : Pres
+  const tense = doTense(head.parsed)
+  if (tense) {
     entries.forEach(entry => {
       if (entry.head === head) {
         entry.root.replaceWith(inflect(entry.parsed.root, tense)).tag(tense)

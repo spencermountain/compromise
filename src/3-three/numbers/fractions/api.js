@@ -8,6 +8,12 @@ import { isValid, replaceFraction } from './_lib.js'
 import { decimalText, replaceNumber } from '../numbers/_conversion.js'
 import { Numeric, Frac } from '../../../2-two/preTagger/tagSet/_lib.js'
 
+// replace each fraction with a spelled-out form
+const convert = (view, n, fn) => view.getNth(n).map(m => {
+  const str = fn(parse(m), m)
+  return str ? replaceFraction(m, str) : m
+})
+
 const plugin = function (View) {
   /**
    */
@@ -54,38 +60,20 @@ const plugin = function (View) {
       return result.fractions()
     }
     toOrdinal(n) {
-      return this.getNth(n).map(m => {
-        const obj = parse(m)
+      return convert(this, n, (obj, m) => {
         let str = toOrdinal(obj)
-        if (!str) {
-          return m
-        }
-        if (m.after('^#NN').found) {
+        if (str && m.after('^#NN').found) {
           str += ' of' // three fifths of dentists
         }
-        return replaceFraction(m, str)
+        return str
       })
     }
     toCardinal(n) {
-      return this.getNth(n).map(m => {
-        const obj = parse(m)
-        const str = toCardinal(obj)
-        if (!str) {
-          return m
-        }
-        return replaceFraction(m, str)
-      })
+      return convert(this, n, toCardinal)
     }
     // spell it out - '1/2' -> 'one half'
     toText(n) {
-      return this.getNth(n).map(m => {
-        const obj = parse(m)
-        const str = toOrdinal(obj)
-        if (str) {
-          return replaceFraction(m, str)
-        }
-        return m
-      })
+      return convert(this, n, toOrdinal)
     }
     toPercentage(n) {
       return this.getNth(n).map(m => {

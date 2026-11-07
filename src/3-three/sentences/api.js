@@ -26,43 +26,6 @@ const api = function (View) {
         return json
       }, [])
     }
-    toPastTense(n) {
-      return this.getNth(n).map(s => {
-        const parsed = parse(s)
-        return toPast(s, parsed)
-      })
-    }
-    toPresentTense(n) {
-      return this.getNth(n).map(s => {
-        const parsed = parse(s)
-        return toPresent(s, parsed)
-      })
-    }
-    toFutureTense(n) {
-      return this.getNth(n).map(s => {
-        const parsed = parse(s)
-        s = toFuture(s, parsed)
-        return s
-      })
-    }
-    toInfinitive(n) {
-      return this.getNth(n).map(s => {
-        const parsed = parse(s)
-        return toInfinitive(s, parsed)
-      })
-    }
-    toNegative(n) {
-      return this.getNth(n).map(vb => {
-        const parsed = parse(vb)
-        return toNegative(vb, parsed)
-      })
-    }
-    toPositive(n) {
-      return this.getNth(n).map(vb => {
-        const parsed = parse(vb)
-        return toPositive(vb, parsed)
-      })
-    }
     isQuestion(n) {
       return this.questions(n)
     }
@@ -76,6 +39,18 @@ const api = function (View) {
     }
   }
   keepClass(Sentences)
+  // parse each sentence, then convert it
+  const each = fn => function (n) {
+    return this.getNth(n).map(s => fn(s, parse(s)))
+  }
+  Object.assign(Sentences.prototype, {
+    toPastTense: each(toPast),
+    toPresentTense: each(toPresent),
+    toFutureTense: each(toFuture),
+    toInfinitive: each(toInfinitive),
+    toNegative: each(toNegative),
+    toPositive: each(toPositive),
+  })
   // aliases
   Sentences.prototype.toPresent = Sentences.prototype.toPresentTense
   Sentences.prototype.toPast = Sentences.prototype.toPastTense

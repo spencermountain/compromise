@@ -1,6 +1,8 @@
 import fillTags from './_fillTags.js'
 import looksPlural from '../../../methods/looksPlural.js'
 import adhoc from './_adhoc.js'
+import { setTag } from '../_lib.js'
+import { hasAny } from '../../../../_lib.js'
 import { Acronym, Phrasal, SportsTeam, Sing, Actor, Plur, Vb, Inf, Pres, Past } from '../../../tagSet/_lib.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
@@ -69,7 +71,6 @@ const doSwitches = function (terms, i, world) {
     return
   }
   const model = world.model
-  const setTag = world.methods.one.setTag
   const { switches, clues } = model.two
   let str = term.normal || term.implicit || ''
   // support prefixes for switching words
@@ -78,7 +79,7 @@ const doSwitches = function (terms, i, world) {
   }
   const form = term.switch
   // skip propernouns, acronyms, etc
-  if (term.tags.has(Acronym) || term.tags.has(Phrasal) || term.tags.has(SportsTeam)) {
+  if (hasAny(term, Acronym, Phrasal, SportsTeam)) {
     return
   }
   let tag = pickTag(terms, i, clues[form], model)
@@ -101,7 +102,7 @@ const doSwitches = function (terms, i, world) {
   // did we find anything?
   if (tag) {
     // tag it
-    setTag([term], tag, world, null, `3-[switch] (${form})`)
+    setTag([term], tag, world, `3-[switch] (${form})`)
     // add plural/singular etc.
     fillTags(terms, i, model)
   }

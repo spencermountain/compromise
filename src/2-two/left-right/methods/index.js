@@ -5,9 +5,8 @@ const collect = (entry, terms, i, pending) => {
   if (!entry) {
     return
   }
-  const bucket = Array.isArray(entry) ? entry : [entry]
-  for (let r = 0; r < bucket.length; r += 1) {
-    const rule = bucket[r]
+  for (let r = 0; r < entry.length; r += 1) {
+    const rule = entry[r]
     if (rule.start !== undefined && i !== rule.start) {
       continue
     }

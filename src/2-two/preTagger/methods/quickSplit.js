@@ -1,3 +1,4 @@
+import { hasAny, toSet } from '../../_lib.js'
 import { Place, Date, Adj } from '../tagSet/_lib.js'
 // roughly, split a document by comma or semicolon
 
@@ -8,13 +9,13 @@ const splitOn = function (terms, i) {
   if (!term) {
     return false
   }
-  const maybeDate = new Set(['may', 'april', 'august', 'jan'])
+  const maybeDate = toSet('may april august jan')
   // veggies, like figs
   if (term.normal === 'like' || maybeDate.has(term.normal)) {
     return false
   }
   // toronto, canada  - tuesday, march
-  if (term.tags.has(Place) || term.tags.has(Date)) {
+  if (hasAny(term, Place, Date)) {
     return false
   }
   if (terms[i - 1]) {

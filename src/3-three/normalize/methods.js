@@ -4,7 +4,7 @@ const termLoop = function (view, cb) {
   })
 }
 
-export default {
+const methods = {
   // remove titlecasing, uppercase
   'case': (doc) => {
     termLoop(doc, (term) => {
@@ -58,23 +58,6 @@ export default {
   'contractions': (doc) => {
     doc.contractions().expand()
   },
-  //remove periods from acronyms, like 'F.B.I.'
-  'acronyms': (doc) => {
-    doc.acronyms().strip()
-  },
-  //remove words inside brackets (like these)
-  'parentheses': (doc) => {
-    doc.parentheses().strip()
-  },
-  // turn "Google's tax return" to "Google tax return"
-  'possessives': (doc) => {
-    doc.possessives().strip()
-  },
-  // turn "tax return" to tax return
-  'quotations': (doc) => {
-    doc.quotations().strip()
-  },
-
   // remove them
   'emoji': (doc) => {
     doc.emojis().remove()
@@ -121,3 +104,11 @@ export default {
     return doc
   }
 }
+// 'F.B.I.' -> 'FBI', (these) -> these, "Google's" -> 'Google', "quoted" -> quoted
+'acronyms parentheses possessives quotations'.split(' ').forEach(k => {
+  methods[k] = (doc) => {
+    doc[k]().strip()
+  }
+})
+
+export default methods

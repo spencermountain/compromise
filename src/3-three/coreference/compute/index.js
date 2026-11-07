@@ -1,6 +1,6 @@
 import getPerson from './findPerson.js'
 import getThey from './findThey.js'
-import { prevSentence } from './lib.js'
+import { prevSentence, he, she, they } from './lib.js'
 
 const addReference = function (pron, m) {
   if (m && m.found) {
@@ -37,11 +37,11 @@ const coreference = function (view) {
   pronouns.forEach(pron => {
     let res = null
     // connect pronoun to its reference
-    if (pron.has('(he|him|his)')) {
+    if (pron.has(he)) {
       res = stepBack(pron, (m) => getPerson(m, 'm'))
-    } else if (pron.has('(she|her|hers)')) {
+    } else if (pron.has(she)) {
       res = stepBack(pron, (m) => getPerson(m, 'f'))
-    } else if (pron.has('(they|them|their|theirs)')) {
+    } else if (pron.has(they)) {
       res = stepBack(pron, getThey)
     }
     if (res && res.found) {

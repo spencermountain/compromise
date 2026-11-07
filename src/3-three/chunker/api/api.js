@@ -10,18 +10,6 @@ const api = function (View) {
       super(document, pointer, groups)
       this.viewType = 'Chunks'
     }
-    isVerb() {
-      return this.filter(c => c.has('<Verb>'))
-    }
-    isNoun() {
-      return this.filter(c => c.has('<Noun>'))
-    }
-    isAdjective() {
-      return this.filter(c => c.has('<Adjective>'))
-    }
-    isPivot() {
-      return this.filter(c => c.has('<Pivot>'))
-    }
     // chunk-friendly debug
     debug() {
       this.toView().debug('chunks')
@@ -29,6 +17,12 @@ const api = function (View) {
     }
   }
   keepClass(Chunks)
+  // isVerb(), isNoun(), isAdjective(), isPivot()
+  'Verb Noun Adjective Pivot'.split(' ').forEach(name => {
+    Chunks.prototype['is' + name] = function () {
+      return this.filter(c => c.has(`<${name}>`))
+    }
+  })
 
   View.prototype.chunks = select(Chunks, getChunks, true)
   View.prototype.clauses = clauses

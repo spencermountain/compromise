@@ -1,21 +1,14 @@
 import fastTag from '../_fastTag.js'
+import findAffix from '../../../methods/_lib.js'
 // const prefixes = /^(anti|re|un|non|extra|inter|intra|over)([a-z-]{3})/
 
 //sweep-through all prefixes
 const prefixLoop = function (str = '', prefixes = []) {
-  const len = str.length
-  let max = 7
-  if (max > len - 3) {
-    max = len - 3
+  const prefix = findAffix(str, prefixes, Math.min(str.length - 3, 7), 3, true)
+  if (prefix === null) {
+    return null
   }
-  for (let i = max; i > 2; i -= 1) {
-    const prefix = str.substring(0, i)
-    if (Object.hasOwn(prefixes[prefix.length], prefix) === true) {
-      const tag = prefixes[prefix.length][prefix]
-      return tag
-    }
-  }
-  return null
+  return prefixes[prefix.length][prefix]
 }
 
 // give 'overwork' the same tag as 'work'

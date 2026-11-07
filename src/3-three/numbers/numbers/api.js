@@ -6,6 +6,7 @@ import parse from './parse/index.js'
 import format from './format/index.js'
 import isUnit from './isUnit.js'
 import convert from './_lib.js'
+import { isPercent } from './_conversion.js'
 import toFraction from './toFraction.js'
 import toPercentage from './toPercentage.js'
 import toDecimal from './toDecimal.js'
@@ -15,6 +16,34 @@ const textValueMatch = '#TxtNum'
 const textOrdinal = 'TextOrdinal'
 const textCardinal = 'TextCardinal'
 const keep = { tags: true, possessives: true }
+
+// shared by set() and add(): give each number a new value, in its current format
+// eslint-disable-next-line max-params
+const edit = (view, n, apply, operation, isText, strip) => {
+  if (typeof n === 'string') {
+    n = parse(n).num
+  }
+  const res = view._mapNumbers(val => {
+    const obj = parse(val)
+    apply(obj, n)
+    if (obj.num === null) {
+      return val
+    }
+    let fmt = val.has(ordinalMatch) ? Ord : Card
+    if (isText(val, obj)) {
+      fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
+    }
+    const str = format(obj, fmt)
+    if (strip) {
+      val = val.not(strip)
+    }
+    val.replaceWith(str, keep)
+    // handle plural/singular unit
+    // agreeUnits(agree, val, obj)
+    return val
+  }, num => operation(num, n))
+  return view.update(res.pointer)
+}
 
 const addMethod = function (View) {
   /**   */
@@ -53,6 +82,13 @@ const addMethod = function (View) {
     /** return values that match a given unit */
     isUnit(allowed) {
       return isUnit(this, allowed)
+    }
+    /** drop matches that do not parse to a usable number - like 'thousand thousand' or '0th' */
+    isValid() {
+      return this.filter(val => {
+        const num = parse(val).num
+        return typeof num === 'number' && Number.isFinite(num)
+      })
     }
     /** return only ordinal numbers */
     isOrdinal() {
@@ -149,54 +185,22 @@ const addMethod = function (View) {
       if (n === undefined) {
         return this // don't bother
       }
-      if (typeof n === 'string') {
-        n = parse(n).num
+      const set = (obj, to) => {
+        obj.num = to
       }
-      const m = this
-      const res = m._mapNumbers(val => {
-        const obj = parse(val)
-        obj.num = n
-        if (obj.num === null) {
-          return val
-        }
-        let fmt = val.has(ordinalMatch) ? Ord : Card
-        if (val.has(textValueMatch)) {
-          fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
-        }
-        const str = format(obj, fmt)
-        val = val.not('#Currency')
-        val.replaceWith(str, keep)
-        // handle plural/singular unit
-        // agreeUnits(agree, val, obj)
-        return val
-      }, () => n)
-      return this.update(res.pointer)
+      return edit(this, n, set, (num, to) => to, val => val.has(textValueMatch), '#Currency')
     }
     add(n) {
       if (!n) {
         return this // don't bother
       }
-      if (typeof n === 'string') {
-        n = parse(n).num
+      // unparseable values stay as they are
+      const add = (obj, by) => {
+        if (obj.num !== null) {
+          obj.num = this._add(obj.num, by)
+        }
       }
-      const m = this
-      const res = m._mapNumbers(val => {
-        const obj = parse(val)
-        if (obj.num === null) {
-          return val
-        }
-        obj.num = this._add(obj.num, n)
-        let fmt = val.has(ordinalMatch) ? Ord : Card
-        if (obj.isText) {
-          fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
-        }
-        const str = format(obj, fmt)
-        val.replaceWith(str, keep)
-        // handle plural/singular unit
-        // agreeUnits(agree, val, obj)
-        return val
-      }, num => this._add(num, n))
-      return this.update(res.pointer)
+      return edit(this, n, add, (num, by) => this._add(num, by), (val, obj) => obj.isText)
     }
     /** decrease each number by n*/
     subtract(n, agree) {
@@ -228,12 +232,7 @@ const addMethod = function (View) {
   Numbers.prototype.equals = Numbers.prototype.isEqual
 
   View.prototype.numbers = select(Numbers, find, true)
-  View.prototype.percentages = function (n) {
-    let m = find(this)
-    m = m.filter(v => v.has('#Pct') || v.after('^per cent').found)
-    m = m.getNth(n)
-    return new Numbers(this.document, m.pointer)
-  }
+  View.prototype.percentages = select(Numbers, doc => find(doc).filter(isPercent), true)
   // alias
   View.prototype.values = View.prototype.numbers
   return Numbers

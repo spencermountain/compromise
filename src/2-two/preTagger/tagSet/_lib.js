@@ -24,16 +24,21 @@ const Fut = 'FutureTense'
 const Cop = 'Copula'
 const Mod = 'Modal'
 const Phrasal = 'PhrasalVerb'
+const Aux = 'Auxiliary'
+const Pass = 'Passive'
+const Imp = 'Imperative'
 const Conj = 'Conjunction'
 const Prep = 'Preposition'
 const Expr = 'Expression'
 const QW = 'QuestionWord'
+const Prefix = 'Prefix'
 
 const Pers = 'Person'
 const Place = 'Place'
 const Org = 'Organization'
 const First = 'FirstName'
 const Last = 'LastName'
+const Hon = 'Honorific'
 const MaleName = 'MaleName'
 const FemaleName = 'FemaleName'
 
@@ -52,6 +57,7 @@ const TxtNum = 'TextValue'
 const Numeric = 'NumericValue'
 const RomanNumeral = 'RomanNumeral'
 const Frac = 'Fraction'
+const Money = 'Money'
 
 const Date = 'Date'
 const WeekDay = 'WeekDay'
@@ -81,5 +87,5 @@ export {
   FemaleName, Actor, Uncountable, SportsTeam, Country, City, Region, Unit, Val, Card,
   Ord, TxtNum, Numeric, RomanNumeral, Frac, Date, WeekDay, Year, FinancialQuarter,
   Season, Time, Timezone, Connector, Abbr, Acronym, HashTag, AtMention, Emoji, Emoticon,
-  SlashedTerm, Email, PhoneNumber, Url, Phrasal,
+  SlashedTerm, Email, PhoneNumber, Url, Phrasal, Aux, Pass, Imp, Prefix, Hon, Money,
 }

@@ -1,4 +1,4 @@
-import doesMatch from '../../term/doesMatch.js'
+import { matchAt, noAnchors } from '../../_lib.js'
 
 // try to match a list of tokens, starting at state.t + skipN
 // returns the number of terms it consumed, or 0 for no-match
@@ -10,16 +10,16 @@ const tryChoice = function (state, regs, skipN) {
     if (state.terms[t] === undefined) {
       return 0
     }
-    if (doesMatch(state.terms[t], cr, state.start_i + t, state.phrase_length) !== true) {
+    if (matchAt(state, cr, t) !== true) {
       return 0
     }
     len += 1
     // this can be greedy - '(foo+ bar)'
     if (cr.greedy === true) {
       // like getGreedy, anchors should not apply to the repeated terms
-      const gr = { ...cr, start: false, end: false }
+      const gr = noAnchors(cr)
       for (let i = t + 1; i < state.terms.length; i += 1) {
-        if (doesMatch(state.terms[i], gr, state.start_i + i, state.phrase_length) !== true) {
+        if (matchAt(state, gr, i) !== true) {
           break
         }
         len += 1
@@ -56,7 +56,7 @@ const tryAndBlock = function (state, skipN) {
       if (state.terms[tryTerm] === undefined) {
         return false
       }
-      return doesMatch(state.terms[tryTerm], cr, state.start_i + tryTerm, state.phrase_length)
+      return matchAt(state, cr, tryTerm)
     })
     if (allWords === true && block.length > longest) {
       longest = block.length
@@ -83,7 +83,7 @@ const repeatBlock = function (state, tryBlock) {
     const term = state.terms[t]
     const hasMin = reg.min === undefined || count >= reg.min
     // stop for the next token, like 'foo+ bar'
-    if (!term || (next && hasMin && doesMatch(term, next, state.start_i + t, state.phrase_length))) {
+    if (!term || (next && hasMin && matchAt(state, next, t))) {
       break
     }
     const more = tryBlock(state, skipN)

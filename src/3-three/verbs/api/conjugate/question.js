@@ -8,10 +8,14 @@ const methods = {
 }
 // Partial views trim their outer punctuation by default
 const keepPunct = { keepEndPunct: true }
+const modals = 'will|would|can|could|shall|should|may|might|must'
+const auxWords = 'do|does|did|have|has|had|is|are|am|was|were|' + modals
 // These are followed by a bare verb, the same as do-support
-const bareVerb = /^(do|does|did|will|would|can|could|shall|should|may|might|must)$/
+const bareVerb = RegExp(`^(do|does|did|${modals})$`)
 const subjectPronoun = /^(i|you|he|she|it|we|they)$/
-const auxiliary = /^(do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must)$/
+const auxiliary = RegExp(`^(${auxWords})$`)
+const doHave = /^(do|have)$/
+const tagged = ['id', 'tagger', 'chunks']
 // Punctuation before the first word: '-What is it?', '"Did you?"'
 const trimLead = str => str.replace(/^[^\p{L}\p{N}]+/u, '')
 // These start a longer subject: 'your dog'
@@ -43,7 +47,7 @@ const copulaEnd = function (terms, words, { start, end, finite, wh, asked }) {
 }
 
 const whStart = /^(?:(?:in|on|at|to|for|from|with|about|by)\s+)?(?:why|when|where|how|what|who|whom|which|whose)\b/i
-const auxStart = /^(?:do|does|did|have|has|had|is|are|am|was|were|will|would|can|could|shall|should|may|might|must|won|shan)(?:n['’]t)?\b/i
+const auxStart = RegExp(`^(?:${auxWords}|won|shan)(?:n['’]t)?\\b`, 'i')
 const isStart = str => whStart.test(str) || auxStart.test(str)
 
 // Count the terms before a question: 'Well, did she walk?', 'Mr. Burns, is it?', 'please could you?'
@@ -58,9 +62,10 @@ const leadLength = function (list) {
 const parseQuestion = function (sentence, target) {
   let text = trimLead(sentence.text())
   let lead = 0
+  const asked = sentence.has('@hasQuestionMark$')
   if (!isStart(text)) {
     // Statements can have a lead too, so this needs a '?': 'Well, she walks.'
-    lead = sentence.has('@hasQuestionMark$') ? leadLength(sentence.docs[0]) : 0
+    lead = asked ? leadLength(sentence.docs[0]) : 0
     if (lead === 0) {
       return null
     }
@@ -86,7 +91,6 @@ const parseQuestion = function (sentence, target) {
   if (frontNegative) start += 1
   const pronoun = terms.eq(start).has('#Pron') && !possessive.test(words[start])
   const polar = isPolar(target)
-  const asked = sentence.has('@hasQuestionMark$')
   const command = terms.eq(lead).has('#Imp')
   // Without a '?', only 'is he happy' is clearly inverted. The rest could be commands,
   // clauses or fragments: 'Do the dishes now', 'When he is late, they walk', 'Had I known, ...'
@@ -164,11 +168,11 @@ const parseQuestion = function (sentence, target) {
     verb += 1
   }
   // Without a verb, this asks for something: 'please do the dishes?', but 'please do they know?'
-  if (words[lead - 1] === 'please' && /^(do|have)$/.test(words[finite]) && !terms.eq(verb).has('#Verb')) {
+  if (words[lead - 1] === 'please' && doHave.test(words[finite]) && !terms.eq(verb).has('#Verb')) {
     return null
   }
   // But 'do it?' is a command, and in 'who did it?' the pronoun is an object.
-  const doIt = words[start] === 'it' && /^(do|have)$/.test(words[finite])
+  const doIt = words[start] === 'it' && doHave.test(words[finite])
   const hasObject = finite > lead && !/^(why|when|where|how)$/.test(words[finite - 1])
   const elided = !copula && !doIt && !hasObject && verb >= words.length && subjectPronoun.test(words[start]) && asked
   // Polite questions have a predicate past the 'please': 'Could you please leave?'
@@ -274,11 +278,11 @@ const question = function (sentence, target) {
   // A trimmed subject reads as one clause with its verb, despite any comma.
   const source = subject.text() + ' ' + words[finite] + negative + ' ' + tail
   // The scratch copies need ids, so that hardened pointers can survive their edits.
-  let work = sentence.fromText(source).compute(['id', 'tagger', 'chunks'])
+  let work = sentence.fromText(source).compute(tagged)
   // Subject-first order keeps the scratch copy on the ordinary conversion path.
   firstGroup(work.verbs())[methods[target]]()
   if (work.text('normal') === sentence.fromText(source).text('normal')) return sentence
-  work = sentence.fromText(work.text()).compute(['id', 'tagger', 'chunks'])
+  work = sentence.fromText(work.text()).compute(tagged)
   const subjectLength = end - start
   let rest = work.terms().slice(subjectLength)
   // A copula can stay behind an adverb: 'he really is happy'

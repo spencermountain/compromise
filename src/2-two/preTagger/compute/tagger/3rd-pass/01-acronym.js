@@ -1,5 +1,6 @@
 import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
+import { hasAny } from '../../../../_lib.js'
 import { RomanNumeral, Acronym, NN, Place, Plur, Org } from '../../../tagSet/_lib.js'
 
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
@@ -70,16 +71,21 @@ const isNoPeriodAcronym = function (term, model) {
   return false
 }
 
+// clear any tags, and make it an acronym
+const toAcronym = (term, model, reason) => {
+  unTag([term], '*', model.one.tagSet, '3-acronym')
+  fastTag(term, [Acronym, NN], reason)
+}
+
 const isAcronym = function (terms, i, model) {
   const term = terms[i]
   //these are not acronyms
-  if (term.tags.has(RomanNumeral) || term.tags.has(Acronym) || term.frozen) {
+  if (hasAny(term, RomanNumeral, Acronym) || term.frozen) {
     return null
   }
   //non-period ones are harder
   if (isNoPeriodAcronym(term, model)) {
-    unTag([term], '*', model.one.tagSet, '3-acronym')
-    fastTag(term, [Acronym, NN], '3-no-period-acronym')
+    toAcronym(term, model, '3-no-period-acronym')
     // ny, la
     if (places[term.normal] === true) {
       fastTag(term, Place, '3-place-acronym')
@@ -93,8 +99,7 @@ const isAcronym = function (terms, i, model) {
   }
   // one-letter acronyms
   if (!Object.hasOwn(oneLetterWord, term.text) && oneLetterAcronym.test(term.text)) {
-    unTag([term], '*', model.one.tagSet, '3-acronym')
-    fastTag(term, [Acronym, NN], '3-one-letter-acronym')
+    toAcronym(term, model, '3-one-letter-acronym')
     return true
   }
   //if it's a very-short organization?

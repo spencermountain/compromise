@@ -1,32 +1,18 @@
-import { hasBreak } from './_lib.js'
+import { hasBreak, hasApostrophe } from './_lib.js'
+import { hasAny, toSet } from '../../_lib.js'
 import { Ger, Det, Adj, Vb, Pron, Conj, Prep, Adv, NN, Past, Plur } from '../../preTagger/tagSet/_lib.js'
 
-const hasContraction = /'/
-
-// these take 'has', whatever follows - he's gone to, he's left for, it's improved
-const hasWords = new Set([
-  'been', //the meeting's been ..
-  'become', //my son's become
-  ...'got gotten gone come had left fallen arrived lived worked moved looked talked happened stayed appeared'.split(
-    ' '
-  ),
-  ...'improved increased failed escaped expanded developed turned'.split(' '),
-  ...'reacted responded listened agreed returned'.split(' '),
-])
-const isWords = new Set([
-  'what', //it's what
-  'how', //it's how
-  'when',
-  'if', //it's if
-  'too',
-])
-const adjLike = new Set(['too', 'also', 'enough', 'outside', 'inside', 'here', 'there'])
+// these take 'has', whatever follows - he's gone to, he's left for, it's improved, the meeting's been
+const hasWords = toSet('been become got gotten gone come had left fallen arrived lived worked moved looked talked happened stayed appeared improved increased failed escaped expanded developed turned reacted responded listened agreed returned')
+// it's what, it's how, it's if
+const isWords = toSet('what how when if too')
+const adjLike = toSet('too also enough outside inside here there')
 // passive, nearly every time - it's called, he's supposed to
-const passive = new Set(['called', 'supposed', 'meant', 'located', 'allowed', 'headed', 'married'])
+const passive = toSet('called supposed meant located allowed headed married')
 // passive when reported - it's said that, he's said to be
-const reported = new Set(['said', 'believed', 'thought', 'reported', 'rumored', 'estimated', 'claimed'])
+const reported = toSet('said believed thought reported rumored estimated claimed')
 // a past word before these is passive - made by, derived from, attracted to
-const passivePrep = new Set(['for', 'by', 'to', 'from', 'with', 'as', 'at', 'in', 'into', 'around'])
+const passivePrep = toSet('for by to from with as at in into around')
 
 // the big clue is the tense of the following verb
 const isOrHas = (terms, i) => {
@@ -79,7 +65,7 @@ const isOrHas = (terms, i) => {
         return 'is'
       }
       // car's parked too, car's parked on, car's parked outside
-      if (adjLike.has(next.normal) || next.tags.has(Prep) || next.tags.has(Adv)) {
+      if (adjLike.has(next.normal) || hasAny(next, Prep, Adv)) {
         return 'is'
       }
       // store's closed early today - but she's lost many friends
@@ -96,7 +82,7 @@ const isOrHas = (terms, i) => {
       return 'has'
     }
     // a later verb is in another clause - it's because he left
-    if (t.tags.has(NN) || t.tags.has(Prep) || t.tags.has(Conj)) {
+    if (hasAny(t, NN, Prep, Conj)) {
       return 'is'
     }
   }
@@ -106,7 +92,7 @@ const isOrHas = (terms, i) => {
 // 's -> [possessive, 'has', 'is', 'are', 'us']
 const apostropheS = function (terms, i) {
   // possessive, is/has
-  const before = terms[i].normal.split(hasContraction)[0]
+  const before = terms[i].normal.split(hasApostrophe)[0]
   // let's - >[let, us]
   if (before === 'let') {
     return [before, 'us']

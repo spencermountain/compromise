@@ -1,7 +1,20 @@
 import { fixPointers, isView, isNet, parseRegs } from './_lib.js'
 
+// parse the match-syntax, then run it over the docs
+const doMatch = (view, regs, group, opts, justOne) => {
+  regs = parseRegs(regs, opts, view.world)
+  return view.methods.one.match(view.docs, { regs, group, justOne }, view._cache)
+}
+
+// turn match results into a view
+const asView = (view, res) => {
+  const { ptrs, byGroup } = fixPointers(res, view.fullPointer)
+  const out = view.toView(ptrs)
+  out._groups = byGroup
+  return out
+}
+
 const match = function (regs, group, opts) {
-  const one = this.methods.one
   // support param as view object
   if (isView(regs)) {
     return this.intersection(regs)
@@ -10,17 +23,10 @@ const match = function (regs, group, opts) {
   if (isNet(regs)) {
     return this.sweep(regs, { tagger: false }).view.settle()
   }
-  regs = parseRegs(regs, opts, this.world)
-  const todo = { regs, group }
-  const res = one.match(this.docs, todo, this._cache)
-  const { ptrs, byGroup } = fixPointers(res, this.fullPointer)
-  const view = this.toView(ptrs)
-  view._groups = byGroup
-  return view
+  return asView(this, doMatch(this, regs, group, opts))
 }
 
 const matchOne = function (regs, group, opts) {
-  const one = this.methods.one
   // support at view as a param
   if (isView(regs)) {
     return this.intersection(regs).eq(0)
@@ -29,30 +35,19 @@ const matchOne = function (regs, group, opts) {
   if (isNet(regs)) {
     return this.sweep(regs, { tagger: false, matchOne: true }).view
   }
-  regs = parseRegs(regs, opts, this.world)
-  const todo = { regs, group, justOne: true }
-  const res = one.match(this.docs, todo, this._cache)
-  const { ptrs, byGroup } = fixPointers(res, this.fullPointer)
-  const view = this.toView(ptrs)
-  view._groups = byGroup
-  return view
+  return asView(this, doMatch(this, regs, group, opts, true))
 }
 
 const has = function (regs, group, opts) {
-  const one = this.methods.one
   // support view as input
   if (isView(regs)) {
-    const ptrs = this.intersection(regs).fullPointer
-    return ptrs.length > 0
+    return this.intersection(regs).fullPointer.length > 0
   }
   // support a compiled set of matches
   if (isNet(regs)) {
     return this.sweep(regs, { tagger: false }).view.found
   }
-  regs = parseRegs(regs, opts, this.world)
-  const todo = { regs, group, justOne: true }
-  const ptrs = one.match(this.docs, todo, this._cache).ptrs
-  return ptrs.length > 0
+  return doMatch(this, regs, group, opts, true).ptrs.length > 0
 }
 
 // 'if'

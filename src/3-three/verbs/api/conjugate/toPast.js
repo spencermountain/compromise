@@ -1,8 +1,8 @@
 import { inflect } from './inflect.js'
-import convertAuxiliary from './auxiliary.js'
+import byForm from './_lib.js'
 import { noop, wasWere, noWill } from '../lib.js'
 import { Past, Participle } from '../../../../2-two/preTagger/tagSet/_lib.js'
-const keep = { tags: true }
+import { keepTags as keep } from '../../../_lib.js'
 
 const fns = {
 
@@ -123,16 +123,5 @@ const forms = {
   },
 }
 
-const toPast = function (vb, parsed, form) {
-  const converted = convertAuxiliary(vb, parsed, form, 'past')
-  if (converted) return converted
-  // console.log(form)
-  if (Object.hasOwn(forms, form)) {
-    vb = forms[form](vb, parsed)
-    vb.fullSentence().compute(['tagger', 'chunks'])
-    return vb
-  }
-  // do nothing i guess?
-  return vb
-}
+const toPast = byForm('past', forms)
 export default toPast

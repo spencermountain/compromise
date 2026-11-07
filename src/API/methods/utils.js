@@ -1,3 +1,4 @@
+import { rawPointer } from '../_helpers.js'
 const utils = {
   /** */
   termList: function () {
@@ -33,10 +34,7 @@ const utils = {
   },
   /** */
   eq: function (n) {
-    let ptr = this.pointer
-    if (!ptr) {
-      ptr = this.docs.map((_doc, i) => [i])
-    }
+    const ptr = rawPointer(this)
     if (ptr[n]) {
       return this.update([ptr[n]])
     }
@@ -64,9 +62,7 @@ const utils = {
 
   /** */
   slice: function (min, max) {
-    let pntrs = this.pointer || this.docs.map((_o, n) => [n])
-    pntrs = pntrs.slice(min, max)
-    return this.update(pntrs)
+    return this.update(rawPointer(this).slice(min, max))
   },
 
   /** return a view of the entire document */

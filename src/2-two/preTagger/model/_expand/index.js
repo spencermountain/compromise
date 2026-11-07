@@ -81,11 +81,6 @@ const expandAdjective = function (str, words, model) {
   words[comp] ||= Comp
 }
 
-const expandNoun = function (str, words, model) {
-  const plur = toPlural(str, model)
-  words[plur] ||= Plur
-}
-
 // harvest ambiguous words for any conjugations
 const expandVariable = function (switchWords, model) {
   const words = {}
@@ -103,7 +98,7 @@ const expandVariable = function (switchWords, model) {
       }
     }
     // conjugate some verbs
-    if (name === 'Noun|Verb' || name === 'Person|Verb' || name === 'Actor|Verb') {
+    if (['Noun|Verb', 'Person|Verb', 'Actor|Verb'].includes(name)) {
       expandVerb(w, lex, false)
     }
     if (name === 'Adj|Present') {
@@ -114,15 +109,15 @@ const expandVariable = function (switchWords, model) {
       expandAdjective(w, lex, model)
     }
     // add infinitives for gerunds
-    if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
+    if (['Adj|Gerund', 'Noun|Gerund'].includes(name)) {
       const inf = toInfinitive(w, tmpModel, Ger)
       if (!lex[inf]) {
         words[inf] = Inf //expand it later
       }
     }
     // add plurals for nouns
-    if (name === 'Noun|Gerund' || name === 'Adj|Noun' || name === 'Person|Noun') {
-      expandNoun(w, lex, model)
+    if (['Noun|Gerund', 'Adj|Noun', 'Person|Noun'].includes(name)) {
+      lex[toPlural(w, model)] ||= Plur
     }
     if (name === 'Adj|Past') {
       const inf = toInfinitive(w, tmpModel, Past)

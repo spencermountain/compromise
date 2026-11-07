@@ -1,5 +1,7 @@
 // parse process.argv for the compromise cli - no dependencies
-const outputs = ['json', 'text', 'spec', 'debug']
+const outputs = ['json', 'jsonl', 'text', 'spec', 'debug']
+// flags that add fields to the json output
+const extras = ['offsets', 'bestTag', 'confidence', 'normal', 'root']
 
 const help = `Usage: compromise [text] [options]
 
@@ -8,8 +10,16 @@ const help = `Usage: compromise [text] [options]
   compromise --file=notes.txt --out=text     read one or more files (globs ok)
 
 Options:
-  --out=FORMAT     ${outputs.join(', ')}  (default: json)
+  --out=FORMAT     ${outputs.join(', ')}
+                   (default: json, or jsonl for several inputs or --stream)
+  --text, --debug  shorthand for --out=text, --out=debug, etc
+  --offsets        add character offsets to the json
+  --bestTag        add each term's single best tag to the json
+  --confidence     add a confidence score per sentence to the json
+  --normal, --root add normalized or root-form text to the json
   --match=PATTERN  only output the matches, e.g. --match='#Noun+'
+  --if=PATTERN     only output sentences containing a match
+  --has=PATTERN    like --if, but stop after the first sentence
   --file=PATH      read input from a file or glob (repeatable)
   --stream         process stdin line-by-line, as it arrives
   --version        print the library version
@@ -32,7 +42,7 @@ const valueOf = function (args, i, name) {
 }
 
 const parseArgs = function (args) {
-  const opts = { out: 'json', match: null, files: [], stream: false, help: false, version: false, text: [] }
+  const opts = { out: null, match: null, if: null, has: null, files: [], stream: false, json: {}, help: false, version: false, text: [] }
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
     const name = arg.split('=')[0]
@@ -42,13 +52,21 @@ const parseArgs = function (args) {
       opts.version = true
     } else if (name === '--stream') {
       opts.stream = true
-    } else if (name === '--out' || name === '--match' || name === '--file' || name === '-f') {
+    } else if (outputs.includes(name.slice(2))) {
+      opts.out = name.slice(2) // --json, --text, --spec, --debug
+    } else if (extras.includes(name.slice(2))) {
+      opts.json[name.slice(2)] = true
+    } else if (name === '--out' || name === '--match' || name === '--if' || name === '--has' || name === '--file' || name === '-f') {
       const { value, skip } = valueOf(args, i, name)
       i += skip
       if (name === '--out') {
         opts.out = value
       } else if (name === '--match') {
         opts.match = value
+      } else if (name === '--if') {
+        opts.if = value
+      } else if (name === '--has') {
+        opts.has = value
       } else {
         opts.files.push(value)
       }
@@ -58,8 +76,12 @@ const parseArgs = function (args) {
       opts.text.push(arg)
     }
   }
-  if (!outputs.includes(opts.out)) {
+  if (opts.out !== null && !outputs.includes(opts.out)) {
     throw new Error(`Unknown output '${opts.out}' - expected one of: ${outputs.join(', ')}`)
+  }
+  const used = Object.keys(opts.json)
+  if (used.length > 0 && opts.out !== null && !opts.out.startsWith('json')) {
+    throw new Error(`--${used[0]} only applies to json output`)
   }
   return opts
 }

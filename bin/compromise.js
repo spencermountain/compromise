@@ -2,10 +2,28 @@
 /* eslint-disable no-console */
 import nlp from '../src/three.js'
 import { parseArgs, help } from './_lib/args.js'
-import inputs from './_lib/input.js'
+import { expandFiles, inputs } from './_lib/input.js'
+
+// doc.json() with any extra fields the flags asked for
+const toJson = function (doc, extras) {
+  const { offsets, bestTag, ...rest } = extras
+  if (bestTag) {
+    doc.compute('tagRank')
+  }
+  if (rest.root) {
+    doc.compute('root')
+  }
+  const json = doc.json({ ...rest, offset: offsets })
+  if (bestTag) {
+    json.forEach(o => {
+      o.terms.forEach(t => (t.bestTag = t.tagRank?.[0] || null))
+    })
+  }
+  return json
+}
 
 // render one parsed document in the chosen format
-const format = function (doc, opts, compact) {
+const format = function (doc, opts) {
   if (opts.out === 'text') {
     return doc.out('array').join('\n')
   }
@@ -16,7 +34,11 @@ const format = function (doc, opts, compact) {
     doc.debug()
     return null
   }
-  return compact ? JSON.stringify(doc.json()) : JSON.stringify(doc.json(), null, 2)
+  const json = toJson(doc, opts.json)
+  if (opts.out === 'jsonl') {
+    return JSON.stringify(json)
+  }
+  return JSON.stringify(json, null, 2)
 }
 
 const main = async function () {
@@ -35,16 +57,30 @@ const main = async function () {
     process.exitCode = 1
     return
   }
-  // a single input pretty-prints; several become newline-delimited json
-  const compact = opts.stream || opts.files.length > 1 || (opts.text.length > 0 && opts.files.length > 0)
-  for await (const text of inputs(opts)) {
+  const paths = await expandFiles(opts.files)
+  // default output: a single input pretty-prints, several become json-lines
+  if (opts.out === null) {
+    const many = opts.stream || paths.length + (opts.text.length > 0 ? 1 : 0) > 1
+    opts.out = many ? 'jsonl' : 'json'
+  }
+  for await (const text of inputs(opts, paths)) {
     let doc = nlp(text)
+    if (opts.if) {
+      doc = doc.if(opts.if)
+    }
+    if (opts.has) {
+      doc = doc.if(opts.has).first()
+    }
     if (opts.match) {
       doc = doc.match(opts.match)
     }
-    const str = format(doc, opts, compact)
+    const str = format(doc, opts)
     if (str !== null) {
       console.log(str)
+    }
+    // --has stops at the first hit, even mid-stream
+    if (opts.has && doc.found) {
+      break
     }
   }
 }

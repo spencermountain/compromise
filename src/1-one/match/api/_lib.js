@@ -1,3 +1,5 @@
+import isObject from '../../../API/_is.js'
+
 const relPointer = function (ptrs, parent) {
   if (!parent) {
     return ptrs
@@ -36,10 +38,6 @@ export const parseRegs = function (regs, opts, world) {
     regs = one.parseMatch(regs, opts, world)
   }
   return regs
-}
-
-const isObject = val => {
-  return Object.prototype.toString.call(val) === '[object Object]'
 }
 
 // did they pass-in a compromise object?

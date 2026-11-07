@@ -1,6 +1,7 @@
+import { setTag } from '../_lib.js'
+import { hasAny } from '../../../../_lib.js'
 import { Val, Email, PhoneNumber, Expr } from '../../../tagSet/_lib.js'
 const byPunctuation = function (terms, i, model, world) {
-  const setTag = world.methods.one.setTag
   // colon following first word
   // edit: foo
   // breaking: foobar
@@ -9,12 +10,11 @@ const byPunctuation = function (terms, i, model, world) {
     const post = terms[0].post
     if (hasColon.test(post)) {
       // phone: 555-2938
-      const nextTerm = terms[1]
-      if (nextTerm.tags.has(Val) || nextTerm.tags.has(Email) || nextTerm.tags.has(PhoneNumber)) {
+      if (hasAny(terms[1], Val, Email, PhoneNumber)) {
         return
       }
       //
-      setTag([terms[0]], Expr, world, null, `2-punct-colon''`)
+      setTag([terms[0]], Expr, world, `2-punct-colon''`)
     }
   }
 }

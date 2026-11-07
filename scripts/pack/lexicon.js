@@ -36,7 +36,8 @@ const packLexicon = () => {
   const tags = new Set([...lexiconTagOrder, ...Object.keys(packed)])
   tags.forEach(tag => {
     if (packed[tag]) {
-      result[tag] = pack(packed[tag], { strict: true, dictionary: true, direction: 'auto' })
+      // every packed list starts with 'true¦' - the unpacker adds it back
+      result[tag] = pack(packed[tag], { strict: true, dictionary: true, direction: 'auto' }).replace(/^true¦/, '')
     }
   })
   return result

@@ -1,4 +1,6 @@
-import { Adj, Inf, Phrasal, NN, Det, Vb } from '../../../tagSet/_lib.js'
+import { setTag } from '../_lib.js'
+import { hasAny, toSet } from '../../../../_lib.js'
+import { Adj, Adv, Inf, Phrasal, NN, Det, Vb } from '../../../tagSet/_lib.js'
 const beside = {
   there: true, //go there
   this: true, //try this
@@ -9,19 +11,18 @@ const beside = {
 }
 
 // go [fast]
-const howWords = new Set(['hard', 'high', 'fast', 'slow'])
+const howWords = toSet('hard high fast slow')
 // not: go so, run enough
-const notHow = new Set(['so', 'such', 'rather', 'enough'])
+const notHow = toSet('so such rather enough')
 
 // '[place] tea bags in hot water'
 const imperative = function (terms, world) {
-  const setTag = world.methods.one.setTag
   const t = terms[0]
   const next = terms[1]
   // '[go] quickly', '[run] fast' - a bare verb and how to do it
-  if (terms.length === 2 && t.tags.has('Infinitive') && !t.tags.has('Hyphenated') && !notHow.has(next.normal)) {
-    if (next.tags.has('Adjective') || next.tags.has('Adverb') || howWords.has(next.normal)) {
-      setTag([t], 'Imperative', world, null, '3-[imperative]')
+  if (terms.length === 2 && t.tags.has(Inf) && !t.tags.has('Hyphenated') && !notHow.has(next.normal)) {
+    if (hasAny(next, Adj, Adv) || howWords.has(next.normal)) {
+      setTag([t], 'Imperative', world, '3-[imperative]')
       return
     }
   }
@@ -29,7 +30,7 @@ const imperative = function (terms, world) {
   const goTo = t.normal === 'go' && next?.normal === 'to' && terms.length >= 3
   const keepIt = t.normal === 'keep' && next?.normal === 'it' && terms[2]?.tags.has(Adj)
   if (goTo || keepIt) {
-    setTag([t], 'Imperative', world, null, '3-[imperative]')
+    setTag([t], 'Imperative', world, '3-[imperative]')
     return
   }
   const multiWords = world.model.one._multiCache || {}
@@ -44,12 +45,11 @@ const imperative = function (terms, world) {
       return
     }
     // is the next word a noun? - 'compile information ..'
-    const nextNoun = terms[1].tags.has(NN) || terms[1].tags.has(Det)
-    if (nextNoun) {
+    if (hasAny(terms[1], NN, Det)) {
       // ensure no soon-verb -  'waste materials are ..'
       const soonVerb = terms.slice(1, 3).some(term => term.tags.has(Vb))
       if (!soonVerb || t.tags.has('#PhrV')) {
-        setTag([t], 'Imperative', world, null, '3-[imperative]')
+        setTag([t], 'Imperative', world, '3-[imperative]')
       }
     }
   }

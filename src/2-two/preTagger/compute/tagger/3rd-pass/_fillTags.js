@@ -2,6 +2,7 @@ import fastTag from '../_fastTag.js'
 import looksPlural from '../../../methods/looksPlural.js'
 import getTense from '../../../methods/transform/verbs/getTense/index.js'
 import debug from '../../../../../API/debug/debug.js'
+import { hasAny } from '../../../../_lib.js'
 import { Acronym, Abbr, Prop, Uncountable, Poss, Pron, NN, Plur, Sing, Vb, Inf, Ger, Pres } from '../../../tagSet/_lib.js'
 // tags that are neither plural or singular
 const uncountable = [
@@ -17,10 +18,7 @@ const uncountable = [
 ]
 // try to guess if each noun is a plural/singular
 const setPluralSingular = function (term) {
-  if (!term.tags.has(NN) || term.tags.has(Plur) || term.tags.has(Sing)) {
-    return
-  }
-  if (uncountable.find(tag => term.tags.has(tag))) {
+  if (!term.tags.has(NN) || hasAny(term, Plur, Sing, ...uncountable)) {
     return
   }
   if (looksPlural(term.normal)) {

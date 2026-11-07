@@ -1,4 +1,5 @@
 import pluckOutTerm from './lib/remove.js'
+import expandContraction from './lib/_expand.js'
 
 // which sentences will have no terms left?
 const getEmptied = function (gonePtrs, document) {
@@ -56,10 +57,7 @@ const methods = {
     }
     const isFull = !self.ptrs
     // is it part of a contraction?
-    if (not.has('@hasContraction') && not.contractions) {
-      const more = not.grow('@hasContraction')
-      more.contractions().expand()
-    }
+    expandContraction(not)
 
     let ptrs = self.fullPointer
     const nots = not.fullPointer.reverse()

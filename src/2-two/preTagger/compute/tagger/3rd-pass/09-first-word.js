@@ -1,6 +1,8 @@
+import { setTag } from '../_lib.js'
+import { toSet } from '../../../../_lib.js'
 import { Adj, Expr } from '../../../tagSet/_lib.js'
 // come on
-const reason='3-[first-word]'
+const reason = '3-[first-word]'
   // [well]..
   // [so]
   // [okay]
@@ -9,26 +11,25 @@ const reason='3-[first-word]'
   // say,
   // like, hello
 const expressions = {
-  beforeAdj: new Set(['well', 'so', 'okay', 'now']),
-  withComma: new Set(['shoot', 'say', 'like']),
+  beforeAdj: toSet('well so okay now'),
+  withComma: toSet('shoot say like'),
 }
 
 const firstWord = function (terms, world) {
-  const setTag = world.methods.one.setTag
   const str = terms[0].normal
   // "[well] i lose"
   if (expressions.beforeAdj.has(str)) {
     if (terms[1] && !terms[1].tags.has(Adj)) {
-      setTag([terms[0]], Expr, world, null, reason)
+      setTag([terms[0]], Expr, world, reason)
     }
     if (terms.length === 1) {
-      setTag([terms[0]], Expr, world, null, reason)
+      setTag([terms[0]], Expr, world, reason)
     }
   }
   // "[say], do you"
   if (expressions.withComma.has(str)) {
     if (/,/.test(terms[0].post)) {
-      setTag([terms[0]], Expr, world, null, reason)
+      setTag([terms[0]], Expr, world, reason)
     }
   }
 }

@@ -1,4 +1,4 @@
-import { findChained } from './lib.js'
+import { findChained, he, she } from './lib.js'
 import compatibleActor from './actorGender.js'
 import personBoundary from './personBoundary.js'
 
@@ -28,10 +28,10 @@ const getPerson = function (s, gender) {
   }
   // existing pronouns
   if (gender === 'f') {
-    return findChained('(she|her|hers)', s)
+    return findChained(she, s)
   }
   if (gender === 'm') {
-    return findChained('(he|him|his)', s)
+    return findChained(he, s)
   }
   return s.none()
 }

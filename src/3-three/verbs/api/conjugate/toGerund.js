@@ -1,9 +1,9 @@
 import { infinitive, inflect } from './inflect.js'
-import { isAreAm } from '../lib.js'
+import { isAreAm, retag } from '../lib.js'
 import convertAuxiliary from './auxiliary.js'
 import parseVerb from '../parse/index.js'
 import { Ger } from '../../../../2-two/preTagger/tagSet/_lib.js'
-const keep = { tags: true }
+import { keepTags as keep } from '../../../_lib.js'
 
 // all verb forms are the same
 const toGerund = function (vb, parsed, form) {
@@ -34,7 +34,7 @@ const toGerund = function (vb, parsed, form) {
 
   vb.replace('not is', 'is not')
   vb.replace('not are', 'are not')
-  vb.fullSentence().compute(['tagger', 'chunks'])
+  retag(vb)
   return vb
 }
 export default toGerund

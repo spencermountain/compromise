@@ -3,7 +3,7 @@ import { inflect } from './inflect.js'
 import groups from './groups.js'
 export { firstGroup } from './groups.js'
 import question, { isInverted, isPolar, questionSelection } from './question.js'
-import { isAreAm } from '../lib.js'
+import { isAreAm, retag } from '../lib.js'
 
 const resultTense = function (head, target) {
   const { chain, parsed, form } = head
@@ -41,7 +41,7 @@ const coordinateNormal = function (verbs, target, convert) {
     const word = inflect(root, entry.tense)
     if (word && word !== root.text('normal')) {
       entry.root.replaceWith(word)
-      vb.fullSentence().compute(['tagger', 'chunks'])
+      retag(vb)
     }
     return vb
   })

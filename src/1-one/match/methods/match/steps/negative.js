@@ -1,6 +1,5 @@
-import matchTerm from '../term/doesMatch.js'
+import { matchAt, logGroup, noAnchors } from '../_lib.js'
 import negGreedy from './logic/negative-greedy.js'
-import { logGroup } from '../_lib.js'
 
 // '!foo' should match anything that isn't 'foo'
 // if it matches, return false
@@ -14,7 +13,7 @@ const doNegative = function (state) {
   tmpReg.negative = false // try removing it
 
   // found it? if so, we die here
-  const found = matchTerm(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length)
+  const found = matchAt(state, tmpReg, state.t)
   if (found) {
     // but '!foo*' can match nothing - '!foo?' stays a lookahead
     return reg.optional === true && reg.greedy === true
@@ -22,7 +21,7 @@ const doNegative = function (state) {
   // negative greedy - !foo+  - super hard!
   if (reg.greedy) {
     // like getGreedy, anchors should not apply to the repeated terms
-    const alive = negGreedy(state, { ...tmpReg, start: false, end: false }, regs[state.r + 1])
+    const alive = negGreedy(state, noAnchors(tmpReg), regs[state.r + 1])
     logGroup(state, startAt)
     return alive
   }
@@ -32,7 +31,7 @@ const doNegative = function (state) {
     // does the next reg match the this term?
     const nextReg = regs[state.r + 1]
     if (nextReg) {
-      const fNext = matchTerm(state.terms[state.t], nextReg, state.start_i + state.t, state.phrase_length)
+      const fNext = matchAt(state, nextReg, state.t)
       if (fNext) {
         return true // leave the term, and any capture, to the next reg
       }
@@ -40,7 +39,7 @@ const doNegative = function (state) {
         // ugh. ok,
         // support "!foo? extra? need"
         // but don't scan ahead more than that.
-        const fNext2 = matchTerm(state.terms[state.t], regs[state.r + 2], state.start_i + state.t, state.phrase_length)
+        const fNext2 = matchAt(state, regs[state.r + 2], state.t)
         if (fNext2) {
           return true
         }

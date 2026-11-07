@@ -1,6 +1,6 @@
 import select from '../../_select.js'
-// return the nth elem of a doc
-const apostropheS = /'s$/
+import stripper from '../_lib.js'
+const strip = stripper(/'s$/)
 
 const find = function (doc) {
   let m = doc.match('#Poss+')
@@ -26,13 +26,7 @@ const api = function (View) {
       this.viewType = 'Possessives'
     }
     strip() {
-      this.docs.forEach(terms => {
-        terms.forEach(term => {
-          term.text = term.text.replace(apostropheS, '')
-          term.normal = term.normal.replace(apostropheS, '')
-        })
-      })
-      return this
+      return strip(this)
     }
   }
 

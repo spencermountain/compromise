@@ -1,15 +1,13 @@
+import eachTerm from './_lib.js'
+
 const wordCount = function (view) {
   let n = 0
-  const docs = view.docs
-  for (let i = 0; i < docs.length; i += 1) {
-    for (let t = 0; t < docs[i].length; t += 1) {
-      if (docs[i][t].normal === '') {
-        continue //skip implicit words
-      }
+  eachTerm(view.docs, term => {
+    //skip implicit words
+    if (term.normal !== '') {
       n += 1
-      docs[i][t].wordCount = n
+      term.wordCount = n
     }
-  }
+  })
 }
-
 export default wordCount

@@ -2,7 +2,7 @@ import { Participle } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { inflect } from './inflect.js'
 import readAuxiliary from '../parse/auxiliary.js'
 import parseVerb from '../parse/index.js'
-import { haveHas, isAreAm, wasWere } from '../lib.js'
+import { haveHas, isAreAm, wasWere, retag } from '../lib.js'
 
 // Decide the auxiliary chain independently of adverbs and negation.
 const plan = function (chain, target, vb, parsed) {
@@ -116,7 +116,7 @@ const convertAuxiliary = function (vb, parsed, form, target) {
   if (target === 'participle' && chain.modal && !chain.perfect && !chain.passive && !chain.progressive) {
     root.replaceWith(inflect(live.root, Participle))
   }
-  vb.fullSentence().compute(['tagger', 'chunks'])
+  retag(vb)
   return vb
 }
 

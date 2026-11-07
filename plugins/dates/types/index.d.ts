@@ -57,6 +57,8 @@ interface DateView extends View {
   /** get parsed date metadata */
   get(): DateJSON[]
   get(n: number): DateJSON | undefined
+  /** drop matches that do not parse to a date, like 'february 222' */
+  isValid(): DateView
   /** keep only dates before the given date */
   isBefore(date: string | number | Date): DateView
   /** keep only dates after the given date */

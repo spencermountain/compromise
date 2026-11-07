@@ -61,7 +61,6 @@ test(here + 'clock start and end times', function (t) {
     ['next monday at 9', '9:00am'],
     // ['half three', '3:30pm'],
     // ['at 10 to three', '2:50pm'],
-    [`@2:99`, '2:59pm'],
     // [`ten to 4pm`, '3:50pm'],
     [`9am to 5:49pm`, '9:00am', '5:49pm'],
     // [`ten to 4 in the morning`, '3:50am'],

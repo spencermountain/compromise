@@ -83,10 +83,21 @@ const api = function (View) {
       return this.add(-amount, unit)
     }
 
+    // .filter() returns a plain View - keep our class and opts, so results chain
+    filterDates(fn) {
+      const res = this.filter(fn)
+      return new Dates(this.document, res.pointer, null, this.opts)
+    }
+    /** drop matches that do not parse to a date - like 'february 222' or 'someday' */
+    isValid() {
+      return this.filterDates(m => {
+        return parseDates(m, this.opts).some(obj => obj.start || obj.repeat)
+      })
+    }
     /** return only dates occuring before a given date  */
     isBefore(iso) {
       const pivot = quickDate(this, iso)
-      return this.filter(m => {
+      return this.filterDates(m => {
         const obj = parseDates(m, this.opts)[0] || {}
         return obj.start && obj.start.d && obj.start.d.isBefore(pivot)
       })
@@ -94,7 +105,7 @@ const api = function (View) {
     /** return only dates occuring after a given date  */
     isAfter(iso) {
       const pivot = quickDate(this, iso)
-      return this.filter(m => {
+      return this.filterDates(m => {
         const obj = parseDates(m, this.opts)[0] || {}
         return obj.start && obj.start.d && obj.start.d.isAfter(pivot)
       })
@@ -102,7 +113,7 @@ const api = function (View) {
     /** return only dates occuring after a given date  */
     isSame(unit, iso) {
       const pivot = quickDate(this, iso)
-      return this.filter(m => {
+      return this.filterDates(m => {
         const obj = parseDates(m, this.opts)[0] || {}
         return obj.start && obj.start.d && obj.start.d.isSame(pivot, unit)
       })

@@ -5,6 +5,7 @@ import find from './find.js'
 import parse from './parse/index.js'
 import format from './format/index.js'
 import isUnit from './isUnit.js'
+import isValid from './isValid.js'
 import convert from './_lib.js'
 import { isPercent } from './_conversion.js'
 import toFraction from './toFraction.js'
@@ -83,12 +84,9 @@ const addMethod = function (View) {
     isUnit(allowed) {
       return isUnit(this, allowed)
     }
-    /** drop matches that do not parse to a usable number - like 'thousand thousand' or '0th' */
+    /** drop matches that do not parse to a usable number - like 'thousand thousand' or '21th' */
     isValid() {
-      return this.filter(val => {
-        const num = parse(val).num
-        return typeof num === 'number' && Number.isFinite(num)
-      })
+      return isValid(this)
     }
     /** return only ordinal numbers */
     isOrdinal() {

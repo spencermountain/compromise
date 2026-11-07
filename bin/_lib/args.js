@@ -1,18 +1,18 @@
 // parse process.argv for the compromise cli - no dependencies
-const outputs = ['json', 'jsonl', 'text', 'spec', 'debug']
+const outputs = ['json', 'jsonl', 'text', 'spec', 'debug', 'highlight']
 // flags that add fields to the json output
 const extras = ['offsets', 'bestTag', 'confidence', 'normal', 'root']
 
-const help = `Usage: compromise [text] [options]
+const help = `Usage: compromise [files...] [options]
 
-  compromise "she sells seashells"           json output (pipe to jq)
+  compromise notes.txt                       parse a file (globs ok)
   echo "she sells seashells" | compromise    read text from stdin
-  compromise --file=notes.txt --out=text     read one or more files (globs ok)
+  compromise --input="she sells seashells"   parse text from an argument
 
 Options:
-  --out=FORMAT     ${outputs.join(', ')}
+  --format=FORMAT     ${outputs.join(', ')}
                    (default: json, or jsonl for several inputs or --stream)
-  --text, --debug  shorthand for --out=text, --out=debug, etc
+  --text, --debug  shorthand for --format=text, --format=debug, etc
   --offsets        add character offsets to the json
   --bestTag        add each term's single best tag to the json
   --confidence     add a confidence score per sentence to the json
@@ -20,7 +20,8 @@ Options:
   --match=PATTERN  only output the matches, e.g. --match='#Noun+'
   --if=PATTERN     only output sentences containing a match
   --has=PATTERN    like --if, but stop after the first sentence
-  --file=PATH      read input from a file or glob (repeatable)
+  --width=N        trim highlight lines to N characters (default: terminal width)
+  --input=TEXT     parse this text instead of a file (repeatable)
   --stream         process stdin line-by-line, as it arrives
   --version        print the library version
   --help           show this help
@@ -28,7 +29,7 @@ Options:
 Output is one json document per input; multiple inputs are newline-delimited.
 Text and spec output print one line per sentence (or per match).`
 
-// '--out=json' or '--out json'
+// '--format=json' or '--format json'
 const valueOf = function (args, i, name) {
   const arg = args[i]
   if (arg.includes('=')) {
@@ -42,7 +43,7 @@ const valueOf = function (args, i, name) {
 }
 
 const parseArgs = function (args) {
-  const opts = { out: null, match: null, if: null, has: null, files: [], stream: false, json: {}, help: false, version: false, text: [] }
+  const opts = { format: null, match: null, if: null, has: null, width: null, files: [], stream: false, json: {}, help: false, version: false, text: [] }
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
     const name = arg.split('=')[0]
@@ -53,34 +54,42 @@ const parseArgs = function (args) {
     } else if (name === '--stream') {
       opts.stream = true
     } else if (outputs.includes(name.slice(2))) {
-      opts.out = name.slice(2) // --json, --text, --spec, --debug
+      opts.format = name.slice(2) // --json, --text, --spec, --debug
     } else if (extras.includes(name.slice(2))) {
       opts.json[name.slice(2)] = true
-    } else if (name === '--out' || name === '--match' || name === '--if' || name === '--has' || name === '--file' || name === '-f') {
+    } else if (name === '--format' || name === '--match' || name === '--if' || name === '--has' || name === '--width' || name === '--input' || name === '-i') {
       const { value, skip } = valueOf(args, i, name)
       i += skip
-      if (name === '--out') {
-        opts.out = value
+      if (name === '--format') {
+        opts.format = value
       } else if (name === '--match') {
         opts.match = value
       } else if (name === '--if') {
         opts.if = value
       } else if (name === '--has') {
         opts.has = value
+      } else if (name === '--width') {
+        opts.width = parseInt(value, 10)
       } else {
-        opts.files.push(value)
+        opts.text.push(value)
       }
     } else if (name.startsWith('-') && name.length > 1) {
       throw new Error(`Unknown option: ${name}`)
     } else {
-      opts.text.push(arg)
+      opts.files.push(arg) // a path or glob
     }
   }
-  if (opts.out !== null && !outputs.includes(opts.out)) {
-    throw new Error(`Unknown output '${opts.out}' - expected one of: ${outputs.join(', ')}`)
+  if (opts.format !== null && !outputs.includes(opts.format)) {
+    throw new Error(`Unknown format '${opts.format}' - expected one of: ${outputs.join(', ')}`)
+  }
+  if (opts.width !== null && !(opts.width > 0)) {
+    throw new Error('--width must be a positive number')
+  }
+  if (opts.format === 'highlight' && !opts.match && !opts.if && !opts.has) {
+    throw new Error('--format=highlight needs a pattern: --match, --if or --has')
   }
   const used = Object.keys(opts.json)
-  if (used.length > 0 && opts.out !== null && !opts.out.startsWith('json')) {
+  if (used.length > 0 && opts.format !== null && !opts.format.startsWith('json')) {
     throw new Error(`--${used[0]} only applies to json output`)
   }
   return opts

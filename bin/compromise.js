@@ -3,6 +3,7 @@
 import nlp from '../src/three.js'
 import { parseArgs, help } from './_lib/args.js'
 import { expandFiles, inputs } from './_lib/input.js'
+import highlight from './_lib/highlight.js'
 
 // doc.json() with any extra fields the flags asked for
 const toJson = function (doc, extras) {
@@ -24,18 +25,18 @@ const toJson = function (doc, extras) {
 
 // render one parsed document in the chosen format
 const format = function (doc, opts) {
-  if (opts.out === 'text') {
+  if (opts.format === 'text') {
     return doc.out('array').join('\n')
   }
-  if (opts.out === 'spec') {
+  if (opts.format === 'spec') {
     return doc.out('spec')
   }
-  if (opts.out === 'debug') {
+  if (opts.format === 'debug') {
     doc.debug()
     return null
   }
   const json = toJson(doc, opts.json)
-  if (opts.out === 'jsonl') {
+  if (opts.format === 'jsonl') {
     return JSON.stringify(json)
   }
   return JSON.stringify(json, null, 2)
@@ -59,9 +60,9 @@ const main = async function () {
   }
   const paths = await expandFiles(opts.files)
   // default output: a single input pretty-prints, several become json-lines
-  if (opts.out === null) {
-    const many = opts.stream || paths.length + (opts.text.length > 0 ? 1 : 0) > 1
-    opts.out = many ? 'jsonl' : 'json'
+  if (opts.format === null) {
+    const many = opts.stream || paths.length + opts.text.length > 1
+    opts.format = many ? 'jsonl' : 'json'
   }
   for await (const text of inputs(opts, paths)) {
     let doc = nlp(text)
@@ -70,6 +71,19 @@ const main = async function () {
     }
     if (opts.has) {
       doc = doc.if(opts.has).first()
+    }
+    if (opts.format === 'highlight') {
+      const pattern = opts.match || opts.if || opts.has
+      const width = opts.width || process.stdout.columns || 80
+      const color = !Object.hasOwn(process.env, 'NO_COLOR')
+      const str = highlight(doc, pattern, { width, color })
+      if (str) {
+        console.log(str)
+      }
+      if (opts.has && doc.found) {
+        break
+      }
+      continue
     }
     if (opts.match) {
       doc = doc.match(opts.match)

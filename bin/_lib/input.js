@@ -31,8 +31,8 @@ const readAll = function (stream) {
 
 // yield each input as a whole document, or stdin line-by-line when streaming
 const inputs = async function* (opts, paths) {
-  if (opts.text.length > 0) {
-    yield opts.text.join(' ')
+  for (const text of opts.text) {
+    yield text
   }
   for (const path of paths) {
     yield await fs.promises.readFile(path, 'utf8')

@@ -4,7 +4,7 @@ import { keepTags as keep } from '../../_lib.js'
 
 const nounToPlural = function (m, parsed) {
   // already plural?
-  if (parsed.isPlural === true) {
+  if (parsed.isPlural) {
     return m
   }
   // handle "steve's"

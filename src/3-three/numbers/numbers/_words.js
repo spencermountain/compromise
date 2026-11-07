@@ -9,7 +9,16 @@ const irregulars = { one: 'first', two: 'second', three: 'third', five: 'fifth',
 // 'four' -> 'fourth', 'twenty' -> 'twentieth'
 const ordinal = w => irregulars[w] || w.replace(/y$/, 'ie') + 'th'
 
+// '1st', '22nd', '13th'
+const ordSuffix = digits => {
+  if (/1[123]$/.test(digits)) {
+    return 'th'
+  }
+  const suffix = { 1: 'st', 2: 'nd', 3: 'rd' }
+  return suffix[digits.slice(-1)] || 'th'
+}
+
 // 1e23, without floating-point drift
 const pow10 = n => Number('1e' + n)
 
-export { ones, teens, tens, bigs, ordinal, pow10 }
+export { ones, teens, tens, bigs, ordinal, ordSuffix, pow10 }

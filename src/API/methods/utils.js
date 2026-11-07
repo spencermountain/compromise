@@ -86,17 +86,8 @@ const utils = {
     }
     const aPtr = this.fullPointer
     const bPtr = b.fullPointer
-    if (!aPtr.length === bPtr.length) {
-      return false
-    }
-    // ensure pointers are the same
-    return aPtr.every((ptr, i) => {
-      if (!bPtr[i]) {
-        return false
-      }
-      // ensure [n, start, end] are all the same
-      return ptr[0] === bPtr[i][0] && ptr[1] === bPtr[i][1] && ptr[2] === bPtr[i][2]
-    })
+    // ensure [n, start, end] are all the same
+    return aPtr.every((ptr, i) => bPtr[i] && ptr[0] === bPtr[i][0] && ptr[1] === bPtr[i][1] && ptr[2] === bPtr[i][2])
   },
 
   /** how many seperate terms does the document have? */

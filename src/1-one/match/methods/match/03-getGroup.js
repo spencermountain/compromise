@@ -3,9 +3,6 @@
 const getGroup = function (res, group) {
   const ptrs = []
   const byGroup = {}
-  if (res.length === 0) {
-    return { ptrs, byGroup }
-  }
   if (typeof group === 'number') {
     group = String(group)
   }
@@ -18,9 +15,9 @@ const getGroup = function (res, group) {
   } else {
     res.forEach(r => {
       ptrs.push(r.pointer)
-      Object.keys(r.groups).forEach(k => {
+      Object.entries(r.groups).forEach(([k, ptr]) => {
         byGroup[k] ||= []
-        byGroup[k].push(r.groups[k])
+        byGroup[k].push(ptr)
       })
     })
   }

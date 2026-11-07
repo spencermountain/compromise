@@ -4,6 +4,7 @@ import groups from './groups.js'
 export { firstGroup } from './groups.js'
 import question, { isInverted, isPolar, questionSelection } from './question.js'
 import { isAreAm, retag } from '../lib.js'
+import { ModalPast, ModalInf } from '../parse/grammar/forms.js'
 
 const resultTense = function (head, target) {
   const { chain, parsed, form } = head
@@ -13,10 +14,10 @@ const resultTense = function (head, target) {
   if (target === 'participle') return Participle
   if (chain && chain.passive) return Participle
   if (chain && chain.perfect) {
-    return target === 'present' && form === 'modal-past' ? Inf : Participle
+    return target === 'present' && form === ModalPast ? Inf : Participle
   }
   if (chain && chain.modal) {
-    return target === 'past' && form === 'modal-infinitive' && chain.finite !== 'can' ? Participle : Inf
+    return target === 'past' && form === ModalInf && chain.finite !== 'can' ? Participle : Inf
   }
   if (target === 'future') return Inf
   if (target === 'past') return Past

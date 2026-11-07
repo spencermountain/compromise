@@ -1,5 +1,5 @@
 import select from '../../_select.js'
-import keepClass from '../../_lib.js'
+import keepClass, { jsonWith } from '../../_lib.js'
 import find from './find.js'
 import parse from './parse.js'
 import toCardinal from './convert/toCardinal.js'
@@ -18,23 +18,11 @@ const plugin = function (View) {
   /**
    */
   class Fractions extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Fractions'
-    }
     parse(n) {
       return this.getNth(n).map(parse, [])
     }
-    get(n) {
-      return this.getNth(n).map(parse, [])
-    }
     json(n) {
-      return this.getNth(n).map(p => {
-        const json = p.toView().json(n)[0]
-        const parsed = parse(p)
-        json.fraction = parsed
-        return json
-      }, [])
+      return jsonWith(this, n, 'fraction', parse)
     }
     // become 0.5
     toDecimal(n) {
@@ -92,7 +80,8 @@ const plugin = function (View) {
       })
     }
   }
-  keepClass(Fractions)
+  keepClass(Fractions, 'Fractions')
+  Fractions.prototype.get = Fractions.prototype.parse
 
   View.prototype.fractions = select(Fractions, find, true)
 }

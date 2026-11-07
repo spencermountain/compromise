@@ -15,7 +15,8 @@ import getGrammar from './parse/grammar/index.js'
 import toNegative from './conjugate/toNegative.js'
 import { inflect, infinitive } from './conjugate/inflect.js'
 import { doTense } from './lib.js'
-import { Inf } from '../../../2-two/preTagger/tagSet/_lib.js'
+import { Inf, Aux, Neg } from '../../../2-two/preTagger/tagSet/_lib.js'
+import { Imperative, SimplePres } from './parse/grammar/forms.js'
 
 // convert each verb to a target form, leaving bare infinitives alone
 const convert = (target, fn) => function (n) {
@@ -31,10 +32,6 @@ const convert = (target, fn) => function (n) {
 
 const api = function (View) {
   class Verbs extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Verbs'
-    }
     parse(n) {
       return this.getNth(n).map(parseVerb)
     }
@@ -75,8 +72,8 @@ const api = function (View) {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
         // allow imperatives like 'go!' to be conjugated here (only)
-        if (info.form === 'imperative') {
-          info.form = 'simple-present'
+        if (info.form === Imperative) {
+          info.form = SimplePres
         }
         let inf = parsed.root.text('normal')
         if (!parsed.root.has('#Inf')) {
@@ -102,7 +99,7 @@ const api = function (View) {
           m.remove('do not')
         }
         // The 'not' in 'not only' is tagged as an adverb.
-        vb.match('not').tag('Negative')
+        vb.match('not').tag(Neg)
         // 'does not walk' -> 'walks'
         const parsed = parseVerb(vb)
         const tense = doTense(parsed)
@@ -122,24 +119,28 @@ const api = function (View) {
         // An inserted 'does not' needs its auxiliary tag, and a place in the next verb selection.
         // Re-running the tagger here would let a repeat reach into other clauses.
         const sentence = vb.fullSentence()
-        sentence.match('[(do|does|did)] not', 0).tag('Auxiliary')
+        sentence.match('[(do|does|did)] not', 0).tag(Aux)
         sentence.compute('chunks')
         return res
       })
     }
   }
-  keepClass(Verbs)
+  keepClass(Verbs, 'Verbs')
+  const toPresentTense = convert('present', toPresent)
+  const toPastTense = convert('past', toPast)
+  const toFutureTense = convert('future', toFuture)
   Object.assign(Verbs.prototype, {
     toInfinitive: convert('infinitive', toInf),
-    toPresentTense: convert('present', toPresent),
-    toPastTense: convert('past', toPast),
-    toFutureTense: convert('future', toFuture),
+    toPresentTense,
+    toPastTense,
+    toFutureTense,
     toGerund: convert('gerund', toGerund),
     toPastParticiple: convert('participle', toParticiple),
+    // aliases
+    toPresent: toPresentTense,
+    toPast: toPastTense,
+    toFuture: toFutureTense,
   })
-  Verbs.prototype.toPast = Verbs.prototype.toPastTense
-  Verbs.prototype.toPresent = Verbs.prototype.toPresentTense
-  Verbs.prototype.toFuture = Verbs.prototype.toFutureTense
 
   View.prototype.verbs = select(Verbs, find, true)
 }

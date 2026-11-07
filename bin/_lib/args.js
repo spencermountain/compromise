@@ -20,7 +20,7 @@ Options:
   --match=PATTERN  only output the matches, e.g. --match='#Noun+'
   --if=PATTERN     only output sentences containing a match
   --has=PATTERN    like --if, but stop after the first sentence
-  --width=N        trim highlight lines to N characters (default: terminal width)
+  --width=N        trim highlight lines to N characters (default: 55)
   --input=TEXT     parse this text instead of a file (repeatable)
   --stream         process stdin line-by-line, as it arrives
   --version        print the library version

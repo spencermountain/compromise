@@ -1,4 +1,4 @@
-import forms from './forms.js'
+import forms, { InfForm } from './forms.js'
 import { Pres } from '../../../../../2-two/preTagger/tagSet/_lib.js'
 
 const cleanUp = function (vb, res) {
@@ -42,7 +42,7 @@ const getGrammar = function (vb, res) {
   vb = cleanUp(vb, res)
   for (let i = 0; i < forms.length; i += 1) {
     const todo = forms[i]
-    if (vb.has(todo.match) === true) {
+    if (vb.has(todo.match)) {
       grammar.form = todo.name
       Object.assign(grammar, todo.data)
       break //only match one
@@ -51,7 +51,7 @@ const getGrammar = function (vb, res) {
   // did we find nothing?
   if (!grammar.form) {
     if (vb.has('^#Verb$')) {
-      grammar.form = 'infinitive'
+      grammar.form = InfForm
     }
   }
   // fallback to 'naiive' tense detection

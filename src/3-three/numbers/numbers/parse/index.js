@@ -5,45 +5,46 @@ import spokenYear from '../../../../2-two/preTagger/methods/spokenYear.js'
 // 'twenty twenty-six'
 const parseYear = str => spokenYear(str.split(/[ -]/))
 
+// '-$4.00kg' -> ['-$', '4.00', 'kg']
+const numericForm = /^([^0-9.]*)(\.?[0-9][0-9,.]*)([^0-9,.].*)?$/
+
 const parseNumeric = function (str, m) {
   str = str.replace(/,/g, '')
-  //parse a numeric-number
-  const arr = str.split(/([0-9.,]*)/)
-
-  // eslint-disable-next-line prefer-const
-  let [prefix, num] = arr
-  let suffix = arr.slice(2).join('')
-  if (num !== '' && m.length < 2) {
-    num = Number(num || str)
-    //ensure that num is an actual number
-    if (typeof num !== 'number') {
-      num = null
-    }
-    // strip an ordinal off the suffix
-    suffix ||= ''
-    if (suffix === 'st' || suffix === 'nd' || suffix === 'rd' || suffix === 'th') {
-      suffix = ''
-    }
-    // strip a possessive, too - it gets kept when replaced
-    if (suffix === "'s" && m.has('#Poss')) {
-      suffix = ''
-    }
-    // support M for million, k for thousand
-    // if (suffix === 'm' || suffix === 'M') {
-    //   num *= 1000000
-    //   suffix = ''
-    // }
-    // if (suffix === 'k' || suffix === 'k') {
-    //   num *= 1000
-    //   suffix = ''
-    // }
-    return {
-      prefix: prefix || '',
-      num: num,
-      suffix: suffix,
-    }
+  const found = str.match(numericForm)
+  if (found === null || m.length >= 2) {
+    return null
   }
-  return null
+  let [, prefix, num, suffix = ''] = found
+  num = Number(num)
+  if (Number.isNaN(num)) {
+    num = null
+  } else if (/[-−]/.test(prefix)) {
+    // a leading minus is part of the value - '-5', '-$5', '(-5)'
+    num = -num || 0
+  }
+  prefix = prefix.replace(/[-−]/, '')
+  // strip an ordinal off the suffix
+  if (suffix === 'st' || suffix === 'nd' || suffix === 'rd' || suffix === 'th') {
+    suffix = ''
+  }
+  // strip a possessive, too - it gets kept when replaced
+  if (suffix === "'s" && m.has('#Poss')) {
+    suffix = ''
+  }
+  // support M for million, k for thousand
+  // if (suffix === 'm' || suffix === 'M') {
+  //   num *= 1000000
+  //   suffix = ''
+  // }
+  // if (suffix === 'k' || suffix === 'k') {
+  //   num *= 1000
+  //   suffix = ''
+  // }
+  return {
+    prefix,
+    num,
+    suffix,
+  }
 }
 
 // get a numeric value from this phrase
@@ -61,6 +62,15 @@ const parseNumber = function (m) {
   const hasComma = /[0-9],[0-9]/.test(m.text('text'))
   // parse a numeric-number like '$4.00'
   if (m.terms().length === 1 && !m.has('#Mult')) {
+    // '1/2' is its quotient, not its numerator
+    if (m.has('#Frac') && str.includes('/')) {
+      const frac = parseFraction(m)
+      let num = null
+      if (frac && frac.decimal !== undefined) {
+        num = frac.decimal
+      }
+      return { prefix: '', num, suffix: '', hasComma, unit }
+    }
     const res = parseNumeric(str, m)
     if (res !== null) {
       res.hasComma = hasComma
@@ -71,7 +81,7 @@ const parseNumber = function (m) {
   // -- parse text-formats --
   // Fractions: remove 'and a half' etc. from the end
   let frPart = m.match('#Frac{2,}$')
-  frPart = frPart.found === false ? m.match('^#Frac$') : frPart
+  frPart = frPart.found ? frPart : m.match('^#Frac$')
   let fraction = null
   if (frPart.found) {
     if (frPart.has('#Val and #Val #Frac')) {

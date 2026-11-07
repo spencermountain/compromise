@@ -27,18 +27,13 @@ const fixPointers = function (ptrs, gonePtrs, emptied) {
     })
     // sentences before our pointer are gone
     ptr[0] -= emptied.filter(k => k < n).length
-    return ptr
-  })
-  // remove any now-empty pointers
-  ptrs = ptrs.filter(ptr => ptr[2] - ptr[1] > 0)
-
-  // remove old hard-pointers
-  ptrs = ptrs.map((ptr) => {
+    // remove old hard-pointers
     ptr[3] = null
     ptr[4] = null
     return ptr
   })
-  return ptrs
+  // remove any now-empty pointers
+  return ptrs.filter(ptr => ptr[2] - ptr[1] > 0)
 }
 
 const methods = {

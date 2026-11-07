@@ -4,6 +4,7 @@ import getGroup from './03-getGroup.js'
 import notIf from './03-notIf.js'
 import matchTerm from './term/doesMatch.js'
 import { isFixed, fromFixed } from './_fixed.js'
+import { getMinLength } from './_lib.js'
 
 
 // make proper pointers
@@ -38,13 +39,7 @@ const runMatch = function (docs, todo, cache) {
   // by callers, so calculate their minimum without caching on the token array.
   let minLength = todo.minLength
   if (minLength === undefined) {
-    minLength = 0
-    for (let i = 0; i < regs.length; i += 1) {
-      const reg = regs[i]
-      if (reg.optional !== true && reg.negative !== true) {
-        minLength += 1
-      }
-    }
+    minLength = getMinLength(regs)
   }
   docs: for (let n = 0; n < docs.length; n += 1) {
     const terms = docs[n]

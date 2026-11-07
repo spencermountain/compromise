@@ -1,6 +1,7 @@
 import parseVerb from '../parse/index.js'
 import getGrammar from '../parse/grammar/index.js'
 import readAuxiliary from '../parse/auxiliary.js'
+import { SimplePres, SimplePast, SimpleFut } from '../parse/grammar/forms.js'
 
 // Snapshot coordination before any edit changes tags or term positions. Only
 // adjacent, compatible roots can inherit an auxiliary; a new subject, object,
@@ -18,12 +19,12 @@ const groups = function (verbs, finite = false) {
       return
     }
     const info = getGrammar(head.vb, head.parsed)
-    const bare = finite && !head.parsed.auxiliary.found && !info.copula && /^(simple-present|simple-past)$/.test(info.form)
+    const bare = finite && !head.parsed.auxiliary.found && !info.copula && (info.form === SimplePres || info.form === SimplePast)
     const doSupport = finite && head.parsed.auxiliary.has('^(do|does|did)$')
     if (!head.parsed.auxiliary.found && !bare) return
     if (info.isInfinitive) return
     const chain = readAuxiliary(head.parsed, info.form)
-    if ((!chain && info.form !== 'simple-future' && !bare && !doSupport) || (chain && chain.prospective)) return
+    if ((!chain && info.form !== SimpleFut && !bare && !doSupport) || (chain && chain.prospective)) return
     head.chain = chain
     head.form = info.form
     const root = entry.parsed.root

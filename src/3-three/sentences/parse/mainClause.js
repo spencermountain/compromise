@@ -18,6 +18,9 @@ const dropIntroducedBy = function (m, pattern) {
   })
 }
 
+// multi-word subordinators
+const subordinators = ['^even (if|though)', '^so that', '^rather than', '^provided that', '^in case']
+
 //try to remove secondary clauses
 const mainClause = function (s) {
   let m = s
@@ -31,11 +34,9 @@ const mainClause = function (s) {
   }
   // this is a signal for subordinate-clauses
   m = dropIntroducedBy(m, subordinate)
-  m = m.ifNo('^even (if|though)')
-  m = m.ifNo('^so that')
-  m = m.ifNo('^rather than')
-  m = m.ifNo('^provided that')
-  m = m.ifNo('^in case')
+  subordinators.forEach(str => {
+    m = m.ifNo(str)
+  })
   if (m.length === 1) {
     return m
   }

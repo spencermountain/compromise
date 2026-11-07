@@ -1,6 +1,6 @@
 import { hasApostrophe } from './_lib.js'
 import { hasAny, toSet } from '../../_lib.js'
-import { Past, Pres, Inf, Adj } from '../../preTagger/tagSet/_lib.js'
+import { Past, Pres, Inf, Adj, AdjPast } from '../../preTagger/tagSet/_lib.js'
 
 // had better, had done, he'd _ before, he'd _ it, she'd had -> she would have..
 const hadWords = toSet('better done before it had')
@@ -23,7 +23,7 @@ const hadOrWould = (terms, i) => {
       return 'would'
     }
     // You'd mentioned -> you had mentioned
-    if (t.tags.has(Past) || t.switch === 'Adj|Past') {
+    if (t.tags.has(Past) || t.switch === AdjPast) {
       return 'had'
     }
     // You'd mention -> you would mention

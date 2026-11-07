@@ -15,6 +15,7 @@ const getColor = function (node) {
 // convert tags to our final format
 const fmt = function (nodes) {
   const res = {}
+  const each = fn => Object.keys(res).forEach(fn)
   nodes.forEach(node => {
     const { not, also, is, novel } = node.props
     let parents = node._cache.parents
@@ -58,8 +59,8 @@ const fmt = function (nodes) {
     resolved.add(tag)
     return res[tag].parents
   }
-  Object.keys(res).forEach(tag => resolveParents(tag))
-  Object.keys(res).forEach(tag => {
+  each(resolveParents)
+  each(tag => {
     res[tag].parents.forEach(parent => {
       if (res[parent]) {
         res[parent].children.push(tag)
@@ -70,8 +71,8 @@ const fmt = function (nodes) {
   // Inherit exclusions through every parent, then exclude all descendants of
   // each conflicting tag. Read a snapshot to keep this independent of order.
   const exclusions = {}
-  Object.keys(res).forEach(tag => { exclusions[tag] = res[tag].not })
-  Object.keys(res).forEach(k => {
+  each(tag => { exclusions[tag] = res[tag].not })
+  each(k => {
     const nots = new Set(exclusions[k])
     res[k].parents.forEach(parent => {
       for (const not of exclusions[parent] || []) {

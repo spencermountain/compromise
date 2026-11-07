@@ -3,10 +3,10 @@ import fastTag from '../_fastTag.js'
 import fillTags from '../3rd-pass/_fillTags.js'
 import { titleCase } from '../_lib.js'
 import { hasAny } from '../../../../_lib.js'
-import { Date, WeekDay, Unit, Expr, Comp, Ger, Det, NN, Prop, RomanNumeral } from '../../../tagSet/_lib.js'
+import { Date, WeekDay, Unit, Expr, Comp, Ger, Det, NN, Prop, RomanNumeral, Month } from '../../../tagSet/_lib.js'
 
 const hasNumber = /[0-9]/
-const notProper = [Date, 'Month', WeekDay, Unit, Expr]
+const notProper = [Date, Month, WeekDay, Unit, Expr]
 
 // roman numeral by regex
 const hasIVX = /[IVX]/ // does it ~look like~ a roman numeral?
@@ -30,7 +30,7 @@ const checkCase = function (terms, i, model) {
   const index = term.index[1]
   const str = term.text || '' //need case info
   // titlecase and not first word of sentence
-  if (index !== 0 && titleCase.test(str) === true && hasNumber.test(str) === false) {
+  if (index !== 0 && titleCase.test(str) && !hasNumber.test(str)) {
     // skip Dates and stuff
     if (hasAny(term, ...notProper)) {
       return null

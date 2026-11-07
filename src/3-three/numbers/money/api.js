@@ -2,19 +2,13 @@ import select from '../../_select.js'
 import find from './find.js'
 import parse from './parse.js'
 import mapNumbers from './_lib.js'
+import { jsonWith } from '../../_lib.js'
 import { add } from './_decimal.js'
 
 const plugin = function (View, Numbers) {
   /**
    */
   class Money extends Numbers {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Money'
-    }
-    _add(a, b) {
-      return add(a, b)
-    }
     _mapNumbers(fn, operation) {
       return mapNumbers(this, fn, operation)
     }
@@ -25,21 +19,17 @@ const plugin = function (View, Numbers) {
       return this.parse(n).map(p => p.num)
     }
     json(n) {
-      const opts = typeof n === 'object' ? n : {}
-      return this.getNth(n).map(p => {
-        const json = p.toView().json(opts)[0]
-        const parsed = parse(p)
-        json.money = parsed
-        return json
-      }, [])
+      return jsonWith(this, n, 'money', parse)
     }
     currency(n) {
       return this.parse(n).map(p => p.currency)
     }
   }
+  Money.prototype.viewType = 'Money'
 
   // These conversions do not describe monetary amounts.
   Object.assign(Money.prototype, {
+    _add: add,
     toOrdinal: undefined,
     toCardinal: undefined,
     toFraction: undefined,

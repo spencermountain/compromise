@@ -1,6 +1,7 @@
 import parse from './parse/index.js'
 import format from './format/index.js'
 import agree from './agree.js'
+import { dropPreSign } from './_conversion.js'
 import { Ord, Card } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 // Keep conversion skips and format choices specific to each public method.
@@ -14,6 +15,7 @@ const convert = (view, tag, skip, getFormat) => {
       return val
     }
     const str = format(obj, getFormat(val))
+    dropPreSign(val, str)
     val.replaceWith(str, { tags: true, possessives: true })
     // Generated currency words keep their noun tags.
     val.not('#Currency').tag(tag)

@@ -14,20 +14,38 @@ const flags = {
   s: { plural: false },
 }
 
+// the grammar form names used by the conjugators
+const Imperative = 'imperative'
+const WantInf = 'want-infinitive'
+const GerPhrase = 'gerund-phrase'
+const SimplePres = 'simple-present'
+const SimplePast = 'simple-past'
+const SimpleFut = 'simple-future'
+const PresCond = 'present-conditional'
+const PastCond = 'past-conditional'
+const AuxFut = 'auxiliary-future'
+const AuxPast = 'auxiliary-past'
+const AuxPres = 'auxiliary-present'
+const ModalPast = 'modal-past'
+const ModalInf = 'modal-infinitive'
+const ModalPerfProg = 'modal-perfect-progressive'
+const PassivePast = 'passive-past'
+const InfForm = 'infinitive'
+
 const verbForms = {
   // === Simple ===
-  'imperative': [
+  [Imperative]: [
     // walk!
     ['#Imp', ''],
   ],
 
-  'want-infinitive': [
+  [WantInf]: [
     ['^(want|wants|wanted) to #Inf$', 'p'],
     ['^wanted to #Inf$', 'P'],
     ['^will want to #Inf$', 'f'],
   ],
 
-  'gerund-phrase': [
+  [GerPhrase]: [
     // started looking
     ['^#Past #Ger$', 'P'],
     // starts looking
@@ -42,17 +60,17 @@ const verbForms = {
     ['^will have #Past #Ger$', 'P'],
   ],
 
-  'simple-present': [
+  [SimplePres]: [
     // he walks',
     ['^#Pres$', 'p'],
     // we walk
     ['^#Inf$', 'p'],
   ],
-  'simple-past': [
+  [SimplePast]: [
     // he walked',
     ['^#Past$', 'P'],
   ],
-  'simple-future': [
+  [SimpleFut]: [
     // he will walk
     ['^will #Adv? #Inf', 'f'],
   ],
@@ -103,7 +121,7 @@ const verbForms = {
   ],
 
   // ==== Passive ===
-  'passive-past': [
+  [PassivePast]: [
     ['^(was|were) being? (#Past|#VBN)$', 'Pv'],
     ['^had been being? (#Past|#VBN)$', 'Pv'],
     // got walked, was walked, were walked
@@ -133,46 +151,46 @@ const verbForms = {
   ],
 
   // === Conditional ===
-  'present-conditional': [
+  [PresCond]: [
     // would be walked
     ['^#Mod be #Past$', 'pdv'],
   ],
-  'past-conditional': [
+  [PastCond]: [
     // would have been walked
     ['^#Mod have been #Past$', 'Pdv'],
   ],
 
   // ==== Auxiliary ===
-  'auxiliary-future': [
+  [AuxFut]: [
     ['^(is|are|am|was|were) going to be #Ger$', 'fg'],
     // going to drink
     ['(is|are|am|was|were) going to (#Inf|#Pres)', 'f'],
   ],
-  'auxiliary-past': [
+  [AuxPast]: [
     // he did walk
     ['^did #Inf$', 'Ps'],
     // used to walk
     ['^used to #Inf$', 'Pc'],
   ],
-  'auxiliary-present': [
+  [AuxPres]: [
     // we do walk
     ['^(does|do) #Inf$', 'pcl'],
   ],
 
   // === modals ===
-  'modal-perfect-progressive': [
+  [ModalPerfProg]: [
     ['^#Mod have been #Ger$', 'Pg'],
   ],
-  'modal-past': [
+  [ModalPast]: [
     // he could have walked
     ['^#Mod have #Past$', 'P'],
   ],
-  'modal-infinitive': [
+  [ModalInf]: [
     // he can walk
     ['^#Mod #Inf$', ''],
   ],
 
-  'infinitive': [
+  [InfForm]: [
     // walk
     ['^#Inf$', ''],
   ],
@@ -189,4 +207,5 @@ Object.keys(verbForms).map(k => {
   })
 })
 
+export { Imperative, WantInf, GerPhrase, SimplePres, SimplePast, SimpleFut, PresCond, PastCond, AuxFut, AuxPast, AuxPres, ModalPast, ModalInf, ModalPerfProg, PassivePast, InfForm }
 export default list

@@ -30,6 +30,8 @@ const stripBoth = function (str) {
   str = stripEnd(str)
   return str
 }
+// is the token wrapped in these chars, like (foo)
+const wrapped = (str, a, b = a) => start(str) === a && end(str) === b
 //
 const parseToken = function (w, opts, aliases) {
   const obj = {}
@@ -89,7 +91,7 @@ const parseToken = function (w, opts, aliases) {
       w = stripStart(w)
     }
     //soft-match
-    if (start(w) === '~' && end(w) === '~' && w.length > 2) {
+    if (wrapped(w, '~') && w.length > 2) {
       w = stripBoth(w)
       obj.fuzzy = true
       obj.min = opts.fuzzy ?? 0.85
@@ -100,7 +102,7 @@ const parseToken = function (w, opts, aliases) {
     }
 
     //regex - {noRegex} leaves it as a plain word, to avoid redos from user-input
-    if (start(w) === '/' && end(w) === '/' && w.length > 2 && !opts.noRegex) {
+    if (wrapped(w, '/') && w.length > 2 && !opts.noRegex) {
       w = stripBoth(w)
       if (opts.caseSensitive) {
         obj.use = 'text'
@@ -140,7 +142,7 @@ const parseToken = function (w, opts, aliases) {
     }
 
     //wrapped-flags
-    if (start(w) === '(' && end(w) === ')') {
+    if (wrapped(w, '(', ')')) {
       // support (one && two)
       if (andSign.test(w)) {
         obj.choices = w.split(andSign)
@@ -164,7 +166,7 @@ const parseToken = function (w, opts, aliases) {
     }
 
     //root/sense overloaded
-    if (start(w) === '{' && end(w) === '}') {
+    if (wrapped(w, '{', '}')) {
       w = stripBoth(w)
       // obj.sense = w
       obj.root = w
@@ -185,13 +187,13 @@ const parseToken = function (w, opts, aliases) {
       return obj
     }
     //chunks
-    if (start(w) === '<' && end(w) === '>') {
+    if (wrapped(w, '<', '>')) {
       w = stripBoth(w)
       obj.chunk = titleCase(w)
       obj.greedy = true
       return obj
     }
-    if (start(w) === '%' && end(w) === '%') {
+    if (wrapped(w, '%')) {
       w = stripBoth(w)
       obj.switch = w
       return obj

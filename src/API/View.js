@@ -10,7 +10,6 @@ class View {
       ['world', world],
       ['_groups', groups],
       ['_cache', null],
-      ['viewType', 'View'],
     ]
     props.forEach(a => {
       Object.defineProperty(this, a[0], {
@@ -124,4 +123,6 @@ class View {
   }
 }
 Object.assign(View.prototype, api)
+// subclasses set their own name on their prototype
+View.prototype.viewType = 'View'
 export default View

@@ -1,10 +1,13 @@
 const hasContraction = /'/
 const isFeminine = /(e|é|aison|sion|tion)$/
 const isMasculine = /(age|isme|acle|ege|oire)$/
+// the word after the apostrophe
+const getAfter = (terms, i) => terms[i].normal.split(hasContraction)[1]
+
 // l'amour
 const preL = (terms, i) => {
   // le/la
-  const after = terms[i].normal.split(hasContraction)[1]
+  const after = getAfter(terms, i)
   // quick french gender disambig (rough)
   if (after && after.endsWith('e')) {
     return ['la', after]
@@ -14,7 +17,7 @@ const preL = (terms, i) => {
 
 // d'amerique
 const preD = (terms, i) => {
-  const after = terms[i].normal.split(hasContraction)[1]
+  const after = getAfter(terms, i)
   // quick guess for noun-agreement (rough)
   if (after && isFeminine.test(after) && !isMasculine.test(after)) {
     return ['du', after]
@@ -25,10 +28,7 @@ const preD = (terms, i) => {
 }
 
 // j'aime
-const preJ = (terms, i) => {
-  const after = terms[i].normal.split(hasContraction)[1]
-  return ['je', after]
-}
+const preJ = (terms, i) => ['je', getAfter(terms, i)]
 
 export default {
   preJ,

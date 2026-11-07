@@ -13,7 +13,7 @@ const isPlural = function (m, root) {
     return true
   }
   // these can't be plural
-  if (root.has(notPlural) === true) {
+  if (root.has(notPlural)) {
     return false
   }
   if (m.has('#Sing')) {

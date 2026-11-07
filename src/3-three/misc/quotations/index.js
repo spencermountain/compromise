@@ -4,10 +4,6 @@ import { find, strip } from './fns.js'
 const api = function (View) {
 
   class Quotations extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Possessives'
-    }
     text(fmt) {
       if (!fmt || fmt === 'text') {
         return super.text({ keepEndPunct: true })
@@ -21,6 +17,7 @@ const api = function (View) {
       strip(this)
     }
   }
+  Quotations.prototype.viewType = 'Quotations'
 
   View.prototype.quotations = select(Quotations, find)
 }

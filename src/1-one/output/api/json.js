@@ -9,19 +9,18 @@ const defaults = {
 
 const opts = { case: 'none', unicode: 'some', form: 'machine', punctuation: 'some' }
 
-const merge = function (a, b) {
-  return { ...a, ...b }
-}
+// text in this format, keeping punctuation
+const punct = (terms, fmt) => textFromTerms(terms, { ...fmt, keepPunct: true }, false)
 
 const fns = {
-  text: terms => textFromTerms(terms, { keepPunct: true }, false),
-  normal: terms => textFromTerms(terms, merge(fmts.normal, { keepPunct: true }), false),
-  implicit: terms => textFromTerms(terms, merge(fmts.implicit, { keepPunct: true }), false),
+  text: terms => punct(terms),
+  normal: terms => punct(terms, fmts.normal),
+  implicit: terms => punct(terms, fmts.implicit),
 
   machine: terms => textFromTerms(terms, opts, false),
-  root: terms => textFromTerms(terms, merge(opts, { form: 'root' }), false),
+  root: terms => textFromTerms(terms, { ...opts, form: 'root' }, false),
 
-  hash: terms => hash(textFromTerms(terms, { keepPunct: true }, false)),
+  hash: terms => hash(punct(terms)),
 
   offset: terms => {
     const len = fns.text(terms).length

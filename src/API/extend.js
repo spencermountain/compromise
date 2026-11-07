@@ -13,10 +13,12 @@ function mergeDeep(model, plugin) {
         continue
       }
       if (isObject(plugin[key])) {
-        if (!model[key]) Object.assign(model, { [key]: {} })
+        if (!model[key]) {
+          model[key] = {}
+        }
         mergeDeep(model[key], plugin[key]) //recursion
       } else {
-        Object.assign(model, { [key]: plugin[key] })
+        model[key] = plugin[key]
       }
     }
   }

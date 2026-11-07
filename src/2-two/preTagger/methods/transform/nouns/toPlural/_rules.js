@@ -23,7 +23,6 @@ const suffixes = {
     [/(alias|status)$/i, '$1es'],
     [/sis$/i, 'ses'],
     [/(bu)s$/i, '$1ses'],
-    [/(sis)$/i, 'ses'],
     [/^(?!talis|.*hu)(.*)man$/i, '$1men'],
     [/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, '$1i'],
   ],

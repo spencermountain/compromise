@@ -1,19 +1,11 @@
 import { hasBreak, isCapital, isUpperCase } from './_lib.js'
 import { hasAny, toSet } from '../../_lib.js'
-import { Prop, Pron, Uncountable, Date, Sing, Mod, Cop, Past, Pres, Conj, Pers, Actor, Poss, QW, Det, Sup, First, Vb, Inf, Ger, NN, Plur, Adj, Adv, Ord, Val } from '../../preTagger/tagSet/_lib.js'
+import { Prop, Pron, Uncountable, Date, Sing, Mod, Cop, Past, Pres, Conj, Pers, Actor, Poss, QW, Det, Vb, Inf, Ger, NN, Plur, Adj, Adv, Ord, NounGerund, AdjNoun, NounVerb } from '../../preTagger/tagSet/_lib.js'
 
-const banList = {
-  that: true,
-  there: true,
-  let: true,
-  here: true,
-  everywhere: true,
-}
+const banList = toSet('that there let here everywhere')
 
 // an object can't be 'is' - "in sunday's", "of Enron's", "at Moe's"
 const beforePossessive = toSet('in by for of at with to on from about into')
-// "Kathy's and Mary's", "a master's of science", "Australia's per capita"
-const joiners = toSet('and or nor but & of per')
 // things that are done, and not owned - Mom's cooked dinner, John's parked here
 const bareObject = toSet('dinner lunch breakfast supper work school college home here there')
 const adjLike = toSet('too also enough about')
@@ -53,10 +45,10 @@ const isPossessive = (terms, i) => {
   // a person can do things - John's played football
   const isPerson = hasAny(term, Pers, Actor)
   // these can't be possessive
-  if (Object.hasOwn(banList, term.machine || term.normal)) {
+  if (banList.has(term.machine || term.normal)) {
     return false
   }
-  // if we already know it
+  // the preTagger found the easy ones - Kathy's and Mary's, the world's largest, baby's first steps
   if (term.tags.has(Poss)) {
     return true
   }
@@ -87,22 +79,17 @@ const isPossessive = (terms, i) => {
   if (afterVerb.has(nextTerm.normal)) {
     return false
   }
-  // "Kathy's, not mine" and "Kathy's and Mary's"
-  if (hasBreak(term) || joiners.has(nextTerm.normal)) {
-    return true
-  }
   // a title - Verne's The Mysterious Island
   if (nextTerm.tags.has(Det) && isCapital(nextTerm)) {
     return true
   }
-  // the world's largest - but John's happiest
-  if (nextTerm.tags.has(Sup) && nextTerm.normal !== 'most' && !term.tags.has(First)) {
-    return true
-  }
-  // "of Enron's", or the rest of a name - "of Keli McCarthy's"
+  // "of Enron's", "on Time magazine's" - a backstop for names tagged after the preTagger's possessive pass
+  const isName = t => term.tags.has(Prop) && t?.tags.has(Prop) === true && !hasBreak(t)
   let n = i - 1
-  const isName = t => term.tags.has(Prop) && t.tags.has(Prop) && !hasBreak(t)
-  while (n > i - 3 && terms[n] && isName(terms[n])) {
+  if (isName(terms[n])) {
+    n -= 1
+  }
+  if (isName(terms[n])) {
     n -= 1
   }
   // "of the region's", "about her sister's"
@@ -116,7 +103,7 @@ const isPossessive = (terms, i) => {
   // the sun's setting vs the artist's painting
   // gerund = is,  noun = possessive
   // (we are doing some dupe-work of the switch classifier here)
-  if (nextTerm.switch == 'Noun|Gerund') {
+  if (nextTerm.switch === NounGerund) {
     const next2 = terms[i + 2]
     // the artist's painting.
     if (!next2) {
@@ -170,7 +157,7 @@ const isPossessive = (terms, i) => {
   }
 
   // john's nuts
-  if (nextTerm.switch === 'Adj|Noun') {
+  if (nextTerm.switch === AdjNoun) {
     const twoTerm = terms[i + 2]
     if (!twoTerm) {
       return false //adj
@@ -209,7 +196,7 @@ const isPossessive = (terms, i) => {
   if (nextTerm.tags.has(Adj) || isAdv) {
     // John's busy writing
     const two = terms[i + 2]
-    if (nextTerm.normal === 'busy' && two && (two.tags.has(Ger) || two.switch === 'Noun|Gerund')) {
+    if (nextTerm.normal === 'busy' && two && (two.tags.has(Ger) || two.switch === NounGerund)) {
       return false
     }
     // skip ahead - rocket's big red nozzle, China's most trusted paper
@@ -269,15 +256,11 @@ const isPossessive = (terms, i) => {
       return true
     }
     // rocket's red glare
-    if (twoTerm.switch === 'Noun|Verb') {
+    if (twoTerm.switch === NounVerb) {
       return true
     }
     //othwerwise, an adjective suggests 'is good'
     return false
-  }
-  // baby's first steps
-  if (nextTerm.tags.has(Val)) {
-    return true
   }
   // otherwise not possessive
   return false

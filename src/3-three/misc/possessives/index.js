@@ -21,14 +21,11 @@ const find = function (doc) {
 const api = function (View) {
 
   class Possessives extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Possessives'
-    }
     strip() {
       return strip(this)
     }
   }
+  Possessives.prototype.viewType = 'Possessives'
 
   View.prototype.possessives = select(Possessives, find)
 }

@@ -9,10 +9,6 @@ const toTitleCase = function (str = '') {
 const api = function (View) {
   /** */
   class Contractions extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Contraction'
-    }
     /** i've -> 'i have' */
     expand() {
       this.docs.forEach(terms => {
@@ -36,6 +32,7 @@ const api = function (View) {
       return this
     }
   }
+  Contractions.prototype.viewType = 'Contraction'
   // add fn to View
   View.prototype.contractions = function () {
     const m = this.match('@hasContraction+')

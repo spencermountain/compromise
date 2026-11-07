@@ -1,39 +1,23 @@
 import { NN, Vb, Det, Val, QW } from '../../../2-two/preTagger/tagSet/_lib.js'
+import { eachTerm, Pivot } from './_lib.js'
 const byWord = {
   this: NN,
-  then: 'Pivot'
+  then: Pivot
 }
+// the first tag found wins - '100 cats' is a noun
+const byTag = [[Vb, Vb], [NN, NN], [Det, NN], [Val, NN], [QW, Pivot]]
 
 // simply chunk Nouns as <Noun>
 const easyMode = function (document) {
-  for (let n = 0; n < document.length; n += 1) {
-    for (let t = 0; t < document[n].length; t += 1) {
-      const term = document[n][t]
-
-      if (Object.hasOwn(byWord, term.normal) === true) {
-        term.chunk = byWord[term.normal]
-        continue
-      }
-      if (term.tags.has(Vb)) {
-        term.chunk = Vb
-        continue
-      }
-      if (term.tags.has(NN) || term.tags.has(Det)) {
-        term.chunk = NN
-        continue
-      }
-      // 100 cats
-      if (term.tags.has(Val)) {
-        term.chunk = NN
-        continue
-      }
-      //
-      if (term.tags.has(QW)) {
-        term.chunk = 'Pivot'
-        continue
-      }
-
+  eachTerm(document, term => {
+    if (Object.hasOwn(byWord, term.normal)) {
+      term.chunk = byWord[term.normal]
+      return
     }
-  }
+    const found = byTag.find(a => term.tags.has(a[0]))
+    if (found) {
+      term.chunk = found[1]
+    }
+  })
 }
 export default easyMode

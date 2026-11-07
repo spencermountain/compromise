@@ -81,7 +81,7 @@ const contractionTwo = view => {
         continue
       }
       let after = null
-      if (hasApostrophe.test(terms[i].normal) === true) {
+      if (hasApostrophe.test(terms[i].normal)) {
         after = terms[i].normal.split(hasApostrophe)[1]
       }
       let words = null

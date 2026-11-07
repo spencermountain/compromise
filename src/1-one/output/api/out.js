@@ -2,6 +2,7 @@ import debug from './debug.js'
 import wrap from './wrap.js'
 import hash from '../methods/hash.js'
 import toSpec from './_spec.js'
+import { rawText } from './_text.js'
 import isObject from '../../../API/_is.js'
 
 // sort by frequency
@@ -30,16 +31,7 @@ const outputs = {
     view.compute('offset')
     return view.json({ offset: true })
   },
-  array: view => {
-    const arr = view.docs.map(terms => {
-      return terms
-        .reduce((str, t) => {
-          return str + t.pre + t.text + t.post
-        }, '')
-        .trim()
-    })
-    return arr.filter(str => str)
-  },
+  array: view => view.docs.map(rawText).filter(str => str),
   // return terms sorted by frequency
   freq: view => topk(view.json({ normal: true }).map(o => o.normal)),
   // some handy ad-hoc outputs

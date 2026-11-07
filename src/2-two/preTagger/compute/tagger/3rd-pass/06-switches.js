@@ -3,7 +3,7 @@ import looksPlural from '../../../methods/looksPlural.js'
 import adhoc from './_adhoc.js'
 import { setTag } from '../_lib.js'
 import { hasAny } from '../../../../_lib.js'
-import { Acronym, Phrasal, SportsTeam, Sing, Actor, Plur, Vb, Inf, Pres, Past } from '../../../tagSet/_lib.js'
+import { Acronym, Phrasal, SportsTeam, Sing, Actor, Plur, Vb, Inf, Pres, Past, ActorVerb, PersonNoun } from '../../../tagSet/_lib.js'
 const prefix = /^(under|over|mis|re|un|dis|semi)-?/
 
 const checkWord = (term, obj) => {
@@ -88,11 +88,11 @@ const doSwitches = function (terms, i, world) {
     tag = adhoc[form](terms, i) || tag
   }
   // Shared noun clues must retain the actor reading.
-  if (form === 'Actor|Verb' && tag === Sing) {
+  if (form === ActorVerb && tag === Sing) {
     tag = Actor
   }
   // Choosing a lexical reading must retain its inflection.
-  if (form === 'Person|Noun' && tag === Sing && looksPlural(str)) {
+  if (form === PersonNoun && tag === Sing && looksPlural(str)) {
     tag = Plur
   }
   // Drew is also a name; only its verbal reading carries past tense.

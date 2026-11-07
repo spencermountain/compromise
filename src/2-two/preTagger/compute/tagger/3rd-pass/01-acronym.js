@@ -29,14 +29,14 @@ const places = {
 const isNoPeriodAcronym = function (term, model) {
   let str = term.text
   // ensure it's all upper-case
-  if (isUpperCase.test(str) === false) {
+  if (!isUpperCase.test(str)) {
     // allow lower-case plural - 'MMVAs'
-    if (str.length > 3 && upperThenS.test(str) === true) {
+    if (str.length > 3 && upperThenS.test(str)) {
       str = str.replace(/s$/, '')
     } else {
       return false
     }
-  } else if (Object.hasOwn(places, term.normal) === true) {
+  } else if (Object.hasOwn(places, term.normal)) {
     // NY, US, UK, etc.
     return true
   }
@@ -53,19 +53,19 @@ const isNoPeriodAcronym = function (term, model) {
     return false
   }
   //like N.D.A
-  if (periodAcronym.test(str) === true) {
+  if (periodAcronym.test(str)) {
     return true
   }
   //like c.e.o
-  if (lowerCaseAcronym.test(str) === true) {
+  if (lowerCaseAcronym.test(str)) {
     return true
   }
   //like 'F.'
-  if (oneLetterAcronym.test(str) === true) {
+  if (oneLetterAcronym.test(str)) {
     return true
   }
   //like NDA
-  if (noPeriodAcronym.test(str) === true) {
+  if (noPeriodAcronym.test(str)) {
     return true
   }
   return false
@@ -91,7 +91,7 @@ const isAcronym = function (terms, i, model) {
       fastTag(term, Place, '3-place-acronym')
     }
     // UFOs
-    if (upperThenS.test(term.text) === true) {
+    if (upperThenS.test(term.text)) {
       fastTag(term, Plur, '3-plural-acronym')
     }
     // if(term.normal

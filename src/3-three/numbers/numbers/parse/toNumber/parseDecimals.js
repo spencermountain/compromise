@@ -5,9 +5,9 @@ const parseDecimals = function (arr) {
   let str = '0.'
   for (let i = 0; i < arr.length; i++) {
     const w = arr[i]
-    if (Object.hasOwn(words.small, w) === true) {
+    if (Object.hasOwn(words.small, w)) {
       str += words.small[w]
-    } else if (/^[0-9]$/.test(w) === true) {
+    } else if (/^[0-9]$/.test(w)) {
       str += w
     } else {
       return 0

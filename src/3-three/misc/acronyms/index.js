@@ -5,10 +5,6 @@ const strip = stripper(/\./g)
 const api = function (View) {
 
   class Acronyms extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Acronyms'
-    }
     strip() {
       return strip(this)
     }
@@ -25,6 +21,7 @@ const api = function (View) {
       return this
     }
   }
+  Acronyms.prototype.viewType = 'Acronyms'
 
   View.prototype.acronyms = select(Acronyms, '#Acronym')
 }

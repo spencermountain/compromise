@@ -12,6 +12,9 @@ const punctToKill = /[,:;)('"\uFF02\u201D\u2019\u00BB\u203A\u2032\u2033\u2034\u3
 const isHyphen = /^[-–—]$/
 const hasSpace = / /
 
+// the original text of these terms, with any outer whitespace removed
+const rawText = terms => terms.reduce((str, t) => str + t.pre + t.text + t.post, '').trim()
+
 const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
   terms.forEach(t => {
@@ -109,4 +112,4 @@ const textFromDoc = function (docs, opts) {
   }
   return text
 }
-export { textFromDoc, textFromTerms }
+export { textFromDoc, textFromTerms, rawText }

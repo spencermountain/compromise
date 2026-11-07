@@ -3,10 +3,6 @@ import keepClass from '../../_lib.js'
 const api = function (View) {
 
   class Pronouns extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Pronouns'
-    }
     hasReference() {
       this.compute('coreference')
       return this.filter(m => {
@@ -31,7 +27,7 @@ const api = function (View) {
       })
     }
   }
-  keepClass(Pronouns)
+  keepClass(Pronouns, 'Pronouns')
 
   View.prototype.pronouns = select(Pronouns, '#Pron')
 }

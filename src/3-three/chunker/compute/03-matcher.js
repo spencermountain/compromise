@@ -1,14 +1,15 @@
 import expandTags from '../../../2-two/postTagger/model/_lib.js'
 import { Adj, Vb, NN } from '../../../2-two/preTagger/tagSet/_lib.js'
+import { Pivot } from './_lib.js'
 
 const rules = [
   // === Conjunction ===
   // that the houses
-  { match: '[that] #Det #NN', group: 0, chunk: 'Pivot' },
+  { match: '[that] #Det #NN', group: 0, chunk: Pivot },
   // estimated that
-  { match: '#Past [that]', group: 0, chunk: 'Pivot' },
+  { match: '#Past [that]', group: 0, chunk: Pivot },
   // so the
-  { match: '[so] #Det', group: 0, chunk: 'Pivot' },
+  { match: '[so] #Det', group: 0, chunk: Pivot },
 
   // === Adjective ===
   // was really nice
@@ -63,7 +64,7 @@ const rules = [
   // breakfast in bed
   { match: '#Sing in #Det? #Sing', chunk: NN },
   // Some citizens in this Canadian capital
-  { match: '#Plur [in] #Det? #NN', group: 0, chunk: 'Pivot' },
+  { match: '#Plur [in] #Det? #NN', group: 0, chunk: Pivot },
   // indoor and outdoor seating
   { match: '#NN and #Det? #NN', notIf: '(#Poss|#Pron)', chunk: NN },
   //  boys and girls

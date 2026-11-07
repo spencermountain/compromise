@@ -1,14 +1,6 @@
 import { convert } from 'suffix-thumb'
 import { Adj } from '../../../../tagSet/_lib.js'
 
-// pull-apart phrasal verb 'fall over'
-const parse = (inf) => {
-  if (/ /.test(inf)) {
-    return inf.split(/ /)
-  }
-  return [inf, '']
-}
-
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
 const conjugate = function (inf, model) {
@@ -23,7 +15,8 @@ const conjugate = function (inf, model) {
       PresentTense: 'is',
     }
   }
-  const [str, particle] = parse(inf)
+  // pull-apart phrasal verb 'fall over'
+  const [str, particle = ''] = inf.split(' ')
   const found = {
     Infinitive: str,
     PastTense: convert(str, toPast),

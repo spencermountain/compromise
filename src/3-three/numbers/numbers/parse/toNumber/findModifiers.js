@@ -15,7 +15,7 @@ const findModifiers = str => {
     // }
   ]
   for (let i = 0; i < mults.length; i++) {
-    if (mults[i].reg.test(str) === true) {
+    if (mults[i].reg.test(str)) {
       return {
         amount: mults[i].mult,
         str: str.replace(mults[i].reg, ''),

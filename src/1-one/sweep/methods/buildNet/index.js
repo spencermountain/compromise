@@ -9,13 +9,8 @@ const buildNet = function (matches, world) {
   // collect by wants and needs
   const hooks = {}
   matches.forEach(obj => {
-    // add needs
-    obj.needs.forEach(str => {
-      hooks[str] = Array.isArray(hooks[str]) ? hooks[str] : []
-      hooks[str].push(obj)
-    })
-    // add wants
-    obj.wants.forEach(str => {
+    // add needs, then wants
+    obj.needs.concat(obj.wants).forEach(str => {
       hooks[str] = Array.isArray(hooks[str]) ? hooks[str] : []
       hooks[str].push(obj)
     })

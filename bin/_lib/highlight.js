@@ -1,60 +1,62 @@
-// print each matching sentence, with the match in green and the rest in grey
+// print one line per match: its sentence, with the match in green and the rest in grey.
+// the match always starts at the middle column, so matches line up down the page
 const green = str => `\x1b[32m${str}\x1b[0m`
 const grey = str => `\x1b[90m${str}\x1b[0m`
-const ellipsis = '… '
+const ellipsis = '…'
 
-// ids of every term inside a match
-const matchedIds = function (doc, pattern) {
-  const ids = new Set()
-  doc.match(pattern).docs.forEach(terms => {
-    terms.forEach(t => ids.add(t.id))
-  })
-  return ids
+const textOf = words => words.map(w => w.str).join('')
+
+// drop words from the far end of one side until it fits. only the outer edge is trimmed,
+// since the space between the context and the match is printed
+const fit = function (words, max, fromStart) {
+  let cut = false
+  const length = () => {
+    const str = fromStart ? textOf(words).trimStart() : textOf(words).trimEnd()
+    return str.length + (cut ? ellipsis.length + 1 : 0)
+  }
+  while (words.length > 0 && length() > max) {
+    if (fromStart) {
+      words.shift()
+    } else {
+      words.pop()
+    }
+    cut = true
+  }
+  return cut
 }
 
-// drop unmatched words from whichever side has more of them, until the line fits
-const trim = function (words, width) {
-  let first = 0
-  let last = words.length - 1
-  const firstHit = words.findIndex(w => w.hit)
-  const lastHit = words.length - 1 - [...words].reverse().findIndex(w => w.hit)
-  const length = () => words.slice(first, last + 1).reduce((n, w) => n + w.str.length, 0)
-  while (length() > width) {
-    const left = firstHit - first
-    const right = last - lastHit
-    if (left === 0 && right === 0) {
-      break
-    }
-    if (left > right) {
-      first += 1
-    } else {
-      last -= 1
-    }
+const paint = function (words, color) {
+  if (!color) {
+    return textOf(words)
   }
-  return { words: words.slice(first, last + 1), before: first > 0, after: last < words.length - 1 }
+  return words.map(w => (w.hit ? green(w.str) : grey(w.str))).join('')
 }
 
 const highlight = function (doc, pattern, opts) {
-  const ids = matchedIds(doc, pattern)
+  const half = Math.floor(opts.width / 2)
+  const dim = str => (opts.color ? grey(str) : str)
   const lines = []
-  doc.docs.forEach(terms => {
-    const words = terms.map(t => ({ str: t.pre + t.text + t.post, hit: ids.has(t.id) }))
-    if (!words.some(w => w.hit)) {
-      return
+  // each pointer is [sentence, start, end] into the full document
+  doc.match(pattern).fullPointer.forEach(([n, start, end]) => {
+    const terms = doc.document[n]
+    const words = terms.map((t, i) => ({ str: t.pre + t.text + t.post, hit: i >= start && i < end }))
+    // left: the words before the match, trimmed from the start, padded to the middle column
+    const left = words.slice(0, start)
+    const leftCut = fit(left, half, true)
+    if (left.length > 0) {
+      left[0] = { ...left[0], str: left[0].str.trimStart() }
     }
-    const res = trim(words, opts.width)
-    // trim whitespace at the edges before painting, so it does not land inside a colour code
-    res.words[0] = { ...res.words[0], str: res.words[0].str.trimStart() }
-    res.words[res.words.length - 1] = { ...res.words.at(-1), str: res.words.at(-1).str.trimEnd() }
-    const paint = opts.color ? w => (w.hit ? green(w.str) : grey(w.str)) : w => w.str
-    let line = res.words.map(paint).join('')
-    if (res.before) {
-      line = (opts.color ? grey(ellipsis) : ellipsis) + line
-    }
-    if (res.after) {
-      line = line + (opts.color ? grey(' ' + ellipsis.trim()) : ' ' + ellipsis.trim())
-    }
-    lines.push(line)
+    let leftStr = (leftCut ? dim(ellipsis + ' ') : '') + paint(left, opts.color)
+    const leftLen = textOf(left).length + (leftCut ? ellipsis.length + 1 : 0)
+    leftStr = ' '.repeat(Math.max(0, half - leftLen)) + leftStr
+    // right: the match and the words after it, trimmed from the end. the match is never cut
+    const right = words.slice(start)
+    const after = right.splice(end - start)
+    const rightCut = fit(after, opts.width - half - textOf(right).length, false)
+    right.push(...after)
+    right[right.length - 1] = { ...right.at(-1), str: right.at(-1).str.trimEnd() }
+    const rightStr = paint(right, opts.color) + (rightCut ? dim(' ' + ellipsis) : '')
+    lines.push(leftStr + rightStr)
   })
   return lines.join('\n')
 }

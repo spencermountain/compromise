@@ -3,14 +3,11 @@ import { find, strip } from './fns.js'
 
 const api = function (View) {
   class Parentheses extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Possessives'
-    }
     strip() {
       return strip(this)
     }
   }
+  Parentheses.prototype.viewType = 'Parentheses'
 
   View.prototype.parentheses = select(Parentheses, find)
 }

@@ -1,6 +1,6 @@
 // finally,
 // actually run these match-statements on the terms
-const runMatch = function (maybeList, document, docCache, methods, opts) {
+const runMatch = function (maybeList, document, methods, opts) {
   const results = []
   for (let n = 0; n < maybeList.length; n += 1) {
     const sentence = [document[n]]
@@ -32,11 +32,7 @@ const runMatch = function (maybeList, document, docCache, methods, opts) {
           //     }
           //   }
           // }
-          const todo = { ...m, pointer: ptr }
-          if (m.unTag !== undefined) {
-            todo.unTag = m.unTag
-          }
-          results.push(todo)
+          results.push({ ...m, pointer: ptr })
         })
         //ok cool, can we stop early?
         if (opts.matchOne === true) {

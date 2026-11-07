@@ -23,14 +23,6 @@ const lookaround = function (view, isAfter, regs, group, opts) {
   return words.match(regs, group, opts)
 }
 
-const before = function (regs, group, opts) {
-  return lookaround(this, false, regs, group, opts)
-}
-
-const after = function (regs, group, opts) {
-  return lookaround(this, true, regs, group, opts)
-}
-
 // extend each match left (or right), while the terms beside it match
 const growSide = function (view, isRight, regs, group, opts) {
   if (typeof regs === 'string') {
@@ -59,16 +51,19 @@ const growSide = function (view, isRight, regs, group, opts) {
   return view.update(ptrs)
 }
 
-const growLeft = function (regs, group, opts) {
-  return growSide(this, false, regs, group, opts)
-}
-
-const growRight = function (regs, group, opts) {
-  return growSide(this, true, regs, group, opts)
+// bind a direction to a method
+const side = (fn, flag) => function (regs, group, opts) {
+  return fn(this, flag, regs, group, opts)
 }
 
 const grow = function (regs, group, opts) {
   return this.growRight(regs, group, opts).growLeft(regs, group, opts)
 }
 
-export default { before, after, growLeft, growRight, grow }
+export default {
+  before: side(lookaround, false),
+  after: side(lookaround, true),
+  growLeft: side(growSide, false),
+  growRight: side(growSide, true),
+  grow,
+}

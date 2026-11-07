@@ -1,5 +1,5 @@
 import select from '../../_select.js'
-import keepClass from '../../_lib.js'
+import keepClass, { jsonWith } from '../../_lib.js'
 import { Numeric, Ord, Card, TxtNum } from '../../../2-two/preTagger/tagSet/_lib.js'
 import find from './find.js'
 import parse from './parse/index.js'
@@ -7,7 +7,7 @@ import format from './format/index.js'
 import isUnit from './isUnit.js'
 import isValid from './isValid.js'
 import convert from './_lib.js'
-import { isPercent } from './_conversion.js'
+import { isPercent, dropPreSign } from './_conversion.js'
 import toFraction from './toFraction.js'
 import toPercentage from './toPercentage.js'
 import toDecimal from './toDecimal.js'
@@ -38,6 +38,7 @@ const edit = (view, n, apply, operation, isText, strip) => {
     if (strip) {
       val = val.not(strip)
     }
+    dropPreSign(val, str)
     val.replaceWith(str, keep)
     // handle plural/singular unit
     // agreeUnits(agree, val, obj)
@@ -49,10 +50,6 @@ const edit = (view, n, apply, operation, isText, strip) => {
 const addMethod = function (View) {
   /**   */
   class Numbers extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Numbers'
-    }
     parse(n) {
       return this.getNth(n).map(parse, [])
     }
@@ -62,19 +59,10 @@ const addMethod = function (View) {
         .map(o => o.num)
     }
     json(n) {
-      const opts = typeof n === 'object' ? n : {}
-      return this.getNth(n).map(p => {
-        const json = p.toView().json(opts)[0]
-        const parsed = parse(p)
-        json.number = {
-          prefix: parsed.prefix,
-          num: parsed.num,
-          suffix: parsed.suffix,
-          hasComma: parsed.hasComma,
-          unit: parsed.unit,
-        }
-        return json
-      }, [])
+      return jsonWith(this, n, 'number', p => {
+        const { prefix, num, suffix, hasComma, unit } = parse(p)
+        return { prefix, num, suffix, hasComma, unit }
+      })
     }
     /** any known measurement unit, for the number */
     units() {
@@ -116,7 +104,9 @@ const addMethod = function (View) {
         if (val.has(ordinalMatch)) {
           num += format(obj, Ord).slice(obj.prefix.length).match(/[a-z]+/)[0]
         }
-        val.replaceWith(obj.prefix + num + obj.suffix, keep)
+        const str = obj.prefix + num + obj.suffix
+        dropPreSign(val, str)
+        val.replaceWith(str, keep)
         return val
       })
       return this.update(res.pointer)
@@ -150,34 +140,6 @@ const addMethod = function (View) {
       return toDecimal(this)
     }
 
-    /** return only numbers that are == n */
-    isEqual(n) {
-      return this.filter(val => {
-        const num = val.get(0)[0]
-        return num === n
-      })
-    }
-    /** return only numbers that are > n*/
-    greaterThan(n) {
-      return this.filter(val => {
-        const num = val.get(0)[0]
-        return num > n
-      })
-    }
-    /** return only numbers that are < n*/
-    lessThan(n) {
-      return this.filter(val => {
-        const num = val.get(0)[0]
-        return num < n
-      })
-    }
-    /** return only numbers > min and < max */
-    between(min, max) {
-      return this.filter(val => {
-        const num = val.get(0)[0]
-        return num > min && num < max
-      })
-    }
     /** set these number to n */
     set(n) {
       if (n === undefined) {
@@ -201,16 +163,16 @@ const addMethod = function (View) {
       return edit(this, n, add, (num, by) => this._add(num, by), (val, obj) => obj.isText)
     }
     /** decrease each number by n*/
-    subtract(n, agree) {
-      return this.add(n * -1, agree)
+    subtract(n) {
+      return this.add(n * -1)
     }
     /** increase each number by 1 */
-    increment(agree) {
-      return this.add(1, agree)
+    increment() {
+      return this.add(1)
     }
     /** decrease each number by 1 */
-    decrement(agree) {
-      return this.add(-1, agree)
+    decrement() {
+      return this.add(-1)
     }
     // Subclasses may supply decimal arithmetic.
     _add(a, b) {
@@ -221,13 +183,25 @@ const addMethod = function (View) {
       return this.map(fn)
     }
   }
-  keepClass(Numbers)
-  // aliases
-  Numbers.prototype.toNice = Numbers.prototype.toLocaleString
-  Numbers.prototype.isBetween = Numbers.prototype.between
-  Numbers.prototype.minus = Numbers.prototype.subtract
-  Numbers.prototype.plus = Numbers.prototype.add
-  Numbers.prototype.equals = Numbers.prototype.isEqual
+  keepClass(Numbers, 'Numbers')
+  const p = Numbers.prototype
+  // filter by each value, like .isEqual(n) or .between(min, max)
+  const compare = test => function (a, b) {
+    return this.filter(val => test(val.get(0)[0], a, b))
+  }
+  const equals = compare((num, n) => num === n)
+  const between = compare((num, min, max) => num > min && num < max)
+  Object.assign(p, {
+    isEqual: equals,
+    equals,
+    greaterThan: compare((num, n) => num > n),
+    lessThan: compare((num, n) => num < n),
+    between,
+    isBetween: between,
+    toNice: p.toLocaleString,
+    minus: p.subtract,
+    plus: p.add,
+  })
 
   View.prototype.numbers = select(Numbers, find, true)
   View.prototype.percentages = select(Numbers, doc => find(doc).filter(isPercent), true)

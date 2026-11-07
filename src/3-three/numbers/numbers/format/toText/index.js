@@ -30,12 +30,12 @@ const breakdown_hundred = function (num) {
   if (num > 100) {
     return arr //something bad happened..
   }
-  for (let i = 0; i < tens_mapping.length; i++) {
-    if (num >= tens_mapping[i][1]) {
-      num -= tens_mapping[i][1]
-      arr.push(tens_mapping[i][0])
+  tens_mapping.forEach(([word, val]) => {
+    if (num >= val) {
+      num -= val
+      arr.push(word)
     }
-  }
+  })
   //(hopefully) we should only have 20-0 now
   if (ones_mapping[num]) {
     arr.push(ones_mapping[num])
@@ -45,19 +45,12 @@ const breakdown_hundred = function (num) {
 
 /** print-out 'point eight nine'*/
 const handle_decimal = num => {
-  const arr = []
   //parse it out like a string, because js math is such shit
-  const str = toString(num)
-  const decimal = str.match(/\.([0-9]+)/)
-  if (!decimal || !decimal[0]) {
-    return arr
+  const decimal = toString(num).match(/\.([0-9]+)/)
+  if (!decimal) {
+    return []
   }
-  arr.push('point')
-  const decimals = decimal[0].split('')
-  for (let i = 0; i < decimals.length; i++) {
-    arr.push(ones[decimals[i]])
-  }
-  return arr
+  return ['point', ...[...decimal[1]].map(d => ones[d])]
 }
 
 /** turns an integer into a textual number */
@@ -81,8 +74,8 @@ const toText = function (obj) {
   //break-down into units, counts
   const units = breakdown_magnitudes(num)
   //build-up the string from its components
-  for (let i = 0; i < units.length; i++) {
-    let unit_name = units[i].unit
+  units.forEach((u, i) => {
+    let unit_name = u.unit
     if (unit_name === 'one') {
       unit_name = ''
       //put an 'and' in here
@@ -95,9 +88,9 @@ const toText = function (obj) {
     if (next && unit_name === 'hundred ' + next.unit) {
       unit_name = 'hundred'
     }
-    arr = arr.concat(breakdown_hundred(units[i].count))
+    arr = arr.concat(breakdown_hundred(u.count))
     arr.push(unit_name)
-  }
+  })
   //also support decimals - 'point eight'
   arr = arr.concat(handle_decimal(num))
   //remove empties

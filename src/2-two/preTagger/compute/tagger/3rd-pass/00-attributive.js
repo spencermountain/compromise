@@ -1,14 +1,14 @@
 import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 import { hasAny, toSet } from '../../../../_lib.js'
-import { Adj, Adv, Ger, Val, Det, Prep, Conj, Pron, Poss, Vb, NN, Plur } from '../../../tagSet/_lib.js'
+import { Adj, Adv, Ger, Val, Det, Prep, Conj, Pron, Poss, Vb, NN, Plur, Neg } from '../../../tagSet/_lib.js'
 
 // adverbs that can also describe a noun
 const describing = toSet('still only very further')
 // these can be a subject - 'this still helps'
 const demonstrative = toSet('this that these those')
 // tags that can't be the thing being described
-const notThing = [Adj, Adv, Ger, Val, Det, Prep, Conj, Pron, 'Negative']
+const notThing = [Adj, Adv, Ger, Val, Det, Prep, Conj, Pron, Neg]
 
 // 'a still night' - between a determiner and its noun, it describes the noun
 const attributive = function (terms, i, model) {

@@ -16,17 +16,12 @@ const casualForms = {
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
-const section_sum = obj => {
-  return Object.keys(obj).reduce((sum, k) => {
-    sum += obj[k]
-    return sum
-  }, 0)
-}
+const section_sum = obj => Object.values(obj).reduce((a, b) => a + b, 0)
 
 //turn a string into a number
 const parse = function (str) {
   //convert some known-numbers
-  if (Object.hasOwn(casualForms, str) === true) {
+  if (Object.hasOwn(casualForms, str)) {
     return casualForms[str]
   }
   //'a/an' is 1
@@ -86,20 +81,17 @@ const parse = function (str) {
     }
 
     //prevent mismatched units, like 'seven eleven' if not a fraction
-    if (isValid(w, has) === false) {
+    if (!isValid(w, has)) {
       return null
     }
 
     //buildOut section, collect 'has' values
+    const kind = ['ones', 'teens', 'tens'].find(k => Object.hasOwn(words[k], w))
     if (/^[0-9.]+$/.test(w)) {
       has.ones = parseFloat(w) //not technically right
-    } else if (Object.hasOwn(words.ones, w) === true) {
-      has.ones = words.ones[w]
-    } else if (Object.hasOwn(words.teens, w) === true) {
-      has.teens = words.teens[w]
-    } else if (Object.hasOwn(words.tens, w) === true) {
-      has.tens = words.tens[w]
-    } else if (Object.hasOwn(words.multiples, w) === true) {
+    } else if (kind) {
+      has[kind] = words[kind][w]
+    } else if (Object.hasOwn(words.multiples, w)) {
       let mult = words.multiples[w]
 
       //something has gone wrong : 'two hundred five hundred'

@@ -33,18 +33,13 @@ const parseBlocks = function (txt, opts = {}) {
     res = res.concat(splitGroups(str))
   })
   res = cleanUp(res)
-  // split by spaces, now
-  let final = []
-  res.forEach(str => {
-    if (isBlock(str)) {
-      final.push(str)
-    } else if (isRegex(str)) {
-      final.push(str)
-    } else {
-      final = final.concat(str.split(byWord))
+  // split by spaces, now - but not inside (blocks) or /regexes/
+  const final = res.flatMap(str => {
+    if (isBlock(str) || isRegex(str)) {
+      return str
     }
+    return str.split(byWord)
   })
-  final = cleanUp(final)
-  return final
+  return cleanUp(final)
 }
 export default parseBlocks

@@ -9,10 +9,6 @@ import toSingular from './toSingular.js'
 
 const api = function (View) {
   class Nouns extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Nouns'
-    }
 
     parse(n) {
       return this.getNth(n).map(parseNoun)
@@ -81,7 +77,7 @@ const api = function (View) {
       })
     }
   }
-  keepClass(Nouns)
+  keepClass(Nouns, 'Nouns')
   View.prototype.nouns = select(Nouns, find, true)
 }
 export default api

@@ -1,7 +1,8 @@
-import { Participle, Ger, Conj } from '../../../../2-two/preTagger/tagSet/_lib.js'
+import { Participle, Ger, Conj, Aux } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { infinitive, inflect } from './inflect.js'
 import byForm from './_lib.js'
 import { noop, haveHas } from '../lib.js'
+import { SimplePres, SimpleFut, PresCond, PastCond, AuxFut, ModalPast, ModalInf, ModalPerfProg, InfForm } from '../parse/grammar/forms.js'
 
 // walk-> has walked
 const simple = (vb, parsed) => {
@@ -15,7 +16,7 @@ const simple = (vb, parsed) => {
     const have = haveHas(vb, parsed)
     vb.replace(root, have)
     vb.match(parsed.negative).insertAfter('been')
-    vb.match(have).tag('Auxiliary')
+    vb.match(have).tag(Aux)
     return vb
   }
   // 'driven' || 'drove'
@@ -25,7 +26,7 @@ const simple = (vb, parsed) => {
   if (auxiliary.has('(do|does|did)')) {
     const have = haveHas(vb, parsed)
     vb.replace(root, str)
-    vb.replace('(do|does|did)', have).match(have).tag('Auxiliary')
+    vb.replace('(do|does|did)', have).match(have).tag(Aux)
     return vb
   }
 
@@ -33,7 +34,7 @@ const simple = (vb, parsed) => {
     vb = vb.replace(root, str)
     // 'have/had/has eaten'
     const have = haveHas(vb, parsed)
-    vb.prepend(have).match(have).tag('Auxiliary')
+    vb.prepend(have).match(have).tag(Aux)
     vb.remove(auxiliary)
   }
 
@@ -43,46 +44,46 @@ const simple = (vb, parsed) => {
 const forms = {
 
   // walk -> walked
-  'infinitive': simple,
+  [InfForm]: simple,
 
   // he walks -> he walked
-  'simple-present': simple,
+  [SimplePres]: simple,
 
   // he will walk -> he walked
-  'simple-future': (vb, parsed) => {
+  [SimpleFut]: (vb, parsed) => {
     vb.replace(parsed.root, inflect(parsed.root, Participle))
     return vb.replace('will', haveHas(vb, parsed))
   },
 
   // would be walked -> 'would have been walked'
-  'present-conditional': vb => vb.replace('be', 'have been'),
+  [PresCond]: vb => vb.replace('be', 'have been'),
 
   // would have been walked
-  'past-conditional': noop,
+  [PastCond]: noop,
 
   // is going to drink -> was going to drink
-  'auxiliary-future': (vb, parsed) => {
+  [AuxFut]: (vb, parsed) => {
     const have = haveHas(vb, parsed)
     vb.replace('(is|are|am|was|were)', have)
     vb.match('going').insertBefore('been')
-    vb.match('(have|has|been|be)').tag('Auxiliary')
+    vb.match('(have|has|been|be)').tag(Aux)
     // The new perfect head governs 'going'; its infinitival complement must
     // remain separate on subsequent conversions, just as on a fresh parse.
-    vb.match('going').unTag('Auxiliary').tag(Ger)
-    vb.match('to').unTag('Auxiliary').tag(Conj)
+    vb.match('going').unTag(Aux).tag(Ger)
+    vb.match('to').unTag(Aux).tag(Conj)
     return vb
   },
 
   // must walk -> 'must have walked'
-  'modal-infinitive': (vb, parsed) => {
+  [ModalInf]: (vb, parsed) => {
     vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, Participle))
-    vb.match('have').tag('Auxiliary')
+    vb.match('have').tag(Aux)
     return vb
   },
 
   // must have walked
-  'modal-past': noop,
-  'modal-perfect-progressive': noop,
+  [ModalPast]: noop,
+  [ModalPerfProg]: noop,
   // wanted to walk
   // 'want-infinitive': noop,
   // started looking

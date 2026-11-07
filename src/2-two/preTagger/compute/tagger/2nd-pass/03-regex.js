@@ -4,7 +4,7 @@ const hasApostrophe = /['‘’‛‵′`´]/
 // normal regexes
 const doRegs = function (str, regs) {
   for (let i = 0; i < regs.length; i += 1) {
-    if (regs[i][0].test(str) === true) {
+    if (regs[i][0].test(str)) {
       return regs[i]
     }
   }

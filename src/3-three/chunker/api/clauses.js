@@ -1,3 +1,14 @@
+// a comma, but not a clause break
+const notClause = [
+  '@hasComma @hasComma', //fun, cool...
+  '@hasComma (and|or) .', //cool, and fun
+  '(#City && @hasComma) #Country', //'toronto, canada'
+  '(#WeekDay && @hasComma) #Date', //'tuesday, march 2nd'
+  '(#Date+ && @hasComma) #Val', //'july 6, 1992'
+  '(#Adj && @hasComma) #Adj', //nice, pretty
+  // '@hasComma (too|also)$', //at end of sentence
+]
+
 const byComma = function (doc) {
   let commas = doc.match('@hasComma')
   // remove any non-clause uses
@@ -10,15 +21,8 @@ const byComma = function (doc) {
     if (m.growRight('. .').wordCount() === 1) {
       return false
     }
-    let more = m.grow('.') // grow by 1 word in either direction
-    more = more.ifNo('@hasComma @hasComma') //fun, cool...
-    more = more.ifNo('@hasComma (and|or) .') //cool, and fun
-    more = more.ifNo('(#City && @hasComma) #Country') //'toronto, canada'
-    more = more.ifNo('(#WeekDay && @hasComma) #Date') //'tuesday, march 2nd'
-    more = more.ifNo('(#Date+ && @hasComma) #Val') //'july 6, 1992'
-    more = more.ifNo('(#Adj && @hasComma) #Adj') //nice, pretty
-    // more = more.ifNo('@hasComma (too|also)$') //at end of sentence
-    return more.found
+    const more = m.grow('.') // grow by 1 word in either direction
+    return !notClause.some(str => more.has(str))
   })
   return doc.splitAfter(commas)
 }
@@ -41,6 +45,24 @@ const splitQuotes = function (doc) {
   return doc.splitOn(matches)
 }
 
+// split a clause before these
+const splitBefore = [
+  // ... said John.
+  '(said|says) #Prop$',
+  // ... if it was
+  '. . if .{4}',
+  // various conjunctions
+  'and while',
+  'now that',
+  'ever since',
+  '(supposing|although)',
+  'even (while|if|though)',
+  '(whereas|whose)',
+  // 'as (far|long|much|soon) as',
+  'as (though|if)',
+  '(til|until)',
+]
+
 const clauses = function (n) {
   let found = this
 
@@ -53,22 +75,9 @@ const clauses = function (n) {
 
   // i said
   found = found.splitAfter('^#Pron (said|says)')
-  // ... said John.
-  found = found.splitBefore('(said|says) #Prop$')
-
-  // ... if it was
-  found = found.splitBefore('. . if .{4}')
-
-  // various conjunctions
-  found = found.splitBefore('and while')
-  found = found.splitBefore('now that')
-  found = found.splitBefore('ever since')
-  found = found.splitBefore('(supposing|although)')
-  found = found.splitBefore('even (while|if|though)')
-  found = found.splitBefore('(whereas|whose)')
-  // found = found.splitBefore('as (far|long|much|soon) as')
-  found = found.splitBefore('as (though|if)')
-  found = found.splitBefore('(til|until)')
+  splitBefore.forEach(str => {
+    found = found.splitBefore(str)
+  })
 
   // it is cool but it is ..
   const m = found.match('#Verb .* [but] .* #Verb', 0)

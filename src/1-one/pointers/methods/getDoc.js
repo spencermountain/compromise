@@ -3,18 +3,13 @@ const max = 20
 // sweep-around looking for our start term uuid
 const blindSweep = function (id, doc, n) {
   for (let i = 0; i < max; i += 1) {
-    // look up a sentence
-    if (doc[n - i]) {
-      const index = doc[n - i].findIndex(term => term.id === id)
-      if (index !== -1) {
-        return [n - i, index]
-      }
-    }
-    // look down a sentence
-    if (doc[n + i]) {
-      const index = doc[n + i].findIndex(term => term.id === id)
-      if (index !== -1) {
-        return [n + i, index]
+    // look up a sentence, then down one
+    for (const k of [n - i, n + i]) {
+      if (doc[k]) {
+        const index = doc[k].findIndex(term => term.id === id)
+        if (index !== -1) {
+          return [k, index]
+        }
       }
     }
   }

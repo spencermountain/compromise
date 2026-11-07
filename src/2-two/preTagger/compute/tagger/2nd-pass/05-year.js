@@ -1,6 +1,6 @@
 import fastTag from '../_fastTag.js'
 import { hasAny, toSet } from '../../../../_lib.js'
-import { Date, WeekDay, Year, Prop, Ord, Card, Val, Numeric, Det, Poss, NN, Plur } from '../../../tagSet/_lib.js'
+import { Date, WeekDay, Year, Prop, Ord, Card, Val, Numeric, Det, Poss, NN, Plur, Month } from '../../../tagSet/_lib.js'
 const min = 1400
 const max = 2100
 const possessive = /^[0-9]{4}'s$/
@@ -10,7 +10,7 @@ const beforeDecade = toSet('the early mid late')
 const dateWords = toSet('in on by until since for to during throughout through within before after of this next last circa around post pre budget classic plan may')
 
 // a date-ish neighbour
-const seemsFine = term => term && hasAny(term, Date, 'Month', WeekDay, Year)
+const seemsFine = term => term && hasAny(term, Date, Month, WeekDay, Year)
 
 const seemsGood = function (term) {
   if (!term) {

@@ -1,6 +1,6 @@
 import { firstGroup } from './groups.js'
 import { doDoes } from '../lib.js'
-import { Vb } from '../../../../2-two/preTagger/tagSet/_lib.js'
+import { Vb, Aux } from '../../../../2-two/preTagger/tagSet/_lib.js'
 
 const methods = {
   past: 'toPastTense', present: 'toPresentTense', future: 'toFutureTense',
@@ -79,19 +79,23 @@ const parseQuestion = function (sentence, target) {
   expanded.contractions().expand()
   const terms = expanded.terms()
   const words = terms.map(t => trimLead(t.text('normal')), [])
+  const len = words.length
+  const at = i => terms.eq(i)
   // An object wh-phrase may contain several words ('which books', 'in which
   // city'). Its finite auxiliary still precedes a separate subject. Subject
   // wh-phrases fail the subject check below and stay on the ordinary path.
   const finite = wh ? words.findIndex((word, i) => i > lead && auxiliary.test(word)) : lead
   if (finite < 0) return null
-  if (!auxiliary.test(words[finite]) || (words[finite] === 'will' && terms.eq(finite).has('#Pers'))) return null
-  const copula = /^(is|are|am|was|were)$/.test(words[finite])
+  const fin = words[finite]
+  if (!auxiliary.test(fin) || (fin === 'will' && at(finite).has('#Pers'))) return null
+  const copula = /^(is|are|am|was|were)$/.test(fin)
   let start = finite + 1
   const frontNegative = words[start] === 'not'
   if (frontNegative) start += 1
-  const pronoun = terms.eq(start).has('#Pron') && !possessive.test(words[start])
+  const first = words[start]
+  const pronoun = at(start).has('#Pron') && !possessive.test(first)
   const polar = isPolar(target)
-  const command = terms.eq(lead).has('#Imp')
+  const command = at(lead).has('#Imp')
   // Without a '?', only 'is he happy' is clearly inverted. The rest could be commands,
   // clauses or fragments: 'Do the dishes now', 'When he is late, they walk', 'Had I known, ...'
   if (polar && !asked && (!pronoun || finite > 1 || command || sentence.has('@hasComma'))) {
@@ -103,37 +107,38 @@ const parseQuestion = function (sentence, target) {
   if (pronoun) {
     end += 1
   } else {
-    if (terms.eq(end).has('#Prep')) return null
+    if (at(end).has('#Prep')) return null
     let noun = false
     let modified = false
-    for (; end < words.length; end += 1) {
-      const term = terms.eq(end)
-      if (clause.test(words[end]) || !term.has('(#Det|#Adj|#NN|#Prep|#Conj)') || term.has('#Verb')) {
+    for (; end < len; end += 1) {
+      const term = at(end)
+      const word = words[end]
+      if (clause.test(word) || !term.has('(#Det|#Adj|#NN|#Prep|#Conj)') || term.has('#Verb')) {
         break
       }
       if (noun && copula) {
-        if (term.has('#Adj') || /ing$/.test(words[end])) {
+        if (term.has('#Adj') || /ing$/.test(word)) {
           break
         }
         // A new noun phrase starts the predicate: 'is Tom [a doctor]', but 'is all the food'
-        const prev = terms.eq(end - 1)
+        const prev = at(end - 1)
         if (term.has('(#Det|#Pron|#Poss)') && prev.has('#NN') && !prev.has('(#Poss|@hasComma|all|both)')) {
           break
         }
       }
       // A modifier can't provide the head noun: 'is wrong about him', but 'are some of them'
-      noun ||= !modified && term.has('#NN') && !possessive.test(words[end])
-      modified ||= term.has('#Prep') && words[end] !== 'of'
+      noun ||= !modified && term.has('#NN') && !possessive.test(word)
+      modified ||= term.has('#Prep') && word !== 'of'
     }
     if (!noun) return null
     // Nothing ended the subject. Adding a 'not' has its own rules for this, below.
-    const open = clause.test(words[end]) || (end >= words.length && !polar)
+    const open = clause.test(words[end]) || (end >= len && !polar)
     if (copula && open) {
       end = copulaEnd(terms, words, { start, end, finite, wh, asked })
       if (end === null) {
         return null
       }
-    } else if (end < words.length && terms.eq(end - 1).has('(#Conj|#Prep)')) {
+    } else if (end < len && at(end - 1).has('(#Conj|#Prep)')) {
       // A verb can't follow a dangling word: 'do the dishes and walk the dog'
       if (!copula) {
         return null
@@ -145,13 +150,13 @@ const parseQuestion = function (sentence, target) {
     }
   }
   // Where does a negative go, when the subject seems to reach the end?
-  if (polar && copula && end >= words.length) {
+  if (polar && copula && end >= len) {
     // The wh-word can be the subject: 'Who is there?'
     if (/^(who|what|which)$/.test(words[finite - 1])) {
       return null
     }
     // Otherwise a phrase can be the predicate: 'Is Tom a doctor?', 'Is the book on the table?'
-    const predicate = words.findIndex((word, i) => i > start && (possessive.test(word) || (word !== 'of' && terms.eq(i).has('(#Det|#Prep)'))))
+    const predicate = words.findIndex((word, i) => i > start && (possessive.test(word) || (word !== 'of' && at(i).has('(#Det|#Prep)'))))
     if (!wh && predicate > -1) {
       // Leave an unclear subject to the ordinary path: 'Is this your dog?'
       if (!terms.slice(start, predicate).has('#NN')) {
@@ -161,28 +166,28 @@ const parseQuestion = function (sentence, target) {
     }
   }
   // Adding a 'not' can go without a predicate: 'Did you?' -> 'Did you not?'
-  const bare = polar && asked && !command && end >= words.length
+  const bare = polar && asked && !command && end >= len
   // A question can elide its verb after a pronoun: 'did you?', 'why did you really?'
   let verb = end
-  while (terms.eq(verb).has('(#Adv|#Neg)')) {
+  while (at(verb).has('(#Adv|#Neg)')) {
     verb += 1
   }
   // Without a verb, this asks for something: 'please do the dishes?', but 'please do they know?'
-  if (words[lead - 1] === 'please' && doHave.test(words[finite]) && !terms.eq(verb).has('#Verb')) {
+  if (words[lead - 1] === 'please' && doHave.test(fin) && !at(verb).has('#Verb')) {
     return null
   }
   // But 'do it?' is a command, and in 'who did it?' the pronoun is an object.
-  const doIt = words[start] === 'it' && doHave.test(words[finite])
+  const doIt = first === 'it' && doHave.test(fin)
   const hasObject = finite > lead && !/^(why|when|where|how)$/.test(words[finite - 1])
-  const elided = !copula && !doIt && !hasObject && verb >= words.length && subjectPronoun.test(words[start]) && asked
+  const elided = !copula && !doIt && !hasObject && verb >= len && subjectPronoun.test(first) && asked
   // Polite questions have a predicate past the 'please': 'Could you please leave?'
   const optional = copula || bare || elided || (polar && words[end] === 'please')
-  if (end === start || (end >= words.length && !optional)) return null
+  if (end === start || (end >= len && !optional)) return null
   if (!optional) {
     // A lexical verb can follow adverbs: 'do the walls really need paint'
-    const lexical = terms.eq(verb).has('#Verb')
+    const lexical = at(verb).has('#Verb')
     // Without a '?', these are commands: 'do the dishes quickly', 'do the dishes, walk the dog'
-    if (!asked && (!lexical || terms.eq(end - 1).has('@hasComma'))) {
+    if (!asked && (!lexical || at(end - 1).has('@hasComma'))) {
       return null
     }
     // Asked, an adverb alone can be enough: 'did she really?'
@@ -226,6 +231,8 @@ const predicateNot = function (terms, end) {
   return -1
 }
 
+const rechunk = sentence => sentence.fullSentence().compute('chunks')
+
 // The auxiliary is already fronted, so 'not' just follows the subject.
 const negate = function (sentence, { terms, end, frontNegative }) {
   if (frontNegative || predicateNot(terms, end) > -1) {
@@ -238,7 +245,7 @@ const negate = function (sentence, { terms, end, frontNegative }) {
   } else {
     all.eq(end - 1).append('not')
   }
-  return sentence.fullSentence().compute('chunks')
+  return rechunk(sentence)
 }
 
 // The auxiliary stays fronted, so only the 'not' goes: 'Does he not walk?' -> 'Does he walk?'
@@ -248,7 +255,7 @@ const affirm = function (sentence, { terms, start, end, frontNegative }) {
     return sentence
   }
   sentence.terms().eq(not).remove()
-  return sentence.fullSentence().compute('chunks')
+  return rechunk(sentence)
 }
 
 // Convert a declarative copy, then put only its finite auxiliary back before
@@ -278,11 +285,12 @@ const question = function (sentence, target) {
   // A trimmed subject reads as one clause with its verb, despite any comma.
   const source = subject.text() + ' ' + words[finite] + negative + ' ' + tail
   // The scratch copies need ids, so that hardened pointers can survive their edits.
-  let work = sentence.fromText(source).compute(tagged)
+  const scratch = str => sentence.fromText(str).compute(tagged)
+  let work = scratch(source)
   // Subject-first order keeps the scratch copy on the ordinary conversion path.
   firstGroup(work.verbs())[methods[target]]()
   if (work.text('normal') === sentence.fromText(source).text('normal')) return sentence
-  work = sentence.fromText(work.text()).compute(tagged)
+  work = scratch(work.text())
   const subjectLength = end - start
   let rest = work.terms().slice(subjectLength)
   // A copula can stay behind an adverb: 'he really is happy'
@@ -336,7 +344,7 @@ const question = function (sentence, target) {
   }
   // A leading 'Had' can otherwise be tagged as a conditional marker. Here we
   // know it is the finite auxiliary that was just moved into question position.
-  changed.terms().eq(finite).tag('Auxiliary')
+  changed.terms().eq(finite).tag(Aux)
   return changed.compute('chunks')
 }
 export default question

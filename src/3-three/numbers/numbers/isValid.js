@@ -1,20 +1,11 @@
 import parse from './parse/index.js'
-import { bigs, pow10 } from './_words.js'
+import { bigs, ordSuffix, pow10 } from './_words.js'
 
 // { hundred: 100, thousand: 1000, ... }
 const mults = {}
 bigs.forEach((w, i) => {
   mults[w] = i === 0 ? 100 : pow10(3 * i)
 })
-
-// '1st', '22nd', '13th'
-const expectedSuffix = digits => {
-  if (/1[123]$/.test(digits)) {
-    return 'th'
-  }
-  const suffix = { 1: 'st', 2: 'nd', 3: 'rd' }
-  return suffix[digits.slice(-1)] || 'th'
-}
 
 // western '1,000,000' or lakh '1,00,000'
 const goodCommas = /^[0-9]{1,3}(,[0-9]{3})+$|^[0-9]{1,2}(,[0-9]{2})*,[0-9]{3}$/
@@ -53,7 +44,7 @@ const checkNumeric = term => {
     if ((decimal && denom === undefined) || term.text.startsWith('-') || /^0+$/.test(base)) {
       return false
     }
-    const want = expectedSuffix(base)
+    const want = ordSuffix(base)
     if (suffix !== want && suffix !== want + 's') {
       return false
     }

@@ -49,24 +49,7 @@ const haveHas = function (vb, parsed) {
   return 'have'
 }
 
-const getTense = function (m) {
-  if (m.has('#Inf')) {
-    return Inf
-  }
-  if (m.has('#Participle')) {
-    return Participle
-  }
-  if (m.has('#Past')) {
-    return Past
-  }
-  if (m.has('#Ger')) {
-    return Ger
-  }
-  if (m.has('#Pres')) {
-    return Pres
-  }
-  return undefined
-}
+const getTense = m => [Inf, Participle, Past, Ger, Pres].find(t => m.has('#' + t))
 
 // the tense set by emphatic do-support - 'does not walk', 'did not walk'
 const doTense = ({ auxiliary, negative }) => {

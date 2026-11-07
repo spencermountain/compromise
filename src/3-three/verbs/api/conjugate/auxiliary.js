@@ -1,8 +1,9 @@
-import { Participle } from '../../../../2-two/preTagger/tagSet/_lib.js'
+import { Participle, Aux } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { inflect } from './inflect.js'
 import readAuxiliary from '../parse/auxiliary.js'
 import parseVerb from '../parse/index.js'
 import { haveHas, isAreAm, wasWere, retag } from '../lib.js'
+import { AuxFut } from '../parse/grammar/forms.js'
 
 // Decide the auxiliary chain independently of adverbs and negation.
 const plan = function (chain, target, vb, parsed) {
@@ -75,23 +76,23 @@ const write = function (vb, parsed, words, target, passive) {
     const text = extra.join(' ')
     if (!passive && target[0] === 'will' && target[1] === 'have') {
       // Retain existing active-perfect adverb placement: 'will have really ...'.
-      slots[0].toView().insertAfter(text).terms().slice(1).tag('Auxiliary')
+      slots[0].toView().insertAfter(text).terms().slice(1).tag(Aux)
     } else {
       const anchor = sourceTail.length > 0 ? sourceTail[0] : root
-      anchor.toView().insertBefore(text).terms().slice(0, extra.length).tag('Auxiliary')
+      anchor.toView().insertBefore(text).terms().slice(0, extra.length).tag(Aux)
     }
   }
   for (let i = 0; i < overlap; i += 1) {
     const sourceIndex = slots.length - 1 - i
     const replacement = target[target.length - 1 - i]
     if (words[sourceIndex] !== replacement) {
-      slots[sourceIndex].replaceWith(replacement).tag('Auxiliary')
+      slots[sourceIndex].replaceWith(replacement).tag(Aux)
     }
   }
   for (let i = sourceTail.length - overlap - 1; i >= 0; i -= 1) {
     sourceTail[i].remove()
   }
-  if (words[0] !== target[0]) slots[0].replaceWith(target[0]).tag('Auxiliary')
+  if (words[0] !== target[0]) slots[0].replaceWith(target[0]).tag(Aux)
   return vb
 }
 
@@ -103,7 +104,7 @@ const convertAuxiliary = function (vb, parsed, form, target) {
   // going-to handlers. New nested going-to forms change only their finite head.
   if (target === 'gerund' && !chain.passive) return null
   if (chain.modal && target !== 'participle' && target !== 'gerund') return null
-  if (chain.prospective && !chain.perfect && !chain.passive && form === 'auxiliary-future') return null
+  if (chain.prospective && !chain.perfect && !chain.passive && form === AuxFut) return null
   const words = plan(chain, target, vb, parsed)
   if (words.join(' ') === chain.words.join(' ')) return vb
   // .parse() expands contractions on a clone. Expand the live selection only

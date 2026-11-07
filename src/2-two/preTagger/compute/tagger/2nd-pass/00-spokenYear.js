@@ -1,6 +1,6 @@
 import fastTag from '../_fastTag.js'
 import spokenYear from '../../../methods/spokenYear.js'
-import { Val, Unit, Card, Year, Date, TxtNum } from '../../../tagSet/_lib.js'
+import { Val, Unit, Card, Year, Date, TxtNum, Month } from '../../../tagSet/_lib.js'
 
 // no punctuation between these words - not 'twenty, twenty one'
 const joined = /^( +|-)$/
@@ -35,7 +35,7 @@ const isCountLeft = function (terms, i) {
   }
   // 'five twenty twenty', but not 'june five twenty twenty' - 'march' and 'may' aren't months yet
   const month = terms[i - 2]
-  return prev.tags.has(Card) && !month?.tags.has('Month') && !/^(march|may)$/.test(month?.normal)
+  return prev.tags.has(Card) && !month?.tags.has(Month) && !/^(march|may)$/.test(month?.normal)
 }
 
 const isCountRight = function (year, next) {

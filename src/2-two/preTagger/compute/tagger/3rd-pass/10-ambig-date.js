@@ -1,6 +1,6 @@
 import { setTag, titleCase } from '../_lib.js'
 import { hasAny, toSet } from '../../../../_lib.js'
-import { Conj, Prep, Inf, Pron, Adv, Plur, Det, Val, Numeric, Date } from '../../../tagSet/_lib.js'
+import { Conj, Prep, Inf, Pron, Adv, Plur, Det, Val, Numeric, Date, Month } from '../../../tagSet/_lib.js'
 // march/may are a month, a verb, or a modal - decided by their neighbours
 // (ported from postTagger match-rules, so it only runs on these two words)
 const reason = '3-[ambig-date]'
@@ -81,7 +81,7 @@ const ambigDate = function (terms, i, world) {
   }
   if (month) {
     setTag(dates, Date, world, reason)
-    setTag([term], 'Month', world, reason)
+    setTag([term], Month, world, reason)
   } else if (!isMay && !has(term, Date) && next && direction.has(next.normal)) {
     // [march] up the hill → Infinitive
     setTag([term], Inf, world, reason)

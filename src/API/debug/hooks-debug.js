@@ -4,10 +4,7 @@ import debug from './debug.js'
 const colorSpec = doc => {
   return doc.docs
     .map((terms, index) => {
-      const plain = terms
-        .map(t => t.pre + t.text + t.post)
-        .join('')
-        .trim()
+      const plain = terms.map(t => t.pre + t.text + t.post).join('').trim()
       const text = dim("'" + plain + "'")
       const spec = doc.update([[index]]).out('spec')
       return text + grey(i(spec.slice(plain.length)))

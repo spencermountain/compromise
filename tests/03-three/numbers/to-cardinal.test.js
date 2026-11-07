@@ -28,7 +28,7 @@ test('parse numbers', function (t) {
   t.end()
 })
 test('parse numbered ordinals', function (t) {
-  t.equal(cardinal('0th'), 0, here + '0th')
+  t.equal(cardinal('0th'), undefined, here + '0th is not a number')
   t.equal(cardinal('1st'), 1, here + '1st')
   t.equal(cardinal('2nd'), 2, here + '2nd')
   t.equal(cardinal('3rd'), 3, here + '3rd')

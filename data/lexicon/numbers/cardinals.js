@@ -28,9 +28,4 @@ export default [
   'seventy',
   'eighty',
   'ninety',
-  // plural-multiples
-  'thousands',
-  'millions',
-  'billions',
-  'trillions',
 ]

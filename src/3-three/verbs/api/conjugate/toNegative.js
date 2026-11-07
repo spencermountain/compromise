@@ -1,5 +1,6 @@
 import { doDoes, getTense } from '../lib.js'
 import { keepTags as keep } from '../../../_lib.js'
+import { Imperative, WantInf, SimplePres, SimplePast, AuxPast, PassivePast, InfForm } from '../parse/grammar/forms.js'
 
 // walked -> walk, using the tense of the whole phrase
 const toInf = function (vb, parsed) {
@@ -40,10 +41,10 @@ const hasCopula = (vb) => vb.has('(is|was|am|are|will|were|be)')
 const forms = {
 
   // he walks' -> 'he does not walk'
-  'simple-present': (vb, parsed) => {
+  [SimplePres]: (vb, parsed) => {
     // is/was
-    if (hasCopula(vb) === true) {
-      return isWas(vb, parsed)
+    if (hasCopula(vb)) {
+      return isWas(vb)
     }
     // he walk
     vb = toInf(vb, parsed)
@@ -52,10 +53,10 @@ const forms = {
     return vb
   },
   // 'he walked' -> 'he did not walk'
-  'simple-past': (vb, parsed) => {
+  [SimplePast]: (vb, parsed) => {
     // is/was
-    if (hasCopula(vb) === true) {
-      return isWas(vb, parsed)
+    if (hasCopula(vb)) {
+      return isWas(vb)
     }
     // he walk
     vb = toInf(vb, parsed)
@@ -66,19 +67,19 @@ const forms = {
   },
 
   // walk! -> 'do not walk'
-  'imperative': (vb) => {
+  [Imperative]: (vb) => {
     vb.prepend('do not')
     return vb
   },
   // walk -> does not walk
-  'infinitive': (vb, parsed) => {
-    if (hasCopula(vb) === true) {
-      return isWas(vb, parsed)
+  [InfForm]: (vb, parsed) => {
+    if (hasCopula(vb)) {
+      return isWas(vb)
     }
     return doesNot(vb, parsed)
   },
 
-  'passive-past': (vb) => {
+  [PassivePast]: (vb) => {
     // got walked -> did not get walked
     if (vb.has('got')) {
       vb.replace('got', 'get', keep)
@@ -94,7 +95,7 @@ const forms = {
     }
     return vb
   },
-  'auxiliary-past': (vb) => {
+  [AuxPast]: (vb) => {
     // used to walk
     if (vb.has('used')) {
       vb.prepend('did not')
@@ -109,7 +110,7 @@ const forms = {
   },
 
   // wants to walk
-  'want-infinitive': (vb, parsed) => {
+  [WantInf]: (vb, parsed) => {
     // does not 
     vb = doesNot(vb, parsed)
     // want
@@ -138,8 +139,8 @@ const toNegative = function (vb, parsed, form) {
     return vb
   }
   // is/was not
-  if (hasCopula(vb) === true) {
-    return isWas(vb, parsed)
+  if (hasCopula(vb)) {
+    return isWas(vb)
   }
 
   // 'would not'

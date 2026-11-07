@@ -3,7 +3,7 @@ import looksPlural from '../../../methods/looksPlural.js'
 import getTense from '../../../methods/transform/verbs/getTense/index.js'
 import debug from '../../../../../API/debug/debug.js'
 import { hasAny } from '../../../../_lib.js'
-import { Acronym, Abbr, Prop, Uncountable, Poss, Pron, NN, Plur, Sing, Vb, Inf, Ger, Pres } from '../../../tagSet/_lib.js'
+import { Acronym, Abbr, Prop, Uncountable, Poss, Pron, NN, Plur, Sing, Vb, Inf, Ger, Pres, Hon, Month } from '../../../tagSet/_lib.js'
 // tags that are neither plural or singular
 const uncountable = [
   Acronym,
@@ -13,8 +13,8 @@ const uncountable = [
   Poss,
   Pron,
   'Activity',
-  'Honorific',
-  'Month',
+  Hon,
+  Month,
 ]
 // try to guess if each noun is a plural/singular
 const setPluralSingular = function (term) {
@@ -45,7 +45,7 @@ const setTense = function (term) {
 //add deduced parent tags to our terms
 const fillTags = function (terms, i, model) {
   const term = terms[i]
-  if (term.frozen === true) {
+  if (term.frozen) {
     return
   }
   // Visit only the original tags, without copying the Set.

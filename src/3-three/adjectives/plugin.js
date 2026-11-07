@@ -29,10 +29,6 @@ const forms = function (root, adj) {
 const api = function (View) {
 
   class Adjectives extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Adjectives'
-    }
     json(opts = {}) {
       opts.normal = true
       return this.map(m => {
@@ -63,6 +59,7 @@ const api = function (View) {
       })
     }
   }
+  Adjectives.prototype.viewType = 'Adjectives'
 
   // Keep generated methods non-enumerable, like the class methods above.
   transforms.forEach(name => {

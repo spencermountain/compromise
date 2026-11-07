@@ -5,7 +5,7 @@ import frozenLex, { shared } from './frozenLex.js'
 import emoticons from './emoticons.js'
 import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import irregularPlurals from '../irregulars/plurals.js'
-import { Conj, Country, Acronym, Emoticon } from '../../tagSet/_lib.js'
+import { Conj, Country, Acronym, Emoticon, NounVerb, PluralVerb } from '../../tagSet/_lib.js'
 // unpack our lexicon of words
 // (found in ./lexicon/)
 
@@ -33,11 +33,11 @@ Object.keys(lexData).forEach(tag => {
   Object.keys(wordsObj).forEach(w => {
     switches[w] = tag
     // pluralize Noun|Verb switches
-    if (tag === 'Noun|Verb') {
+    if (tag === NounVerb) {
       const plural = toPlural(w, tmpModel)
       // Invariant irregular plurals intentionally share a switch.
       if (plural !== w || irregularPlurals[w] === w) {
-        switches[plural] = 'Plural|Verb'
+        switches[plural] = PluralVerb
       }
     }
   })

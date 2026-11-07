@@ -1,27 +1,30 @@
 /* eslint no-console: 0 */
+import { resolveTag } from '../methods/_lib.js'
+
+// shared guards and logging - returns the terms to change, or null
+const prep = function (view, input, reason, sign) {
+  if (!view.found || !input) {
+    return null
+  }
+  const terms = view.termList()
+  if (terms.length === 0) {
+    return null
+  }
+  // logger
+  if (view.verbose === true) {
+    console.log(sign, input, reason || '')
+  }
+  return terms
+}
 
 const fns = {
   /** add a given tag, to all these terms */
   tag: function (input, reason = '', isSafe) {
-    if (!this.found || !input) {
-      return this
+    const terms = prep(this, input, reason, ' +  ')
+    if (terms) {
+      this.methods.one.setTag(terms, input, this.world, isSafe, reason)
+      this.uncache()
     }
-    const terms = this.termList()
-    if (terms.length === 0) {
-      return this
-    }
-    const { methods, verbose, world } = this
-    // logger
-    if (verbose === true) {
-      console.log(' +  ', input, reason || '')
-    }
-    if (Array.isArray(input)) {
-      input.forEach(tag => methods.one.setTag(terms, tag, world, isSafe, reason))
-    } else {
-      methods.one.setTag(terms, input, world, isSafe, reason)
-    }
-    // uncache
-    this.uncache()
     return this
   },
 
@@ -32,38 +35,21 @@ const fns = {
 
   /** remove a given tag from all these terms */
   unTag: function (input, reason) {
-    if (!this.found || !input) {
-      return this
+    const terms = prep(this, input, reason, ' -  ')
+    if (terms) {
+      const { methods, model } = this
+      const { tagSet, tagAliases } = model.one
+      const list = Array.isArray(input) ? input : [input]
+      list.forEach(tag => methods.one.unTag(terms, resolveTag(tag.trim(), tagAliases), tagSet, reason))
+      this.uncache()
     }
-    const terms = this.termList()
-    if (terms.length === 0) {
-      return this
-    }
-    const { methods, verbose, model } = this
-    // logger
-    if (verbose === true) {
-      console.log(' -  ', input, reason || '')
-    }
-    const tagSet = model.one.tagSet
-    const resolve = tag => {
-      tag = tag.trim().replace(/^#/, '')
-      return model.one.tagAliases[tag] || tag
-    }
-    if (Array.isArray(input)) {
-      input.forEach(tag => methods.one.unTag(terms, resolve(tag), tagSet, reason))
-    } else {
-      methods.one.unTag(terms, resolve(input), tagSet, reason)
-    }
-    // uncache
-    this.uncache()
     return this
   },
 
   /** return only the terms that can be this tag  */
   canBe: function (tag) {
-    tag = tag.replace(/^#/, '')
-    tag = this.model.one.tagAliases[tag] || tag
-    const tagSet = this.model.one.tagSet
+    const { tagSet, tagAliases } = this.model.one
+    tag = resolveTag(tag, tagAliases)
     const canBe = this.methods.one.canBe
     const nope = []
     this.document.forEach((terms, n) => {

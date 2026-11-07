@@ -28,3 +28,6 @@ export const matchAt = (state, reg, t) => doesMatch(state.terms[t], reg, state.s
 
 // anchors should not apply to repeated terms
 export const noAnchors = reg => ({ ...reg, start: false, end: false })
+
+// how many terms a match must have - optional and negative regs don't count
+export const getMinLength = regs => regs.filter(reg => reg.optional !== true && reg.negative !== true).length

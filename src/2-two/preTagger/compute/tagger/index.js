@@ -11,6 +11,7 @@ import checkYear from './2nd-pass/05-year.js'
 import verbType from './3rd-pass/07-verb-type.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
+import possessive from './3rd-pass/00-possessive.js'
 import attributive from './3rd-pass/00-attributive.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
@@ -45,7 +46,7 @@ const firstPass = function (docs, model, world) {
 const secondPass = function (terms, model, world, isYelling) {
   for (let i = 0; i < terms.length; i += 1) {
     // skip frozen terms, for now
-    if (terms[i].frozen === true) {
+    if (terms[i].frozen) {
       continue
     }
     // mark Noun|Verb on term metadata
@@ -53,7 +54,7 @@ const secondPass = function (terms, model, world, isYelling) {
     // turn 'twenty twenty-six' into a year
     spokenYear(terms, i)
     //  is it titlecased?
-    if (isYelling === false) {
+    if (!isYelling) {
       checkCase(terms, i, model)
     }
     // look at word ending
@@ -80,10 +81,12 @@ const thirdPass = function (terms, model, world, isYelling) {
     found ||= neighbours(terms, i, model)
     //  ¯\_(ツ)_/¯ - found nothing
     found ||= nounFallback(terms, i, model)
+    // spencer's, in sunday's - the easy cases, once the word has its noun tags
+    possessive(terms, i, world)
   }
   for (let i = 0; i < terms.length; i += 1) {
     // skip these
-    if (terms[i].frozen === true) {
+    if (terms[i].frozen) {
       continue
     }
     // Johnson LLC

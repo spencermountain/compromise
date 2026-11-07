@@ -8,13 +8,8 @@ export default [
   [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
   [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
 
-  [/(ause)s$/i, '$1'],//causes
-  [/(ease)s$/i, '$1'],//diseases
   [/(ious)es$/i, '$1'],//geniouses
-  [/(ouse)s$/i, '$1'],//houses
-  [/(ose)s$/i, '$1'],//roses
-
-  [/(..ase)s$/i, '$1'],
+  [/(ause|ease|ouse|ose|..ase)s$/i, '$1'],//causes, diseases, houses, roses
   [/(..[aeiu]s)es$/i, '$1'],
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],

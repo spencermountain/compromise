@@ -1,57 +1,32 @@
-import { Adj, Cop, Det, NN, Adv, Vb } from '../../../2-two/preTagger/tagSet/_lib.js'
-// simply chunk Nouns as <Noun>
+import { Adj, Cop, Det, NN, Adv, Vb, Neg } from '../../../2-two/preTagger/tagSet/_lib.js'
+import { hasAny } from '../../../2-two/_lib.js'
+import { eachTerm } from './_lib.js'
+
+// [neighbour offset, its tag, our chunk] - the first match wins
+// 'is cool' vs 'the cool dog'
+const adjRules = [[-1, Cop, Adj], [-1, Det, NN], [1, NN, NN]]
+// 'really swimming' vs 'really cool'
+const advRules = [[-1, Adj, Adj], [-1, Vb, Vb], [1, Adj, Adj], [1, Vb, Vb]]
+
+// chunk by the term on either side
 const byNeighbour = function (document) {
-  for (let n = 0; n < document.length; n += 1) {
-    for (let t = 0; t < document[n].length; t += 1) {
-      const term = document[n][t]
-      if (term.chunk) {
-        continue
-      }
-      // based on next-term
-      const onRight = document[n][t + 1]
-      // based on last-term
-      const onLeft = document[n][t - 1]
-
-      //'is cool' vs 'the cool dog'
-      if (term.tags.has(Adj)) {
-        // 'is cool'
-        if (onLeft && onLeft.tags.has(Cop)) {
-          term.chunk = Adj
-          continue
-        }
-        // 'the cool'
-        if (onLeft && onLeft.tags.has(Det)) {
-          term.chunk = NN
-          continue
-        }
-        // 'cool dog'
-        if (onRight && onRight.tags.has(NN)) {
-          term.chunk = NN
-          continue
-        }
-        continue
-      }
-      // 'really swimming' vs 'really cool'
-      if (term.tags.has(Adv) || term.tags.has('Negative')) {
-        if (onLeft && onLeft.tags.has(Adj)) {
-          term.chunk = Adj
-          continue
-        }
-        if (onLeft && onLeft.tags.has(Vb)) {
-          term.chunk = Vb
-          continue
-        }
-
-        if (onRight && onRight.tags.has(Adj)) {
-          term.chunk = Adj
-          continue
-        }
-        if (onRight && onRight.tags.has(Vb)) {
-          term.chunk = Vb
-          continue
-        }
-      }
+  eachTerm(document, (term, terms, t) => {
+    if (term.chunk) {
+      return
     }
-  }
+    let rules = null
+    if (term.tags.has(Adj)) {
+      rules = adjRules
+    } else if (hasAny(term, Adv, Neg)) {
+      rules = advRules
+    }
+    if (!rules) {
+      return
+    }
+    const found = rules.find(([side, tag]) => terms[t + side] && terms[t + side].tags.has(tag))
+    if (found) {
+      term.chunk = found[2]
+    }
+  })
 }
 export default byNeighbour

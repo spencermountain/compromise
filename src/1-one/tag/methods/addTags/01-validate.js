@@ -13,41 +13,38 @@ const toArr = function (input) {
 const addImplied = function (tags) {
   const aliases = compileAliases(tags)
   const resolve = tag => aliases[tag] || tag
+  // add an implicit entry for any tag we reference
+  const ensure = tag => {
+    if (!Object.hasOwn(tags, tag)) {
+      tags[tag] = {}
+    }
+  }
   Object.keys(tags).forEach(k => {
+    const o = tags[k]
     // support deprecated fmts
-    if (tags[k].isA) {
-      tags[k].is = tags[k].isA
+    if (o.isA) {
+      o.is = o.isA
     }
-    if (tags[k].notA) {
-      tags[k].not = tags[k].notA
+    if (o.notA) {
+      o.not = o.notA
     }
-    if (typeof tags[k].is === 'string') {
-      tags[k].is = resolve(tags[k].is)
+    if (typeof o.is === 'string') {
+      o.is = resolve(o.is)
     }
-    if (tags[k].also) {
-      tags[k].also = toArr(tags[k].also).map(resolve)
+    if (o.also) {
+      o.also = toArr(o.also).map(resolve)
     }
-    if (tags[k].not) {
-      tags[k].not = toArr(tags[k].not).map(resolve)
+    if (o.not) {
+      o.not = toArr(o.not).map(resolve)
     }
     // add any implicit 'is' tags
-    if (tags[k].is && typeof tags[k].is === 'string') {
-      if (!Object.hasOwn(tags, tags[k].is)) {
-        tags[tags[k].is] = {}
-      }
+    if (o.is && typeof o.is === 'string') {
+      ensure(o.is)
     }
     // Additional parents need entries too, including parents introduced by plugins.
-    toArr(tags[k].also).forEach(parent => {
-      if (!Object.hasOwn(tags, parent)) {
-        tags[parent] = {}
-      }
-    })
+    toArr(o.also).forEach(ensure)
     // add any implicit 'not' tags
-    toArr(tags[k].not).forEach(excluded => {
-      if (!Object.hasOwn(tags, excluded)) {
-        tags[excluded] = {}
-      }
-    })
+    toArr(o.not).forEach(ensure)
   })
   return tags
 }
@@ -61,13 +58,14 @@ const validate = function (tags, already) {
 
   // property validation
   Object.keys(tags).forEach(k => {
-    if (tags[k].aliases !== undefined) {
-      tags[k].aliases = toArr(tags[k].aliases)
+    const o = tags[k]
+    if (o.aliases !== undefined) {
+      o.aliases = toArr(o.aliases)
     }
-    tags[k].children = toArr(tags[k].children)
-    tags[k].not = toArr(tags[k].not)
-    if (tags[k].also) {
-      tags[k].also = toArr(tags[k].also)
+    o.children = toArr(o.children)
+    o.not = toArr(o.not)
+    if (o.also) {
+      o.also = toArr(o.also)
     }
   })
   // not links are bi-directional

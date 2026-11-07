@@ -1,8 +1,9 @@
 import { infinitive } from './inflect.js'
 import byForm from './_lib.js'
 import { noop, isAreAm } from '../lib.js'
-import { Vb } from '../../../../2-two/preTagger/tagSet/_lib.js'
+import { Vb, Aux } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { keepTags as keep } from '../../../_lib.js'
+import { WantInf, GerPhrase, SimplePres, SimplePast, SimpleFut, PresCond, PastCond, AuxFut, AuxPast, AuxPres, ModalPast, ModalInf, InfForm } from '../parse/grammar/forms.js'
 
 const simple = (vb, parsed) => {
   const { root, auxiliary } = parsed
@@ -20,31 +21,33 @@ const simple = (vb, parsed) => {
     vb = vb.replace(root, str, keep)
     vb.not('#Particle').tag(Vb)
   }
-  vb.prepend('will').match('will').tag('Auxiliary')
+  vb.prepend('will').match('will').tag(Aux)
   vb.remove(auxiliary)
   return vb
 }
 
+const wouldWill = vb => vb.replace('would', 'will')
+
 const forms = {
   // walk ->
-  'infinitive': simple,
+  [InfForm]: simple,
   // he walks ->
-  'simple-present': simple,
+  [SimplePres]: simple,
   // he walked
-  'simple-past': simple,
+  [SimplePast]: simple,
   // he will walk ->
-  'simple-future': noop,
+  [SimpleFut]: noop,
 
   // would be walked ->
-  'present-conditional': vb => vb.replace('would', 'will'),
+  [PresCond]: wouldWill,
   // would have been walked ->
-  'past-conditional': vb => vb.replace('would', 'will'),
+  [PastCond]: wouldWill,
 
   // is going to drink ->
-  'auxiliary-future': (vb, parsed) => vb.replace('(was|were)', isAreAm(vb, parsed)),
+  [AuxFut]: (vb, parsed) => vb.replace('(was|were)', isAreAm(vb, parsed)),
   // used to walk -> is walking
   // did walk -> is walking
-  'auxiliary-past': vb => {
+  [AuxPast]: vb => {
     if (vb.has('used') && vb.has('to')) {
       vb.replace('used', 'will')
       return vb.remove('to')
@@ -54,22 +57,22 @@ const forms = {
   },
   // we do walk ->
   // he does walk ->
-  'auxiliary-present': vb => {
+  [AuxPres]: vb => {
     return vb.replace('(do|does)', 'will')
   },
 
   // must walk ->
-  'modal-infinitive': noop,
+  [ModalInf]: noop,
   // must have walked
-  'modal-past': noop,
+  [ModalPast]: noop,
   // started looking
-  'gerund-phrase': (vb, parsed) => {
+  [GerPhrase]: (vb, parsed) => {
     parsed.root = parsed.root.not('#Ger$')
     simple(vb, parsed)
     return vb.remove('(had|have)')
   },
   // wanted to walk
-  'want-infinitive': vb => {
+  [WantInf]: vb => {
     vb.replace('(want|wants|wanted)', 'will want')
     return vb
   },

@@ -36,7 +36,8 @@ export default [
   //numbers
   // 50 | -50 | 3.23  | 5,999.0  | 10+
   [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?\+?$/, [Card, Numeric], '5,999'],
-  [/^[-+]?[0-9]+(,[0-9]{3})*(\.[0-9]+)?(st|nd|rd|r?th)$/, [Ord, Numeric], '53rd'],
+  // a positive integer - not '0th', '-1st' or '3.5th'
+  [/^(?!0+[a-z])[0-9]+(,[0-9]{3})*(st|nd|rd|r?th)$/, [Ord, Numeric], '53rd'],
   // .73th
   [/^\.[0-9]+\+?$/, [Card, Numeric], '.73th'],
   //percent
@@ -49,5 +50,6 @@ export default [
   //time-range
   [/^[0-9]{1,2}(:[0-9][0-9])?(am|pm)? ?[-–—] ?[0-9]{1,2}(:[0-9][0-9])?(am|pm)$/, [Time, 'NumberRange'], '3-4pm'],
   //number with unit
-  [/^[0-9.]+([a-z°]{1,4})$/, Numeric, '9km'],
+  // not a refused ordinal like '3.5th'
+  [/^[0-9.]+(?!(st|nd|rd|th)s?$)([a-z°]{1,4})$/, Numeric, '9km'],
 ]

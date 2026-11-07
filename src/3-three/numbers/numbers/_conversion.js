@@ -45,13 +45,22 @@ const decimalFraction = num => {
 
 const isPercent = value => value.has('#Pct') || value.after('^per cent').found
 
+// a written sign replaces a numeric minus stored as pre-punctuation - '(-5)'
+const dropPreSign = (value, str) => {
+  const first = value.docs[0][0]
+  if (/[-−]$/.test(first.pre) && /^(-|minus\b)/.test(str)) {
+    first.pre = first.pre.slice(0, -1)
+  }
+}
+
 const replaceNumber = (value, str) => {
   // A leading decimal point is stored as pre-punctuation.
   const first = value.docs[0][0]
   if (/\.$/.test(first.pre) && /^\d/.test(first.text)) {
     first.pre = first.pre.slice(0, -1)
   }
+  dropPreSign(value, str)
   return value.replaceWith(str).firstTerm()
 }
 
-export { shiftDecimal, decimalText, decimalFraction, isPercent, replaceNumber }
+export { shiftDecimal, decimalText, decimalFraction, isPercent, replaceNumber, dropPreSign }

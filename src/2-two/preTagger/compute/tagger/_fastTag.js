@@ -5,7 +5,7 @@ const fastTag = function (term, tag, reason) {
   if (!tag || tag.length === 0) {
     return
   }
-  if (term.frozen === true) {
+  if (term.frozen) {
     return
   }
   term.tags ||= new Set()

@@ -1,6 +1,6 @@
 import { hasBreak, hasApostrophe } from './_lib.js'
 import { hasAny, toSet } from '../../_lib.js'
-import { Ger, Det, Adj, Vb, Pron, Conj, Prep, Adv, NN, Past, Plur } from '../../preTagger/tagSet/_lib.js'
+import { Ger, Det, Adj, Vb, Pron, Conj, Prep, Adv, NN, Past, Plur, AdjPast } from '../../preTagger/tagSet/_lib.js'
 
 // these take 'has', whatever follows - he's gone to, he's left for, it's improved, the meeting's been
 const hasWords = toSet('been become got gotten gone come had left fallen arrived lived worked moved looked talked happened stayed appeared improved increased failed escaped expanded developed turned reacted responded listened agreed returned')
@@ -59,7 +59,7 @@ const isOrHas = (terms, i) => {
       }
     }
     // the car's parked
-    if (t.switch === 'Adj|Past') {
+    if (t.switch === AdjPast) {
       // she's tired. she's tired, and ..
       if (!next || hasBreak(t) || next.tags.has(Conj)) {
         return 'is'

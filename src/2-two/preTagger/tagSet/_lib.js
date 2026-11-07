@@ -27,6 +27,7 @@ const Phrasal = 'PhrasalVerb'
 const Aux = 'Auxiliary'
 const Pass = 'Passive'
 const Imp = 'Imperative'
+const Neg = 'Negative'
 const Conj = 'Conjunction'
 const Prep = 'Preposition'
 const Expr = 'Expression'
@@ -79,6 +80,21 @@ const SlashedTerm = 'SlashedTerm'
 const Email = 'Email'
 const PhoneNumber = 'PhoneNumber'
 const Url = 'Url'
+const Month = 'Month'
+const Hyphenated = 'Hyphenated'
+
+// switch names - words the lexicon marks as ambiguous
+const NounVerb = 'Noun|Verb'
+const PluralVerb = 'Plural|Verb'
+const NounGerund = 'Noun|Gerund'
+const AdjPast = 'Adj|Past'
+const AdjNoun = 'Adj|Noun'
+const AdjGerund = 'Adj|Gerund'
+const AdjPresent = 'Adj|Present'
+const ActorVerb = 'Actor|Verb'
+const PersonNoun = 'Person|Noun'
+const PersonVerb = 'Person|Verb'
+const PersonAdj = 'Person|Adj'
 
 
 export {
@@ -87,5 +103,6 @@ export {
   FemaleName, Actor, Uncountable, SportsTeam, Country, City, Region, Unit, Val, Card,
   Ord, TxtNum, Numeric, RomanNumeral, Frac, Date, WeekDay, Year, FinancialQuarter,
   Season, Time, Timezone, Connector, Abbr, Acronym, HashTag, AtMention, Emoji, Emoticon,
-  SlashedTerm, Email, PhoneNumber, Url, Phrasal, Aux, Pass, Imp, Prefix, Hon, Money,
+  SlashedTerm, Email, PhoneNumber, Url, Phrasal, Aux, Pass, Imp, Prefix, Hon, Money, Neg, Month, Hyphenated,
+  NounVerb, PluralVerb, NounGerund, AdjPast, AdjNoun, AdjGerund, AdjPresent, ActorVerb, PersonNoun, PersonVerb, PersonAdj,
 }

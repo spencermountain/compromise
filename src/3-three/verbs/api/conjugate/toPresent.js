@@ -1,8 +1,9 @@
-import { Pres, Inf, Ger } from '../../../../2-two/preTagger/tagSet/_lib.js'
+import { Pres, Inf, Ger, Aux } from '../../../../2-two/preTagger/tagSet/_lib.js'
 import { infinitive, inflect } from './inflect.js'
 import byForm from './_lib.js'
 import { noop, isPlural, isAreAm, doDoes, getSubject } from '../lib.js'
 import { keepTags as keep } from '../../../_lib.js'
+import { WantInf, GerPhrase, SimplePres, SimplePast, SimpleFut, PresCond, PastCond, AuxFut, AuxPast, AuxPres, ModalPast, ModalInf, InfForm } from '../parse/grammar/forms.js'
 
 // walk->walked
 const simple = (vb, parsed) => {
@@ -36,22 +37,13 @@ const toGerund = (vb, parsed) => {
   return vb
 }
 
-const vbToInf = (vb, parsed) => {
-  const root = parsed.root
-  const str = infinitive(root)
-  if (str) {
-    vb = vb.replace(parsed.root, str, keep)
-  }
-  return vb
-}
-
 const forms = {
 
   // walk
-  'infinitive': simple,
+  [InfForm]: simple,
 
   // he walks -> he walked
-  'simple-present': (vb, parsed) => {
+  [SimplePres]: (vb, parsed) => {
     const { conjugate } = vb.methods.two.transform.verb
     const { root } = parsed
     // is it *only* a infinitive? - 'we buy' etc
@@ -74,10 +66,10 @@ const forms = {
   },
 
   // he walked
-  'simple-past': simple,
+  [SimplePast]: simple,
 
   // he will walk -> he walked
-  'simple-future': (vb, parsed) => {
+  [SimpleFut]: (vb, parsed) => {
     const { root, auxiliary } = parsed
     // handle 'will be'
     if (auxiliary.has('will') && root.has('be')) {
@@ -86,7 +78,7 @@ const forms = {
       vb = vb.remove('will')
       vb.replace('not ' + str, str + ' not')
     } else if (parsed.negative.found) {
-      vb.replace('will', doDoes(vb, parsed)).match('(do|does)').tag('Auxiliary')
+      vb.replace('will', doDoes(vb, parsed)).match('(do|does)').tag(Aux)
     } else {
       simple(vb, parsed)
       vb = vb.remove('will')
@@ -95,16 +87,16 @@ const forms = {
   },
 
   // would be walked ->
-  'present-conditional': noop,
+  [PresCond]: noop,
 
   // would have been walked ->
-  'past-conditional': vb => {
+  [PastCond]: vb => {
     vb.replace('been', 'be')
     return vb.remove('have')
   },
 
   // is going to drink -> is drinking
-  'auxiliary-future': (vb, parsed) => {
+  [AuxFut]: (vb, parsed) => {
     const copula = isAreAm(vb, parsed)
     vb.replace('(was|were)', copula)
     if (parsed.root.has('#Ger') && vb.has('going to be')) {
@@ -117,7 +109,7 @@ const forms = {
   },
 
   // did walk -> is walking
-  'auxiliary-past': (vb, parsed) => {
+  [AuxPast]: (vb, parsed) => {
     // 'did provide' -> 'does provide'
     if (parsed.auxiliary.has('did')) {
       const str = doDoes(vb, parsed)
@@ -130,26 +122,29 @@ const forms = {
   },
 
   // we do walk ->
-  'auxiliary-present': noop,
+  [AuxPres]: noop,
 
   // must walk -> 'must have walked'
-  'modal-infinitive': noop,
+  [ModalInf]: noop,
 
   // must have walked
-  'modal-past': (vb, parsed) => {
-    vbToInf(vb, parsed)
+  [ModalPast]: (vb, parsed) => {
+    const str = infinitive(parsed.root)
+    if (str) {
+      vb.replace(parsed.root, str, keep)
+    }
     return vb.remove('have')
   },
 
   // started looking
-  'gerund-phrase': (vb, parsed) => {
+  [GerPhrase]: (vb, parsed) => {
     parsed.root = parsed.root.not('#Ger$')
     simple(vb, parsed)
     return vb.remove('(will|have)')
   },
 
   // wanted to walk
-  'want-infinitive': (vb, parsed) => {
+  [WantInf]: (vb, parsed) => {
     let str = 'wants'
     if (isPlural(vb, parsed)) {
       str = 'want'//we want

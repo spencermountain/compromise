@@ -31,11 +31,13 @@ const arr = [
   ['(127.54)', '#Cardinal'],
   // ['(127.54)', '#Money'],
 
-  ['16.125th', '#Ordinal'],
   ['161,253th', '#Ordinal'],
-  ['+160.125th', '#Ordinal'],
-  ['-0.2nd', '#Ordinal'],
-  ['(127.54th)', '#Ordinal'],
+  // an ordinal is a positive integer
+  ['16.125th', '!#Value'],
+  ['+160.125th', '!#Value'],
+  ['-0.2nd', '!#Value'],
+  ['(127.54th)', '!#Value'],
+  ['0th', '!#Value'],
 
   ['-0.1%', '#Percent'],
   ['.1%', '#Percent'],

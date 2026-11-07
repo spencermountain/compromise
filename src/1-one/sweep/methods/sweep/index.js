@@ -8,7 +8,7 @@ const sweep = function (document, net, methods, opts = {}) {
   const maybeList = getHooks(docCache, net, document)
 
   // now actually run the matches
-  const results = runMatch(maybeList, document, docCache, methods, opts)
+  const results = runMatch(maybeList, document, methods, opts)
   // console.dir(results, { depth: 5 })
   return results
 }

@@ -10,26 +10,15 @@ const addReference = function (pron, m) {
   }
 }
 
+// look in the same sentence, then the previous one, then two sentences back
 const stepBack = function (m, cb) {
-  // 1st - in same sentence
   let s = m.before()
   let res = cb(s)
-  if (res.found) {
-    return res
+  for (let i = 0; i < 2 && !res.found; i += 1) {
+    s = prevSentence(i === 0 ? m : s)
+    res = cb(s)
   }
-  // 2nd - previous sentence
-  s = prevSentence(m)
-  res = cb(s)
-  if (res.found) {
-    return res
-  }
-  // 3rd - two sentences back
-  s = prevSentence(s)
-  res = cb(s)
-  if (res.found) {
-    return res
-  }
-  return m.none()
+  return res.found ? res : m.none()
 }
 
 const coreference = function (view) {

@@ -7,6 +7,9 @@ const parseNumber = function (m) {
   return parseText(str)
 }
 
+// only when both sides parsed
+const pair = (num, den) => typeof num === 'number' && typeof den === 'number' ? { numerator: num, denominator: den } : null
+
 const mapping = {
   half: 2,
   halve: 2,
@@ -16,19 +19,13 @@ const mapping = {
 const slashForm = function (m) {
   const str = m.text('reduced')
   const found = str.match(/^([-+]?[0-9]+(?:\.[0-9]+)?)\/([-+]?[0-9]+)(st|nd|rd|th)?s?$/)
-  if (found && found[1] && found[0]) {
-    return {
-      numerator: Number(found[1]),
-      denominator: Number(found[2]),
-    }
-  }
-  return null
+  return found ? pair(Number(found[1]), Number(found[2])) : null
 }
 
 // parse '4 out of 4'
 const nOutOfN = function (m) {
   const found = m.match('[<num>#Val+] out of every? [<den>#Val+]')
-  if (found.found !== true) {
+  if (!found.found) {
     return null
   }
   let { num, den } = found.groups()
@@ -41,13 +38,7 @@ const nOutOfN = function (m) {
   if (!den) {
     return null
   }
-  if (typeof num === 'number' && typeof den === 'number') {
-    return {
-      numerator: num,
-      denominator: den,
-    }
-  }
-  return null
+  return pair(num, den)
 }
 
 // Keep compound singular denominators together: a twenty fifth.
@@ -66,7 +57,7 @@ const compoundOrdinal = (m) => {
 const nOrinalth = function (m) {
   // the words of 'thirty five fifths' are all tagged as #Fraction
   const found = m.match('[<num>(#Card|a)+] [<den>(#Frac && !#Card)+]')
-  if (found.found !== true) {
+  if (!found.found) {
     return null
   }
   let { num, den } = found.groups()
@@ -94,19 +85,13 @@ const nOrinalth = function (m) {
     // dem = dem.numbers().get()[0]
     den = parseNumber(den)
   }
-  if (typeof num === 'number' && typeof den === 'number') {
-    return {
-      numerator: num,
-      denominator: den,
-    }
-  }
-  return null
+  return pair(num, den)
 }
 
 // implied 1 in '100th of a', 'fifth of a'
 const oneNth = function (m) {
   const found = m.match('^#Ord$')
-  if (found.found !== true) {
+  if (!found.found) {
     return null
   }
   // ensure it's '100th of a '

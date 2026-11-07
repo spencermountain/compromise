@@ -8,7 +8,7 @@ const bin = fileURLToPath(new URL('../../bin/compromise.js', import.meta.url))
 // run the cli with args, and optional stdin text
 const run = (args, input, env = { NO_COLOR: '1' }) => {
   const res = spawnSync(process.execPath, [bin, ...args], { input, encoding: 'utf8', env: { ...process.env, ...env } })
-  return { out: res.stdout.trim(), err: res.stderr.trim(), code: res.status }
+  return { out: res.stdout.trim(), raw: res.stdout.trimEnd(), err: res.stderr.trim(), code: res.status }
 }
 
 test(here + 'json by default', t => {
@@ -85,17 +85,27 @@ test(here + 'has stops at the first sentence', t => {
 
 test(here + 'highlight output', t => {
   const text = 'the quick brown fox jumps over the lazy dog. nothing here.'
-  t.equal(run(['--input=' + text, '--highlight', '--match=lazy']).out, 'the quick brown fox jumps over the lazy dog.', 'plain with NO_COLOR')
-  const color = run(['--input=' + text, '--highlight', '--match=lazy'], undefined, {}).out
+  const col = str => str.indexOf('lazy')
+  const plain = run(['--input=' + text, '--highlight', '--match=lazy']).raw
+  t.equal(plain, '… brown fox jumps over the lazy dog.', 'plain with NO_COLOR, left trimmed to half')
+  t.equal(col(plain), 27, 'match starts at the middle column of 55')
+  const color = run(['--input=' + text, '--highlight', '--match=lazy'], undefined, {}).raw
   t.ok(color.includes('\x1b[32mlazy'), 'match is green')
-  t.ok(color.includes('\x1b[90mthe '), 'context is grey')
-  t.equal(run(['--input=' + text, '--highlight', '--match=lazy', '--width=20']).out, '… over the lazy dog.', 'trims the longer side')
-  t.equal(run(['--input=' + text, '--highlight', '--match=quick', '--width=20']).out, 'the quick brown fox …', 'trims the other side')
-  t.equal(run(['--input=' + text, '--highlight', '--match=jumps', '--width=1']).out, '… jumps …', 'never trims the match')
-  t.equal(run(['--input=' + text, '--highlight', '--if=lazy']).out, 'the quick brown fox jumps over the lazy dog.', 'if supplies the pattern')
-  t.equal(run(['--input=' + text, '--highlight', '--match=zebra']).out, '', 'no match, no output')
+  t.ok(color.includes('\x1b[90mfox '), 'context is grey')
+  const narrow = run(['--input=' + text, '--highlight', '--match=lazy', '--width=20']).raw
+  t.equal(narrow, '    … the lazy dog.', 'trims the left to half, then pads')
+  t.equal(col(narrow), 10, 'still at the middle column')
+  t.equal(run(['--input=' + text, '--highlight', '--match=quick', '--width=20']).raw, '      the quick …', 'pads the left, trims the right')
+  t.equal(run(['--input=' + text, '--highlight', '--match=jumps', '--width=1']).raw, '… jumps …', 'never trims the match')
+  t.equal(run(['--input=' + text, '--highlight', '--if=lazy']).raw, plain, 'if supplies the pattern')
+  t.equal(run(['--input=' + text, '--highlight', '--match=zebra']).raw, '', 'no match, no output')
   t.equal(run(['--input=' + text, '--highlight']).code, 1, 'needs a pattern')
   t.equal(run(['--input=' + text, '--highlight', '--match=lazy', '--width=0']).code, 1, 'width must be positive')
+  const twice = run(['--input=the lazy fox and the lazy dog.', '--highlight', '--match=lazy', '--width=16']).raw.split('\n')
+  t.deepEqual(twice, ['    the lazy …', '  … the lazy …'], 'one line per match, each trimmed around its own')
+  t.equal(col(twice[0]), col(twice[1]), 'both matches share a column')
+  const grouped = run(['--input=the lazy fox and the lazy dog.', '--highlight', '--match=lazy'], undefined, {}).raw
+  t.ok(grouped.split('\n')[0].includes('\x1b[90mlazy '), 'the other match is grey on each line')
   t.end()
 })
 

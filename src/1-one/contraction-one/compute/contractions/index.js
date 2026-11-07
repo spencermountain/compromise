@@ -55,11 +55,14 @@ const knownOnes = function (list, term, before, after) {
   return null
 }
 
-const toDocs = function (words, view, term) {
-  contractionDebug(term, words)
+// turn the words into terms, and put them where the contraction was
+const expand = function (words, view, document, n, i) {
+  contractionDebug(document[n][i], words)
   const doc = view.fromText(words.join(' '))
   doc.compute(['id', 'alias'])
-  return doc.docs[0]
+  words = doc.docs[0]
+  splice(document, [n, i], words)
+  return words
 }
 
 // there's is usually [there, is]
@@ -114,16 +117,14 @@ const contractions = view => {
       }
       // actually insert the new terms
       if (words) {
-        words = toDocs(words, view, terms[i])
-        splice(document, [n, i], words)
+        expand(words, view, document, n, i)
         continue
       }
       // '44-2' has special care
       if (numDash.test(terms[i].normal)) {
         words = numberRange(terms, i)
         if (words) {
-          words = toDocs(words, view, terms[i])
-          splice(document, [n, i], words)
+          words = expand(words, view, document, n, i)
           methods.one.setTag(words, 'NumberRange', world) //add custom tag
           // is it a time-range, like '5-9pm'
           if (words[2] && words[2].tags.has('Time')) {
@@ -135,8 +136,7 @@ const contractions = view => {
       // split-apart '4km'
       words = numberUnit(terms, i, world)
       if (words) {
-        words = toDocs(words, view, terms[i])
-        splice(document, [n, i], words)
+        words = expand(words, view, document, n, i)
         methods.one.setTag([words[1]], 'Unit', world, null, 'contraction-unit')
       }
     }

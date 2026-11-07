@@ -1,6 +1,6 @@
 import fastTag from '../_fastTag.js'
 import fillTag from './_fillTags.js'
-import { HashTag, SlashedTerm, NN } from '../../../tagSet/_lib.js'
+import { HashTag, SlashedTerm, NN, Hyphenated, Prefix } from '../../../tagSet/_lib.js'
 
 const nounFallback = function (terms, i, model) {
   let isEmpty = false
@@ -9,7 +9,7 @@ const nounFallback = function (terms, i, model) {
     isEmpty = true
   } else if (tags.size === 1) {
     // weaker tags to ignore
-    if (tags.has('Hyphenated') || tags.has(HashTag) || tags.has('Prefix') || tags.has(SlashedTerm)) {
+    if (tags.has(Hyphenated) || tags.has(HashTag) || tags.has(Prefix) || tags.has(SlashedTerm)) {
       isEmpty = true
     }
   }

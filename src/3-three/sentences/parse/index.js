@@ -1,19 +1,9 @@
 import findMain from './mainClause.js'
 import { Past, Fut, Pres } from '../../../2-two/preTagger/tagSet/_lib.js'
 
-const grammar = function (vb) {
-  let tense = null
-  if (vb.has('#Past')) {
-    tense = Past
-  } else if (vb.has('#FutureTense')) {
-    tense = Fut
-  } else if (vb.has('#Pres')) {
-    tense = Pres
-  }
-  return {
-    tense,
-  }
-}
+const grammar = vb => ({
+  tense: [Past, Fut, Pres].find(t => vb.has('#' + t)) || null,
+})
 
 const parse = function (s) {
   const clauses = s.clauses()

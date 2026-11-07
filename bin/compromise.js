@@ -74,7 +74,7 @@ const main = async function () {
     }
     if (opts.format === 'highlight') {
       const pattern = opts.match || opts.if || opts.has
-      const width = opts.width || process.stdout.columns || 80
+      const width = opts.width || 55
       const color = !Object.hasOwn(process.env, 'NO_COLOR')
       const str = highlight(doc, pattern, { width, color })
       if (str) {

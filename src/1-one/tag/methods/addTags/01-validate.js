@@ -30,9 +30,6 @@ const addImplied = function (tags) {
     if (tags[k].not) {
       tags[k].not = toArr(tags[k].not).map(resolve)
     }
-    if (tags[k].allow) {
-      tags[k].allow = toArr(tags[k].allow).map(resolve)
-    }
     // add any implicit 'is' tags
     if (tags[k].is && typeof tags[k].is === 'string') {
       if (!Object.hasOwn(tags, tags[k].is)) {
@@ -69,7 +66,6 @@ const validate = function (tags, already) {
     }
     tags[k].children = toArr(tags[k].children)
     tags[k].not = toArr(tags[k].not)
-    tags[k].allow = toArr(tags[k].allow)
     if (tags[k].also) {
       tags[k].also = toArr(tags[k].also)
     }

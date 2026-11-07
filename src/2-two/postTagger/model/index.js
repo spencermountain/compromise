@@ -48,7 +48,6 @@ const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
 const fractionNoun = '(the|this|that|each|every|last|final|next|#Ord|#Poss)'
 const singularDet = 'a|an|this|that|each|every|another'
 const afterModal = '#Inf|have|not' // may [be], may [have], may [not]
-// const verbSubject = '(#Pron|#Plur) (/^(march|may)$/ && !@isTitleCase)' // they march, soldiers march
 const titles =
   '(lieutenant|corporal|sergeant|captain|admiral|major|colonel|marshal|president|queen|king|minister|senator|governor|chancellor|mayor|judge|congressman|chairman|professor|ambassador)'
 
@@ -218,25 +217,6 @@ const rules = [
   ['[sun] the #Ord', WeekDay, 0],
   // 1pm next [sun] → WeekDay
   ['#Date (on|this|next|last|during)? [sun]', WeekDay, 0],
-
-  // ==== Month ====
-  // (march/may rules moved to preTagger/compute/tagger/3rd-pass/10-ambig-date.js)
-  // this march → Date Month
-  // ['(this|next|last) march !#Inf?', '#Date #Month'],
-  // this may → Date Month (not: this may not be true)
-  // [`[(this|next|last) may] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
-  // march 5th → Month Date Date
-  // ['(#Pron|#Plur)? [(march|may) the? #Value]', '#Month #Date #Date', 0, { n: verbSubject }],
-  // 5th of march → Date Date Month
-  // [`#Value of (march|may)`, '#Date #Date #Month'],
-  // 12 march → Date Month (not: these 5 may leave, $5 may help, the first march)
-  // [`[#NumericValue (march|may)] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
-  // [march] and feb → Month (not: you may leave tomorrow, they march on monday)
-  // (nor: the march on monday)
-  // ['(#Pron|#Plur|#Det)? [(march|may)] (#Conj|#Prep|this|that|next|last)? #Date', 'Month', 0, { n: '(#Pron|#Plur|#Det) (/^(march|may)$/ && !@isTitleCase)' }],
-  // feb to [march] → Month (not: tomorrow may be better, tomorrow we march)
-  // [`#Date (#Conj|#Prep)? [(march|may)] #Adv? (${afterModal}|#Pron)?`, 'Month', 0, { n: `may #Adv? (${afterModal}|#Pron)` }],
-  // as [may] be necessary → Modal (not: as may approaches)
   // (stays here - it repairs the later left-right rule '#Prep _ -> #Month')
   [`(as|than) [may] #Adv? (${afterModal})`, Mod, 0],
 
@@ -788,8 +768,6 @@ const rules = [
   ['will #Adv? not? #Adv? [be] #Ger', Cop, 0],
   // will [be] nice → Copula
   ['will #Adv? not? #Adv? [be] #Adj', Cop, 0],
-  // [march] up → Infinitive
-  // ['[march] (up|down|back|toward)', Inf, 0, { n: '#Date' }],
   // birds [home] to their nest → Infinitive
   ['(#Pron|#Plur|#Mod) #Adv+? [home] to', Inf, 0],
   // is [subject] to change → Adjective

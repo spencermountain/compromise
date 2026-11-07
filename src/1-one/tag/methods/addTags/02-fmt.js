@@ -16,7 +16,7 @@ const getColor = function (node) {
 const fmt = function (nodes) {
   const res = {}
   nodes.forEach(node => {
-    const { not, allow, also, is, novel } = node.props
+    const { not, also, is, novel } = node.props
     let parents = node._cache.parents
     if (also) {
       parents = parents.concat(also)
@@ -24,7 +24,6 @@ const fmt = function (nodes) {
     res[node.id] = {
       is,
       not,
-      allow,
       novel,
       also,
       parents,
@@ -68,31 +67,6 @@ const fmt = function (nodes) {
     })
   })
 
-  // `allow` names excluded tags that may still coexist with this one. The
-  // exception is mutual and covers both sides' descendants. Their parents stay
-  // excluded here; setTag keeps a parent only while an allowed tag needs it.
-  const allowed = {}
-  const permit = function (tag, other) {
-    allowed[tag] ||= new Set()
-    allowed[tag].add(other)
-  }
-  Object.keys(res).forEach(k => {
-    res[k].allow.forEach(other => {
-      if (!res[other]) {
-        return
-      }
-      const ours = [k, ...res[k].children]
-      const theirs = [other, ...res[other].children]
-      ours.forEach(a => theirs.forEach(b => {
-        permit(a, b)
-        permit(b, a)
-      }))
-    })
-  })
-  Object.keys(res).forEach(k => {
-    res[k].allow = Array.from(allowed[k] || [])
-  })
-
   // Inherit exclusions through every parent, then exclude all descendants of
   // each conflicting tag. Read a snapshot to keep this independent of order.
   const exclusions = {}
@@ -109,9 +83,6 @@ const fmt = function (nodes) {
         res[not].children.forEach(tag => nots.add(tag))
       }
     })
-    if (allowed[k]) {
-      allowed[k].forEach(tag => nots.delete(tag))
-    }
     res[k].not = Array.from(nots)
     getTagSet(res[k].not)
     getTagSet(res[k].children)

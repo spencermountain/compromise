@@ -217,10 +217,9 @@ const arr = [
 
 test('more-coreference:', function (t) {
   arr.forEach(str => {
-    // eslint-disable-next-line regexp/no-super-linear-move -- Short, fixed fixtures with balanced markers.
-    const subj = str.match(/\(.*?\)/)[0].replace(/[()]/g, '').toLowerCase()
-    // eslint-disable-next-line regexp/no-super-linear-move -- Short, fixed fixtures with balanced markers.
-    const pronoun = str.match(/\[.*?\]/)[0].replace(/[[\]]/g, '').toLowerCase()
+    // capture the bracketed markers without a wildcard, so each start scans a bounded span
+    const subj = str.match(/\(([^()]*)\)/)[1].toLowerCase()
+    const pronoun = str.match(/\[([^[\]]*)\]/)[1].toLowerCase()
     const msg = here + subj + ' → ' + pronoun
     const doc = nlp(str)
     const p = doc.pronouns().notIf('#Possessive').hasReference()

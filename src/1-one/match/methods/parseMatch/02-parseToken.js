@@ -99,8 +99,8 @@ const parseToken = function (w, opts, aliases) {
       }
     }
 
-    //regex
-    if (start(w) === '/' && end(w) === '/' && w.length > 2) {
+    //regex - {noRegex} leaves it as a plain word, to avoid redos from user-input
+    if (start(w) === '/' && end(w) === '/' && w.length > 2 && !opts.noRegex) {
       w = stripBoth(w)
       if (opts.caseSensitive) {
         obj.use = 'text'

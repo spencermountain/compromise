@@ -20,6 +20,7 @@ import nounFallback from './3rd-pass/05-fallback.js'
 import switches from './3rd-pass/06-switches.js'
 import imperative from './3rd-pass/08-imperative.js'
 import firstWord from './3rd-pass/09-first-word.js'
+import ambigDate from './3rd-pass/10-ambig-date.js'
 
 // is it all yelling-case?
 const ignoreCase = function (terms) {
@@ -94,6 +95,8 @@ const thirdPass = function (terms, model, world, isYelling) {
     verbType(terms, i, model, world)
     // hard-nosed
     hyphens(terms, i, model, world)
+    // march/may
+    ambigDate(terms, i, world)
   }
   // place tea bags
   imperative(terms, world)

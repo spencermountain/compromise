@@ -2,11 +2,11 @@ import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 
 // adverbs that can also describe a noun
-const describing = new Set(['still'])
+const describing = new Set(['still', 'only', 'very', 'further'])
 // these can be a subject - 'this still helps'
 const demonstrative = new Set(['this', 'that', 'these', 'those'])
 // tags that can't be the thing being described
-const notThing = ['Adjective', 'Adverb', 'Value', 'Determiner', 'Preposition', 'Conjunction', 'Pronoun', 'Negative']
+const notThing = ['Adjective', 'Adverb', 'Gerund', 'Value', 'Determiner', 'Preposition', 'Conjunction', 'Pronoun', 'Negative']
 
 // 'a still night' - between a determiner and its noun, it describes the noun
 const attributive = function (terms, i, model) {

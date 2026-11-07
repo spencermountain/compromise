@@ -125,7 +125,7 @@ nlp('the price of milk').match('price of [.]', 0).text()  // 'milk'
 ### Fuzzy — `~word~`
 
 Matches near-spellings / typos using string distance (default threshold ~0.85). Pass a custom
-threshold via the options argument: `doc.match('~color~', null, { fuzzy: 0.7 })`.
+threshold via the [options argument](#match-options): `doc.match('~color~', null, { fuzzy: 0.7 })`.
 
 ```js
 nlp('the organisation').match('~organization~').text()   // 'organisation'
@@ -164,6 +164,22 @@ Apply a built-in term predicate. Common ones: `@isTitleCase`, `@isUpperCase`, `@
 nlp('Hello World now').match('@isTitleCase').out('array')   // ['Hello','World']
 ```
 
+## Match options
+
+`.match()`, `.matchOne()`, `.has()`, `.if()`, `.ifNo()`, `.before()` and `.after()` take an options
+object as their third argument, after the capture group. `nlp.parseMatch(str, opts)` takes it second.
+
+| Option | Default | Effect |
+|---|---|---|
+| `fuzzy` | `0.85` | similarity threshold for `~word~` tokens, from 0 to 1 |
+| `caseSensitive` | `false` | match words and `/regex/` tokens against the original text, not the normalized form |
+| `noRegex` | `false` | treat `/regex/` tokens as plain words, so they are never compiled or run |
+
+```js
+nlp('Hello hello').match('Hello', null, { caseSensitive: true }).out('array')   // ['Hello']
+nlp('the cat sat').match('/^c/', null, { noRegex: true }).out('array')         // []
+```
+
 ## Matching against an array (fast path)
 
 For a long list of literal words, `.lookup()` is far faster than many `.match()` calls:
@@ -179,18 +195,20 @@ patterns into one fast net for `.sweep()`. Use these in hot loops.
 
 ## Untrusted input
 
-> ⚠️ Treat a match string as code, like SQL or `new RegExp()`. Never build one from user input.
+Pass `{ noRegex: true }` when a pattern comes from a user. Its `/regex/` tokens become plain words,
+so a pattern like `'/^(a+)+$/'` never runs, and an invalid one like `'/(/'` doesn't throw. The rest
+of the syntax works as usual. Other syntax errors, like `'[<>foo]'`, still throw a `SyntaxError`.
 
-- A `/regex/` token runs as written, on your thread. A hostile pattern can hang it indefinitely, even
-  on ordinary text, and a timeout on the same thread can't interrupt it.
-- An invalid pattern throws a `SyntaxError`, like `'/(/'` or `'[<>foo]'`.
-- Removing `/regex/` tokens isn't enough: stacked repeats like `(a|.)+ (b|.)+` get much slower on
-  long sentences.
+Methods without an options argument, like `.replace()` or `.splitOn()`, accept a pattern parsed with
+`nlp.parseMatch()`:
 
-Text from users is a different case: it can be parsed and matched, as long as your own `/regex/`
-tokens avoid nested repeats like `/^(a+)+$/`.
+```js
+let doc = nlp('i like cats and dogs')
+doc.replace(nlp.parseMatch('cats', { noRegex: true }), 'birds')
+doc.text()   // 'i like birds and dogs'
+```
 
-To search for words that a user typed, use `.lookup()`, which treats them as plain text:
+To search for words that a user typed, without any match-syntax, use `.lookup()`:
 
 ```js
 nlp('i saw mary').lookup(['mary', '/(/', '#Verb']).out('array')   // ['mary']

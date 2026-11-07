@@ -48,7 +48,7 @@ const companySuffix = '(inc|ltd|llc|co|corp|corporation|company|limited)'
 const fractionNoun = '(the|this|that|each|every|last|final|next|#Ord|#Poss)'
 const singularDet = 'a|an|this|that|each|every|another'
 const afterModal = '#Inf|have|not' // may [be], may [have], may [not]
-const verbSubject = '(#Pron|#Plur) (/^(march|may)$/ && !@isTitleCase)' // they march, soldiers march
+// const verbSubject = '(#Pron|#Plur) (/^(march|may)$/ && !@isTitleCase)' // they march, soldiers march
 const titles =
   '(lieutenant|corporal|sergeant|captain|admiral|major|colonel|marshal|president|queen|king|minister|senator|governor|chancellor|mayor|judge|congressman|chairman|professor|ambassador)'
 
@@ -220,22 +220,24 @@ const rules = [
   ['#Date (on|this|next|last|during)? [sun]', WeekDay, 0],
 
   // ==== Month ====
+  // (march/may rules moved to preTagger/compute/tagger/3rd-pass/10-ambig-date.js)
   // this march → Date Month
-  ['(this|next|last) march !#Inf?', '#Date #Month'],
+  // ['(this|next|last) march !#Inf?', '#Date #Month'],
   // this may → Date Month (not: this may not be true)
-  [`[(this|next|last) may] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
+  // [`[(this|next|last) may] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
   // march 5th → Month Date Date
-  ['(#Pron|#Plur)? [(march|may) the? #Value]', '#Month #Date #Date', 0, { n: verbSubject }],
+  // ['(#Pron|#Plur)? [(march|may) the? #Value]', '#Month #Date #Date', 0, { n: verbSubject }],
   // 5th of march → Date Date Month
-  [`#Value of (march|may)`, '#Date #Date #Month'],
+  // [`#Value of (march|may)`, '#Date #Date #Month'],
   // 12 march → Date Month (not: these 5 may leave, $5 may help, the first march)
-  [`[/^([0-9]{1,2}(st|nd|rd|th)?|(1[0-9]|20)[0-9]{2})$/ (march|may)] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
+  // [`[#NumericValue (march|may)] #Adv? (${afterModal})?`, '#Date #Month', 0, { n: `may #Adv? (${afterModal})` }],
   // [march] and feb → Month (not: you may leave tomorrow, they march on monday)
   // (nor: the march on monday)
-  ['(#Pron|#Plur|#Det)? [(march|may)] (#Conj|#Prep|this|that|next|last)? #Date', 'Month', 0, { n: '(#Pron|#Plur|#Det) (/^(march|may)$/ && !@isTitleCase)' }],
+  // ['(#Pron|#Plur|#Det)? [(march|may)] (#Conj|#Prep|this|that|next|last)? #Date', 'Month', 0, { n: '(#Pron|#Plur|#Det) (/^(march|may)$/ && !@isTitleCase)' }],
   // feb to [march] → Month (not: tomorrow may be better, tomorrow we march)
-  [`#Date (#Conj|#Prep)? [(march|may)] #Adv? (${afterModal}|#Pron)?`, 'Month', 0, { n: `may #Adv? (${afterModal}|#Pron)` }],
+  // [`#Date (#Conj|#Prep)? [(march|may)] #Adv? (${afterModal}|#Pron)?`, 'Month', 0, { n: `may #Adv? (${afterModal}|#Pron)` }],
   // as [may] be necessary → Modal (not: as may approaches)
+  // (stays here - it repairs the later left-right rule '#Prep _ -> #Month')
   [`(as|than) [may] #Adv? (${afterModal})`, Mod, 0],
 
   // === dates/date-phrase.js ===
@@ -383,23 +385,17 @@ const rules = [
   ['(#Past|#Pres) for [%Noun|Gerund%]', Ger, 0],
   // he reads the [upcoming] → Noun
   ['#Pres the [#Ger]', NN, 0],
+  // the only painting → Noun
+  ['#Determiner only [%Noun|Gerund%]', NN, 0],
 
   // === verbs/verb-noun.js ===
 
   // A final button label is an object, not a second verb. → PresentTense Noun
-  ...['click', 'clicks'].map(word => [
-    `(#Pron|#Sing|#Plur) [${word} (submit|save|cancel)]$`,
-    'Pres NN',
-    0,
-  ]),
+  ...['click', 'clicks'].map(word => [`(#Pron|#Sing|#Plur) [${word} (submit|save|cancel)]$`, 'Pres NN', 0]),
   // Common intransitive predicates after a singular subject. Keep arbitrary
   // plural/verb switches conservative: 'the dog treats' is a noun phrase.
   // the dog [runs] → PresentTense
-  ...['runs', 'walks', 'barks', 'sleeps'].map(word => [
-    `^(#Det|#Poss) #Adj+? #Sing #Adv+? [${word}] #Adv+?$`,
-    Pres,
-    0,
-  ]),
+  ...['runs', 'walks', 'barks', 'sleeps'].map(word => [`^(#Det|#Poss) #Adj+? #Sing #Adv+? [${word}] #Adv+?$`, Pres, 0]),
   // with heads and [arms] rolling around
   // { m: '#Prep #Plur and [%Plural|Verb%] #Ger', g: 0, t: 'Plur' },
   // he can solve the [puzzle] → Noun
@@ -577,7 +573,12 @@ const rules = [
   // (not the third quarter of the game, or my half of the deal)
   ['[(a|one) (half|quarter)] of? (a|an|the)', Frac, 0, { u: Date }],
   [`${fractionNoun}? [(a|one)? (half|quarter)] of #Pron`, Frac, 0, { n: `${fractionNoun} (half|quarter)`, u: Date }],
-  [`${fractionNoun}? #Adj? [(half|quarter)] of? (a|an|the)`, Frac, 0, { n: `${fractionNoun} #Adj? (half|quarter)`, u: Date }],
+  [
+    `${fractionNoun}? #Adj? [(half|quarter)] of? (a|an|the)`,
+    Frac,
+    0,
+    { n: `${fractionNoun} #Adj? (half|quarter)`, u: Date },
+  ],
   // two and a half → Fraction
   ['#Card and a half', Frac],
   // two-halves → Fraction
@@ -602,7 +603,12 @@ const rules = [
   // === numbers/numbers.js ===
 
   // version [10.11.12] → Singular; remove Date (but not release 15.03.2020)
-  ['(version|ver|v|build|patch|firmware|kernel|revision|rev|release) [(#Date && /\\.[0-9][0-9]?$/)]', Sing, 0, { u: Date }],
+  [
+    '(version|ver|v|build|patch|firmware|kernel|revision|rev|release) [(#Date && /\\.[0-9][0-9]?$/)]',
+    Sing,
+    0,
+    { u: Date },
+  ],
   // ==== Ambiguous numbers ====
   // with [a] hundred jobs → Value
   ['!once? [(a|an)] hundred', Val, 0],
@@ -663,8 +669,8 @@ const rules = [
   ['#Acronym #Last', Pers, null, { safe: true }],
   // Dr. J. → Person
   ['#Hon #Acronym', Pers],
-  // John [b] → [Acronym, 'Pers']
-  ['#First [/^[bdefghjlmnopqstvwxyz]$/]', [Acronym, 'Pers'], 0],
+  // John [b] → [Acronym, 'Pers'] (not a, i, or texting c, k, r, u)
+  ['#First [(b|d|e|f|g|h|j|l|m|n|o|p|q|s|t|v|w|x|y|z)]', [Acronym, 'Pers'], 0],
   // Ludwig van Beethoven → Person
   ['#NN van der? #NN', Pers, null, { safe: true }],
   // king of spain → Person
@@ -733,11 +739,14 @@ const rules = [
   // ebenezer scrooge → . LastName
   // not 'we saw John there' - only the first name is capitalized
   // not 'i gave john money' - this verb needs a person and a thing
+  // not 'john things', 'john everyone' - indefinite pronouns are tagged as nouns
   [
     '(give|gives|gave|giving|lend|lends|lent|hand|hands|handed|buy|buys|bought)? #First [#NN]$',
     Last,
     0,
-    { n: '(#Poss|#Org|#Place|#Pron|there|/thing$/|@isTitleCase !@isTitleCase|#Verb . !@isTitleCase)' },
+    {
+      n: '(#Poss|#Org|#Place|#Pron|there|/things?$/|someone|anyone|everyone|somebody|anybody|everybody|nobody|@isTitleCase !@isTitleCase|#Verb . !@isTitleCase)',
+    },
   ],
   // Jack [D.], Yong-[hwa]
   ['#First (#Acronym|#Hyphenated)$', '. #Last', null, { n: '(#Poss|#Org|#Place|#Pron|!#NN)' }],
@@ -780,7 +789,7 @@ const rules = [
   // will [be] nice → Copula
   ['will #Adv? not? #Adv? [be] #Adj', Cop, 0],
   // [march] up → Infinitive
-  ['[march] (up|down|back|toward)', Inf, 0, { n: '#Date' }],
+  // ['[march] (up|down|back|toward)', Inf, 0, { n: '#Date' }],
   // birds [home] to their nest → Infinitive
   ['(#Pron|#Plur|#Mod) #Adv+? [home] to', Inf, 0],
   // is [subject] to change → Adjective
@@ -796,8 +805,8 @@ const rules = [
   // === misc==
   // were being [run] → PastTense
   [`(were|was) being [#Pres]`, Past, 0],
-  // had [been broken] → Auxiliary Participle
-  [`(had|has|have) [been (#Past && /en$/)]`, 'Aux VBN', 0],
+  // had [been broken], had [been known] → Auxiliary Participle
+  [`(had|has|have) [been (#Past && /[ew]n$/)]`, 'Aux VBN', 0],
   // had [been] eaten → Auxiliary
   [`(had|has) #Adv? [been] #Adv? #Past`, 'Aux', 0],
   // had to [Google] the answer → Infinitive
@@ -1015,7 +1024,6 @@ const rules = [
 
   // === verbs/adj-gerund.js ===
 
-
   // === _misc.js ===
   // order matters
 
@@ -1206,8 +1214,8 @@ const multi = [
   ['^[like] (#Det|#Poss)? #Adj+? (#NN && @hasComma)', Prep, 0],
   // I like tea, [like] my sister does. → Conjunction
   [`@hasComma [like] ${subject} ${predicate}`, Conj, 0],
-  // We talked about the fact [that] she resigned. → Conjunction
-  [`#NN [that] ${subject} ${predicate}`, Conj, 0],
+  // We talked about the fact [that] she resigned. → Conjunction (not: May that year was hot)
+  [`#NN [that] ${subject} ${predicate}`, Conj, 0, { n: '#Month that #Date' }],
   // I have heard that story [before] → Adverb
   ['#V (#Det|#Poss)? #NN+? [(before|since)]$', Adv, 0, { n: '@hasQuestionMark' }],
   // Who did she arrive [before]? → Preposition

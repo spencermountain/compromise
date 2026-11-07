@@ -14,7 +14,7 @@ const syntax = function (input, opts, world) {
   if (typeof input === 'number') {
     input = String(input) //go for it?
   }
-  let tokens = parseBlocks(input)
+  let tokens = parseBlocks(input, opts)
   //turn them into objects
   tokens = tokens.map(str => parseToken(str, opts, world.model.one.tagAliases))
   // '~re-do~'

@@ -1,5 +1,6 @@
 import debug from '../../../API/debug/debug.js'
 import getConflicts from './_lib.js'
+import isRequired from './_required.js'
 const isMulti = / /
 
 const addChunk = function (term, tag) {
@@ -32,14 +33,20 @@ const tagTerm = function (term, tag, tagSet, isSafe, validated, reason) {
     // first, we remove any conflicting tags
     if (known !== validated && known.not && known.not.length > 0) {
       const conflicts = getConflicts(known.not)
+      const hasAllow = known.allow && known.allow.length > 0
       for (const existing of term.tags) {
-        if (conflicts.has(existing)) {
-          // Safe and frozen terms cannot lose conflicting tags.
-          if (isSafe === true) {
-            return null
-          }
-          term.tags.delete(existing)
+        if (!conflicts.has(existing)) {
+          continue
         }
+        // an allowed tag keeps the parents it shares with the conflict
+        if (hasAllow && isRequired(existing, term.tags, conflicts, tagSet)) {
+          continue
+        }
+        // Safe and frozen terms cannot lose conflicting tags.
+        if (isSafe === true) {
+          return null
+        }
+        term.tags.delete(existing)
       }
     }
     // add parent tags

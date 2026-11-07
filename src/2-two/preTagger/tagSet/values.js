@@ -1,4 +1,4 @@
-import { Vb, Adj, Adv, Val, Card, Ord, NN, TxtNum, Numeric, RomanNumeral } from './_lib.js'
+import { Vb, Adj, Adv, Val, Card, Ord, NN, Plur, TxtNum, Numeric, RomanNumeral } from './_lib.js'
 
 // Written format is independent of quantity types such as Fraction or Money.
 export default {
@@ -16,10 +16,12 @@ export default {
     is: Val,
     not: [Ord],
   },
+  // 'thirds' is also a plural noun
   Fraction: {
     aliases: [null, 'Frac'],
     is: Val,
     not: [NN],
+    allow: [Plur],
   },
   Multiple: {
     aliases: [null, 'Mult'],

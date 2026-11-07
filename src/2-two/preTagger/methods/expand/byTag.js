@@ -85,8 +85,8 @@ export default {
     lex[word] = ['Multiple', 'Cardinal']
     // 'millionth'
     lex[word + 'th'] = ['Multiple', 'Ordinal']
-    // 'millionths'
-    lex[word + 'ths'] = ['Multiple', 'Fraction']
+    // 'millionths' - also a plural noun
+    lex[word + 'ths'] = ['Fraction', 'Plural']
   },
   // expand number-words
   Cardinal: (word, lex) => {
@@ -96,7 +96,8 @@ export default {
   // 'millionth'
   Ordinal: (word, lex) => {
     lex[word] = ['TextValue', 'Ordinal']
-    lex[word + 's'] = ['TextValue', 'Fraction']
+    // 'thirds' - also a plural noun
+    lex[word + 's'] = ['Fraction', 'Plural']
   },
   // 'thames'
   Place: (word, lex) => {

@@ -13,7 +13,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 #### 14.20.0 [Nov 2026]
 
 - **[new]** - html, markdown, unist, and subtitle plugins
-- **[new]** - - add plugin callback for .replace() events
+- **[new]** - add plugin callback for .replace() events
 - **[fix]** - #1254 #1255 #1256 issues parsing large numbers
 - **[fix]** - #1257 fraction/ordinal date interpretation
 - **[fix]** - #1258 verb normalization
@@ -32,6 +32,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
   - - greedy and-block `(a && b)+` support in match-syntax
   - - lookahead fix: `the * (#Noun|#Verb)` now matches 'the big dog'
 - **[plugin]** - compromise-dates 3.11.0
+- **[new]** - `{noRegex:true}` option on parseMatch to avoid ugc-reDos attacks
 
 #### 14.19.0 [Oct 2026]
 

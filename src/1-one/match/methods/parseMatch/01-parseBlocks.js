@@ -10,6 +10,7 @@ const isBlock = str => {
 const isReg = str => {
   return /^[![^]*(<[^<]*>)?\//.test(str) && /\/[?\]+*$~]*$/.test(str)
 }
+const never = () => false
 
 const cleanUp = function (arr) {
   arr = arr.map(str => str.trim())
@@ -17,13 +18,15 @@ const cleanUp = function (arr) {
   return arr
 }
 
-const parseBlocks = function (txt) {
+const parseBlocks = function (txt, opts = {}) {
+  // {noRegex} - slashes are plain characters
+  const isRegex = opts.noRegex ? never : isReg
   // parse by /regex/ first
-  const arr = splitRegs(txt)
+  const arr = opts.noRegex ? [txt] : splitRegs(txt)
   let res = []
   // parse by (blocks), next
   arr.forEach(str => {
-    if (isReg(str)) {
+    if (isRegex(str)) {
       res.push(str)
       return
     }
@@ -35,7 +38,7 @@ const parseBlocks = function (txt) {
   res.forEach(str => {
     if (isBlock(str)) {
       final.push(str)
-    } else if (isReg(str)) {
+    } else if (isRegex(str)) {
       final.push(str)
     } else {
       final = final.concat(str.split(byWord))

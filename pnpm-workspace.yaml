@@ -17,7 +17,7 @@ catalog:
   'efrt': '2.9.0'
   eslint: 10.14.0
   mdast-util-from-markdown: ^2.1.0
-  mdast-util-to-markdown: ^2.2.0
+  mdast-util-to-markdown: ^2.2.3
   micromark-extension-gfm-table: ^2.1.2
   mdast-util-gfm-table: ^2.0.0
   micromark-extension-gfm: ^3.0.0

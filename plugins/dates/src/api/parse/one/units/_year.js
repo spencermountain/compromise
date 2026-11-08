@@ -82,7 +82,8 @@ class Season extends Unit {
   }
   // spacetime's endOf('season') stops a month early - a season is three months
   end() {
-    this.d = this.d.startOf(this.unit).add(2, 'months').endOf('month')
+    const last = new Month(this.d.startOf(this.unit).add(2, 'months'), null, this.context)
+    this.d = last.end().d // respects a custom dayEnd
     return this
   }
   next() {

@@ -42,7 +42,8 @@ const checkDate = (t, nlp, context, row) => {
     const selection = nlp(text).dates(context)
     if (start === null) {
       // the match may remain, but it must not parse to a date
-      t.deepEqual(selection.isValid().length, 0, text)
+      const kept = typeof selection.isValid === 'function' ? selection.isValid() : selection
+      t.deepEqual(kept.length, 0, text)
       return
     }
     const expected = [[start]]

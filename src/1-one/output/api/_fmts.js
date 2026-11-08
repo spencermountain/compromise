@@ -1,28 +1,27 @@
+const some = {
+  whitespace: 'some',
+  punctuation: 'some',
+  unicode: 'some',
+}
 const fmts = {
   text: {
     form: 'text',
   },
   normal: {
-    whitespace: 'some',
-    punctuation: 'some',
+    ...some,
     case: 'some',
-    unicode: 'some',
     form: 'normal',
   },
   machine: {
+    ...some,
     keepSpace: false,
-    whitespace: 'some',
-    punctuation: 'some',
     case: 'none',
-    unicode: 'some',
     form: 'machine',
   },
   root: {
+    ...some,
     keepSpace: false,
-    whitespace: 'some',
-    punctuation: 'some',
     case: 'some',
-    unicode: 'some',
     form: 'root',
   },
   implicit: {

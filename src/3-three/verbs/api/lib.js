@@ -1,14 +1,11 @@
 import getSubject from './parse/getSubject.js'
+import { Inf, Participle, Past, Ger, Pres } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const noop = vb => vb
 
 const isPlural = (vb, parsed) => {
   const subj = getSubject(vb, parsed)
-  const m = subj.subject
-  if (m.has('(i|we|you)')) {
-    return true
-  }
-  return subj.plural
+  return subj.subject.has('(i|we|you)') || subj.plural
 }
 
 const wasWere = (vb, parsed) => {
@@ -38,65 +35,32 @@ const isAreAm = function (vb, parsed) {
 }
 
 
-const doDoes = function (vb, parsed) {
-  const subj = getSubject(vb, parsed)
-  const m = subj.subject
-  if (m.has('(i|we|you)')) {
-    return 'do'
-  }
-  if (subj.plural) {
-    return 'do'
-  }
-  return 'does'
-}
+const doDoes = (vb, parsed) => isPlural(vb, parsed) ? 'do' : 'does'
 
 const haveHas = function (vb, parsed) {
-  const subj = getSubject(vb, parsed)
-  const m = subj.subject
-  if (m.has('(i|we|you)')) {
+  const { subject, plural } = getSubject(vb, parsed)
+  if (subject.has('(i|we|you)')) {
     return 'have'
   }
-  // the dog has
-  if (subj.plural === false) {
-    return 'has'
-  }
-  // spencer has
-  if (m.has('he') || m.has('she') || m.has('#Person')) {
+  // the dog has, spencer has
+  if (!plural || subject.has('(he|she|#Pers)')) {
     return 'has'
   }
   return 'have'
 }
 
-const getTense = function (m) {
-  if (m.has('#Infinitive')) {
-    return 'Infinitive'
+const getTense = m => [Inf, Participle, Past, Ger, Pres].find(t => m.has('#' + t))
+
+// the tense set by emphatic do-support - 'does not walk', 'did not walk'
+const doTense = ({ auxiliary, negative }) => {
+  if (!negative.found || !auxiliary.has('^(does|did)$')) {
+    return null
   }
-  if (m.has('#Participle')) {
-    return 'Participle'
-  }
-  if (m.has('#PastTense')) {
-    return 'PastTense'
-  }
-  if (m.has('#Gerund')) {
-    return 'Gerund'
-  }
-  if (m.has('#PresentTense')) {
-    return 'PresentTense'
-  }
-  return undefined
+  return auxiliary.has('did') ? Past : Pres
 }
 
-const toInf = function (vb, parsed) {
-  const { toInfinitive } = vb.methods.two.transform.verb
-  let str = parsed.root.text({ keepPunct: false })
-  str = toInfinitive(str, vb.model, getTense(vb))
-  if (str) {
-    vb.replace(parsed.root, str)
-  }
-  return vb
-}
-
-
+// re-tag the sentence after a change
+const retag = vb => vb.fullSentence().compute(['tagger', 'chunks'])
 
 // i will start looking -> i started looking
 // i will not start looking -> i did not start looking
@@ -107,4 +71,4 @@ const noWill = (vb) => {
   return vb.remove('will')
 }
 
-export { noop, isPlural, isAreAm, doDoes, toInf, getSubject, getTense, wasWere, noWill, haveHas }
+export { noop, isPlural, isAreAm, doDoes, getSubject, getTense, wasWere, noWill, haveHas, retag, doTense }

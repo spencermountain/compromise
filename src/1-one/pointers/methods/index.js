@@ -3,15 +3,7 @@ import splitAll from '../api/lib/split.js'
 import getDoc from './getDoc.js'
 
 // flat list of terms from nested document
-const termList = function (docs) {
-  const arr = []
-  for (let i = 0; i < docs.length; i += 1) {
-    for (let t = 0; t < docs[i].length; t += 1) {
-      arr.push(docs[i][t])
-    }
-  }
-  return arr
-}
+const termList = docs => docs.flat()
 
 export default {
   one: {

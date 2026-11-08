@@ -1,3 +1,4 @@
+import spacetime from 'spacetime'
 import { Day, CalendarDate, Month, Moment } from '../units/index.js'
 
 // "'98" becomes 1998
@@ -29,6 +30,7 @@ const parseExplicit = function (doc, context) {
     if (unit.d.isValid() === true) {
       return unit
     }
+    return null // 'february 30th 2026' is not a date
   }
 
   // 'march 1992'
@@ -121,9 +123,15 @@ const parseExplicit = function (doc, context) {
       obj.year += 1
       unit = new CalendarDate(obj, null, context)
     }
+    // 'february 29' - the next leap year, within reason
+    for (let i = 0; i < 4 && unit.d.isValid() === false; i += 1) {
+      obj.year += 1
+      unit = new CalendarDate(obj, null, context)
+    }
     if (unit.d.isValid() === true) {
       return unit
     }
+    return null // 'february 30th' is not a date
   }
 
   // support 'december'
@@ -156,6 +164,7 @@ const parseExplicit = function (doc, context) {
     if (unit.d.isValid() === true) {
       return unit
     }
+    return null
   }
   // support date-only 'the 21st'
   m = doc.match('the [<date>#Value]')
@@ -173,6 +182,7 @@ const parseExplicit = function (doc, context) {
       }
       return unit
     }
+    return null
   }
   // parse ISO as a Moment
   m = doc.match('/[0-9]{4}-[0-9]{2}-[0-9]{2}t[0-9]{2}:/')
@@ -186,6 +196,15 @@ const parseExplicit = function (doc, context) {
   const str = doc.text('reduced')
   if (!str) {
     return new Moment(context.today, null, context)
+  }
+  // '2026-13-10', '2026-02-30' - spacetime would swap or clamp these
+  const iso = str.match(/^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})$/)
+  if (iso) {
+    const [year, month, date] = iso.slice(1).map(Number)
+    const days = spacetime({ year, month: month - 1, date: 1 }, context.timezone).daysInMonth()
+    if (month < 1 || month > 12 || date < 1 || date > days) {
+      return null
+    }
   }
   // punt it to spacetime, for the heavy-lifting
   const unit = new Day(str, null, context)

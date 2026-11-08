@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/nouns/to-singular] '
 
 test('toSingular:', function (t) {
@@ -217,6 +217,12 @@ test('toSingular:', function (t) {
     [`ireland potatoes`, 'ireland potato'],
     [`irish potatoes`, 'irish potato'],
     [`john's potatoes`, `john's potato`],
+    ['toes', 'toe'],
+    ['canoes', 'canoe'],
+    ['foes', 'foe'],
+    ['oboes', 'oboe'],
+    ['lies', 'lie'],
+    ['ties', 'tie'],
     // ['Isley Brothers members', 'Isley Brothers member'],
     // ['mayors of chicago', 'mayor of chicago'],
     //test that sungular.singularize()==singular..
@@ -246,6 +252,8 @@ test('toSingular - longer:', function (t) {
     [`my fingers looked green afterwards`, `my finger looked green afterwards`],
     [`other person`, 'other person'],
     [`other people`, 'other person'],
+    [`he cut two cheeses`, 'he cut two cheese'],
+    [`she stubbed her toes`, 'she stubbed her toe'],
     // [`other people's kids`, 'other person\'s kid'],
     // [`the women's room`, 'the women\'s room'],
   ]

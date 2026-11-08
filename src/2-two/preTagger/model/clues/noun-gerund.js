@@ -1,3 +1,4 @@
+import merge from './_lib.js'
 import tagWords from '../_lib.js'
 import { Ger } from '../../tagSet/_lib.js'
 import noun from './_noun.js'
@@ -33,10 +34,4 @@ const misc = {
     them: Ger,
   },
 }
-const clue = {
-  beforeTags: { ...gerund.beforeTags, ...noun.beforeTags, ...misc.beforeTags },
-  afterTags: { ...gerund.afterTags, ...noun.afterTags, ...misc.afterTags },
-  beforeWords: { ...gerund.beforeWords, ...noun.beforeWords, ...misc.beforeWords },
-  afterWords: { ...gerund.afterWords, ...noun.afterWords, ...misc.afterWords },
-}
-export default clue
+export default merge(gerund, noun, misc)

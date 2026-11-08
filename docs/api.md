@@ -214,9 +214,10 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.isOrdinal()`** — return only ordinal numbers
 - **`.isCardinal()`** — return only cardinal numbers
 - **`.isUnit(units)`** — return only numbers with the given unit(s), like 'km'
+- **`.isValid()`** — drop matches that do not parse to a usable number, like `thousand thousand`, `21th` or `1/0`
 - **`.toNumber()`** — convert number to `5` or `5th`
 - **`.toLocaleString()`** — add commas, or nicer formatting for numbers
-- **`.toText()`** — convert number to `five` or `fifth`
+- **`.toText()`** — convert number to `five` or `fifth`; a slash-fraction like `1/2` becomes `one half`
 - **`.toCardinal()`** — convert number to `five` or `5`
 - **`.toOrdinal()`** — convert number to `fifth` or `5th`
 - **`.toFraction()`** — convert decimals to reduced fractions, such as `0.25` → `1/4`, or percentages to fractions over 100, such as `4.5%` → `4.5/100`; returns a Fractions selection

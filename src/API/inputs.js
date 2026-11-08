@@ -1,6 +1,4 @@
-const isObject = val => {
-  return Object.prototype.toString.call(val) === '[object Object]'
-}
+import isObject from './_is.js'
 
 // internal Term objects are slightly different
 const fromJson = function (json) {

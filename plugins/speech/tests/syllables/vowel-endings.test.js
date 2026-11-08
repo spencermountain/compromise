@@ -1,5 +1,5 @@
 import test from 'tape'
-import splitTerm from '../../src/syllables/split/index.js'
+import { splitTerm } from '../_lib.js'
 
 // Contrast silent endings and blended vowels with similar, separately voiced forms.
 const examples = [

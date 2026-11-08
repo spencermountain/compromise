@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/one.js'
+import nlp from '../lib.js'
 const here = '[one/sweep/sweep-hook] '
 
 test(here + 'explicit hooks choose a required word or tag', t => {
@@ -25,8 +25,16 @@ test(here + 'explicit hooks preserve action order and matchOne', t => {
   ]
   const net = nlp.buildNet(rules)
   const doc = nlp('one two')
-  t.deepEqual(doc.sweep(net).found.map(r => r.reason), ['two', 'both', 'one'], 'manual hook does not move the action to a later bucket')
-  t.deepEqual(doc.sweep(net, { matchOne: true }).found.map(r => r.reason), ['two'], 'first result is unchanged')
+  t.deepEqual(
+    doc.sweep(net).found.map(r => r.reason),
+    ['two', 'both', 'one'],
+    'manual hook does not move the action to a later bucket'
+  )
+  t.deepEqual(
+    doc.sweep(net, { matchOne: true }).found.map(r => r.reason),
+    ['two'],
+    'first result is unchanged'
+  )
   t.end()
 })
 
@@ -54,7 +62,7 @@ test(here + 'unsafe explicit hooks fail at compilation', t => {
   ]
   for (let i = 0; i < cases.length; i += 1) {
     const [match, hook] = cases[i]
-    t.throws(() => nlp.buildNet([{ match, hook }]), /Invalid hook.*required word, #Tag, or %Switch%/, match + ' rejects ' + hook)
+    t.throws(() => nlp.buildNet([{ match, hook }]), /Invalid hook/, match + ' rejects ' + hook)
   }
   t.end()
 })

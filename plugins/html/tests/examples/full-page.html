@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>headSecret</title>
+    <style>.sample { color: red; } /* styleSecret */</style>
+  </head>
+  <body>
+    <header>
+      <h1>A day at school</h1>
+      <nav><a href="#story">Read the story</a></nav>
+    </header>
+    <main id="story">
+      <article>
+        <h2>The morning journey</h2>
+        <p>She <strong>walks</strong> to <a href="https://example.com/school" title="titleSecret">school</a>.</p>
+        <p>They walk<!-- keep this comment --><em>ed</em> together.</p>
+        <p>Cats &amp; dogs share a garden. Five &lt; ten.</p>
+        <p>He can't visit today.</p>
+        <p>A <span>small <em>nested</em> phrase</span> remains readable.</p>
+        <p>BoundaryAlpha</p>
+        <p>BoundaryBeta</p>
+        <section>
+          <h3>Things to bring</h3>
+          <ul>
+            <li>Fresh apples</li>
+            <li>School supplies
+              <ol><li>Blue pencils</li><li>Clean paper</li></ol>
+            </li>
+          </ul>
+          <dl><dt>Recess</dt><dd>A short break outdoors.</dd></dl>
+          <blockquote>
+            <p>A thoughtful quotation.</p>
+            <blockquote><p>A nested quotation.</p></blockquote>
+          </blockquote>
+        </section>
+        <p>BeforeBreak<br>AfterBreak</p>
+        <hr>
+        <figure>
+          <img src="/school.png" alt="imageSecret">
+          <figcaption>The school entrance.</figcaption>
+        </figure>
+        <p>Before code <code>inlineSecret</code> after code.</p>
+        <pre><code>blockSecret</code></pre>
+        <table>
+          <caption>tableCaptionSecret</caption>
+          <thead><tr><th>tableHeaderSecret</th></tr></thead>
+          <tbody><tr><td>tableCellSecret</td></tr></tbody>
+        </table>
+        <div hidden><p>hiddenSecret</p></div>
+        <template><p>templateSecret</p></template>
+        <script>const token = 'scriptSecret'</script>
+        <p>farewellToken ends the story.</p>
+      </article>
+    </main>
+    <footer><p>Thanks for reading.</p></footer>
+  </body>
+</html>

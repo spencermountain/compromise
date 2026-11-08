@@ -7,7 +7,7 @@ const numberRange = function (terms, i) {
   let parts = term.text.match(isRange)
   if (parts !== null) {
     // 123-1234 is a phone number, not a number-range
-    if (term.tags.has('PhoneNumber') === true || phoneNum.test(term.text)) {
+    if (term.tags.has('PhoneNumber') || phoneNum.test(term.text)) {
       return null
     }
     return [parts[1], 'to', parts[2]]

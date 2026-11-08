@@ -1,6 +1,6 @@
 {
   "name": "compromise",
-  "version": "14.19.0",
+  "version": "14.20.0",
   "description": "modest natural language processing",
   "license": "MIT",
   "repository": "github:spencermountain/compromise",
@@ -77,6 +77,9 @@
   },
   "main": "./src/three.js",
   "module": "./src/three.js",
+  "bin": {
+    "compromise": "./bin/compromise.js"
+  },
   "types": "./types/three.d.ts",
   "sideEffects": false,
   "engines": {
@@ -91,9 +94,10 @@
     "testb": "tape \"./scripts/test/smoke.test.js\" | tap-dancer && cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer",
     "test:types": "tsc --project tsconfig.json && tsc --project tsconfig.json --module Node16 --moduleResolution Node16",
     "test:smoke": "tape \"./scripts/test/smoke.test.js\" | tap-dancer",
+    "test:cli": "tape \"./scripts/test/cli.test.js\" | tap-dancer",
     "test:plugins": "pnpm --filter \"./plugins/*\" run test",
     "test:dates": "pnpm --filter \"./plugins/dates\" run test",
-    "test:all": "pnpm test && pnpm test:plugins && pnpm test:smoke && pnpm test:types",
+    "test:all": "pnpm test && pnpm test:plugins && pnpm test:smoke && pnpm test:cli && pnpm test:types",
     "test:hmm": "node ./tests/_hmm/run.js",
     "testb:plugins": "pnpm --filter \"./plugins/*\" run testb",
     "build:plugins": "pnpm --filter \"./plugins/*\" run build",
@@ -109,6 +113,7 @@
   },
   "files": [
     "AGENTS.md",
+    "bin/",
     "builds/",
     "docs/",
     "one/",
@@ -124,15 +129,16 @@
   ],
   "dependencies": {
     "efrt": "catalog:",
-    "suffix-thumb": "6.0.0"
+    "suffix-thumb": "6.1.0"
   },
   "devDependencies": {
+    "eslint-plugin-redos": "catalog:",
     "@rollup/plugin-node-resolve": "catalog:",
     "@rollup/plugin-terser": "catalog:",
     "@types/node": "catalog:",
     "cross-env": "catalog:",
     "eslint": "catalog:",
-    "eslint-plugin-regexp": "3.3.1",
+    "eslint-plugin-regexp": "catalog:",
     "nlp-corpus": "catalog:",
     "rollup": "catalog:",
     "rollup-plugin-filesize-check": "catalog:",
@@ -158,5 +164,5 @@
     "printWidth": 120,
     "arrowParens": "avoid"
   },
-  "packageManager": "pnpm@11.5.0"
+  "packageManager": "pnpm@12.16.1"
 }

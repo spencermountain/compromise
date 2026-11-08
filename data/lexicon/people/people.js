@@ -6,7 +6,6 @@ export default [
   'ashton kutcher',
   'barack obama',
   'cardinal wolsey',
-  'carson palmer',
   'denzel washington',
   'dick wolf',
   'emeril lagasse',
@@ -118,6 +117,8 @@ export default [
   'woode',
 
   'al capone',
+  'al gore',
+  'tipper gore',
   'al pacino',
   'archimedes',
   'avril lavigne',

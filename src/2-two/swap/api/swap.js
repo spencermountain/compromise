@@ -2,7 +2,7 @@ import swapVerb from './swap-verb.js'
 
 const swapNoun = function (m, lemma) {
   let str = lemma
-  if (m.has('#Plural')) {
+  if (m.has('#Plur')) {
     const toPlural = m.methods.two.transform.noun.toPlural
     str = toPlural(lemma, m.model)
   }
@@ -11,8 +11,7 @@ const swapNoun = function (m, lemma) {
 
 const swapAdverb = function (m, lemma) {
   const { toAdverb } = m.methods.two.transform.adjective
-  const str = lemma
-  const adv = toAdverb(str)
+  const adv = toAdverb(lemma)
   if (adv) {
     m.replaceWith(adv)
   }
@@ -20,9 +19,9 @@ const swapAdverb = function (m, lemma) {
 const swapAdjective = function (m, lemma) {
   const { toComparative, toSuperlative } = m.methods.two.transform.adjective
   let str = lemma
-  if (m.has('#Comparative')) {
+  if (m.has('#Comp')) {
     str = toComparative(str, m.model)
-  } else if (m.has('#Superlative')) {
+  } else if (m.has('#Sup')) {
     str = toSuperlative(str, m.model)
   }
   if (str) {
@@ -31,9 +30,7 @@ const swapAdjective = function (m, lemma) {
 }
 
 const swap = function (from, to, tag) {
-  let reg = from.split(/ /g).map(str => str.toLowerCase().trim())
-  reg = reg.filter(str => str)
-  reg = reg.map(str => `{${str}}`).join(' ')
+  const reg = from.split(/ /g).map(str => str.toLowerCase().trim()).filter(str => str).map(str => `{${str}}`).join(' ')
   let m = this.match(reg)
   // guard against some homonyms
   if (tag) {
@@ -42,13 +39,13 @@ const swap = function (from, to, tag) {
   if (m.has('#Verb')) {
     return swapVerb(m, to)
   }
-  if (m.has('#Noun')) {
+  if (m.has('#NN')) {
     return swapNoun(m, to)
   }
-  if (m.has('#Adverb')) {
+  if (m.has('#Adv')) {
     return swapAdverb(m, to)
   }
-  if (m.has('#Adjective')) {
+  if (m.has('#Adj')) {
     return swapAdjective(m, to)
   }
   return this

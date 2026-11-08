@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/verbs/copula-passive-regression] '
 
 test(here + 'copula and future passive conversions retain agreement and aspect', t => {

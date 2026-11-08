@@ -4,7 +4,9 @@ import pairs from '../../data/pairs/index.js'
 const packConjugations = () => {
   const packed = {}
   Object.keys(pairs).forEach(key => {
-    const opts = {}
+    const opts = {
+      rounds: 2,
+    }
     if (key === 'AdjToNoun') {
       opts.reverse = false
     }

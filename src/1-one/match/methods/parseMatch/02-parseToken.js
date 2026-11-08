@@ -30,6 +30,8 @@ const stripBoth = function (str) {
   str = stripEnd(str)
   return str
 }
+// is the token wrapped in these chars, like (foo)
+const wrapped = (str, a, b = a) => start(str) === a && end(str) === b
 //
 const parseToken = function (w, opts, aliases) {
   const obj = {}
@@ -77,8 +79,10 @@ const parseToken = function (w, opts, aliases) {
       obj.greedy = true
       w = stripEnd(w)
     }
-    if (w !== '*' && end(w) === '*' && w !== '\\*') {
+    // 'foo*' is zero or more
+    if (w !== '*' && end(w) === '*' && !w.endsWith('\\*')) {
       obj.greedy = true
+      obj.optional = true
       w = stripEnd(w)
     }
     if (start(w) === '!') {
@@ -87,18 +91,18 @@ const parseToken = function (w, opts, aliases) {
       w = stripStart(w)
     }
     //soft-match
-    if (start(w) === '~' && end(w) === '~' && w.length > 2) {
+    if (wrapped(w, '~') && w.length > 2) {
       w = stripBoth(w)
       obj.fuzzy = true
       obj.min = opts.fuzzy ?? 0.85
-      if (/\(/.test(w) === false) {
+      if (!/\(/.test(w)) {
         obj.word = w
         return obj
       }
     }
 
-    //regex
-    if (start(w) === '/' && end(w) === '/' && w.length > 2) {
+    //regex - {noRegex} leaves it as a plain word, to avoid redos from user-input
+    if (wrapped(w, '/') && w.length > 2 && !opts.noRegex) {
       w = stripBoth(w)
       if (opts.caseSensitive) {
         obj.use = 'text'
@@ -108,7 +112,7 @@ const parseToken = function (w, opts, aliases) {
     }
 
     // support foo{1,9}
-    if (hasMinMax.test(w) === true) {
+    if (hasMinMax.test(w)) {
       w = w.replace(hasMinMax, (_a, b, c) => {
         if (c === undefined) {
           // '{3}'	Exactly three times
@@ -138,7 +142,7 @@ const parseToken = function (w, opts, aliases) {
     }
 
     //wrapped-flags
-    if (start(w) === '(' && end(w) === ')') {
+    if (wrapped(w, '(', ')')) {
       // support (one && two)
       if (andSign.test(w)) {
         obj.choices = w.split(andSign)
@@ -156,13 +160,13 @@ const parseToken = function (w, opts, aliases) {
       obj.choices = obj.choices.filter(s => s)
       //recursion alert!
       obj.choices = obj.choices.map(str => {
-        return str.split(/ /g).map(s => parseToken(s, opts, aliases))
+        return str.split(/\s+/).map(s => parseToken(s, opts, aliases))
       })
       w = ''
     }
 
     //root/sense overloaded
-    if (start(w) === '{' && end(w) === '}') {
+    if (wrapped(w, '{', '}')) {
       w = stripBoth(w)
       // obj.sense = w
       obj.root = w
@@ -183,13 +187,13 @@ const parseToken = function (w, opts, aliases) {
       return obj
     }
     //chunks
-    if (start(w) === '<' && end(w) === '>') {
+    if (wrapped(w, '<', '>')) {
       w = stripBoth(w)
       obj.chunk = titleCase(w)
       obj.greedy = true
       return obj
     }
-    if (start(w) === '%' && end(w) === '%') {
+    if (wrapped(w, '%')) {
       w = stripBoth(w)
       obj.switch = w
       return obj

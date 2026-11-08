@@ -12,9 +12,12 @@ const punctToKill = /[,:;)('"\uFF02\u201D\u2019\u00BB\u203A\u2032\u2033\u2034\u3
 const isHyphen = /^[-–—]$/
 const hasSpace = / /
 
+// the original text of these terms, with any outer whitespace removed
+const rawText = terms => terms.reduce((str, t) => str + t.pre + t.text + t.post, '').trim()
+
 const textFromTerms = function (terms, opts, keepSpace = true) {
   let txt = ''
-  terms.forEach(t => {
+  terms.forEach((t, i) => {
     let pre = t.pre || ''
     let post = t.post || ''
     if (opts.punctuation === 'some') {
@@ -56,8 +59,8 @@ const textFromTerms = function (terms, opts, keepSpace = true) {
     if (opts.form === 'root' && t.implicit) {
       word = t.root || t.implicit || t.normal
     }
-    // add an implicit space, for contractions
-    if ((opts.form === 'machine' || opts.form === 'implicit' || opts.form === 'root') && t.implicit) {
+    // add an implicit space, for contractions - but not after the last word
+    if ((opts.form === 'machine' || opts.form === 'implicit' || opts.form === 'root') && t.implicit && i < terms.length - 1) {
       if (!post || !hasSpace.test(post)) {
         post += ' '
       }
@@ -109,4 +112,4 @@ const textFromDoc = function (docs, opts) {
   }
   return text
 }
-export { textFromDoc, textFromTerms }
+export { textFromDoc, textFromTerms, rawText }

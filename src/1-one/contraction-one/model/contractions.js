@@ -1,72 +1,99 @@
+// one 'word:out words' per line - decoded once into { [key]: word, out: [...] }
+const parse = (str, key) =>
+  str
+    .trim()
+    .split('\n')
+    .map(s => {
+      const [k, out] = s.trim().split(':')
+      return { [key]: k, out: out.split(' ') }
+    })
+
 export default [
+  // that's and let's are decided here, before any tagging
+  // (step 1 of the 's decision - the list is in 2-two/contraction-two/compute/index.js)
   // simple mappings
-  { word: '@', out: ['at'] },
-  { word: 'arent', out: ['are', 'not'] },
-  { word: 'alot', out: ['a', 'lot'] },
-  { word: 'brb', out: ['be', 'right', 'back'] },
-  { word: 'cannot', out: ['can', 'not'] },
-  { word: 'dun', out: ['do', 'not'] },
-  { word: "can't", out: ['can', 'not'] },
-  { word: "shan't", out: ['should', 'not'] },
-  { word: "won't", out: ['will', 'not'] },
-  { word: "that's", out: ['that', 'is'] },
-  { word: "what's", out: ['what', 'is'] },
-  { word: "let's", out: ['let', 'us'] },
-  // { word: "there's", out: ['there', 'is'] },
-  { word: 'dunno', out: ['do', 'not', 'know'] },
-  { word: 'gonna', out: ['going', 'to'] },
-  { word: 'gotta', out: ['have', 'got', 'to'] }, //hmm
-  { word: 'gimme', out: ['give', 'me'] },
-  { word: 'outta', out: ['out', 'of'] },
-  { word: 'tryna', out: ['trying', 'to'] },
-  { word: 'gtg', out: ['got', 'to', 'go'] },
-  { word: 'im', out: ['i', 'am'] },
-  { word: 'imma', out: ['I', 'will'] },
-  { word: 'imo', out: ['in', 'my', 'opinion'] },
-  { word: 'irl', out: ['in', 'real', 'life'] },
-  { word: 'ive', out: ['i', 'have'] },
-  { word: 'rn', out: ['right', 'now'] },
-  { word: 'tbh', out: ['to', 'be', 'honest'] },
-  { word: 'wanna', out: ['want', 'to'] },
-  { word: `c'mere`, out: ['come', 'here'] },
-  { word: `c'mon`, out: ['come', 'on'] },
-  // shoulda, coulda
-  { word: 'shoulda', out: ['should', 'have'] },
-  { word: 'coulda', out: ['coulda', 'have'] },
-  { word: 'woulda', out: ['woulda', 'have'] },
-  { word: 'musta', out: ['must', 'have'] },
-
-  { word: "tis", out: ['it', 'is'] },
-  { word: "twas", out: ['it', 'was'] },
-  { word: `y'know`, out: ['you', 'know'] },
-  { word: "ne'er", out: ['never'] },
-  { word: "o'er", out: ['over'] },
+  ...parse(
+    `
+@:at
+arent:are not
+alot:a lot
+brb:be right back
+cannot:can not
+dun:do not
+can't:can not
+shan't:should not
+won't:will not
+that's:that is
+what's:what is
+let's:let us
+dunno:do not know
+gonna:going to
+gotta:have got to
+gimme:give me
+outta:out of
+tryna:trying to
+gtg:got to go
+im:i am
+imma:I will
+imo:in my opinion
+irl:in real life
+ive:i have
+rn:right now
+tbh:to be honest
+wanna:want to
+c'mere:come here
+c'mon:come on
+shoulda:should have
+coulda:could have
+woulda:would have
+musta:must have
+tis:it is
+twas:it was
+y'know:you know
+ne'er:never
+o'er:over
+  `,
+    'word'
+  ),
   // contraction-part mappings
-  { after: 'll', out: ['will'] },
-  { after: 've', out: ['have'] },
-  { after: 're', out: ['are'] },
-  { after: 'm', out: ['am'] },
-  // french contractions
-  { before: 'c', out: ['ce'] },
-  { before: 'm', out: ['me'] },
-  { before: 'n', out: ['ne'] },
-  { before: 'qu', out: ['que'] },
-  { before: 's', out: ['se'] },
-  { before: 't', out: ['tu'] }, // t'aime
-
-  // missing apostrophes
-  { word: 'shouldnt', out: ['should', 'not'] },
-  { word: 'couldnt', out: ['could', 'not'] },
-  { word: 'wouldnt', out: ['would', 'not'] },
-  { word: 'hasnt', out: ['has', 'not'] },
-  { word: 'wasnt', out: ['was', 'not'] },
-  { word: 'isnt', out: ['is', 'not'] },
-  { word: 'cant', out: ['can', 'not'] },
-  { word: 'dont', out: ['do', 'not'] },
-  { word: 'wont', out: ['will', 'not'] },
-  // apostrophe d
-  { word: 'howd', out: ['how', 'did'] },
-  { word: 'whatd', out: ['what', 'did'] },
-  { word: 'whend', out: ['when', 'did'] },
-  { word: 'whered', out: ['where', 'did'] },
+  ...parse(
+    `
+ll:will
+ve:have
+re:are
+m:am
+  `,
+    'after'
+  ),
+  // french contractions - t'aime
+  ...parse(
+    `
+c:ce
+m:me
+n:ne
+qu:que
+s:se
+t:tu
+  `,
+    'before'
+  ),
+  // missing apostrophes, apostrophe-d
+  ...parse(
+    `
+shouldnt:should not
+couldnt:could not
+wouldnt:would not
+hasnt:has not
+wasnt:was not
+isnt:is not
+cant:can not
+dont:do not
+wont:will not
+howd:how did
+whatd:what did
+whend:when did
+whered:where did
+  `,
+    'word'
+  ),
 ]

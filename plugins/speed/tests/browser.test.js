@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from 'compromise'
+import nlp from '../../../tests/03-three/lib.js'
 import { readFile } from 'node:fs/promises'
 import { createContext, runInContext } from 'node:vm'
 import { createRequire } from 'node:module'

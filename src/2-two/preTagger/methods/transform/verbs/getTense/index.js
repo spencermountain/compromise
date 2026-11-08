@@ -1,18 +1,17 @@
 import guess from './_guess.js'
+import { Pres } from '../../../../tagSet/_lib.js'
 
 /** it helps to know what we're conjugating from */
 const getTense = function (str) {
-  const three = str.substring(str.length - 3)
-  if (Object.hasOwn(guess, three) === true) {
-    return guess[three]
+  // try the last three letters, then two
+  for (const n of [3, 2]) {
+    const end = str.substring(str.length - n)
+    if (Object.hasOwn(guess, end)) {
+      return guess[end]
+    }
   }
-  const two = str.substring(str.length - 2)
-  if (Object.hasOwn(guess, two) === true) {
-    return guess[two]
-  }
-  const one = str.substring(str.length - 1)
-  if (one === 's') {
-    return 'PresentTense'
+  if (str.endsWith('s')) {
+    return Pres
   }
   return null
 }

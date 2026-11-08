@@ -1,9 +1,9 @@
-import doesMatch from '../../term/doesMatch.js'
+import { matchAt } from '../../_lib.js'
 
 const negGreedy = function (state, reg, nextReg) {
   let skip = 0
   for (let t = state.t; t < state.terms.length; t += 1) {
-    let found = doesMatch(state.terms[t], reg, state.start_i + t, state.phrase_length)
+    let found = matchAt(state, reg, t)
     // we don't want a match, here
     if (found) {
       break//stop going
@@ -11,7 +11,7 @@ const negGreedy = function (state, reg, nextReg) {
     // are we doing 'greedy-to'?
     // - "!foo+ after"  should stop at 'after'
     if (nextReg) {
-      found = doesMatch(state.terms[t], nextReg, state.start_i + t, state.phrase_length)
+      found = matchAt(state, nextReg, t)
       if (found) {
         break
       }
@@ -22,8 +22,9 @@ const negGreedy = function (state, reg, nextReg) {
       break
     }
   }
+  // '!foo* after' can match nothing, and leave this term for the next token
   if (skip === 0) {
-    return false //dead
+    return reg.optional === true //dead, otherwise
   }
   // did we satisfy min for !foo{min,max}
   if (reg.min && reg.min > skip) {

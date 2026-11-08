@@ -1,42 +1,42 @@
-// units that are abbreviations too
-export default [
-  'dl',
-  'ml',
-  'gal',
-  // 'ft', //ambiguous
-  'qt',
-  'pt',
-  'tbl',
-  'tsp',
-  'tbsp',
-  'km',
-  'dm', //decimeter
-  'cm',
-  'mm',
-  'mi',
-  'td',
-  'hr', //hour
-  'hrs', //hour
-  'kg',
-  'hg',
-  'dg', //decigram
-  'cg', //centigram
-  'mg', //milligram
-  'µg', //microgram
-  'lb', //pound
-  'oz', //ounce
-  'sq ft',
-  'hz', //hertz
-  'mps', //meters per second
-  'mph',
-  'kmph', //kilometers per hour
-  'kb', //kilobyte
-  'mb', //megabyte
-  // 'gb', //ambig
-  'tb', //terabyte
-  'lx', //lux
-  'lm', //lumen
-  // 'pa', //ambig
-  'fl oz', //
-  'yb',
-]
+import { toList } from '../_lib.js'
+// units that are abbreviations too (not ft, gb, pa - ambiguous)
+// dm=decimeter, hr/hrs=hour, dg/cg/mg/µg=grams, lb=pound, oz=ounce, hz=hertz,
+// mps=meters per second, kmph=kilometers per hour, kb/mb/tb/yb=bytes, lx=lux, lm=lumen
+export default toList(`
+dl
+ml
+gal
+qt
+pt
+tbl
+tsp
+tbsp
+km
+dm
+cm
+mm
+mi
+td
+hr
+hrs
+kg
+hg
+dg
+cg
+mg
+µg
+lb
+oz
+sq ft
+hz
+mps
+mph
+kmph
+kb
+mb
+tb
+lx
+lm
+fl oz
+yb
+`)

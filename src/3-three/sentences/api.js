@@ -1,3 +1,4 @@
+import keepClass from '../_lib.js'
 import isQuestion from './questions.js'
 import parse from './parse/index.js'
 import toPast from './conjugate/toPast.js'
@@ -8,10 +9,6 @@ import toInfinitive from './conjugate/toInfinitive.js'
 
 const api = function (View) {
   class Sentences extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Sentences'
-    }
     json(opts = {}) {
       return this.map(m => {
         const json = m.toView().json(opts)[0] || {}
@@ -25,43 +22,6 @@ const api = function (View) {
         return json
       }, [])
     }
-    toPastTense(n) {
-      return this.getNth(n).map(s => {
-        const parsed = parse(s)
-        return toPast(s, parsed)
-      })
-    }
-    toPresentTense(n) {
-      return this.getNth(n).map(s => {
-        const parsed = parse(s)
-        return toPresent(s, parsed)
-      })
-    }
-    toFutureTense(n) {
-      return this.getNth(n).map(s => {
-        const parsed = parse(s)
-        s = toFuture(s, parsed)
-        return s
-      })
-    }
-    toInfinitive(n) {
-      return this.getNth(n).map(s => {
-        const parsed = parse(s)
-        return toInfinitive(s, parsed)
-      })
-    }
-    toNegative(n) {
-      return this.getNth(n).map(vb => {
-        const parsed = parse(vb)
-        return toNegative(vb, parsed)
-      })
-    }
-    toPositive(n) {
-      return this.getNth(n).map(vb => {
-        const parsed = parse(vb)
-        return toPositive(vb, parsed)
-      })
-    }
     isQuestion(n) {
       return this.questions(n)
     }
@@ -73,17 +33,27 @@ const api = function (View) {
       const res = this.filter(s => !s.isExclamation().found && !s.isQuestion().found)
       return res.getNth(n)
     }
-    // overloaded - keep Sentences class
-    update(pointer) {
-      const m = new Sentences(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      return m
-    }
   }
-  // aliases
-  Sentences.prototype.toPresent = Sentences.prototype.toPresentTense
-  Sentences.prototype.toPast = Sentences.prototype.toPastTense
-  Sentences.prototype.toFuture = Sentences.prototype.toFutureTense
+  keepClass(Sentences, 'Sentences')
+  // parse each sentence, then convert it
+  const each = fn => function (n) {
+    return this.getNth(n).map(s => fn(s, parse(s)))
+  }
+  const toPastTense = each(toPast)
+  const toPresentTense = each(toPresent)
+  const toFutureTense = each(toFuture)
+  Object.assign(Sentences.prototype, {
+    toPastTense,
+    toPresentTense,
+    toFutureTense,
+    toInfinitive: each(toInfinitive),
+    toNegative: each(toNegative),
+    toPositive: each(toPositive),
+    // aliases
+    toPresent: toPresentTense,
+    toPast: toPastTense,
+    toFuture: toFutureTense,
+  })
 
   const methods = {
     sentences: function (n) {

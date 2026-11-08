@@ -1,17 +1,7 @@
 import getUnion from './lib/union.js'
 import getDifference from './lib/difference.js'
 import getIntersection from './lib/intersection.js'
-
-const getDoc = (m, view) => {
-  if (typeof m === 'string' || Array.isArray(m)) {
-    return view.match(m)
-  }
-  if (!m) {
-    return view.none()
-  }
-  // support pre-parsed reg object
-  return m
-}
+import { getDoc } from './lib/_lib.js'
 
 // 'harden' our json pointers, again
 const addIds = function (ptrs, docs) {
@@ -24,40 +14,31 @@ const addIds = function (ptrs, docs) {
   })
 }
 
+// a new view from the pointers
+const toView = (view, ptrs) => view.toView(addIds(ptrs, view.document))
+
+// combine our pointers with another view's
+const setOp = fn => function (m) {
+  m = getDoc(m, this)
+  return toView(this, fn(this.fullPointer, m.fullPointer))
+}
+
 const methods = {}
 
 // all parts, minus duplicates
-methods.union = function (m) {
-  m = getDoc(m, this)
-  let ptrs = getUnion(this.fullPointer, m.fullPointer)
-  ptrs = addIds(ptrs, this.document)
-  return this.toView(ptrs)
-}
+methods.union = setOp(getUnion)
 methods.and = methods.union
 
 // only parts they both have
-methods.intersection = function (m) {
-  m = getDoc(m, this)
-  let ptrs = getIntersection(this.fullPointer, m.fullPointer)
-  ptrs = addIds(ptrs, this.document)
-  return this.toView(ptrs)
-}
+methods.intersection = setOp(getIntersection)
 
 // only parts of a that b does not have
-methods.not = function (m) {
-  m = getDoc(m, this)
-  let ptrs = getDifference(this.fullPointer, m.fullPointer)
-  ptrs = addIds(ptrs, this.document)
-  return this.toView(ptrs)
-}
+methods.not = setOp(getDifference)
 methods.difference = methods.not
 
 // get opposite of a match
 methods.complement = function () {
-  const doc = this.all()
-  let ptrs = getDifference(doc.fullPointer, this.fullPointer)
-  ptrs = addIds(ptrs, this.document)
-  return this.toView(ptrs)
+  return toView(this, getDifference(this.all().fullPointer, this.fullPointer))
 }
 
 // remove overlaps

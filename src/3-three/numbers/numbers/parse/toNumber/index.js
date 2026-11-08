@@ -13,20 +13,17 @@ const casualForms = {
   'two dozen': 24,
   zero: 0,
 }
+// counts for 'a few hundred'
+const casualCounts = { few: 3, couple: 2 }
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
-const section_sum = obj => {
-  return Object.keys(obj).reduce((sum, k) => {
-    sum += obj[k]
-    return sum
-  }, 0)
-}
+const section_sum = obj => Object.values(obj).reduce((a, b) => a + b, 0)
 
 //turn a string into a number
 const parse = function (str) {
   //convert some known-numbers
-  if (Object.hasOwn(casualForms, str) === true) {
+  if (Object.hasOwn(casualForms, str)) {
     return casualForms[str]
   }
   //'a/an' is 1
@@ -36,6 +33,8 @@ const parse = function (str) {
   const modifier = findModifiers(str)
   str = modifier.str
   let last_mult = null
+  // the sum after the last thousand-or-bigger multiple, like 'two million'
+  let last_big = null
   let has = {}
   let sum = 0
   let isNegative = false
@@ -60,9 +59,18 @@ const parse = function (str) {
     //decimal mode
     if (w === 'point') {
       sum += section_sum(has)
-      sum += parseDecimals(terms.slice(i + 1, terms.length))
-      sum *= modifier.amount
-      return sum
+      let rest = terms.slice(i + 1)
+      // 'six point five million' - the decimals end at a multiplier
+      const end = rest.findIndex(t => Object.hasOwn(words.multiples, t))
+      let scale = 1
+      if (end !== -1) {
+        const mults = rest.slice(end).filter(t => Object.hasOwn(words.multiples, t))
+        scale = mults.reduce((n, t) => n * words.multiples[t], 1)
+        rest = rest.slice(0, end)
+      }
+      sum += parseDecimals(rest)
+      sum *= scale * modifier.amount
+      return isNegative ? -sum : sum
     }
 
     //improper fraction
@@ -78,31 +86,30 @@ const parse = function (str) {
     // try to support 'two fifty'
     if (Object.hasOwn(words.tens, w)) {
       if (has.ones && Object.keys(has).length === 1) {
-        sum = has.ones * 100
-        has = {}
+        // keep it in this section, so 'five thousand' before it survives
+        has = { hundreds: has.ones * 100 }
       }
     }
 
     //prevent mismatched units, like 'seven eleven' if not a fraction
-    if (isValid(w, has) === false) {
+    if (!isValid(w, has)) {
       return null
     }
 
     //buildOut section, collect 'has' values
+    const kind = ['ones', 'teens', 'tens'].find(k => Object.hasOwn(words[k], w))
     if (/^[0-9.]+$/.test(w)) {
       has.ones = parseFloat(w) //not technically right
-    } else if (Object.hasOwn(words.ones, w) === true) {
-      has.ones = words.ones[w]
-    } else if (Object.hasOwn(words.teens, w) === true) {
-      has.teens = words.teens[w]
-    } else if (Object.hasOwn(words.tens, w) === true) {
-      has.tens = words.tens[w]
-    } else if (Object.hasOwn(words.multiples, w) === true) {
+    } else if (kind) {
+      has[kind] = words[kind][w]
+    } else if (Object.hasOwn(casualCounts, w)) {
+      has.ones = casualCounts[w]
+    } else if (Object.hasOwn(words.multiples, w)) {
       let mult = words.multiples[w]
 
       //something has gone wrong : 'two hundred five hundred'
       //possibly because it's a fraction
-      if (mult === last_mult) {
+      if (mult === last_mult && Object.keys(has).length > 0) {
         return null
       }
       //support 'hundred thousand'
@@ -114,6 +121,15 @@ const parse = function (str) {
           i += 1
         }
       }
+      // 'a million million' - nothing counted since the last multiple, so multiply
+      if (last_mult !== null && Object.keys(has).length === 0) {
+        sum = (sum || 1) * mult
+        last_mult = mult
+        if (mult >= 1000) {
+          last_big = { sum, mult }
+        }
+        continue
+      }
       //natural order of things
       //five thousand, one hundred..
       if (last_mult === null || mult < last_mult) {
@@ -124,8 +140,17 @@ const parse = function (str) {
         //maybe hundred .. thousand
         sum += section_sum(has)
         last_mult = mult
-        sum = (sum || 1) * mult
+        // only multiply what came after a bigger multiple
+        // 'two million [three hundred five] thousand'
+        let base = 0
+        if (last_big !== null && last_big.mult > mult) {
+          base = last_big.sum
+        }
+        sum = base + (sum - base || 1) * mult
         has = {}
+      }
+      if (mult >= 1000) {
+        last_big = { sum, mult }
       }
     }
   }

@@ -4,7 +4,7 @@ const combineDocs = function (homeDocs, inputDocs) {
     // add a space
     const end = homeDocs.at(-1)
     const last = end.at(-1)
-    if (/ /.test(last.post) === false) {
+    if (!/ /.test(last.post)) {
       last.post += ' '
     }
   }

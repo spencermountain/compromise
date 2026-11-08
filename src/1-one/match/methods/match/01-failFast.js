@@ -14,15 +14,15 @@ const failFast = function (regs, cache) {
       continue
     }
     // is the word missing from the cache?
-    if (reg.word !== undefined && cache.has(reg.word) === false) {
+    if (reg.word !== undefined && !cache.has(reg.word)) {
       return true
     }
     // is the tag missing?
-    if (reg.tag !== undefined && cache.has('#' + reg.tag) === false) {
+    if (reg.tag !== undefined && !cache.has('#' + reg.tag)) {
       return true
     }
     // are all of the fast-or words missing?
-    if (reg.fastOr !== undefined && anyIntersection(reg.fastOr, cache) === false) {
+    if (reg.fastOr !== undefined && !anyIntersection(reg.fastOr, cache)) {
       return true
     }
   }

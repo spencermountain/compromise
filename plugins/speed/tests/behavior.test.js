@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from 'compromise'
+import nlp from '../../../tests/03-three/lib.js'
 import { mkdtemp, writeFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'

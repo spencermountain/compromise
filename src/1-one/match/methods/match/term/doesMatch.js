@@ -50,7 +50,7 @@ const doesMatch = function (term, reg, index, length) {
   }
   //support #Tag
   if (reg.tag !== undefined) {
-    return term.tags.has(reg.tag) === true
+    return term.tags.has(reg.tag)
   }
   //support @method
   if (reg.method !== undefined) {
@@ -109,14 +109,15 @@ const doesMatch = function (term, reg, index, length) {
     return reg.fastOr.has(str) || reg.fastOr.has(term.text)
   }
   //support slower (one|two)
+  // each choice is a list of tokens - this term can only test the first one
   if (reg.choices !== undefined) {
     // try to support && operator
     if (reg.operator === 'and') {
       // must match them all
-      return reg.choices.every(r => wrapMatch(term, r, index, length))
+      return reg.choices.every(r => wrapMatch(term, r[0], index, length))
     }
     // or must match one
-    return reg.choices.some(r => wrapMatch(term, r, index, length))
+    return reg.choices.some(r => wrapMatch(term, r[0], index, length))
   }
   return false
 }

@@ -1,4 +1,5 @@
 export default [
+  [/^([dlpt])ies$/i, '$1ie'],//lies, ties
   [/([^v])ies$/i, '$1y'],
   [/(ise)s$/i, '$1'],//promises
   [/(kn|[^o]l|w)ives$/i, '$1ife'],
@@ -8,16 +9,12 @@ export default [
   [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
   [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
 
-  [/(ause)s$/i, '$1'],//causes
-  [/(ease)s$/i, '$1'],//diseases
   [/(ious)es$/i, '$1'],//geniouses
-  [/(ouse)s$/i, '$1'],//houses
-  [/(ose)s$/i, '$1'],//roses
-
-  [/(..ase)s$/i, '$1'],
+  [/(ause|ease|eese|ouse|ose|..ase)s$/i, '$1'],//causes, diseases, cheeses, houses, roses
   [/(..[aeiu]s)es$/i, '$1'],
   [/(vert|ind|cort)(ices)$/i, '$1ex'],
   [/(matr|append)(ices)$/i, '$1ix'],
+  [/^(can|ob|tipt|[fhtw])oes$/i, '$1oe'],//toes, canoes
   [/([xo]|ch|ss|sh)es$/i, '$1'],
   [/men$/i, 'man'],
   [/(n)ews$/i, '$1ews'],

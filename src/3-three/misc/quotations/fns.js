@@ -1,4 +1,5 @@
 /* eslint-disable regexp/no-dupe-characters-character-class */
+import { findPairs, stripPairs } from '../_pairs.js'
 
 const pairs = {
   '\u0022': '\u0022', // 'StraightDoubleQuotes'
@@ -40,30 +41,6 @@ const findEnd = function (terms, i) {
   return null
 }
 
-const find = function (doc) {
-  const ptrs = []
-  doc.docs.forEach(terms => {
-    const isOpen = false
-    for (let i = 0; i < terms.length; i += 1) {
-      const term = terms[i]
-      if (!isOpen && term.pre && hasOpen.test(term.pre)) {
-        const end = findEnd(terms, i)
-        if (end !== null) {
-          const [n, start] = terms[i].index
-          ptrs.push([n, start, end + 1, terms[i].id])
-          i = end
-        }
-      }
-    }
-  })
-  return doc.update(ptrs)
-}
-
-const strip = function (m) {
-  m.docs.forEach(terms => {
-    terms[0].pre = terms[0].pre.replace(hasOpen, '')
-    const lastTerm = terms[terms.length - 1]
-    lastTerm.post = lastTerm.post.replace(hasClosed, '')
-  })
-}
+const find = findPairs(hasOpen, findEnd)
+const strip = stripPairs(hasOpen, hasClosed)
 export { find, strip }

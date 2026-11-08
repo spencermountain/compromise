@@ -7,13 +7,13 @@ const tail = '(#Date|#Adv)+?$'
 
 const rules = [
   // waters the roses [daily]; worked [together] yesterday → Adverb
-  ...['', object].map(between => [`(#V && !#Cop && !be && !been && !being) ${between} [${time}] ${tail}`, Adv, 0]),
+  ...['', object].map(between => [`(#V && !#Cop && !be && !been && !being) ${between} [${time}] ${tail}`, Adv]),
   // carried the laundry [upstairs]; fresh towels [upstairs] → Adverb
-  ...['', object].map(between => [`${between ? '#V' : '(#V && !#Cop)'} ${between} [${place}] ${tail}`, Adv, 0]),
+  ...['', object].map(between => [`${between ? '#V' : '(#V && !#Cop)'} ${between} [${place}] ${tail}`, Adv]),
   // walked [home]; works [downtown] (but visited downtown) → Adverb
   [
     '(go|goes|went|walk|walked|walks|work|works|worked|come|came|comes|going|walking|working|coming) [(home|downtown)] (together|#Date|#Adv)+?$',
-    Adv, 0,
+    Adv,
   ],
   // chauffeur the guests [home]; leave home purchases as nouns → Adverb
   ...[
@@ -21,12 +21,12 @@ const rules = [
     object,
   ].map(between => [
     `(chauffeur|chauffeurs|chauffeured|chauffeuring|drive|drives|drove|driven|driving|escort|escorts|escorted|escorting) ${between} [home] ${tail}`,
-    Adv, 0,
+    Adv,
   ]),
   // boss everyone [around], with a separated object → Adverb
-  [`(boss|bosses|bossed|bossing) ${object} [around] ${tail}`, Adv, 0],
+  [`(boss|bosses|bossed|bossing) ${object} [around] ${tail}`, Adv],
   // come here [now] → Adverb
-  ['here [now]$', Adv, 0],
+  ['here [now]$', Adv],
 ]
 
 export default rules

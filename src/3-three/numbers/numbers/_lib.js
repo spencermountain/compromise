@@ -1,6 +1,8 @@
 import parse from './parse/index.js'
 import format from './format/index.js'
 import agree from './agree.js'
+import { dropPreSign } from './_conversion.js'
+import { Ord, Card, TxtNum } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 // Keep conversion skips and format choices specific to each public method.
 const convert = (view, tag, skip, getFormat) => {
@@ -8,16 +10,21 @@ const convert = (view, tag, skip, getFormat) => {
     if (skip(val)) {
       return val
     }
+    // a slash-fraction is spelled out as a fraction - '1/2' -> 'one half'
+    if (val.has('(#Frac && #Numeric)')) {
+      return tag === TxtNum ? val.fractions().toText() : val
+    }
     const obj = parse(val)
     if (obj.num === null) {
       return val
     }
     const str = format(obj, getFormat(val))
-    val.replaceWith(str, { tags: true })
+    dropPreSign(val, str)
+    val.replaceWith(str, { tags: true, possessives: true })
     // Generated currency words keep their noun tags.
     val.not('#Currency').tag(tag)
-    if (tag === 'Ordinal' || tag === 'Cardinal') {
-      agree(val, tag === 'Ordinal' || obj.num === 1)
+    if (tag === Ord || tag === Card) {
+      agree(val, tag === Ord || obj.num === 1)
     }
     return val
   })

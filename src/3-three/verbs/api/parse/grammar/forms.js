@@ -1,184 +1,198 @@
 import expandTags from '../../../../../2-two/postTagger/model/_lib.js'
+import { Pres, Fut, Past } from '../../../../../2-two/preTagger/tagSet/_lib.js'
 
-const present = { tense: 'PresentTense' }
-const conditional = { conditional: true }
-const future = { tense: 'FutureTense' }
-const prog = { progressive: true }
-const past = { tense: 'PastTense' }
-const complete = { complete: true, progressive: false }
-const passive = { passive: true }
-const plural = { plural: true }
-const singular = { plural: false }
-
-const getData = function (tags) {
-  const data = {}
-  tags.forEach(o => {
-    Object.assign(data, o)
-  })
-  return data
+// one letter per grammar flag, joined into a code like 'Pv' (past passive)
+const flags = {
+  p: { tense: Pres },
+  d: { conditional: true },
+  f: { tense: Fut },
+  g: { progressive: true },
+  P: { tense: Past },
+  c: { complete: true, progressive: false },
+  v: { passive: true },
+  l: { plural: true },
+  s: { plural: false },
 }
+
+// the grammar form names used by the conjugators
+const Imperative = 'imperative'
+const WantInf = 'want-infinitive'
+const GerPhrase = 'gerund-phrase'
+const SimplePres = 'simple-present'
+const SimplePast = 'simple-past'
+const SimpleFut = 'simple-future'
+const PresCond = 'present-conditional'
+const PastCond = 'past-conditional'
+const AuxFut = 'auxiliary-future'
+const AuxPast = 'auxiliary-past'
+const AuxPres = 'auxiliary-present'
+const ModalPast = 'modal-past'
+const ModalInf = 'modal-infinitive'
+const ModalPerfProg = 'modal-perfect-progressive'
+const PassivePast = 'passive-past'
+const InfForm = 'infinitive'
 
 const verbForms = {
   // === Simple ===
-  'imperative': [
+  [Imperative]: [
     // walk!
-    ['#Imp', []],
+    ['#Imp', ''],
   ],
 
-  'want-infinitive': [
-    ['^(want|wants|wanted) to #Inf$', [present]],
-    ['^wanted to #Inf$', [past]],
-    ['^will want to #Inf$', [future]],
+  [WantInf]: [
+    ['^(want|wants|wanted) to #Inf$', 'p'],
+    ['^wanted to #Inf$', 'P'],
+    ['^will want to #Inf$', 'f'],
   ],
 
-  'gerund-phrase': [
+  [GerPhrase]: [
     // started looking
-    ['^#Past #Ger$', [past]],
+    ['^#Past #Ger$', 'P'],
     // starts looking
-    ['^#Pres #Ger$', [present]],
+    ['^#Pres #Ger$', 'p'],
     // start looking
-    ['^#Inf #Ger$', [present]],
+    ['^#Inf #Ger$', 'p'],
     // will start looking
-    ['^will #Inf #Ger$', [future]],
+    ['^will #Inf #Ger$', 'f'],
     // have started looking
-    ['^have #Past #Ger$', [past]],
+    ['^have #Past #Ger$', 'P'],
     // will have started looking
-    ['^will have #Past #Ger$', [past]],
+    ['^will have #Past #Ger$', 'P'],
   ],
 
-  'simple-present': [
+  [SimplePres]: [
     // he walks',
-    ['^#Pres$', [present]],
+    ['^#Pres$', 'p'],
     // we walk
-    ['^#Inf$', [present]],
+    ['^#Inf$', 'p'],
   ],
-  'simple-past': [
+  [SimplePast]: [
     // he walked',
-    ['^#Past$', [past]],
+    ['^#Past$', 'P'],
   ],
-  'simple-future': [
+  [SimpleFut]: [
     // he will walk
-    ['^will #Adv? #Inf', [future]],
+    ['^will #Adv? #Inf', 'f'],
   ],
 
   // === Progressive ===
   'present-progressive': [
     // he is walking
-    ['^(is|are|am) #Ger$', [present, prog]],
+    ['^(is|are|am) #Ger$', 'pg'],
   ],
   'past-progressive': [
     // he was walking
-    ['^(was|were) #Ger$', [past, prog]],
+    ['^(was|were) #Ger$', 'Pg'],
   ],
   'future-progressive': [
     // he will be
-    ['^will be #Ger$', [future, prog]],
+    ['^will be #Ger$', 'fg'],
   ],
 
   // === Perfect ===
   'present-perfect': [
     // he has walked
-    ['^(has|have) #Past$', [past, complete]], //past?
+    ['^(has|have) #Past$', 'Pc'], //past?
   ],
   'past-perfect': [
     // he had walked
-    ['^had #Past$', [past, complete]],
+    ['^had #Past$', 'Pc'],
     // had been to see
-    ['^had #Past to #Inf', [past, complete]],
+    ['^had #Past to #Inf', 'Pc'],
   ],
   'future-perfect': [
     // he will have
-    ['^will have #Past$', [future, complete]],
+    ['^will have #Past$', 'fc'],
   ],
 
   // === Progressive-perfect ===
   'present-perfect-progressive': [
-    ['^(has|have) been going to be #Ger$', [past, prog]],
+    ['^(has|have) been going to be #Ger$', 'Pg'],
     // he has been walking
-    ['^(has|have) been #Ger$', [past, prog]], //present?
+    ['^(has|have) been #Ger$', 'Pg'], //present?
   ],
   'past-perfect-progressive': [
     // he had been
-    ['^had been #Ger$', [past, prog]],
+    ['^had been #Ger$', 'Pg'],
   ],
   'future-perfect-progressive': [
     // will have been
-    ['^will have been #Ger$', [future, prog]],
+    ['^will have been #Ger$', 'fg'],
   ],
 
   // ==== Passive ===
-  'passive-past': [
-    ['^(was|were) being? (#Past|#VBN)$', [past, passive]],
-    ['^had been being? (#Past|#VBN)$', [past, passive]],
+  [PassivePast]: [
+    ['^(was|were) being? (#Past|#VBN)$', 'Pv'],
+    ['^had been being? (#Past|#VBN)$', 'Pv'],
     // got walked, was walked, were walked
-    ['(got|were|was) #Pass', [past, passive]],
+    ['(got|were|was) #Pass', 'Pv'],
     // was being walked
-    ['^(was|were) being #Pass', [past, passive]],
+    ['^(was|were) being #Pass', 'Pv'],
     // had been walked
-    ['^had been #Pass', [past, passive]],
+    ['^had been #Pass', 'Pv'],
   ],
   'passive-present': [
-    ['^(is|are|am) being? (#Past|#VBN)$', [present, passive]],
-    ['^(has|have) been being? (#Past|#VBN)$', [present, passive]],
+    ['^(is|are|am) being? (#Past|#VBN)$', 'pv'],
+    ['^(has|have) been being? (#Past|#VBN)$', 'pv'],
     // is walked, are stolen
-    ['^(is|are|am) #Pass', [present, passive]],
+    ['^(is|are|am) #Pass', 'pv'],
     // is being walked
-    ['^(is|are|am) being #Pass', [present, passive]],
+    ['^(is|are|am) being #Pass', 'pv'],
     // has/have been cleaned
-    ['^(has|have) been #Pass', [present, passive]],
+    ['^(has|have) been #Pass', 'pv'],
   ],
   'passive-future': [
-    ['^will have been being? (#Past|#VBN)$', [future, passive, conditional]],
-    ['^will be being? (#Past|#VBN)$', [future, passive, conditional]],
+    ['^will have been being? (#Past|#VBN)$', 'fvd'],
+    ['^will be being? (#Past|#VBN)$', 'fvd'],
     // will have been walked
-    ['will have been #Pass', [future, passive, conditional]],
+    ['will have been #Pass', 'fvd'],
     // will be cleaned
-    ['will be being? #Pass', [future, passive, conditional]],
+    ['will be being? #Pass', 'fvd'],
   ],
 
   // === Conditional ===
-  'present-conditional': [
+  [PresCond]: [
     // would be walked
-    ['^#Mod be #Past$', [present, conditional, passive]],
+    ['^#Mod be #Past$', 'pdv'],
   ],
-  'past-conditional': [
+  [PastCond]: [
     // would have been walked
-    ['^#Mod have been #Past$', [past, conditional, passive]],
+    ['^#Mod have been #Past$', 'Pdv'],
   ],
 
   // ==== Auxiliary ===
-  'auxiliary-future': [
-    ['^(is|are|am|was|were) going to be #Ger$', [future, prog]],
+  [AuxFut]: [
+    ['^(is|are|am|was|were) going to be #Ger$', 'fg'],
     // going to drink
-    ['(is|are|am|was|were) going to (#Inf|#Pres)', [future]],
+    ['(is|are|am|was|were) going to (#Inf|#Pres)', 'f'],
   ],
-  'auxiliary-past': [
+  [AuxPast]: [
     // he did walk
-    ['^did #Inf$', [past, singular]],
+    ['^did #Inf$', 'Ps'],
     // used to walk
-    ['^used to #Inf$', [past, complete]],
+    ['^used to #Inf$', 'Pc'],
   ],
-  'auxiliary-present': [
+  [AuxPres]: [
     // we do walk
-    ['^(does|do) #Inf$', [present, complete, plural]],
+    ['^(does|do) #Inf$', 'pcl'],
   ],
 
   // === modals ===
-  'modal-perfect-progressive': [
-    ['^#Mod have been #Ger$', [past, prog]],
+  [ModalPerfProg]: [
+    ['^#Mod have been #Ger$', 'Pg'],
   ],
-  'modal-past': [
+  [ModalPast]: [
     // he could have walked
-    ['^#Mod have #Past$', [past]],
+    ['^#Mod have #Past$', 'P'],
   ],
-  'modal-infinitive': [
+  [ModalInf]: [
     // he can walk
-    ['^#Mod #Inf$', []],
+    ['^#Mod #Inf$', ''],
   ],
 
-  'infinitive': [
+  [InfForm]: [
     // walk
-    ['^#Inf$', []],
+    ['^#Inf$', ''],
   ],
 }
 
@@ -188,9 +202,10 @@ Object.keys(verbForms).map(k => {
     list.push({
       name: k,
       match: expandTags(a[0]),
-      data: getData(a[1]),
+      data: Object.assign({}, ...[...a[1]].map(c => flags[c])),
     })
   })
 })
 
+export { Imperative, WantInf, GerPhrase, SimplePres, SimplePast, SimpleFut, PresCond, PastCond, AuxFut, AuxPast, AuxPres, ModalPast, ModalInf, ModalPerfProg, PassivePast, InfForm }
 export default list

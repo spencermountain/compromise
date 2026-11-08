@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/three.js'
+import nlp from '../03-three/lib.js'
 const here = '[ignored/abbreviations] '
 
 test('abbreviations', function (t) {

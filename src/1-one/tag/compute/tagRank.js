@@ -1,3 +1,4 @@
+import eachTerm from '../../tokenize/compute/_lib.js'
 const boringTags = new Set(['Auxiliary', 'Possessive'])
 
 const sortByKids = function (tags, tagSet) {
@@ -21,11 +22,9 @@ const sortByKids = function (tags, tagSet) {
 const tagRank = function (view) {
   const { document, world } = view
   const tagSet = world.model.one.tagSet
-  document.forEach(terms => {
-    terms.forEach(term => {
-      const tags = Array.from(term.tags)
-      term.tagRank = sortByKids(tags, tagSet)
-    })
+  eachTerm(document, term => {
+    const tags = Array.from(term.tags)
+    term.tagRank = sortByKids(tags, tagSet)
   })
 }
 export default tagRank

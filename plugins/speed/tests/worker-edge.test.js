@@ -69,7 +69,7 @@ test('worker calls do not mix concurrent inputs or retain earlier matches', asyn
 
 test('idle workers do not keep a Node process alive', async t => {
   const script = `
-    import nlp from 'compromise'
+    import nlp from ${JSON.stringify(new URL('../../../tests/03-three/lib.js', import.meta.url).href)}
     import speed from ${JSON.stringify(pluginUrl)}
     nlp.plugin(speed)
     const doc = await nlp.workerPool('One cat. Two cats. Three cats.', '.', {
@@ -79,6 +79,6 @@ test('idle workers do not keep a Node process alive', async t => {
   `
   const { stdout, stderr } = await execute(process.execPath, ['--input-type=module', '-e', script], { timeout: 10000 })
   t.equal(stdout.trim(), 'One cat. Two cats. Three cats.', 'child completes without explicitly closing its pool')
-  t.equal(stderr, '', 'child exits without errors')
+  t.equal(stderr.replace('== production build test 🚀 ==\n', ''), '', 'child exits without errors')
   t.end()
 })

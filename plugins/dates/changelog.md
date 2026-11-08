@@ -2,6 +2,12 @@
 - **[breaking]** - return array in .json().dates
 -->
 
+### 3.11.0 [Nov 2026]
+
+- **[update]** - 2026f tzdb
+- **[change]** - support "twenty twenty-five"
+- **[new]** - `.dates().isValid()` - drop matches like 'february 41'
+
 ### 3.10.0 [Oct 2026]
 
 - **[new]** - add `.dates().add()` and `.subtract()` update document text

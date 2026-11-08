@@ -1,12 +1,5 @@
 import { convert } from 'suffix-thumb'
-
-// pull-apart phrasal verb 'fall over'
-const parse = (inf) => {
-  if (/ /.test(inf)) {
-    return inf.split(/ /)
-  }
-  return [inf, '']
-}
+import { Adj } from '../../../../tagSet/_lib.js'
 
 //we run this on every verb in the lexicon, so please keep it fast
 //we assume the input word is a proper infinitive
@@ -22,7 +15,8 @@ const conjugate = function (inf, model) {
       PresentTense: 'is',
     }
   }
-  const [str, particle] = parse(inf)
+  // pull-apart phrasal verb 'fall over'
+  const [str, particle = ''] = inf.split(' ')
   const found = {
     Infinitive: str,
     PastTense: convert(str, toPast),
@@ -36,7 +30,7 @@ const conjugate = function (inf, model) {
   if (pastPrt !== inf && pastPrt !== found.PastTense) {
     // ensure it's a known participle
     const lex = model.one.lexicon || {}
-    if (lex[pastPrt] === 'Participle' || lex[pastPrt] === 'Adjective') {
+    if (lex[pastPrt] === 'Participle' || lex[pastPrt] === Adj) {
       // one exception
       if (inf === 'play') {
         pastPrt = 'played'

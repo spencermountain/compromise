@@ -1,6 +1,6 @@
-import { green, red, dim } from '../../API/_color.js'
+import debug from '../../API/debug/debug.js'
 import specFailures from './_spec-failures.js'
-import logSpec from './_spec-log.js'
+import { logSpec, logLine } from './_spec-log.js'
 import { parseLine, toMatchString, applyTags } from './_spec-lib.js'
 
 const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMode = 'ignore', verbose = false } = {}) {
@@ -41,13 +41,8 @@ const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMo
     const detail = failures.map(failure => failure.message).join('; ')
     if (failureMode === 'log' && failures.length > 0) {
       console.error(logSpec(doc, tags, failures, aliases)) //eslint-disable-line no-console
-    } else if (verbose) {
-      const block = tags === null ? '' : ` {${tags.map(slot => slot.join('|')).join(',')}}`
-      if (failures.length > 0) {
-        console.log(`${red('✗')} ${text}${dim(block)} - ${red(detail)}`) //eslint-disable-line no-console
-      } else {
-        console.log(`${green('✓')} ${green(dim(text))}${dim(block)}`) //eslint-disable-line no-console
-      }
+    } else if (verbose || debug.spec) {
+      console.log(logLine(text, tags, detail)) //eslint-disable-line no-console
     }
     if (failures.length > 0 && failureMode === 'throw') {
       throw new Error(`${text.trim()} - ${detail}`)

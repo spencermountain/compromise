@@ -12,9 +12,9 @@ class Week extends Unit {
     this.d = this.d.add(2, 'days') //wednesday
     return this
   }
-  // move it to 3/4s through
+  // 'middle of next week' runs wednesday through thursday
   beforeEnd() {
-    this.d = this.d.day('friday')
+    this.d = this.d.day('thursday').endOf('day')
     return this
   }
 }

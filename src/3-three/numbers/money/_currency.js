@@ -1,4 +1,7 @@
 import symbols from './currencies.js'
+// iso codes are not tagged as currencies
+const codes = '(cad|usd)'
+const currencyMatch = '(#Currency|cad|usd)'
 
 const minorUnits = {
   dollar: 'cent', usd: 'cent', cad: 'cent', aud: 'cent', nzd: 'cent',
@@ -19,13 +22,13 @@ const qualifier = value => value.text().match(/(?:^|[^a-z])(cad|usd)(?=$|[^a-z])
 
 const unit = value => {
   const m = value.clone()
-  let name = m.match('#Currency').not('(cad|usd)').first().nouns().toSingular().text('normal')
+  let name = m.match('#Currency').not(codes).first().nouns().toSingular().text('normal')
   // Pounds can be tagged as measurement units.
   if (!name) {
     name = m.match('(pound|pounds)').nouns().toSingular().text('normal')
   }
   if (!name) {
-    name = decimalName(m.not('(cad|usd)').docs[0]?.at(-1)?.normal || '', m.world)
+    name = decimalName(m.not(codes).docs[0]?.at(-1)?.normal || '', m.world)
   }
   if (!name) {
     const str = m.text()
@@ -54,4 +57,4 @@ const multiplier = value => {
 
 const currency = value => qualifier(value) || unit(value)
 
-export { currency, isMinor, multiplier, decimalName }
+export { currency, isMinor, multiplier, decimalName, codes, currencyMatch }

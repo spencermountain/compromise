@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/one.js'
+import nlp from '../lib.js'
 const here = '[one/change/replace-sub] '
 
 test('replace-sub-num :', function (t) {

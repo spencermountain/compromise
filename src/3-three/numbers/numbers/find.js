@@ -1,54 +1,56 @@
-const ones = 'one|two|three|four|five|six|seven|eight|nine'
-const tens = 'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|fourty'
-const teens = 'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen'
+import * as words from './_words.js'
+const ones = words.ones.slice(1).join('|')
+const tens = words.tens.join('|') + '|fourty'
+const teens = words.teens.join('|')
 
 // this is a bit of a mess
 // segment consecutive number-words into sensible chunks
-const findNumbers = function (doc) {
-  let m = doc.match('#Value+')
+const splitNumbers = function (m) {
+  // two hundred - three hundred
+  m = m.splitAfter('@hasDash')
+  // a tens-word ends its number - 'sixty fifteen', 'twenty eighty two'
+  while (m.has(`(${tens}) (${tens}|${teens})`)) {
+    m = m.splitBefore(`(${tens}) [(${tens}|${teens})]`, 0)
+  }
 
   //"50 83"
-  if (m.has('#NumericValue #NumericValue')) {
+  if (m.has('#Numeric #Numeric')) {
     //a comma may mean two numbers
-    if (m.has('#Value @hasComma #Value')) {
+    if (m.has('#Val @hasComma #Val')) {
       m.splitAfter('@hasComma')
-    } else if (m.has('#NumericValue #Fraction')) {
-      m.splitAfter('#NumericValue #Fraction')
+    } else if (m.has('#Numeric #Frac')) {
+      m.splitAfter('#Numeric #Frac')
     } else {
-      m = m.splitAfter('#NumericValue')
+      m = m.splitAfter('#Numeric')
     }
   }
 
   //three-length
-  if (m.has('#Value #Value #Value') && !m.has('#Multiple')) {
+  if (m.has('#Val #Val #Val') && !m.has('#Mult')) {
     //twenty-five-twenty
-    if (m.has('(' + tens + ') #Cardinal #Cardinal')) {
-      m = m.splitAfter('(' + tens + ') #Cardinal')
+    if (m.has('(' + tens + ') #Card #Card')) {
+      m = m.splitAfter('(' + tens + ') #Card')
     }
   }
 
   //two-length ones
-  if (m.has('#Value #Value')) {
+  if (m.has('#Val #Val')) {
     //june 21st 1992 is two seperate values
-    if (m.has('#NumericValue #NumericValue')) {
+    if (m.has('#Numeric #Numeric')) {
       m = m.splitOn('#Year')
-    }
-    //sixty fifteen
-    if (m.has('(' + tens + ') (' + teens + ')')) {
-      m = m.splitAfter('(' + tens + ')')
     }
 
     //"72 82"
-    const double = m.match('#Cardinal #Cardinal')
-    if (double.found && !m.has('(point|decimal|#Fraction)')) {
+    const double = m.match('#Card #Card')
+    if (double.found && !m.has('(point|decimal|#Frac)')) {
       //not 'two hundred'
-      if (!double.has('#Cardinal (#Multiple|point|decimal)')) {
+      if (!double.has('#Card (#Mult|point|decimal)')) {
         // two fifty five
         const noMultiple = m.has(`(${ones}) (${tens})`)
         // twenty one
-        const tensVal = double.has('(' + tens + ') #Cardinal')
+        const tensVal = double.has('(' + tens + ') #Card')
         // hundredOne
-        const multVal = double.has('#Multiple #Value')
+        const multVal = double.has('#Mult #Val')
         //one proper way, 'twenty one', or 'hundred one'
         if (!noMultiple && !tensVal && !multVal) {
           // double = double.firstTerm()
@@ -60,21 +62,19 @@ const findNumbers = function (doc) {
     }
 
     //seventh fifth
-    if (m.match('#Ordinal #Ordinal').match('#TextValue').found && !m.has('#Multiple')) {
-      //the one proper way, 'twenty first'
-      if (!m.has('(' + tens + ') #Ordinal')) {
-        m = m.splitAfter('#Ordinal')
-      }
+    // an ordinal ends its number, so this keeps 'twenty first' whole
+    if (m.match('#Ord #Ord').match('#TxtNum').found && !m.has('#Mult')) {
+      m = m.splitAfter('#Ord')
     }
     // one thirty am != 130
     if (m.has('#Time')) {
       m = m.splitOn('#Time')
     }
     //fifth five
-    m = m.splitBefore('#Ordinal [#Cardinal]', 0)
+    m = m.splitBefore('#Ord [#Card]', 0)
     //five 2017 (support '5 hundred', and 'twenty 5'
-    if (m.has('#TextValue #NumericValue') && !m.has('(' + tens + '|#Multiple)')) {
-      m = m.splitBefore('#TextValue #NumericValue')
+    if (m.has('#TxtNum #Numeric') && !m.has('(' + tens + '|#Mult)')) {
+      m = m.splitBefore('#TxtNum #Numeric')
     }
   }
 
@@ -83,6 +83,17 @@ const findNumbers = function (doc) {
   // june 5th 1999
   m = m.splitBefore('#Year')
   return m
+}
+
+const findNumbers = function (doc) {
+  const m = doc.match('#Val+')
+  // spoken years are already whole - 'twenty twenty six'
+  const years = m.match('(#Year && #TxtNum)+').splitAfter('(@hasComma|@hasDash)')
+  if (!years.found) {
+    return splitNumbers(m)
+  }
+  const ptrs = splitNumbers(m.not(years)).fullPointer.concat(years.fullPointer)
+  return m.toView(ptrs.sort((a, b) => a[0] - b[0] || a[1] - b[1]))
 }
 
 export default findNumbers

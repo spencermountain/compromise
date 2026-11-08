@@ -1,14 +1,9 @@
+import eachTerm from '../../tokenize/compute/_lib.js'
 const isClass = /^\../
 const isId = /^#./
 
-const escapeXml = str => {
-  str = str.replaceAll('&', '&amp;')
-  str = str.replaceAll('<', '&lt;')
-  str = str.replaceAll('>', '&gt;')
-  str = str.replaceAll('"', '&quot;')
-  str = str.replaceAll("'", '&apos;')
-  return str
-}
+const escapes = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }
+const escapeXml = str => str.replace(/[&<>"']/g, c => escapes[c])
 
 // interpret .class, #id, tagName
 const toTag = function (k) {
@@ -57,20 +52,17 @@ const html = function (obj) {
   const { starts, ends } = getIndex(this, obj)
   // create the text output
   let out = ''
-  this.docs.forEach(terms => {
-    for (let i = 0; i < terms.length; i += 1) {
-      const t = terms[i]
-      // do a span tag
-      if (Object.hasOwn(starts, t.id)) {
-        out += starts[t.id].join('')
-      }
-      out += t.pre || ''
-      out += t.text || ''
-      if (Object.hasOwn(ends, t.id)) {
-        out += ends[t.id].join('')
-      }
-      out += t.post || ''
+  eachTerm(this.docs, t => {
+    // do a span tag
+    if (Object.hasOwn(starts, t.id)) {
+      out += starts[t.id].join('')
     }
+    out += t.pre || ''
+    out += t.text || ''
+    if (Object.hasOwn(ends, t.id)) {
+      out += ends[t.id].join('')
+    }
+    out += t.post || ''
   })
   return out
 }

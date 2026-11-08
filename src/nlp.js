@@ -7,6 +7,8 @@ import debug from './API/debug/debug.js'
 import handleInputs from './API/inputs.js'
 
 const world = { ...tmpWrld }
+// the steps to run before (or without) the tagger
+const preTag = ['alias', 'normal', 'machine', 'contractions']
 
 const nlp = function nlp(input, lex) {
   if (lex) {
@@ -38,9 +40,9 @@ nlp.tokenize = function (input, lex) {
   const doc = handleInputs(input, View, world)
   // give contractions a shot, at least
   if (debug.hooks) {
-    debug.hooks(doc, compute.contractions ? ['alias', 'normal', 'machine', 'contractions'] : [])
+    debug.hooks(doc, compute.contractions ? preTag : [])
   } else if (compute.contractions) {
-    doc.compute(['alias', 'normal', 'machine', 'contractions']) //run it if we've got it
+    doc.compute(preTag) //run it if we've got it
   }
   return doc
 }

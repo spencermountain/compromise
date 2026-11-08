@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/sentences/is-question] '
 
 test('selects questions from mixed sentences', function (t) {

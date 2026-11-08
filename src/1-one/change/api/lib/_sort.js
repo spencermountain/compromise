@@ -9,40 +9,14 @@ const alpha = (a, b) => {
   return 0
 }
 
-/** count the # of characters of each match */
-const length = (a, b) => {
-  const left = a.normal.trim().length
-  const right = b.normal.trim().length
-  if (left < right) {
-    return 1
-  }
-  if (left > right) {
-    return -1
-  }
-  return 0
-}
+/** count the # of characters of each match - longest first */
+const length = (a, b) => b.normal.trim().length - a.normal.trim().length
+
+/** count the # of terms in each match - most first */
+const wordCount = (a, b) => b.words - a.words
 
 /** count the # of terms in each match */
-const wordCount = (a, b) => {
-  if (a.words < b.words) {
-    return 1
-  }
-  if (a.words > b.words) {
-    return -1
-  }
-  return 0
-}
-
-/** count the # of terms in each match */
-const sequential = (a, b) => {
-  if (a[0] < b[0]) {
-    return 1
-  }
-  if (a[0] > b[0]) {
-    return -1
-  }
-  return a[1] > b[1] ? 1 : -1
-}
+const sequential = (a, b) => b[0] - a[0] || (a[1] > b[1] ? 1 : -1)
 
 /** sort by # of duplicates in the document*/
 const byFreq = function (arr) {
@@ -51,18 +25,8 @@ const byFreq = function (arr) {
     counts[o.normal] ??= 0
     counts[o.normal] += 1
   })
-  // sort by freq
-  arr.sort((a, b) => {
-    const left = counts[a.normal]
-    const right = counts[b.normal]
-    if (left < right) {
-      return 1
-    }
-    if (left > right) {
-      return -1
-    }
-    return 0
-  })
+  // sort by freq - most first
+  arr.sort((a, b) => counts[b.normal] - counts[a.normal])
   return arr
 }
 

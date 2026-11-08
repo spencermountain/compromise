@@ -425,7 +425,7 @@ doc.money().json()
 
 <img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
-## 🤖 For AI agents & LLMs
+## Docs
 
 Plain-text, copy-paste docs that render without JavaScript live in this repo:
 
@@ -435,6 +435,28 @@ Plain-text, copy-paste docs that render without JavaScript live in this repo:
 - **[docs/tag-definitions.md](./docs/tag-definitions.md)** — the complete, valid part-of-speech tagset
 - **[docs/api.md](./docs/api.md)** — every method, signature, and description
 - **[docs/recipes.md](./docs/recipes.md)** — solutions to common tasks
+
+## CLI
+
+tag and match a file or directory as a one-liner.
+
+```bash
+# parse all files in a directory to JSON
+npx compromise ~/fanfic/a-c/*.txt
+# get json response for all matches
+npx compromise ./infinite-jest.txt --match="to be #Adjective"
+# pipe/stream plaintext through compromise
+cat ~/fanfic/**/*.txt | npx compromise --has="the #Adjective of times" | jq
+# get all sentences containing match
+npx compromise ./infinite-jest.txt   --if="on and on" --text
+# pretty-print matches in-context
+npx compromise ./infinite-jest.txt  --match="and so on" --format=highlight
+```
+
+<div align="right">
+  <a href="./docs/cli.md">CLI docs</a>
+</div>
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/9c8e09bc-3e6e-46bb-8a0a-130afe1c36e3" />
 
 <img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
@@ -564,7 +586,7 @@ _(these methods are on the main `nlp` object)_
 - **[nlp.tokenize(str)](https://observablehq.com/@spencermountain/compromise-tokenization)** - parse text without running POS-tagging
 - **[nlp.lazy(str, match)](https://observablehq.com/@spencermountain/compromise-performance)** - scan through a text with minimal analysis
 - **[nlp.plugin({})](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - mix in a compromise-plugin
-- **[nlp.parseMatch(str)](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - pre-parse any match statements into json
+- **[nlp.parseMatch(str, opts)](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - pre-parse any match statements into json
 - **[nlp.world()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab or change library internals
 - **[nlp.model()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab all current linguistic data
 - **[nlp.methods()](https://observablehq.com/@spencermountain/compromise-constructor-methods)** - grab or change internal methods
@@ -911,6 +933,10 @@ These are some helpful extensions:
   - **[.times().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
   - **[.times().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with time metadata
 
+<div align="right">
+  <a href="./docs/dates-plugin.md">Date-parsing docs</a>
+</div>
+
 ##### Stats
 
 `npm install compromise-stats`
@@ -932,17 +958,81 @@ These are some helpful extensions:
 - **[.syllables()](https://observablehq.com/@spencermountain/compromise-syllables)** - split each term by its typical pronunciation
 - **[.soundsLike()](https://observablehq.com/@spencermountain/compromise-soundsLike)** - produce a estimated pronunciation
 
-##### Wikipedia
+##### Subtitle Input
 
-`npm install compromise-wikipedia`
+`npm install compromise-subtitle`
 
-- **[.wikipedia()](https://observablehq.com/@spencermountain/compromise-wikipedia)** - compressed article reconciliation
+- **nlp.fromSubtitle(vttText)** - parses and interprets a .vtt subtitle text
+- **.toVtt()** - reproduces a valid subtitle output
 
-<!-- spacer -->
-<div >
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  <hr/>
-</div>
+##### Html Input
+
+`npm install compromise-html`
+
+- **nlp.fromHtml(htmlText, {})** - parses an html string, and connects its text to a document
+- **nlp.fromHast(tree, {})** - connects to an existing [hast](https://github.com/syntax-tree/hast) tree
+- **.updateHast()** - writes supported edits back to the tree
+- **.toHtml({})** - serializes the last-updated tree to an html string, indented with `{format:true}`
+- **.debug('ast')** - prints which text nodes own the selected terms
+
+##### Markdown Input
+
+`npm install compromise-markdown`
+
+- **nlp.fromMarkdown(mdText, {})** - parses a markdown string, and connects its text to a document
+- **nlp.fromMdast(tree, {})** - connects to an existing [mdast](https://github.com/syntax-tree/mdast) tree
+- **.updateTree()** - writes supported edits back to the tree
+- **.markdown()** - serializes the last-updated tree to a markdown string
+- **.debug('ast')** - prints which text nodes own the selected terms
+
+##### AST ouput
+
+create a Abstract-Syntax-Tree in Unist (NLCST) format.
+`npm install compromise-unist`
+
+- **.toAst({})** - converts the document to an [nlcst](https://github.com/syntax-tree/nlcst) tree
+- **nlp.fromAst(tree, {})** - creates a document from an nlcst tree, without re-tokenizing or tagging
+
+##### Paragraphs
+
+`npm install compromise-paragraphs`
+
+- **.paragraphs()** - groups sentences into paragraphs, split on blank lines
+  - **.paragraphs().text()** - returns the text of every paragraph, separated by a blank line
+  - **.paragraphs().json()** - returns an array of sentence json for each paragraph
+  - **.paragraphs().sentences()** - returns a normal view of every sentence
+  - **.paragraphs().terms()** - returns a normal view of every term
+  - **.paragraphs().match('')** - returns a normal view of the matches
+  - **.paragraphs().not('')** - returns a normal view of everything but the matches
+  - **.paragraphs().has('')** - returns true if any paragraph has the match
+  - **.paragraphs().if('')** - keeps only the paragraphs with the match
+  - **.paragraphs().ifNo('')** - removes the paragraphs with the match
+  - **.paragraphs().eq(0)** - returns the paragraph at this index
+  - **.paragraphs().first()** - returns the first paragraph
+  - **.paragraphs().last()** - returns the last paragraph
+  - **.paragraphs().forEach(fn)** - runs a function on each sentence
+  - **.paragraphs().map(fn)** - runs a function on each paragraph
+  - **.paragraphs().filter(fn)** - keeps the paragraphs where any sentence passes the function
+
+##### Payload
+
+`npm install compromise-payload`
+
+- **.addPayload({})** - attaches data to each match, from an object or a callback
+- **.getPayloads()** - returns `{match, val}` for each payload in the selection
+- **.clearPayloads()** - removes the payloads in the selection
+- **.debug('payload')** - prints each match with its data
+
+##### Speed
+
+`npm install compromise-speed`
+
+- **nlp.workerPool(text, match, {})** - parses sentences in parallel, and resolves to the matches _(node-only)_
+- **nlp.closeWorkerPool()** - stops the workers, and rejects any unfinished jobs _(node-only)_
+- **nlp.streamFile(path, fn, {})** - parses a file in sentence batches, and resolves to whatever the callback returned _(node-only)_
+- **nlp.streamFileIterator(path, {})** - yields parsed sentence batches, without collecting results _(node-only)_
+- **nlp.keyPress(text, lexicon, {})** - re-parses only the sentences that changed since the last call
+- **nlp.lazy(text, match)** - tokenizes first, tags only the sentences that could match, and returns the matches
 
 ### Typescript
 

@@ -1,15 +1,7 @@
+import { getDoc } from '../../pointers/api/lib/_lib.js'
+
 const combine = function (left, right) {
   return [left[0], left[1], right[2]]
-}
-
-const getDoc = (reg, view, group) => {
-  if (typeof reg === 'string' || Array.isArray(reg)) {
-    return view.match(reg, group)
-  }
-  if (!reg) {
-    return view.none()
-  }
-  return reg
 }
 
 const addIds = function (ptr, view) {
@@ -23,78 +15,55 @@ const addIds = function (ptr, view) {
   return ptr
 }
 
+// split each match, then collect the pieces into pointers
+const split = function (view, m, group, collect) {
+  const { splitAll } = view.methods.one.pointer
+  const splits = getDoc(m, view, group).fullPointer
+  const all = splitAll(view.fullPointer, splits)
+  const res = collect(all).filter(p => p).map(p => addIds(p, view))
+  return view.update(res)
+}
+
 const methods = {}
 // [before], [match], [after]
 methods.splitOn = function (m, group) {
-  const { splitAll } = this.methods.one.pointer
-  const splits = getDoc(m, this, group).fullPointer
-  const all = splitAll(this.fullPointer, splits)
-  let res = []
-  all.forEach(o => {
-    res.push(o.passthrough)
-    res.push(o.before)
-    res.push(o.match)
-    res.push(o.after)
-  })
-  res = res.filter(p => p)
-  res = res.map(p => addIds(p, this))
-  return this.update(res)
+  return split(this, m, group, all => all.flatMap(o => [o.passthrough, o.before, o.match, o.after]))
 }
 
 // [before], [match after]
 methods.splitBefore = function (m, group) {
-  const { splitAll } = this.methods.one.pointer
-  const splits = getDoc(m, this, group).fullPointer
-  const all = splitAll(this.fullPointer, splits)
-  // repair matches to favor [match, after]
-  // - instead of [before, match]
-  for (let i = 0; i < all.length; i += 1) {
-    // move a before to a preceding after
-    if (!all[i].after && all[i + 1]?.before) {
-      // ensure it's from the same original sentence
-      if (all[i].match && all[i].match[0] === all[i + 1].before[0]) {
-        all[i].after = all[i + 1].before
-        delete all[i + 1].before
+  return split(this, m, group, all => {
+    // repair matches to favor [match, after]
+    // - instead of [before, match]
+    for (let i = 0; i < all.length; i += 1) {
+      // move a before to a preceding after
+      if (!all[i].after && all[i + 1]?.before) {
+        // ensure it's from the same original sentence
+        if (all[i].match && all[i].match[0] === all[i + 1].before[0]) {
+          all[i].after = all[i + 1].before
+          delete all[i + 1].before
+        }
       }
     }
-  }
-
-  let res = []
-  all.forEach(o => {
-    res.push(o.passthrough)
-    res.push(o.before)
-    // a, [x, b]
-    if (o.match && o.after) {
-      res.push(combine(o.match, o.after))
-    } else {
+    return all.flatMap(o => {
+      // a, [x, b]
+      if (o.match && o.after) {
+        return [o.passthrough, o.before, combine(o.match, o.after)]
+      }
       // a, [x], b
-      res.push(o.match)
-    }
+      return [o.passthrough, o.before, o.match]
+    })
   })
-  res = res.filter(p => p)
-  res = res.map(p => addIds(p, this))
-  return this.update(res)
 }
 
 // [before match], [after]
 methods.splitAfter = function (m, group) {
-  const { splitAll } = this.methods.one.pointer
-  const splits = getDoc(m, this, group).fullPointer
-  const all = splitAll(this.fullPointer, splits)
-  let res = []
-  all.forEach(o => {
-    res.push(o.passthrough)
+  return split(this, m, group, all => all.flatMap(o => {
     if (o.before && o.match) {
-      res.push(combine(o.before, o.match))
-    } else {
-      res.push(o.before)
-      res.push(o.match)
+      return [o.passthrough, combine(o.before, o.match), o.after]
     }
-    res.push(o.after)
-  })
-  res = res.filter(p => p)
-  res = res.map(p => addIds(p, this))
-  return this.update(res)
+    return [o.passthrough, o.before, o.match, o.after]
+  }))
 }
 methods.split = methods.splitAfter
 

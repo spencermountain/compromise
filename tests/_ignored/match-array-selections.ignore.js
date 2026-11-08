@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/two.js'
+import nlp from '../02-two/lib.js'
 const here = '[ignored/match-array-selections] '
 
 // Deferred: Array patterns do not currently produce the disjoint selections expected here.

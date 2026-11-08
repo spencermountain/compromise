@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/misc/bugs-regression] '
 
 test(here + 'resolved examples from bugs.md', t => {

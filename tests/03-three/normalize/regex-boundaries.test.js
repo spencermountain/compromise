@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/normalize/regex-boundaries] '
 
 test(here + 'generated punctuation contexts are stable when normalized', t => {

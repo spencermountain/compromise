@@ -1,4 +1,4 @@
-import { red, green, dim, white } from '../_color.js'
+import { red, green, dim } from '../_color.js'
 const env = globalThis.process?.env ?? globalThis.env ?? {}
 const debug = { tags: Boolean(env.DEBUG_TAGS) }
 
@@ -25,7 +25,7 @@ const log = (term, previous, reason = '') => {
   const prefix = debug.prefix || '   '
   if (debug.rule !== reason) {
     const headingPrefix = debug.prefix ? prefix.replace('│  ', '│ ') : '  '
-    console.log(`${headingPrefix}${dim(white((reason || 'tag change') + ':'))}`) // eslint-disable-line no-console
+    console.log(`${headingPrefix}${dim((reason || 'tag change') + ':')}`) // eslint-disable-line no-console
     debug.rule = reason
   }
   const print = (tags, sign, color) => {

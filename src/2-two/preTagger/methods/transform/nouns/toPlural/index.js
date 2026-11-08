@@ -3,10 +3,10 @@ const addE = /([xsz]|ch|sh)$/
 
 const trySuffix = function (str) {
   const c = str[str.length - 1]
-  if (Object.hasOwn(rules, c) === true) {
+  if (Object.hasOwn(rules, c)) {
     for (let i = 0; i < rules[c].length; i += 1) {
       const reg = rules[c][i][0]
-      if (reg.test(str) === true) {
+      if (reg.test(str)) {
         return str.replace(reg, rules[c][i][1])
       }
     }

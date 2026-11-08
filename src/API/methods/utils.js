@@ -1,3 +1,4 @@
+import { rawPointer } from '../_helpers.js'
 const utils = {
   /** */
   termList: function () {
@@ -33,10 +34,7 @@ const utils = {
   },
   /** */
   eq: function (n) {
-    let ptr = this.pointer
-    if (!ptr) {
-      ptr = this.docs.map((_doc, i) => [i])
-    }
+    const ptr = rawPointer(this)
     if (ptr[n]) {
       return this.update([ptr[n]])
     }
@@ -64,9 +62,7 @@ const utils = {
 
   /** */
   slice: function (min, max) {
-    let pntrs = this.pointer || this.docs.map((_o, n) => [n])
-    pntrs = pntrs.slice(min, max)
-    return this.update(pntrs)
+    return this.update(rawPointer(this).slice(min, max))
   },
 
   /** return a view of the entire document */
@@ -90,17 +86,11 @@ const utils = {
     }
     const aPtr = this.fullPointer
     const bPtr = b.fullPointer
-    if (!aPtr.length === bPtr.length) {
+    if (aPtr.length !== bPtr.length) {
       return false
     }
-    // ensure pointers are the same
-    return aPtr.every((ptr, i) => {
-      if (!bPtr[i]) {
-        return false
-      }
-      // ensure [n, start, end] are all the same
-      return ptr[0] === bPtr[i][0] && ptr[1] === bPtr[i][1] && ptr[2] === bPtr[i][2]
-    })
+    // ensure [n, start, end] are all the same
+    return aPtr.every((ptr, i) => bPtr[i] && ptr[0] === bPtr[i][0] && ptr[1] === bPtr[i][1] && ptr[2] === bPtr[i][2])
   },
 
   /** how many seperate terms does the document have? */

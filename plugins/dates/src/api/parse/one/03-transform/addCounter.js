@@ -40,6 +40,10 @@ const nthWeekDay = function (unit, counter) {
     d = d.add(counter.num || 0, 'weeks')
   }
   d = d.startOf('day')
+  // 'the fifth monday of february' may not exist
+  if (d.isAfter(unit.d.endOf(unit.unit))) {
+    return null
+  }
   const u = new WeekDay(d, null, unit.context)
   if (u.d.isValid() === true) {
     return u

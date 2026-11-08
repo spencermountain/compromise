@@ -1,3 +1,4 @@
+import merge from './_lib.js'
 import tagWords from '../_lib.js'
 import { NN, Adj } from '../../tagSet/_lib.js'
 import adj from './_adj.js'
@@ -13,20 +14,13 @@ const misc = {
   },
   afterTags: {
     // Pronoun: 'Noun'//as an adult i
-  }
-}
-const clue = {
-  beforeTags: { ...adj.beforeTags, ...noun.beforeTags, ...misc.beforeTags },
-  afterTags: { ...adj.afterTags, ...noun.afterTags, ...misc.afterTags },
+  },
   beforeWords: {
-    ...adj.beforeWords,
-    ...noun.beforeWords,
     // are representative
     ...tagWords('are is was be', Adj),
     // phrasals
     off: Adj,//start off fine
     out: Adj,//comes out fine
   },
-  afterWords: { ...adj.afterWords, ...noun.afterWords },
 }
-export default clue
+export default merge(adj, noun, misc)

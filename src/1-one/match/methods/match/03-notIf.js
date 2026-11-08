@@ -1,18 +1,12 @@
 import fromHere from './02-from-here.js'
 
+// drop any results that contain this match
 const notIf = function (results, not, docs) {
-  results = results.filter(res => {
+  return results.filter(res => {
     const [n, start, end] = res.pointer
     const terms = docs[n].slice(start, end)
-    for (let i = 0; i < terms.length; i += 1) {
-      const found = fromHere(terms, not, i, terms.length, i)
-      if (found !== null) {
-        return false
-      }
-    }
-    return true
+    return !terms.some((_t, i) => fromHere(terms, not, i, terms.length, i) !== null)
   })
-  return results
 }
 
 export default notIf

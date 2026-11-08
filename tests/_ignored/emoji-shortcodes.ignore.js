@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/two.js'
+import nlp from '../02-two/lib.js'
 const here = '[ignored/emoji-shortcodes] '
 
 // Deferred: Emoji tagging does not currently recognize colon-delimited shortcodes.

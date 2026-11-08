@@ -5,50 +5,51 @@ const transforms = ['toComparative', 'toSuperlative', 'toAdverb', 'toNoun']
 const toRoot = function (adj) {
   const { fromComparative, fromSuperlative } = adj.methods.two.transform.adjective
   const str = adj.text('normal')
-  if (adj.has('#Comparative')) {
+  if (adj.has('#Comp')) {
     return fromComparative(str, adj.model)
   }
-  if (adj.has('#Superlative')) {
+  if (adj.has('#Sup')) {
     return fromSuperlative(str, adj.model)
   }
   return str
 }
 
+// the four derived forms of an adjective root
+const forms = function (root, adj) {
+  const { toAdverb, toNoun, toSuperlative, toComparative } = adj.methods.two.transform.adjective
+  const { model } = adj
+  return {
+    adverb: toAdverb(root, model),
+    noun: toNoun(root, model),
+    superlative: toSuperlative(root, model),
+    comparative: toComparative(root, model),
+  }
+}
+
 const api = function (View) {
 
   class Adjectives extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Adjectives'
-    }
     json(opts = {}) {
-      const { toAdverb, toNoun, toSuperlative, toComparative } = this.methods.two.transform.adjective
       opts.normal = true
       return this.map(m => {
         const json = m.toView().json(opts)[0] || {}
-        const str = toRoot(m)
-        json.adjective = {
-          adverb: toAdverb(str, this.model),
-          noun: toNoun(str, this.model),
-          superlative: toSuperlative(str, this.model),
-          comparative: toComparative(str, this.model),
-        }
+        json.adjective = forms(toRoot(m), m)
         return json
       }, [])
     }
     adverbs() {
-      return this.before('#Adverb+$').concat(this.after('^#Adverb+'))
+      return this.before('#Adv+$').concat(this.after('^#Adv+'))
     }
     conjugate(n) {
-      const { toComparative, toSuperlative, toNoun, toAdverb } = this.methods.two.transform.adjective
       return this.getNth(n).map(adj => {
         const root = toRoot(adj)
+        const f = forms(root, adj)
         return {
           Adjective: root,
-          Comparative: toComparative(root, this.model),
-          Superlative: toSuperlative(root, this.model),
-          Noun: toNoun(root, this.model),
-          Adverb: toAdverb(root, this.model),
+          Comparative: f.comparative,
+          Superlative: f.superlative,
+          Noun: f.noun,
+          Adverb: f.adverb,
         }
       }, [])
     }
@@ -58,6 +59,7 @@ const api = function (View) {
       })
     }
   }
+  Adjectives.prototype.viewType = 'Adjectives'
 
   // Keep generated methods non-enumerable, like the class methods above.
   transforms.forEach(name => {
@@ -73,8 +75,8 @@ const api = function (View) {
     })
   })
 
-  View.prototype.adjectives = select(Adjectives, '#Adjective')
-  View.prototype.superlatives = select(Adjectives, '#Superlative')
-  View.prototype.comparatives = select(Adjectives, '#Comparative')
+  View.prototype.adjectives = select(Adjectives, '#Adj')
+  View.prototype.superlatives = select(Adjectives, '#Sup')
+  View.prototype.comparatives = select(Adjectives, '#Comp')
 }
 export default { api }

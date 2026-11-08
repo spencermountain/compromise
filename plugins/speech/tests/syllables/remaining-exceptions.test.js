@@ -1,5 +1,5 @@
 import test from 'tape'
-import splitTerm from '../../src/syllables/split/index.js'
+import { splitTerm } from '../_lib.js'
 
 // Check readable boundaries as well as the counts in the HMM fixture.
 const examples = [

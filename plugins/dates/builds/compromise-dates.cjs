@@ -7,10 +7,11 @@
   // chop things up into bite-size pieces
   const split = function (dates) {
     let m = null;
-    // don't split a range - but only exempt that phrase, not the whole document
-    const ranges = dates.filter(d => d.has('^(between|within) #Date'));
+    // don't split a range, or a repeat - but only exempt that phrase, not the whole document
+    const isWhole = d => d.has('^(between|within|every|any|each) #Date') || d.has('^(#WeekDay && #Plural) (and|or)');
+    const ranges = dates.filter(isWhole);
     if (ranges.found) {
-      let rest = dates.filter(d => !d.has('^(between|within) #Date'));
+      let rest = dates.filter(d => !isWhole(d));
       rest = split(rest);
       return ranges.concat(rest)
     }
@@ -91,7 +92,7 @@
     let dates = doc.match('#Date+');
     // ignore only-durations like '20 minutes'
     dates = dates.filter(m => {
-      const isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$');
+      const isDuration = m.has('^#Duration+$') || m.has('^#Value+ #Duration+$');
       // allow 'q4', etc
       if (isDuration === true && m.has('(#FinancialQuarter|quarter)')) {
         return true
@@ -99,27 +100,23 @@
       return isDuration === false
     });
     // 30 minutes on tuesday
-    let m = dates.match('[#Cardinal #Duration (in|on|this|next|during|for)] #Date', 0);
+    let m = dates.match('[#Cardinal+ #Duration (in|on|this|next|during|for)] #Date', 0);
     if (m.found) {
       dates = dates.not(m);
     }
     // 30 minutes tuesday
-    m = dates.match('[#Cardinal #Duration] #WeekDay', 0);
+    m = dates.match('[#Cardinal+ #Duration] #WeekDay', 0);
     if (m.found) {
       dates = dates.not(m);
     }
-    // tuesday for 30 mins
-    m = dates.match('#Date [for #Value #Duration]$', 0);
-    if (m.found) {
-      dates = dates.not(m);
-    }
+    // 'tuesday for 30 mins' keeps its duration - the range parser reads it as an end
     // '20 minutes june 5th'
-    m = dates.match('[#Cardinal #Duration] #Date', 0); //but allow '20 minutes ago'
-    if (m.found && !dates.has('#Cardinal #Duration (ago|from|before|after|back|hence)')) {
+    m = dates.match('[#Cardinal+ #Duration] #Date', 0); //but allow '20 minutes ago'
+    if (m.found && !dates.has('#Cardinal+ #Duration (ago|from|before|after|back|hence)')) {
       dates = dates.not(m);
     }
-    // for 20 minutes
-    m = dates.match('for #Cardinal #Duration');
+    // for 20 minutes - alone, it is only a duration
+    m = dates.match('^for #Cardinal+ #Duration$');
     if (m.found) {
       dates = dates.not(m);
     }
@@ -155,7 +152,7 @@
   };
 
   // units made of other units
-  const multiples = {
+  const multiples$1 = {
     fortnight: [2, 'week'],
   };
 
@@ -199,9 +196,9 @@
       if (num && typeof num === 'number') {
         let unit = parseUnit(ts);
         // '1 fortnight' is 2 weeks
-        if (Object.hasOwn(multiples, unit)) {
-          num *= multiples[unit][0];
-          unit = multiples[unit][1];
+        if (Object.hasOwn(multiples$1, unit)) {
+          num *= multiples$1[unit][0];
+          unit = multiples$1[unit][1];
         }
         if (knownUnits[unit] === true) {
           result[unit] = isNegative ? num * -1 : num;
@@ -341,12 +338,17 @@
     return { result: null, m: doc.none() }
   };
 
-  const e=e=>e%4==0&&e%100!=0||e%400==0,t=e=>"[object Object]"===Object.prototype.toString.call(e),n=(e,t=2)=>(e+="").length>=t?e:new Array(t-e.length+1).join("0")+e,a=e=>{const t=e%10,n=e%100;return 1===t&&11!==n?e+"st":2===t&&12!==n?e+"nd":3===t&&13!==n?e+"rd":e+"th"},r=e=>(e=(e=String(e)).replace(/([0-9])(st|nd|rd|th)$/i,"$1"),parseInt(e,10)),o=(e="")=>"day"===(e=(e=(e=(e=e.toLowerCase().trim()).replace(/ies$/,"y")).replace(/s$/,"")).replace(/-/g,""))||"days"===e?"date":"min"===e||"mins"===e?"minute":e,s=e=>{return "number"==typeof e?e:(t=e,"[object Date]"!==Object.prototype.toString.call(t)||isNaN(t.valueOf())?e.epoch||0===e.epoch?e.epoch:null:e.getTime());var t;},i=(e,n)=>false===t(e)?n.clone().set(e):e,u=(e,t="")=>{const a=e>0?"+":"-",r=Math.abs(e);return `${a}${n(parseInt(""+r,10))}${t}${n(r%1*60)}`},c=(e,t)=>{ false===e.silent&&console.warn(`Warn: ${t}`);},h=(e,t)=>"iso8601"!==t.calendarId?(c(e,`Temporal calendar "${t.calendarId}" converted to iso8601`),t.withCalendar("iso8601")):t,l=e=>{const t=e.tz.match(/^etc\/gmt([+-][0-9]+(?:\.[0-9]+)?)$/i);return t?u(-Number(t[1]),":"):e.timezone().name},m=(e,t)=>{const n=globalThis.Temporal;if(!n)return null;if(t instanceof n.ZonedDateTime||t instanceof n.Instant){t instanceof n.ZonedDateTime&&(t=h(e,t)),t.epochNanoseconds%1000000n!=0n&&c(e,"Temporal sub-millisecond precision discarded; use spacetime/temporal to preserve it"),e.epoch=t.epochMilliseconds;const a=t instanceof n.Instant?t.toZonedDateTimeISO(l(e)):t.withTimeZone(l(e));return Math.round(6e10*e.offset())!==a.offsetNanoseconds&&c(e,"Spacetime timezone rules differ from Temporal at this instant; use spacetime/temporal for native wall-clock values"),e}return t instanceof n.PlainDate||t instanceof n.PlainDateTime?m(e,h(e,t).toZonedDateTime(l(e))):((e,t)=>e instanceof t.PlainTime||e instanceof t.PlainYearMonth||e instanceof t.PlainMonthDay||e instanceof t.Duration)(t,n)?(c(e,"Temporal input requires a complete date; convert it to a PlainDateTime or ZonedDateTime first"),e.epoch=null,e):null},d=(e,t,n)=>{const[a,r]=e.split("/"),[o,s,i=0]=r.split(":");return Date.UTC(n,a-1,o,s,i)-36e5*t},f=(e,t,n,a,r)=>{const o=new Date(e).getUTCFullYear(),s=d(t,r,o),i=d(n,a,o);return e>=s&&e<i};var p=e=>"australia/lord_howe"===e||"australia/lhi"===e?.5:"antarctica/troll"===e?2:1;var y={"9|s":"2/dili,2/jayapura","9|n":"2/chita,2/khandyga,2/pyongyang,2/seoul,2/tokyo,2/yakutsk,11/palau,japan,rok","9.5|s|04/05:03->10/04:02":"4/adelaide,4/broken_hill,4/south,4/yancowinna","9.5|s":"4/darwin,4/north","8|s":"12/casey,2/makassar,4/perth,2/ujung_pandang,4/west","8|n":"2/brunei,2/hong_kong,2/irkutsk,2/kuala_lumpur,2/kuching,2/macau,2/manila,2/shanghai,2/singapore,2/taipei,2/ulaanbaatar,2/chongqing,2/chungking,2/harbin,2/macao,2/ulan_bator,2/choibalsan,hongkong,prc,roc,singapore","8.75|s":"4/eucla","7|s":"12/davis,2/jakarta,2/pontianak,9/christmas","7|n":"2/bangkok,2/barnaul,2/hovd,2/krasnoyarsk,2/novokuznetsk,2/novosibirsk,2/phnom_penh,2/ho_chi_minh,2/tomsk,2/vientiane,2/saigon","6|s":"9/chagos","6|n":"2/bishkek,2/dhaka,2/omsk,2/thimphu,2/urumqi,2/dacca,2/kashgar,2/thimbu","6.5|s":"9/cocos","6.5|n":"2/yangon,2/rangoon","5|s":"12/mawson,12/vostok,9/kerguelen","5|n":"2/almaty,2/aqtau,2/aqtobe,2/ashgabat,2/atyrau,2/dushanbe,2/karachi,2/oral,2/qyzylorda,2/qostanay,2/samarkand,2/tashkent,2/yekaterinburg,9/maldives,2/ashkhabad","5.75|n":"2/kathmandu,2/katmandu","5.5|n":"2/kolkata,2/colombo,2/calcutta","4|s":"9/mahe,9/mauritius,9/reunion","4|n":"2/baku,2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk","4.5|n":"2/kabul","3|s":"0/dar_es_salaam,0/nairobi,12/syowa,9/antananarivo,9/comoro,9/mayotte","3|n|04/24:00->10/29:24":"0/cairo,egypt","3|n|03/29:03->10/25:04":"2/famagusta,2/nicosia,8/athens,8/bucharest,8/chisinau,8/helsinki,8/kyiv,8/mariehamn,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye,8/nicosia,8/tiraspol,8/kiev,eet","3|n|03/29:00->10/24:24":"2/beirut","3|n|03/28:02->10/24:02":"2/gaza,2/hebron","3|n|03/27:02->10/25:02":"2/jerusalem,2/tel_aviv,israel","3|n":"0/addis_ababa,0/asmara,0/asmera,0/djibouti,0/kampala,0/mogadishu,2/aden,2/amman,2/baghdad,2/bahrain,2/damascus,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,8/volgograd,2/volgograd,2/istanbul,turkey,w-su","3.5|n":"2/tehran,iran","2|s":"0/blantyre,0/bujumbura,0/gaborone,0/harare,0/johannesburg,0/kigali,0/lubumbashi,0/lusaka,0/maputo,0/maseru,0/mbabane,0/windhoek","2|n|03/29:02->10/25:03":"0/ceuta,arctic/longyearbyen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich,3/jan_mayen,poland,cet,met","2|n|03/29:01->10/25:03":"12/troll","2|n":"0/juba,0/khartoum,0/tripoli,8/kaliningrad,libya","1|s":"0/brazzaville,0/kinshasa,0/luanda","1|n|03/29:01->10/25:02":"3/canary,3/faroe,3/madeira,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london,3/faeroe,eire,8/belfast,gb-eire,gb,portugal,wet","1|n":"0/algiers,0/bangui,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis","14|n":"11/kiritimati","13|s":"11/apia,11/enderbury,11/kanton,11/fakaofo,11/tongatapu","12|s|04/05:03->09/27:02":"12/mcmurdo,11/auckland,12/south_pole,nz","12|s":"11/fiji,11/funafuti,11/nauru,11/wallis","12|n":"2/anadyr,2/kamchatka,11/kwajalein,11/majuro,11/tarawa,11/wake,kwajalein","12.75|s|04/05:03:45->09/27:02:45":"11/chatham,nz-chat","11|s|04/05:03->10/04:02":"11/norfolk","11|s":"11/bougainville,11/efate,11/guadalcanal,11/noumea","11|n":"2/magadan,2/sakhalin,2/srednekolymsk,11/kosrae,11/pohnpei,11/ponape","10|s|04/05:03->10/04:02":"12/macquarie,4/currie,4/hobart,4/melbourne,4/sydney,4/act,4/canberra,4/nsw,4/tasmania,4/victoria","10|s":"12/dumontdurville,4/brisbane,4/lindeman,11/port_moresby,4/queensland","10|n":"2/ust-nera,2/vladivostok,11/guam,11/saipan,11/chuuk,11/truk,11/yap","10.5|s|04/05:02->10/04:02":"4/lord_howe,4/lhi","0|s|02/15:03->09/20:02":"0/casablanca","0|s|02/15:03->03/22:02":"0/el_aaiun","0|s":"3/st_helena","0|n|03/29:00->10/25:01":"3/azores","0|n":"0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,1/danmarkshavn,3/reykjavik,13/gmt,13/utc,0/timbuktu,13/greenwich,13/uct,13/universal,13/zulu,gmt-0,gmt+0,gmt0,greenwich,iceland,uct,universal,utc,zulu,13/unknown,factory","-9|s":"11/gambier","-9|n|03/08:02->11/01:02":"1/adak,1/atka,us/aleutian","-9.5|s":"11/marquesas","-8|s":"11/pitcairn","-8|n|03/08:02->11/01:02":"1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat,us/alaska","-7|n|03/08:02->12/31:23":"1/vancouver,6/pacific","-7|n|03/08:02->11/01:02":"1/los_angeles,1/santa_isabel,1/tijuana,1/ensenada,10/bajanorte,us/pacific-new,us/pacific,pst8pdt","-7|n":"1/creston,1/dawson,1/dawson_creek,1/fort_nelson,1/hermosillo,1/mazatlan,1/phoenix,1/whitehorse,6/yukon,10/bajasur,us/arizona,mst","-6|s|04/04:22->09/05:22":"11/easter,7/easterisland","-6|s":"11/galapagos","-6|n|03/08:02->12/31:23":"1/edmonton,1/yellowknife,6/mountain","-6|n|03/08:02->11/01:02":"1/boise,1/cambridge_bay,1/denver,1/inuvik,1/ciudad_juarez,1/shiprock,navajo,us/mountain,mst7mdt","-6|n":"1/bahia_banderas,1/belize,1/chihuahua,1/costa_rica,1/el_salvador,1/guatemala,1/managua,1/merida,1/mexico_city,1/monterrey,1/regina,1/swift_current,1/tegucigalpa,6/east-saskatchewan,6/saskatchewan,10/general","-5|s":"1/eirunepe,1/guayaquil,1/lima,1/rio_branco,1/porto_acre,5/acre","-5|n|03/08:02->11/01:02":"1/chicago,1/matamoros,1/menominee,1/north_dakota,1/ojinaga,1/rainy_river,1/rankin_inlet,1/resolute,1/winnipeg,1/indiana/knox,1/indiana/tell_city,1/north_dakota/beulah,1/north_dakota/center,1/north_dakota/new_salem,1/knox_in,6/central,us/central,us/indiana-starke,cst6cdt","-5|n":"1/bogota,1/cancun,1/cayman,1/coral_harbour,1/jamaica,1/panama,1/atikokan,jamaica,est","-4|s|04/04:24->09/06:00":"1/santiago,7/continental","-4|s":"1/campo_grande,1/cuiaba,1/la_paz,1/manaus,1/porto_velho,5/west","-4|n|03/08:02->11/01:02":"1/detroit,1/grand_turk,1/indiana,1/indianapolis,1/iqaluit,1/kentucky,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,1/indiana/marengo,1/indiana/petersburg,1/indiana/vevay,1/indiana/vincennes,1/indiana/winamac,1/kentucky/monticello,1/fort_wayne,1/indiana/indianapolis,1/kentucky/louisville,6/eastern,us/east-indiana,us/eastern,us/michigan,est5edt","-4|n|03/08:00->11/01:01":"1/havana,cuba","-4|n":"1/anguilla,1/antigua,1/aruba,1/barbados,1/blanc-sablon,1/boa_vista,1/caracas,1/curacao,1/dominica,1/grenada,1/guadeloupe,1/guyana,1/kralendijk,1/lower_princes,1/marigot,1/martinique,1/montserrat,1/port_of_spain,1/puerto_rico,1/santo_domingo,1/st_barthelemy,1/st_kitts,1/st_lucia,1/st_thomas,1/st_vincent,1/tortola,1/virgin","-3|s":"1/araguaina,1/argentina,1/asuncion,1/bahia,1/belem,1/buenos_aires,1/catamarca,1/cordoba,1/coyhaique,1/fortaleza,1/jujuy,1/maceio,1/mendoza,1/montevideo,1/punta_arenas,1/recife,1/santarem,1/sao_paulo,12/palmer,12/rothera,3/stanley,1/argentina/la_rioja,1/argentina/rio_gallegos,1/argentina/salta,1/argentina/san_juan,1/argentina/san_luis,1/argentina/tucuman,1/argentina/ushuaia,1/argentina/comodrivadavia,1/argentina/buenos_aires,1/argentina/catamarca,1/argentina/cordoba,1/argentina/jujuy,1/argentina/mendoza,1/argentina/rosario,1/rosario,5/east","-3|n|03/08:02->11/01:02":"1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic","-3|n":"1/cayenne,1/paramaribo","-2|s":"1/noronha,3/south_georgia,5/denoronha","-2|n|03/08:02->11/01:02":"1/miquelon","-2.5|n|03/08:02->11/01:02":"1/st_johns,6/newfoundland","-1|n|03/28:23->10/24:24":"1/nuuk,1/scoresbysund,1/godthab","-1|n":"3/cape_verde","-11|s":"11/niue,11/pago_pago,11/samoa,us/samoa","-11|n":"11/midway","-10|s":"11/rarotonga,11/tahiti","-10|n":"11/honolulu,11/johnston,us/hawaii,hst"},g=["africa","america","asia","atlantic","australia","brazil","canada","chile","europe","indian","mexico","pacific","antarctica","etc"];const b={};Object.keys(y).forEach(e=>{const t=e.split("|"),n={offset:Number(t[0]),hem:t[1]};t[2]&&(n.dst=t[2]);y[e].split(",").forEach(e=>{e=e.replace(/(^[0-9]+)\//,(e,t)=>(t=Number(t),g[t]+"/")),b[e]=n;});}),b.utc={offset:0,hem:"n"};for(let e=-14;e<=14;e+=.25){let t=e;t>0&&(t="+"+t);let n="etc/gmt"+t;b[n]={offset:-1*e,hem:"n"},n="utc/gmt"+t,b[n]={offset:-1*e,hem:"n"};}const w=/^(?:(utc|gmt)\s*)?([+-]?)(\d+)(?:(\.\d+)|:([0-5]\d))?(?:\s*(?:h|hrs?|hours?))?$/i,k=/(?:^|\s)([+-]?\d+(?:\.\d+|:[0-5]\d)?\s*(?:h|hrs?|hours?))$/i;let v=(()=>{const e=(()=>{if("undefined"==typeof Intl||void 0===Intl.DateTimeFormat)return null;const e=Intl.DateTimeFormat();if(void 0===e||void 0===e.resolvedOptions)return null;const t=e.resolvedOptions().timeZone;return t?t.toLowerCase():null})();return null===e?"utc":e})();const z=Object.keys(b).reduce((e,t)=>{let n=t.split("/").pop();return n=n.replace(/_/g," "),e[n]=t,e},{}),$=(e,t)=>{if(!e)return t.hasOwnProperty(v)||(console.warn(`Unrecognized IANA id '${v}'. Setting fallback tz to UTC.`),v="utc"),v;"string"!=typeof e&&console.error("Timezone must be a string - recieved: '",e,"'\n");let n=e.trim();if(n=n.toLowerCase(),true===t.hasOwnProperty(n))return n;if(n=(e=>(e=(e=(e=(e=(e=e.replace(/ time/g,"")).replace(/ (standard|daylight|summer)/g,"")).replace(/\b(east|west|north|south)ern/g,"$1")).replace(/\b(africa|america|australia)n/g,"$1")).replace(/\beuropean/g,"europe")).replace(/islands/g,"island"))(n),true===t.hasOwnProperty(n))return n;if(true===z.hasOwnProperty(n))return z[n];if(true===/[0-9]/.test(n)){const e=(e=>{const t=e.trim();let n=t.match(w);if(!n){const e=t.match(k);e&&(n=e[1].match(w));}if(!n)return null;const[,a,r,o,s="0",i="0"]=n;let u=Number(o)+Number(s)+Number(i)/60;return u>14||!Number.isInteger(4*u)?null:("-"===r&&(u*=-1),"gmt"!==a?.toLowerCase()&&(u*=-1),"etc/gmt"+(u>0?"+":"")+u)})(n);if(e)return e}throw new Error("Spacetime: Cannot find timezone named: '"+e+"'. Please enter an IANA timezone id.")},_={year:(new Date).getFullYear(),month:0,date:1},j=["year","month","date","hour","minute","second","millisecond"];var O={parseArray:(e,t,n)=>{if(0===t.length)return e;for(let a=0;a<j.length;a++){const r=t[a]??n[j[a]]??_[j[a]]??0;e=e[j[a]](r);}return e},parseObject:(e,t)=>{if(0===Object.keys(t).length)return e;(t=Object.assign({},_,t)).timezone&&(e.tz=t.timezone);for(let n=0;n<j.length;n++){const a=j[n];void 0!==t[a]&&(e=e[a](t[a]));}return e},parseNumber:function(e,t){return t>0&&t<25e8&&false===e.silent&&(console.warn("  - Warning: You are setting the date to January 1970."),console.warn("       -   did input seconds instead of milliseconds?")),e.epoch=t,e}};const T=function(e){return e.epoch=Date.now(),Object.keys(e._today||{}).forEach(t=>{"function"==typeof e[t]&&(e=e[t](e._today[t]));}),e},D={now:e=>T(e),today:e=>T(e),tonight:e=>e=(e=T(e)).hour(18),tomorrow:e=>e=(e=(e=T(e)).add(1,"day")).startOf("day"),yesterday:e=>e=(e=(e=T(e)).subtract(1,"day")).startOf("day"),christmas:e=>{const t=T(e).year();return e=e.set([t,11,25,18,0,0])},"new years":e=>{const t=T(e).year();return e=e.set([t,11,31,18,0,0])}};D["new years eve"]=D["new years"];const N=[31,28,31,30,31,30,31,31,30,31,30,31],M=(e,t="")=>{if(!(t=t.trim().toLowerCase()))return e.startOf("day");let n=t.match(/^([0-9]{1,2}):([0-9]{2})(?::([0-9]{1,2}))?(?:[:.]([0-9]+))?(?: ?(am|pm|gmt))?$/);if(null!==n){const[,t,a,r,o,s]=n,i=Number(t),u=Number(a),c="am"===s||"pm"===s;return i>23||u>59||Number(r||0)>59||c&&(i<1||i>12)?(e.epoch=null,e):(e=(e=(e=(e=e.hour(i)).minute(u)).seconds(r||0)).millisecond(function(e=""){return (e=String(e)).length>3?e=e.substring(0,3):1===e.length?e+="00":2===e.length&&(e+="0"),Number(e)||0}(o)),c&&(e=e.ampm(s)),e)}if(n=t.match(/^([0-9]{1,2}) ?(am|pm)$/),null!==n&&n[1]){const t=Number(n[1]);return t>12||t<1?(e.epoch=null,e):e=(e=(e=e.hour(n[1]||0)).ampm(n[2])).startOf("hour")}return e.epoch=null,e};let C=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"],q=["january","february","march","april","may","june","july","august","september","october","november","december"];function S(){return C}function I(){return function(){const e={sep:8};for(let t=0;t<C.length;t++)e[C[t]]=t;for(let t=0;t<q.length;t++)e[q[t]]=t;return e}()}const U=I(),E=t=>{if(true!==N.hasOwnProperty(t.month)||t.date<1)return  false;if(1===t.month)return !!(e(t.year)&&t.date<=29)||t.date<=28;const n=N[t.month]||0;return t.date<=n},P=(e="",t)=>{if(e=e.trim(),true===/^'?[0-9][0-9]$/.test(e)){const t=Number(e.replace(/'/,""));return t>50?1900+t:2e3+t}let n=parseInt(e,10);return !n&&t&&(n=t.year),n=n||(new Date).getFullYear(),n},A=function(e){return "sept"===(e=e.toLowerCase().trim())?U.sep:U[e]},x={millisecond:1,second:1e3,minute:6e4,hour:36e5,day:864e5};x.date=x.day,x.month=25488e5,x.week=6048e5,x.year=3154e7,Object.keys(x).forEach(e=>{x[e+"s"]=x[e];});const V=(e,t,n,a,r)=>{const o=e.d[n]();if(o===t)return;const s=null===r?null:e.d[r](),i=e.epoch,u=t-o;e.epoch+=x[a]*u,"day"===a&&Math.abs(u)>28&&t<28&&(e.epoch+=x.hour),null!==r&&s!==e.d[r]()&&(e.epoch=i);const c=x[a]/2;for(;e.d[n]()<t;)e.epoch+=c;for(;e.d[n]()>t;)e.epoch-=c;null!==r&&s!==e.d[r]()&&(e.epoch=i);},Y={year:{valid:e=>e>-4e3&&e<4e3,walkTo:(e,t)=>V(e,t,"getUTCFullYear","year",null)},month:{valid:e=>e>=0&&e<=11,walkTo:(e,t)=>{const n=e.d,a=n.getUTCMonth(),r=e.epoch,o=n.getUTCFullYear();if(a===t)return;const s=t-a;for(e.epoch+=x.day*(28*s),o!==e.d.getUTCFullYear()&&(e.epoch=r);e.d.getUTCMonth()<t;)e.epoch+=x.day;for(;e.d.getUTCMonth()>t;)e.epoch-=x.day;}},date:{valid:e=>e>0&&e<=31,walkTo:(e,t)=>V(e,t,"getUTCDate","day","getUTCMonth")},hour:{valid:e=>e>=0&&e<24,walkTo:(e,t)=>V(e,t,"getUTCHours","hour","getUTCDate")},minute:{valid:e=>e>=0&&e<60,walkTo:(e,t)=>V(e,t,"getUTCMinutes","minute","getUTCHours")},second:{valid:e=>e>=0&&e<60,walkTo:(e,t)=>{e.epoch=e.seconds(t).epoch;}},millisecond:{valid:e=>e>=0&&e<1e3,walkTo:(e,t)=>{e.epoch=e.milliseconds(t).epoch;}}},F=(e,t)=>{const n=Object.keys(Y),a=e.clone();for(let r=0;r<n.length;r++){const o=n[r];let s=t[o];if(void 0===s&&(s=a[o]()),"string"==typeof s&&(s=parseInt(s,10)),!Y[o].valid(s))return e.epoch=null,void(false===e.silent&&console.warn("invalid "+o+": "+s));Y[o].walkTo(e,s);}},Z=(e,t)=>{if(!t)return e;if("z"===(t=t.trim().toLowerCase()))return e.tz="etc/gmt",e;const n=t.match(/^([+-]?)([0-9]{2})(?::?([0-9]{2}))?$/);if(!n)return e;const a=Number(n[2]),r=Number(n[3]||0);if(r>59)return e;let o=(a+r/60)*("-"===n[1]?-1:1);if(0===o)return e.tz="etc/gmt",e;o*=-1,o>=0&&(o="+"+o);const s="etc/gmt"+o;return e.timezones[s]&&(e.tz=s),e};var L=[].concat(((e,t)=>[{reg:/^(-?0{0,2}[0-9]{3,4})-([0-9]{1,2})-([0-9]{1,2})[T ]([0-9.:]+)(Z|[+-][0-9:]+)?(\[[^[\]]*\])?(\[[^[\]]*\])?$/i,parse:(n,a)=>{const r={year:a[1],month:parseInt(a[2],10)-1,date:a[3]};if(false===E(r))return n.epoch=null,n;if(a[6]){const e=a[6].trim().replace(/[[\]]/g,"");e&&(n=n.timezone(e));}else t(n,a[5]);return e(n,r),n=M(n,a[4])}},{reg:/^([0-9]{4})[\-/. ]([0-9]{1,2})[\-/. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(t,n)=>{const a={year:n[1],month:parseInt(n[2],10)-1,date:parseInt(n[3],10)};return a.month>=12&&(a.date=parseInt(n[2],10),a.month=parseInt(n[3],10)-1),false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([0-9]{4})[\-/. ]([a-z]+)[\-/. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(t,n)=>{const a={year:P(n[1],t._today),month:A(n[2]),date:r(n[3]||"")};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}}])(F,Z),((e,t)=>[{reg:/^([0-9]{1,2})[-/.]([0-9]{1,2})(?:[\-/.]([0-9]{4}|[0-9]{2}))?( [0-9]{1,2}:[0-9]{2}:?[0-9]{0,2} ?(am|pm|gmt))?$/i,parse:(t,n)=>{let a=parseInt(n[1],10)-1,r=parseInt(n[2],10);(t.british||a>=12)&&(r=parseInt(n[1],10),a=parseInt(n[2],10)-1);const o={date:r,month:a,year:P(n[3],t._today)||(new Date).getFullYear()};return  false===E(o)?(t.epoch=null,t):(e(t,o),t=M(t,n[4]))}},{reg:/^([a-z]+)[\-/. ]([0-9]{1,2})[\-/. ]?([0-9]{4}|'[0-9]{2})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(t,n)=>{const a={year:P(n[3],t._today),month:A(n[1]),date:r(n[2]||"")};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([a-z]+) ([0-9]{1,2})( [0-9]{4})?( ([0-9:]+( ?am| ?pm| ?gmt)?))?$/i,parse:(t,n)=>{const a={year:P(n[3],t._today),month:A(n[1]),date:r(n[2]||"")};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([a-z]+) ([0-9]{1,2}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2})( \+[0-9]{4})?( [0-9]{4})?$/i,parse:(n,a)=>{const[,o,s,i,u,c]=a,h={year:P(c,n._today),month:A(o),date:r(s||"")};return  false===E(h)?(n.epoch=null,n):(n=t(n,u),e(n,h),n=M(n,i))}},{reg:/^([a-z]+) ([0-9]{1,2}) ([0-9]{4}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}) (?:gmt)?([+-][0-9]{4})/i,parse:(n,a)=>{const[,o,s,i,u,c]=a,h={year:P(i,n._today),month:A(o),date:r(s||"")};return  false===E(h)?(n.epoch=null,n):(n=t(n,c),e(n,h),n=M(n,u))}}])(F,Z),(e=>[{reg:/^([0-9]{1,2})[-/]([a-z]+)[\-/]?([0-9]{4})?$/i,parse:(t,n)=>{const a={year:P(n[3],t._today),month:A(n[2]),date:r(n[1]||"")};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([0-9]{1,2})( [a-z]+)( [0-9]{4}| '[0-9]{2})? ?([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2} ?(am|pm|gmt))?$/i,parse:(t,n)=>{const a={year:P(n[3],t._today),month:A(n[2]),date:r(n[1])};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([0-9]{1,2})[. \-/]([a-z]+)[. \-/]([0-9]{4})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(t,n)=>{const a={date:Number(n[1]),month:A(n[2]),year:Number(n[3])};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=t.startOf("day"),t=M(t,n[4]))}}])(F),(e=>[{reg:/^([0-9]{4})[\-/]([0-9]{2})$/,parse:(t,n)=>{const a={year:n[1],month:parseInt(n[2],10)-1,date:1};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^([a-z]+) ([0-9]{4})$/i,parse:(t,n)=>{const a={year:P(n[2],t._today),month:A(n[1]),date:t._today.date||1};return  false===E(a)?(t.epoch=null,t):(e(t,a),t=M(t,n[4]))}},{reg:/^(q[1-4])( of)?( [0-9]{4})?$/i,parse:(e,t)=>{const n=t[1]||"";e=e.quarter(n);let a=t[3]||"";return a&&(a=a.trim(),e=e.year(a)),e}},{reg:/^(spring|summer|winter|fall|autumn)( of)?( [0-9]{4})?$/i,parse:(e,t)=>{const n=t[1]||"";e=e.season(n);let a=t[3]||"";return a&&(a=a.trim(),e=e.year(a)),e}},{reg:/^[0-9,]+ ?b\.?c\.?$/i,parse:(t,n)=>{let a=n[0]||"";a=a.replace(/^([0-9,]+) ?b\.?c\.?$/i,"-$1");const r=new Date,o={year:parseInt(a.trim(),10),month:r.getMonth(),date:r.getDate()};return  false===E(o)?(t.epoch=null,t):(e(t,o),t=M(t))}},{reg:/^[0-9,]+ ?(a\.?d\.?|c\.?e\.?)$/i,parse:(t,n)=>{let a=n[0]||"";a=a.replace(/,/g,"");const r=new Date,o={year:parseInt(a.trim(),10),month:r.getMonth(),date:r.getDate()};return  false===E(o)?(t.epoch=null,t):(e(t,o),t=M(t))}},{reg:/^[0-9]{4}( ?a\.?d\.?)?$/i,parse:(t,n)=>{const a=t._today;a.month&&!a.date&&(a.date=1);const r=new Date,o={year:P(n[0],a),month:a.month||r.getMonth(),date:a.date||r.getDate()};return  false===E(o)?(t.epoch=null,t):(e(t,o),t=M(t))}}])(F));const{parseArray:B,parseObject:H,parseNumber:Q}=O,G={year:(new Date).getFullYear(),month:0,date:1},W=(e,n,a)=>{const r=e._today||G;if("number"==typeof n)return Q(e,n);if(e.epoch=Date.now(),e._today&&t(e._today)&&Object.keys(e._today).length>0){const t=H(e,r);t.isValid()&&(e.epoch=t.epoch);}if(null==n||""===n)return e;const o=m(e,n);if(o)return o;if("[object Date]"===Object.prototype.toString.call(n))return e.epoch=n.getTime(),e;if(true===(e=>"[object Array]"===Object.prototype.toString.call(e))(n))return e=B(e,n,r);if(true===t(n)){if("epoch"in n)return e.epoch="number"==typeof n.epoch?n.epoch:NaN,null==a&&n.tz&&(e.tz=n.tz),e;const t=Object.assign({},r,n);return e=H(e,t)}return "string"!=typeof n?e:(n=n.replace(/\b(mon|tues?|wed|wednes|thur?s?|fri|sat|satur|sun)(day)?\b/i,"").replace(/([0-9])(th|rd|st|nd)/,"$1").replace(/,/g,"").replace(/ +/g," ").trim(),true===D.hasOwnProperty(n)?e=D[n](e):function(e,t,n){for(let a=0;a<L.length;a++){const r=t.match(L[a].reg);if(r){const t=L[a].parse(e.clone(),r,n);if(null!==t&&t.isValid())return t}}return  false===e.silent&&console.warn("Warning: couldn't parse date-string: '"+t+"'"),e.epoch=null,e}(e,n))};let J=["sun","mon","tue","wed","thu","fri","sat"],K=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];function R(){return J}function X(){return K}const ee={mo:1,tu:2,we:3,th:4,fr:5,sa:6,su:7,tues:2,weds:3,wedn:3,thur:4,thurs:4};let te=true;const ne=e=>{const t=e.timezone().current.offset;return t?u(t,":"):"Z"},ae=e=>te?(e=>e?e[0].toUpperCase()+e.substr(1):"")(e):e,re={day:e=>ae(e.dayName()),"day-short":e=>ae(R()[e.day()]),"day-number":e=>e.day(),"day-ordinal":e=>a(e.day()),"day-pad":e=>n(e.day()),date:e=>e.date(),"date-ordinal":e=>a(e.date()),"date-pad":e=>n(e.date()),month:e=>ae(e.monthName()),"month-short":e=>ae(S()[e.month()]),"month-number":e=>e.month(),"month-ordinal":e=>a(e.month()),"month-pad":e=>n(e.month()),"iso-month":e=>n(e.month()+1),year:e=>{let t=e.year();return t>0?t:(t=Math.abs(t),t+" BC")},"year-short":e=>{let t=e.year();return t>0?`'${String(e.year()).substr(2,4)}`:(t=Math.abs(t),t+" BC")},"iso-year":e=>{const t=e.year(),a=t<0;let r=n(Math.abs(t),4);return a&&(r=n(r,6),r="-"+r),r},time:e=>e.time(),"time-24":e=>`${e.hour24()}:${n(e.minute())}`,hour:e=>e.hour12(),"hour-pad":e=>n(e.hour12()),"hour-24":e=>e.hour24(),"hour-24-pad":e=>n(e.hour24()),minute:e=>e.minute(),"minute-pad":e=>n(e.minute()),second:e=>e.second(),"second-pad":e=>n(e.second()),millisecond:e=>e.millisecond(),"millisecond-pad":e=>n(e.millisecond(),3),ampm:e=>e.ampm(),AMPM:e=>e.ampm().toUpperCase(),quarter:e=>"Q"+e.quarter(),season:e=>e.season(),era:e=>e.era(),json:e=>e.json(),timezone:e=>e.timezone().name,offset:e=>ne(e),numeric:e=>`${e.year()}/${n(e.month()+1)}/${n(e.date())}`,"numeric-us":e=>`${n(e.month()+1)}/${n(e.date())}/${e.year()}`,"numeric-uk":e=>`${n(e.date())}/${n(e.month()+1)}/${e.year()}`,"mm/dd":e=>`${n(e.month()+1)}/${n(e.date())}`,iso:e=>`${e.format("iso-year")}-${n(e.month()+1)}-${n(e.date())}T${n(e.h24())}:${n(e.minute())}:${n(e.second())}.${n(e.millisecond(),3)}${ne(e)}`,"iso-short":e=>{const t=n(e.month()+1),a=n(e.date());var r;return `${(r=e.year())>=0?n(r,4):(r=Math.abs(r),"-"+n(r,4))}-${t}-${a}`},"iso-utc":e=>new Date(e.epoch).toISOString(),"iso-full":e=>{let t=e.format("iso");const n=e.timezone().name;return n&&(t+=`[${n}]`),t},sql:e=>`${e.format("iso-year")}-${n(e.month()+1)}-${n(e.date())} ${n(e.h24())}:${n(e.minute())}:${n(e.second())}`,nice:e=>`${S()[e.month()]} ${a(e.date())}, ${e.time()}`,"nice-24":e=>`${S()[e.month()]} ${a(e.date())}, ${e.hour24()}:${n(e.minute())}`,"nice-year":e=>`${S()[e.month()]} ${a(e.date())}, ${e.year()}`,"nice-day":e=>`${R()[e.day()]} ${ae(S()[e.month()])} ${a(e.date())}`,"nice-full":e=>`${e.dayName()} ${ae(e.monthName())} ${a(e.date())}, ${e.time()}`,"nice-full-24":e=>`${e.dayName()} ${ae(e.monthName())} ${a(e.date())}, ${e.hour24()}:${n(e.minute())}`},oe={"day-name":"day","month-name":"month","iso 8601":"iso","iso 9075":"sql","time-h24":"time-24","time-12":"time","time-h12":"time",tz:"timezone",iana:"timezone","day-num":"day-number","month-num":"month-number","month-iso":"iso-month","year-iso":"iso-year","nice-short":"nice","nice-short-24":"nice-24",mdy:"numeric-us",dmy:"numeric-uk",ymd:"numeric","yyyy/mm/dd":"numeric","mm/dd/yyyy":"numeric-us","dd/mm/yyyy":"numeric-us","little-endian":"numeric-uk","big-endian":"numeric","day-nice":"nice-day"};Object.keys(oe).forEach(e=>re[e]=re[oe[e]]);const se=(e,t="",n)=>{if(true!==e.isValid())return "";const a=re;if(a.hasOwnProperty(t)){let n=a[t](e)||"";return "json"!==t&&(n=String(n),"ampm"!==t.toLowerCase()&&(n=ae(n))),n}if(-1!==t.indexOf("{")){const n=/\{(.[^}\r\n\u2028\u2029]*)(\})?/g;return t=t.replace(n,(t,n,r)=>{if(!r)return t;if("AMPM"!==(n=n.trim())&&(n=n.toLowerCase()),a.hasOwnProperty(n)){const t=String(a[n](e));return "ampm"!==n.toLowerCase()?ae(t):t}return ""}),t}return e.format("iso-short")},ie={G:e=>e.era(),GG:e=>e.era(),GGG:e=>e.era(),GGGG:e=>"AD"===e.era()?"Anno Domini":"Before Christ",y:e=>e.year(),yy:e=>n(Number(String(e.year()).substr(2,4))),yyy:e=>e.year(),yyyy:e=>e.year(),yyyyy:e=>"0"+e.year(),Q:e=>e.quarter(),QQ:e=>e.quarter(),QQQ:e=>e.quarter(),QQQQ:e=>e.quarter(),M:e=>e.month()+1,MM:e=>n(e.month()+1),MMM:e=>e.format("month-short"),MMMM:e=>e.format("month"),w:e=>e.week(),ww:e=>n(e.week()),d:e=>e.date(),dd:e=>n(e.date()),D:e=>e.dayOfYear(),DD:e=>n(e.dayOfYear()),DDD:e=>n(e.dayOfYear(),3),E:e=>e.format("day-short"),EE:e=>e.format("day-short"),EEE:e=>e.format("day-short"),EEEE:e=>e.format("day"),EEEEE:e=>e.format("day")[0],e:e=>e.day(),ee:e=>e.day(),eee:e=>e.format("day-short"),eeee:e=>e.format("day"),eeeee:e=>e.format("day")[0],a:e=>e.ampm().toUpperCase(),aa:e=>e.ampm().toUpperCase(),aaa:e=>e.ampm().toUpperCase(),aaaa:e=>e.ampm().toUpperCase(),h:e=>e.h12(),hh:e=>n(e.h12()),H:e=>e.hour(),HH:e=>n(e.hour()),m:e=>e.minute(),mm:e=>n(e.minute()),s:e=>e.second(),ss:e=>n(e.second()),SSS:e=>n(e.millisecond(),3),A:e=>e.epoch-e.startOf("day").epoch,z:e=>e.timezone().name,zz:e=>e.timezone().name,zzz:e=>e.timezone().name,zzzz:e=>e.timezone().name,Z:e=>u(e.timezone().current.offset),ZZ:e=>u(e.timezone().current.offset),ZZZ:e=>u(e.timezone().current.offset),ZZZZ:e=>u(e.timezone().current.offset,":")},ue=(e,t,n)=>{let a=e,r=t;for(let o=0;o<n;o+=1)ie[a]=ie[r],a+=e,r+=t;};ue("q","Q",4),ue("L","M",4),ue("Y","y",4),ue("c","e",4),ue("k","H",2),ue("K","h",2),ue("S","s",2),ue("v","z",4),ue("V","Z",4);const ce=["year","season","quarter","month","week","day","quarterHour","hour","minute"],he=function(e,t){const n=e.clone().startOf(t),a=e.clone().endOf(t).epoch-n.epoch,r=(e.epoch-n.epoch)/a;return parseFloat(r.toFixed(2))},le=["year","season","quarter","month","week","date","quarterhour","hour","minute"],me=(e,t,n)=>{let a=0;for(e=e.clone();e.isBefore(t);)e=e.add(1,n),a+=1;return e.isAfter(t,n)&&(a-=1),a},de=(e,t,n)=>e.isBefore(t)?me(e,t,n):-1*me(t,e,n),fe=function(e,t,n){t=i(t,e);let a=false;if(e.isAfter(t)){const n=e;e=t,t=n,a=true;}let r=function(e,t){const n=t.epoch-e.epoch,a={milliseconds:n,seconds:parseInt(n/1e3,10)};a.minutes=parseInt(a.seconds/60,10),a.hours=parseInt(a.minutes/60,10);let r=e.clone();return a.years=((e,t)=>{let n=t.year()-e.year();return (e=e.year(t.year())).isAfter(t)&&(n-=1),n})(r,t),r=e.add(a.years,"year"),a.months=12*a.years,r=e.add(a.months,"month"),a.months+=de(r,t,"month"),a.quarters=4*a.years,a.quarters+=parseInt(a.months%12/3,10),a.weeks=52*a.years,r=e.add(a.weeks,"week"),a.weeks+=de(r,t,"week"),a.days=7*a.weeks,r=e.add(a.days,"day"),a.days+=de(r,t,"day"),a}(e,t);return a&&(r=function(e){return Object.keys(e).forEach(t=>{e[t]*=-1;}),e}(r)),n?(n=o(n),true!==/s$/.test(n)&&(n+="s"),"dates"===n&&(n="days"),r[n]):r},pe=e=>Math.abs(e)||0;let ye={second:"second",seconds:"seconds",minute:"minute",minutes:"minutes",hour:"hour",hours:"hours",day:"day",days:"days",month:"month",months:"months",year:"year",years:"years"};function ge(e){return ye[e]||""}let be="past",we="future",ke="present",ve="now",ze="almost",$e="over",_e=e=>`${e} ago`,je=e=>`in ${e}`;function Oe(e){return _e(e)}function Te(e){return je(e)}function De(){return ve}const Ne={months:{almost:10,over:4},days:{almost:25,over:10},hours:{almost:20,over:8},minutes:{almost:50,over:20},seconds:{almost:50,over:20}};function Me(e,t){return 1===e?e+" "+ge(t.slice(0,-1)):e+" "+ge(t)}const Ce=function(e){let t=null,n=null;const a=[],r=[];return Object.keys(e).forEach((o,s,i)=>{const u=Math.abs(e[o]);if(0===u)return;a.push(u+o[0]);const c=Me(u,o);if(r.push(c),!t){if(t=c,n=c,s>4)return;const a=i[s+1],r=Math.abs(e[a]);r>Ne[a].almost?(t=Me(u+1,o),n=ze+" "+t):r>Ne[a].over&&(n=$e+" "+c);}}),{qualified:n,rounded:t,abbreviated:a,englishValues:r}},qe=(e,t)=>{const n=function(e,t){const n=e.isBefore(t),a=n?t:e;let r=n?e:t;r=r.clone();const o={years:0,months:0,days:0,hours:0,minutes:0,seconds:0};return Object.keys(o).forEach(e=>{if(r.isSame(a,e))return;const t=r.diff(a,e);r=r.add(t,e),o[e]=t;}),n&&Object.keys(o).forEach(e=>{0!==o[e]&&(o[e]*=-1);}),o}(e,t=i(t,e));if(true===Object.keys(n).every(e=>!n[e]))return {diff:n,rounded:De(),qualified:De(),precise:De(),abbreviated:[],iso:"P0Y0M0DT0H0M0S",direction:ke};let a,r=we,{rounded:o,qualified:s}=Ce(n);const{englishValues:u,abbreviated:c}=Ce(n);a=u.splice(0,2).join(", "),true===e.isAfter(t)?(o=Oe(o),s=Oe(s),a=Oe(a),r=be):(o=Te(o),s=Te(s),a=Te(a));const h=function(e){let t="P";return t+=pe(e.years)+"Y",t+=pe(e.months)+"M",t+=pe(e.days)+"DT",t+=pe(e.hours)+"H",t+=pe(e.minutes)+"M",t+=pe(e.seconds)+"S",t}(n);return {diff:n,rounded:o,qualified:s,precise:a,abbreviated:c,iso:h,direction:r}};var Se={north:[["spring",2,1],["summer",5,1],["fall",8,1],["autumn",8,1],["winter",11,1]],south:[["fall",2,1],["autumn",2,1],["winter",5,1],["spring",8,1],["summer",11,1]]},Ie=[null,[0,1],[3,1],[6,1],[9,1]];const Ue={second:e=>(F(e,{millisecond:0}),e),minute:e=>(F(e,{second:0,millisecond:0}),e),quarterhour:e=>{const t=e.minutes();return e=t>=45?e.minutes(45):t>=30?e.minutes(30):t>=15?e.minutes(15):e.minutes(0),F(e,{second:0,millisecond:0}),e},hour:e=>(F(e,{minute:0,second:0,millisecond:0}),e),day:e=>(F(e,{hour:0,minute:0,second:0,millisecond:0}),e),week:e=>{const t=e.clone();return (e=e.day(e._weekStart)).isAfter(t)&&(e=e.subtract(1,"week")),F(e,{hour:0,minute:0,second:0,millisecond:0}),e},month:e=>(F(e,{date:1,hour:0,minute:0,second:0,millisecond:0}),e),quarter:e=>{const t=e.quarter();return Ie[t]&&F(e,{month:Ie[t][0],date:Ie[t][1],hour:0,minute:0,second:0,millisecond:0}),e},season:e=>{const t=e.season();let n="north";"South"===e.hemisphere()&&(n="south");for(let a=0;a<Se[n].length;a++)if(Se[n][a][0]===t){let r=e.year();return "winter"===t&&e.month()<3&&(r-=1),F(e,{year:r,month:Se[n][a][1],date:Se[n][a][2],hour:0,minute:0,second:0,millisecond:0}),e}return e},year:e=>(F(e,{month:0,date:1,hour:0,minute:0,second:0,millisecond:0}),e),decade:e=>{const t=(e=e.startOf("year")).year(),n=10*parseInt(t/10,10);return e=e.year(n)},century:e=>{const t=(e=e.startOf("year")).year(),n=100*parseInt(t/100,10);return e=e.year(n)}};Ue.date=Ue.day;const Ee=function(e,t,n,a=1){if(!t||!n||!Number.isInteger(a)||a<=0)return [];if(t=o(t),n=e.clone().set(n),!e.isValid()||!n.isValid())return [];if(e.isAfter(n)){const t=e;e=n,n=t;}if(e.diff(n,t)<a)return [];let r=e.clone();if(function(e){return !!R().find(t=>t===e)||!!X().find(t=>t===e)}(t))r=r.next(t),t="week";else {r.startOf(t).isBefore(e)&&(r=r.next(t));}const s=[];for(;r.isBefore(n);){s.push(r);const e=r.add(a,t);if(!e.isValid()||e.epoch<=r.epoch)break;r=e;}return s},Pe=e=>("Utc"===(e=(e=(e=(e=(e=(e=(e=(e=e[0].toUpperCase()+e.substr(1)).replace(/[/_-]([a-z])/gi,e=>e.toUpperCase())).replace(/_(of|es)_/i,e=>e.toLowerCase())).replace(/\/gmt/i,"/GMT")).replace(/\/utc/i,"/UTC")).replace(/\/Dumontdurville$/i,"/DumontDUrville")).replace(/\/Mcmurdo$/i,"/McMurdo")).replace(/\/Port-au-prince$/i,"/Port-au-Prince"))&&(e="UTC"),e),Ae=e=>{const t=e.timezones;let n=e.tz;if(false===t.hasOwnProperty(n)&&(n=$(e.tz,t)),null===n)return  false===e.silent&&console.warn("Warn: could not find given or local timezone - '"+e.tz+"'"),{current:{epochShift:0}};const a=t[n],r={name:Pe(n),hasDst:Boolean(a.dst),default_offset:a.offset,hemisphere:"s"===a.hem?"South":"North",current:{}};if(r.hasDst){const e=(o=a.dst)?o.split("->"):[];r.change={start:e[0],back:e[1]};}var o;const s=a.offset;let i=s;const u=p(n);return  true===r.hasDst&&(i="North"===r.hemisphere?s-u:a.offset+u),false===r.hasDst?(r.current.offset=s,r.current.isDST=false):true===f(e.epoch,r.change.start,r.change.back,s,i)?(r.current.offset=s,r.current.isDST="North"===r.hemisphere):(r.current.offset=i,r.current.isDST="South"===r.hemisphere),r},xe=["century","decade","year","month","date","day","hour","minute","second","millisecond"],Ve={set:function(e,t){let n=this.clone();return n=W(n,e,null),t&&(n.tz=$(t,n.timezones)),n},timezone:function(e){if(void 0!==e){const t=this.json();return t.timezone=e,this.set(t,e)}return Ae(this)},isDST:function(){return Ae(this).current.isDST},hasDST:function(){return Ae(this).hasDst},offset:function(){return 60*Ae(this).current.offset},hemisphere:function(){return Ae(this).hemisphere},format:function(e){return se(this,e)},unixFmt:function(e){return ((e,t)=>{let n=t.split("");return n=function(e){for(let t=0;t<e.length;t+=1)if("'"===e[t])for(let n=t+1;n<e.length;n+=1){if(e[n]&&(e[t]+=e[n]),"'"===e[n]){e[n]=null;break}e[n]=null;}return e.filter(e=>e)}(n),n=function(e){for(let t=0;t<e.length;t+=1){const n=e[t];for(let a=t+1;a<e.length&&e[a]===n;a+=1)e[t]+=e[a],e[a]=null;}return (e=e.filter(e=>e)).map(e=>("''"===e&&(e="'"),e))}(n),n.reduce((t,n)=>(void 0!==ie[n]?t+=ie[n](e)||"":(/^'.+'$/.test(n)&&(n=n.replace(/'/g,"")),t+=n),t),"")})(this,e)},startOf:function(e){return ((e,t)=>{let n=e.clone();return n.isValid()?(t=o(t),Ue[t]?Ue[t](n):"summer"===t||"winter"===t?(n=n.season(t),Ue.season(n)):n):n})(this,e)},endOf:function(e){return ((e,t)=>{let n=e.clone();return n.isValid()?(t=o(t),Ue[t]?(n=Ue[t](n),n=n.add(1,t),n=n.subtract(1,"millisecond"),n):n):n})(this,e)},leapYear:function(){const t=this.year();return e(t)},progress:function(e){return ((e,t)=>{if(t)return t=o(t),he(e,t);const n={};return ce.forEach(t=>{n[t]=he(e,t);}),n})(this,e)},nearest:function(e){return ((e,t)=>{if(t=o(t),!le.includes(t))return  false===e.silent&&console.warn("no known unit '"+t+"'"),e;const n=e.startOf(t),a=n.add(1,t);return e.epoch-n.epoch>a.epoch-e.epoch?a:n})(this,e)},diff:function(e,t){return fe(this,e,t)},since:function(e){return e||(e=this.clone().set()),qe(this,e)},next:function(e){return this.add(1,e).startOf(e)},last:function(e){return this.subtract(1,e).startOf(e)},isValid:function(){return !(!this.epoch&&0!==this.epoch)&&(Number.isFinite(this.epoch)&&!isNaN(new Date(this.epoch).getTime()))},goto:function(e){const t=this.clone();return t.tz=$(e,t.timezones),t},every:function(e,t,n){if("object"==typeof e&&"string"==typeof t){const n=t;t=e,e=n;}return Ee(this,e,t,n)},isAwake:function(){const e=this.hour();return !(e<8||e>22)},isAsleep:function(){return !this.isAwake()},daysInMonth:function(){switch(this.month()){case 0:case 2:case 4:case 6:case 7:case 9:case 11:return 31;case 1:return this.leapYear()?29:28;case 3:case 5:case 8:case 10:return 30;default:throw new Error("Invalid Month state.")}},log:function(){return console.log("\n"+se(this,"nice-short")),this},logYear:function(){return console.log("\n"+se(this,"full-short")),this},json:function(e){if(void 0!==e){let t=this.clone();e.timezone&&(t.tz=e.timezone);for(let n=0;n<xe.length;n++){const a=xe[n];void 0!==e[a]&&(t=t[a](e[a]));}return t}const t=xe.reduce((e,t)=>(e[t]=this[t](),e),{});return t.offset=this.timezone().current.offset,t.timezone=this.tz,t},debug:function(){const e=this.timezone();let t=this.format("MM")+" "+this.format("date-ordinal")+" "+this.year();return t+="\n     - "+this.format("time"),console.log("\n\n",t+"\n     - "+e.name+" ("+e.current.offset+")"),this},from:function(e){return (e=this.clone().set(e)).since(this)},fromNow:function(){return this.clone().set(Date.now()).since(this)},weekStart:function(e){if("number"==typeof e)return this._weekStart=e,this;if("string"==typeof e){e=e.toLowerCase().trim();let t=R().indexOf(e);-1===t&&(t=X().indexOf(e)),-1===t&&(t=1),this._weekStart=t;}else console.warn("Spacetime Error: Cannot understand .weekStart() input:",e);return this}};Ve.inDST=Ve.isDST,Ve.round=Ve.nearest,Ve.each=Ve.every;const Ye=function(t,n){return 1===t&&e(n)?29:N[t]},Fe=(e,t)=>{if(e.month>0){const n=parseInt(e.month/12,10);e.year=t.year()+n,e.month=e.month%12;}else if(e.month<0){const n=Math.abs(e.month);let a=parseInt(n/12,10);n%12!=0&&(a+=1),e.year=t.year()-a,e.month=e.month%12,e.month=e.month+12,12===e.month&&(e.month=0);}return e},Ze=(e,t,n)=>{let a=t.year(),r=t.month(),o=Ye(r,a);for(;n>o;)n-=o,r+=1,r>=12&&(r-=12,a+=1),o=Ye(r,a);return e.month=r,e.date=n,e},Le=(e,t,n)=>{e.year=t.year(),e.month=t.month();const a=t.date();for(e.date=a-Math.abs(n);e.date<1;){e.month-=1,e.month<0&&(e.month=11,e.year-=1);const t=Ye(e.month,e.year);e.date+=t;}return e},Be=e=>("string"==typeof e&&(e=parseInt(e,10)),e),He=["year","month","date","hour","minute","second","millisecond"],Qe=(e,t,n)=>{const a=He.indexOf(n),r=He.slice(a,He.length);for(let n=0;n<r.length;n++){const a=t[r[n]]();e[r[n]](a);}return e},Ge=function(e,t,n,a){return  true===n&&e.isBefore(t)?e=e.add(1,a):false===n&&e.isAfter(t)&&(e=e.minus(1,a)),e},We=function(e,t,n){t=Be(t);const a=e.clone(),r=(e.minute()-t)*x.minute;return e.epoch-=r,Qe(e,a,"second"),(e=Ge(e,a,n,"hour")).epoch},Je=function(e,t,n){(t=Be(t))>=24?t=23:t<0&&(t=0);const a=e.clone();let r=e.hour()-t,o=r*x.hour;return e.epoch-=o,e.date()!==a.date()&&(e=a.clone(),r>1&&(r-=1),r<1&&(r+=1),o=r*x.hour,e.epoch-=o),F(e,{hour:t}),Qe(e,a,"minute"),(e=Ge(e,a,n,"day")).epoch},Ke=function(e,t){"string"==typeof t&&/^'[0-9]{2}$/.test(t)&&(t=t.replace(/'/,"").trim(),t=(t=Number(t))>30?1900+t:2e3+t),t=Be(t);const n=e.month(),a=Math.min(e.date(),Ye(n,t));return F(e,{year:t,month:n,date:a}),e.epoch},Re=function(e,t,n){const a=e.clone();return 1===(t=Be(t))&&"december"===e.monthName()&&e.date()>=29&&1===e.week()?e:("december"===(e=(e=(e=e.month(0)).date(1)).day("monday",false)).monthName()&&e.date()<29&&(e=e.add(1,"week")),t-=1,e=e.add(t,"weeks"),e=Ge(e,a,n,"year"))};let Xe="am",et="pm";const tt={millisecond:function(e){if(void 0!==e){const t=this.clone();return t.epoch=function(e,t){t=Be(t);const n=e.millisecond()-t;return e.epoch-n}(t,e),t}return this.d.getUTCMilliseconds()},second:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){t=Be(t);const a=e.clone(),r=(e.second()-t)*x.second;return e.epoch=e.epoch-r,(e=Ge(e,a,n,"minute")).epoch}(n,e,t),n}return this.d.getUTCSeconds()},minute:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=We(n,e,t),n}return this.d.getUTCMinutes()},hour:function(e,t){const n=this.d;if(void 0!==e){const n=this.clone();return n.epoch=Je(n,e,t),n}return n.getUTCHours()},hourFloat:function(e,t){if(void 0!==e){const n=this.clone();let a=e%1;a*=60;const r=parseInt(e,10);return n.epoch=Je(n,r,t),n.epoch=We(n,a,t),n}const n=this.d,a=n.getUTCHours();let r=n.getUTCMinutes();return r/=60,a+r},hour12:function(e,t){const n=this.d;if(void 0!==e){const n=this.clone(),a=(e=""+e).match(/^([0-9]+)(am|pm)$/);if(a){let e=parseInt(a[1],10);12===e&&(e=0),"pm"===a[2]&&(e+=12),n.epoch=Je(n,e,t);}return n}let a=n.getUTCHours();return a>12&&(a-=12),0===a&&(a=12),a},time:function(e,t){if(void 0!==e){const n=this.clone();return e=e.toLowerCase().trim(),n.epoch=function(e,t,n){let a=t.match(/([0-9]{1,2})[:h]([0-9]{1,2})(:[0-9]{1,2})? ?(am|pm)?/);if(!a){if(a=t.match(/([0-9]{1,2}) ?(am|pm)/),!a)return null;a.splice(2,0,"0"),a.splice(3,0,"");}let r=false,o=parseInt(a[1],10),s=parseInt(a[2],10);s>=60&&(s=59),o>12&&(r=true),false===r&&("am"===a[4]&&12===o&&(o=0),"pm"===a[4]&&o<12&&(o+=12)),a[3]=a[3]||"",a[3]=a[3].replace(/:/,"");const i=parseInt(a[3],10)||0,u=e.clone();return e=(e=(e=(e=e.hour(o)).minute(s)).second(i)).millisecond(0),(e=Ge(e,u,n,"day")).epoch}(n,e,t),n}return `${this.h12()}:${n(this.minute())}${this.ampm()}`},ampm:function(e,t){let n=Xe,a=this.hour();if(a>=12&&(n=et),"string"!=typeof e)return n;const r=this.clone();return e=e.toLowerCase().trim(),a>=12&&"am"===e?(a-=12,r.hour(a,t)):a<12&&"pm"===e?(a+=12,r.hour(a,t)):r},dayTime:function(e,t){if(void 0!==e){const n={morning:"7:00",breakfast:"7:00",noon:"12:00",lunch:"12:00",afternoon:"14:00",evening:"18:00",dinner:"18:00",night:"23:00",midnight:"00:00"};let a=this.clone();return e=(e=e||"").toLowerCase(),true===n.hasOwnProperty(e)&&(a=a.time(n[e],t)),a}const n=this.hour();return n<6?"night":n<12?"morning":n<17?"afternoon":n<22?"evening":"night"},iso:function(e){return void 0!==e?this.set(e):this.format("iso")},isoFull:function(e){return void 0!==e?this.set(e):this.format("iso-full")},epochSeconds:function(e){return void 0!==e?(this.epoch=1e3*e,this):this.isValid()?Math.floor(this.epoch/1e3):null}},nt={date:function(e,t){if(void 0!==e){const n=this.clone();return e=parseInt(e,10),Number.isNaN(e)||(n.epoch=function(e,t,n){if((t=Be(t))>28){const n=Ye(e.month(),e.year());t>n&&(t=n);}t<=0&&(t=1);const a=e.clone();return F(e,{date:t}),(e=Ge(e,a,n,"month")).epoch}(n,e,t)),n}return this.d.getUTCDate()},day:function(e,t){if(void 0===e)return this.d.getUTCDay();const n=this.clone();let a=e;"string"==typeof e&&(e=e.toLowerCase(),ee.hasOwnProperty(e)?a=ee[e]:(a=R().indexOf(e),-1===a&&(a=X().indexOf(e))));let r=this.d.getUTCDay()-a;true===t&&r>0&&(r-=7),false===t&&r<0&&(r+=7);const o=this.subtract(r,"days");return F(o,{hour:n.hour(),minute:n.minute(),second:n.second()}),o},dayName:function(e,t){if(void 0===e)return X()[this.day()];let n=this.clone();return n=n.day(e,t),n}},at=e=>e=(e=(e=e.minute(0)).second(0)).millisecond(1),rt=function(e){if(void 0!==e){if("string"==typeof e&&(e=e.replace(/([0-9])(th|rd|st|nd)/,"$1"),e=Number(e),isNaN(e)))return console.warn("Spacetime: Invalid millennium input"),this;e>0&&(e-=1);let t=1e3*e;return 0===t&&(t=1),this.year(t)}let t=Math.floor(this.year()/1e3);return t>=0&&(t+=1),t},ot={dayOfYear:function(t,n){if(void 0!==t){const a=this.clone();return a.epoch=function(t,n,a){n=Be(n);const r=t.clone();return (n-=1)<=0?n=0:n>=365&&(n=e(t.year())?365:364),t=(t=t.startOf("year")).add(n,"day"),Qe(t,r,"hour"),(t=Ge(t,r,a,"year")).epoch}(a,t,n),a}const a=this.d;let r=a.getUTCDate();const o=a.getUTCMonth(),s=a.getUTCFullYear();for(let e=0;e<o;e++)r+=Ye(e,s);return r},week:function(e,t){if(void 0!==e){let n=this.clone();return n=Re(n,e,t),n=at(n),n}const n=this.epoch;let a=this.clone();if("december"===a.monthName()&&a.date()>=29){if(Re(a.add(15,"days"),1,false).epoch<=a.epoch)return 1}if(a=a.month(0),a=a.date(1),a=at(a),a=a.day("monday",false),"december"===a.monthName()&&a.date()<29&&(a=a.add(1,"week")),a=a.minus(2,"hours"),a.epoch>n)return 1;let r=0;const o=4*this.month();for(a.epoch+=x.week*o,r+=o;r<=52;r++){if(a.epoch>n)return r;a=a.add(1,"week");}return 52},month:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){"string"==typeof t&&("sept"===t&&(t="sep"),t=I()[t.toLowerCase()]),(t=Be(t))>=12&&(t=11),t<=0&&(t=0);let a=e.date();const r=Ye(t,e.year());a>r&&(a=r);const o=e.clone();return F(e,{month:t,date:a}),(e=Ge(e,o,n,"year")).epoch}(n,e,t),n}return this.d.getUTCMonth()},monthName:function(e,t){if(void 0!==e){let n=this.clone();return n=n.month(e,t),n}return q[this.month()]},quarter:function(e,t){if(void 0!==e&&("string"==typeof e&&(e=e.replace(/^q/i,""),e=parseInt(e,10)),Ie[e])){let n=this.clone();const a=Ie[e][0];return n=n.month(a,t),n=n.date(1,t),n=n.startOf("day"),n}const n=this.d.getUTCMonth();for(let e=1;e<Ie.length;e++)if(n<Ie[e][0])return e-1;return 4},season:function(e,t){let n="north";if("South"===this.hemisphere()&&(n="south"),void 0!==e){let a=this.clone();for(let r=0;r<Se[n].length;r++)e===Se[n][r][0]&&(a=a.month(Se[n][r][1],t),a=a.date(1),a=a.startOf("day"));return a}const a=this.d.getUTCMonth();for(let e=0;e<Se[n].length-1;e++)if(a>=Se[n][e][1]&&a<Se[n][e+1][1])return Se[n][e][0];return "north"===n?"winter":"summer"},year:function(e){if(void 0!==e){const t=this.clone();return t.epoch=Ke(t,e),t}return this.d.getUTCFullYear()},era:function(e){if(void 0!==e){const t=this.clone();e=e.toLowerCase();const n=t.d.getUTCFullYear();return "bc"===e&&n>0&&(t.epoch=Ke(t,-1*n)),"ad"===e&&n<0&&(t.epoch=Ke(t,-1*n)),t}return this.d.getUTCFullYear()<0?"BC":"AD"},decade:function(e){if(void 0!==e){if(!(e=(e=(e=String(e)).replace(/([0-9])'?s$/,"$1")).replace(/([0-9])(th|rd|st|nd)/,"$1")))return console.warn("Spacetime: Invalid decade input"),this;2===e.length&&/[0-9][0-9]/.test(e)&&(e="19"+e);let t=Number(e);return isNaN(t)?this:(t=10*Math.floor(t/10),this.year(t))}return this.startOf("decade").year()},century:function(e){if(void 0!==e){"string"==typeof e&&(e=(e=(e=e.replace(/([0-9])(th|rd|st|nd)/,"$1")).replace(/(?<![0-9])([0-9]+) ?(b\.?c\.?|a\.?d\.?)/i,(e,t,n)=>(/b\.?c\.?/i.test(n)&&(t="-"+t),t))).replace(/c$/,""));let t=Number(e);return isNaN(e)?(console.warn("Spacetime: Invalid century input"),this):(0===t&&(t=1),t=t>=0?100*(t-1):100*(t+1),this.year(t))}let t=this.startOf("century").year();return t=Math.floor(t/100),t<0?t-1:t+1},millenium:rt,millennium:rt},st=Object.assign({},tt,nt,ot);st.milliseconds=st.millisecond,st.seconds=st.second,st.minutes=st.minute,st.hours=st.hour,st.hour24=st.hour,st.h12=st.hour12,st.h24=st.hour24,st.days=st.day;const it={second:"millisecond",minute:"second",quarterhour:"minute",hour:"minute",date:"hour",week:"day",month:"day",quarter:"day",season:"day",year:"day"},ut={decade:10,century:100},ct=["millisecond","second","minute","hour","date","month"],ht={second:ct.slice(0,1),minute:ct.slice(0,2),quarterhour:ct.slice(0,2),hour:ct.slice(0,3),date:ct.slice(0,4),month:ct.slice(0,4),quarter:ct.slice(0,4),season:ct.slice(0,4),year:ct,decade:ct,century:ct};ht.week=ht.hour,ht.season=ht.date,ht.quarter=ht.date;const lt={year:true,quarter:true,season:true,month:true,week:true,date:true},mt={month:true,quarter:true,season:true,year:true,decade:true,century:true},dt={millisecond:e=>e.epoch,second:e=>[e.year(),e.month(),e.date(),e.hour(),e.minute(),e.second()].join("-"),minute:e=>[e.year(),e.month(),e.date(),e.hour(),e.minute()].join("-"),hour:e=>[e.year(),e.month(),e.date(),e.hour()].join("-"),day:e=>[e.year(),e.month(),e.date()].join("-"),week:e=>[e.year(),e.week()].join("-"),month:e=>[e.year(),e.month()].join("-"),quarter:e=>[e.year(),e.quarter()].join("-"),year:e=>e.year()};dt.date=dt.day;const ft=e=>Number.isFinite(e)&&!isNaN(new Date(e).getTime());let pt=b;const yt=function(e,t,n={}){this.epoch=null,this.tz=$(t??(e=>{const t=globalThis.Temporal;return t&&e instanceof t.ZonedDateTime?e.timeZoneId:void 0})(e),pt),this.silent=void 0===n.silent||n.silent,this.british=n.dmy||n.british,this._weekStart=1,void 0!==n.weekStart&&(this._weekStart=n.weekStart),this._today={},void 0!==n.today&&(this._today=n.today),Object.defineProperty(this,"d",{get:function(){if(!Number.isFinite(this.epoch))return new Date(NaN);const e=(e=>{const t=e.timezones[e.tz];if(void 0===t)return console.warn("Warning: couldn't find timezone "+e.tz),0;if(void 0===t.dst)return t.offset;const n=t.offset,a=p(e.tz);let r=t.offset+a;"n"===t.hem&&(r=n-a);const o=t.dst.split("->");return  true===f(e.epoch,o[0],o[1],n,r)?n:r})(this);return new Date(this.epoch+36e5*e)}}),Object.defineProperty(this,"timezones",{get:()=>pt,set:e=>(pt=e,e)});const a=W(this,e,t);this.epoch=a.epoch,a.tz&&(this.tz=a.tz);};var gt;Object.keys(Ve).forEach(e=>{yt.prototype[e]=Ve[e];}),yt.prototype.clone=function(){return new yt(this.isValid()?this.epoch:NaN,this.tz,{silent:this.silent,dmy:this.british,weekStart:this._weekStart,today:this._today,parsers:this.parsers})},yt.prototype.toLocalDate=function(){return this.toNativeDate()},yt.prototype.toNativeDate=function(){return new Date(this.isValid()?this.epoch:NaN)},yt.prototype.toTemporal=function(){return (e=>{const t=globalThis.Temporal;if(!t)throw new Error("toTemporal() requires native Temporal (or a globally installed polyfill)");return e.isValid()?t.Instant.fromEpochMilliseconds(Math.trunc(e.epoch)).toZonedDateTimeISO(l(e)):null})(this)},gt=yt,Object.keys(st).forEach(e=>{gt.prototype[e]=st[e];}),(e=>{e.prototype.add=function(e,t){let n=this.clone();if(!n.isValid()||!t||0===e)return n;const a=this.clone(),r=t;if("millisecond"===(t=o(t)))return n.epoch+=e,n;if("fortnight"===t&&(e*=2,t="week"),"millennium"===t)return n.add(1e3*e,"year");if(Number.isFinite(e)&&!Number.isInteger(e)){const a=((e,t,n)=>{if(Object.hasOwn(ut,n))return e.add(t*ut[n],"year");if(!Object.hasOwn(it,n))return null;let a=x[n];"month"===n||"quarter"===n||"season"===n||"year"===n?(e=e.add(Math.trunc(t),n),t%=1,a=e.add(1,n).epoch-e.epoch,"month"===n&&(a=28*x.day)):"quarterhour"===n&&(a=15*x.minute),e.epoch+=t*a;const r=it[n];if("millisecond"===r)return e.epoch=Math.round(e.epoch),e;const o=e.startOf(r),s=o.add(1,r);return e.epoch-o.epoch<=s.epoch-e.epoch?o:s})(n,e,t);if(a)return a}if(!Object.hasOwn(x,t)&&!Object.hasOwn(ht,t)&&"weekend"!==t)return  false===n.silent&&console.warn(`Warn: unsupported arithmetic unit "${r}"`),n;x[t]?n.epoch+=x[t]*e:"week"===t||"weekend"===t?n.epoch+=x.day*(7*e):"quarter"===t||"season"===t?n.epoch+=x.month*(3*e):"quarterhour"===t&&(n.epoch+=15*x.minute*e);let s={};if(ht[t]&&ht[t].forEach(e=>{s[e]=a[e]();}),lt[t]){const e=a.timezone().current.offset-n.timezone().current.offset;n.epoch+=3600*e*1e3;}if("month"===t&&(s.month=a.month()+e,s=Fe(s,a)),"week"===t){const t=a.date()+7*e;t<=28&&t>1&&(s.date=t);}if("weekend"===t&&"saturday"!==n.dayName())n=n.day("saturday",true);else if("date"===t){if(e<0)s=Le(s,a,e);else {const t=a.date()+e;s=Ze(s,a,t);}0!==e&&a.isSame(n,"day")&&(s.date=a.date()+e);}else if("quarter"===t){if(s.month=a.month()+3*e,s.year=a.year(),s.month<0){const e=Math.floor(s.month/12),t=s.month+12*Math.abs(e);s.month=t,s.year+=e;}else if(s.month>=12){const e=Math.floor(s.month/12);s.month=s.month%12,s.year+=e;}s.date=a.date();}else if("year"===t){const t=a.year()+e,r=n.year();if(r<t){const t=Math.floor(e/4)||1;n.epoch+=Math.abs(x.day*t);}else if(r>t){const t=Math.floor(e/4)||1;n.epoch+=x.day*t;}}else "decade"===t?s.year=a.year()+10*e:"century"===t&&(s.year=a.year()+100*e);if(mt[t]){const e=void 0!==s.year?s.year:a.year(),t=Ye(s.month,e);s.date=a.date(),s.date>t&&(s.date=t);}return Object.keys(s).length>1&&F(n,s),n},e.prototype.subtract=function(e,t){return this.clone().add(-1*e,t)},e.prototype.minus=e.prototype.subtract,e.prototype.plus=e.prototype.add;})(yt),(e=>{e.prototype.isSame=function(t,n,a=true){const r=this;if(!n)return null;if("string"==typeof t&&"object"==typeof n){const e=t;t=n,n=e;}return "string"!=typeof t&&"number"!=typeof t||(t=new e(t,this.timezone.name)),!(!r.isValid()||!t?.isValid?.())&&(n=n.replace(/s$/,""),true===a&&r.tz!==t.tz&&((t=t.clone()).tz=r.tz),dt[n]?dt[n](r)===dt[n](t):null)};})(yt),(e=>{const t={isAfter:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!ft(t))&&this.epoch>t},isBefore:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!ft(t))&&this.epoch<t},isEqual:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!ft(t))&&this.epoch===t},isBetween:function(e,t,n=false){e=i(e,this),t=i(t,this);const a=s(e);if(!this.isValid()||!ft(a))return  false;const r=s(t);return !!ft(r)&&(n?this.isBetween(e,t)||this.isEqual(e)||this.isEqual(t):a<this.epoch&&this.epoch<r)}};Object.keys(t).forEach(n=>{e.prototype[n]=t[n];});})(yt),(e=>{const n={i18n:function(e){var n,a,r;return t(e.days)&&(n=e.days,J=n.short||J,K=n.long||K),t(e.months)&&function(e){C=e.short||C,q=e.long||q;}(e.months),r=e.useTitleCase,"[object Boolean]"===Object.prototype.toString.call(r)&&(a=e.useTitleCase,te=a),t(e.ampm)&&function(e){Xe=e.am||Xe,et=e.pm||et;}(e.ampm),t(e.distance)&&function(e){_e=e.pastDistance||_e,je=e.futureDistance||je,be=e.past||be,we=e.future||we,ke=e.present||ke,ve=e.now||ve,ze=e.almost||ze,$e=e.over||$e;}(e.distance),t(e.units)&&function(e={}){ye={second:e.second||ye.second,seconds:e.seconds||ye.seconds,minute:e.minute||ye.minute,minutes:e.minutes||ye.minutes,hour:e.hour||ye.hour,hours:e.hours||ye.hours,day:e.day||ye.day,days:e.days||ye.days,month:e.month||ye.month,months:e.months||ye.months,year:e.year||ye.year,years:e.years||ye.years};}(e.units),this}};Object.keys(n).forEach(t=>{e.prototype[t]=n[t];});})(yt);const bt=(e,t,n)=>new yt(e,t,n),wt=function(e){const t=e._today||{};return Object.keys(t).forEach(n=>{e=e[n](t[n]);}),e};bt.now=(e,t)=>{let n=new yt((new Date).getTime(),e,t);return n=wt(n),n},bt.today=(e,t)=>{let n=new yt((new Date).getTime(),e,t);return n=wt(n),n.startOf("day")},bt.tomorrow=(e,t)=>{let n=new yt((new Date).getTime(),e,t);return n=wt(n),n.add(1,"day").startOf("day")},bt.yesterday=(e,t)=>{let n=new yt((new Date).getTime(),e,t);return n=wt(n),n.subtract(1,"day").startOf("day")},bt.fromUnixSeconds=(e,t,n)=>new yt(1e3*e,t,n),bt.extend=function(e={}){return Object.keys(e).forEach(t=>{yt.prototype[t]=e[t];}),this},bt.timezones=function(){return (new yt).timezones},bt.max=function(e,t){const n=new yt(null,e,t);return n.epoch=864e13,n},bt.min=function(e,t){const n=new yt(null,e,t);return n.epoch=-864e13,n},bt.whereIts=(e,t)=>{let n=new yt(null),a=new yt(null);n=n.time(e),a=t?a.time(t):n.add(59,"minutes");const r=n.hour(),o=a.hour();return Object.keys(n.timezones).filter(e=>{if(-1===e.indexOf("/"))return  false;const t=new yt(null,e),s=t.hour();return s>=r&&s<=o&&(!(s===r&&t.minute()<n.minute())&&!(s===o&&t.minute()>a.minute()))}).map(Pe)},bt.version="7.17.0",bt.tzdbVersion="2026c",bt.plugin=bt.extend;
+  const e=e=>e%4==0&&e%100!=0||e%400==0,t=e=>"[object Object]"===Object.prototype.toString.call(e),n=(e,t=2)=>{const n=e+"";return n.length>=t?n:new Array(t-n.length+1).join("0")+n},a=e=>{const t=e%10,n=e%100;return 1===t&&11!==n?e+"st":2===t&&12!==n?e+"nd":3===t&&13!==n?e+"rd":e+"th"},r=e=>{let t=String(e);return t=t.replace(/([0-9])(st|nd|rd|th)$/i,"$1"),parseInt(t,10)},o=(e="")=>"day"===(e=(e=(e=(e=e.toLowerCase().trim()).replace(/ies$/,"y")).replace(/s$/,"")).replace(/-/g,""))||"days"===e?"date":"min"===e||"mins"===e?"minute":e,s=e=>{return "number"==typeof e?e:(t=e,"[object Date]"!==Object.prototype.toString.call(t)||isNaN(t.valueOf())?e.epoch||0===e.epoch?e.epoch:null:e.getTime());var t;},i=(e,t)=>e instanceof Object&&"epoch"in e?e:null==e?t.clone().set():t.clone().set(e),u=["year","month","date","hour","minute","second","millisecond"],c=e=>u.includes(e),l=(e,t)=>e[t].call(e),h=(e,t,n)=>e[t].call(e,n),m=(e,t="")=>{const a=e>0?"+":"-",r=Math.abs(e);return `${a}${n(Math.trunc(r))}${t}${n(r%1*60)}`},d=(e,t)=>{ false===e.silent&&console.warn(`Warn: ${t}`);},f=(e,t)=>"iso8601"!==t.calendarId?(d(e,`Temporal calendar "${t.calendarId}" converted to iso8601`),t.withCalendar("iso8601")):t,p=()=>"undefined"==typeof globalThis?void 0:globalThis.Temporal,y=e=>{const t=e.tz.match(/^etc\/gmt([+-][0-9]+(?:\.[0-9]+)?)$/i);return t?m(-Number(t[1]),":"):e.timezone().name},g=(e,t)=>{const n=p();if(!n)return null;if(t instanceof n.ZonedDateTime||t instanceof n.Instant){const a=t instanceof n.ZonedDateTime?f(e,t):t;a.epochNanoseconds%1000000n!=0n&&d(e,"Temporal sub-millisecond precision discarded; use spacetime/temporal to preserve it"),e.epoch=a.epochMilliseconds;const r=a instanceof n.Instant?a.toZonedDateTimeISO(y(e)):a.withTimeZone(y(e));return Math.round(6e10*e.offset())!==r.offsetNanoseconds&&d(e,"Spacetime timezone rules differ from Temporal at this instant; use spacetime/temporal for native wall-clock values"),e}return t instanceof n.PlainDate||t instanceof n.PlainDateTime?g(e,f(e,t).toZonedDateTime(y(e))):((e,t)=>e instanceof t.PlainTime||e instanceof t.PlainYearMonth||e instanceof t.PlainMonthDay||e instanceof t.Duration)(t,n)?(d(e,"Temporal input requires a complete date; convert it to a PlainDateTime or ZonedDateTime first"),e.epoch=null,e):null},b=(e,t,n)=>{const[a,r]=e.split("/"),[o,s,i="0"]=r.split(":");return Date.UTC(n,Number(a)-1,Number(o),Number(s),Number(i))-36e5*t},w=(e,t,n,a,r)=>{const o=new Date(e).getUTCFullYear(),s=b(t,r,o),i=b(n,a,o);return e>=s&&e<i},k=e=>"australia/lord_howe"===e||"australia/lhi"===e?.5:"antarctica/troll"===e?2:1;var v={"9|s":"2/dili,2/jayapura","9|n":"2/chita,2/khandyga,2/pyongyang,2/seoul,2/tokyo,2/yakutsk,11/palau,japan,rok","9.5|s|04/05:03->10/04:02":"4/adelaide,4/broken_hill,4/south,4/yancowinna","9.5|s":"4/darwin,4/north","8|s":"12/casey,2/makassar,4/perth,2/ujung_pandang,4/west","8|n":"2/brunei,2/hong_kong,2/irkutsk,2/kuala_lumpur,2/kuching,2/macau,2/manila,2/shanghai,2/singapore,2/taipei,2/ulaanbaatar,2/chongqing,2/chungking,2/harbin,2/macao,2/ulan_bator,2/choibalsan,hongkong,prc,roc,singapore","8.75|s":"4/eucla","7|s":"12/davis,2/jakarta,2/pontianak,9/christmas","7|n":"2/bangkok,2/barnaul,2/hovd,2/krasnoyarsk,2/novokuznetsk,2/novosibirsk,2/phnom_penh,2/ho_chi_minh,2/tomsk,2/vientiane,2/saigon","6|s":"9/chagos","6|n":"2/bishkek,2/dhaka,2/omsk,2/thimphu,2/urumqi,2/dacca,2/kashgar,2/thimbu","6.5|s":"9/cocos","6.5|n":"2/yangon,2/rangoon","5|s":"12/mawson,12/vostok,9/kerguelen","5|n":"2/almaty,2/aqtau,2/aqtobe,2/ashgabat,2/atyrau,2/dushanbe,2/karachi,2/oral,2/qyzylorda,2/qostanay,2/samarkand,2/tashkent,2/yekaterinburg,9/maldives,2/ashkhabad","5.75|n":"2/kathmandu,2/katmandu","5.5|n":"2/kolkata,2/colombo,2/calcutta","4|s":"9/mahe,9/mauritius,9/reunion","4|n":"2/baku,2/dubai,2/muscat,2/tbilisi,2/yerevan,8/astrakhan,8/samara,8/saratov,8/ulyanovsk","4.5|n":"2/kabul","3|s":"0/dar_es_salaam,0/nairobi,12/syowa,9/antananarivo,9/comoro,9/mayotte","3|n|04/24:00->10/29:24":"0/cairo,egypt","3|n|03/29:03->10/25:04":"2/famagusta,2/nicosia,8/athens,8/bucharest,8/chisinau,8/helsinki,8/kyiv,8/mariehamn,8/riga,8/sofia,8/tallinn,8/uzhgorod,8/vilnius,8/zaporozhye,8/nicosia,8/tiraspol,8/kiev,eet","3|n|03/29:00->10/24:24":"2/beirut","3|n|03/28:02->10/24:02":"2/gaza,2/hebron","3|n|03/27:02->10/25:02":"2/jerusalem,2/tel_aviv,israel","3|n":"0/addis_ababa,0/asmara,0/asmera,0/djibouti,0/kampala,0/mogadishu,2/aden,2/amman,2/baghdad,2/bahrain,2/damascus,2/kuwait,2/qatar,2/riyadh,8/istanbul,8/kirov,8/minsk,8/moscow,8/simferopol,8/volgograd,2/volgograd,2/istanbul,turkey,w-su","3.5|n":"2/tehran,iran","2|s":"0/blantyre,0/bujumbura,0/gaborone,0/harare,0/johannesburg,0/kigali,0/lubumbashi,0/lusaka,0/maputo,0/maseru,0/mbabane,0/windhoek","2|n|03/29:02->10/25:03":"0/ceuta,arctic/longyearbyen,8/amsterdam,8/andorra,8/belgrade,8/berlin,8/bratislava,8/brussels,8/budapest,8/busingen,8/copenhagen,8/gibraltar,8/ljubljana,8/luxembourg,8/madrid,8/malta,8/monaco,8/oslo,8/paris,8/podgorica,8/prague,8/rome,8/san_marino,8/sarajevo,8/skopje,8/stockholm,8/tirane,8/vaduz,8/vatican,8/vienna,8/warsaw,8/zagreb,8/zurich,3/jan_mayen,poland,cet,met","2|n|03/29:01->10/25:03":"12/troll","2|n":"0/juba,0/khartoum,0/tripoli,8/kaliningrad,libya","1|s":"0/brazzaville,0/kinshasa,0/luanda","1|n|03/29:01->10/25:02":"3/canary,3/faroe,3/madeira,8/dublin,8/guernsey,8/isle_of_man,8/jersey,8/lisbon,8/london,3/faeroe,eire,8/belfast,gb-eire,gb,portugal,wet","1|n":"0/algiers,0/bangui,0/douala,0/lagos,0/libreville,0/malabo,0/ndjamena,0/niamey,0/porto-novo,0/tunis","14|n":"11/kiritimati","13|s":"11/apia,11/enderbury,11/kanton,11/fakaofo,11/tongatapu","12|s|04/05:03->09/27:02":"12/mcmurdo,11/auckland,12/south_pole,nz","12|s":"11/fiji,11/funafuti,11/nauru,11/wallis","12|n":"2/anadyr,2/kamchatka,11/kwajalein,11/majuro,11/tarawa,11/wake,kwajalein","12.75|s|04/05:03:45->09/27:02:45":"11/chatham,nz-chat","11|s|04/05:03->10/04:02":"11/norfolk","11|s":"11/bougainville,11/efate,11/guadalcanal,11/noumea","11|n":"2/magadan,2/sakhalin,2/srednekolymsk,11/kosrae,11/pohnpei,11/ponape","10|s|04/05:03->10/04:02":"12/macquarie,4/currie,4/hobart,4/melbourne,4/sydney,4/act,4/canberra,4/nsw,4/tasmania,4/victoria","10|s":"12/dumontdurville,4/brisbane,4/lindeman,11/port_moresby,4/queensland","10|n":"2/ust-nera,2/vladivostok,11/guam,11/saipan,11/chuuk,11/truk,11/yap","10.5|s|04/05:02->10/04:02":"4/lord_howe,4/lhi","0|s":"0/casablanca,0/el_aaiun,3/st_helena","0|n|03/29:00->10/25:01":"3/azores","0|n":"0/abidjan,0/accra,0/bamako,0/banjul,0/bissau,0/conakry,0/dakar,0/freetown,0/lome,0/monrovia,0/nouakchott,0/ouagadougou,0/sao_tome,1/danmarkshavn,3/reykjavik,13/gmt,13/utc,0/timbuktu,13/greenwich,13/uct,13/universal,13/zulu,gmt-0,gmt+0,gmt0,greenwich,iceland,uct,universal,utc,zulu,13/unknown,factory","-9|s":"11/gambier","-9|n|03/08:02->11/01:02":"1/adak,1/atka,us/aleutian","-9.5|s":"11/marquesas","-8|s":"11/pitcairn","-8|n|03/08:02->11/01:02":"1/anchorage,1/juneau,1/metlakatla,1/nome,1/sitka,1/yakutat,us/alaska","-7|n|03/08:02->11/01:02":"1/los_angeles,1/santa_isabel,1/tijuana,1/ensenada,10/bajanorte,us/pacific-new,us/pacific,pst8pdt","-7|n":"1/creston,1/dawson,1/dawson_creek,1/fort_nelson,1/hermosillo,1/mazatlan,1/phoenix,1/vancouver,1/whitehorse,6/pacific,6/yukon,10/bajasur,us/arizona,mst","-6|s|04/04:22->09/05:22":"11/easter,7/easterisland","-6|s":"11/galapagos","-6|n|03/08:02->11/01:02":"1/boise,1/cambridge_bay,1/denver,1/ciudad_juarez,1/shiprock,navajo,us/mountain,mst7mdt","-6|n":"1/bahia_banderas,1/belize,1/chihuahua,1/costa_rica,1/edmonton,1/el_salvador,1/guatemala,1/inuvik,1/managua,1/merida,1/mexico_city,1/monterrey,1/regina,1/swift_current,1/tegucigalpa,1/yellowknife,6/east-saskatchewan,6/mountain,6/saskatchewan,10/general","-5|s":"1/eirunepe,1/guayaquil,1/lima,1/rio_branco,1/porto_acre,5/acre","-5|n|03/08:02->11/01:02":"1/chicago,1/matamoros,1/menominee,1/north_dakota,1/ojinaga,1/rankin_inlet,1/resolute,1/indiana/knox,1/indiana/tell_city,1/north_dakota/beulah,1/north_dakota/center,1/north_dakota/new_salem,1/knox_in,us/central,us/indiana-starke,cst6cdt","-5|n":"1/bogota,1/cancun,1/cayman,1/coral_harbour,1/jamaica,1/panama,1/rainy_river,1/winnipeg,1/atikokan,6/central,jamaica,est","-4|s|04/04:24->09/06:00":"1/santiago,7/continental","-4|s":"1/campo_grande,1/cuiaba,1/la_paz,1/manaus,1/porto_velho,5/west","-4|n|03/08:02->11/01:02":"1/detroit,1/grand_turk,1/indiana,1/indianapolis,1/iqaluit,1/kentucky,1/louisville,1/montreal,1/nassau,1/new_york,1/nipigon,1/pangnirtung,1/port-au-prince,1/thunder_bay,1/toronto,1/indiana/marengo,1/indiana/petersburg,1/indiana/vevay,1/indiana/vincennes,1/indiana/winamac,1/kentucky/monticello,1/fort_wayne,1/indiana/indianapolis,1/kentucky/louisville,6/eastern,us/east-indiana,us/eastern,us/michigan,est5edt","-4|n":"1/anguilla,1/antigua,1/aruba,1/barbados,1/blanc-sablon,1/boa_vista,1/caracas,1/curacao,1/dominica,1/grenada,1/guadeloupe,1/guyana,1/havana,1/kralendijk,1/lower_princes,1/marigot,1/martinique,1/montserrat,1/port_of_spain,1/puerto_rico,1/santo_domingo,1/st_barthelemy,1/st_kitts,1/st_lucia,1/st_thomas,1/st_vincent,1/tortola,1/virgin,cuba","-3|s":"1/araguaina,1/argentina,1/asuncion,1/bahia,1/belem,1/buenos_aires,1/catamarca,1/cordoba,1/coyhaique,1/fortaleza,1/jujuy,1/maceio,1/mendoza,1/montevideo,1/punta_arenas,1/recife,1/santarem,1/sao_paulo,12/palmer,12/rothera,3/stanley,1/argentina/la_rioja,1/argentina/rio_gallegos,1/argentina/salta,1/argentina/san_juan,1/argentina/san_luis,1/argentina/tucuman,1/argentina/ushuaia,1/argentina/comodrivadavia,1/argentina/buenos_aires,1/argentina/catamarca,1/argentina/cordoba,1/argentina/jujuy,1/argentina/mendoza,1/argentina/rosario,1/rosario,5/east","-3|n|03/08:02->11/01:02":"1/glace_bay,1/goose_bay,1/halifax,1/moncton,1/thule,3/bermuda,6/atlantic","-3|n":"1/cayenne,1/paramaribo","-2|s":"1/noronha,3/south_georgia,5/denoronha","-2|n|03/08:02->11/01:02":"1/miquelon","-2.5|n|03/08:02->11/01:02":"1/st_johns,6/newfoundland","-1|n|03/28:23->10/24:24":"1/nuuk,1/scoresbysund,1/godthab","-1|n":"3/cape_verde","-11|s":"11/niue,11/pago_pago,11/samoa,us/samoa","-11|n":"11/midway","-10|s":"11/rarotonga,11/tahiti","-10|n":"11/honolulu,11/johnston,us/hawaii,hst"},z=["africa","america","asia","atlantic","australia","brazil","canada","chile","europe","indian","mexico","pacific","antarctica","etc"];const $={};Object.keys(v).forEach(e=>{const t=e.split("|"),n={offset:Number(t[0]),hem:t[1]};t[2]&&(n.dst=t[2]);v[e].split(",").forEach(e=>{e=e.replace(/(^[0-9]+)\//,(e,t)=>z[Number(t)]+"/"),$[e]=n;});}),$.utc={offset:0,hem:"n"};for(let e=-14;e<=14;e+=.25){const t=e>0?"+"+e:String(e);let n="etc/gmt"+t;$[n]={offset:-1*e,hem:"n"},n="utc/gmt"+t,$[n]={offset:-1*e,hem:"n"};}const _=/^(?:(utc|gmt)\s*)?([+-]?)(\d+)(?:(\.\d+)|:([0-5]\d))?(?:\s*(?:h|hrs?|hours?))?$/i,j=/(?:^|\s)([+-]?\d+(?:\.\d+|:[0-5]\d)?\s*(?:h|hrs?|hours?))$/i;let N=(()=>{const e=(()=>{if("undefined"==typeof Intl||void 0===Intl.DateTimeFormat)return null;const e=Intl.DateTimeFormat();if(void 0===e||void 0===e.resolvedOptions)return null;const t=e.resolvedOptions().timeZone;return t?t.toLowerCase():null})();return null===e?"utc":e})();const T={};Object.keys($).forEach(e=>{const t=e.split("/").pop().replace(/_/g," ");T[t]=e;});const O=(e,t)=>{if(!e)return t.hasOwnProperty(N)||(console.warn(`Unrecognized IANA id '${N}'. Setting fallback tz to UTC.`),N="utc"),N;"string"!=typeof e&&console.error("Timezone must be a string - recieved: '",e,"'\n");let n=e.trim();if(n=n.toLowerCase(),true===t.hasOwnProperty(n))return n;if(n=(e=>(e=(e=(e=(e=(e=e.replace(/ time/g,"")).replace(/ (standard|daylight|summer)/g,"")).replace(/\b(east|west|north|south)ern/g,"$1")).replace(/\b(africa|america|australia)n/g,"$1")).replace(/\beuropean/g,"europe")).replace(/islands/g,"island"))(n),true===t.hasOwnProperty(n))return n;if(true===T.hasOwnProperty(n))return T[n];if(true===/[0-9]/.test(n)){const e=(e=>{const t=e.trim();let n=t.match(_);if(!n){const e=t.match(j);e&&(n=e[1].match(_));}if(!n)return null;const[,a,r,o,s="0",i="0"]=n;let u=Number(o)+Number(s)+Number(i)/60;return u>14||!Number.isInteger(4*u)?null:("-"===r&&(u*=-1),null!=a&&"gmt"===a.toLowerCase()||(u*=-1),"etc/gmt"+(u>0?"+":"")+u)})(n);if(e)return e}throw new Error("Spacetime: Cannot find timezone named: '"+e+"'. Please enter an IANA timezone id.")},M=[31,28,31,30,31,30,31,31,30,31,30,31],D=(e,t="")=>{if(!(t=t.trim().toLowerCase()))return e.startOf("day");let n=t.match(/^([0-9]{1,2}):([0-9]{2})(?::([0-9]{1,2}))?(?:[:.]([0-9]+))?(?: ?(am|pm|gmt))?$/);if(null!==n){const[,t,a,r,o,s]=n,i=Number(t),u=Number(a),c="am"===s||"pm"===s;return i>23||u>59||Number(r||0)>59||c&&(i<1||i>12)?(e.epoch=null,e):(e=(e=(e=(e=e.hour(i)).minute(u)).second(Number(r||0))).millisecond(function(e=""){return (e=String(e)).length>3?e=e.substring(0,3):1===e.length?e+="00":2===e.length&&(e+="0"),Number(e)||0}(o)),c&&(e=e.ampm(s)),e)}if(n=t.match(/^([0-9]{1,2}) ?(am|pm)$/),null!==n&&n[1]){const t=Number(n[1]);return t>12||t<1?(e.epoch=null,e):e=(e=(e=e.hour(n[1]||0)).ampm(n[2])).startOf("hour")}return e.epoch=null,e};let C=["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"],q=["january","february","march","april","may","june","july","august","september","october","november","december"];function S(){return C}function U(){return function(){const e={sep:8};for(let t=0;t<C.length;t++)e[C[t]]=t;for(let t=0;t<q.length;t++)e[q[t]]=t;return e}()}const I=U(),E=t=>{if(true!==M.hasOwnProperty(t.month)||t.date<1)return  false;if(1===t.month)return !!(e(t.year)&&t.date<=29)||t.date<=28;const n=M[t.month]||0;return t.date<=n},P=t=>{let n=M[t.month]||31;return 1===t.month&&e(t.year)&&(n=29),Math.min(t.date,n)},A=(e="",t)=>{if(e=e.trim(),true===/^'?[0-9][0-9]$/.test(e)){const t=Number(e.replace(/'/,""));return t>50?1900+t:2e3+t}let n=parseInt(e,10);return !n&&t&&(n=t.year),n=n||(new Date).getFullYear(),n},x=function(e){return "sept"===(e=e.toLowerCase().trim())?I.sep:I[e]},V={year:(new Date).getFullYear(),month:0,date:1},Y=["year","month","date","hour","minute","second","millisecond"];var F={parseArray:(e,t,n)=>{if(0===t.length)return e;for(let a=0;a<Y.length;a++){let r=t[a];null==r&&(r=n[Y[a]]),null==r&&(r=V[Y[a]]),null==r&&(r=0),e=h(e,Y[a],r);}return e},parseObject:(e,t)=>{if(0===Object.keys(t).length)return e;(t=Object.assign({},V,t)).timezone&&(e.tz=t.timezone);for(let n=0;n<Y.length;n++){const a=Y[n];void 0!==t[a]&&(e=h(e,a,t[a]));}return e},parseNumber:function(e,t){return t>0&&t<25e8&&false===e.silent&&(console.warn("  - Warning: You are setting the date to January 1970."),console.warn("       -   did input seconds instead of milliseconds?")),e.epoch=t,e}};const Z=function(e){return e.epoch=Date.now(),Object.keys(e._today||{}).forEach(t=>{c(t)&&(e=h(e,t,e._today[t]));}),e},L={now:e=>Z(e),today:e=>Z(e),tonight:e=>e=(e=Z(e)).hour(18),tomorrow:e=>e=(e=(e=Z(e)).add(1,"day")).startOf("day"),yesterday:e=>e=(e=(e=Z(e)).subtract(1,"day")).startOf("day"),christmas:e=>{const t=Z(e).year();return e=e.set([t,11,25,18,0,0])},"new years":e=>{const t=Z(e).year();return e=e.set([t,11,31,18,0,0])}};L["new years eve"]=L["new years"];const B=[{reg:/^(-?0{0,2}[0-9]{3,4})-([0-9]{1,2})-([0-9]{1,2})[T ]([0-9.:]+)(Z|[+-][0-9:]+)?(\[[^[\]]*\])?(\[[^[\]]*\])?$/i,parse:e=>{const t={year:Number(e[1]),month:parseInt(e[2],10)-1,date:Number(e[3])};if(false===E(t))return null;const n=e[6]?e[6].trim().replace(/[[\]]/g,""):"";return n?{parts:t,timezone:n,time:e[4]}:{parts:t,offset:e[5],time:e[4]}}},{reg:/^([0-9]{4})[\-/. ]([0-9]{1,2})[\-/. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:e=>{const t={year:Number(e[1]),month:parseInt(e[2],10)-1,date:parseInt(e[3],10)};return t.month>=12&&(t.date=parseInt(e[2],10),t.month=parseInt(e[3],10)-1),false===E(t)?null:{parts:t,time:e[4]||""}}},{reg:/^([0-9]{4})[\-/. ]([a-z]+)[\-/. ]([0-9]{1,2})( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(e,t)=>{const n={year:A(e[1],t._today),month:x(e[2]),date:r(e[3]||"")};return  false===E(n)?null:{parts:n,time:e[4]||""}}}],H=[{reg:/^([0-9]{1,2})[-/.]([0-9]{1,2})(?:[\-/.]([0-9]{4}|[0-9]{2}))?( [0-9]{1,2}:[0-9]{2}:?[0-9]{0,2} ?(am|pm|gmt))?$/i,parse:(e,t)=>{let n=parseInt(e[1],10)-1,a=parseInt(e[2],10);(t.british||n>=12)&&(a=parseInt(e[1],10),n=parseInt(e[2],10)-1);const r={date:a,month:n,year:A(e[3],t._today)||(new Date).getFullYear()};return  false===E(r)?null:{parts:r,time:e[4]||""}}},{reg:/^([a-z]+)[\-/. ]([0-9]{1,2})[\-/. ]?([0-9]{4}|'[0-9]{2})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:(e,t)=>{const n={year:A(e[3],t._today),month:x(e[1]),date:r(e[2]||"")};return  false===E(n)?null:{parts:n,time:e[4]||""}}},{reg:/^([a-z]+) ([0-9]{1,2})( [0-9]{4})?( ([0-9:]+( ?am| ?pm| ?gmt)?))?$/i,parse:(e,t)=>{const n={year:A(e[3],t._today),month:x(e[1]),date:r(e[2]||"")};return  false===E(n)?null:{parts:n,time:e[4]||""}}},{reg:/^([a-z]+) ([0-9]{1,2}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2})( \+[0-9]{4})?( [0-9]{4})?$/i,parse:(e,t)=>{const[,n,a,o,s,i]=e,u={year:A(i,t._today),month:x(n),date:r(a||"")};return  false===E(u)?null:{parts:u,offset:s,time:o}}},{reg:/^([a-z]+) ([0-9]{1,2}) ([0-9]{4}) ([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2}) (?:gmt)?([+-][0-9]{4})/i,parse:(e,t)=>{const[,n,a,o,s,i]=e,u={year:A(o,t._today),month:x(n),date:r(a||"")};return  false===E(u)?null:{parts:u,offset:i,time:s}}}],Q=[{reg:/^([0-9]{4})[\-/]([0-9]{2})$/,parse:e=>{const t={year:Number(e[1]),month:parseInt(e[2],10)-1,date:1};return  false===E(t)?null:{parts:t,time:""}}},{reg:/^([a-z]+) ([0-9]{4})$/i,parse:(e,t)=>{const n={year:A(e[2],t._today),month:x(e[1]),date:t._today.date||1};return n.date=P(n),false===E(n)?null:{parts:n,time:""}}},{reg:/^(q[1-4])( of)?( [0-9]{4})?$/i,parse:e=>{const t=(e[3]||"").trim();return {quarter:e[1]||"",parts:t?{year:Number(t)}:void 0}}},{reg:/^(spring|summer|winter|fall|autumn)( of)?( [0-9]{4})?$/i,parse:e=>{const t=(e[3]||"").trim();return {season:e[1]||"",parts:t?{year:Number(t)}:void 0}}},{reg:/^[0-9,]+ ?b\.?c\.?$/i,parse:e=>{let t=e[0]||"";t=t.replace(/^([0-9,]+) ?b\.?c\.?$/i,"-$1");const n=new Date,a={year:parseInt(t.trim(),10),month:n.getMonth(),date:n.getDate()};return a.date=P(a),false===E(a)?null:{parts:a,time:""}}},{reg:/^[0-9,]+ ?(a\.?d\.?|c\.?e\.?)$/i,parse:e=>{let t=e[0]||"";t=t.replace(/,/g,"");const n=new Date,a={year:parseInt(t.trim(),10),month:n.getMonth(),date:n.getDate()};return a.date=P(a),false===E(a)?null:{parts:a,time:""}}},{reg:/^[0-9]{4}( ?a\.?d\.?)?$/i,parse:(e,t)=>{const n=t._today,a=new Date,r={year:A(e[0],n),month:n.month||a.getMonth(),date:n.date||(n.month?1:a.getDate())};return r.date=P(r),false===E(r)?null:{parts:r,time:""}}}],G=[...B,...H,...[{reg:/^([0-9]{1,2})[-/]([a-z]+)[\-/]?([0-9]{4})?$/i,parse:(e,t)=>{const n={year:A(e[3],t._today),month:x(e[2]),date:r(e[1]||"")};return  false===E(n)?null:{parts:n,time:""}}},{reg:/^([0-9]{1,2})( [a-z]+)( [0-9]{4}| '[0-9]{2})? ?([0-9]{1,2}:[0-9]{2}:?[0-9]{0,2} ?(am|pm|gmt))?$/i,parse:(e,t)=>{const n={year:A(e[3],t._today),month:x(e[2]),date:r(e[1])};return  false===E(n)?null:{parts:n,time:e[4]||""}}},{reg:/^([0-9]{1,2})[. \-/]([a-z]+)[. \-/]([0-9]{4})?( [0-9]{1,2}(:[0-9]{0,2})?(:[0-9]{0,3})? ?(am|pm)?)?$/i,parse:e=>{const t={date:Number(e[1]),month:x(e[2]),year:Number(e[3])};return  false===E(t)?null:{parts:t,time:e[4]||""}}}],...Q],W=36e5,J=864e5,K=6048e5,R=25488e5,X=3154e7,ee={millisecond:1,second:1e3,minute:6e4,hour:W,day:J,date:J,week:K,month:R,year:X,milliseconds:1,seconds:1e3,minutes:6e4,hours:W,days:J,dates:J,weeks:K,months:R,years:X},te=(e,t,n,a,r)=>{const o=e.d[n]();if(o===t)return;const s=null===r?null:e.d[r](),i=e.epoch,u=t-o;e.epoch+=ee[a]*u,"day"===a&&Math.abs(u)>28&&t<28&&(e.epoch+=ee.hour),null!==r&&s!==e.d[r]()&&(e.epoch=i);const c=ee[a]/2;for(;e.d[n]()<t;)e.epoch+=c;for(;e.d[n]()>t;)if(e.epoch-=c,null!==r&&s!==e.d[r]()){const a=e.d.getTime();e.epoch+=c;const r=e.d;r[n.replace("get","set")](t),e.epoch+=r.getTime()-a-c;break}null!==r&&s!==e.d[r]()&&(e.epoch=i);},ne={year:{valid:e=>e>-4e3&&e<4e3,walkTo:(e,t)=>te(e,t,"getUTCFullYear","year",null)},month:{valid:e=>e>=0&&e<=11,walkTo:(e,t)=>{const n=e.d,a=n.getUTCMonth(),r=e.epoch,o=n.getUTCFullYear();if(a===t)return;const s=t-a;for(e.epoch+=ee.day*(28*s),o!==e.d.getUTCFullYear()&&(e.epoch=r);e.d.getUTCMonth()<t;)e.epoch+=ee.day;for(;e.d.getUTCMonth()>t;)e.epoch-=ee.day;}},date:{valid:e=>e>0&&e<=31,walkTo:(e,t)=>te(e,t,"getUTCDate","day","getUTCMonth")},hour:{valid:e=>e>=0&&e<24,walkTo:(e,t)=>te(e,t,"getUTCHours","hour","getUTCDate")},minute:{valid:e=>e>=0&&e<60,walkTo:(e,t)=>te(e,t,"getUTCMinutes","minute","getUTCHours")},second:{valid:e=>e>=0&&e<60,walkTo:(e,t)=>{e.epoch=e.seconds(t).epoch;}},millisecond:{valid:e=>e>=0&&e<1e3,walkTo:(e,t)=>{e.epoch=e.milliseconds(t).epoch;}}},ae=(e,t)=>{const n=Object.keys(ne),a=e.clone();for(let r=0;r<n.length;r++){const o=n[r];let s=t[o];if(void 0===s&&(s=l(a,o)),"string"==typeof s&&(s=parseInt(s,10)),!ne[o].valid(s))return e.epoch=null,void(false===e.silent&&console.warn("invalid "+o+": "+s));ne[o].walkTo(e,s);}},re=(e,t)=>(t.timezone?e=e.timezone(t.timezone):t.offset&&(e=((e,t)=>{if(!t)return e;if("z"===(t=t.trim().toLowerCase()))return e.tz="etc/gmt",e;const n=t.match(/^([+-]?)([0-9]{2})(?::?([0-9]{2}))?$/);if(!n)return e;const a=Number(n[2]),r=Number(n[3]||0);if(r>59)return e;let o=(a+r/60)*("-"===n[1]?-1:1);if(0===o)return e.tz="etc/gmt",e;o*=-1;const s="etc/gmt"+(o>=0?"+"+o:o);return e.timezones[s]&&(e.tz=s),e})(e,t.offset)),t.parts&&ae(e,t.parts),t.quarter&&(e=e.quarter(t.quarter)),t.season&&(e=e.season(t.season)),void 0!==t.time&&(e=D(e,t.time)),e),{parseArray:oe,parseObject:se,parseNumber:ie}=F,ue={year:(new Date).getFullYear(),month:0,date:1},ce=(e,n,a)=>{const r=e._today||ue;if("number"==typeof n)return ie(e,n);if(e.epoch=Date.now(),e._today&&t(e._today)&&Object.keys(e._today).length>0){const t=se(e,r);t.isValid()&&(e.epoch=t.epoch);}if(null==n||""===n)return e;const o=g(e,n);if(o)return o;if("[object Date]"===Object.prototype.toString.call(n))return e.epoch=n.getTime(),e;if(Array.isArray(n))return e=oe(e,n,r);if(t(n)){if("epoch"in n)return e.epoch="number"==typeof n.epoch?n.epoch:NaN,null==a&&"tz"in n&&"string"==typeof n.tz&&(e.tz=n.tz),e;const t=Object.assign({},r,n);return e=se(e,t)}return "string"!=typeof n?e:(n=n.replace(/\b(mon|tues?|wed|wednes|thur?s?|fri|sat|satur|sun)(day)?\b/i,"").replace(/([0-9])(th|rd|st|nd)/,"$1").replace(/,/g,"").replace(/ +/g," ").trim(),true===L.hasOwnProperty(n)?e=L[n](e):function(e,t){if(t.length>500)return  false===e.silent&&console.warn("Warning: didn't parse long date-string."),e.epoch=null,e;for(let n=0;n<G.length;n++){const a=t.match(G[n].reg);if(a){const t=G[n].parse(a,e);if(null!==t){const n=re(e.clone(),t);if(n.isValid())return n}}}return  false===e.silent&&console.warn("Warning: couldn't parse date-string: '"+t+"'"),e.epoch=null,e}(e,n))};let le=["sun","mon","tue","wed","thu","fri","sat"],he=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];function me(){return le}function de(){return he}const fe={mo:1,tu:2,we:3,th:4,fr:5,sa:6,su:7,tues:2,weds:3,wedn:3,thur:4,thurs:4};let pe=true;const ye=e=>{const t=e.timezone().current.offset;return t?m(t,":"):"Z"},ge=e=>pe?(e=>e?e[0].toUpperCase()+e.slice(1):"")(e):e,be={day:e=>ge(e.dayName()),"day-short":e=>ge(me()[e.day()]),"day-number":e=>e.day(),"day-ordinal":e=>a(e.day()),"day-pad":e=>n(e.day()),date:e=>e.date(),"date-ordinal":e=>a(e.date()),"date-pad":e=>n(e.date()),month:e=>ge(e.monthName()),"month-short":e=>ge(S()[e.month()]),"month-number":e=>e.month(),"month-ordinal":e=>a(e.month()),"month-pad":e=>n(e.month()),"iso-month":e=>n(e.month()+1),year:e=>{let t=e.year();return t>0?t:(t=Math.abs(t),t+" BC")},"year-short":e=>{let t=e.year();return t>0?`'${String(e.year()).slice(2,6)}`:(t=Math.abs(t),t+" BC")},"iso-year":e=>{const t=e.year(),a=t<0;let r=n(Math.abs(t),4);return a&&(r=n(r,6),r="-"+r),r},time:e=>e.time(),"time-24":e=>`${e.hour24()}:${n(e.minute())}`,hour:e=>e.hour12(),"hour-pad":e=>n(e.hour12()),"hour-24":e=>e.hour24(),"hour-24-pad":e=>n(e.hour24()),minute:e=>e.minute(),"minute-pad":e=>n(e.minute()),second:e=>e.second(),"second-pad":e=>n(e.second()),millisecond:e=>e.millisecond(),"millisecond-pad":e=>n(e.millisecond(),3),ampm:e=>e.ampm(),AMPM:e=>e.ampm().toUpperCase(),quarter:e=>"Q"+e.quarter(),season:e=>e.season(),era:e=>e.era(),json:e=>e.json(),timezone:e=>e.timezone().name,offset:e=>ye(e),numeric:e=>`${e.year()}/${n(e.month()+1)}/${n(e.date())}`,"numeric-us":e=>`${n(e.month()+1)}/${n(e.date())}/${e.year()}`,"numeric-uk":e=>`${n(e.date())}/${n(e.month()+1)}/${e.year()}`,"mm/dd":e=>`${n(e.month()+1)}/${n(e.date())}`,iso:e=>`${e.format("iso-year")}-${n(e.month()+1)}-${n(e.date())}T${n(e.h24())}:${n(e.minute())}:${n(e.second())}.${n(e.millisecond(),3)}${ye(e)}`,"iso-short":e=>{const t=n(e.month()+1),a=n(e.date());var r;return `${(r=e.year())>=0?n(r,4):(r=Math.abs(r),"-"+n(r,4))}-${t}-${a}`},"iso-utc":e=>new Date(e.epoch).toISOString(),"iso-full":e=>{let t=e.format("iso");const n=e.timezone().name;return n&&(t+=`[${n}]`),t},sql:e=>`${e.format("iso-year")}-${n(e.month()+1)}-${n(e.date())} ${n(e.h24())}:${n(e.minute())}:${n(e.second())}`,nice:e=>`${S()[e.month()]} ${a(e.date())}, ${e.time()}`,"nice-24":e=>`${S()[e.month()]} ${a(e.date())}, ${e.hour24()}:${n(e.minute())}`,"nice-year":e=>`${S()[e.month()]} ${a(e.date())}, ${e.year()}`,"nice-day":e=>`${me()[e.day()]} ${ge(S()[e.month()])} ${a(e.date())}`,"nice-full":e=>`${e.dayName()} ${ge(e.monthName())} ${a(e.date())}, ${e.time()}`,"nice-full-24":e=>`${e.dayName()} ${ge(e.monthName())} ${a(e.date())}, ${e.hour24()}:${n(e.minute())}`},we={"day-name":"day","month-name":"month","iso 8601":"iso","iso 9075":"sql","time-h24":"time-24","time-12":"time","time-h12":"time",tz:"timezone",iana:"timezone","day-num":"day-number","month-num":"month-number","month-iso":"iso-month","year-iso":"iso-year","nice-short":"nice","nice-short-24":"nice-24",mdy:"numeric-us",dmy:"numeric-uk",ymd:"numeric","yyyy/mm/dd":"numeric","mm/dd/yyyy":"numeric-us","dd/mm/yyyy":"numeric-us","little-endian":"numeric-uk","big-endian":"numeric","day-nice":"nice-day"};Object.keys(we).forEach(e=>be[e]=be[we[e]]);const ke=(e,t="",n)=>{if(true!==e.isValid())return "";const a=be;if(a.hasOwnProperty(t)){let n=a[t](e)||"";return "json"!==t&&(n=String(n),"ampm"!==t.toLowerCase()&&(n=ge(n))),n}if(-1!==t.indexOf("{")){const n=/\{(.[^}\r\n\u2028\u2029]*)(\})?/g;return t=t.replace(n,(t,n,r)=>{if(!r)return t;if("AMPM"!==(n=n.trim())&&(n=n.toLowerCase()),a.hasOwnProperty(n)){const t=String(a[n](e));return "ampm"!==n.toLowerCase()?ge(t):t}return ""}),t}return e.format("iso-short")},ve={G:e=>e.era(),GG:e=>e.era(),GGG:e=>e.era(),GGGG:e=>"AD"===e.era()?"Anno Domini":"Before Christ",y:e=>e.year(),yy:e=>n(Number(String(e.year()).slice(2,6))),yyy:e=>e.year(),yyyy:e=>e.year(),yyyyy:e=>"0"+e.year(),Q:e=>e.quarter(),QQ:e=>e.quarter(),QQQ:e=>e.quarter(),QQQQ:e=>e.quarter(),M:e=>e.month()+1,MM:e=>n(e.month()+1),MMM:e=>e.format("month-short"),MMMM:e=>e.format("month"),w:e=>e.week(),ww:e=>n(e.week()),d:e=>e.date(),dd:e=>n(e.date()),D:e=>e.dayOfYear(),DD:e=>n(e.dayOfYear()),DDD:e=>n(e.dayOfYear(),3),E:e=>e.format("day-short"),EE:e=>e.format("day-short"),EEE:e=>e.format("day-short"),EEEE:e=>e.format("day"),EEEEE:e=>e.format("day")[0],e:e=>e.day(),ee:e=>e.day(),eee:e=>e.format("day-short"),eeee:e=>e.format("day"),eeeee:e=>e.format("day")[0],a:e=>e.ampm().toUpperCase(),aa:e=>e.ampm().toUpperCase(),aaa:e=>e.ampm().toUpperCase(),aaaa:e=>e.ampm().toUpperCase(),h:e=>e.h12(),hh:e=>n(e.h12()),H:e=>e.hour(),HH:e=>n(e.hour()),m:e=>e.minute(),mm:e=>n(e.minute()),s:e=>e.second(),ss:e=>n(e.second()),SSS:e=>n(e.millisecond(),3),A:e=>e.epoch-e.startOf("day").epoch,z:e=>e.timezone().name,zz:e=>e.timezone().name,zzz:e=>e.timezone().name,zzzz:e=>e.timezone().name,Z:e=>m(e.timezone().current.offset),ZZ:e=>m(e.timezone().current.offset),ZZZ:e=>m(e.timezone().current.offset),ZZZZ:e=>m(e.timezone().current.offset,":")},ze=(e,t,n)=>{let a=e,r=t;for(let o=0;o<n;o+=1)ve[a]=ve[r],a+=e,r+=t;};ze("q","Q",4),ze("L","M",4),ze("Y","y",4),ze("c","e",4),ze("k","H",2),ze("K","h",2),ze("S","s",2),ze("v","z",4),ze("V","Z",4);const $e=["year","season","quarter","month","week","day","quarterHour","hour","minute"],_e=function(e,t){const n=e.clone().startOf(t),a=e.clone().endOf(t).epoch-n.epoch,r=(e.epoch-n.epoch)/a;return parseFloat(r.toFixed(2))},je=["year","season","quarter","month","week","date","quarterhour","hour","minute"],Ne=(e,t,n)=>{let a=0,r=e.clone();for(;r.isBefore(t);)a+=1,r=e.add(a,n);return r.isAfter(t)&&(a-=1),a},Te=(e,t,n)=>e.isBefore(t)?Ne(e,t,n):-1*Ne(t,e,n);function Oe(e,t,n){let a=i(t,e),r=false;if(e.isAfter(a)){const t=e;e=a,a=t,r=true;}let s=function(e,t){const n=t.epoch-e.epoch,a={milliseconds:n,seconds:Math.trunc(n/1e3)};a.minutes=Math.trunc(a.seconds/60),a.hours=Math.trunc(a.minutes/60);let r=e.clone();return a.years=((e,t)=>{let n=t.year()-e.year();return e.add(n,"year").isAfter(t)&&(n-=1),n})(r,t),r=e.add(a.years,"year"),a.months=12*a.years,r=e.add(a.months,"month"),a.months+=Te(r,t,"month"),a.years=Math.trunc(a.months/12),a.quarters=4*a.years,a.quarters+=Math.trunc(a.months%12/3),a.weeks=52*a.years,r=e.add(a.weeks,"week"),a.weeks+=Te(r,t,"week"),a.days=7*a.weeks,r=e.add(a.days,"day"),a.days+=Te(r,t,"day"),a}(e,a);return r&&(s=function(e){return Object.keys(e).forEach(t=>{e[t]*=-1;}),e}(s)),n?(n=o(n),true!==/s$/.test(n)&&(n+="s"),"dates"===n&&(n="days"),s[n]):s}const Me=e=>Math.abs(e)||0;let De={second:"second",seconds:"seconds",minute:"minute",minutes:"minutes",hour:"hour",hours:"hours",day:"day",days:"days",month:"month",months:"months",year:"year",years:"years"};function Ce(e){return De[e]||""}let qe="past",Se="future",Ue="present",Ie="now",Ee="almost",Pe="over",Ae=e=>`${e} ago`,xe=e=>`in ${e}`;function Ve(e){return Ae(e)}function Ye(e){return xe(e)}function Fe(){return Ie}const Ze={months:{almost:10,over:4},days:{almost:25,over:10},hours:{almost:20,over:8},minutes:{almost:50,over:20},seconds:{almost:50,over:20}};function Le(e,t){return 1===e?e+" "+Ce(t.slice(0,-1)):e+" "+Ce(t)}const Be=function(e){let t=null,n=null;const a=[],r=[];return Object.keys(e).forEach((o,s,i)=>{const u=Math.abs(e[o]);if(0===u)return;a.push(u+o[0]);const c=Le(u,o);if(r.push(c),!t){if(t=c,n=c,s>4)return;const a=i[s+1],r=Math.abs(e[a]);r>Ze[a].almost?(t=Le(u+1,o),n=Ee+" "+t):r>Ze[a].over&&(n=Pe+" "+c);}}),{qualified:n,rounded:t,abbreviated:a,englishValues:r}},He=(e,t)=>{const n=i(t,e),a=function(e,t){const n=e.isBefore(t),a=n?t:e;let r=n?e:t;r=r.clone();const o={years:0,months:0,days:0,hours:0,minutes:0,seconds:0};return Object.keys(o).forEach(e=>{if(r.isSame(a,e))return;let t=r.diff(a,e),n=r.add(t,e);n.isAfter(a)&&(t-=1,n=r.add(t,e)),r=n,o[e]=t;}),o.months>=12&&(o.years+=Math.trunc(o.months/12),o.months=o.months%12),n&&Object.keys(o).forEach(e=>{0!==o[e]&&(o[e]*=-1);}),o}(e,n);if(true===Object.values(a).every(e=>!e))return {diff:a,rounded:Fe(),qualified:Fe(),precise:Fe(),abbreviated:[],iso:"P0Y0M0DT0H0M0S",direction:Ue};let r,o=Se,{rounded:s,qualified:u}=Be(a);const{englishValues:c,abbreviated:l}=Be(a);r=c.splice(0,2).join(", "),true===e.isAfter(n)?(s=Ve(s),u=Ve(u),r=Ve(r),o=qe):(s=Ye(s),u=Ye(u),r=Ye(r));const h=function(e){let t="P";return t+=Me(e.years)+"Y",t+=Me(e.months)+"M",t+=Me(e.days)+"DT",t+=Me(e.hours)+"H",t+=Me(e.minutes)+"M",t+=Me(e.seconds)+"S",t}(a);return {diff:a,rounded:s,qualified:u,precise:r,abbreviated:l,iso:h,direction:o}},Qe={north:[["spring",2,1],["summer",5,1],["fall",8,1],["autumn",8,1],["winter",11,1]],south:[["fall",2,1],["autumn",2,1],["winter",5,1],["spring",8,1],["summer",11,1]]},Ge=[null,[0,1],[3,1],[6,1],[9,1]],We={second:e=>(ae(e,{millisecond:0}),e),minute:e=>(ae(e,{second:0,millisecond:0}),e),quarterhour:e=>{const t=e.minutes();return e=t>=45?e.minutes(45):t>=30?e.minutes(30):t>=15?e.minutes(15):e.minutes(0),ae(e,{second:0,millisecond:0}),e},hour:e=>(ae(e,{minute:0,second:0,millisecond:0}),e),day:e=>(ae(e,{hour:0,minute:0,second:0,millisecond:0}),e),week:e=>{const t=e.clone();return (e=e.day(e._weekStart)).isAfter(t)&&(e=e.subtract(1,"week")),ae(e,{hour:0,minute:0,second:0,millisecond:0}),e},month:e=>(ae(e,{date:1,hour:0,minute:0,second:0,millisecond:0}),e),quarter:e=>{const t=e.quarter();return Ge[t]&&ae(e,{month:Ge[t][0],date:Ge[t][1],hour:0,minute:0,second:0,millisecond:0}),e},season:e=>{const t=e.season();let n="north";"South"===e.hemisphere()&&(n="south");for(let a=0;a<Qe[n].length;a++)if(Qe[n][a][0]===t){let t=e.year();return 11===Qe[n][a][1]&&e.month()<3&&(t-=1),ae(e,{year:t,month:Qe[n][a][1],date:Qe[n][a][2],hour:0,minute:0,second:0,millisecond:0}),e}return e},year:e=>(ae(e,{month:0,date:1,hour:0,minute:0,second:0,millisecond:0}),e),decade:e=>{const t=(e=e.startOf("year")).year(),n=10*Math.trunc(t/10);return e=e.year(n)},century:e=>{const t=(e=e.startOf("year")).year(),n=100*Math.trunc(t/100);return e=e.year(n)},date:e=>(ae(e,{hour:0,minute:0,second:0,millisecond:0}),e)},Je=function(e,t,n,a=1){if(!t||!n||!Number.isInteger(a)||a<=0)return [];t=o(t);let r=e.clone().set(n);if(!e.isValid()||!r.isValid())return [];if(e.isAfter(r)){const t=e;e=r,r=t;}if(e.diff(r,t)<a)return [];let s=e.clone();if(function(e){return !!me().find(t=>t===e)||!!de().find(t=>t===e)}(t))s=s.next(t),t="week";else {s.startOf(t).isBefore(e)&&(s=s.next(t));}const i=[];for(;s.isBefore(r);){i.push(s);const e=s.add(a,t);if(!e.isValid()||e.epoch<=s.epoch)break;s=e;}return i},Ke=e=>("Utc"===(e=(e=(e=(e=(e=(e=(e=(e=e[0].toUpperCase()+e.slice(1)).replace(/[/_-]([a-z])/gi,e=>e.toUpperCase())).replace(/_(of|es)_/i,e=>e.toLowerCase())).replace(/\/gmt/i,"/GMT")).replace(/\/utc/i,"/UTC")).replace(/\/Dumontdurville$/i,"/DumontDUrville")).replace(/\/Mcmurdo$/i,"/McMurdo")).replace(/\/Port-au-prince$/i,"/Port-au-Prince"))&&(e="UTC"),e),Re=e=>{const t=e.timezones;let n=e.tz;false===t.hasOwnProperty(n)&&(n=O(e.tz,t));const a=t[n],r={name:Ke(n),hasDst:Boolean(a.dst),default_offset:a.offset,hemisphere:"s"===a.hem?"South":"North",current:{offset:a.offset,isDST:false}};if(r.hasDst){const[e,t]=a.dst.split("->");r.change={start:e,back:t};}const o=a.offset;let s=o;const i=k(n);return  true===r.hasDst&&(s="North"===r.hemisphere?o-i:a.offset+i),false===r.hasDst?(r.current.offset=o,r.current.isDST=false):true===w(e.epoch,r.change.start,r.change.back,o,s)?(r.current.offset=o,r.current.isDST="North"===r.hemisphere):(r.current.offset=s,r.current.isDST="South"===r.hemisphere),r},Xe=["century","decade","year","month","date","day","hour","minute","second","millisecond"];const et={set:function(e,t){let n=this.clone();return n=ce(n,e,null),t&&(n.tz=O(t,n.timezones)),n},timezone:function(e){if(void 0!==e){const t={...this.json(),timezone:e};return this.set(t,e)}return Re(this)},isDST:function(){return Re(this).current.isDST},hasDST:function(){return Re(this).hasDst},offset:function(){return 60*Re(this).current.offset},hemisphere:function(){return Re(this).hemisphere},format:function(e){return ke(this,e)},unixFmt:function(e){return ((e,t)=>{let n=t.split("");return n=function(e){for(let t=0;t<e.length;t+=1)if("'"===e[t])for(let n=t+1;n<e.length;n+=1){if(e[n]&&(e[t]+=e[n]),"'"===e[n]){e[n]=null;break}e[n]=null;}return e.filter(e=>e)}(n),n=function(e){for(let t=0;t<e.length;t+=1){const n=e[t];if(null!==n)for(let a=t+1;a<e.length&&e[a]===n;a+=1)e[t]+=e[a],e[a]=null;}return (e=e.filter(e=>e)).map(e=>("''"===e&&(e="'"),e))}(n),n.reduce((t,n)=>(void 0!==ve[n]?t+=ve[n](e)||"":(/^'.+'$/.test(n)&&(n=n.replace(/'/g,"")),t+=n),t),"")})(this,e)},startOf:function(e){return ((e,t)=>{let n=e.clone();if(!n.isValid())return n;const a=o(t);return We[a]?We[a](n):"summer"===a||"winter"===a?(n=n.season(a),We.season(n)):n})(this,e)},endOf:function(e){return ((e,t)=>{let n=e.clone();return n.isValid()?(t=o(t),We[t]?(n=We[t](n),n=n.add(1,t),n=n.subtract(1,"millisecond"),n):n):n})(this,e)},leapYear:function(){const t=this.year();return e(t)},progress:function(e){return ((e,t)=>{if(t)return t=o(t),_e(e,t);const n={};return $e.forEach(t=>{n[t]=_e(e,t);}),n})(this,e)},nearest:function(e){return ((e,t)=>{if(t=o(t),!je.includes(t))return  false===e.silent&&console.warn("no known unit '"+t+"'"),e;const n=e.startOf(t),a=n.add(1,t);return e.epoch-n.epoch>a.epoch-e.epoch?a:n})(this,e)},diff:function(e,t){return Oe(this,e,t)},since:function(e){return e||(e=this.clone().set()),He(this,e)},next:function(e){return this.add(1,e).startOf(e)},last:function(e){return this.subtract(1,e).startOf(e)},isValid:function(){return !(!this.epoch&&0!==this.epoch)&&(Number.isFinite(this.epoch)&&!isNaN(new Date(this.epoch).getTime()))},goto:function(e){const t=this.clone();return t.tz=O(e,t.timezones),t},every:function(e,t,n){if("object"==typeof e&&"string"==typeof t){const n=t;t=e,e=n;}return Je(this,e,t,n)},isAwake:function(){const e=this.hour();return !(e<8||e>22)},isAsleep:function(){return !this.isAwake()},daysInMonth:function(){switch(this.month()){case 0:case 2:case 4:case 6:case 7:case 9:case 11:return 31;case 1:return this.leapYear()?29:28;case 3:case 5:case 8:case 10:return 30;default:throw new Error("Invalid Month state.")}},log:function(){return console.log("\n"+ke(this,"nice-short")),this},logYear:function(){return console.log("\n"+ke(this,"full-short")),this},json:function(e){if(void 0!==e){let t=this.clone();e.timezone&&(t.tz=String(e.timezone));for(let n=0;n<Xe.length;n++){const a=Xe[n];void 0!==e[a]&&(t=t[a].call(t,e[a]));}return t}const t={};return Xe.forEach(e=>{t[e]=c(e)?l(this,e):this[e]();}),t.offset=this.timezone().current.offset,t.timezone=this.tz,t},debug:function(){const e=this.timezone();let t=this.format("MM")+" "+this.format("date-ordinal")+" "+this.year();return t+="\n     - "+this.format("time"),console.log("\n\n",t+"\n     - "+e.name+" ("+e.current.offset+")"),this},from:function(e){return this.clone().set(e).since(this)},fromNow:function(){return this.clone().set(Date.now()).since(this)},weekStart:function(e){if("number"==typeof e)return this._weekStart=e,this;if("string"==typeof e){e=e.toLowerCase().trim();let t=me().indexOf(e);-1===t&&(t=de().indexOf(e)),-1===t&&(t=1),this._weekStart=t;}else console.warn("Spacetime Error: Cannot understand .weekStart() input:",e);return this}};var tt={...et,inDST:et.isDST,round:et.nearest,each:et.every};const nt=function(t,n){return 1===t&&e(n)?29:M[t]},at=(e,t)=>{if(e.month>0){const n=Math.trunc(e.month/12);e.year=t.year()+n,e.month=e.month%12;}else if(e.month<0){const n=Math.abs(e.month);let a=Math.trunc(n/12);n%12!=0&&(a+=1),e.year=t.year()-a,e.month=e.month%12,e.month=e.month+12,12===e.month&&(e.month=0);}return e},rt=(e,t,n)=>{let a=t.year(),r=t.month(),o=nt(r,a);for(;n>o;)n-=o,r+=1,r>=12&&(r-=12,a+=1),o=nt(r,a);return e.month=r,e.date=n,e},ot=(e,t,n)=>{e.year=t.year(),e.month=t.month();const a=t.date();for(e.date=a-Math.abs(n);e.date<1;){e.month-=1,e.month<0&&(e.month=11,e.year-=1);const t=nt(e.month,e.year);e.date+=t;}return e},st=e=>("string"==typeof e&&(e=parseInt(e,10)),e),it=["year","month","date","hour","minute","second","millisecond"],ut=(e,t,n)=>{const a=it.indexOf(n),r=it.slice(a,it.length);for(let n=0;n<r.length;n++){const a=l(t,r[n]);h(e,r[n],a);}return e},ct=function(e,t,n,a){return  true===n&&e.isBefore(t)?e=e.add(1,a):false===n&&e.isAfter(t)&&(e=e.minus(1,a)),e},lt=function(e,t,n){t=st(t);const a=e.clone(),r=(e.minute()-t)*ee.minute;return e.epoch-=r,ut(e,a,"second"),(e=ct(e,a,n,"hour")).epoch},ht=function(e,t,n){(t=st(t))>=24?t=23:t<0&&(t=0);const a=e.clone();let r=e.hour()-t,o=r*ee.hour;return e.epoch-=o,e.date()!==a.date()&&(e=a.clone(),r>1&&(r-=1),r<1&&(r+=1),o=r*ee.hour,e.epoch-=o),ae(e,{hour:t}),ut(e,a,"minute"),(e=ct(e,a,n,"day")).epoch},mt=function(e,t){"string"==typeof t&&/^'[0-9]{2}$/.test(t)&&(t=t.replace(/'/,"").trim(),t=(t=Number(t))>30?1900+t:2e3+t),t=st(t);const n=e.month(),a=Math.min(e.date(),nt(n,t));return ae(e,{year:t,month:n,date:a}),e.epoch},dt=function(e,t,n){const a=e.clone();return 1===(t=st(t))&&"december"===e.monthName()&&e.date()>=29&&1===e.week()?e:("december"===(e=(e=(e=e.month(0)).date(1)).day("monday",false)).monthName()&&e.date()<29&&(e=e.add(1,"week")),t-=1,e=e.add(t,"weeks"),e=ct(e,a,n,"year"))};let ft="am",pt="pm";const yt={millisecond:function(e){if(void 0!==e){const t=this.clone();return t.epoch=function(e,t){t=st(t);const n=e.millisecond()-t;return e.epoch-n}(t,e),t}return this.d.getUTCMilliseconds()},second:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){t=st(t);const a=e.clone(),r=(e.second()-t)*ee.second;return e.epoch=e.epoch-r,(e=ct(e,a,n,"minute")).epoch}(n,e,t),n}return this.d.getUTCSeconds()},minute:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=lt(n,e,t),n}return this.d.getUTCMinutes()},hour:function(e,t){const n=this.d;if(void 0!==e){const n=this.clone();return n.epoch=ht(n,e,t),n}return n.getUTCHours()},hourFloat:function(e,t){if(void 0!==e){const n=this.clone();let a=(e=Number(e))%1;a*=60;const r=Math.trunc(e);return n.epoch=ht(n,r,t),n.epoch=lt(n,a,t),n}const n=this.d,a=n.getUTCHours();let r=n.getUTCMinutes();return r/=60,a+r},hour12:function(e,t){const n=this.d;if(void 0!==e){const n=this.clone(),a=(e=""+e).match(/^([0-9]+)(am|pm)$/);if(a){let e=parseInt(a[1],10);12===e&&(e=0),"pm"===a[2]&&(e+=12),n.epoch=ht(n,e,t);}return n}let a=n.getUTCHours();return a>12&&(a-=12),0===a&&(a=12),a},time:function(e,t){if(void 0!==e){const n=this.clone();return e=e.toLowerCase().trim(),n.epoch=function(e,t,n){let a=t.match(/([0-9]{1,2})[:h]([0-9]{1,2})(:[0-9]{1,2})? ?(am|pm)?/);if(!a){if(a=t.match(/([0-9]{1,2}) ?(am|pm)/),!a)return null;a.splice(2,0,"0"),a.splice(3,0,"");}let r=false,o=parseInt(a[1],10),s=parseInt(a[2],10);s>=60&&(s=59),o>12&&(r=true),false===r&&("am"===a[4]&&12===o&&(o=0),"pm"===a[4]&&o<12&&(o+=12)),a[3]=a[3]||"",a[3]=a[3].replace(/:/,"");const i=parseInt(a[3],10)||0,u=e.clone();return e=(e=(e=(e=e.hour(o)).minute(s)).second(i)).millisecond(0),(e=ct(e,u,n,"day")).epoch}(n,e,t),n}return `${this.h12()}:${n(this.minute())}${this.ampm()}`},ampm:function(e,t){let n=ft,a=this.hour();if(a>=12&&(n=pt),"string"!=typeof e)return n;const r=this.clone();return e=e.toLowerCase().trim(),a>=12&&"am"===e?(a-=12,r.hour(a,t)):a<12&&"pm"===e?(a+=12,r.hour(a,t)):r},dayTime:function(e,t){if(void 0!==e){const n={morning:"7:00",breakfast:"7:00",noon:"12:00",lunch:"12:00",afternoon:"14:00",evening:"18:00",dinner:"18:00",night:"23:00",midnight:"00:00"};let a=this.clone();return e=(e=e||"").toLowerCase(),true===n.hasOwnProperty(e)&&(a=a.time(n[e],t)),a}const n=this.hour();return n<6?"night":n<12?"morning":n<17?"afternoon":n<22?"evening":"night"},iso:function(e){return void 0!==e?this.set(e):this.format("iso")},isoFull:function(e){return void 0!==e?this.set(e):this.format("iso-full")},epochSeconds:function(e){return void 0!==e?(this.epoch=1e3*e,this):this.isValid()?Math.floor(this.epoch/1e3):null}},gt={date:function(e,t){if(void 0!==e){const n=this.clone(),a=parseInt(String(e),10);return Number.isNaN(a)||(n.epoch=function(e,t,n){if((t=st(t))>28){const n=nt(e.month(),e.year());t>n&&(t=n);}t<=0&&(t=1);const a=e.clone();return ae(e,{date:t}),(e=ct(e,a,n,"month")).epoch}(n,a,t)),n}return this.d.getUTCDate()},day:function(e,t){if(void 0===e)return this.d.getUTCDay();const n=this.clone();let a=Number(e);"string"==typeof e&&(e=e.toLowerCase(),fe.hasOwnProperty(e)?a=fe[e]:(a=me().indexOf(e),-1===a&&(a=de().indexOf(e))));let r=this.d.getUTCDay()-a;true===t&&r>0&&(r-=7),false===t&&r<0&&(r+=7);const o=this.subtract(r,"days");return ae(o,{hour:n.hour(),minute:n.minute(),second:n.second()}),o},dayName:function(e,t){if(void 0===e)return de()[this.day()];let n=this.clone();return n=n.day(e,t),n}},bt=e=>e=(e=(e=e.minute(0)).second(0)).millisecond(1),wt=function(e){if(void 0!==e){if("string"==typeof e&&(e=e.replace(/([0-9])(th|rd|st|nd)/,"$1"),e=Number(e),isNaN(e)))return console.warn("Spacetime: Invalid millennium input"),this;e>0&&(e-=1);let t=1e3*e;return 0===t&&(t=1),this.year(t)}let t=Math.floor(this.year()/1e3);return t>=0&&(t+=1),t},kt={dayOfYear:function(t,n){if(void 0!==t){const a=this.clone();return a.epoch=function(t,n,a){n=st(n);const r=t.clone();return (n-=1)<=0?n=0:n>=365&&(n=e(t.year())?365:364),t=(t=t.startOf("year")).add(n,"day"),ut(t,r,"hour"),(t=ct(t,r,a,"year")).epoch}(a,t,n),a}const a=this.d;let r=a.getUTCDate();const o=a.getUTCMonth(),s=a.getUTCFullYear();for(let e=0;e<o;e++)r+=nt(e,s);return r},week:function(e,t){if(void 0!==e){let n=this.clone();return n=dt(n,e,t),n=bt(n),n}const n=this.epoch;let a=this.clone();if("december"===a.monthName()&&a.date()>=29){if(dt(a.add(15,"days"),1,false).epoch<=a.epoch)return 1}if(a=a.month(0),a=a.date(1),a=bt(a),a=a.day("monday",false),"december"===a.monthName()&&a.date()<29&&(a=a.add(1,"week")),a=a.minus(2,"hours"),a.epoch>n)return 1;let r=0;const o=4*this.month();for(a.epoch+=ee.week*o,r+=o;r<=52;r++){if(a.epoch>n)return r;a=a.add(1,"week");}return 52},month:function(e,t){if(void 0!==e){const n=this.clone();return n.epoch=function(e,t,n){"string"==typeof t&&("sept"===t&&(t="sep"),t=U()[t.toLowerCase()]),(t=st(t))>=12&&(t=11),t<=0&&(t=0);let a=e.date();const r=nt(t,e.year());a>r&&(a=r);const o=e.clone();return ae(e,{month:t,date:a}),(e=ct(e,o,n,"year")).epoch}(n,e,t),n}return this.d.getUTCMonth()},monthName:function(e,t){if(void 0!==e){let n=this.clone();return n=n.month(e,t),n}return q[this.month()]},quarter:function(e,t){if(void 0!==e&&("string"==typeof e&&(e=e.replace(/^q/i,""),e=parseInt(e,10)),Ge[e])){let n=this.clone();const a=Ge[e][0];return n=n.month(a,t),n=n.date(1,t),n=n.startOf("day"),n}const n=this.d.getUTCMonth();for(let e=1;e<Ge.length;e++)if(n<Ge[e][0])return e-1;return 4},season:function(e,t){let n="north";if("South"===this.hemisphere()&&(n="south"),void 0!==e){let a=this.clone();for(let r=0;r<Qe[n].length;r++)e===Qe[n][r][0]&&(a=a.month(Qe[n][r][1],t),a=a.date(1),a=a.startOf("day"));return a}const a=this.d.getUTCMonth();for(let e=0;e<Qe[n].length-1;e++)if(a>=Qe[n][e][1]&&a<Qe[n][e+1][1])return Qe[n][e][0];return "north"===n?"winter":"summer"},year:function(e){if(void 0!==e){const t=this.clone();return t.epoch=mt(t,e),t}return this.d.getUTCFullYear()},era:function(e){if(void 0!==e){const t=this.clone();e=e.toLowerCase();const n=t.d.getUTCFullYear();return "bc"===e&&n>0&&(t.epoch=mt(t,-1*n)),"ad"===e&&n<0&&(t.epoch=mt(t,-1*n)),t}return this.d.getUTCFullYear()<0?"BC":"AD"},decade:function(e){if(void 0!==e){if(!(e=(e=(e=String(e)).replace(/([0-9])'?s$/,"$1")).replace(/([0-9])(th|rd|st|nd)/,"$1")))return console.warn("Spacetime: Invalid decade input"),this;2===e.length&&/[0-9][0-9]/.test(e)&&(e="19"+e);let t=Number(e);return isNaN(t)?this:(t=10*Math.floor(t/10),this.year(t))}return this.startOf("decade").year()},century:function(e){if(void 0!==e){"string"==typeof e&&(e=(e=(e=e.replace(/([0-9])(th|rd|st|nd)/,"$1")).replace(/(?<![0-9])([0-9]+) ?(b\.?c\.?|a\.?d\.?)/i,(e,t,n)=>(/b\.?c\.?/i.test(n)&&(t="-"+t),t))).replace(/c$/,""));let t=Number(e);return isNaN(t)?(console.warn("Spacetime: Invalid century input"),this):(0===t&&(t=1),t=t>=0?100*(t-1):100*(t+1),this.year(t))}let t=this.startOf("century").year();return t=Math.floor(t/100),t<0?t-1:t+1},millenium:wt,millennium:wt},vt={...yt,...gt,...kt,milliseconds:yt.millisecond,seconds:yt.second,minutes:yt.minute,hours:yt.hour,hour24:yt.hour,h12:yt.hour12,h24:yt.hour,days:gt.day},zt={second:"millisecond",minute:"second",quarterhour:"minute",hour:"minute",date:"hour",week:"day",month:"day",quarter:"day",season:"day",year:"day"},$t={decade:10,century:100},_t=["millisecond","second","minute","hour","date","month"],jt={second:_t.slice(0,1),minute:_t.slice(0,2),quarterhour:_t.slice(0,2),hour:_t.slice(0,3),date:_t.slice(0,4),month:_t.slice(0,4),quarter:_t.slice(0,4),season:_t.slice(0,4),year:_t,decade:_t,century:_t};jt.week=jt.hour,jt.season=jt.date,jt.quarter=jt.date;const Nt={year:true,quarter:true,season:true,month:true,week:true,date:true},Tt={month:true,quarter:true,season:true,year:true,decade:true,century:true},Ot=function(e,t){let n=this.clone();if(!n.isValid()||!t||0===e)return n;const a=this.clone(),r=t;if("millisecond"===(t=o(t)))return n.epoch+=e,n;if("fortnight"===t&&(e*=2,t="week"),"millennium"===t)return n.add(1e3*e,"year");if(Number.isFinite(e)&&!Number.isInteger(e)){const a=((e,t,n)=>{if(Object.prototype.hasOwnProperty.call($t,n))return e.add(t*$t[n],"year");if(!Object.prototype.hasOwnProperty.call(zt,n))return null;let a=ee[n];"month"===n||"quarter"===n||"season"===n||"year"===n?(e=e.add(Math.trunc(t),n),t%=1,a=e.add(1,n).epoch-e.epoch,"month"===n&&(a=28*ee.day)):"quarterhour"===n&&(a=15*ee.minute),e.epoch+=t*a;const r=zt[n];if("millisecond"===r)return e.epoch=Math.round(e.epoch),e;const o=e.startOf(r),s=o.add(1,r);return e.epoch-o.epoch<=s.epoch-e.epoch?o:s})(n,e,t);if(a)return a}if(!Object.prototype.hasOwnProperty.call(ee,t)&&!Object.prototype.hasOwnProperty.call(jt,t)&&"weekend"!==t)return  false===n.silent&&console.warn(`Warn: unsupported arithmetic unit "${r}"`),n;ee[t]?n.epoch+=ee[t]*e:"week"===t||"weekend"===t?n.epoch+=ee.day*(7*e):"quarter"===t||"season"===t?n.epoch+=ee.month*(3*e):"quarterhour"===t&&(n.epoch+=15*ee.minute*e);let s={};if(jt[t]&&jt[t].forEach(e=>{s[e]=l(a,e);}),Nt[t]){const e=a.timezone().current.offset-n.timezone().current.offset;n.epoch+=3600*e*1e3;}if("month"===t&&(s.month=a.month()+e,s=at(s,a)),"week"===t){const t=a.date()+7*e;t<=28&&t>1&&(s.date=t);}if("weekend"===t&&"saturday"!==n.dayName())n=n.day("saturday",true);else if("date"===t){if(e<0)s=ot(s,a,e);else {const t=a.date()+e;s=rt(s,a,t);}0!==e&&a.isSame(n,"day")&&(s.date=a.date()+e);}else if("quarter"===t){if(s.month=a.month()+3*e,s.year=a.year(),s.month<0){const e=Math.floor(s.month/12),t=s.month+12*Math.abs(e);s.month=t,s.year+=e;}else if(s.month>=12){const e=Math.floor(s.month/12);s.month=s.month%12,s.year+=e;}s.date=a.date();}else if("year"===t){const t=a.year()+e,r=n.year();if(s.year=t,r<t){const t=Math.floor(e/4)||1;n.epoch+=Math.abs(ee.day*t);}else if(r>t){const t=Math.floor(e/4)||1;n.epoch+=ee.day*t;}}else "decade"===t?s.year=a.year()+10*e:"century"===t&&(s.year=a.year()+100*e);if(Tt[t]){const e=void 0!==s.year?s.year:a.year(),t=nt(s.month,e);s.date=a.date(),s.date>t&&(s.date=t);}return Object.keys(s).length>1&&ae(n,s),n},Mt=function(e,t){return this.clone().add(-1*e,t)},Dt={add:Ot,subtract:Mt,minus:Mt,plus:Ot},Ct={millisecond:e=>e.epoch,second:e=>[e.year(),e.month(),e.date(),e.hour(),e.minute(),e.second()].join("-"),minute:e=>[e.year(),e.month(),e.date(),e.hour(),e.minute()].join("-"),hour:e=>[e.year(),e.month(),e.date(),e.hour()].join("-"),day:e=>[e.year(),e.month(),e.date()].join("-"),week:e=>[e.year(),e.week()].join("-"),month:e=>[e.year(),e.month()].join("-"),quarter:e=>[e.year(),e.quarter()].join("-"),year:e=>e.year(),date:e=>[e.year(),e.month(),e.date()].join("-")};var qt={isSame:function(e,t,n=true){const a=this;if(!t)return null;if("string"==typeof e&&"object"==typeof t){const n=e;e=t,t=n;}let r=e;if("string"!=typeof e&&"number"!=typeof e||(r=this.clone().set(e)),!a.isValid()||null==r||null==r.isValid||!r.isValid())return  false;const o=t.replace(/s$/,"");return  true===n&&a.tz!==r.tz&&(r=r.clone(),r.tz=a.tz),Ct[o]?Ct[o](a)===Ct[o](r):null}};const St=e=>Number.isFinite(e)&&!isNaN(new Date(e).getTime()),Ut={isAfter:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!St(t))&&this.epoch>t},isBefore:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!St(t))&&this.epoch<t},isEqual:function(e){e=i(e,this);const t=s(e);return !(!this.isValid()||!St(t))&&this.epoch===t},isBetween:function(e,t,n=false){e=i(e,this),t=i(t,this);const a=s(e);if(!this.isValid()||!St(a))return  false;const r=s(t);return !!St(r)&&(n?this.isBetween(e,t)||this.isEqual(e)||this.isEqual(t):a<this.epoch&&this.epoch<r)}},It={i18n:function(e){var n,a,r;return t(e.days)&&(n=e.days,le=n.short||le,he=n.long||he),t(e.months)&&function(e){C=e.short||C,q=e.long||q;}(e.months),r=e.useTitleCase,"[object Boolean]"===Object.prototype.toString.call(r)&&(a=e.useTitleCase,pe=a),t(e.ampm)&&function(e){ft=e.am||ft,pt=e.pm||pt;}(e.ampm),t(e.distance)&&function(e){Ae=e.pastDistance||Ae,xe=e.futureDistance||xe,qe=e.past||qe,Se=e.future||Se,Ue=e.present||Ue,Ie=e.now||Ie,Ee=e.almost||Ee,Pe=e.over||Pe;}(e.distance),t(e.units)&&function(e={}){De={second:e.second||De.second,seconds:e.seconds||De.seconds,minute:e.minute||De.minute,minutes:e.minutes||De.minutes,hour:e.hour||De.hour,hours:e.hours||De.hours,day:e.day||De.day,days:e.days||De.days,month:e.month||De.month,months:e.months||De.months,year:e.year||De.year,years:e.years||De.years};}(e.units),this}};let Et=$;class Pt{epoch;tz;silent;british;_weekStart;_today;constructor(e,t,n={}){this.epoch=null,this.tz=O(null==t?(e=>{const t=p();return t&&e instanceof t.ZonedDateTime?e.timeZoneId:void 0})(e):t,Et),this.silent=void 0===n.silent||n.silent,this.british=n.dmy||n.british,this._weekStart=void 0!==n.weekStart?n.weekStart:1,this._today=((e={})=>{const t={};return Y.forEach(n=>{const a=e[n];if(null!=a){if("month"===n&&"string"==typeof a&&isNaN(Number(a))){const e=x(a);return void(void 0!==e&&(t.month=e))}t[n]=Number(a);}}),t})(n.today);const a=ce(this,e,t);this.epoch=a.epoch,a.tz&&(this.tz=a.tz);}get d(){if(!Number.isFinite(this.epoch))return new Date(NaN);const e=(e=>{const t=e.timezones[e.tz];if(void 0===t)return console.warn("Warning: couldn't find timezone "+e.tz),0;if(void 0===t.dst)return t.offset;const n=t.offset,a=k(e.tz);let r=t.offset+a;"n"===t.hem&&(r=n-a);const[o,s]=t.dst.split("->");return  true===w(e.epoch,o,s,n,r)?n:r})(this);return new Date(this.epoch+36e5*e)}get timezones(){return Et}set timezones(e){Et=e;}clone(){return new Pt(this.isValid()?this.epoch:NaN,this.tz,{silent:this.silent,dmy:this.british,weekStart:this._weekStart,today:this._today})}toLocalDate(){return this.toNativeDate()}toNativeDate(){return new Date(this.isValid()?this.epoch:NaN)}toTemporal(){return (e=>{const t=p();if(!t)throw new Error("toTemporal() requires native Temporal (or a globally installed polyfill)");return e.isValid()?t.Instant.fromEpochMilliseconds(Math.trunc(e.epoch)).toZonedDateTimeISO(y(e)):null})(this)}}Object.assign(Pt.prototype,tt,vt,Dt,qt,Ut,It);const At=(e,t)=>{let n=new Pt((new Date).getTime(),e,t);return n=function(e){const t=e._today||{};return Object.keys(t).forEach(n=>{c(n)&&(e=h(e,n,t[n]));}),e}(n),n},xt=function(e={}){return Object.keys(e).forEach(t=>{const n=Pt.prototype;t in n&&n[t]!==e[t]&&console.warn(`Spacetime Warning: .extend() is overriding the existing method '${t}'`),n[t]=e[t];}),Vt},Vt=Object.assign((e,t,n)=>new Pt(e,t,n),{now:At,today:(e,t)=>At(e,t).startOf("day"),tomorrow:(e,t)=>At(e,t).add(1,"day").startOf("day"),yesterday:(e,t)=>At(e,t).subtract(1,"day").startOf("day"),fromUnixSeconds:(e,t,n)=>new Pt(1e3*e,t,n),extend:xt,plugin:xt,timezones:()=>(new Pt).timezones,max:(e,t)=>{const n=new Pt(null,e,t);return n.epoch=864e13,n},min:(e,t)=>{const n=new Pt(null,e,t);return n.epoch=-864e13,n},whereIts:(e,t)=>{let n=new Pt(null),a=new Pt(null);n=n.time(e),a=t?a.time(t):n.add(59,"minutes");const r=n.hour(),o=a.hour(),s=Object.keys(n.timezones).filter(e=>{if(-1===e.indexOf("/"))return  false;const t=new Pt(null,e),s=t.hour();return s>=r&&s<=o&&(!(s===r&&t.minute()<n.minute())&&!(s===o&&t.minute()>a.minute()))});return s.map(Ke)},version:"7.17.1",tzdbVersion:"2026f"});
 
-  // these should be added to model
-  const hardCoded = {
+  // spoken times of day, and the clock-time we assume for them
+  const knownTimes = {
     daybreak: '7:00am', //ergh
     breakfast: '8:00am',
+    'breakfast time': '8:00am',
+    'lunch time': '12:00pm',
+    'dinner time': '6:00pm',
+    'early morning': '7:00am',
+    'late night': '11:00pm',
     morning: '9:00am',
     noon: '12:00pm',
     midday: '12:00pm',
@@ -362,6 +364,7 @@
     'early day': '8:00am',
     'late at night': '11:00pm'
   };
+
   const minMap = {
     quarter: 15,
     half: 30,
@@ -374,6 +377,30 @@
       return s.ampm('pm')
     }
     return s
+  };
+
+  // '25:00', '2:62pm', '13pm' - spacetime would clamp these, so reject them
+  const isImpossible = function (str) {
+    const m = str.match(/^([0-9]{1,2})(?::([0-9]{2}))?(?::([0-9]{2}))? ?(am|pm)?$/);
+    if (!m) {
+      return false
+    }
+    const [hour, min, sec] = m.slice(1, 4).map(n => Number(n || 0));
+    if (m[4] && (hour < 1 || hour > 12)) {
+      return true
+    }
+    return hour > 23 || min > 59 || sec > 59
+  };
+
+  // '00:30' or '16:05' are already unambiguous
+  const is24Hour = str => /^(0[0-9]|1[3-9]|2[0-3]):/.test(str);
+
+  // keep seconds, when given
+  const toTime = function (s) {
+    if (s.second() === 0) {
+      return s.time()
+    }
+    return s.format('{hour-24-pad}:{minute-pad}:{second-pad}')
   };
 
   // parse 'twenty past 2'
@@ -407,28 +434,41 @@
     let time = doc.match('(at|by|for|before|this|after)? #Time+');
     // get the main part of the time
     time = time.not('^(at|by|for|before|this|after)');
+    // '12 noon' - but not 'june 12 noon'
+    if (time.has('^(noon|midnight)$') && doc.has('12 (noon|midnight)') && !doc.has('(#Month|the) 12')) {
+      time = doc.match('12 (noon|midnight)');
+    }
     time = time.not('sharp');
     time = time.not('on the dot');
 
-    let s = bt(context.today || null, context.timezone);
+    let s = Vt(context.today || null, context.timezone);
     // sentinel-millisecond, so a no-op parse won't equal `now` below
     s = s.millisecond(123);
     const now = s.clone();
     // check for known-times (like 'today')
     let timeStr = time.not('in? the').text('reduced');
     timeStr = timeStr.replace(/^@/, '');//@4pm
-    if (Object.hasOwn(hardCoded, timeStr)) {
-      return { result: hardCoded[timeStr], m: time }
+    timeStr = timeStr.replace(/^12 (noon|midnight)$/, '$1');
+    if (Object.hasOwn(knownTimes, timeStr)) {
+      return { result: knownTimes[timeStr], m: time }
+    }
+    if (isImpossible(timeStr)) {
+      return { result: null, m: time, invalid: true }
     }
     // '5 oclock'
-    let m = time.match('^#Cardinal oclock (am|pm)?');
+    let m = time.match("^#Cardinal (oclock|o'clock) (am|pm)?");
     if (m.found) {
-      s = s.hour(m.text('reduced'));
+      s = s.hour(m.match('#Cardinal').text('reduced'));
       s = s.startOf('hour');
       if (s.isValid() && !s.isEqual(now)) {
         const ampm = m.match('(am|pm)');
+        // 'four o'clock this afternoon'
+        const desc = time.match('(morning|afternoon|evening|night)');
         if (ampm.found) {
           s = s.ampm(ampm.text('reduced'));
+        } else if (desc.found) {
+          s = s.ampm(desc.has('morning') ? 'am' : 'pm');
+          m = m.concat(desc);
         } else {
           s = ampmChooser(s);
         }
@@ -450,7 +490,7 @@
     m = time.match('[<min>(half|quarter|25|20|15|10|5)] (past|after)');
     if (m.found) {
       let min = m.groups('min').text('reduced');
-      let d = bt(context.today);
+      let d = Vt(context.today);
       // support 'quarter', etc.
       if (Object.hasOwn(minMap, min)) {
         min = minMap[min];
@@ -464,7 +504,7 @@
     m = time.match('[<min>(half|quarter|25|20|15|10|5)] to');
     if (m.found) {
       let min = m.groups('min').text('reduced');
-      let d = bt(context.today);
+      let d = Vt(context.today);
       // support 'quarter', etc.
       if (Object.hasOwn(minMap, min)) {
         min = minMap[min];
@@ -475,7 +515,7 @@
       }
     }
     // '4 in the evening'
-    m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|evening|night|nighttime)]');
+    m = time.match('[<time>#Time] (in|at) the? [<desc>(morning|afternoon|evening|night|nighttime)]');
     if (m.found) {
       const str = m.groups('time').text('normal');
       if (/^[0-9]{1,2}$/.test(str)) {
@@ -486,7 +526,7 @@
       }
       if (s.isValid() && !s.isEqual(now)) {
         const desc = m.groups('desc').text('reduced');
-        if (desc === 'evening' || desc === 'night') {
+        if (desc === 'afternoon' || desc === 'evening' || desc === 'night') {
           s = s.ampm('pm');
         }
         return { result: s.time(), m }
@@ -555,10 +595,10 @@
     s = s.time(str);
     if (s.isValid() && !s.isEqual(now)) {
       // choose ambiguous ampm
-      if (/(am|pm)/i.test(str) === false) {
+      if (/(am|pm)/i.test(str) === false && !is24Hour(str)) {
         s = ampmChooser(s);
       }
-      return { result: s.time(), m: time }
+      return { result: toTime(s), m: time }
     }
     // should we fallback to a dayStart default?
     if (context.dayStart) {
@@ -882,7 +922,7 @@
   };
 
   //add the official iana zonefile names, like 'canada/eastern'
-  const iana = bt().timezones;
+  const iana = Vt().timezones;
   const formal = Object.keys(iana).reduce((h, k) => {
     h[k] = k;
     return h
@@ -979,9 +1019,12 @@
     }
     //
     doc = doc.not('#Preposition$');
-    doc = doc.not('#Conjunction$');
+    // a trailing 'now' is not a moment - 'a year from now'
+    doc = doc.not('(#Conjunction|now)$');
     doc = doc.not('sharp');
     doc = doc.not('on the dot');
+    // 'all day tomorrow' is just tomorrow
+    doc = doc.not('all day');
     doc = doc.not('^(on|of|due)');
     // keep a bare 'next' or 'last' - the leftover of 'day after next'
     if (!doc.has('^(next|last)$') && !doc.has('^after (next|last)$')) {
@@ -1010,6 +1053,7 @@
     // parse '2pm'
     res = parseTime(doc, context);
     const time = res.result;
+    const invalid = res.invalid === true; // 'at 25:00'
     doc = doc.not(res.m);
 
     // parse 'tuesday'
@@ -1034,6 +1078,7 @@
       counter,
       tz,
       time,
+      invalid,
       weekDay,
       section,
       rel,
@@ -1058,7 +1103,7 @@
         input.month = 'sep';
       }
       // set it to the beginning of the given unit
-      const d = bt(input, context.timezone, { today: today, dmy: context.dmy });
+      const d = Vt(input, context.timezone, { today: today, dmy: context.dmy });
       Object.defineProperty(this, 'd', {
         enumerable: false,
         writable: true,
@@ -1087,7 +1132,7 @@
     applyShift(obj = {}) {
       Object.keys(obj).forEach((unit) => {
         this.d = this.d.add(obj[unit], unit);
-        if (unit === 'hour' || unit === 'minute') {
+        if (unit === 'hour' || unit === 'minute' || unit === 'second') {
           this.setTime = true;
         }
       });
@@ -1095,6 +1140,10 @@
     }
     applyTime(str) {
       if (str) {
+        // 'noon', 'midnight'
+        if (Object.hasOwn(knownTimes, str)) {
+          str = knownTimes[str];
+        }
         const justHour = /^[0-9]{1,2}$/;
         if (justHour.test(str)) {
           this.d = this.d.hour(str);
@@ -1244,6 +1293,11 @@
     constructor(input, unit, context) {
       super(input, unit, context);
       this.unit = 'day';
+      // 'february 30th' - spacetime clamps it to the 28th, so reject it instead
+      const want = parseInt(String(input?.date), 10);
+      if (!Number.isNaN(want) && this.d.isValid() && want !== this.d.date()) {
+        this.d = Vt('invalid', this.context.timezone);
+      }
       if (this.d.isValid()) {
         this.d = this.d.startOf('day');
       }
@@ -1265,7 +1319,7 @@
       this.isWeekDay = true; //cool.
       // is the input just a weekday?
       if (typeof input === 'string') {
-        this.d = bt(context.today, context.timezone);
+        this.d = Vt(context.today, context.timezone);
         this.d = this.d.day(input);
         // assume a wednesday in the future
         if (this.d.isBefore(context.today)) {
@@ -1444,6 +1498,12 @@
         this.d = this.d.startOf(this.unit);
       }
     }
+    // spacetime's endOf('season') stops a month early - a season is three months
+    end() {
+      const last = new Month(this.d.startOf(this.unit).add(2, 'months'), null, this.context);
+      this.d = last.end().d; // respects a custom dayEnd
+      return this
+    }
     next() {
       this.d = this.d.add(1, 'year');
       this.d = this.d.startOf(this.unit);
@@ -1477,9 +1537,9 @@
       this.d = this.d.add(2, 'days'); //wednesday
       return this
     }
-    // move it to 3/4s through
+    // 'middle of next week' runs wednesday through thursday
     beforeEnd() {
-      this.d = this.d.day('friday');
+      this.d = this.d.day('thursday').endOf('day');
       return this
     }
   }
@@ -1570,7 +1630,7 @@
       }
       //do we just have a shift?
       if (parts.shift && Object.keys(parts.shift).length > 0) {
-        if (parts.shift.hour || parts.shift.minute) {
+        if (parts.shift.hour || parts.shift.minute || parts.shift.second) {
           unit = new Moment(context.today, null, context); // choose now
         } else {
           unit = new Day(context.today, null, context); // choose today
@@ -1595,7 +1655,11 @@
       if (keys.length === 1 && Math.abs(parts.shift[keys[0]]) === 1 && Object.hasOwn(afterNext, keys[0])) {
         const Model = afterNext[keys[0]];
         const base = new Model(context.today, null, context);
-        return str === 'next' ? base.next() : base.last()
+        const period = str === 'next' ? base.next() : base.last();
+        // apply the shift here, so the unit keeps its full week/month span
+        period.applyShift(parts.shift);
+        parts.shift = null;
+        return period
       }
       return str === 'next' ? knownWord.tomorrow(context) : knownWord.yesterday(context)
     }
@@ -1692,7 +1756,7 @@
   const fixedDates = function (str, normal, year, tz) {
     if (fixed.hasOwnProperty(str) || fixed.hasOwnProperty(normal)) {
       const arr = fixed[str] || fixed[normal] || [];
-      let s = bt.now(tz);
+      let s = Vt.now(tz);
       s = s.year(year);
       s = s.startOf('year');
       s = s.month(arr[0]);
@@ -1759,7 +1823,7 @@
       const base = lookup(rule.after, year, tz);
       return base ? base.add(rule.days, 'day') : null
     }
-    const start = bt.now(tz).year(year).startOf('year');
+    const start = Vt.now(tz).year(year).startOf('year');
     if (rule.before) {
       const anchor = start.month(rule.before[0]).date(rule.before[1]);
       let result = anchor.day(rule.weekday);
@@ -1838,7 +1902,7 @@
       if (!date) {
         return null //no easter for this year
       }
-      let e = bt(date, tz);
+      let e = Vt(date, tz);
       e = e.year(year);
 
       const s = e.add(days, 'day');
@@ -2004,7 +2068,7 @@
       return null
     }
     // Convert the event instant before selecting its local calendar date.
-    return bt(events[dates$1[name]], tz).startOf('day')
+    return Vt(events[dates$1[name]], tz).startOf('day')
   };
 
   // Islamic month (1-based) and day, using the tabular civil calendar.
@@ -2052,7 +2116,7 @@
       return []
     }
     const [month, day] = dates$3[name];
-    return occurrences(year, month, day).map((date) => bt(date, tz).startOf('day'))
+    return occurrences(year, month, day).map((date) => Vt(date, tz).startOf('day'))
   };
 
   // The singular lookup returns the first occurrence in the Gregorian year.
@@ -2136,7 +2200,7 @@
     if (!name) {
       return null
     }
-    year = year ?? bt.now(tz).year();
+    year = year ?? Vt.now(tz).year();
     for (let i = 0; i < resolvers.length; i += 1) {
       const date = resolvers[i](name, name, year, tz, lookup);
       if (date !== null) {
@@ -2164,7 +2228,7 @@
     const from = options.from ?? Date.now();
     const timezone = options.timezone ?? from?.tz;
     const input = from?.epoch ?? from;
-    const reference = bt(input, timezone).startOf('day');
+    const reference = Vt(input, timezone).startOf('day');
     if (!reference.isValid()) {
       return null
     }
@@ -2198,7 +2262,8 @@
     if (hasYear) {
       year = Number(m.groups('year').text('reduced')) || year;
     }
-    const str = m.groups('holiday').text('reduced');
+    // "new year's eve" is listed as 'new years eve'
+    const str = m.groups('holiday').text('reduced').replace(/'s\b/g, 's');
     let s = lookup(str, year, context.timezone);
     if (s !== null) {
       // no explicit year given - assume the holiday is in the future
@@ -2286,7 +2351,7 @@
     let m = doc.match('[<season>(spring|summer|winter|fall|autumn)] of? [<year>(#Year|#Cardinal)?]');
     if (m.found) {
       const str = m.groups('season').text('reduced');
-      let s = bt(str, context.timezone, { today: fmtToday(context) });
+      let s = Vt(str, context.timezone, { today: fmtToday(context) });
       const yr = m.groups('year');
       if (yr.found) {
         const num = fixYear$1(yr.text('reduced'));
@@ -2304,7 +2369,7 @@
     m = doc.match('[<q>#FinancialQuarter] [<year>#Year?]');
     if (m.found) {
       const str = m.groups('q').text('reduced');
-      let s = bt(str, context.timezone, { today: fmtToday(context) });
+      let s = Vt(str, context.timezone, { today: fmtToday(context) });
       if (m.groups('year').found) {
         const year = Number(m.groups('year').text()) || context.today.year();
         s = s.year(year);
@@ -2318,7 +2383,7 @@
     m = doc.match('[<q>#Value] quarter (of|in)? [<year>#Year?]');
     if (m.found) {
       const q = m.groups('q').text('reduced');
-      let s = bt(`q${q}`, context.timezone, { today: fmtToday(context) });
+      let s = Vt(`q${q}`, context.timezone, { today: fmtToday(context) });
       if (m.groups('year').found) {
         const year = Number(m.groups('year').text()) || context.today.year();
         s = s.year(year);
@@ -2332,7 +2397,7 @@
     m = doc.match('^#Year$');
     if (m.found) {
       const str = doc.text('reduced');
-      let s = bt(null, context.timezone, { today: fmtToday(context) });
+      let s = Vt(null, context.timezone, { today: fmtToday(context) });
       s = s.year(str);
       const unit = new Year(s, null, context);
       if (unit.d.isValid() === true) {
@@ -2372,6 +2437,7 @@
       if (unit.d.isValid() === true) {
         return unit
       }
+      return null // 'february 30th 2026' is not a date
     }
 
     // 'march 1992'
@@ -2464,9 +2530,15 @@
         obj.year += 1;
         unit = new CalendarDate(obj, null, context);
       }
+      // 'february 29' - the next leap year, within reason
+      for (let i = 0; i < 4 && unit.d.isValid() === false; i += 1) {
+        obj.year += 1;
+        unit = new CalendarDate(obj, null, context);
+      }
       if (unit.d.isValid() === true) {
         return unit
       }
+      return null // 'february 30th' is not a date
     }
 
     // support 'december'
@@ -2499,6 +2571,7 @@
       if (unit.d.isValid() === true) {
         return unit
       }
+      return null
     }
     // support date-only 'the 21st'
     m = doc.match('the [<date>#Value]');
@@ -2516,6 +2589,7 @@
         }
         return unit
       }
+      return null
     }
     // parse ISO as a Moment
     m = doc.match('/[0-9]{4}-[0-9]{2}-[0-9]{2}t[0-9]{2}:/');
@@ -2529,6 +2603,15 @@
     const str = doc.text('reduced');
     if (!str) {
       return new Moment(context.today, null, context)
+    }
+    // '2026-13-10', '2026-02-30' - spacetime would swap or clamp these
+    const iso = str.match(/^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})$/);
+    if (iso) {
+      const [year, month, date] = iso.slice(1).map(Number);
+      const days = Vt({ year, month: month - 1, date: 1 }, context.timezone).daysInMonth();
+      if (month < 1 || month > 12 || date < 1 || date > days) {
+        return null
+      }
     }
     // punt it to spacetime, for the heavy-lifting
     const unit = new Day(str, null, context);
@@ -2596,6 +2679,10 @@
       d = d.add(counter.num || 0, 'weeks');
     }
     d = d.startOf('day');
+    // 'the fifth monday of february' may not exist
+    if (d.isAfter(unit.d.endOf(unit.unit))) {
+      return null
+    }
     const u = new WeekDay(d, null, unit.context);
     if (u.d.isValid() === true) {
       return u
@@ -2660,7 +2747,7 @@
       const shift = parts.shift;
       unit.applyShift(shift);
       // allow shift to change our unit size
-      if (shift.hour || shift.minute) {
+      if (shift.hour || shift.minute || shift.second) {
         unit = new Moment(unit.d, null, unit.context);
       } else if (shift.week || shift.day || shift.month) {
         unit = new Day(unit.d, null, unit.context);
@@ -2686,16 +2773,25 @@
     }
     // apply counter
     if (parts.counter && parts.counter.unit) {
-      unit = applyCounter(unit, parts.counter);
+      unit = applyCounter(unit, parts.counter); // null when the period has no such day
     }
     return unit
   };
 
+  // shared by the DEBUG_DATE traces and .dates().debug()
+  const env = globalThis.process?.env ?? globalThis.env ?? {};
+  const off = Object.hasOwn(env, 'NO_COLOR');
+  const color = code => str => (off ? str : '\x1b[' + code + 'm' + str + '\x1b[0m');
+  const green = color(32);
+  const cyan = color(36);
+  const magenta = color(35);
+  const dim = color(2);
+  const isDebug = () => Boolean(env.DEBUG_DATE);
+
   // import spacetime from 'spacetime'
 
-  const env$1 = globalThis.process?.env ?? globalThis.env ?? {};
   const log$1 = parts => {
-    if (env$1.DEBUG_DATE) {
+    if (isDebug()) {
       // console.log(parts)// eslint-disable-line
       console.log(`\n==== '${parts.doc.text()}' =====`); // eslint-disable-line
       Object.keys(parts).forEach(k => {
@@ -2713,6 +2809,10 @@
     doc = parts.doc;
     // logger
     log$1(parts);
+    // 'tomorrow at 25:00' is not a date
+    if (parts.invalid) {
+      return null
+    }
 
     //apply our given timezone
     if (parts.tz) {
@@ -2791,14 +2891,15 @@
       return { repeat: repeat }
     }
 
-    // 'every friday'
-    m = doc.match('[<logic>(every|any|each|a)] [<skip>other?] [<day>#WeekDay+] (starting|beginning|commencing)?');
+    // 'every friday', 'every monday and wednesday'
+    m = doc.match('[<logic>(every|any|each|a)] [<skip>other?] [<day>(#WeekDay|and|or|&)+] (starting|beginning|commencing)?');
     if (m.found) {
       const repeat = { interval: { day: 1 }, filter: { weekDays: {} } };
-      let str = m.groups('day').text('reduced');
-      str = dayNames[str]; //normalize it
-      if (str) {
-        repeat.filter.weekDays[str] = true;
+      const days = m.groups('day').match('#WeekDay').map(d => dayNames[d.text('reduced')]).filter(Boolean);
+      if (days.length) {
+        days.forEach(str => {
+          repeat.filter.weekDays[str] = true;
+        });
         repeat.choose = parseLogic(m);
         doc = doc.remove(m);
         return { repeat: repeat }
@@ -2850,17 +2951,17 @@
       return { repeat: repeat }
     }
 
-    // mondays
+    // mondays, 'tuesdays and thursdays'
     m = doc.match(
-      '[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays)] (at|near|after)? [<time>#Time+?]'
+      '[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays|and|or|&)+] (at|near|after)? [<time>#Time+?]'
     );
     if (m.found) {
       const repeat = { interval: { day: 1 }, filter: { weekDays: {} } };
-      let str = m.groups('day').text('reduced');
-      str = str.replace(/s$/, '');
-      str = dayNames[str]; //normalize it
-      if (str) {
-        repeat.filter.weekDays[str] = true;
+      const days = m.groups('day').match('#Plural').map(d => dayNames[d.text('reduced').replace(/s$/, '')]).filter(Boolean);
+      if (days.length) {
+        days.forEach(str => {
+          repeat.filter.weekDays[str] = true;
+        });
         repeat.choose = 'OR';
         const time = m.groups('time');
         if (time.found) {
@@ -2982,10 +3083,10 @@
   var doCombos = [
     {
       // 'jan, or march 1999'
-      match: '^during? #Month+ (or|and) #Month [<year>#Year]?',
+      match: '^(during|in)? #Month+ (or|and) #Month [<year>#Year]?',
       desc: 'march or june',
       parse: (m, context) => {
-        const before = m.match('^during? [#Month]', 0);
+        const before = m.match('^(during|in)? [#Month]', 0);
         m = m.not('(or|and)');
         const start = parseDate(before, context);
         if (start) {
@@ -3123,8 +3224,8 @@
     },
 
     {
-      // 'june or july 2019'
-      match: '^!(between|from|during)? [<from>#Date+] (and|or) [<to>#Date+]$',
+      // 'june or july 2019' - but not 'one year and two months ago'
+      match: '^!(between|from|during)? [<from>(#Date && !#DateShift)+] (and|or) [<to>#Date+]$',
       desc: 'A or B',
       parse: (m, context) => {
         const fromDoc = m.groups('from');
@@ -3166,7 +3267,123 @@
     return obj
   };
 
+  const clockUnits$1 = /^(hour|minute|second|hr|min|sec)s?$/;
+
+  // 'the next 3 days' - a window of whole units, starting tomorrow or ending yesterday
+  // 'within 2 weeks' includes today
+  const rollingWindow = function (m, context, dir, fromToday) {
+    let num = m.match('#Value').numbers().get()[0];
+    // 'the next few days'
+    if (!num && m.has('few')) {
+      num = 3;
+    }
+    if (!num && m.has('couple')) {
+      num = 2;
+    }
+    const unit = m.match('#Duration').text('reduced');
+    if (!num || !unit) {
+      return null
+    }
+    // 'the next 3 hours' is measured from right now
+    if (clockUnits$1.test(unit)) {
+      const now = new Moment(context.today, null, context);
+      const then = now.clone().applyShift({ [unit]: num * dir });
+      return dir > 0 ? { start: now, end: then, unit: 'time' } : { start: then, end: now, unit: 'time' }
+    }
+    const today = new CalendarDate(context.today, null, context);
+    const edge = today.clone().applyShift({ [unit]: num * dir });
+    if (dir > 0) {
+      const start = fromToday ? today : today.clone().applyShift({ day: 1 });
+      return { start, end: edge.end() }
+    }
+    const end = fromToday ? today.clone() : today.clone().applyShift({ day: -1 });
+    return { start: edge, end: end.end() }
+  };
+
+  // fuzzy positions in a month - early is the 1st-14th, mid the 10th-20th, late the 21st onward
+  const fuzzyDays = {
+    early: [1, 14],
+    mid: [10, 20],
+    late: [21, null],
+  };
+  const whichPart = function (m) {
+    if (m.has('(early|start|beginning)')) {
+      return 'early'
+    }
+    if (m.has('(mid|middle|midpoint)')) {
+      return 'mid'
+    }
+    if (m.has('(late|end|ending)')) {
+      return 'late'
+    }
+    return null
+  };
+  // the month a fuzzy phrase refers to, as a parsed unit
+  const monthOf = function (m, context) {
+    let doc = m.match('(next|this|last|the)? #Month #Year?');
+    if (!doc.found) {
+      doc = m.match('(next|this|last) month');
+    }
+    const unit = doc.found ? parseDate(doc, context) : null;
+    if (!unit || unit.unit !== 'month') {
+      return null
+    }
+    return unit
+  };
+  const fuzzyRange = function (unit, part) {
+    const [from, to] = fuzzyDays[part];
+    const start = unit.start();
+    const end = unit.clone().end();
+    start.d = start.d.date(from);
+    if (to) {
+      end.d = end.d.date(to).endOf('day');
+    }
+    return { start, end }
+  };
+
   var doDateRange = [
+
+    {
+      // the next 3 days
+      match: '^(in|over|for|during)? the? (next|coming|following) (#Value|few|couple) of? #Duration$',
+      desc: 'next 3 days',
+      parse: (m, context) => rollingWindow(m, context, 1, false),
+    },
+    {
+      // the last 3 days
+      match: '^(in|over|for|during)? the? (last|past|previous) (#Value|few|couple) of? #Duration$',
+      desc: 'last 3 days',
+      parse: (m, context) => rollingWindow(m, context, -1, false),
+    },
+    {
+      // within 2 weeks
+      match: '^within the? next? #Value #Duration$',
+      desc: 'within 2 weeks',
+      parse: (m, context) => rollingWindow(m, context, 1, true),
+    },
+    {
+      // 'tomorrow at 2pm for two hours', 'september 10 for three days'
+      match: '.+ for #Value #Duration$',
+      desc: 'for two hours',
+      parse: (m, context) => {
+        const start = parseDate(m.not('for #Value #Duration$'), context);
+        const num = m.match('for [#Value]', 0).numbers().get()[0];
+        const unit = m.match('#Duration$').text('reduced');
+        if (!start || !num) {
+          return null
+        }
+        const end = start.clone().applyShift({ [unit]: num });
+        if (clockUnits$1.test(unit)) {
+          // 'tuesday for 30 mins' has no start-time to count from
+          if (!start.setTime) {
+            return null
+          }
+          return { start, end, unit: 'time' }
+        }
+        end.d = end.d.minus(1, 'millisecond');
+        return { start, end }
+      },
+    },
 
 
     {
@@ -3175,9 +3392,14 @@
       desc: 'between march and jan',
       parse: (m, context) => {
         const { start, end, year } = m.groups();
-        const y = year && year.found ? Number(year.text('reduced')) : context.today.year();
+        let y = year && year.found ? Number(year.text('reduced')) : context.today.year();
         let obj = { month: start.text('reduced'), year: y };
         let left = new Month(obj, null, context).start();
+        // 'between june and july' - assume the future, like 'june' alone does
+        if (!(year && year.found) && left.d.month() < context.today.month()) {
+          y += 1;
+          left = new Month({ ...obj, year: y }, null, context).start();
+        }
         obj = { month: end.text('reduced'), year: y };
         let right = new Month(obj, null, context).start();
         if (left.d.isAfter(right.d)) {
@@ -3223,7 +3445,7 @@
 
     {
       // two months, no year - 'june 5 to june 7'
-      match: '[<from>#Month #Value] (to|through|thru) [<to>#Month #Value] [<year>#Year?]',
+      match: '[<from>#Month #Value] (to|until|upto|through|thru) [<to>#Month #Value] [<year>#Year?]',
       desc: 'june 5 to june 7',
       parse: (m, context) => {
         const res = m.groups();
@@ -3255,7 +3477,7 @@
     {
       // two day-of-month dates - '28th of September to 5th of October 2008'
       match:
-        '[<from>#Value] of? [<fromMonth>#Month] (to|through|thru) [<to>#Value] of? [<toMonth>#Month] [<year>#Year?]',
+        '[<from>#Value] of? [<fromMonth>#Month] (to|until|upto|through|thru) [<to>#Value] of? [<toMonth>#Month] [<year>#Year?]',
       desc: '28th of September to 5th of October 2008',
       parse: (m, context) => {
         const { from, fromMonth, to, toMonth, year } = m.groups();
@@ -3281,7 +3503,7 @@
     },
     {
       // one month, one year, first form - 'january 5 to 7 1998'
-      match: '[<month>#Month] [<from>#Value] (to|through|thru) [<to>#Value] of? [<year>#Year]',
+      match: '[<month>#Month] [<from>#Value] (to|until|upto|through|thru) [<to>#Value] of? [<year>#Year]',
       desc: 'january 5 to 7 1998',
       parse: (m, context) => {
         const { month, from, to, year } = m.groups();
@@ -3303,15 +3525,15 @@
     },
     {
       // one month, one year, second form - '5 to 7 of january 1998'
-      match: '[<from>#Value] (to|through|thru) [<to>#Value of? #Month #Date+?]',
+      match: '#Value (to|until|upto|through|thru) the? #Value of? #Month #Date+?',
       desc: '5 to 7 of january 1998',
       parse: (m, context) => {
-        let to = m.groups('to');
-        to = parseDate(to, context);
+        // sub-matches, not groups - 'the tenth' may have shifted group pointers
+        const values = m.match('#Value');
+        const to = parseDate(m.match('#Value of? #Month #Date+?$'), context);
         if (to) {
-          const fromDate = m.groups('from');
           const from = to.clone();
-          from.d = from.d.date(fromDate.text('implicit'));
+          from.d = from.d.date(values.eq(0).text('implicit'));
           return {
             start: from,
             end: to.end(),
@@ -3323,7 +3545,7 @@
 
     {
       // one month, no year - 'january 5 to 7'
-      match: '[<from>#Month #Value] (to|through|thru) [<to>#Value]',
+      match: '[<from>#Month #Value] (to|until|upto|through|thru) [<to>#Value]',
       desc: 'january 5 to 7',
       parse: (m, context) => {
         let from = m.groups('from');
@@ -3354,13 +3576,14 @@
         if (from && to) {
           from.d = from.d.year(year);
           to.d = to.d.year(year);
-          let obj = {
+          // 'aug to june 1999' starts the year before
+          if (from.d.isAfter(to.d)) {
+            from.d = from.d.minus(1, 'year');
+          }
+          return {
             start: from,
             end: to.end(),
-          };
-          // reverse the order?
-          obj = reverseMaybe(obj);
-          return obj
+          }
         }
         return null
       },
@@ -3412,11 +3635,10 @@
 
     {
       // implicit range
-      match: '^until [<to>#Date+]',
+      match: '^until #Date+',
       desc: 'until christmas',
       parse: (m, context) => {
-        let to = m.groups('to');
-        to = parseDate(to, context);
+        const to = parseDate(m.not('^until'), context);
         if (to) {
           const start = new CalendarDate(context.today, null, context);
           return {
@@ -3427,20 +3649,114 @@
         return null
       },
     },
+    {
+      // 'through march 1' - from today, including the end
+      match: '^(through|thru) #Date+',
+      desc: 'through march 1',
+      parse: (m, context) => {
+        const to = parseDate(m.not('^(through|thru)'), context);
+        if (to) {
+          const start = new CalendarDate(context.today, null, context);
+          return {
+            start: start,
+            end: to.end(),
+          }
+        }
+        return null
+      },
+    },
+    {
+      // 'since 2020' - from then, until today
+      match: '^since #Date+',
+      desc: 'since 2020',
+      parse: (m, context) => {
+        const from = parseDate(m.not('^since'), context);
+        if (from) {
+          const end = new CalendarDate(context.today, null, context);
+          return {
+            start: from.start(),
+            end: end.end(),
+          }
+        }
+        return null
+      },
+    },
+
+    {
+      // first half of 2027
+      match: '(first|1st|initial|second|2nd|latter) half of #Year',
+      desc: 'first half of 2027',
+      parse: (m, context) => {
+        const year = new Year({ year: Number(m.match('#Year').text('reduced')) }, null, context);
+        const july = year.clone();
+        july.d = july.d.add(6, 'months');
+        if (m.has('^(first|1st|initial)')) {
+          july.d = july.d.minus(1, 'millisecond');
+          return { start: year, end: july }
+        }
+        return { start: july, end: year.clone().end() }
+      },
+    },
+
+    {
+      // early to mid june, late june to early july 2027
+      match: '^(in|during)? (early|mid|late) #Month? (to|through|until) (early|mid|late) (next|this|last|the)? #Month #Year?$',
+      desc: 'early to mid june',
+      parse: (m, context) => {
+        const parts = m.match('(early|mid|late)');
+        const fromDoc = m.match('[.+] (to|through|until)', 0);
+        const toUnit = monthOf(m.match('(to|through|until) [.+]', 0), context);
+        if (!toUnit) {
+          return null
+        }
+        // 'late june to early july 2027' - the first month shares the year
+        let fromUnit = toUnit.clone();
+        if (fromDoc.has('#Month')) {
+          fromUnit = monthOf(fromDoc, context);
+          if (!fromUnit) {
+            return null
+          }
+          fromUnit.d = fromUnit.d.year(toUnit.d.year());
+        }
+        const { start } = fuzzyRange(fromUnit, parts.eq(0).text('reduced'));
+        const { end } = fuzzyRange(toUnit, parts.eq(1).text('reduced'));
+        return { start, end }
+      },
+    },
+
+    {
+      // early june, mid next month, towards the end of march
+      match: '^(in|during)? (early|mid|late|middle|midpoint|towards|toward) .+$',
+      desc: 'early june',
+      parse: (m, context) => {
+        const part = whichPart(m);
+        const unit = monthOf(m, context);
+        // only months, for now - 'early evening' is a time
+        if (!part || !unit) {
+          return null
+        }
+        return fuzzyRange(unit, part)
+      },
+    },
 
     {
       // second half of march
-      match: '[<part>(1st|initial|2nd|latter)] half of [<month>#Month] [<year>#Year?]',
+      match: '(first|1st|initial|second|2nd|latter) half of #Month #Year?',
       desc: 'second half of march',
       parse: (m, context) => {
-        const { part, month, year } = m.groups();
+        // sub-matches, not groups - 'the second' may have shifted group pointers
+        const year = m.match('#Year');
         const obj = {
-          month: month.text('reduced'),
+          month: m.match('#Month').text('reduced'),
           date: 1, //assume 1st
-          year: year && year.found ? year.text('reduced') : context.today.year()
+          year: year.found ? year.text('reduced') : context.today.year()
         };
         const unit = new Month(obj, null, context);
-        if (part.has('(1st|initial)')) {
+        // 'first half of march' - assume the future, like 'march' alone does
+        if (!year.found && unit.d.month() < context.today.month()) {
+          unit.d = unit.d.add(1, 'year');
+        }
+        if (m.has('^(first|1st|initial)')) {
           return {
             start: unit.start(),
             end: unit.clone().middle(),
@@ -3472,7 +3788,8 @@
         if (from && to) {
           let obj = {
             start: from,
-            end: to.end(),
+            // 'to october 1 at 2am' ends at that time, not the end of the day
+            end: to.setTime ? to : to.end(),
           };
           obj = reverseMaybe(obj);
           return obj
@@ -3603,10 +3920,8 @@
 
   const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate);
 
-  const env = globalThis.process?.env ?? globalThis.env ?? {};
-  const green = str => '\x1b[32m' + str + '\x1b[0m';
   const log = msg => {
-    if (env.DEBUG_DATE) {
+    if (isDebug()) {
       console.log(`\n  ${green(` ${msg} `)}`); // eslint-disable-line
     }
   };
@@ -3680,6 +3995,25 @@
     return found
   };
 
+  // 'twenty twenty-six' becomes one term '2026', so our view must shrink along with it
+  const toNumbers = function (doc, num) {
+    const ptrs = doc.fullPointer;
+    if (ptrs.length !== 1) {
+      num.toNumber();
+      return doc
+    }
+    const [n, start, end] = ptrs[0];
+    const size = doc.document[n].length;
+    num.toNumber();
+    const removed = size - doc.document[n].length;
+    if (removed === 0) {
+      return doc
+    }
+    // get a pointer with fresh term-ids, to follow any later changes
+    const m = doc.update([[n, start, end - removed]]);
+    return m.update(m.fullPointer)
+  };
+
   // shared cleanup for .dates() and .times() - see parse/normalize.js
   const normalize$1 = function (doc, opts = {}) {
     doc = doc.clone();
@@ -3705,7 +4039,9 @@
     }
     // convert 'two' to 2
     const num = doc.numbers();
-    num.toNumber();
+    doc = toNumbers(doc, num);
+    // '2020's election' - the possessive isn't part of the year
+    doc.match('#Year').possessives().strip();
     if (opts.times) {
       num.toCardinal(false);
     }
@@ -3747,8 +4083,8 @@
     }
     // the implied duration of 'after june 2nd'
     context.punt ||= { weeks: 2 };
-    context.today ||= bt.now(context.timezone);
-    context.today = bt(context.today, context.timezone);
+    context.today ||= Vt.now(context.timezone);
+    context.today = Vt(context.today, context.timezone);
 
     doc = normalize(doc);
 
@@ -4041,10 +4377,21 @@
         return this.add(-amount, unit)
       }
 
+      // .filter() returns a plain View - keep our class and opts, so results chain
+      filterDates(fn) {
+        const res = this.filter(fn);
+        return new Dates(this.document, res.pointer, null, this.opts)
+      }
+      /** drop matches that do not parse to a date - like 'february 222' or 'someday' */
+      isValid() {
+        return this.filterDates(m => {
+          return parse$2(m, this.opts).some(obj => obj.start || obj.repeat)
+        })
+      }
       /** return only dates occuring before a given date  */
       isBefore(iso) {
         const pivot = quickDate(this, iso);
-        return this.filter(m => {
+        return this.filterDates(m => {
           const obj = parse$2(m, this.opts)[0] || {};
           return obj.start && obj.start.d && obj.start.d.isBefore(pivot)
         })
@@ -4052,7 +4399,7 @@
       /** return only dates occuring after a given date  */
       isAfter(iso) {
         const pivot = quickDate(this, iso);
-        return this.filter(m => {
+        return this.filterDates(m => {
           const obj = parse$2(m, this.opts)[0] || {};
           return obj.start && obj.start.d && obj.start.d.isAfter(pivot)
         })
@@ -4060,7 +4407,7 @@
       /** return only dates occuring after a given date  */
       isSame(unit, iso) {
         const pivot = quickDate(this, iso);
-        return this.filter(m => {
+        return this.filterDates(m => {
           const obj = parse$2(m, this.opts)[0] || {};
           return obj.start && obj.start.d && obj.start.d.isSame(pivot, unit)
         })
@@ -4083,7 +4430,7 @@
     if (!res.result) {
       return { time: null, '24h': null }
     }
-    const s = bt.now().time(res.result);
+    const s = Vt.now().time(res.result);
     return {
       time: res.result,
       '24h': s.format('time-24'),
@@ -4107,7 +4454,7 @@
         const res = found.map(m => {
           const obj = parse$1(m) || {};
           if (obj.time) {
-            const s = bt.now().time(obj.time);
+            const s = Vt.now().time(obj.time);
             let str = obj.time;
             if (fmt === '24h') {
               str = s.format('time-24');
@@ -4183,19 +4530,48 @@
     mapping[k + 's'] = mapping[k];
   });
 
+  // units made of other units
+  const multiples = {
+    fortnight: [2, 'week'],
+  };
+
+  const toUnit = function (str) {
+    let unit = str.replace(/ies$/, 'y');
+    unit = unit.replace(/s$/, '');
+    // turn 'mins' into 'minute'
+    if (Object.hasOwn(mapping, unit)) {
+      unit = mapping[unit];
+    }
+    return unit
+  };
+
+  // '8', 'a', 'half an', 'two and a half'
+  const toNumber = function (m) {
+    if (m.has('^half')) {
+      return 0.5
+    }
+    let num = m.match('[#Value+] #Duration', 0).numbers().get()[0];
+    if (num === null || num === undefined) {
+      num = m.has('(a|an)') ? 1 : null;
+    }
+    if (num !== null && m.has('and a half$')) {
+      num += 0.5;
+    }
+    return num
+  };
+
   const parse = function (doc) {
     const duration = {};
     //parse '8 minutes'
-    const twoWord = doc.match('#Value+ #Duration');
+    const twoWord = doc.match('half? (#Value+|a|an) #Duration (and a half)?');
     if (twoWord.found) {
       twoWord.forEach((m) => {
-        const num = m.numbers().get()[0];
-        let unit = m.terms().last().text('reduced');
-        unit = unit.replace(/ies$/, 'y');
-        unit = unit.replace(/s$/, '');
-        // turn 'mins' into 'minute'
-        if (Object.hasOwn(mapping, unit)) {
-          unit = mapping[unit];
+        let num = toNumber(m);
+        let unit = toUnit(m.match('#Duration').text('reduced'));
+        // 'a fortnight' is 2 weeks
+        if (Object.hasOwn(multiples, unit)) {
+          num *= multiples[unit][0];
+          unit = multiples[unit][1];
         }
         if (Object.hasOwn(known, unit) && num !== null) {
           duration[unit] = num;
@@ -4255,7 +4631,7 @@
 
     /** phrases like '2 months' */
     View.prototype.durations = function (n) {
-      let m = this.match('#Value+ #Duration (and? #Value+ #Duration)?');
+      let m = this.match('half? (#Value+|a|an) #Duration (and a half|and? #Value+ #Duration)?');
 
       // not 'in 20 minutes'
       m = m.notIf('#DateShift');
@@ -4505,11 +4881,15 @@
   const sections = '(start|end|middle|starting|ending|midpoint|beginning|mid)'; //2
   const seasons = '(spring|summer|winter|fall|autumn)';
   const knownDate = '(yesterday|today|tomorrow)';
+  const verbSubject = '(#Pronoun|#Plural) (/^(march|may)$/ && !@isTitleCase)';
 
   // { match: '', tag: '', reason:'' },
   const matches = [
     // Christmas eve
     { match: '#Holiday (day|eve)', hook: '#Holiday', tag: 'Holiday', reason: 'holiday-day' },
+    // new year's eve, valentine's day - the lexicon has the forms without an apostrophe
+    { match: "new year's (eve|day)", tag: 'Holiday', reason: 'new-years-eve' },
+    { match: "(valentine's|st patrick's|saint patrick's|mother's|father's|april fool's|all saint's|all hallow's) (day|eve)", tag: 'Holiday', reason: 'holiday-possessive' },
     // in the evening
     { match: 'in the (night|evening|morning|afternoon|day|daytime)', tag: 'Time', reason: 'in-the-night' },
     // 8 pm
@@ -4530,12 +4910,12 @@
     { match: '#Month #Value (and|or|to)? #Value+', tag: 'Date', reason: 'value-to-value' },
     //march the 12th
     { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
-    // march to april - but not 'the soldiers march tomorrow'
-    { match: '[(march|may)] (to|through|thru|until|and|or) #Date', group: 0, tag: 'Month', reason: 'march-to' },
+    // march to april - but not 'the soldiers march tomorrow', or 'they march to monday'
+    { match: '(#Pronoun|#Plural)? [(march|may)] (to|through|thru|until|and|or) #Date', group: 0, tag: 'Month', notIf: verbSubject, reason: 'march-to' },
     // march 2020
     { match: '[(march|may)] of? #Year', group: 0, tag: 'Month', reason: 'march-year' },
-    // march 5th
-    { match: '[(march|may)] the? (#Value && !#Year)', group: 0, tag: 'Month', reason: 'march-value' },
+    // march 5th - but not 'they march 5 miles'
+    { match: '(#Pronoun|#Plural)? [(march|may)] the? (#Value && !#Year)', group: 0, tag: 'Month', notIf: verbSubject, reason: 'march-value' },
     // 'the soldiers march tomorrow' - not a month
     { match: '[(march|may)] (today|tomorrow|tonight|yesterday)', group: 0, unTag: 'Date', reason: 'march-tomorrow' },
     // 'march'
@@ -4578,18 +4958,33 @@
     { match: `#Preposition? the? ${sections} of #Date`, tag: 'Date', reason: 'section-of' },
     //fifth week in 1998
     { match: '#Ordinal #Duration in #Date', tag: 'Date', reason: 'duration-in' },
-    //early in june
-    { match: '(early|late) (at|in)? the? #Date', tag: 'Time', reason: 'early-evening' },
+    //early june, late next month
+    { match: '[(early|late)] #Month', group: 0, tag: 'Date', reason: 'early-june' },
+    { match: '[(early|late)] (next|this|last) month', group: 0, tag: 'Date', reason: 'early-next-month' },
+    //the next few days
+    { match: '(next|last|past|coming|following|previous) (few|couple) of? [(days|weeks|months|years|hours|minutes|seconds)]', group: 0, tag: 'Duration', reason: 'few-days' },
+    { match: '(next|last|past|coming|following|previous) (few|couple) of? #Duration', tag: 'Date', reason: 'next-few-days' },
+    //early to mid june
+    { match: '(early|mid|late) (to|through|until) (early|mid|late) #Date', tag: 'Date', reason: 'early-to-mid' },
+    //towards the end of june
+    { match: '[(towards|toward)] the (end|start|beginning|middle) of #Date', group: 0, tag: 'Date', reason: 'towards-the-end' },
+    //early in the evening - but not 'early june'
+    { match: '(early|late) (at|in)? the? #Date', notIf: '(#Month|month)', tag: 'Time', reason: 'early-evening' },
     //tomorrow before 3
     { match: '#Date [(by|before|after|at|@|about) #Cardinal]', group: 0, tag: 'Time', reason: 'date-before-Cardinal' },
     //feb to june
     { match: '#Date (#Preposition|to) #Date', ifNo: '#Duration', tag: 'Date', reason: 'date-prep-date' },
+    //at 2:62pm - an impossible clock-time still belongs to the date, so it can be rejected
+    { match: '(at|by|@) [/^[0-9]{1,2}:[0-9]{2}(:[0-9]{2})?(am|pm)?$/]', group: 0, tag: 'Time', reason: 'hh:mm' },
     //by 6pm
     { match: '(by|before|after|at|@|about) #Time', tag: 'Time', reason: 'preposition-time' },
     // in 20mins
     { match: '(in|after) /^[0-9]+(min|sec|wk)s?/', tag: 'Date', reason: 'shift-units' },
     //tuesday night
     { match: '#Date [(now|night|sometime)]', group: 0, tag: 'Time', reason: 'date-now' },
+    //saturday late night
+    { match: 'late night', tag: 'Time', reason: 'late-night' },
+    { match: 'early morning', tag: 'Time', reason: 'early-morning' },
     // 4 days from now
     { match: '(from|starting|until|by) now', tag: 'Date', reason: 'for-now' },
     // every night
@@ -4601,8 +4996,8 @@
 
     //june 5 to 7th
     { match: '#Month #Value to #Value of? #Year?', tag: 'Date', reason: 'june 5 to 7th' },
-    //5 to 7th june
-    { match: '#Value to #Value of? #Month #Year?', tag: 'Date', reason: '5 to 7th june' },
+    //5 to 7th june, the tenth through the twelfth of june
+    { match: '#Value (to|through|thru) the? #Value of? #Month #Year?', tag: 'Date', reason: '5 to 7th june' },
     //third week of may
     { match: '#Value #Duration of #Date', tag: 'Date', reason: 'third week of may' },
     //two days after
@@ -4621,6 +5016,10 @@
     { match: '(#Value|a|an) #Duration and a half (before|after|ago|hence|back|from)', tag: 'DateShift', reason: 'year-and-a-half-ago' },
     //in a year and a half
     { match: 'in (#Value|a|an) #Duration and a half', tag: 'DateShift', reason: 'in-year-and-a-half' },
+    //in one and a half years
+    { match: 'in #Cardinal and a half #Duration', tag: 'DateShift', reason: 'in-one-and-a-half' },
+    //three and a half days from now
+    { match: '#Cardinal and a half #Duration (before|after|ago|hence|back|from)', tag: 'DateShift', reason: 'one-and-a-half-ago' },
     //5 and a half years
     { match: '#Value and a half (years|months|weeks|days)', tag: 'Date', reason: '5 and a half years' },
     //on the fifth
@@ -4644,6 +5043,10 @@
     { match: '(between|from) #Date', tag: 'Date', reason: 'between x and y' },
     { match: '(to|until|upto) #Date', tag: 'Date', reason: 'between x and y2' },
     { match: 'between #Date+ and #Date+', tag: 'Date', reason: 'between x and y3' },
+    // every monday and wednesday
+    { match: '(every|any|each) #WeekDay+ [(and|or|&)] #WeekDay', group: 0, tag: 'Date', reason: 'every monday and wednesday' },
+    // tuesdays and thursdays
+    { match: '(#WeekDay && #Plural) [(and|or|&)] (#WeekDay && #Plural)', group: 0, tag: 'Date', reason: 'tuesdays and thursdays' },
     { match: '#Month and #Month #Year', tag: 'Date', reason: 'x and y4' },
     //day after next
     { match: 'the? #Date after next one?', tag: 'Date', reason: 'day after next' },
@@ -4652,7 +5055,7 @@
 
     // until june
     {
-      match: '(by|until|on|in|at|during|over|every|each|due) the? #Date',
+      match: '(by|until|through|thru|on|in|at|during|over|every|each|due) the? #Date',
       ifNo: '#PhrasalVerb',
       tag: 'Date',
       reason: 'until june',
@@ -4681,7 +5084,7 @@
     { match: '#Date up to #Date', tag: 'Date', reason: 'january up to june' },
 
     // 2 oclock
-    { match: '#Cardinal oclock', tag: 'Time', reason: '2 oclock' },
+    { match: "#Cardinal (oclock|o'clock)", tag: 'Time', reason: '2 oclock' },
     // // 13h30
     // { match: '/^[0-9]{2}h[0-9]{2}$/', tag: 'Time', reason: '13h30' },
     // // 03/02
@@ -4728,7 +5131,7 @@
 
     // around four thirty
     {
-      match: '(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]',
+      match: '(at|around|near|#Date) [(#Cardinal && !#Year) (thirty|fifteen) (am|pm)?]',
       group: 0,
       tag: 'Time',
       reason: 'around four thirty',
@@ -4736,23 +5139,27 @@
     // four thirty am
     { match: '#Cardinal (thirty|fifteen) (am|pm)', tag: 'Time', reason: 'four thirty am' },
     // four thirty tomorrow
-    { match: '[#Cardinal (thirty|fifteen)] #Date', group: 0, tag: 'Time', reason: 'four thirty tomorrow' },
+    { match: '[(#Cardinal && !#Year) (thirty|fifteen)] #Date', group: 0, tag: 'Time', reason: 'four thirty tomorrow' },
     //anytime around 3
     { match: '(anytime|sometime) (before|after|near) [#Cardinal]', group: 0, tag: 'Time', reason: 'antime-after-3' },
 
     //'two days before'/ 'nine weeks frow now'
     {
-      match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)',
+      match: '(a|an)? (#Cardinal+|a|an) #Duration (before|after|ago|from|hence|back)',
       tag: 'DateShift',
       reason: 'nine weeks frow now',
     },
     // in two weeks
-    { match: 'in (around|about|maybe|perhaps)? #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
+    { match: 'in (around|about|maybe|perhaps)? #Cardinal+ #Duration', tag: 'DateShift', reason: 'in two weeks' },
+    // in a hundred years - but not 'in a 12-hour day', or 'in a hundred-year flood'
+    { match: 'in (around|about|maybe|perhaps)? (a|an) (hundred|thousand|dozen) (#Duration && #Plural)', tag: 'DateShift', reason: 'in a hundred years' },
     { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
     // an hour from now
     { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },
     // a month ago
     { match: '(a|an) #Duration ago', tag: 'DateShift', reason: 'a month ago' },
+    // a week friday
+    { match: '[(a|an) #Duration] #WeekDay', group: 0, tag: 'DateShift', reason: 'a week friday' },
     // in half an hour
     { match: 'in half (a|an) #Duration', tag: 'DateShift', reason: 'in half an hour' },
     // half an hour ago
@@ -4788,8 +5195,9 @@
     { match: '[(wed|sat)] (#Month|#Year|on|between|during|from)', group: 0, tag: 'WeekDay', reason: 'wed' },
     //'spa day'
     { match: '^day$', unTag: 'Date', reason: 'spa-day' },
-    // tomorrow's meeting
-    { match: '(in|of|by|for)? (#Possessive && #Date) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
+    // tomorrow's meeting - but not 2020's election
+    // but keep "valentine's day"
+    { match: '(in|of|by|for)? (#Possessive && #Date && !#Year && !#Holiday) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
     //yesterday 7
     { match: `${knownDate} [#Value]$`, unTag: 'Date', group: 0, reason: 'yesterday-7' },
     //7 yesterday
@@ -4806,18 +5214,20 @@
     { match: `^[#Value] (this|next|last)`, group: 0, unTag: 'Date', reason: '4 next' },
     //this month 7
     { match: `(last|this|next) #Duration [#Value]`, group: 0, unTag: 'Date', reason: 'this month 7' },
-    //7 this month
-    { match: `[!#Month] #Value (last|this|next) #Date`, group: 0, unTag: 'Date', reason: '7 this month' },
     // over the years
     { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
     // second quarter of 2020
     { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+    // a good morning routine, my evening class - a generic time is not a date
+    { match: '(a|an|#Possessive) #Adjective? [(morning|afternoon|evening|night)] (#Noun|#Adjective)', group: 0, tag: 'Singular', unTag: 'Date', reason: 'time-modifier' },
+    // third quarter of the game, a quarter of the pie (but not of the fiscal year)
+    { match: '[(#Ordinal|a|one)? quarter] of #Determiner #Adjective? (#Noun && !#Date && !#Possessive)', group: 0, unTag: 'Date', reason: 'quarter-of-noun' },
     // a month from now
     { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
     // 18th next month
     { match: '#Value of? (this|next|last) #Date', tag: 'Date' },
     // first half of march
-    { match: '(first|initial|second|latter) half of #Month', tag: 'Date' },
+    { match: '(first|initial|second|latter) half of (#Month|#Year)', tag: 'Date' },
   ];
 
   const nets = new WeakMap();
@@ -4846,8 +5256,8 @@
     // sorry, one more - twice, to chain '2 years, 4 months and 5 days ago'
     if (view.has('#DateShift')) {
       for (let i = 0; i < 2; i += 1) {
-        view.match('#Cardinal #Duration and? #DateShift').tag('DateShift', 'three days before');
-        view.match('#DateShift and #Cardinal #Duration').tag('DateShift', 'three days and two weeks');
+        view.match('#Cardinal+ #Duration and? #DateShift').tag('DateShift', 'three days before');
+        view.match('#DateShift and #Cardinal+ #Duration').tag('DateShift', 'three days and two weeks');
       }
     }
     // view.match('in #Adverb #DateShift').tag('Date', 'in-around-2-weeks')
@@ -5045,6 +5455,7 @@
     'independents day',
     'juneteenth',
     'labour day',
+    'labor day',
     'national freedom day',
     'national nurses day',
     'new years eve',
@@ -5178,7 +5589,9 @@
     'afternoon',
     'breakfast time',
     'lunchtime',
+    'lunch time',
     'dinnertime',
+    'dinner time',
     'midday',
     'eod',
     'oclock',
@@ -5227,15 +5640,11 @@
 
   ];
 
-  var version = '3.10.0';
+  var version = '3.11.0';
 
   /* eslint-disable no-console */
 
-  const magenta = str => '\x1b[35m' + str + '\x1b[0m';
-  const dim = str => '\x1b[2m' + str + '\x1b[0m';
-  const cyan = str => '\x1b[36m' + str + '\x1b[0m';
-
-  const fmt = iso => (iso ? bt(iso).format('{nice-day} {year}') : '-');
+  const fmt = iso => (iso ? Vt(iso).format('{nice-day} {year}') : '-');
 
   const debug = function (view) {
     view.dates().forEach(m => {

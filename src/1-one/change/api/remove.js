@@ -1,44 +1,39 @@
 import pluckOutTerm from './lib/remove.js'
+import expandContraction from './lib/_expand.js'
 
-const fixPointers = function (ptrs, gonePtrs) {
+// which sentences will have no terms left?
+const getEmptied = function (gonePtrs, document) {
+  return Object.keys(gonePtrs).map(Number).filter(n => {
+    const count = gonePtrs[n].reduce((sum, no) => sum + no[2] - no[1], 0)
+    return document[n] && count >= document[n].length
+  })
+}
+
+// gonePtrs must run from last-to-first, in each sentence
+const fixPointers = function (ptrs, gonePtrs, emptied) {
   ptrs = ptrs.map(ptr => {
     const [n] = ptr
-    if (!gonePtrs[n]) {
-      return ptr
-    }
-    gonePtrs[n].forEach(no => {
+    const gone = gonePtrs[n] || []
+    gone.forEach(no => {
       const len = no[2] - no[1]
       // does it effect our pointer?
       if (ptr[1] <= no[1] && ptr[2] >= no[2]) {
         ptr[2] -= len
+      } else if (ptr[1] >= no[2]) {
+        // terms before our pointer are gone
+        ptr[1] -= len
+        ptr[2] -= len
       }
     })
-    return ptr
-  })
-
-  // decrement any pointers after a now-empty pointer
-  ptrs.forEach((ptr, i) => {
-    // is the pointer now empty?
-    if (ptr[1] === 0 && ptr[2] == 0) {
-      // go down subsequent pointers
-      for (let n = i + 1; n < ptrs.length; n += 1) {
-        ptrs[n][0] -= 1
-        if (ptrs[n][0] < 0) {
-          ptrs[n][0] = 0
-        }
-      }
-    }
-  })
-  // remove any now-empty pointers
-  ptrs = ptrs.filter(ptr => ptr[2] - ptr[1] > 0)
-
-  // remove old hard-pointers
-  ptrs = ptrs.map((ptr) => {
+    // sentences before our pointer are gone
+    ptr[0] -= emptied.filter(k => k < n).length
+    // remove old hard-pointers
     ptr[3] = null
     ptr[4] = null
     return ptr
   })
-  return ptrs
+  // remove any now-empty pointers
+  return ptrs.filter(ptr => ptr[2] - ptr[1] > 0)
 }
 
 const methods = {
@@ -57,18 +52,16 @@ const methods = {
     }
     const isFull = !self.ptrs
     // is it part of a contraction?
-    if (not.has('@hasContraction') && not.contractions) {
-      const more = not.grow('@hasContraction')
-      more.contractions().expand()
-    }
+    expandContraction(not)
 
     let ptrs = self.fullPointer
     const nots = not.fullPointer.reverse()
+    const gonePtrs = indexN(nots)
+    const emptied = getEmptied(gonePtrs, this.document)
     // remove them from the actual document)
     const document = pluckOutTerm(this.document, nots)
     // repair our pointers
-    const gonePtrs = indexN(nots)
-    ptrs = fixPointers(ptrs, gonePtrs)
+    ptrs = fixPointers(ptrs, gonePtrs, emptied)
     // clean up our original inputs
     self.ptrs = ptrs
     self.document = document

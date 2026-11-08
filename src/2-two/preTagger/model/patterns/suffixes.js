@@ -1,190 +1,34 @@
-import tagWords from '../_lib.js'
-import tags from '../../tagSet/aliases.js'
+import { Last, Sing, NN, Adj, Adv, Vb, Past, Mod, Cop, Inf, Ger, Pres, Participle, Place, Plur, Actor, Ord, Prop, Val } from '../../tagSet/_lib.js'
+//just a foolish lookup of known suffixes, by tag
+const byTag = {
+  [Last]: "ov ez ev sen vic nen ova akis chuk czyk enko sson marek auskas opoulos sdottir",
+  [Sing]: "ea rol sis ogy oid ian ield iend ette iary wner tion ique vice lier fier gent lite site rite mite bite mate date ndal vent note cide ence holic phite osome tment ndent scent rient dient parent cedent ionary cklist",
+  [NN]: "ia eer ger ber ton tage tors dorf esty ology archy pathy opoly embly phate worth",
+  [Adj]: "ic azy ffy lar mum nny ous que ful bal mned gone less llen made some tive wide iant nary ghty uent ggly bbly zzly bound rough iable borne gnant inant igent atory",
+  [Adv]: "ly fore fully wards where",
+  [Vb]: "'n 't end ends",
+  [Past]: "oed ued xed ped eld amed aped ched lked rked reed nded cted dged wned tized urned eased",
+  [Mod]: "'ll ould",
+  [Cop]: "'re",
+  [Inf]: "ify ize ibe ect ict ign oze cede gate ruct vide ract duce pose eive lyze lyse ounce",
+  [Ger]: "ing",
+  [Pres]: "zes ects fies poses ishes tches",
+  [Participle]: "ken ven ten",
+  [Place]: "pur bury wych dale folk vale abad sham wick burgh mouth ceter ville hurst stead endon brook shire ridge brooke brough cester ington cliffe ingham chester borough",
+  [Plur]: "ices ints ines ions ners pers lers ians ances ettes ities ports tures",
+  [Actor]: "tist pist rist mist yist vist ists uist gist erer elist onist anist alist olist icist maker keeper logist worker master writer logists",
+  [Ord]: "tieth",
+  [Prop]: "field",
+  [Val]: "teenth",
+}
 
-const {
-  JJ: Adj, Inf, Pres, Sing, VBD: Past, RB: Avb, NNS: Plrl, Actor,
-  V: Vb, NN: Noun, NNP: Prop, Last, Modal, Place, VBN: Participle
-} = tags
-//just a foolish lookup of known suffixes
-
-export default [
-  null,
-  null,
-  {
-    //2-letter
-    ea: Sing,
-    ia: Noun,
-    ic: Adj,
-    ly: Avb,
-    "'n": Vb,
-    "'t": Vb,
-  },
-  {
-    //3-letter
-    oed: Past,
-    ued: Past,
-    xed: Past,
-    ' so': Avb,
-    "'ll": Modal,
-    "'re": 'Copula',
-    azy: Adj,
-    eer: Noun,
-    end: Vb,
-    ped: Past,
-    ffy: Adj,
-    ify: Inf,
-    ing: 'Gerund',
-    ize: Inf,
-    ibe: Inf,
-    lar: Adj,
-    mum: Adj,
-    nes: Pres,
-    nny: Adj,
-    // oid: Adj,
-    ous: Adj,
-    que: Adj,
-    ger: Noun,
-    ber: Noun,
-    ...tagWords('rol sis ogy oid ian', Sing),
-    zes: Pres,
-    eld: Past,
-    ken: Participle, //awoken
-    ven: Participle, //woven
-    ten: Participle, //brighten
-    ect: Inf,
-    ict: Inf,
-    // ide: Inf,
-    ign: Inf,
-    oze: Inf,
-    ful: Adj,
-    bal: Adj,
-    ton: Noun,
-    pur: Place,
-  },
-  {
-    //4-letter
-    ...tagWords('amed aped ched lked rked reed nded', Past),
-    mned: Adj,
-    cted: Past,
-    dged: Past,
-    ield: Sing,
-    akis: Last,
-    cede: Inf,
-    chuk: Last,
-    czyk: Last,
-    ects: Pres,
-    iend: Sing,
-    ends: Vb,
-    enko: Last,
-    ette: Sing,
-    iary: Sing,
-    wner: Sing, //owner
-    fies: Pres,
-    fore: Avb,
-    gate: Inf,
-    gone: Adj,
-    ices: Plrl,
-    ints: Plrl,
-    ruct: Inf,
-    ...tagWords('ines ions ners pers lers', Plrl),
-    less: Adj,
-    llen: Adj,
-    made: Adj,
-    nsen: Last,
-    oses: Pres,
-    ould: Modal,
-    some: Adj,
-    sson: Last,
-    ians: Plrl,
-    // tage: Inf,
-    tion: Sing,
-    tage: Noun,
-    ique: Sing,
-    tive: Adj,
-    tors: Noun,
-    vice: Sing,
-    lier: Sing,
-    fier: Sing,
-    wned: Past,
-    gent: Sing,
-    ...tagWords('tist pist rist mist yist vist ists', Actor),
-    ...tagWords('lite site rite mite bite mate date ndal vent', Sing),
-    uist: Actor,
-    gist: Actor,
-    note: Sing,
-    cide: Sing, //homicide
-    ence: Sing, //absence
-    wide: Adj, //nationwide
-    // side: Adj,//alongside
-    // provide
-    ...tagWords('vide ract duce pose eive lyze lyse', Inf),
-    ...tagWords('iant nary ghty uent', Adj),
-    erer: Actor, //caterer
-    bury: Place,
-    dorf: Noun,
-    esty: Noun,
-    ...tagWords('wych dale folk vale abad sham wick view', Place),
-  },
-  {
-    //5-letter
-    elist: Actor,
-    holic: Sing,
-    phite: Sing,
-    tized: Past,
-    urned: Past,
-    eased: Past,
-    ances: Plrl,
-    bound: Adj,
-    ettes: Plrl,
-    fully: Avb,
-    ishes: Pres,
-    ities: Plrl,
-    marek: Last,
-    nssen: Last,
-    ology: Noun,
-    osome: Sing,
-    tment: Sing,
-    ports: Plrl,
-    rough: Adj,
-    tches: Pres,
-    tieth: 'Ordinal',
-    tures: Plrl,
-    wards: Avb,
-    where: Avb,
-    ...tagWords('archy pathy opoly embly phate', Noun),
-    ndent: Sing,
-    scent: Sing,
-    ...tagWords('onist anist alist olist icist', Actor),
-    ounce: Inf,
-    ...tagWords('iable borne gnant inant igent atory', Adj),
-    // ctory: Adj,
-    rient: Sing,
-    dient: Sing,
-    maker: Actor,
-    ...tagWords('burgh mouth ceter ville hurst stead endon brook shire', Place),
-    worth: Noun,
-    field: Prop,
-    ridge: Place,
-  },
-  {
-    //6-letter
-    auskas: Last,
-    ...tagWords('parent cedent ionary cklist', Sing),
-    brooke: Place,
-    keeper: Actor,
-    logist: Actor,
-    teenth: 'Value',
-    worker: Actor,
-    master: Actor,
-    writer: Actor,
-    ...tagWords('brough cester ington cliffe ingham', Place),
-  },
-  {
-    //7-letter
-    chester: Place,
-    logists: Actor,
-    opoulos: Last,
-    borough: Place,
-    sdottir: Last, //swedish female
-  },
-]
+// index them by length - 'ful' lives in suffixes[3]
+const suffixes = [null, null, {}, {}, {}, {}, {}, {}]
+Object.keys(byTag).forEach(tag => {
+  byTag[tag].split(' ').forEach(suffix => {
+    suffixes[suffix.length][suffix] = tag
+  })
+})
+// the only suffix with a space
+suffixes[3][' so'] = Adv
+export default suffixes

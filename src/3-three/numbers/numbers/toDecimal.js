@@ -1,5 +1,6 @@
 import parse from './parse/index.js'
 import { shiftDecimal, decimalText, isPercent, replaceNumber } from './_conversion.js'
+import { Card, Numeric } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const toDecimal = numbers => {
   const result = numbers.map(value => {
@@ -11,7 +12,7 @@ const toDecimal = numbers => {
       return value.none()
     }
     const phrase = value.growRight('(percent|percentage|per cent)')
-    return replaceNumber(phrase, decimalText(num)).unTag('Percent').tag(['Cardinal', 'NumericValue'])
+    return replaceNumber(phrase, decimalText(num)).unTag('Percent').tag([Card, Numeric])
   })
   return result.numbers()
 }

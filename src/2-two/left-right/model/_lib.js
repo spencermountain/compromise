@@ -53,7 +53,7 @@ const parse = (word, source) => {
   if (index < 0 || index > 1 || terms.length - index > 2) {
     fail()
   }
-  const rule = { actions, reason: `${source}` }
+  const rule = { actions, reason: source }
   if (index === 1) {
     let pre = terms[0]
     if (pre.startsWith('^')) {
@@ -80,17 +80,28 @@ const parse = (word, source) => {
 }
 
 // Run once when loading the model; runtime keys use normal/tag/switch values directly.
-const compile = rules => Object.fromEntries(Object.entries(rules).map(([word, entries]) => {
-  if (!Array.isArray(entries)) {
-    throw new Error(`Left-right rules for "${word}" must be an array.`)
-  }
-  let key = word
-  if (word.startsWith('#')) {
-    key = word.slice(1)
-  } else if (word.startsWith('%') && word.endsWith('%')) {
-    key = word.slice(1, -1)
-  }
-  return [key, entries.map(source => parse(word, expandTags(source)))]
-}))
+// A key may list several words as 'a|b'; a word's rules accumulate across keys in source order.
+const compile = rules => {
+  const out = {}
+  Object.entries(rules).forEach(([words, entries]) => {
+    if (typeof entries !== 'string' && !Array.isArray(entries)) {
+      throw new Error(`Left-right rules for "${words}" must be a string or an array.`)
+    }
+    const parsed = [entries].flat().map(source => parse(words, expandTags(source)))
+    // a '%Switch%' key keeps its pipe
+    const keys = words.startsWith('%') ? [words] : expandTags(words).split('|')
+    keys.forEach(word => {
+      let key = word
+      if (word.startsWith('#')) {
+        key = word.slice(1)
+      } else if (word.startsWith('%') && word.endsWith('%')) {
+        key = word.slice(1, -1)
+      }
+      out[key] ||= []
+      out[key].push(...parsed)
+    })
+  })
+  return out
+}
 
 export default compile

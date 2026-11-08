@@ -1,70 +1,39 @@
+import eachTerm from '../../../1-one/tokenize/compute/_lib.js'
+import { Past, Ger, Inf, Pres } from '../tagSet/_lib.js'
+
+const toInf = (str, world, tense) => world.methods.two.transform.verb.toInfinitive(str, world.model, tense)
+
+// first matching tag wins. (str, world, term) -> root form
 const toRoot = {
   // 'spencer's' -> 'spencer'
-  'Possessive': (term) => {
-    let str = term.machine || term.normal || term.text
-    str = str.replace(/'s$/, '')
-    return str
-  },
+  Possessive: str => str.replace(/'s$/, ''),
   // 'drinks' -> 'drink'
-  'Plural': (term, world) => {
-    const str = term.machine || term.normal || term.text
-    return world.methods.two.transform.noun.toSingular(str, world.model)
-  },
-  // ''
-  'Copula': () => {
-    return 'is'
-  },
+  Plural: (str, world) => world.methods.two.transform.noun.toSingular(str, world.model),
+  Copula: () => 'is',
   // 'walked' -> 'walk'
-  'PastTense': (term, world) => {
-    const str = term.machine || term.normal || term.text
-    return world.methods.two.transform.verb.toInfinitive(str, world.model, 'PastTense')
-  },
+  PastTense: (str, world) => toInf(str, world, Past),
   // 'walking' -> 'walk'
-  'Gerund': (term, world) => {
-    const str = term.machine || term.normal || term.text
-    return world.methods.two.transform.verb.toInfinitive(str, world.model, 'Gerund')
-  },
+  Gerund: (str, world) => toInf(str, world, Ger),
   // 'walks' -> 'walk'
-  'PresentTense': (term, world) => {
-    const str = term.machine || term.normal || term.text
-    if (term.tags.has('Infinitive')) {
-      return str
-    }
-    return world.methods.two.transform.verb.toInfinitive(str, world.model, 'PresentTense')
-  },
+  PresentTense: (str, world, term) => term.tags.has(Inf) ? str : toInf(str, world, Pres),
   // 'quieter' -> 'quiet'
-  'Comparative': (term, world) => {
-    const str = term.machine || term.normal || term.text
-    return world.methods.two.transform.adjective.fromComparative(str, world.model)
-  },
+  Comparative: (str, world) => world.methods.two.transform.adjective.fromComparative(str, world.model),
   // 'quietest' -> 'quiet'
-  'Superlative': (term, world) => {
-    const str = term.machine || term.normal || term.text
-    return world.methods.two.transform.adjective.fromSuperlative(str, world.model)
-  },
+  Superlative: (str, world) => world.methods.two.transform.adjective.fromSuperlative(str, world.model),
   // 'suddenly' -> 'sudden'
-  'Adverb': (term, world) => {
-    const { fromAdverb } = world.methods.two.transform.adjective
-    const str = term.machine || term.normal || term.text
-    return fromAdverb(str)
-  },
+  Adverb: (str, world) => world.methods.two.transform.adjective.fromAdverb(str),
 }
 
 const getRoot = function (view) {
   const world = view.world
   const keys = Object.keys(toRoot)
-  view.docs.forEach(terms => {
-    for (let i = 0; i < terms.length; i += 1) {
-      const term = terms[i]
-      for (let k = 0; k < keys.length; k += 1) {
-        if (term.tags.has(keys[k])) {
-          const fn = toRoot[keys[k]]
-          const root = fn(term, world)
-          if (term.normal !== root) {
-            term.root = root
-          }
-          break
-        }
+  eachTerm(view.docs, term => {
+    const key = keys.find(k => term.tags.has(k))
+    if (key) {
+      const str = term.machine || term.normal || term.text
+      const root = toRoot[key](str, world, term)
+      if (term.normal !== root) {
+        term.root = root
       }
     }
   })

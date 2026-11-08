@@ -1,4 +1,5 @@
-import forms from './forms.js'
+import forms, { InfForm } from './forms.js'
+import { Pres } from '../../../../../2-two/preTagger/tagSet/_lib.js'
 
 const cleanUp = function (vb, res) {
   vb = vb.clone()
@@ -10,20 +11,20 @@ const cleanUp = function (vb, res) {
     vb.remove(res.adverbs.pre)
   }
   // remove negatives
-  if (vb.has('#Negative')) {
-    vb = vb.remove('#Negative')
+  if (vb.has('#Neg')) {
+    vb = vb.remove('#Neg')
   }
   // remove prefixes like 'anti'
   if (vb.has('#Prefix')) {
     vb = vb.remove('#Prefix')
   }
   // cut-off phrasal-verb
-  if (res.root.has('#PhrasalVerb #Particle')) {
+  if (res.root.has('#PhrV #Particle')) {
     vb.remove('#Particle$')
   }
   // did we miss any of these?
   // vb = vb.remove('#Adverb')
-  vb = vb.not('#Adverb')
+  vb = vb.not('#Adv')
   return vb
 }
 
@@ -31,7 +32,7 @@ const cleanUp = function (vb, res) {
 const isInfinitive = function (vb) {
   // Auxiliary tagging can remove Infinitive from 'have' or 'be'. The leading
   // 'to' still governs the whole complement, including intervening modifiers.
-  return vb.growLeft('to (#Adverb|#Negative)+?').has('^to (#Adverb|#Negative)+? #Verb')
+  return vb.growLeft('to (#Adv|#Neg)+?').has('^to (#Adv|#Neg)+? #Verb')
 }
 
 const getGrammar = function (vb, res) {
@@ -41,7 +42,7 @@ const getGrammar = function (vb, res) {
   vb = cleanUp(vb, res)
   for (let i = 0; i < forms.length; i += 1) {
     const todo = forms[i]
-    if (vb.has(todo.match) === true) {
+    if (vb.has(todo.match)) {
       grammar.form = todo.name
       Object.assign(grammar, todo.data)
       break //only match one
@@ -50,14 +51,14 @@ const getGrammar = function (vb, res) {
   // did we find nothing?
   if (!grammar.form) {
     if (vb.has('^#Verb$')) {
-      grammar.form = 'infinitive'
+      grammar.form = InfForm
     }
   }
   // fallback to 'naiive' tense detection
   if (!grammar.tense) {
-    grammar.tense = res.root.has('#PastTense') ? 'PastTense' : 'PresentTense'
+    grammar.tense = res.root.has('#Past') ? 'PastTense' : Pres
   }
-  grammar.copula = res.root.has('#Copula')
+  grammar.copula = res.root.has('#Cop')
   // 'learn to code'
   grammar.isInfinitive = infinitive
   return grammar

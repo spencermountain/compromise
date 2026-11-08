@@ -1,0 +1,25 @@
+{
+  "name": "compromise-speed-browser",
+  "version": "0.0.0",
+  "description": "This is a stub package.json for old bundlers",
+  "license": "MIT",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./../types/browser.d.ts",
+        "default": "./../src/browser.js"
+      },
+      "require": {
+        "types": "./../types/browser.d.cts",
+        "default": "./../builds/compromise-speed.browser.cjs"
+      }
+    }
+  },
+  "main": "./../builds/compromise-speed.browser.cjs",
+  "module": "./../src/browser.js",
+  "types": "./../types/browser.d.cts",
+  "sideEffects": false
+}

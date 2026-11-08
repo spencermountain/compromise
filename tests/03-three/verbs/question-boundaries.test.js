@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/verbs/question-boundaries] '
 
 test(here + 'question conversion stays inside selected sentences', t => {

@@ -1,16 +1,16 @@
 import splitGroups from './splitGroups.js'
+import splitRegs from './splitRegs.js'
 
-// match  'foo /yes/' and not 'foo/no/bar'
-const bySlashes = /(?:^|\s)([![^]*(?:<[^<]*>)?\/.*?[^\\/]\/[?\]+*$~]*)(?:\s|$)/
-// okay
-const byWord = / /g
+// any whitespace separates terms, the same as the tokenizer
+const byWord = /\s+/
 
 const isBlock = str => {
-  return /^[![^]*(<[^<]*>)?\(/.test(str) && /\)[?\]+*$~]*$/.test(str)
+  return /^[![^]*(<[^<]*>)?!?\(/.test(str) && /\)[?\]+*$~{},0-9]*$/.test(str)
 }
 const isReg = str => {
   return /^[![^]*(<[^<]*>)?\//.test(str) && /\/[?\]+*$~]*$/.test(str)
 }
+const never = () => false
 
 const cleanUp = function (arr) {
   arr = arr.map(str => str.trim())
@@ -18,31 +18,28 @@ const cleanUp = function (arr) {
   return arr
 }
 
-const parseBlocks = function (txt) {
+const parseBlocks = function (txt, opts = {}) {
+  // {noRegex} - slashes are plain characters
+  const isRegex = opts.noRegex ? never : isReg
   // parse by /regex/ first
-  const arr = txt.split(bySlashes)
+  const arr = opts.noRegex ? [txt] : splitRegs(txt)
   let res = []
   // parse by (blocks), next
   arr.forEach(str => {
-    if (isReg(str)) {
+    if (isRegex(str)) {
       res.push(str)
       return
     }
     res = res.concat(splitGroups(str))
   })
   res = cleanUp(res)
-  // split by spaces, now
-  let final = []
-  res.forEach(str => {
-    if (isBlock(str)) {
-      final.push(str)
-    } else if (isReg(str)) {
-      final.push(str)
-    } else {
-      final = final.concat(str.split(byWord))
+  // split by spaces, now - but not inside (blocks) or /regexes/
+  const final = res.flatMap(str => {
+    if (isBlock(str) || isRegex(str)) {
+      return str
     }
+    return str.split(byWord)
   })
-  final = cleanUp(final)
-  return final
+  return cleanUp(final)
 }
 export default parseBlocks

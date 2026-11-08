@@ -1,10 +1,11 @@
 import lexData from '../../../_built/lexicon.js'
 import { unpack } from 'efrt'
 import misc from './misc.js'
-import frozenLex from './frozenLex.js'
+import frozenLex, { shared } from './frozenLex.js'
 import emoticons from './emoticons.js'
 import toPlural from '../../methods/transform/nouns/toPlural/index.js'
 import irregularPlurals from '../irregulars/plurals.js'
+import { Conj, Country, Acronym, Emoticon, NounVerb, PluralVerb } from '../../tagSet/_lib.js'
 // unpack our lexicon of words
 // (found in ./lexicon/)
 
@@ -12,13 +13,14 @@ import irregularPlurals from '../irregulars/plurals.js'
 //  - once the plugin is applied
 const hasSwitch = /\|/
 const countryAcronyms = ['uk', 'usa', 'ussr']
-const lexicon = { ...misc }
+const lexicon = { ...misc, ...shared }
 const switches = {}
 
 const tmpModel = { two: { irregularPlurals, uncountable: {} } }
 
 Object.keys(lexData).forEach(tag => {
-  const wordsObj = unpack(lexData[tag])
+  // the packer strips the shared 'true¦' prefix
+  const wordsObj = unpack('true¦' + lexData[tag])
   // POS tag, or something fancier?
   if (!hasSwitch.test(tag)) {
     // set them as simple word key-value lookup
@@ -31,25 +33,25 @@ Object.keys(lexData).forEach(tag => {
   Object.keys(wordsObj).forEach(w => {
     switches[w] = tag
     // pluralize Noun|Verb switches
-    if (tag === 'Noun|Verb') {
+    if (tag === NounVerb) {
       const plural = toPlural(w, tmpModel)
       // Invariant irregular plurals intentionally share a switch.
       if (plural !== w || irregularPlurals[w] === w) {
-        switches[plural] = 'Plural|Verb'
+        switches[plural] = PluralVerb
       }
     }
   })
 })
 // Keep the conditional tag alongside the packed conjunction entry.
-lexicon.if = ['Conjunction', 'Condition']
+lexicon.if = [Conj, 'Condition']
 
 // Keep country initialisms out of the generic acronym retagging pass.
 countryAcronyms.forEach(word => {
-  lexicon[word] = ['Country', 'Acronym']
+  lexicon[word] = [Country, Acronym]
 })
 
 // add ':)'
-emoticons.forEach(str => (lexicon[str] = 'Emoticon'))
+emoticons.forEach(str => (lexicon[str] = Emoticon))
 
 // misc cleanup
 delete lexicon['']

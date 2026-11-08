@@ -1,8 +1,12 @@
+import { hasAny, toSet } from '../../../../_lib.js'
+import { Prop, NN, Det, Mod, Poss, Adj, Adv, Date, Inf, Time, Pres, Plur, Pron, Vb, Cop, Past, Sing, Pers, Neg, AdjNoun, NounGerund, PluralVerb, AdjGerund, ActorVerb, AdjPast, AdjPresent, NounVerb, PersonNoun, PersonVerb, PersonAdj } from '../../../tagSet/_lib.js'
 const isTitleCase = /^[A-Z][a-z]/
+// punctuation, after a word
+const hasPunct = /[^\s-]/
 
 const isCapital = (terms, i) => {
-  if (terms[i].tags.has('ProperNoun') && isTitleCase.test(terms[i].text)) {// 'Comfort Inn'
-    return 'Noun'
+  if (terms[i].tags.has(Prop) && isTitleCase.test(terms[i].text)) {// 'Comfort Inn'
+    return NN
   }
   return null
 }
@@ -16,8 +20,8 @@ const isAlone = (terms, i, tag) => {
 
 // 'a rental'
 const isEndNoun = function (terms, i) {
-  if (!terms[i + 1] && terms[i - 1] && terms[i - 1].tags.has('Determiner')) {
-    return 'Noun'
+  if (!terms[i + 1] && terms[i - 1] && terms[i - 1].tags.has(Det)) {
+    return NN
   }
   return null
 }
@@ -31,114 +35,206 @@ const isStart = function (terms, i, tag) {
 }
 
 // An inverted question has one subject head before its terminal predicate.
-const questionWords = new Set(['why', 'when', 'where', 'how'])
-const doForms = new Set(['do', 'does', 'did'])
+const questionWords = toSet('why when where how')
+const doForms = toSet('do does did')
 const isQuestionVerb = (terms, i) => {
   let n = questionWords.has(terms[0].normal) ? 1 : 0
   if (n === 0 && !terms[terms.length - 1].post.includes('?')) {
     return null
   }
   const auxiliary = terms[n]
-  if (!auxiliary || (!doForms.has(auxiliary.normal) && !auxiliary.tags.has('Modal'))) {
+  if (!auxiliary || (!doForms.has(auxiliary.normal) && !auxiliary.tags.has(Mod))) {
     return null
   }
   n += 1
-  if (terms[n]?.tags.has('Determiner') || terms[n]?.tags.has('Possessive')) {
+  if (terms[n] && hasAny(terms[n], Det, Poss)) {
     n += 1
-    for (; n < i && (terms[n].tags.has('Adjective') || terms[n].tags.has('Adverb')); n += 1) {
+    for (; n < i && hasAny(terms[n], Adj, Adv); n += 1) {
       // Skip subject modifiers.
     }
   }
-  if (n >= i || !terms[n]?.tags.has('Noun')) {
+  if (n >= i || !terms[n]?.tags.has(NN)) {
     return null
   }
   n += 1
-  for (; n < i && (terms[n].tags.has('Adverb') || terms[n].tags.has('Negative')); n += 1) {
+  for (; n < i && hasAny(terms[n], Adv, Neg); n += 1) {
     // Skip predicate modifiers.
   }
-  if (n !== i || terms.slice(i + 1).some(t => !t.tags.has('Adverb') && !t.tags.has('Date'))) {
+  if (n !== i || terms.slice(i + 1).some(t => !hasAny(t, Adv, Date))) {
     return null
   }
-  return 'Infinitive'
+  return Inf
+}
+
+// A singular determiner cannot lead a plural head: 'a good morning routine helps'.
+const singularDet = toSet('a an this that each every another')
+const isNounLike = term => hasAny(term, NN, Time) || term.switch === AdjNoun
+
+const isSingularSubject = (terms, i) => {
+  // Mid-clause, the word may modify a noun: 'a fantasy sports league'.
+  if (terms[i + 1] || !terms[i - 1] || !isNounLike(terms[i - 1])) {
+    return null
+  }
+  for (let n = i - 1; n >= 0; n -= 1) {
+    const term = terms[n]
+    // Punctuation splits the phrase: '(a) in future reports'.
+    if (hasPunct.test(term.post)) {
+      return null
+    }
+    if (singularDet.has(term.normal)) {
+      return Pres
+    }
+    // These allow a plural head: a friend's plans, a couple plans, once a week updates.
+    if (term.normal.endsWith("'s") || term.normal === 'couple' || term.tags.has('Duration')) {
+      return null
+    }
+    // A verb can intervene: 'a job cleaning mirrors' (but not 'a good meeting helps').
+    if (term.switch === NounGerund && terms[n - 1]?.tags.has(NN)) {
+      return null
+    }
+    if (!isNounLike(term) && !hasAny(term, Adj, Adv)) {
+      return null
+    }
+  }
+  return null
+}
+
+// 'sales [targets]' - mid-clause it could be a verb: 'rain in four decades hits delhi'.
+const isPluralCompound = (terms, i) => {
+  const prev = terms[i - 1]
+  if (!terms[i + 1] && prev?.tags.has(Plur) && !prev.tags.has(Prop) && !hasPunct.test(prev.post)) {
+    return Plur
+  }
+  return null
+}
+
+// 'sports [records] are' - but not 'the cars he [drives] are'.
+const isBeforeAre = (terms, i) => {
+  const prev = terms[i - 1]
+  const hasSubject = prev?.tags.has(Pron) && !prev.tags.has(Poss)
+  if (/^(are|were)$/.test(terms[i + 1]?.normal) && !hasSubject) {
+    return Plur
+  }
+  return null
+}
+
+// 'a [routine] helps'
+const isSubjectNoun = (terms, i) => {
+  if (singularDet.has(terms[i - 1]?.normal) && terms[i + 1]?.switch === PluralVerb && !terms[i + 2]) {
+    return NN
+  }
+  return null
+}
+
+// Adjective-ish adverb clues that modify a verb just as readily.
+const verbAdverb = /^(really|truly|still|always|quite|badly|deeply|totally|rather|mostly|profoundly)$/
+// These pronouns are only ever a subject.
+const nominative = /^(i|he|she|we|they)$/
+
+// 'he really needed' - a subject, then an adverb, begins a predicate.
+const isAfterSubject = (terms, i, n) => {
+  const subject = terms[n]
+  if (!verbAdverb.test(terms[i - 1]?.normal) || !subject?.tags.has(NN) || subject.tags.has(Poss)) {
+    return null
+  }
+  // "it's really needed" may still hide a copula, and 'me' is never a subject
+  if (subject.normal.includes("'") || /^(me|him|us|them)$/.test(subject.normal)) {
+    return null
+  }
+  // Other nouns may be an object: 'made it really complicated', 'with the kids really excited'.
+  let isComplement = terms.slice(0, n).some(t => t.tags.has(Vb) || t.normal === 'with')
+  // or the head of a phrase: 'anyone really interested should', 'students still confused about'
+  const next = terms[i + 1]
+  isComplement ||= next?.tags.has(Mod) || next?.normal === 'about'
+  // A subject pronoun only follows an inverted copula: "isn't he really needed".
+  if (nominative.test(subject.normal)) {
+    const skip = terms[n - 1]?.tags.has(Neg) ? 2 : 1
+    isComplement = terms[n - skip]?.tags.has(Cop)
+  }
+  return isComplement ? null : Past
 }
 
 const adhoc = {
-  'Adj|Gerund': (terms, i) => {
-    return isCapital(terms, i)
+  [AdjGerund]: isCapital,
+  [AdjNoun]: (terms, i) => {
+    return isCapital(terms, i) || isEndNoun(terms, i) || isSubjectNoun(terms, i)
   },
-  'Adj|Noun': (terms, i) => {
-    return isCapital(terms, i) || isEndNoun(terms, i)
-  },
-  'Actor|Verb': (terms, i) => {
-    return isCapital(terms, i)
-  },
-  'Adj|Past': (terms, i) => {
+  [ActorVerb]: isCapital,
+  [AdjPast]: (terms, i) => {
     // Perfect auxiliaries can be separated from the participle.
     let before = i - 1
     for (; before >= 0; before -= 1) {
       const term = terms[before]
-      if (!term.tags.has('Adverb') && !term.tags.has('Negative') && term.normal !== 'since') {
+      // 'still' is not an adverb, yet
+      const isAdverb = term.tags.has(Adv) || term.normal === 'since' || term.normal === 'still'
+      if (!isAdverb && !term.tags.has(Neg)) {
         break
       }
     }
     if (/^(have|has|had)$/.test(terms[before]?.normal)) {
-      return 'PastTense'
+      return Past
     }
-    return isCapital(terms, i)
+    return isAfterSubject(terms, i, before) || isCapital(terms, i)
   },
-  'Adj|Present': (terms, i) => {
+  [AdjPresent]: (terms, i) => {
     // 'are ready for' and 'are not ready for' describe a state.
     let before = i - 1
-    if (terms[before]?.tags.has('Negative')) {
+    if (terms[before]?.tags.has(Neg)) {
       before -= 1
     }
-    if (terms[before]?.tags.has('Copula')) {
-      return 'Adjective'
+    if (terms[before]?.tags.has(Cop)) {
+      return Adj
     }
-    return  isCapital(terms, i)
-  },
-  'Noun|Gerund': (terms, i) => {
     return isCapital(terms, i)
   },
-  'Noun|Verb': (terms, i) => {
-    if (terms[i - 1]?.normal === 'even' && terms[i - 2]?.tags.has('Determiner')) {
-      return 'Singular'
+  [NounGerund]: isCapital,
+  [NounVerb]: (terms, i) => {
+    // 'the even split', 'this still water', "the pond's still water" - a bare verb can't follow 'is still'
+    const adverb = terms[i - 1]?.normal
+    const owner = terms[i - 2]
+    const isOwned = adverb === 'still' && owner?.normal.endsWith("'s")
+    if (((adverb === 'even' || adverb === 'still') && owner?.tags.has(Det)) || isOwned) {
+      return Sing
     }
-    return isQuestionVerb(terms, i) || (i > 0 && isCapital(terms, i)) || isAlone(terms, i, 'Infinitive')
+    return isQuestionVerb(terms, i) || (i > 0 && isCapital(terms, i)) || isAlone(terms, i, Inf)
   },
-  'Plural|Verb': (terms, i) => {
+  [PluralVerb]: (terms, i) => {
     // A singular demonstrative makes 'this still helps' a predicate.
     const subject = terms[i - 2]?.normal
     if (terms[i - 1]?.normal === 'still' && (subject === 'this' || subject === 'that')) {
-      return 'PresentTense'
+      return Pres
     }
-    return isCapital(terms, i) || isAlone(terms, i, 'PresentTense') || isStart(terms, i, 'Plural')
+    // A plural demonstrative can't take an -s verb: 'these still waters'.
+    if (terms[i - 1]?.normal === 'still' && (subject === 'these' || subject === 'those')) {
+      return Plur
+    }
+    return isCapital(terms, i) || isSingularSubject(terms, i) || isPluralCompound(terms, i) || isBeforeAre(terms, i) || isAlone(terms, i, Pres) || isStart(terms, i, Plur)
   },
-  'Person|Noun': (terms, i) => {
+  [PersonNoun]: (terms, i) => {
     // A robin sang; her faith never wavered.
     const before = terms[i - 1]
-    if (before?.tags.has('Determiner') || before?.tags.has('Possessive')) {
-      return 'Singular'
+    if (before && hasAny(before, Det, Poss)) {
+      return Sing
     }
     // My friend Art arrived; Alfredo handed me the keys.
     if (isTitleCase.test(terms[i].text)) {
-      if (i > 0 || (terms[i + 1]?.tags.has('Verb') && !terms[i + 1].tags.has('Copula') && terms[i + 2]?.tags.has('Pronoun'))) {
-        return 'Person'
+      if (i > 0 || (terms[i + 1]?.tags.has(Vb) && !terms[i + 1].tags.has(Cop) && terms[i + 2]?.tags.has(Pron))) {
+        return Pers
       }
     }
     return null
   },
-  'Person|Verb': (terms, i) => {
+  [PersonVerb]: (terms, i) => {
     if (i !== 0) {
       return isCapital(terms, i)
     }
     return null
   },
-  'Person|Adj': (terms, i) => {
+  [PersonAdj]: (terms, i) => {
     if (i === 0 && terms.length > 1) {
-      return 'Person'
+      return Pers
     }
-    return isCapital(terms, i) ? 'Person' : null
+    return isCapital(terms, i) ? Pers : null
   },
 }
 export default adhoc

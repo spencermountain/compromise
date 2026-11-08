@@ -14,4 +14,10 @@ const getTagSet = (tags) => {
   return set
 }
 
+// strip the '#', then follow any alias
+export const resolveTag = (tag, aliases) => {
+  tag = tag.replace(/^#/, '')
+  return aliases?.[tag] || tag
+}
+
 export default getTagSet

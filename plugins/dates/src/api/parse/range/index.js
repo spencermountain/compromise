@@ -5,13 +5,12 @@ import doTwoTimes from './01-two-times.js'
 import doCombos from './combos/index.js'
 import doDateRange from './02-date-range.js'
 import doOneDate from './03-one-date.js'
+import { green, isDebug } from '../../../_debug.js'
 
 const ranges = [].concat(doTwoTimes, doCombos, doDateRange, doOneDate)
 
-const env = globalThis.process?.env ?? globalThis.env ?? {}
-const green = str => '\x1b[32m' + str + '\x1b[0m'
 const log = msg => {
-  if (env.DEBUG_DATE) {
+  if (isDebug()) {
     console.log(`\n  ${green(` ${msg} `)}`) // eslint-disable-line
   }
 }

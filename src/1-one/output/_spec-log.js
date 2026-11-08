@@ -1,4 +1,4 @@
-import { red } from '../../API/_color.js'
+import { red, green, dim } from '../../API/_color.js'
 
 const logSpec = (doc, slots, failures, aliases) => {
   const terms = doc.docs.flat()
@@ -38,4 +38,13 @@ const logSpec = (doc, slots, failures, aliases) => {
   return `${text} ${block}`
 }
 
-export default logSpec
+// one ✓ or ✗ line per spec line, for verbose mode
+const logLine = (text, tags, detail) => {
+  const block = tags === null ? '' : ` {${tags.map(slot => slot.join('|')).join(',')}}`
+  if (detail) {
+    return `${red('✗')} ${text}${dim(block)} - ${red(detail)}`
+  }
+  return `${green('✓')} ${green(dim(text))}${dim(block)}`
+}
+
+export { logSpec, logLine }

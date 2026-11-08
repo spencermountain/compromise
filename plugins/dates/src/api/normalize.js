@@ -1,3 +1,21 @@
+// 'twenty twenty-six' becomes one term '2026', so our view must shrink along with it
+const toNumbers = function (doc, num) {
+  const ptrs = doc.fullPointer
+  if (ptrs.length !== 1) {
+    num.toNumber()
+    return doc
+  }
+  const [n, start, end] = ptrs[0]
+  const size = doc.document[n].length
+  num.toNumber()
+  const removed = size - doc.document[n].length
+  if (removed === 0) {
+    return doc
+  }
+  // get a pointer with fresh term-ids, to follow any later changes
+  const m = doc.update([[n, start, end - removed]])
+  return m.update(m.fullPointer)
+}
 
 // shared cleanup for .dates() and .times() - see parse/normalize.js
 const normalize = function (doc, opts = {}) {
@@ -24,7 +42,9 @@ const normalize = function (doc, opts = {}) {
   }
   // convert 'two' to 2
   const num = doc.numbers()
-  num.toNumber()
+  doc = toNumbers(doc, num)
+  // '2020's election' - the possessive isn't part of the year
+  doc.match('#Year').possessives().strip()
   if (opts.times) {
     num.toCardinal(false)
   }

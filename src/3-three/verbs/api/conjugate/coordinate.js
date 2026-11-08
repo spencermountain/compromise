@@ -2,21 +2,22 @@ import { Inf, Participle, Ger, Past, Pres } from '../../../../2-two/preTagger/ta
 import { inflect } from './inflect.js'
 import groups from './groups.js'
 export { firstGroup } from './groups.js'
-import question, { isInverted, questionSelection } from './question.js'
-import { isAreAm } from '../lib.js'
+import question, { isInverted, isPolar, questionSelection } from './question.js'
+import { isAreAm, retag } from '../lib.js'
+import { ModalPast, ModalInf } from '../parse/grammar/forms.js'
 
 const resultTense = function (head, target) {
   const { chain, parsed, form } = head
   if (target === 'infinitive') return Inf
   if (target === 'gerund') return chain && chain.passive ? Participle : Ger
-  if (parsed.root.has('#Gerund')) return Ger
+  if (parsed.root.has('#Ger')) return Ger
   if (target === 'participle') return Participle
   if (chain && chain.passive) return Participle
   if (chain && chain.perfect) {
-    return target === 'present' && form === 'modal-past' ? Inf : Participle
+    return target === 'present' && form === ModalPast ? Inf : Participle
   }
   if (chain && chain.modal) {
-    return target === 'past' && form === 'modal-infinitive' && chain.finite !== 'can' ? Participle : Inf
+    return target === 'past' && form === ModalInf && chain.finite !== 'can' ? Participle : Inf
   }
   if (target === 'future') return Inf
   if (target === 'past') return Past
@@ -24,7 +25,10 @@ const resultTense = function (head, target) {
 }
 
 const coordinateNormal = function (verbs, target, convert) {
-  if (verbs.length < 2) return verbs.map(convert)
+  // A 'not' has no tense to share, so each verb converts on its own.
+  if (verbs.length < 2 || isPolar(target)) {
+    return verbs.map(convert)
+  }
   const entries = groups(verbs)
   entries.forEach(entry => {
     if (entry.head) entry.tense = resultTense(entry.head, target)
@@ -38,34 +42,44 @@ const coordinateNormal = function (verbs, target, convert) {
     const word = inflect(root, entry.tense)
     if (word && word !== root.text('normal')) {
       entry.root.replaceWith(word)
-      vb.fullSentence().compute(['tagger', 'chunks'])
+      retag(vb)
     }
     return vb
   })
 }
 const coordinate = function (verbs, target, convert) {
   const sentences = verbs.fullSentence().settle()
-  if (!sentences.some(s => isInverted(s))) return coordinateNormal(verbs, target, convert)
+  if (!sentences.some(s => isInverted(s, target))) return coordinateNormal(verbs, target, convert)
   return sentences.map(sentence => {
     const index = sentence.fullPointer[0][0]
     const selected = verbs.filter(vb => vb.fullPointer[0][0] === index)
-    const required = questionSelection(sentence)
+    const required = questionSelection(sentence, target)
     if (!required) return coordinateNormal(selected, target, convert)
     const outside = selected.not(required)
     const inside = selected.not(outside).harden()
     const others = coordinateNormal(outside, target, convert)
     if (!inside.found) return others
-    // Partial selections cannot reconstruct the whole question.
-    if (required.terms().not(inside.terms()).not('#Negative').found) return inside.concat(others).settle()
+    // Partial selections cannot reconstruct the whole question, but can still drop a 'not'.
+    if (required.terms().not(inside.terms()).not('#Neg').found) {
+      const kept = target === 'positive' ? inside.map(convert) : inside
+      return kept.concat(others).settle()
+    }
+    // Converting the others can change the sentence length: 'were' -> 'have been'.
+    const current = sentence.fullSentence()
     // Question reconstruction changes term IDs. Track other selected phrases
     // from the sentence end, since the unchanged trailing clauses keep their
     // lengths even when the main auxiliary chain grows or shrinks.
-    const end = sentence.fullPointer[0][2]
+    const end = current.fullPointer[0][2]
     const trailing = others.fullPointer.map(ptr => [ptr[0], end - ptr[1], end - ptr[2]])
-    const result = question(sentence, target)
+    const result = question(current, target)
+    // Converting the others can stop it reading as inverted: 'what I want is a dog'
+    if (!result) {
+      return inside.concat(others).settle()
+    }
     const newEnd = result.fullPointer[0][2]
     const remaining = result.update(trailing.map(ptr => [ptr[0], newEnd - ptr[1], newEnd - ptr[2]]))
-    return questionSelection(result).concat(remaining).settle()
+    // The new sentence may no longer read as a question.
+    return (questionSelection(result, target) || result).concat(remaining).settle()
   })
 }
 export default coordinate

@@ -4,25 +4,27 @@ const hasSomething = /\S/
 
 const notEmpty = function (splits) {
   const chunks = []
+  let lead = '' // whitespace+punctuation, before the first chunk
   for (let i = 0; i < splits.length; i++) {
     const s = splits[i]
     if (s === undefined || s === '') {
       continue
     }
     //this is meaningful whitespace
-    if (hasSomething.test(s) === false || hasLetter.test(s) === false) {
+    if (!hasSomething.test(s) || !hasLetter.test(s)) {
       //add it to the last one
       if (chunks[chunks.length - 1]) {
         chunks[chunks.length - 1] += s
         continue
       } else if (splits[i + 1]) {
         //add it to the next one
-        splits[i + 1] = s + splits[i + 1]
+        lead += s
         continue
       }
     }
     //else, only whitespace, no terms, no sentence
-    chunks.push(s)
+    chunks.push(lead + s)
+    lead = ''
   }
   return chunks
 }

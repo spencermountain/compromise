@@ -30,10 +30,7 @@ collisions are more-likely after
 */
 let index = 0
 
-const pad3 = (str) => {
-  str = str.length < 3 ? '0' + str : str
-  return str.length < 3 ? '0' + str : str
-}
+const pad3 = str => str.padStart(3, '0')
 
 const toId = function (term) {
   let [n, i] = term.index || [0, 0]
@@ -52,9 +49,7 @@ const toId = function (term) {
   id += pad3(n.toString(36))
 
   // 1 digit for term index (36)
-  let tx = i.toString(36)
-  tx = tx.length < 2 ? '0' + tx : tx //pad2
-  id += tx
+  id += i.toString(36).padStart(2, '0')
 
   // 1 digit random number
   const r = parseInt(Math.random() * 36, 10)

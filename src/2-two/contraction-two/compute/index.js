@@ -4,9 +4,15 @@ import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
 import isPossessive from './isPossessive.js'
 import wannaNoun from './wanna.js'
+import thereAre from './there-are.js'
 import contractionDebug from '../../../API/debug/contractions-debug.js'
+import { hasApostrophe } from './_lib.js'
+import { isDecade } from './_words.js'
+import { setTag } from '../../preTagger/compute/tagger/_lib.js'
+import { Year, Poss } from '../../preTagger/tagSet/_lib.js'
 
-const byApostrophe = /'/
+// the debug reason for every tag this pass sets
+const reason = '2-contraction'
 
 // poor-mans reindexing of this sentence only
 const reIndex = function (terms) {
@@ -35,17 +41,35 @@ const reTag = function (terms, view, start, len) {
   reIndex(terms)
 }
 
+// What 's means (possessive, is, has, us) is decided in steps, in run order:
+//   1. 1-one/contraction-one/model/contractions.js        fixed forms - that's, let's
+//   2. 2-two/preTagger/model/regex/regex-text.js          plural owners - flanders'
+//   3. 2-two/preTagger/compute/tagger/2nd-pass/05-year.js  years - 2020's election
+//   4. 2-two/preTagger/compute/tagger/3rd-pass/00-possessive.js  the sure cases, from lexicon tags
+//   5. ./isPossessive.js                                   the full possessive decision
+//   6. ./apostrophe-s.js                                   is vs has, once it is a verb
+// Steps 4 and 5 share their word lists, in ./_words.js.
+// A wrong call invents a verb, so change them together. Each file points back to this list.
 const byEnd = {
   // how'd
-  d: (terms, i) => apostropheD(terms, i),
+  d: apostropheD,
   // we ain't
-  t: (terms, i) => apostropheT(terms, i),
+  t: apostropheT,
   // bob's
   s: (terms, i, world) => {
+    // [the 1990's] is a decade - neither an owner, nor 'is'
+    if (isDecade(terms[i])) {
+      return null
+    }
     // [bob's house] vs [bob's cool]
     if (isPossessive(terms, i)) {
       contractionDebug(terms[i])
-      return world.methods.one.setTag([terms[i]], 'Possessive', world, null, '2-contraction')
+      // [2020's election] stays a number - setTag would remove it, for being a noun
+      if (terms[i].tags.has(Year)) {
+        terms[i].tags.add(Poss)
+        return null
+      }
+      return setTag([terms[i]], Poss, world, reason)
     }
     return apostropheS(terms, i)
   },
@@ -70,13 +94,19 @@ const contractionTwo = view => {
         reIndex(terms)
         continue
       }
+      if (thereAre(terms, i)) {
+        contractionDebug(terms[i], ['there', 'are'])
+        continue
+      }
       // is it already a contraction
       if (terms[i].implicit) {
         continue
       }
       let after = null
-      if (byApostrophe.test(terms[i].normal) === true) {
-        after = terms[i].normal.split(byApostrophe)[1]
+      if (hasApostrophe.test(terms[i].normal)) {
+        after = terms[i].normal.split(hasApostrophe)[1]
+      } else if (terms[i].normal === 'aint') {
+        after = 't'
       }
       let words = null
       // any known-ones, like 'dunno'?
@@ -85,9 +115,14 @@ const contractionTwo = view => {
       }
       // actually insert the new terms
       if (words) {
+        const isYear = terms[i].tags.has(Year)
         words = toDocs(words, view, terms[i])
         splice(document, [n, i], words)
         reTag(document[n], view, i, words.length)
+        // [twenty twenty-six's] over - it may only be a year as a whole
+        if (isYear) {
+          setTag([document[n][i]], Year, world, reason)
+        }
         continue
       }
     }

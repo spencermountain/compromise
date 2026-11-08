@@ -1,14 +1,7 @@
 import { cleanAppend, cleanPrepend } from './lib/insert.js'
 import uuid from '../compute/uuid.js'
-// are we inserting inside a contraction?
-// expand it first
-const expand = function (m) {
-  if (m.has('@hasContraction') && typeof m.contractions === 'function') {
-    //&& m.after('^.').has('@hasContraction')
-    const more = m.grow('@hasContraction')
-    more.contractions().expand()
-  }
-}
+import expandContraction from './lib/_expand.js'
+import { retag } from '../../../API/_helpers.js'
 
 // set new ids for each terms
 const addIds = function (terms) {
@@ -54,10 +47,10 @@ const insert = function (input, view, prepend) {
     }
     terms = addIds(terms)
     if (prepend) {
-      expand(view.update([ptr]).firstTerm())
+      expandContraction(view.update([ptr]).firstTerm())
       cleanPrepend(home, ptr, terms, document)
     } else {
-      expand(view.update([ptr]).lastTerm())
+      expandContraction(view.update([ptr]).lastTerm())
       cleanAppend(home, ptr, terms, document)
     }
     // harden the pointer
@@ -74,12 +67,7 @@ const insert = function (input, view, prepend) {
   // shift our self pointer, if necessary
   view.ptrs = selfPtrs
   // try to tag them, too
-  doc.compute(['id', 'index', 'freeze', 'lexicon'])
-  if (doc.world.compute.preTagger) {
-    doc.compute('preTagger')
-  }
-  doc.compute('unfreeze')
-  return doc
+  return retag(doc, ['id', 'index'])
 }
 
 const fns = {

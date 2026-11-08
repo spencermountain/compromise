@@ -9,10 +9,6 @@ const toRoot = function (adj) {
 const api = function (View) {
 
   class Adverbs extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Adverbs'
-    }
     conjugate(n) {
       return this.getNth(n).map(adv => {
         const adj = toRoot(adv)
@@ -34,7 +30,8 @@ const api = function (View) {
       }, [])
     }
   }
+  Adverbs.prototype.viewType = 'Adverbs'
 
-  View.prototype.adverbs = select(Adverbs, '#Adverb')
+  View.prototype.adverbs = select(Adverbs, '#Adv')
 }
 export default { api }

@@ -1,6 +1,6 @@
 {
   "name": "compromise-dates",
-  "version": "3.10.0",
+  "version": "3.11.0",
   "description": "Date and time extraction for compromise",
   "license": "MIT",
   "repository": {
@@ -25,7 +25,7 @@
   },
   "main": "./builds/compromise-dates.cjs",
   "module": "./builds/compromise-dates.mjs",
-  "types": "./types/index.d.ts",
+  "types": "./types/index.d.cts",
   "sideEffects": false,
   "engines": {
     "node": ">=18"
@@ -45,7 +45,7 @@
     "src/"
   ],
   "dependencies": {
-    "spacetime": "^7.17.0",
+    "spacetime": "^7.17.1",
     "spacetime-holiday": "0.4.0"
   },
   "peerDependencies": {

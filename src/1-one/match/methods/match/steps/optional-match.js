@@ -1,20 +1,16 @@
-import matchTerm from '../term/doesMatch.js'
+import { matchAt } from '../_lib.js'
 
 // 'foo? foo' matches are tricky.
-const foundOptional = function (state) {
-  const { regs } = state
-  const reg = regs[state.r]
-  const term = state.terms[state.t]
-  // does the next reg match it too?
-  const nextRegMatched = matchTerm(term, regs[state.r + 1], state.start_i + state.t, state.phrase_length)
-  if (reg.negative || nextRegMatched) {
-    // but does the next reg match the next term??
-    // only skip if it doesn't
-    const nextTerm = state.terms[state.t + 1]
-    if (!nextTerm || !matchTerm(nextTerm, regs[state.r + 1], state.start_i + state.t + 1, state.phrase_length)) {
-      state.r += 1
-    }
+// should this optional token leave its term for the next one?
+const leaveForNext = function (state) {
+  const next = state.regs[state.r + 1]
+  if (!next || !matchAt(state, next, state.t)) {
+    return false
   }
+  // but does the next reg match the next term??
+  // only skip if it doesn't
+  const nextTerm = state.terms[state.t + 1]
+  return !nextTerm || !matchAt(state, next, state.t + 1)
 }
 
-export default foundOptional
+export default leaveForNext

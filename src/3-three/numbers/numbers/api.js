@@ -1,48 +1,68 @@
 import select from '../../_select.js'
+import keepClass, { jsonWith } from '../../_lib.js'
 import { Numeric, Ord, Card, TxtNum } from '../../../2-two/preTagger/tagSet/_lib.js'
 import find from './find.js'
 import parse from './parse/index.js'
 import format from './format/index.js'
 import isUnit from './isUnit.js'
+import isValid from './isValid.js'
 import convert from './_lib.js'
+import { isPercent, dropPreSign } from './_conversion.js'
 import toFraction from './toFraction.js'
 import toPercentage from './toPercentage.js'
 import toDecimal from './toDecimal.js'
 
-const ordinalMatch = '#Ordinal'
-const textValueMatch = '#TextValue'
+const ordinalMatch = '#Ord'
+const textValueMatch = '#TxtNum'
 const textOrdinal = 'TextOrdinal'
 const textCardinal = 'TextCardinal'
+const keep = { tags: true, possessives: true }
+
+// shared by set() and add(): give each number a new value, in its current format
+// eslint-disable-next-line max-params
+const edit = (view, n, apply, operation, isText, strip) => {
+  if (typeof n === 'string') {
+    n = parse(n).num
+  }
+  const res = view._mapNumbers(val => {
+    const obj = parse(val)
+    apply(obj, n)
+    if (obj.num === null) {
+      return val
+    }
+    let fmt = val.has(ordinalMatch) ? Ord : Card
+    if (isText(val, obj)) {
+      fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
+    }
+    const str = format(obj, fmt)
+    if (strip) {
+      val = val.not(strip)
+    }
+    dropPreSign(val, str)
+    val.replaceWith(str, keep)
+    // handle plural/singular unit
+    // agreeUnits(agree, val, obj)
+    return val
+  }, num => operation(num, n))
+  return view.update(res.pointer)
+}
 
 const addMethod = function (View) {
   /**   */
   class Numbers extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Numbers'
-    }
     parse(n) {
-      return this.getNth(n).map(parse)
+      return this.getNth(n).map(parse, [])
     }
     get(n) {
       return this.getNth(n)
-        .map(parse)
+        .map(parse, [])
         .map(o => o.num)
     }
     json(n) {
-      const opts = typeof n === 'object' ? n : {}
-      return this.getNth(n).map(p => {
-        const json = p.toView().json(opts)[0]
-        const parsed = parse(p)
-        json.number = {
-          prefix: parsed.prefix,
-          num: parsed.num,
-          suffix: parsed.suffix,
-          hasComma: parsed.hasComma,
-          unit: parsed.unit,
-        }
-        return json
-      }, [])
+      return jsonWith(this, n, 'number', p => {
+        const { prefix, num, suffix, hasComma, unit } = parse(p)
+        return { prefix, num, suffix, hasComma, unit }
+      })
     }
     /** any known measurement unit, for the number */
     units() {
@@ -52,13 +72,17 @@ const addMethod = function (View) {
     isUnit(allowed) {
       return isUnit(this, allowed)
     }
+    /** drop matches that do not parse to a usable number - like 'thousand thousand' or '21th' */
+    isValid() {
+      return isValid(this)
+    }
     /** return only ordinal numbers */
     isOrdinal() {
       return this.if(ordinalMatch)
     }
     /** return only cardinal numbers*/
     isCardinal() {
-      return this.if('#Cardinal')
+      return this.if('#Card')
     }
 
     /** convert to numeric form like '8' or '8th' */
@@ -72,7 +96,8 @@ const addMethod = function (View) {
       const m = this
       const res = m._mapNumbers(val => {
         const obj = parse(val)
-        if (obj.num === null) {
+        // leave '1/2' alone
+        if (obj.num === null || val.has('(#Frac && #Numeric)')) {
           return val
         }
         let num = obj.num.toLocaleString()
@@ -80,7 +105,9 @@ const addMethod = function (View) {
         if (val.has(ordinalMatch)) {
           num += format(obj, Ord).slice(obj.prefix.length).match(/[a-z]+/)[0]
         }
-        val.replaceWith(obj.prefix + num + obj.suffix, { tags: true })
+        const str = obj.prefix + num + obj.suffix
+        dropPreSign(val, str)
+        val.replaceWith(str, keep)
         return val
       })
       return this.update(res.pointer)
@@ -114,99 +141,39 @@ const addMethod = function (View) {
       return toDecimal(this)
     }
 
-    /** return only numbers that are == n */
-    isEqual(n) {
-      return this.filter(val => {
-        const num = val.get(0)[0]
-        return num === n
-      })
-    }
-    /** return only numbers that are > n*/
-    greaterThan(n) {
-      return this.filter(val => {
-        const num = val.get(0)[0]
-        return num > n
-      })
-    }
-    /** return only numbers that are < n*/
-    lessThan(n) {
-      return this.filter(val => {
-        const num = val.get(0)[0]
-        return num < n
-      })
-    }
-    /** return only numbers > min and < max */
-    between(min, max) {
-      return this.filter(val => {
-        const num = val.get(0)[0]
-        return num > min && num < max
-      })
-    }
     /** set these number to n */
     set(n) {
       if (n === undefined) {
         return this // don't bother
       }
-      if (typeof n === 'string') {
-        n = parse(n).num
+      const set = (obj, to) => {
+        obj.num = to
       }
-      const m = this
-      const res = m._mapNumbers(val => {
-        const obj = parse(val)
-        obj.num = n
-        if (obj.num === null) {
-          return val
-        }
-        let fmt = val.has(ordinalMatch) ? Ord : Card
-        if (val.has(textValueMatch)) {
-          fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
-        }
-        const str = format(obj, fmt)
-        val = val.not('#Currency')
-        val.replaceWith(str, { tags: true })
-        // handle plural/singular unit
-        // agreeUnits(agree, val, obj)
-        return val
-      }, () => n)
-      return this.update(res.pointer)
+      return edit(this, n, set, (num, to) => to, val => val.has(textValueMatch), '#Currency')
     }
     add(n) {
       if (!n) {
         return this // don't bother
       }
-      if (typeof n === 'string') {
-        n = parse(n).num
+      // unparseable values stay as they are
+      const add = (obj, by) => {
+        if (obj.num !== null) {
+          obj.num = this._add(obj.num, by)
+        }
       }
-      const m = this
-      const res = m._mapNumbers(val => {
-        const obj = parse(val)
-        if (obj.num === null) {
-          return val
-        }
-        obj.num = this._add(obj.num, n)
-        let fmt = val.has(ordinalMatch) ? Ord : Card
-        if (obj.isText) {
-          fmt = val.has(ordinalMatch) ? textOrdinal : textCardinal
-        }
-        const str = format(obj, fmt)
-        val.replaceWith(str, { tags: true })
-        // handle plural/singular unit
-        // agreeUnits(agree, val, obj)
-        return val
-      }, num => this._add(num, n))
-      return this.update(res.pointer)
+      return edit(this, n, add, (num, by) => this._add(num, by), (val, obj) => obj.isText)
     }
     /** decrease each number by n*/
-    subtract(n, agree) {
-      return this.add(n * -1, agree)
+    subtract(n) {
+      return this.add(n * -1)
     }
     /** increase each number by 1 */
-    increment(agree) {
-      return this.add(1, agree)
+    increment() {
+      return this.add(1)
     }
     /** decrease each number by 1 */
-    decrement(agree) {
-      return this.add(-1, agree)
+    decrement() {
+      return this.add(-1)
     }
     // Subclasses may supply decimal arithmetic.
     _add(a, b) {
@@ -216,28 +183,29 @@ const addMethod = function (View) {
     _mapNumbers(fn) {
       return this.map(fn)
     }
-    // overloaded - keep the current class
-    update(pointer) {
-      const m = new this.constructor(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      m.world = this.world
-      return m
-    }
   }
-  // aliases
-  Numbers.prototype.toNice = Numbers.prototype.toLocaleString
-  Numbers.prototype.isBetween = Numbers.prototype.between
-  Numbers.prototype.minus = Numbers.prototype.subtract
-  Numbers.prototype.plus = Numbers.prototype.add
-  Numbers.prototype.equals = Numbers.prototype.isEqual
+  keepClass(Numbers, 'Numbers')
+  const p = Numbers.prototype
+  // filter by each value, like .isEqual(n) or .between(min, max)
+  const compare = test => function (a, b) {
+    return this.filter(val => test(val.get(0)[0], a, b))
+  }
+  const equals = compare((num, n) => num === n)
+  const between = compare((num, min, max) => num > min && num < max)
+  Object.assign(p, {
+    isEqual: equals,
+    equals,
+    greaterThan: compare((num, n) => num > n),
+    lessThan: compare((num, n) => num < n),
+    between,
+    isBetween: between,
+    toNice: p.toLocaleString,
+    minus: p.subtract,
+    plus: p.add,
+  })
 
   View.prototype.numbers = select(Numbers, find, true)
-  View.prototype.percentages = function (n) {
-    let m = find(this)
-    m = m.filter(v => v.has('#Percent') || v.after('^per cent').found)
-    m = m.getNth(n)
-    return new Numbers(this.document, m.pointer)
-  }
+  View.prototype.percentages = select(Numbers, doc => find(doc).filter(isPercent), true)
   // alias
   View.prototype.values = View.prototype.numbers
   return Numbers

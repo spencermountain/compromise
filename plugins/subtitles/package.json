@@ -1,0 +1,61 @@
+{
+  "name": "compromise-subtitle",
+  "version": "0.0.1",
+  "description": "match and transform text in subtitle",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spencermountain/compromise.git",
+    "directory": "plugins/subtitles"
+  },
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/subtitles",
+  "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./types/index.d.ts",
+        "default": "./src/plugin.js"
+      },
+      "require": {
+        "types": "./types/index.d.cts",
+        "default": "./builds/compromise-subtitle.cjs"
+      }
+    }
+  },
+  "main": "./builds/compromise-subtitle.cjs",
+  "module": "./builds/compromise-subtitle.mjs",
+  "types": "./types/index.d.cts",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "testb": "cross-env TESTENV=prod tape \"./tests/**/*.test.js\" | tap-dancer --color always",
+    "watch": "node --watch ./scratch.js",
+    "version": "node ./scripts/version.js",
+    "build": "node ./scripts/version.js && rollup -c --silent"
+  },
+  "files": [
+    "types/",
+    "builds/",
+    "src/"
+  ],
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "catalog:",
+    "@rollup/plugin-terser": "catalog:",
+    "cross-env": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-filesize-check": "catalog:",
+    "tap-dancer": "catalog:",
+    "tape": "catalog:"
+  },
+  "peerDependencies": {
+    "compromise": "workspace:^"
+  },
+  "unpkg": "./builds/compromise-subtitle.min.js",
+  "dependencies": {
+    "vttpeg": "catalog:"
+  }
+}

@@ -1,17 +1,17 @@
-import doesMatch from '../../term/doesMatch.js'
+import { matchAt, noAnchors } from '../../_lib.js'
 
 // for greedy checking, we no longer care about the reg.start
 // value, and leaving it can cause failures for anchored greedy
 // matches.  ditto for end-greedy matches: we need an earlier non-
 // ending match to succceed until we get to the actual end.
 const getGreedy = function (state, endReg) {
-  const reg = { ...state.regs[state.r], start: false, end: false }
+  const reg = noAnchors(state.regs[state.r])
   const start = state.t
   for (; state.t < state.terms.length; state.t += 1) {
     // the number of terms we've matched, if we stop here
     const count = state.t - start + 1
     //stop for next-reg match - unless we're still under our min
-    if (endReg && doesMatch(state.terms[state.t], endReg, state.start_i + state.t, state.phrase_length)) {
+    if (endReg && matchAt(state, endReg, state.t)) {
       if (reg.min === undefined || count >= reg.min) {
         return state.t
       }
@@ -21,7 +21,7 @@ const getGreedy = function (state, endReg) {
       return state.t
     }
     //stop here
-    if (doesMatch(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length) === false) {
+    if (matchAt(state, reg, state.t) === false) {
       // is it too short?
       if (reg.min !== undefined && count < reg.min) {
         return null
@@ -44,7 +44,7 @@ const greedyTo = function (state, nextReg) {
   }
   //otherwise, we're looking for the next one
   for (; t < state.terms.length; t += 1) {
-    if (doesMatch(state.terms[t], nextReg, state.start_i + t, state.phrase_length) === true) {
+    if (matchAt(state, nextReg, t) === true) {
       // console.log(`greedyTo ${state.terms[t].normal}`)
       return t
     }
@@ -57,7 +57,7 @@ const isEndGreedy = function (reg, state) {
   if (reg.end === true && reg.greedy === true) {
     if (state.start_i + state.t < state.phrase_length - 1) {
       const tmpReg = { ...reg, end: false }
-      if (doesMatch(state.terms[state.t], tmpReg, state.start_i + state.t, state.phrase_length) === true) {
+      if (matchAt(state, tmpReg, state.t) === true) {
         // console.log(`endGreedy ${state.terms[state.t].normal}`)
         return true
       }

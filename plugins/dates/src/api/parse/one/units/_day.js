@@ -24,6 +24,11 @@ class CalendarDate extends Day {
   constructor(input, unit, context) {
     super(input, unit, context)
     this.unit = 'day'
+    // 'february 30th' - spacetime clamps it to the 28th, so reject it instead
+    const want = parseInt(String(input?.date), 10)
+    if (!Number.isNaN(want) && this.d.isValid() && want !== this.d.date()) {
+      this.d = spacetime('invalid', this.context.timezone)
+    }
     if (this.d.isValid()) {
       this.d = this.d.startOf('day')
     }

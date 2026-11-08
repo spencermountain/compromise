@@ -4,7 +4,7 @@ const findDate = function (doc) {
   let dates = doc.match('#Date+')
   // ignore only-durations like '20 minutes'
   dates = dates.filter(m => {
-    const isDuration = m.has('^#Duration+$') || m.has('^#Value #Duration+$')
+    const isDuration = m.has('^#Duration+$') || m.has('^#Value+ #Duration+$')
     // allow 'q4', etc
     if (isDuration === true && m.has('(#FinancialQuarter|quarter)')) {
       return true
@@ -12,27 +12,23 @@ const findDate = function (doc) {
     return isDuration === false
   })
   // 30 minutes on tuesday
-  let m = dates.match('[#Cardinal #Duration (in|on|this|next|during|for)] #Date', 0)
+  let m = dates.match('[#Cardinal+ #Duration (in|on|this|next|during|for)] #Date', 0)
   if (m.found) {
     dates = dates.not(m)
   }
   // 30 minutes tuesday
-  m = dates.match('[#Cardinal #Duration] #WeekDay', 0)
+  m = dates.match('[#Cardinal+ #Duration] #WeekDay', 0)
   if (m.found) {
     dates = dates.not(m)
   }
-  // tuesday for 30 mins
-  m = dates.match('#Date [for #Value #Duration]$', 0)
-  if (m.found) {
-    dates = dates.not(m)
-  }
+  // 'tuesday for 30 mins' keeps its duration - the range parser reads it as an end
   // '20 minutes june 5th'
-  m = dates.match('[#Cardinal #Duration] #Date', 0) //but allow '20 minutes ago'
-  if (m.found && !dates.has('#Cardinal #Duration (ago|from|before|after|back|hence)')) {
+  m = dates.match('[#Cardinal+ #Duration] #Date', 0) //but allow '20 minutes ago'
+  if (m.found && !dates.has('#Cardinal+ #Duration (ago|from|before|after|back|hence)')) {
     dates = dates.not(m)
   }
-  // for 20 minutes
-  m = dates.match('for #Cardinal #Duration')
+  // for 20 minutes - alone, it is only a duration
+  m = dates.match('^for #Cardinal+ #Duration$')
   if (m.found) {
     dates = dates.not(m)
   }

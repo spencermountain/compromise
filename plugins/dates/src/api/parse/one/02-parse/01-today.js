@@ -53,7 +53,7 @@ const today = function (doc, context, parts) {
     }
     //do we just have a shift?
     if (parts.shift && Object.keys(parts.shift).length > 0) {
-      if (parts.shift.hour || parts.shift.minute) {
+      if (parts.shift.hour || parts.shift.minute || parts.shift.second) {
         unit = new Moment(context.today, null, context) // choose now
       } else {
         unit = new Day(context.today, null, context) // choose today
@@ -78,7 +78,11 @@ const today = function (doc, context, parts) {
     if (keys.length === 1 && Math.abs(parts.shift[keys[0]]) === 1 && Object.hasOwn(afterNext, keys[0])) {
       const Model = afterNext[keys[0]]
       const base = new Model(context.today, null, context)
-      return str === 'next' ? base.next() : base.last()
+      const period = str === 'next' ? base.next() : base.last()
+      // apply the shift here, so the unit keeps its full week/month span
+      period.applyShift(parts.shift)
+      parts.shift = null
+      return period
     }
     return str === 'next' ? knownWord.tomorrow(context) : knownWord.yesterday(context)
   }

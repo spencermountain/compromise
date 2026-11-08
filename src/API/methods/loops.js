@@ -1,19 +1,17 @@
 // wrappers for loops in javascript arrays
 
+// call the callback with a one-match view
+const wrap = (view, cb) => (ptr, i) => cb(view.update([ptr]), i)
+
 const forEach = function (cb) {
-  const ptrs = this.fullPointer
-  ptrs.forEach((ptr, i) => {
-    const view = this.update([ptr])
-    cb(view, i)
-  })
+  this.fullPointer.forEach(wrap(this, cb))
   return this
 }
 
 const map = function (cb, empty) {
-  const ptrs = this.fullPointer
-  const res = ptrs.map((ptr, i) => {
-    const view = this.update([ptr])
-    const out = cb(view, i)
+  const run = wrap(this, cb)
+  const res = this.fullPointer.map((ptr, i) => {
+    const out = run(ptr, i)
     // if we returned nothing, return a view
     if (out === undefined) {
       return this.none()
@@ -44,30 +42,19 @@ const map = function (cb, empty) {
 }
 
 const filter = function (cb) {
-  let ptrs = this.fullPointer
-  ptrs = ptrs.filter((ptr, i) => {
-    const view = this.update([ptr])
-    return cb(view, i)
-  })
-  const res = this.update(ptrs)
-  return res
+  return this.update(this.fullPointer.filter(wrap(this, cb)))
 }
 
 const find = function (cb) {
-  const ptrs = this.fullPointer
-  const found = ptrs.find((ptr, i) => {
-    const view = this.update([ptr])
-    return cb(view, i)
-  })
+  const found = this.fullPointer.find(wrap(this, cb))
+  if (found === undefined) {
+    return this.update([])
+  }
   return this.update([found])
 }
 
 const some = function (cb) {
-  const ptrs = this.fullPointer
-  return ptrs.some((ptr, i) => {
-    const view = this.update([ptr])
-    return cb(view, i)
-  })
+  return this.fullPointer.some(wrap(this, cb))
 }
 
 const random = function (n = 1) {

@@ -3,11 +3,15 @@ const thisNext = '(last|next|this|previous|current|upcoming|coming)' //2
 const sections = '(start|end|middle|starting|ending|midpoint|beginning|mid)' //2
 const seasons = '(spring|summer|winter|fall|autumn)'
 const knownDate = '(yesterday|today|tomorrow)'
+const verbSubject = '(#Pronoun|#Plural) (/^(march|may)$/ && !@isTitleCase)'
 
 // { match: '', tag: '', reason:'' },
 const matches = [
   // Christmas eve
   { match: '#Holiday (day|eve)', hook: '#Holiday', tag: 'Holiday', reason: 'holiday-day' },
+  // new year's eve, valentine's day - the lexicon has the forms without an apostrophe
+  { match: "new year's (eve|day)", tag: 'Holiday', reason: 'new-years-eve' },
+  { match: "(valentine's|st patrick's|saint patrick's|mother's|father's|april fool's|all saint's|all hallow's) (day|eve)", tag: 'Holiday', reason: 'holiday-possessive' },
   // in the evening
   { match: 'in the (night|evening|morning|afternoon|day|daytime)', tag: 'Time', reason: 'in-the-night' },
   // 8 pm
@@ -28,12 +32,12 @@ const matches = [
   { match: '#Month #Value (and|or|to)? #Value+', tag: 'Date', reason: 'value-to-value' },
   //march the 12th
   { match: '#Month the #Value', tag: 'Date', reason: 'month-the-value' },
-  // march to april - but not 'the soldiers march tomorrow'
-  { match: '[(march|may)] (to|through|thru|until|and|or) #Date', group: 0, tag: 'Month', reason: 'march-to' },
+  // march to april - but not 'the soldiers march tomorrow', or 'they march to monday'
+  { match: '(#Pronoun|#Plural)? [(march|may)] (to|through|thru|until|and|or) #Date', group: 0, tag: 'Month', notIf: verbSubject, reason: 'march-to' },
   // march 2020
   { match: '[(march|may)] of? #Year', group: 0, tag: 'Month', reason: 'march-year' },
-  // march 5th
-  { match: '[(march|may)] the? (#Value && !#Year)', group: 0, tag: 'Month', reason: 'march-value' },
+  // march 5th - but not 'they march 5 miles'
+  { match: '(#Pronoun|#Plural)? [(march|may)] the? (#Value && !#Year)', group: 0, tag: 'Month', notIf: verbSubject, reason: 'march-value' },
   // 'the soldiers march tomorrow' - not a month
   { match: '[(march|may)] (today|tomorrow|tonight|yesterday)', group: 0, unTag: 'Date', reason: 'march-tomorrow' },
   // 'march'
@@ -76,18 +80,33 @@ const matches = [
   { match: `#Preposition? the? ${sections} of #Date`, tag: 'Date', reason: 'section-of' },
   //fifth week in 1998
   { match: '#Ordinal #Duration in #Date', tag: 'Date', reason: 'duration-in' },
-  //early in june
-  { match: '(early|late) (at|in)? the? #Date', tag: 'Time', reason: 'early-evening' },
+  //early june, late next month
+  { match: '[(early|late)] #Month', group: 0, tag: 'Date', reason: 'early-june' },
+  { match: '[(early|late)] (next|this|last) month', group: 0, tag: 'Date', reason: 'early-next-month' },
+  //the next few days
+  { match: '(next|last|past|coming|following|previous) (few|couple) of? [(days|weeks|months|years|hours|minutes|seconds)]', group: 0, tag: 'Duration', reason: 'few-days' },
+  { match: '(next|last|past|coming|following|previous) (few|couple) of? #Duration', tag: 'Date', reason: 'next-few-days' },
+  //early to mid june
+  { match: '(early|mid|late) (to|through|until) (early|mid|late) #Date', tag: 'Date', reason: 'early-to-mid' },
+  //towards the end of june
+  { match: '[(towards|toward)] the (end|start|beginning|middle) of #Date', group: 0, tag: 'Date', reason: 'towards-the-end' },
+  //early in the evening - but not 'early june'
+  { match: '(early|late) (at|in)? the? #Date', notIf: '(#Month|month)', tag: 'Time', reason: 'early-evening' },
   //tomorrow before 3
   { match: '#Date [(by|before|after|at|@|about) #Cardinal]', group: 0, tag: 'Time', reason: 'date-before-Cardinal' },
   //feb to june
   { match: '#Date (#Preposition|to) #Date', ifNo: '#Duration', tag: 'Date', reason: 'date-prep-date' },
+  //at 2:62pm - an impossible clock-time still belongs to the date, so it can be rejected
+  { match: '(at|by|@) [/^[0-9]{1,2}:[0-9]{2}(:[0-9]{2})?(am|pm)?$/]', group: 0, tag: 'Time', reason: 'hh:mm' },
   //by 6pm
   { match: '(by|before|after|at|@|about) #Time', tag: 'Time', reason: 'preposition-time' },
   // in 20mins
   { match: '(in|after) /^[0-9]+(min|sec|wk)s?/', tag: 'Date', reason: 'shift-units' },
   //tuesday night
   { match: '#Date [(now|night|sometime)]', group: 0, tag: 'Time', reason: 'date-now' },
+  //saturday late night
+  { match: 'late night', tag: 'Time', reason: 'late-night' },
+  { match: 'early morning', tag: 'Time', reason: 'early-morning' },
   // 4 days from now
   { match: '(from|starting|until|by) now', tag: 'Date', reason: 'for-now' },
   // every night
@@ -99,8 +118,8 @@ const matches = [
 
   //june 5 to 7th
   { match: '#Month #Value to #Value of? #Year?', tag: 'Date', reason: 'june 5 to 7th' },
-  //5 to 7th june
-  { match: '#Value to #Value of? #Month #Year?', tag: 'Date', reason: '5 to 7th june' },
+  //5 to 7th june, the tenth through the twelfth of june
+  { match: '#Value (to|through|thru) the? #Value of? #Month #Year?', tag: 'Date', reason: '5 to 7th june' },
   //third week of may
   { match: '#Value #Duration of #Date', tag: 'Date', reason: 'third week of may' },
   //two days after
@@ -119,6 +138,10 @@ const matches = [
   { match: '(#Value|a|an) #Duration and a half (before|after|ago|hence|back|from)', tag: 'DateShift', reason: 'year-and-a-half-ago' },
   //in a year and a half
   { match: 'in (#Value|a|an) #Duration and a half', tag: 'DateShift', reason: 'in-year-and-a-half' },
+  //in one and a half years
+  { match: 'in #Cardinal and a half #Duration', tag: 'DateShift', reason: 'in-one-and-a-half' },
+  //three and a half days from now
+  { match: '#Cardinal and a half #Duration (before|after|ago|hence|back|from)', tag: 'DateShift', reason: 'one-and-a-half-ago' },
   //5 and a half years
   { match: '#Value and a half (years|months|weeks|days)', tag: 'Date', reason: '5 and a half years' },
   //on the fifth
@@ -142,6 +165,10 @@ const matches = [
   { match: '(between|from) #Date', tag: 'Date', reason: 'between x and y' },
   { match: '(to|until|upto) #Date', tag: 'Date', reason: 'between x and y2' },
   { match: 'between #Date+ and #Date+', tag: 'Date', reason: 'between x and y3' },
+  // every monday and wednesday
+  { match: '(every|any|each) #WeekDay+ [(and|or|&)] #WeekDay', group: 0, tag: 'Date', reason: 'every monday and wednesday' },
+  // tuesdays and thursdays
+  { match: '(#WeekDay && #Plural) [(and|or|&)] (#WeekDay && #Plural)', group: 0, tag: 'Date', reason: 'tuesdays and thursdays' },
   { match: '#Month and #Month #Year', tag: 'Date', reason: 'x and y4' },
   //day after next
   { match: 'the? #Date after next one?', tag: 'Date', reason: 'day after next' },
@@ -150,7 +177,7 @@ const matches = [
 
   // until june
   {
-    match: '(by|until|on|in|at|during|over|every|each|due) the? #Date',
+    match: '(by|until|through|thru|on|in|at|during|over|every|each|due) the? #Date',
     ifNo: '#PhrasalVerb',
     tag: 'Date',
     reason: 'until june',
@@ -179,7 +206,7 @@ const matches = [
   { match: '#Date up to #Date', tag: 'Date', reason: 'january up to june' },
 
   // 2 oclock
-  { match: '#Cardinal oclock', tag: 'Time', reason: '2 oclock' },
+  { match: "#Cardinal (oclock|o'clock)", tag: 'Time', reason: '2 oclock' },
   // // 13h30
   // { match: '/^[0-9]{2}h[0-9]{2}$/', tag: 'Time', reason: '13h30' },
   // // 03/02
@@ -226,7 +253,7 @@ const matches = [
 
   // around four thirty
   {
-    match: '(at|around|near|#Date) [#Cardinal (thirty|fifteen) (am|pm)?]',
+    match: '(at|around|near|#Date) [(#Cardinal && !#Year) (thirty|fifteen) (am|pm)?]',
     group: 0,
     tag: 'Time',
     reason: 'around four thirty',
@@ -234,23 +261,27 @@ const matches = [
   // four thirty am
   { match: '#Cardinal (thirty|fifteen) (am|pm)', tag: 'Time', reason: 'four thirty am' },
   // four thirty tomorrow
-  { match: '[#Cardinal (thirty|fifteen)] #Date', group: 0, tag: 'Time', reason: 'four thirty tomorrow' },
+  { match: '[(#Cardinal && !#Year) (thirty|fifteen)] #Date', group: 0, tag: 'Time', reason: 'four thirty tomorrow' },
   //anytime around 3
   { match: '(anytime|sometime) (before|after|near) [#Cardinal]', group: 0, tag: 'Time', reason: 'antime-after-3' },
 
   //'two days before'/ 'nine weeks frow now'
   {
-    match: '(#Cardinal|a|an) #Duration (before|after|ago|from|hence|back)',
+    match: '(a|an)? (#Cardinal+|a|an) #Duration (before|after|ago|from|hence|back)',
     tag: 'DateShift',
     reason: 'nine weeks frow now',
   },
   // in two weeks
-  { match: 'in (around|about|maybe|perhaps)? #Cardinal #Duration', tag: 'DateShift', reason: 'in two weeks' },
+  { match: 'in (around|about|maybe|perhaps)? #Cardinal+ #Duration', tag: 'DateShift', reason: 'in two weeks' },
+  // in a hundred years - but not 'in a 12-hour day', or 'in a hundred-year flood'
+  { match: 'in (around|about|maybe|perhaps)? (a|an) (hundred|thousand|dozen) (#Duration && #Plural)', tag: 'DateShift', reason: 'in a hundred years' },
   { match: 'in (a|an) #Duration', tag: 'DateShift', reason: 'in a week' },
   // an hour from now
   { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },
   // a month ago
   { match: '(a|an) #Duration ago', tag: 'DateShift', reason: 'a month ago' },
+  // a week friday
+  { match: '[(a|an) #Duration] #WeekDay', group: 0, tag: 'DateShift', reason: 'a week friday' },
   // in half an hour
   { match: 'in half (a|an) #Duration', tag: 'DateShift', reason: 'in half an hour' },
   // half an hour ago
@@ -286,8 +317,9 @@ const matches = [
   { match: '[(wed|sat)] (#Month|#Year|on|between|during|from)', group: 0, tag: 'WeekDay', reason: 'wed' },
   //'spa day'
   { match: '^day$', unTag: 'Date', reason: 'spa-day' },
-  // tomorrow's meeting
-  { match: '(in|of|by|for)? (#Possessive && #Date) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
+  // tomorrow's meeting - but not 2020's election
+  // but keep "valentine's day"
+  { match: '(in|of|by|for)? (#Possessive && #Date && !#Year && !#Holiday) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
   //yesterday 7
   { match: `${knownDate} [#Value]$`, unTag: 'Date', group: 0, reason: 'yesterday-7' },
   //7 yesterday
@@ -304,17 +336,19 @@ const matches = [
   { match: `^[#Value] (this|next|last)`, group: 0, unTag: 'Date', reason: '4 next' },
   //this month 7
   { match: `(last|this|next) #Duration [#Value]`, group: 0, unTag: 'Date', reason: 'this month 7' },
-  //7 this month
-  { match: `[!#Month] #Value (last|this|next) #Date`, group: 0, unTag: 'Date', reason: '7 this month' },
   // over the years
   { match: '(in|over) the #Duration #Date+?', unTag: 'Date', reason: 'over-the-duration' },
   // second quarter of 2020
   { match: '#Ordinal quarter of? #Year', unTag: 'Fraction' },
+  // a good morning routine, my evening class - a generic time is not a date
+  { match: '(a|an|#Possessive) #Adjective? [(morning|afternoon|evening|night)] (#Noun|#Adjective)', group: 0, tag: 'Singular', unTag: 'Date', reason: 'time-modifier' },
+  // third quarter of the game, a quarter of the pie (but not of the fiscal year)
+  { match: '[(#Ordinal|a|one)? quarter] of #Determiner #Adjective? (#Noun && !#Date && !#Possessive)', group: 0, unTag: 'Date', reason: 'quarter-of-noun' },
   // a month from now
   { match: '(from|by|before) now', unTag: 'Time', tag: 'Date' },
   // 18th next month
   { match: '#Value of? (this|next|last) #Date', tag: 'Date' },
   // first half of march
-  { match: '(first|initial|second|latter) half of #Month', tag: 'Date' },
+  { match: '(first|initial|second|latter) half of (#Month|#Year)', tag: 'Date' },
 ]
 export default matches

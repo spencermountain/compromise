@@ -1,25 +1,22 @@
 import fastTag from '../_fastTag.js'
 import fillTag from './_fillTags.js'
 
-const lookAtWord = function (term, words) {
-  if (!term) {
-    return null
-  }
-  // look at prev word <-
-  const found = words.find(a => term.normal === a[0])
-  if (found) {
-    return found[1]
+// a hint from the neighbouring word
+const lookAtWord = (term, words) => {
+  if (term && Object.hasOwn(words, term.normal)) {
+    return words[term.normal]
   }
   return null
 }
 
-const lookAtTag = function (term, tags) {
+// a hint from the neighbouring word's tags - first match wins
+const lookAtTag = (term, tags) => {
   if (!term) {
     return null
   }
-  const found = tags.find(a => term.tags.has(a[0]))
+  const found = Object.keys(tags).find(tag => term.tags.has(tag))
   if (found) {
-    return found[1]
+    return tags[found]
   }
   return null
 }

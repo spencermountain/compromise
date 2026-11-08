@@ -13,7 +13,7 @@ const replace = (part, amount, negative = amount < 0) => {
   obj.num = Math.abs(amount)
   obj.prefix = obj.prefix.replace(/[-+]/g, '')
   let str
-  if (number.has('#TextValue')) {
+  if (number.has('#TxtNum')) {
     str = format(obj, 'TextCardinal')
     if (negative) {
       str = 'minus ' + str
@@ -32,11 +32,9 @@ const replace = (part, amount, negative = amount < 0) => {
     let digits = fixed(amount, precision)
     if (obj.hasComma) {
       const [whole, fraction] = digits.split('.')
-      const groups = []
-      for (let offset = whole.length; offset > 0; offset -= 3) {
-        groups.unshift(whole.slice(Math.max(0, offset - 3), offset))
-      }
-      digits = groups.join(',')
+      // group the whole part in threes: '1234567' -> '1,234,567'
+      const lead = whole.length % 3 || 3
+      digits = whole.slice(0, lead) + whole.slice(lead).replace(/\d{3}/g, ',$&')
       if (fraction !== undefined) {
         digits += '.' + fraction
       }

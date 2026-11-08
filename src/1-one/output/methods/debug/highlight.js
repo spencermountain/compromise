@@ -1,31 +1,59 @@
 /* eslint-disable no-console */
-import { blue } from '../../../../API/_color.js'
+import { green, grey } from '../../../../API/_color.js'
 
-const spliceIn = (txt, offset, index) => {
-  const start = offset.start + index * 9 // Each highlight adds nine ANSI characters.
-  const end = start + offset.length
-  return txt.substring(0, start) + blue(txt.substring(start, end)) + txt.substring(end)
+// each match on its own line: green, inside its grey sentence, aligned at the middle column
+const width = 55
+const half = 27
+const dots = '…'
+
+// drop words from the outer edge until the side fits, leaving room for an ellipsis
+const fit = (arr, max, fromStart) => {
+  let cut = false
+  const size = () => (fromStart ? arr.join('').trimStart() : arr.join('').trimEnd()).length + (cut ? 2 : 0)
+  while (arr.length > 0 && size() > max) {
+    if (fromStart) {
+      arr.shift()
+    } else {
+      arr.pop()
+    }
+    cut = true
+  }
+  return cut
 }
 
-const showHighlight = function (doc) {
-  if (!doc.found) {
-    return
+// the padded context before the match, the match, and the context after it
+const parts = (terms, start, end) => {
+  const arrs = [[], [], []] // before, match, after
+  terms.forEach((t, i) => {
+    const str = (t.pre + t.text + t.post).replace(/\s+/g, ' ')
+    const arr = arrs[(i >= start ? 1 : 0) + (i >= end ? 1 : 0)]
+    // blank terms fold into the word before them
+    if (str.trim() === '' && arr.length > 0) {
+      arr[arr.length - 1] = (arr.at(-1) + str).replace(/\s+/g, ' ')
+    } else {
+      arr.push(str)
+    }
+  })
+  const [before, match, after] = arrs
+  const left = (fit(before, half, true) ? dots + ' ' : '') + before.join('').trimStart()
+  let mid = match.join('')
+  const cutR = fit(after, width - half - mid.length, false)
+  const right = after.join('').trimEnd() + (cutR ? ' ' + dots : '')
+  if (right === '') {
+    mid = mid.trimEnd()
   }
-  const bySentence = {}
-  doc.fullPointer.forEach(ptr => {
-    bySentence[ptr[0]] ||= []
-    bySentence[ptr[0]].push(ptr)
+  return [' '.repeat(Math.max(0, half - left.length)) + left, mid, right]
+}
+
+const showHighlight = function (view) {
+  const client = typeof window !== 'undefined' && window.document
+  view.fullPointer.forEach(([n, s, e]) => {
+    const [left, mid, right] = parts(view.document[n], s, e)
+    if (client) {
+      console.log('%c' + left + '%c' + mid + '%c' + right, 'color:grey', 'color:green', 'color:grey')
+    } else {
+      console.log(grey(left) + green(mid) + (right ? grey(right) : ''))
+    }
   })
-  Object.keys(bySentence).forEach(k => {
-    const full = doc.update([[Number(k)]])
-    let txt = full.text()
-    const matches = doc.update(bySentence[k])
-    const json = matches.json({ offset: true })
-    json.forEach((obj, i) => {
-      txt = spliceIn(txt, obj.offset, i)
-    })
-    console.log(txt)
-  })
-  console.log('\n')
 }
 export default showHighlight

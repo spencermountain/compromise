@@ -1,3 +1,4 @@
+import { Vb } from '../../../2-two/preTagger/tagSet/_lib.js'
 const fixUp = function (docs) {
   const byChunk = []
   let current = null
@@ -15,8 +16,8 @@ const fixUp = function (docs) {
   })
   // ensure every verb-phrase actually has a verb
   byChunk.forEach(c => {
-    if (c.chunk === 'Verb') {
-      const hasVerb = c.terms.find(t => t.tags.has('Verb'))
+    if (c.chunk === Vb) {
+      const hasVerb = c.terms.find(t => t.tags.has(Vb))
       if (!hasVerb) {
         c.terms.forEach(t => t.chunk = null)
       }

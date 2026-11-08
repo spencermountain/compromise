@@ -2,6 +2,7 @@ import colons from './1st-pass/01-colons.js'
 import hyphens from './1st-pass/02-hyphens.js'
 
 import tagSwitch from './2nd-pass/00-tagSwitch.js'
+import spokenYear from './2nd-pass/00-spokenYear.js'
 import checkCase from './2nd-pass/01-case.js'
 import checkSuffix from './2nd-pass/02-suffix.js'
 import checkRegex from './2nd-pass/03-regex.js'
@@ -10,6 +11,8 @@ import checkYear from './2nd-pass/05-year.js'
 import verbType from './3rd-pass/07-verb-type.js'
 
 import fillTags from './3rd-pass/_fillTags.js'
+import possessive from './3rd-pass/00-possessive.js'
+import attributive from './3rd-pass/00-attributive.js'
 import checkAcronym from './3rd-pass/01-acronym.js'
 import neighbours from './3rd-pass/02-neighbours.js'
 import orgWords from './3rd-pass/03-orgWords.js'
@@ -18,11 +21,13 @@ import nounFallback from './3rd-pass/05-fallback.js'
 import switches from './3rd-pass/06-switches.js'
 import imperative from './3rd-pass/08-imperative.js'
 import firstWord from './3rd-pass/09-first-word.js'
+import ambigDate from './3rd-pass/10-ambig-date.js'
+import { Prop } from '../../tagSet/_lib.js'
 
 // is it all yelling-case?
 const ignoreCase = function (terms) {
   // allow 'John F Kennedy'
-  if (terms.filter(t => !t.tags.has('ProperNoun')).length <= 3) {
+  if (terms.filter(t => !t.tags.has(Prop)).length <= 3) {
     return false
   }
   const lowerCase = /^[a-z]/
@@ -41,13 +46,15 @@ const firstPass = function (docs, model, world) {
 const secondPass = function (terms, model, world, isYelling) {
   for (let i = 0; i < terms.length; i += 1) {
     // skip frozen terms, for now
-    if (terms[i].frozen === true) {
+    if (terms[i].frozen) {
       continue
     }
     // mark Noun|Verb on term metadata
     tagSwitch(terms, i, model)
+    // turn 'twenty twenty-six' into a year
+    spokenYear(terms, i)
     //  is it titlecased?
-    if (isYelling === false) {
+    if (!isYelling) {
       checkCase(terms, i, model)
     }
     // look at word ending
@@ -64,6 +71,8 @@ const secondPass = function (terms, model, world, isYelling) {
 // neighbour-based tagging
 const thirdPass = function (terms, model, world, isYelling) {
   for (let i = 0; i < terms.length; i += 1) {
+    // a still night
+    attributive(terms, i, model)
     // let these tags get layered
     let found = checkAcronym(terms, i, model)
     // deduce parent tags
@@ -72,10 +81,12 @@ const thirdPass = function (terms, model, world, isYelling) {
     found ||= neighbours(terms, i, model)
     //  ¯\_(ツ)_/¯ - found nothing
     found ||= nounFallback(terms, i, model)
+    // spencer's, in sunday's - the easy cases, once the word has its noun tags
+    possessive(terms, i, world)
   }
   for (let i = 0; i < terms.length; i += 1) {
     // skip these
-    if (terms[i].frozen === true) {
+    if (terms[i].frozen) {
       continue
     }
     // Johnson LLC
@@ -88,6 +99,8 @@ const thirdPass = function (terms, model, world, isYelling) {
     verbType(terms, i, model, world)
     // hard-nosed
     hyphens(terms, i, model, world)
+    // march/may
+    ambigDate(terms, i, world)
   }
   // place tea bags
   imperative(terms, world)

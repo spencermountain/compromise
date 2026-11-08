@@ -1,7 +1,8 @@
 import { infinitive } from './inflect.js'
-import { doDoes, isAreAm } from '../lib.js'
+import { doDoes, isAreAm, retag } from '../lib.js'
 import parseVerb from '../parse/index.js'
-const keep = { tags: true }
+import { Vb, Inf } from '../../../../2-two/preTagger/tagSet/_lib.js'
+import { keepTags as keep } from '../../../_lib.js'
 
 // all verb forms are the same
 const toInf = function (vb, parsed) {
@@ -21,11 +22,11 @@ const toInf = function (vb, parsed) {
     } else {
       vb.replace(root, copula)
     }
-    vb.fullSentence().compute(['tagger', 'chunks'])
+    retag(vb)
     return vb
   }
   if (str) {
-    vb.replace(root, str, keep).tag('Verb').firstTerm().tag('Infinitive')
+    vb.replace(root, str, keep).tag(Vb).firstTerm().tag(Inf)
   }
   // remove any auxiliary terms
   if (aux.found) {

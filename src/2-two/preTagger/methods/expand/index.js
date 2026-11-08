@@ -22,7 +22,7 @@ const expand = function (words, world) {
       }
     }
     // do any clever-business, by it's tag
-    if (Object.hasOwn(byTag, tag) === true) {
+    if (Object.hasOwn(byTag, tag)) {
       byTag[tag](word, lex, methods, model)
     }
     lex[word] ||= tag

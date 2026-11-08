@@ -4,10 +4,6 @@ const hasSlash = /\//
 const api = function (View) {
 
   class Slashes extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Slashes'
-    }
     split() {
       return this.map((m) => {
         const str = m.text()
@@ -17,6 +13,7 @@ const api = function (View) {
       })
     }
   }
+  Slashes.prototype.viewType = 'Slashes'
 
   View.prototype.slashes = select(Slashes, '#SlashedTerm')
 }

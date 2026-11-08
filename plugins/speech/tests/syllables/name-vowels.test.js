@@ -1,5 +1,5 @@
 import test from 'tape'
-import splitTerm from '../../src/syllables/split/index.js'
+import { splitTerm } from '../_lib.js'
 
 // Name-ending rules must not change similar vowel pairs in ordinary words.
 const examples = [

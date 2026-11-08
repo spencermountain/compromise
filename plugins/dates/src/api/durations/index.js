@@ -33,7 +33,7 @@ const addDurations = function (View) {
 
   /** phrases like '2 months' */
   View.prototype.durations = function (n) {
-    let m = this.match('#Value+ #Duration (and? #Value+ #Duration)?')
+    let m = this.match('half? (#Value+|a|an) #Duration (and a half|and? #Value+ #Duration)?')
 
     // not 'in 20 minutes'
     m = m.notIf('#DateShift')

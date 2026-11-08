@@ -1,4 +1,4 @@
-import nlp from '../../lib/two.js'
+import nlp from '../../02-two/lib.js'
 
 const assertNoOverlap = (t, spec, here, patterns) => {
   const overlaps = []
@@ -7,7 +7,8 @@ const assertNoOverlap = (t, spec, here, patterns) => {
     if (!line || line.startsWith('#')) {
       return
     }
-    const text = line.replace(/\s*\{[^{}]*\}\s*$/, '')
+    // strip a trailing '{...}' annotation; line is already trimmed
+    const text = line.replace(/\{[^{}]*\}\s*$/, '').trimEnd()
     const doc = nlp(text)
     patterns.forEach(pattern => {
       const match = doc.match(pattern)

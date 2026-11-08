@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/two.js'
+import nlp from '../lib.js'
 import penn from '../../lib/penn-sample.js'
 const here = '[two/misc/penn] '
 

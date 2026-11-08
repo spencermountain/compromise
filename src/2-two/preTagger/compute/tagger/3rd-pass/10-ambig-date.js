@@ -1,0 +1,90 @@
+import { setTag, titleCase } from '../_lib.js'
+import { hasAny, toSet } from '../../../../_lib.js'
+import { Conj, Prep, Inf, Pron, Adv, Plur, Det, Val, Numeric, Date, Month } from '../../../tagSet/_lib.js'
+// march/may are a month, a verb, or a modal - decided by their neighbours
+// (ported from postTagger match-rules, so it only runs on these two words)
+const reason = '3-[ambig-date]'
+// [this] march
+const thisNext = toSet('this next last')
+// march [next] year
+const toDate = toSet('this that next last')
+// march [up] the hill
+const direction = toSet('up down back toward')
+
+const has = (term, ...tags) => Boolean(term) && hasAny(term, ...tags)
+const isLink = term => has(term, Conj, Prep)
+// may [be], may [have], may [not], (may [I])
+const isVerbAfter = (term, orPron) =>
+  has(term, Inf) || term?.normal === 'have' || term?.normal === 'not' || (orPron && has(term, Pron))
+// may [also] be
+const modalAfter = (terms, i, orPron) =>
+  isVerbAfter(terms[i + 1], orPron) || (has(terms[i + 1], Adv) && isVerbAfter(terms[i + 2], orPron))
+// they march, soldiers march, (the march) - a lowercase word after its subject
+const hasSubject = (prev, term, orDet) =>
+  !titleCase.test(term.text) && (has(prev, Pron, Plur) || (orDet && has(prev, Det)))
+
+const ambigDate = function (terms, i, world) {
+  const term = terms[i]
+  const isMay = term.normal === 'may'
+  if (!isMay && term.normal !== 'march') {
+    return
+  }
+  const prev = terms[i - 1]
+  const next = terms[i + 1]
+  // neighbours that become a #Date, if this is a month
+  const dates = []
+  let month = false
+  // this march → Date Month (not: this march begins, this may be true)
+  if (prev && thisNext.has(prev.normal)) {
+    const verb = isMay ? modalAfter(terms, i) : has(next, Inf)
+    if (!verb) {
+      month = true
+      dates.push(prev)
+    }
+  }
+  // march 5th, may the 5th → Month Date Date (not: they march 5 miles)
+  if (!hasSubject(prev, term)) {
+    let value = next
+    if (next?.normal === 'the') {
+      value = terms[i + 2]
+    }
+    if (has(value, Val)) {
+      month = true
+      dates.push(next, value)
+    }
+  }
+  // 5th of march → Date Date Month
+  if (prev?.normal === 'of' && has(terms[i - 2], Val)) {
+    month = true
+    dates.push(terms[i - 2], prev)
+  }
+  // 12 march → Date Month (not: these 5 may leave)
+  if (has(prev, Numeric) && !(isMay && modalAfter(terms, i))) {
+    month = true
+    dates.push(prev)
+  }
+  // [march] and feb, [may] next year → Month (not: you may leave tomorrow, the march on monday)
+  if (!hasSubject(prev, term, true)) {
+    let date = next
+    if (next && !has(next, Date) && (isLink(next) || toDate.has(next.normal))) {
+      date = terms[i + 2]
+    }
+    month ||= has(date, Date)
+  }
+  // feb to [march], tomorrow in [may] → Month (not: tomorrow may be better, tomorrow we march)
+  let date = prev
+  if (prev && !has(prev, Date) && isLink(prev)) {
+    date = terms[i - 2]
+  }
+  if (has(date, Date) && !(isMay && modalAfter(terms, i, true))) {
+    month = true
+  }
+  if (month) {
+    setTag(dates, Date, world, reason)
+    setTag([term], Month, world, reason)
+  } else if (!isMay && !has(term, Date) && next && direction.has(next.normal)) {
+    // [march] up the hill → Infinitive
+    setTag([term], Inf, world, reason)
+  }
+}
+export default ambigDate

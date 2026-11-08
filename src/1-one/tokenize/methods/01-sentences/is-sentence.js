@@ -4,14 +4,14 @@ const hasLetter = /\p{L}/u
 const hasPeriod = /\. *$/
 const leadInit = /^[A-Z]\. $/ // "W. Kensington"
 
-/** does this look like a sentence? */
-const isSentence = function (str, abbrevs) {
+/** does this look like a sentence? - str can be the end of it, if foundLetter is given */
+const isSentence = function (str, abbrevs, foundLetter = hasLetter.test(str)) {
   // must have a letter
-  if (hasLetter.test(str) === false) {
+  if (foundLetter === false) {
     return false
   }
   // check for 'F.B.I.'
-  if (isAcronym.test(str) === true) {
+  if (isAcronym.test(str)) {
     return false
   }
   // check for leading initial - "W. Kensington"
@@ -19,14 +19,14 @@ const isSentence = function (str, abbrevs) {
     return false
   }
   //check for '...'
-  if (hasEllipse.test(str) === true) {
+  if (hasEllipse.test(str)) {
     return false
   }
   const txt = str.replace(/[.!?\u203D\u2E18\u203C\u2047-\u2049] *$/, '')
   const words = txt.split(' ')
   const lastWord = words[words.length - 1].toLowerCase()
   // check for 'Mr.' (and not mr?)
-  if (Object.hasOwn(abbrevs, lastWord) === true && hasPeriod.test(str) === true) {
+  if (Object.hasOwn(abbrevs, lastWord) && hasPeriod.test(str)) {
     return false
   }
   // //check for jeopardy!

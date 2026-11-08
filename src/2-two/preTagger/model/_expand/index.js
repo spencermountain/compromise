@@ -5,6 +5,7 @@ import conjugate from '../../methods/transform/verbs/conjugate/index.js'
 import { toSuperlative, toComparative } from '../../methods/transform/adjectives/inflect.js'
 import toInfinitive from '../../methods/transform/verbs/toInfinitive/index.js'
 import models from '../models/index.js'
+import { Actor, Adj, Sing, Ger, NN, First, Pers, Plur, Uncountable, Past, Pres, Sup, Comp, Inf, Month, ActorVerb, AdjGerund, AdjNoun, AdjPast, AdjPresent, NounVerb, NounGerund, PersonNoun, PersonVerb, PersonAdj, PluralVerb } from '../../tagSet/_lib.js'
 const tmpModel = {
   one: { lexicon: {} },
   two: { models }
@@ -13,33 +14,33 @@ const tmpModel = {
 // defaults for switches
 const switchDefaults = {
   // 'pilot'
-  'Actor|Verb': 'Actor', //
+  [ActorVerb]: Actor, //
   // 'amusing'
-  'Adj|Gerund': 'Adjective', //+conjugations
+  [AdjGerund]: Adj, //+conjugations
   // 'standard'
-  'Adj|Noun': 'Adjective',
+  [AdjNoun]: Adj,
   // 'boiled'
-  'Adj|Past': 'Adjective', //+conjugations
+  [AdjPast]: Adj, //+conjugations
   // 'smooth'
-  'Adj|Present': 'Adjective',//+conjugations
+  [AdjPresent]: Adj,//+conjugations
   // 'box'
-  'Noun|Verb': 'Singular', //+conjugations (no-present)
+  [NounVerb]: Sing, //+conjugations (no-present)
   //'singing'
-  'Noun|Gerund': 'Gerund', //+conjugations
+  [NounGerund]: Ger, //+conjugations
   // 'hope'
-  'Person|Noun': 'Noun',
+  [PersonNoun]: NN,
   // 'April'
-  'Person|Date': 'Month',
+  'Person|Date': Month,
   // 'rob'
-  'Person|Verb': 'FirstName',//+conjugations
+  [PersonVerb]: First,//+conjugations
   // 'victoria'
-  'Person|Place': 'Person',
+  'Person|Place': Pers,
   // 'rusty'
-  'Person|Adj': 'Comparable',
+  [PersonAdj]: 'Comparable',
   // 'boxes'
-  'Plural|Verb': 'Plural', //(these are already derivative)
+  [PluralVerb]: Plur, //(these are already derivative)
   // 'miles'
-  'Unit|Noun': 'Noun',
+  'Unit|Noun': NN,
 }
 
 const expandLexicon = function (words, model) {
@@ -55,9 +56,9 @@ const expandLexicon = function (words, model) {
 // these words have no singular/plural conjugation
 const addUncountables = function (words, model) {
   Object.keys(words).forEach(k => {
-    if (words[k] === 'Uncountable') {
+    if (words[k] === Uncountable) {
       model.two.uncountable[k] = true
-      words[k] = 'Uncountable'
+      words[k] = Uncountable
     }
   })
   return model
@@ -65,24 +66,19 @@ const addUncountables = function (words, model) {
 
 const expandVerb = function (str, words, doPresent) {
   const obj = conjugate(str, tmpModel)
-  words[obj.PastTense] ||= 'PastTense'
-  words[obj.Gerund] ||= 'Gerund'
-  if (doPresent === true) {
+  words[obj.PastTense] ||= Past
+  words[obj.Gerund] ||= Ger
+  if (doPresent) {
     // is this plural noun, or present-tense?
-    words[obj.PresentTense] ||= 'PresentTense'
+    words[obj.PresentTense] ||= Pres
   }
 }
 
 const expandAdjective = function (str, words, model) {
   const sup = toSuperlative(str, model)
-  words[sup] ||= 'Superlative'
+  words[sup] ||= Sup
   const comp = toComparative(str, model)
-  words[comp] ||= 'Comparative'
-}
-
-const expandNoun = function (str, words, model) {
-  const plur = toPlural(str, model)
-  words[plur] ||= 'Plural'
+  words[comp] ||= Comp
 }
 
 // harvest ambiguous words for any conjugations
@@ -95,39 +91,39 @@ const expandVariable = function (switchWords, model) {
     const name = switchWords[w]
     words[w] = switchDefaults[name]
     // Plural actors keep their actor reading until a verb clue wins.
-    if (name === 'Actor|Verb') {
+    if (name === ActorVerb) {
       const plural = toPlural(w, model)
-      if (switchWords[plural] === 'Plural|Verb') {
-        actorPlurals[plural] = ['Plural', 'Actor']
+      if (switchWords[plural] === PluralVerb) {
+        actorPlurals[plural] = [Plur, Actor]
       }
     }
     // conjugate some verbs
-    if (name === 'Noun|Verb' || name === 'Person|Verb' || name === 'Actor|Verb') {
+    if ([NounVerb, PersonVerb, ActorVerb].includes(name)) {
       expandVerb(w, lex, false)
     }
-    if (name === 'Adj|Present') {
+    if (name === AdjPresent) {
       expandVerb(w, lex, true)
       expandAdjective(w, lex, model)
     }
-    if (name === 'Person|Adj') {
+    if (name === PersonAdj) {
       expandAdjective(w, lex, model)
     }
     // add infinitives for gerunds
-    if (name === 'Adj|Gerund' || name === 'Noun|Gerund') {
-      const inf = toInfinitive(w, tmpModel, 'Gerund')
+    if ([AdjGerund, NounGerund].includes(name)) {
+      const inf = toInfinitive(w, tmpModel, Ger)
       if (!lex[inf]) {
-        words[inf] = 'Infinitive' //expand it later
+        words[inf] = Inf //expand it later
       }
     }
     // add plurals for nouns
-    if (name === 'Noun|Gerund' || name === 'Adj|Noun' || name === 'Person|Noun') {
-      expandNoun(w, lex, model)
+    if ([NounGerund, AdjNoun, PersonNoun].includes(name)) {
+      lex[toPlural(w, model)] ||= Plur
     }
-    if (name === 'Adj|Past') {
-      const inf = toInfinitive(w, tmpModel, 'PastTense')
+    if (name === AdjPast) {
+      const inf = toInfinitive(w, tmpModel, Past)
       // An unchanged guess is not evidence that an adjective is an infinitive.
       if (inf !== w && !lex[inf]) {
-        words[inf] = 'Infinitive' //expand it later
+        words[inf] = Inf //expand it later
       }
     }
   })

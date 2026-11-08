@@ -1,17 +1,11 @@
-const hasContraction = /'/
+import { hasApostrophe } from './_lib.js'
+import { hasAny, toSet } from '../../_lib.js'
+import { Past, Pres, Inf, Adj, Det, AdjPast } from '../../preTagger/tagSet/_lib.js'
 
-const hadWords = new Set([
-  'better', //had better
-  'done', //had done
-  'before', // he'd _ before
-  'it', // he'd _ it
-  'had', //she'd had -> she would have..
-])
-
-const wouldWords = new Set([
-  'have', // 'i'd have' -> i would have..
-  'be', //' she'd be'
-])
+// had better, had done, he'd _ before, he'd _ it, she'd had -> she would have..
+const hadWords = toSet('better done before it had')
+// 'i'd have' -> i would have, 'she'd be'
+const wouldWords = toSet('have be')
 
 //look for a past-tense verb
 // You'd mentioned -> you had mentioned
@@ -29,18 +23,18 @@ const hadOrWould = (terms, i) => {
       return 'would'
     }
     // You'd mentioned -> you had mentioned
-    if (t.tags.has('PastTense') || t.switch === 'Adj|Past') {
+    if (t.tags.has(Past) || t.switch === AdjPast) {
       return 'had'
     }
     // You'd mention -> you would mention
-    if (t.tags.has('PresentTense') || t.tags.has('Infinitive')) {
+    if (hasAny(t, Pres, Inf)) {
       return 'would'
     }
-    // i'd an issue
-    if (t.tags.has('#Determiner')) {
+    // i'd an issue - but not they'd both go
+    if (t.tags.has(Det) && !(terms[o + 1] && hasAny(terms[o + 1], Pres, Inf))) {
       return 'had'
     }
-    if (t.tags.has('Adjective')) {
+    if (t.tags.has(Adj)) {
       return 'would'
     }
   }
@@ -51,7 +45,7 @@ const hadOrWould = (terms, i) => {
 // how'd -> did
 // he'd go -> would
 const _apostropheD = function (terms, i) {
-  const before = terms[i].normal.split(hasContraction)[0]
+  const before = terms[i].normal.split(hasApostrophe)[0]
   // what'd, how'd
   if (before === 'how' || before === 'what') {
     return [before, 'did']

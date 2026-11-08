@@ -30,19 +30,48 @@ Object.keys(mapping).forEach((k) => {
   mapping[k + 's'] = mapping[k]
 })
 
+// units made of other units
+const multiples = {
+  fortnight: [2, 'week'],
+}
+
+const toUnit = function (str) {
+  let unit = str.replace(/ies$/, 'y')
+  unit = unit.replace(/s$/, '')
+  // turn 'mins' into 'minute'
+  if (Object.hasOwn(mapping, unit)) {
+    unit = mapping[unit]
+  }
+  return unit
+}
+
+// '8', 'a', 'half an', 'two and a half'
+const toNumber = function (m) {
+  if (m.has('^half')) {
+    return 0.5
+  }
+  let num = m.match('[#Value+] #Duration', 0).numbers().get()[0]
+  if (num === null || num === undefined) {
+    num = m.has('(a|an)') ? 1 : null
+  }
+  if (num !== null && m.has('and a half$')) {
+    num += 0.5
+  }
+  return num
+}
+
 const parse = function (doc) {
   const duration = {}
   //parse '8 minutes'
-  const twoWord = doc.match('#Value+ #Duration')
+  const twoWord = doc.match('half? (#Value+|a|an) #Duration (and a half)?')
   if (twoWord.found) {
     twoWord.forEach((m) => {
-      const num = m.numbers().get()[0]
-      let unit = m.terms().last().text('reduced')
-      unit = unit.replace(/ies$/, 'y')
-      unit = unit.replace(/s$/, '')
-      // turn 'mins' into 'minute'
-      if (Object.hasOwn(mapping, unit)) {
-        unit = mapping[unit]
+      let num = toNumber(m)
+      let unit = toUnit(m.match('#Duration').text('reduced'))
+      // 'a fortnight' is 2 weeks
+      if (Object.hasOwn(multiples, unit)) {
+        num *= multiples[unit][0]
+        unit = multiples[unit][1]
       }
       if (Object.hasOwn(known, unit) && num !== null) {
         duration[unit] = num

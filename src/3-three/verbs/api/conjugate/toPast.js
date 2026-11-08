@@ -1,7 +1,9 @@
 import { inflect } from './inflect.js'
-import convertAuxiliary from './auxiliary.js'
+import byForm from './_lib.js'
 import { noop, wasWere, noWill } from '../lib.js'
-const keep = { tags: true }
+import { Past, Participle, Aux } from '../../../../2-two/preTagger/tagSet/_lib.js'
+import { keepTags as keep } from '../../../_lib.js'
+import { WantInf, GerPhrase, SimplePres, SimplePast, SimpleFut, PresCond, PastCond, AuxFut, AuxPast, AuxPres, ModalPast, ModalInf, InfForm } from '../parse/grammar/forms.js'
 
 const fns = {
 
@@ -16,10 +18,10 @@ const fns = {
   simple: (vb, parsed) => {
     const root = parsed.root
     // 'i may'
-    if (root.has('#Modal')) {
+    if (root.has('#Mod')) {
       return vb
     }
-    let str = inflect(root, 'PastTense', { keepPunct: false })
+    let str = inflect(root, Past, { keepPunct: false })
     // but skip the 'is' participle..
     str = str === 'been' ? 'was' : str
     if (str === 'was') {
@@ -52,43 +54,43 @@ const fns = {
 const forms = {
 
   // walk -> walked
-  'infinitive': fns.simple,
+  [InfForm]: fns.simple,
 
   // he walks -> he walked
-  'simple-present': fns.simple,
+  [SimplePres]: fns.simple,
 
   // he walked
-  'simple-past': noop,
+  [SimplePast]: noop,
 
   // he will walk -> he walked
-  'simple-future': fns.both,
+  [SimpleFut]: fns.both,
 
   // would be walked -> 'would have been walked'
-  'present-conditional': vb => {
+  [PresCond]: vb => {
     vb.replace('be', 'have been')
     return vb
   },
 
   // would have been walked
-  'past-conditional': noop,
+  [PastCond]: noop,
 
   // is going to drink -> was going to drink
-  'auxiliary-future': (vb, parsed) => {
+  [AuxFut]: (vb, parsed) => {
     vb.replace('(is|are|am)', wasWere(vb, parsed), keep)
     return vb
   },
 
   // used to walk
-  'auxiliary-past': noop,
+  [AuxPast]: noop,
 
   // we do walk -> we did walk
-  'auxiliary-present': vb => {
+  [AuxPres]: vb => {
     vb.replace('(do|does)', 'did', keep)
     return vb
   },
 
   // must walk -> 'must have walked'
-  'modal-infinitive': (vb, parsed) => {
+  [ModalInf]: (vb, parsed) => {
     // this modal has a clear tense
     if (vb.has('can')) {
       // can drive -> could drive
@@ -97,41 +99,30 @@ const forms = {
       // otherwise, 
       //  walk -> have walked
       //  drive -> have driven
-      vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, 'Participle'))
-      vb.match('have').tag('Auxiliary')
+      vb.match(parsed.root).replaceWith('have ' + inflect(parsed.root, Participle))
+      vb.match('have').tag(Aux)
     }
     return vb
   },
 
   // must have walked
-  'modal-past': noop,
+  [ModalPast]: noop,
 
   // wanted to walk
-  'want-infinitive': vb => {
+  [WantInf]: vb => {
     vb.replace('(want|wants)', 'wanted', keep)
     vb.remove('will')
     return vb
   },
 
   // started looking
-  'gerund-phrase': (vb, parsed) => {
-    parsed.root = parsed.root.not('#Gerund$')
+  [GerPhrase]: (vb, parsed) => {
+    parsed.root = parsed.root.not('#Ger$')
     fns.simple(vb, parsed)
     noWill(vb)
     return vb
   },
 }
 
-const toPast = function (vb, parsed, form) {
-  const converted = convertAuxiliary(vb, parsed, form, 'past')
-  if (converted) return converted
-  // console.log(form)
-  if (Object.hasOwn(forms, form)) {
-    vb = forms[form](vb, parsed)
-    vb.fullSentence().compute(['tagger', 'chunks'])
-    return vb
-  }
-  // do nothing i guess?
-  return vb
-}
+const toPast = byForm('past', forms)
 export default toPast

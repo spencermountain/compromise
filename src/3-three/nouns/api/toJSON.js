@@ -1,7 +1,7 @@
 import parseNoun from './parse.js'
+import { toArray } from '../../_lib.js'
 
 const toText = m => m.text()
-const toArray = m => m.json({ terms: false, normal: true }).map(s => s.normal)
 
 const getNum = function (m) {
   const num = null

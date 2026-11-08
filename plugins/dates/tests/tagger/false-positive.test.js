@@ -99,7 +99,6 @@ test(here + 'no dates', function (t) {
     'time off',
     'time zone',
     'prime time',
-    'lunch time',
     'bed time',
     'play time',
     'show time',

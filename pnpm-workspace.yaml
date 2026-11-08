@@ -5,19 +5,38 @@ catalogMode: prefer
 
 # Shared versions for the root library and maintained plugins.
 catalog:
-  '@types/node': '^26.6.5'
+  '@types/node': '^26.6.6'
   '@rollup/plugin-node-resolve': '16.0.3'
-  '@rollup/plugin-terser': '1.0.0'
-  'rollup': '4.64.8'
+  '@rollup/plugin-terser': '1.0.2'
+  'rollup': 4.68.0
   'rollup-plugin-filesize-check': '2.0.1'
   'tap-dancer': '0.4.4'
   'tape': '5.10.3'
   'cross-env': '10.1.0'
   'nlp-corpus': '4.4.0'
   'efrt': '2.9.0'
-  eslint: 10.13.0
+  eslint: 10.14.0
+  mdast-util-from-markdown: ^2.1.0
+  mdast-util-to-markdown: ^2.2.0
+  micromark-extension-gfm-table: ^2.1.2
+  mdast-util-gfm-table: ^2.0.0
+  micromark-extension-gfm: ^3.0.0
+  mdast-util-gfm: ^3.1.0
+  micromark-extension-frontmatter: ^2.0.0
+  mdast-util-frontmatter: ^2.0.1
+  hast-util-from-html: ^2.0.3
+  hast-util-to-html: ^9.0.5
+  nlcst-test: ^4.0.0
+  nlcst-to-string: ^4.0.0
+  unist-util-inspect: ^8.1.0
+  parse-english: ^7.0.0
+  hast-util-format: ^1.1.0
+  eslint-plugin-regexp: 3.3.3
+  eslint-plugin-redos: ^4.6.2
+  vttpeg: ^0.0.6
 
 linkWorkspacePackages: false
 
 minimumReleaseAgeExclude:
-  - spacetime@7.17.0
+  - spacetime@7.17.1
+  - suffix-thumb@6.1.0

@@ -2,7 +2,6 @@
 export default [
   'has',
   'keep tabs',
-  'born',
   'cannot',
   'gonna',
   'msg',

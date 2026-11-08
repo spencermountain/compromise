@@ -1,3 +1,5 @@
+import { resolveTag } from '../../../tag/methods/_lib.js'
+
 // Resolve actions and index hints once, alongside the match expression.
 const resolveAliases = (rule, aliases) => {
   const tag = value => {
@@ -7,10 +9,7 @@ const resolveAliases = (rule, aliases) => {
     if (typeof value !== 'string') {
       return value
     }
-    return value.trim().split(/ +/).map(name => {
-      name = name.replace(/^#/, '')
-      return aliases[name] || name
-    }).join(' ')
+    return value.trim().split(/ +/).map(name => resolveTag(name, aliases)).join(' ')
   }
   const hook = value => {
     if (typeof value === 'string' && value.startsWith('#')) {

@@ -14,9 +14,12 @@ const cleanup = function (doc) {
   }
   //
   doc = doc.not('#Preposition$')
-  doc = doc.not('#Conjunction$')
+  // a trailing 'now' is not a moment - 'a year from now'
+  doc = doc.not('(#Conjunction|now)$')
   doc = doc.not('sharp')
   doc = doc.not('on the dot')
+  // 'all day tomorrow' is just tomorrow
+  doc = doc.not('all day')
   doc = doc.not('^(on|of|due)')
   // keep a bare 'next' or 'last' - the leftover of 'day after next'
   if (!doc.has('^(next|last)$') && !doc.has('^after (next|last)$')) {
@@ -45,6 +48,7 @@ const tokenize = function (doc, context) {
   // parse '2pm'
   res = doTime(doc, context)
   const time = res.result
+  const invalid = res.invalid === true // 'at 25:00'
   doc = doc.not(res.m)
 
   // parse 'tuesday'
@@ -69,6 +73,7 @@ const tokenize = function (doc, context) {
     counter,
     tz,
     time,
+    invalid,
     weekDay,
     section,
     rel,

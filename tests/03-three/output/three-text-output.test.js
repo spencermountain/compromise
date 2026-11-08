@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/output/three-text-output] '
 import penn from '../../lib/penn-sample.js'
 const txt = penn.map(o => o.text).join(' ')

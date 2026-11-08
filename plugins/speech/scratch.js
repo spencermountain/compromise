@@ -11,3 +11,6 @@ nlp.plugin(speechPlugin)
 const doc = nlp(`it stars Alicia Silverstone and Paul Rudd`)
 console.log(doc.people().syllables())
 // [ [ 'back', 'to', 'win', 'ni', 'peg' ] ]
+
+console.log(nlp('silent').syllables()) // [['si', 'lent']]
+console.log(nlp('silence').syllables()) // [['silen', 'ce']]

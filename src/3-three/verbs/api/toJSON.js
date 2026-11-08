@@ -1,27 +1,7 @@
 import parseVerb from './parse/index.js'
 import getGrammar from './parse/grammar/index.js'
-import { getTense } from './lib.js'
-
-const toArray = function (m) {
-  if (!m || !m.isView) {
-    return []
-  }
-  const opts = { normal: true, terms: false, text: false }
-  return m.json(opts).map(s => s.normal)
-}
-
-const toText = function (m) {
-  if (!m || !m.isView) {
-    return ''
-  }
-  return m.text('normal')
-}
-
-const toInf = function (root) {
-  const { toInfinitive } = root.methods.two.transform.verb
-  const str = root.text('normal')
-  return toInfinitive(str, root.model, getTense(root))
-}
+import { infinitive } from './conjugate/inflect.js'
+import { toArray } from '../../_lib.js'
 
 const toJSON = function (vb) {
   const parsed = parseVerb(vb)
@@ -31,10 +11,10 @@ const toJSON = function (vb) {
     root: parsed.root.text(),
     preAdverbs: toArray(parsed.adverbs.pre),
     postAdverbs: toArray(parsed.adverbs.post),
-    auxiliary: toText(parsed.auxiliary),
+    auxiliary: parsed.auxiliary.text('normal'),
     negative: parsed.negative.found,
-    prefix: toText(parsed.prefix),
-    infinitive: toInf(parsed.root),
+    prefix: parsed.prefix.text('normal'),
+    infinitive: infinitive(parsed.root),
     grammar: info,
   }
 }

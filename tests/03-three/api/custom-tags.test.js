@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/api/custom-tags] '
 
 test('custom-tags-persist', function (t) {

@@ -1,3 +1,4 @@
+import { Plur } from '../../../2-two/preTagger/tagSet/_lib.js'
 const boundary = /[,;:.!?]/
 
 // Agree only the following noun, without reaching into another phrase.
@@ -5,15 +6,15 @@ const agree = (value, singular) => {
   if (boundary.test(value.docs[0].at(-1).post)) {
     return
   }
-  const phrase = value.after('^(#Adverb|#Adjective)+? #Noun')
+  const phrase = value.after('^(#Adv|#Adj)+? #NN')
   if (!phrase.found || phrase.docs[0].slice(0, -1).some(term => boundary.test(term.post))) {
     return
   }
   const noun = phrase.lastTerm()
-  if (noun.has('(#Pronoun|#Possessive|#ProperNoun|#Uncountable)')) {
+  if (noun.has('(#Pron|#Poss|#Prop|#Uncountable)')) {
     return
   }
-  const tag = singular ? 'Singular' : 'Plural'
+  const tag = singular ? 'Singular' : Plur
   if (noun.has('#' + tag)) {
     return
   }

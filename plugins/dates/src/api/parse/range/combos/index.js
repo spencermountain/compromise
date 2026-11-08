@@ -5,10 +5,10 @@ import parseDate from '../../one/index.js'
 export default [
   {
     // 'jan, or march 1999'
-    match: '^during? #Month+ (or|and) #Month [<year>#Year]?',
+    match: '^(during|in)? #Month+ (or|and) #Month [<year>#Year]?',
     desc: 'march or june',
     parse: (m, context) => {
-      const before = m.match('^during? [#Month]', 0)
+      const before = m.match('^(during|in)? [#Month]', 0)
       m = m.not('(or|and)')
       const start = parseDate(before, context)
       if (start) {
@@ -146,8 +146,8 @@ export default [
   },
 
   {
-    // 'june or july 2019'
-    match: '^!(between|from|during)? [<from>#Date+] (and|or) [<to>#Date+]$',
+    // 'june or july 2019' - but not 'one year and two months ago'
+    match: '^!(between|from|during)? [<from>(#Date && !#DateShift)+] (and|or) [<to>#Date+]$',
     desc: 'A or B',
     parse: (m, context) => {
       const fromDoc = m.groups('from')

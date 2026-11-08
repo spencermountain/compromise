@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/three.js'
+import nlp from '../03-three/lib.js'
 const here = '[ignored/redact-tag] '
 
 // Deferred: The custom redaction marker is not returned consistently for every tagged selection.

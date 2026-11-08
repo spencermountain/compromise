@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/two.js'
+import nlp from '../02-two/lib.js'
 import isolateModel from '../lib/isolate-model.js'
 const here = '[ignored/tag-inheritance-array] '
 

@@ -1,41 +1,8 @@
 import doRules from './lib.js'
+import { toSet } from '../../../../../_lib.js'
 
-const s = 'ically'
-const ical = new Set([
-  'analyt' + s, //analytical
-  'chem' + s,// chemical
-  'class' + s, //classical
-  'clin' + s, // clinical
-  'crit' + s,// critical
-  'ecolog' + s,// ecological
-  'electr' + s,// electrical
-  'empir' + s, // empirical
-  'frant' + s, // frantical
-  'grammat' + s,// grammatical
-  'ident' + s, // identical
-  'ideolog' + s, // ideological
-  'log' + s, // logical
-  'mag' + s, //magical
-  'mathemat' + s,// mathematical
-  'mechan' + s,// mechanical
-  'med' + s,// medical
-  'method' + s, // methodical
-  'method' + s,// methodical
-  'mus' + s, // musical
-  'phys' + s, // physical
-  'phys' + s,// physical
-  'polit' + s,// political
-  'pract' + s,// practical
-  'rad' + s, //radical
-  'satir' + s, // satirical
-  'statist' + s, // statistical
-  'techn' + s,// technical
-  'technolog' + s, // technological
-  'theoret' + s,// theoretical
-  'typ' + s,// typical
-  'vert' + s,// vertical
-  'whims' + s,// whimsical
-])
+// analytically -> analytical (not analytic)
+const ical = new Set('analyt chem class clin crit ecolog electr empir frant grammat ident ideolog log mag mathemat mechan med method mus phys polit pract rad satir statist techn technolog theoret typ vert whims'.split(' ').map(x => x + 'ically'))
 
 const suffixes = [
   null,
@@ -66,31 +33,7 @@ const suffixes = [
   }
 ]
 
-const noAdj = new Set([
-  'early',
-  'only',
-  'hourly',
-  'daily',
-  'weekly',
-  'monthly',
-  'yearly',
-  'mostly',
-  'duly',
-  'unduly',
-  'especially',
-  'undoubtedly',
-  'conversely',
-  'namely',
-  'exceedingly',
-  'presumably',
-  'accordingly',
-  'overly',
-  'best',
-  'latter',
-  'little',
-  'long',
-  'low'
-])
+const noAdj = toSet('early only hourly daily weekly monthly yearly mostly duly unduly especially undoubtedly conversely namely exceedingly presumably accordingly overly best latter little long low')
 
 // exceptions to rules
 const exceptions = {

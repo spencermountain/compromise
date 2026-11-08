@@ -52,6 +52,18 @@ export const uniquePtrs = function (arr) {
   return Object.values(obj)
 }
 
+// turn a match-string, array, or view into a view
+export const getDoc = (reg, view, group) => {
+  if (typeof reg === 'string' || Array.isArray(reg)) {
+    return view.match(reg, group)
+  }
+  if (!reg) {
+    return view.none()
+  }
+  // support pre-parsed reg object
+  return reg
+}
+
 // a before b
 // console.log(doesOverlap([0, 0, 4], [0, 2, 5]))
 // // b before a

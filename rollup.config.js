@@ -2,7 +2,7 @@ import terser from '@rollup/plugin-terser'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import sizeCheck from 'rollup-plugin-filesize-check'
 
-const terserOpts = { keep_classnames: true, compress: { passes: 2 } }
+const terserOpts = { compress: { passes: 2 } }
 const modernTerserOpts = {
   ...terserOpts,
   ecma: 2022,
@@ -50,7 +50,7 @@ export default [
         plugins: [
           terser(modernTerserOpts),
           sizeCheck({
-            expect: 273,
+            expect: 259,
             warn: 5, // acceptable (+/-)
             throw: 25, // unacceptable (+/-)
           }),
@@ -82,7 +82,7 @@ export default [
         plugins: [
           terser(modernTerserOpts),
           sizeCheck({
-            expect: 342,
+            expect: 330,
             warn: 5, // acceptable (+/-)
             throw: 50, // unacceptable (+/-)
           }),

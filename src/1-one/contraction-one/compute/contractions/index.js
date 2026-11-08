@@ -2,6 +2,7 @@ import contractionDebug from '../../../../API/debug/contractions-debug.js'
 import splice from './_splice.js'
 import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
+import doubled from './double.js'
 import french from './french.js'
 import numberRange from './number-range.js'
 import numberUnit from './number-unit.js'
@@ -9,35 +10,29 @@ import numberUnit from './number-unit.js'
 const byApostrophe = /'/
 const numDash = /^[0-9][^-–—]*[-–—].*?[0-9]/
 
-// run tagger on our new implicit terms
-const reTag = function (terms, view, start, len) {
-  const tmp = view.update()
-  tmp.document = [terms]
-  // offer to re-tag neighbours, too
-  let end = start + len
-  if (start > 0) {
-    start -= 1
-  }
-  if (terms[end]) {
-    end += 1
-  }
-  tmp.ptrs = [[0, start, end]]
+// poor-mans reindexing of this sentence only
+const reIndex = function (terms) {
+  terms.forEach((t, i) => {
+    if (t.index) {
+      t.index[1] = i
+    }
+  })
 }
 
 const byEnd = {
   // ain't
-  t: (terms, i) => apostropheT(terms, i),
+  t: apostropheT,
   // how'd
-  d: (terms, i) => apostropheD(terms, i),
+  d: apostropheD,
 }
 
 const byStart = {
   // j'aime
-  j: (terms, i) => french.preJ(terms, i),
+  j: french.preJ,
   // l'amour
-  l: (terms, i) => french.preL(terms, i),
+  l: french.preL,
   // d'amerique
-  d: (terms, i) => french.preD(terms, i),
+  d: french.preD,
 }
 
 // pull-apart known contractions from model
@@ -61,11 +56,14 @@ const knownOnes = function (list, term, before, after) {
   return null
 }
 
-const toDocs = function (words, view, term) {
-  contractionDebug(term, words)
+// turn the words into terms, and put them where the contraction was
+const expand = function (words, view, document, n, i) {
+  contractionDebug(document[n][i], words)
   const doc = view.fromText(words.join(' '))
   doc.compute(['id', 'alias'])
-  return doc.docs[0]
+  words = doc.docs[0]
+  splice(document, [n, i], words)
+  return words
 }
 
 // there's is usually [there, is]
@@ -90,17 +88,22 @@ const contractions = view => {
   // let units = new Set(model.one.units || [])
   // each sentence
   document.forEach((terms, n) => {
+    const len = terms.length
     // loop through terms backwards
     for (let i = terms.length - 1; i >= 0; i -= 1) {
+      // already expanded - this runs on the whole document, and must be re-runnable
+      if (terms[i].implicit) {
+        continue
+      }
       let before = null
       let after = null
-      if (byApostrophe.test(terms[i].normal) === true) {
+      if (byApostrophe.test(terms[i].normal)) {
         const res = terms[i].normal.split(byApostrophe)
         before = res[0]
         after = res[1]
       }
-      // any known-ones, like 'dunno'?
-      let words = knownOnes(list, terms[i], before, after)
+      // wouldn't've, then any known-ones, like 'dunno'
+      let words = doubled(terms, i) || knownOnes(list, terms[i], before, after)
       // ['foo', 's']
       if (!words && Object.hasOwn(byEnd, after)) {
         words = byEnd[after](terms, i, world)
@@ -115,33 +118,32 @@ const contractions = view => {
       }
       // actually insert the new terms
       if (words) {
-        words = toDocs(words, view, terms[i])
-        splice(document, [n, i], words)
-        reTag(document[n], view, i, words.length)
+        expand(words, view, document, n, i)
         continue
       }
       // '44-2' has special care
       if (numDash.test(terms[i].normal)) {
         words = numberRange(terms, i)
         if (words) {
-          words = toDocs(words, view, terms[i])
-          splice(document, [n, i], words)
+          words = expand(words, view, document, n, i)
           methods.one.setTag(words, 'NumberRange', world) //add custom tag
           // is it a time-range, like '5-9pm'
           if (words[2] && words[2].tags.has('Time')) {
             methods.one.setTag([words[0]], 'Time', world, null, 'time-range')
           }
-          reTag(document[n], view, i, words.length)
         }
         continue
       }
       // split-apart '4km'
       words = numberUnit(terms, i, world)
       if (words) {
-        words = toDocs(words, view, terms[i])
-        splice(document, [n, i], words)
+        words = expand(words, view, document, n, i)
         methods.one.setTag([words[1]], 'Unit', world, null, 'contraction-unit')
       }
+    }
+    // new terms shift the indexes of any terms after them
+    if (terms.length !== len) {
+      reIndex(terms)
     }
   })
 }

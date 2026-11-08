@@ -125,7 +125,7 @@ nlp('the price of milk').match('price of [.]', 0).text()  // 'milk'
 ### Fuzzy — `~word~`
 
 Matches near-spellings / typos using string distance (default threshold ~0.85). Pass a custom
-threshold via the options argument: `doc.match('~color~', null, { fuzzy: 0.7 })`.
+threshold via the [options argument](#match-options): `doc.match('~color~', null, { fuzzy: 0.7 })`.
 
 ```js
 nlp('the organisation').match('~organization~').text()   // 'organisation'
@@ -164,6 +164,22 @@ Apply a built-in term predicate. Common ones: `@isTitleCase`, `@isUpperCase`, `@
 nlp('Hello World now').match('@isTitleCase').out('array')   // ['Hello','World']
 ```
 
+## Match options
+
+`.match()`, `.matchOne()`, `.has()`, `.if()`, `.ifNo()`, `.before()` and `.after()` take an options
+object as their third argument, after the capture group. `nlp.parseMatch(str, opts)` takes it second.
+
+| Option | Default | Effect |
+|---|---|---|
+| `fuzzy` | `0.85` | similarity threshold for `~word~` tokens, from 0 to 1 |
+| `caseSensitive` | `false` | match words and `/regex/` tokens against the original text, not the normalized form |
+| `noRegex` | `false` | treat `/regex/` tokens as plain words, so they are never compiled or run |
+
+```js
+nlp('Hello hello').match('Hello', null, { caseSensitive: true }).out('array')   // ['Hello']
+nlp('the cat sat').match('/^c/', null, { noRegex: true }).out('array')         // []
+```
+
 ## Matching against an array (fast path)
 
 For a long list of literal words, `.lookup()` is far faster than many `.match()` calls:
@@ -177,11 +193,40 @@ nlp('i saw mary and john').lookup(['mary', 'john']).out('array')   // ['mary','j
 `nlp.parseMatch(str)` turns a pattern into reusable JSON; `nlp.buildNet([...])` compiles many
 patterns into one fast net for `.sweep()`. Use these in hot loops.
 
+## Untrusted input
+
+Pass `{ noRegex: true }` when a pattern comes from a user. Its `/regex/` tokens become plain words,
+so a pattern like `'/^(a+)+$/'` never runs, and an invalid one like `'/(/'` doesn't throw. The rest
+of the syntax works as usual. Other syntax errors, like `'[<>foo]'`, still throw a `SyntaxError`.
+
+Methods without an options argument, like `.replace()` or `.splitOn()`, accept a pattern parsed with
+`nlp.parseMatch()`:
+
+```js
+let doc = nlp('i like cats and dogs')
+doc.replace(nlp.parseMatch('cats', { noRegex: true }), 'birds')
+doc.text()   // 'i like birds and dogs'
+```
+
+To search for words that a user typed, without any match-syntax, use `.lookup()`:
+
+```js
+nlp('i saw mary').lookup(['mary', '/(/', '#Verb']).out('array')   // ['mary']
+```
+
+To run a regex that a user wrote, pass a parsed token. Its `regex` can be any object with a
+`.test()` method, so you can use an engine that doesn't backtrack:
+
+```js
+const safe = { test: str => str === 'dog' }
+nlp('the big dog').match([{ regex: safe }]).out('array')   // ['dog']
+```
+
 ## What is NOT supported
 
 - **Nested groups**: `'(modern (major|minor))? general'` — flatten or chain `.match()` calls.
 - **Cross-sentence matching** — use the paragraphs plugin.
 - **Character-level regex inside a term** — use a real `/regex/` token instead:
-  `nlp('color colour').match('/colou?r/').out('array')`.
+  `nlp('color colour').match('/colou?r/').out('array')`. See [untrusted input](#untrusted-input).
 
 See [concepts.md](concepts.md) for the document model and [api.md](api.md) for every method.

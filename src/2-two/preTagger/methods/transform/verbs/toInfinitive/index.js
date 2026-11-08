@@ -1,12 +1,11 @@
 import { convert } from 'suffix-thumb'
 import getTense from '../getTense/index.js'
+import { toSet } from '../../../../../_lib.js'
+import { Participle, Past, Pres, Ger } from '../../../../tagSet/_lib.js'
 
 const toParts = function (str, model) {
   let prefix = ''
-  let prefixes = {}
-  if (model.one && model.one.prefixes) {
-    prefixes = model.one.prefixes
-  }
+  const prefixes = model.one?.prefixes || {}
   // pull-apart phrasal verb 'fall over'
   let [verb, particle] = str.split(/ /)
   // support 'over cleaned'
@@ -22,34 +21,28 @@ const toParts = function (str, model) {
 
 
 // dunno about these..
-const copulaMap = {
-  are: 'be',
-  were: 'be',
-  been: 'be',
-  is: 'be',
-  am: 'be',
-  was: 'be',
-  be: 'be',
-  being: 'be',
+const copulas = toSet('are were been is am was be being')
+
+// which model turns each tense into an infinitive
+const byTense = {
+  [Participle]: 'fromParticiple',
+  [Past]: 'fromPast',
+  [Pres]: 'fromPresent',
+  [Ger]: 'fromGerund',
 }
 
 const toInfinitive = function (str, model, tense) {
-  const { fromPast, fromPresent, fromGerund, fromParticiple } = model.two.models
   const { prefix, verb, particle } = toParts(str, model)
   let inf = ''
   if (!tense) {
     tense = getTense(str)
   }
-  if (Object.hasOwn(copulaMap, str)) {
-    inf = copulaMap[str]
-  } else if (tense === 'Participle') {
-    inf = convert(verb, fromParticiple)
-  } else if (tense === 'PastTense') {
-    inf = convert(verb, fromPast)
-  } else if (tense === 'PresentTense') {
-    inf = convert(verb, fromPresent)
-  } else if (tense === 'Gerund') {
-    inf = convert(verb, fromGerund)
+  // a sentence-start can keep its case: 'Is happy'
+  const lower = str.toLowerCase()
+  if (copulas.has(lower)) {
+    inf = 'be'
+  } else if (Object.hasOwn(byTense, tense)) {
+    inf = convert(verb, model.two.models[byTense[tense]])
   } else {
     return str
   }

@@ -1,5 +1,5 @@
 import compute from './compute.js'
-import debug from './debug.js'
+import eachTerm from '../tokenize/compute/_lib.js'
 
 export default {
   // add .compute('freeze')
@@ -9,18 +9,16 @@ export default {
     const methods = world.methods.one
     // add @isFrozen method
     methods.termMethods.isFrozen = term => term.frozen === true
-    // adds `.debug('frozen')`
-    methods.debug.freeze = debug
-    methods.debug.frozen = debug
+    // `.debug('frozen')` is the tags view, which marks frozen terms
+    methods.debug.freeze = view => methods.debug.tags(view)
+    methods.debug.frozen = methods.debug.freeze
   },
 
   api: function (View) {
     // set all terms to reject any desctructive tags
     View.prototype.freeze = function () {
-      this.docs.forEach(ts => {
-        ts.forEach(term => {
-          term.frozen = true
-        })
+      eachTerm(this.docs, term => {
+        term.frozen = true
       })
       return this
     }

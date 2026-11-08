@@ -1,3 +1,4 @@
+import { rawText } from './_text.js'
 // the 'spec' output format - a clean sentence + an ordered list of top-level tags
 // designed to round-trip between compromise and LLMs (see docs/spec-format.md)
 
@@ -47,7 +48,7 @@ const toSpec = function (doc, world) {
   const tagSet = world.model.one.tagSet
   const aliases = makeAliases(tagSet, world.model.one.tagAliases)
   return doc.docs.map(terms => {
-    const text = terms.reduce((str, t) => str + t.pre + t.text + t.post, '').trim()
+    const text = rawText(terms)
     const tags = terms.map(t => {
       const tag = slotForTerm(t, tagSet)
       return aliases[tag] || tag

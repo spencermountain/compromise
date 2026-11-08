@@ -7,23 +7,17 @@ const concatArr = function (views, fn) {
   return arr
 }
 
-const concatStr = function (views, cb) {
-  let str = []
-  views.forEach(m => {
-    str += cb(m)
-  })
-  return str
-}
-
-const concatDoc = function (views, cb) {
+const concatDoc = function (paragraphs, cb) {
   let ptrs = []
-  views.forEach(m => {
+  paragraphs.views.forEach(m => {
     const res = cb(m)
     if (res.found) {
       ptrs = ptrs.concat(res.ptrs)
     }
   })
-  return views[0].update(ptrs)
+  // an empty selection has no views to update from
+  const base = paragraphs.views[0] || paragraphs.source
+  return base.update(ptrs)
 }
 
 
@@ -32,9 +26,10 @@ const api = function (View) {
 
 
   class Paragraphs {
-    constructor(views) {
+    constructor(views, source) {
       this.viewType = 'Paragraphs'
       this.views = views
+      this.source = source
     }
     // is the view not-empty?
     get found() {
@@ -46,22 +41,23 @@ const api = function (View) {
     }
 
     text(fmt) {
-      return concatStr(this.views, (m) => m.text(fmt))
+      // each view trims its trailing whitespace, so re-separate the paragraphs
+      return this.views.map(m => m.text(fmt)).filter(str => str).join('\n\n')
     }
     json() {
       return concatArr(this.views, 'json')
     }
     match(reg) {
-      return concatDoc(this.views, (view) => view.match(reg))
+      return concatDoc(this, (view) => view.match(reg))
     }
     not(reg) {
-      return concatDoc(this.views, (view) => view.match(reg))
+      return concatDoc(this, (view) => view.not(reg))
     }
     sentences() {
-      return concatDoc(this.views, (view) => view)
+      return concatDoc(this, (view) => view)
     }
     terms() {
-      return concatDoc(this.views, (view) => view.terms())
+      return concatDoc(this, (view) => view.terms())
     }
     filter(fn) {
       const res = this.views.filter(p => {
@@ -115,7 +111,7 @@ const api = function (View) {
 
     // overloaded - keep Paragraphs class
     update(views) {
-      const m = new Paragraphs(views)
+      const m = new Paragraphs(views, this.source)
       return m
     }
   }
@@ -139,7 +135,7 @@ const api = function (View) {
     const views = all.map(ptr => {
       return this.update(ptr)
     })
-    return new Paragraphs(views)
+    return new Paragraphs(views, this)
   }
 }
 export default api

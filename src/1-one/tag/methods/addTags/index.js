@@ -11,13 +11,12 @@ const compute = function (allTags) {
     return { id: k, parent: o.is, props, children: [], alias: o.alias, aliases: o.aliases?.slice() }
   })
   const graph = grad(flatList).cache().fillDown()
-  return graph.out('array')
+  return graph.toArray()
 }
 
 const fromUser = function (tags) {
-  Object.keys(tags).forEach(k => {
-    tags[k] = { ...tags[k] }
-    tags[k].novel = true
+  Object.entries(tags).forEach(([k, v]) => {
+    tags[k] = { ...v, novel: true }
   })
   return tags
 }

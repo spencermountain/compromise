@@ -1,6 +1,7 @@
 import resolveAliases from './aliases.js'
 import { canCheck, getBoundary } from './_lib.js'
 import { isFixed } from '../../../match/methods/match/_fixed.js'
+import { getMinLength } from '../../../match/methods/match/_lib.js'
 
 // extract the clear needs for an individual match token
 const getTokenNeeds = function (reg) {
@@ -39,8 +40,8 @@ const getNeeds = function (regs) {
   const needs = []
   regs.forEach(reg => {
     needs.push(getTokenNeeds(reg))
-    // support AND (foo && tag)
-    if (reg.operator === 'and' && reg.choices) {
+    // support AND (foo && tag) - but an optional or negative block requires nothing
+    if (reg.operator === 'and' && reg.choices && !reg.optional && !reg.negative) {
       reg.choices.forEach(oneSide => {
         oneSide.forEach(r => {
           needs.push(getTokenNeeds(r))
@@ -105,7 +106,7 @@ const parse = function (matches, world) {
     obj.minWords = obj.regs.filter(o => !o.optional).length
     // The matcher excludes negative tokens from its own minimum. Cache that
     // separately rather than changing the sweep's existing length filter.
-    obj.minLength = obj.regs.filter(o => o.optional !== true && o.negative !== true).length
+    obj.minLength = getMinLength(obj.regs)
   })
   return matches
 }

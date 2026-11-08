@@ -165,7 +165,6 @@ export default [
   'nasa',
   'nascar',
   'nasdaq',
-  'national academy of sciences',
   'nato',
   'natwest',
   'nba',
@@ -282,7 +281,6 @@ export default [
   `carls jr`,
   `le oreal`, //l'oreal
   `macs milk`,
-  `mcdonalds`,
   `quiznos`,
   `sainsburys`,
 
@@ -347,4 +345,5 @@ export default [
   'smirnoff',
   'wikileaks',
   'wikipedia',
+  // 'sunday times',
 ]

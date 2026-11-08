@@ -1,9 +1,10 @@
 import parse from './parse/index.js'
 import { decimalFraction, decimalText, isPercent, replaceNumber } from './_conversion.js'
+import { Frac, Numeric } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const toFraction = numbers => {
   const result = numbers.map(value => {
-    if (value.has('#Fraction')) {
+    if (value.has('#Frac')) {
       return value
     }
     const { num } = parse(value)
@@ -18,7 +19,7 @@ const toFraction = numbers => {
       str = decimalFraction(num).join('/')
     }
     const phrase = replaceNumber(value, str)
-    phrase.unTag('Percent').tag(['Fraction', 'NumericValue'])
+    phrase.unTag('Percent').tag([Frac, Numeric])
     return phrase
   })
   return result.fractions()

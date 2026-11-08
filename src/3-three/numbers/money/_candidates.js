@@ -1,11 +1,12 @@
 import { decimalName } from './_currency.js'
+import { Val } from '../../../2-two/preTagger/tagSet/_lib.js'
 
 const isQualifier = word => word === 'cad' || word === 'usd'
 
 // Inspect terms directly instead of constructing a View for every word.
 const tagCents = doc => {
   if (doc.docs.some(terms => terms.some(term => term.text.includes('¢') || term.pre.includes('¢')))) {
-    doc.terms().filter(term => /^¢[0-9]/.test(term.text())).tag(['Money', 'Value'])
+    doc.terms().filter(term => /^¢[0-9]/.test(term.text())).tag(['Money', Val])
   }
 }
 

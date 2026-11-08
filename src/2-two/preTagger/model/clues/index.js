@@ -1,4 +1,4 @@
-import { Inf, Pres, Plur } from '../../tagSet/_lib.js'
+import { Inf, Pres, Plur, ActorVerb, AdjGerund, AdjNoun, AdjPast, AdjPresent, NounVerb, NounGerund, PersonNoun, PersonVerb, PersonAdj, PluralVerb } from '../../tagSet/_lib.js'
 import actorVerb from './actor-verb.js'
 import adjGerund from './adj-gerund.js'
 import adjNoun from './adj-noun.js'
@@ -14,18 +14,18 @@ import personAdj from './person-adj.js'
 import unitNoun from './unit-noun.js'
 
 const clues = {
-  'Actor|Verb': actorVerb,
-  'Adj|Gerund': adjGerund,
-  'Adj|Noun': adjNoun,
-  'Adj|Past': adjPast,
-  'Adj|Present': adjPresent,
-  'Noun|Verb': nounVerb,
-  'Noun|Gerund': nounGerund,
-  'Person|Noun': personNoun,
+  [ActorVerb]: actorVerb,
+  [AdjGerund]: adjGerund,
+  [AdjNoun]: adjNoun,
+  [AdjPast]: adjPast,
+  [AdjPresent]: adjPresent,
+  [NounVerb]: nounVerb,
+  [NounGerund]: nounGerund,
+  [PersonNoun]: personNoun,
   'Person|Date': personDate,
-  'Person|Verb': personVerb,
+  [PersonVerb]: personVerb,
   'Person|Place': personPlace,
-  'Person|Adj': personAdj,
+  [PersonAdj]: personAdj,
   'Unit|Noun': unitNoun,
 }
 
@@ -38,26 +38,29 @@ const copy = (obj, more) => {
 }
 
 // make a copy of this one
-clues['Plural|Verb'] = {
-  beforeWords: copy(clues['Noun|Verb'].beforeWords, {
+clues[PluralVerb] = {
+  beforeWords: copy(clues[NounVerb].beforeWords, {
     had: Plur, //had tears
     have: Plur,
   }),
-  afterWords: copy(clues['Noun|Verb'].afterWords, {
-    his: Pres, her: Pres, its: Pres,
-    in: null, to: null,
+  afterWords: copy(clues[NounVerb].afterWords, {
+    his: Pres,
+    her: Pres,
+    its: Pres,
+    in: null,
+    to: null,
     is: Pres, //the way it works is
     by: Pres, //it works by
   }),
-  beforeTags: copy(clues['Noun|Verb'].beforeTags, {
+  beforeTags: copy(clues[NounVerb].beforeTags, {
     Conjunction: Pres, //and changes
     Noun: undefined, //the century demands
-    ProperNoun: Pres//john plays
+    ProperNoun: Pres, //john plays
   }),
-  afterTags: copy(clues['Noun|Verb'].afterTags, {
-    Gerund: Plur,//ice caps disappearing
+  afterTags: copy(clues[NounVerb].afterTags, {
+    Gerund: Plur, //ice caps disappearing
     Noun: Pres, //changes gears
-    Value: Pres //changes seven gears
+    Value: Pres, //changes seven gears
   }),
 }
 // add some custom plural clues

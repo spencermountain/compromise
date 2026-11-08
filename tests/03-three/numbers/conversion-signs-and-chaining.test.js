@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/numbers/conversion-signs-and-chaining] '
 
 test(here + 'negative fractions in words', t => {

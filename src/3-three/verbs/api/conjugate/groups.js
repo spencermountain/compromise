@@ -1,6 +1,7 @@
 import parseVerb from '../parse/index.js'
 import getGrammar from '../parse/grammar/index.js'
 import readAuxiliary from '../parse/auxiliary.js'
+import { SimplePres, SimplePast, SimpleFut } from '../parse/grammar/forms.js'
 
 // Snapshot coordination before any edit changes tags or term positions. Only
 // adjacent, compatible roots can inherit an auxiliary; a new subject, object,
@@ -18,24 +19,24 @@ const groups = function (verbs, finite = false) {
       return
     }
     const info = getGrammar(head.vb, head.parsed)
-    const bare = finite && !head.parsed.auxiliary.found && !info.copula && /^(simple-present|simple-past)$/.test(info.form)
+    const bare = finite && !head.parsed.auxiliary.found && !info.copula && (info.form === SimplePres || info.form === SimplePast)
     const doSupport = finite && head.parsed.auxiliary.has('^(do|does|did)$')
     if (!head.parsed.auxiliary.found && !bare) return
     if (info.isInfinitive) return
     const chain = readAuxiliary(head.parsed, info.form)
-    if ((!chain && info.form !== 'simple-future' && !bare && !doSupport) || (chain && chain.prospective)) return
+    if ((!chain && info.form !== SimpleFut && !bare && !doSupport) || (chain && chain.prospective)) return
     head.chain = chain
     head.form = info.form
     const root = entry.parsed.root
     const headRoot = head.parsed.root
-    let compatible = headRoot.has('#Infinitive') && root.has('#Infinitive')
-    if (bare && headRoot.has('#PresentTense')) {
-      compatible = root.has('#PresentTense')
+    let compatible = headRoot.has('#Inf') && root.has('#Inf')
+    if (bare && headRoot.has('#Pres')) {
+      compatible = root.has('#Pres')
     }
-    if (headRoot.has('(#PastTense|#Participle)')) compatible = root.has('(#PastTense|#Participle)')
-    if (headRoot.has('#Gerund')) compatible = root.has('#Gerund')
+    if (headRoot.has('(#Past|#Participle)')) compatible = root.has('(#Past|#Participle)')
+    if (headRoot.has('#Ger')) compatible = root.has('#Ger')
     if (!compatible || previous.vb.has('@hasComma$')) return
-    const next = previous.vb.growRight('(and|or) #Adverb+? #Verb+ #Particle?')
+    const next = previous.vb.growRight('(and|or) #Adv+? #Verb+ #Particle?')
     if (next.match(entry.vb).wordCount() !== entry.vb.wordCount()) return
     entry.head = head
   })

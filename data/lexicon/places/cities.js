@@ -493,4 +493,11 @@ export default [
   'versailles',
 
   'salt lake city',
+  // would match a surname suffix
+  'essen',
+  'kirov',
+  'natchez',
+  'rostov',
+  // not an airport code
+  'las vegas',
 ]

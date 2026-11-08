@@ -1,48 +1,47 @@
-export default [
-  'rd',
-  'st',
-  'dist',
-  'mt',
-  'ave',
-  'blvd',
-  'cl',
-  // 'ct',
-  'cres',
-  'hwy',
-  //states
-  'ariz',
-  'cal',
-  'calif',
-  'colo',
-  'conn',
-  'fla',
-  'fl',
-  'ga',
-  'ida',
-  'ia',
-  'kan',
-  'kans',
-
-  'minn',
-  'neb',
-  'nebr',
-  'okla',
-  'penna',
-  'penn',
-  'pa',
-  'dak',
-  'tenn',
-  'tex',
-  'ut',
-  'vt',
-  'va',
-  'wis',
-  'wisc',
-  'wy',
-  'wyo',
-  'usafa',
-  'alta',
-  'ont',
-  'que',
-  'sask',
-]
+import { toList } from '../_lib.js'
+// streets, then states/provinces (not ct)
+export default toList(`
+rd
+st
+dist
+mt
+ave
+blvd
+cl
+cres
+hwy
+ariz
+cal
+calif
+colo
+conn
+fla
+fl
+ga
+ida
+ia
+kan
+kans
+minn
+neb
+nebr
+okla
+penna
+penn
+pa
+dak
+tenn
+tex
+ut
+vt
+va
+wis
+wisc
+wy
+wyo
+usafa
+alta
+ont
+que
+sask
+`)

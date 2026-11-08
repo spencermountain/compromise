@@ -1,3 +1,4 @@
+import merge from './_lib.js'
 import tagWords from '../_lib.js'
 import person from './_person.js'
 import tags from '../../tagSet/aliases.js'
@@ -30,9 +31,4 @@ const month = {
     'sometime in of until the', m,
   ),
 }
-export default {
-  beforeTags: { ...person.beforeTags, ...month.beforeTags },
-  afterTags: { ...person.afterTags, ...month.afterTags },
-  beforeWords: { ...person.beforeWords, ...month.beforeWords },
-  afterWords: { ...person.afterWords, ...month.afterWords },
-}
+export default merge(person, month)

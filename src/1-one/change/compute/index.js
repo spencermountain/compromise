@@ -1,14 +1,11 @@
 import uuid from './uuid.js'
+import eachTerm from '../../tokenize/compute/_lib.js'
 
 const compute = {
   id: function (view) {
-    const docs = view.docs
-    for (let n = 0; n < docs.length; n += 1) {
-      for (let i = 0; i < docs[n].length; i += 1) {
-        const term = docs[n][i]
-        term.id ||= uuid(term)
-      }
-    }
+    eachTerm(view.docs, term => {
+      term.id ||= uuid(term)
+    })
   }
 }
 

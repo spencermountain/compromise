@@ -1,5 +1,7 @@
 import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
+import { hasAny, toSet } from '../../../../_lib.js'
+import { RomanNumeral, Acronym, NN, Place, Plur, Org } from '../../../tagSet/_lib.js'
 
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
 const isUpperCase = /^[A-Z-]+$/
@@ -8,33 +10,23 @@ const periodAcronym = /^([A-Z]\.)+[A-Z]?,?$/
 const noPeriodAcronym = /^[A-Z]{2,}('s|,)?$/
 const lowerCaseAcronym = /^([a-z]\.)+[a-z]\.?$/
 
-const oneLetterWord = {
-  I: true,
-  A: true,
-}
+const oneLetterWord = toSet('I A')
 
 // only assume these are places if they are uppercased
-const places = {
-  la: true,
-  ny: true,
-  us: true,
-  dc: true,
-  gb: true,
-  uk: true,
-}
+const places = toSet('la ny us dc gb uk')
 
 // just uppercase acronyms, no periods - 'UNOCHA'
 const isNoPeriodAcronym = function (term, model) {
   let str = term.text
   // ensure it's all upper-case
-  if (isUpperCase.test(str) === false) {
+  if (!isUpperCase.test(str)) {
     // allow lower-case plural - 'MMVAs'
-    if (str.length > 3 && upperThenS.test(str) === true) {
+    if (str.length > 3 && upperThenS.test(str)) {
       str = str.replace(/s$/, '')
     } else {
       return false
     }
-  } else if (Object.hasOwn(places, term.normal) === true) {
+  } else if (places.has(term.normal)) {
     // NY, US, UK, etc.
     return true
   }
@@ -43,7 +35,7 @@ const isNoPeriodAcronym = function (term, model) {
     return false
   }
   // 'I' is not a acronym
-  if (Object.hasOwn(oneLetterWord, str)) {
+  if (oneLetterWord.has(str)) {
     return false
   }
   // known-words, like 'PIZZA' is not an acronym.
@@ -51,59 +43,65 @@ const isNoPeriodAcronym = function (term, model) {
     return false
   }
   //like N.D.A
-  if (periodAcronym.test(str) === true) {
+  if (periodAcronym.test(str)) {
     return true
   }
   //like c.e.o
-  if (lowerCaseAcronym.test(str) === true) {
+  if (lowerCaseAcronym.test(str)) {
     return true
   }
   //like 'F.'
-  if (oneLetterAcronym.test(str) === true) {
+  if (oneLetterAcronym.test(str)) {
     return true
   }
   //like NDA
-  if (noPeriodAcronym.test(str) === true) {
+  if (noPeriodAcronym.test(str)) {
     return true
   }
   return false
 }
 
+// clear any tags, and make it an acronym
+const reason = '3-acronym'
+
+const toAcronym = (term, model) => {
+  unTag([term], '*', model.one.tagSet, reason)
+  fastTag(term, [Acronym, NN], reason)
+}
+
 const isAcronym = function (terms, i, model) {
   const term = terms[i]
   //these are not acronyms
-  if (term.tags.has('RomanNumeral') || term.tags.has('Acronym') || term.frozen) {
+  if (hasAny(term, RomanNumeral, Acronym) || term.frozen) {
     return null
   }
   //non-period ones are harder
   if (isNoPeriodAcronym(term, model)) {
-    unTag([term], '*', model.one.tagSet, '3-acronym')
-    fastTag(term, ['Acronym', 'Noun'], '3-no-period-acronym')
+    toAcronym(term, model)
     // ny, la
-    if (places[term.normal] === true) {
-      fastTag(term, 'Place', '3-place-acronym')
+    if (places.has(term.normal)) {
+      fastTag(term, Place, reason)
     }
     // UFOs
-    if (upperThenS.test(term.text) === true) {
-      fastTag(term, 'Plural', '3-plural-acronym')
+    if (upperThenS.test(term.text)) {
+      fastTag(term, Plur, reason)
     }
     // if(term.normal
     return true
   }
   // one-letter acronyms
-  if (!Object.hasOwn(oneLetterWord, term.text) && oneLetterAcronym.test(term.text)) {
-    unTag([term], '*', model.one.tagSet, '3-acronym')
-    fastTag(term, ['Acronym', 'Noun'], '3-one-letter-acronym')
+  if (!oneLetterWord.has(term.text) && oneLetterAcronym.test(term.text)) {
+    toAcronym(term, model)
     return true
   }
   //if it's a very-short organization?
-  if (term.tags.has('Organization') && term.text.length <= 3) {
-    fastTag(term, 'Acronym', '3-org-acronym')
+  if (term.tags.has(Org) && term.text.length <= 3) {
+    fastTag(term, Acronym, reason)
     return true
   }
   // upper-case org, like UNESCO
-  if (term.tags.has('Organization') && isUpperCase.test(term.text) && term.text.length <= 6) {
-    fastTag(term, 'Acronym', '3-titlecase-acronym')
+  if (term.tags.has(Org) && isUpperCase.test(term.text) && term.text.length <= 6) {
+    fastTag(term, Acronym, reason)
     return true
   }
   return null

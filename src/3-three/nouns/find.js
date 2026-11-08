@@ -9,29 +9,29 @@ const findNouns = function (doc) {
     m = m.splitAfter(commas)
   }
   // yo there
-  m = split(m, 'splitOn', '#Expression')
+  m = split(m, 'splitOn', '#Expr')
   // these are individual nouns
   m = split(m, 'splitOn', '(he|she|we|you|they|i)')
   // a client i saw
-  m = split(m, 'splitOn', '(#Noun|#Adjective) [(he|him|she|it)]', 0)
+  m = split(m, 'splitOn', '(#NN|#Adj) [(he|him|she|it)]', 0)
   // give him the best
-  m = split(m, 'splitOn', '[(he|him|she|it)] (#Determiner|#Value)', 0)
+  m = split(m, 'splitOn', '[(he|him|she|it)] (#Det|#Val)', 0)
   // the noise the slide makes
-  m = split(m, 'splitBefore', '#Noun [(the|a|an)] #Adjective? #Noun', 0)
+  m = split(m, 'splitBefore', '#NN [(the|a|an)] #Adj? #NN', 0)
   // here spencer slept
-  m = split(m, 'splitOn', '[(here|there)] #Noun', 0)
+  m = split(m, 'splitOn', '[(here|there)] #NN', 0)
   // put it there
-  m = split(m, 'splitOn', '[#Noun] (here|there)', 0)
+  m = split(m, 'splitOn', '[#NN] (here|there)', 0)
   // its great purposes
   // give [parents] [our money]
   m = split(m, 'splitBefore', '(our|my|their|your)')
   // tell my friend that he
-  m = split(m, 'splitOn', '#Noun [#Determiner]', 0)
+  m = split(m, 'splitOn', '#NN [#Det]', 0)
   // his excuses
   // m = m.splitAfter('(his|hers|yours|ours|theirs)')
   // m = m.not('^#Determiner')
   //ensure there's actually a noun
-  m = m.if('#Noun')
+  m = m.if('#NN')
   return m
 }
 export default findNouns

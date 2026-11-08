@@ -1,42 +1,16 @@
+import { toHash } from './_lib.js'
 // https://util.unicode.org/UnicodeJsps/list-unicodeset.jsp?a=%5Cp%7Bpunctuation%7D
 
-// punctuation to keep at start of word
-const prePunctuation = {
-  '#': true, //#hastag
-  '@': true, //@atmention
-  '_': true,//underscore
-  '°': true,
-  // '+': true,//+4
-  // '\\-',//-4  (escape)
-  // '.',//.4
-  // zero-width chars
-  '\u200B': true,
-  '\u200C': true,
-  '\u200D': true,
-  '\uFEFF': true
-}
+// zero-width chars
+const zeroWidth = '\u200B\u200C\u200D\uFEFF'
 
-// punctuation to keep at end of word
-const postPunctuation = {
-  '%': true,//88%
-  '_': true,//underscore
-  '°': true,//degrees, italian ordinal
-  // '\'',// sometimes
-  // zero-width chars
-  '\u200B': true,
-  '\u200C': true,
-  '\u200D': true,
-  '\uFEFF': true
-}
+// punctuation to keep at start of word - #hastag, @atmention, underscore
+// (not +4, -4, .4)
+const prePunctuation = toHash(('#@_°' + zeroWidth).split(''))
 
-const emoticons = {
-  '<3': true,
-  '</3': true,
-  '<\\3': true,
-  ':^P': true,
-  ':^p': true,
-  ':^O': true,
-  ':^3': true,
-}
+// punctuation to keep at end of word - 88%, underscore, degrees/italian ordinal
+const postPunctuation = toHash(('%_°' + zeroWidth).split(''))
+
+const emoticons = toHash('<3 </3 <\\3 :^P :^p :^O :^3'.split(' '))
 
 export { prePunctuation, postPunctuation, emoticons }

@@ -14,7 +14,25 @@ const tagString = function (tags, model) {
   return tags.join(', ')
 }
 
+// browser consoles get a collapsible table per sentence
+const showClient = function (view) {
+  console.log('%c -=-=- ', 'background-color:#6699cc;')
+  view.forEach(m => {
+    console.groupCollapsed(m.text())
+    const out = m.docs[0].map(t => {
+      const text = t.implicit ? '[' + t.implicit + ']' : t.text || '-'
+      return { text, tags: '[' + Array.from(t.tags).join(', ') + ']' }
+    })
+    console.table(out, ['text', 'tags'])
+    console.groupEnd()
+  })
+}
+
 const showTags = function (view) {
+  if (typeof window !== 'undefined' && window.document) {
+    showClient(view)
+    return
+  }
   const { docs, model } = view
   if (docs.length === 0) {
     console.log(cli.blue('\n     ──────'))
@@ -32,6 +50,9 @@ const showTags = function (view) {
       }
       text = cli.yellow(text)
       let word = "'" + text + "'"
+      if (t.frozen === true) {
+        word += ' ❄️'
+      }
       if (t.reference) {
         const str = view.update([t.reference]).text('normal')
         word += ` - ${cli.dim(cli.i('[' + str + ']'))}`

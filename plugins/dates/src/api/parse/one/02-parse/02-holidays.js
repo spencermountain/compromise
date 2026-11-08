@@ -12,7 +12,8 @@ const parseHoliday = function (doc, context) {
   if (hasYear) {
     year = Number(m.groups('year').text('reduced')) || year
   }
-  const str = m.groups('holiday').text('reduced')
+  // "new year's eve" is listed as 'new years eve'
+  const str = m.groups('holiday').text('reduced').replace(/'s\b/g, 's')
   let s = spacetimeHoliday(str, year, context.timezone)
   if (s !== null) {
     // no explicit year given - assume the holiday is in the future

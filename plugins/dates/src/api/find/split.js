@@ -1,10 +1,11 @@
 // chop things up into bite-size pieces
 const split = function (dates) {
   let m = null
-  // don't split a range - but only exempt that phrase, not the whole document
-  const ranges = dates.filter(d => d.has('^(between|within) #Date'))
+  // don't split a range, or a repeat - but only exempt that phrase, not the whole document
+  const isWhole = d => d.has('^(between|within|every|any|each) #Date') || d.has('^(#WeekDay && #Plural) (and|or)')
+  const ranges = dates.filter(isWhole)
   if (ranges.found) {
-    let rest = dates.filter(d => !d.has('^(between|within) #Date'))
+    let rest = dates.filter(d => !isWhole(d))
     rest = split(rest)
     return ranges.concat(rest)
   }

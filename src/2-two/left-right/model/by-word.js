@@ -2,26 +2,22 @@ const adverbBeforeAdjective = '_ #Adj -> #Adv'
 const imperativeBeforeAdjective = '^ _ #Adj -> #Imp'
 const imperativeBeforeNoun = '^ _ #NN -> #Imp'
 const infinitiveBeforeGerund = '_ #Ger -> #Inf'
+// is [lasting] longer
+const copGer = post => `#Cop _ ${post} -> #Ger`
 
 const rules = {
-  cold: [
-    // a bit [cold]; ice [cold]
-    '(bit|ice) _ -> #Adj',
-  ],
-  lunatic: [
-    '_ fringe -> #Adj',
-  ],
-  fringe: [
-    'lunatic _ -> #Noun',
-  ],
+  // a bit [cold]; ice [cold]
+  cold: '(bit|ice) _ -> #Adj',
+  // entirely [unknown], from the un-known switch
+  unknown: '#Adv _ -> #Adj',
+  lunatic: '_ fringe -> #Adj',
+  fringe: 'lunatic _ -> #Noun',
   here: [
     // come [here], leave the bowls [here], is [here]
     '(#Verb|#Noun) _ $ -> #Adv',
     '#Verb _ (#Date|now) -> #Adv',
   ],
-  too: [
-    '_ much -> #Adv',
-  ],
+  too: '_ much -> #Adv',
   much: [
     adverbBeforeAdjective,
     '(too|bit) _ -> #Adj',
@@ -31,17 +27,13 @@ const rules = {
     // a [bit] much
     'a _ much -> #Adv',
   ],
-  live: [
-    'long _ -> #Inf',
-  ],
+  live: 'long _ -> #Inf',
   rights: [
     '_ of -> #NN',
     'equal _ -> #Plural',
   ],
-  over: [
-    // geek out [over] computers
-    '#Particle _ #NN -> #Prep',
-  ],
+  // geek out [over] computers
+  over: '#Particle _ #NN -> #Prep',
   under: [
     // looked [under] the bed
     '#V _ (#Det|#Poss|#Pron) -> #Prep',
@@ -50,79 +42,41 @@ const rules = {
     // wimp out [under] pressure
     '#Particle _ #NN -> #Prep',
   ],
-  am: [
-    // five [am]
-    '#Value _ -> #Time',
-  ],
-  pm: [
-    '#Value _ -> #Time',
-  ],
-  well: [
-    // a [well] made table
-    '_ #Past -> #Adv',
-  ],
-  cool: [
-    // keep it [cool]
-    'it _ $ -> #Adj',
-  ],
+  // five [am]
+  'am|pm': '#Value _ -> #Time',
+  // a [well] made table
+  well: '_ #Past -> #Adv',
+  // keep it [cool]
+  cool: 'it _ $ -> #Adj',
   long: [
     '_ after$ -> #Adv',
     '_ live -> #Adv',
   ],
-  minus: [
-    // [minus] seven
-    '_ #Value -> #Value',
-  ],
-  negative: [
-    '_ #Value -> #Value',
-  ],
-  point: [
-    // seven [point] five
-    '#Value _ #Value -> #Value',
-  ],
-  decimal: [
-    '#Value _ #Value -> #Value',
-  ],
+  // [minus] seven
+  'minus|negative': '_ #Value -> #Value',
+  // seven [point] five
+  'point|decimal': '#Value _ #Value -> #Value',
   fine: [
     // pay his [fine]; it works out [fine]
     '#Poss _ $ -> #Singular',
     '#PhrasalVerb _ $ -> #Adjective',
   ],
-  lieutenant: [
-    // 1st [lieutenant]
-    '(1st|2nd|3rd) _ -> #Hon',
-  ],
-  dozen: [
-    // two [dozen] eggs
-    '(a|#Cardinal) _ -> #Multiple | #Cardinal',
-  ],
-  how: [
-    // [how] is she?
-    '_ (#Det|#Cop|#Mod|#Past) -> #QW',
-  ],
-  rival: [
-    // a [rival] company
-    '(#Det|#Poss) _ #Noun -> #Adjective',
-  ],
-  bill: [
-    // the [bill] is a common noun, despite its name default
-    '(#Det|#Poss) _ -> #Singular | !#Person | !#ProperNoun',
-  ],
-  air: [
-    // the [air] force
-    '_ force -> #NN',
-  ],
-  said: [
-    // the [said] dog
-    'the _ #NN -> #Adj',
-  ],
-  still: [
-    // was [still] in
-    '#Cop _ (in|#Ger|#Adj) -> #Adv',
-    // [still] good
-    // [still] make
-    '_ (#Adj|#V) -> #Adv',
-  ],
+  // 1st [lieutenant]
+  lieutenant: '(1st|2nd|3rd) _ -> #Hon',
+  // two [dozen] eggs
+  dozen: '(a|#Cardinal) _ -> #Multiple | #Cardinal',
+  // [how] is she?
+  how: '_ (#Det|#Cop|#Mod|#Past) -> #QW',
+  // a [rival] company
+  rival: '(#Det|#Poss) _ #Noun -> #Adjective',
+  // the [bill] is a common noun, despite its name default
+  bill: '(#Det|#Poss) _ -> #Singular | !#Person | !#ProperNoun',
+  // the [air] force
+  air: '_ force -> #NN',
+  // the [said] dog
+  said: 'the _ #NN -> #Adj',
+  // this [still] water, the pond's [still] water
+  still: '(#Determiner|#Possessive) _ #Noun -> #Adjective',
   so: [
     // [so] hot
     adverbBeforeAdjective,
@@ -131,11 +85,9 @@ const rules = {
     // [so] he
     '_ #NN -> #Conj',
   ],
-  way: [
-    // [way] hotter
-    // [way] over
-    '_ (#Comp|#Adj) -> #Adv',
-  ],
+  // [way] hotter
+  // [way] over
+  way: '_ (#Comp|#Adj) -> #Adv',
   all: [
     // they [all] swim
     '_ #V -> #Adv',
@@ -153,14 +105,15 @@ const rules = {
     // [even] the greatest
     '_ (#V|#Comp|#Det|#Poss) -> #Adv',
   ],
-  later: [
-    // [later] say
-    '_ #Pres -> #Adv',
-  ],
+  // [later] say
+  later: '_ #Pres -> #Adv',
   enough: [
     // high [enough]
     '#Adj _ -> #Adv',
+    'soon _ -> #Adv',
   ],
+  // [pretty] soon
+  pretty: '_ soon -> #Adv',
   least: [
     // [least] expensive
     adverbBeforeAdjective,
@@ -186,10 +139,8 @@ const rules = {
     '_ #V -> #Pron',
     '_ r -> #Pron',
   ],
-  r: [
-    // u [r] cool
-    'u _ -> #Cop',
-  ],
+  // u [r] cool
+  r: 'u _ -> #Cop',
   half: [
     '^ _ $ -> #Frac',
     '#Det _ #Unit -> #Value',
@@ -204,6 +155,8 @@ const rules = {
     '(half|quarter) _ -> #Unit | #Singular',
     // one [second]
     '#Card _ -> #Unit',
+    // twenty [second] - a unit after it would be 'seconds'
+    '(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety) _ -> #Ord',
     // [second] dog
     '_ #NN -> #Ord',
   ],
@@ -231,28 +184,20 @@ const rules = {
     // [march] quickly
     '_ #Adv -> #V',
   ],
-  open: [
-    // [open] the door
-    '_ #Det -> #Inf',
-  ],
+  // [open] the door
+  open: '_ #Det -> #Inf',
   be: [
     // will [be] walked
     'will _ #Past -> #Aux',
     // [stay] cool
     imperativeBeforeAdjective,
   ],
-  about: [
-    // at [about]
-    '#Prep _ -> #Adv',
-  ],
-  plenty: [
-    // [plenty] of
-    '_ of -> #Uncountable',
-  ],
-  no: [
-    // see [no]
-    '#V _ -> #Neg',
-  ],
+  // at [about]
+  about: '#Prep _ -> #Adv',
+  // [plenty] of
+  plenty: '_ of -> #Uncountable',
+  // see [no]
+  no: '#V _ -> #Neg',
   turkey: [
     // i ate [turkey]
     '(eat|ate|eating|roast|roasted|thanksgiving) _ -> #Uncountable | !#Place',
@@ -276,18 +221,12 @@ const rules = {
     // [like] the time
     '^ _ #Det -> #Prep',
   ],
-  enduring: [
-    // enduring symbols, running water
-    '_ (symbols|legacy|legacies|appeal|influence|value|values) -> #Adj',
-  ],
-  running: [
-    // enduring symbols, running water
-    '(have|has|had|#Det|#Poss) _ water -> #Adj',
-  ],
-  wit: [
-    // [wit] it
-    '_ (me|it) -> #Prep',
-  ],
+  // enduring symbols, running water
+  enduring: '_ (symbols|legacy|legacies|appeal|influence|value|values) -> #Adj',
+  // enduring symbols, running water
+  running: '(have|has|had|#Det|#Poss) _ water -> #Adj',
+  // [wit] it
+  wit: '_ (me|it) -> #Prep',
   leads: [
     // it [leads] to
     '_ (to|from) -> #Pres',
@@ -300,10 +239,8 @@ const rules = {
     // [pay] attention
     imperativeBeforeNoun,
   ],
-  finish: [
-    // [start] listening
-    infinitiveBeforeGerund,
-  ],
+  // [start] listening
+  finish: infinitiveBeforeGerund,
   help: [
     // [start] listening
     infinitiveBeforeGerund,
@@ -314,23 +251,17 @@ const rules = {
     // [right] after
     '_ (before|after|in|into|to|toward|above|below|under|over) -> #Adv',
     '_ of -> #NN',
+    // the [right] to vote
+    '(#Det|#Poss) _ to -> #NN',
   ],
-  there: [
-    // always [there]
-    '(always|nearly|barely|practically) _ -> #Adj',
-  ],
-  mine: [
-    // than [mine]
-    '(then|than) _ -> #Poss',
-  ],
-  sorry: [
-    // said [sorry]
-    '(say|says|said) _ -> #Expr',
-  ],
-  wed: [
-    // on [wed]
-    '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay | #Singular',
-  ],
+  // always [there]
+  there: '(always|nearly|barely|practically) _ -> #Adj',
+  // than [mine]
+  mine: '(then|than) _ -> #Poss',
+  // said [sorry]
+  sorry: '(say|says|said) _ -> #Expr',
+  // on [wed]
+  wed: '(in|by|before|during|on|until|after|of|within|all) _ -> #WeekDay | #Singular',
   quarter: [
     '#Det _ #Unit -> #Value',
     // a [half] second
@@ -356,140 +287,83 @@ const rules = {
     // [sat] november
     '^ _ #Date -> #WeekDay | #Singular',
   ],
-  read: [
-    // he [read]
-    '^(he|she|it|#Pers) _ -> #Past',
-  ],
+  // he [read]
+  read: '^(he|she|it|#Pers) _ -> #Past',
   stay: [
     // [stay] away
     '^ _ (out|away|back) -> #Imp',
     // [stay] cool
     imperativeBeforeAdjective,
   ],
-  keep: [
-    // [stay] cool
-    imperativeBeforeAdjective,
-  ],
-  shoot: [
-    // shoot
-    '^ _ $ -> #Expr',
-  ],
-  seconds: [
-    // 10 [seconds]
-    '#Value _ -> #Plur | !#Value',
-  ],
+  // [stay] cool
+  keep: imperativeBeforeAdjective,
+  // shoot
+  shoot: '^ _ $ -> #Expr',
+  // 10 [seconds]
+  seconds: '#Value _ -> #Plur | !#Value',
   premier: [
     // This is the [premier] university in Virginia
     'the _ #NN -> #Adj',
     // { m: '#Cop the [%Adj|Noun%] #NN', g: 0, t: 'Adj', r: 'premier-uni' },
   ],
-  frequent: [
-    // i [frequent] this restaurant
-    '#Pron _ #Det -> #Inf',
-  ],
-  google: [
-    // [google] me
-    '^ _ #Pron -> #Inf',
-  ],
-  left: [
-    // she even [left]
-    'even _ $ -> #Past',
-  ],
-  since: [
-    // she has [since] moved
-    '(has|have|had) _ #Past -> #Adv',
-  ],
-  time: [
-    // she had [time]
-    'had _ $ -> #NN',
-  ],
-  closing: [
-    // the station was [closing]
-    '#Cop _ -> #Ger',
-  ],
-  growing: [
-    // plants that were [growing]
-    '#Cop _ -> #Ger',
-  ],
-  soon: [
-    '_ after$ -> #Adv',
-    // the shop is closing [soon]
-    'closing _ $ -> #Adv',
-  ],
-  penny: [
-    // half a [penny]
-    'a _ $ -> #Currency',
-  ],
-  next: [
-    // 1pm [next] sun
-    '#Time _ (sun|#WeekDay) -> #Date',
-  ],
+  // i [frequent] this restaurant
+  frequent: '#Pron _ #Det -> #Inf',
+  // [google] me
+  google: '^ _ #Pron -> #Inf',
+  // she even [left]
+  left: 'even _ $ -> #Past',
+  // she has [since] moved
+  since: '(has|have|had) _ #Past -> #Adv',
+  // she had [time]
+  time: 'had _ $ -> #NN',
+  // the station was [closing]; plants that were [growing]
+  'closing|growing': '#Cop _ -> #Ger',
+  // half a [penny]
+  penny: 'a _ $ -> #Currency',
+  // 1pm [next] sun
+  next: '#Time _ (sun|#WeekDay) -> #Date',
   to: [
     // from start [to] finish
     'start _ finish -> #Prep',
     // [to] the store
     '_ (#Det|#Poss|#Pron|#Email|#Url) -> #Prep | !#Conj',
+    // went [to] 888 (but not 3 to 5)
+    '#V _ #Value -> #Prep | !#Conj',
   ],
   in: [
     // bowed his head [in] prayer
     '_ prayer -> #Prep',
+    // closed [in] july
+    '_ #Month -> #Prep',
   ],
-  pope: [
-    // [pope] francis
-    '_ #Pers -> #Hon',
-  ],
-  prince: [
-    // [prince] paris
-    '_ #Prop -> #Hon',
-  ],
-  born: [
-    // being [born]
-    'being _ -> #Past',
-  ],
-  ya: [
-    // are [ya]
-    '(are|#Mod|see|do|for) _ -> #Pron',
-  ],
-  after: [
-    // we met shortly [after]
-    '(shortly|soon|long) _ $ -> #Adv',
-  ],
-  yet: [
-    // she has not arrived [yet]
-    '#Past _ $ -> #Adv',
-  ],
-  before: [
-    // [before] dinner
-    '_ (#Det|#Poss|#NN|#Ger|#Date) -> #Prep',
-  ],
-  below: [
-    // dropped [below] zero
-    '_ #Value -> #Prep',
-  ],
-  alongside: [
-    // runs [alongside] the river
-    '_ (#Det|#Poss|#Pron|#Prop) -> #Prep',
-  ],
-  behind: [
-    // fell [behind] the sofa, but fell behind
-    '#Past _ (#Det|#Poss|#Pron) -> #Prep',
-  ],
-  do: [
-    // [do] you swim?
-    '^ _ (you|we|they) -> #QW',
-  ],
-  does: [
-    // [does] he swim?
-    '^ _ (he|she|it|#Prop) -> #QW',
-  ],
-  me: [
-    // i ate [me] sandwich (scottish slang)
-    '#Past _ #NN -> #Poss',
-  ],
+  // [pope] francis
+  pope: '_ #Pers -> #Hon',
+  // [prince] paris
+  prince: '_ #Prop -> #Hon',
+  // being [born]
+  born: 'being _ -> #Past',
+  // are [ya]
+  ya: '(are|#Mod|see|do|for) _ -> #Pron',
+  // we met shortly [after]
+  after: '(shortly|soon|long) _ $ -> #Adv',
+  // she has not arrived [yet]
+  yet: '#Past _ $ -> #Adv',
+  // [before] dinner
+  before: '_ (#Det|#Poss|#NN|#Ger|#Date) -> #Prep',
+  // dropped [below] zero
+  below: '_ #Value -> #Prep',
+  // runs [alongside] the river
+  alongside: '_ (#Det|#Poss|#Pron|#Prop) -> #Prep',
+  // fell [behind] the sofa, but fell behind
+  behind: '#Past _ (#Det|#Poss|#Pron) -> #Prep',
+  // [do] you swim?
+  do: '^ _ (you|we|they) -> #QW',
+  // [does] he swim?
+  does: '^ _ (he|she|it|#Prop) -> #QW',
+  // i ate [me] sandwich (scottish slang)
+  me: '#Past _ #NN -> #Poss',
 
-}
-
-const compounds = {
+  // Shared rules follow, so a word's own rules stay first in its bucket.
   // travel by [train]; benefit from [exercise]
   train: 'by _ -> #Noun',
   exercise: '(after|from) _ -> #Noun',
@@ -501,47 +375,45 @@ const compounds = {
   // spoke [concerning] the budget
   concerning: '(spoke|talked|wrote) _ #Det -> #Prep',
   // is [lasting] [longer]
-  lasting: '#Cop _ longer -> #Ger',
+  lasting: copGer('longer'),
   longer: 'lasting _ $ -> #Adv',
   // is [empowering] local women
-  empowering: '#Cop _ #Adj -> #Ger',
+  empowering: copGer('#Adj'),
   // attempts at [escape]; waited [pending] approval
   escape: 'at _ -> #Noun',
   pending: '#Past _ #Noun -> #Prep',
   // is [lagging] behind
-  lagging: '#Cop _ behind -> #Ger',
+  lagging: copGer('behind'),
   // anyone [owing] money; was sadly [lacking]
   owing: '_ #Noun -> #Ger',
   lacking: '(sadly|sorely) _ $ -> #Adj',
   // is [absorbing] water
-  'absorbing|baffling|contributing|exacting|foreboding': '#Cop _ #Noun -> #Ger',
+  'absorbing|baffling|contributing|exacting|foreboding': copGer('#Noun'),
   // is [booming] again; is flowering [early]
-  'booming|skyrocketing': '#Cop _ again -> #Ger',
-  'budding|flowering': '#Cop _ early -> #Ger',
-  screeching: '#Cop _ outside -> #Ger',
+  'booming|skyrocketing': copGer('again'),
+  'budding|flowering': copGer('early'),
+  screeching: copGer('outside'),
   early: '(budding|flowering) _ $ -> #Adv',
   // is [drifting] toward the shore
-  'accelerating|dashing|drifting|rushing|sloping|staggering': '#Cop _ toward -> #Ger',
+  'accelerating|dashing|drifting|rushing|sloping|staggering': copGer('toward'),
   // is [meandering] through the village
-  'meandering|rambling|speeding|surging': '#Cop _ through -> #Ger',
+  'meandering|rambling|speeding|surging': copGer('through'),
   // is [decaying] in the rain; is [smiling] at the baby
-  'decaying|fading|flaming|gleaming|maturing|sparkling|swelling|thriving': '#Cop _ in -> #Ger',
-  'glaring|remaining|roaring|smiling': '#Cop _ at -> #Ger',
+  'decaying|fading|flaming|gleaming|maturing|sparkling|swelling|thriving': copGer('in'),
+  'glaring|remaining|roaring|smiling': copGer('at'),
   // is [appealing] against the verdict; is [trembling] with fear
-  'appealing|conspiring|intriguing|leaning|raging': '#Cop _ against -> #Ger',
-  'conflicting|corresponding|trembling|trifling': '#Cop _ with -> #Ger',
-  'agonizing|reigning': '#Cop _ over -> #Ger',
-  'aching|ensuing': '#Cop _ after -> #Ger',
-  bustling: '#Cop _ around -> #Ger',
-  dissenting: '#Cop _ from -> #Ger',
-  living: '#Cop _ near -> #Ger',
-  prevailing: '#Cop _ despite -> #Ger',
-  plunging: '#Cop _ into -> #Ger',
-  emerging: '#Cop _ from -> #Ger',
-  flowing: '#Cop _ under -> #Ger',
-  soaring: '#Cop _ above -> #Ger',
-  sprawling: '#Cop _ across -> #Ger',
-  revolving: '#Cop _ around -> #Ger',
+  'appealing|conspiring|intriguing|leaning|raging': copGer('against'),
+  'conflicting|corresponding|trembling|trifling': copGer('with'),
+  'agonizing|reigning': copGer('over'),
+  'aching|ensuing': copGer('after'),
+  'bustling|revolving': copGer('around'),
+  'dissenting|emerging': copGer('from'),
+  living: copGer('near'),
+  prevailing: copGer('despite'),
+  plunging: copGer('into'),
+  flowing: copGer('under'),
+  soaring: copGer('above'),
+  sprawling: copGer('across'),
   // [1st] lieutenant
   '1st|2nd|3rd': '_ lieutenant -> #Hon',
   // is [when] he left
@@ -556,8 +428,8 @@ const compounds = {
   'shit|hell': 'to _ -> #NN',
   // the [can]
   'can|will|may': 'the _ -> #Sing',
-  // five [feet]
-  'foot|feet': '#Value _ -> #Unit',
+  // five [feet]; 5 [k]; 5 [gb]
+  'foot|feet|k|gb|pa|ft|m': '#Value _ -> #Unit',
   // [damn] them
   'shit|damn': '^ _ them -> #Inf',
   // [super] strong
@@ -565,9 +437,6 @@ const compounds = {
   // a [must]
   // a [while]
   'must|while': 'a _ -> #Sing',
-  // 5 [k]
-  // 5 [gb]
-  'k|gb|pa|ft|m': '#Value _ -> #Unit',
   // [sounds] fun
   // [look] good
   'sound|sounds|looks': '_ #Adj -> #Pres',
@@ -609,10 +478,4 @@ const compounds = {
   'poor|weary|public': 'the _ #Verb-> #Noun',
 }
 
-Object.entries(compounds).forEach(([words, rule]) => {
-  words.split('|').forEach(word => {
-    rules[word] ||= []
-    rules[word].push(rule)
-  })
-})
 export default rules

@@ -1,39 +1,6 @@
-import question from '../../verbs/api/conjugate/question.js'
-import { firstGroup } from '../../verbs/api/conjugate/coordinate.js'
+import agree from './_lib.js'
 
-const toPast = function (s) {
-  const inverted = question(s, 'past')
-  if (inverted) return inverted
-  let verbs = s.verbs()
-  // translate the first verb, no-stress
-  const first = firstGroup(verbs)
-  // A passive participle does not make its auxiliary past tense.
-  if (first.has('#PastTense') && !first.has('#Auxiliary')) {
-    return s
-  }
-  first.toPastTense()
+// only present-tense verbs follow, skipping a run-on infinitive-list - 'to walk, sit and eat'
+const narrow = (verbs, s) => verbs.if('#Pres').not(s.match('to #Verb+ #Conj #Verb').terms())
 
-  // force agreement with any 2nd/3rd verbs:
-  if (verbs.length > 1) {
-    verbs = verbs.slice(first.length)
-    // remove any sorta infinitive - 'to engage'
-    verbs = verbs.filter((v) => !v.lookBehind('to$').found)
-
-    // keep -ing verbs
-    verbs = verbs.if('#PresentTense')
-    verbs = verbs.notIf('#Gerund')
-
-    //run-on infinitive-list - 'to walk, sit and eat'
-    const list = s.match('to #Verb+ #Conjunction #Verb').terms()
-    verbs = verbs.not(list)
-
-    // otherwise, I guess so?
-    if (verbs.found) {
-      verbs.verbs().toPastTense()
-    }
-  }
-
-  // s.compute('chunks')
-  return s
-}
-export default toPast
+export default agree('past', 'toPastTense', narrow)

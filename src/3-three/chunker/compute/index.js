@@ -15,7 +15,7 @@ const findChunks = function (view) {
   easyMode(docs)
   byNeighbour(docs)
   matcher(view, docs, world)
-  fallback(docs, world)
-  fixUp(docs, world)
+  fallback(docs)
+  fixUp(docs)
 }
 export default { chunks: findChunks }

@@ -1,6 +1,6 @@
 // if a clause starts with these, it's not a main clause
 // followed by a number, 'since' or 'once' is a preposition or an adverb ('since 2010', 'once upon a time')
-const subordinate = `(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once) !(#Value|upon|then|now)`
+const subordinate = `(after|although|as|because|before|if|since|than|that|though|when|whenever|where|whereas|wherever|whether|while|why|unless|until|once) !(#Val|upon|then|now)`
 const relative = `(that|which|whichever|who|whoever|whom|whose|whomever)`
 
 // a subordinator or relative pronoun only makes the clause secondary when it
@@ -18,6 +18,9 @@ const dropIntroducedBy = function (m, pattern) {
   })
 }
 
+// multi-word subordinators
+const subordinators = ['^even (if|though)', '^so that', '^rather than', '^provided that', '^in case']
+
 //try to remove secondary clauses
 const mainClause = function (s) {
   let m = s
@@ -31,11 +34,9 @@ const mainClause = function (s) {
   }
   // this is a signal for subordinate-clauses
   m = dropIntroducedBy(m, subordinate)
-  m = m.ifNo('^even (if|though)')
-  m = m.ifNo('^so that')
-  m = m.ifNo('^rather than')
-  m = m.ifNo('^provided that')
-  m = m.ifNo('^in case')
+  subordinators.forEach(str => {
+    m = m.ifNo(str)
+  })
   if (m.length === 1) {
     return m
   }
@@ -52,14 +53,14 @@ const mainClause = function (s) {
   }
 
   // check for clauses beginning with Gerund ("Taking ..., ...")
-  m = m.ifNo('^#Gerund')
+  m = m.ifNo('^#Ger')
   if (m.length === 1) {
     return m
   }
 
   // an infinitive or an inverted condition ('To win ...', 'Had I known ...')
-  m = m.ifNo('^to #Infinitive')
-  m = m.ifNo('^#Condition')
+  m = m.ifNo('^to #Inf')
+  m = m.ifNo('^#Cond')
   if (m.length === 1) {
     return m
   }

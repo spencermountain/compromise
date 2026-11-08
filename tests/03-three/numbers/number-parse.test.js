@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/numbers/number-parse] '
 
 test('parse numbers', function (t) {
@@ -53,6 +53,42 @@ test('parse dozen', function (t) {
     ['three dozen', 36],
     ['i bought a dozen eggs', 12],
     ['half a dozen eggs', 6],
+  ]
+  arr.forEach(function (a) {
+    const num = nlp(a[0]).numbers().get()[0]
+    t.equal(num, a[1], here + a[0])
+  })
+  t.end()
+})
+
+test('parse hundreds after a bigger multiple', function (t) {
+  const arr = [
+    ['one million nine hundred ninety-four thousand', 1994000],
+    ['two million three hundred forty five thousand six hundred and seven', 2345607],
+    ['five million two hundred five thousand', 5205000],
+    ['one billion two hundred thirty million', 1230000000],
+    ['nine billion one hundred twelve million two hundred five thousand and six', 9112205006],
+    // unchanged
+    ['two hundred fifty thousand', 250000],
+    ['one million two hundred thousand', 1200000],
+    ['seven million nine hundred thousand two hundred and five', 7900205],
+  ]
+  arr.forEach(function (a) {
+    const num = nlp(a[0]).numbers().get()[0]
+    t.equal(num, a[1], here + a[0])
+  })
+  t.end()
+})
+
+test('parse a dropped-hundred next to a bigger multiple', function (t) {
+  const arr = [
+    ['five thousand two fifty', 5250],
+    ['a thousand two fifty', 1250],
+    ['seven thousand nine ninety nine', 7999],
+    ['one million two fifty', 1000250],
+    ['two fifty thousand', 250000],
+    ['nine ninety nine thousand', 999000],
+    ['one million two fifty thousand', 1250000],
   ]
   arr.forEach(function (a) {
     const num = nlp(a[0]).numbers().get()[0]

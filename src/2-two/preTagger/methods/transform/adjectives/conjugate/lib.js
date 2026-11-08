@@ -1,15 +1,11 @@
-//sweep-through all suffixes
+import findAffix from '../../../_lib.js'
+// swap a known suffix for its replacement
 const suffixLoop = function (str = '', suffixes = []) {
   const len = str.length
-  const max = len <= 6 ? len - 1 : 6
-  for (let i = max; i >= 1; i -= 1) {
-    const suffix = str.substring(len - i, str.length)
-    if (Object.hasOwn(suffixes[suffix.length], suffix) === true) {
-      const pre = str.slice(0, len - i)
-      const post = suffixes[suffix.length][suffix]
-      return pre + post
-    }
+  const suffix = findAffix(str, suffixes, Math.min(len - 1, 6), 1)
+  if (suffix === null) {
+    return null
   }
-  return null
+  return str.slice(0, len - suffix.length) + suffixes[suffix.length][suffix]
 }
 export default suffixLoop

@@ -2,42 +2,43 @@ import fastTag from '../_fastTag.js'
 import looksPlural from '../../../methods/looksPlural.js'
 import getTense from '../../../methods/transform/verbs/getTense/index.js'
 import debug from '../../../../../API/debug/debug.js'
+import { hasAny } from '../../../../_lib.js'
+import { Acronym, Abbr, Prop, Uncountable, Poss, Pron, NN, Plur, Sing, Vb, Inf, Ger, Pres, Hon, Month } from '../../../tagSet/_lib.js'
+// the debug reason for every tag this pass sets
+const reason = '3-fill-tags'
 // tags that are neither plural or singular
 const uncountable = [
-  'Acronym',
-  'Abbreviation',
-  'ProperNoun',
-  'Uncountable',
-  'Possessive',
-  'Pronoun',
+  Acronym,
+  Abbr,
+  Prop,
+  Uncountable,
+  Poss,
+  Pron,
   'Activity',
-  'Honorific',
-  'Month',
+  Hon,
+  Month,
 ]
 // try to guess if each noun is a plural/singular
 const setPluralSingular = function (term) {
-  if (!term.tags.has('Noun') || term.tags.has('Plural') || term.tags.has('Singular')) {
-    return
-  }
-  if (uncountable.find(tag => term.tags.has(tag))) {
+  if (!term.tags.has(NN) || hasAny(term, Plur, Sing, ...uncountable)) {
     return
   }
   if (looksPlural(term.normal)) {
-    fastTag(term, 'Plural', '3-plural-guess')
+    fastTag(term, Plur, reason)
   } else {
-    fastTag(term, 'Singular', '3-singular-guess')
+    fastTag(term, Sing, reason)
   }
 }
 
 // try to guess the tense of a naked verb
 const setTense = function (term) {
   const tags = term.tags
-  if (tags.has('Verb') && tags.size === 1) {
+  if (tags.has(Vb) && tags.size === 1) {
     const guess = getTense(term.normal)
     if (guess) {
-      fastTag(term, guess, '3-verb-tense-guess')
-      if (guess === 'Infinitive' || guess === 'Gerund') {
-        fastTag(term, 'PresentTense', '3-verb-tense-guess')
+      fastTag(term, guess, reason)
+      if (guess === Inf || guess === Ger) {
+        fastTag(term, Pres, reason)
       }
     }
   }
@@ -46,7 +47,7 @@ const setTense = function (term) {
 //add deduced parent tags to our terms
 const fillTags = function (terms, i, model) {
   const term = terms[i]
-  if (term.frozen === true) {
+  if (term.frozen) {
     return
   }
   // Visit only the original tags, without copying the Set.

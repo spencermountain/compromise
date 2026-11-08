@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/three.js'
+import nlp from '../lib.js'
 const here = '[three/numbers/big-number] '
 
 const cardinal = function (str) {
@@ -50,5 +50,22 @@ test('from number', function (t) {
   // t.equal(nlp('90000000000000002006').values().toText().out(), 'ninety quintillion two thousand and six');
   // t.equal(nlp('99000000000000002006').values().toText().out(), 'ninety nine quintillion two thousand and six');
   // t.equal(nlp('9000000000000000000000').values().toText().out(), 'nine sextillion');
+  t.end()
+})
+
+test('hundred quintillion and sextillion to text', function (t) {
+  const arr = [
+    ['100000000000000000000', 'one hundred quintillion'],
+    ['250000000000000000000', 'two hundred fifty quintillion'],
+    ['1000000000000000000000', 'one sextillion'],
+    ['9000000000000000000000', 'nine sextillion'],
+    ['10000000000000000000000', 'ten sextillion'],
+    ['500000000000000000000000', 'five hundred sextillion'],
+  ]
+  arr.forEach(a => {
+    const str = nlp(a[0]).values().toText().text()
+    t.equal(str, a[1], here + a[0])
+    t.equal(nlp(str).values().get()[0], Number(a[0]), here + 'round-trip ' + a[1])
+  })
   t.end()
 })

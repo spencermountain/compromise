@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/two.js'
+import nlp from '../lib.js'
 
 const here = '[two/tag/exclusions] '
 const blank = () => nlp('xyz').unTag('*')

@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
 import spacetime from 'spacetime'
 
-const magenta = str => '\x1b[35m' + str + '\x1b[0m'
-const dim = str => '\x1b[2m' + str + '\x1b[0m'
-const cyan = str => '\x1b[36m' + str + '\x1b[0m'
+import { magenta, dim, cyan } from './_debug.js'
 
 const fmt = iso => (iso ? spacetime(iso).format('{nice-day} {year}') : '-')
 

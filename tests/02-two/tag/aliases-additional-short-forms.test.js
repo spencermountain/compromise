@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/two.js'
+import nlp from '../lib.js'
 const here = '[two/tag/aliases-additional-short-forms] '
 
 test(here + 'additional short forms preserve canonical tags and spec output', t => {

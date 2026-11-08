@@ -1,4 +1,4 @@
-import { findChained } from './lib.js'
+import { findChained, they } from './lib.js'
 import pluralPhrase from './pluralPhrase.js'
 
 // find best reference for 'they' & 'their'
@@ -6,17 +6,17 @@ const getThey = function (s) {
   const nouns = s.nouns()
 
   // 'the bananas'
-  let things = nouns.isPlural().notIf('#Pronoun')
+  let things = nouns.isPlural().notIf('#Pron')
   if (things.found) {
     return things.last()
   }
   // A repeated determiner can separate two singular members of a group.
-  things = nouns.filter(pluralPhrase).notIf('#Pronoun')
+  things = nouns.filter(pluralPhrase).notIf('#Pron')
   if (things.found) {
     return things.last()
   }
   // re-use existing pronoun reference
-  const chain = findChained('(they|them|their|theirs)', s)
+  const chain = findChained(they, s)
   if (chain.found) {
     return chain
   }

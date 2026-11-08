@@ -1,4 +1,5 @@
 import methods from './lib/_sort.js'
+import { rawPointer } from '../../../API/_helpers.js'
 // aliases
 const seqNames = new Set(['index', 'sequence', 'seq', 'sequential', 'chron', 'chronological'])
 const freqNames = new Set(['freq', 'frequency', 'topk', 'repeats'])
@@ -18,13 +19,13 @@ const customSort = function (view, fn) {
 
 /** re-arrange the order of the matches (in place) */
 const sort = function (input) {
-  const { docs, pointer } = this
+  const { docs } = this
   this.uncache()
   if (typeof input === 'function') {
     return customSort(this, input)
   }
   input ||= 'alpha'
-  const ptrs = pointer || docs.map((_d, n) => [n])
+  const ptrs = rawPointer(this)
   let arr = docs.map((terms, n) => {
     return {
       index: n,
@@ -56,9 +57,7 @@ const sort = function (input) {
 
 /** reverse the order of the matches, but not the words or index */
 const reverse = function () {
-  let ptrs = this.pointer || this.docs.map((_d, n) => [n])
-  ptrs = [].concat(ptrs)
-  ptrs = ptrs.reverse()
+  const ptrs = [].concat(rawPointer(this)).reverse()
   if (this._cache) {
     this._cache = this._cache.reverse()
   }

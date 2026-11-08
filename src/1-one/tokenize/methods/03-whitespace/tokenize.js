@@ -2,9 +2,12 @@
 
 //we have slightly different rules for start/end - like #hashtags.
 const isLetter = /\p{Letter}/u
+const isMark = /\p{Mark}/u
 const isNumber = /[\p{Number}\p{Currency_Symbol}]/u
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const chillin = /[sn]['’]$/
+// a leading apostrophe that stands for letters - 'tis, 'em, 'cause
+const elision = /^['’](tis|twas|em|cause|til|bout|round)\b/i
 const isFullNumber = /^[(+\-]?\d+(th|st|nd|rd)?[)+\-]?$/
 const openers = { ')': '(', ']': '[', '}': '{' }
 
@@ -26,6 +29,7 @@ const normalizePunctuation = function (str, model) {
   // quick lookup for allowed pre/post punctuation
   const { prePunctuation, postPunctuation, emoticons } = model.one
   const original = str
+  const trimmed = str.trim()
   let pre = ''
   let post = ''
   const chars = Array.from(str)
@@ -33,8 +37,8 @@ const normalizePunctuation = function (str, model) {
   let end = chars.length
 
   // punctuation-only words, like '<3'
-  if (Object.hasOwn(emoticons, str.trim())) {
-    return { str: str.trim(), pre, post: ' ' } //not great
+  if (Object.hasOwn(emoticons, trimmed)) {
+    return { str: trimmed, pre, post: ' ' } //not great
   }
 
   // Locate the first retained code point without shifting the array.
@@ -45,16 +49,16 @@ const normalizePunctuation = function (str, model) {
       break//keep it
     }
     // keep '+' or '-' only before a number
-    if ((c === '+' || c === '-' || c === '(') && isFullNumber.test(str.trim())) {
-      break//done
-    }
-    // '97 - year short-form
-    if (c === "'" && c.length === 3 && isNumber.test(chars[start + 1])) {
+    if ((c === '+' || c === '-' || c === '(') && isFullNumber.test(trimmed)) {
       break//done
     }
     // start of word
     if (isLetter.test(c) || isNumber.test(c)) {
       break //done
+    }
+    // keep an elided apostrophe - 'tis
+    if ((c === "'" || c === '’') && elision.test(chars.slice(start).join(''))) {
+      break//keep it
     }
     // punctuation
     start++
@@ -71,16 +75,28 @@ const normalizePunctuation = function (str, model) {
     if (isLetter.test(c) || isNumber.test(c)) {
       break //done
     }
+    // Keep marks attached to letters, but not variation selectors after symbols.
+    if (isMark.test(c)) {
+      let base = end - 2
+      while (base >= start && isMark.test(chars[base])) {
+        base--
+      }
+      if (base >= start && isLetter.test(chars[base])) {
+        break
+      }
+      end = base + 1
+      continue
+    }
     // F.B.I.
-    if (c === '.' && hasAcronym.test(original) === true) {
+    if (c === '.' && hasAcronym.test(original)) {
       break//keep it
     }
     //  keep s-apostrophe - "flanders'" or "chillin'"
-    if (c === "'" && chillin.test(original) === true) {
+    if (c === "'" && chillin.test(original)) {
       break//keep it
     }
     // keep '+' or ')' only for a number like (800) or 500+
-    if ((c === '+' || c === ')') && isFullNumber.test(str.trim())) {
+    if ((c === '+' || c === ')') && isFullNumber.test(trimmed)) {
       break//done
     }
     if (Object.hasOwn(openers, c) && closesInside(chars, start, end)) {

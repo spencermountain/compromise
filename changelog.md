@@ -6,6 +6,40 @@ compromise uses semver, and pushes to npm and github frequently
 
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
+<!--
+
+-->
+
+#### 14.20.0 [Nov 2026]
+
+- **[new]** - html, markdown, unist, and subtitle plugins
+- **[new]** - add plugin callback for .replace() events
+- **[fix]** - #1254 #1255 #1256 issues parsing large numbers
+- **[fix]** - #1257 fraction/ordinal date interpretation
+- **[fix]** - #1258 verb normalization
+- **[fix]** - #1259 number-splitter bug
+- **[fix]** - #1253 fix match escaping for + and /
+- **[fix]** - #1262 Preserve punctuation in quotation text output
+- **[fix]** - problematic regex fixes
+- **[fix]** - whitespace tokenization in match strings
+- **[fix]** - offset issue with pre punctuation
+- **[change]** - number parsing details
+  - - support possessive numbers like "2023's turmoil"
+  - - interpret 'twenty twenty six' as year (from 2010-2040)
+  - - concatenated number-parsing - "sixty fifteen and thirty five"
+  - - numbers().isValid() methods
+  - - "thousands of people" no longer number 1,000
+  - - remove invalid ordinals like -5.2rd
+- **[change]** - match-syntax fixes
+  - - `foo*` now consistantly means zero or more
+  - - greedy and-block `(a && b)+` support in match-syntax
+  - - lookahead fix: `the * (#Noun|#Verb)` now matches 'the big dog'
+- **[change]** - improvements to isPossessive()
+- **[plugin]** - compromise-dates 3.11.0
+- **[new]** - `{noRegex:true}` option on parseMatch to avoid ugc-reDos attacks
+- **[new]** - npx bin CLI command
+- **[new]** - .debug('highlight')
+
 #### 14.19.0 [Oct 2026]
 
 - **[change]** - verbose mode/inspection

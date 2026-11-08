@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../lib/two.js'
+import nlp from '../02-two/lib.js'
 const here = '[ignored/match-group-whitespace] '
 
 // Deferred: Parenthesized patterns with extra internal spaces do not match this phrase.

@@ -8,20 +8,20 @@ export type outMethods =
 export type Groups = object
 
 export interface Term {
-  text: string,
-  pre: string,
-  post: string,
-  normal: string,
+  text: string
+  pre: string
+  post: string
+  normal: string
 
   // in /two
-  tags?: Set<string>,
-  index?: [n?: number, start?: number],
-  id?: string,
-  chunk?: string,
+  tags?: Set<string>
+  index?: [n?: number, start?: number]
+  id?: string
+  chunk?: string
   dirty?: boolean
 
   // other things you may find...
-  syllables?: string[],
+  syllables?: string[]
 }
 
 // possible values to .json()
@@ -62,37 +62,38 @@ export interface Lexicon {
 }
 
 export interface Plugin {
-  methods?: object,
-  model?: object,
-  compute?: object,
-  hooks?: string[],
-  tags?: object,
-  words?: object,
-  frozen?: {[key: string]: string},
-  lib?: object,
-  api?: (fn: (view: any) => {}) => void,  //should be View
-  mutate?: (fn: (world: object) => {}) => void,
+  methods?: object
+  model?: object
+  compute?: object
+  hooks?: string[]
+  tags?: object
+  words?: object
+  frozen?: { [key: string]: string }
+  lib?: object
+  api?: (fn: (view: any) => {}) => void //should be View
+  mutate?: (fn: (world: object) => {}) => void
 }
 
 export interface matchOptions {
-  fuzzy?: number,
-  caseSensitive?: boolean,
+  fuzzy?: number
+  caseSensitive?: boolean
+  noRegex?: boolean
 }
 
 export interface Match {
-  match: string,
+  match: string
   /** Required word, #Tag, or %Switch% to use instead of automatic hook selection. */
-  hook?: string,
-  tag?: string | string[],
-  unTag?: string | string[],
-  group?: string | number,
-  reason?: string,
+  hook?: string
+  tag?: string | string[]
+  unTag?: string | string[]
+  group?: string | number
+  reason?: string
   freeze?: boolean
 }
 
 export interface Net {
-  hooks: object,
-  always?: any,
+  hooks: object
+  always?: any
   isNet: boolean
 }
 

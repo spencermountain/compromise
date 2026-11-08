@@ -140,8 +140,7 @@ for (const [word, tag] of Object.entries(misc)) {
 for (const [words, tag] of data) {
   addWords(lex, words, tag, tag + ' list')
 }
-for (const [word, tag] of Object.entries(shared)) {
-  addWords(lex, [word], tag, 'shared frozen lexicon')
-}
+// shared phrases are merged at load-time, and only need to stay unique here
+addWords({ ...lex }, Object.keys(shared), 'shared', 'shared frozen lexicon')
 
 export default lex

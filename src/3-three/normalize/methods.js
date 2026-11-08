@@ -1,13 +1,9 @@
-const termLoop = function (view, cb) {
-  view.docs.forEach(terms => {
-    terms.forEach(cb)
-  })
-}
+import eachTerm from '../../1-one/tokenize/compute/_lib.js'
 
-export default {
+const methods = {
   // remove titlecasing, uppercase
   'case': (doc) => {
-    termLoop(doc, (term) => {
+    eachTerm(doc.docs, (term) => {
       term.text = term.text.toLowerCase()
     })
   },
@@ -15,11 +11,11 @@ export default {
   'unicode': (doc) => {
     const world = doc.world
     const killUnicode = world.methods.one.killUnicode
-    termLoop(doc, (term) => term.text = killUnicode(term.text, world))
+    eachTerm(doc.docs, (term) => term.text = killUnicode(term.text, world))
   },
   // remove hyphens, newlines, and force one space between words
   'whitespace': (doc) => {
-    termLoop(doc, (term) => {
+    eachTerm(doc.docs, (term) => {
       // one space between words
       term.post = term.post.replace(/\s+/g, ' ')
       term.post = term.post.replace(/\s([.,?!:;])/g, '$1')//no whitespace before a period, etc
@@ -29,7 +25,7 @@ export default {
   },
   // remove commas, semicolons - but keep sentence-ending punctuation
   'punctuation': (doc) => {
-    termLoop(doc, (term) => {
+    eachTerm(doc.docs, (term) => {
       term.pre = term.pre.replace(/[,،]/g, '')
       // turn dashes to spaces
       term.post = term.post.replace(/[–—-]/g, ' ')
@@ -58,30 +54,13 @@ export default {
   'contractions': (doc) => {
     doc.contractions().expand()
   },
-  //remove periods from acronyms, like 'F.B.I.'
-  'acronyms': (doc) => {
-    doc.acronyms().strip()
-  },
-  //remove words inside brackets (like these)
-  'parentheses': (doc) => {
-    doc.parentheses().strip()
-  },
-  // turn "Google's tax return" to "Google tax return"
-  'possessives': (doc) => {
-    doc.possessives().strip()
-  },
-  // turn "tax return" to tax return
-  'quotations': (doc) => {
-    doc.quotations().strip()
-  },
-
   // remove them
   'emoji': (doc) => {
     doc.emojis().remove()
   },
   //turn 'Vice Admiral John Smith' to 'John Smith'
   'honorifics': (doc) => {
-    doc.match('#Honorific+ #Person').honorifics().remove()
+    doc.match('#Hon+ #Pers').honorifics().remove()
   },
   // remove needless adverbs
   'adverbs': (doc) => {
@@ -94,7 +73,15 @@ export default {
   },
   // turn all verbs into Infinitive form - "I walked" → "I walk"
   'verbs': (doc) => {
-    doc.verbs().toInfinitive()
+    const normalized = doc.map(view => {
+      // Verb replacements invalidate the selection's term IDs and can change its length.
+      const ptr = view.fullPointer[0].slice(0, 3)
+      const before = view.document[ptr[0]].length
+      view.verbs().toInfinitive()
+      ptr[2] += view.document[ptr[0]].length - before
+      return view.update([ptr]).harden()
+    })
+    doc.ptrs = normalized.ptrs
   },
   // turn "fifty" into "50"
   'numbers': (doc) => {
@@ -113,3 +100,11 @@ export default {
     return doc
   }
 }
+// 'F.B.I.' -> 'FBI', (these) -> these, "Google's" -> 'Google', "quoted" -> quoted
+'acronyms parentheses possessives quotations'.split(' ').forEach(k => {
+  methods[k] = (doc) => {
+    doc[k]().strip()
+  }
+})
+
+export default methods

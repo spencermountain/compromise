@@ -1,3 +1,4 @@
+import merge from './_lib.js'
 import tagWords from '../_lib.js'
 import person from './_person.js'
 import tags from '../../tagSet/aliases.js'
@@ -17,10 +18,4 @@ const place = {
   afterWords: tagWords('in by near from to government council region city', p),
 }
 
-const clue = {
-  beforeTags: { ...place.beforeTags, ...person.beforeTags },
-  afterTags: { ...place.afterTags, ...person.afterTags },
-  beforeWords: { ...place.beforeWords, ...person.beforeWords },
-  afterWords: { ...place.afterWords, ...person.afterWords },
-}
-export default clue
+export default merge(place, person)

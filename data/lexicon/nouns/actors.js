@@ -482,4 +482,8 @@ export default [
   'yogi',
   'youth',
   'youtuber',
+  // would match '-ier' comparatives
+  'courtier',
+  'crier',
+  'vizier',
 ]

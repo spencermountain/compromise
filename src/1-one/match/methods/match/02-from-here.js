@@ -4,12 +4,55 @@ import doAndBlock from './steps/and-block.js'
 import doNegative from './steps/negative.js'
 import simpleMatch from './steps/simple-match.js'
 import { isEndGreedy } from './steps/logic/greedy.js'
-import matchTerm from './term/doesMatch.js'
+import { matchAt } from './_lib.js'
 // i formally apologize for how complicated this is.
 
-/** 
- * try a sequence of match tokens ('regs') 
- * on a sequence of terms, 
+// choose how to consume this reg: a step function, null to die, or undefined to skip it
+const pickStep = function (reg, state) {
+  // support 'unspecific greedy' .* properly
+  if (reg.anything === true && reg.greedy === true) {
+    return doAstrix
+  }
+  // slow-OR - multi-word OR (a|b|foo bar)
+  if (reg.choices !== undefined && reg.operator === 'or') {
+    return doOrBlock
+  }
+  // slow-AND - multi-word AND (#Noun && foo) blocks
+  if (reg.choices !== undefined && reg.operator === 'and') {
+    return doAndBlock
+  }
+  // support '.' as any-single
+  if (reg.anything === true) {
+    // '!.' negative anything should insta-fail
+    if (reg.negative) {
+      return null
+    }
+    return simpleMatch
+  }
+  // support 'foo*$' until the end
+  if (isEndGreedy(reg, state) === true) {
+    return simpleMatch
+  }
+  // ok, it doesn't match - but maybe it wasn't *supposed* to?
+  if (reg.negative) {
+    // we want *anything* but this term
+    return doNegative
+  }
+  // ok, finally test the term-reg
+  if (matchAt(state, reg, state.t) === true) {
+    return simpleMatch
+  }
+  //ok who cares, keep going
+  if (reg.optional === true) {
+    return undefined
+  }
+  // finally, we die
+  return null
+}
+
+/**
+ * try a sequence of match tokens ('regs')
+ * on a sequence of terms,
  * starting at this certain term.
  */
 const tryHere = function (terms, regs, start_i, phrase_length, offset = 0) {
@@ -40,11 +83,7 @@ const tryHere = function (terms, regs, start_i, phrase_length, offset = 0) {
     // Check if this reg has a named capture group
     state.hasGroup = Boolean(reg.group)
     // Reuse previous capture group if same
-    if (state.hasGroup === true) {
-      state.inGroup = reg.group
-    } else {
-      state.inGroup = null
-    }
+    state.inGroup = state.hasGroup ? reg.group : null
     //have we run-out of terms?
     if (!state.terms[state.t]) {
       //are all remaining regs optional or negative?
@@ -54,75 +93,13 @@ const tryHere = function (terms, regs, start_i, phrase_length, offset = 0) {
       }
       return null // die
     }
-    // support 'unspecific greedy' .* properly
-    if (reg.anything === true && reg.greedy === true) {
-      const alive = doAstrix(state)
-      if (!alive) {
-        return null
-      }
-      continue
+    const step = pickStep(reg, state)
+    if (step === null) {
+      return null
     }
-    // slow-OR - multi-word OR (a|b|foo bar)
-    if (reg.choices !== undefined && reg.operator === 'or') {
-      const alive = doOrBlock(state)
-      if (!alive) {
-        return null
-      }
-      continue
+    if (step && !step(state)) {
+      return null
     }
-    // slow-AND - multi-word AND (#Noun && foo) blocks
-    if (reg.choices !== undefined && reg.operator === 'and') {
-      const alive = doAndBlock(state)
-      if (!alive) {
-        return null
-      }
-      continue
-    }
-    // support '.' as any-single
-    if (reg.anything === true) {
-      // '!.' negative anything should insta-fail
-      if (reg.negative && reg.anything) {
-        return null
-      }
-      const alive = simpleMatch(state)
-      if (!alive) {
-        return null
-      }
-      continue
-    }
-    // support 'foo*$' until the end
-    if (isEndGreedy(reg, state) === true) {
-      const alive = simpleMatch(state)
-      if (!alive) {
-        return null
-      }
-      continue
-    }
-    // ok, it doesn't match - but maybe it wasn't *supposed* to?
-    if (reg.negative) {
-      // we want *anything* but this term
-      const alive = doNegative(state)
-      if (!alive) {
-        return null
-      }
-      continue
-    }
-    // ok, finally test the term-reg
-    const hasMatch = matchTerm(state.terms[state.t], reg, state.start_i + state.t, state.phrase_length)
-    if (hasMatch === true) {
-      const alive = simpleMatch(state)
-      if (!alive) {
-        return null
-      }
-      continue
-    }
-    //ok who cares, keep going
-    if (reg.optional === true) {
-      continue
-    }
-
-    // finally, we die
-    return null
   }
   //return our results, as pointers
   const pntr = [null, start_i, state.t + origin]

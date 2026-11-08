@@ -6,9 +6,9 @@ const addWords = function (words, isFrozen = false) {
     return
   }
   // normalize tag vals
-  Object.keys(words).forEach(k => {
-    if (typeof words[k] === 'string' && words[k].startsWith('#')) {
-      words[k] = words[k].replace(/^#/, '')
+  Object.entries(words).forEach(([k, v]) => {
+    if (typeof v === 'string' && v.startsWith('#')) {
+      words[k] = v.replace(/^#/, '')
     }
   })
   // these words go into a seperate lexicon

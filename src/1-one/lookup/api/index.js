@@ -1,9 +1,7 @@
 import build from './buildTrie/index.js'
 import scan from './scan.js'
 
-const isObject = val => {
-  return Object.prototype.toString.call(val) === '[object Object]'
-}
+import isObject from '../../../API/_is.js'
 
 export default function (View) {
 

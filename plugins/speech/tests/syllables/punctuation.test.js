@@ -1,6 +1,5 @@
 import test from 'tape'
-import nlp from '../_lib.js'
-import splitTerm from '../../src/syllables/split/index.js'
+import nlp, { splitTerm } from '../_lib.js'
 
 test('speech: punctuation preserves word spelling', t => {
   // Include straight/curly apostrophes and repeated separators without losing text.

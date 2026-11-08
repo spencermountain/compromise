@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/one.js'
+import nlp from '../lib.js'
 import isolateModel from '../../lib/isolate-model.js'
 const here = '[one/misc/core-lexicon] '
 

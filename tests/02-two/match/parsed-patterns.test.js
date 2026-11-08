@@ -1,5 +1,5 @@
 import test from 'tape'
-import nlp from '../../lib/two.js'
+import nlp from '../lib.js'
 const here = '[two/match/parsed-patterns] '
 
 test(here + 'matching respects edits to parsed patterns', t => {

@@ -1,11 +1,8 @@
 import select from '../../_select.js'
+import keepClass from '../../_lib.js'
 const api = function (View) {
 
   class Pronouns extends View {
-    constructor(document, pointer, groups) {
-      super(document, pointer, groups)
-      this.viewType = 'Pronouns'
-    }
     hasReference() {
       this.compute('coreference')
       return this.filter(m => {
@@ -29,14 +26,9 @@ const api = function (View) {
         return m.none()
       })
     }
-    // overloaded - keep Numbers class
-    update(pointer) {
-      const m = new Pronouns(this.document, pointer)
-      m._cache = this._cache // share this full thing
-      return m
-    }
   }
+  keepClass(Pronouns, 'Pronouns')
 
-  View.prototype.pronouns = select(Pronouns, '#Pronoun')
+  View.prototype.pronouns = select(Pronouns, '#Pron')
 }
 export default api

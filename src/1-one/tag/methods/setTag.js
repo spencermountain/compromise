@@ -1,12 +1,9 @@
 import debug from '../../../API/debug/debug.js'
-import getConflicts from './_lib.js'
+import getConflicts, { resolveTag } from './_lib.js'
 const isMulti = / /
 
 const addChunk = function (term, tag) {
-  if (tag === 'Noun') {
-    term.chunk = tag
-  }
-  if (tag === 'Verb') {
+  if (tag === 'Noun' || tag === 'Verb') {
     term.chunk = tag
   }
 }
@@ -14,7 +11,7 @@ const addChunk = function (term, tag) {
 // eslint-disable-next-line max-params
 const tagTerm = function (term, tag, tagSet, isSafe, validated, reason) {
   // does it already have this tag?
-  if (term.tags.has(tag) === true) {
+  if (term.tags.has(tag)) {
     return null
   }
   // allow this shorthand in multiple-tag strings
@@ -67,11 +64,9 @@ const tagTerm = function (term, tag, tagSet, isSafe, validated, reason) {
 const multiTag = function (terms, tagString, tagSet, aliases, isSafe, reason) {
   const tags = tagString.split(isMulti)
   terms.forEach((term, i) => {
-    let tag = tags[i]
+    const tag = tags[i]
     if (tag) {
-      tag = tag.replace(/^#/, '')
-      tag = aliases?.[tag] || tag
-      tagTerm(term, tag, tagSet, isSafe, undefined, reason)
+      tagTerm(term, resolveTag(tag, aliases), tagSet, isSafe, undefined, reason)
     }
   })
 }
@@ -84,7 +79,7 @@ const setTag = function (terms, tag, world = {}, isSafe, reason, validated) {
   if (!tag) {
     return
   }
-  if (Array.isArray(tag) === true) {
+  if (Array.isArray(tag)) {
     tag.forEach(tg => setTag(terms, tg, world, isSafe, reason))
     return
   }
@@ -98,9 +93,7 @@ const setTag = function (terms, tag, world = {}, isSafe, reason, validated) {
     multiTag(terms, tag, tagSet, world.model.one.tagAliases, isSafe, reason)
     return
   }
-  tag = tag.replace(/^#/, '')
-  tag = world.model.one.tagAliases?.[tag] || tag
-  // let set = false
+  tag = resolveTag(tag, world.model.one.tagAliases)
   for (let i = 0; i < terms.length; i += 1) {
     tagTerm(terms[i], tag, tagSet, isSafe, validated, reason)
   }

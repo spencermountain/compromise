@@ -13,7 +13,7 @@ const splitSentences = function (text, world) {
   text ||= ''
   text = String(text)
   // Ensure it 'smells like' a sentence
-  if (!text || typeof text !== 'string' || hasSomething.test(text) === false) {
+  if (!text || typeof text !== 'string' || !hasSomething.test(text)) {
     return []
   }
   // First do a greedy-split..

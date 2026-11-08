@@ -9,6 +9,9 @@ const verbSubject = '(#Pronoun|#Plural) (/^(march|may)$/ && !@isTitleCase)'
 const matches = [
   // Christmas eve
   { match: '#Holiday (day|eve)', hook: '#Holiday', tag: 'Holiday', reason: 'holiday-day' },
+  // new year's eve, valentine's day - the lexicon has the forms without an apostrophe
+  { match: "new year's (eve|day)", tag: 'Holiday', reason: 'new-years-eve' },
+  { match: "(valentine's|st patrick's|saint patrick's|mother's|father's|april fool's|all saint's|all hallow's) (day|eve)", tag: 'Holiday', reason: 'holiday-possessive' },
   // in the evening
   { match: 'in the (night|evening|morning|afternoon|day|daytime)', tag: 'Time', reason: 'in-the-night' },
   // 8 pm
@@ -101,6 +104,9 @@ const matches = [
   { match: '(in|after) /^[0-9]+(min|sec|wk)s?/', tag: 'Date', reason: 'shift-units' },
   //tuesday night
   { match: '#Date [(now|night|sometime)]', group: 0, tag: 'Time', reason: 'date-now' },
+  //saturday late night
+  { match: 'late night', tag: 'Time', reason: 'late-night' },
+  { match: 'early morning', tag: 'Time', reason: 'early-morning' },
   // 4 days from now
   { match: '(from|starting|until|by) now', tag: 'Date', reason: 'for-now' },
   // every night
@@ -112,8 +118,8 @@ const matches = [
 
   //june 5 to 7th
   { match: '#Month #Value to #Value of? #Year?', tag: 'Date', reason: 'june 5 to 7th' },
-  //5 to 7th june
-  { match: '#Value to #Value of? #Month #Year?', tag: 'Date', reason: '5 to 7th june' },
+  //5 to 7th june, the tenth through the twelfth of june
+  { match: '#Value (to|through|thru) the? #Value of? #Month #Year?', tag: 'Date', reason: '5 to 7th june' },
   //third week of may
   { match: '#Value #Duration of #Date', tag: 'Date', reason: 'third week of may' },
   //two days after
@@ -171,7 +177,7 @@ const matches = [
 
   // until june
   {
-    match: '(by|until|on|in|at|during|over|every|each|due) the? #Date',
+    match: '(by|until|through|thru|on|in|at|during|over|every|each|due) the? #Date',
     ifNo: '#PhrasalVerb',
     tag: 'Date',
     reason: 'until june',
@@ -312,7 +318,8 @@ const matches = [
   //'spa day'
   { match: '^day$', unTag: 'Date', reason: 'spa-day' },
   // tomorrow's meeting - but not 2020's election
-  { match: '(in|of|by|for)? (#Possessive && #Date && !#Year) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
+  // but keep "valentine's day"
+  { match: '(in|of|by|for)? (#Possessive && #Date && !#Year && !#Holiday) time?', notIf: '#Duration time$', unTag: 'Date', reason: 'tomorrows meeting' },
   //yesterday 7
   { match: `${knownDate} [#Value]$`, unTag: 'Date', group: 0, reason: 'yesterday-7' },
   //7 yesterday

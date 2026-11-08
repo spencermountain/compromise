@@ -96,6 +96,29 @@ export default [
     desc: 'within 2 weeks',
     parse: (m, context) => rollingWindow(m, context, 1, true),
   },
+  {
+    // 'tomorrow at 2pm for two hours', 'september 10 for three days'
+    match: '.+ for #Value #Duration$',
+    desc: 'for two hours',
+    parse: (m, context) => {
+      const start = parseDate(m.not('for #Value #Duration$'), context)
+      const num = m.match('for [#Value]', 0).numbers().get()[0]
+      const unit = m.match('#Duration$').text('reduced')
+      if (!start || !num) {
+        return null
+      }
+      const end = start.clone().applyShift({ [unit]: num })
+      if (clockUnits.test(unit)) {
+        // 'tuesday for 30 mins' has no start-time to count from
+        if (!start.setTime) {
+          return null
+        }
+        return { start, end, unit: 'time' }
+      }
+      end.d = end.d.minus(1, 'millisecond')
+      return { start, end }
+    },
+  },
 
 
   {
@@ -104,9 +127,14 @@ export default [
     desc: 'between march and jan',
     parse: (m, context) => {
       const { start, end, year } = m.groups()
-      const y = year && year.found ? Number(year.text('reduced')) : context.today.year()
+      let y = year && year.found ? Number(year.text('reduced')) : context.today.year()
       let obj = { month: start.text('reduced'), year: y }
       let left = new Month(obj, null, context).start()
+      // 'between june and july' - assume the future, like 'june' alone does
+      if (!(year && year.found) && left.d.month() < context.today.month()) {
+        y += 1
+        left = new Month({ ...obj, year: y }, null, context).start()
+      }
       obj = { month: end.text('reduced'), year: y }
       let right = new Month(obj, null, context).start()
       if (left.d.isAfter(right.d)) {
@@ -232,15 +260,15 @@ export default [
   },
   {
     // one month, one year, second form - '5 to 7 of january 1998'
-    match: '[<from>#Value] (to|until|upto|through|thru) [<to>#Value of? #Month #Date+?]',
+    match: '#Value (to|until|upto|through|thru) the? #Value of? #Month #Date+?',
     desc: '5 to 7 of january 1998',
     parse: (m, context) => {
-      let to = m.groups('to')
-      to = parseDate(to, context)
+      // sub-matches, not groups - 'the tenth' may have shifted group pointers
+      const values = m.match('#Value')
+      const to = parseDate(m.match('#Value of? #Month #Date+?$'), context)
       if (to) {
-        const fromDate = m.groups('from')
         const from = to.clone()
-        from.d = from.d.date(fromDate.text('implicit'))
+        from.d = from.d.date(values.eq(0).text('implicit'))
         return {
           start: from,
           end: to.end(),
@@ -342,16 +370,47 @@ export default [
 
   {
     // implicit range
-    match: '^until [<to>#Date+]',
+    match: '^until #Date+',
     desc: 'until christmas',
     parse: (m, context) => {
-      let to = m.groups('to')
-      to = parseDate(to, context)
+      const to = parseDate(m.not('^until'), context)
       if (to) {
         const start = new CalendarDate(context.today, null, context)
         return {
           start: start,
           end: to.start(),
+        }
+      }
+      return null
+    },
+  },
+  {
+    // 'through march 1' - from today, including the end
+    match: '^(through|thru) #Date+',
+    desc: 'through march 1',
+    parse: (m, context) => {
+      const to = parseDate(m.not('^(through|thru)'), context)
+      if (to) {
+        const start = new CalendarDate(context.today, null, context)
+        return {
+          start: start,
+          end: to.end(),
+        }
+      }
+      return null
+    },
+  },
+  {
+    // 'since 2020' - from then, until today
+    match: '^since #Date+',
+    desc: 'since 2020',
+    parse: (m, context) => {
+      const from = parseDate(m.not('^since'), context)
+      if (from) {
+        const end = new CalendarDate(context.today, null, context)
+        return {
+          start: from.start(),
+          end: end.end(),
         }
       }
       return null
@@ -428,6 +487,10 @@ export default [
         year: year.found ? year.text('reduced') : context.today.year()
       }
       const unit = new Month(obj, null, context)
+      // 'first half of march' - assume the future, like 'march' alone does
+      if (!year.found && unit.d.month() < context.today.month()) {
+        unit.d = unit.d.add(1, 'year')
+      }
       if (m.has('^(first|1st|initial)')) {
         return {
           start: unit.start(),

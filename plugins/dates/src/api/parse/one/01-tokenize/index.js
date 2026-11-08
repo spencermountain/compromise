@@ -18,6 +18,8 @@ const cleanup = function (doc) {
   doc = doc.not('(#Conjunction|now)$')
   doc = doc.not('sharp')
   doc = doc.not('on the dot')
+  // 'all day tomorrow' is just tomorrow
+  doc = doc.not('all day')
   doc = doc.not('^(on|of|due)')
   // keep a bare 'next' or 'last' - the leftover of 'day after next'
   if (!doc.has('^(next|last)$') && !doc.has('^after (next|last)$')) {

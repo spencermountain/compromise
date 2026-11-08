@@ -21,18 +21,14 @@ const findDate = function (doc) {
   if (m.found) {
     dates = dates.not(m)
   }
-  // tuesday for 30 mins
-  m = dates.match('#Date [for #Value+ #Duration]$', 0)
-  if (m.found) {
-    dates = dates.not(m)
-  }
+  // 'tuesday for 30 mins' keeps its duration - the range parser reads it as an end
   // '20 minutes june 5th'
   m = dates.match('[#Cardinal+ #Duration] #Date', 0) //but allow '20 minutes ago'
   if (m.found && !dates.has('#Cardinal+ #Duration (ago|from|before|after|back|hence)')) {
     dates = dates.not(m)
   }
-  // for 20 minutes
-  m = dates.match('for #Cardinal+ #Duration')
+  // for 20 minutes - alone, it is only a duration
+  m = dates.match('^for #Cardinal+ #Duration$')
   if (m.found) {
     dates = dates.not(m)
   }

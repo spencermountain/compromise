@@ -24,6 +24,7 @@ export default [
   'independents day',
   'juneteenth',
   'labour day',
+  'labor day',
   'national freedom day',
   'national nurses day',
   'new years eve',

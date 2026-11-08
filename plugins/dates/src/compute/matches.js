@@ -77,8 +77,11 @@ const matches = [
   { match: `#Preposition? the? ${sections} of #Date`, tag: 'Date', reason: 'section-of' },
   //fifth week in 1998
   { match: '#Ordinal #Duration in #Date', tag: 'Date', reason: 'duration-in' },
-  //early in june
-  { match: '(early|late) (at|in)? the? #Date', tag: 'Time', reason: 'early-evening' },
+  //early june, late next month
+  { match: '[(early|late)] #Month', group: 0, tag: 'Date', reason: 'early-june' },
+  { match: '[(early|late)] (next|this|last) month', group: 0, tag: 'Date', reason: 'early-next-month' },
+  //early in the evening - but not 'early june'
+  { match: '(early|late) (at|in)? the? #Date', notIf: '(#Month|month)', tag: 'Time', reason: 'early-evening' },
   //tomorrow before 3
   { match: '#Date [(by|before|after|at|@|about) #Cardinal]', group: 0, tag: 'Time', reason: 'date-before-Cardinal' },
   //feb to june
@@ -332,6 +335,6 @@ const matches = [
   // 18th next month
   { match: '#Value of? (this|next|last) #Date', tag: 'Date' },
   // first half of march
-  { match: '(first|initial|second|latter) half of #Month', tag: 'Date' },
+  { match: '(first|initial|second|latter) half of (#Month|#Year)', tag: 'Date' },
 ]
 export default matches

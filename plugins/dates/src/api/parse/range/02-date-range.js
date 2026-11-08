@@ -1,6 +1,6 @@
 import parseDate from '../one/index.js'
 import reverseMaybe from './_reverse.js'
-import { Month, CalendarDate } from '../one/units/index.js'
+import { Month, Year, CalendarDate } from '../one/units/index.js'
 
 export default [
 
@@ -262,6 +262,49 @@ export default [
         }
       }
       return null
+    },
+  },
+
+  {
+    // first half of 2027
+    match: '(first|1st|initial|second|2nd|latter) half of #Year',
+    desc: 'first half of 2027',
+    parse: (m, context) => {
+      const year = new Year({ year: Number(m.match('#Year').text('reduced')) }, null, context)
+      const july = year.clone()
+      july.d = july.d.add(6, 'months')
+      if (m.has('^(first|1st|initial)')) {
+        july.d = july.d.minus(1, 'millisecond')
+        return { start: year, end: july }
+      }
+      return { start: july, end: year.clone().end() }
+    },
+  },
+
+  {
+    // early june, late next month - early is the 1st-14th, late is the 21st onward
+    match: '^(in|during)? (early|late) .+$',
+    desc: 'early june',
+    parse: (m, context) => {
+      // sub-matches, not groups - a leading 'the' may have shifted group pointers
+      const part = m.match('(early|late)').text('reduced')
+      const rest = m.not('^(in|during)? (early|late)')
+      // only months, for now - 'early evening' is a time
+      if (!rest.has('(#Month|month)')) {
+        return null
+      }
+      const unit = parseDate(rest, context)
+      if (!unit || unit.unit !== 'month') {
+        return null
+      }
+      const start = unit.start()
+      const end = unit.clone().end()
+      if (part === 'early') {
+        end.d = start.d.date(14).endOf('day')
+      } else {
+        start.d = start.d.date(21)
+      }
+      return { start, end }
     },
   },
 

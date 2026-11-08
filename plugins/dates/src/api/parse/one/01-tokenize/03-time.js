@@ -98,8 +98,13 @@ const parseTime = function (doc, context) {
     s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
       const ampm = m.match('(am|pm)')
+      // 'four o'clock this afternoon'
+      const desc = time.match('(morning|afternoon|evening|night)')
       if (ampm.found) {
         s = s.ampm(ampm.text('reduced'))
+      } else if (desc.found) {
+        s = s.ampm(desc.has('morning') ? 'am' : 'pm')
+        m = m.concat(desc)
       } else {
         s = ampmChooser(s)
       }

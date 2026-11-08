@@ -6,9 +6,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/spencermountain/compromise.git",
-    "directory": "plugins/subtitle"
+    "directory": "plugins/subtitles"
   },
-  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/subtitle",
+  "homepage": "https://github.com/spencermountain/compromise/tree/master/plugins/subtitles",
   "author": "Spencer Kelly <spencermountain@gmail.com> (https://spencermountain.dev)",
   "type": "module",
   "exports": {

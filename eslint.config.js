@@ -2,7 +2,7 @@ import * as regexpPlugin from 'eslint-plugin-regexp'
 import redos from 'eslint-plugin-redos'
 
 export default [
-  { ignores: ['**/builds/*', '**/scratch.js', '**/rollup.config.js'] },
+  { ignores: ['**/builds/*', '**/scratch.js', '**/rollup.config.js', '.claude/**'] },
   // regex scanning
   regexpPlugin.configs['flat/recommended'],
   // specific regexDos vulnerability scanner

@@ -17,7 +17,7 @@ const fromArray = function (rows) {
         delete node.parent //no-longer needed
         parent.children.push(node)
       } else {
-        console.warn(`[Grad] - missing node '${node.parent}'`) // eslint-disable-line no-console
+        console.warn(`[Graph] - missing node '${node.parent}'`) // eslint-disable-line no-console
       }
       return
     }

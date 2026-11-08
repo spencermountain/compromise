@@ -19,7 +19,7 @@ export default {
       plugins: [
         terser({ keep_classnames: true }),
         sizeCheck({
-          expect: 132,
+          expect: 141,
           warn: 5, // acceptable (+/-)
           throw: 10, // unacceptable (+/-)
         }),

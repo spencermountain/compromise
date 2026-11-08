@@ -69,10 +69,7 @@ const main = async function () {
       doc = doc.if(opts.has).first()
     }
     if (opts.format === 'highlight') {
-      const str = doc.match(opts.match || opts.if || opts.has).out('highlight')
-      if (str) {
-        console.log(str)
-      }
+      doc.match(opts.match || opts.if || opts.has).debug('highlight')
     } else if (doc.found) {
       if (opts.match) {
         doc = doc.match(opts.match)

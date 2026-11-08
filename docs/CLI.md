@@ -100,7 +100,7 @@ its neighbours in grey. It takes its pattern from `--match`, `--if` or `--has`, 
 with two matches prints twice, once for each. The match always starts at the middle column,
 so matches line up down the page: the words before it are trimmed or padded to 27 characters,
 and the words after it are trimmed so the line fits in 55. The match itself is never trimmed.
-This is the library's `.out('highlight')`. Set `NO_COLOR` to drop the colours:
+This is the library's `.debug('highlight')`. Set `NO_COLOR` to drop the colours:
 
 ```bash
 npx compromise infinite-jest.txt --highlight --match='and but so'

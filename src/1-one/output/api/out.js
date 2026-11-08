@@ -4,7 +4,6 @@ import hash from '../methods/hash.js'
 import toSpec from './_spec.js'
 import { rawText } from './_text.js'
 import isObject from '../../../API/_is.js'
-import highlight from './_highlight.js'
 
 // sort by frequency
 const topk = function (arr) {
@@ -53,8 +52,6 @@ const outputs = {
       })
       .join('\n')
   },
-  // matches in green, in their sentence, aligned to the middle column
-  highlight: view => highlight(view),
   debug: view => view.debug(), //allow
 }
 // aliases

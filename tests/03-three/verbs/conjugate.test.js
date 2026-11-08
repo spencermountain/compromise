@@ -789,6 +789,48 @@ const arr = [
     PastTense: 'kept up',
     Gerund: 'keeping up',
   },
+  {
+    Infinitive: 'budget',
+    PresentTense: 'budgets',
+    PastTense: 'budgeted',
+    Gerund: 'budgeting',
+  },
+  {
+    Infinitive: 'string',
+    PresentTense: 'strings',
+    PastTense: 'strung',
+    Gerund: 'stringing',
+  },
+  {
+    Infinitive: 'summarise',
+    PresentTense: 'summarises',
+    PastTense: 'summarised',
+    Gerund: 'summarising',
+  },
+  {
+    Infinitive: 'quiz',
+    PresentTense: 'quizzes',
+    PastTense: 'quizzed',
+    Gerund: 'quizzing',
+  },
+  {
+    Infinitive: 'overhear',
+    PresentTense: 'overhears',
+    PastTense: 'overheard',
+    Gerund: 'overhearing',
+  },
+  {
+    Infinitive: 'condone',
+    PresentTense: 'condones',
+    PastTense: 'condoned',
+    Gerund: 'condoning',
+  },
+  {
+    Infinitive: 'panic',
+    PresentTense: 'panics',
+    PastTense: 'panicked',
+    Gerund: 'panicking',
+  },
 
 ]
 test('conjugation:', function (t) {

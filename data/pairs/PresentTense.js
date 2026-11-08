@@ -1939,5 +1939,6 @@ export default [
   ["tilts", "tilt"],
   ["undoes", "undo"],
   ["vetoes", "veto"],
-  ["witnesses", "witness"]
+  ["witnesses", "witness"],
+  ["quizzes", "quiz"],
 ]

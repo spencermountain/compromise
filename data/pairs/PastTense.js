@@ -2204,6 +2204,12 @@ export default [
   ['yelled', 'yell'],
   ['yielded', 'yield'],
   ['zoned', 'zone'],
+  ['budgeted', 'budget'],
+  ['strung', 'string'],
+  ['summarised', 'summarise'],
+  ['quizzed', 'quiz'],
+  ['overheard', 'overhear'],
+  ['condoned', 'condone'],
 
 
   // ['', ''],

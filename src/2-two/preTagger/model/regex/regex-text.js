@@ -7,7 +7,7 @@ export default [
   [/^@\w{2,}$/, AtMention],
 
   // period-ones acronyms - f.b.i.
-  [/^([A-Z]\.){2}[A-Z]?/i, [Acronym, NN]], //ascii-only
+  [/^([A-Z]\.){2}[A-Z]?/i, [Acronym, NN]], // F.B.I - ascii-only
 
   // ending-apostrophes
   [/.{3}[lkmnp]in['‘’‛‵′`´]$/, Ger], // chillin'

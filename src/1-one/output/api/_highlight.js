@@ -9,7 +9,8 @@ const dots = '…'
 const fit = (arr, max, fromStart) => {
   let cut = false
   const size = () => (fromStart ? arr.join('').trimStart() : arr.join('').trimEnd()).length + (cut ? 2 : 0)
-  while (arr.length > 0 && size() > max) {
+  // each pass removes one word, so i tracks arr.length
+  for (let i = arr.length; i > 0 && size() > max; i -= 1) {
     if (fromStart) {
       arr.shift()
     } else {

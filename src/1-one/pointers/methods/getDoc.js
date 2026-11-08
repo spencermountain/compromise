@@ -59,6 +59,10 @@ const getDoc = function (ptrs, document) {
         endId = document[wild[0]].some(term => term.id === endId) ? endId : undefined
         ptr = [wild[0], wild[1], wild[1] + len, startId, endId]
         ptrs[i] = ptr
+      } else {
+        // our start-term was deleted (replaced?) - trust the index, and adopt the term now there
+        terms = terms.slice(start, end)
+        ptr[3] = terms[0] ? terms[0].id : null
       }
     } else {
       terms = terms.slice(start, end)

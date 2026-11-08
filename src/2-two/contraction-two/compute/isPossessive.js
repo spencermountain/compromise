@@ -1,7 +1,7 @@
 import { hasBreak, isCapital, isUpperCase } from './_lib.js'
 import { hasAny, toSet } from '../../_lib.js'
 import { never, afterVerb, beforePossessive } from './_words.js'
-import { Prop, Pron, Uncountable, Date, Sing, Mod, Cop, Past, Pres, Conj, Pers, Actor, Poss, QW, Det, Vb, Inf, Ger, NN, Plur, Adj, Adv, Ord, NounGerund, AdjNoun, NounVerb } from '../../preTagger/tagSet/_lib.js'
+import { Prop, Pron, Uncountable, Date, Sing, Mod, Cop, Past, Pres, Conj, Prep, Pers, Actor, Poss, QW, Det, Vb, Inf, Ger, NN, Plur, Adj, Adv, Ord, NounGerund, AdjNoun, NounVerb } from '../../preTagger/tagSet/_lib.js'
 
 // things that are done, and not owned - Mom's cooked dinner, John's parked here
 const bareObject = toSet('dinner lunch breakfast supper work school college home here there')
@@ -11,6 +11,8 @@ const nounLike = toSet('is are did were could should must had have')
 const copulas = toSet('is are was were am')
 // past words that don't describe a thing - the team's made progress
 const lightVerbs = toSet('made had done did took taken gave given saw seen went came said')
+// a clause follows these - said it's time, knew it's war
+const reporting = toSet('said thought knew heard felt hoped guessed realized figured decided meant')
 
 // one countable thing can't be the object of 'is making' or 'has made' - so it is owned
 const isOneThing = t => {
@@ -41,6 +43,23 @@ const isPossessive = (terms, i) => {
   const term = terms[i]
   // a person can do things - John's played football
   const isPerson = hasAny(term, Pers, Actor)
+  const nextTerm = terms[i + 1]
+  // a misspelled 'its' - licked it's paw, on it's way, it's fur is soft
+  if (term.normal === `it's`) {
+    // the thing after a pronoun is tagged as a verb - it's [paw]
+    const owned = Boolean(nextTerm) && (isOneThing(nextTerm) || nextTerm.tags.has(Inf)) && !hasAny(nextTerm, Ger, Cop)
+    const two = terms[i + 2]
+    const isClause = two && (two.tags.has(Pron) || two.normal === 'to' || (two.tags.has(Vb) && !hasAny(two, Cop, Mod)))
+    if (!owned || isClause) {
+      return false
+    }
+    // but not 'said it's time we left'
+    const prev = terms[i - 1]
+    if (prev && (prev.tags.has(Prep) || (prev.tags.has(Past) && !reporting.has(prev.normal)))) {
+      return true
+    }
+    return i === 0 && Boolean(two) && hasAny(two, Cop, Mod)
+  }
   // these can't be possessive
   if (never.has(term.machine || term.normal)) {
     return false
@@ -58,16 +77,8 @@ const isPossessive = (terms, i) => {
     return false
   }
   //if end of sentence, it is possessive - "was spencer's"
-  const nextTerm = terms[i + 1]
   if (!nextTerm) {
     return true
-  }
-  // "it's a life" vs "run it's business"
-  if (term.normal === `it's`) {
-    if (nextTerm.tags.has('#NN')) {
-      return true
-    }
-    return false
   }
   // a question already has its verb - Is Wendy's still open?
   if (i > 0 && i < 3 && terms[0].tags.has(Cop)) {

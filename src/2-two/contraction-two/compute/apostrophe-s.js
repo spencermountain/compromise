@@ -1,6 +1,6 @@
 import { hasBreak, hasApostrophe } from './_lib.js'
 import { hasAny, toSet } from '../../_lib.js'
-import { Ger, Det, Adj, Vb, Pron, Conj, Prep, Adv, NN, Past, Plur, AdjPast } from '../../preTagger/tagSet/_lib.js'
+import { Ger, Det, Adj, Vb, Pron, Conj, Prep, Adv, NN, Past, AdjPast } from '../../preTagger/tagSet/_lib.js'
 
 // these take 'has', whatever follows - he's gone to, he's left for, it's improved, the meeting's been
 const hasWords = toSet('been become got gotten gone come had left fallen arrived lived worked moved looked talked happened stayed appeared improved increased failed escaped expanded developed turned reacted responded listened agreed returned')
@@ -98,12 +98,15 @@ const apostropheS = function (terms, i) {
   if (before === 'let') {
     return [before, 'us']
   }
-  // allow slang "there's cookies" -> there are
-  if (before === 'there') {
-    const t = terms[i + 1]
-    if (t && t.tags.has(Plur)) {
-      return [before, 'are']
-    }
+  // he's gotta -> he has got to - the 's stands in for gotta's 'have'
+  const next = terms[i + 1]
+  if (next && next.normal === 'gotta' && next.implicit === 'have') {
+    const got = terms[i + 2]
+    got.text = next.text
+    got.normal = next.normal
+    got.pre = next.pre
+    terms.splice(i + 1, 1)
+    return [before, 'has']
   }
   // spencer's got -> spencer has got
   if (isOrHas(terms, i) === 'has') {

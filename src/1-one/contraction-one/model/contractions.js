@@ -44,8 +44,8 @@ wanna:want to
 c'mere:come here
 c'mon:come on
 shoulda:should have
-coulda:coulda have
-woulda:woulda have
+coulda:could have
+woulda:would have
 musta:must have
 tis:it is
 twas:it was

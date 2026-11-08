@@ -6,13 +6,13 @@ const findModifiers = str => {
       mult: -1,
     },
     {
-      reg: /^(a\s)?half[\s-](of\s)?/i,
+      reg: /^((a|one)\s)?half[\s-](of\s)?/i,
       mult: 0.5,
     },
-    //  {
-    //   reg: /^(a\s)?quarter[\s\-]/i,
-    //   mult: 0.25
-    // }
+    {
+      reg: /^((a|one)\s)?quarter[\s-](of\s)?/i,
+      mult: 0.25,
+    },
   ]
   for (let i = 0; i < mults.length; i++) {
     if (mults[i].reg.test(str)) {

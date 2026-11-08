@@ -13,6 +13,8 @@ const casualForms = {
   'two dozen': 24,
   zero: 0,
 }
+// counts for 'a few hundred'
+const casualCounts = { few: 3, couple: 2 }
 
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
@@ -57,9 +59,18 @@ const parse = function (str) {
     //decimal mode
     if (w === 'point') {
       sum += section_sum(has)
-      sum += parseDecimals(terms.slice(i + 1, terms.length))
-      sum *= modifier.amount
-      return sum
+      let rest = terms.slice(i + 1)
+      // 'six point five million' - the decimals end at a multiplier
+      const end = rest.findIndex(t => Object.hasOwn(words.multiples, t))
+      let scale = 1
+      if (end !== -1) {
+        const mults = rest.slice(end).filter(t => Object.hasOwn(words.multiples, t))
+        scale = mults.reduce((n, t) => n * words.multiples[t], 1)
+        rest = rest.slice(0, end)
+      }
+      sum += parseDecimals(rest)
+      sum *= scale * modifier.amount
+      return isNegative ? -sum : sum
     }
 
     //improper fraction
@@ -91,12 +102,14 @@ const parse = function (str) {
       has.ones = parseFloat(w) //not technically right
     } else if (kind) {
       has[kind] = words[kind][w]
+    } else if (Object.hasOwn(casualCounts, w)) {
+      has.ones = casualCounts[w]
     } else if (Object.hasOwn(words.multiples, w)) {
       let mult = words.multiples[w]
 
       //something has gone wrong : 'two hundred five hundred'
       //possibly because it's a fraction
-      if (mult === last_mult) {
+      if (mult === last_mult && Object.keys(has).length > 0) {
         return null
       }
       //support 'hundred thousand'
@@ -107,6 +120,15 @@ const parse = function (str) {
           mult *= words.multiples[w2] //hundredThousand/hundredMillion
           i += 1
         }
+      }
+      // 'a million million' - nothing counted since the last multiple, so multiply
+      if (last_mult !== null && Object.keys(has).length === 0) {
+        sum = (sum || 1) * mult
+        last_mult = mult
+        if (mult >= 1000) {
+          last_big = { sum, mult }
+        }
+        continue
       }
       //natural order of things
       //five thousand, one hundred..

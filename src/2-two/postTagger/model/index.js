@@ -570,6 +570,11 @@ const rules = [
   ],
   // two and a half → Fraction
   ['#Card and a half', Frac],
+  // five [and] three quarters → Fraction
+  ['#Card [and] #Val (halves|quarters|thirds|fifths|sixths|eighths|tenths)', Frac],
+  // [a half] million, [a quarter] million → Fraction
+  ['[(a|one) (half|quarter)] #Mult', Frac, { u: Date }],
+  ['(a|one) (half|quarter) [of a] #Mult', Frac],
   // two-halves → Fraction
   ['#Val (halves|halfs|quarters)', Frac],
 

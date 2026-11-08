@@ -78,6 +78,15 @@ const parseNumber = function (m) {
       return res
     }
   }
+  // 'two and a half thousand' is (2 + 0.5) * 1000
+  if (m.has('(#Frac && !(a|of|and)) (#Mult && !#Frac && !#Ord)+$')) {
+    const mult = m.match('(#Mult && !#Frac && !#Ord)+$')
+    const lead = parseNumber(m.not(mult))
+    const scale = parseText(mult.text('reduced'))
+    if (lead.num !== null && scale) {
+      return { ...lead, num: lead.num * scale, unit }
+    }
+  }
   // -- parse text-formats --
   // Fractions: remove 'and a half' etc. from the end
   let frPart = m.match('#Frac{2,}$')
@@ -93,7 +102,7 @@ const parseNumber = function (m) {
     m = m.not('and$')
     str = m.text('reduced')
   }
-  let num = 0
+  let num = null
   if (str) {
     let end = str.length
     for (; end > 0 && /[.!?]/.test(str[end - 1]); end -= 1) {
@@ -102,11 +111,15 @@ const parseNumber = function (m) {
     const text = str.slice(0, end)
     // the tagger already decided if this is a year
     const year = m.has('#Year') ? parseYear(text) : null
-    num = year ?? (parseText(text) || 0)
+    num = year ?? parseText(text)
+    // 'negative zero'
+    if (num === 0) {
+      num = 0
+    }
   }
   // apply numeric fraction
   if (fraction && fraction.decimal) {
-    num += fraction.decimal
+    num = (num || 0) + fraction.decimal
   }
 
 

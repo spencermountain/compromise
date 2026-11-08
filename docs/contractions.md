@@ -129,9 +129,11 @@ nlp(`Don't go`).text('implicit')   // 'Do not go'
 ### `ain't`
 
 `ain't` is read from its subject: `am not`, `is not`, or `are not`. Before `never`, it is `have`.
+`aint` without the apostrophe works the same.
 
 ```js
 nlp(`i ain't going`).text('implicit')          // 'i am not going'
+nlp(`we aint going`).text('implicit')          // 'we are not going'
 nlp(`she ain't going`).text('implicit')        // 'she is not going'
 nlp(`the dogs ain't here`).text('implicit')    // 'the dogs are not here'
 nlp(`he ain't never seen it`).text('implicit') // 'he have never seen it'
@@ -148,6 +150,7 @@ These are looked up as whole words. Slang:
 | `gimme` | give me | `outta` | out of |
 | `dunno` | do not know | `cannot` | can not |
 | `shoulda` | should have | `musta` | must have |
+| `coulda` | could have | `woulda` | would have |
 | `c'mon` | come on | `c'mere` | come here |
 | `y'know` | you know | `alot` | a lot |
 | `tis` | it is | `twas` | it was |
@@ -162,6 +165,7 @@ Text-speak: `brb`, `gtg`, `imo`, `irl`, `rn`, `tbh`, and `@` (at).
 ```js
 nlp(`we're gonna win`).text('implicit')   // 'we are going to win'
 nlp(`i gotta go`).text('implicit')        // 'i have got to go'
+nlp(`he's gotta go`).text('implicit')     // 'he has got to go'
 nlp(`get outta here`).text('implicit')    // 'get out of here'
 ```
 
@@ -174,7 +178,6 @@ These stay as one word, so a match for `let me` will not find `lemme`:
 - `'em`, `'cause`, `'til`, `ol'`, `goin'`, `chillin'` — the leading or trailing apostrophe is
   stripped from `.normal`, but nothing is added
 - `idk`, `lol`, `omg`, `btw`, `fyi`, `asap`, `pls`, `thx`, `ur`, `u`
-- `aint` without its apostrophe
 - double contractions: `wouldn't've` reads as `would've not`, `I'd've` as `i would`
 
 ### `wanna`
@@ -190,15 +193,17 @@ nlp(`I wanna pickle some beets`).text('implicit')  // 'I want to pickle some bee
 
 ### `'d`: did, had, or would
 
-After a question word it is `did`. Otherwise the next verb decides: a past-tense verb or `been`,
-`gone`, `better`, `done`, `before`, `it` means `had`, and a present verb or `have`, `be` means
-`would`. With no clue, it is `would`.
+After a question word it is `did`. Otherwise the next words decide: a past-tense verb, a
+determiner, or `been`, `gone`, `better`, `done`, `before`, `it` means `had`, and a present verb or
+`have`, `be` means `would`. With no clue, it is `would`.
 
 ```js
 nlp(`how'd you do that`).text('implicit')   // 'how did you do that'
 nlp(`i'd walked`).text('implicit')          // 'i had walked'
 nlp(`she'd been there`).text('implicit')    // 'she had been there'
 nlp(`he'd better go`).text('implicit')      // 'he had better go'
+nlp(`they'd an issue`).text('implicit')     // 'they had an issue'
+nlp(`they'd both go`).text('implicit')      // 'they would both go'
 nlp(`i'd like a coffee`).text('implicit')   // 'i would like a coffee'
 nlp(`he'd have gone`).text('implicit')      // 'he would have gone'
 nlp(`he'd`).text('implicit')                // 'he would'
@@ -213,10 +218,11 @@ steps and looks at the whole clause.
 
 - `let's` is `let us`. `that's`, `what's`, `there's`, `here's`, `who's`, `where's`, `how's`,
   `he's`, `she's` and `it's` are never possessive.
-- `it's` is always read as `it is` / `it has`, even where `its` was meant: `the cat licked it's paw`
-  reads `it is`.
-- `there's` is `there has` before `been`, else `there is`, even with a plural (`there's cats` reads
-  `there is cats`).
+- `it's` is `it is` / `it has`, unless it was clearly meant as `its`: after a verb or preposition,
+  before a thing (`the cat licked it's paw`, `on it's way`), or as the subject before `is`
+  (`it's fur is soft`). `it's time we left` and `it's dinner` still read `it is`.
+- `there's` is `there has` before `been`, `there are` before a plural (`there's cats`), else
+  `there is`.
 - A word before `gonna`, `gotta`, `got` or `been` is a contraction: `the man in black's gonna rock`
   reads `black is`.
 

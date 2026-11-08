@@ -96,7 +96,8 @@ const addMethod = function (View) {
       const m = this
       const res = m._mapNumbers(val => {
         const obj = parse(val)
-        if (obj.num === null) {
+        // leave '1/2' alone
+        if (obj.num === null || val.has('(#Frac && #Numeric)')) {
           return val
         }
         let num = obj.num.toLocaleString()

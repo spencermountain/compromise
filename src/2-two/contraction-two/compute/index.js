@@ -4,6 +4,7 @@ import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
 import isPossessive from './isPossessive.js'
 import wannaNoun from './wanna.js'
+import thereAre from './there-are.js'
 import contractionDebug from '../../../API/debug/contractions-debug.js'
 import { hasApostrophe } from './_lib.js'
 import { setTag } from '../../preTagger/compute/tagger/_lib.js'
@@ -85,6 +86,10 @@ const contractionTwo = view => {
         reIndex(terms)
         continue
       }
+      if (thereAre(terms, i)) {
+        contractionDebug(terms[i], ['there', 'are'])
+        continue
+      }
       // is it already a contraction
       if (terms[i].implicit) {
         continue
@@ -92,6 +97,8 @@ const contractionTwo = view => {
       let after = null
       if (hasApostrophe.test(terms[i].normal)) {
         after = terms[i].normal.split(hasApostrophe)[1]
+      } else if (terms[i].normal === 'aint') {
+        after = 't'
       }
       let words = null
       // any known-ones, like 'dunno'?

@@ -4,82 +4,58 @@ import { spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 const here = '[scripts/test/cli] '
 const bin = fileURLToPath(new URL('../../bin/compromise.js', import.meta.url))
+const fixture = fileURLToPath(new URL('./_cli-fixture.txt', import.meta.url))
 
-// run the cli with args, and optional stdin text
+// run the cli with args, and optional stdin text. colours are off unless env says otherwise
 const run = (args, input, env = { NO_COLOR: '1' }) => {
   const res = spawnSync(process.execPath, [bin, ...args], { input, encoding: 'utf8', env: { ...process.env, ...env } })
   return { out: res.stdout.trim(), raw: res.stdout.trimEnd(), err: res.stderr.trim(), code: res.status }
 }
+const lines = res => res.out.split('\n').filter(Boolean).map(line => JSON.parse(line))
 
-test(here + 'json by default', t => {
-  const res = run(['--input=she sells seashells'])
+test(here + 'jsonl by default, one line per sentence', t => {
+  const res = run(['--input=she sells seashells. he walked home.'])
   t.equal(res.code, 0, 'exits 0')
-  const json = JSON.parse(res.out)
-  t.equal(json[0].text, 'she sells seashells', 'parses the text')
-  t.equal(json[0].terms.length, 3, 'has terms')
+  const json = lines(res)
+  t.equal(json.length, 2, 'two lines')
+  t.equal(json[0].text, 'she sells seashells.', 'first sentence')
+  t.equal(json[1].terms.length, 3, 'has terms')
+  t.equal(lines(run(['--input=one dog.', '--jsonl']))[0].text, 'one dog.', '--jsonl is the same')
+  t.equal(run(['--input=hi', '--format=json']).code, 1, 'pretty json is gone')
   t.end()
 })
 
 test(here + 'text, spec, and debug outputs', t => {
-  t.equal(run(['--input=one dog. two cats.', '--format=text']).out, 'one dog.\ntwo cats.', 'one sentence per line')
-  t.equal(run(['--input=she sells seashells', '--format=spec']).out, 'she sells seashells {Noun,Vb,Noun}', 'spec format')
-  t.ok(run(['--input=she sells seashells', '--format=debug']).out.includes('sells'), 'debug prints the terms')
-  t.equal(run(['--input=one dog. two cats.', '--text']).out, 'one dog.\ntwo cats.', '--text alias')
-  t.equal(run(['--input=she sells seashells', '--spec']).out, 'she sells seashells {Noun,Vb,Noun}', '--spec alias')
-  t.ok(run(['--input=she sells seashells', '--debug']).out.includes('sells'), '--debug alias')
-  t.end()
-})
-
-test(here + 'jsonl output', t => {
-  const one = run(['--input=she sells seashells', '--format=jsonl']).out
-  t.equal(one.split('\n').length, 1, 'one line')
-  t.equal(JSON.parse(one)[0].text, 'she sells seashells', 'valid json')
-  const alias = run(['--input=she sells seashells', '--jsonl']).out
-  t.equal(alias.split('\n').length, 1, '--jsonl alias is one line')
-  t.equal(JSON.parse(alias)[0].text, 'she sells seashells', '--jsonl alias is valid json')
-  t.ok(run(['--stream', '--json'], 'one dog\ntwo cats\n').out.split('\n').length > 2, '--json forces pretty output')
-  t.equal(JSON.parse(run(['--input=hi there', '--jsonl', '--offsets']).out)[0].offset.length, 8, 'extras work with jsonl')
+  t.equal(run(['--input=one dog. two cats.', '--text']).out, 'one dog.\ntwo cats.', 'one sentence per line')
+  t.equal(run(['--input=one dog. two cats.', '--format', 'spec']).out, 'one dog. {Val,Noun}\ntwo cats. {Val,Noun}', 'spec format')
+  t.ok(run(['--input=she sells seashells', '--debug']).out.includes('sells'), 'debug prints the terms')
   t.end()
 })
 
 test(here + 'json extras', t => {
-  const json = JSON.parse(run(['--input=she sells seashells', '--offsets', '--bestTag', '--confidence', '--normal', '--root']).out)
-  t.deepEqual(json[0].offset, { index: 0, start: 0, length: 19 }, 'sentence offset')
-  t.equal(json[0].terms[1].offset.start, 4, 'term offset')
-  t.equal(json[0].terms[1].bestTag, 'PresentTense', 'best tag')
-  t.equal(typeof json[0].confidence, 'number', 'confidence')
-  t.equal(json[0].normal, 'she sells seashells', 'normal')
-  t.equal(json[0].root, 'she sell seashell', 'root')
-  const plain = JSON.parse(run(['--input=she sells seashells']).out)
-  t.equal(plain[0].offset, undefined, 'no extras by default')
+  const json = lines(run(['--input=she sells seashells', '--offsets', '--bestTag', '--confidence', '--normal', '--root']))[0]
+  t.deepEqual(json.offset, { index: 0, start: 0, length: 19 }, 'sentence offset')
+  t.equal(json.terms[1].offset.start, 4, 'term offset')
+  t.equal(json.terms[1].bestTag, 'PresentTense', 'best tag')
+  t.equal(typeof json.confidence, 'number', 'confidence')
+  t.equal(json.normal, 'she sells seashells', 'normal')
+  t.equal(json.root, 'she sell seashell', 'root')
+  t.equal(lines(run(['--input=she sells seashells']))[0].offset, undefined, 'no extras by default')
   const bad = run(['--input=hi', '--text', '--offsets'])
-  t.equal(bad.code, 1, 'extras need json output')
+  t.equal(bad.code, 1, 'extras need jsonl output')
   t.ok(bad.err.includes('--offsets'), 'names the flag')
   t.end()
 })
 
-test(here + 'match filters the output', t => {
-  t.equal(run(['--input=she sells seashells', '--match=#Verb', '--format=text']).out, 'sells', 'text of matches')
-  const json = JSON.parse(run(['--input=she sells seashells', '--match', '#Verb']).out)
-  t.equal(json[0].text, 'sells', 'json of matches')
-  t.end()
-})
-
-test(here + 'if keeps whole sentences', t => {
+test(here + 'match, if, and has', t => {
   const text = 'and but so she left. he stayed. and but so it goes.'
-  t.equal(run(['--input=' + text, '--if=and but so', '--text']).out, 'and but so she left.\nand but so it goes.', 'sentences with a match')
+  t.equal(run(['--input=' + text, '--match=#Pronoun', '--text']).out, 'she\nhe\nit', 'one line per match')
+  t.equal(lines(run(['--input=' + text, '--match', '#Pronoun']))[1].text, 'he', 'json of matches')
+  t.equal(run(['--input=' + text, '--if=and but so', '--text']).out, 'and but so she left.\nand but so it goes.', 'if keeps sentences')
   t.equal(run(['--input=' + text, '--if=#Verb', '--match=#Pronoun', '--text']).out, 'she\nhe\nit', 'if runs before match')
-  t.equal(run(['--input=' + text, '--if=nothing', '--text']).out, '', 'no sentences, no output')
-  t.end()
-})
-
-test(here + 'has stops at the first sentence', t => {
-  const text = 'and but so she left. he stayed. and but so it goes.'
-  t.equal(run(['--input=' + text, '--has=and but so', '--text']).out, 'and but so she left.', 'first sentence only')
+  t.equal(run(['--input=' + text, '--has=and but so', '--text']).out, 'and but so she left.', 'has keeps the first sentence')
   t.equal(run(['--input=' + text, '--has=and but so', '--match=#Verb', '--text']).out, 'left.', 'has runs before match')
-  const lines = run(['--stream', '--has=and but so', '--text'], 'he stayed\nand but so she left\nand but so it goes\n').out
-  t.equal(lines, 'and but so she left', 'stops the stream after the first hit')
-  t.equal(run(['--input=' + text, '--has=nothing', '--text']).out, '', 'no sentences, no output')
+  t.equal(run(['--input=' + text, '--if=nothing', '--text']).out, '', 'no sentences, no output')
   t.end()
 })
 
@@ -109,19 +85,50 @@ test(here + 'highlight output', t => {
   t.end()
 })
 
-test(here + 'stdin, whole and streamed', t => {
-  t.equal(run(['--format=text'], 'the cat sat').out, 'the cat sat', 'reads stdin')
-  const lines = run(['--stream', '--format=text'], 'one dog\n\ntwo cats\n').out.split('\n')
-  t.deepEqual(lines, ['one dog', 'two cats'], 'one output per non-empty line')
-  const ndjson = run(['--stream'], 'one dog\ntwo cats\n').out.split('\n')
-  t.equal(ndjson.length, 2, 'streamed json is newline-delimited')
-  t.equal(JSON.parse(ndjson[1])[0].text, 'two cats', 'each line is valid json')
+test(here + 'stdin', t => {
+  t.equal(run(['--text'], 'the cat sat').out, 'the cat sat', 'reads stdin')
+  const two = run(['--text'], 'one dog\n\ntwo cats\n').out.split('\n')
+  t.deepEqual(two, ['one dog', 'two cats'], 'splits on sentence boundaries')
+  // the tokenizer keeps a line break inside this one; every format must still print one line per sentence
+  const inner = 'one dog\n\n. two cats.'
+  const count = lines(run([], inner)).length
+  t.ok(lines(run([], inner)).some(o => o.text.includes('\n')), 'jsonl keeps the raw line break')
+  t.equal(run(['--text'], inner).out.split('\n').length, count, 'text: one line per sentence')
+  t.equal(run(['--spec'], inner).out.split('\n').length, count, 'spec: one line per sentence')
+  t.equal(run(['--highlight', '--match=dog'], inner).raw.split('\n').length, 1, 'highlight: one line per match')
+  t.equal(run(['--has=two', '--text'], 'one dog. two cats. three birds.').out, 'two cats.', 'has stops at the first hit')
   t.end()
 })
 
-test(here + 'file input', t => {
-  const res = run([fileURLToPath(new URL('./_cli-fixture.txt', import.meta.url)), '--format=text'])
-  t.equal(res.out, 'the quick brown fox.\njumps over the lazy dog.', 'reads a file')
+test(here + 'files and globs', t => {
+  t.equal(run([fixture, '--text']).out, 'the quick brown fox.\njumps over the lazy dog.', 'reads a file')
+  const text = fs.readFileSync(fixture, 'utf8')
+  const json = lines(run([fixture, '--offsets']))
+  t.equal(json[1].offset.start, text.indexOf('jumps'), 'offsets count from the start of the file')
+  t.equal(json[1].terms[0].offset.start, text.indexOf('jumps'), 'term offsets too')
+  const many = lines(run(['--input=one dog.', fixture]))
+  t.equal(many.length, 3, 'inputs and files are all sentences in one stream')
+  t.equal(run(['/no/such/file.txt']).code, 1, 'missing file exits 1')
+  t.end()
+})
+
+test(here + 'glob input', { skip: !fs.promises.glob }, t => {
+  const two = fileURLToPath(new URL('./_cli-fixture-two.txt', import.meta.url))
+  fs.writeFileSync(two, 'hello there.\n')
+  const res = run([fileURLToPath(new URL('./_cli-fixture*.txt', import.meta.url)), '--text'])
+  fs.unlinkSync(two)
+  t.deepEqual(res.out.split('\n').sort(), ['hello there.', 'jumps over the lazy dog.', 'the quick brown fox.'], 'all files, one line per sentence')
+  t.end()
+})
+
+test(here + 'a long file streams', t => {
+  // 3000 sentences, well past one read chunk - output must arrive in order and complete
+  const big = fileURLToPath(new URL('./_cli-fixture-big.txt', import.meta.url))
+  fs.writeFileSync(big, Array.from({ length: 3000 }, (_, i) => `sentence number ${i} is here.`).join(' '))
+  const res = run([big, '--text']).out.split('\n')
+  fs.unlinkSync(big)
+  t.equal(res.length, 3000, 'every sentence')
+  t.equal(res[2999], 'sentence number 2999 is here.', 'in order, to the end')
   t.end()
 })
 
@@ -129,22 +136,9 @@ test(here + 'errors and help', t => {
   t.ok(run(['--help']).out.startsWith('Usage:'), 'prints help')
   t.ok(/^\d+\.\d+\.\d+/.test(run(['--version']).out), 'prints version')
   const bad = run(['--input=hi', '--format=nope'])
-  t.equal(bad.code, 1, 'bad output exits 1')
+  t.equal(bad.code, 1, 'bad format exits 1')
   t.ok(bad.err.includes('Unknown format'), 'explains the error')
   t.equal(run(['--input=hi', '--wat']).code, 1, 'unknown option exits 1')
-  t.equal(JSON.parse(run(['--input', 'one dog', '--input', 'two cats']).out.split('\n')[1])[0].text, 'two cats', 'each --input is its own document')
-  t.equal(run(['/no/such/file.txt']).code, 1, 'missing file exits 1')
-  t.end()
-})
-
-test(here + 'glob input is newline-delimited json', { skip: !fs.promises.glob }, t => {
-  const two = fileURLToPath(new URL('./_cli-fixture-two.txt', import.meta.url))
-  fs.writeFileSync(two, 'hello there.\n')
-  const res = run([fileURLToPath(new URL('./_cli-fixture*.txt', import.meta.url))])
-  fs.unlinkSync(two)
-  const lines = res.out.split('\n')
-  t.equal(lines.length, 2, 'one line per file')
-  const texts = lines.map(line => JSON.parse(line)[0].text).sort()
-  t.deepEqual(texts, ['hello there.', 'the quick brown fox.'], 'each line is valid json')
+  t.equal(run(['--input=hi', '--stream']).code, 1, '--stream is gone')
   t.end()
 })

@@ -438,9 +438,25 @@ Plain-text, copy-paste docs that render without JavaScript live in this repo:
 
 ## CLI
 
+tag and match a file or directory as a one-liner.
+
+```bash
+# parse all files in a directory to JSON
+npx compromise ~/fanfic/a-c/*.txt
+# get json response for all matches
+npx compromise ./infinite-jest.txt --match="to be #Adjective"
+# pipe/stream pltaintext through compromise
+cat ~/fanfic/**/*.txt | npx compromise --has="the #Adjective of times" | jq
+# get all sentences containing match
+npx compromise ./infinite-jest.txt   --if="on and on" --text
+# pretty-print matches in-context
+npx compromise ./infinite-jest.txt  --match="and so on" --format=highlight
 ```
-npx compromise ./infinite-jest.txt --if="and but so"
-```
+
+<div align="right">
+  <a href="./docs/cli.md">CLI docs</a>
+</div>
+<img width="500" alt="Image" src="https://github.com/user-attachments/assets/9c8e09bc-3e6e-46bb-8a0a-130afe1c36e3" />
 
 <img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 
@@ -916,6 +932,10 @@ These are some helpful extensions:
 - **[.times()](https://observablehq.com/@spencermountain/compromise-dates)** - `4:30pm` or `half past five`
   - **[.times().get()](https://observablehq.com/@spencermountain/compromise-dates)** - return simple json for times
   - **[.times().json()](https://observablehq.com/@spencermountain/compromise-dates)** - overloaded output with time metadata
+
+<div align="right">
+  <a href="./docs/dates-plugin.md">Date-parsing docs</a>
+</div>
 
 ##### Stats
 

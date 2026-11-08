@@ -39,9 +39,19 @@ const highlight = function (doc, pattern, opts) {
   // each pointer is [sentence, start, end] into the full document
   doc.match(pattern).fullPointer.forEach(([n, start, end]) => {
     const terms = doc.document[n]
-    const words = terms.map((t, i) => ({ str: t.pre + t.text + t.post, hit: i >= start && i < end }))
+    // collapse line breaks inside the sentence, so each match stays on one line.
+    // blank terms, which the tokenizer leaves behind some punctuation, fold into the word before
+    const words = []
+    terms.forEach((t, i) => {
+      const str = (t.pre + t.text + t.post).replace(/\s+/g, ' ')
+      if (str.trim() !== '') {
+        words.push({ str, i, hit: i >= start && i < end })
+      } else if (words.length > 0) {
+        words[words.length - 1].str = (words[words.length - 1].str + str).replace(/\s+/g, ' ')
+      }
+    })
     // left: the words before the match, trimmed from the start, padded to the middle column
-    const left = words.slice(0, start)
+    const left = words.filter(w => w.i < start)
     const leftCut = fit(left, half, true)
     if (left.length > 0) {
       left[0] = { ...left[0], str: left[0].str.trimStart() }
@@ -50,8 +60,8 @@ const highlight = function (doc, pattern, opts) {
     const leftLen = textOf(left).length + (leftCut ? ellipsis.length + 1 : 0)
     leftStr = ' '.repeat(Math.max(0, half - leftLen)) + leftStr
     // right: the match and the words after it, trimmed from the end. the match is never cut
-    const right = words.slice(start)
-    const after = right.splice(end - start)
+    const right = words.filter(w => w.hit)
+    const after = words.filter(w => w.i >= end)
     const rightCut = fit(after, opts.width - half - textOf(right).length, false)
     right.push(...after)
     right[right.length - 1] = { ...right.at(-1), str: right.at(-1).str.trimEnd() }

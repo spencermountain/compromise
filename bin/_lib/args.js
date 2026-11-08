@@ -1,5 +1,5 @@
 // parse process.argv for the compromise cli - no dependencies
-const outputs = ['json', 'jsonl', 'text', 'spec', 'debug', 'highlight']
+const outputs = ['jsonl', 'text', 'spec', 'debug', 'highlight']
 // flags that add fields to the json output
 const extras = ['offsets', 'bestTag', 'confidence', 'normal', 'root']
 
@@ -10,8 +10,7 @@ const help = `Usage: compromise [files...] [options]
   compromise --input="she sells seashells"   parse text from an argument
 
 Options:
-  --format=FORMAT     ${outputs.join(', ')}
-                   (default: json, or jsonl for several inputs or --stream)
+  --format=FORMAT  ${outputs.join(', ')}  (default: jsonl)
   --text, --debug  shorthand for --format=text, --format=debug, etc
   --offsets        add character offsets to the json
   --bestTag        add each term's single best tag to the json
@@ -22,14 +21,13 @@ Options:
   --has=PATTERN    like --if, but stop after the first sentence
   --width=N        trim highlight lines to N characters (default: 55)
   --input=TEXT     parse this text instead of a file (repeatable)
-  --stream         process stdin line-by-line, as it arrives
   --version        print the library version
   --help           show this help
 
-Output is one json document per input; multiple inputs are newline-delimited.
-Text and spec output print one line per sentence (or per match).`
+Input is streamed, sentence by sentence, and every format prints one line per sentence
+(or per match with --match), as soon as it is parsed.`
 
-// '--format=json' or '--format json'
+// '--format=text' or '--format text'
 const valueOf = function (args, i, name) {
   const arg = args[i]
   if (arg.includes('=')) {
@@ -43,7 +41,7 @@ const valueOf = function (args, i, name) {
 }
 
 const parseArgs = function (args) {
-  const opts = { format: null, match: null, if: null, has: null, width: null, files: [], stream: false, json: {}, help: false, version: false, text: [] }
+  const opts = { format: null, match: null, if: null, has: null, width: null, files: [], json: {}, help: false, version: false, text: [] }
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
     const name = arg.split('=')[0]
@@ -51,10 +49,8 @@ const parseArgs = function (args) {
       opts.help = true
     } else if (name === '--version' || name === '-v') {
       opts.version = true
-    } else if (name === '--stream') {
-      opts.stream = true
     } else if (outputs.includes(name.slice(2))) {
-      opts.format = name.slice(2) // --json, --text, --spec, --debug
+      opts.format = name.slice(2) // --jsonl, --text, --spec, --debug, --highlight
     } else if (extras.includes(name.slice(2))) {
       opts.json[name.slice(2)] = true
     } else if (name === '--format' || name === '--match' || name === '--if' || name === '--has' || name === '--width' || name === '--input' || name === '-i') {
@@ -79,7 +75,8 @@ const parseArgs = function (args) {
       opts.files.push(arg) // a path or glob
     }
   }
-  if (opts.format !== null && !outputs.includes(opts.format)) {
+  opts.format ||= 'jsonl'
+  if (!outputs.includes(opts.format)) {
     throw new Error(`Unknown format '${opts.format}' - expected one of: ${outputs.join(', ')}`)
   }
   if (opts.width !== null && !(opts.width > 0)) {
@@ -89,8 +86,8 @@ const parseArgs = function (args) {
     throw new Error('--format=highlight needs a pattern: --match, --if or --has')
   }
   const used = Object.keys(opts.json)
-  if (used.length > 0 && opts.format !== null && !opts.format.startsWith('json')) {
-    throw new Error(`--${used[0]} only applies to json output`)
+  if (used.length > 0 && opts.format !== null && opts.format !== 'jsonl') {
+    throw new Error(`--${used[0]} only applies to jsonl output`)
   }
   return opts
 }

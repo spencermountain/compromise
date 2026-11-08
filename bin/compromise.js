@@ -2,11 +2,11 @@
 /* eslint-disable no-console */
 import nlp from '../src/three.js'
 import { parseArgs, help } from './_lib/args.js'
-import { expandFiles, inputs } from './_lib/input.js'
+import { expandFiles, batches } from './_lib/input.js'
 import highlight from './_lib/highlight.js'
 
 // doc.json() with any extra fields the flags asked for
-const toJson = function (doc, extras) {
+const toJson = function (doc, extras, base) {
   const { offsets, bestTag, ...rest } = extras
   if (bestTag) {
     doc.compute('tagRank')
@@ -15,31 +15,33 @@ const toJson = function (doc, extras) {
     doc.compute('root')
   }
   const json = doc.json({ ...rest, offset: offsets })
-  if (bestTag) {
-    json.forEach(o => {
+  json.forEach(o => {
+    if (bestTag) {
       o.terms.forEach(t => (t.bestTag = t.tagRank?.[0] || null))
-    })
-  }
+    }
+    // offsets are per-batch; shift them to the start of the file
+    if (offsets) {
+      o.offset.start += base
+      o.terms.forEach(t => (t.offset.start += base))
+    }
+  })
   return json
 }
 
-// render one parsed document in the chosen format
-const format = function (doc, opts) {
+// a sentence may wrap across lines in the source; keep it on one output line
+const oneLine = str => str.replace(/\s+/g, ' ').trim()
+
+// print one batch in the chosen format - one line per sentence, or per match
+const emit = function (doc, opts, base) {
   if (opts.format === 'text') {
-    return doc.out('array').join('\n')
-  }
-  if (opts.format === 'spec') {
-    return doc.out('spec')
-  }
-  if (opts.format === 'debug') {
+    doc.out('array').forEach(str => console.log(oneLine(str)))
+  } else if (opts.format === 'spec') {
+    doc.docs.forEach((_terms, i) => console.log(oneLine(doc.eq(i).out('spec'))))
+  } else if (opts.format === 'debug') {
     doc.debug()
-    return null
+  } else {
+    toJson(doc, opts.json, base).forEach(o => console.log(JSON.stringify(o)))
   }
-  const json = toJson(doc, opts.json)
-  if (opts.format === 'jsonl') {
-    return JSON.stringify(json)
-  }
-  return JSON.stringify(json, null, 2)
 }
 
 const main = async function () {
@@ -59,13 +61,8 @@ const main = async function () {
     return
   }
   const paths = await expandFiles(opts.files)
-  // default output: a single input pretty-prints, several become json-lines
-  if (opts.format === null) {
-    const many = opts.stream || paths.length + opts.text.length > 1
-    opts.format = many ? 'jsonl' : 'json'
-  }
-  for await (const text of inputs(opts, paths)) {
-    let doc = nlp(text)
+  for await (const batch of batches(nlp, opts, paths)) {
+    let doc = nlp(batch.text)
     if (opts.if) {
       doc = doc.if(opts.if)
     }
@@ -74,30 +71,32 @@ const main = async function () {
     }
     if (opts.format === 'highlight') {
       const pattern = opts.match || opts.if || opts.has
-      const width = opts.width || 55
       const color = !Object.hasOwn(process.env, 'NO_COLOR')
-      const str = highlight(doc, pattern, { width, color })
+      const str = highlight(doc, pattern, { width: opts.width || 55, color })
       if (str) {
         console.log(str)
       }
-      if (opts.has && doc.found) {
-        break
+    } else if (doc.found) {
+      if (opts.match) {
+        doc = doc.match(opts.match)
       }
-      continue
+      if (doc.found) {
+        emit(doc, opts, batch.offset)
+      }
     }
-    if (opts.match) {
-      doc = doc.match(opts.match)
-    }
-    const str = format(doc, opts)
-    if (str !== null) {
-      console.log(str)
-    }
-    // --has stops at the first hit, even mid-stream
+    // --has stops at the first hit; returning closes the file stream
     if (opts.has && doc.found) {
-      break
+      return
     }
   }
 }
+
+// a closed pipe (e.g. `| head`) is not an error
+process.stdout.on('error', e => {
+  if (e.code === 'EPIPE') {
+    process.exit(0)
+  }
+})
 
 main().catch(e => {
   console.error(e.message)

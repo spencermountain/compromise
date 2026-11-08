@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import readline from 'node:readline'
+import { sentenceBuffer } from './sentences.js'
 
 // expand paths or globs into file paths (fs.glob is node 22+; older nodes get the literal path)
 const expandFiles = async function (patterns) {
@@ -19,38 +19,38 @@ const expandFiles = async function (patterns) {
   return paths
 }
 
-const readAll = function (stream) {
-  return new Promise((resolve, reject) => {
-    let str = ''
-    stream.setEncoding('utf8')
-    stream.on('data', chunk => (str += chunk))
-    stream.on('end', () => resolve(str))
-    stream.on('error', reject)
-  })
-}
-
-// yield each input as a whole document, or stdin line-by-line when streaming
-const inputs = async function* (opts, paths) {
+// every input, as something that yields utf8 chunks
+const sources = function* (opts, paths) {
   for (const text of opts.text) {
-    yield text
+    yield { name: 'input', chunks: [text] }
   }
   for (const path of paths) {
-    yield await fs.promises.readFile(path, 'utf8')
+    yield { name: path, chunks: fs.createReadStream(path, { encoding: 'utf8' }) }
   }
-  const useStdin = opts.text.length === 0 && paths.length === 0 && !process.stdin.isTTY
-  if (!useStdin) {
-    return
+  if (opts.text.length === 0 && paths.length === 0 && !process.stdin.isTTY) {
+    process.stdin.setEncoding('utf8')
+    yield { name: 'stdin', chunks: process.stdin }
   }
-  if (opts.stream) {
-    const rl = readline.createInterface({ input: process.stdin })
-    for await (const line of rl) {
-      if (line.trim()) {
-        yield line
-      }
-    }
-    return
-  }
-  yield await readAll(process.stdin)
 }
 
-export { expandFiles, inputs }
+// sentence-aligned batches of text, as each input arrives.
+// `offset` is where the batch starts in its source, in characters
+const batches = async function* (nlp, opts, paths) {
+  for (const source of sources(opts, paths)) {
+    const buffer = sentenceBuffer(nlp)
+    let offset = 0
+    for await (const chunk of source.chunks) {
+      const ready = buffer.push(chunk)
+      if (ready) {
+        yield { text: ready, offset, file: source.name }
+        offset += ready.length
+      }
+    }
+    const tail = buffer.finish()
+    if (tail) {
+      yield { text: tail, offset, file: source.name }
+    }
+  }
+}
+
+export { expandFiles, batches }

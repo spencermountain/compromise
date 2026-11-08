@@ -14,7 +14,7 @@ test('out-highlight', function (t) {
   t.equal(column(lines[0]), 27, here + 'first match at middle column')
   t.equal(column(lines[1]), 27, here + 'second match at middle column')
   t.equal(plain(lines[0]), '                   he said and so on, and so on and …', here + 'right side trimmed')
-  t.equal(plain(lines[1]), '        he said and so on, and so on and so forth, then left.', here + 'short right side kept')
+  t.equal(plain(lines[1]), '        he said and so on, and so on and so forth, …', here + 'second line trimmed')
   t.ok(lines[0].includes(esc + '[32mand so on, ' + esc + '[0m'), here + 'match is green')
 
   const long = nlp('one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen')

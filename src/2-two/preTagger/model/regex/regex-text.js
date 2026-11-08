@@ -10,12 +10,12 @@ export default [
   [/^([A-Z]\.){2}[A-Z]?/i, [Acronym, NN]], //ascii-only
 
   // ending-apostrophes
-  [/.{3}[lkmnp]in['‘’‛‵′`´]$/, Ger, "chillin'"],
+  [/.{3}[lkmnp]in['‘’‛‵′`´]$/, Ger], // chillin'
   // (step 2 of the 's decision - the list is in contraction-two/compute/index.js)
-  [/.{4}s['‘’‛‵′`´]$/, Poss, "flanders'"],
+  [/.{4}s['‘’‛‵′`´]$/, Poss], // flanders'
 
   //from https://www.regextester.com/106421
   // [/^([\u00a9\u00ae\u2319-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/, 'Emoji', 'emoji-range']
   // unicode character range
-  [/^[\p{Emoji_Presentation}\p{Extended_Pictographic}]/u, Emoji],
+  [/^[\p{Emoji_Presentation}\p{Extended_Pictographic}]/u, Emoji], // emoji-class
 ]

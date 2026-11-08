@@ -98,9 +98,9 @@ npx compromise infinite-jest.txt --has='and but so' --text
 `--format=highlight` prints one line per match: its sentence, with the match in green and
 its neighbours in grey. It takes its pattern from `--match`, `--if` or `--has`, and a sentence
 with two matches prints twice, once for each. The match always starts at the middle column,
-so matches line up down the page: the words before it are trimmed or padded to half of
-`--width`, and the words after it are trimmed to the other half. `--width` defaults to 55
-characters, and the match itself is never trimmed. Set `NO_COLOR` to drop the colours:
+so matches line up down the page: the words before it are trimmed or padded to 27 characters,
+and the words after it are trimmed so the line fits in 55. The match itself is never trimmed.
+This is the library's `.out('highlight')`. Set `NO_COLOR` to drop the colours:
 
 ```bash
 npx compromise infinite-jest.txt --highlight --match='and but so'
@@ -122,7 +122,6 @@ Matches stay within a sentence, like `.match()` does.
 --match=PATTERN  only output the matches
 --if=PATTERN     only output sentences containing a match
 --has=PATTERN    like --if, but stop after the first sentence
---width=N        trim highlight lines to N characters (default: 55)
 --input=TEXT     parse this text instead of a file (repeatable)
 --version        print the library version
 --help           show this help

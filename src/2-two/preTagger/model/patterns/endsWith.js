@@ -11,38 +11,38 @@ const {
 
 export default {
   a: [
-    [/.[aeiou]na$/, Noun],
+    [/.[aeiou]na$/, Noun], // tuna
     [/.[oau][wvl]ska$/, Last],
-    [/.[^aeiou]ica$/, Sing],
+    [/.[^aeiou]ica$/, Sing], // harmonica
     [/^([hyj]a+)+$/, Exp], //hahah
   ],
   d: [
     //==-ed==
     //double-consonant
-    [/[aeiou](pp|ll|ss|ff|gg|tt|rr|bb|nn|mm)ed$/, Past],
+    [/[aeiou](pp|ll|ss|ff|gg|tt|rr|bb|nn|mm)ed$/, Past], // popped
     //double-vowel
-    [/.[aeo]{2}[bdgmnprvz]ed$/, Past],
+    [/.[aeo]{2}[bdgmnprvz]ed$/, Past], // rammed
     //-hed
-    [/.[aeiou][sg]hed$/, Past],
+    [/.[aeiou][sg]hed$/, Past], // gushed
     //-rd
-    [/.[aeiou]red$/, Past],
-    [/.[aeiou]r?ried$/, Past],
+    [/.[aeiou]red$/, Past], // hired
+    [/.[aeiou]r?ried$/, Past], // hurried
     // ard
-    [/[^aeiou]ard$/, Sing],
+    [/[^aeiou]ard$/, Sing], // steward
     // id
     [/[aeiou][^aeiou]id$/, Adj],
-    [/.[vrl]id$/, Adj],
+    [/.[vrl]id$/, Adj], // livid
 
     // ===== -ed ======
     //-led
-    [/..led$/, Past],
+    [/..led$/, Past], // hurled
     //-sed
     [/.[iao]sed$/, Past],
     [/[aeiou]n?[cs]ed$/, Past],
     //-med
     [/[aeiou][rl]?[mnf]ed$/, Past],
     //-ked
-    [/[aeiou][ns]?c?ked$/, Past],
+    [/[aeiou][ns]?c?ked$/, Past], // bunked
     //-gned
     [/[aeiou]gned$/, Past],
     //-ged
@@ -51,42 +51,42 @@ export default {
     [/.[tdbwxyz]ed$/, Past],
     [/[^aeiou][aeiou][tvx]ed$/, Past],
     //-ied
-    [/.[cdflmnprstv]ied$/, Past],
+    [/.[cdflmnprstv]ied$/, Past], // emptied
   ],
   e: [
-    [/.[^aeiou]ise$/, Inf],
-    [/.[aeiou]te$/, Inf],
-    [/.[^aeiou][ai]ble$/, Adj],
-    [/.[^aeiou]eable$/, Adj],
-    [/.[ts]ive$/, Adj],
-    [/[a-z]-like$/, Adj],
+    [/.[^aeiou]ise$/, Inf], // antagonise
+    [/.[aeiou]te$/, Inf], // bite
+    [/.[^aeiou][ai]ble$/, Adj], // fixable
+    [/.[^aeiou]eable$/, Adj], // maleable
+    [/.[ts]ive$/, Adj], // festive
+    [/[a-z]-like$/, Adj], // woman-like
   ],
   h: [
-    [/.[^aeiouf]ish$/, Adj],
-    [/.v[iy]ch$/, Last],
-    [/^ug?h+$/, Exp],
-    [/^uh[ -]?oh$/, Exp],
+    [/.[^aeiouf]ish$/, Adj], // cornish
+    [/.v[iy]ch$/, Last], // ..ovich
+    [/^ug?h+$/, Exp], // ughh
+    [/^uh[ -]?oh$/, Exp], // uhoh
   ],
-  i: [[/.[oau][wvl]ski$/, Last, 'polish-male']],
+  i: [[/.[oau][wvl]ski$/, Last]],
   k: [
     [/^(k){2}$/, Exp], //kkkk
   ],
   l: [
-    [/.[gl]ial$/, Adj],
-    [/.[nrtumcd]al$/, Adj],
-    [/.[^aeiou][ei]al$/, Adj],
+    [/.[gl]ial$/, Adj], // familial
+    [/.[nrtumcd]al$/, Adj], // natal
+    [/.[^aeiou][ei]al$/, Adj], // familial
   ],
   m: [
-    [/.[^aeiou]ium$/, Sing],
-    [/[^aeiou]ism$/, Sing],
-    [/^[hu]m+$/, Exp],
-    [/^\d+ ?[ap]m$/, Date],
+    [/.[^aeiou]ium$/, Sing], // magnesium
+    [/[^aeiou]ism$/, Sing], // schism
+    [/^[hu]m+$/, Exp], // hmm
+    [/^\d+ ?[ap]m$/, Date], // 3am
   ],
   n: [
   ],
   o: [
-    [/^no+$/, Exp],
-    [/^(yo)+$/, Exp],
+    [/^no+$/, Exp], // noooo
+    [/^(yo)+$/, Exp], // yoo
     [/^wo{2,}[pt]?$/, Exp], //woo
   ],
   r: [

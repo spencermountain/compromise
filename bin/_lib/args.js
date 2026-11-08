@@ -19,7 +19,6 @@ Options:
   --match=PATTERN  only output the matches, e.g. --match='#Noun+'
   --if=PATTERN     only output sentences containing a match
   --has=PATTERN    like --if, but stop after the first sentence
-  --width=N        trim highlight lines to N characters (default: 55)
   --input=TEXT     parse this text instead of a file (repeatable)
   --version        print the library version
   --help           show this help
@@ -41,7 +40,7 @@ const valueOf = function (args, i, name) {
 }
 
 const parseArgs = function (args) {
-  const opts = { format: null, match: null, if: null, has: null, width: null, files: [], json: {}, help: false, version: false, text: [] }
+  const opts = { format: null, match: null, if: null, has: null, files: [], json: {}, help: false, version: false, text: [] }
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i]
     const name = arg.split('=')[0]
@@ -53,7 +52,7 @@ const parseArgs = function (args) {
       opts.format = name.slice(2) // --jsonl, --text, --spec, --debug, --highlight
     } else if (extras.includes(name.slice(2))) {
       opts.json[name.slice(2)] = true
-    } else if (name === '--format' || name === '--match' || name === '--if' || name === '--has' || name === '--width' || name === '--input' || name === '-i') {
+    } else if (name === '--format' || name === '--match' || name === '--if' || name === '--has' || name === '--input' || name === '-i') {
       const { value, skip } = valueOf(args, i, name)
       i += skip
       if (name === '--format') {
@@ -64,8 +63,6 @@ const parseArgs = function (args) {
         opts.if = value
       } else if (name === '--has') {
         opts.has = value
-      } else if (name === '--width') {
-        opts.width = parseInt(value, 10)
       } else {
         opts.text.push(value)
       }
@@ -78,9 +75,6 @@ const parseArgs = function (args) {
   opts.format ||= 'jsonl'
   if (!outputs.includes(opts.format)) {
     throw new Error(`Unknown format '${opts.format}' - expected one of: ${outputs.join(', ')}`)
-  }
-  if (opts.width !== null && !(opts.width > 0)) {
-    throw new Error('--width must be a positive number')
   }
   if (opts.format === 'highlight' && !opts.match && !opts.if && !opts.has) {
     throw new Error('--format=highlight needs a pattern: --match, --if or --has')

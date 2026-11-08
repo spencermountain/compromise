@@ -1,4 +1,4 @@
-import byDepth from '../crawl/crawl.js'
+import byDepth from './crawl/crawl.js'
 
 const toArray = function (json) {
   // The tag formatter only reads these graph-owned nodes.

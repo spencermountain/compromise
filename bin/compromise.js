@@ -3,7 +3,6 @@
 import nlp from '../src/three.js'
 import { parseArgs, help } from './_lib/args.js'
 import { expandFiles, batches } from './_lib/input.js'
-import highlight from './_lib/highlight.js'
 
 // doc.json() with any extra fields the flags asked for
 const toJson = function (doc, extras, base) {
@@ -70,9 +69,7 @@ const main = async function () {
       doc = doc.if(opts.has).first()
     }
     if (opts.format === 'highlight') {
-      const pattern = opts.match || opts.if || opts.has
-      const color = !Object.hasOwn(process.env, 'NO_COLOR')
-      const str = highlight(doc, pattern, { width: opts.width || 55, color })
+      const str = doc.match(opts.match || opts.if || opts.has).out('highlight')
       if (str) {
         console.log(str)
       }

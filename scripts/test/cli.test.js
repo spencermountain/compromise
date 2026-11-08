@@ -67,21 +67,16 @@ test(here + 'highlight output', t => {
   t.equal(col(plain), 27, 'match starts at the middle column of 55')
   const color = run(['--input=' + text, '--highlight', '--match=lazy'], undefined, {}).raw
   t.ok(color.includes('\x1b[32mlazy'), 'match is green')
-  t.ok(color.includes('\x1b[90mfox '), 'context is grey')
-  const narrow = run(['--input=' + text, '--highlight', '--match=lazy', '--width=20']).raw
-  t.equal(narrow, '    … the lazy dog.', 'trims the left to half, then pads')
-  t.equal(col(narrow), 10, 'still at the middle column')
-  t.equal(run(['--input=' + text, '--highlight', '--match=quick', '--width=20']).raw, '      the quick …', 'pads the left, trims the right')
-  t.equal(run(['--input=' + text, '--highlight', '--match=jumps', '--width=1']).raw, '… jumps …', 'never trims the match')
+  t.ok(color.includes('\x1b[90m… brown fox jumps over the \x1b[0m'), 'context is grey')
+  t.equal(run(['--input=' + text, '--highlight', '--match=quick']).raw, '                       the quick brown fox jumps over …', 'pads the left, trims the right')
   t.equal(run(['--input=' + text, '--highlight', '--if=lazy']).raw, plain, 'if supplies the pattern')
   t.equal(run(['--input=' + text, '--highlight', '--match=zebra']).raw, '', 'no match, no output')
   t.equal(run(['--input=' + text, '--highlight']).code, 1, 'needs a pattern')
-  t.equal(run(['--input=' + text, '--highlight', '--match=lazy', '--width=0']).code, 1, 'width must be positive')
-  const twice = run(['--input=the lazy fox and the lazy dog.', '--highlight', '--match=lazy', '--width=16']).raw.split('\n')
-  t.deepEqual(twice, ['    the lazy …', '  … the lazy …'], 'one line per match, each trimmed around its own')
-  t.equal(col(twice[0]), col(twice[1]), 'both matches share a column')
+  const twice = run(['--input=the lazy fox and the lazy dog.', '--highlight', '--match=lazy']).raw.split('\n')
+  t.deepEqual(twice, ['                       the lazy fox and the lazy dog.', '      the lazy fox and the lazy dog.'], 'one line per match, each aligned on its own')
+  t.equal(twice[1].lastIndexOf('lazy'), 27, 'the second match sits at the same column')
   const grouped = run(['--input=the lazy fox and the lazy dog.', '--highlight', '--match=lazy'], undefined, {}).raw
-  t.ok(grouped.split('\n')[0].includes('\x1b[90mlazy '), 'the other match is grey on each line')
+  t.equal(grouped.split('\n')[0].split('\x1b[32m').length, 2, 'only one match is green on each line')
   t.end()
 })
 

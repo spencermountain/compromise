@@ -59,7 +59,7 @@ export default [
 
   {
     // two months, no year - 'june 5 to june 7'
-    match: '[<from>#Month #Value] (to|through|thru) [<to>#Month #Value] [<year>#Year?]',
+    match: '[<from>#Month #Value] (to|until|upto|through|thru) [<to>#Month #Value] [<year>#Year?]',
     desc: 'june 5 to june 7',
     parse: (m, context) => {
       const res = m.groups()
@@ -91,7 +91,7 @@ export default [
   {
     // two day-of-month dates - '28th of September to 5th of October 2008'
     match:
-      '[<from>#Value] of? [<fromMonth>#Month] (to|through|thru) [<to>#Value] of? [<toMonth>#Month] [<year>#Year?]',
+      '[<from>#Value] of? [<fromMonth>#Month] (to|until|upto|through|thru) [<to>#Value] of? [<toMonth>#Month] [<year>#Year?]',
     desc: '28th of September to 5th of October 2008',
     parse: (m, context) => {
       const { from, fromMonth, to, toMonth, year } = m.groups()
@@ -117,7 +117,7 @@ export default [
   },
   {
     // one month, one year, first form - 'january 5 to 7 1998'
-    match: '[<month>#Month] [<from>#Value] (to|through|thru) [<to>#Value] of? [<year>#Year]',
+    match: '[<month>#Month] [<from>#Value] (to|until|upto|through|thru) [<to>#Value] of? [<year>#Year]',
     desc: 'january 5 to 7 1998',
     parse: (m, context) => {
       const { month, from, to, year } = m.groups()
@@ -139,7 +139,7 @@ export default [
   },
   {
     // one month, one year, second form - '5 to 7 of january 1998'
-    match: '[<from>#Value] (to|through|thru) [<to>#Value of? #Month #Date+?]',
+    match: '[<from>#Value] (to|until|upto|through|thru) [<to>#Value of? #Month #Date+?]',
     desc: '5 to 7 of january 1998',
     parse: (m, context) => {
       let to = m.groups('to')
@@ -159,7 +159,7 @@ export default [
 
   {
     // one month, no year - 'january 5 to 7'
-    match: '[<from>#Month #Value] (to|through|thru) [<to>#Value]',
+    match: '[<from>#Month #Value] (to|until|upto|through|thru) [<to>#Value]',
     desc: 'january 5 to 7',
     parse: (m, context) => {
       let from = m.groups('from')
@@ -190,13 +190,14 @@ export default [
       if (from && to) {
         from.d = from.d.year(year)
         to.d = to.d.year(year)
-        let obj = {
+        // 'aug to june 1999' starts the year before
+        if (from.d.isAfter(to.d)) {
+          from.d = from.d.minus(1, 'year')
+        }
+        return {
           start: from,
           end: to.end(),
         }
-        // reverse the order?
-        obj = reverseMaybe(obj)
-        return obj
       }
       return null
     },

@@ -149,6 +149,10 @@ const matches = [
   { match: '(between|from) #Date', tag: 'Date', reason: 'between x and y' },
   { match: '(to|until|upto) #Date', tag: 'Date', reason: 'between x and y2' },
   { match: 'between #Date+ and #Date+', tag: 'Date', reason: 'between x and y3' },
+  // every monday and wednesday
+  { match: '(every|any|each) #WeekDay+ [(and|or|&)] #WeekDay', group: 0, tag: 'Date', reason: 'every monday and wednesday' },
+  // tuesdays and thursdays
+  { match: '(#WeekDay && #Plural) [(and|or|&)] (#WeekDay && #Plural)', group: 0, tag: 'Date', reason: 'tuesdays and thursdays' },
   { match: '#Month and #Month #Year', tag: 'Date', reason: 'x and y4' },
   //day after next
   { match: 'the? #Date after next one?', tag: 'Date', reason: 'day after next' },
@@ -186,7 +190,7 @@ const matches = [
   { match: '#Date up to #Date', tag: 'Date', reason: 'january up to june' },
 
   // 2 oclock
-  { match: '#Cardinal oclock', tag: 'Time', reason: '2 oclock' },
+  { match: "#Cardinal (oclock|o'clock)", tag: 'Time', reason: '2 oclock' },
   // // 13h30
   // { match: '/^[0-9]{2}h[0-9]{2}$/', tag: 'Time', reason: '13h30' },
   // // 03/02
@@ -260,6 +264,8 @@ const matches = [
   { match: '[(a|an) #Duration from] #Date', group: 0, tag: 'DateShift', reason: 'an hour from now' },
   // a month ago
   { match: '(a|an) #Duration ago', tag: 'DateShift', reason: 'a month ago' },
+  // a week friday
+  { match: '[(a|an) #Duration] #WeekDay', group: 0, tag: 'DateShift', reason: 'a week friday' },
   // in half an hour
   { match: 'in half (a|an) #Duration', tag: 'DateShift', reason: 'in half an hour' },
   // half an hour ago

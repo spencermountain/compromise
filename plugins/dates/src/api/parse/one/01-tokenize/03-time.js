@@ -70,6 +70,10 @@ const parseTime = function (doc, context) {
   let time = doc.match('(at|by|for|before|this|after)? #Time+')
   // get the main part of the time
   time = time.not('^(at|by|for|before|this|after)')
+  // '12 noon' - but not 'june 12 noon'
+  if (time.has('^(noon|midnight)$') && doc.has('12 (noon|midnight)') && !doc.has('(#Month|the) 12')) {
+    time = doc.match('12 (noon|midnight)')
+  }
   time = time.not('sharp')
   time = time.not('on the dot')
 
@@ -80,6 +84,7 @@ const parseTime = function (doc, context) {
   // check for known-times (like 'today')
   let timeStr = time.not('in? the').text('reduced')
   timeStr = timeStr.replace(/^@/, '')//@4pm
+  timeStr = timeStr.replace(/^12 (noon|midnight)$/, '$1')
   if (Object.hasOwn(hardCoded, timeStr)) {
     return { result: hardCoded[timeStr], m: time }
   }
@@ -87,9 +92,9 @@ const parseTime = function (doc, context) {
     return { result: null, m: time, invalid: true }
   }
   // '5 oclock'
-  let m = time.match('^#Cardinal oclock (am|pm)?')
+  let m = time.match("^#Cardinal (oclock|o'clock) (am|pm)?")
   if (m.found) {
-    s = s.hour(m.text('reduced'))
+    s = s.hour(m.match('#Cardinal').text('reduced'))
     s = s.startOf('hour')
     if (s.isValid() && !s.isEqual(now)) {
       const ampm = m.match('(am|pm)')

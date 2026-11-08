@@ -58,14 +58,15 @@ const parseIntervals = function (doc, context) {
     return { repeat: repeat }
   }
 
-  // 'every friday'
-  m = doc.match('[<logic>(every|any|each|a)] [<skip>other?] [<day>#WeekDay+] (starting|beginning|commencing)?')
+  // 'every friday', 'every monday and wednesday'
+  m = doc.match('[<logic>(every|any|each|a)] [<skip>other?] [<day>(#WeekDay|and|or|&)+] (starting|beginning|commencing)?')
   if (m.found) {
     const repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
-    let str = m.groups('day').text('reduced')
-    str = dayNames[str] //normalize it
-    if (str) {
-      repeat.filter.weekDays[str] = true
+    const days = m.groups('day').match('#WeekDay').map(d => dayNames[d.text('reduced')]).filter(Boolean)
+    if (days.length) {
+      days.forEach(str => {
+        repeat.filter.weekDays[str] = true
+      })
       repeat.choose = parseLogic(m)
       doc = doc.remove(m)
       return { repeat: repeat }
@@ -117,17 +118,17 @@ const parseIntervals = function (doc, context) {
     return { repeat: repeat }
   }
 
-  // mondays
+  // mondays, 'tuesdays and thursdays'
   m = doc.match(
-    '[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays)] (at|near|after)? [<time>#Time+?]'
+    '[<day>(mondays|tuesdays|wednesdays|thursdays|fridays|saturdays|sundays|and|or|&)+] (at|near|after)? [<time>#Time+?]'
   )
   if (m.found) {
     const repeat = { interval: { day: 1 }, filter: { weekDays: {} } }
-    let str = m.groups('day').text('reduced')
-    str = str.replace(/s$/, '')
-    str = dayNames[str] //normalize it
-    if (str) {
-      repeat.filter.weekDays[str] = true
+    const days = m.groups('day').match('#Plural').map(d => dayNames[d.text('reduced').replace(/s$/, '')]).filter(Boolean)
+    if (days.length) {
+      days.forEach(str => {
+        repeat.filter.weekDays[str] = true
+      })
       repeat.choose = 'OR'
       const time = m.groups('time')
       if (time.found) {

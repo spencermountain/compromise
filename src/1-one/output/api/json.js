@@ -24,9 +24,12 @@ const fns = {
 
   offset: terms => {
     const len = fns.text(terms).length
+    // the text keeps leading punctuation but trims whitespace, so start where the text starts
+    const raw = terms[0].pre + terms[0].text
+    const lead = terms[0].pre.length - (raw.length - raw.trimStart().length)
     return {
       index: terms[0].offset.index,
-      start: terms[0].offset.start,
+      start: terms[0].offset.start - lead,
       length: len,
     }
   },

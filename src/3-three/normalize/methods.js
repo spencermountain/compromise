@@ -1,13 +1,9 @@
-const termLoop = function (view, cb) {
-  view.docs.forEach(terms => {
-    terms.forEach(cb)
-  })
-}
+import eachTerm from '../../1-one/tokenize/compute/_lib.js'
 
 const methods = {
   // remove titlecasing, uppercase
   'case': (doc) => {
-    termLoop(doc, (term) => {
+    eachTerm(doc.docs, (term) => {
       term.text = term.text.toLowerCase()
     })
   },
@@ -15,11 +11,11 @@ const methods = {
   'unicode': (doc) => {
     const world = doc.world
     const killUnicode = world.methods.one.killUnicode
-    termLoop(doc, (term) => term.text = killUnicode(term.text, world))
+    eachTerm(doc.docs, (term) => term.text = killUnicode(term.text, world))
   },
   // remove hyphens, newlines, and force one space between words
   'whitespace': (doc) => {
-    termLoop(doc, (term) => {
+    eachTerm(doc.docs, (term) => {
       // one space between words
       term.post = term.post.replace(/\s+/g, ' ')
       term.post = term.post.replace(/\s([.,?!:;])/g, '$1')//no whitespace before a period, etc
@@ -29,7 +25,7 @@ const methods = {
   },
   // remove commas, semicolons - but keep sentence-ending punctuation
   'punctuation': (doc) => {
-    termLoop(doc, (term) => {
+    eachTerm(doc.docs, (term) => {
       term.pre = term.pre.replace(/[,،]/g, '')
       // turn dashes to spaces
       term.post = term.post.replace(/[–—-]/g, ' ')

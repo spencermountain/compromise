@@ -1,8 +1,9 @@
-// visit every term in a nested document
+// visit every term of a nested document: fn(term, terms, t, n)
 const eachTerm = (docs, fn) => {
-  for (let i = 0; i < docs.length; i += 1) {
-    for (let t = 0; t < docs[i].length; t += 1) {
-      fn(docs[i][t], i, t)
+  for (let n = 0; n < docs.length; n += 1) {
+    const terms = docs[n]
+    for (let t = 0; t < terms.length; t += 1) {
+      fn(terms[t], terms, t, n)
     }
   }
 }

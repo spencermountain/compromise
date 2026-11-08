@@ -11,7 +11,7 @@ const addChunk = function (term, tag) {
 // eslint-disable-next-line max-params
 const tagTerm = function (term, tag, tagSet, isSafe, validated, reason) {
   // does it already have this tag?
-  if (term.tags.has(tag) === true) {
+  if (term.tags.has(tag)) {
     return null
   }
   // allow this shorthand in multiple-tag strings
@@ -79,7 +79,7 @@ const setTag = function (terms, tag, world = {}, isSafe, reason, validated) {
   if (!tag) {
     return
   }
-  if (Array.isArray(tag) === true) {
+  if (Array.isArray(tag)) {
     tag.forEach(tg => setTag(terms, tg, world, isSafe, reason))
     return
   }

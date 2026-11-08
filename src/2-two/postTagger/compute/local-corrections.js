@@ -23,8 +23,7 @@ const localCorrections = sentences => {
       terms[last - 3]?.tags.has(Sing)) {
       add([terms[last - 1], terms[last]], Pres, 'relative-main-verb')
     }
-    for (let i = 0; i < terms.length; i += 1) {
-      const term = terms[i]
+    terms.forEach((term, i) => {
       const next = terms[i + 1]
       const prev = terms[i - 1]
       // the books she read: noun readings can settle in the main sweep.
@@ -76,7 +75,7 @@ const localCorrections = sentences => {
         add([term], Pres, 'coordinated-present')
       }
       if (!next) {
-        continue
+        return
       }
       if (spatial.has(term.normal) && !term.tags.has(Vb) && hasAny(next, Det, Poss, Pron, Prop)) {
         add([term], Prep, 'space-obj')
@@ -113,7 +112,7 @@ const localCorrections = sentences => {
       if (term.tags.has(TxtNum) && term.tags.has(Date) && !term.tags.has(Year) && next.tags.has(TxtNum)) {
         add([term, next], Date, 'textvalue-date')
       }
-    }
+    })
   })
   return pending
 }

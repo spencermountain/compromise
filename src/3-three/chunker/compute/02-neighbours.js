@@ -1,6 +1,6 @@
 import { Adj, Cop, Det, NN, Adv, Vb, Neg } from '../../../2-two/preTagger/tagSet/_lib.js'
 import { hasAny } from '../../../2-two/_lib.js'
-import { eachTerm } from './_lib.js'
+import eachTerm from '../../../1-one/tokenize/compute/_lib.js'
 
 // [neighbour offset, its tag, our chunk] - the first match wins
 // 'is cool' vs 'the cool dog'

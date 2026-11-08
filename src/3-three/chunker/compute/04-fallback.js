@@ -1,6 +1,7 @@
 import { Conj, Prep, Adv, Vb, NN } from '../../../2-two/preTagger/tagSet/_lib.js'
 import { hasAny } from '../../../2-two/_lib.js'
-import { eachTerm, Pivot } from './_lib.js'
+import Pivot from './_lib.js'
+import eachTerm from '../../../1-one/tokenize/compute/_lib.js'
 
 // ensure everything has a chunk
 const fallback = function (document) {

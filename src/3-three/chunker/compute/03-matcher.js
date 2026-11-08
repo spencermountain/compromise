@@ -1,6 +1,6 @@
 import expandTags from '../../../2-two/postTagger/model/_lib.js'
 import { Adj, Vb, NN } from '../../../2-two/preTagger/tagSet/_lib.js'
-import { Pivot } from './_lib.js'
+import Pivot from './_lib.js'
 
 const rules = [
   // === Conjunction ===

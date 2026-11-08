@@ -95,7 +95,7 @@ const parseToken = function (w, opts, aliases) {
       w = stripBoth(w)
       obj.fuzzy = true
       obj.min = opts.fuzzy ?? 0.85
-      if (/\(/.test(w) === false) {
+      if (!/\(/.test(w)) {
         obj.word = w
         return obj
       }
@@ -112,7 +112,7 @@ const parseToken = function (w, opts, aliases) {
     }
 
     // support foo{1,9}
-    if (hasMinMax.test(w) === true) {
+    if (hasMinMax.test(w)) {
       w = w.replace(hasMinMax, (_a, b, c) => {
         if (c === undefined) {
           // '{3}'	Exactly three times

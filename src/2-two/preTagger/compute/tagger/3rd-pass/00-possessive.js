@@ -1,4 +1,4 @@
-import { never, afterVerb, joiners, beforePossessive } from '../../../../contraction-two/compute/_words.js'
+import { never, afterVerb, joiners, beforePossessive, isDecade } from '../../../../contraction-two/compute/_words.js'
 import { Poss, Sup, Val, Pron, QW, First, Prop, Det, Year } from '../../../tagSet/_lib.js'
 
 const apostropheS = /'s$/
@@ -15,6 +15,10 @@ const possessive = function (terms, i, world) {
   const term = terms[i]
   // who's, or an apostrophe we have already split
   if (!apostropheS.test(term.normal) || term.implicit || term.tags.has(Poss) || term.tags.has(QW)) {
+    return
+  }
+  // the 1990's
+  if (isDecade(term)) {
     return
   }
   if (never.has(term.normal.slice(0, -2))) {

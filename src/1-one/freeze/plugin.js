@@ -1,5 +1,6 @@
 import compute from './compute.js'
 import debug from './debug.js'
+import eachTerm from '../tokenize/compute/_lib.js'
 
 export default {
   // add .compute('freeze')
@@ -17,10 +18,8 @@ export default {
   api: function (View) {
     // set all terms to reject any desctructive tags
     View.prototype.freeze = function () {
-      this.docs.forEach(ts => {
-        ts.forEach(term => {
-          term.frozen = true
-        })
+      eachTerm(this.docs, term => {
+        term.frozen = true
       })
       return this
     }

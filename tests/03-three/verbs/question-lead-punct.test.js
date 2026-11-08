@@ -83,7 +83,7 @@ test('returned selection', function (t) {
 test('not a question', function (t) {
   t.equal(convert('-He runs fast.', 'verbs', 'toPastTense'), '-He ran fast.', here + 'statement')
   t.equal(convert('"He runs fast."', 'verbs', 'toPastTense'), '"He ran fast."', here + 'quoted statement')
-  t.equal(convert("'Tis fine.", 'verbs', 'toPastTense'), "'It was fine.", here + 'leading apostrophe')
+  t.equal(convert("'Tis fine.", 'verbs', 'toPastTense'), 'It was fine.', here + 'leading apostrophe')
   t.end()
 })
 

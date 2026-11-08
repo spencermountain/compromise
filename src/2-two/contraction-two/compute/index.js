@@ -7,6 +7,7 @@ import wannaNoun from './wanna.js'
 import thereAre from './there-are.js'
 import contractionDebug from '../../../API/debug/contractions-debug.js'
 import { hasApostrophe } from './_lib.js'
+import { isDecade } from './_words.js'
 import { setTag } from '../../preTagger/compute/tagger/_lib.js'
 import { Year, Poss } from '../../preTagger/tagSet/_lib.js'
 
@@ -53,6 +54,10 @@ const byEnd = {
   t: apostropheT,
   // bob's
   s: (terms, i, world) => {
+    // [the 1990's] is a decade - neither an owner, nor 'is'
+    if (isDecade(terms[i])) {
+      return null
+    }
     // [bob's house] vs [bob's cool]
     if (isPossessive(terms, i)) {
       contractionDebug(terms[i])

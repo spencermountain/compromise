@@ -55,12 +55,12 @@ const api = function (View) {
     }
     isSingular(n) {
       return this.getNth(n).filter(vb => {
-        return getSubject(vb).plural !== true
+        return !getSubject(vb).plural
       })
     }
     isPlural(n) {
       return this.getNth(n).filter(vb => {
-        return getSubject(vb).plural === true
+        return getSubject(vb).plural
       })
     }
     isImperative(n) {

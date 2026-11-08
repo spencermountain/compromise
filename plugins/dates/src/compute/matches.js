@@ -80,6 +80,13 @@ const matches = [
   //early june, late next month
   { match: '[(early|late)] #Month', group: 0, tag: 'Date', reason: 'early-june' },
   { match: '[(early|late)] (next|this|last) month', group: 0, tag: 'Date', reason: 'early-next-month' },
+  //the next few days
+  { match: '(next|last|past|coming|following|previous) (few|couple) of? [(days|weeks|months|years|hours|minutes|seconds)]', group: 0, tag: 'Duration', reason: 'few-days' },
+  { match: '(next|last|past|coming|following|previous) (few|couple) of? #Duration', tag: 'Date', reason: 'next-few-days' },
+  //early to mid june
+  { match: '(early|mid|late) (to|through|until) (early|mid|late) #Date', tag: 'Date', reason: 'early-to-mid' },
+  //towards the end of june
+  { match: '[(towards|toward)] the (end|start|beginning|middle) of #Date', group: 0, tag: 'Date', reason: 'towards-the-end' },
   //early in the evening - but not 'early june'
   { match: '(early|late) (at|in)? the? #Date', notIf: '(#Month|month)', tag: 'Time', reason: 'early-evening' },
   //tomorrow before 3

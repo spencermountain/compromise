@@ -31,7 +31,7 @@ const checkLexicon = function (terms, i, world) {
     }
   }
   // prefixing for verbs/adjectives
-  if (prefix.test(word) === true) {
+  if (prefix.test(word)) {
     const stem = word.replace(prefix, '')
     if (Object.hasOwn(lexicon, stem) && stem.length > 3) {
       // only allow prefixes for verbs/adjectives

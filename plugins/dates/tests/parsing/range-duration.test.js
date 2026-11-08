@@ -218,7 +218,7 @@ const tests = [
       ['end of february', 0],
       ['end of march', 0],
       ['beginning of march', 0],
-      ['mid february', 0],
+      ['mid february', 11],
       ['february and march', 0],
       ['march and april', 0],
       ['monday and tuesday', 1],

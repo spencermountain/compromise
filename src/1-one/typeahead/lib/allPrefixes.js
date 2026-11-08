@@ -16,11 +16,11 @@ const getPrefixes = function (arr, opts, world) {
         continue
       }
       // does it already exist?
-      if (Object.hasOwn(existing, prefix) === true) {
+      if (Object.hasOwn(existing, prefix)) {
         collisions.push(prefix)
         continue
       }
-      if (Object.hasOwn(index, prefix) === true) {
+      if (Object.hasOwn(index, prefix)) {
         collisions.push(prefix)
         continue
       }

@@ -18,9 +18,9 @@ const clean = function (str) {
   //en-dash
   str = str.replaceAll('–', '-')
   //strip leading & trailing grammatical punctuation
-  if (/^[:;]/.test(str) === false) {
+  if (!/^[:;]/.test(str)) {
     str = trimPunctuation(str, /[",.!:;?)]/)
-    str = str.replace(/^['"(]+/g, '')
+    str = str.replace(/^['’"(]+/g, '')
   }
   // remove zero-width characters
   str = str.replace(/[\u200B-\u200D\uFEFF]/g, '')

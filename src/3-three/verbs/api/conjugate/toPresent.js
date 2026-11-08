@@ -11,7 +11,7 @@ const simple = (vb, parsed) => {
   let str = infinitive(root)
   // 'i walk' vs 'he walks'
   const plural = isPlural(vb, parsed)
-  if (plural === false) {
+  if (!plural) {
     str = inflect(root, Pres)
   }
   // handle copula

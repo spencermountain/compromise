@@ -1,13 +1,13 @@
 import { hasHyphen, splitHyphens } from './01-hyphens.js'
 import combineRanges from './03-ranges.js'
 import combineSlashes from './02-slashes.js'
-import { toList, toHash } from '../../model/_lib.js'
+import { toList } from '../../model/_lib.js'
 
 const wordlike = /\S/
 const isBoundary = /^[!?.]+$/
 const naiiveSplit = /(\S+)/
 
-const notWord = toHash(toList(`
+const notWord = new Set(toList(`
 .
 ?
 !
@@ -46,7 +46,7 @@ const splitWords = function (str, model) {
   const words = str.split(naiiveSplit)
   for (let i = 0; i < words.length; i++) {
     //split 'one-two'
-    if (hasHyphen(words[i], model) === true) {
+    if (hasHyphen(words[i], model)) {
       arr = arr.concat(splitHyphens(words[i]))
       continue
     }
@@ -57,7 +57,7 @@ const splitWords = function (str, model) {
   for (let i = 0; i < arr.length; i++) {
     const word = arr[i]
     //if it's more than a whitespace
-    if (wordlike.test(word) === true && Object.hasOwn(notWord, word) === false && isBoundary.test(word) === false) {
+    if (wordlike.test(word) && !notWord.has(word) && !isBoundary.test(word)) {
       //put whitespace on end of previous term, if possible
       if (result.length > 0) {
         result[result.length - 1] += carry

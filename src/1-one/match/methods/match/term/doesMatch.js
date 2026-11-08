@@ -50,7 +50,7 @@ const doesMatch = function (term, reg, index, length) {
   }
   //support #Tag
   if (reg.tag !== undefined) {
-    return term.tags.has(reg.tag) === true
+    return term.tags.has(reg.tag)
   }
   //support @method
   if (reg.method !== undefined) {

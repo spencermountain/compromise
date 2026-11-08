@@ -1,3 +1,4 @@
+import eachTerm from '../../../1-one/tokenize/compute/_lib.js'
 import { Past, Ger, Inf, Pres } from '../tagSet/_lib.js'
 
 const toInf = (str, world, tense) => world.methods.two.transform.verb.toInfinitive(str, world.model, tense)
@@ -26,18 +27,13 @@ const toRoot = {
 const getRoot = function (view) {
   const world = view.world
   const keys = Object.keys(toRoot)
-  view.docs.forEach(terms => {
-    for (let i = 0; i < terms.length; i += 1) {
-      const term = terms[i]
-      for (let k = 0; k < keys.length; k += 1) {
-        if (term.tags.has(keys[k])) {
-          const str = term.machine || term.normal || term.text
-          const root = toRoot[keys[k]](str, world, term)
-          if (term.normal !== root) {
-            term.root = root
-          }
-          break
-        }
+  eachTerm(view.docs, term => {
+    const key = keys.find(k => term.tags.has(k))
+    if (key) {
+      const str = term.machine || term.normal || term.text
+      const root = toRoot[key](str, world, term)
+      if (term.normal !== root) {
+        term.root = root
       }
     }
   })

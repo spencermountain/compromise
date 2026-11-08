@@ -14,7 +14,7 @@ const matchCase = function (original, str) {
 
 const nounToSingular = function (m, parsed) {
   // already singular?
-  if (parsed.isPlural === false) {
+  if (!parsed.isPlural) {
     return m
   }
   const { methods, model } = m.world

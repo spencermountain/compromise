@@ -2,7 +2,7 @@ import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 import fillTags from '../3rd-pass/_fillTags.js'
 import { titleCase } from '../_lib.js'
-import { hasAny } from '../../../../_lib.js'
+import { hasAny, toSet } from '../../../../_lib.js'
 import { Date, WeekDay, Unit, Expr, Comp, Ger, Det, NN, Prop, RomanNumeral, Month } from '../../../tagSet/_lib.js'
 
 const hasNumber = /[0-9]/
@@ -14,13 +14,7 @@ const hasIVX = /[IVX]/ // does it ~look like~ a roman numeral?
 const romanNumeral = /^[IVXLCDM]{2,}$/
 // https://stackoverflow.com/a/267405/168877
 const romanNumValid = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/
-const nope = {
-  li: true,
-  dc: true,
-  md: true,
-  dm: true,
-  ml: true,
-}
+const nope = toSet('li dc md dm ml')
 
 // if it's a unknown titlecase word, it's a propernoun
 const checkCase = function (terms, i, model) {
@@ -58,7 +52,7 @@ const checkCase = function (terms, i, model) {
     return true
   }
   //roman numberals - XVII
-  if (str.length >= 2 && romanNumeral.test(str) && hasIVX.test(str) && romanNumValid.test(str) && !nope[term.normal]) {
+  if (str.length >= 2 && romanNumeral.test(str) && hasIVX.test(str) && romanNumValid.test(str) && !nope.has(term.normal)) {
     fastTag(term, RomanNumeral, '2-xvii')
     return true
   }

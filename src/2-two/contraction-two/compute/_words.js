@@ -11,4 +11,8 @@ const joiners = toSet('and or nor but & of per')
 // an object can't be 'is' - "in sunday's", "of Enron's", "at Moe's"
 const beforePossessive = toSet('in by for of at with to on from about into')
 
-export { never, afterVerb, joiners, beforePossessive }
+// a decade, like the 1990's or the 90's - 2nd-pass/05-year.js has already kept 2020's as a year
+const decade = /^[0-9]{1,3}0['’]s$/
+const isDecade = term => !term.tags.has('Year') && decade.test(term.normal)
+
+export { never, afterVerb, joiners, beforePossessive, isDecade }

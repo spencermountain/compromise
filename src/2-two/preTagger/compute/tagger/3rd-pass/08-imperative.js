@@ -1,14 +1,8 @@
 import { setTag } from '../_lib.js'
 import { hasAny, toSet } from '../../../../_lib.js'
 import { Adj, Adv, Inf, Phrasal, NN, Det, Vb, Hyphenated, Imp, NounVerb } from '../../../tagSet/_lib.js'
-const beside = {
-  there: true, //go there
-  this: true, //try this
-  it: true, //do it
-  him: true,
-  her: true,
-  us: true, //tell us
-}
+// go there, try this, do it, tell us
+const beside = toSet('there this it him her us')
 
 // go [fast]
 const howWords = toSet('hard high fast slow')
@@ -39,7 +33,7 @@ const imperative = function (terms, world) {
   const isRight = t.switch === NounVerb || t.tags.has(Inf)
   if (isRight && terms.length >= 2) {
     // ensure rest of sentence is ok
-    if (terms.length < 4 && !beside[terms[1].normal]) {
+    if (terms.length < 4 && !beside.has(terms[1].normal)) {
       return
     }
     // avoid multi-noun words like '[board] room'

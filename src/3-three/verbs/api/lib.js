@@ -43,7 +43,7 @@ const haveHas = function (vb, parsed) {
     return 'have'
   }
   // the dog has, spencer has
-  if (plural === false || subject.has('(he|she|#Pers)')) {
+  if (!plural || subject.has('(he|she|#Pers)')) {
     return 'has'
   }
   return 'have'

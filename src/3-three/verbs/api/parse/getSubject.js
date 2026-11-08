@@ -58,7 +58,7 @@ const lastNoun = function (vb) {
   if (det.found) {
     return det
   }
-  if (nouns.found === false) {
+  if (!nouns.found) {
     det = before.match('^(that|this|those)')
     if (det.found) {
       return det

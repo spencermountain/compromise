@@ -1,5 +1,6 @@
 /* eslint no-console: 0 */
 import { resolveTag } from '../methods/_lib.js'
+import eachTerm from '../../tokenize/compute/_lib.js'
 
 // shared guards and logging - returns the terms to change, or null
 const prep = function (view, input, reason, sign) {
@@ -52,12 +53,10 @@ const fns = {
     tag = resolveTag(tag, tagAliases)
     const canBe = this.methods.one.canBe
     const nope = []
-    this.document.forEach((terms, n) => {
-      terms.forEach((term, i) => {
-        if (!canBe(term, tag, tagSet)) {
-          nope.push([n, i, i + 1])
-        }
-      })
+    eachTerm(this.document, (term, terms, i, n) => {
+      if (!canBe(term, tag, tagSet)) {
+        nope.push([n, i, i + 1])
+      }
     })
     const noDoc = this.update(nope)
     return this.difference(noDoc)

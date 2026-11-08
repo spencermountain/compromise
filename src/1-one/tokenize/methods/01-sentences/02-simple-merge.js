@@ -11,7 +11,7 @@ const notEmpty = function (splits) {
       continue
     }
     //this is meaningful whitespace
-    if (hasSomething.test(s) === false || hasLetter.test(s) === false) {
+    if (!hasSomething.test(s) || !hasLetter.test(s)) {
       //add it to the last one
       if (chunks[chunks.length - 1]) {
         chunks[chunks.length - 1] += s

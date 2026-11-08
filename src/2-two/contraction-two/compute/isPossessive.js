@@ -46,6 +46,10 @@ const isPossessive = (terms, i) => {
   const nextTerm = terms[i + 1]
   // a misspelled 'its' - licked it's paw, on it's way, it's fur is soft
   if (term.normal === `it's`) {
+    // on it's own
+    if (nextTerm && nextTerm.normal === 'own') {
+      return true
+    }
     // the thing after a pronoun is tagged as a verb - it's [paw]
     const owned = Boolean(nextTerm) && (isOneThing(nextTerm) || nextTerm.tags.has(Inf)) && !hasAny(nextTerm, Ger, Cop)
     const two = terms[i + 2]

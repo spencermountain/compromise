@@ -1,6 +1,6 @@
 import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
-import { hasAny } from '../../../../_lib.js'
+import { hasAny, toSet } from '../../../../_lib.js'
 import { RomanNumeral, Acronym, NN, Place, Plur, Org } from '../../../tagSet/_lib.js'
 
 const oneLetterAcronym = /^[A-Z]('s|,)?$/
@@ -10,20 +10,10 @@ const periodAcronym = /^([A-Z]\.)+[A-Z]?,?$/
 const noPeriodAcronym = /^[A-Z]{2,}('s|,)?$/
 const lowerCaseAcronym = /^([a-z]\.)+[a-z]\.?$/
 
-const oneLetterWord = {
-  I: true,
-  A: true,
-}
+const oneLetterWord = toSet('I A')
 
 // only assume these are places if they are uppercased
-const places = {
-  la: true,
-  ny: true,
-  us: true,
-  dc: true,
-  gb: true,
-  uk: true,
-}
+const places = toSet('la ny us dc gb uk')
 
 // just uppercase acronyms, no periods - 'UNOCHA'
 const isNoPeriodAcronym = function (term, model) {
@@ -36,7 +26,7 @@ const isNoPeriodAcronym = function (term, model) {
     } else {
       return false
     }
-  } else if (Object.hasOwn(places, term.normal)) {
+  } else if (places.has(term.normal)) {
     // NY, US, UK, etc.
     return true
   }
@@ -45,7 +35,7 @@ const isNoPeriodAcronym = function (term, model) {
     return false
   }
   // 'I' is not a acronym
-  if (Object.hasOwn(oneLetterWord, str)) {
+  if (oneLetterWord.has(str)) {
     return false
   }
   // known-words, like 'PIZZA' is not an acronym.
@@ -87,7 +77,7 @@ const isAcronym = function (terms, i, model) {
   if (isNoPeriodAcronym(term, model)) {
     toAcronym(term, model, '3-no-period-acronym')
     // ny, la
-    if (places[term.normal] === true) {
+    if (places.has(term.normal)) {
       fastTag(term, Place, '3-place-acronym')
     }
     // UFOs
@@ -98,7 +88,7 @@ const isAcronym = function (terms, i, model) {
     return true
   }
   // one-letter acronyms
-  if (!Object.hasOwn(oneLetterWord, term.text) && oneLetterAcronym.test(term.text)) {
+  if (!oneLetterWord.has(term.text) && oneLetterAcronym.test(term.text)) {
     toAcronym(term, model, '3-one-letter-acronym')
     return true
   }

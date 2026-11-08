@@ -1,3 +1,4 @@
+import eachTerm from '../../tokenize/compute/_lib.js'
 // set or append the pre/post of the first/last term of each match
 const setSide = function (view, side, str, concat) {
   view.docs.forEach(terms => {
@@ -55,16 +56,14 @@ const methods = {
 
   /** connect words with hyphen, and remove whitespace */
   hyphenate: function () {
-    this.docs.forEach(terms => {
-      //remove whitespace
-      terms.forEach((t, i) => {
-        if (i !== 0) {
-          t.pre = ''
-        }
-        if (terms[i + 1]) {
-          t.post = '-'
-        }
-      })
+    //remove whitespace
+    eachTerm(this.docs, (t, terms, i) => {
+      if (i !== 0) {
+        t.pre = ''
+      }
+      if (terms[i + 1]) {
+        t.post = '-'
+      }
     })
     return this
   },
@@ -72,13 +71,11 @@ const methods = {
   /** remove hyphens between words, and set whitespace */
   dehyphenate: function () {
     const hasHyphen = /[-–—]/
-    this.docs.forEach(terms => {
-      //remove whitespace
-      terms.forEach(t => {
-        if (hasHyphen.test(t.post)) {
-          t.post = ' '
-        }
-      })
+    //remove whitespace
+    eachTerm(this.docs, t => {
+      if (hasHyphen.test(t.post)) {
+        t.post = ' '
+      }
     })
     return this
   },

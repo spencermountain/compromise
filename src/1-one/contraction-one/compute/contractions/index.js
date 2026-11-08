@@ -2,6 +2,7 @@ import contractionDebug from '../../../../API/debug/contractions-debug.js'
 import splice from './_splice.js'
 import apostropheD from './apostrophe-d.js'
 import apostropheT from './apostrophe-t.js'
+import doubled from './double.js'
 import french from './french.js'
 import numberRange from './number-range.js'
 import numberUnit from './number-unit.js'
@@ -96,13 +97,13 @@ const contractions = view => {
       }
       let before = null
       let after = null
-      if (byApostrophe.test(terms[i].normal) === true) {
+      if (byApostrophe.test(terms[i].normal)) {
         const res = terms[i].normal.split(byApostrophe)
         before = res[0]
         after = res[1]
       }
-      // any known-ones, like 'dunno'?
-      let words = knownOnes(list, terms[i], before, after)
+      // wouldn't've, then any known-ones, like 'dunno'
+      let words = doubled(terms, i) || knownOnes(list, terms[i], before, after)
       // ['foo', 's']
       if (!words && Object.hasOwn(byEnd, after)) {
         words = byEnd[after](terms, i, world)

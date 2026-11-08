@@ -1,8 +1,101 @@
 import parseDate from '../one/index.js'
 import reverseMaybe from './_reverse.js'
-import { Month, Year, CalendarDate } from '../one/units/index.js'
+import { Month, Year, CalendarDate, Moment } from '../one/units/index.js'
+
+const clockUnits = /^(hour|minute|second|hr|min|sec)s?$/
+
+// 'the next 3 days' - a window of whole units, starting tomorrow or ending yesterday
+// 'within 2 weeks' includes today
+const rollingWindow = function (m, context, dir, fromToday) {
+  let num = m.match('#Value').numbers().get()[0]
+  // 'the next few days'
+  if (!num && m.has('few')) {
+    num = 3
+  }
+  if (!num && m.has('couple')) {
+    num = 2
+  }
+  const unit = m.match('#Duration').text('reduced')
+  if (!num || !unit) {
+    return null
+  }
+  // 'the next 3 hours' is measured from right now
+  if (clockUnits.test(unit)) {
+    const now = new Moment(context.today, null, context)
+    const then = now.clone().applyShift({ [unit]: num * dir })
+    return dir > 0 ? { start: now, end: then, unit: 'time' } : { start: then, end: now, unit: 'time' }
+  }
+  const today = new CalendarDate(context.today, null, context)
+  const edge = today.clone().applyShift({ [unit]: num * dir })
+  if (dir > 0) {
+    const start = fromToday ? today : today.clone().applyShift({ day: 1 })
+    return { start, end: edge.end() }
+  }
+  const end = fromToday ? today.clone() : today.clone().applyShift({ day: -1 })
+  return { start: edge, end: end.end() }
+}
+
+// fuzzy positions in a month - early is the 1st-14th, mid the 10th-20th, late the 21st onward
+const fuzzyDays = {
+  early: [1, 14],
+  mid: [10, 20],
+  late: [21, null],
+}
+const whichPart = function (m) {
+  if (m.has('(early|start|beginning)')) {
+    return 'early'
+  }
+  if (m.has('(mid|middle|midpoint)')) {
+    return 'mid'
+  }
+  if (m.has('(late|end|ending)')) {
+    return 'late'
+  }
+  return null
+}
+// the month a fuzzy phrase refers to, as a parsed unit
+const monthOf = function (m, context) {
+  let doc = m.match('(next|this|last|the)? #Month #Year?')
+  if (!doc.found) {
+    doc = m.match('(next|this|last) month')
+  }
+  const unit = doc.found ? parseDate(doc, context) : null
+  if (!unit || unit.unit !== 'month') {
+    return null
+  }
+  return unit
+}
+const fuzzyRange = function (unit, part) {
+  const [from, to] = fuzzyDays[part]
+  const start = unit.start()
+  const end = unit.clone().end()
+  start.d = start.d.date(from)
+  if (to) {
+    end.d = end.d.date(to).endOf('day')
+  }
+  return { start, end }
+}
 
 export default [
+
+  {
+    // the next 3 days
+    match: '^(in|over|for|during)? the? (next|coming|following) (#Value|few|couple) of? #Duration$',
+    desc: 'next 3 days',
+    parse: (m, context) => rollingWindow(m, context, 1, false),
+  },
+  {
+    // the last 3 days
+    match: '^(in|over|for|during)? the? (last|past|previous) (#Value|few|couple) of? #Duration$',
+    desc: 'last 3 days',
+    parse: (m, context) => rollingWindow(m, context, -1, false),
+  },
+  {
+    // within 2 weeks
+    match: '^within the? next? #Value #Duration$',
+    desc: 'within 2 weeks',
+    parse: (m, context) => rollingWindow(m, context, 1, true),
+  },
 
 
   {
@@ -282,29 +375,43 @@ export default [
   },
 
   {
-    // early june, late next month - early is the 1st-14th, late is the 21st onward
-    match: '^(in|during)? (early|late) .+$',
+    // early to mid june, late june to early july 2027
+    match: '^(in|during)? (early|mid|late) #Month? (to|through|until) (early|mid|late) (next|this|last|the)? #Month #Year?$',
+    desc: 'early to mid june',
+    parse: (m, context) => {
+      const parts = m.match('(early|mid|late)')
+      const fromDoc = m.match('[.+] (to|through|until)', 0)
+      const toUnit = monthOf(m.match('(to|through|until) [.+]', 0), context)
+      if (!toUnit) {
+        return null
+      }
+      // 'late june to early july 2027' - the first month shares the year
+      let fromUnit = toUnit.clone()
+      if (fromDoc.has('#Month')) {
+        fromUnit = monthOf(fromDoc, context)
+        if (!fromUnit) {
+          return null
+        }
+        fromUnit.d = fromUnit.d.year(toUnit.d.year())
+      }
+      const { start } = fuzzyRange(fromUnit, parts.eq(0).text('reduced'))
+      const { end } = fuzzyRange(toUnit, parts.eq(1).text('reduced'))
+      return { start, end }
+    },
+  },
+
+  {
+    // early june, mid next month, towards the end of march
+    match: '^(in|during)? (early|mid|late|middle|midpoint|towards|toward) .+$',
     desc: 'early june',
     parse: (m, context) => {
-      // sub-matches, not groups - a leading 'the' may have shifted group pointers
-      const part = m.match('(early|late)').text('reduced')
-      const rest = m.not('^(in|during)? (early|late)')
+      const part = whichPart(m)
+      const unit = monthOf(m, context)
       // only months, for now - 'early evening' is a time
-      if (!rest.has('(#Month|month)')) {
+      if (!part || !unit) {
         return null
       }
-      const unit = parseDate(rest, context)
-      if (!unit || unit.unit !== 'month') {
-        return null
-      }
-      const start = unit.start()
-      const end = unit.clone().end()
-      if (part === 'early') {
-        end.d = start.d.date(14).endOf('day')
-      } else {
-        start.d = start.d.date(21)
-      }
-      return { start, end }
+      return fuzzyRange(unit, part)
     },
   },
 

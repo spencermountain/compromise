@@ -28,7 +28,7 @@ const scanWords = function (terms, trie, opts) {
 
 const cacheMiss = function (words, cache) {
   for (let i = 0; i < words.length; i += 1) {
-    if (cache.has(words[i]) === true) {
+    if (cache.has(words[i])) {
       return false
     }
   }

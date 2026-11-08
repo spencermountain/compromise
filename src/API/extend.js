@@ -17,6 +17,9 @@ function mergeDeep(model, plugin) {
           model[key] = {}
         }
         mergeDeep(model[key], plugin[key]) //recursion
+      } else if (Array.isArray(plugin[key]) && Array.isArray(model[key])) {
+        // a list, like model.one.contractions, is added to - not replaced
+        model[key] = model[key].concat(plugin[key])
       } else {
         model[key] = plugin[key]
       }

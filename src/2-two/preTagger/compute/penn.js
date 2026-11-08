@@ -1,3 +1,4 @@
+import eachTerm from '../../../1-one/tokenize/compute/_lib.js'
 import { Conj, Prop, Plur, Poss, Pron } from '../tagSet/_lib.js'
 // rough connection between compromise tagset and Penn Treebank
 // https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html
@@ -95,10 +96,8 @@ const toPenn = function (term) {
 
 const pennTag = function (view) {
   view.compute('tagRank')
-  view.docs.forEach(terms => {
-    terms.forEach(term => {
-      term.penn = toPenn(term)
-    })
+  eachTerm(view.docs, term => {
+    term.penn = toPenn(term)
   })
 }
 export default pennTag

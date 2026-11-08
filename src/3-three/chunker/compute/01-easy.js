@@ -1,5 +1,6 @@
 import { NN, Vb, Det, Val, QW } from '../../../2-two/preTagger/tagSet/_lib.js'
-import { eachTerm, Pivot } from './_lib.js'
+import Pivot from './_lib.js'
+import eachTerm from '../../../1-one/tokenize/compute/_lib.js'
 const byWord = {
   this: NN,
   then: Pivot

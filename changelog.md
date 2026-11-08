@@ -22,6 +22,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - #1262 Preserve punctuation in quotation text output
 - **[fix]** - problematic regex fixes
 - **[fix]** - whitespace tokenization in match strings
+- **[fix]** - offset issue with pre punctuation
 - **[change]** - number parsing details
   - - support possessive numbers like "2023's turmoil"
   - - interpret 'twenty twenty six' as year (from 2010-2040)

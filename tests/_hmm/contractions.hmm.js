@@ -52,3 +52,106 @@ test(here + `there's before a plural`, t => {
   t.equal(nlp(`there's been trouble`).text('implicit'), 'there has been trouble', here + `there's been`)
   t.end()
 })
+
+// a literal match skips one hidden word, so a three-word form like gotta (have got to) is never consumed
+test(here + 'a literal match across a three-word form', t => {
+  let doc = nlp(`i gotta go`)
+  t.equal(doc.match('gotta go').text(), 'gotta go', here + 'gotta go')
+  t.equal(doc.match('i gotta go').text(), 'i gotta go', here + 'i gotta go')
+  t.equal(doc.match('got to go').text('implicit'), 'got to go', here + 'got to go')
+
+  doc = nlp(`i dunno it`)
+  t.equal(doc.match('dunno it').text(), 'dunno it', here + 'dunno it')
+  t.equal(doc.match('@hasContraction it').text(), 'dunno it', here + '@hasContraction it')
+
+  doc = nlp(`gonna rain`)
+  t.equal(doc.match('gonna rain').text(), 'gonna rain', here + 'two-word form still works')
+  t.end()
+})
+
+// "ain't never" is always 'have', whatever the subject
+test(here + `ain't never`, t => {
+  t.equal(nlp(`he ain't never seen it`).text('implicit'), 'he has never seen it', here + 'he')
+  t.equal(nlp(`the dog ain't never bitten anyone`).text('implicit'), 'the dog has never bitten anyone', here + 'the dog')
+  t.equal(nlp(`i ain't never seen it`).text('implicit'), 'i have never seen it', here + 'i')
+  t.equal(nlp(`they ain't never seen it`).text('implicit'), 'they have never seen it', here + 'they')
+  t.end()
+})
+
+// only the first apostrophe is split, and the 've is left behind
+test(here + 'double contractions', t => {
+  t.equal(nlp(`i wouldn't've gone`).text('implicit'), 'i would not have gone', here + `wouldn't've`)
+  t.equal(nlp(`she couldn't've known`).text('implicit'), 'she could not have known', here + `couldn't've`)
+  t.equal(nlp(`I'd've gone`).text('implicit'), 'i would have gone', here + `I'd've`)
+  t.equal(nlp(`he'd've liked it`).text('implicit'), 'he would have liked it', here + `he'd've`)
+  t.equal(nlp(`you can't've seen it`).text('implicit'), 'you can not have seen it', here + `can't've`)
+  t.end()
+})
+
+// a hidden word at the end of the text is given a trailing space
+test(here + 'implicit text ends cleanly', t => {
+  t.equal(nlp(`l'amour`).text('implicit'), 'le amour', here + `l'amour`)
+  t.equal(nlp(`i'm`).text('implicit'), 'i am', here + `i'm`)
+  t.equal(nlp(`we're not gonna`).text('implicit'), 'we are not going to', here + 'gonna')
+  t.end()
+})
+
+// the tokenizer moves the elided apostrophe into .pre, so it survives the expansion
+test(here + `'tis and 'twas`, t => {
+  t.equal(nlp(`'tis the season`).text('implicit'), 'it is the season', here + `'tis implicit`)
+  t.equal(nlp(`'tis the season`).text(), `'tis the season`, here + `'tis text`)
+  t.equal(nlp(`'twas the night`).text('implicit'), 'it was the night', here + `'twas implicit`)
+  t.end()
+})
+
+// strip() only removes an 's ending
+test(here + 'strip a plural, or curly, possessive', t => {
+  const arr = [
+    [`the flanders' house`, 'the flanders house'],
+    [`James' car`, 'James car'],
+    [`spencer’s house`, 'spencer house'],
+  ]
+  arr.forEach(([str, want]) => {
+    const doc = nlp(str)
+    doc.possessives().strip()
+    t.equal(doc.text(), want, here + str)
+  })
+  t.end()
+})
+
+// a decade written with an apostrophe is read as an owner
+test(here + 'a decade is not possessive', t => {
+  const arr = [`the 1990's were great`, `in the 1990's`, `1980's music`, `the 2020's election`, `the 90's`]
+  arr.forEach(str => {
+    const doc = nlp(str)
+    t.equal(doc.has('#Possessive'), false, here + `no #Possessive: '${str}'`)
+    t.equal(doc.text('implicit'), str, here + `not expanded: '${str}'`)
+  })
+  // but a single year still owns things
+  t.equal(nlp(`2020's election`).has('(#Year && #Possessive)'), true, here + `2020's election`)
+  t.end()
+})
+
+// 'own' is an adjective, so it's own reads as 'it is own'
+test(here + `it's own`, t => {
+  t.equal(nlp(`on it's own`).text('implicit'), `on it's own`, here + `on it's own`)
+  t.equal(nlp(`it's own fault`).match(`it's`).has('#Possessive'), true, here + `it's own fault`)
+  t.end()
+})
+
+// the l' article is guessed from the word's ending, and homme ends in e
+test(here + `french l' gender`, t => {
+  t.equal(nlp(`l'homme`).text('implicit'), 'le homme', here + `l'homme`)
+  t.equal(nlp(`l'eau`).text('implicit'), 'la eau', here + `l'eau`)
+  t.equal(nlp(`l'amour`).text('implicit'), 'le amour', here + `l'amour`)
+  t.equal(nlp(`l'école`).text('implicit'), 'la ecole', here + `l'école`)
+  t.end()
+})
+
+// a plugin's model replaces the contraction list, instead of adding to it
+test(here + 'a plugin adds a contraction', t => {
+  nlp.plugin({ model: { one: { contractions: [{ word: 'yolo', out: ['you', 'only', 'live', 'once'] }] } } })
+  t.equal(nlp(`yolo`).has('you only live once'), true, here + 'new word is expanded')
+  t.equal(nlp(`gonna`).has('going to'), true, here + 'built-in words still expand')
+  t.end()
+})

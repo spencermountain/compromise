@@ -1,30 +1,22 @@
 import parse from './parse/index.js'
 
-// turn anything into {foo:true} format
-const coerceToObject = function (input) {
+// accept 'kg', ['kg', 'lb'], or { kg: true } as a set of unit names
+const toUnits = function (input) {
   if (typeof input === 'string' || typeof input === 'number') {
-    const tmp = {}
-    tmp[input] = true
-    return tmp
+    return new Set([String(input)])
   }
   if (Array.isArray(input)) {
-    return input.reduce((h, s) => {
-      h[s] = true
-      return h
-    }, {})
+    return new Set(input.map(String))
   }
-  return input || {}
+  return new Set(Object.keys(input || {}).filter(k => input[k] === true))
 }
 
 // only return values with the given unit
 const isUnit = function (doc, input = {}) {
-  input = coerceToObject(input)
+  const units = toUnits(input)
   return doc.filter(p => {
     const { unit } = parse(p)
-    if (unit && input[unit] === true) {
-      return true
-    }
-    return false
+    return Boolean(unit) && units.has(unit)
   })
 }
 export default isUnit

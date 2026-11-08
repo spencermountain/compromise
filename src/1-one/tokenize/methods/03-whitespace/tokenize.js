@@ -6,6 +6,8 @@ const isMark = /\p{Mark}/u
 const isNumber = /[\p{Number}\p{Currency_Symbol}]/u
 const hasAcronym = /^[a-z]\.([a-z]\.)+/i
 const chillin = /[sn]['’]$/
+// a leading apostrophe that stands for letters - 'tis, 'em, 'cause
+const elision = /^['’](tis|twas|em|cause|til|bout|round)\b/i
 const isFullNumber = /^[(+\-]?\d+(th|st|nd|rd)?[)+\-]?$/
 const openers = { ')': '(', ']': '[', '}': '{' }
 
@@ -54,6 +56,10 @@ const normalizePunctuation = function (str, model) {
     if (isLetter.test(c) || isNumber.test(c)) {
       break //done
     }
+    // keep an elided apostrophe - 'tis
+    if ((c === "'" || c === '’') && elision.test(chars.slice(start).join(''))) {
+      break//keep it
+    }
     // punctuation
     start++
   }
@@ -82,11 +88,11 @@ const normalizePunctuation = function (str, model) {
       continue
     }
     // F.B.I.
-    if (c === '.' && hasAcronym.test(original) === true) {
+    if (c === '.' && hasAcronym.test(original)) {
       break//keep it
     }
     //  keep s-apostrophe - "flanders'" or "chillin'"
-    if (c === "'" && chillin.test(original) === true) {
+    if (c === "'" && chillin.test(original)) {
       break//keep it
     }
     // keep '+' or ')' only for a number like (800) or 500+

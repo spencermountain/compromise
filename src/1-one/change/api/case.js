@@ -1,3 +1,4 @@
+import eachTerm from '../../tokenize/compute/_lib.js'
 // uppercase the first letter - todo: support unicode?
 const titleCase = str => str.replace(/^ *[a-z\u00C0-\u00FF]/, x => x.toUpperCase())
 
@@ -24,15 +25,13 @@ export default {
   },
   /** */
   toCamelCase: function () {
-    this.docs.forEach(terms => {
-      terms.forEach((t, i) => {
-        if (i !== 0) {
-          t.text = titleCase(t.text)
-        }
-        if (i !== terms.length - 1) {
-          t.post = ''
-        }
-      })
+    eachTerm(this.docs, (t, terms, i) => {
+      if (i !== 0) {
+        t.text = titleCase(t.text)
+      }
+      if (i !== terms.length - 1) {
+        t.post = ''
+      }
     })
     return this
   },

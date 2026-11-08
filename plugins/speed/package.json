@@ -45,7 +45,7 @@
   },
   "main": "./builds/compromise-speed.cjs",
   "module": "./builds/compromise-speed.mjs",
-  "types": "./types/index.d.ts",
+  "types": "./types/index.d.cts",
   "sideEffects": false,
   "engines": {
     "node": ">=18"
@@ -58,6 +58,7 @@
     "build": "node ./scripts/version.js && rollup -c --silent"
   },
   "files": [
+    "browser/",
     "types/",
     "builds/",
     "src/"

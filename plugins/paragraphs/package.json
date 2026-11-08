@@ -25,7 +25,7 @@
   },
   "main": "./builds/compromise-paragraphs.cjs",
   "module": "./builds/compromise-paragraphs.mjs",
-  "types": "./types/index.d.ts",
+  "types": "./types/index.d.cts",
   "sideEffects": false,
   "engines": {
     "node": ">=18"

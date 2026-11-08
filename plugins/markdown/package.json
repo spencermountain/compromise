@@ -25,7 +25,7 @@
   },
   "main": "./builds/compromise-markdown.cjs",
   "module": "./builds/compromise-markdown.mjs",
-  "types": "./types/index.d.ts",
+  "types": "./types/index.d.cts",
   "sideEffects": false,
   "engines": {
     "node": ">=18"

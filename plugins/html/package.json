@@ -17,7 +17,7 @@
     }
   },
   "main": "./builds/compromise-html.cjs",
-  "types": "./types/index.d.ts",
+  "types": "./types/index.d.cts",
   "sideEffects": false,
   "engines": {
     "node": ">=18"

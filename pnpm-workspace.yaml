@@ -8,7 +8,7 @@ catalog:
   '@types/node': '^26.6.6'
   '@rollup/plugin-node-resolve': '16.0.3'
   '@rollup/plugin-terser': '1.0.2'
-  'rollup': 4.67.5
+  'rollup': 4.68.0
   'rollup-plugin-filesize-check': '2.0.1'
   'tap-dancer': '0.4.4'
   'tape': '5.10.3'

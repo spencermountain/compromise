@@ -11,6 +11,9 @@ import { isDecade } from './_words.js'
 import { setTag } from '../../preTagger/compute/tagger/_lib.js'
 import { Year, Poss } from '../../preTagger/tagSet/_lib.js'
 
+// the debug reason for every tag this pass sets
+const reason = '2-contraction'
+
 // poor-mans reindexing of this sentence only
 const reIndex = function (terms) {
   terms.forEach((t, i) => {
@@ -66,7 +69,7 @@ const byEnd = {
         terms[i].tags.add(Poss)
         return null
       }
-      return setTag([terms[i]], Poss, world, '2-contraction')
+      return setTag([terms[i]], Poss, world, reason)
     }
     return apostropheS(terms, i)
   },
@@ -118,7 +121,7 @@ const contractionTwo = view => {
         reTag(document[n], view, i, words.length)
         // [twenty twenty-six's] over - it may only be a year as a whole
         if (isYear) {
-          setTag([document[n][i]], Year, world, '2-contraction')
+          setTag([document[n][i]], Year, world, reason)
         }
         continue
       }

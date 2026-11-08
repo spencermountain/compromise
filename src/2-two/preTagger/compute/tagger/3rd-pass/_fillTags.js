@@ -4,6 +4,8 @@ import getTense from '../../../methods/transform/verbs/getTense/index.js'
 import debug from '../../../../../API/debug/debug.js'
 import { hasAny } from '../../../../_lib.js'
 import { Acronym, Abbr, Prop, Uncountable, Poss, Pron, NN, Plur, Sing, Vb, Inf, Ger, Pres, Hon, Month } from '../../../tagSet/_lib.js'
+// the debug reason for every tag this pass sets
+const reason = '3-fill-tags'
 // tags that are neither plural or singular
 const uncountable = [
   Acronym,
@@ -22,9 +24,9 @@ const setPluralSingular = function (term) {
     return
   }
   if (looksPlural(term.normal)) {
-    fastTag(term, Plur, '3-plural-guess')
+    fastTag(term, Plur, reason)
   } else {
-    fastTag(term, Sing, '3-singular-guess')
+    fastTag(term, Sing, reason)
   }
 }
 
@@ -34,9 +36,9 @@ const setTense = function (term) {
   if (tags.has(Vb) && tags.size === 1) {
     const guess = getTense(term.normal)
     if (guess) {
-      fastTag(term, guess, '3-verb-tense-guess')
+      fastTag(term, guess, reason)
       if (guess === Inf || guess === Ger) {
-        fastTag(term, Pres, '3-verb-tense-guess')
+        fastTag(term, Pres, reason)
       }
     }
   }

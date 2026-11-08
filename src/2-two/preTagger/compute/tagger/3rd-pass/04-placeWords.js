@@ -1,6 +1,8 @@
 import { setTag, isTitleWord } from '../_lib.js'
 import { hasAny, toSet } from '../../../../_lib.js'
 import { Org, Poss, Prop, Place } from '../../../tagSet/_lib.js'
+// the debug reason for every tag this pass sets
+const reason = '3-place-word'
 // only the sure 's words are #Possessive this early (see contraction-two/compute/index.js), so guard by text
 const isPossessive = /'s$/
 
@@ -37,7 +39,7 @@ const tagOrgs = function (terms, i, world, yelling) {
         continue
       }
       if (isPlace(terms[n], n, yelling)) {
-        setTag(terms.slice(n, i + 1), Place, world, '3-[place-of-foo]')
+        setTag(terms.slice(n, i + 1), Place, world, reason)
         continue
       }
       break
@@ -49,7 +51,7 @@ const tagOrgs = function (terms, i, world, yelling) {
     }
     for (let n = i + 1; n < terms.length; n += 1) {
       if (isPlace(terms[n], n, yelling)) {
-        setTag(terms.slice(i, n + 1), Place, world, '3-[foo-place]')
+        setTag(terms.slice(i, n + 1), Place, world, reason)
         return true
       }
       // 'municipal ...'

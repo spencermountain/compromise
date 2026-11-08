@@ -1,6 +1,8 @@
 import fastTag from '../_fastTag.js'
 import findAffix from '../../../methods/_lib.js'
 import { Prop, Last } from '../../../tagSet/_lib.js'
+// the debug reason for every tag this pass sets
+const reason = '2-suffix'
 
 //sweep-through all suffixes
 const suffixLoop = function (str = '', suffixes = []) {
@@ -17,7 +19,7 @@ const tagBySuffix = function (terms, i, model) {
   if (term.tags.size === 0) {
     let tag = suffixLoop(term.normal, model.two.suffixPatterns)
     if (tag !== null) {
-      fastTag(term, tag, '2-suffix')
+      fastTag(term, tag, reason)
       term.confidence = 0.7
       return true
     }
@@ -25,7 +27,7 @@ const tagBySuffix = function (terms, i, model) {
     if (term.implicit) {
       tag = suffixLoop(term.implicit, model.two.suffixPatterns)
       if (tag !== null) {
-        fastTag(term, tag, '2-implicit-suffix')
+        fastTag(term, tag, reason)
         term.confidence = 0.7
         return true
       }
@@ -35,7 +37,7 @@ const tagBySuffix = function (terms, i, model) {
     //   let str = term.normal.replace(/s$/, '')
     //   if (suffixLoop(str, model.two.suffixPatterns) === 'Infinitive') {
     //     console.log(str)
-    //     fastTag(term, 'PresentTense', '2-implied-present')
+    //     fastTag(term, 'PresentTense', reason)
     //     term.confidence = 0.5
     //     return true
     //   }
@@ -45,7 +47,7 @@ const tagBySuffix = function (terms, i, model) {
   const str = term.machine || term.normal
   if (term.tags.size === 1 && term.tags.has(Prop) && !Object.hasOwn(model.one.lexicon, str)) {
     if (suffixLoop(str, model.two.suffixPatterns) === Last) {
-      fastTag(term, Last, '2-suffix-lastname')
+      fastTag(term, Last, reason)
       return true
     }
   }

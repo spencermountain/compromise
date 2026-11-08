@@ -40,7 +40,7 @@ const checkRegex = function (terms, i, model, world) {
   }
   if (arr) {
     // console.log(arr)
-    setTag([term], arr[1], world, `2-regex-'${arr[2] || arr[0]}'`)
+    setTag([term], arr[1], world, '2-regex')
     term.confidence = 0.6
     return true
   }

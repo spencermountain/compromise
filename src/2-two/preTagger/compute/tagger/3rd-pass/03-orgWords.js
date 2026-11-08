@@ -1,6 +1,8 @@
 import { setTag, isTitleWord } from '../_lib.js'
 import { hasAny } from '../../../../_lib.js'
 import { First, Place, Prop, Org, Acronym } from '../../../tagSet/_lib.js'
+// the debug reason for every tag this pass sets
+const reason = '3-org-word'
 
 const isOrg = function (term, i, yelling) {
   if (!term) {
@@ -21,11 +23,11 @@ const tagOrgs = function (terms, i, world, yelling) {
   const term = terms[i]
   const str = term.machine || term.normal
   if (orgWords[str] === true && isOrg(terms[i - 1], i - 1, yelling)) {
-    setTag([terms[i]], Org, world, '3-[org-word]')
+    setTag([terms[i]], Org, world, reason)
     // loop backwards, tag organization-like things
     for (let t = i; t >= 0; t -= 1) {
       if (isOrg(terms[t], t, yelling)) {
-        setTag([terms[t]], Org, world, '3-[org-word]')
+        setTag([terms[t]], Org, world, reason)
       } else {
         break
       }

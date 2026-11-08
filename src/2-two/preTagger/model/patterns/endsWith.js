@@ -11,38 +11,38 @@ const {
 
 export default {
   a: [
-    [/.[aeiou]na$/, Noun, 'tuna'],
+    [/.[aeiou]na$/, Noun],
     [/.[oau][wvl]ska$/, Last],
-    [/.[^aeiou]ica$/, Sing, 'harmonica'],
-    [/^([hyj]a+)+$/, Exp, 'haha'], //hahah
+    [/.[^aeiou]ica$/, Sing],
+    [/^([hyj]a+)+$/, Exp], //hahah
   ],
   d: [
     //==-ed==
     //double-consonant
-    [/[aeiou](pp|ll|ss|ff|gg|tt|rr|bb|nn|mm)ed$/, Past, 'popped'],
+    [/[aeiou](pp|ll|ss|ff|gg|tt|rr|bb|nn|mm)ed$/, Past],
     //double-vowel
-    [/.[aeo]{2}[bdgmnprvz]ed$/, Past, 'rammed'],
+    [/.[aeo]{2}[bdgmnprvz]ed$/, Past],
     //-hed
-    [/.[aeiou][sg]hed$/, Past, 'gushed'],
+    [/.[aeiou][sg]hed$/, Past],
     //-rd
-    [/.[aeiou]red$/, Past, 'hired'],
-    [/.[aeiou]r?ried$/, Past, 'hurried'],
+    [/.[aeiou]red$/, Past],
+    [/.[aeiou]r?ried$/, Past],
     // ard
-    [/[^aeiou]ard$/, Sing, 'steward'],
+    [/[^aeiou]ard$/, Sing],
     // id
-    [/[aeiou][^aeiou]id$/, Adj, ''],
-    [/.[vrl]id$/, Adj, 'livid'],
+    [/[aeiou][^aeiou]id$/, Adj],
+    [/.[vrl]id$/, Adj],
 
     // ===== -ed ======
     //-led
-    [/..led$/, Past, 'hurled'],
+    [/..led$/, Past],
     //-sed
-    [/.[iao]sed$/, Past, ''],
-    [/[aeiou]n?[cs]ed$/, Past, ''],
+    [/.[iao]sed$/, Past],
+    [/[aeiou]n?[cs]ed$/, Past],
     //-med
-    [/[aeiou][rl]?[mnf]ed$/, Past, ''],
+    [/[aeiou][rl]?[mnf]ed$/, Past],
     //-ked
-    [/[aeiou][ns]?c?ked$/, Past, 'bunked'],
+    [/[aeiou][ns]?c?ked$/, Past],
     //-gned
     [/[aeiou]gned$/, Past],
     //-ged
@@ -51,43 +51,43 @@ export default {
     [/.[tdbwxyz]ed$/, Past],
     [/[^aeiou][aeiou][tvx]ed$/, Past],
     //-ied
-    [/.[cdflmnprstv]ied$/, Past, 'emptied'],
+    [/.[cdflmnprstv]ied$/, Past],
   ],
   e: [
-    [/.[^aeiou]ise$/, Inf, 'antagonise'],
-    [/.[aeiou]te$/, Inf, 'bite'],
-    [/.[^aeiou][ai]ble$/, Adj, 'fixable'],
-    [/.[^aeiou]eable$/, Adj, 'maleable'],
-    [/.[ts]ive$/, Adj, 'festive'],
-    [/[a-z]-like$/, Adj, 'woman-like'],
+    [/.[^aeiou]ise$/, Inf],
+    [/.[aeiou]te$/, Inf],
+    [/.[^aeiou][ai]ble$/, Adj],
+    [/.[^aeiou]eable$/, Adj],
+    [/.[ts]ive$/, Adj],
+    [/[a-z]-like$/, Adj],
   ],
   h: [
-    [/.[^aeiouf]ish$/, Adj, 'cornish'],
-    [/.v[iy]ch$/, Last, '..ovich'],
-    [/^ug?h+$/, Exp, 'ughh'],
-    [/^uh[ -]?oh$/, Exp, 'uhoh'],
+    [/.[^aeiouf]ish$/, Adj],
+    [/.v[iy]ch$/, Last],
+    [/^ug?h+$/, Exp],
+    [/^uh[ -]?oh$/, Exp],
   ],
   i: [[/.[oau][wvl]ski$/, Last, 'polish-male']],
   k: [
-    [/^(k){2}$/, Exp, 'kkkk'], //kkkk
+    [/^(k){2}$/, Exp], //kkkk
   ],
   l: [
-    [/.[gl]ial$/, Adj, 'familial'],
-    [/.[nrtumcd]al$/, Adj, 'natal'],
-    [/.[^aeiou][ei]al$/, Adj, 'familial'],
+    [/.[gl]ial$/, Adj],
+    [/.[nrtumcd]al$/, Adj],
+    [/.[^aeiou][ei]al$/, Adj],
   ],
   m: [
-    [/.[^aeiou]ium$/, Sing, 'magnesium'],
-    [/[^aeiou]ism$/, Sing, 'schism'],
-    [/^[hu]m+$/, Exp, 'hmm'],
-    [/^\d+ ?[ap]m$/, Date, '3am'],
+    [/.[^aeiou]ium$/, Sing],
+    [/[^aeiou]ism$/, Sing],
+    [/^[hu]m+$/, Exp],
+    [/^\d+ ?[ap]m$/, Date],
   ],
   n: [
   ],
   o: [
-    [/^no+$/, Exp, 'noooo'],
-    [/^(yo)+$/, Exp, 'yoo'],
-    [/^wo{2,}[pt]?$/, Exp, 'woop'], //woo
+    [/^no+$/, Exp],
+    [/^(yo)+$/, Exp],
+    [/^wo{2,}[pt]?$/, Exp], //woo
   ],
   r: [
     [/.[bdfklmst]ler$/, 'Noun'],

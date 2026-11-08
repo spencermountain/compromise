@@ -62,8 +62,10 @@ const isNoPeriodAcronym = function (term, model) {
 }
 
 // clear any tags, and make it an acronym
-const toAcronym = (term, model, reason) => {
-  unTag([term], '*', model.one.tagSet, '3-acronym')
+const reason = '3-acronym'
+
+const toAcronym = (term, model) => {
+  unTag([term], '*', model.one.tagSet, reason)
   fastTag(term, [Acronym, NN], reason)
 }
 
@@ -75,31 +77,31 @@ const isAcronym = function (terms, i, model) {
   }
   //non-period ones are harder
   if (isNoPeriodAcronym(term, model)) {
-    toAcronym(term, model, '3-no-period-acronym')
+    toAcronym(term, model)
     // ny, la
     if (places.has(term.normal)) {
-      fastTag(term, Place, '3-place-acronym')
+      fastTag(term, Place, reason)
     }
     // UFOs
     if (upperThenS.test(term.text)) {
-      fastTag(term, Plur, '3-plural-acronym')
+      fastTag(term, Plur, reason)
     }
     // if(term.normal
     return true
   }
   // one-letter acronyms
   if (!oneLetterWord.has(term.text) && oneLetterAcronym.test(term.text)) {
-    toAcronym(term, model, '3-one-letter-acronym')
+    toAcronym(term, model)
     return true
   }
   //if it's a very-short organization?
   if (term.tags.has(Org) && term.text.length <= 3) {
-    fastTag(term, Acronym, '3-org-acronym')
+    fastTag(term, Acronym, reason)
     return true
   }
   // upper-case org, like UNESCO
   if (term.tags.has(Org) && isUpperCase.test(term.text) && term.text.length <= 6) {
-    fastTag(term, Acronym, '3-titlecase-acronym')
+    fastTag(term, Acronym, reason)
     return true
   }
   return null

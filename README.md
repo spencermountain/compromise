@@ -445,7 +445,7 @@ tag and match a file or directory as a one-liner.
 npx compromise ~/fanfic/a-c/*.txt
 # get json response for all matches
 npx compromise ./infinite-jest.txt --match="to be #Adjective"
-# pipe/stream pltaintext through compromise
+# pipe/stream plaintext through compromise
 cat ~/fanfic/**/*.txt | npx compromise --has="the #Adjective of times" | jq
 # get all sentences containing match
 npx compromise ./infinite-jest.txt   --if="on and on" --text

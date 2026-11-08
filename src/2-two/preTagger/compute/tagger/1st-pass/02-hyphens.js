@@ -1,11 +1,11 @@
 import { setTag } from '../_lib.js'
 import { hasAny } from '../../../../_lib.js'
 import { Pron, Mod, Vb, Inf, Val, Phrasal, Past, Cop, Det, Adj, Hyphenated, Prefix, NounVerb } from '../../../tagSet/_lib.js'
-const reason = '3-hyphen-prefix'
+const reason = '1-hyphen'
 const byHyphen = (terms, i, model, world) => {
   const term = terms[i]
   if (term.post === '-' && terms[i + 1]) {
-    setTag([term, terms[i + 1]], Hyphenated, world, '1-punct-hyphen')
+    setTag([term, terms[i + 1]], Hyphenated, world, reason)
   }
   // Resolve the pair after both terms have passed through their switches.
   const prev = terms[i - 1]
@@ -27,7 +27,7 @@ const byHyphen = (terms, i, model, world) => {
   const verbCompound = prev.tags.has(Inf) && !prev.tags.has(Phrasal) && !hasAny(term, Phrasal, Pron)
   const nounParticiple = prev.switch === NounVerb && term.tags.has(Past) && before && hasAny(before, Cop, Det)
   if (offWhite || numberFold || verbCompound || nounParticiple) {
-    setTag([prev, term], Adj, world, '3-hyphen-adjective')
+    setTag([prev, term], Adj, world, reason)
   }
 }
 export default byHyphen

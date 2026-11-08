@@ -2,6 +2,8 @@ import unTag from '../../../../../1-one/tag/methods/unTag.js'
 import fastTag from '../_fastTag.js'
 import { hasAny, toSet } from '../../../../_lib.js'
 import { Adj, Adv, Ger, Val, Det, Prep, Conj, Pron, Poss, Vb, NN, Plur, Neg } from '../../../tagSet/_lib.js'
+// the debug reason for every tag this pass sets
+const reason = '3-attributive'
 
 // adverbs that can also describe a noun
 const describing = toSet('still only very further')
@@ -27,7 +29,7 @@ const attributive = function (terms, i, model) {
   if (isVerb || hasAny(after, ...notThing)) {
     return
   }
-  unTag([term], Adv, model.one.tagSet, '3-attributive')
-  fastTag(term, Adj, '3-attributive')
+  unTag([term], Adv, model.one.tagSet, reason)
+  fastTag(term, Adj, reason)
 }
 export default attributive

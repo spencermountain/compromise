@@ -4,6 +4,8 @@ import fillTags from '../3rd-pass/_fillTags.js'
 import { titleCase } from '../_lib.js'
 import { hasAny, toSet } from '../../../../_lib.js'
 import { Date, WeekDay, Unit, Expr, Comp, Ger, Det, NN, Prop, RomanNumeral, Month } from '../../../tagSet/_lib.js'
+// the debug reason for every tag this pass sets
+const reason = '2-case'
 
 const hasNumber = /[0-9]/
 const notProper = [Date, Month, WeekDay, Unit, Expr]
@@ -46,14 +48,14 @@ const checkCase = function (terms, i, model) {
     }
     fillTags(terms, i, model)
     if (!term.tags.has(NN) && !term.frozen) {
-      unTag([term], '*', model.one.tagSet, '2-titlecase')
+      unTag([term], '*', model.one.tagSet, reason)
     }
-    fastTag(term, Prop, '2-titlecase')
+    fastTag(term, Prop, reason)
     return true
   }
   //roman numberals - XVII
   if (str.length >= 2 && romanNumeral.test(str) && hasIVX.test(str) && romanNumValid.test(str) && !nope.has(term.normal)) {
-    fastTag(term, RomanNumeral, '2-xvii')
+    fastTag(term, RomanNumeral, reason)
     return true
   }
 

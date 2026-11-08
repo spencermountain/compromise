@@ -558,3 +558,12 @@ test(here + 'end of the month', (t) => {
   t.equal(getStart('end of the year'), '2026-12-31T23:59:59.999-05:00', 'end of the year')
   t.end()
 })
+
+test(here + 'last season is the most recent one to end', t => {
+  checkStarts(t, { today: '2026-11-09', timezone: 'UTC' }, [
+    ['last summer', '2026-06-01'],
+    ['last spring', '2026-03-01'],
+  ])
+  checkStarts(t, { today: '2026-07-20', timezone: 'UTC' }, [['last summer', '2025-06-01']])
+  t.end()
+})

@@ -22,20 +22,21 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - #1262 Preserve punctuation in quotation text output
 - **[fix]** - problematic regex fixes
 - **[fix]** - whitespace tokenization in match strings
-- **[change]** - improvements to isPossessive()
 - **[change]** - number parsing details
   - - support possessive numbers like "2023's turmoil"
   - - interpret 'twenty twenty six' as year (from 2010-2040)
   - - concatenated number-parsing - "sixty fifteen and thirty five"
+  - - numbers().isValid() methods
+  - - "thousands of people" no longer number 1,000
+  - - remove invalid ordinals like -5.2rd
 - **[change]** - match-syntax fixes
   - - `foo*` now consistantly means zero or more
   - - greedy and-block `(a && b)+` support in match-syntax
   - - lookahead fix: `the * (#Noun|#Verb)` now matches 'the big dog'
+- **[change]** - improvements to isPossessive()
 - **[plugin]** - compromise-dates 3.11.0
 - **[new]** - `{noRegex:true}` option on parseMatch to avoid ugc-reDos attacks
 - **[new]** - npx bin CLI command
-- **[new]** - dates().isValid() and numbers().isValid() methods
-- **[new]** - "thousands of people" no longer number 1,000
 
 #### 14.19.0 [Oct 2026]
 

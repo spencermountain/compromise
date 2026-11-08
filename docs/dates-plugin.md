@@ -319,6 +319,7 @@ phrase that returns two rows returned two dates.
 | next mon                   | 2026-11-09T00:00:00.000Z | 2026-11-09T23:59:59.999Z |
 | last friday                | 2026-10-30T00:00:00.000Z | 2026-10-30T23:59:59.999Z |
 | last thurs                 | 2026-10-29T00:00:00.000Z | 2026-10-29T23:59:59.999Z |
+| a week friday              | 2026-11-13T00:00:00.000Z | 2026-11-13T23:59:59.999Z |
 | a week after this friday   | 2026-11-13T00:00:00.000Z | 2026-11-13T23:59:59.999Z |
 | two weeks from this friday | 2026-11-20T00:00:00.000Z | 2026-11-20T23:59:59.999Z |
 | the saturday after next    | 2026-11-14T00:00:00.000Z | 2026-11-14T23:59:59.999Z |
@@ -501,8 +502,10 @@ phrase that returns two rows returned two dates.
 | five past 3           | 2026-11-04T15:05:00.000Z | 2026-11-04T15:05:00.000Z |
 | at 20 past            | 2026-11-04T11:20:00.000Z | 2026-11-04T11:20:00.000Z |
 | noon                  | 2026-11-04T12:00:00.000Z | 2026-11-04T12:00:00.000Z |
+| 12 noon               | 2026-11-04T12:00:00.000Z | 2026-11-04T12:00:00.000Z |
 | midnight              | 2026-11-04T00:00:00.000Z | 2026-11-04T00:00:00.000Z |
 | midday                | 2026-11-04T12:00:00.000Z | 2026-11-04T12:00:00.000Z |
+| 5 o'clock             | 2026-11-04T17:00:00.000Z | 2026-11-04T17:00:00.000Z |
 | eod                   | 2026-11-04T22:00:00.000Z | 2026-11-04T22:00:00.000Z |
 | lunchtime             | 2026-11-04T12:00:00.000Z | 2026-11-04T12:00:00.000Z |
 | dinnertime            | 2026-11-04T18:00:00.000Z | 2026-11-04T18:00:00.000Z |
@@ -633,52 +636,54 @@ phrase that returns two rows returned two dates.
 
 ### Date ranges
 
-| text                                     | start                    | end                      |
-| ---------------------------------------- | ------------------------ | ------------------------ |
-| between june and july 2027               | 2027-06-01T00:00:00.000Z | 2027-07-01T00:00:00.000Z |
-| between june 5th and august 19th 2027    | 2027-06-05T00:00:00.000Z | 2027-08-18T23:59:59.999Z |
-| between tuesday and thursday             | 2026-11-10T00:00:00.000Z | 2026-11-11T23:59:59.999Z |
-| between friday and sunday                | 2026-11-06T00:00:00.000Z | 2026-11-07T23:59:59.999Z |
-| between jan 5 and jan 10                 | 2027-01-05T00:00:00.000Z | 2027-01-09T23:59:59.999Z |
-| between Sept and Oct 2027                | 2027-09-01T00:00:00.000Z | 2027-10-01T00:00:00.000Z |
-| june to july                             | 2027-06-01T00:00:00.000Z | 2027-07-31T23:59:59.999Z |
-| today to next friday                     | 2026-11-04T00:00:00.000Z | 2026-11-13T23:59:59.999Z |
-| from monday to friday                    | 2026-11-09T00:00:00.000Z | 2026-11-13T23:59:59.999Z |
-| monday through friday                    | 2026-11-09T00:00:00.000Z | 2026-11-13T23:59:59.999Z |
-| monday to wednesday next week            | 2026-11-09T00:00:00.000Z | 2026-11-11T23:59:59.999Z |
-| this Friday through Sunday               | 2026-11-06T00:00:00.000Z | 2026-11-08T23:59:59.999Z |
-| today through tomorrow                   | 2026-11-04T00:00:00.000Z | 2026-11-05T23:59:59.999Z |
-| yesterday through tomorrow               | 2026-11-03T00:00:00.000Z | 2026-11-05T23:59:59.999Z |
-| aug 1 - aug 31                           | 2027-08-01T00:00:00.000Z | 2027-08-31T23:59:59.999Z |
-| aug 1-3                                  | 2027-08-01T00:00:00.000Z | 2027-08-03T23:59:59.999Z |
-| august 10th to 15th                      | 2027-08-10T00:00:00.000Z | 2027-08-15T23:59:59.999Z |
-| August 10-22, 2027                       | 2027-08-10T00:00:00.000Z | 2027-08-22T23:59:59.999Z |
-| September 10–12, 2026                    | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
-| September 10 — September 12, 2026        | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
-| 22-23 February                           | 2027-02-22T00:00:00.000Z | 2027-02-23T23:59:59.999Z |
-| June 1st to June 11th 2027               | 2027-06-01T00:00:00.000Z | 2027-06-11T23:59:59.999Z |
-| june 5-7 1999                            | 1999-06-05T00:00:00.000Z | 1999-06-07T23:59:59.999Z |
-| June 1st-11th 1999                       | 1999-06-01T00:00:00.000Z | 1999-06-11T23:59:59.999Z |
-| 15th - 20th of august                    | 2027-08-15T00:00:00.000Z | 2027-08-20T23:59:59.999Z |
-| 28th of September to 5th of October 2027 | 2027-09-28T00:00:00.000Z | 2027-10-05T23:59:59.999Z |
-| 12th of July to 3rd of August 1995       | 1995-07-12T00:00:00.000Z | 1995-08-03T23:59:59.999Z |
-| 5 to 7 of january 1998                   | 1998-01-05T00:00:00.000Z | 1998-01-07T23:59:59.999Z |
-| December 30 to January 2                 | 2026-12-30T00:00:00.000Z | 2027-01-02T23:59:59.999Z |
-| December 30, 2026 to January 2, 2027     | 2026-12-30T00:00:00.000Z | 2027-01-02T23:59:59.999Z |
-| feb to apr 2027                          | 2027-02-01T00:00:00.000Z | 2027-04-30T23:59:59.999Z |
-| january to march 2027                    | 2027-01-01T00:00:00.000Z | 2027-03-31T23:59:59.999Z |
-| march 2027 to may 2027                   | 2027-03-01T00:00:00.000Z | 2027-05-31T23:59:59.999Z |
-| September through November 2027          | 2027-09-01T00:00:00.000Z | 2027-11-30T23:59:59.999Z |
-| December 2026 through February 2027      | 2026-12-01T00:00:00.000Z | 2027-02-28T23:59:59.999Z |
-| 2010 - 2020                              | 2010-01-01T00:00:00.000Z | 2020-12-31T23:59:59.999Z |
-| twenty ten - twenty twenty               | 2010-01-01T00:00:00.000Z | 2020-12-31T23:59:59.999Z |
-| 2026-09-10 to 2026-09-12                 | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
-| 8/10/2027 - 8/15/2027                    | 2027-08-10T00:00:00.000Z | 2027-08-15T23:59:59.999Z |
-| 09/10/2026 through 09/12/2026            | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
-| jan 1 to dec 31                          | 2027-01-01T00:00:00.000Z | 2027-12-31T23:59:59.999Z |
-| april 1st-30th                           | 2027-04-01T00:00:00.000Z | 2027-04-30T23:59:59.999Z |
-| during june                              | 2027-06-01T00:00:00.000Z | 2027-06-30T23:59:59.999Z |
-| from Christmas Eve to Boxing Day 2026    | 2026-12-24T00:00:00.000Z | 2026-12-26T23:59:59.999Z |
+| text                                       | start                    | end                      |
+| ------------------------------------------ | ------------------------ | ------------------------ |
+| between june and july 2027                 | 2027-06-01T00:00:00.000Z | 2027-07-01T00:00:00.000Z |
+| between june 5th and august 19th 2027      | 2027-06-05T00:00:00.000Z | 2027-08-18T23:59:59.999Z |
+| between tuesday and thursday               | 2026-11-10T00:00:00.000Z | 2026-11-11T23:59:59.999Z |
+| between friday and sunday                  | 2026-11-06T00:00:00.000Z | 2026-11-07T23:59:59.999Z |
+| between jan 5 and jan 10                   | 2027-01-05T00:00:00.000Z | 2027-01-09T23:59:59.999Z |
+| between Sept and Oct 2027                  | 2027-09-01T00:00:00.000Z | 2027-10-01T00:00:00.000Z |
+| june to july                               | 2027-06-01T00:00:00.000Z | 2027-07-31T23:59:59.999Z |
+| today to next friday                       | 2026-11-04T00:00:00.000Z | 2026-11-13T23:59:59.999Z |
+| from monday to friday                      | 2026-11-09T00:00:00.000Z | 2026-11-13T23:59:59.999Z |
+| monday through friday                      | 2026-11-09T00:00:00.000Z | 2026-11-13T23:59:59.999Z |
+| monday to wednesday next week              | 2026-11-09T00:00:00.000Z | 2026-11-11T23:59:59.999Z |
+| this Friday through Sunday                 | 2026-11-06T00:00:00.000Z | 2026-11-08T23:59:59.999Z |
+| today through tomorrow                     | 2026-11-04T00:00:00.000Z | 2026-11-05T23:59:59.999Z |
+| yesterday through tomorrow                 | 2026-11-03T00:00:00.000Z | 2026-11-05T23:59:59.999Z |
+| aug 1 - aug 31                             | 2027-08-01T00:00:00.000Z | 2027-08-31T23:59:59.999Z |
+| aug 1-3                                    | 2027-08-01T00:00:00.000Z | 2027-08-03T23:59:59.999Z |
+| august 10th to 15th                        | 2027-08-10T00:00:00.000Z | 2027-08-15T23:59:59.999Z |
+| August 10-22, 2027                         | 2027-08-10T00:00:00.000Z | 2027-08-22T23:59:59.999Z |
+| September 10–12, 2026                      | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
+| September 10 — September 12, 2026          | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
+| 22-23 February                             | 2027-02-22T00:00:00.000Z | 2027-02-23T23:59:59.999Z |
+| June 1st to June 11th 2027                 | 2027-06-01T00:00:00.000Z | 2027-06-11T23:59:59.999Z |
+| june 5-7 1999                              | 1999-06-05T00:00:00.000Z | 1999-06-07T23:59:59.999Z |
+| June 1st-11th 1999                         | 1999-06-01T00:00:00.000Z | 1999-06-11T23:59:59.999Z |
+| 15th - 20th of august                      | 2027-08-15T00:00:00.000Z | 2027-08-20T23:59:59.999Z |
+| 28th of September to 5th of October 2027   | 2027-09-28T00:00:00.000Z | 2027-10-05T23:59:59.999Z |
+| 12th of July to 3rd of August 1995         | 1995-07-12T00:00:00.000Z | 1995-08-03T23:59:59.999Z |
+| 5 to 7 of january 1998                     | 1998-01-05T00:00:00.000Z | 1998-01-07T23:59:59.999Z |
+| December 30 to January 2                   | 2026-12-30T00:00:00.000Z | 2027-01-02T23:59:59.999Z |
+| December 30, 2026 to January 2, 2027       | 2026-12-30T00:00:00.000Z | 2027-01-02T23:59:59.999Z |
+| feb to apr 2027                            | 2027-02-01T00:00:00.000Z | 2027-04-30T23:59:59.999Z |
+| january to march 2027                      | 2027-01-01T00:00:00.000Z | 2027-03-31T23:59:59.999Z |
+| march 2027 to may 2027                     | 2027-03-01T00:00:00.000Z | 2027-05-31T23:59:59.999Z |
+| September through November 2027            | 2027-09-01T00:00:00.000Z | 2027-11-30T23:59:59.999Z |
+| December 2026 through February 2027        | 2026-12-01T00:00:00.000Z | 2027-02-28T23:59:59.999Z |
+| 2010 - 2020                                | 2010-01-01T00:00:00.000Z | 2020-12-31T23:59:59.999Z |
+| twenty ten - twenty twenty                 | 2010-01-01T00:00:00.000Z | 2020-12-31T23:59:59.999Z |
+| 2026-09-10 to 2026-09-12                   | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
+| 8/10/2027 - 8/15/2027                      | 2027-08-10T00:00:00.000Z | 2027-08-15T23:59:59.999Z |
+| 09/10/2026 through 09/12/2026              | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
+| jan 1 to dec 31                            | 2027-01-01T00:00:00.000Z | 2027-12-31T23:59:59.999Z |
+| april 1st-30th                             | 2027-04-01T00:00:00.000Z | 2027-04-30T23:59:59.999Z |
+| during june                                | 2027-06-01T00:00:00.000Z | 2027-06-30T23:59:59.999Z |
+| from Christmas Eve to Boxing Day 2026      | 2026-12-24T00:00:00.000Z | 2026-12-26T23:59:59.999Z |
+| from September 10 until September 12, 2026 | 2026-09-10T00:00:00.000Z | 2026-09-12T23:59:59.999Z |
+| aug to june 1999                           | 1998-08-01T00:00:00.000Z | 1999-06-30T23:59:59.999Z |
 
 ### Open-ended ranges
 
@@ -754,10 +759,10 @@ phrase that returns two rows returned two dates.
 | ---------------------------- | ------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | every tuesday                | `null`                   | `null`                   | `{"interval":{"day":1},"filter":{"weekDays":{"tuesday":true}},"choose":"AND"}`                                                              |
 | any wednesday                | `null`                   | `null`                   | `{"interval":{"day":1},"filter":{"weekDays":{"wednesday":true}},"choose":"OR"}`                                                             |
+| every monday and wednesday   | `null`                   | `null`                   | `{"interval":{"day":1},"filter":{"weekDays":{"monday":true,"wednesday":true}},"choose":"AND"}`                                              |
 | mondays at 5pm               | `null`                   | `null`                   | `{"interval":{"day":1},"filter":{"weekDays":{"monday":true}},"choose":"OR","time":"5:00pm"}`                                                |
 | every tuesday at 3pm         | 2026-11-04T15:00:00.000Z | 2026-11-04T15:00:00.000Z | `{"interval":{"day":1},"filter":{"weekDays":{"tuesday":true}},"choose":"AND"}`                                                              |
-| tuesdays and thursdays       | `null`                   | `null`                   | `{"interval":{"day":1},"filter":{"weekDays":{"tuesday":true}},"choose":"OR"}`                                                               |
-| tuesdays and thursdays       | `null`                   | `null`                   | `{"interval":{"day":1},"filter":{"weekDays":{"thursday":true}},"choose":"OR"}`                                                              |
+| tuesdays and thursdays       | `null`                   | `null`                   | `{"interval":{"day":1},"filter":{"weekDays":{"tuesday":true,"thursday":true}},"choose":"OR"}`                                               |
 | every day                    | `null`                   | `null`                   | `{"interval":{"day":1},"choose":"AND"}`                                                                                                     |
 | every other day              | `null`                   | `null`                   | `{"interval":{"day":2},"choose":"AND"}`                                                                                                     |
 | every weekday                | `null`                   | `null`                   | `{"interval":{"day":1},"filter":{"weekDays":{"monday":true,"tuesday":true,"wednesday":true,"thursday":true,"friday":true}},"choose":"AND"}` |
@@ -781,6 +786,10 @@ phrase that returns two rows returned two dates.
 | 1sec                  | `{"second":1}`          |
 | two hours and 8 mins  | `{"hour":2,"minute":8}` |
 | 12 years and 2 months | `{"year":12,"month":2}` |
+| a fortnight           | `{"week":2}`            |
+| half an hour          | `{"hour":0.5}`          |
+| a week and a half     | `{"week":1.5}`          |
+| a decade              | `{"decade":1}`          |
 | for 3 hours           | `{"hour":3}`            |
 | 3 weekends            | `{"weekend":3}`         |
 | 2 decades             | `{"decade":2}`          |

@@ -1,7 +1,8 @@
 # Command-line interface
 Compromise ships a small `npx`-runnable bin for parsing text from the terminal.
-It uses the full build (`compromise/three`), has no dependencies, and prints json by
-default so results can be piped into `jq`.
+It uses the full build (`compromise/three`), has no dependencies, and streams: input is
+read in chunks, split into sentences, and every sentence is printed as soon as it is parsed,
+one json line each, so results pipe straight into `jq` or `grep`.
 
 ```bash
 npx compromise ./infinite-jest.txt --if='and but so' --text
@@ -17,25 +18,25 @@ echo "the cat sat on the mat" | npx compromise   # stdin
 npx compromise --input="the cat sat on the mat"  # an argument
 ```
 
-* Positional arguments are file paths. Each file is parsed as its own document.
-* `--input` is repeatable, and each one is its own document too.
+* Positional arguments are file paths. `--input` is repeatable. All of them, and stdin, are
+  parsed into one stream of sentences, in order.
 * Globs use node's built-in `fs.glob`. On node 18-20 the value is treated as a literal path.
-* stdin is read in full by default, so sentence boundaries survive hard-wrapped text.
-* `--stream` reads stdin line-by-line and emits a result for each non-empty line as it
-  arrives, for large or never-ending inputs. Each line is parsed on its own, so a sentence
-  split across two lines will be read as two sentences.
+* Input is read in chunks and split on sentence boundaries by the tokenizer, so a sentence
+  that straddles two chunks stays whole, and a file never has to fit in memory. A few
+  sentences are held back as lookahead for unbalanced quotes and brackets, so the last ones
+  print at end of input. As everywhere in compromise, a line break ends a sentence.
 
 ## Output
-`--format` picks the format. Each format is also a flag of its own, so `--text` means `--format=text`:
+`--format` picks the format. Each format is also a flag of its own, so `--text` means
+`--format=text`. Every format prints one line per sentence, or one per match with `--match`:
 
-| format  | prints                                                        |
-| ------- | ------------------------------------------------------------- |
-| `json`  | `doc.json()`, pretty-printed - the default                    |
-| `jsonl` | the same json on one line per input ([json lines](https://jsonlines.org)) |
-| `text`  | one line per sentence (or per match)                          |
-| `spec`  | the [spec format](spec-format.md) - one line per sentence      |
-| `debug` | the same coloured table as `doc.debug()`                      |
-| `highlight` | one line per match, in green, with its sentence in grey     |
+| format      | prints                                                        |
+| ----------- | ------------------------------------------------------------- |
+| `jsonl`     | one `doc.json()` object per line - the default                |
+| `text`      | the sentence text                                             |
+| `spec`      | the [spec format](spec-format.md)                             |
+| `debug`     | the same coloured table as `doc.debug()`                      |
+| `highlight` | one line per match, in green, with its sentence in grey       |
 
 ```bash
 npx compromise --input="she sells seashells" --format=spec
@@ -44,32 +45,25 @@ npx compromise --input="she sells seashells" --format=spec
 npx compromise --input="she sells seashells" --debug
 ```
 
-The json output is `doc.json()`. A few flags add fields to it, for both `json` and `jsonl`:
+Each `jsonl` line is one sentence from `doc.json()`, or one match. A few flags add fields:
 
 | flag           | adds                                                           |
 | -------------- | -------------------------------------------------------------- |
-| `--offsets`    | `offset: { index, start, length }` on every sentence and term  |
+| `--offsets`    | `offset: { index, start, length }` on the sentence and each term, counted from the start of its file |
 | `--bestTag`    | `bestTag` on every term - its single most specific tag          |
 | `--confidence` | a `confidence` score per sentence                              |
 | `--normal`     | a `normal` text per sentence, lowercased and cleaned           |
 | `--root`       | a `root` text per sentence, with verbs and nouns un-conjugated |
 
 ```bash
-npx compromise --input="she sells seashells" --match='#Verb' --offsets | jq '.[].offset'
+npx compromise --input="she sells seashells" --match='#Verb' --offsets | jq '.offset'
 # { "index": 1, "start": 4, "length": 5 }
 
-npx compromise --input="she sells seashells" --bestTag | jq '.[].terms[].bestTag'
+npx compromise infinite-jest.txt --bestTag | jq -r '.terms[].bestTag' | sort | uniq -c
 ```
 
-These flags only apply to json, and the command exits `1` if they are used with another format.
-
-With no `--format`, a single input prints `json`. Several inputs - more than one file, a file plus
-an `--input`, or `--stream` - print `jsonl`, one line per input, which `jq` reads natively.
-Pass `--json` or `--jsonl` to pick one regardless:
-
-```bash
-cat posts/*.txt | npx compromise --stream | jq -c '.[].text'
-```
+These flags only apply to `jsonl`, and the command exits `1` if they are used with another
+format. There is no pretty-printed json: pipe through `jq` for that.
 
 ## Matching
 `--match` runs a [match pattern](match-syntax.md) first, and outputs only the matches:
@@ -93,8 +87,8 @@ npx compromise infinite-jest.txt --if='and but so' --text
 npx compromise infinite-jest.txt --if='and but so' --match='#Verb' --text
 ```
 
-`--has` is `--if` for the first sentence only. It stops reading input at the first hit, so
-with `--stream` it returns as soon as one line matches:
+`--has` is `--if` for the first sentence only. It stops reading input at the first hit, so on
+a large file it returns as soon as one sentence matches:
 
 ```bash
 npx compromise infinite-jest.txt --has='and but so' --text
@@ -119,8 +113,7 @@ Matches stay within a sentence, like `.match()` does.
 
 ## Options
 ```
---format=FORMAT  json, jsonl, text, spec, debug, highlight
-                 (default: json, or jsonl for several inputs or --stream)
+--format=FORMAT  jsonl, text, spec, debug, highlight  (default: jsonl)
 --text, --debug  shorthand for --format=text, --format=debug, etc
 --offsets        add character offsets to the json
 --bestTag        add each term's single best tag to the json
@@ -131,18 +124,19 @@ Matches stay within a sentence, like `.match()` does.
 --has=PATTERN    like --if, but stop after the first sentence
 --width=N        trim highlight lines to N characters (default: 55)
 --input=TEXT     parse this text instead of a file (repeatable)
---stream         process stdin line-by-line, as it arrives
 --version        print the library version
 --help           show this help
 ```
 
-Options accept `--format=json` or `--format json`. The command exits `1` with a message on stderr
+Options accept `--format=text` or `--format text`. The command exits `1` with a message on stderr
 for an unknown option or format, or a file that does not exist. With no files, `--input`, or
 piped stdin it prints the help and exits `1`.
 
 ## Development
 The bin lives in [`bin/compromise.js`](../bin/compromise.js) and imports `src/three.js`
-directly, so it runs from a checkout without a build:
+directly, so it runs from a checkout without a build. The sentence streaming in
+[`bin/_lib/sentences.js`](../bin/_lib/sentences.js) is a copy of the same file in the
+[speed plugin](../plugins/speed/src/_lib/sentences.js); keep the two in sync.
 
 ```bash
 node ./bin/compromise.js --input="hello world"

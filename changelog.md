@@ -38,6 +38,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[plugin]** - compromise-dates 3.11.0
 - **[new]** - `{noRegex:true}` option on parseMatch to avoid ugc-reDos attacks
 - **[new]** - npx bin CLI command
+- **[new]** - .out('highlight')
 
 #### 14.19.0 [Oct 2026]
 

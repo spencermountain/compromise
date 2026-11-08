@@ -20,6 +20,7 @@ const insertContraction = function (document, point, words) {
     words[words.length - 1].post = document[n][w].post
     // add the text/normal to the first term
     words[0].text = document[n][w].text
+    // the first term keeps the apostrophe, and reTag runs the preTagger on it again - so 00-possessive.js skips implicit terms
     words[0].normal = document[n][w].normal // move tags too?
   }
   // do the splice

@@ -48,6 +48,7 @@ const seemsOkay = function (term) {
   return false
 }
 
+// (step 3 of the 's decision - the list is in contraction-two/compute/index.js)
 // a possessive is good evidence for a year, like '2020's election'
 const tagPossessive = function (terms, i) {
   const num = parseInt(terms[i].normal, 10)

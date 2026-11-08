@@ -36,6 +36,15 @@ const reTag = function (terms, view, start, len) {
   reIndex(terms)
 }
 
+// What 's means (possessive, is, has, us) is decided in steps, in run order:
+//   1. 1-one/contraction-one/model/contractions.js        fixed forms - that's, let's
+//   2. 2-two/preTagger/model/regex/regex-text.js          plural owners - flanders'
+//   3. 2-two/preTagger/compute/tagger/2nd-pass/05-year.js  years - 2020's election
+//   4. 2-two/preTagger/compute/tagger/3rd-pass/00-possessive.js  the sure cases, from lexicon tags
+//   5. ./isPossessive.js                                   the full possessive decision
+//   6. ./apostrophe-s.js                                   is vs has, once it is a verb
+// Steps 4 and 5 share their word lists, in ./_words.js.
+// A wrong call invents a verb, so change them together. Each file points back to this list.
 const byEnd = {
   // how'd
   d: apostropheD,

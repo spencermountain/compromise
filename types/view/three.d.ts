@@ -109,6 +109,8 @@ export interface Numbers extends View {
   /** grab 'kilos' from `25 kilos' */
   // units: () => View
   /** return only ordinal numbers */
+  /** drop matches that do not parse to a usable number */
+  isValid: () => View
   isOrdinal: () => View
   /** return only cardinal numbers */
   isCardinal: () => View
@@ -166,6 +168,8 @@ export interface Money extends Omit<Numbers, 'toOrdinal' | 'toCardinal' | 'toFra
   json: (n?: number | JsonProps | string) => MoneyJson[]
   values: (n?: number, opts?: object) => Numbers
   units: () => View
+  /** drop matches that do not parse to a usable number */
+  isValid: () => this
   isOrdinal: () => this
   isCardinal: () => this
   isUnit: (units: string | string[] | object) => this

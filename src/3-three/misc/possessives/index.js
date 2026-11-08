@@ -2,6 +2,7 @@ import select from '../../_select.js'
 import stripper from '../_lib.js'
 const strip = stripper(/'s$/)
 
+// #Possessive is decided upstream, in steps - the list is in 2-two/contraction-two/compute/index.js
 const find = function (doc) {
   let m = doc.match('#Poss+')
   // expand it to include 'john smith's'

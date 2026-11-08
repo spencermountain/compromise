@@ -14,6 +14,7 @@ const reported = toSet('said believed thought reported rumored estimated claimed
 // a past word before these is passive - made by, derived from, attracted to
 const passivePrep = toSet('for by to from with as at in into around')
 
+// (step 6 of the 's decision - the list is in ./index.js)
 // the big clue is the tense of the following verb
 const isOrHas = (terms, i) => {
   // scan ahead for the next verb or adjective

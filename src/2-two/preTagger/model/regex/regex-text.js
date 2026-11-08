@@ -11,6 +11,7 @@ export default [
 
   // ending-apostrophes
   [/.{3}[lkmnp]in['‘’‛‵′`´]$/, Ger, "chillin'"],
+  // (step 2 of the 's decision - the list is in contraction-two/compute/index.js)
   [/.{4}s['‘’‛‵′`´]$/, Poss, "flanders'"],
 
   //from https://www.regextester.com/106421

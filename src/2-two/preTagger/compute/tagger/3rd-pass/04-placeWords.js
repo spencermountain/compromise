@@ -1,6 +1,7 @@
 import { setTag, isTitleWord } from '../_lib.js'
 import { hasAny, toSet } from '../../../../_lib.js'
 import { Org, Poss, Prop, Place } from '../../../tagSet/_lib.js'
+// only the sure 's words are #Possessive this early (see contraction-two/compute/index.js), so guard by text
 const isPossessive = /'s$/
 
 // words that can fit inside a place

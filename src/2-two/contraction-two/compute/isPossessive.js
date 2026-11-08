@@ -1,19 +1,14 @@
 import { hasBreak, isCapital, isUpperCase } from './_lib.js'
 import { hasAny, toSet } from '../../_lib.js'
+import { never, afterVerb, beforePossessive } from './_words.js'
 import { Prop, Pron, Uncountable, Date, Sing, Mod, Cop, Past, Pres, Conj, Pers, Actor, Poss, QW, Det, Vb, Inf, Ger, NN, Plur, Adj, Adv, Ord, NounGerund, AdjNoun, NounVerb } from '../../preTagger/tagSet/_lib.js'
 
-const banList = toSet('that there let here everywhere')
-
-// an object can't be 'is' - "in sunday's", "of Enron's", "at Moe's"
-const beforePossessive = toSet('in by for of at with to on from about into')
 // things that are done, and not owned - Mom's cooked dinner, John's parked here
 const bareObject = toSet('dinner lunch breakfast supper work school college home here there')
 const adjLike = toSet('too also enough about')
 const nounLike = toSet('is are did were could should must had have')
 // "is was" or "has was" can't happen, so a copula means the 's is possessive
 const copulas = toSet('is are was were am')
-// these only follow 'is' or 'has' - the man in black's gonna
-const afterVerb = toSet('gonna gotta got been')
 // past words that don't describe a thing - the team's made progress
 const lightVerbs = toSet('made had done did took taken gave given saw seen went came said')
 
@@ -40,12 +35,14 @@ const hasPredicate = (terms, n) => {
   return false
 }
 
+// (step 5 of the 's decision - the list is in ./index.js)
+// the sure cases arrive already tagged, from preTagger/compute/tagger/3rd-pass/00-possessive.js
 const isPossessive = (terms, i) => {
   const term = terms[i]
   // a person can do things - John's played football
   const isPerson = hasAny(term, Pers, Actor)
   // these can't be possessive
-  if (banList.has(term.machine || term.normal)) {
+  if (never.has(term.machine || term.normal)) {
     return false
   }
   // the preTagger found the easy ones - Kathy's and Mary's, the world's largest, baby's first steps

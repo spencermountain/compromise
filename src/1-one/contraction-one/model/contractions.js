@@ -9,6 +9,8 @@ const parse = (str, key) =>
     })
 
 export default [
+  // that's and let's are decided here, before any tagging
+  // (step 1 of the 's decision - the list is in 2-two/contraction-two/compute/index.js)
   // simple mappings
   ...parse(
     `

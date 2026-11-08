@@ -1,21 +1,15 @@
+import { never, afterVerb, joiners, beforePossessive } from '../../../../contraction-two/compute/_words.js'
 import { Poss, Sup, Val, Pron, QW, First, Prop, Det, Year } from '../../../tagSet/_lib.js'
 
 const apostropheS = /'s$/
 const hasBreak = /[,;:]/
-// never possessive - there's, here's
-const never = new Set(['that', 'there', 'let', 'here', 'everywhere', 'he', 'she', 'it'])
-// these only follow 'is' or 'has' - the man in black's gonna
-const afterVerb = new Set(['gonna', 'gotta', 'got', 'been'])
-// "Kathy's and Mary's", "a master's of science"
-const joiners = new Set(['and', 'or', 'nor', 'but', '&', 'of', 'per'])
-// an object can't be 'is' - "in sunday's", "of Enron's", "at Moe's"
-const beforePossessive = new Set(['in', 'by', 'for', 'of', 'at', 'with', 'to', 'on', 'from', 'about', 'into'])
 
 // the rest of a name - "of Keli [McCarthy]'s"
 const isName = (term, t) => term.tags.has(Prop) && t?.tags.has(Prop) === true && !hasBreak.test(t.post)
 // "of the region's", "about her sister's"
 const isLead = t => t?.tags.has(Det) === true || (t?.tags.has(Poss) === true && t.tags.has(Pron))
 
+// (step 4 of the 's decision - the list is in contraction-two/compute/index.js)
 // the easy possessives, from lexicon tags alone - the hard ones wait for contractionTwo
 const possessive = function (terms, i, world) {
   const term = terms[i]

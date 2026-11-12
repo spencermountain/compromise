@@ -2,13 +2,15 @@ export default [
   [/^([dlpt])ies$/i, '$1ie'],//lies, ties
   [/([^v])ies$/i, '$1y'],
   [/(ise)s$/i, '$1'],//promises
-  [/(kn|[^o]l|w)ives$/i, '$1ife'],
+  [/(kn|^l|[^o]l|w)ives$/i, '$1ife'],//lives, knives, wives
   [/^((?:ca|e|ha|(?:our|them|your)?se|she|wo)l|lea|loa|shea|thie)ves$/i, '$1f'],
   [/^(dwar|handkerchie|hoo|scar|whar)ves$/i, '$1f'],
   [/(antenn|formul|nebul|vertebr|vit)ae$/i, '$1a'],
   [/(octop|vir|radi|nucle|fung|cact|stimul)(i)$/i, '$1us'],
   [/(buffal|tomat|tornad)(oes)$/i, '$1o'],
 
+  [/(thes)es$/i, '$1is'],//hypotheses, syntheses
+  [/(tz)es$/i, '$1'],//waltzes, blitzes
   [/(ious)es$/i, '$1'],//geniouses
   [/(ause|ease|eese|ouse|ose|..ase)s$/i, '$1'],//causes, diseases, cheeses, houses, roses
   [/(..[aeiu]s)es$/i, '$1'],

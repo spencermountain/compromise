@@ -223,6 +223,11 @@ test('toSingular:', function (t) {
     ['oboes', 'oboe'],
     ['lies', 'lie'],
     ['ties', 'tie'],
+    ['lives', 'life'],
+    ['hypotheses', 'hypothesis'],
+    ['syntheses', 'synthesis'],
+    ['waltzes', 'waltz'],
+    ['blitzes', 'blitz'],
     // ['Isley Brothers members', 'Isley Brothers member'],
     // ['mayors of chicago', 'mayor of chicago'],
     //test that sungular.singularize()==singular..

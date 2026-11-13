@@ -2151,7 +2151,6 @@ export default [
   ['vulcanized', 'vulcanize'],
   ['waited', 'wait'],
   ['waived', 'waive'],
-  ['waked', 'wake'],
   ['walked', 'walk'],
   ['walled', 'wall'],
   ['waned', 'wane'],

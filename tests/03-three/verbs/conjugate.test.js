@@ -831,6 +831,18 @@ const arr = [
     PastTense: 'panicked',
     Gerund: 'panicking',
   },
+  {
+    Infinitive: 'rhyme',
+    PresentTense: 'rhymes',
+    PastTense: 'rhymed',
+    Gerund: 'rhyming',
+  },
+  {
+    Infinitive: 'bang',
+    PresentTense: 'bangs',
+    PastTense: 'banged',
+    Gerund: 'banging',
+  },
 
 ]
 test('conjugation:', function (t) {

@@ -7,7 +7,8 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 <!--
-
+#### Unrelease [Dec 2026]
+- **[fix]** - #1271 #1272 conjugation issues
 -->
 
 #### 14.20.0 [Nov 2026]

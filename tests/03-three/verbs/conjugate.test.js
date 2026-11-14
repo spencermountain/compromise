@@ -831,6 +831,12 @@ const arr = [
     PastTense: 'panicked',
     Gerund: 'panicking',
   },
+  {
+    Infinitive: 'wake',
+    PresentTense: 'wakes',
+    PastTense: 'woke',
+    Gerund: 'waking',
+  },
 
 ]
 test('conjugation:', function (t) {

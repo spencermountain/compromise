@@ -843,7 +843,12 @@ const arr = [
     PastTense: 'banged',
     Gerund: 'banging',
   },
-
+  {
+    Infinitive: 'wake',
+    PresentTense: 'wakes',
+    PastTense: 'woke',
+    Gerund: 'waking',
+  }
 ]
 test('conjugation:', function (t) {
   const test_conjugation = function (inf, o, form, original) {

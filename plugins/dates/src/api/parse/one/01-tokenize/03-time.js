@@ -81,6 +81,28 @@ const parseTime = function (doc, context) {
   // sentinel-millisecond, so a no-op parse won't equal `now` below
   s = s.millisecond(123)
   const now = s.clone()
+  // '7:45 tonight', '8 this evening', '7:45 tomorrow night'
+  let m = doc.match('[<time>(#Cardinal|#Time)] (this|tomorrow)? [<desc>(morning|afternoon|evening|night|tonight)]')
+  if (m.found && !doc.has('#Month #Cardinal')) {
+    const str = m.groups('time').text('reduced')
+    if (/^[0-9]{1,2}(:[0-9]{2}){0,2}$/.test(str) && !isImpossible(str)) {
+      if (/^[0-9]{1,2}$/.test(str)) {
+        s = s.hour(str)
+        s = s.startOf('hour')
+      } else {
+        s = s.time(str)
+      }
+      if (s.isValid() && !s.isEqual(now)) {
+        const desc = m.groups('desc').text('reduced')
+        if (desc === 'morning') {
+          s = s.ampm('am')
+        } else if (!is24Hour(str)) {
+          s = s.ampm('pm')
+        }
+        return { result: toTime(s), m: m.groups('time').concat(m.groups('desc')) }
+      }
+    }
+  }
   // check for known-times (like 'today')
   let timeStr = time.not('in? the').text('reduced')
   timeStr = timeStr.replace(/^@/, '')//@4pm
@@ -92,7 +114,7 @@ const parseTime = function (doc, context) {
     return { result: null, m: time, invalid: true }
   }
   // '5 oclock'
-  let m = time.match("^#Cardinal (oclock|o'clock) (am|pm)?")
+  m = time.match("^#Cardinal (oclock|o'clock) (am|pm)?")
   if (m.found) {
     s = s.hour(m.match('#Cardinal').text('reduced'))
     s = s.startOf('hour')

@@ -1,5 +1,5 @@
 <!-- #### [Unreleased]
-- **[breaking]** - return array in .json().dates
+- **[fix]** - #1268 -"8:30 this evening"
 -->
 
 ### 3.11.0 [Nov 2026]

@@ -8,7 +8,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 
 <!--
 #### Unrelease [Dec 2026]
-- **[fix]** - #1271 #1272 conjugation issues
+- **[fix]** - conjugation issues #1269 #1270 #1271 #1272
 -->
 
 #### 14.20.0 [Nov 2026]

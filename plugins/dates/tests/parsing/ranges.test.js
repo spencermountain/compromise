@@ -22,6 +22,7 @@ test(here + 'start dates — ' + JSON.stringify({ today: [2016, may, 11], timezo
   const rows = [
     ['by next week', [2016, may, 11]],
     ['before next week', [2016, may, 11]],
+    ['by end of day', [2016, may, 11]],
     // ['after next week', [2016, may, 20]],
     ['june 5th to august 19th', [2016, june, 5]],
     ['between june 5th and august 19th 2017', [2016, june, 5]],

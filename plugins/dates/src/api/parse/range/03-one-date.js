@@ -51,6 +51,10 @@ export default [
         if (start.d.isBefore(unit.d) === false) {
           start = unit.clone().applyShift({ weeks: -2 })
         }
+        // 'by end of day' already points at the last moment
+        if (unit.d.isEqual(unit.clone().end().d)) {
+          return { start: start, end: unit }
+        }
         // end the night before
         const end = unit.clone().applyShift({ day: -1 })
         return {

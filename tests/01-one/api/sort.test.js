@@ -23,6 +23,23 @@ test('sortSequential:', function (t) {
   t.end()
 })
 
+test('sortSequential across sentences:', function (t) {
+  const doc = nlp('cat zebra apple. mango dog. banana cat.')
+  const want = ['cat', 'zebra', 'apple.', 'mango', 'dog.', 'banana', 'cat.']
+  const words = () => doc.match('.')
+  t.deepEqual(words().sort('alpha').sort('chronological').out('array'), want, here + 'sort-chron-sentences')
+  t.deepEqual(words().sort('alpha').sort('index').out('array'), want, here + 'sort-index-sentences')
+  t.end()
+})
+
+test('sortSequential overlapping matches:', function (t) {
+  const doc = nlp('John Smith ran. Mary Jones swam.')
+  const m = doc.match('(john|mary) .').concat(doc.match('(john|mary)'))
+  const want = ['John', 'John Smith', 'Mary', 'Mary Jones']
+  t.deepEqual(m.sort('length').sort('seq').out('array'), want, here + 'sort-seq-overlap')
+  t.end()
+})
+
 test('reverse:', function (t) {
   const str = 'John xoo, John fredman, John davis'
   let r = nlp(str)

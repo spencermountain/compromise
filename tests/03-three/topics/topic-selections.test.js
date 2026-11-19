@@ -5,7 +5,7 @@ const here = '[three/topics/topic-selections] '
 test('topics:', function (t) {
   const list = [
     ['Tony Hawk lives in Toronto. Tony Hawk is cool.', 'tony hawk'],
-    ['I live Toronto. I think Toronto is cool.', 'toronto'],
+    ['I live in Toronto and I think Toronto is cool.', 'toronto'],
     ['The EACD united in 1972. EACD must follow regulations.', 'eacd'],
     // ['The Elkjsdflkjsdf sells hamburgers. I think the Elkjsdflkjsdf eats turky.', 'elkjsdflkjsdf'],
     // ["Toronto's citizens love toronto!", 'toronto'],
@@ -15,6 +15,13 @@ test('topics:', function (t) {
     const arr = nlp(a[0]).topics().out('freq')
     t.equal(arr[0] && arr[0].normal, a[1], here + a[0])
   })
+  t.end()
+})
+
+test('topics-document-order:', function (t) {
+  const doc = nlp('Tony Hawk lives in Toronto. Tony Hawk is cool.')
+  t.deepEqual(doc.topics().out('array'), ['Tony Hawk', 'Toronto.', 'Tony Hawk'], here + 'topics in document order')
+  t.equal(doc.topics(0).text(), 'Tony Hawk', here + 'first topic is the first mention')
   t.end()
 })
 

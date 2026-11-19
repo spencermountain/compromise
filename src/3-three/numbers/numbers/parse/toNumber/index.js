@@ -3,6 +3,7 @@ import words from './data.js'
 import isValid from './validate.js'
 import parseDecimals from './parseDecimals.js'
 import parseNumeric from './parseNumeric.js'
+import { shiftDecimal } from '../../_conversion.js'
 const improperFraction = /^([0-9,. ]+)\/([0-9,. ]+)$/
 
 //some numbers we know
@@ -19,6 +20,15 @@ const casualCounts = { few: 3, couple: 2 }
 // a 'section' is something like 'fifty-nine thousand'
 // turn a section into something we can add to - like 59000
 const section_sum = obj => Object.values(obj).reduce((a, b) => a + b, 0)
+
+// '2.01 million' - shift the decimal point, as 2.01 * 1000000 is 2009999.9999999998
+const scale = (num, mult) => {
+  const places = Math.log10(mult)
+  if (Number.isInteger(places)) {
+    return shiftDecimal(num, places)
+  }
+  return num * mult
+}
 
 //turn a string into a number
 const parse = function (str) {
@@ -62,14 +72,14 @@ const parse = function (str) {
       let rest = terms.slice(i + 1)
       // 'six point five million' - the decimals end at a multiplier
       const end = rest.findIndex(t => Object.hasOwn(words.multiples, t))
-      let scale = 1
+      let mults = []
       if (end !== -1) {
-        const mults = rest.slice(end).filter(t => Object.hasOwn(words.multiples, t))
-        scale = mults.reduce((n, t) => n * words.multiples[t], 1)
+        mults = rest.slice(end).filter(t => Object.hasOwn(words.multiples, t))
         rest = rest.slice(0, end)
       }
-      sum += parseDecimals(rest)
-      sum *= scale * modifier.amount
+      sum = parseDecimals(sum, rest)
+      sum = mults.reduce((n, t) => scale(n, words.multiples[t]), sum)
+      sum *= modifier.amount
       return isNegative ? -sum : sum
     }
 
@@ -123,7 +133,7 @@ const parse = function (str) {
       }
       // 'a million million' - nothing counted since the last multiple, so multiply
       if (last_mult !== null && Object.keys(has).length === 0) {
-        sum = (sum || 1) * mult
+        sum = scale(sum || 1, mult)
         last_mult = mult
         if (mult >= 1000) {
           last_big = { sum, mult }
@@ -133,7 +143,7 @@ const parse = function (str) {
       //natural order of things
       //five thousand, one hundred..
       if (last_mult === null || mult < last_mult) {
-        sum += (section_sum(has) || 1) * mult
+        sum += scale(section_sum(has) || 1, mult)
         last_mult = mult
         has = {}
       } else {
@@ -146,7 +156,7 @@ const parse = function (str) {
         if (last_big !== null && last_big.mult > mult) {
           base = last_big.sum
         }
-        sum = base + (sum - base || 1) * mult
+        sum = base + scale(sum - base || 1, mult)
         has = {}
       }
       if (mult >= 1000) {

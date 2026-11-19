@@ -1,8 +1,9 @@
 import words from './data.js'
 
-//concatenate into a string with leading '0.'
-const parseDecimals = function (arr) {
-  let str = '0.'
+// append the decimal digits to the whole number, as a string
+// (6 + 0.94 is 6.9399999999999995)
+const parseDecimals = function (whole, arr) {
+  let str = ''
   for (let i = 0; i < arr.length; i++) {
     const w = arr[i]
     if (Object.hasOwn(words.small, w)) {
@@ -10,10 +11,16 @@ const parseDecimals = function (arr) {
     } else if (/^[0-9]$/.test(w)) {
       str += w
     } else {
-      return 0
+      return whole
     }
   }
-  return parseFloat(str)
+  if (str === '') {
+    return whole
+  }
+  if (Number.isSafeInteger(whole) && whole >= 0) {
+    return Number(`${whole}.${str}`)
+  }
+  return whole + parseFloat('0.' + str)
 }
 
 export default parseDecimals

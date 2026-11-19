@@ -15,8 +15,8 @@ const length = (a, b) => b.normal.trim().length - a.normal.trim().length
 /** count the # of terms in each match - most first */
 const wordCount = (a, b) => b.words - a.words
 
-/** count the # of terms in each match */
-const sequential = (a, b) => b[0] - a[0] || (a[1] > b[1] ? 1 : -1)
+/** document order - sentence, then start, then end of each match */
+const sequential = (a, b) => a.pointer[0] - b.pointer[0] || a.pointer[1] - b.pointer[1] || a.pointer[2] - b.pointer[2]
 
 /** sort by # of duplicates in the document*/
 const byFreq = function (arr) {

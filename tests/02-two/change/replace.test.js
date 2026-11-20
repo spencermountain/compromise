@@ -225,3 +225,14 @@ test('replace-with-pre-post', function (t) {
 
   t.end()
 })
+
+test('replace-with-empty-string', function (t) {
+  let doc = nlp('the dog sat on the mat')
+  doc.replace('dog', '')
+  t.equal(doc.text(), 'the sat on the mat', here + 'removes the match')
+
+  doc = nlp('the dog sat. the dog ran.')
+  doc.replace('dog', '')
+  t.equal(doc.text(), 'the sat. the ran.', here + 'in each sentence')
+  t.end()
+})

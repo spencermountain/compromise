@@ -149,7 +149,7 @@ fns.replaceWith = function (input, keep = {}) {
 }
 
 fns.replace = function (match, input, keep) {
-  if (match && !input) {
+  if (match && input === undefined) {
     return this.replaceWith(match, keep)
   }
   const m = this.match(match)

@@ -82,3 +82,15 @@ test('to-text keeps hundreds in their group:', function (t) {
   t.equal(str, 'one million nine hundred ninety four thousand six hundred and eighty third', here + '1994683rd')
   t.end()
 })
+
+test('to-text keeps tiny decimals:', function (t) {
+  let str = nlp('0.00000001').numbers().toText().text()
+  t.equal(str, 'point zero zero zero zero zero zero zero one', here + '0.00000001')
+
+  str = nlp('0.0000005').numbers().toText().text()
+  t.equal(str, 'point zero zero zero zero zero zero five', here + '0.0000005')
+
+  str = nlp('one billionth').numbers().toCardinal().text()
+  t.equal(str, 'point zero zero zero zero zero zero zero zero one', here + 'one billionth')
+  t.end()
+})

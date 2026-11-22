@@ -192,7 +192,7 @@ const parseTime = function (doc, context) {
   }
 
   // 'this morning at 4'
-  m = time.match('this? [<desc>(morning|afternoon|evening|tonight)] at [<time>(#Cardinal|#Time)]')
+  m = time.match('this? [<desc>(morning|afternoon|evening|night|tonight)] at [<time>(#Cardinal|#Time)]')
   if (m.found) {
     const g = m.groups()
     const str = g.time.text('reduced')
@@ -207,7 +207,7 @@ const parseTime = function (doc, context) {
       if (desc === 'morning') {
         s = s.ampm('am')
       }
-      if (desc === 'afternoon' || desc === 'evening' || desc === 'tonight') {
+      if (desc === 'afternoon' || desc === 'evening' || desc === 'night' || desc === 'tonight') {
         s = s.ampm('pm')
       }
       return { result: s.time(), m }

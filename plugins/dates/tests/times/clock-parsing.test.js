@@ -51,6 +51,8 @@ test(here + 'clock start and end times', function (t) {
     ['wednesday at 3pm', '3:00pm'],
     ['wednesday afternoon at 2', '2:00pm'],
     ['tomorrow afternoon at 2', '2:00pm'],
+    ['friday night at 8', '8:00pm'],
+    ['tomorrow night at 7', '7:00pm'],
     ['3pm to 7 tomorrow', '3:00pm', '7:00pm'],
     ['between 3 and 6 tuesday', '3:00pm', '6:00pm'],
     ['sometime after 4', '4:00pm'],

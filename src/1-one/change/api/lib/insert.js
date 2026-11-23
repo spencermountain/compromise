@@ -31,7 +31,9 @@ const movePunct = (source, end, needle) => {
   if (juicy.test(post)) {
     const punct = post.match(juicy).join('') //not perfect
     const last = needle.at(-1)
-    last.post = punct + last.post
+    // keep it after any closing brackets or quotes of the new words
+    const closing = last.post.trimEnd()
+    last.post = closing + punct + last.post.slice(closing.length)
     // remove it, from source
     wasLast.post = wasLast.post.replace(juicy, '')
   }

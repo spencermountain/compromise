@@ -19,7 +19,9 @@ const capture = fn => {
 test('debug prints every tag color', function (t) {
   // one word for each color in the tagset
   const doc = nlp('the quick dog quickly ate four big apples in June')
-  const out = capture(() => doc.debug()).join('\n').replace(/\x1b\[\d+m/g, '') // eslint-disable-line no-control-regex
+  const out = capture(() => doc.debug())
+    .join('\n')
+    .replace(/\x1b\[\d+m/g, '') // eslint-disable-line no-control-regex
   doc.terms().forEach(term => {
     t.ok(out.includes(`'${term.text('trim')}'`), here + term.text())
   })

@@ -2,7 +2,7 @@ const notPlural = '(#Pron|#Place|#Val|#Pers|#Uncountable|#Month|#WeekDay|#Holida
 
 const isPlural = function (m, root) {
   // const { looksPlural } = m.world.methods.two
-  if (m.has('#Plur')) {
+  if (root.has('#Plur')) {
     return true
   }
   // two singular nouns are plural noun phrase

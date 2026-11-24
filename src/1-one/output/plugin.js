@@ -1,6 +1,7 @@
 import api from './api/index.js'
 import { debug, hash } from './methods/index.js'
 import { fromSpec, testSpec } from './fromSpec.js'
+import { parseSpec } from './_spec-lib.js'
 
 export default {
   lib: {
@@ -12,6 +13,7 @@ export default {
     one: {
       hash,
       debug,
+      parseSpec,
     },
   },
 }

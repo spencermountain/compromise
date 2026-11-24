@@ -81,6 +81,12 @@ doc.nouns().toPlural();   doc.text()   // 'one good dogs'
 
 let d2 = nlp('three turnovers')
 d2.nouns().toSingular();  d2.text()    // 'three turnover'
+
+// the article and the next verb follow along ({ agreement: false } to skip)
+let d3 = nlp('she sells seashells')
+d3.nouns().toSingular();  d3.text()    // 'she sells a seashell'
+let d4 = nlp('a captain is here')
+d4.nouns().toPlural();    d4.text()    // 'captains are here'
 ```
 
 ## Work with numbers

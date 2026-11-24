@@ -13,6 +13,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - date-plugin issues #1266 #1268 #1274 #1275 #1279
 - **[fix]** - mutation issues #1280 #1278
 - **[fix]** - decimal-parsing issue #1273
+- **[fix]** - doc.debug() runtime error
 -->
 
 #### 14.20.0 [Nov 2026]

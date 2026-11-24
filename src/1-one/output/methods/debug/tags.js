@@ -7,8 +7,9 @@ const tagString = function (tags, model) {
       if (!Object.hasOwn(model.one.tagSet, tag)) {
         return tag
       }
-      const c = model.one.tagSet[tag].color || 'blue'
-      return cli[c](tag)
+      // an unknown color should not break the output
+      const paint = cli[model.one.tagSet[tag].color] || cli.blue
+      return paint(tag)
     })
   }
   return tags.join(', ')

@@ -283,12 +283,53 @@ test('toSingular - keeps case:', function (t) {
     [`Those are Great Danes`, `Those are Great Dane`],
     [`The Children played`, `The Child played`],
     [`I saw Mice`, `I saw Mouse`],
-    [`I saw MICE`, `I saw MOUSE`],
+    [`I saw MICE`, `I saw a MOUSE`],
   ]
   arr.forEach(function (a) {
     const doc = nlp(a[0])
     doc.nouns().toSingular()
     t.equal(doc.text(), a[1], here + '[case] ' + a[0])
   })
+  t.end()
+})
+
+test('toSingular - adds an article:', function (t) {
+  const arr = [
+    // bare plurals get one
+    [`She sells seashells by the seashore.`, `She sells a seashell by the seashore.`],
+    [`he likes big red apples`, `he likes a big red apple`],
+    [`she ate oranges`, `she ate an orange`],
+    [`we waited for hours`, `we waited for an hour`],
+    [`they wore uniforms`, `they wore a uniform`],
+    // before any adjectives
+    [`they are honest men`, `they are an honest man`],
+    [`he has really old cars`, `he has a really old car`],
+    // at the start of a sentence
+    [`Seashells wash up here`, `A seashell washes up here`],
+    // a proper noun doesn't take one
+    [`he likes Toronto restaurants`, `he likes a Toronto restaurant`],
+    [`he hired FBI agents`, `he hired an FBI agent`],
+    [`she met NASA officials`, `she met a NASA official`],
+    [`she met Canadians`, `she met Canadian`],
+    // these already have one
+    [`my old dogs bark`, `my old dog barks`],
+    [`the very big dogs ran`, `the very big dog ran`],
+    [`the dogs ran`, `the dog ran`],
+    [`these dogs bark`, `these dog barks`],
+    [`no dogs allowed`, `no dog allowed`],
+    [`all dogs bark`, `all dog barks`],
+    [`i saw two dogs`, `i saw two dog`],
+    // fragments are left alone
+    [`seashells`, `seashell`],
+  ]
+  arr.forEach(function (a) {
+    const doc = nlp(a[0])
+    doc.nouns().toSingular()
+    t.equal(doc.text(), a[1], here + '[article] ' + a[0])
+  })
+  // opt-out
+  const doc = nlp('She sells seashells by the seashore.')
+  doc.nouns().toSingular({ agreement: false })
+  t.equal(doc.text(), 'She sells seashell by the seashore.', here + 'agreement:false')
   t.end()
 })

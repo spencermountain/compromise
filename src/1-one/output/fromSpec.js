@@ -1,7 +1,7 @@
 import debug from '../../API/debug/debug.js'
 import specFailures from './_spec-failures.js'
 import { logSpec, logLine } from './_spec-log.js'
-import { parseLine, toMatchString, applyTags } from './_spec-lib.js'
+import { parseSpec, toMatchString, applyTags } from './_spec-lib.js'
 
 const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMode = 'ignore', verbose = false } = {}) {
   if (!['ignore', 'use'].includes(tagMode) || !['ignore', 'throw', 'retain', 'log'].includes(failureMode)) {
@@ -10,29 +10,24 @@ const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMo
   const aliases = this.world().model.one.tagAliases
   const result = this('')
   result.failures = []
-  spec.split('\n').forEach((line, index) => {
-    if (!line.trim() || /^\s*#/.test(line)) {
-      return
-    }
-    const { text, tags } = parseLine(line)
+  parseSpec(spec).forEach(({ line, text, tags }) => {
     const doc = tagMode === 'use' ? this.tokenize(text) : this(text)
     let failures = []
     if (tags !== null && (tagMode === 'use' || failureMode !== 'ignore')) {
       const count = doc.docs.reduce((sum, terms) => sum + terms.length, 0)
-      const patterns = tags.map(slot => toMatchString([slot], aliases))
       const pattern = toMatchString(tags, aliases)
       // Assigning slots is unsafe when the shape or syntax is invalid.
       const canApply = count === tags.length && pattern !== null
       if (tagMode === 'use' && !canApply && failureMode !== 'log') {
-        const invalid = specFailures(doc, tags, patterns, aliases)
+        const invalid = specFailures(doc, tags, aliases)
         throw new Error(`${text.trim()} - ${invalid.map(failure => failure.message).join('; ')}`)
       }
       if (tagMode === 'use') {
         applyTags(doc, canApply ? tags : null, aliases)
       }
-      if (failureMode !== 'ignore' && (count !== tags.length || pattern === null || !doc.has(pattern))) {
-        failures = specFailures(doc, tags, patterns, aliases)
-          .map(failure => ({ line: index + 1, text: text.trim(), ...failure }))
+      if (failureMode !== 'ignore') {
+        failures = specFailures(doc, tags, aliases)
+          .map(failure => ({ line, text: text.trim(), ...failure }))
         result.failures.push(...failures)
       }
     } else if (tagMode === 'use') {

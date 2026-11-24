@@ -95,10 +95,10 @@ export interface Nouns extends View {
   isPlural: () => View
   /** get any adjectives describing this noun*/
   adjectives: () => View
-  /** 'football captain' → 'football captains' */
-  toPlural: (setArticle?: boolean) => View
-  /** 'turnovers' → 'turnover' */
-  toSingular: (setArticle?: boolean) => View
+  /** 'a football captain' → 'football captains'. Pass {agreement: false} to keep the article and verb as they are */
+  toPlural: (opts?: { agreement?: boolean }) => View
+  /** 'sells seashells' → 'sells a seashell'. Pass {agreement: false} to keep the article and verb as they are */
+  toSingular: (opts?: { agreement?: boolean }) => View
 }
 
 export interface Numbers extends View {

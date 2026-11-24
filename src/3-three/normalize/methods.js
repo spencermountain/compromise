@@ -69,7 +69,7 @@ const methods = {
 
   // turn "batmobiles" into "batmobile"
   'nouns': (doc) => {
-    doc.nouns().toSingular()
+    doc.nouns().toSingular({ agreement: false })
   },
   // turn all verbs into Infinitive form - "I walked" → "I walk"
   'verbs': (doc) => {

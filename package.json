@@ -58,6 +58,12 @@
         "default": "./builds/three/compromise-three.cjs"
       }
     },
+    "./shared": {
+      "import": {
+        "types": "./types/shared.d.ts",
+        "default": "./src/shared/index.js"
+      }
+    },
     "./misc": {
       "import": {
         "types": "./types/misc.d.ts"

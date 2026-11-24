@@ -364,3 +364,13 @@ test(here + 'pluralization handles irregular endings through noun selections', t
   }
   t.end()
 })
+
+test('toPlural - agreement:', function (t) {
+  let doc = nlp('a captain is here')
+  doc.nouns().toPlural()
+  t.equal(doc.text(), 'captains are here', here + 'agreement on')
+  doc = nlp('a captain is here')
+  doc.nouns().toPlural({ agreement: false })
+  t.equal(doc.text(), 'a captains is here', here + 'agreement off')
+  t.end()
+})

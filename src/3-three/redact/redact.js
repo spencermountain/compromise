@@ -39,7 +39,8 @@ const redact = function (opts = {}, blockStr = '██████████',
   opts = { ...defaults, ...opts }
   // each key is also the View method that finds them
   Object.keys(defaults).forEach(k => {
-    if (opts[k] !== false) {
+    // skip finders that this build or language does not have
+    if (opts[k] !== false && this[k]) {
       const m = redactMatch(this[k](), blockStr, keep)
       if (hideTags[k]) {
         m.unTag(hideTags[k])

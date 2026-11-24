@@ -63,17 +63,19 @@ const api = function (View) {
       return res.getNth(n)
     }
 
-    toPlural(n) {
+    // pass { agreement: false } to leave the surrounding words alone
+    toPlural(n, opts) {
+      opts = typeof n === 'object' ? n : opts
       return this.getNth(n).map(m => {
-        return toPlural(m, parseNoun(m))
+        return toPlural(m, parseNoun(m), opts)
       })
-      // return new Nouns(all.document, all.pointer)
     }
 
-    toSingular(n) {
+    toSingular(n, opts) {
+      opts = typeof n === 'object' ? n : opts
       return this.getNth(n).map(m => {
         const res = parseNoun(m)
-        return toSingular(m, res)
+        return toSingular(m, res, opts)
       })
     }
   }

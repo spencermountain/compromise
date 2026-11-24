@@ -1,23 +1,18 @@
 import nlp from '../02-two/lib.js'
+import { checkSpec } from '../../src/shared/index.js'
+nlp.plugin(checkSpec)
 
 // One Tape assertion per spec line; leave t.end() to the caller.
 const assertSpec = (t, spec, message = '') => {
-  const lines = Array.isArray(spec) ? spec.join('\n') : spec
-  lines.split('\n').forEach(line => {
-    line = line.trim()
-    if (!line || line.startsWith('#')) {
+  const prefix = message ? message + ' ' : ''
+  nlp.checkSpec([spec].flat().join('\n')).forEach(res => {
+    if (res.status !== 'fail') {
+      const block = res.tags ? ` {${res.tags.join(',')}}` : ''
+      t.pass(prefix + res.text + block)
       return
     }
-    const failing = nlp.testSpec(line, false)
-    const prefix = message ? message + ' ' : ''
-    if (failing.failures.length > 0) {
-      const words = failing.failures.map(failure => {
-        return failure.word ? `'${failure.word}'` : failure.message
-      }).join(', ')
-      t.fail(prefix + failing.out('spec') + ' - !=' + words)
-    } else {
-      t.pass(prefix + line)
-    }
+    const words = res.failures.map(failure => `'${failure.word || failure.want}'`).join(', ')
+    t.fail(prefix + nlp(res.text).out('spec') + ' - !=' + words)
   })
 }
 

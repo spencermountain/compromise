@@ -1,6 +1,13 @@
+import { toMatchString } from './_spec-lib.js'
+
 // Diagnostics describe the original parse, before the returned View is mutated.
-const specFailures = (doc, slots, patterns, aliases) => {
+const specFailures = (doc, slots, aliases) => {
   const terms = doc.docs.flat()
+  const patterns = slots.map(slot => toMatchString([slot], aliases))
+  const pattern = toMatchString(slots, aliases)
+  if (terms.length === slots.length && pattern !== null && doc.has(pattern)) {
+    return [] // valid
+  }
   const failures = []
   if (terms.length !== slots.length) {
     failures.push({

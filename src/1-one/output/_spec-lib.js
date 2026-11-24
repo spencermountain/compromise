@@ -1,13 +1,16 @@
 const lastBrace = /\{(?=[^{]*$)/ // split on the last { only
-const comment = /\}[ \t]*#.*$/s // an optional '# comment' after the last {tags} block
+const comment = /\}[ \t]*#(.*)$/s // an optional '# comment' after the last {tags} block
 
 
 // parse the spec output
 const parseLine = function (line = '') {
   let [text, tags] = line.split(lastBrace) // eslint-disable-line prefer-const
   if (tags === undefined) {
-    return { text: text.replace(/\s#.*$/s, '').trimEnd(), tags: null } // no {tags} block on this line
+    const note = text.match(/\s#(.*)$/s)?.[1] || ''
+    // no {tags} block on this line
+    return { text: text.replace(/\s#.*$/s, '').trimEnd(), tags: null, comment: note.trim() }
   }
+  const note = (tags.match(comment)?.[1] || '').trim()
   tags = tags.replace(comment, '}') // drop the comment - only ever one, always last
   tags = tags.split(',').map(tag => tag.trim())
   const lastTag = tags[tags.length - 1]
@@ -16,7 +19,18 @@ const parseLine = function (line = '') {
   if (tags.length === 1 && tags[0].length === 1 && tags[0][0] === '') {
     tags = [] // empty '{}'; retain empty slots in nonempty lists
   }
-  return { text, tags }
+  return { text, tags, comment: note }
+}
+
+// parse a whole spec into [{ line, text, tags, comment }], skipping blank and comment lines
+const parseSpec = function (spec = '') {
+  const list = []
+  spec.split('\n').forEach((str, i) => {
+    if (str.trim() && !/^\s*#/.test(str)) {
+      list.push({ line: i + 1, ...parseLine(str) })
+    }
+  })
+  return list
 }
 
 // make a match syntax looping through the arrays of tags
@@ -56,4 +70,4 @@ const applyTags = (doc, slots, aliases) => {
   })
 }
 
-export { parseLine, toMatchString, applyTags }
+export { parseSpec, toMatchString, applyTags }

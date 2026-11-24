@@ -3,7 +3,7 @@ import fastTag from '../_fastTag.js'
 import fillTags from '../3rd-pass/_fillTags.js'
 import { titleCase } from '../_lib.js'
 import { hasAny, toSet } from '../../../../_lib.js'
-import { Date, WeekDay, Unit, Expr, Comp, Ger, Det, NN, Prop, RomanNumeral, Month } from '../../../tagSet/_lib.js'
+import { Date, WeekDay, Unit, Expr, Comp, Ger, Det, NN, Prop, RomanNumeral, Month, Vb } from '../../../tagSet/_lib.js'
 // the debug reason for every tag this pass sets
 const reason = '2-case'
 
@@ -37,6 +37,11 @@ const checkCase = function (terms, i, model) {
     }
     // A heading can start a new clause: 'Tutorial: Creating a cake'.
     if (i === 0 && term.tags.has(Ger) && terms[i + 1]?.tags.has(Det)) {
+      return null
+    }
+    // a gerund after a verb is still a gerund when capitalized: 'he was Creating a cake',
+    // unless it starts a titlecase name like 'Giving Tuesday'
+    if (term.tags.has(Ger) && terms[i - 1]?.tags.has(Vb) && !titleCase.test(terms[i + 1]?.text || '')) {
       return null
     }
     // first word in a quotation?

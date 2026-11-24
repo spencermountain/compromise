@@ -16,7 +16,10 @@ export interface SpecCheck {
   status: 'pass' | 'fail' | 'skip'
   failures: SpecCheckFailure[]
 }
-/** plugin adding nlp.checkSpec(spec), which returns one SpecCheck per spec line */
+/**
+ * plugin adding nlp.checkSpec(spec), which returns one SpecCheck per spec line,
+ * and nlp.assertSpec(t, spec, prefix?), which calls t.pass() or t.fail() once per line
+ */
 export const checkSpec: Plugin
 /** plugin adding .redact(), which uses whichever finders (.people(), .places(), ...) the build has */
 export const redact: Plugin

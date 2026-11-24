@@ -20,14 +20,14 @@ const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMo
       const canApply = count === tags.length && pattern !== null
       if (tagMode === 'use' && !canApply && failureMode !== 'log') {
         const invalid = specFailures(doc, tags, aliases)
-        throw new Error(`${text.trim()} - ${invalid.map(failure => failure.message).join('; ')}`)
+        throw new Error(`${text} - ${invalid.map(failure => failure.message).join('; ')}`)
       }
       if (tagMode === 'use') {
         applyTags(doc, canApply ? tags : null, aliases)
       }
       if (failureMode !== 'ignore') {
         failures = specFailures(doc, tags, aliases)
-          .map(failure => ({ line, text: text.trim(), ...failure }))
+          .map(failure => ({ line, text, ...failure }))
         result.failures.push(...failures)
       }
     } else if (tagMode === 'use') {
@@ -40,7 +40,7 @@ const fromSpec = function (spec, { tags: tagMode = 'ignore', failures: failureMo
       console.log(logLine(text, tags, detail)) //eslint-disable-line no-console
     }
     if (failures.length > 0 && failureMode === 'throw') {
-      throw new Error(`${text.trim()} - ${detail}`)
+      throw new Error(`${text} - ${detail}`)
     }
     if (failureMode === 'retain' && tags !== null && failures.length === 0) {
       return

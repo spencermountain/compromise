@@ -14,6 +14,10 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - mutation issues #1280 #1278
 - **[fix]** - decimal-parsing issue #1273
 - **[fix]** - doc.debug() runtime error
+- **[new]** - `compromise/shared` export (esm-only), with `checkSpec` and `redact` plugins
+- **[new]** - `nlp.methods().one.parseSpec()`
+- **[change]** - `.redact()` skips finders the build does not have, instead of throwing
+- **[change]** - `fromSpec()` text drops leading indentation, and the space before a tag block
 -->
 
 #### 14.20.0 [Nov 2026]

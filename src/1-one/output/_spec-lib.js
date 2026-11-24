@@ -8,7 +8,7 @@ const parseLine = function (line = '') {
   if (tags === undefined) {
     const note = text.match(/\s#(.*)$/s)?.[1] || ''
     // no {tags} block on this line
-    return { text: text.replace(/\s#.*$/s, '').trimEnd(), tags: null, comment: note.trim() }
+    return { text: text.replace(/\s#.*$/s, '').trim(), tags: null, comment: note.trim() }
   }
   const note = (tags.match(comment)?.[1] || '').trim()
   tags = tags.replace(comment, '}') // drop the comment - only ever one, always last
@@ -19,7 +19,7 @@ const parseLine = function (line = '') {
   if (tags.length === 1 && tags[0].length === 1 && tags[0][0] === '') {
     tags = [] // empty '{}'; retain empty slots in nonempty lists
   }
-  return { text, tags, comment: note }
+  return { text: text.trim(), tags, comment: note }
 }
 
 // parse a whole spec into [{ line, text, tags, comment }], skipping blank and comment lines

@@ -22,7 +22,7 @@ const checkSpec = function (spec) {
   const aliases = model.one.tagAliases
   const list = []
   methods.one.parseSpec(spec).forEach(({ line, text, tags, comment }) => {
-    const res = { line, text: text.trim(), tags: null, comment, status: 'skip', failures: [] }
+    const res = { line, text, tags: null, comment, status: 'skip', failures: [] }
     if (tags !== null) {
       const doc = this(text)
       res.tags = tags.map(slot => slot.join('|'))

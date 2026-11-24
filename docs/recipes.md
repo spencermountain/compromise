@@ -69,9 +69,9 @@ let doc = nlp('Mary called John')
 doc.people().replaceWith('███')
 doc.text()                       // '███ called ███'
 ```
-There is also a built-in `.redact()` that removes **people, places, emails, and phone numbers** at
-once. Note it does **not** currently redact organizations — remove those yourself with
-`doc.organizations().replaceWith('███')` if you need to.
+There is also a built-in `.redact()` that removes **people, places, organizations, emails, and
+phone numbers** at once (plus money, urls, and more). Turn any of them off with
+`doc.redact({ organizations: false })`.
 
 ## Pluralize / singularize nouns
 

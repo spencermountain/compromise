@@ -1,4 +1,5 @@
 import checkSpec from './checkSpec.js'
+import assertSpec from './assertSpec.js'
 
-// adds nlp.checkSpec()
-export default { lib: { checkSpec } }
+// adds nlp.checkSpec() and nlp.assertSpec()
+export default { lib: { checkSpec, assertSpec } }

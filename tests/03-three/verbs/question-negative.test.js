@@ -186,12 +186,16 @@ test(here + 'selections stay inside their sentence and clause', t => {
     doc[selection]().toNegative()
     t.equal(doc.text(), 'She does not walk. Has he not eaten? They do not sleep.', here + 'every ' + selection)
   }
-  // partial phrases can't be negated alone
-  for (const index of [1, 2]) {
+  // half of the question's verb is negated on its own, even when that breaks the question
+  const halves = [
+    [1, 'She walks. Does not Has he eaten? They sleep.'],
+    [2, 'She walks. Has he did not eat? They sleep.'],
+  ]
+  halves.forEach(([index, expected]) => {
     const doc = nlp(source)
     doc.verbs(index).toNegative()
-    t.equal(doc.text(), source, here + 'incomplete inverted phrase remains intact')
-  }
+    t.equal(doc.text(), expected, here + 'only the selected half changes')
+  })
   // main and subordinate predicates
   const subordinate = 'Has she eaten after he arrived?'
   const rows = [

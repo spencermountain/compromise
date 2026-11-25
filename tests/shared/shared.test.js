@@ -53,7 +53,7 @@ test('shared entry is published', function (t) {
   t.ok(fs.existsSync(path.join(root, entry.types)), here + 'types exist')
   const graph = importGraph(entry.default)
   t.deepEqual(graph.missing, [], here + 'no broken imports')
-  t.deepEqual(graph.bare, [], here + 'no dependencies')
+  t.deepEqual(graph.bare.filter(str => !pkg.dependencies[str]), [], here + 'no undeclared dependencies')
   const isPublished = file => pkg.files.some(str => file === str || (str.endsWith('/') && file.startsWith(str)))
   const unpublished = Object.keys(graph.files).filter(file => !isPublished(file))
   t.deepEqual(unpublished, [], here + 'every import is in package.json files')

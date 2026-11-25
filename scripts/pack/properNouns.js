@@ -27,9 +27,16 @@ const lists = {
 
 // whole efrt strings, so any efrt unpack() can read them
 const packProperNouns = () => {
+  // one tag per word - a later list wins, like in the english lexicon
+  const byWord = {}
+  Object.keys(lists).forEach(tag => {
+    lists[tag].forEach(word => {
+      byWord[word] = tag
+    })
+  })
   const result = {}
   Object.keys(lists).forEach(tag => {
-    result[tag] = pack(lists[tag])
+    result[tag] = pack(lists[tag].filter(word => byWord[word] === tag))
   })
   return result
 }

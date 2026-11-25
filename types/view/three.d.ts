@@ -255,11 +255,6 @@ export interface People extends View {
 }
 
 // Verbs class
-export interface VerbOptions {
-  /** also change any verbs that lean on this one, so the sentence still reads properly. default true */
-  agree?: boolean
-}
-
 export interface Verbs extends View {
   /** grab the parsed verb-phrase */
   parse: (n?: number) => object[]
@@ -275,17 +270,17 @@ export interface Verbs extends View {
   isImperative: () => View
 
   /** 'walks' → 'walk' */
-  toInfinitive: (opts?: VerbOptions) => View
+  toInfinitive: () => View
   /** 'walked' → 'walks' */
-  toPresentTense: (opts?: VerbOptions) => View
+  toPresentTense: () => View
   /** 'will go' → 'went' */
-  toPastTense: (opts?: VerbOptions) => View
+  toPastTense: () => View
   /** 'walked' → 'will walk' */
-  toFutureTense: (opts?: VerbOptions) => View
+  toFutureTense: () => View
   /** 'walks' → 'walking' */
-  toGerund: (opts?: VerbOptions) => View
+  toGerund: () => View
   /** 'walks' → 'has walked' */
-  toPastParticiple: (opts?: VerbOptions) => View
+  toPastParticiple: () => View
 
   /** return all forms of these verbs */
   conjugate: () => object[]
@@ -294,9 +289,9 @@ export interface Verbs extends View {
   /** only verbs without 'not'*/
   isPositive: () => View
   /** "didn't study" → 'studied' */
-  toPositive: (opts?: VerbOptions) => View
+  toPositive: () => View
   /** 'went' → 'did not go'*/
-  toNegative: (opts?: VerbOptions) => View
+  toNegative: () => View
 }
 
 export interface Acronyms extends View {

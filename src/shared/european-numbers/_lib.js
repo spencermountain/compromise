@@ -1,12 +1,14 @@
 // a leading '-', or the real minus-sign, or one after a symbol - '$-5'
 const minus = /^\s*[-−]|\P{L}[-−]$/u
-const signs = /[-+−]/g
+const signs = /[-−]/g
 // any currency symbol - '$', '€', '₽'
 const currency = /\p{Sc}/u
 
 // a decimal-comma, unless the language's model says otherwise.
 // `ordinal` is regex-source for the ending of a numeric ordinal - '[ºª°]'
-const defaults = { decimal: ',', group: '.', ordinal: '' }
+// `loose` reads a lone decimal-mark before three digits as thousands - '7,938'
+// `percent` and `currencies` are the words that follow a number - 'per cento', 'euro'
+const defaults = { decimal: ',', group: '.', ordinal: '', loose: false, percent: [], currencies: [] }
 
 // the mark that groups thousands can't also be the decimal
 const groupMark = function (group, decimal) {

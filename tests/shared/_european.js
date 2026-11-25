@@ -25,4 +25,14 @@ out.nums = doc.match('#Value').docs.map(terms => read(terms[0].text, terms[0].pr
 // french groups with a space
 nlp.plugin({ model: { two: { europeanNumbers: { group: ' ' } } } })
 out.french = write(1234.5, { hasComma: true }, nlp.model().two.europeanNumbers)
+// the word beside a number - a language gives its own
+nlp.plugin({ words: { mille: 'Value', cinquanta: 'Value', cento: 'Value' } })
+nlp.plugin({ model: { two: { europeanNumbers: { percent: ['per cento'], currencies: ['euro'] } } } })
+const money = nlp('costa 5,30 € o mille euro e CHF 12 o 7 USD')
+out.spacedMoney = money.match('#Money').out('array')
+out.currency = money.match('#Currency').out('array')
+const pct = nlp('il 3,5 % e il cinquanta per cento')
+out.spacedPercent = pct.match('#Percent').out('array')
+out.cento = pct.match('cento').has('#Value')
+out.plain = nlp('per cento anni, 5, euro').match('(#Money|#Percent)').out('array')
 console.log(JSON.stringify(out))

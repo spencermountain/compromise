@@ -40,6 +40,12 @@ export interface EuropeanLocale {
   group?: string
   /** regex-source for the ending of a numeric ordinal - '[ºª°]' */
   ordinal?: string
+  /** read a lone decimal-mark before three digits as thousands - '7,938' */
+  loose?: boolean
+  /** the words for a percentage, after a number - 'per cento' */
+  percent?: string[]
+  /** the names of currencies, after a number - 'euro' */
+  currencies?: string[]
 }
 export interface EuropeanStyle {
   prefix?: string

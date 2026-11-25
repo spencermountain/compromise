@@ -13,7 +13,11 @@ const write = function (num, how = {}, locale = defaults) {
   let str = String(Math.abs(num))
   // leave '1e+21' alone
   if (/^[0-9]+(?:\.[0-9]+)?$/.test(str)) {
-    const decimal = how.decimal || locale.decimal
+    let decimal = how.decimal || locale.decimal
+    // '7,938' was grouped with a comma, so its decimal is a period
+    if (!how.decimal && how.group === decimal) {
+      decimal = groupMark(decimal, decimal)
+    }
     const parts = str.split('.')
     let int = parts[0]
     const fraction = parts[1]

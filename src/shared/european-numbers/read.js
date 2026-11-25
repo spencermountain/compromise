@@ -29,7 +29,8 @@ const findMarks = function (str, locale) {
   } else if (dots + commas === 1) {
     const mark = dots ? '.' : ','
     const isGroup = /^[1-9][0-9]{0,2}[.,][0-9]{3}$/.test(str)
-    if (soft || mark === locale.decimal || !isGroup) {
+    const isDecimal = mark === locale.decimal && !(locale.loose && isGroup)
+    if (soft || isDecimal || !isGroup) {
       decimal = mark // '3,5', and '3.5' anywhere
     } else {
       group = mark // '1.000' where the decimal is a comma

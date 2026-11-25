@@ -24,7 +24,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - date-plugin issues #1266 #1268 #1274 #1275 #1279
 - **[fix]** - mutation issues #1280 #1278
 - **[fix]** - decimal-parsing issue #1273
-- **[new]** - `compromise/shared` export (esm-only), with `checkSpec` and `redact` plugins
+- **[new]** - `compromise/shared` export (esm-only), with `checkSpec` and `europeanNumbers`
 - **[new]** - re-usable internal `nlp.methods().one.parseSpec()`
 
 agreement changes:

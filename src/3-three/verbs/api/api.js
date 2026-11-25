@@ -2,7 +2,6 @@ import select from '../../_select.js'
 import keepClass, { keepTags as keep } from '../../_lib.js'
 import find from '../find.js'
 import coordinate from './conjugate/coordinate.js'
-import { questionSelection } from './conjugate/question.js'
 import toJSON from './toJSON.js'
 import parseVerb from './parse/index.js'
 import toInf from './conjugate/toInfinitive.js'
@@ -19,38 +18,16 @@ import { doTense } from './lib.js'
 import { Inf, Aux, Neg } from '../../../2-two/preTagger/tagSet/_lib.js'
 import { Imperative, SimplePres } from './parse/grammar/forms.js'
 
-// a question splits its verb around the subject - '[does] he [walk]?' - so take all of it
-const wholeQuestion = function (verbs, target) {
-  let res = verbs
-  verbs.fullSentence().settle().forEach(sentence => {
-    const all = questionSelection(sentence, target)
-    if (all && all.intersection(verbs).found) {
-      res = res.union(all)
-    }
-  })
-  return res
-}
-
-// by default, heal the rest of the sentence. {agree: false} changes only the selected verbs
-const each = function (verbs, target, fn, n, opts) {
-  opts = n && typeof n === 'object' ? n : opts
-  verbs = verbs.getNth(n)
-  if (!opts || opts.agree !== false) {
-    verbs = wholeQuestion(verbs, target)
-  }
-  return coordinate(verbs, target, fn)
-}
-
 // convert each verb to a target form, leaving bare infinitives alone
-const convert = (target, fn) => function (n, opts) {
-  return each(this, target, vb => {
+const convert = (target, fn) => function (n) {
+  return coordinate(this.getNth(n), target, vb => {
     const parsed = parseVerb(vb)
     const info = getGrammar(vb, parsed)
     if (info.isInfinitive) {
       return vb
     }
     return fn(vb, parsed, info.form)
-  }, n, opts)
+  })
 }
 
 const api = function (View) {
@@ -115,8 +92,8 @@ const api = function (View) {
       return this.ifNo('#Neg')
     }
     /** remove 'not' from these verbs */
-    toPositive(n, opts) {
-      return each(this, 'positive', vb => {
+    toPositive() {
+      return coordinate(this, 'positive', vb => {
         const m = vb.match('do not #Verb')
         if (m.found) {
           m.remove('do not')
@@ -132,10 +109,10 @@ const api = function (View) {
           vb.remove(auxiliary)
         }
         return vb.remove('#Neg')
-      }, n, opts)
+      })
     }
-    toNegative(n, opts) {
-      return each(this, 'negative', vb => {
+    toNegative(n) {
+      return coordinate(this.getNth(n), 'negative', vb => {
         const parsed = parseVerb(vb)
         const info = getGrammar(vb, parsed)
         const res = toNegative(vb, parsed, info.form)
@@ -145,7 +122,7 @@ const api = function (View) {
         sentence.match('[(do|does|did)] not', 0).tag(Aux)
         sentence.compute('chunks')
         return res
-      }, n, opts)
+      })
     }
   }
   keepClass(Verbs, 'Verbs')

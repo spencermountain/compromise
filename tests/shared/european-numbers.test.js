@@ -167,7 +167,13 @@ test('european-numbers regexes', function (t) {
 })
 
 test('european-numbers defaults', function (t) {
-  t.deepEqual(europeanNumbers.model.two.europeanNumbers, { decimal: ',', group: '.', ordinal: '' }, here + 'model')
+  t.deepEqual(europeanNumbers.model.two.europeanNumbers, { decimal: ',', group: '.', ordinal: '', loose: false, percent: [], currencies: [] }, here + 'model')
+  // a language may read '7,938' as thousands
+  const loose = { decimal: ',', group: ' ', loose: true }
+  t.equal(read('7,938', '', loose).num, 7938, here + 'loose thousands')
+  t.equal(read('7,93', '', loose).num, 7.93, here + 'loose decimal')
+  t.equal(write(7939, read('7,938', '', loose), loose), '7,939', here + 'loose round-trip')
+  t.equal(read('+5%').prefix, '+', here + 'keeps a plus-sign')
   t.equal(read('1.000').num, 1000, here + 'reads with a decimal-comma')
   t.equal(read('3,5').num, 3.5, here + 'decimal-comma')
   t.equal(write(1234.5, { hasComma: true }), '1.234,5', here + 'writes with a decimal-comma')
@@ -189,5 +195,10 @@ test('european-numbers on a tokenize-only build', function (t) {
   t.deepEqual(out.nums, [1234.56, 3.5, 5.3, -5, 2], here + 'reads them')
   t.deepEqual(out.kept, ['12.05.2020'], here + 'leaves dates alone')
   t.equal(out.french, '1 234,5', here + 'a language sets its own marks')
+  t.deepEqual(out.spacedMoney, ['5,30', 'mille', '12', '7'], here + 'money beside a currency')
+  t.deepEqual(out.currency, ['€', 'euro', 'CHF', 'USD'], here + 'tags the currency')
+  t.deepEqual(out.spacedPercent, ['3,5', 'cinquanta'], here + 'percent beside its word')
+  t.deepEqual(out.cento, false, here + "'cento' is not a second number")
+  t.deepEqual(out.plain, [], here + 'no money without a currency')
   t.end()
 })

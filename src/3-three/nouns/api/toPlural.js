@@ -2,7 +2,8 @@ import hasPlural from './hasPlural.js'
 import { Plur } from '../../../2-two/preTagger/tagSet/_lib.js'
 import { keepTags as keep } from '../../_lib.js'
 import { matchCase, setChunk, isFixed } from './_lib.js'
-import { removeArticle } from './_article.js'
+import { removeArticle, withAdjectives } from './_article.js'
+import fixDeterminer from './_determiner.js'
 import fixVerb from './_verb.js'
 
 const nounToPlural = function (m, parsed, opts = {}) {
@@ -25,8 +26,12 @@ const nounToPlural = function (m, parsed, opts = {}) {
   }
   const agree = opts.agree !== false
   // 'dog barks' -> 'dogs bark' (before our own words move)
-  if (agree) {
+  if (agree && opts.verb !== false) {
     fixVerb(m, parsed, true)
+  }
+  // 'this dog' -> 'these dogs'
+  if (agree) {
+    fixDeterminer(withAdjectives(m), 'plural')
   }
   const after = m.match(parsed.root).replaceWith(plural, keep).tag(Plur, 'toPlural')
   setChunk(after)

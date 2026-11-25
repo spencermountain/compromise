@@ -13,10 +13,10 @@ const entry = pkg.exports['./shared'].import
 
 // the i18n libraries import these by name - removing one is a breaking change
 test('shared export names', function (t) {
-  const want = ['checkSpec', 'clauses', 'lazy', 'misc', 'properNouns', 'redact', 'tagSet', 'topics']
+  const want = ['checkSpec', 'clauses', 'lazy', 'misc', 'numerals', 'properNouns', 'redact', 'tagSet', 'topics']
   t.deepEqual(Object.keys(shared).sort(), want, here + 'export names')
   const pluginKeys = ['api', 'lib', 'model', 'methods', 'compute', 'hooks', 'tags', 'words', 'frozen', 'mutate']
-  want.filter(k => k !== 'properNouns' && k !== 'tagSet').forEach(k => {
+  want.filter(k => k !== 'properNouns' && k !== 'tagSet' && k !== 'numerals').forEach(k => {
     const keys = Object.keys(shared[k])
     t.ok(keys.length > 0 && keys.every(key => pluginKeys.includes(key)), here + k + ' is a plugin')
   })

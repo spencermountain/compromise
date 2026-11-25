@@ -33,6 +33,43 @@ export const misc: Plugin
 export const clauses: Plugin
 /** the english tagset, for use in a plugin as { tags: { ...tagSet } } */
 export const tagSet: { [tag: string]: { is?: string; not?: string[]; also?: string[]; aliases?: (string | null)[]; color?: string } }
+export interface NumeralLocale {
+  /** the decimal mark - ',' or '.' (default) */
+  decimal?: string
+  /** the mark written between thousands - '.', ',' (default), ' ' */
+  group?: string
+  /** matches the ending of a numeric ordinal - /^[ºª°]$/ */
+  ordinal?: RegExp | null
+}
+export interface NumeralStyle {
+  prefix?: string
+  suffix?: string
+  /** are thousands grouped? */
+  hasComma?: boolean
+  decimal?: string | null
+  group?: string | null
+}
+export interface NumeralRead extends Required<NumeralStyle> {
+  /** null when the text is not one number */
+  num: number | null
+  /** the ending of a numeric ordinal - 'ª' */
+  ordinal: string | null
+  /** a currency symbol found on either side - '€', 'R$' */
+  currency: string | null
+  isPercent: boolean
+  isFraction: boolean
+}
+export interface Numerals {
+  locale: Required<NumeralLocale>
+  /** '1.234,56 €' → { num: 1234.56, .. } - `pre` is the punctuation in front of the term */
+  read: (str: string, pre?: string) => NumeralRead
+  /** 1234.56 → '1.234,56' - pass a read() result to write it back the same way */
+  write: (num: number, how?: NumeralStyle) => string
+  /** preTagger rules, as [regex, tags, example] - to be tested on a term's text */
+  regexes: [RegExp, string[], string][]
+}
+/** a reader and writer of numbers written in digits, for one language's decimal and thousands marks */
+export const numerals: (locale?: NumeralLocale) => Numerals
 /** efrt-packed names of people and places, keyed by tag - read each with efrt's unpack() */
 export const properNouns: {
   ProperNoun: string

@@ -19,7 +19,7 @@ const isPossessive = root => root.has('#Poss') || root.docs.some(terms => terms.
 // an acronym, already pluralized - 'CDs'
 const isPluralAcronym = root => /^\p{Lu}{2,}s$/u.test(root.text('trim'))
 
-// these stay as they are, and so do the words around them
-const isFixed = root => isPossessive(root) || isPluralAcronym(root)
+// these stay as they are, and so do the words around them - "boys'", 'CDs', 'cats/dogs'
+const isFixed = root => isPossessive(root) || isPluralAcronym(root) || root.text().includes('/')
 
 export { matchCase, setChunk, hasApostrophe, isPossessive, isFixed }

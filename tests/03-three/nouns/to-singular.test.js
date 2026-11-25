@@ -302,7 +302,7 @@ test('toSingular - adds an article:', function (t) {
     [`we waited for hours`, `we waited for an hour`],
     [`they wore uniforms`, `they wore a uniform`],
     // before any adjectives
-    [`they are honest men`, `they are an honest man`],
+    [`she met honest men`, `she met an honest man`],
     [`he has really old cars`, `he has a really old car`],
     // at the start of a sentence
     [`Seashells wash up here`, `A seashell washes up here`],
@@ -315,7 +315,7 @@ test('toSingular - adds an article:', function (t) {
     [`my old dogs bark`, `my old dog barks`],
     [`the very big dogs ran`, `the very big dog ran`],
     [`the dogs ran`, `the dog ran`],
-    [`these dogs bark`, `these dog barks`],
+    [`these dogs bark`, `this dog barks`],
     [`no dogs allowed`, `no dog allowed`],
     [`all dogs bark`, `all dog barks`],
     [`i saw two dogs`, `i saw two dog`],

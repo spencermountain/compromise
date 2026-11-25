@@ -1,12 +1,20 @@
 import { Sing } from '../../../2-two/preTagger/tagSet/_lib.js'
 import { keepTags as keep } from '../../_lib.js'
 import { matchCase, setChunk, isFixed } from './_lib.js'
-import { addArticle, needsArticle } from './_article.js'
+import { addArticle, needsArticle, withAdjectives } from './_article.js'
+import fixDeterminer from './_determiner.js'
 import fixVerb from './_verb.js'
+
+// 'they are [doctors]' - this must stay plural, like its subject
+const isPredicate = '(we|they|you) (not|#Adv)* (#Cop|become|became) (#Adv|#Adj)*$'
 
 const nounToSingular = function (m, parsed, opts = {}) {
   // already singular?
   if (!parsed.isPlural || isFixed(parsed.root)) {
+    return m
+  }
+  const agree = opts.agree !== false
+  if (agree && m.before().has(isPredicate)) {
     return m
   }
   const { methods, model } = m.world
@@ -19,11 +27,14 @@ const nounToSingular = function (m, parsed, opts = {}) {
     return m
   }
   // decide this before the phrase is changed
-  const agree = opts.agree !== false
-  const bare = agree && needsArticle(m, parsed)
+  const bare = agree && opts.article !== false && (opts.article || needsArticle(m, parsed))
   // 'dogs bark' -> 'dog barks' (before our own words move)
-  if (agree) {
+  if (agree && opts.verb !== false) {
     fixVerb(m, parsed, false)
+  }
+  // 'these dogs' -> 'this dog'
+  if (agree) {
+    fixDeterminer(withAdjectives(m), 'singular')
   }
   const before = (parsed.root.docs[0] || []).map(term => term.text)
   const after = m.replace(parsed.root, single, keep).tag(Sing, 'toSingular')

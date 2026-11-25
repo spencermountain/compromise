@@ -1,3 +1,5 @@
+import { passCapital, passOpening } from './_agree.js'
+
 // Remove only the first qualifying run, matching String.replace without /g.
 const removeRunBefore = (str, run, following) => {
   let i = 0
@@ -28,16 +30,37 @@ const repairPunct = function (terms, len) {
   }
 }
 
+// the words after us become the start of the phrase
+const repairStart = function (terms, start, end) {
+  const next = terms[end]
+  if (!next) {
+    return
+  }
+  // '"the dogs' -> '"dogs', unless the quote closes inside the removed words
+  if (!/["”’)\]]/.test(terms[end - 1].post)) {
+    passOpening(terms[start], next)
+  }
+  // 'The dogs' -> 'Dogs'
+  if (start === 0) {
+    passCapital(terms[start], next)
+  }
+}
+
 // remove terms from document json
-const pluckOut = function (document, nots) {
+const pluckOut = function (document, nots, opts = {}) {
   nots.forEach(ptr => {
     const [n, start, end] = ptr
     const len = end - start
     if (!document[n]) {
       return // weird!
     }
-    if (end === document[n].length && end > 1) {
-      repairPunct(document[n], len)
+    if (opts.agree !== false) {
+      if (end === document[n].length && end > 1) {
+        repairPunct(document[n], len)
+      }
+      if (opts.start !== false) {
+        repairStart(document[n], start, end)
+      }
     }
     document[n].splice(start, len) // replaces len terms at index start
   })

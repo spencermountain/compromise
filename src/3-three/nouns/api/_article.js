@@ -64,13 +64,7 @@ const removeArticle = function (m) {
   if (!article.found) {
     return m
   }
-  const isTitle = /^\p{Lu}/u.test(article.text('trim'))
-  const res = phrase.remove(article)
-  // 'A dog' -> 'Dogs'
-  if (isTitle) {
-    res.match('^.').toTitleCase()
-  }
-  return res
+  return phrase.remove(article)
 }
 
 export { addArticle, removeArticle, needsArticle }

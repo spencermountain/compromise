@@ -90,12 +90,12 @@ _(available on every View)_
 ### Insert
 
 - **`.concat(input)`** — add these new things to the end
-- **`.insertBefore(input)`** — add these words before each match
-- **`.prepend(input)`** — insertBefore() alias
-- **`.insertAfter(text)`** — add these words after each match
-- **`.append(text)`** — insertAfter() alias
+- **`.insertBefore(input, opts?)`** — add these words before each match. Moves the sentence's capital and any opening punctuation onto the new words, unless `{ agree: false }`
+- **`.prepend(input, opts?)`** — insertBefore() alias
+- **`.insertAfter(text, opts?)`** — add these words after each match. Moves any closing punctuation onto the new words, unless `{ agree: false }`
+- **`.append(text, opts?)`** — insertAfter() alias
 - **`.insert(text)`** — insertAfter() alias
-- **`.remove(match)`** — fully remove these terms from the document
+- **`.remove(match?, opts?)`** — fully remove these terms from the document. Repairs the capital and punctuation around them, unless `{ agree: false }`
 - **`.delete(match)`** — alias for .remove()
 - **`.replace(from, to?, keep?)`** — search and replace match with new content
 - **`.replaceWith(to, keep?)`** — substitute-in new content

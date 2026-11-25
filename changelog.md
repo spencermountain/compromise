@@ -7,13 +7,14 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 <!--
-#### Unreleased [Dec 2026]
+#### 14.21.0 [Dec 2026]
+- **[fix]** - doc.debug() runtime error
+- **[fix]** - #1286 toCardinal() runtime error
 - **[fix]** - false-negative net results #1282
 - **[fix]** - conjugation issues #1269 #1270 #1271 #1272
 - **[fix]** - date-plugin issues #1266 #1268 #1274 #1275 #1279
 - **[fix]** - mutation issues #1280 #1278
 - **[fix]** - decimal-parsing issue #1273
-- **[fix]** - doc.debug() runtime error
 - **[new]** - `compromise/shared` export (esm-only), with `checkSpec` and `redact` plugins
 - **[new]** - `nlp.methods().one.parseSpec()`
 - **[change]** - `.redact()` skips finders the build does not have, instead of throwing

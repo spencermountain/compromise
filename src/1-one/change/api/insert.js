@@ -29,7 +29,9 @@ const getTerms = function (input, world) {
   return []
 }
 
-const insert = function (input, view, prepend) {
+// {agree: false} skips moving any capitals or punctuation
+const insert = function (input, view, prepend, opts = {}) {
+  const agree = opts.agree !== false
   const { document, world } = view
   view.uncache()
   // insert words at end of each doc
@@ -48,10 +50,10 @@ const insert = function (input, view, prepend) {
     terms = addIds(terms)
     if (prepend) {
       expandContraction(view.update([ptr]).firstTerm())
-      cleanPrepend(home, ptr, terms, document)
+      cleanPrepend(home, ptr, terms, document, agree)
     } else {
       expandContraction(view.update([ptr]).lastTerm())
-      cleanAppend(home, ptr, terms, document)
+      cleanAppend(home, ptr, terms, document, agree)
     }
     // harden the pointer
     if (document[n]?.[ptr[1]]) {
@@ -71,11 +73,11 @@ const insert = function (input, view, prepend) {
 }
 
 const fns = {
-  insertAfter: function (input) {
-    return insert(input, this, false)
+  insertAfter: function (input, opts) {
+    return insert(input, this, false, opts)
   },
-  insertBefore: function (input) {
-    return insert(input, this, true)
+  insertBefore: function (input, opts) {
+    return insert(input, this, true, opts)
   },
 }
 fns.append = fns.insertAfter

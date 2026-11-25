@@ -1,13 +1,4 @@
-// give 'dane' the case of the word it replaced: 'Danes' -> 'Dane', 'DANES' -> 'DANE'
-const matchCase = function (original, str) {
-  if (original.length > 1 && original === original.toUpperCase() && original !== original.toLowerCase()) {
-    return str.toUpperCase()
-  }
-  if (/^\p{Lu}/u.test(original)) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
-  }
-  return str
-}
+import { matchCase } from '../../../1-one/change/api/lib/_case.js'
 
 // new words have no chunk, and .nouns() needs one to find them again
 const setChunk = function (m) {

@@ -119,7 +119,8 @@ fns.replaceWith = function (input, keep = {}) {
     more.contractions().expand()
   }
   // delete the original terms
-  main.delete(original) //science.
+  // (we restore the start of the phrase ourselves, below)
+  main.delete(original, { start: false }) //science.
 
   // main now points at only the new terms
   main.docs.forEach((terms, i) => restoreOriginal(terms, originals[i], keep))

@@ -5,9 +5,4 @@ import nlp from './src/three.js'
 // nlp.verbose()
 // nlp('the only painting').debug()
 
-const txt = `The dog is nice. {Det,Noun,Vb,Adj}
-The dog don't bark. {Det,Noun,Vb,Negative,Vb}
-The dog's tail wagged. {Det,Noun,Noun,Vb}`
-
-const doc = nlp.testSpec(txt, true, false)
-console.log(doc)
+nlp('one billionth').numbers().toCardinal()

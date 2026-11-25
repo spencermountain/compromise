@@ -58,7 +58,7 @@ test('shared entry is published', function (t) {
   const unpublished = Object.keys(graph.files).filter(file => !isPublished(file))
   t.deepEqual(unpublished, [], here + 'every import is in package.json files')
   // guard against pulling-in the english model
-  const code = Object.keys(graph.files).filter(file => !file.includes('/_built/'))
+  const code = Object.keys(graph.files).filter(file => !file.endsWith('/_built.js'))
   const bytes = code.reduce((sum, file) => sum + graph.files[file], 0)
   t.ok(bytes < 60000, here + `code stays small - ${bytes} bytes`)
   t.end()
@@ -85,6 +85,8 @@ test('shared plugins on a tokenize-only build', function (t) {
   t.deepEqual(out.quotes, ['"Paris, France".'], here + 'quotations need no tags')
   t.deepEqual(out.tags, [true, true, true, false], here + 'tagset adds parents and aliases')
   t.deepEqual(out.clauses, ['before we go;', 'we eat'], here + 'clauses split on punctuation')
+  t.equal(out.noEnglish, 1, here + 'clauses has no english word-rules')
+  t.deepEqual(out.ownRules, ['il part', 'mais elle reste'], here + 'clauses takes rules from the model')
   t.deepEqual(out.spec, ['skip'], here + 'checkSpec runs')
   t.end()
 })

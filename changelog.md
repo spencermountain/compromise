@@ -7,19 +7,42 @@ compromise uses semver, and pushes to npm and github frequently
 While all _Major_ releases should be reviewed, our only _large_ releases are **v6** in 2016 **v12** in 2019 and **v14** in 2022. Others have been mostly incremental.
 
 <!--
+-->
+
 #### 14.21.0 [Dec 2026]
+
 - **[fix]** - doc.debug() runtime error
 - **[fix]** - #1286 toCardinal() runtime error
+- **[new]** - improved agreement & sentence-healing after modifications
+- - _[new]_ - use `{agree:true}` for `prepend, append, insert, remove, replace` methods
+- - _[new]_ - toSingular/toPlural now adjust neighbour verbs/articles
+- - _[change]_ - transform methods now keep titlecased 1st-word, trailing punctuation
+- - _[change]_ - transform methods now keep opening/closing punctuation marks
+- - _[change]_ - applies to conjugation and normalization
 - **[fix]** - false-negative net results #1282
 - **[fix]** - conjugation issues #1269 #1270 #1271 #1272
 - **[fix]** - date-plugin issues #1266 #1268 #1274 #1275 #1279
 - **[fix]** - mutation issues #1280 #1278
 - **[fix]** - decimal-parsing issue #1273
 - **[new]** - `compromise/shared` export (esm-only), with `checkSpec` and `redact` plugins
-- **[new]** - `nlp.methods().one.parseSpec()`
-- **[change]** - `.redact()` skips finders the build does not have, instead of throwing
-- **[change]** - `fromSpec()` text drops leading indentation, and the space before a tag block
--->
+- **[new]** - re-usable internal `nlp.methods().one.parseSpec()`
+
+agreement changes:
+
+```js
+nlp('Seashells wash up here.').nouns().toSingular()
+// before: 'Seashell wash up here.'
+// after:  'A seashell washes up here.'
+
+// opt out with { agree: false }
+nlp('she sells seashells').nouns().toSingular({ agree: false })
+// 'she sells seashell'
+
+doc = nlp('"Dogs bark" he said.')
+doc.match('dogs').prepend('the')
+// before: 'The "dogs bark" he said.'
+// after:  '"The dogs bark" he said.'
+```
 
 #### 14.20.0 [Nov 2026]
 

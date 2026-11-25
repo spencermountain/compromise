@@ -78,7 +78,12 @@ test('replace agree', t => {
     // punctuation stays around the new words
     ['Dogs bark.', (d, o) => d.replace('bark', 'run away', o), 'Dogs run away.', 'Dogs run away'],
     ['Dogs bark, cats run.', (d, o) => d.replace('bark', 'howl', o), 'Dogs howl, cats run.', 'Dogs howl cats run.'],
-    ['"Dogs" bark.', (d, o) => d.replace('dogs', 'cats', o), '"cats" bark.', 'cats bark.'],
+    ['"Dogs" bark.', (d, o) => d.replace('dogs', 'cats', o), '"Cats" bark.', 'cats bark.'],
+    // the capital stays with the sentence
+    ['Dogs bark.', (d, o) => d.replace('dogs', 'a cat', o), 'A cat bark.', 'a cat bark.'],
+    ['Spencer barks.', (d, o) => d.replace('spencer', 'the dog', o), 'The dog barks.', 'the dog barks.'],
+    ['Yes. Dogs bark.', (d, o) => d.replace('dogs', 'the cats', o), 'Yes. The cats bark.', 'Yes. the cats bark.'],
+    ['i saw Spencer today.', (d, o) => d.replace('spencer', 'the dog', o), 'i saw the dog today.', 'i saw the dog today.'],
     ['he (the dog) left.', (d, o) => d.replace('the dog', 'spencer', o), 'he (spencer) left.', 'he spencer left.'],
     ['Dogs bark.', (d, o) => d.match('bark').replaceWith('run', o), 'Dogs run.', 'Dogs run'],
   ], true)
@@ -86,5 +91,9 @@ test('replace agree', t => {
   const doc = nlp('DOGS BARK.')
   doc.replace('dogs', 'cats', { case: true })
   t.equal(doc.text(), 'CATS BARK.', here + 'keep upper-case')
+  // {case: false} uses the new word's own case
+  const doc2 = nlp('Spencer is cool.')
+  doc2.replace('spencer', 'jogging', { case: false })
+  t.equal(doc2.text(), 'jogging is cool.', here + 'case:false')
   t.end()
 })

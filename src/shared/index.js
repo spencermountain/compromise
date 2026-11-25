@@ -12,11 +12,11 @@ export { default as topics } from '../3-three/topics/plugin.js'
 export { default as redact } from '../3-three/redact/plugin.js'
 // acronyms(), parentheses()
 export { default as misc } from '../3-three/misc/plugin.js'
-// .clauses()
-export { default as clauses } from '../3-three/clauses/plugin.js'
+// .clauses() - without the english rules in model.three.clauses
+export { default as clauses } from './clauses.js'
 
 // ==/shared==
 // used for testing
 export { default as checkSpec } from './spec/plugin.js'
 // efrt-packed names of people and places, keyed by tag
-export { default as properNouns } from './_built/properNouns.js'
+export { default as properNouns } from './lexicon/_built.js'

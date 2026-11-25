@@ -1,8 +1,8 @@
-import clauses from './clauses.js'
+import api from './api.js'
+import model from './model.js'
 
 // split sentences into clauses - uses no chunks, so any build can add it
-const api = function (View) {
-  View.prototype.clauses = clauses
+export default {
+  api,
+  model: { three: { clauses: model } },
 }
-
-export default { api }

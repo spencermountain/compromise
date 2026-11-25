@@ -98,7 +98,7 @@ _(available on every View)_
 - **`.remove(match?, opts?)`** — fully remove these terms from the document. Repairs the capital and punctuation around them, unless `{ agree: false }`
 - **`.delete(match)`** — alias for .remove()
 - **`.replace(from, to?, keep?)`** — search and replace match with new content
-- **`.replaceWith(to, keep?)`** — substitute-in new content. Keeps the punctuation around the old words, unless `{ agree: false }`
+- **`.replaceWith(to, keep?)`** — substitute-in new content. Keeps the sentence's capital and the punctuation around the old words, unless `{ agree: false }`
 - **`.unique()`** — remove any duplicate matches
 - **`.reverse()`** — reverse the order of the matches, but not the words
 - **`.sort(method?)`** — re-arrange the order of the matches (in place)

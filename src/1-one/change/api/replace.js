@@ -123,8 +123,9 @@ fns.replaceWith = function (input, keep = {}) {
   }
   // delete the original terms
   // (we restore the start of the phrase ourselves, below)
-  // (we restore the edges of the phrase ourselves, below)
-  main.delete(original, { agree, start: false, end: false }) //science.
+  // the new words take the sentence's capital, unless {case: false}
+  // (we restore the punctuation ourselves, below)
+  main.delete(original, { agree, start: keep.case !== false, end: false }) //science.
 
   // main now points at only the new terms
   if (agree) {

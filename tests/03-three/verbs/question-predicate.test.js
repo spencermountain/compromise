@@ -111,14 +111,14 @@ test(here + 'fragments are not questions', t => {
     ['is back on', 'will be back on'],
     ['is back on?', 'will be back on?'],
     ['is back on track', 'will be back on track'],
-    ['Is wrong about him', 'will be wrong about him'],
-    ['Is wrong about him?', 'will be wrong about him?'],
-    ['Is happy about it', 'will be happy about it'],
+    ['Is wrong about him', 'Will be wrong about him'],
+    ['Is wrong about him?', 'Will be wrong about him?'],
+    ['Is happy about it', 'Will be happy about it'],
   ]
   arr.forEach(([str, want]) => t.equal(convert(str, 'toFutureTense'), want, str))
   // a capitalized copula is still a copula
-  t.equal(convert('Is wrong about him', 'toPastTense', 'verbs'), 'was wrong about him', 'not Ied')
-  t.equal(convert('Are happy', 'toPastTense', 'verbs'), 'were happy', 'not Ared')
+  t.equal(convert('Is wrong about him', 'toPastTense', 'verbs'), 'Was wrong about him', 'not Ied')
+  t.equal(convert('Are happy', 'toPastTense', 'verbs'), 'Were happy', 'not Ared')
   t.end()
 })
 

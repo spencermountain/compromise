@@ -18,7 +18,7 @@ export interface AgreeOptions {
 }
 
 export interface ReplaceWithProps {
-  /** keep the punctuation around the old words. default true */
+  /** keep the sentence's capital, and the punctuation around the old words. default true */
   agree?: boolean
   /** preserve the case of the original, ignoring the case of the replacement */
   case?: boolean

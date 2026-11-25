@@ -31,5 +31,9 @@ nlp.plugin({ tags: { ...tagSet } })
 const tagged = nlp('toronto').tag('City')
 out.tags = [tagged.has('#Place'), tagged.has('#Noun'), tagged.has('#NN'), tagged.has('#Verb')]
 out.clauses = nlp('before we go; we eat').clauses().out('array')
+// english word-rules are not included, and a language adds its own
+out.noEnglish = nlp('we stay until we go').clauses().length
+nlp.plugin({ model: { three: { clauses: { splitBefore: ['mais'] } } } })
+out.ownRules = nlp('il part mais elle reste').clauses().out('array')
 out.spec = nlp.checkSpec('hello there').map(res => res.status)
 console.log(JSON.stringify(out)) // eslint-disable-line no-console

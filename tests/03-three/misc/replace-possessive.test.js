@@ -68,10 +68,10 @@ test(here + 'possessives are only kept on request', function (t) {
 test(here + 'replacing a possessive with nothing', function (t) {
   let doc = nlp(`Tom's dog sat.`)
   doc.people().replaceWith('', possessives)
-  t.equal(doc.text(), 'dog sat.', here + 'one')
+  t.equal(doc.text(), 'Dog sat.', here + 'one')
 
   doc = nlp(`Tom's dog sat. Sue's cat ran.`)
   doc.people().replaceWith('', possessives)
-  t.equal(doc.text(), 'dog sat. cat ran.', here + 'two')
+  t.equal(doc.text(), 'Dog sat. Cat ran.', here + 'two')
   t.end()
 })

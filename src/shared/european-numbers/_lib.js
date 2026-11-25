@@ -27,8 +27,9 @@ const addGroups = function (int, mark) {
   return out.join(mark)
 }
 
-// floating-point noise - 0.1 + 0.2
-const tidy = num => Number(num.toPrecision(15))
+// floating-point noise - 0.1 + 0.2. a whole number is already exact,
+// and rounding it to 15 digits would corrupt a 16-digit one
+const tidy = num => (Number.isInteger(num) ? num : Number(num.toPrecision(15)))
 
 // compile each ordinal-ending once
 const cache = {}

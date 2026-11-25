@@ -7,6 +7,7 @@ import format from './format/index.js'
 import isUnit from './isUnit.js'
 import isValid from './isValid.js'
 import convert from './_lib.js'
+import agree from './agree.js'
 import { isPercent, dropPreSign } from './_conversion.js'
 import toFraction from './toFraction.js'
 import toPercentage from './toPercentage.js'
@@ -20,7 +21,7 @@ const keep = { tags: true, possessives: true }
 
 // shared by set() and add(): give each number a new value, in its current format
 // eslint-disable-next-line max-params
-const edit = (view, n, apply, operation, isText, strip) => {
+const edit = (view, n, opts, apply, operation, isText, strip) => {
   if (typeof n === 'string') {
     n = parse(n).num
   }
@@ -40,8 +41,11 @@ const edit = (view, n, apply, operation, isText, strip) => {
     }
     dropPreSign(val, str)
     val.replaceWith(str, keep)
-    // handle plural/singular unit
-    // agreeUnits(agree, val, obj)
+    // 'two dogs bark' -> 'one dog barks', unless {agree: false}. A year counts nothing - "2020's election"
+    const counts = fmt !== Ord && fmt !== textOrdinal && !val.has('(#Year|#Poss)')
+    if (counts && (!opts || opts.agree !== false)) {
+      agree(val, Math.abs(obj.num) === 1, true)
+    }
     return val
   }, num => operation(num, n))
   return view.update(res.pointer)
@@ -142,16 +146,16 @@ const addMethod = function (View) {
     }
 
     /** set these number to n */
-    set(n) {
+    set(n, opts) {
       if (n === undefined) {
         return this // don't bother
       }
       const set = (obj, to) => {
         obj.num = to
       }
-      return edit(this, n, set, (num, to) => to, val => val.has(textValueMatch), '#Currency')
+      return edit(this, n, opts, set, (num, to) => to, val => val.has(textValueMatch), '#Currency')
     }
-    add(n) {
+    add(n, opts) {
       if (!n) {
         return this // don't bother
       }
@@ -161,11 +165,11 @@ const addMethod = function (View) {
           obj.num = this._add(obj.num, by)
         }
       }
-      return edit(this, n, add, (num, by) => this._add(num, by), (val, obj) => obj.isText)
+      return edit(this, n, opts, add, (num, by) => this._add(num, by), (val, obj) => obj.isText)
     }
     /** decrease each number by n*/
-    subtract(n) {
-      return this.add(n * -1)
+    subtract(n, opts) {
+      return this.add(n * -1, opts)
     }
     /** increase each number by 1 */
     increment() {

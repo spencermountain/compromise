@@ -228,9 +228,9 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.greaterThan(min)`** — return numbers bigger than n
 - **`.lessThan(max)`** — return numbers smaller than n
 - **`.between(min, max)`** — return numbers between min and max
-- **`.set(n)`** — set number to n
-- **`.add(n)`** — increase number by n
-- **`.subtract(n)`** — decrease number by n
+- **`.set(n, opts?)`** — set number to n. The counted noun, and its verb, follow ('two dogs bark' → 'one dog barks'), unless `{ agree: false }`
+- **`.add(n, opts?)`** — increase number by n. The counted noun, and its verb, follow, unless `{ agree: false }`
+- **`.subtract(n, opts?)`** — decrease number by n. The counted noun, and its verb, follow, unless `{ agree: false }`
 - **`.increment()`** — increase number by 1
 - **`.decrement()`** — decrease number by 1
 

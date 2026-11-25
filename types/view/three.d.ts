@@ -140,12 +140,12 @@ export interface Numbers extends View {
   lessThan: (max: number) => View
   /** return numbers between min and max */
   between: (min: number, max: number) => View
-  /** set number to n */
-  set: (n: number) => View
-  /** increase number by n */
-  add: (n: number) => View
-  /** decrease number by n*/
-  subtract: (n: number) => View
+  /** set number to n. The counted noun, and its verb, follow - 'two dogs bark' → 'one dog barks' - unless {agree: false} */
+  set: (n: number, opts?: { agree?: boolean }) => View
+  /** increase number by n. The counted noun, and its verb, follow, unless {agree: false} */
+  add: (n: number, opts?: { agree?: boolean }) => View
+  /** decrease number by n. The counted noun, and its verb, follow, unless {agree: false} */
+  subtract: (n: number, opts?: { agree?: boolean }) => View
   /** increase number by 1 */
   increment: () => View
   /** decrease number by 1*/

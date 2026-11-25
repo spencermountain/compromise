@@ -24,6 +24,7 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 - **[fix]** - date-plugin issues #1266 #1268 #1274 #1275 #1279
 - **[fix]** - mutation issues #1280 #1278
 - **[fix]** - decimal-parsing issue #1273
+- **[change]** - improved i18n sentence-splitting
 - **[new]** - `compromise/shared` export (esm-only), with `checkSpec` and `europeanNumbers`
 - **[new]** - re-usable internal `nlp.methods().one.parseSpec()`
 
@@ -34,14 +35,19 @@ nlp('Seashells wash up here.').nouns().toSingular()
 // before: 'Seashell wash up here.'
 // after:  'A seashell washes up here.'
 
-// opt out with { agree: false }
-nlp('she sells seashells').nouns().toSingular({ agree: false })
-// 'she sells seashell'
-
 doc = nlp('"Dogs bark" he said.')
 doc.match('dogs').prepend('the')
 // before: 'The "dogs bark" he said.'
 // after:  '"The dogs bark" he said.'
+
+doc = nlp('he drank two beers')
+doc.numbers().set(1)
+// before: he drank one beers
+// after: he drank one beer
+
+// opt out with { agree: false }
+nlp('she sells seashells').nouns().toSingular({ agree: false })
+// 'she sells seashell'
 ```
 
 #### 14.20.0 [Nov 2026]

@@ -118,6 +118,10 @@ test('european-numbers write', function (t) {
   t.equal(comma.write(-5), '-5', here + 'negative')
   t.equal(comma.write(-5.3, { prefix: '€' }), '-€5,3', here + 'sign before currency')
   t.equal(comma.write(0.1 + 0.2), '0,3', here + 'float noise')
+  // a whole number is exact - tidying float-noise must not round it
+  t.equal(comma.write(9007199254740991), '9007199254740991', here + 'largest safe integer')
+  t.equal(comma.write(1234567890123456 + 1), '1234567890123457', here + '16-digit integer')
+  t.equal(comma.write(1234567890123456, { hasComma: true }), '1.234.567.890.123.456', here + '16-digit grouped')
   t.equal(comma.write(1e21), '1e+21', here + 'exponent')
   t.equal(comma.write(null), '', here + 'not a number')
   t.equal(comma.write(1234, { hasComma: true, decimal: '.' }), '1,234', here + 'marks never collide')

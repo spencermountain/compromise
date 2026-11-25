@@ -22,6 +22,9 @@ The baby cries. {Det,Noun,Pres}
 The student studies. {Det,Noun,Pres}
 She dreams of castles. {Pronoun,Pres,Prep,Plural}
 The dog barks and runs. {Det,Noun,Pres,.,Pres}
+One dog barks. {Value,Noun,Pres}
+One cat sleeps and eats. {Value,Noun,Pres,.,Pres}
+Two dogs in the yard bark. {Value,Plural,Prep,Det,Noun,Inf}
 
 # --- a bare verb after its object
 I let the dog run. {Pronoun,.,Det,Noun,Inf}

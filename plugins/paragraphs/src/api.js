@@ -118,7 +118,7 @@ const api = function (View) {
 
   /** */
   View.prototype.paragraphs = function () {
-    const hasTwoNewline = /\n\n/
+    const hasTwoNewline = /\n\r?\n/
     const all = []
     let run = []
     this.all().forEach(s => {

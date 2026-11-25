@@ -25,5 +25,8 @@ const jsonWith = (view, n, key, fn) => {
 // the normalized text of each match
 const toArray = m => m.json({ normal: true, terms: false, text: false }).map(s => s.normal)
 
-export { keepTags, toArray, jsonWith }
+// after these verbs, and their object, the next verb is a bare infinitive - 'let him [go]'
+const causative = '(let|lets|make|makes|made|help|helps|helped|see|sees|saw|watch|watched|hear|heard|have|has|had|feel|felt)'
+
+export { keepTags, toArray, jsonWith, causative }
 export default keepClass

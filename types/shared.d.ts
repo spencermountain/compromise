@@ -33,15 +33,15 @@ export const misc: Plugin
 export const clauses: Plugin
 /** the english tagset, for use in a plugin as { tags: { ...tagSet } } */
 export const tagSet: { [tag: string]: { is?: string; not?: string[]; also?: string[]; aliases?: (string | null)[]; color?: string } }
-export interface NumeralLocale {
-  /** the decimal mark - ',' or '.' (default) */
+export interface EuropeanLocale {
+  /** the decimal mark - ',' (default) or '.' */
   decimal?: string
-  /** the mark written between thousands - '.', ',' (default), ' ' */
+  /** the mark written between thousands - '.' (default), ' ', ',' */
   group?: string
-  /** matches the ending of a numeric ordinal - /^[ºª°]$/ */
-  ordinal?: RegExp | null
+  /** regex-source for the ending of a numeric ordinal - '[ºª°]' */
+  ordinal?: string
 }
-export interface NumeralStyle {
+export interface EuropeanStyle {
   prefix?: string
   suffix?: string
   /** are thousands grouped? */
@@ -49,7 +49,7 @@ export interface NumeralStyle {
   decimal?: string | null
   group?: string | null
 }
-export interface NumeralRead extends Required<NumeralStyle> {
+export interface EuropeanNumber extends Required<EuropeanStyle> {
   /** null when the text is not one number */
   num: number | null
   /** the ending of a numeric ordinal - 'ª' */
@@ -59,17 +59,20 @@ export interface NumeralRead extends Required<NumeralStyle> {
   isPercent: boolean
   isFraction: boolean
 }
-export interface Numerals {
-  locale: Required<NumeralLocale>
+/** found at methods.two.europeanNumbers - the locale is model.two.europeanNumbers */
+export interface EuropeanNumberMethods {
   /** '1.234,56 €' → { num: 1234.56, .. } - `pre` is the punctuation in front of the term */
-  read: (str: string, pre?: string) => NumeralRead
+  read: (str: string, pre?: string, locale?: EuropeanLocale) => EuropeanNumber
   /** 1234.56 → '1.234,56' - pass a read() result to write it back the same way */
-  write: (num: number, how?: NumeralStyle) => string
-  /** preTagger rules, as [regex, tags, example] - to be tested on a term's text */
-  regexes: [RegExp, string[], string][]
+  write: (num: number, how?: EuropeanStyle, locale?: EuropeanLocale) => string
+  /** tagging rules, as [regex, tags, example] - to be tested on a term's text */
+  regexes: (locale?: EuropeanLocale) => [RegExp, string[], string][]
 }
-/** a reader and writer of numbers written in digits, for one language's decimal and thousands marks */
-export const numerals: (locale?: NumeralLocale) => Numerals
+/**
+ * plugin for numbers written with a decimal-comma - '1.234,56', '3,5%', '5,30€'.
+ * tags them, and adds methods.two.europeanNumbers. A language sets its marks in model.two.europeanNumbers
+ */
+export const europeanNumbers: Plugin
 /** efrt-packed names of people and places, keyed by tag - read each with efrt's unpack() */
 export const properNouns: {
   ProperNoun: string

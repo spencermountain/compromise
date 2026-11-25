@@ -375,6 +375,7 @@ configured minor-unit multiplier. No exchange-rate conversion is performed.
 - **`.toFutureTense()`** — 'walked' → 'will walk'
 - **`.toGerund()`** — 'walks' → 'walking'
 - **`.toPastParticiple()`** — 'walks' → 'has walked'
+- each conversion takes `{ agree: false }`, to change only the selected verbs. By default a verb that shares the selected verb's helper changes too: `verbs(0)` of 'will walk and talk' → 'walked and talked'
 - **`.conjugate()`** — return all forms of these verbs
 - **`.isNegative()`** — return verbs with 'not'
 - **`.isPositive()`** — only verbs without 'not'

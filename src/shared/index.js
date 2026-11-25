@@ -16,8 +16,8 @@ export { default as misc } from '../3-three/misc/plugin.js'
 export { default as clauses } from './clauses.js'
 
 // ==/shared==
-// numerals(locale) reads and writes numbers in digits - '1.234,56'
-export { default as numerals } from './numerals/index.js'
+// tags, reads and writes numbers with a decimal-comma - '1.234,56'
+export { default as europeanNumbers } from './european-numbers/plugin.js'
 // used for testing
 export { default as checkSpec } from './spec/plugin.js'
 // efrt-packed names of people and places, keyed by tag

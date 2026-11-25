@@ -1,4 +1,4 @@
-import { keepTags as keep } from '../../_lib.js'
+import { keepTags as keep, causative } from '../../_lib.js'
 
 // irregular helpers - 'the dog [is]' <-> 'the dogs [are]'
 const pairs = [
@@ -12,7 +12,7 @@ const aux = '(is|are|was|were|do|does|have|has)'
 const opener = '(not|no|#Det|#Poss|#Adj|#Adv)*'
 const adverbs = '(not|never|#Adv)*'
 // here, the noun is not doing the next verb - 'let the [dogs] run'
-const isObject = '(let|lets|make|makes|made|help|helps|helped|see|sees|saw|watch|watched|hear|heard|have|has|had|feel|felt)$'
+const isObject = causative + '$'
 // 'the men who own [dogs] like them'
 const inClause = '(who|that|which) #Adv? #Verb$'
 

@@ -2,8 +2,8 @@ import test from 'tape'
 import assertSpec from '../lib/spec.js'
 const here = '[hmm/noun-agreement-tagging] '
 
-// Tagging misses found while building noun agreement. Each one stops toSingular() or
-// toPlural() from finding the noun, or its verb. Expected tags come from the language,
+// Tagging misses found while building noun and verb agreement. Each one stops a conversion
+// from finding the noun, or its verb. Expected tags come from the language,
 // not the tagger, so these lines fail today. '.' skips a word this line is not about.
 const spec = `
 # --- a verb after a plural subject, read as a second noun
@@ -36,6 +36,12 @@ We need plates, forks and knives. {Pronoun,.,Plural,Plural,.,Plural}
 It is in the dogs' bowls. {Pronoun,Copula,Prep,Det,Poss,Plural}
 She called the boys' parents. {Pronoun,Past,Det,Poss,.}
 He bought CDs. {Pronoun,Past,Plural}
+
+# --- found while checking verb agreement
+Everyone walks. {Noun,Pres}
+I walk or run. {Pronoun,Inf,.,Inf}
+She lets him go. {Pronoun,Pres|!Modal,Pronoun,Inf}
+He lay down. {Pronoun,Past,.}
 
 # --- small words
 I wonder why the lights are on. {Pronoun,.,!Prep,Det,Plural,Copula,.}

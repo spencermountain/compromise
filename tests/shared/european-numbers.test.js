@@ -1,14 +1,23 @@
 import test from 'tape'
-import { numerals } from '../../src/shared/index.js'
-const here = '[shared/numerals] '
+import { spawnSync } from 'child_process'
+import { fileURLToPath } from 'url'
+import { europeanNumbers } from '../../src/shared/index.js'
+const here = '[shared/european-numbers] '
 
+const { read, write, regexes } = europeanNumbers.methods.two.europeanNumbers
+// bind the methods to one language's marks
+const use = locale => ({
+  read: (str, pre) => read(str, pre, locale),
+  write: (num, how) => write(num, how, locale),
+  regexes: regexes(locale),
+})
 // italian, portuguese, german, spanish ..
-const comma = numerals({ decimal: ',', group: '.', ordinal: /^\.?[ºª°]$/ })
+const comma = use({ decimal: ',', group: '.', ordinal: '\\.?[ºª°]' })
 // french, russian
-const space = numerals({ decimal: ',', group: ' ' })
-const english = numerals()
+const space = use({ decimal: ',', group: ' ' })
+const english = use({ decimal: '.', group: ',' })
 
-test('numerals read - decimal comma', function (t) {
+test('european-numbers read - decimal comma', function (t) {
   const arr = [
     ['3,50', 3.5],
     ['0,5', 0.5],
@@ -59,7 +68,7 @@ test('numerals read - decimal comma', function (t) {
   t.end()
 })
 
-test('numerals read - decimal point', function (t) {
+test('european-numbers read - decimal point', function (t) {
   const arr = [
     ['3.50', 3.5],
     ['1,000', 1000],
@@ -75,7 +84,7 @@ test('numerals read - decimal point', function (t) {
   t.end()
 })
 
-test('numerals read - affixes', function (t) {
+test('european-numbers read - affixes', function (t) {
   let res = comma.read('5,30€')
   t.equal(res.suffix, '€', here + 'money suffix')
   t.equal(res.currency, '€', here + 'money symbol')
@@ -101,7 +110,7 @@ test('numerals read - affixes', function (t) {
   t.end()
 })
 
-test('numerals write', function (t) {
+test('european-numbers write', function (t) {
   t.equal(comma.write(1234.5), '1234,5', here + 'decimal comma')
   t.equal(comma.write(1234.5, { hasComma: true }), '1.234,5', here + 'grouped')
   t.equal(space.write(1234567.89, { hasComma: true }), '1 234 567,89', here + 'space-grouped')
@@ -123,7 +132,7 @@ test('numerals write', function (t) {
   t.end()
 })
 
-test('numerals regexes', function (t) {
+test('european-numbers regexes', function (t) {
   const tag = str => {
     const found = comma.regexes.find(a => a[0].test(str))
     return found ? found[1][0] : null
@@ -154,5 +163,31 @@ test('numerals regexes', function (t) {
     t.ok(a[0].test(a[2]) || a[2] === 'ordinal', here + `example '${a[2]}'`)
   })
   t.equal(english.regexes.some(a => a[1][0] === 'Ordinal'), false, here + 'no ordinals unless given')
+  t.end()
+})
+
+test('european-numbers defaults', function (t) {
+  t.deepEqual(europeanNumbers.model.two.europeanNumbers, { decimal: ',', group: '.', ordinal: '' }, here + 'model')
+  t.equal(read('1.000').num, 1000, here + 'reads with a decimal-comma')
+  t.equal(read('3,5').num, 3.5, here + 'decimal-comma')
+  t.equal(write(1234.5, { hasComma: true }), '1.234,5', here + 'writes with a decimal-comma')
+  t.equal(regexes(), regexes(), here + 'rules are built once')
+  t.end()
+})
+
+// plugins are applied to one shared View, so use a fresh process
+test('european-numbers on a tokenize-only build', function (t) {
+  const file = fileURLToPath(new URL('./_european.js', import.meta.url))
+  const res = spawnSync(process.execPath, [file], { encoding: 'utf8' })
+  t.equal(res.status, 0, here + 'runs' + res.stderr)
+  const out = JSON.parse(res.stdout || '{}')
+  t.equal(out.before, false, here + 'build starts without number tags')
+  t.deepEqual(out.values, ['1.234,56', '3,5%', '5,30€', '-5', '2ª'], here + 'tags numbers')
+  t.deepEqual(out.percent, ['3,5%'], here + 'tags percentages')
+  t.deepEqual(out.money, ['5,30€'], here + 'tags money')
+  t.deepEqual(out.ordinal, ['2ª'], here + 'uses the ordinal from the model')
+  t.deepEqual(out.nums, [1234.56, 3.5, 5.3, -5, 2], here + 'reads them')
+  t.deepEqual(out.kept, ['12.05.2020'], here + 'leaves dates alone')
+  t.equal(out.french, '1 234,5', here + 'a language sets its own marks')
   t.end()
 })

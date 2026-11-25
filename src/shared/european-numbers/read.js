@@ -1,4 +1,4 @@
-import { minus, signs, currency } from './_lib.js'
+import { minus, signs, currency, defaults, isOrdinal } from './_lib.js'
 
 // digits, and any mark that sits between two of them - '1.234,56', '1 000', "1'000"
 const body = /^[0-9](?:[0-9]|[.,'’\s](?=[0-9]))*/
@@ -67,8 +67,9 @@ const toNumber = function (str, marks) {
 /**
  * pull-apart a number written in digits - '-5', '1.234,56 €', '3,5%', '2ª'
  * `pre` is any punctuation that the tokenizer left in front of it - '(-'
+ * `locale` is model.two.europeanNumbers
  */
-const read = function (str, pre, locale) {
+const read = function (str, pre = '', locale = defaults) {
   const res = {
     num: null,
     prefix: '',
@@ -111,12 +112,11 @@ const read = function (str, pre, locale) {
   }
   // the sign may be hiding in the punctuation - '(-5)'
   // .. on either side of the currency - '-$5', '$-5' - but not 'covid-19'
-  const edges = prefix.trim().slice(0, 1) + prefix.slice(-1)
-  if (minus.test(edges) || /[-−]$/.test(pre)) {
+  if (minus.test(prefix) || /[-−]$/.test(pre)) {
     num *= -1
   }
   // a numeric ordinal - '2ª', '5-го', '3e'
-  if (locale.ordinal && locale.ordinal.test(suffix)) {
+  if (isOrdinal(suffix, locale.ordinal)) {
     res.ordinal = suffix
     suffix = ''
   }

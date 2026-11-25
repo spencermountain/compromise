@@ -63,7 +63,7 @@ const api = function (View) {
       return res.getNth(n)
     }
 
-    // pass { agreement: false } to leave the surrounding words alone
+    // pass { agree: false } to leave the surrounding words alone
     toPlural(n, opts) {
       opts = typeof n === 'object' ? n : opts
       return this.getNth(n).map(m => {

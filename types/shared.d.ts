@@ -23,3 +23,26 @@ export interface SpecCheck {
 export const checkSpec: Plugin
 /** plugin adding .redact(), which uses whichever finders (.people(), .places(), ...) the build has */
 export const redact: Plugin
+/** plugin adding nlp.lazy(text, match), which only tags sentences that may match */
+export const lazy: Plugin
+/** plugin adding .people(), .places(), .organizations() and .topics() */
+export const topics: Plugin
+/** plugin adding .acronyms(), .parentheses(), .possessives(), .quotations(), .slashes(), .emails() ... */
+export const misc: Plugin
+/** plugin adding .clauses() - splits on parentheses and quotations when the misc plugin is present */
+export const clauses: Plugin
+/** the english tagset, for use in a plugin as { tags: { ...tagSet } } */
+export const tagSet: { [tag: string]: { is?: string; not?: string[]; also?: string[]; aliases?: (string | null)[]; color?: string } }
+/** efrt-packed names of people and places, keyed by tag - read each with efrt's unpack() */
+export const properNouns: {
+  ProperNoun: string
+  Organization: string
+  City: string
+  Place: string
+  Region: string
+  FemaleName: string
+  FirstName: string
+  LastName: string
+  MaleName: string
+  Person: string
+}

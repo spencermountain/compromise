@@ -19,7 +19,7 @@ const nounToSingular = function (m, parsed, opts = {}) {
     return m
   }
   // decide this before the phrase is changed
-  const agree = opts.agreement !== false
+  const agree = opts.agree !== false
   const bare = agree && needsArticle(m, parsed)
   // 'dogs bark' -> 'dog barks' (before our own words move)
   if (agree) {

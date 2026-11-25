@@ -329,7 +329,7 @@ test('toSingular - adds an article:', function (t) {
   })
   // opt-out
   const doc = nlp('She sells seashells by the seashore.')
-  doc.nouns().toSingular({ agreement: false })
-  t.equal(doc.text(), 'She sells seashell by the seashore.', here + 'agreement:false')
+  doc.nouns().toSingular({ agree: false })
+  t.equal(doc.text(), 'She sells seashell by the seashore.', here + 'agree:false')
   t.end()
 })

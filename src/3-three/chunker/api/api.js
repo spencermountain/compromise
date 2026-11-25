@@ -1,6 +1,5 @@
 import select from '../../_select.js'
 import keepClass from '../../_lib.js'
-import clauses from './clauses.js'
 import getChunks from './chunks.js'
 
 const api = function (View) {
@@ -21,6 +20,5 @@ const api = function (View) {
   })
 
   View.prototype.chunks = select(Chunks, getChunks, true)
-  View.prototype.clauses = clauses
 }
 export default api

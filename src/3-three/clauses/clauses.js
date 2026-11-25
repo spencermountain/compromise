@@ -29,6 +29,10 @@ const byComma = function (doc) {
 
 // should we split-out a clause (in brackets)?
 const splitParentheses = function (doc) {
+  // from the misc plugin
+  if (!doc.parentheses) {
+    return doc
+  }
   let matches = doc.parentheses()
   matches = matches.filter(m => {
     return m.wordCount() >= 3 && m.has('#Verb') && m.has('#NN')
@@ -38,6 +42,10 @@ const splitParentheses = function (doc) {
 
 // split-out a long quotion, but not 'inline quotes'.
 const splitQuotes = function (doc) {
+  // from the misc plugin
+  if (!doc.quotations) {
+    return doc
+  }
   let matches = doc.quotations()
   matches = matches.filter(m => {
     return m.wordCount() >= 3 && m.has('#Verb') && m.has('#NN')

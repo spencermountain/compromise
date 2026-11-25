@@ -3,7 +3,7 @@ import nlp from '../lib.js'
 const here = '[two/change/agree] '
 
 // run each edit, with the healing on (default) and then off
-const check = (t, rows) => {
+const check = (t, rows, more) => {
   rows.forEach(([input, fn, on, off]) => {
     let doc = nlp(input)
     fn(doc)
@@ -12,7 +12,9 @@ const check = (t, rows) => {
     fn(doc, { agree: false })
     t.equal(doc.text(), off, here + `[off] ${input}`)
   })
-  t.end()
+  if (!more) {
+    t.end()
+  }
 }
 
 test('prepend agree', t => {
@@ -59,5 +61,30 @@ test('remove agree', t => {
     ['he (the dog) left.', (d, o) => d.remove('the', o), 'he (dog) left.', 'he dog) left.'],
     ['Dogs bark loudly.', (d, o) => d.remove('loudly', o), 'Dogs bark.', 'Dogs bark '],
     ['Dogs bark loudly?', (d, o) => d.remove('loudly', o), 'Dogs bark?', 'Dogs bark '],
+    // in the middle
+    ['Dogs bark loudly, and run.', (d, o) => d.remove('loudly', o), 'Dogs bark, and run.', 'Dogs bark and run.'],
+    ['Dogs bark loudly; cats run.', (d, o) => d.remove('loudly', o), 'Dogs bark; cats run.', 'Dogs bark cats run.'],
+    ['he (the dog) left.', (d, o) => d.remove('dog', o), 'he (the) left.', 'he (the left.'],
+    ['Dogs, cats, and birds.', (d, o) => d.remove('cats', o), 'Dogs, and birds.', 'Dogs, and birds.'],
+    // a pair leaves with its words
+    ['Dogs bark (loudly).', (d, o) => d.remove('loudly', o), 'Dogs bark.', 'Dogs bark '],
+    ['he said "no" twice.', (d, o) => d.remove('no', o), 'he said twice.', 'he said twice.'],
+    ['he said "dogs bark loudly".', (d, o) => d.remove('loudly', o), 'he said "dogs bark".', 'he said "dogs bark '],
   ])
+})
+
+test('replace agree', t => {
+  check(t, [
+    // punctuation stays around the new words
+    ['Dogs bark.', (d, o) => d.replace('bark', 'run away', o), 'Dogs run away.', 'Dogs run away'],
+    ['Dogs bark, cats run.', (d, o) => d.replace('bark', 'howl', o), 'Dogs howl, cats run.', 'Dogs howl cats run.'],
+    ['"Dogs" bark.', (d, o) => d.replace('dogs', 'cats', o), '"cats" bark.', 'cats bark.'],
+    ['he (the dog) left.', (d, o) => d.replace('the dog', 'spencer', o), 'he (spencer) left.', 'he spencer left.'],
+    ['Dogs bark.', (d, o) => d.match('bark').replaceWith('run', o), 'Dogs run.', 'Dogs run'],
+  ], true)
+  // all-caps is a case to keep, too
+  const doc = nlp('DOGS BARK.')
+  doc.replace('dogs', 'cats', { case: true })
+  t.equal(doc.text(), 'CATS BARK.', here + 'keep upper-case')
+  t.end()
 })

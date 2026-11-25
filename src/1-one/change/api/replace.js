@@ -1,4 +1,4 @@
-import { isTitleCase, toTitleCase, toLowerCase } from './lib/_case.js'
+import { isTitleCase, toTitleCase, toLowerCase, matchCase } from './lib/_case.js'
 import { retag } from '../../../API/_helpers.js'
 const dollarStub = /\$[0-9a-z]+/g
 const fns = {}
@@ -39,6 +39,7 @@ const getOriginal = function (terms) {
     pre: terms[0].pre,
     post: last.post,
     isTitleCase: isTitleCase(terms[0].text),
+    text: terms[0].text,
     isPossessive: last.tags.has('Possessive'),
     tags: terms.map(term => Array.from(term.tags)),
   }
@@ -102,7 +103,9 @@ fns.replaceWith = function (input, keep = {}) {
   if (typeof input === 'string') {
     input = this.fromText(input).compute('id')
   }
-  main.insertAfter(input)
+  // {agree: false} swaps the words, and nothing else
+  const agree = keep.agree !== false
+  main.insertAfter(input, { agree })
   // New terms follow each old match; stop at an existing term to separate nearby matches.
   if (replacements) {
     replacements.forEach(group => {
@@ -120,10 +123,13 @@ fns.replaceWith = function (input, keep = {}) {
   }
   // delete the original terms
   // (we restore the start of the phrase ourselves, below)
-  main.delete(original, { start: false }) //science.
+  // (we restore the edges of the phrase ourselves, below)
+  main.delete(original, { agree, start: false, end: false }) //science.
 
   // main now points at only the new terms
-  main.docs.forEach((terms, i) => restoreOriginal(terms, originals[i], keep))
+  if (agree) {
+    main.docs.forEach((terms, i) => restoreOriginal(terms, originals[i], keep))
+  }
 
   // what should we return?
   const m = retag(main.toView(), ['index'])
@@ -137,7 +143,8 @@ fns.replaceWith = function (input, keep = {}) {
   if (keep.case) {
     m.docs.forEach((terms, i) => {
       const transformCase = originals[i].isTitleCase ? toTitleCase : toLowerCase
-      terms[0].text = transformCase(terms[0].text)
+      // 'DOGS' -> 'CATS'
+      terms[0].text = matchCase(originals[i].text, transformCase(terms[0].text))
     })
   }
   // Transfer plugin metadata after replacement text, punctuation, and case are finalized.

@@ -99,7 +99,7 @@ test('round-trip, without agreement:', function (t) {
     ['the dog barks loudly', 'the dogs barks loudly', 'the dog barks loudly'],
     ['dog have eaten', 'dogs have eaten', 'dogs have eaten'],
   ]
-  arr.forEach(a => roundTrip(t, a, { agreement: false }, 'off'))
+  arr.forEach(a => roundTrip(t, a, { agree: false }, 'off'))
   t.end()
 })
 
@@ -121,7 +121,7 @@ test('round-trip, nothing to inflect:', function (t) {
   ]
   arr.forEach(str => {
     roundTrip(t, [str, str, str], undefined, 'on')
-    roundTrip(t, [str, str, str], { agreement: false }, 'off')
+    roundTrip(t, [str, str, str], { agree: false }, 'off')
   })
   t.end()
 })

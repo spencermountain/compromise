@@ -23,7 +23,7 @@ const nounToPlural = function (m, parsed, opts = {}) {
   if (plural === str) {
     return m
   }
-  const agree = opts.agreement !== false
+  const agree = opts.agree !== false
   // 'dog barks' -> 'dogs bark' (before our own words move)
   if (agree) {
     fixVerb(m, parsed, true)

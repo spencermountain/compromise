@@ -18,6 +18,8 @@ export interface AgreeOptions {
 }
 
 export interface ReplaceWithProps {
+  /** keep the punctuation around the old words. default true */
+  agree?: boolean
   /** preserve the case of the original, ignoring the case of the replacement */
   case?: boolean
   /** preserve whether the original was a possessive */

@@ -1,8 +1,23 @@
 import { setTag } from '../_lib.js'
 import { hasAny } from '../../../../_lib.js'
-import { Pron, Mod, Vb, Inf, Val, Phrasal, Past, Cop, Det, Adj, Hyphenated, Prefix, NounVerb } from '../../../tagSet/_lib.js'
+import {
+  Pron,
+  Mod,
+  Vb,
+  Inf,
+  Val,
+  Phrasal,
+  Past,
+  Cop,
+  Det,
+  Adj,
+  Hyphenated,
+  Prefix,
+  NounVerb,
+} from '../../../tagSet/_lib.js'
 const reason = '1-hyphen'
-const byHyphen = (terms, i, model, world) => {
+
+const byHyphen = (terms, i, _model, world) => {
   const term = terms[i]
   if (term.post === '-' && terms[i + 1]) {
     setTag([term, terms[i + 1]], Hyphenated, world, reason)
@@ -14,8 +29,12 @@ const byHyphen = (terms, i, model, world) => {
   }
   const before = terms[i - 2]
   // we under-estimate costs: the prefix does not make an adjective.
-  if (/^(under|over|out|re|mis)$/.test(prev.normal) && term.switch === NounVerb &&
-    before && hasAny(before, Pron, Mod)) {
+  if (
+    /^(under|over|out|re|mis)$/.test(prev.normal) &&
+    term.switch === NounVerb &&
+    before &&
+    hasAny(before, Pron, Mod)
+  ) {
     setTag([prev], Prefix, world, reason)
     setTag([prev], Vb, world, reason)
     setTag([term], Inf, world, reason)

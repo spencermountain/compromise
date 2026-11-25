@@ -98,7 +98,7 @@ _(available on every View)_
 - **`.remove(match?, opts?)`** — fully remove these terms from the document. Repairs the capital and punctuation around them, unless `{ agree: false }`
 - **`.delete(match)`** — alias for .remove()
 - **`.replace(from, to?, keep?)`** — search and replace match with new content
-- **`.replaceWith(to, keep?)`** — substitute-in new content
+- **`.replaceWith(to, keep?)`** — substitute-in new content. Keeps the punctuation around the old words, unless `{ agree: false }`
 - **`.unique()`** — remove any duplicate matches
 - **`.reverse()`** — reverse the order of the matches, but not the words
 - **`.sort(method?)`** — re-arrange the order of the matches (in place)
@@ -205,8 +205,8 @@ These return specialised sub-views with extra methods. e.g. `doc.verbs().toPastT
 - **`.parse(n?)`** — grab the parsed noun-phrase
 - **`.isPlural()`** — return only plural nouns
 - **`.adjectives()`** — get any adjectives describing this noun
-- **`.toPlural(opts?)`** — 'a football captain' → 'football captains'. Drops 'a/an' and makes the next verb agree ('is' → 'are', 'barks' → 'bark'), unless `{ agreement: false }`
-- **`.toSingular(opts?)`** — 'sells seashells' → 'sells a seashell'. Adds 'a/an' to a bare plural and makes the next verb agree ('are' → 'is', 'bark' → 'barks'), unless `{ agreement: false }`
+- **`.toPlural(opts?)`** — 'a football captain' → 'football captains'. Drops 'a/an' and makes the next verb agree ('is' → 'are', 'barks' → 'bark'), unless `{ agree: false }`
+- **`.toSingular(opts?)`** — 'sells seashells' → 'sells a seashell'. Adds 'a/an' to a bare plural and makes the next verb agree ('are' → 'is', 'bark' → 'barks'), unless `{ agree: false }`
 
 ### `.numbers()` →
 

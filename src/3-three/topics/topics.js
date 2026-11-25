@@ -1,7 +1,8 @@
 
 //combine them with .topics() method
 const find = function (n) {
-  const r = this.clauses()
+  // builds without the chunker have no .clauses()
+  const r = this.clauses ? this.clauses() : this
   // Find entities and acronyms without duplicating acronyms inside entities.
   let m = r.people()
   m = m.concat(r.places())

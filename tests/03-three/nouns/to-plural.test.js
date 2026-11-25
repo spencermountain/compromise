@@ -370,7 +370,7 @@ test('toPlural - agreement:', function (t) {
   doc.nouns().toPlural()
   t.equal(doc.text(), 'captains are here', here + 'agreement on')
   doc = nlp('a captain is here')
-  doc.nouns().toPlural({ agreement: false })
+  doc.nouns().toPlural({ agree: false })
   t.equal(doc.text(), 'a captains is here', here + 'agreement off')
   t.end()
 })

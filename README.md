@@ -120,7 +120,7 @@ doc.match('the #Adjective of times').text()
 </div>
 <div align="center">
   <picture>
-    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/f6e93fc7-94ce-410d-8d7b-f6c578308b3e" />
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/978ebaaa-f8e1-47a8-95df-70af56a362aa" />
   </picture>
 </div>
 <!-- spacer -->
@@ -179,7 +179,7 @@ doc.text()
 </div>
 <div align="center">
   <picture>
-    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/8f17c3c6-dabd-4f80-86d9-bc137dc5a919" />
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/bdfb784e-323d-4746-8e3f-9e93f310e9fe" />
   </picture>
 </div>
 <!-- spacer -->

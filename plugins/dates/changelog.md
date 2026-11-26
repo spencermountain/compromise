@@ -2,6 +2,15 @@
 - **[fix]** - #1268 -"8:30 this evening"
 -->
 
+### 3.12.0 [Nov 2026]
+
+- **[change]** - read 'night at 7' as 7pm #1279
+- **[change]** - keep 'by end of day' on today #1275
+- **[change]** - read 'afternoon at 2' as 2pm #1274
+- **[fix]** - last summer/spring as this-year #1266
+- **[fix]** - 7:45 tonight #1268
+- **[update]** - spacetime 2027 DST dates
+
 ### 3.11.0 [Nov 2026]
 
 - **[update]** - 2026f tzdb

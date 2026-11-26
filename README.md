@@ -16,7 +16,6 @@
       </a>
     </sub>
   </div>
-  <div><code>npm install compromise</code></div>
   <picture>
     <img height="22px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   </picture>
@@ -36,10 +35,13 @@
      <a href="https://github.com/nlp-compromise/fr-compromise">french</a> • <a href="https://github.com/nlp-compromise/de-compromise">german</a>  • <a href="https://github.com/nlp-compromise/it-compromise">italian</a> • <a href="https://github.com/nlp-compromise/es-compromise">spanish</a>
     </sub>
   </div>
+  <div><code>npm install compromise</code></div>
 </div>
 
 <!-- spacer -->
-<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<picture>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 
 <div align="left">
 don't you find it strange,
@@ -57,8 +59,9 @@ and how hard it is to actually <b>parse</b> and <i>use</i>?
 </div>
 
 <!-- spacer -->
-<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
+<picture>
+  <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 <div align="left">
   <img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <i><a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a></i> to turn text into data.
   <br/>
@@ -67,9 +70,9 @@ and how hard it is to actually <b>parse</b> and <i>use</i>?
   <sub >
    <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it's not as smart as you'd think.
   </sub>
-
-<img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
+<picture>
+  <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
  <!--
   it is
   <a href="https://observablehq.com/@spencermountain/compromise-filesize">small,
@@ -77,7 +80,9 @@ and how hard it is to actually <b>parse</b> and <i>use</i>?
   and often <i><a href="https://observablehq.com/@spencermountain/compromise-accuracy">good-enough</a></i>.
   <br/> -->
 </div>
+<picture>
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 
 ```js
 import nlp from 'compromise'
@@ -154,7 +159,9 @@ doc.places().json()
 </div>
 
 <!-- spacer -->
-<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<picture>
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 
 avoid the problems of brittle parsers:
 

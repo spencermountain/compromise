@@ -24,12 +24,12 @@
     <img src="https://badgen.net/bundlejs/min/compromise"/>
   </a>  
   </div>
+  <div><code>npm install compromise</code></div>
   <div align="center">
     <sub>
      <a href="https://github.com/nlp-compromise/fr-compromise">french</a> • <a href="https://github.com/nlp-compromise/de-compromise">german</a>  • <a href="https://github.com/nlp-compromise/it-compromise">italian</a> • <a href="https://github.com/nlp-compromise/es-compromise">spanish</a>
     </sub>
   </div>
-  <div><code>npm install compromise</code></div>
 </div>
 
 <!-- spacer -->
@@ -117,7 +117,7 @@ doc.match('the #Adjective of times').text()
 </div>
 <div align="center">
   <picture>
-    <img width="400" height="8" alt="image" src="https://github.com/user-attachments/assets/1bc129c0-f88a-435b-a6b4-3b661e1a34fb" />
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/f6e93fc7-94ce-410d-8d7b-f6c578308b3e" />
   </picture>
 </div>
 <!-- spacer -->
@@ -148,7 +148,7 @@ doc.places().json()
 </div>
 <div align="center">
   <picture>
-    <img width="400" height="8" alt="image" src="https://github.com/user-attachments/assets/704d5842-3feb-463a-a0ee-6d4e6caa3169" />
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/7e25aaf8-6b2e-417c-aa05-752ffffbfe5d" />
   </picture>
 </div>
 
@@ -175,7 +175,9 @@ doc.text()
   <a href="https://observablehq.com/@spencermountain/compromise-contractions">contraction docs</a>
 </div>
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+  <picture>
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/8f17c3c6-dabd-4f80-86d9-bc137dc5a919" />
+  </picture>
 </div>
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -194,7 +196,9 @@ doc.text()
 </div>
 
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
+  <picture>
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/9796e6fc-6fd5-42be-a2f7-b6fd3ec8c419" />
+  </picture>
 </div>
 <!-- spacer -->
 <img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -212,7 +216,7 @@ doc.text()
   <a href="https://observablehq.com/@spencermountain/nouns">noun docs</a>
 </div>
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
+  <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/03125e84-90c9-47ef-b318-fba3debaf9a6" />
 </div>
 
 <!-- spacer -->

@@ -46,13 +46,22 @@ const shiftRange = (range, amount, unit, text, opts) => {
   return str
 }
 
-const arithmetic = (view, amount, unit) => {
+const arithmetic = (view, amount, unit, undo) => {
   if (!Number.isFinite(amount) || amount === 0 || typeof unit !== 'string') {
     return view
   }
   unit = unit.toLowerCase().trim().replace(/ies$/, 'y').replace(/s$/, '')
   if (!units.has(unit)) {
     return view
+  }
+  // spacetime keeps a fraction of a week, but a date moves by whole days
+  if ((unit === 'week' || unit === 'fortnight') && !Number.isInteger(amount)) {
+    amount = Math.ceil(amount * (unit === 'week' ? 7 : 14) - 0.5)
+    unit = 'day'
+  }
+  // subtracting undoes the same shift, so rounding is the same both ways
+  if (undo) {
+    amount = -amount
   }
   return view.map(m => {
     const ranges = parseDates(m, view.opts)

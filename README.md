@@ -4,7 +4,7 @@
   <div>modest natural language processing</div>
   <div>
     <picture>
-      <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/ba550701-c737-47c1-bbac-7ee7e33c9d08" />
+      <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/978ebaaa-f8e1-47a8-95df-70af56a362aa" />
     </picture>
   </div>
   <div align="center">
@@ -120,7 +120,7 @@ doc.match('the #Adjective of times').text()
 </div>
 <div align="center">
   <picture>
-    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/978ebaaa-f8e1-47a8-95df-70af56a362aa" />
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/ba550701-c737-47c1-bbac-7ee7e33c9d08" />
   </picture>
 </div>
 <!-- spacer -->
@@ -179,7 +179,7 @@ doc.text()
 </div>
 <div align="center">
   <picture>
-    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/bdfb784e-323d-4746-8e3f-9e93f310e9fe" />
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/463e9384-1317-4a6d-8f35-1b4d295429cd" />
   </picture>
 </div>
 <!-- spacer -->

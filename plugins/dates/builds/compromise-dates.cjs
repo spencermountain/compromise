@@ -2622,6 +2622,11 @@
       const str = doc.text('reduced');
       const unit = new Moment(str, null, context);
       if (unit.d.isValid() === true) {
+        // spacetime moves it to our timezone - keep the offset it was written in
+        const off = str.match(/(z|[+-][0-9]{2}:[0-9]{2})$/);
+        if (off) {
+          unit.d = unit.d.goto(off[1] === 'z' ? 'UTC' : off[1]);
+        }
         return unit
       }
     }
@@ -4291,13 +4296,22 @@
     return str
   };
 
-  const arithmetic = (view, amount, unit) => {
+  const arithmetic = (view, amount, unit, undo) => {
     if (!Number.isFinite(amount) || amount === 0 || typeof unit !== 'string') {
       return view
     }
     unit = unit.toLowerCase().trim().replace(/ies$/, 'y').replace(/s$/, '');
     if (!units.has(unit)) {
       return view
+    }
+    // spacetime keeps a fraction of a week, but a date moves by whole days
+    if ((unit === 'week' || unit === 'fortnight') && !Number.isInteger(amount)) {
+      amount = Math.ceil(amount * (unit === 'week' ? 7 : 14) - 0.5);
+      unit = 'day';
+    }
+    // subtracting undoes the same shift, so rounding is the same both ways
+    if (undo) {
+      amount = -amount;
     }
     return view.map(m => {
       const ranges = parse$2(m, view.opts);
@@ -4403,7 +4417,8 @@
         if (!Number.isFinite(amount)) {
           return this
         }
-        return this.add(-amount, unit)
+        const res = arithmetic(this, amount, unit, true);
+        return new Dates(this.document, res.pointer, null, this.opts)
       }
 
       // .filter() returns a plain View - keep our class and opts, so results chain

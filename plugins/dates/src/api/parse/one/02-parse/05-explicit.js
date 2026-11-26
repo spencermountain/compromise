@@ -190,6 +190,11 @@ const parseExplicit = function (doc, context) {
     const str = doc.text('reduced')
     const unit = new Moment(str, null, context)
     if (unit.d.isValid() === true) {
+      // spacetime moves it to our timezone - keep the offset it was written in
+      const off = str.match(/(z|[+-][0-9]{2}:[0-9]{2})$/)
+      if (off) {
+        unit.d = unit.d.goto(off[1] === 'z' ? 'UTC' : off[1])
+      }
       return unit
     }
   }

@@ -80,7 +80,8 @@ const api = function (View) {
       if (!Number.isFinite(amount)) {
         return this
       }
-      return this.add(-amount, unit)
+      const res = arithmetic(this, amount, unit, true)
+      return new Dates(this.document, res.pointer, null, this.opts)
     }
 
     // .filter() returns a plain View - keep our class and opts, so results chain

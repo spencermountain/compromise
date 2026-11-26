@@ -1,9 +1,12 @@
 <div align="center">
   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
   <div><b>compromise</b></div>
-  <img src="https://user-images.githubusercontent.com/399657/68222691-6597f180-ffb9-11e9-8a32-a7f38aa8bded.png"/>
   <div>modest natural language processing</div>
-  <div><code>npm install compromise</code></div>
+  <div>
+    <picture>
+      <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/a8454327-add3-4486-ad7d-c24be50f9d8d" />
+    </picture>
+  </div>
   <div align="center">
     <sub>
       by
@@ -13,7 +16,10 @@
       </a>
     </sub>
   </div>
-  <img height="22px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <div><code>npm install compromise</code></div>
+  <picture>
+    <img height="22px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  </picture>
 </div>
 
 <div align="center">
@@ -22,8 +28,8 @@
     <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
   </a>
   <a href="https://bundlephobia.com/result?p=compromise">
-    <img src="https://badgen.net/bundlephobia/min/compromise"/>
-  </a>
+    <img src="https://badgen.net/bundlejs/min/compromise"/>
+  </a>  
   </div>
   <div align="center">
     <sub>

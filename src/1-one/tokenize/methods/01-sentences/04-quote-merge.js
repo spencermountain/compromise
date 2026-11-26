@@ -28,6 +28,9 @@ const pairs = [
   ['\u300E', '\u300F'], // white-corner
 ]
 
+// any opening mark - most sentences have none
+const hasQuote = new RegExp('[' + pairs.map(a => a[0]).join('') + ']')
+
 const count = function (str, chars) {
   let n = 0
   for (const c of str) {
@@ -40,6 +43,9 @@ const count = function (str, chars) {
 
 // is there a quotation here, that hasn't closed yet?
 const isOpen = function (str) {
+  if (!hasQuote.test(str)) {
+    return false
+  }
   return pairs.some(([open, close, unless]) => {
     const n = count(str, open)
     if (n === 0 || (unless && str.includes(unless))) {

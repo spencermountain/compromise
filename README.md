@@ -57,12 +57,13 @@ and how hard it is to actually <b>parse</b> and <i>use</i>?
   <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </picture>
 <div align="left">
-  <img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>compromise <i><a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a></i> to turn text into data.
+  <picture><img height="10px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>compromise <i><a href="https://observablehq.com/@spencermountain/compromise-justification">tries its best</a></i> to turn text into data.
   <br/>
-  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>it makes limited and sensible decisions.
+  <picture>
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>it makes limited and sensible decisions.
   <br/>
   <sub >
-   <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it's not as smart as you'd think.
+   <picture><img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>it's not as smart as you'd think.
   </sub>
   <picture>
     <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -82,7 +83,8 @@ doc.text()
 ```
 
 <!-- spacer -->
-<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+<picture><img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 
 <div align="left">
 <i>don't be fancy, at all:</i>
@@ -95,7 +97,8 @@ if (doc.has('simon says #Verb')) {
 ```
 
 <!-- spacer -->
-<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+<picture><img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 <div align="center">
   <picture>
     <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/a8454327-add3-4486-ad7d-c24be50f9d8d" />
@@ -250,7 +253,8 @@ doc.verbs().toNegative()
   bragging graphs
  -->
 <!-- spacer -->
-<img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+
+<picture><img height="30" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 
 compromise is **~250kb** (minified):
 
@@ -280,8 +284,9 @@ The final lexicon is <a href="https://observablehq.com/@spencermountain/compromi
 you can read more about how it works, [here](https://observablehq.com/@spencermountain/compromise-internals). it's weird.
 
 <!-- spacer -->
-<img height="75px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
+<picture>
+  <img height="75px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 <!--
   one/two/three parts
  -->
@@ -318,8 +323,9 @@ let data = doc.json()
   <sub>and does nothing else -</sub>
 </ul>
 
-<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
+<picture>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 <b>/one</b> is quick - most sentences take a 10th of a millisecond.
 
 It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
@@ -331,7 +337,9 @@ It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
 </div>
 
 <!-- spacer -->
-<img height="60px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<picture>
+  <img height="60px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 
 <!-- two -->
 <p align="center">
@@ -339,7 +347,7 @@ It can do <b>~1mb</b> of text a second - or 10 wikipedia pages.
    <code>compromise/two</code>
   </h1>
   <p align="center">A <code>part-of-speech</code> tagger, and grammar-interpreter.</p>
-  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <picture><img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
   <p>
 
 ```js
@@ -355,7 +363,7 @@ let str = doc.match('#Possessive #Noun').text()
 </div>
 
 <p>
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <picture><img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 </p>
 <b>compromise/two</b> automatically calculates the very basic grammar of each word.
 
@@ -365,8 +373,9 @@ Light grammar helps you write cleaner templates, and get closer to the informati
 
 <!-- Part-of-speech tagging is profoundly-difficult task to get 100% on. It is also a profoundly easy task to get 85% on. -->
 
-<img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-
+<picture>
+  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 compromise has <b>83 tags</b>, arranged in <a href="https://observablehq.com/@spencermountain/compromise-tags">a handsome graph</a>.
 
 <b>#FirstName</b> → <b>#Person</b> → <b>#ProperNoun</b> → <b>#Noun</b>
@@ -383,7 +392,7 @@ doc.compute('penn')
 doc.json()
 ```
 
-<img height="60px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<picture><img height="60px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 
 <!-- three -->
 <p align="center">
@@ -391,7 +400,7 @@ doc.json()
    <code>compromise/three</code>
   </h1>
   <p align="center"><code>Phrase</code> and sentence tooling.</p>
-  <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <picture><img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
   <p>
 
 ```js
@@ -434,7 +443,7 @@ doc.money().json()
 ]*/
 ```
 
-<img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<picture><img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 
 ## Docs
 
@@ -466,10 +475,9 @@ npx compromise ./infinite-jest.txt  --match="and so on" --format=highlight
 
 <div align="right">
   <a href="./docs/cli.md">CLI docs</a>
+  <img width="500" alt="Image" src="https://github.com/user-attachments/assets/9c8e09bc-3e6e-46bb-8a0a-130afe1c36e3" />
 </div>
-<img width="500" alt="Image" src="https://github.com/user-attachments/assets/9c8e09bc-3e6e-46bb-8a0a-130afe1c36e3" />
-
-<img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<picture><img height="80px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 
 ## API
 
@@ -767,11 +775,11 @@ _(these methods are on the main `nlp` object)_
   - **[.slashes().split()](https://observablehq.com/@spencermountain/compromise-selections)** - turn 'love/hate' into 'love hate'
 
 <p>
-<img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <picture><img height="85px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 </p>
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+<picture><img src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/></picture>
 </div>
 
 ### .extend():
@@ -829,12 +837,12 @@ nlp.extend({
   <a href="https://observablehq.com/@spencermountain/compromise-plugins">.plugin() docs</a>
 </div>
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/>
+  <picture><img height="50px" src="https://user-images.githubusercontent.com/399657/68221848-11404200-ffb8-11e9-90cd-3adee8d8564f.png"/></picture>
 </div>
 
 <!-- spacer -->
 <div >
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <picture><img height="50px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 </div>
 
 ### Docs:
@@ -847,7 +855,7 @@ nlp.extend({
   <!-- * **[Tutorial #4]()**  -  Making a plugin -->
 
 <div >
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <picture><img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 </div>
 
 ##### Documentation:
@@ -875,7 +883,7 @@ nlp.extend({
 | [Root-forms](https://observablehq.com/@spencermountain/compromise-root)                     |
 
 <div >
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <picture><img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
 </div>
 
 ##### Talks:
@@ -912,11 +920,11 @@ nlp.extend({
 
 <!-- spacer -->
 <div align="center">
-  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <picture><img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/></picture>
   <hr/>
 </div>
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/>
+  <picture><img height="50px" src="https://user-images.githubusercontent.com/399657/68221632-b9094000-ffb7-11e9-99e0-b48edd6cdf8a.png"/></picture>
 </div>
 
 <!-- <div align="center">
@@ -1152,7 +1160,7 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
 </ul>
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/>
+  <picture><img src="https://user-images.githubusercontent.com/399657/68221731-e8b84800-ffb7-11e9-8453-6395e0e903fa.png"/></picture>
 </div>
 
 #### See Also:
@@ -1171,6 +1179,8 @@ nlpEx('This is type safe!').ngrams({ min: 1 })
 - &nbsp; **[Prose](https://github.com/jdkato/prose/)** - quick tagger in Go by Joseph Kato
 - &nbsp; **[TextBlob](https://github.com/sloria/TextBlob)** - python tagger
 
-<img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+<picture>
+  <img height="25px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+</picture>
 
 <b>MIT</b>

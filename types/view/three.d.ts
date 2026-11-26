@@ -96,9 +96,9 @@ export interface Nouns extends View {
   /** get any adjectives describing this noun*/
   adjectives: () => View
   /** 'a football captain' → 'football captains'. Pass {agree: false} to keep the article and verb as they are */
-  toPlural: (opts?: { agree?: boolean }) => View
+  toPlural: (n?: number | { agree?: boolean }, opts?: { agree?: boolean }) => View
   /** 'sells seashells' → 'sells a seashell'. Pass {agree: false} to keep the article and verb as they are */
-  toSingular: (opts?: { agree?: boolean }) => View
+  toSingular: (n?: number | { agree?: boolean }, opts?: { agree?: boolean }) => View
 }
 
 export interface Numbers extends View {

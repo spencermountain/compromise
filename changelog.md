@@ -9,12 +9,12 @@ While all _Major_ releases should be reviewed, our only _large_ releases are **v
 <!--
 -->
 
-#### 14.21.0 [Dec 2026]
+#### 14.21.0 [Nov 2026]
 
 - **[fix]** - doc.debug() runtime error
 - **[fix]** - #1286 toCardinal() runtime error
 - **[new]** - improved agreement & sentence-healing after modifications
-- - _[new]_ - use `{agree:true}` for `prepend, append, insert, remove, replace` methods
+- - _[new]_ - consistent `{agree:true}` param for `prepend, append, insert, remove, replace` methods
 - - _[new]_ - toSingular/toPlural now adjust neighbour verbs/articles
 - - _[change]_ - transform methods now keep titlecased 1st-word, trailing punctuation
 - - _[change]_ - transform methods now keep opening/closing punctuation marks

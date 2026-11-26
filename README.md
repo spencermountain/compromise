@@ -4,7 +4,7 @@
   <div>modest natural language processing</div>
   <div>
     <picture>
-      <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/a8454327-add3-4486-ad7d-c24be50f9d8d" />
+      <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/ba550701-c737-47c1-bbac-7ee7e33c9d08" />
     </picture>
   </div>
   <div align="center">
@@ -16,12 +16,6 @@
       </a>
     </sub>
   </div>
-  <picture>
-    <img height="22px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-  </picture>
-</div>
-
-<div align="center">
   <div>
     <a href="https://npmjs.org/package/compromise">
     <img src="https://img.shields.io/npm/v/compromise.svg?style=flat-square" />
@@ -70,18 +64,12 @@ and how hard it is to actually <b>parse</b> and <i>use</i>?
   <sub >
    <img height="15px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/> it's not as smart as you'd think.
   </sub>
-<picture>
-  <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
-</picture>
- <!--
-  it is
-  <a href="https://observablehq.com/@spencermountain/compromise-filesize">small,
-  <a href="https://observablehq.com/@spencermountain/compromise-performance">quick</a>,
-  and often <i><a href="https://observablehq.com/@spencermountain/compromise-accuracy">good-enough</a></i>.
-  <br/> -->
+  <picture>
+    <img height="45px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  </picture>
 </div>
 <picture>
-<img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
+  <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 </picture>
 
 ```js
@@ -109,7 +97,9 @@ if (doc.has('simon says #Verb')) {
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+  <picture>
+    <img width="300" height="8" alt="image" src="https://github.com/user-attachments/assets/a8454327-add3-4486-ad7d-c24be50f9d8d" />
+  </picture>
 </div>
 
 <div align="left">
@@ -126,7 +116,9 @@ doc.match('the #Adjective of times').text()
   <a href="https://observablehq.com/@spencermountain/compromise-match">match docs</a>
 </div>
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221837-0d142480-ffb8-11e9-9d30-90669f1b897c.png"/>
+  <picture>
+    <img width="400" height="8" alt="image" src="https://github.com/user-attachments/assets/1bc129c0-f88a-435b-a6b4-3b661e1a34fb" />
+  </picture>
 </div>
 <!-- spacer -->
 <img height="30px" src="https://user-images.githubusercontent.com/399657/68221862-17ceb980-ffb8-11e9-87d4-7b30b6488f16.png"/>
@@ -155,7 +147,9 @@ doc.places().json()
   <a href="https://observablehq.com/@spencermountain/compromise-json">json docs</a>
 </div>
 <div align="center">
-  <img height="50px" src="https://user-images.githubusercontent.com/399657/68221814-05ed1680-ffb8-11e9-8b6b-c7528d163871.png"/>
+  <picture>
+    <img width="400" height="8" alt="image" src="https://github.com/user-attachments/assets/704d5842-3feb-463a-a0ee-6d4e6caa3169" />
+  </picture>
 </div>
 
 <!-- spacer -->

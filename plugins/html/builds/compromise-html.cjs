@@ -2462,8 +2462,13 @@
       get col() {
           return this.pos - this.lineStartPos + Number(this.lastGapPos !== this.pos);
       }
+      /** The index in `html` at which the current code point starts (the high surrogate of a pair). */
+      get codePointStart() {
+          return this.pos - Number(this.lastGapPos === this.pos);
+      }
+      /** The offset of the current code point, before the second unit of a surrogate pair. */
       get offset() {
-          return this.droppedBufferSize + this.pos;
+          return this.droppedBufferSize + this.codePointStart;
       }
       getError(code, cpOffset) {
           const { line, col, offset } = this;
@@ -2515,12 +2520,16 @@
       }
       dropParsedChunk() {
           if (this.willDropParsedChunk()) {
-              this.html = this.html.substring(this.pos);
-              this.lineStartPos -= this.pos;
-              this.droppedBufferSize += this.pos;
-              this.pos = 0;
+              // Retain the entire current code point, including both units of a surrogate pair.
+              const droppedSize = this.offset - this.droppedBufferSize;
+              this.html = this.html.substring(droppedSize);
+              this.lineStartPos -= droppedSize;
+              this.droppedBufferSize += droppedSize;
+              this.pos -= droppedSize;
               this.lastGapPos = -2;
               this.gapStack.length = 0;
+              if (this.pos > 0)
+                  this._addGap();
           }
       }
       write(chunk, isLastChunk) {
@@ -2650,111 +2659,249 @@
       return null;
   }
 
-  // Generated using scripts/write-decode-map.ts
-  const htmlDecodeTree = /* #__PURE__ */ new Uint16Array(
-  // prettier-ignore
-  /* #__PURE__ */ "\u1d41<\xd5\u0131\u028a\u049d\u057b\u05d0\u0675\u06de\u07a2\u07d6\u080f\u0a4a\u0a91\u0da1\u0e6d\u0f09\u0f26\u10ca\u1228\u12e1\u1415\u149d\u14c3\u14df\u1525\0\0\0\0\0\0\u156b\u16cd\u198d\u1c12\u1ddd\u1f7e\u2060\u21b0\u228d\u23c0\u23fb\u2442\u2824\u2912\u2d08\u2e48\u2fce\u3016\u32ba\u3639\u37ac\u38fe\u3a28\u3a71\u3ae0\u3b2e\u0800EMabcfglmnoprstu\\bfms\x7f\x84\x8b\x90\x95\x98\xa6\xb3\xb9\xc8\xcflig\u803b\xc6\u40c6P\u803b&\u4026cute\u803b\xc1\u40c1reve;\u4102\u0100iyx}rc\u803b\xc2\u40c2;\u4410r;\uc000\ud835\udd04rave\u803b\xc0\u40c0pha;\u4391acr;\u4100d;\u6a53\u0100gp\x9d\xa1on;\u4104f;\uc000\ud835\udd38plyFunction;\u6061ing\u803b\xc5\u40c5\u0100cs\xbe\xc3r;\uc000\ud835\udc9cign;\u6254ilde\u803b\xc3\u40c3ml\u803b\xc4\u40c4\u0400aceforsu\xe5\xfb\xfe\u0117\u011c\u0122\u0127\u012a\u0100cr\xea\xf2kslash;\u6216\u0176\xf6\xf8;\u6ae7ed;\u6306y;\u4411\u0180crt\u0105\u010b\u0114ause;\u6235noullis;\u612ca;\u4392r;\uc000\ud835\udd05pf;\uc000\ud835\udd39eve;\u42d8c\xf2\u0113mpeq;\u624e\u0700HOacdefhilorsu\u014d\u0151\u0156\u0180\u019e\u01a2\u01b5\u01b7\u01ba\u01dc\u0215\u0273\u0278\u027ecy;\u4427PY\u803b\xa9\u40a9\u0180cpy\u015d\u0162\u017aute;\u4106\u0100;i\u0167\u0168\u62d2talDifferentialD;\u6145leys;\u612d\u0200aeio\u0189\u018e\u0194\u0198ron;\u410cdil\u803b\xc7\u40c7rc;\u4108nint;\u6230ot;\u410a\u0100dn\u01a7\u01adilla;\u40b8terDot;\u40b7\xf2\u017fi;\u43a7rcle\u0200DMPT\u01c7\u01cb\u01d1\u01d6ot;\u6299inus;\u6296lus;\u6295imes;\u6297o\u0100cs\u01e2\u01f8kwiseContourIntegral;\u6232eCurly\u0100DQ\u0203\u020foubleQuote;\u601duote;\u6019\u0200lnpu\u021e\u0228\u0247\u0255on\u0100;e\u0225\u0226\u6237;\u6a74\u0180git\u022f\u0236\u023aruent;\u6261nt;\u622fourIntegral;\u622e\u0100fr\u024c\u024e;\u6102oduct;\u6210nterClockwiseContourIntegral;\u6233oss;\u6a2fcr;\uc000\ud835\udc9ep\u0100;C\u0284\u0285\u62d3ap;\u624d\u0580DJSZacefios\u02a0\u02ac\u02b0\u02b4\u02b8\u02cb\u02d7\u02e1\u02e6\u0333\u048d\u0100;o\u0179\u02a5trahd;\u6911cy;\u4402cy;\u4405cy;\u440f\u0180grs\u02bf\u02c4\u02c7ger;\u6021r;\u61a1hv;\u6ae4\u0100ay\u02d0\u02d5ron;\u410e;\u4414l\u0100;t\u02dd\u02de\u6207a;\u4394r;\uc000\ud835\udd07\u0100af\u02eb\u0327\u0100cm\u02f0\u0322ritical\u0200ADGT\u0300\u0306\u0316\u031ccute;\u40b4o\u0174\u030b\u030d;\u42d9bleAcute;\u42ddrave;\u4060ilde;\u42dcond;\u62c4ferentialD;\u6146\u0470\u033d\0\0\0\u0342\u0354\0\u0405f;\uc000\ud835\udd3b\u0180;DE\u0348\u0349\u034d\u40a8ot;\u60dcqual;\u6250ble\u0300CDLRUV\u0363\u0372\u0382\u03cf\u03e2\u03f8ontourIntegra\xec\u0239o\u0274\u0379\0\0\u037b\xbb\u0349nArrow;\u61d3\u0100eo\u0387\u03a4ft\u0180ART\u0390\u0396\u03a1rrow;\u61d0ightArrow;\u61d4e\xe5\u02cang\u0100LR\u03ab\u03c4eft\u0100AR\u03b3\u03b9rrow;\u67f8ightArrow;\u67faightArrow;\u67f9ight\u0100AT\u03d8\u03derrow;\u61d2ee;\u62a8p\u0241\u03e9\0\0\u03efrrow;\u61d1ownArrow;\u61d5erticalBar;\u6225n\u0300ABLRTa\u0412\u042a\u0430\u045e\u047f\u037crrow\u0180;BU\u041d\u041e\u0422\u6193ar;\u6913pArrow;\u61f5reve;\u4311eft\u02d2\u043a\0\u0446\0\u0450ightVector;\u6950eeVector;\u695eector\u0100;B\u0459\u045a\u61bdar;\u6956ight\u01d4\u0467\0\u0471eeVector;\u695fector\u0100;B\u047a\u047b\u61c1ar;\u6957ee\u0100;A\u0486\u0487\u62a4rrow;\u61a7\u0100ct\u0492\u0497r;\uc000\ud835\udc9frok;\u4110\u0800NTacdfglmopqstux\u04bd\u04c0\u04c4\u04cb\u04de\u04e2\u04e7\u04ee\u04f5\u0521\u052f\u0536\u0552\u055d\u0560\u0565G;\u414aH\u803b\xd0\u40d0cute\u803b\xc9\u40c9\u0180aiy\u04d2\u04d7\u04dcron;\u411arc\u803b\xca\u40ca;\u442dot;\u4116r;\uc000\ud835\udd08rave\u803b\xc8\u40c8ement;\u6208\u0100ap\u04fa\u04fecr;\u4112ty\u0253\u0506\0\0\u0512mallSquare;\u65fberySmallSquare;\u65ab\u0100gp\u0526\u052aon;\u4118f;\uc000\ud835\udd3csilon;\u4395u\u0100ai\u053c\u0549l\u0100;T\u0542\u0543\u6a75ilde;\u6242librium;\u61cc\u0100ci\u0557\u055ar;\u6130m;\u6a73a;\u4397ml\u803b\xcb\u40cb\u0100ip\u056a\u056fsts;\u6203onentialE;\u6147\u0280cfios\u0585\u0588\u058d\u05b2\u05ccy;\u4424r;\uc000\ud835\udd09lled\u0253\u0597\0\0\u05a3mallSquare;\u65fcerySmallSquare;\u65aa\u0370\u05ba\0\u05bf\0\0\u05c4f;\uc000\ud835\udd3dAll;\u6200riertrf;\u6131c\xf2\u05cb\u0600JTabcdfgorst\u05e8\u05ec\u05ef\u05fa\u0600\u0612\u0616\u061b\u061d\u0623\u066c\u0672cy;\u4403\u803b>\u403emma\u0100;d\u05f7\u05f8\u4393;\u43dcreve;\u411e\u0180eiy\u0607\u060c\u0610dil;\u4122rc;\u411c;\u4413ot;\u4120r;\uc000\ud835\udd0a;\u62d9pf;\uc000\ud835\udd3eeater\u0300EFGLST\u0635\u0644\u064e\u0656\u065b\u0666qual\u0100;L\u063e\u063f\u6265ess;\u62dbullEqual;\u6267reater;\u6aa2ess;\u6277lantEqual;\u6a7eilde;\u6273cr;\uc000\ud835\udca2;\u626b\u0400Aacfiosu\u0685\u068b\u0696\u069b\u069e\u06aa\u06be\u06caRDcy;\u442a\u0100ct\u0690\u0694ek;\u42c7;\u405eirc;\u4124r;\u610clbertSpace;\u610b\u01f0\u06af\0\u06b2f;\u610dizontalLine;\u6500\u0100ct\u06c3\u06c5\xf2\u06a9rok;\u4126mp\u0144\u06d0\u06d8ownHum\xf0\u012fqual;\u624f\u0700EJOacdfgmnostu\u06fa\u06fe\u0703\u0707\u070e\u071a\u071e\u0721\u0728\u0744\u0778\u078b\u078f\u0795cy;\u4415lig;\u4132cy;\u4401cute\u803b\xcd\u40cd\u0100iy\u0713\u0718rc\u803b\xce\u40ce;\u4418ot;\u4130r;\u6111rave\u803b\xcc\u40cc\u0180;ap\u0720\u072f\u073f\u0100cg\u0734\u0737r;\u412ainaryI;\u6148lie\xf3\u03dd\u01f4\u0749\0\u0762\u0100;e\u074d\u074e\u622c\u0100gr\u0753\u0758ral;\u622bsection;\u62c2isible\u0100CT\u076c\u0772omma;\u6063imes;\u6062\u0180gpt\u077f\u0783\u0788on;\u412ef;\uc000\ud835\udd40a;\u4399cr;\u6110ilde;\u4128\u01eb\u079a\0\u079ecy;\u4406l\u803b\xcf\u40cf\u0280cfosu\u07ac\u07b7\u07bc\u07c2\u07d0\u0100iy\u07b1\u07b5rc;\u4134;\u4419r;\uc000\ud835\udd0dpf;\uc000\ud835\udd41\u01e3\u07c7\0\u07ccr;\uc000\ud835\udca5rcy;\u4408kcy;\u4404\u0380HJacfos\u07e4\u07e8\u07ec\u07f1\u07fd\u0802\u0808cy;\u4425cy;\u440cppa;\u439a\u0100ey\u07f6\u07fbdil;\u4136;\u441ar;\uc000\ud835\udd0epf;\uc000\ud835\udd42cr;\uc000\ud835\udca6\u0580JTaceflmost\u0825\u0829\u082c\u0850\u0863\u09b3\u09b8\u09c7\u09cd\u0a37\u0a47cy;\u4409\u803b<\u403c\u0280cmnpr\u0837\u083c\u0841\u0844\u084dute;\u4139bda;\u439bg;\u67ealacetrf;\u6112r;\u619e\u0180aey\u0857\u085c\u0861ron;\u413ddil;\u413b;\u441b\u0100fs\u0868\u0970t\u0500ACDFRTUVar\u087e\u08a9\u08b1\u08e0\u08e6\u08fc\u092f\u095b\u0390\u096a\u0100nr\u0883\u088fgleBracket;\u67e8row\u0180;BR\u0899\u089a\u089e\u6190ar;\u61e4ightArrow;\u61c6eiling;\u6308o\u01f5\u08b7\0\u08c3bleBracket;\u67e6n\u01d4\u08c8\0\u08d2eeVector;\u6961ector\u0100;B\u08db\u08dc\u61c3ar;\u6959loor;\u630aight\u0100AV\u08ef\u08f5rrow;\u6194ector;\u694e\u0100er\u0901\u0917e\u0180;AV\u0909\u090a\u0910\u62a3rrow;\u61a4ector;\u695aiangle\u0180;BE\u0924\u0925\u0929\u62b2ar;\u69cfqual;\u62b4p\u0180DTV\u0937\u0942\u094cownVector;\u6951eeVector;\u6960ector\u0100;B\u0956\u0957\u61bfar;\u6958ector\u0100;B\u0965\u0966\u61bcar;\u6952ight\xe1\u039cs\u0300EFGLST\u097e\u098b\u0995\u099d\u09a2\u09adqualGreater;\u62daullEqual;\u6266reater;\u6276ess;\u6aa1lantEqual;\u6a7dilde;\u6272r;\uc000\ud835\udd0f\u0100;e\u09bd\u09be\u62d8ftarrow;\u61daidot;\u413f\u0180npw\u09d4\u0a16\u0a1bg\u0200LRlr\u09de\u09f7\u0a02\u0a10eft\u0100AR\u09e6\u09ecrrow;\u67f5ightArrow;\u67f7ightArrow;\u67f6eft\u0100ar\u03b3\u0a0aight\xe1\u03bfight\xe1\u03caf;\uc000\ud835\udd43er\u0100LR\u0a22\u0a2ceftArrow;\u6199ightArrow;\u6198\u0180cht\u0a3e\u0a40\u0a42\xf2\u084c;\u61b0rok;\u4141;\u626a\u0400acefiosu\u0a5a\u0a5d\u0a60\u0a77\u0a7c\u0a85\u0a8b\u0a8ep;\u6905y;\u441c\u0100dl\u0a65\u0a6fiumSpace;\u605flintrf;\u6133r;\uc000\ud835\udd10nusPlus;\u6213pf;\uc000\ud835\udd44c\xf2\u0a76;\u439c\u0480Jacefostu\u0aa3\u0aa7\u0aad\u0ac0\u0b14\u0b19\u0d91\u0d97\u0d9ecy;\u440acute;\u4143\u0180aey\u0ab4\u0ab9\u0aberon;\u4147dil;\u4145;\u441d\u0180gsw\u0ac7\u0af0\u0b0eative\u0180MTV\u0ad3\u0adf\u0ae8ediumSpace;\u600bhi\u0100cn\u0ae6\u0ad8\xeb\u0ad9eryThi\xee\u0ad9ted\u0100GL\u0af8\u0b06reaterGreate\xf2\u0673essLes\xf3\u0a48Line;\u400ar;\uc000\ud835\udd11\u0200Bnpt\u0b22\u0b28\u0b37\u0b3areak;\u6060BreakingSpace;\u40a0f;\u6115\u0680;CDEGHLNPRSTV\u0b55\u0b56\u0b6a\u0b7c\u0ba1\u0beb\u0c04\u0c5e\u0c84\u0ca6\u0cd8\u0d61\u0d85\u6aec\u0100ou\u0b5b\u0b64ngruent;\u6262pCap;\u626doubleVerticalBar;\u6226\u0180lqx\u0b83\u0b8a\u0b9bement;\u6209ual\u0100;T\u0b92\u0b93\u6260ilde;\uc000\u2242\u0338ists;\u6204reater\u0380;EFGLST\u0bb6\u0bb7\u0bbd\u0bc9\u0bd3\u0bd8\u0be5\u626fqual;\u6271ullEqual;\uc000\u2267\u0338reater;\uc000\u226b\u0338ess;\u6279lantEqual;\uc000\u2a7e\u0338ilde;\u6275ump\u0144\u0bf2\u0bfdownHump;\uc000\u224e\u0338qual;\uc000\u224f\u0338e\u0100fs\u0c0a\u0c27tTriangle\u0180;BE\u0c1a\u0c1b\u0c21\u62eaar;\uc000\u29cf\u0338qual;\u62ecs\u0300;EGLST\u0c35\u0c36\u0c3c\u0c44\u0c4b\u0c58\u626equal;\u6270reater;\u6278ess;\uc000\u226a\u0338lantEqual;\uc000\u2a7d\u0338ilde;\u6274ested\u0100GL\u0c68\u0c79reaterGreater;\uc000\u2aa2\u0338essLess;\uc000\u2aa1\u0338recedes\u0180;ES\u0c92\u0c93\u0c9b\u6280qual;\uc000\u2aaf\u0338lantEqual;\u62e0\u0100ei\u0cab\u0cb9verseElement;\u620cghtTriangle\u0180;BE\u0ccb\u0ccc\u0cd2\u62ebar;\uc000\u29d0\u0338qual;\u62ed\u0100qu\u0cdd\u0d0cuareSu\u0100bp\u0ce8\u0cf9set\u0100;E\u0cf0\u0cf3\uc000\u228f\u0338qual;\u62e2erset\u0100;E\u0d03\u0d06\uc000\u2290\u0338qual;\u62e3\u0180bcp\u0d13\u0d24\u0d4eset\u0100;E\u0d1b\u0d1e\uc000\u2282\u20d2qual;\u6288ceeds\u0200;EST\u0d32\u0d33\u0d3b\u0d46\u6281qual;\uc000\u2ab0\u0338lantEqual;\u62e1ilde;\uc000\u227f\u0338erset\u0100;E\u0d58\u0d5b\uc000\u2283\u20d2qual;\u6289ilde\u0200;EFT\u0d6e\u0d6f\u0d75\u0d7f\u6241qual;\u6244ullEqual;\u6247ilde;\u6249erticalBar;\u6224cr;\uc000\ud835\udca9ilde\u803b\xd1\u40d1;\u439d\u0700Eacdfgmoprstuv\u0dbd\u0dc2\u0dc9\u0dd5\u0ddb\u0de0\u0de7\u0dfc\u0e02\u0e20\u0e22\u0e32\u0e3f\u0e44lig;\u4152cute\u803b\xd3\u40d3\u0100iy\u0dce\u0dd3rc\u803b\xd4\u40d4;\u441eblac;\u4150r;\uc000\ud835\udd12rave\u803b\xd2\u40d2\u0180aei\u0dee\u0df2\u0df6cr;\u414cga;\u43a9cron;\u439fpf;\uc000\ud835\udd46enCurly\u0100DQ\u0e0e\u0e1aoubleQuote;\u601cuote;\u6018;\u6a54\u0100cl\u0e27\u0e2cr;\uc000\ud835\udcaaash\u803b\xd8\u40d8i\u016c\u0e37\u0e3cde\u803b\xd5\u40d5es;\u6a37ml\u803b\xd6\u40d6er\u0100BP\u0e4b\u0e60\u0100ar\u0e50\u0e53r;\u603eac\u0100ek\u0e5a\u0e5c;\u63deet;\u63b4arenthesis;\u63dc\u0480acfhilors\u0e7f\u0e87\u0e8a\u0e8f\u0e92\u0e94\u0e9d\u0eb0\u0efcrtialD;\u6202y;\u441fr;\uc000\ud835\udd13i;\u43a6;\u43a0usMinus;\u40b1\u0100ip\u0ea2\u0eadncareplan\xe5\u069df;\u6119\u0200;eio\u0eb9\u0eba\u0ee0\u0ee4\u6abbcedes\u0200;EST\u0ec8\u0ec9\u0ecf\u0eda\u627aqual;\u6aaflantEqual;\u627cilde;\u627eme;\u6033\u0100dp\u0ee9\u0eeeuct;\u620fortion\u0100;a\u0225\u0ef9l;\u621d\u0100ci\u0f01\u0f06r;\uc000\ud835\udcab;\u43a8\u0200Ufos\u0f11\u0f16\u0f1b\u0f1fOT\u803b\"\u4022r;\uc000\ud835\udd14pf;\u611acr;\uc000\ud835\udcac\u0600BEacefhiorsu\u0f3e\u0f43\u0f47\u0f60\u0f73\u0fa7\u0faa\u0fad\u1096\u10a9\u10b4\u10bearr;\u6910G\u803b\xae\u40ae\u0180cnr\u0f4e\u0f53\u0f56ute;\u4154g;\u67ebr\u0100;t\u0f5c\u0f5d\u61a0l;\u6916\u0180aey\u0f67\u0f6c\u0f71ron;\u4158dil;\u4156;\u4420\u0100;v\u0f78\u0f79\u611cerse\u0100EU\u0f82\u0f99\u0100lq\u0f87\u0f8eement;\u620builibrium;\u61cbpEquilibrium;\u696fr\xbb\u0f79o;\u43a1ght\u0400ACDFTUVa\u0fc1\u0feb\u0ff3\u1022\u1028\u105b\u1087\u03d8\u0100nr\u0fc6\u0fd2gleBracket;\u67e9row\u0180;BL\u0fdc\u0fdd\u0fe1\u6192ar;\u61e5eftArrow;\u61c4eiling;\u6309o\u01f5\u0ff9\0\u1005bleBracket;\u67e7n\u01d4\u100a\0\u1014eeVector;\u695dector\u0100;B\u101d\u101e\u61c2ar;\u6955loor;\u630b\u0100er\u102d\u1043e\u0180;AV\u1035\u1036\u103c\u62a2rrow;\u61a6ector;\u695biangle\u0180;BE\u1050\u1051\u1055\u62b3ar;\u69d0qual;\u62b5p\u0180DTV\u1063\u106e\u1078ownVector;\u694feeVector;\u695cector\u0100;B\u1082\u1083\u61bear;\u6954ector\u0100;B\u1091\u1092\u61c0ar;\u6953\u0100pu\u109b\u109ef;\u611dndImplies;\u6970ightarrow;\u61db\u0100ch\u10b9\u10bcr;\u611b;\u61b1leDelayed;\u69f4\u0680HOacfhimoqstu\u10e4\u10f1\u10f7\u10fd\u1119\u111e\u1151\u1156\u1161\u1167\u11b5\u11bb\u11bf\u0100Cc\u10e9\u10eeHcy;\u4429y;\u4428FTcy;\u442ccute;\u415a\u0280;aeiy\u1108\u1109\u110e\u1113\u1117\u6abcron;\u4160dil;\u415erc;\u415c;\u4421r;\uc000\ud835\udd16ort\u0200DLRU\u112a\u1134\u113e\u1149ownArrow\xbb\u041eeftArrow\xbb\u089aightArrow\xbb\u0fddpArrow;\u6191gma;\u43a3allCircle;\u6218pf;\uc000\ud835\udd4a\u0272\u116d\0\0\u1170t;\u621aare\u0200;ISU\u117b\u117c\u1189\u11af\u65a1ntersection;\u6293u\u0100bp\u118f\u119eset\u0100;E\u1197\u1198\u628fqual;\u6291erset\u0100;E\u11a8\u11a9\u6290qual;\u6292nion;\u6294cr;\uc000\ud835\udcaear;\u62c6\u0200bcmp\u11c8\u11db\u1209\u120b\u0100;s\u11cd\u11ce\u62d0et\u0100;E\u11cd\u11d5qual;\u6286\u0100ch\u11e0\u1205eeds\u0200;EST\u11ed\u11ee\u11f4\u11ff\u627bqual;\u6ab0lantEqual;\u627dilde;\u627fTh\xe1\u0f8c;\u6211\u0180;es\u1212\u1213\u1223\u62d1rset\u0100;E\u121c\u121d\u6283qual;\u6287et\xbb\u1213\u0580HRSacfhiors\u123e\u1244\u1249\u1255\u125e\u1271\u1276\u129f\u12c2\u12c8\u12d1ORN\u803b\xde\u40deADE;\u6122\u0100Hc\u124e\u1252cy;\u440by;\u4426\u0100bu\u125a\u125c;\u4009;\u43a4\u0180aey\u1265\u126a\u126fron;\u4164dil;\u4162;\u4422r;\uc000\ud835\udd17\u0100ei\u127b\u1289\u01f2\u1280\0\u1287efore;\u6234a;\u4398\u0100cn\u128e\u1298kSpace;\uc000\u205f\u200aSpace;\u6009lde\u0200;EFT\u12ab\u12ac\u12b2\u12bc\u623cqual;\u6243ullEqual;\u6245ilde;\u6248pf;\uc000\ud835\udd4bipleDot;\u60db\u0100ct\u12d6\u12dbr;\uc000\ud835\udcafrok;\u4166\u0ae1\u12f7\u130e\u131a\u1326\0\u132c\u1331\0\0\0\0\0\u1338\u133d\u1377\u1385\0\u13ff\u1404\u140a\u1410\u0100cr\u12fb\u1301ute\u803b\xda\u40dar\u0100;o\u1307\u1308\u619fcir;\u6949r\u01e3\u1313\0\u1316y;\u440eve;\u416c\u0100iy\u131e\u1323rc\u803b\xdb\u40db;\u4423blac;\u4170r;\uc000\ud835\udd18rave\u803b\xd9\u40d9acr;\u416a\u0100di\u1341\u1369er\u0100BP\u1348\u135d\u0100ar\u134d\u1350r;\u405fac\u0100ek\u1357\u1359;\u63dfet;\u63b5arenthesis;\u63ddon\u0100;P\u1370\u1371\u62c3lus;\u628e\u0100gp\u137b\u137fon;\u4172f;\uc000\ud835\udd4c\u0400ADETadps\u1395\u13ae\u13b8\u13c4\u03e8\u13d2\u13d7\u13f3rrow\u0180;BD\u1150\u13a0\u13a4ar;\u6912ownArrow;\u61c5ownArrow;\u6195quilibrium;\u696eee\u0100;A\u13cb\u13cc\u62a5rrow;\u61a5own\xe1\u03f3er\u0100LR\u13de\u13e8eftArrow;\u6196ightArrow;\u6197i\u0100;l\u13f9\u13fa\u43d2on;\u43a5ing;\u416ecr;\uc000\ud835\udcb0ilde;\u4168ml\u803b\xdc\u40dc\u0480Dbcdefosv\u1427\u142c\u1430\u1433\u143e\u1485\u148a\u1490\u1496ash;\u62abar;\u6aeby;\u4412ash\u0100;l\u143b\u143c\u62a9;\u6ae6\u0100er\u1443\u1445;\u62c1\u0180bty\u144c\u1450\u147aar;\u6016\u0100;i\u144f\u1455cal\u0200BLST\u1461\u1465\u146a\u1474ar;\u6223ine;\u407ceparator;\u6758ilde;\u6240ThinSpace;\u600ar;\uc000\ud835\udd19pf;\uc000\ud835\udd4dcr;\uc000\ud835\udcb1dash;\u62aa\u0280cefos\u14a7\u14ac\u14b1\u14b6\u14bcirc;\u4174dge;\u62c0r;\uc000\ud835\udd1apf;\uc000\ud835\udd4ecr;\uc000\ud835\udcb2\u0200fios\u14cb\u14d0\u14d2\u14d8r;\uc000\ud835\udd1b;\u439epf;\uc000\ud835\udd4fcr;\uc000\ud835\udcb3\u0480AIUacfosu\u14f1\u14f5\u14f9\u14fd\u1504\u150f\u1514\u151a\u1520cy;\u442fcy;\u4407cy;\u442ecute\u803b\xdd\u40dd\u0100iy\u1509\u150drc;\u4176;\u442br;\uc000\ud835\udd1cpf;\uc000\ud835\udd50cr;\uc000\ud835\udcb4ml;\u4178\u0400Hacdefos\u1535\u1539\u153f\u154b\u154f\u155d\u1560\u1564cy;\u4416cute;\u4179\u0100ay\u1544\u1549ron;\u417d;\u4417ot;\u417b\u01f2\u1554\0\u155boWidt\xe8\u0ad9a;\u4396r;\u6128pf;\u6124cr;\uc000\ud835\udcb5\u0be1\u1583\u158a\u1590\0\u15b0\u15b6\u15bf\0\0\0\0\u15c6\u15db\u15eb\u165f\u166d\0\u1695\u169b\u16b2\u16b9\0\u16becute\u803b\xe1\u40e1reve;\u4103\u0300;Ediuy\u159c\u159d\u15a1\u15a3\u15a8\u15ad\u623e;\uc000\u223e\u0333;\u623frc\u803b\xe2\u40e2te\u80bb\xb4\u0306;\u4430lig\u803b\xe6\u40e6\u0100;r\xb2\u15ba;\uc000\ud835\udd1erave\u803b\xe0\u40e0\u0100ep\u15ca\u15d6\u0100fp\u15cf\u15d4sym;\u6135\xe8\u15d3ha;\u43b1\u0100ap\u15dfc\u0100cl\u15e4\u15e7r;\u4101g;\u6a3f\u0264\u15f0\0\0\u160a\u0280;adsv\u15fa\u15fb\u15ff\u1601\u1607\u6227nd;\u6a55;\u6a5clope;\u6a58;\u6a5a\u0380;elmrsz\u1618\u1619\u161b\u161e\u163f\u164f\u1659\u6220;\u69a4e\xbb\u1619sd\u0100;a\u1625\u1626\u6221\u0461\u1630\u1632\u1634\u1636\u1638\u163a\u163c\u163e;\u69a8;\u69a9;\u69aa;\u69ab;\u69ac;\u69ad;\u69ae;\u69aft\u0100;v\u1645\u1646\u621fb\u0100;d\u164c\u164d\u62be;\u699d\u0100pt\u1654\u1657h;\u6222\xbb\xb9arr;\u637c\u0100gp\u1663\u1667on;\u4105f;\uc000\ud835\udd52\u0380;Eaeiop\u12c1\u167b\u167d\u1682\u1684\u1687\u168a;\u6a70cir;\u6a6f;\u624ad;\u624bs;\u4027rox\u0100;e\u12c1\u1692\xf1\u1683ing\u803b\xe5\u40e5\u0180cty\u16a1\u16a6\u16a8r;\uc000\ud835\udcb6;\u402amp\u0100;e\u12c1\u16af\xf1\u0288ilde\u803b\xe3\u40e3ml\u803b\xe4\u40e4\u0100ci\u16c2\u16c8onin\xf4\u0272nt;\u6a11\u0800Nabcdefiklnoprsu\u16ed\u16f1\u1730\u173c\u1743\u1748\u1778\u177d\u17e0\u17e6\u1839\u1850\u170d\u193d\u1948\u1970ot;\u6aed\u0100cr\u16f6\u171ek\u0200ceps\u1700\u1705\u170d\u1713ong;\u624cpsilon;\u43f6rime;\u6035im\u0100;e\u171a\u171b\u623dq;\u62cd\u0176\u1722\u1726ee;\u62bded\u0100;g\u172c\u172d\u6305e\xbb\u172drk\u0100;t\u135c\u1737brk;\u63b6\u0100oy\u1701\u1741;\u4431quo;\u601e\u0280cmprt\u1753\u175b\u1761\u1764\u1768aus\u0100;e\u010a\u0109ptyv;\u69b0s\xe9\u170cno\xf5\u0113\u0180ahw\u176f\u1771\u1773;\u43b2;\u6136een;\u626cr;\uc000\ud835\udd1fg\u0380costuvw\u178d\u179d\u17b3\u17c1\u17d5\u17db\u17de\u0180aiu\u1794\u1796\u179a\xf0\u0760rc;\u65efp\xbb\u1371\u0180dpt\u17a4\u17a8\u17adot;\u6a00lus;\u6a01imes;\u6a02\u0271\u17b9\0\0\u17becup;\u6a06ar;\u6605riangle\u0100du\u17cd\u17d2own;\u65bdp;\u65b3plus;\u6a04e\xe5\u1444\xe5\u14adarow;\u690d\u0180ako\u17ed\u1826\u1835\u0100cn\u17f2\u1823k\u0180lst\u17fa\u05ab\u1802ozenge;\u69ebriangle\u0200;dlr\u1812\u1813\u1818\u181d\u65b4own;\u65beeft;\u65c2ight;\u65b8k;\u6423\u01b1\u182b\0\u1833\u01b2\u182f\0\u1831;\u6592;\u65914;\u6593ck;\u6588\u0100eo\u183e\u184d\u0100;q\u1843\u1846\uc000=\u20e5uiv;\uc000\u2261\u20e5t;\u6310\u0200ptwx\u1859\u185e\u1867\u186cf;\uc000\ud835\udd53\u0100;t\u13cb\u1863om\xbb\u13cctie;\u62c8\u0600DHUVbdhmptuv\u1885\u1896\u18aa\u18bb\u18d7\u18db\u18ec\u18ff\u1905\u190a\u1910\u1921\u0200LRlr\u188e\u1890\u1892\u1894;\u6557;\u6554;\u6556;\u6553\u0280;DUdu\u18a1\u18a2\u18a4\u18a6\u18a8\u6550;\u6566;\u6569;\u6564;\u6567\u0200LRlr\u18b3\u18b5\u18b7\u18b9;\u655d;\u655a;\u655c;\u6559\u0380;HLRhlr\u18ca\u18cb\u18cd\u18cf\u18d1\u18d3\u18d5\u6551;\u656c;\u6563;\u6560;\u656b;\u6562;\u655fox;\u69c9\u0200LRlr\u18e4\u18e6\u18e8\u18ea;\u6555;\u6552;\u6510;\u650c\u0280;DUdu\u06bd\u18f7\u18f9\u18fb\u18fd;\u6565;\u6568;\u652c;\u6534inus;\u629flus;\u629eimes;\u62a0\u0200LRlr\u1919\u191b\u191d\u191f;\u655b;\u6558;\u6518;\u6514\u0380;HLRhlr\u1930\u1931\u1933\u1935\u1937\u1939\u193b\u6502;\u656a;\u6561;\u655e;\u653c;\u6524;\u651c\u0100ev\u0123\u1942bar\u803b\xa6\u40a6\u0200ceio\u1951\u1956\u195a\u1960r;\uc000\ud835\udcb7mi;\u604fm\u0100;e\u171a\u171cl\u0180;bh\u1968\u1969\u196b\u405c;\u69c5sub;\u67c8\u016c\u1974\u197el\u0100;e\u1979\u197a\u6022t\xbb\u197ap\u0180;Ee\u012f\u1985\u1987;\u6aae\u0100;q\u06dc\u06db\u0ce1\u19a7\0\u19e8\u1a11\u1a15\u1a32\0\u1a37\u1a50\0\0\u1ab4\0\0\u1ac1\0\0\u1b21\u1b2e\u1b4d\u1b52\0\u1bfd\0\u1c0c\u0180cpr\u19ad\u19b2\u19ddute;\u4107\u0300;abcds\u19bf\u19c0\u19c4\u19ca\u19d5\u19d9\u6229nd;\u6a44rcup;\u6a49\u0100au\u19cf\u19d2p;\u6a4bp;\u6a47ot;\u6a40;\uc000\u2229\ufe00\u0100eo\u19e2\u19e5t;\u6041\xee\u0693\u0200aeiu\u19f0\u19fb\u1a01\u1a05\u01f0\u19f5\0\u19f8s;\u6a4don;\u410ddil\u803b\xe7\u40e7rc;\u4109ps\u0100;s\u1a0c\u1a0d\u6a4cm;\u6a50ot;\u410b\u0180dmn\u1a1b\u1a20\u1a26il\u80bb\xb8\u01adptyv;\u69b2t\u8100\xa2;e\u1a2d\u1a2e\u40a2r\xe4\u01b2r;\uc000\ud835\udd20\u0180cei\u1a3d\u1a40\u1a4dy;\u4447ck\u0100;m\u1a47\u1a48\u6713ark\xbb\u1a48;\u43c7r\u0380;Ecefms\u1a5f\u1a60\u1a62\u1a6b\u1aa4\u1aaa\u1aae\u65cb;\u69c3\u0180;el\u1a69\u1a6a\u1a6d\u42c6q;\u6257e\u0261\u1a74\0\0\u1a88rrow\u0100lr\u1a7c\u1a81eft;\u61baight;\u61bb\u0280RSacd\u1a92\u1a94\u1a96\u1a9a\u1a9f\xbb\u0f47;\u64c8st;\u629birc;\u629aash;\u629dnint;\u6a10id;\u6aefcir;\u69c2ubs\u0100;u\u1abb\u1abc\u6663it\xbb\u1abc\u02ec\u1ac7\u1ad4\u1afa\0\u1b0aon\u0100;e\u1acd\u1ace\u403a\u0100;q\xc7\xc6\u026d\u1ad9\0\0\u1ae2a\u0100;t\u1ade\u1adf\u402c;\u4040\u0180;fl\u1ae8\u1ae9\u1aeb\u6201\xee\u1160e\u0100mx\u1af1\u1af6ent\xbb\u1ae9e\xf3\u024d\u01e7\u1afe\0\u1b07\u0100;d\u12bb\u1b02ot;\u6a6dn\xf4\u0246\u0180fry\u1b10\u1b14\u1b17;\uc000\ud835\udd54o\xe4\u0254\u8100\xa9;s\u0155\u1b1dr;\u6117\u0100ao\u1b25\u1b29rr;\u61b5ss;\u6717\u0100cu\u1b32\u1b37r;\uc000\ud835\udcb8\u0100bp\u1b3c\u1b44\u0100;e\u1b41\u1b42\u6acf;\u6ad1\u0100;e\u1b49\u1b4a\u6ad0;\u6ad2dot;\u62ef\u0380delprvw\u1b60\u1b6c\u1b77\u1b82\u1bac\u1bd4\u1bf9arr\u0100lr\u1b68\u1b6a;\u6938;\u6935\u0270\u1b72\0\0\u1b75r;\u62dec;\u62dfarr\u0100;p\u1b7f\u1b80\u61b6;\u693d\u0300;bcdos\u1b8f\u1b90\u1b96\u1ba1\u1ba5\u1ba8\u622arcap;\u6a48\u0100au\u1b9b\u1b9ep;\u6a46p;\u6a4aot;\u628dr;\u6a45;\uc000\u222a\ufe00\u0200alrv\u1bb5\u1bbf\u1bde\u1be3rr\u0100;m\u1bbc\u1bbd\u61b7;\u693cy\u0180evw\u1bc7\u1bd4\u1bd8q\u0270\u1bce\0\0\u1bd2re\xe3\u1b73u\xe3\u1b75ee;\u62ceedge;\u62cfen\u803b\xa4\u40a4earrow\u0100lr\u1bee\u1bf3eft\xbb\u1b80ight\xbb\u1bbde\xe4\u1bdd\u0100ci\u1c01\u1c07onin\xf4\u01f7nt;\u6231lcty;\u632d\u0980AHabcdefhijlorstuwz\u1c38\u1c3b\u1c3f\u1c5d\u1c69\u1c75\u1c8a\u1c9e\u1cac\u1cb7\u1cfb\u1cff\u1d0d\u1d7b\u1d91\u1dab\u1dbb\u1dc6\u1dcdr\xf2\u0381ar;\u6965\u0200glrs\u1c48\u1c4d\u1c52\u1c54ger;\u6020eth;\u6138\xf2\u1133h\u0100;v\u1c5a\u1c5b\u6010\xbb\u090a\u016b\u1c61\u1c67arow;\u690fa\xe3\u0315\u0100ay\u1c6e\u1c73ron;\u410f;\u4434\u0180;ao\u0332\u1c7c\u1c84\u0100gr\u02bf\u1c81r;\u61catseq;\u6a77\u0180glm\u1c91\u1c94\u1c98\u803b\xb0\u40b0ta;\u43b4ptyv;\u69b1\u0100ir\u1ca3\u1ca8sht;\u697f;\uc000\ud835\udd21ar\u0100lr\u1cb3\u1cb5\xbb\u08dc\xbb\u101e\u0280aegsv\u1cc2\u0378\u1cd6\u1cdc\u1ce0m\u0180;os\u0326\u1cca\u1cd4nd\u0100;s\u0326\u1cd1uit;\u6666amma;\u43ddin;\u62f2\u0180;io\u1ce7\u1ce8\u1cf8\u40f7de\u8100\xf7;o\u1ce7\u1cf0ntimes;\u62c7n\xf8\u1cf7cy;\u4452c\u026f\u1d06\0\0\u1d0arn;\u631eop;\u630d\u0280lptuw\u1d18\u1d1d\u1d22\u1d49\u1d55lar;\u4024f;\uc000\ud835\udd55\u0280;emps\u030b\u1d2d\u1d37\u1d3d\u1d42q\u0100;d\u0352\u1d33ot;\u6251inus;\u6238lus;\u6214quare;\u62a1blebarwedg\xe5\xfan\u0180adh\u112e\u1d5d\u1d67ownarrow\xf3\u1c83arpoon\u0100lr\u1d72\u1d76ef\xf4\u1cb4igh\xf4\u1cb6\u0162\u1d7f\u1d85karo\xf7\u0f42\u026f\u1d8a\0\0\u1d8ern;\u631fop;\u630c\u0180cot\u1d98\u1da3\u1da6\u0100ry\u1d9d\u1da1;\uc000\ud835\udcb9;\u4455l;\u69f6rok;\u4111\u0100dr\u1db0\u1db4ot;\u62f1i\u0100;f\u1dba\u1816\u65bf\u0100ah\u1dc0\u1dc3r\xf2\u0429a\xf2\u0fa6angle;\u69a6\u0100ci\u1dd2\u1dd5y;\u445fgrarr;\u67ff\u0900Dacdefglmnopqrstux\u1e01\u1e09\u1e19\u1e38\u0578\u1e3c\u1e49\u1e61\u1e7e\u1ea5\u1eaf\u1ebd\u1ee1\u1f2a\u1f37\u1f44\u1f4e\u1f5a\u0100Do\u1e06\u1d34o\xf4\u1c89\u0100cs\u1e0e\u1e14ute\u803b\xe9\u40e9ter;\u6a6e\u0200aioy\u1e22\u1e27\u1e31\u1e36ron;\u411br\u0100;c\u1e2d\u1e2e\u6256\u803b\xea\u40ealon;\u6255;\u444dot;\u4117\u0100Dr\u1e41\u1e45ot;\u6252;\uc000\ud835\udd22\u0180;rs\u1e50\u1e51\u1e57\u6a9aave\u803b\xe8\u40e8\u0100;d\u1e5c\u1e5d\u6a96ot;\u6a98\u0200;ils\u1e6a\u1e6b\u1e72\u1e74\u6a99nters;\u63e7;\u6113\u0100;d\u1e79\u1e7a\u6a95ot;\u6a97\u0180aps\u1e85\u1e89\u1e97cr;\u4113ty\u0180;sv\u1e92\u1e93\u1e95\u6205et\xbb\u1e93p\u01001;\u1e9d\u1ea4\u0133\u1ea1\u1ea3;\u6004;\u6005\u6003\u0100gs\u1eaa\u1eac;\u414bp;\u6002\u0100gp\u1eb4\u1eb8on;\u4119f;\uc000\ud835\udd56\u0180als\u1ec4\u1ece\u1ed2r\u0100;s\u1eca\u1ecb\u62d5l;\u69e3us;\u6a71i\u0180;lv\u1eda\u1edb\u1edf\u43b5on\xbb\u1edb;\u43f5\u0200csuv\u1eea\u1ef3\u1f0b\u1f23\u0100io\u1eef\u1e31rc\xbb\u1e2e\u0269\u1ef9\0\0\u1efb\xed\u0548ant\u0100gl\u1f02\u1f06tr\xbb\u1e5dess\xbb\u1e7a\u0180aei\u1f12\u1f16\u1f1als;\u403dst;\u625fv\u0100;D\u0235\u1f20D;\u6a78parsl;\u69e5\u0100Da\u1f2f\u1f33ot;\u6253rr;\u6971\u0180cdi\u1f3e\u1f41\u1ef8r;\u612fo\xf4\u0352\u0100ah\u1f49\u1f4b;\u43b7\u803b\xf0\u40f0\u0100mr\u1f53\u1f57l\u803b\xeb\u40ebo;\u60ac\u0180cip\u1f61\u1f64\u1f67l;\u4021s\xf4\u056e\u0100eo\u1f6c\u1f74ctatio\xee\u0559nential\xe5\u0579\u09e1\u1f92\0\u1f9e\0\u1fa1\u1fa7\0\0\u1fc6\u1fcc\0\u1fd3\0\u1fe6\u1fea\u2000\0\u2008\u205allingdotse\xf1\u1e44y;\u4444male;\u6640\u0180ilr\u1fad\u1fb3\u1fc1lig;\u8000\ufb03\u0269\u1fb9\0\0\u1fbdg;\u8000\ufb00ig;\u8000\ufb04;\uc000\ud835\udd23lig;\u8000\ufb01lig;\uc000fj\u0180alt\u1fd9\u1fdc\u1fe1t;\u666dig;\u8000\ufb02ns;\u65b1of;\u4192\u01f0\u1fee\0\u1ff3f;\uc000\ud835\udd57\u0100ak\u05bf\u1ff7\u0100;v\u1ffc\u1ffd\u62d4;\u6ad9artint;\u6a0d\u0100ao\u200c\u2055\u0100cs\u2011\u2052\u03b1\u201a\u2030\u2038\u2045\u2048\0\u2050\u03b2\u2022\u2025\u2027\u202a\u202c\0\u202e\u803b\xbd\u40bd;\u6153\u803b\xbc\u40bc;\u6155;\u6159;\u615b\u01b3\u2034\0\u2036;\u6154;\u6156\u02b4\u203e\u2041\0\0\u2043\u803b\xbe\u40be;\u6157;\u615c5;\u6158\u01b6\u204c\0\u204e;\u615a;\u615d8;\u615el;\u6044wn;\u6322cr;\uc000\ud835\udcbb\u0880Eabcdefgijlnorstv\u2082\u2089\u209f\u20a5\u20b0\u20b4\u20f0\u20f5\u20fa\u20ff\u2103\u2112\u2138\u0317\u213e\u2152\u219e\u0100;l\u064d\u2087;\u6a8c\u0180cmp\u2090\u2095\u209dute;\u41f5ma\u0100;d\u209c\u1cda\u43b3;\u6a86reve;\u411f\u0100iy\u20aa\u20aerc;\u411d;\u4433ot;\u4121\u0200;lqs\u063e\u0642\u20bd\u20c9\u0180;qs\u063e\u064c\u20c4lan\xf4\u0665\u0200;cdl\u0665\u20d2\u20d5\u20e5c;\u6aa9ot\u0100;o\u20dc\u20dd\u6a80\u0100;l\u20e2\u20e3\u6a82;\u6a84\u0100;e\u20ea\u20ed\uc000\u22db\ufe00s;\u6a94r;\uc000\ud835\udd24\u0100;g\u0673\u061bmel;\u6137cy;\u4453\u0200;Eaj\u065a\u210c\u210e\u2110;\u6a92;\u6aa5;\u6aa4\u0200Eaes\u211b\u211d\u2129\u2134;\u6269p\u0100;p\u2123\u2124\u6a8arox\xbb\u2124\u0100;q\u212e\u212f\u6a88\u0100;q\u212e\u211bim;\u62e7pf;\uc000\ud835\udd58\u0100ci\u2143\u2146r;\u610am\u0180;el\u066b\u214e\u2150;\u6a8e;\u6a90\u8300>;cdlqr\u05ee\u2160\u216a\u216e\u2173\u2179\u0100ci\u2165\u2167;\u6aa7r;\u6a7aot;\u62d7Par;\u6995uest;\u6a7c\u0280adels\u2184\u216a\u2190\u0656\u219b\u01f0\u2189\0\u218epro\xf8\u209er;\u6978q\u0100lq\u063f\u2196les\xf3\u2088i\xed\u066b\u0100en\u21a3\u21adrtneqq;\uc000\u2269\ufe00\xc5\u21aa\u0500Aabcefkosy\u21c4\u21c7\u21f1\u21f5\u21fa\u2218\u221d\u222f\u2268\u227dr\xf2\u03a0\u0200ilmr\u21d0\u21d4\u21d7\u21dbrs\xf0\u1484f\xbb\u2024il\xf4\u06a9\u0100dr\u21e0\u21e4cy;\u444a\u0180;cw\u08f4\u21eb\u21efir;\u6948;\u61adar;\u610firc;\u4125\u0180alr\u2201\u220e\u2213rts\u0100;u\u2209\u220a\u6665it\xbb\u220alip;\u6026con;\u62b9r;\uc000\ud835\udd25s\u0100ew\u2223\u2229arow;\u6925arow;\u6926\u0280amopr\u223a\u223e\u2243\u225e\u2263rr;\u61fftht;\u623bk\u0100lr\u2249\u2253eftarrow;\u61a9ightarrow;\u61aaf;\uc000\ud835\udd59bar;\u6015\u0180clt\u226f\u2274\u2278r;\uc000\ud835\udcbdas\xe8\u21f4rok;\u4127\u0100bp\u2282\u2287ull;\u6043hen\xbb\u1c5b\u0ae1\u22a3\0\u22aa\0\u22b8\u22c5\u22ce\0\u22d5\u22f3\0\0\u22f8\u2322\u2367\u2362\u237f\0\u2386\u23aa\u23b4cute\u803b\xed\u40ed\u0180;iy\u0771\u22b0\u22b5rc\u803b\xee\u40ee;\u4438\u0100cx\u22bc\u22bfy;\u4435cl\u803b\xa1\u40a1\u0100fr\u039f\u22c9;\uc000\ud835\udd26rave\u803b\xec\u40ec\u0200;ino\u073e\u22dd\u22e9\u22ee\u0100in\u22e2\u22e6nt;\u6a0ct;\u622dfin;\u69dcta;\u6129lig;\u4133\u0180aop\u22fe\u231a\u231d\u0180cgt\u2305\u2308\u2317r;\u412b\u0180elp\u071f\u230f\u2313in\xe5\u078ear\xf4\u0720h;\u4131f;\u62b7ed;\u41b5\u0280;cfot\u04f4\u232c\u2331\u233d\u2341are;\u6105in\u0100;t\u2338\u2339\u621eie;\u69dddo\xf4\u2319\u0280;celp\u0757\u234c\u2350\u235b\u2361al;\u62ba\u0100gr\u2355\u2359er\xf3\u1563\xe3\u234darhk;\u6a17rod;\u6a3c\u0200cgpt\u236f\u2372\u2376\u237by;\u4451on;\u412ff;\uc000\ud835\udd5aa;\u43b9uest\u803b\xbf\u40bf\u0100ci\u238a\u238fr;\uc000\ud835\udcben\u0280;Edsv\u04f4\u239b\u239d\u23a1\u04f3;\u62f9ot;\u62f5\u0100;v\u23a6\u23a7\u62f4;\u62f3\u0100;i\u0777\u23aelde;\u4129\u01eb\u23b8\0\u23bccy;\u4456l\u803b\xef\u40ef\u0300cfmosu\u23cc\u23d7\u23dc\u23e1\u23e7\u23f5\u0100iy\u23d1\u23d5rc;\u4135;\u4439r;\uc000\ud835\udd27ath;\u4237pf;\uc000\ud835\udd5b\u01e3\u23ec\0\u23f1r;\uc000\ud835\udcbfrcy;\u4458kcy;\u4454\u0400acfghjos\u240b\u2416\u2422\u2427\u242d\u2431\u2435\u243bppa\u0100;v\u2413\u2414\u43ba;\u43f0\u0100ey\u241b\u2420dil;\u4137;\u443ar;\uc000\ud835\udd28reen;\u4138cy;\u4445cy;\u445cpf;\uc000\ud835\udd5ccr;\uc000\ud835\udcc0\u0b80ABEHabcdefghjlmnoprstuv\u2470\u2481\u2486\u248d\u2491\u250e\u253d\u255a\u2580\u264e\u265e\u2665\u2679\u267d\u269a\u26b2\u26d8\u275d\u2768\u278b\u27c0\u2801\u2812\u0180art\u2477\u247a\u247cr\xf2\u09c6\xf2\u0395ail;\u691barr;\u690e\u0100;g\u0994\u248b;\u6a8bar;\u6962\u0963\u24a5\0\u24aa\0\u24b1\0\0\0\0\0\u24b5\u24ba\0\u24c6\u24c8\u24cd\0\u24f9ute;\u413amptyv;\u69b4ra\xee\u084cbda;\u43bbg\u0180;dl\u088e\u24c1\u24c3;\u6991\xe5\u088e;\u6a85uo\u803b\xab\u40abr\u0400;bfhlpst\u0899\u24de\u24e6\u24e9\u24eb\u24ee\u24f1\u24f5\u0100;f\u089d\u24e3s;\u691fs;\u691d\xeb\u2252p;\u61abl;\u6939im;\u6973l;\u61a2\u0180;ae\u24ff\u2500\u2504\u6aabil;\u6919\u0100;s\u2509\u250a\u6aad;\uc000\u2aad\ufe00\u0180abr\u2515\u2519\u251drr;\u690crk;\u6772\u0100ak\u2522\u252cc\u0100ek\u2528\u252a;\u407b;\u405b\u0100es\u2531\u2533;\u698bl\u0100du\u2539\u253b;\u698f;\u698d\u0200aeuy\u2546\u254b\u2556\u2558ron;\u413e\u0100di\u2550\u2554il;\u413c\xec\u08b0\xe2\u2529;\u443b\u0200cqrs\u2563\u2566\u256d\u257da;\u6936uo\u0100;r\u0e19\u1746\u0100du\u2572\u2577har;\u6967shar;\u694bh;\u61b2\u0280;fgqs\u258b\u258c\u0989\u25f3\u25ff\u6264t\u0280ahlrt\u2598\u25a4\u25b7\u25c2\u25e8rrow\u0100;t\u0899\u25a1a\xe9\u24f6arpoon\u0100du\u25af\u25b4own\xbb\u045ap\xbb\u0966eftarrows;\u61c7ight\u0180ahs\u25cd\u25d6\u25derrow\u0100;s\u08f4\u08a7arpoon\xf3\u0f98quigarro\xf7\u21f0hreetimes;\u62cb\u0180;qs\u258b\u0993\u25falan\xf4\u09ac\u0280;cdgs\u09ac\u260a\u260d\u261d\u2628c;\u6aa8ot\u0100;o\u2614\u2615\u6a7f\u0100;r\u261a\u261b\u6a81;\u6a83\u0100;e\u2622\u2625\uc000\u22da\ufe00s;\u6a93\u0280adegs\u2633\u2639\u263d\u2649\u264bppro\xf8\u24c6ot;\u62d6q\u0100gq\u2643\u2645\xf4\u0989gt\xf2\u248c\xf4\u099bi\xed\u09b2\u0180ilr\u2655\u08e1\u265asht;\u697c;\uc000\ud835\udd29\u0100;E\u099c\u2663;\u6a91\u0161\u2669\u2676r\u0100du\u25b2\u266e\u0100;l\u0965\u2673;\u696alk;\u6584cy;\u4459\u0280;acht\u0a48\u2688\u268b\u2691\u2696r\xf2\u25c1orne\xf2\u1d08ard;\u696bri;\u65fa\u0100io\u269f\u26a4dot;\u4140ust\u0100;a\u26ac\u26ad\u63b0che\xbb\u26ad\u0200Eaes\u26bb\u26bd\u26c9\u26d4;\u6268p\u0100;p\u26c3\u26c4\u6a89rox\xbb\u26c4\u0100;q\u26ce\u26cf\u6a87\u0100;q\u26ce\u26bbim;\u62e6\u0400abnoptwz\u26e9\u26f4\u26f7\u271a\u272f\u2741\u2747\u2750\u0100nr\u26ee\u26f1g;\u67ecr;\u61fdr\xeb\u08c1g\u0180lmr\u26ff\u270d\u2714eft\u0100ar\u09e6\u2707ight\xe1\u09f2apsto;\u67fcight\xe1\u09fdparrow\u0100lr\u2725\u2729ef\xf4\u24edight;\u61ac\u0180afl\u2736\u2739\u273dr;\u6985;\uc000\ud835\udd5dus;\u6a2dimes;\u6a34\u0161\u274b\u274fst;\u6217\xe1\u134e\u0180;ef\u2757\u2758\u1800\u65cange\xbb\u2758ar\u0100;l\u2764\u2765\u4028t;\u6993\u0280achmt\u2773\u2776\u277c\u2785\u2787r\xf2\u08a8orne\xf2\u1d8car\u0100;d\u0f98\u2783;\u696d;\u600eri;\u62bf\u0300achiqt\u2798\u279d\u0a40\u27a2\u27ae\u27bbquo;\u6039r;\uc000\ud835\udcc1m\u0180;eg\u09b2\u27aa\u27ac;\u6a8d;\u6a8f\u0100bu\u252a\u27b3o\u0100;r\u0e1f\u27b9;\u601arok;\u4142\u8400<;cdhilqr\u082b\u27d2\u2639\u27dc\u27e0\u27e5\u27ea\u27f0\u0100ci\u27d7\u27d9;\u6aa6r;\u6a79re\xe5\u25f2mes;\u62c9arr;\u6976uest;\u6a7b\u0100Pi\u27f5\u27f9ar;\u6996\u0180;ef\u2800\u092d\u181b\u65c3r\u0100du\u2807\u280dshar;\u694ahar;\u6966\u0100en\u2817\u2821rtneqq;\uc000\u2268\ufe00\xc5\u281e\u0700Dacdefhilnopsu\u2840\u2845\u2882\u288e\u2893\u28a0\u28a5\u28a8\u28da\u28e2\u28e4\u0a83\u28f3\u2902Dot;\u623a\u0200clpr\u284e\u2852\u2863\u287dr\u803b\xaf\u40af\u0100et\u2857\u2859;\u6642\u0100;e\u285e\u285f\u6720se\xbb\u285f\u0100;s\u103b\u2868to\u0200;dlu\u103b\u2873\u2877\u287bow\xee\u048cef\xf4\u090f\xf0\u13d1ker;\u65ae\u0100oy\u2887\u288cmma;\u6a29;\u443cash;\u6014asuredangle\xbb\u1626r;\uc000\ud835\udd2ao;\u6127\u0180cdn\u28af\u28b4\u28c9ro\u803b\xb5\u40b5\u0200;acd\u1464\u28bd\u28c0\u28c4s\xf4\u16a7ir;\u6af0ot\u80bb\xb7\u01b5us\u0180;bd\u28d2\u1903\u28d3\u6212\u0100;u\u1d3c\u28d8;\u6a2a\u0163\u28de\u28e1p;\u6adb\xf2\u2212\xf0\u0a81\u0100dp\u28e9\u28eeels;\u62a7f;\uc000\ud835\udd5e\u0100ct\u28f8\u28fdr;\uc000\ud835\udcc2pos\xbb\u159d\u0180;lm\u2909\u290a\u290d\u43bctimap;\u62b8\u0c00GLRVabcdefghijlmoprstuvw\u2942\u2953\u297e\u2989\u2998\u29da\u29e9\u2a15\u2a1a\u2a58\u2a5d\u2a83\u2a95\u2aa4\u2aa8\u2b04\u2b07\u2b44\u2b7f\u2bae\u2c34\u2c67\u2c7c\u2ce9\u0100gt\u2947\u294b;\uc000\u22d9\u0338\u0100;v\u2950\u0bcf\uc000\u226b\u20d2\u0180elt\u295a\u2972\u2976ft\u0100ar\u2961\u2967rrow;\u61cdightarrow;\u61ce;\uc000\u22d8\u0338\u0100;v\u297b\u0c47\uc000\u226a\u20d2ightarrow;\u61cf\u0100Dd\u298e\u2993ash;\u62afash;\u62ae\u0280bcnpt\u29a3\u29a7\u29ac\u29b1\u29ccla\xbb\u02deute;\u4144g;\uc000\u2220\u20d2\u0280;Eiop\u0d84\u29bc\u29c0\u29c5\u29c8;\uc000\u2a70\u0338d;\uc000\u224b\u0338s;\u4149ro\xf8\u0d84ur\u0100;a\u29d3\u29d4\u666el\u0100;s\u29d3\u0b38\u01f3\u29df\0\u29e3p\u80bb\xa0\u0b37mp\u0100;e\u0bf9\u0c00\u0280aeouy\u29f4\u29fe\u2a03\u2a10\u2a13\u01f0\u29f9\0\u29fb;\u6a43on;\u4148dil;\u4146ng\u0100;d\u0d7e\u2a0aot;\uc000\u2a6d\u0338p;\u6a42;\u443dash;\u6013\u0380;Aadqsx\u0b92\u2a29\u2a2d\u2a3b\u2a41\u2a45\u2a50rr;\u61d7r\u0100hr\u2a33\u2a36k;\u6924\u0100;o\u13f2\u13f0ot;\uc000\u2250\u0338ui\xf6\u0b63\u0100ei\u2a4a\u2a4ear;\u6928\xed\u0b98ist\u0100;s\u0ba0\u0b9fr;\uc000\ud835\udd2b\u0200Eest\u0bc5\u2a66\u2a79\u2a7c\u0180;qs\u0bbc\u2a6d\u0be1\u0180;qs\u0bbc\u0bc5\u2a74lan\xf4\u0be2i\xed\u0bea\u0100;r\u0bb6\u2a81\xbb\u0bb7\u0180Aap\u2a8a\u2a8d\u2a91r\xf2\u2971rr;\u61aear;\u6af2\u0180;sv\u0f8d\u2a9c\u0f8c\u0100;d\u2aa1\u2aa2\u62fc;\u62facy;\u445a\u0380AEadest\u2ab7\u2aba\u2abe\u2ac2\u2ac5\u2af6\u2af9r\xf2\u2966;\uc000\u2266\u0338rr;\u619ar;\u6025\u0200;fqs\u0c3b\u2ace\u2ae3\u2aeft\u0100ar\u2ad4\u2ad9rro\xf7\u2ac1ightarro\xf7\u2a90\u0180;qs\u0c3b\u2aba\u2aealan\xf4\u0c55\u0100;s\u0c55\u2af4\xbb\u0c36i\xed\u0c5d\u0100;r\u0c35\u2afei\u0100;e\u0c1a\u0c25i\xe4\u0d90\u0100pt\u2b0c\u2b11f;\uc000\ud835\udd5f\u8180\xac;in\u2b19\u2b1a\u2b36\u40acn\u0200;Edv\u0b89\u2b24\u2b28\u2b2e;\uc000\u22f9\u0338ot;\uc000\u22f5\u0338\u01e1\u0b89\u2b33\u2b35;\u62f7;\u62f6i\u0100;v\u0cb8\u2b3c\u01e1\u0cb8\u2b41\u2b43;\u62fe;\u62fd\u0180aor\u2b4b\u2b63\u2b69r\u0200;ast\u0b7b\u2b55\u2b5a\u2b5flle\xec\u0b7bl;\uc000\u2afd\u20e5;\uc000\u2202\u0338lint;\u6a14\u0180;ce\u0c92\u2b70\u2b73u\xe5\u0ca5\u0100;c\u0c98\u2b78\u0100;e\u0c92\u2b7d\xf1\u0c98\u0200Aait\u2b88\u2b8b\u2b9d\u2ba7r\xf2\u2988rr\u0180;cw\u2b94\u2b95\u2b99\u619b;\uc000\u2933\u0338;\uc000\u219d\u0338ghtarrow\xbb\u2b95ri\u0100;e\u0ccb\u0cd6\u0380chimpqu\u2bbd\u2bcd\u2bd9\u2b04\u0b78\u2be4\u2bef\u0200;cer\u0d32\u2bc6\u0d37\u2bc9u\xe5\u0d45;\uc000\ud835\udcc3ort\u026d\u2b05\0\0\u2bd6ar\xe1\u2b56m\u0100;e\u0d6e\u2bdf\u0100;q\u0d74\u0d73su\u0100bp\u2beb\u2bed\xe5\u0cf8\xe5\u0d0b\u0180bcp\u2bf6\u2c11\u2c19\u0200;Ees\u2bff\u2c00\u0d22\u2c04\u6284;\uc000\u2ac5\u0338et\u0100;e\u0d1b\u2c0bq\u0100;q\u0d23\u2c00c\u0100;e\u0d32\u2c17\xf1\u0d38\u0200;Ees\u2c22\u2c23\u0d5f\u2c27\u6285;\uc000\u2ac6\u0338et\u0100;e\u0d58\u2c2eq\u0100;q\u0d60\u2c23\u0200gilr\u2c3d\u2c3f\u2c45\u2c47\xec\u0bd7lde\u803b\xf1\u40f1\xe7\u0c43iangle\u0100lr\u2c52\u2c5ceft\u0100;e\u0c1a\u2c5a\xf1\u0c26ight\u0100;e\u0ccb\u2c65\xf1\u0cd7\u0100;m\u2c6c\u2c6d\u43bd\u0180;es\u2c74\u2c75\u2c79\u4023ro;\u6116p;\u6007\u0480DHadgilrs\u2c8f\u2c94\u2c99\u2c9e\u2ca3\u2cb0\u2cb6\u2cd3\u2ce3ash;\u62adarr;\u6904p;\uc000\u224d\u20d2ash;\u62ac\u0100et\u2ca8\u2cac;\uc000\u2265\u20d2;\uc000>\u20d2nfin;\u69de\u0180Aet\u2cbd\u2cc1\u2cc5rr;\u6902;\uc000\u2264\u20d2\u0100;r\u2cca\u2ccd\uc000<\u20d2ie;\uc000\u22b4\u20d2\u0100At\u2cd8\u2cdcrr;\u6903rie;\uc000\u22b5\u20d2im;\uc000\u223c\u20d2\u0180Aan\u2cf0\u2cf4\u2d02rr;\u61d6r\u0100hr\u2cfa\u2cfdk;\u6923\u0100;o\u13e7\u13e5ear;\u6927\u1253\u1a95\0\0\0\0\0\0\0\0\0\0\0\0\0\u2d2d\0\u2d38\u2d48\u2d60\u2d65\u2d72\u2d84\u1b07\0\0\u2d8d\u2dab\0\u2dc8\u2dce\0\u2ddc\u2e19\u2e2b\u2e3e\u2e43\u0100cs\u2d31\u1a97ute\u803b\xf3\u40f3\u0100iy\u2d3c\u2d45r\u0100;c\u1a9e\u2d42\u803b\xf4\u40f4;\u443e\u0280abios\u1aa0\u2d52\u2d57\u01c8\u2d5alac;\u4151v;\u6a38old;\u69bclig;\u4153\u0100cr\u2d69\u2d6dir;\u69bf;\uc000\ud835\udd2c\u036f\u2d79\0\0\u2d7c\0\u2d82n;\u42dbave\u803b\xf2\u40f2;\u69c1\u0100bm\u2d88\u0df4ar;\u69b5\u0200acit\u2d95\u2d98\u2da5\u2da8r\xf2\u1a80\u0100ir\u2d9d\u2da0r;\u69beoss;\u69bbn\xe5\u0e52;\u69c0\u0180aei\u2db1\u2db5\u2db9cr;\u414dga;\u43c9\u0180cdn\u2dc0\u2dc5\u01cdron;\u43bf;\u69b6pf;\uc000\ud835\udd60\u0180ael\u2dd4\u2dd7\u01d2r;\u69b7rp;\u69b9\u0380;adiosv\u2dea\u2deb\u2dee\u2e08\u2e0d\u2e10\u2e16\u6228r\xf2\u1a86\u0200;efm\u2df7\u2df8\u2e02\u2e05\u6a5dr\u0100;o\u2dfe\u2dff\u6134f\xbb\u2dff\u803b\xaa\u40aa\u803b\xba\u40bagof;\u62b6r;\u6a56lope;\u6a57;\u6a5b\u0180clo\u2e1f\u2e21\u2e27\xf2\u2e01ash\u803b\xf8\u40f8l;\u6298i\u016c\u2e2f\u2e34de\u803b\xf5\u40f5es\u0100;a\u01db\u2e3as;\u6a36ml\u803b\xf6\u40f6bar;\u633d\u0ae1\u2e5e\0\u2e7d\0\u2e80\u2e9d\0\u2ea2\u2eb9\0\0\u2ecb\u0e9c\0\u2f13\0\0\u2f2b\u2fbc\0\u2fc8r\u0200;ast\u0403\u2e67\u2e72\u0e85\u8100\xb6;l\u2e6d\u2e6e\u40b6le\xec\u0403\u0269\u2e78\0\0\u2e7bm;\u6af3;\u6afdy;\u443fr\u0280cimpt\u2e8b\u2e8f\u2e93\u1865\u2e97nt;\u4025od;\u402eil;\u6030enk;\u6031r;\uc000\ud835\udd2d\u0180imo\u2ea8\u2eb0\u2eb4\u0100;v\u2ead\u2eae\u43c6;\u43d5ma\xf4\u0a76ne;\u660e\u0180;tv\u2ebf\u2ec0\u2ec8\u43c0chfork\xbb\u1ffd;\u43d6\u0100au\u2ecf\u2edfn\u0100ck\u2ed5\u2eddk\u0100;h\u21f4\u2edb;\u610e\xf6\u21f4s\u0480;abcdemst\u2ef3\u2ef4\u1908\u2ef9\u2efd\u2f04\u2f06\u2f0a\u2f0e\u402bcir;\u6a23ir;\u6a22\u0100ou\u1d40\u2f02;\u6a25;\u6a72n\u80bb\xb1\u0e9dim;\u6a26wo;\u6a27\u0180ipu\u2f19\u2f20\u2f25ntint;\u6a15f;\uc000\ud835\udd61nd\u803b\xa3\u40a3\u0500;Eaceinosu\u0ec8\u2f3f\u2f41\u2f44\u2f47\u2f81\u2f89\u2f92\u2f7e\u2fb6;\u6ab3p;\u6ab7u\xe5\u0ed9\u0100;c\u0ece\u2f4c\u0300;acens\u0ec8\u2f59\u2f5f\u2f66\u2f68\u2f7eppro\xf8\u2f43urlye\xf1\u0ed9\xf1\u0ece\u0180aes\u2f6f\u2f76\u2f7approx;\u6ab9qq;\u6ab5im;\u62e8i\xed\u0edfme\u0100;s\u2f88\u0eae\u6032\u0180Eas\u2f78\u2f90\u2f7a\xf0\u2f75\u0180dfp\u0eec\u2f99\u2faf\u0180als\u2fa0\u2fa5\u2faalar;\u632eine;\u6312urf;\u6313\u0100;t\u0efb\u2fb4\xef\u0efbrel;\u62b0\u0100ci\u2fc0\u2fc5r;\uc000\ud835\udcc5;\u43c8ncsp;\u6008\u0300fiopsu\u2fda\u22e2\u2fdf\u2fe5\u2feb\u2ff1r;\uc000\ud835\udd2epf;\uc000\ud835\udd62rime;\u6057cr;\uc000\ud835\udcc6\u0180aeo\u2ff8\u3009\u3013t\u0100ei\u2ffe\u3005rnion\xf3\u06b0nt;\u6a16st\u0100;e\u3010\u3011\u403f\xf1\u1f19\xf4\u0f14\u0a80ABHabcdefhilmnoprstux\u3040\u3051\u3055\u3059\u30e0\u310e\u312b\u3147\u3162\u3172\u318e\u3206\u3215\u3224\u3229\u3258\u326e\u3272\u3290\u32b0\u32b7\u0180art\u3047\u304a\u304cr\xf2\u10b3\xf2\u03ddail;\u691car\xf2\u1c65ar;\u6964\u0380cdenqrt\u3068\u3075\u3078\u307f\u308f\u3094\u30cc\u0100eu\u306d\u3071;\uc000\u223d\u0331te;\u4155i\xe3\u116emptyv;\u69b3g\u0200;del\u0fd1\u3089\u308b\u308d;\u6992;\u69a5\xe5\u0fd1uo\u803b\xbb\u40bbr\u0580;abcfhlpstw\u0fdc\u30ac\u30af\u30b7\u30b9\u30bc\u30be\u30c0\u30c3\u30c7\u30cap;\u6975\u0100;f\u0fe0\u30b4s;\u6920;\u6933s;\u691e\xeb\u225d\xf0\u272el;\u6945im;\u6974l;\u61a3;\u619d\u0100ai\u30d1\u30d5il;\u691ao\u0100;n\u30db\u30dc\u6236al\xf3\u0f1e\u0180abr\u30e7\u30ea\u30eer\xf2\u17e5rk;\u6773\u0100ak\u30f3\u30fdc\u0100ek\u30f9\u30fb;\u407d;\u405d\u0100es\u3102\u3104;\u698cl\u0100du\u310a\u310c;\u698e;\u6990\u0200aeuy\u3117\u311c\u3127\u3129ron;\u4159\u0100di\u3121\u3125il;\u4157\xec\u0ff2\xe2\u30fa;\u4440\u0200clqs\u3134\u3137\u313d\u3144a;\u6937dhar;\u6969uo\u0100;r\u020e\u020dh;\u61b3\u0180acg\u314e\u315f\u0f44l\u0200;ips\u0f78\u3158\u315b\u109cn\xe5\u10bbar\xf4\u0fa9t;\u65ad\u0180ilr\u3169\u1023\u316esht;\u697d;\uc000\ud835\udd2f\u0100ao\u3177\u3186r\u0100du\u317d\u317f\xbb\u047b\u0100;l\u1091\u3184;\u696c\u0100;v\u318b\u318c\u43c1;\u43f1\u0180gns\u3195\u31f9\u31fcht\u0300ahlrst\u31a4\u31b0\u31c2\u31d8\u31e4\u31eerrow\u0100;t\u0fdc\u31ada\xe9\u30c8arpoon\u0100du\u31bb\u31bfow\xee\u317ep\xbb\u1092eft\u0100ah\u31ca\u31d0rrow\xf3\u0feaarpoon\xf3\u0551ightarrows;\u61c9quigarro\xf7\u30cbhreetimes;\u62ccg;\u42daingdotse\xf1\u1f32\u0180ahm\u320d\u3210\u3213r\xf2\u0feaa\xf2\u0551;\u600foust\u0100;a\u321e\u321f\u63b1che\xbb\u321fmid;\u6aee\u0200abpt\u3232\u323d\u3240\u3252\u0100nr\u3237\u323ag;\u67edr;\u61fer\xeb\u1003\u0180afl\u3247\u324a\u324er;\u6986;\uc000\ud835\udd63us;\u6a2eimes;\u6a35\u0100ap\u325d\u3267r\u0100;g\u3263\u3264\u4029t;\u6994olint;\u6a12ar\xf2\u31e3\u0200achq\u327b\u3280\u10bc\u3285quo;\u603ar;\uc000\ud835\udcc7\u0100bu\u30fb\u328ao\u0100;r\u0214\u0213\u0180hir\u3297\u329b\u32a0re\xe5\u31f8mes;\u62cai\u0200;efl\u32aa\u1059\u1821\u32ab\u65b9tri;\u69celuhar;\u6968;\u611e\u0d61\u32d5\u32db\u32df\u332c\u3338\u3371\0\u337a\u33a4\0\0\u33ec\u33f0\0\u3428\u3448\u345a\u34ad\u34b1\u34ca\u34f1\0\u3616\0\0\u3633cute;\u415bqu\xef\u27ba\u0500;Eaceinpsy\u11ed\u32f3\u32f5\u32ff\u3302\u330b\u330f\u331f\u3326\u3329;\u6ab4\u01f0\u32fa\0\u32fc;\u6ab8on;\u4161u\xe5\u11fe\u0100;d\u11f3\u3307il;\u415frc;\u415d\u0180Eas\u3316\u3318\u331b;\u6ab6p;\u6abaim;\u62e9olint;\u6a13i\xed\u1204;\u4441ot\u0180;be\u3334\u1d47\u3335\u62c5;\u6a66\u0380Aacmstx\u3346\u334a\u3357\u335b\u335e\u3363\u336drr;\u61d8r\u0100hr\u3350\u3352\xeb\u2228\u0100;o\u0a36\u0a34t\u803b\xa7\u40a7i;\u403bwar;\u6929m\u0100in\u3369\xf0nu\xf3\xf1t;\u6736r\u0100;o\u3376\u2055\uc000\ud835\udd30\u0200acoy\u3382\u3386\u3391\u33a0rp;\u666f\u0100hy\u338b\u338fcy;\u4449;\u4448rt\u026d\u3399\0\0\u339ci\xe4\u1464ara\xec\u2e6f\u803b\xad\u40ad\u0100gm\u33a8\u33b4ma\u0180;fv\u33b1\u33b2\u33b2\u43c3;\u43c2\u0400;deglnpr\u12ab\u33c5\u33c9\u33ce\u33d6\u33de\u33e1\u33e6ot;\u6a6a\u0100;q\u12b1\u12b0\u0100;E\u33d3\u33d4\u6a9e;\u6aa0\u0100;E\u33db\u33dc\u6a9d;\u6a9fe;\u6246lus;\u6a24arr;\u6972ar\xf2\u113d\u0200aeit\u33f8\u3408\u340f\u3417\u0100ls\u33fd\u3404lsetm\xe9\u336ahp;\u6a33parsl;\u69e4\u0100dl\u1463\u3414e;\u6323\u0100;e\u341c\u341d\u6aaa\u0100;s\u3422\u3423\u6aac;\uc000\u2aac\ufe00\u0180flp\u342e\u3433\u3442tcy;\u444c\u0100;b\u3438\u3439\u402f\u0100;a\u343e\u343f\u69c4r;\u633ff;\uc000\ud835\udd64a\u0100dr\u344d\u0402es\u0100;u\u3454\u3455\u6660it\xbb\u3455\u0180csu\u3460\u3479\u349f\u0100au\u3465\u346fp\u0100;s\u1188\u346b;\uc000\u2293\ufe00p\u0100;s\u11b4\u3475;\uc000\u2294\ufe00u\u0100bp\u347f\u348f\u0180;es\u1197\u119c\u3486et\u0100;e\u1197\u348d\xf1\u119d\u0180;es\u11a8\u11ad\u3496et\u0100;e\u11a8\u349d\xf1\u11ae\u0180;af\u117b\u34a6\u05b0r\u0165\u34ab\u05b1\xbb\u117car\xf2\u1148\u0200cemt\u34b9\u34be\u34c2\u34c5r;\uc000\ud835\udcc8tm\xee\xf1i\xec\u3415ar\xe6\u11be\u0100ar\u34ce\u34d5r\u0100;f\u34d4\u17bf\u6606\u0100an\u34da\u34edight\u0100ep\u34e3\u34eapsilo\xee\u1ee0h\xe9\u2eafs\xbb\u2852\u0280bcmnp\u34fb\u355e\u1209\u358b\u358e\u0480;Edemnprs\u350e\u350f\u3511\u3515\u351e\u3523\u352c\u3531\u3536\u6282;\u6ac5ot;\u6abd\u0100;d\u11da\u351aot;\u6ac3ult;\u6ac1\u0100Ee\u3528\u352a;\u6acb;\u628alus;\u6abfarr;\u6979\u0180eiu\u353d\u3552\u3555t\u0180;en\u350e\u3545\u354bq\u0100;q\u11da\u350feq\u0100;q\u352b\u3528m;\u6ac7\u0100bp\u355a\u355c;\u6ad5;\u6ad3c\u0300;acens\u11ed\u356c\u3572\u3579\u357b\u3326ppro\xf8\u32faurlye\xf1\u11fe\xf1\u11f3\u0180aes\u3582\u3588\u331bppro\xf8\u331aq\xf1\u3317g;\u666a\u0680123;Edehlmnps\u35a9\u35ac\u35af\u121c\u35b2\u35b4\u35c0\u35c9\u35d5\u35da\u35df\u35e8\u35ed\u803b\xb9\u40b9\u803b\xb2\u40b2\u803b\xb3\u40b3;\u6ac6\u0100os\u35b9\u35bct;\u6abeub;\u6ad8\u0100;d\u1222\u35c5ot;\u6ac4s\u0100ou\u35cf\u35d2l;\u67c9b;\u6ad7arr;\u697bult;\u6ac2\u0100Ee\u35e4\u35e6;\u6acc;\u628blus;\u6ac0\u0180eiu\u35f4\u3609\u360ct\u0180;en\u121c\u35fc\u3602q\u0100;q\u1222\u35b2eq\u0100;q\u35e7\u35e4m;\u6ac8\u0100bp\u3611\u3613;\u6ad4;\u6ad6\u0180Aan\u361c\u3620\u362drr;\u61d9r\u0100hr\u3626\u3628\xeb\u222e\u0100;o\u0a2b\u0a29war;\u692alig\u803b\xdf\u40df\u0be1\u3651\u365d\u3660\u12ce\u3673\u3679\0\u367e\u36c2\0\0\0\0\0\u36db\u3703\0\u3709\u376c\0\0\0\u3787\u0272\u3656\0\0\u365bget;\u6316;\u43c4r\xeb\u0e5f\u0180aey\u3666\u366b\u3670ron;\u4165dil;\u4163;\u4442lrec;\u6315r;\uc000\ud835\udd31\u0200eiko\u3686\u369d\u36b5\u36bc\u01f2\u368b\0\u3691e\u01004f\u1284\u1281a\u0180;sv\u3698\u3699\u369b\u43b8ym;\u43d1\u0100cn\u36a2\u36b2k\u0100as\u36a8\u36aeppro\xf8\u12c1im\xbb\u12acs\xf0\u129e\u0100as\u36ba\u36ae\xf0\u12c1rn\u803b\xfe\u40fe\u01ec\u031f\u36c6\u22e7es\u8180\xd7;bd\u36cf\u36d0\u36d8\u40d7\u0100;a\u190f\u36d5r;\u6a31;\u6a30\u0180eps\u36e1\u36e3\u3700\xe1\u2a4d\u0200;bcf\u0486\u36ec\u36f0\u36f4ot;\u6336ir;\u6af1\u0100;o\u36f9\u36fc\uc000\ud835\udd65rk;\u6ada\xe1\u3362rime;\u6034\u0180aip\u370f\u3712\u3764d\xe5\u1248\u0380adempst\u3721\u374d\u3740\u3751\u3757\u375c\u375fngle\u0280;dlqr\u3730\u3731\u3736\u3740\u3742\u65b5own\xbb\u1dbbeft\u0100;e\u2800\u373e\xf1\u092e;\u625cight\u0100;e\u32aa\u374b\xf1\u105aot;\u65ecinus;\u6a3alus;\u6a39b;\u69cdime;\u6a3bezium;\u63e2\u0180cht\u3772\u377d\u3781\u0100ry\u3777\u377b;\uc000\ud835\udcc9;\u4446cy;\u445brok;\u4167\u0100io\u378b\u378ex\xf4\u1777head\u0100lr\u3797\u37a0eftarro\xf7\u084fightarrow\xbb\u0f5d\u0900AHabcdfghlmoprstuw\u37d0\u37d3\u37d7\u37e4\u37f0\u37fc\u380e\u381c\u3823\u3834\u3851\u385d\u386b\u38a9\u38cc\u38d2\u38ea\u38f6r\xf2\u03edar;\u6963\u0100cr\u37dc\u37e2ute\u803b\xfa\u40fa\xf2\u1150r\u01e3\u37ea\0\u37edy;\u445eve;\u416d\u0100iy\u37f5\u37farc\u803b\xfb\u40fb;\u4443\u0180abh\u3803\u3806\u380br\xf2\u13adlac;\u4171a\xf2\u13c3\u0100ir\u3813\u3818sht;\u697e;\uc000\ud835\udd32rave\u803b\xf9\u40f9\u0161\u3827\u3831r\u0100lr\u382c\u382e\xbb\u0957\xbb\u1083lk;\u6580\u0100ct\u3839\u384d\u026f\u383f\0\0\u384arn\u0100;e\u3845\u3846\u631cr\xbb\u3846op;\u630fri;\u65f8\u0100al\u3856\u385acr;\u416b\u80bb\xa8\u0349\u0100gp\u3862\u3866on;\u4173f;\uc000\ud835\udd66\u0300adhlsu\u114b\u3878\u387d\u1372\u3891\u38a0own\xe1\u13b3arpoon\u0100lr\u3888\u388cef\xf4\u382digh\xf4\u382fi\u0180;hl\u3899\u389a\u389c\u43c5\xbb\u13faon\xbb\u389aparrows;\u61c8\u0180cit\u38b0\u38c4\u38c8\u026f\u38b6\0\0\u38c1rn\u0100;e\u38bc\u38bd\u631dr\xbb\u38bdop;\u630eng;\u416fri;\u65f9cr;\uc000\ud835\udcca\u0180dir\u38d9\u38dd\u38e2ot;\u62f0lde;\u4169i\u0100;f\u3730\u38e8\xbb\u1813\u0100am\u38ef\u38f2r\xf2\u38a8l\u803b\xfc\u40fcangle;\u69a7\u0780ABDacdeflnoprsz\u391c\u391f\u3929\u392d\u39b5\u39b8\u39bd\u39df\u39e4\u39e8\u39f3\u39f9\u39fd\u3a01\u3a20r\xf2\u03f7ar\u0100;v\u3926\u3927\u6ae8;\u6ae9as\xe8\u03e1\u0100nr\u3932\u3937grt;\u699c\u0380eknprst\u34e3\u3946\u394b\u3952\u395d\u3964\u3996app\xe1\u2415othin\xe7\u1e96\u0180hir\u34eb\u2ec8\u3959op\xf4\u2fb5\u0100;h\u13b7\u3962\xef\u318d\u0100iu\u3969\u396dgm\xe1\u33b3\u0100bp\u3972\u3984setneq\u0100;q\u397d\u3980\uc000\u228a\ufe00;\uc000\u2acb\ufe00setneq\u0100;q\u398f\u3992\uc000\u228b\ufe00;\uc000\u2acc\ufe00\u0100hr\u399b\u399fet\xe1\u369ciangle\u0100lr\u39aa\u39afeft\xbb\u0925ight\xbb\u1051y;\u4432ash\xbb\u1036\u0180elr\u39c4\u39d2\u39d7\u0180;be\u2dea\u39cb\u39cfar;\u62bbq;\u625alip;\u62ee\u0100bt\u39dc\u1468a\xf2\u1469r;\uc000\ud835\udd33tr\xe9\u39aesu\u0100bp\u39ef\u39f1\xbb\u0d1c\xbb\u0d59pf;\uc000\ud835\udd67ro\xf0\u0efbtr\xe9\u39b4\u0100cu\u3a06\u3a0br;\uc000\ud835\udccb\u0100bp\u3a10\u3a18n\u0100Ee\u3980\u3a16\xbb\u397en\u0100Ee\u3992\u3a1e\xbb\u3990igzag;\u699a\u0380cefoprs\u3a36\u3a3b\u3a56\u3a5b\u3a54\u3a61\u3a6airc;\u4175\u0100di\u3a40\u3a51\u0100bg\u3a45\u3a49ar;\u6a5fe\u0100;q\u15fa\u3a4f;\u6259erp;\u6118r;\uc000\ud835\udd34pf;\uc000\ud835\udd68\u0100;e\u1479\u3a66at\xe8\u1479cr;\uc000\ud835\udccc\u0ae3\u178e\u3a87\0\u3a8b\0\u3a90\u3a9b\0\0\u3a9d\u3aa8\u3aab\u3aaf\0\0\u3ac3\u3ace\0\u3ad8\u17dc\u17dftr\xe9\u17d1r;\uc000\ud835\udd35\u0100Aa\u3a94\u3a97r\xf2\u03c3r\xf2\u09f6;\u43be\u0100Aa\u3aa1\u3aa4r\xf2\u03b8r\xf2\u09eba\xf0\u2713is;\u62fb\u0180dpt\u17a4\u3ab5\u3abe\u0100fl\u3aba\u17a9;\uc000\ud835\udd69im\xe5\u17b2\u0100Aa\u3ac7\u3acar\xf2\u03cer\xf2\u0a01\u0100cq\u3ad2\u17b8r;\uc000\ud835\udccd\u0100pt\u17d6\u3adcr\xe9\u17d4\u0400acefiosu\u3af0\u3afd\u3b08\u3b0c\u3b11\u3b15\u3b1b\u3b21c\u0100uy\u3af6\u3afbte\u803b\xfd\u40fd;\u444f\u0100iy\u3b02\u3b06rc;\u4177;\u444bn\u803b\xa5\u40a5r;\uc000\ud835\udd36cy;\u4457pf;\uc000\ud835\udd6acr;\uc000\ud835\udcce\u0100cm\u3b26\u3b29y;\u444el\u803b\xff\u40ff\u0500acdefhiosw\u3b42\u3b48\u3b54\u3b58\u3b64\u3b69\u3b6d\u3b74\u3b7a\u3b80cute;\u417a\u0100ay\u3b4d\u3b52ron;\u417e;\u4437ot;\u417c\u0100et\u3b5d\u3b61tr\xe6\u155fa;\u43b6r;\uc000\ud835\udd37cy;\u4436grarr;\u61ddpf;\uc000\ud835\udd6bcr;\uc000\ud835\udccf\u0100jn\u3b85\u3b87;\u600dj;\u600c"
-      .split("")
-      .map((c) => c.charCodeAt(0)));
-
   // Adapted from https://github.com/mathiasbynens/he/blob/36afe179392226cf1b6ccdb16ebbb7a5a844d93a/src/he.js#L106-L134
-  const decodeMap = new Map([
-      [0, 65533],
-      // C1 Unicode control character reference replacements
-      [128, 8364],
-      [130, 8218],
-      [131, 402],
-      [132, 8222],
-      [133, 8230],
-      [134, 8224],
-      [135, 8225],
-      [136, 710],
-      [137, 8240],
-      [138, 352],
-      [139, 8249],
-      [140, 338],
-      [142, 381],
-      [145, 8216],
-      [146, 8217],
-      [147, 8220],
-      [148, 8221],
-      [149, 8226],
-      [150, 8211],
-      [151, 8212],
-      [152, 732],
-      [153, 8482],
-      [154, 353],
-      [155, 8250],
-      [156, 339],
-      [158, 382],
-      [159, 376],
-  ]);
   /**
-   * Replace the given code point with a replacement character if it is a
-   * surrogate or is outside the valid range. Otherwise return the code
-   * point unchanged.
+   * C1 Unicode control character reference replacements (code points 128-159).
+   * Index i gives the replacement for code point 128+i; 0 means "no replacement".
+   */
+  const c1 = [
+      8364, 0, 8218, 402, 8222, 8230, 8224, 8225, 710, 8240, 352, 8249, 338, 0,
+      381, 0, 0, 8216, 8217, 8220, 8221, 8226, 8211, 8212, 732, 8482, 353, 8250,
+      339, 0, 382, 376,
+  ];
+  /**
+   * True for NUL, UTF-16 surrogates, and values past U+10FFFF.
+   * @param codePoint Unicode code point to check.
+   */
+  function isInvalidCodePoint(codePoint) {
+      return (codePoint === 0 ||
+          (codePoint >= 0xd8_00 && codePoint <= 0xdf_ff) ||
+          codePoint > 0x10_ff_ff);
+  }
+  /**
+   * Replace the given code point with U+FFFD if it is NUL (0), a surrogate, or
+   * outside the valid Unicode range. Code points in the C1 controls range
+   * (128-159) are remapped to their Windows-1252 equivalents, following the
+   * HTML spec. All other code points are returned unchanged.
+   * @param codePoint Unicode code point to convert.
    */
   function replaceCodePoint(codePoint) {
-      var _a;
-      if ((codePoint >= 55296 && codePoint <= 57343) ||
-          codePoint > 1114111) {
-          return 65533;
+      if (isInvalidCodePoint(codePoint)) {
+          return 0xff_fd;
       }
-      return (_a = decodeMap.get(codePoint)) !== null && _a !== void 0 ? _a : codePoint;
+      if (codePoint >= 128 && codePoint <= 159) {
+          return c1[codePoint - 128] || codePoint;
+      }
+      return codePoint;
   }
 
-  var CharCodes;
-  (function (CharCodes) {
-      CharCodes[CharCodes["NUM"] = 35] = "NUM";
-      CharCodes[CharCodes["SEMI"] = 59] = "SEMI";
-      CharCodes[CharCodes["EQUALS"] = 61] = "EQUALS";
-      CharCodes[CharCodes["ZERO"] = 48] = "ZERO";
-      CharCodes[CharCodes["NINE"] = 57] = "NINE";
-      CharCodes[CharCodes["LOWER_A"] = 97] = "LOWER_A";
-      CharCodes[CharCodes["LOWER_F"] = 102] = "LOWER_F";
-      CharCodes[CharCodes["LOWER_X"] = 120] = "LOWER_X";
-      CharCodes[CharCodes["LOWER_Z"] = 122] = "LOWER_Z";
-      CharCodes[CharCodes["UPPER_A"] = 65] = "UPPER_A";
-      CharCodes[CharCodes["UPPER_F"] = 70] = "UPPER_F";
-      CharCodes[CharCodes["UPPER_Z"] = 90] = "UPPER_Z";
-  })(CharCodes || (CharCodes = {}));
+  // Generated using scripts/write-decode-map.ts
+  /* eslint-disable unicorn/prefer-unicode-code-point-escapes -- Fixed-width escapes keep generated source compact. */
+  /**
+   * Serialized decode data; the format is documented in
+   * `src/internal/decode-data-format.ts`. `[0]` is one-byte data (all char
+   * codes <= 0xFF: header, front-coded name suffixes, per-name metadata,
+   * cuckoo choice bits); `[1]` holds the replacement values.
+   */
+  // biome-ignore format: generated data
+  const htmlDecodeData = ["Q=¨`p0AEligMPacutebrevecircyfrgravelphamacrndogonpfpplyFunctionringscrsigntildeumlBackslashrvwedcyecausernoullistafropfrevescrumpeqCHcyOPYacutepitalDifferentialDyleyscaronedilirconintdotedillanterDotfrhiircleDotMinusPlusTimeslockwiseContourIntegralseCurlyDoubleQuoteQuoteolonengruentinttourIntegralpfroductunterClockwiseContourIntegralrossscrupCapDDotrahdJcyScyZcyaggerrrshvcaronyeltafriacriticalAcuteDotubleAcuteGraveTildemondfferentialDopftDotEqualubleContourIntegralDotwnArrowLeftArrowRightArrowTeeongLeftArrowRightArrowRightArrowRightArrowTeeUpArrowDownArrowVerticalBarwnArrowBarUpArrowBreveLeftRightVectorTeeVectorVectorBarRightTeeVectorVectorBarTeeArrowarrowscrtrokENGTHacutecaronircydotfrgravelementmacrptySmallSquareVerySmallSquareogonpfpsilonqualTildeilibriumscrimtaumlxistsponentialEFcyfrilledSmallSquareVerySmallSquareopfrAlluriertrfscrGJcyTammadbrevecedilircydotfrgopfreaterEqualLessFullEqualGreaterLessSlantEqualTildescrtHARDcyacektcircfrilbertSpaceopfrizontalLinescrtrokumpDownHumpEqualIEcyJligOcyacutecircydotfrgravemacrginaryIpliesntegralrsectionvisibleCommaTimesogonpftascrtildeukcymlJcircyfropfscrercyukcyKHcyJcyappacedilyfropfscrLJcyTacutembdangplacetrfrrcaronedilyeftAngleBracketrrowBarRightArrowCeilingDoubleBracketwnTeeVectorVectorBarFloorRightArrowVectorTeeArrowVectorriangleBarEqualUpDownVectorTeeVectorVectorBarVectorBararrowrightarrowssEqualGreaterFullEqualGreaterLessSlantEqualTildefrleftarrowmidotongLeftArrowRightArrowRightArrowleftarrowrightarrowrightarrowpfwerLeftArrowRightArrowscrhtroktMapcyediumSpacellintrffrinusPlusopfscruNJcyacutecaronedilyegativeMediumSpaceThickSpacenSpaceVeryThinSpacestedGreaterGreaterLessLesswLinefroBreaknBreakingSpacepftCongruentupCapDoubleVerticalBarElementqualTildexistsGreaterEqualFullEqualGreaterLessSlantEqualTildeHumpDownHumpEqualLeftTriangleBarEqualssEqualGreaterLessSlantEqualTildeNestedGreaterGreaterLessLessPrecedesEqualSlantEqualReverseElementightTriangleBarEqualSquareSubsetEqualpersetEqualubsetEqualcceedsEqualSlantEqualTildepersetEqualTildeEqualFullEqualTildeVerticalBarscrtildeuOEligacutecircydblacfrgravemacregaicronopfpenCurlyDoubleQuoteQuoterscrlashtildemesumlverBarraceketParenthesisPartialDcyfrhiilusMinusoincareplanepfrecedesEqualSlantEqualTildeimeoductportionalscriQUOTfropfscrRBarrEGacutengrrtlcaronedilyeverseElementquilibriumUpEquilibriumfrhoightAngleBracketrrowBarLeftArrowCeilingDoubleBracketwnTeeVectorVectorBarFloorTeeArrowVectorriangleBarEqualUpDownVectorTeeVectorVectorBarVectorBararrowopfundImpliesrightarrowscrhuleDelayedSHCHcycyOFTcyacutecaronedilircyfrhortDownArrowLeftArrowRightArrowUpArrowigmamallCircleopfqrtuareIntersectionSubsetEqualpersetEqualUnionscrtarubsetEqualcceedsEqualSlantEqualTildehThatmpersetEqualsetTHORNRADESHcycyabucaronedilyfrhereforetaickSpacenSpaceildeEqualFullEqualTildeopfripleDotscrtrokUacuterrocirbrcyevecircydblacfrgravemacrnderBarraceketParenthesisionPlusogonpfpArrowBarDownArrowDownArrowEquilibriumTeeArrowarrowdownarrowperLeftArrowRightArrowsilonringscrtildeumlVDashbarcydashleerbarticalBarLineSeparatorTildeyThinSpacefropfscrvdashWcircedgefropfscrXfriopfscrYAcyIcyUcyacutecircyfropfscrumlZHcyacutecaronydoteroWidthSpacetafropfscraacutebrevecEdircuteyeligfrgravelefsymphphamacrlgpndanddslopevgelemsdaabcdefghrtvbdsphtzarrogonpfpEacireidosproxeqringscrtympeqtildeumlwconintintbNotackcongepsilonprimesimeqrveewedgebrktbrkcongydquoecausemptyvpsirnoutahweenfrigcapircupodotplustimessqcuptartriangledownupuplusveewedgekarowlacklozengesquaretriangledownleftrightnkk12434ocknequivotopfttomwtiexDLRlrHDUduULRlrVHLRhlrboxdLRlrhDUduminusplustimesuLRlrvHLRhlrprimerevevbarscremiimeolbhsubulletmpEeqcacutepandbrcupcapupdotsretoncapsronedilircupssmdotedilmptyvnterdotfrhcyeckmarkiirEceqlearrowleftrightdRSastcircdashefnintmidscirlubsuitoloneqmmatpfnlementxesngdotintpfrodysrrarrossscrubepetdotudarrlreprsclarrppbrcapcapupdotorsrarrmlyeqprecsuccveewedgerenvearrowleftrightveewedwconintintylctydArrHaraggerlethrrshvbkarowlaccaronydaggerrrotseqegltamptyvfishtrharlriamondsuitsegammasinvideontimesonxjcylcornropollarpfteqdotminusplussquareublebarwedgewnarrowdownarrowsharpoonleftrightrbkarowcornropscryoltroktdotrifuarrharwanglezcyigrarreDDototacutestercaronircolonydotefDotrgravesdotlinterslsdotmacrptysetvsp134ngspogonpfparsllussilonvqcircolonsimlantgtrlessualsestivDDvparslrDotarrscrdotimtahumlroxclistpectationonentialefallingdotseqcyemalefiligligligriligjliglatligtnsnofopfrallkvpartintrac123456823534584556878slownscrgElacutemmadpbrevecircydotelqqslantsccdotollesfrggimeljcylEajnEapproxeqqsimopfravescrimeltccirdotlParquestrapproxrrdoteqlessqlesslesssimvertneqqnEhArrairsplfmiltrdcyrcirwbarcirceartsuitlliprconfrksearowwarowoarrmthtokleftarrowrightarrowpfrbarscrlashtrokybullpheniacutecircyecyxclffrgraveiiintntnfinotajligmacrgelinepartthofpedncarefintieodottcalegersrcallarhkprodocygonpftaprodquestscrinEdotsvvtildeukcymljcircyfrmathopfscrercyukcykappavcedilyfrgreenhcyjcyopfscrlAarrrrtailBarrEgHaracuteemptyvgranmbdangdlepquorrbfsfshklpplsimtltailesbarrbrkracekkeslducaronedililubydcaquorrdharusharsheftarrowtailharpoondownupleftarrowsrightarrowsharpoonssquigarrowthreetimesgqqslantsccdotorgessapproxdoteqgtrqgtrgtrsimfishtloorrgEhardulblkjcylarrcornerhardtrimidotoustachenEapproxeqqsimoangrrbrkngleftarrowrightarrowmapstorightarrowoparrowleftrightparflustimeswastbarzengefparltrarrcornerhardmtrisaquocrhimegqbuortroktccirdothreeimeslarrquestrPariefurdsharuharvertneqqnEmDDotacrletesepstodownleftuprkercommaydasheasuredanglefrhoicrodastcirdotnusbdulcpdrnplusodelspfpscrtposultimapmapnGgtvLeftarrowrightarrowltvRightarrowVDashdashablacutengpEidosproxturalsbspumpecapronedilongdotupydasheArrarhkrowdotquivsearimxistsfrgEeqqslantssimtrhArrarrparisdvjcylArrEarrdreftarrowrightarrowqqslantsssimtriemidopftinEdotvabcnivabcparallelsltolintrcueeceqrArrarrcwightarrowtriesccueerhortmidparallelimeqmidparqsubepeubEeseteqqcceqpEeseteqqtglildelgrianglelefteqrightequmerospvDashHarrapdashgetinfinlArretrierArrtriesimwArrarhkrownearoSacutestcircydashblacivotsoldeligfcirrgonravethbarmintlarrcirrossinetmacregaicrondnusopfparerplusrarrderoffmigoforslopevscrlasholtildemesasumlvbarparallelsimltcyercntiodmilptenkfrhivmmatoneitchforkvlanckhkvusacirbcirdouemnsimtwomointintpfundrEapcueecapproxcurlyeqeqnapproxeqqsimsimimesnEapsimodfalarlinesurfptosimurelscriuncspqfrintopfprimescruaternionsintesteqotrAarrrrtailBarrHaraceutedicemptyvngdelequorrapbfscfshklpplsimtlwtailionalsbarrbrkracekkeslducaronedililubydcaldharquorshealinepartsctgfishtloorrhardulovightarrowtailharpoondownupleftarrowsharpoonsrightarrowssquigarrowthreetimesngsingdotseqlarrharmmoustachenmidoangrrbrkparflustimespargtpolintrarrsaquocrhqbuorthreeimesriefltriuluharxsacutebquocEaproncueedilircnEapsimpolintsimydotbeeArrarhkrowctmiswartminusnxtfrownharpchcyyortmidparallelyigmafvmdoteqgElEneplusrarrlarrmallsetminusshpeparslidletesoftcylbarpfpadesuitrqcapsupssubeseteqpesetequareffrarrscretmnmiletarftarfraightepsilonphinsubEdotedotmultnEeplusrarrseteqqneqqimubpccapproxcurlyeqeqnapproxeqqsimsimmngp123EdotsubedothsolublarrmultnEeplusseteqqneqqimubpwArrarhkrownwarzligtargetubrkcaronedilydotelrecfrhere4foretasymvickapproxsimnspkapsimornildemesbardntoeapbotcirforksaprimeradeiangledownlefteqqrighteqdoteminusplussbtimepeziumscryhcytrokwixtoheadleftarrowrightarrowuArrHaracuterrbrcyevecircydarrblacharfishtrgraveharlrblklcornerroptrimacrlogonpfparrowdownarrowharpoonleftrightlussihlonuparrowsrcornerropingtriscrtdotilderifuarrmlwanglevArrBarvDashangrtrepsilonkappanothingphiiroptorhosigmaubsetneqqpsetneqqthetariangleleftrightcydasheebareqlliprbartfrltrinsubpopfproprtriscrubnEepnEezigzagwcircedbargeqierpfropfpreathscrxcapircupdtrifrhArrarrilArrarrmapnisodotpflustimerArrarrscrqcupuplustriveewedgeyacuteycircyenfricyopfscrucymlzacutecaronydoteetrftafrhcyigrarropfscrwjnjC(D%D($(D'%$$ED($'$'$%$'%E$/D'$F%'D(D&#,%%&&$%$)%+%%$E$F$'$&$(#'D&$(%$&4%($(E'%&%($&$)%*$%$%$+)()')($:&5-($'($%*&&&/%%&)%@$'$F$%&&#%%)$&$&$&$(%%%&$(%$$%&%$E$2.&0,.(.(&'%.$F%$&&&(%6)&+*),---&*/1---)-.&)*+,).%*,&,*'('2+,+)1&'1,)2&'&*('($F%'#&D%D($(E&%$$&$ED($)$'%1(2$'%E$)$'((&+$&%%$%D&$(%-#&$E$3)2$F%'%+$&#'D$$'($$($(%&%$$&$E$$$F$./'*,***'*-*($F$$#)$'%$$'$%$.$&%/$&%'$.'(#'$'$&D(D'%$$&$%D($$%&&*%($%&('+%/,($'%E%%$&$($'E%#(%$$E$F$F%'$'#'$&$'$(%$$E$F$F#'D$$(%'%%%+%%$(%'%$$2(',&,-'*'0).+)1&'('-,)'&*(*)(*/&/('/),))/&')-&'('-%1','*'''-'($E$$%+$($/+-'-',+-'-%E%/(-$&%$%'$$#&$%$-%*$E$+$F$&$$#'$($(%'%$$5+-.)+0%5)+%($E$)%1%%%$&,'(&4&*''+H'(&*-(-L-J-'-M-(&O*H&/2F2((%*(***G*M*(&W,K&+.H.-&1'/3F3(&O2(.I4('H,(().H.-.H(I.(&(+(+,+(&.$FD($$#(D(D'%$$($ED($'%&%($F$6,($$$FE'D(&&D&$)('+&'.#+$%$E$%$$$+$/%%$$%)+(+-+(%&%(&*-%$F%$C'$E$&$F#(D%$(%%%%'%$(%'%$$$%/+-*0$%$%$3)'-&-,(*(0*.,)2&(((&+(+))*0&0((/*,*)0&().&(($&%-$-$&%$$-#)%%$($($$%'%'%&%$$E$0(,(-(*$'$-$F$&%')/))/(+)1()($F$&$%&&)(%)+(+-+(&(%$%$&(+(&&C($'$'%%$%%$$(%'%$$E$+&%%K&)$'(((,(($F$+$F%'C)%%''$'&&D'%$$($ED($'$*)',&(.%&('$'%E$)*&*,%,%.%&((%(%,%/(-%%'&$'$F$(D&#($&$%$'($$%%'&$'*+'+,+(&-$E$F$F$(#($'$E$F$F#F$$$F$F#'$&$&D($'%$$E$F$F$&#'$($(%$$&$0%%$%$&$FC)$($$%D%$E&E&%$D'$$%DD($)&%%&$'&%E$$%&&&$&(&$%$&$&%&&)%*$*$*$*$*$*$*$&%(%*$&&'$&'$'%E$$%$%'%$%%%%%')%D'$F%$%&(%D(D&$*%&#'$*'*'('&*%%'&&)%$&''$'%$$'$()$%(%&%'%%&$&'$E$('&'%&''''(&('&&/.%&(&&&($($.()(+0'0'0(&%%&'$&%%&$E&G%%$F%$&&%'%&'$'$'$&$'$'$'$'$&%'$'$'$&$'$'$'$'$'$'$&&&%'$'$'$&$'$'$'$'$&(&'&(&%'$'$'$&$'$'$'$'$'$'$$($'E'$F%&%%'$%%'$''$&'%%%'$'$($#)%$&&&(&&'%&&&D%&&%$'&&E'%&%&(%$&D'%(E%'($E$&%&('%$$%&$&$'%'..()%*$*&*'*'&$&(&&&'$'(&$'($)$%&($&$'%'))&%%'&&&%E&&F$'%$'%&$F%%'$&$'$$'$))$%&&%%')$%$&(&&'%&&&%&D%')$&+*'(&((F&&.-(%&%&$*%&$(#'$&$(%'%%%%'$$)%&$(%$$$%(&%%(D%%&%($(%D$''$$&'&*''$%$%(%&%$F&)*&&$&$(&&$(%E%$&%(&&(&'&)%/%*'-'..($*%'&&$F&$%%%'$'%%'$$'%&$)$&%)#(%%D(%'$(%%G$%'%$$&$$$'%D$$E'%$&&$$%)%$%$&&$'%&(&($%%'%($$%%%$'%E$&'%%&%%'&'$$(&'%&&**'%'&&&%(%%)$'%&$&%&%%$%E$D&%%$&%&%,&,#0$%$($(%&&&%D$'$G$&%&%&$&$F%'&$'$$*D(($H$($($($'%($G%($($'%'%($'%&%%&$F#%%$$(%&($%$$($'%$$&$$%$%$&$&(%$&%&&)$*$&D'%$E$$%$$'$&$$%$%$%$$%%%''%$&$'$%&$F$'$&%%'$'$D$%%&%%&%'%(%*'%&&&)((&'&&$K%E#'$(%%%'%'&$'&'$$&$'$()&%'%'$E$*&($'%'%.'-%E%'$F%'%'$(%'C)$$E&%$$&E&$%%DD($$%'&%%'%&$'$'&%''''&%%%%&$$%'%&(&%'%$&&&(''&(&'$&%&%E%%$'D($F%%'$'&'$($'$$$%'$'E%#(%$$E$'$F$F%'$'#(($$(%$$E$($&$&$F$F#(%%%'$'$$%$$&$(%)%'%'%%'$'%%$E&%%'$(%'%'%'%'%'&'%%$&&&$'D$'%&%'($&%'&)$$(%'&%%%%$$&%&($%(&(%%$$%*,''..%'-'-1$,+,-'-%$%$&$&(%$&%&&)$*$&D'%&*'&'()''&'&$(%'%D$$%$$''$($%&$&$$%&%)%'%&$(%')'$%%%''%$&$'$%&$'&%%&%.+-')'-%.,(%&&D&&%(%'&&%$&'&$$&'%$'%)%&($%$%&$(%E%$%%'$'$%%&%($%'D$%%&%%&%'%'%'%(%'&$'$'$$*&'$K%E#(D&%%&$'&%$&&)')')%%'$(%$$'$/$E$%D'%$&&&&F&%&($($)$$&%%$($(%E$$$F%'$$%)%&#F%D&D$,(-%D%D&D$-$(%'$'%'%E%$&D&E&%&'%&(%*$D&%F(D$&&&%'%&(F%%%$$'$$%&%''$(%%F%'%'&E%')$$E$E%$&$'D'H&D%&%$&$$'%&%&$$%$&$%$$&$'%D%&%%%$&*(-&$'D'H&D'$%&%$&%($$&$FE$&%(D(F(%)$)$&%(%)$)$$&'('E'D%(%$&&&D'$(E$'%&(D(D%,%&($$%&&&D&D%*)+%%'$($%&%&%((%%%'D'$'F*%,D&%(E&$'D'$'F*%,D$&E'%%%.0%,(1%$$%$&&&%$(%'%E%'%E&D%(%'&D&D'F%'&G%F$'%''$(%%'#%D(%%$&G$%$$'%'%%%%%'$'$'%D$&E'%$$'%$$&$'%&&'%&%$$'%&%(&$&&$F$&%&%&$$%&%$&%(%F$F$%'%%%(%$$&E'%%D(&&)%D&$'#&F$''&&'$&$$%$(&&&&&$&'$E$%&$%'%&$$%*%$$()$'%%%'''$'&'%($'$G%'&'&$$$*%EE&$$%$%%%&%$&$')'*'%'*(&(&'&%&($%%&%&&%%&(''''&$'%%&%'$F%$$(#F$&$F$($F$-'&%&(%E%#(%%%'$'$&$F&&%&%)%%'$'$'%E&%%'%'$(%'$'%'%'%'%'&'%'$%'&%('$'%&%'($&%'&)$$(%'&%%%%$$&%(%&($%%$&'&'''$%%E$$(%'%D$''$($%$&$$,-'(./%(-,+(.(-(-%%%-$'%&%$$()'$'$'&%%&%&&D&&%($&'%%)$'$(%E%$%%&%($$(%'%%'$'$''$)$$#)$'$$%$%%&&%&%$&&%&%%&%&&%)%&%$$&'$'$$'%''$(%E%%%%'%)'$%%$E&&$'%'&$%)(+E$$'($($%$&&&$'$&$'$&$'$&%&'&'$'$/&&%)%%&%%$&$'D$(%$&$'%%E$()&&$$'(D&%(D%&($(&+%'$($(&+%%$&&($&$$'$F%'%'%'$&'$%0+&&%$%&$&&&$'&&'&%'$&'&'&&)%+$)&,$'%'%($%%')'*'%'*(&(&'&%$%%%$F$F$F$&$&&'&&$'&&'(%&'&'&%'$&'&&)%+$)&,$'%'%($$'%''$(%%'D'#)%$$&$(%'%$$&$($E$(('&%(&($%,(&&&%&&&E&$'E&($)%($%%$&%$&&&&&D'&%%$($'%)+'+'/%+$+(0%&&&$&(&'&%&'%)$F&$%&%'$'%1*-#'$&D(%%$'&&D'%$$'%'%&$(%DD($''$%&$()%&&%&$'E$$'%E$)%,%.,(%&%%'$'&%+$()%&&%&%&$F$'%'%%'$$'E%$)#'$&'$$'$(%+&(&*&&'$'(&$'%&('K/D(J/D&('..($%$'$%&&&%%'%'&$$E$'$G'D$F$'$'$F%G(D&F(D$)#($(&%($%'$E$F$$$$%'$F#'%&%%$'$E$'%&$$$'%&$&$&$'%E&&%'$'%&$F%'$(%&$&$(C)&$$'%$D%$E$&$F$F$&E%#)$(%$$&$(%%$E$&$)$F$F$%%%0@0000H8H40H000047P00P@001000@0B0HP@:H9T8P000LB8d@800@I0<110000QQ8400P10030005940@410020000Q02000@0200000@P0101@8000440400000000808000000000@00000000P`0000000040400@0004<000000000008000030000000000P020T400020@0@00000000000000000000000000P0000000400400000400220080000100000000000000000P000000000000P000000@00402000000000@00000000000000000000040000000000000", "Æ&Á\u0102Â\u0410\uD835\uDD04À\u0391\u0100\u2A53\u0104\uD835\uDD38\u2061Å\uD835\uDC9C\u2254ÃÄ\u2216\u2AE7\u2306\u0411\u2235\u212C\u0392\uD835\uDD05\uD835\uDD39\u02D8\u212C\u224E\u0427©\u0106\u22D2\u2145\u212D\u010CÇ\u0108\u2230\u010A¸·\u212D\u03A7\u2299\u2296\u2295\u2297\u2232\u201D\u2019\u2237\u2A74\u2261\u222F\u222E\u2102\u2210\u2233\u2A2F\uD835\uDC9E\u22D3\u224D\u2145\u2911\u0402\u0405\u040F\u2021\u21A1\u2AE4\u010E\u0414\u2207\u0394\uD835\uDD07´\u02D9\u02DD`\u02DC\u22C4\u2146\uD835\uDD3B¨\u20DC\u2250\u222F¨\u21D3\u21D0\u21D4\u2AE4\u27F8\u27FA\u27F9\u21D2\u22A8\u21D1\u21D5\u2225\u2193\u2913\u21F5\u0311\u2950\u295E\u21BD\u2956\u295F\u21C1\u2957\u22A4\u21A7\u21D3\uD835\uDC9F\u0110\u014AÐÉ\u011AÊ\u042D\u0116\uD835\uDD08È\u2208\u0112\u25FB\u25AB\u0118\uD835\uDD3C\u0395\u2A75\u2242\u21CC\u2130\u2A73\u0397Ë\u2203\u2147\u0424\uD835\uDD09\u25FC\u25AA\uD835\uDD3D\u2200\u2131\u2131\u0403>\u0393\u03DC\u011E\u0122\u011C\u0413\u0120\uD835\uDD0A\u22D9\uD835\uDD3E\u2265\u22DB\u2267\u2AA2\u2277\u2A7E\u2273\uD835\uDCA2\u226B\u042A\u02C7^\u0124\u210C\u210B\u210D\u2500\u210B\u0126\u224E\u224F\u0415\u0132\u0401ÍÎ\u0418\u0130\u2111Ì\u2111\u012A\u2148\u21D2\u222C\u222B\u22C2\u2063\u2062\u012E\uD835\uDD40\u0399\u2110\u0128\u0406Ï\u0134\u0419\uD835\uDD0D\uD835\uDD41\uD835\uDCA5\u0408\u0404\u0425\u040C\u039A\u0136\u041A\uD835\uDD0E\uD835\uDD42\uD835\uDCA6\u0409<\u0139\u039B\u27EA\u2112\u219E\u013D\u013B\u041B\u27E8\u2190\u21E4\u21C6\u2308\u27E6\u2961\u21C3\u2959\u230A\u2194\u294E\u22A3\u21A4\u295A\u22B2\u29CF\u22B4\u2951\u2960\u21BF\u2958\u21BC\u2952\u21D0\u21D4\u22DA\u2266\u2276\u2AA1\u2A7D\u2272\uD835\uDD0F\u22D8\u21DA\u013F\u27F5\u27F7\u27F6\u27F8\u27FA\u27F9\uD835\uDD43\u2199\u2198\u2112\u21B0\u0141\u226A\u2905\u041C\u205F\u2133\uD835\uDD10\u2213\uD835\uDD44\u2133\u039C\u040A\u0143\u0147\u0145\u041D\u200B\u200B\u200B\u200B\u226B\u226A\n\uD835\uDD11\u2060 \u2115\u2AEC\u2262\u226D\u2226\u2209\u2260\u2242\u0338\u2204\u226F\u2271\u2267\u0338\u226B\u0338\u2279\u2A7E\u0338\u2275\u224E\u0338\u224F\u0338\u22EA\u29CF\u0338\u22EC\u226E\u2270\u2278\u226A\u0338\u2A7D\u0338\u2274\u2AA2\u0338\u2AA1\u0338\u2280\u2AAF\u0338\u22E0\u220C\u22EB\u29D0\u0338\u22ED\u228F\u0338\u22E2\u2290\u0338\u22E3\u2282\u20D2\u2288\u2281\u2AB0\u0338\u22E1\u227F\u0338\u2283\u20D2\u2289\u2241\u2244\u2247\u2249\u2224\uD835\uDCA9Ñ\u039D\u0152ÓÔ\u041E\u0150\uD835\uDD12Ò\u014C\u03A9\u039F\uD835\uDD46\u201C\u2018\u2A54\uD835\uDCAAØÕ\u2A37Ö\u203E\u23DE\u23B4\u23DC\u2202\u041F\uD835\uDD13\u03A6\u03A0±\u210C\u2119\u2ABB\u227A\u2AAF\u227C\u227E\u2033\u220F\u2237\u221D\uD835\uDCAB\u03A8\"\uD835\uDD14\u211A\uD835\uDCAC\u2910®\u0154\u27EB\u21A0\u2916\u0158\u0156\u0420\u211C\u220B\u21CB\u296F\u211C\u03A1\u27E9\u2192\u21E5\u21C4\u2309\u27E7\u295D\u21C2\u2955\u230B\u22A2\u21A6\u295B\u22B3\u29D0\u22B5\u294F\u295C\u21BE\u2954\u21C0\u2953\u21D2\u211D\u2970\u21DB\u211B\u21B1\u29F4\u0429\u0428\u042C\u015A\u2ABC\u0160\u015E\u015C\u0421\uD835\uDD16\u2193\u2190\u2192\u2191\u03A3\u2218\uD835\uDD4A\u221A\u25A1\u2293\u228F\u2291\u2290\u2292\u2294\uD835\uDCAE\u22C6\u22D0\u22D0\u2286\u227B\u2AB0\u227D\u227F\u220B\u2211\u22D1\u2283\u2287\u22D1Þ\u2122\u040B\u0426\t\u03A4\u0164\u0162\u0422\uD835\uDD17\u2234\u0398\u205F\u200A\u2009\u223C\u2243\u2245\u2248\uD835\uDD4B\u20DB\uD835\uDCAF\u0166Ú\u219F\u2949\u040E\u016CÛ\u0423\u0170\uD835\uDD18Ù\u016A_\u23DF\u23B5\u23DD\u22C3\u228E\u0172\uD835\uDD4C\u2191\u2912\u21C5\u2195\u296E\u22A5\u21A5\u21D1\u21D5\u2196\u2197\u03D2\u03A5\u016E\uD835\uDCB0\u0168Ü\u22AB\u2AEB\u0412\u22A9\u2AE6\u22C1\u2016\u2016\u2223|\u2758\u2240\u200A\uD835\uDD19\uD835\uDD4D\uD835\uDCB1\u22AA\u0174\u22C0\uD835\uDD1A\uD835\uDD4E\uD835\uDCB2\uD835\uDD1B\u039E\uD835\uDD4F\uD835\uDCB3\u042F\u0407\u042EÝ\u0176\u042B\uD835\uDD1C\uD835\uDD50\uD835\uDCB4\u0178\u0416\u0179\u017D\u0417\u017B\u200B\u0396\u2128\u2124\uD835\uDCB5á\u0103\u223E\u223E\u0333\u223Fâ´\u0430æ\u2061\uD835\uDD1Eà\u2135\u2135\u03B1\u0101\u2A3F&\u2227\u2A55\u2A5C\u2A58\u2A5A\u2220\u29A4\u2220\u2221\u29A8\u29A9\u29AA\u29AB\u29AC\u29AD\u29AE\u29AF\u221F\u22BE\u299D\u2222Å\u237C\u0105\uD835\uDD52\u2248\u2A70\u2A6F\u224A\u224B'\u2248\u224Aå\uD835\uDCB6*\u2248\u224Dãä\u2233\u2A11\u2AED\u224C\u03F6\u2035\u223D\u22CD\u22BD\u2305\u2305\u23B5\u23B6\u224C\u0431\u201E\u2235\u2235\u29B0\u03F6\u212C\u03B2\u2136\u226C\uD835\uDD1F\u22C2\u25EF\u22C3\u2A00\u2A01\u2A02\u2A06\u2605\u25BD\u25B3\u2A04\u22C1\u22C0\u290D\u29EB\u25AA\u25B4\u25BE\u25C2\u25B8\u2423\u2592\u2591\u2593\u2588=\u20E5\u2261\u20E5\u2310\uD835\uDD53\u22A5\u22A5\u22C8\u2557\u2554\u2556\u2553\u2550\u2566\u2569\u2564\u2567\u255D\u255A\u255C\u2559\u2551\u256C\u2563\u2560\u256B\u2562\u255F\u29C9\u2555\u2552\u2510\u250C\u2500\u2565\u2568\u252C\u2534\u229F\u229E\u22A0\u255B\u2558\u2518\u2514\u2502\u256A\u2561\u255E\u253C\u2524\u251C\u2035\u02D8¦\uD835\uDCB7\u204F\u223D\u22CD\\\u29C5\u27C8\u2022\u2022\u224E\u2AAE\u224F\u224F\u0107\u2229\u2A44\u2A49\u2A4B\u2A47\u2A40\u2229\uFE00\u2041\u02C7\u2A4D\u010Dç\u0109\u2A4C\u2A50\u010B¸\u29B2¢·\uD835\uDD20\u0447\u2713\u2713\u03C7\u25CB\u29C3\u02C6\u2257\u21BA\u21BB®\u24C8\u229B\u229A\u229D\u2257\u2A10\u2AEF\u29C2\u2663\u2663:\u2254\u2254,@\u2201\u2218\u2201\u2102\u2245\u2A6D\u222E\uD835\uDD54\u2210©\u2117\u21B5\u2717\uD835\uDCB8\u2ACF\u2AD1\u2AD0\u2AD2\u22EF\u2938\u2935\u22DE\u22DF\u21B6\u293D\u222A\u2A48\u2A46\u2A4A\u228D\u2A45\u222A\uFE00\u21B7\u293C\u22DE\u22DF\u22CE\u22CF¤\u21B6\u21B7\u22CE\u22CF\u2232\u2231\u232D\u21D3\u2965\u2020\u2138\u2193\u2010\u22A3\u290F\u02DD\u010F\u0434\u2146\u2021\u21CA\u2A77°\u03B4\u29B1\u297F\uD835\uDD21\u21C3\u21C2\u22C4\u22C4\u2666\u2666¨\u03DD\u22F2÷÷\u22C7\u22C7\u0452\u231E\u230D$\uD835\uDD55\u02D9\u2250\u2251\u2238\u2214\u22A1\u2306\u2193\u21CA\u21C3\u21C2\u2910\u231F\u230C\uD835\uDCB9\u0455\u29F6\u0111\u22F1\u25BF\u25BE\u21F5\u296F\u29A6\u045F\u27FF\u2A77\u2251é\u2A6E\u011B\u2256ê\u2255\u044D\u0117\u2147\u2252\uD835\uDD22\u2A9Aè\u2A96\u2A98\u2A99\u23E7\u2113\u2A95\u2A97\u0113\u2205\u2205\u2205\u2003\u2004\u2005\u014B\u2002\u0119\uD835\uDD56\u22D5\u29E3\u2A71\u03B5\u03B5\u03F5\u2256\u2255\u2242\u2A96\u2A95=\u225F\u2261\u2A78\u29E5\u2253\u2971\u212F\u2250\u2242\u03B7ðë\u20AC!\u2203\u2130\u2147\u2252\u0444\u2640\uFB03\uFB00\uFB04\uD835\uDD23\uFB01fj\u266D\uFB02\u25B1\u0192\uD835\uDD57\u2200\u22D4\u2AD9\u2A0D½\u2153¼\u2155\u2159\u215B\u2154\u2156¾\u2157\u215C\u2158\u215A\u215D\u215E\u2044\u2322\uD835\uDCBB\u2267\u2A8C\u01F5\u03B3\u03DD\u2A86\u011F\u011D\u0433\u0121\u2265\u22DB\u2265\u2267\u2A7E\u2A7E\u2AA9\u2A80\u2A82\u2A84\u22DB\uFE00\u2A94\uD835\uDD24\u226B\u22D9\u2137\u0453\u2277\u2A92\u2AA5\u2AA4\u2269\u2A8A\u2A8A\u2A88\u2A88\u2269\u22E7\uD835\uDD58`\u210A\u2273\u2A8E\u2A90>\u2AA7\u2A7A\u22D7\u2995\u2A7C\u2A86\u2978\u22D7\u22DB\u2A8C\u2277\u2273\u2269\uFE00\u2269\uFE00\u21D4\u200A½\u210B\u044A\u2194\u2948\u21AD\u210F\u0125\u2665\u2665\u2026\u22B9\uD835\uDD25\u2925\u2926\u21FF\u223B\u21A9\u21AA\uD835\uDD59\u2015\uD835\uDCBD\u210F\u0127\u2043\u2010í\u2063î\u0438\u0435¡\u21D4\uD835\uDD26ì\u2148\u2A0C\u222D\u29DC\u2129\u0133\u012B\u2111\u2110\u2111\u0131\u22B7\u01B5\u2208\u2105\u221E\u29DD\u0131\u222B\u22BA\u2124\u22BA\u2A17\u2A3C\u0451\u012F\uD835\uDD5A\u03B9\u2A3C¿\uD835\uDCBE\u2208\u22F9\u22F5\u22F4\u22F3\u2208\u2062\u0129\u0456ï\u0135\u0439\uD835\uDD27\u0237\uD835\uDD5B\uD835\uDCBF\u0458\u0454\u03BA\u03F0\u0137\u043A\uD835\uDD28\u0138\u0445\u045C\uD835\uDD5C\uD835\uDCC0\u21DA\u21D0\u291B\u290E\u2266\u2A8B\u2962\u013A\u29B4\u2112\u03BB\u27E8\u2991\u27E8\u2A85«\u2190\u21E4\u291F\u291D\u21A9\u21AB\u2939\u2973\u21A2\u2AAB\u2919\u2AAD\u2AAD\uFE00\u290C\u2772{[\u298B\u298F\u298D\u013E\u013C\u2308{\u043B\u2936\u201C\u201E\u2967\u294B\u21B2\u2264\u2190\u21A2\u21BD\u21BC\u21C7\u2194\u21C6\u21CB\u21AD\u22CB\u22DA\u2264\u2266\u2A7D\u2A7D\u2AA8\u2A7F\u2A81\u2A83\u22DA\uFE00\u2A93\u2A85\u22D6\u22DA\u2A8B\u2276\u2272\u297C\u230A\uD835\uDD29\u2276\u2A91\u21BD\u21BC\u296A\u2584\u0459\u226A\u21C7\u231E\u296B\u25FA\u0140\u23B0\u23B0\u2268\u2A89\u2A89\u2A87\u2A87\u2268\u22E6\u27EC\u21FD\u27E6\u27F5\u27F7\u27FC\u27F6\u21AB\u21AC\u2985\uD835\uDD5D\u2A2D\u2A34\u2217_\u25CA\u25CA\u29EB(\u2993\u21C6\u231F\u21CB\u296D\u200E\u22BF\u2039\uD835\uDCC1\u21B0\u2272\u2A8D\u2A8F[\u2018\u201A\u0142<\u2AA6\u2A79\u22D6\u22CB\u22C9\u2976\u2A7B\u2996\u25C3\u22B4\u25C2\u294A\u2966\u2268\uFE00\u2268\uFE00\u223A¯\u2642\u2720\u2720\u21A6\u21A6\u21A7\u21A4\u21A5\u25AE\u2A29\u043C\u2014\u2221\uD835\uDD2A\u2127µ\u2223*\u2AF0·\u2212\u229F\u2238\u2A2A\u2ADB\u2026\u2213\u22A7\uD835\uDD5E\u2213\uD835\uDCC2\u223E\u03BC\u22B8\u22B8\u22D9\u0338\u226B\u20D2\u226B\u0338\u21CD\u21CE\u22D8\u0338\u226A\u20D2\u226A\u0338\u21CF\u22AF\u22AE\u2207\u0144\u2220\u20D2\u2249\u2A70\u0338\u224B\u0338\u0149\u2249\u266E\u266E\u2115 \u224E\u0338\u224F\u0338\u2A43\u0148\u0146\u2247\u2A6D\u0338\u2A42\u043D\u2013\u2260\u21D7\u2924\u2197\u2197\u2250\u0338\u2262\u2928\u2242\u0338\u2204\u2204\uD835\uDD2B\u2267\u0338\u2271\u2271\u2267\u0338\u2A7E\u0338\u2A7E\u0338\u2275\u226F\u226F\u21CE\u21AE\u2AF2\u220B\u22FC\u22FA\u220B\u045A\u21CD\u2266\u0338\u219A\u2025\u2270\u219A\u21AE\u2270\u2266\u0338\u2A7D\u0338\u2A7D\u0338\u226E\u2274\u226E\u22EA\u22EC\u2224\uD835\uDD5F¬\u2209\u22F9\u0338\u22F5\u0338\u2209\u22F7\u22F6\u220C\u220C\u22FE\u22FD\u2226\u2226\u2AFD\u20E5\u2202\u0338\u2A14\u2280\u22E0\u2AAF\u0338\u2280\u2AAF\u0338\u21CF\u219B\u2933\u0338\u219D\u0338\u219B\u22EB\u22ED\u2281\u22E1\u2AB0\u0338\uD835\uDCC3\u2224\u2226\u2241\u2244\u2244\u2224\u2226\u22E2\u22E3\u2284\u2AC5\u0338\u2288\u2282\u20D2\u2288\u2AC5\u0338\u2281\u2AB0\u0338\u2285\u2AC6\u0338\u2289\u2283\u20D2\u2289\u2AC6\u0338\u2279ñ\u2278\u22EA\u22EC\u22EB\u22ED\u03BD#\u2116\u2007\u22AD\u2904\u224D\u20D2\u22AC\u2265\u20D2>\u20D2\u29DE\u2902\u2264\u20D2<\u20D2\u22B4\u20D2\u2903\u22B5\u20D2\u223C\u20D2\u21D6\u2923\u2196\u2196\u2927\u24C8ó\u229B\u229Aô\u043E\u229D\u0151\u2A38\u2299\u29BC\u0153\u29BF\uD835\uDD2C\u02DBò\u29C1\u29B5\u03A9\u222E\u21BA\u29BE\u29BB\u203E\u29C0\u014D\u03C9\u03BF\u29B6\u2296\uD835\uDD60\u29B7\u29B9\u2295\u2228\u21BB\u2A5D\u2134\u2134ªº\u22B6\u2A56\u2A57\u2A5B\u2134ø\u2298õ\u2297\u2A36ö\u233D\u2225¶\u2225\u2AF3\u2AFD\u2202\u043F%.\u2030\u22A5\u2031\uD835\uDD2D\u03C6\u03D5\u2133\u260E\u03C0\u22D4\u03D6\u210F\u210E\u210F+\u2A23\u229E\u2A22\u2214\u2A25\u2A72±\u2A26\u2A27±\u2A15\uD835\uDD61£\u227A\u2AB3\u2AB7\u227C\u2AAF\u227A\u2AB7\u227C\u2AAF\u2AB9\u2AB5\u22E8\u227E\u2032\u2119\u2AB5\u2AB9\u22E8\u220F\u232E\u2312\u2313\u221D\u221D\u227E\u22B0\uD835\uDCC5\u03C8\u2008\uD835\uDD2E\u2A0C\uD835\uDD62\u2057\uD835\uDCC6\u210D\u2A16?\u225F\"\u21DB\u21D2\u291C\u290F\u2964\u223D\u0331\u0155\u221A\u29B3\u27E9\u2992\u29A5\u27E9»\u2192\u2975\u21E5\u2920\u2933\u291E\u21AA\u21AC\u2945\u2974\u21A3\u219D\u291A\u2236\u211A\u290D\u2773}]\u298C\u298E\u2990\u0159\u0157\u2309}\u0440\u2937\u2969\u201D\u201D\u21B3\u211C\u211B\u211C\u211D\u25AD®\u297D\u230B\uD835\uDD2F\u21C1\u21C0\u296C\u03C1\u03F1\u2192\u21A3\u21C1\u21C0\u21C4\u21CC\u21C9\u219D\u22CC\u02DA\u2253\u21C4\u21CC\u200F\u23B1\u23B1\u2AEE\u27ED\u21FE\u27E7\u2986\uD835\uDD63\u2A2E\u2A35)\u2994\u2A12\u21C9\u203A\uD835\uDCC7\u21B1]\u2019\u2019\u22CC\u22CA\u25B9\u22B5\u25B8\u29CE\u2968\u211E\u015B\u201A\u227B\u2AB4\u2AB8\u0161\u227D\u2AB0\u015F\u015D\u2AB6\u2ABA\u22E9\u2A13\u227F\u0441\u22C5\u22A1\u2A66\u21D8\u2925\u2198\u2198§;\u2929\u2216\u2216\u2736\uD835\uDD30\u2322\u266F\u0449\u0448\u2223\u2225­\u03C3\u03C2\u03C2\u223C\u2A6A\u2243\u2243\u2A9E\u2AA0\u2A9D\u2A9F\u2246\u2A24\u2972\u2190\u2216\u2A33\u29E4\u2223\u2323\u2AAA\u2AAC\u2AAC\uFE00\u044C/\u29C4\u233F\uD835\uDD64\u2660\u2660\u2225\u2293\u2293\uFE00\u2294\u2294\uFE00\u228F\u2291\u228F\u2291\u2290\u2292\u2290\u2292\u25A1\u25A1\u25AA\u25AA\u2192\uD835\uDCC8\u2216\u2323\u22C6\u2606\u2605\u03F5\u03D5¯\u2282\u2AC5\u2ABD\u2286\u2AC3\u2AC1\u2ACB\u228A\u2ABF\u2979\u2282\u2286\u2AC5\u228A\u2ACB\u2AC7\u2AD5\u2AD3\u227B\u2AB8\u227D\u2AB0\u2ABA\u2AB6\u22E9\u227F\u2211\u266A\u2283¹²³\u2AC6\u2ABE\u2AD8\u2287\u2AC4\u27C9\u2AD7\u297B\u2AC2\u2ACC\u228B\u2AC0\u2283\u2287\u2AC6\u228B\u2ACC\u2AC8\u2AD4\u2AD6\u21D9\u2926\u2199\u2199\u292Aß\u2316\u03C4\u23B4\u0165\u0163\u0442\u20DB\u2315\uD835\uDD31\u2234\u2234\u03B8\u03D1\u03D1\u2248\u223C\u2009\u2248\u223Cþ\u02DC×\u22A0\u2A31\u2A30\u222D\u2928\u22A4\u2336\u2AF1\uD835\uDD65\u2ADA\u2929\u2034\u2122\u25B5\u25BF\u25C3\u22B4\u225C\u25B9\u22B5\u25EC\u225C\u2A3A\u2A39\u29CD\u2A3B\u23E2\uD835\uDCC9\u0446\u045B\u0167\u226C\u219E\u21A0\u21D1\u2963ú\u2191\u045E\u016Dû\u0443\u21C5\u0171\u296E\u297E\uD835\uDD32ù\u21BF\u21BE\u2580\u231C\u231C\u230F\u25F8\u016B¨\u0173\uD835\uDD66\u2191\u2195\u21BF\u21BE\u228E\u03C5\u03D2\u03C5\u21C8\u231D\u231D\u230E\u016F\u25F9\uD835\uDCCA\u22F0\u0169\u25B5\u25B4\u21C8ü\u29A7\u21D5\u2AE8\u2AE9\u22A8\u299C\u03F5\u03F0\u2205\u03D5\u03D6\u221D\u2195\u03F1\u03C2\u228A\uFE00\u2ACB\uFE00\u228B\uFE00\u2ACC\uFE00\u03D1\u22B2\u22B3\u0432\u22A2\u2228\u22BB\u225A\u22EE||\uD835\uDD33\u22B2\u2282\u20D2\u2283\u20D2\uD835\uDD67\u221D\u22B3\uD835\uDCCB\u2ACB\uFE00\u228A\uFE00\u2ACC\uFE00\u228B\uFE00\u299A\u0175\u2A5F\u2227\u2259\u2118\uD835\uDD34\uD835\uDD68\u2118\u2240\u2240\uD835\uDCCC\u22C2\u25EF\u22C3\u25BD\uD835\uDD35\u27FA\u27F7\u03BE\u27F8\u27F5\u27FC\u22FB\u2A00\uD835\uDD69\u2A01\u2A02\u27F9\u27F6\uD835\uDCCD\u2A06\u2A04\u25B3\u22C1\u22C0ý\u044F\u0177\u044B¥\uD835\uDD36\u0457\uD835\uDD6A\uD835\uDCCE\u044Eÿ\u017A\u017E\u0437\u017C\u2128\u03B6\uD835\uDD37\u0436\u21DD\uD835\uDD6B\uD835\uDCCF\u200D\u200C"];
+
+  /**
+   * Constants and helpers shared between the decode-data generator
+   * (`scripts/write-decode-map.ts`) and the runtime (`src/decode.ts`).
+   *
+   * The format and the algorithms (front-coded names, exact 32-bit keys in a
+   * two-choice cuckoo table, the length-probe front end, and the measured
+   * engineering notes) are documented with references in
+   * `scripts/README.md`.
+   */
+  /** Bias added to every meta char so none needs escaping in JS source. */
+  const META_BIAS = 0x23;
+  /** Bias for header and choice-bit chars. */
+  const HEADER_BIAS = 0x30;
+  /** Number of header chars: n (2), suffixes length (2), bucket count (2). */
+  const HEADER_LENGTH = 6;
+  /** Choice bits packed per char. */
+  const CHOICE_BITS_PER_CHAR = 6;
+  /** Multiplier deriving the first candidate bucket from a key. */
+  const BUCKET_HASH_1 = 0x9e_37_79_b1;
+  /** Multiplier deriving the second candidate bucket from a key. */
+  const BUCKET_HASH_2 = 0x85_eb_ca_6b;
+  /** Size of the (c0,c1) class table (10-bit index). */
+  const PAIR_TABLE_SIZE = 1024;
+  /**
+   * Map an alphanumeric char code to 6 bits (1..62); 0 = not alphanumeric.
+   * Used for the key's last-character field.
+   */
+  const CHAR_REMAP = (() => {
+      const remap = new Uint8Array(128);
+      for (let code = 0x30; code <= 0x39; code++)
+          remap[code] = code - 0x2f;
+      for (let code = 0x41; code <= 0x5a; code++)
+          remap[code] = code - 0x36;
+      for (let code = 0x61; code <= 0x7a; code++)
+          remap[code] = code - 0x3c;
+      return remap;
+  })();
+  /**
+   * The exact 32-bit key for a name occurring at `nameStart` with `length`
+   * chars. Covers the first two and last two characters plus the length;
+   * middle characters are verified separately against the names blob.
+   *
+   * The hot decoder inlines this computation; tests assert both stay in sync
+   * by looking every entity up through the public API.
+   * @param text Text containing the name.
+   * @param nameStart Index of the name's first character.
+   * @param length Length of the name.
+   */
+  function exactKey(text, nameStart, length) {
+      return ((text.charCodeAt(nameStart) << 25) |
+          (text.charCodeAt(nameStart + 1) << 18) |
+          (text.charCodeAt(nameStart + length - 2) << 11) |
+          (CHAR_REMAP[text.charCodeAt(nameStart + length - 1)] << 5) |
+          length);
+  }
+  /**
+   * The 10-bit (c0,c1) class index used by the probe front end. The function
+   * was chosen by exhaustive search over load-free mixers for minimal
+   * candidate-set collisions on the real entity set.
+   * @param c0 First char code of the candidate name.
+   * @param c1 Second char code.
+   */
+  function pairIndex(c0, c1) {
+      return (((c0 * 3) << 3) ^ c1) & (PAIR_TABLE_SIZE - 1);
+  }
+  /**
+   * First candidate bucket for a key in a table of `buckets` buckets.
+   * @param key Exact key.
+   * @param buckets Bucket count.
+   */
+  function bucketOne(key, buckets) {
+      return ((Math.imul(key, BUCKET_HASH_1) >>> 16) * buckets) >>> 16;
+  }
+  /**
+   * Second candidate bucket for a key.
+   * @param key Exact key.
+   * @param buckets Bucket count.
+   */
+  function bucketTwo(key, buckets) {
+      return ((Math.imul(key, BUCKET_HASH_2) >>> 16) * buckets) >>> 16;
+  }
+  /**
+   * Build the lookup structures from a serialized dataset.
+   * @param packed Serialized decode data, see `decode-data-format.ts`.
+   */
+  function initDecodeData(packed) {
+      const [data, values] = packed;
+      const nameCount = ((data.charCodeAt(0) - HEADER_BIAS) << 6) |
+          (data.charCodeAt(1) - HEADER_BIAS);
+      const suffixesLength = ((data.charCodeAt(2) - HEADER_BIAS) << 6) |
+          (data.charCodeAt(3) - HEADER_BIAS);
+      const buckets = ((data.charCodeAt(4) - HEADER_BIAS) << 6) |
+          (data.charCodeAt(5) - HEADER_BIAS);
+      const metaStart = HEADER_LENGTH + suffixesLength;
+      const choicesStart = metaStart + 2 * nameCount;
+      const slotCount = 2 * buckets;
+      const keys = new Int32Array(slotCount);
+      const slotMidOff = new Uint16Array(slotCount);
+      const slotValue = new Uint16Array(slotCount);
+      const lengthBits = new Uint32Array(PAIR_TABLE_SIZE);
+      const middleOffsets = new Map();
+      const middles = [];
+      let name = "";
+      let suffixOffset = HEADER_LENGTH;
+      let valueOffset = 0;
+      for (let index = 0; index < nameCount; index++) {
+          const meta0 = data.charCodeAt(metaStart + 2 * index) - META_BIAS;
+          const meta1 = data.charCodeAt(metaStart + 2 * index + 1) - META_BIAS;
+          const prefixLength = meta0 & 31;
+          const length = prefixLength + (meta1 & 31);
+          const valueLength = (meta1 >> 5) + 1;
+          name =
+              name.slice(0, prefixLength) +
+                  data.slice(suffixOffset, suffixOffset + length - prefixLength);
+          suffixOffset += length - prefixLength;
+          const key = exactKey(name, 0, length);
+          const choice = (data.charCodeAt(choicesStart + Math.floor(index / CHOICE_BITS_PER_CHAR)) -
+              HEADER_BIAS) &
+              (1 << (index % CHOICE_BITS_PER_CHAR));
+          let slot = 2 * (choice === 0 ? bucketOne : bucketTwo)(key, buckets);
+          if (keys[slot] !== 0)
+              slot += 1;
+          keys[slot] = key;
+          if (length > 4) {
+              const middle = name.slice(2, length - 2);
+              const existing = middleOffsets.get(middle);
+              if (existing === undefined) {
+                  middleOffsets.set(middle, middles.length);
+                  slotMidOff[slot] = middles.length;
+                  for (let middleIndex = 0; middleIndex < middle.length; middleIndex += 2) {
+                      middles.push(middle.charCodeAt(middleIndex) |
+                          (middle.charCodeAt(middleIndex + 1) << 16));
+                  }
+              }
+              else {
+                  slotMidOff[slot] = existing;
+              }
+          }
+          const pair = pairIndex(name.charCodeAt(0), name.charCodeAt(1));
+          lengthBits[pair] |= length <= 16 ? 1 << (length - 2) : 0x80_00;
+          if ((meta0 & 0x20) !== 0) {
+              lengthBits[pair] |= 1 << (length - 2 + 16);
+          }
+          /*
+           * Values have one or two units, leaving bit 1 for the legacy flag.
+           * The generator checks the 14-bit offset and two-unit value limits.
+           */
+          slotValue[slot] =
+              (valueOffset << 2) | (valueLength - 1) | ((meta0 & 0x20) >> 4);
+          valueOffset += valueLength;
+      }
+      return {
+          keys,
+          buckets,
+          slotMidOff,
+          slotValue,
+          values,
+          lengthBits,
+          middles: new Uint32Array(middles),
+      };
+  }
+
+  const CHAR_NUM = 35; // "#"
+  const CHAR_SEMI = 59; // ";"
+  const CHAR_EQUALS = 61; // "="
+  const CHAR_ZERO = 48; // "0"
+  const CHAR_LOWER_A = 97; // "a"
+  const CHAR_LOWER_X = 120; // "x"
+  const CHAR_UPPER_A = 65; // "A"
   /** Bit that needs to be set to convert an upper case ASCII character to lower case */
-  const TO_LOWER_BIT = 32;
-  var BinTrieFlags;
-  (function (BinTrieFlags) {
-      BinTrieFlags[BinTrieFlags["VALUE_LENGTH"] = 49152] = "VALUE_LENGTH";
-      BinTrieFlags[BinTrieFlags["BRANCH_LENGTH"] = 16256] = "BRANCH_LENGTH";
-      BinTrieFlags[BinTrieFlags["JUMP_TABLE"] = 127] = "JUMP_TABLE";
-  })(BinTrieFlags || (BinTrieFlags = {}));
+  const TO_LOWER_BIT = 0b10_0000;
+  /**
+   * Unsigned subtraction trick: (code - lo) >>> 0 wraps negatives to large
+   * values, so a single `<=` covers the entire [lo..hi] range check.
+   * @param code Code point to check.
+   */
   function isNumber(code) {
-      return code >= CharCodes.ZERO && code <= CharCodes.NINE;
+      return (code - CHAR_ZERO) >>> 0 <= 9;
   }
-  function isHexadecimalCharacter(code) {
-      return ((code >= CharCodes.UPPER_A && code <= CharCodes.UPPER_F) ||
-          (code >= CharCodes.LOWER_A && code <= CharCodes.LOWER_F));
-  }
-  function isAsciiAlphaNumeric$1(code) {
-      return ((code >= CharCodes.UPPER_A && code <= CharCodes.UPPER_Z) ||
-          (code >= CharCodes.LOWER_A && code <= CharCodes.LOWER_Z) ||
-          isNumber(code));
+  function isAlphaNumeric(code) {
+      return (isNumber(code) || ((code | TO_LOWER_BIT) - CHAR_LOWER_A) >>> 0 <= 25 // Z - a
+      );
   }
   /**
    * Checks if the given character is a valid end character for an entity in an attribute.
    *
    * Attribute values that aren't terminated properly aren't parsed, and shouldn't lead to a parser error.
    * See the example in https://html.spec.whatwg.org/multipage/parsing.html#named-character-reference-state
+   * @param code Code point to check.
    */
   function isEntityInAttributeInvalidEnd(code) {
-      return code === CharCodes.EQUALS || isAsciiAlphaNumeric$1(code);
+      return code === CHAR_EQUALS || isAlphaNumeric(code);
   }
-  var EntityDecoderState;
-  (function (EntityDecoderState) {
-      EntityDecoderState[EntityDecoderState["EntityStart"] = 0] = "EntityStart";
-      EntityDecoderState[EntityDecoderState["NumericStart"] = 1] = "NumericStart";
-      EntityDecoderState[EntityDecoderState["NumericDecimal"] = 2] = "NumericDecimal";
-      EntityDecoderState[EntityDecoderState["NumericHex"] = 3] = "NumericHex";
-      EntityDecoderState[EntityDecoderState["NamedEntity"] = 4] = "NamedEntity";
-  })(EntityDecoderState || (EntityDecoderState = {}));
+  /**
+   * Decoding mode for named entities.
+   */
   var DecodingMode;
   (function (DecodingMode) {
       /** Entities in text nodes that can end with any character. */
@@ -2764,96 +2911,194 @@
       /** Entities in attributes have limitations on ending characters. */
       DecodingMode[DecodingMode["Attribute"] = 2] = "Attribute";
   })(DecodingMode || (DecodingMode = {}));
-  /**
-   * Token decoder with support of writing partial entities.
+  /** Decode data for HTML entities. */
+  const htmlDecode = /* #__PURE__ */ initDecodeData(htmlDecodeData);
+  /*
+   * Every decoder below is specialized over these module-level constants. V8
+   * compiles direct references to them roughly 20% faster than property loads
+   * off a shared object.
    */
-  class EntityDecoder {
+  const htmlKeys = /* #__PURE__ */ (() => htmlDecode.keys)();
+  const htmlBuckets = /* #__PURE__ */ (() => htmlDecode.buckets)();
+  const htmlSlotMidOff = /* #__PURE__ */ (() => htmlDecode.slotMidOff)();
+  const htmlLengthBits = /* #__PURE__ */ (() => htmlDecode.lengthBits)();
+  const htmlMiddles = /* #__PURE__ */ (() => htmlDecode.middles)();
+  /** Hoisted for the specialized HTML cores; see `emitHtmlValue`. */
+  const htmlSlotValue = /* #__PURE__ */ (() => htmlDecode.slotValue)();
+  const htmlValues = /* #__PURE__ */ (() => htmlDecode.values)();
+  /**
+   * Find the slot matching `text[start..start+length)`, or -1. A match proves
+   * every character of the span (exact key + middle comparison).
+   * @param text Input text.
+   * @param start Start of the span in `text`.
+   * @param length Length of the span.
+   */
+  function findSlotHtml(text, start, length) {
+      const c0 = text.charCodeAt(start);
+      const c1 = text.charCodeAt(start + 1);
+      const c2 = text.charCodeAt(start + length - 2);
+      const c3 = text.charCodeAt(start + length - 1);
+      /*
+       * Probed spans aren't pre-filtered to alphanumerics; characters >= 0x80
+       * would alias mod 128 inside the packed 7-bit fields, so reject them
+       * before they can forge a key.
+       */
+      if ((c0 | c1 | c2 | c3) > 127)
+          return -1;
+      const key = (c0 << 25) | (c1 << 18) | (c2 << 11) | (CHAR_REMAP[c3] << 5) | length;
+      let slot = 2 * (((Math.imul(key, BUCKET_HASH_1) >>> 16) * htmlBuckets) >>> 16);
+      for (let attempt = 0;; attempt++) {
+          if (htmlKeys[slot] === key &&
+              (length <= 4 || isMidMatchHtml(slot, text, start, length))) {
+              return slot;
+          }
+          if (htmlKeys[slot + 1] === key &&
+              (length <= 4 || isMidMatchHtml(slot + 1, text, start, length))) {
+              return slot + 1;
+          }
+          if (attempt === 1)
+              return -1;
+          slot =
+              2 * (((Math.imul(key, BUCKET_HASH_2) >>> 16) * htmlBuckets) >>> 16);
+      }
+  }
+  /**
+   * Compare the middle characters (positions 2..length-3) of the candidate at
+   * `slot` against the input. The key already proves the outer characters and
+   * the length. Names of length at most four are accepted by the caller.
+   * @param slot Slot of the candidate.
+   * @param text Input text.
+   * @param start Start of the span in `text`.
+   * @param length Length of the span.
+   */
+  function isMidMatchHtml(slot, text, start, length) {
+      let wordIndex = htmlSlotMidOff[slot];
+      let index = start + 2;
+      const end = start + length - 2;
+      while (index + 1 < end) {
+          if ((text.charCodeAt(index) | (text.charCodeAt(index + 1) << 16)) !==
+              htmlMiddles[wordIndex++])
+              return false;
+          index += 2;
+      }
+      return (index === end ||
+          text.charCodeAt(index) === (htmlMiddles[wordIndex] & 0xff_ff));
+  }
+  /** ASCII digit values; 0xff marks characters outside the hexadecimal range. */
+  const numericDigits = /* #__PURE__ */ (() => {
+      const digits = new Uint8Array(128).fill(0xff);
+      for (let digit = 0; digit < 10; digit++) {
+          digits[CHAR_ZERO + digit] = digit;
+      }
+      for (let digit = 0; digit < 6; digit++) {
+          digits[CHAR_UPPER_A + digit] = digit + 10;
+          digits[CHAR_LOWER_A + digit] = digit + 10;
+      }
+      return digits;
+  })();
+  /**
+   * Find the longest legacy (semicolon-less) match for the name starting at
+   * `start`, using the per-class legacy length bits. Returns
+   * `slot << 3 | matchLength`, or -1 if there is no match. Only called after
+   * the exact probes failed (the miss path).
+   * @param input Input text.
+   * @param start Start of the name.
+   * @param maxLength Number of available run characters.
+   */
+  function findLegacySlot(input, start, maxLength) {
+      let legacy = (htmlLengthBits[pairIndex(input.charCodeAt(start), input.charCodeAt(start + 1))] >>>
+          16) &
+          31;
+      while (legacy !== 0) {
+          // Longest first: the spec matches references greedily.
+          const top = 31 - Math.clz32(legacy);
+          legacy ^= 1 << top;
+          if (top + 2 > maxLength)
+              continue;
+          const slot = findSlotHtml(input, start, top + 2);
+          if (slot >= 0 && (htmlSlotValue[slot] & 2) !== 0) {
+              return (slot << 3) | (top + 2);
+          }
+      }
+      return -1;
+  }
+  /**
+   * Match a class containing long names without probing all its shorter lengths.
+   * The 32-character window bounds the scan even for invalid or unterminated runs.
+   * Returns `(slot << 6) | consumed`, excluding the `&`, or -1 on a miss.
+   * @param input Input containing the candidate name.
+   * @param start Start of the name.
+   * @param mode Decoding mode, including the rules for legacy matches.
+   */
+  function findLongClassMatch(input, start, mode) {
+      const length = input.slice(start, start + 32).indexOf(";");
+      if ((length - 2) >>> 0 <= 29) {
+          const slot = findSlotHtml(input, start, length);
+          if (slot >= 0)
+              return (slot << 6) | (length + 1);
+      }
+      if (mode !== DecodingMode.Strict) {
+          const packed = findLegacySlot(input, start, Math.min(31, input.length - start));
+          if (packed >= 0) {
+              const length = packed & 7;
+              if (mode !== DecodingMode.Attribute ||
+                  start + length >= input.length ||
+                  !isEntityInAttributeInvalidEnd(input.charCodeAt(start + length)))
+                  return ((packed >> 3) << 6) | length;
+          }
+      }
+      return -1;
+  }
+  const STATE_ENTITY_START = 0;
+  const STATE_NUMERIC_START = 1;
+  const STATE_NUMERIC_DECIMAL = 2;
+  const STATE_NUMERIC_HEX = 3;
+  const STATE_NAMED_ENTITY = 4;
+  /**
+   * Token decoder with support of writing partial entities; the shared base
+   * of `HtmlEntityDecoder` and `XmlEntityDecoder`. Numeric entities are
+   * identical in both document types and are handled here; named entities are
+   * left to the subclasses.
+   *
+   * The decoder is driven by a tokenizer: after a `&`, write the following
+   * input (possibly in chunks). `write` returns the number of characters
+   * consumed once the entity is decided, or -1 while more input is needed.
+   * Rejection may surface later than strictly possible (the decoder buffers
+   * until a terminator or the name-length limit), but emitted code points,
+   * consumed counts, and final return values are exact.
+   */
+  class EntityDecoderBase {
+      emitCodePoint;
+      errors;
+      /** The current state of the decoder. */
+      state = STATE_ENTITY_START;
+      /** Characters that were consumed while parsing an entity. */
+      consumed = 1;
+      /** Accumulated numeric code point, or a packed partial XML name. */
+      result = 0;
+      /** The mode in which the decoder is operating. */
+      decodeMode = DecodingMode.Strict;
+      /** Replacement rules for numeric character references. */
+      replaceNumericCodePoint = replaceCodePoint;
       constructor(
-      /** The tree used to decode entities. */
-      decodeTree, 
       /**
        * The function that is called when a codepoint is decoded.
        *
        * For multi-byte named entities, this will be called multiple times,
        * with the second codepoint, and the same `consumed` value.
-       *
        * @param codepoint The decoded codepoint.
        * @param consumed The number of bytes consumed by the decoder.
        */
       emitCodePoint, 
       /** An object that is used to produce errors. */
       errors) {
-          this.decodeTree = decodeTree;
           this.emitCodePoint = emitCodePoint;
           this.errors = errors;
-          /** The current state of the decoder. */
-          this.state = EntityDecoderState.EntityStart;
-          /** Characters that were consumed while parsing an entity. */
-          this.consumed = 1;
-          /**
-           * The result of the entity.
-           *
-           * Either the result index of a numeric entity, or the codepoint of a
-           * numeric entity.
-           */
-          this.result = 0;
-          /** The current index in the decode tree. */
-          this.treeIndex = 0;
-          /** The number of characters that were consumed in excess. */
-          this.excess = 1;
-          /** The mode in which the decoder is operating. */
-          this.decodeMode = DecodingMode.Strict;
-      }
-      /** Resets the instance to make it reusable. */
-      startEntity(decodeMode) {
-          this.decodeMode = decodeMode;
-          this.state = EntityDecoderState.EntityStart;
-          this.result = 0;
-          this.treeIndex = 0;
-          this.excess = 1;
-          this.consumed = 1;
-      }
-      /**
-       * Write an entity to the decoder. This can be called multiple times with partial entities.
-       * If the entity is incomplete, the decoder will return -1.
-       *
-       * Mirrors the implementation of `getDecoder`, but with the ability to stop decoding if the
-       * entity is incomplete, and resume when the next string is written.
-       *
-       * @param input The string containing the entity (or a continuation of the entity).
-       * @param offset The offset at which the entity begins. Should be 0 if this is not the first call.
-       * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
-       */
-      write(input, offset) {
-          switch (this.state) {
-              case EntityDecoderState.EntityStart: {
-                  if (input.charCodeAt(offset) === CharCodes.NUM) {
-                      this.state = EntityDecoderState.NumericStart;
-                      this.consumed += 1;
-                      return this.stateNumericStart(input, offset + 1);
-                  }
-                  this.state = EntityDecoderState.NamedEntity;
-                  return this.stateNamedEntity(input, offset);
-              }
-              case EntityDecoderState.NumericStart: {
-                  return this.stateNumericStart(input, offset);
-              }
-              case EntityDecoderState.NumericDecimal: {
-                  return this.stateNumericDecimal(input, offset);
-              }
-              case EntityDecoderState.NumericHex: {
-                  return this.stateNumericHex(input, offset);
-              }
-              case EntityDecoderState.NamedEntity: {
-                  return this.stateNamedEntity(input, offset);
-              }
-          }
       }
       /**
        * Switches between the numeric decimal and hexadecimal states.
        *
        * Equivalent to the `Numeric character reference state` in the HTML spec.
-       *
        * @param input The string containing the entity (or a continuation of the entity).
        * @param offset The current offset.
        * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
@@ -2862,77 +3107,78 @@
           if (offset >= input.length) {
               return -1;
           }
-          if ((input.charCodeAt(offset) | TO_LOWER_BIT) === CharCodes.LOWER_X) {
-              this.state = EntityDecoderState.NumericHex;
+          if ((input.charCodeAt(offset) | TO_LOWER_BIT) === CHAR_LOWER_X) {
+              this.state = STATE_NUMERIC_HEX;
               this.consumed += 1;
               return this.stateNumericHex(input, offset + 1);
           }
-          this.state = EntityDecoderState.NumericDecimal;
+          this.state = STATE_NUMERIC_DECIMAL;
           return this.stateNumericDecimal(input, offset);
-      }
-      addToNumericResult(input, start, end, base) {
-          if (start !== end) {
-              const digitCount = end - start;
-              this.result =
-                  this.result * Math.pow(base, digitCount) +
-                      Number.parseInt(input.substr(start, digitCount), base);
-              this.consumed += digitCount;
-          }
       }
       /**
        * Parses a hexadecimal numeric entity.
        *
-       * Equivalent to the `Hexademical character reference state` in the HTML spec.
-       *
+       * Equivalent to the `Hexadecimal character reference state` in the HTML spec.
        * @param input The string containing the entity (or a continuation of the entity).
        * @param offset The current offset.
        * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
        */
       stateNumericHex(input, offset) {
-          const startIndex = offset;
-          while (offset < input.length) {
-              const char = input.charCodeAt(offset);
-              if (isNumber(char) || isHexadecimalCharacter(char)) {
-                  offset += 1;
+          const inputLength = input.length;
+          // Local accumulators; flushed before any exit.
+          let { result, consumed } = this;
+          let index = offset;
+          while (index < inputLength) {
+              const char = input.charCodeAt(index);
+              const digit = numericDigits[char];
+              if (digit <= 15) {
+                  result = result * 16 + digit;
               }
               else {
-                  this.addToNumericResult(input, startIndex, offset, 16);
+                  this.result = result;
+                  this.consumed = consumed;
                   return this.emitNumericEntity(char, 3);
               }
+              consumed += 1;
+              index += 1;
           }
-          this.addToNumericResult(input, startIndex, offset, 16);
-          return -1;
+          this.result = result;
+          this.consumed = consumed;
+          return -1; // Incomplete entity
       }
       /**
        * Parses a decimal numeric entity.
        *
        * Equivalent to the `Decimal character reference state` in the HTML spec.
-       *
        * @param input The string containing the entity (or a continuation of the entity).
        * @param offset The current offset.
        * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
        */
       stateNumericDecimal(input, offset) {
-          const startIndex = offset;
-          while (offset < input.length) {
-              const char = input.charCodeAt(offset);
-              if (isNumber(char)) {
-                  offset += 1;
+          const inputLength = input.length;
+          // Local accumulators; flushed before any exit.
+          let { result, consumed } = this;
+          let index = offset;
+          while (index < inputLength) {
+              const digit = input.charCodeAt(index) - CHAR_ZERO;
+              if (digit >>> 0 > 9) {
+                  this.result = result;
+                  this.consumed = consumed;
+                  return this.emitNumericEntity(digit + CHAR_ZERO, 2);
               }
-              else {
-                  this.addToNumericResult(input, startIndex, offset, 10);
-                  return this.emitNumericEntity(char, 2);
-              }
+              result = result * 10 + digit;
+              consumed += 1;
+              index += 1;
           }
-          this.addToNumericResult(input, startIndex, offset, 10);
-          return -1;
+          this.result = result;
+          this.consumed = consumed;
+          return -1; // Incomplete entity
       }
       /**
        * Validate and emit a numeric entity.
        *
-       * Implements the logic from the `Hexademical character reference start
+       * Implements the logic from the `Hexadecimal character reference start
        * state` and `Numeric character reference end state` in the HTML spec.
-       *
        * @param lastCp The last code point of the entity. Used to see if the
        *               entity was terminated with a semicolon.
        * @param expectedLength The minimum number of characters that should be
@@ -2941,22 +3187,21 @@
        * @returns The number of characters that were consumed.
        */
       emitNumericEntity(lastCp, expectedLength) {
-          var _a;
           // Ensure we consumed at least one digit.
           if (this.consumed <= expectedLength) {
-              (_a = this.errors) === null || _a === void 0 ? void 0 : _a.absenceOfDigitsInNumericCharacterReference(this.consumed);
+              this.errors?.absenceOfDigitsInNumericCharacterReference(this.consumed);
               return 0;
           }
           // Figure out if this is a legit end of the entity
-          if (lastCp === CharCodes.SEMI) {
+          if (lastCp === CHAR_SEMI) {
               this.consumed += 1;
           }
           else if (this.decodeMode === DecodingMode.Strict) {
               return 0;
           }
-          this.emitCodePoint(replaceCodePoint(this.result), this.consumed);
+          this.emitCodePoint(this.replaceNumericCodePoint(this.result), this.consumed);
           if (this.errors) {
-              if (lastCp !== CharCodes.SEMI) {
+              if (lastCp !== CHAR_SEMI) {
                   this.errors.missingSemicolonAfterCharacterReference();
               }
               this.errors.validateNumericCharacterReference(this.result);
@@ -2964,160 +3209,287 @@
           return this.consumed;
       }
       /**
-       * Parses a named entity.
-       *
-       * Equivalent to the `Named character reference state` in the HTML spec.
-       *
+       * Resets the instance to make it reusable.
+       * @param decodeMode Entity decoding mode to use.
+       */
+      startEntity(decodeMode) {
+          this.decodeMode = decodeMode;
+          this.state = STATE_ENTITY_START;
+          this.result = 0;
+          this.consumed = 1;
+      }
+      /**
+       * Write an entity to the decoder. This can be called multiple times with partial entities.
+       * If the entity is incomplete, the decoder will return -1.
        * @param input The string containing the entity (or a continuation of the entity).
-       * @param offset The current offset.
+       * @param offset The offset at which the entity begins. Should be 0 if this is not the first call.
        * @returns The number of characters that were consumed, or -1 if the entity is incomplete.
        */
-      stateNamedEntity(input, offset) {
-          const { decodeTree } = this;
-          let current = decodeTree[this.treeIndex];
-          // The mask is the number of bytes of the value, including the current byte.
-          let valueLength = (current & BinTrieFlags.VALUE_LENGTH) >> 14;
-          for (; offset < input.length; offset++, this.excess++) {
-              const char = input.charCodeAt(offset);
-              this.treeIndex = determineBranch(decodeTree, current, this.treeIndex + Math.max(1, valueLength), char);
-              if (this.treeIndex < 0) {
-                  return this.result === 0 ||
-                      // If we are parsing an attribute
-                      (this.decodeMode === DecodingMode.Attribute &&
-                          // We shouldn't have consumed any characters after the entity,
-                          (valueLength === 0 ||
-                              // And there should be no invalid characters.
-                              isEntityInAttributeInvalidEnd(char)))
-                      ? 0
-                      : this.emitNotTerminatedNamedEntity();
+      write(input, offset) {
+          switch (this.state) {
+              case STATE_ENTITY_START: {
+                  if (input.charCodeAt(offset) === CHAR_NUM) {
+                      this.state = STATE_NUMERIC_START;
+                      this.consumed += 1;
+                      return this.stateNumericStart(input, offset + 1);
+                  }
+                  this.state = STATE_NAMED_ENTITY;
+                  return this.stateNamedEntity(input, offset);
               }
-              current = decodeTree[this.treeIndex];
-              valueLength = (current & BinTrieFlags.VALUE_LENGTH) >> 14;
-              // If the branch is a value, store it and continue
-              if (valueLength !== 0) {
-                  // If the entity is terminated by a semicolon, we are done.
-                  if (char === CharCodes.SEMI) {
-                      return this.emitNamedEntityData(this.treeIndex, valueLength, this.consumed + this.excess);
-                  }
-                  // If we encounter a non-terminated (legacy) entity while parsing strictly, then ignore it.
-                  if (this.decodeMode !== DecodingMode.Strict) {
-                      this.result = this.treeIndex;
-                      this.consumed += this.excess;
-                      this.excess = 0;
-                  }
+              case STATE_NUMERIC_START: {
+                  return this.stateNumericStart(input, offset);
+              }
+              case STATE_NUMERIC_DECIMAL: {
+                  return this.stateNumericDecimal(input, offset);
+              }
+              case STATE_NUMERIC_HEX: {
+                  return this.stateNumericHex(input, offset);
+              }
+              default: {
+                  // NamedEntity: the only remaining state.
+                  return this.stateNamedEntity(input, offset);
               }
           }
-          return -1;
-      }
-      /**
-       * Emit a named entity that was not terminated with a semicolon.
-       *
-       * @returns The number of characters consumed.
-       */
-      emitNotTerminatedNamedEntity() {
-          var _a;
-          const { result, decodeTree } = this;
-          const valueLength = (decodeTree[result] & BinTrieFlags.VALUE_LENGTH) >> 14;
-          this.emitNamedEntityData(result, valueLength, this.consumed);
-          (_a = this.errors) === null || _a === void 0 ? void 0 : _a.missingSemicolonAfterCharacterReference();
-          return this.consumed;
-      }
-      /**
-       * Emit a named entity.
-       *
-       * @param result The index of the entity in the decode tree.
-       * @param valueLength The number of bytes in the entity.
-       * @param consumed The number of characters consumed.
-       *
-       * @returns The number of characters consumed.
-       */
-      emitNamedEntityData(result, valueLength, consumed) {
-          const { decodeTree } = this;
-          this.emitCodePoint(valueLength === 1
-              ? decodeTree[result] & ~BinTrieFlags.VALUE_LENGTH
-              : decodeTree[result + 1], consumed);
-          if (valueLength === 3) {
-              // For multi-byte values, we need to emit the second byte.
-              this.emitCodePoint(decodeTree[result + 2], consumed);
-          }
-          return consumed;
       }
       /**
        * Signal to the parser that the end of the input was reached.
        *
        * Remaining data will be emitted and relevant errors will be produced.
-       *
        * @returns The number of characters consumed.
        */
       end() {
-          var _a;
           switch (this.state) {
-              case EntityDecoderState.NamedEntity: {
-                  // Emit a named entity if we have one.
-                  return this.result !== 0 &&
-                      (this.decodeMode !== DecodingMode.Attribute ||
-                          this.result === this.treeIndex)
-                      ? this.emitNotTerminatedNamedEntity()
-                      : 0;
+              case STATE_NAMED_ENTITY: {
+                  return this.endNamedEntity();
               }
               // Otherwise, emit a numeric entity if we have one.
-              case EntityDecoderState.NumericDecimal: {
+              case STATE_NUMERIC_DECIMAL: {
                   return this.emitNumericEntity(0, 2);
               }
-              case EntityDecoderState.NumericHex: {
+              case STATE_NUMERIC_HEX: {
                   return this.emitNumericEntity(0, 3);
               }
-              case EntityDecoderState.NumericStart: {
-                  (_a = this.errors) === null || _a === void 0 ? void 0 : _a.absenceOfDigitsInNumericCharacterReference(this.consumed);
+              case STATE_NUMERIC_START: {
+                  this.errors?.absenceOfDigitsInNumericCharacterReference(this.consumed);
                   return 0;
               }
-              case EntityDecoderState.EntityStart: {
-                  // Return 0 if we have no entity.
+              default: {
+                  // EntityStart: return 0.
                   return 0;
               }
           }
       }
   }
   /**
-   * Determines the branch of the current node that is taken given the current
-   * character. This function is used to traverse the trie.
+   * Streaming decoder for HTML entities.
    *
-   * @param decodeTree The trie.
-   * @param current The current node.
-   * @param nodeIdx The index right after the current node and its value.
-   * @param char The current character.
-   * @returns The index of the next node, or -1 if no branch is taken.
+   * When the entity fits inside the current chunk (the common case), the
+   * lookup runs directly on the chunk via the same length-probe scheme as the
+   * synchronous decoder; chunk-boundary runs use a reusable character buffer.
    */
-  function determineBranch(decodeTree, current, nodeIndex, char) {
-      const branchCount = (current & BinTrieFlags.BRANCH_LENGTH) >> 7;
-      const jumpOffset = current & BinTrieFlags.JUMP_TABLE;
-      // Case 1: Single branch encoded in jump offset
-      if (branchCount === 0) {
-          return jumpOffset !== 0 && char === jumpOffset ? nodeIndex : -1;
+  class HtmlEntityDecoder extends EntityDecoderBase {
+      /** Total name characters seen for the current named entity. */
+      runLength = 0;
+      /** Reused for ASCII alphanumerics; the 32nd character rules out an exact match. */
+      nameBuffer = new Uint8Array(32);
+      /**
+       * Emit the replacement for a matched slot. Values are at most two
+       * UTF-16 code units; like previous versions, each unit is emitted as
+       * its own callback (surrogate halves included).
+       * @param slot The matched slot.
+       */
+      emitSlot(slot) {
+          const packed = htmlSlotValue[slot];
+          const off = packed >> 2;
+          this.emitCodePoint(htmlValues.charCodeAt(off), this.consumed);
+          if ((packed & 1) !== 0) {
+              this.emitCodePoint(htmlValues.charCodeAt(off + 1), this.consumed);
+          }
       }
-      // Case 2: Multiple branches encoded in jump table
-      if (jumpOffset) {
-          const value = char - jumpOffset;
-          return value < 0 || value >= branchCount
-              ? -1
-              : decodeTree[nodeIndex + value] - 1;
+      startEntity(decodeMode) {
+          super.startEntity(decodeMode);
+          this.runLength = 0;
       }
-      // Case 3: Multiple branches encoded in dictionary
-      // Binary search for the character.
-      let lo = nodeIndex;
-      let hi = lo + branchCount - 1;
-      while (lo <= hi) {
-          const mid = (lo + hi) >>> 1;
-          const midValue = decodeTree[mid];
-          if (midValue < char) {
-              lo = mid + 1;
+      stateNamedEntity(input, offset) {
+          const inputLength = input.length;
+          if (this.runLength === 0 && offset + 17 <= inputLength) {
+              /*
+               * Fast path: all length probes are conclusive inside this
+               * chunk. (Near the chunk end a probe miss could be a name
+               * continuing in the next chunk, so fall through to buffering.)
+               */
+              const c0 = input.charCodeAt(offset);
+              const pair = pairIndex(c0, input.charCodeAt(offset + 1));
+              const bits = htmlLengthBits[pair];
+              if ((bits & 0x80_00) !== 0 && offset + 32 <= inputLength) {
+                  const packed = findLongClassMatch(input, offset, this.decodeMode);
+                  if (packed >= 0) {
+                      const length = packed & 63;
+                      this.consumed = length + 1;
+                      this.emitSlot(packed >> 6);
+                      if (input.charCodeAt(offset + length - 1) !== CHAR_SEMI) {
+                          this.errors?.missingSemicolonAfterCharacterReference();
+                      }
+                      return this.consumed;
+                  }
+                  // The window decides every exact or legacy candidate.
+                  return 0;
+              }
+              let probed = bits & 0x7f_ff;
+              while (probed !== 0) {
+                  /*
+                   * Shortest candidate first: only one length can carry the
+                   * terminating ';' (a ';' inside a longer candidate fails its
+                   * middle comparison), so the order is correctness-neutral,
+                   * and the most common entities are short. Legacy matches are
+                   * resolved after the loop, preserving exact-match
+                   * precedence.
+                   */
+                  const low = probed & -probed;
+                  probed ^= low;
+                  const length = 33 - Math.clz32(low);
+                  if (input.charCodeAt(offset + length) === CHAR_SEMI) {
+                      const slot = findSlotHtml(input, offset, length);
+                      if (slot >= 0) {
+                          this.consumed = length + 2;
+                          this.emitSlot(slot);
+                          return this.consumed;
+                      }
+                  }
+              }
+              if ((bits & 0x80_00) === 0) {
+                  if (this.decodeMode !== DecodingMode.Strict) {
+                      const packed = findLegacySlot(input, offset, 31);
+                      if (packed >= 0) {
+                          const matchLength = packed & 7;
+                          const next = input.charCodeAt(offset + matchLength);
+                          if (this.decodeMode === DecodingMode.Attribute &&
+                              isEntityInAttributeInvalidEnd(next)) {
+                              return 0;
+                          }
+                          this.consumed = matchLength + 1;
+                          this.emitSlot(packed >> 3);
+                          this.errors?.missingSemicolonAfterCharacterReference();
+                          return this.consumed;
+                      }
+                  }
+                  // No long names in this class: the probes were exhaustive.
+                  return 0;
+              }
           }
-          else if (midValue > char) {
-              hi = mid - 1;
+          // A 32nd name character rules out every exact HTML match.
+          let index = offset;
+          let { runLength } = this;
+          let terminator = -1;
+          const scanEnd = Math.min(inputLength, offset + 32 - runLength);
+          while (index < scanEnd) {
+              const char = input.charCodeAt(index);
+              if (!isAlphaNumeric(char)) {
+                  terminator = char;
+                  break;
+              }
+              this.nameBuffer[runLength++] = char;
+              index++;
           }
-          else {
-              return decodeTree[mid + branchCount];
+          if (terminator < 0 && runLength < 32) {
+              this.runLength = runLength;
+              return -1;
           }
+          if (terminator === CHAR_SEMI && (runLength - 2) >>> 0 <= 29) {
+              const slot = findBufferedHtmlSlot(this.nameBuffer, runLength);
+              if (slot >= 0) {
+                  this.consumed = runLength + 2;
+                  this.emitSlot(slot);
+                  return this.consumed;
+              }
+          }
+          if (this.decodeMode !== DecodingMode.Strict && runLength >= 2) {
+              const packed = findBufferedLegacySlot(this.nameBuffer, runLength);
+              if (packed >= 0) {
+                  const length = packed & 7;
+                  const next = length < runLength ? this.nameBuffer[length] : terminator;
+                  if (this.decodeMode === DecodingMode.Attribute &&
+                      isEntityInAttributeInvalidEnd(next))
+                      return 0;
+                  this.consumed = length + 1;
+                  this.emitSlot(packed >> 3);
+                  this.errors?.missingSemicolonAfterCharacterReference();
+                  return this.consumed;
+              }
+          }
+          return 0;
+      }
+      endNamedEntity() {
+          // Emit the longest legacy match in the buffered run, if any.
+          if (this.decodeMode === DecodingMode.Strict || this.runLength < 2) {
+              return 0;
+          }
+          const packed = findBufferedLegacySlot(this.nameBuffer, this.runLength);
+          if (packed < 0)
+              return 0;
+          if (this.decodeMode === DecodingMode.Attribute &&
+              (packed & 7) < this.runLength) {
+              return 0;
+          }
+          this.consumed = (packed & 7) + 1;
+          this.emitSlot(packed >> 3);
+          this.errors?.missingSemicolonAfterCharacterReference();
+          return this.consumed;
+      }
+  }
+  /**
+   * Find a buffered name. Its characters were already checked as ASCII
+   * alphanumerics while scanning, so no outer-character range check is needed.
+   * @param buffer Reusable character buffer.
+   * @param length Number of characters to match.
+   */
+  function findBufferedHtmlSlot(buffer, length) {
+      const key = (buffer[0] << 25) |
+          (buffer[1] << 18) |
+          (buffer[length - 2] << 11) |
+          (CHAR_REMAP[buffer[length - 1]] << 5) |
+          length;
+      let slot = 2 * (((Math.imul(key, BUCKET_HASH_1) >>> 16) * htmlBuckets) >>> 16);
+      for (let attempt = 0;; attempt++) {
+          if (htmlKeys[slot] === key &&
+              (length <= 4 || isBufferedMiddle(slot, buffer, length)))
+              return slot;
+          if (htmlKeys[slot + 1] === key &&
+              (length <= 4 || isBufferedMiddle(slot + 1, buffer, length)))
+              return slot + 1;
+          if (attempt === 1)
+              return -1;
+          slot =
+              2 * (((Math.imul(key, BUCKET_HASH_2) >>> 16) * htmlBuckets) >>> 16);
+      }
+  }
+  function isBufferedMiddle(slot, buffer, length) {
+      let wordIndex = htmlSlotMidOff[slot];
+      let index = 2;
+      const end = length - 2;
+      while (index + 1 < end) {
+          if ((buffer[index] | (buffer[index + 1] << 16)) !==
+              htmlMiddles[wordIndex++])
+              return false;
+          index += 2;
+      }
+      return (index === end || buffer[index] === (htmlMiddles[wordIndex] & 0xff_ff));
+  }
+  /**
+   * Find the longest legacy name in the buffer, packed as `(slot << 3) | length`.
+   * @param buffer Reusable character buffer.
+   * @param length Number of buffered characters.
+   */
+  function findBufferedLegacySlot(buffer, length) {
+      let legacy = (htmlLengthBits[pairIndex(buffer[0], buffer[1])] >>> 16) & 31;
+      while (legacy !== 0) {
+          const top = 31 - Math.clz32(legacy);
+          legacy ^= 1 << top;
+          if (top + 2 > length)
+              continue;
+          const slot = findBufferedHtmlSlot(buffer, top + 2);
+          if (slot >= 0 && (htmlSlotValue[slot] & 2) !== 0)
+              return (slot << 3) | (top + 2);
       }
       return -1;
   }
@@ -3752,7 +4124,7 @@
       return cp + 32;
   }
   function isWhitespace(cp) {
-      return cp === CODE_POINTS.SPACE || cp === CODE_POINTS.LINE_FEED || cp === CODE_POINTS.TABULATION || cp === CODE_POINTS.FORM_FEED;
+      return (cp === CODE_POINTS.SPACE || cp === CODE_POINTS.LINE_FEED || cp === CODE_POINTS.TABULATION || cp === CODE_POINTS.FORM_FEED || cp === CODE_POINTS.CARRIAGE_RETURN);
   }
   function isScriptDataDoubleEscapeSequenceEnd(cp) {
       return isWhitespace(cp) || cp === CODE_POINTS.SOLIDUS || cp === CODE_POINTS.GREATER_THAN_SIGN;
@@ -3799,13 +4171,27 @@
           this.currentCharacterToken = null;
           this.currentToken = null;
           this.currentAttr = { name: '', value: '' };
+          this.currentAttrLocation = null;
+          /**
+           * `[start, end)` of `preprocessor.html` still to be appended to the attribute value, comment data or character
+           * token being built (`_flushRun`): input that is used as is is appended as one slice, not a code point at a time.
+           */
+          this.runStart = 0;
+          this.runEnd = 0;
           this.preprocessor = new Preprocessor(handler);
           this.currentLocation = this.getCurrentLocation(-1);
-          this.entityDecoder = new EntityDecoder(htmlDecodeTree, (cp, consumed) => {
+          this.entityDecoder = new HtmlEntityDecoder((cp, consumed) => {
               // Note: Set `pos` _before_ flushing, as flushing might drop
               // the current chunk and invalidate `entityStartPos`.
               this.preprocessor.pos = this.entityStartPos + consumed - 1;
-              this._flushCodePointConsumedAsCharacterReference(cp);
+              if (!this._isCharacterReferenceInAttribute()) {
+                  this._ensureCharacterToken(isWhitespace(cp)
+                      ? TokenType.WHITESPACE_CHARACTER
+                      : cp === CODE_POINTS.NULL
+                          ? TokenType.NULL_CHARACTER
+                          : TokenType.CHARACTER);
+              }
+              this._extendRunWith(String.fromCodePoint(cp), 0);
           }, handler.onParseError
               ? {
                   missingSemicolonAfterCharacterReference: () => {
@@ -3855,6 +4241,99 @@
           this.inLoop = false;
       }
       //API
+      /** Emit buffered character tokens without completing the current token or emitting EOF. */
+      flushCharacters() {
+          var _a;
+          if (this.inLoop) {
+              throw new Error('Cannot flush characters from a tokenizer callback');
+          }
+          const location = (_a = this.currentCharacterToken) === null || _a === void 0 ? void 0 : _a.location;
+          let nextLocation = null;
+          if (location) {
+              nextLocation = this.getCharacterTokenEndLocation(location);
+              this.currentLocation = nextLocation;
+          }
+          this.inLoop = true;
+          try {
+              this._emitCurrentCharacterToken(nextLocation);
+          }
+          finally {
+              this.inLoop = false;
+          }
+          this._runParsingLoop();
+      }
+      getCharacterTokenEndLocation(location) {
+          const endOffset = this.getCharacterTokenEndOffset();
+          const html = this.preprocessor.html.slice(location.startOffset - this.preprocessor.droppedBufferSize, endOffset - this.preprocessor.droppedBufferSize);
+          let line = location.startLine;
+          let lastLineBreak = -1;
+          for (let i = html.indexOf('\n'); i !== -1; i = html.indexOf('\n', i + 1)) {
+              line++;
+              lastLineBreak = i;
+          }
+          for (let i = html.indexOf('\r'); i !== -1; i = html.indexOf('\r', i + 1)) {
+              // Count CRLF as one line break by counting its LF only.
+              if (html.charCodeAt(i + 1) !== CODE_POINTS.LINE_FEED) {
+                  line++;
+                  lastLineBreak = Math.max(lastLineBreak, i);
+              }
+          }
+          return {
+              startLine: line,
+              startCol: lastLineBreak === -1 ? location.startCol + html.length : html.length - lastLineBreak,
+              startOffset: endOffset,
+              endLine: -1,
+              endCol: -1,
+              endOffset: -1,
+          };
+      }
+      // Return the input boundary before any unfinished token or buffered delimiter.
+      getCharacterTokenEndOffset() {
+          var _a;
+          const end = this.preprocessor.droppedBufferSize + this.preprocessor.pos + 1;
+          const tokenLocation = (_a = this.currentToken) === null || _a === void 0 ? void 0 : _a.location;
+          switch (this.state) {
+              case State.TAG_OPEN:
+              case State.RCDATA_LESS_THAN_SIGN:
+              case State.RAWTEXT_LESS_THAN_SIGN:
+              case State.SCRIPT_DATA_LESS_THAN_SIGN:
+              case State.SCRIPT_DATA_ESCAPED_LESS_THAN_SIGN:
+              case State.CDATA_SECTION_BRACKET: {
+                  return end - 1;
+              }
+              case State.END_TAG_OPEN:
+              case State.MARKUP_DECLARATION_OPEN:
+              case State.RCDATA_END_TAG_OPEN:
+              case State.RCDATA_END_TAG_NAME:
+              case State.RAWTEXT_END_TAG_OPEN:
+              case State.RAWTEXT_END_TAG_NAME:
+              case State.SCRIPT_DATA_END_TAG_OPEN:
+              case State.SCRIPT_DATA_END_TAG_NAME:
+              case State.SCRIPT_DATA_ESCAPED_END_TAG_OPEN:
+              case State.SCRIPT_DATA_ESCAPED_END_TAG_NAME:
+              case State.CDATA_SECTION_END: {
+                  return end - 2;
+              }
+              case State.CHARACTER_REFERENCE: {
+                  return this._isCharacterReferenceInAttribute() && tokenLocation
+                      ? tokenLocation.startOffset
+                      : this.preprocessor.droppedBufferSize + this.entityStartPos;
+              }
+              case State.DOCTYPE:
+              case State.BEFORE_DOCTYPE_NAME: {
+                  return this.currentLocation.startOffset;
+              }
+              default: {
+                  if (tokenLocation &&
+                      (this.state === State.TAG_NAME ||
+                          (this.state >= State.BEFORE_ATTRIBUTE_NAME && this.state <= State.BOGUS_COMMENT) ||
+                          (this.state >= State.COMMENT_START && this.state <= State.BOGUS_DOCTYPE))) {
+                      return tokenLocation.startOffset;
+                  }
+                  return end;
+              }
+          }
+      }
       pause() {
           this.paused = true;
       }
@@ -3915,6 +4394,7 @@
       }
       //Token creation
       _createStartTagToken() {
+          this._flushRun('');
           this.currentToken = {
               type: TokenType.START_TAG,
               tagName: '',
@@ -3926,6 +4406,7 @@
           };
       }
       _createEndTagToken() {
+          this._flushRun('');
           this.currentToken = {
               type: TokenType.END_TAG,
               tagName: '',
@@ -3937,6 +4418,7 @@
           };
       }
       _createCommentToken(offset) {
+          this._flushRun('');
           this.currentToken = {
               type: TokenType.COMMENT,
               data: '',
@@ -3944,6 +4426,7 @@
           };
       }
       _createDoctypeToken(initialName) {
+          this._flushRun('');
           this.currentToken = {
               type: TokenType.DOCTYPE,
               name: initialName,
@@ -3953,20 +4436,28 @@
               location: this.currentLocation,
           };
       }
-      _createCharacterToken(type, chars) {
+      _createCharacterToken(type) {
+          if (this.currentLocation) {
+              const start = this.currentLocation.startOffset - this.preprocessor.droppedBufferSize;
+              // A flushed CR already advanced the line; exclude its ignored LF from the next token's range.
+              if (this.preprocessor.html[start] === '\n' && this.preprocessor.html[start - 1] === '\r') {
+                  this.currentLocation.startOffset++;
+              }
+          }
           this.currentCharacterToken = {
               type,
-              chars,
+              chars: '',
               location: this.currentLocation,
           };
       }
       //Tag attributes
       _createAttr(attrNameFirstCh) {
+          this._flushRun('');
           this.currentAttr = {
               name: attrNameFirstCh,
               value: '',
           };
-          this.currentLocation = this.getCurrentLocation(0);
+          this.currentAttrLocation = this.getCurrentLocation(0);
       }
       _leaveAttrName() {
           var _a;
@@ -3974,9 +4465,9 @@
           const token = this.currentToken;
           if (getTokenAttr(token, this.currentAttr.name) === null) {
               token.attrs.push(this.currentAttr);
-              if (token.location && this.currentLocation) {
+              if (token.location && this.currentAttrLocation) {
                   const attrLocations = ((_a = (_b = token.location).attrs) !== null && _a !== void 0 ? _a : (_b.attrs = Object.create(null)));
-                  attrLocations[this.currentAttr.name] = this.currentLocation;
+                  attrLocations[this.currentAttr.name] = this.currentAttrLocation;
                   // Set end location
                   this._leaveAttrValue();
               }
@@ -3986,11 +4477,71 @@
           }
       }
       _leaveAttrValue() {
-          if (this.currentLocation) {
-              this.currentLocation.endLine = this.preprocessor.line;
-              this.currentLocation.endCol = this.preprocessor.col;
-              this.currentLocation.endOffset = this.preprocessor.offset;
+          if (this.currentAttrLocation) {
+              this.currentAttrLocation.endLine = this.preprocessor.line;
+              this.currentAttrLocation.endCol = this.preprocessor.col;
+              this.currentAttrLocation.endOffset = this.preprocessor.offset;
           }
+      }
+      /**
+       * Append the pending run and `text` to the attribute value, comment data or character token being built.
+       * The run is a string of its own: V8 copies a slice of fewer than 13 characters but lets a longer one share
+       * the input's buffer, which would keep that buffer alive for as long as any attribute value or text cut from
+       * it is; a concatenation is flattened into a buffer of its own when it is sliced.
+       */
+      _flushRun(text) {
+          if (this.runEnd === this.runStart && text.length === 0) {
+              return;
+          }
+          const slice = this.preprocessor.html.slice(this.runStart, this.runEnd);
+          const run = (slice.length < 13 ? slice : ` ${slice}`.slice(1)) + text;
+          const token = this.currentToken;
+          this.runStart = this.runEnd;
+          if (token === null) {
+              this.currentCharacterToken.chars += run;
+          }
+          else if (token.type === TokenType.COMMENT) {
+              token.data += run;
+          }
+          else {
+              this.currentAttr.value += run;
+          }
+      }
+      /** Extend the pending run by the current input code point, read as `cp`, or flush it and start a new one. */
+      _extendRun(cp) {
+          const { preprocessor } = this;
+          //NOTE: a CR is read as LF, which is then not in the input.
+          if (cp === CODE_POINTS.LINE_FEED && preprocessor.html.charCodeAt(preprocessor.pos) !== CODE_POINTS.LINE_FEED) {
+              this._flushRun('\n');
+              this.runStart = preprocessor.pos + 1;
+          }
+          else {
+              const start = preprocessor.pos - Number(cp > 65535);
+              if (start !== this.runEnd) {
+                  this._flushRun('');
+                  this.runStart = start;
+              }
+          }
+          this.runEnd = preprocessor.pos + 1;
+      }
+      /**
+       * Extend the pending run by `text`, the input that ends `cpOffset` code points after the current one, or flush
+       * the run and append `text` where the input differs (a NUL replacement, a decoded reference, a dropped chunk).
+       */
+      _extendRunWith(text, cpOffset) {
+          const { preprocessor } = this;
+          const start = preprocessor.codePointStart + 1 + cpOffset - text.length;
+          if (start >= 0 && preprocessor.html.startsWith(text, start)) {
+              if (start !== this.runEnd) {
+                  this._flushRun('');
+                  this.runStart = start;
+              }
+          }
+          else {
+              this._flushRun(text);
+              this.runStart = start + text.length;
+          }
+          this.runEnd = start + text.length;
       }
       //Token emission
       prepareToken(ct) {
@@ -4033,6 +4584,7 @@
           this.preprocessor.dropParsedChunk();
       }
       _emitCurrentCharacterToken(nextLocation) {
+          this._flushRun('');
           if (this.currentCharacterToken) {
               //NOTE: if we have a pending character token, make it's end location equal to the
               //current token's start location.
@@ -4078,32 +4630,48 @@
       //1)TokenType.NULL_CHARACTER - \u0000-character sequences (e.g. '\u0000\u0000\u0000')
       //2)TokenType.WHITESPACE_CHARACTER - any whitespace/new-line character sequences (e.g. '\n  \r\t   \f')
       //3)TokenType.CHARACTER - any character sequence which don't belong to groups 1 and 2 (e.g. 'abcdef1234@@#$%^')
-      _appendCharToCurrentCharacterToken(type, ch) {
+      /** Make the current character token one of `type`, emitting the current one if it has another type. */
+      _ensureCharacterToken(type) {
           if (this.currentCharacterToken) {
               if (this.currentCharacterToken.type === type) {
-                  this.currentCharacterToken.chars += ch;
                   return;
               }
-              else {
-                  this.currentLocation = this.getCurrentLocation(0);
-                  this._emitCurrentCharacterToken(this.currentLocation);
-                  this.preprocessor.dropParsedChunk();
-              }
+              this.currentLocation = this.getCurrentLocation(0);
+              this._emitCurrentCharacterToken(this.currentLocation);
+              this.preprocessor.dropParsedChunk();
           }
-          this._createCharacterToken(type, ch);
+          this._createCharacterToken(type);
       }
+      /** Emit the current input code point, read as `cp`. */
       _emitCodePoint(cp) {
           const type = isWhitespace(cp)
               ? TokenType.WHITESPACE_CHARACTER
               : cp === CODE_POINTS.NULL
                   ? TokenType.NULL_CHARACTER
                   : TokenType.CHARACTER;
-          this._appendCharToCurrentCharacterToken(type, String.fromCodePoint(cp));
+          const token = this.currentCharacterToken;
+          if (token === null || token.type !== type) {
+              this._ensureCharacterToken(type);
+          }
+          this._extendRun(cp);
       }
       //NOTE: used when we emit characters explicitly.
       //This is always for non-whitespace and non-null characters, which allows us to avoid additional checks.
-      _emitChars(ch) {
-          this._appendCharToCurrentCharacterToken(TokenType.CHARACTER, ch);
+      // Negative `cpOffset` values locate text emitted before the current input character.
+      _emitChars(ch, cpOffset = 0) {
+          if (this.options.sourceCodeLocationInfo &&
+              cpOffset !== 0 &&
+              this.currentCharacterToken &&
+              this.currentCharacterToken.type !== TokenType.CHARACTER) {
+              this.currentLocation = this.getCurrentLocation(ch.length - 1 - cpOffset);
+              this._emitCurrentCharacterToken(this.currentLocation);
+              // Keep source characters that precede the lookahead available for a subsequent flush.
+              this._createCharacterToken(TokenType.CHARACTER);
+          }
+          else {
+              this._ensureCharacterToken(TokenType.CHARACTER);
+          }
+          this._extendRunWith(ch, cpOffset);
       }
       // Character reference helpers
       _startCharacterReference() {
@@ -4119,7 +4687,7 @@
       }
       _flushCodePointConsumedAsCharacterReference(cp) {
           if (this._isCharacterReferenceInAttribute()) {
-              this.currentAttr.value += String.fromCodePoint(cp);
+              this._extendRun(cp);
           }
           else {
               this._emitCodePoint(cp);
@@ -4567,13 +5135,13 @@
                   }
                   case CODE_POINTS.EOF: {
                       this._err(ERR.eofBeforeTagName);
-                      this._emitChars('<');
+                      this._emitChars('<', -1);
                       this._emitEOFToken();
                       break;
                   }
                   default: {
                       this._err(ERR.invalidFirstCharacterOfTagName);
-                      this._emitChars('<');
+                      this._emitChars('<', -1);
                       this.state = State.DATA;
                       this._stateData(cp);
                   }
@@ -4596,7 +5164,7 @@
                   }
                   case CODE_POINTS.EOF: {
                       this._err(ERR.eofBeforeTagName);
-                      this._emitChars('</');
+                      this._emitChars('</', -1);
                       this._emitEOFToken();
                       break;
                   }
@@ -4651,7 +5219,7 @@
               this.state = State.RCDATA_END_TAG_OPEN;
           }
           else {
-              this._emitChars('<');
+              this._emitChars('<', -1);
               this.state = State.RCDATA;
               this._stateRcdata(cp);
           }
@@ -4664,7 +5232,7 @@
               this._stateRcdataEndTagName(cp);
           }
           else {
-              this._emitChars('</');
+              this._emitChars('</', -1);
               this.state = State.RCDATA;
               this._stateRcdata(cp);
           }
@@ -4698,6 +5266,8 @@
                   return false;
               }
               default: {
+                  //NOTE: the end tag is text after all, so no token is being built.
+                  this.currentToken = null;
                   return !this._ensureHibernation();
               }
           }
@@ -4706,7 +5276,7 @@
       //------------------------------------------------------------------
       _stateRcdataEndTagName(cp) {
           if (this.handleSpecialEndTag(cp)) {
-              this._emitChars('</');
+              this._emitChars('</', -1);
               this.state = State.RCDATA;
               this._stateRcdata(cp);
           }
@@ -4718,7 +5288,7 @@
               this.state = State.RAWTEXT_END_TAG_OPEN;
           }
           else {
-              this._emitChars('<');
+              this._emitChars('<', -1);
               this.state = State.RAWTEXT;
               this._stateRawtext(cp);
           }
@@ -4731,7 +5301,7 @@
               this._stateRawtextEndTagName(cp);
           }
           else {
-              this._emitChars('</');
+              this._emitChars('</', -1);
               this.state = State.RAWTEXT;
               this._stateRawtext(cp);
           }
@@ -4740,7 +5310,7 @@
       //------------------------------------------------------------------
       _stateRawtextEndTagName(cp) {
           if (this.handleSpecialEndTag(cp)) {
-              this._emitChars('</');
+              this._emitChars('</', -1);
               this.state = State.RAWTEXT;
               this._stateRawtext(cp);
           }
@@ -4759,7 +5329,7 @@
                   break;
               }
               default: {
-                  this._emitChars('<');
+                  this._emitChars('<', -1);
                   this.state = State.SCRIPT_DATA;
                   this._stateScriptData(cp);
               }
@@ -4773,7 +5343,7 @@
               this._stateScriptDataEndTagName(cp);
           }
           else {
-              this._emitChars('</');
+              this._emitChars('</', -1);
               this.state = State.SCRIPT_DATA;
               this._stateScriptData(cp);
           }
@@ -4782,7 +5352,7 @@
       //------------------------------------------------------------------
       _stateScriptDataEndTagName(cp) {
           if (this.handleSpecialEndTag(cp)) {
-              this._emitChars('</');
+              this._emitChars('</', -1);
               this.state = State.SCRIPT_DATA;
               this._stateScriptData(cp);
           }
@@ -4910,12 +5480,12 @@
               this.state = State.SCRIPT_DATA_ESCAPED_END_TAG_OPEN;
           }
           else if (isAsciiLetter(cp)) {
-              this._emitChars('<');
+              this._emitChars('<', -1);
               this.state = State.SCRIPT_DATA_DOUBLE_ESCAPE_START;
               this._stateScriptDataDoubleEscapeStart(cp);
           }
           else {
-              this._emitChars('<');
+              this._emitChars('<', -1);
               this.state = State.SCRIPT_DATA_ESCAPED;
               this._stateScriptDataEscaped(cp);
           }
@@ -4928,7 +5498,7 @@
               this._stateScriptDataEscapedEndTagName(cp);
           }
           else {
-              this._emitChars('</');
+              this._emitChars('</', -1);
               this.state = State.SCRIPT_DATA_ESCAPED;
               this._stateScriptDataEscaped(cp);
           }
@@ -4937,7 +5507,7 @@
       //------------------------------------------------------------------
       _stateScriptDataEscapedEndTagName(cp) {
           if (this.handleSpecialEndTag(cp)) {
-              this._emitChars('</');
+              this._emitChars('</', -1);
               this.state = State.SCRIPT_DATA_ESCAPED;
               this._stateScriptDataEscaped(cp);
           }
@@ -5231,7 +5801,7 @@
               }
               case CODE_POINTS.NULL: {
                   this._err(ERR.unexpectedNullCharacter);
-                  this.currentAttr.value += REPLACEMENT_CHARACTER;
+                  this._extendRunWith(REPLACEMENT_CHARACTER, 0);
                   break;
               }
               case CODE_POINTS.EOF: {
@@ -5240,7 +5810,7 @@
                   break;
               }
               default: {
-                  this.currentAttr.value += String.fromCodePoint(cp);
+                  this._extendRun(cp);
               }
           }
       }
@@ -5258,7 +5828,7 @@
               }
               case CODE_POINTS.NULL: {
                   this._err(ERR.unexpectedNullCharacter);
-                  this.currentAttr.value += REPLACEMENT_CHARACTER;
+                  this._extendRunWith(REPLACEMENT_CHARACTER, 0);
                   break;
               }
               case CODE_POINTS.EOF: {
@@ -5267,7 +5837,7 @@
                   break;
               }
               default: {
-                  this.currentAttr.value += String.fromCodePoint(cp);
+                  this._extendRun(cp);
               }
           }
       }
@@ -5295,7 +5865,7 @@
               }
               case CODE_POINTS.NULL: {
                   this._err(ERR.unexpectedNullCharacter);
-                  this.currentAttr.value += REPLACEMENT_CHARACTER;
+                  this._extendRunWith(REPLACEMENT_CHARACTER, 0);
                   break;
               }
               case CODE_POINTS.QUOTATION_MARK:
@@ -5304,7 +5874,7 @@
               case CODE_POINTS.EQUALS_SIGN:
               case CODE_POINTS.GRAVE_ACCENT: {
                   this._err(ERR.unexpectedCharacterInUnquotedAttributeValue);
-                  this.currentAttr.value += String.fromCodePoint(cp);
+                  this._extendRun(cp);
                   break;
               }
               case CODE_POINTS.EOF: {
@@ -5313,7 +5883,7 @@
                   break;
               }
               default: {
-                  this.currentAttr.value += String.fromCodePoint(cp);
+                  this._extendRun(cp);
               }
           }
       }
@@ -5347,6 +5917,7 @@
               }
               default: {
                   this._err(ERR.missingWhitespaceBetweenAttributes);
+                  this._leaveAttrValue();
                   this.state = State.BEFORE_ATTRIBUTE_NAME;
                   this._stateBeforeAttributeName(cp);
               }
@@ -5392,11 +5963,11 @@
               }
               case CODE_POINTS.NULL: {
                   this._err(ERR.unexpectedNullCharacter);
-                  token.data += REPLACEMENT_CHARACTER;
+                  this._extendRunWith(REPLACEMENT_CHARACTER, 0);
                   break;
               }
               default: {
-                  token.data += String.fromCodePoint(cp);
+                  this._extendRun(cp);
               }
           }
       }
@@ -5475,7 +6046,7 @@
                   break;
               }
               default: {
-                  token.data += '-';
+                  this._extendRunWith('-', -1);
                   this.state = State.COMMENT;
                   this._stateComment(cp);
               }
@@ -5491,13 +6062,13 @@
                   break;
               }
               case CODE_POINTS.LESS_THAN_SIGN: {
-                  token.data += '<';
+                  this._extendRunWith('<', 0);
                   this.state = State.COMMENT_LESS_THAN_SIGN;
                   break;
               }
               case CODE_POINTS.NULL: {
                   this._err(ERR.unexpectedNullCharacter);
-                  token.data += REPLACEMENT_CHARACTER;
+                  this._extendRunWith(REPLACEMENT_CHARACTER, 0);
                   break;
               }
               case CODE_POINTS.EOF: {
@@ -5507,22 +6078,21 @@
                   break;
               }
               default: {
-                  token.data += String.fromCodePoint(cp);
+                  this._extendRun(cp);
               }
           }
       }
       // Comment less-than sign state
       //------------------------------------------------------------------
       _stateCommentLessThanSign(cp) {
-          const token = this.currentToken;
           switch (cp) {
               case CODE_POINTS.EXCLAMATION_MARK: {
-                  token.data += '!';
+                  this._extendRunWith('!', 0);
                   this.state = State.COMMENT_LESS_THAN_SIGN_BANG;
                   break;
               }
               case CODE_POINTS.LESS_THAN_SIGN: {
-                  token.data += '<';
+                  this._extendRunWith('<', 0);
                   break;
               }
               default: {
@@ -5578,7 +6148,7 @@
                   break;
               }
               default: {
-                  token.data += '-';
+                  this._extendRunWith('-', -1);
                   this.state = State.COMMENT;
                   this._stateComment(cp);
               }
@@ -5599,7 +6169,7 @@
                   break;
               }
               case CODE_POINTS.HYPHEN_MINUS: {
-                  token.data += '-';
+                  this._extendRunWith('-', -2);
                   break;
               }
               case CODE_POINTS.EOF: {
@@ -5609,7 +6179,7 @@
                   break;
               }
               default: {
-                  token.data += '--';
+                  this._extendRunWith('--', -1);
                   this.state = State.COMMENT;
                   this._stateComment(cp);
               }
@@ -5621,7 +6191,7 @@
           const token = this.currentToken;
           switch (cp) {
               case CODE_POINTS.HYPHEN_MINUS: {
-                  token.data += '--!';
+                  this._extendRunWith('--!', -1);
                   this.state = State.COMMENT_END_DASH;
                   break;
               }
@@ -5638,7 +6208,7 @@
                   break;
               }
               default: {
-                  token.data += '--!';
+                  this._extendRunWith('--!', -1);
                   this.state = State.COMMENT;
                   this._stateComment(cp);
               }
@@ -6274,7 +6844,7 @@
               this.state = State.CDATA_SECTION_END;
           }
           else {
-              this._emitChars(']');
+              this._emitChars(']', -1);
               this.state = State.CDATA_SECTION;
               this._stateCdataSection(cp);
           }
@@ -6288,11 +6858,11 @@
                   break;
               }
               case CODE_POINTS.RIGHT_SQUARE_BRACKET: {
-                  this._emitChars(']');
+                  this._emitChars(']', -2);
                   break;
               }
               default: {
-                  this._emitChars(']]');
+                  this._emitChars(']]', -1);
                   this.state = State.CDATA_SECTION;
                   this._stateCdataSection(cp);
               }
@@ -7561,7 +8131,7 @@
           }
       }
       /** @protected */
-      _attachElementToTree(element, location) {
+      _attachElementToTree(element, location, insertionLocation) {
           if (this.options.sourceCodeLocationInfo) {
               const loc = location && {
                   ...location,
@@ -7569,13 +8139,34 @@
               };
               this.treeAdapter.setNodeSourceCodeLocation(element, loc);
           }
-          if (this._shouldFosterParentOnInsertion()) {
-              this._fosterParentElement(element);
+          if (insertionLocation.beforeElement) {
+              this.treeAdapter.insertBefore(insertionLocation.parent, element, insertionLocation.beforeElement);
           }
           else {
-              const parent = this.openElements.currentTmplContentOrNode;
-              this.treeAdapter.appendChild(parent !== null && parent !== void 0 ? parent : this.document, element);
+              this.treeAdapter.appendChild(insertionLocation.parent, element);
           }
+      }
+      /** @protected */
+      _getInsertionLocation() {
+          var _a;
+          if (this._shouldFosterParentOnInsertion()) {
+              return this._findFosterParentingLocation();
+          }
+          return {
+              parent: (_a = this.openElements.currentTmplContentOrNode) !== null && _a !== void 0 ? _a : this.document,
+              beforeElement: null,
+          };
+      }
+      /** @protected */
+      _createElement(tagName, namespaceURI, attrs, intendedParent) {
+          var _a, _b;
+          const element = this.treeAdapter.createElement(tagName, namespaceURI, attrs);
+          (_b = (_a = this.treeAdapter).onElementCreated) === null || _b === void 0 ? void 0 : _b.call(_a, element, {
+              intendedParent,
+              formElement: this.formElement,
+              isInTemplate: this.openElements.tmplCount > 0,
+          });
+          return element;
       }
       /**
        * For self-closing tags. Add an element to the tree, but skip adding it
@@ -7583,37 +8174,41 @@
        */
       /** @protected */
       _appendElement(token, namespaceURI) {
-          const element = this.treeAdapter.createElement(token.tagName, namespaceURI, token.attrs);
-          this._attachElementToTree(element, token.location);
+          const insertionLocation = this._getInsertionLocation();
+          const element = this._createElement(token.tagName, namespaceURI, token.attrs, insertionLocation.parent);
+          this._attachElementToTree(element, token.location, insertionLocation);
       }
       /** @protected */
       _insertElement(token, namespaceURI) {
-          const element = this.treeAdapter.createElement(token.tagName, namespaceURI, token.attrs);
-          this._attachElementToTree(element, token.location);
+          const insertionLocation = this._getInsertionLocation();
+          const element = this._createElement(token.tagName, namespaceURI, token.attrs, insertionLocation.parent);
+          this._attachElementToTree(element, token.location, insertionLocation);
           this.openElements.push(element, token.tagID);
       }
       /** @protected */
       _insertFakeElement(tagName, tagID) {
-          const element = this.treeAdapter.createElement(tagName, NS.HTML, []);
-          this._attachElementToTree(element, null);
+          const insertionLocation = this._getInsertionLocation();
+          const element = this._createElement(tagName, NS.HTML, [], insertionLocation.parent);
+          this._attachElementToTree(element, null, insertionLocation);
           this.openElements.push(element, tagID);
       }
       /** @protected */
       _insertTemplate(token) {
-          const tmpl = this.treeAdapter.createElement(token.tagName, NS.HTML, token.attrs);
+          const insertionLocation = this._getInsertionLocation();
+          const tmpl = this._createElement(token.tagName, NS.HTML, token.attrs, insertionLocation.parent);
           const content = this.treeAdapter.createDocumentFragment();
           this.treeAdapter.setTemplateContent(tmpl, content);
-          this._attachElementToTree(tmpl, token.location);
+          this._attachElementToTree(tmpl, token.location, insertionLocation);
           this.openElements.push(tmpl, token.tagID);
           if (this.options.sourceCodeLocationInfo)
               this.treeAdapter.setNodeSourceCodeLocation(content, null);
       }
       /** @protected */
       _insertFakeRootElement() {
-          const element = this.treeAdapter.createElement(TAG_NAMES.HTML, NS.HTML, []);
+          const element = this._createElement(TAG_NAMES.HTML, NS.HTML, [], this.document);
           if (this.options.sourceCodeLocationInfo)
               this.treeAdapter.setNodeSourceCodeLocation(element, null);
-          this.treeAdapter.appendChild(this.openElements.current, element);
+          this.treeAdapter.appendChild(this.document, element);
           this.openElements.push(element, TAG_ID.HTML);
       }
       /** @protected */
@@ -8496,6 +9091,7 @@
   function aaInnerLoop(p, furthestBlock, formattingElement) {
       let lastElement = furthestBlock;
       let nextElement = p.openElements.getCommonAncestor(furthestBlock);
+      const intendedParent = p.openElements.getCommonAncestor(formattingElement);
       for (let i = 0, element = nextElement; element !== formattingElement; i++, element = nextElement) {
           //NOTE: store the next element for the next loop iteration (it may be deleted from the stack by step 9.5)
           nextElement = p.openElements.getCommonAncestor(element);
@@ -8509,7 +9105,7 @@
               p.openElements.remove(element);
           }
           else {
-              element = aaRecreateElementFromEntry(p, elementEntry);
+              element = aaRecreateElementFromEntry(p, elementEntry, intendedParent);
               if (lastElement === furthestBlock) {
                   p.activeFormattingElements.bookmark = elementEntry;
               }
@@ -8521,9 +9117,9 @@
       return lastElement;
   }
   //Step 13.7 of the algorithm
-  function aaRecreateElementFromEntry(p, elementEntry) {
+  function aaRecreateElementFromEntry(p, elementEntry, intendedParent) {
       const ns = p.treeAdapter.getNamespaceURI(elementEntry.element);
-      const newElement = p.treeAdapter.createElement(elementEntry.token.tagName, ns, elementEntry.token.attrs);
+      const newElement = p._createElement(elementEntry.token.tagName, ns, elementEntry.token.attrs, intendedParent);
       p.openElements.replace(elementEntry.element, newElement);
       elementEntry.element = newElement;
       return newElement;
@@ -8547,7 +9143,7 @@
   function aaReplaceFormattingElement(p, furthestBlock, formattingElementEntry) {
       const ns = p.treeAdapter.getNamespaceURI(formattingElementEntry.element);
       const { token } = formattingElementEntry;
-      const newElement = p.treeAdapter.createElement(token.tagName, ns, token.attrs);
+      const newElement = p._createElement(token.tagName, ns, token.attrs, furthestBlock);
       p._adoptNodes(furthestBlock, newElement);
       p.treeAdapter.appendChild(furthestBlock, newElement);
       p.activeFormattingElements.insertElementAfterBookmark(newElement, token);
@@ -9505,7 +10101,10 @@
           const element = p.openElements.items[i];
           const elementId = p.openElements.tagIDs[i];
           // Compare the tag name here, as the tag might not be a known tag with an ID.
-          if (tid === elementId && (tid !== TAG_ID.UNKNOWN || p.treeAdapter.getTagName(element) === tn)) {
+          // Only HTML elements match; a foreign element falls through to the special-element check.
+          if (tid === elementId &&
+              p.treeAdapter.getNamespaceURI(element) === NS.HTML &&
+              (tid !== TAG_ID.UNKNOWN || p.treeAdapter.getTagName(element) === tn)) {
               p.openElements.generateImpliedEndTagsWithExclusion(tid);
               if (p.openElements.stackTop >= i)
                   p.openElements.shortenToLength(i);
@@ -12489,7 +13088,7 @@
   const base = 'https://html.spec.whatwg.org/multipage/parsing.html#parse-error-';
 
   const dashToCamelRe = /-[a-z]/g;
-  const formatCRe = /%c(?:([-+])(\d+))?/g;
+  const formatCRe = /%c(?:([+-])(\d+))?/g;
   const formatXRe = /%x/g;
 
   const fatalities = {2: true, 1: false, 0: null};
@@ -12509,7 +13108,7 @@
    */
   function fromHtml(value, options) {
     const settings = options || emptyOptions$3;
-    const onerror = settings.onerror;
+    const {onerror} = settings;
     const file = value instanceof VFile ? value : new VFile(value);
     const parseFunction = settings.fragment ? parseFragment : parse;
     const document = String(file);
@@ -12538,10 +13137,10 @@
      *   Nothing.
      */
     function internalOnerror(error) {
-      const code = error.code;
+      const {code} = error;
       const name = camelcase(code);
       const setting = settings[name];
-      const config = setting === null || setting === undefined ? true : setting;
+      const config = setting ?? true;
       const level = typeof config === 'number' ? config : config ? 1 : 0;
 
       if (level) {
@@ -12599,8 +13198,7 @@
          *   Formatted.
          */
         function formatC(_, $1, $2) {
-          const offset =
-            ($2 ? Number.parseInt($2, 10) : 0) * ($1 === '-' ? -1 : 1);
+          const offset = ($2 ? Number($2) : 0) * ($1 === '-' ? -1 : 1);
           const char = document.charAt(error.startOffset + offset);
           return visualizeCharacter(char)
         }
@@ -12619,6 +13217,8 @@
   }
 
   /**
+   * Turn an error code from dash case into camelcase.
+   *
    * @param {string} value
    *   Error code in dash case.
    * @returns {ErrorCode}
@@ -12630,6 +13230,8 @@
   }
 
   /**
+   * Turn a dash and a letter into an uppercase letter.
+   *
    * @param {string} $0
    *   Match.
    * @returns {string}
@@ -12640,6 +13242,8 @@
   }
 
   /**
+   * Show a character in a message.
+   *
    * @param {string} char
    *   Character.
    * @returns {string}
@@ -12650,6 +13254,8 @@
   }
 
   /**
+   * Show a character code in a message.
+   *
    * @param {number} charCode
    *   Character code.
    * @returns {string}
@@ -13508,7 +14114,7 @@
    * @param {Comment} node
    *   Node to handle.
    * @param {number | undefined} _1
-   *   Index of `node` in `parent.
+   *   Index of `node` in `parent`.
    * @param {Parents | undefined} _2
    *   Parent of `node`.
    * @param {State} state
@@ -13530,7 +14136,12 @@
       : '<!--' + node.value.replace(htmlCommentRegex, encode) + '-->'
 
     /**
+     * Encode a dangerous character.
+     *
      * @param {string} $0
+     *   Character.
+     * @returns {string}
+     *   Encoded character.
      */
     function encode($0) {
       return stringifyEntities(
@@ -13553,7 +14164,7 @@
    * @param {Doctype} _1
    *   Node to handle.
    * @param {number | undefined} _2
-   *   Index of `node` in `parent.
+   *   Index of `node` in `parent`.
    * @param {Parents | undefined} _3
    *   Parent of `node`.
    * @param {State} state
@@ -13648,6 +14259,9 @@
    * Factory to check siblings in a direction.
    *
    * @param {number} increment
+   *   Direction.
+   * @returns {typeof sibling}
+   *   Check.
    */
   function siblings(increment) {
     return sibling
@@ -13698,7 +14312,6 @@
    *   Parent of element.
    * @returns {boolean}
    *   Whether to omit a tag.
-   *
    */
 
   const own$1 = {}.hasOwnProperty;
@@ -13866,7 +14479,9 @@
               parent.tagName === 'ins' ||
               parent.tagName === 'map' ||
               parent.tagName === 'noscript' ||
-              parent.tagName === 'video')
+              parent.tagName === 'video' ||
+              // Custom element.
+              parent.tagName.includes('-'))
           )
   }
 
@@ -13903,8 +14518,8 @@
     const next = siblingAfter(parent, index);
     return Boolean(
       next &&
-        next.type === 'element' &&
-        (next.tagName === 'dt' || next.tagName === 'dd')
+      next.type === 'element' &&
+      (next.tagName === 'dt' || next.tagName === 'dd')
     )
   }
 
@@ -14004,8 +14619,8 @@
     const next = siblingAfter(parent, index);
     return Boolean(
       next &&
-        next.type === 'element' &&
-        (next.tagName === 'tbody' || next.tagName === 'tfoot')
+      next.type === 'element' &&
+      (next.tagName === 'tbody' || next.tagName === 'tfoot')
     )
   }
 
@@ -14183,7 +14798,6 @@
    */
   function colgroup(node, index, parent) {
     const previous = siblingBefore(parent, index);
-    const head = siblingAfter(node, -1, true);
 
     // Previous colgroup was already omitted.
     if (
@@ -14195,6 +14809,8 @@
     ) {
       return false
     }
+
+    const head = siblingAfter(node, -1, true);
 
     return Boolean(head && head.type === 'element' && head.tagName === 'col')
   }
@@ -14213,7 +14829,6 @@
    */
   function tbody(node, index, parent) {
     const previous = siblingBefore(parent, index);
-    const head = siblingAfter(node, -1);
 
     // Previous table section was already omitted.
     if (
@@ -14225,6 +14840,8 @@
     ) {
       return false
     }
+
+    const head = siblingAfter(node, -1);
 
     return Boolean(head && head.type === 'element' && head.tagName === 'tr')
   }
@@ -14268,12 +14885,19 @@
   };
 
   /**
+   * SVG elements whose content is HTML.
+   *
+   * @type {ReadonlySet<string>}
+   */
+  const htmlIntegrationPoints = new Set(['desc', 'foreignObject', 'title']);
+
+  /**
    * Serialize an element node.
    *
    * @param {Element} node
    *   Node to handle.
    * @param {number | undefined} index
-   *   Index of `node` in `parent.
+   *   Index of `node` in `parent`.
    * @param {Parents | undefined} parent
    *   Parent of `node`.
    * @param {State} state
@@ -14282,7 +14906,7 @@
    *   Serialized node.
    */
   function element$1(node, index, parent, state) {
-    const schema = state.schema;
+    const {schema} = state;
     const omit = schema.space === 'svg' ? false : state.settings.omitOptionalTags;
     let selfClosing =
       schema.space === 'svg'
@@ -14290,14 +14914,18 @@
         : state.settings.voids.includes(node.tagName.toLowerCase());
     /** @type {Array<string>} */
     const parts = [];
-    /** @type {string} */
-    let last;
 
     if (schema.space === 'html' && node.tagName === 'svg') {
       state.schema = svg;
     }
 
     const attributes = serializeAttributes(state, node.properties);
+
+    // HTML integration points is HTML.
+    // See: <https://html.spec.whatwg.org/#html-integration-point>.
+    if (state.schema.space === 'svg' && htmlIntegrationPoints.has(node.tagName)) {
+      state.schema = html$2;
+    }
 
     const content = state.all(
       schema.space === 'html' && node.tagName === 'template' ? node.content : node
@@ -14320,7 +14948,7 @@
         selfClosing &&
         (schema.space === 'svg' || state.settings.closeSelfClosing)
       ) {
-        last = attributes.charAt(attributes.length - 1);
+        const last = attributes.charAt(attributes.length - 1);
         if (
           !state.settings.tightSelfClosing ||
           last === '/' ||
@@ -14345,9 +14973,14 @@
   }
 
   /**
+   * Serialize all attributes.
+   *
    * @param {State} state
+   *   Info passed around about the current state.
    * @param {Properties | null | undefined} properties
+   *   Properties.
    * @returns {string}
+   *   Serialized attributes.
    */
   function serializeAttributes(state, properties) {
     /** @type {Array<string>} */
@@ -14380,19 +15013,22 @@
   }
 
   /**
+   * Serialize an attribute.
+   *
    * @param {State} state
+   *   Info passed around about the current state.
    * @param {string} key
+   *   Property name.
    * @param {Properties[keyof Properties]} value
+   *   Property value.
    * @returns {string}
+   *   Serialized attribute.
    */
   function serializeAttribute(state, key, value) {
     const info = find(state.schema, key);
     const x =
       state.settings.allowParseErrors && state.schema.space === 'html' ? 0 : 1;
     const y = state.settings.allowDangerousCharacters ? 0 : 1;
-    let quote = state.quote;
-    /** @type {string | undefined} */
-    let result;
 
     if (info.overloadedBoolean && (value === info.attribute || value === '')) {
       value = true;
@@ -14449,6 +15085,9 @@
 
     if (state.settings.collapseEmptyAttributes && !value) return name
 
+    /** @type {string | undefined} */
+    let result;
+
     // Check unquoted value.
     if (state.settings.preferUnquoted) {
       result = stringifyEntities(
@@ -14463,6 +15102,8 @@
     // If we don’t want unquoted, or if `value` contains character references when
     // unquoted…
     if (result !== value) {
+      let {quote} = state;
+
       // If the alternative is less common than `quote`, switch.
       if (
         state.settings.quoteSmart &&
@@ -14504,7 +15145,7 @@
    * @param {Raw | Text} node
    *   Node to handle.
    * @param {number | undefined} _
-   *   Index of `node` in `parent.
+   *   Index of `node` in `parent`.
    * @param {Parents | undefined} parent
    *   Parent of `node`.
    * @param {State} state
@@ -14539,7 +15180,7 @@
    * @param {Raw} node
    *   Node to handle.
    * @param {number | undefined} index
-   *   Index of `node` in `parent.
+   *   Index of `node` in `parent`.
    * @param {Parents | undefined} parent
    *   Parent of `node`.
    * @param {State} state
@@ -14564,7 +15205,7 @@
    * @param {Root} node
    *   Node to handle.
    * @param {number | undefined} _1
-   *   Index of `node` in `parent.
+   *   Index of `node` in `parent`.
    * @param {Parents | undefined} _2
    *   Parent of `node`.
    * @param {State} state
@@ -14607,7 +15248,7 @@
    * Fail when a node with an unknown type is found in the tree.
    *
    * @param {unknown} node_
-   *  Unknown node.
+   *   Unknown node.
    * @returns {never}
    *   Never.
    */
@@ -14646,11 +15287,12 @@
   function toHtml(tree, options) {
     const options_ = emptyOptions$2;
     const quote = options_.quote || '"';
-    const alternative = quote === '"' ? "'" : '"';
 
     if (quote !== '"' && quote !== "'") {
       throw new Error('Invalid quote `' + quote + '`, expected `\'` or `"`')
     }
+
+    const alternative = quote === '"' ? "'" : '"';
 
     /** @type {State} */
     const state = {
@@ -14696,7 +15338,7 @@
    * @param {Nodes} node
    *   Node to handle.
    * @param {number | undefined} index
-   *   Index of `node` in `parent.
+   *   Index of `node` in `parent`.
    * @param {Parents | undefined} parent
    *   Parent of `node`.
    * @returns {string}
@@ -14714,6 +15356,7 @@
    * @param {Parents | undefined} parent
    *   Parent whose children to serialize.
    * @returns {string}
+   *   Serialized children.
    */
   function all$1(parent) {
     /** @type {Array<string>} */
@@ -16141,7 +16784,7 @@
     )
   }
 
-  var version = '0.0.1';
+  var version = '0.0.5';
 
   // Structural HTML boundaries, independent of CSS or browser layout.
   const blocks = new Set([

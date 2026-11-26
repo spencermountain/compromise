@@ -1,5 +1,6 @@
 import forms, { InfForm } from './forms.js'
 import { Pres } from '../../../../../2-two/preTagger/tagSet/_lib.js'
+import { causative } from '../../../../_lib.js'
 
 const cleanUp = function (vb, res) {
   vb = vb.clone()
@@ -30,6 +31,10 @@ const cleanUp = function (vb, res) {
 
 // 'learned [to code]'
 const isInfinitive = function (vb) {
+  // 'made him [laugh]'
+  if (vb.has('^#Inf$') && vb.before(causative + ' (#Pronoun|#Det? #Adj* #Noun+)$').found) {
+    return true
+  }
   // Auxiliary tagging can remove Infinitive from 'have' or 'be'. The leading
   // 'to' still governs the whole complement, including intervening modifiers.
   return vb.growLeft('to (#Adv|#Neg)+?').has('^to (#Adv|#Neg)+? #Verb')

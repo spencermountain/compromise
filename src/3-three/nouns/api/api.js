@@ -6,6 +6,7 @@ import toJSON from './toJSON.js'
 import toPlural from './toPlural.js'
 import hasPlural from './hasPlural.js'
 import toSingular from './toSingular.js'
+import eachNoun from './_list.js'
 
 const api = function (View) {
   class Nouns extends View {
@@ -63,18 +64,15 @@ const api = function (View) {
       return res.getNth(n)
     }
 
-    toPlural(n) {
-      return this.getNth(n).map(m => {
-        return toPlural(m, parseNoun(m))
-      })
-      // return new Nouns(all.document, all.pointer)
+    // pass { agree: false } to leave the surrounding words alone
+    toPlural(n, opts) {
+      opts = typeof n === 'object' ? n : opts
+      return this.getNth(n).map(m => eachNoun(m, toPlural, opts))
     }
 
-    toSingular(n) {
-      return this.getNth(n).map(m => {
-        const res = parseNoun(m)
-        return toSingular(m, res)
-      })
+    toSingular(n, opts) {
+      opts = typeof n === 'object' ? n : opts
+      return this.getNth(n).map(m => eachNoun(m, toSingular, opts))
     }
   }
   keepClass(Nouns, 'Nouns')

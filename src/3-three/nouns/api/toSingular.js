@@ -1,20 +1,20 @@
 import { Sing } from '../../../2-two/preTagger/tagSet/_lib.js'
 import { keepTags as keep } from '../../_lib.js'
+import { matchCase, setChunk, isFixed } from './_lib.js'
+import { addArticle, needsArticle, withAdjectives } from './_article.js'
+import fixDeterminer from './_determiner.js'
+import fixVerb from './_verb.js'
 
-// give 'dane' the case of the word it replaced: 'Danes' -> 'Dane', 'DANES' -> 'DANE'
-const matchCase = function (original, str) {
-  if (original.length > 1 && original === original.toUpperCase() && original !== original.toLowerCase()) {
-    return str.toUpperCase()
-  }
-  if (/^\p{Lu}/u.test(original)) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
-  }
-  return str
-}
+// 'they are [doctors]' - this must stay plural, like its subject
+const isPredicate = '(we|they|you) (not|#Adv)* (#Cop|become|became) (#Adv|#Adj)*$'
 
-const nounToSingular = function (m, parsed) {
+const nounToSingular = function (m, parsed, opts = {}) {
   // already singular?
-  if (!parsed.isPlural) {
+  if (!parsed.isPlural || isFixed(parsed.root)) {
+    return m
+  }
+  const agree = opts.agree !== false
+  if (agree && m.before().has(isPredicate)) {
     return m
   }
   const { methods, model } = m.world
@@ -22,8 +22,23 @@ const nounToSingular = function (m, parsed) {
   // inflect the root noun
   const str = parsed.root.text('normal')
   const single = toSingular(str, model)
+  // nothing to do - 'sheep'
+  if (single === str) {
+    return m
+  }
+  // decide this before the phrase is changed
+  const bare = agree && opts.article !== false && (opts.article || needsArticle(m, parsed))
+  // 'dogs bark' -> 'dog barks' (before our own words move)
+  if (agree && opts.verb !== false) {
+    fixVerb(m, parsed, false)
+  }
+  // 'these dogs' -> 'this dog'
+  if (agree) {
+    fixDeterminer(withAdjectives(m), 'singular')
+  }
   const before = (parsed.root.docs[0] || []).map(term => term.text)
-  const after = m.replace(parsed.root, single, keep).tag(Sing, 'toPlural')
+  const after = m.replace(parsed.root, single, keep).tag(Sing, 'toSingular')
+  setChunk(after)
   // the conversion works on the normalized text, so put the original case back
   const terms = after.docs[0] || []
   if (terms.length === before.length) {
@@ -31,8 +46,10 @@ const nounToSingular = function (m, parsed) {
       term.text = matchCase(before[i], term.text)
     })
   }
-  // should we change the determiner/article?
-  // m.debug()
+  // 'sells seashells' -> 'sells a seashell'
+  if (bare) {
+    return addArticle(m)
+  }
   return m
 }
 export default nounToSingular

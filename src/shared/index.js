@@ -1,0 +1,24 @@
+// language-neutral plugins, for reuse by other builds and languages
+
+// ===/two==
+export { default as lazy } from '../2-two/lazy/plugin.js'
+// the english tagset, for use as { tags: { ...tagSet } }
+export { default as tagSet } from '../2-two/preTagger/tagSet/index.js'
+
+// ===/three==
+// persons(), places() organizations()
+export { default as topics } from '../3-three/topics/plugin.js'
+// .redact()
+export { default as redact } from '../3-three/redact/plugin.js'
+// acronyms(), parentheses()
+export { default as misc } from '../3-three/misc/plugin.js'
+// .clauses() - without the english rules in model.three.clauses
+export { default as clauses } from './clauses.js'
+
+// ==/shared==
+// tags, reads and writes numbers with a decimal-comma - '1.234,56'
+export { default as europeanNumbers } from './european-numbers/plugin.js'
+// used for testing
+export { default as checkSpec } from './spec/plugin.js'
+// efrt-packed names of people and places, keyed by tag
+export { default as properNouns } from './lexicon/_built.js'

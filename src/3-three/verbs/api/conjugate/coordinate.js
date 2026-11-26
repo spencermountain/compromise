@@ -59,10 +59,9 @@ const coordinate = function (verbs, target, convert) {
     const inside = selected.not(outside).harden()
     const others = coordinateNormal(outside, target, convert)
     if (!inside.found) return others
-    // Partial selections cannot reconstruct the whole question, but can still drop a 'not'.
+    // A partial selection cannot reconstruct the whole question, so change only those words.
     if (required.terms().not(inside.terms()).not('#Neg').found) {
-      const kept = target === 'positive' ? inside.map(convert) : inside
-      return kept.concat(others).settle()
+      return inside.map(convert).concat(others).settle()
     }
     // Converting the others can change the sentence length: 'were' -> 'have been'.
     const current = sentence.fullSentence()

@@ -2,6 +2,7 @@ import nlp from './two.js'
 import adjectives from './3-three/adjectives/plugin.js'
 import adverbs from './3-three/adverbs/plugin.js'
 import chunker from './3-three/chunker/plugin.js'
+import clauses from './3-three/clauses/plugin.js'
 import misc from './3-three/misc/plugin.js'
 import normalize from './3-three/normalize/plugin.js'
 import nouns from './3-three/nouns/plugin.js'
@@ -15,6 +16,7 @@ import coreference from './3-three/coreference/plugin.js'
 nlp.plugin(adjectives) //
 nlp.plugin(adverbs) //
 nlp.plugin(chunker) //
+nlp.plugin(clauses) //
 nlp.plugin(coreference)
 nlp.plugin(misc) //
 nlp.plugin(normalize) //

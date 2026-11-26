@@ -2,7 +2,9 @@ const isAcronym = /[ .][A-Z]\.? *$/i //asci - 'n.s.a.'
 const hasEllipse = /(?:\u2026|\.{2}) *$/ // '...'
 const hasLetter = /\p{L}/u
 const hasPeriod = /\. *$/
-const leadInit = /^[A-Z]\. $/ // "W. Kensington"
+const leadInit = /^\p{Lu}\. $/u // "W. Kensington"
+// an initial in any alphabet - 'А. С. Пушкин'
+const isInitial = /[ .]\p{Lu}\. *$/u
 
 /** does this look like a sentence? - str can be the end of it, if foundLetter is given */
 const isSentence = function (str, abbrevs, foundLetter = hasLetter.test(str)) {
@@ -11,7 +13,7 @@ const isSentence = function (str, abbrevs, foundLetter = hasLetter.test(str)) {
     return false
   }
   // check for 'F.B.I.'
-  if (isAcronym.test(str)) {
+  if (isAcronym.test(str) || isInitial.test(str)) {
     return false
   }
   // check for leading initial - "W. Kensington"

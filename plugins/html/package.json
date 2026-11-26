@@ -1,6 +1,6 @@
 {
   "name": "compromise-html",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "parse and transform text inside HTML",
   "license": "MIT",
   "type": "module",

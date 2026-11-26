@@ -37,9 +37,14 @@ const fixPointers = function (ptrs, gonePtrs, emptied) {
 }
 
 const methods = {
-  /** */
-  remove: function (reg) {
+  // {agree: false} skips moving any capitals or punctuation
+  remove: function (reg, opts) {
     const { indexN } = this.methods.one.pointer
+    // allow .remove({agree: false})
+    if (reg && Object.hasOwn(reg, 'agree')) {
+      opts = reg
+      reg = undefined
+    }
     this.uncache()
     // two modes:
     //  - a. remove self, from full parent
@@ -59,7 +64,7 @@ const methods = {
     const gonePtrs = indexN(nots)
     const emptied = getEmptied(gonePtrs, this.document)
     // remove them from the actual document)
-    const document = pluckOutTerm(this.document, nots)
+    const document = pluckOutTerm(this.document, nots, opts)
     // repair our pointers
     ptrs = fixPointers(ptrs, gonePtrs, emptied)
     // clean up our original inputs

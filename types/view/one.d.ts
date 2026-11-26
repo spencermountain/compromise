@@ -12,7 +12,14 @@ import type {
 
 export type Matchable = string | View | Net | ParsedMatch
 
+export interface AgreeOptions {
+  /** move capitals and punctuation, so the sentence still reads properly. default true */
+  agree?: boolean
+}
+
 export interface ReplaceWithProps {
+  /** keep the sentence's capital, and the punctuation around the old words. default true */
+  agree?: boolean
   /** preserve the case of the original, ignoring the case of the replacement */
   case?: boolean
   /** preserve whether the original was a possessive */
@@ -161,19 +168,19 @@ declare class View {
   /** add these new things to the end */
   concat: (input: string | View) => View
   /** add these words before each match */
-  insertBefore: (input: string | View) => View
+  insertBefore: (input: string | View, opts?: AgreeOptions) => View
   /** insertBefore() alias */
-  prepend: (input: string | View) => View
+  prepend: (input: string | View, opts?: AgreeOptions) => View
   /** add these words after each match */
-  insertAfter: (text: string | View) => View
+  insertAfter: (text: string | View, opts?: AgreeOptions) => View
   /** insertAfter() alias */
-  append: (text: string | View) => View
+  append: (text: string | View, opts?: AgreeOptions) => View
   /** insertAfter() alias */
-  insert: (text: string | View) => View
+  insert: (text: string | View, opts?: AgreeOptions) => View
   /** fully remove these terms from the document */
-  remove: (match: Matchable) => View
+  remove: (match?: Matchable | AgreeOptions, opts?: AgreeOptions) => View
   /** alias for .remove() */
-  delete: (match: Matchable) => View
+  delete: (match?: Matchable | AgreeOptions, opts?: AgreeOptions) => View
   /** search and replace match with new content */
   replace: (from: string | View, to?: string | Function, keep?: object) => View
   /** substitute-in new content */

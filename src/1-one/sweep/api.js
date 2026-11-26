@@ -20,7 +20,7 @@ const api = function (View) {
         o.pointer = [
           term.index[0],
           term.index[1],
-          ptr[1] + len
+          term.index[1] + len
         ]
       }
       return o

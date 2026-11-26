@@ -75,6 +75,5 @@ export default [
   ['woven', 'weave'],
   ['written', 'write'],
   ['wrung', 'wring'],
-  ['waked', 'wake'],
 
 ]

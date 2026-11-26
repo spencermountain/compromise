@@ -9,7 +9,11 @@ const wrap = (...cues) => new WrapDoc(cues.map(str => nlp(str)))
 test('every method matches a single doc', function (t) {
   const results = allCases(nlp).map(([sel, name, args]) => compare(nlp, sel, name, args))
   const different = results.filter(res => !isSame(res) && !expected[res.id])
-  t.deepEqual(different.map(res => res.id), [], here + `${results.length} method calls`)
+  t.deepEqual(
+    different.map(res => res.id),
+    [],
+    here + `${results.length} method calls`
+  )
   t.end()
 })
 
@@ -20,7 +24,7 @@ test('transforms change each cue', function (t) {
   t.deepEqual(
     doc.views.map(v => v.text()),
     ['I walked to work. She sang.', 'Oh wow!', 'He ate.'],
-    here + 'each cue',
+    here + 'each cue'
   )
   t.end()
 })
@@ -28,9 +32,21 @@ test('transforms change each cue', function (t) {
 test('selections keep one view per cue', function (t) {
   const doc = wrap('I walk. She sings.', 'Oh wow!', 'He eats.')
   const m = doc.verbs()
-  t.deepEqual(m.views.map(v => v.length), [2, 0, 1], here + 'verbs')
-  t.deepEqual(m.last().views.map(v => v.length), [0, 0, 1], here + 'last')
-  t.deepEqual(doc.match('zebra').views.map(v => v.length), [0, 0, 0], here + 'no match')
+  t.deepEqual(
+    m.views.map(v => v.length),
+    [2, 0, 1],
+    here + 'verbs'
+  )
+  t.deepEqual(
+    m.last().views.map(v => v.length),
+    [0, 0, 1],
+    here + 'last'
+  )
+  t.deepEqual(
+    doc.match('zebra').views.map(v => v.length),
+    [0, 0, 0],
+    here + 'no match'
+  )
   t.equal(doc.match('zebra').found, false, here + 'not found')
   t.end()
 })
@@ -58,18 +74,34 @@ test('callbacks get a running index', function (t) {
   const seen = []
   m.forEach((_m, i) => seen.push(i))
   t.deepEqual(seen, [0, 1, 2, 3, 4], here + 'forEach')
-  t.deepEqual(m.map((v, i) => v.text() + i), ['one0', 'two1', 'three2', 'four3', 'five4'], here + 'map')
+  t.deepEqual(
+    m.map((v, i) => v.text() + i),
+    ['one0', 'two1', 'three2', 'four3', 'five4'],
+    here + 'map'
+  )
   t.equal(m.filter((_m, i) => i > 2).text(), 'four five', here + 'filter')
   t.equal(m.find(v => v.has('(three|five)')).text(), 'three', here + 'find')
   t.equal(m.find(v => v.has('zebra')).found, false, here + 'find nothing')
-  t.equal(m.some((_m, i) => i === 4), true, here + 'some')
-  t.equal(m.some((_m, i) => i === 5), false, here + 'none')
+  t.equal(
+    m.some((_m, i) => i === 4),
+    true,
+    here + 'some'
+  )
+  t.equal(
+    m.some((_m, i) => i === 5),
+    false,
+    here + 'none'
+  )
   t.end()
 })
 
 test('map skips cues without a match', function (t) {
   const doc = wrap('i walk', 'oh wow', 'he eats')
-  t.deepEqual(doc.verbs().map(v => v.text()), ['walk', 'eats'], here + 'strings')
+  t.deepEqual(
+    doc.verbs().map(v => v.text()),
+    ['walk', 'eats'],
+    here + 'strings'
+  )
   t.end()
 })
 
@@ -105,7 +137,7 @@ test('numbers that are not positions', function (t) {
 
   const doc = wrap('i have 1 apple', 'give me 3 grapes')
   doc.numbers().add(2)
-  t.equal(doc.text(), 'i have 3 apple give me 5 grapes', here + 'add')
+  t.equal(doc.text(), 'i have 3 apples give me 5 grapes', here + 'add')
   t.end()
 })
 

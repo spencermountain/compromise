@@ -92,7 +92,10 @@ class Season extends Unit {
     return this
   }
   last() {
-    this.d = this.d.minus(1, 'year')
+    // this year's season, if it is already over, is the last one
+    if (!this.d.endOf(this.unit).isBefore(this.context.today)) {
+      this.d = this.d.minus(1, 'year')
+    }
     this.d = this.d.startOf(this.unit)
     return this
   }

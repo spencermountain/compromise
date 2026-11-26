@@ -86,6 +86,21 @@ test('punctuation edge-cases :', function (t) {
   t.end()
 })
 
+test('punctuation after inserted brackets :', function (t) {
+  let doc = nlp('the dog sat.')
+  doc.match('sat').insertAfter('[x]')
+  t.equal(doc.text(), 'the dog sat [x].', here + 'period')
+
+  doc = nlp('the dog, sat')
+  doc.match('dog').insertAfter('(x)')
+  t.equal(doc.text(), 'the dog (x), sat', here + 'comma')
+
+  doc = nlp('the (dog) sat')
+  doc.match('dog').insertAfter('[x]')
+  t.equal(doc.text(), 'the (dog [x]) sat', here + 'closing paren')
+  t.end()
+})
+
 test('prepend shift-self :', function (t) {
   const doc = nlp('no self no')
   const m = doc.match('self')

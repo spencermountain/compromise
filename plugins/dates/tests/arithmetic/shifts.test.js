@@ -158,13 +158,14 @@ test(here + 'relative dates and day-first input', t => {
 })
 
 test(here + 'timezone and daylight-saving boundaries', t => {
+  // spacetime uses one year's changeover dates for every year - these are 2027's
   const cases = [
-    ['March 7th 2020 at 3pm', 1, 'day', 'America/New_York', '2020-03-08T15:00:00.000-04:00'],
-    ['March 7th 2020 at 3pm', 24, 'hours', 'America/New_York', '2020-03-08T16:00:00.000-04:00'],
-    ['October 31st 2020 at 3pm', 1, 'day', 'America/New_York', '2020-11-01T15:00:00.000-05:00'],
-    ['October 31st 2020 at 3pm', 24, 'hours', 'America/New_York', '2020-11-01T14:00:00.000-05:00'],
-    ['March 8th 2020 at 3pm', -1, 'day', 'America/New_York', '2020-03-07T15:00:00.000-05:00'],
-    ['March 28th 2020 at 3pm', 1, 'day', 'Europe/London', '2020-03-29T15:00:00.000+01:00'],
+    ['March 13th 2027 at 3pm', 1, 'day', 'America/New_York', '2027-03-14T15:00:00.000-04:00'],
+    ['March 13th 2027 at 3pm', 24, 'hours', 'America/New_York', '2027-03-14T16:00:00.000-04:00'],
+    ['November 6th 2027 at 3pm', 1, 'day', 'America/New_York', '2027-11-07T15:00:00.000-05:00'],
+    ['November 6th 2027 at 3pm', 24, 'hours', 'America/New_York', '2027-11-07T14:00:00.000-05:00'],
+    ['March 14th 2027 at 3pm', -1, 'day', 'America/New_York', '2027-03-13T15:00:00.000-05:00'],
+    ['March 27th 2027 at 3pm', 1, 'day', 'Europe/London', '2027-03-28T15:00:00.000+01:00'],
     ['June 5th 2020 at 11pm', 2, 'hours', 'Asia/Kolkata', '2020-06-06T01:00:00.000+05:30'],
     ['June 5th 2020 at 11pm', 2, 'hours', 'Asia/Kathmandu', '2020-06-06T01:00:00.000+05:45'],
   ]
@@ -175,15 +176,15 @@ test(here + 'timezone and daylight-saving boundaries', t => {
     t.equal(dates.get(0)?.start, expected, `${timezone}: ${input} + ${amount} ${unit}`)
   })
   const opts = { ...options, timezone: 'America/New_York' }
-  const single = nlp('March 6th 2020 at 3pm').dates(opts).add(1, 'day').add(2, 'days')
-  t.equal(single.get(0)?.start, '2020-03-09T15:00:00.000-04:00', 'chained dates retain named timezone')
+  const single = nlp('March 12th 2027 at 3pm').dates(opts).add(1, 'day').add(2, 'days')
+  t.equal(single.get(0)?.start, '2027-03-15T15:00:00.000-04:00', 'chained dates retain named timezone')
 
-  const range = nlp('March 6th 2020 from 3pm to 5pm').dates(opts).add(1, 'day').add(2, 'days')
-  t.equal(range.get(0)?.start, '2020-03-09T15:00:00.000-04:00', 'chained range start retains named timezone')
-  t.equal(range.get(0)?.end, '2020-03-09T17:00:00.000-04:00', 'chained range end retains named timezone')
+  const range = nlp('March 12th 2027 from 3pm to 5pm').dates(opts).add(1, 'day').add(2, 'days')
+  t.equal(range.get(0)?.start, '2027-03-15T15:00:00.000-04:00', 'chained range start retains named timezone')
+  t.equal(range.get(0)?.end, '2027-03-15T17:00:00.000-04:00', 'chained range end retains named timezone')
 
-  const precise = nlp('March 6th 2020 at 3pm').dates(opts).add(1, 'second').add(3, 'days')
-  t.equal(precise.get(0)?.start, '2020-03-09T15:00:01.000-04:00', 'sub-minute precision retains named timezone')
+  const precise = nlp('March 12th 2027 at 3pm').dates(opts).add(1, 'second').add(3, 'days')
+  t.equal(precise.get(0)?.start, '2027-03-15T15:00:01.000-04:00', 'sub-minute precision retains named timezone')
   t.end()
 })
 

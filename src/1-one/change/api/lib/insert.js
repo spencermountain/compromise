@@ -1,4 +1,4 @@
-import { isTitleCase, toTitleCase, toLowerCase } from './_case.js'
+import { passCapital, passOpening, passClosing } from './_agree.js'
 
 // splice an array into an array
 const spliceArr = (parent, index, child) => {
@@ -20,44 +20,8 @@ const endSpace = function (terms) {
   }
 }
 
-// sentence-ending punctuation should move in append
-const movePunct = (source, end, needle) => {
-  const juicy = /[-.?!,;:)–—'"]/g
-  const wasLast = source[end - 1]
-  if (!wasLast) {
-    return
-  }
-  const post = wasLast.post
-  if (juicy.test(post)) {
-    const punct = post.match(juicy).join('') //not perfect
-    const last = needle.at(-1)
-    last.post = punct + last.post
-    // remove it, from source
-    wasLast.post = wasLast.post.replace(juicy, '')
-  }
-}
-
-
-const moveTitleCase = function (home, start, needle) {
-  const from = home[start]
-  // should we bother?
-  if (start !== 0 || !isTitleCase(from.text)) {
-    return
-  }
-  // titlecase new first term
-  needle[0].text = toTitleCase(needle[0].text)
-  // should we un-titlecase the old word?
-  const old = home[start]
-  if (old.tags.has('ProperNoun') || old.tags.has('Acronym')) {
-    return
-  }
-  if (isTitleCase(old.text) && old.text.length > 1) {
-    old.text = toLowerCase(old.text)
-  }
-}
-
 // put these words before the others
-const cleanPrepend = function (home, ptr, needle, document) {
+const cleanPrepend = function (home, ptr, needle, document, agree) {
   const [n, start, end] = ptr
   // introduce spaces appropriately
   if (start === 0) {
@@ -71,25 +35,28 @@ const cleanPrepend = function (home, ptr, needle, document) {
     endSpace(needle)
     endSpace([home[ptr[1]]])
   }
-  moveTitleCase(home, start, needle)
-  // movePunct(home, end, needle)
+  if (agree) {
+    // '"dogs' -> '"the dogs'
+    passOpening(home[start], needle[0])
+    // 'Dogs' -> 'The dogs'
+    if (start === 0) {
+      passCapital(home[start], needle[0], true)
+    }
+  }
   spliceArr(home, start, needle)
 }
 
-const cleanAppend = function (home, ptr, needle, document) {
+const cleanAppend = function (home, ptr, needle, document, agree) {
   const [n, , end] = ptr
   const total = (document[n] || []).length
-  if (end < total) {
-    // are we in the middle?
-    // add trailing space on self
-    movePunct(home, end, needle)
+  // 'bark.' -> 'bark loudly.'
+  const moved = agree && home[end - 1] && passClosing(home, end - 1, needle.at(-1))
+  if (!moved && end < total) {
+    // in the middle - add trailing space on self
     endSpace(needle)
-  } else if (total === end) {
-    // are we at the end?
-    // add a space to predecessor
+  } else if (!moved) {
+    // at the end - add a space to predecessor
     endSpace(home)
-    // very end, move period
-    movePunct(home, end, needle)
     // is there another sentence after?
     if (document[n + 1]) {
       needle.at(-1).post += ' '

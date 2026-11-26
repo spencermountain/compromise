@@ -26,6 +26,7 @@ prognosis prognoses
 synopsis synopses
 thesis theses
 neurosis neuroses
+oasis oases
 appendix appendices
 index indices
 matrix matrices
@@ -63,6 +64,11 @@ tableau tableaux
 bus buses
 gas gases
 circus circuses
+alias aliases
+atlas atlases
+canvas canvases
+iris irises
+lens lenses
 crisis crises
 virus viruses
 database databases
@@ -83,6 +89,8 @@ mosquito mosquitoes
 mouse mice
 person people
 quiz quizzes
+buzz buzzes
+fez fezzes
 rodeo rodeos
 shoe shoes
 sombrero sombreros

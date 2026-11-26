@@ -49,6 +49,10 @@ test(here + 'clock start and end times', function (t) {
     ['4pm or 5pm', '4:00pm'],
     ['wednesday at 3', '3:00pm'],
     ['wednesday at 3pm', '3:00pm'],
+    ['wednesday afternoon at 2', '2:00pm'],
+    ['tomorrow afternoon at 2', '2:00pm'],
+    ['friday night at 8', '8:00pm'],
+    ['tomorrow night at 7', '7:00pm'],
     ['3pm to 7 tomorrow', '3:00pm', '7:00pm'],
     ['between 3 and 6 tuesday', '3:00pm', '6:00pm'],
     ['sometime after 4', '4:00pm'],
@@ -200,7 +204,7 @@ test(here + 'clock start and end times', function (t) {
     ['tomorrow morning at 9', '9:00am', '11:59pm'],
     ['tomorrow evening at 7', '7:00pm', '11:59pm'],
     ['tonight at 9', '9:00pm'],
-    ['9:30 tonight', '9:30am'],
+    ['9:30 tonight', '9:30pm'],
     ['quarter to 4', '3:45pm', '3:45pm'],
     ['quarter to 4pm', '12:00am', '4:00pm'],
     ['five past 3', '3:05pm'],
@@ -357,6 +361,24 @@ test(here + 'clock start and end times', function (t) {
     if (a[2]) {
       t.equal(spacetime(dates.end).time(), a[2], `[end time; today=${context.today}; timezone=${context.timezone}] ${a[0]}`)
     }
+  })
+  t.end()
+})
+
+test(here + 'clock before a part of the day', function (t) {
+  const context = { timezone: 'UTC', today: '2026-11-09' }
+  const arr = [
+    ['7:45 tonight', '2026-11-09T19:45'],
+    ['8:30 this evening', '2026-11-09T20:30'],
+    ['7:45 tomorrow night', '2026-11-10T19:45'],
+    ['8 tonight', '2026-11-09T20:00'],
+    ['dinner at 7 tonight', '2026-11-09T19:00'],
+    ['8 this morning', '2026-11-09T08:00'],
+    ['june 5 tonight', '2027-06-05T00:00'],
+  ]
+  arr.forEach(([str, start]) => {
+    const found = nlp(str).dates(context).json({ terms: false })[0]
+    t.equal((found.dates.start || '').slice(0, 16), start, str)
   })
   t.end()
 })

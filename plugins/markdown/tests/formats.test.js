@@ -24,7 +24,10 @@ test('markdown - nested wrappers and code modes', t => {
   const kept = nlp.fromMarkdown('A **very *nice*** day.', { strongs: 'keep', emphases: 'keep' })
   t.equal(kept.text(), 'A **very *nice*** day.', 'nested wrappers are ordered')
   kept.updateTree()
-  t.equal(kept.markdown().trim(), 'A **very *nice*** day.', 'generated syntax does not change AST')
+  // mdast-util-to-markdown may alternate markers (`_nice_`) inside strong; compare the reparsed tree instead
+  const strip = tree => JSON.parse(JSON.stringify(tree, (k, v) => (k === 'position' ? undefined : v)))
+  const reparsed = nlp.fromMarkdown(kept.markdown()).document.unist.tree
+  t.deepEqual(strip(reparsed), strip(kept.document.unist.tree), 'generated syntax does not change AST')
   t.equal(nlp.fromMarkdown('`hello`', { inlineCode: 'inline' }).text(), 'hello', 'inline code can expose content')
   t.equal(nlp.fromMarkdown('`hello`', { inlineCode: 'keep' }).text(), '`hello`', 'kept code has delimiters')
   t.end()

@@ -1,6 +1,6 @@
 {
   "name": "compromise",
-  "version": "14.20.0",
+  "version": "14.21.0",
   "description": "modest natural language processing",
   "license": "MIT",
   "repository": "github:spencermountain/compromise",
@@ -56,6 +56,12 @@
       "require": {
         "types": "./types/three.d.cts",
         "default": "./builds/three/compromise-three.cjs"
+      }
+    },
+    "./shared": {
+      "import": {
+        "types": "./types/shared.d.ts",
+        "default": "./src/shared/index.js"
       }
     },
     "./misc": {

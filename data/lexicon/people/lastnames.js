@@ -48,6 +48,7 @@ export default [
   'bhowmik',
   'bhuiyan',
   'bianchi',
+  'biden',
   'bishwas',
   'blanco',
   'blondal',

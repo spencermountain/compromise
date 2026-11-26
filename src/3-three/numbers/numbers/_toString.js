@@ -5,7 +5,8 @@ import { decimalText } from './_conversion.js'
  * */
 const numToString = function (n) {
   if (n < 1000000) {
-    return String(n)
+    // tiny values like 1e-8 print in exponent form
+    return decimalText(n)
   }
   let str
   if (typeof n === 'number') {

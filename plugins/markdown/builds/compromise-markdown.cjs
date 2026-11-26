@@ -13270,6 +13270,1015 @@
   }
 
   /**
+   * Get the first character of a value.
+   *
+   * Is aware of astral characters (such as emoji).
+   *
+   * @param {string} value
+   *   Value.
+   * @returns {string}
+   *   First character; empty if `value` is empty.
+   */
+  function firstCharacter(value) {
+    const code = value.codePointAt(0);
+    return code === undefined ? '' : String.fromCodePoint(code)
+  }
+
+  /**
+   * Get the last character of a value.
+   *
+   * Is aware of astral characters (such as emoji).
+   *
+   * @param {string} value
+   *   Value.
+   * @returns {string}
+   *   Last character; empty if `value` is empty.
+   */
+  function lastCharacter(value) {
+    // Only a surrogate pair gives a code point above the BMP.
+    const code = value.codePointAt(value.length - 2);
+    return code !== undefined && code > 0xff_ff
+      ? value.slice(-2)
+      : value.slice(-1)
+  }
+
+  /**
+   * Encode a code point as a character reference.
+   *
+   * @param {number} code
+   *   Code point to encode.
+   * @returns {string}
+   *   Encoded character reference.
+   */
+  function encodeCharacterReference(code) {
+    return '&#x' + code.toString(16).toUpperCase() + ';'
+  }
+
+  /**
+   * @import {EncodeSides} from '../types.js'
+   */
+
+
+  /**
+   * Check whether to encode (as a character reference) the characters
+   * surrounding an attention run.
+   *
+   * Which characters are around an attention run influence whether it works or
+   * not.
+   *
+   * See <https://github.com/orgs/syntax-tree/discussions/60> for more info.
+   * See this markdown in a particular renderer to see what works:
+   *
+   * ```markdown
+   * |                         | A (letter inside) | B (punctuation inside) | C (whitespace inside) | D (nothing inside) |
+   * | ----------------------- | ----------------- | ---------------------- | --------------------- | ------------------ |
+   * | 1 (letter outside)      | x*y*z             | x*.*z                  | x* *z                 | x**z               |
+   * | 2 (punctuation outside) | .*y*.             | .*.*.                  | .* *.                 | .**.               |
+   * | 3 (whitespace outside)  | x *y* z           | x *.* z                | x * * z               | x ** z             |
+   * | 4 (nothing outside)     | *x*               | *.*                    | * *                   | **                 |
+   * ```
+   *
+   * @param {number} outside
+   *   Code point on the outer side of the run.
+   * @param {number} inside
+   *   Code point on the inner side of the run.
+   * @param {string} marker
+   *   Marker of the run.
+   *   Underscores are handled more strictly (they form less often) than
+   *   asterisks.
+   * @returns {EncodeSides}
+   *   Whether to encode characters.
+   */
+  // Important: punctuation must never be encoded.
+  // Punctuation is solely used by markdown constructs.
+  // And by encoding itself.
+  // Encoding them will break constructs or double encode things.
+  function encodeInfo(outside, inside, marker) {
+    const outsideKind = classifyCharacter(outside);
+    const insideKind = classifyCharacter(inside);
+
+    // Letter outside:
+    if (outsideKind === undefined) {
+      return insideKind === undefined
+        ? // Letter inside:
+          // we have to encode *both* letters for `_` as it is looser.
+          // it already forms for `*` (and GFMs `~`).
+          marker === '_'
+          ? {inside: true, outside: true}
+          : {inside: false, outside: false}
+        : insideKind === 1
+          ? // Whitespace inside: encode both (letter, whitespace).
+            {inside: true, outside: true}
+          : // Punctuation inside: encode outer (letter)
+            {inside: false, outside: true}
+    }
+
+    // Whitespace outside:
+    if (outsideKind === 1) {
+      return insideKind === undefined
+        ? // Letter inside: already forms.
+          {inside: false, outside: false}
+        : insideKind === 1
+          ? // Whitespace inside: encode both (whitespace).
+            {inside: true, outside: true}
+          : // Punctuation inside: already forms.
+            {inside: false, outside: false}
+    }
+
+    // Punctuation outside:
+    return insideKind === undefined
+      ? // Letter inside: already forms.
+        {inside: false, outside: false}
+      : insideKind === 1
+        ? // Whitespace inside: encode inner (whitespace).
+          {inside: true, outside: false}
+        : // Punctuation inside: already forms.
+          {inside: false, outside: false}
+  }
+
+  /**
+   * @typedef {1 | 2 | 3 | 4 | 5 | 6 | 7} Kind
+   *   Kind of HTML (flow) element.
+   */
+
+  /**
+   * Infer the kind of HTML that `value` is.
+   *
+   * This works on valid trees as produced by `micromark`.
+   * Kinds:
+   *
+   * 1. raw
+   * 2. comment
+   * 3. instruction
+   * 4. declaration
+   * 5. cdata
+   * 6. block
+   * 7. other
+   *
+   * See: <https://spec.commonmark.org/0.31.2/#html-blocks>.
+   *
+   * @param {string} value
+   *   HTML.
+   * @returns {Kind | undefined}
+   *   Kind; `undefined` if unknown.
+   */
+  function htmlKind(value) {
+    if (value.charCodeAt(0) !== 60 /* `<` */) return
+
+    const next = value.charCodeAt(1);
+
+    if (next === 33 /* `!` */) {
+      const code = value.charCodeAt(2);
+      if (code === 45 /* `-` */) return 2
+      if (code === 91 /* `[` */) return 5
+      if (asciiAlpha(code)) return 4
+      return
+    }
+
+    if (next === 63 /* `?` */) return 3
+
+    const closing = next === 47; /* `/` */
+    const start = closing ? 2 : 1;
+    let end = start;
+    let code = value.charCodeAt(end);
+
+    if (!asciiAlpha(code)) return
+
+    while (code === 45 /* `-` */ || asciiAlphanumeric(code)) {
+      code = value.charCodeAt(++end);
+    }
+
+    const name = value.slice(start, end).toLowerCase();
+
+    if (!closing && code !== 47 /* `/` */ && htmlRawNames.includes(name)) {
+      return 1
+    }
+
+    return htmlBlockNames.includes(name) ? 6 : 7
+  }
+
+  /**
+   * @import {Attention, Handle, Info, State, Tracker} from 'mdast-util-to-markdown'
+   * @import {PhrasingParents} from '../types.js'
+   */
+
+
+  /**
+   * Markers for builtin attention (emphasis, strong) to whether they are stricter:
+   * whether they cannot open and close inside words.
+   *
+   * Builtin runs pair following CommonMark rules for emphasis and strong:
+   * they are split,
+   * using one or two markers at a time,
+   * with the rule of 3.
+   * Other markers pair like GFM strikethrough:
+   * whole runs pair with a run of the same size.
+   *
+   * @type {Map<string, boolean>}
+   */
+  const builtins = new Map([
+    ['*', false],
+    ['_', true]
+  ]);
+
+  /**
+   * @typedef AttentionResult
+   *   Attention, of which the sequence is chosen later.
+   * @property {Array<Item>} children
+   *   Serialized children.
+   * @property {Array<string>} sequences
+   *   Sequences that can be used, in order of preference.
+   */
+
+  /**
+   * @typedef Improvement
+   *   Improvement of attention sequences.
+   * @property {Map<AttentionResult, string>} chosen
+   *   Chosen sequences for each attention.
+   * @property {Array<Token>} tokens
+   *   Tokens involved in the improvement.
+   * @property {Mistake | undefined} mistake
+   *   Mistake that led to this improvement, if any.
+   */
+
+  /**
+   * @typedef {AttentionResult | string} Item
+   *   Serialized phrasing.
+   */
+
+  /**
+   * @typedef Mistake
+   *   Sequence that does not form its attention.
+   * @property {Array<AttentionResult>} attention
+   *   Attention to try other sequences for.
+   * @property {number} index
+   *   Index of the token.
+   */
+
+  /**
+   * @typedef Run
+   *   Sequences next to each other with the same marker.
+   * @property {boolean} close
+   *   Whether it can close.
+   * @property {number} end
+   *   Index after the last marker not used (to open).
+   * @property {Array<Token>} markers
+   *   Sequence of each marker.
+   * @property {boolean} open
+   *   Whether it can open.
+   * @property {boolean} split
+   *   Whether it can be split (built-in attention).
+   * @property {number} start
+   *   Index of the first marker not used (to close).
+   * @property {Array<Token>} tokens
+   *   Sequences.
+   */
+
+  /**
+   * @typedef Token
+   *   Rendered phrasing.
+   * @property {AttentionResult | undefined} attention
+   *   Attention, if this is one of its sequences.
+   * @property {string} value
+   *   Value.
+   */
+
+  /**
+   * Get candidates for a mistake:
+   * attention to try other sequences for,
+   * later first.
+   *
+   * @param {Array<Token>} tokens
+   *   Tokens.
+   * @param {Array<Token>} involved
+   *   Sequences involved in the mistake.
+   * @param {Map<Token, Run>} runOf
+   *   Run of each sequence.
+   * @returns {Array<AttentionResult>}
+   *   Candidates.
+   */
+  function candidates(tokens, involved, runOf) {
+    /** @type {Set<AttentionResult | undefined>} */
+    const related = new Set();
+
+    // The attention involved, and attention in runs with its sequences.
+    for (const token of tokens) {
+      const siblings = runOf.get(token);
+      if (
+        siblings &&
+        token.attention &&
+        involved.some((d) => d.attention === token.attention)
+      ) {
+        for (const sibling of siblings.tokens) {
+          related.add(sibling.attention);
+        }
+      }
+    }
+
+    /** @type {Array<AttentionResult>} */
+    const ordered = [];
+
+    for (const token of tokens) {
+      if (token.attention && related.delete(token.attention)) {
+        ordered.push(token.attention);
+      }
+    }
+
+    // Later first: attention that opens later is inner or next.
+    ordered.reverse();
+    return ordered
+  }
+
+  /**
+   * Check whether sequences form their attention, like `micromark`.
+   *
+   * Sequences of `*` and `_` pair like emphasis and strong in CommonMark,
+   * others like strikethrough in GFM.
+   *
+   * @param {Array<Token>} tokens
+   *   Tokens.
+   * @param {string} before
+   *   Characters before.
+   * @param {string} after
+   *   Characters after.
+   * @returns {Mistake | undefined}
+   *   First mistake, if any.
+   */
+  function check(tokens, before, after) {
+    /** @type {Array<Run>} */
+    const runs = [];
+    /** @type {Map<Token, Array<Token>>} */
+    const wrong = new Map();
+    /** @type {Map<Token, Run>} */
+    const runOf = new Map();
+    let index = 0;
+
+    while (index < tokens.length) {
+      if (!tokens[index].attention) {
+        index++;
+        continue
+      }
+
+      const marker = tokens[index].value.charAt(0);
+      const strict = builtins.get(marker);
+      let end = index + 1;
+
+      while (
+        end < tokens.length &&
+        tokens[end].attention &&
+        tokens[end].value.charAt(0) === marker
+      ) {
+        end++;
+      }
+
+      const head = index ? tokens[index - 1].value : before;
+      const previous = classifyCharacter(head.charCodeAt(head.length - 1));
+      const next = classifyCharacter(
+        (end < tokens.length ? tokens[end].value : after).charCodeAt(0)
+      );
+      const open = !next || (next === 2 && Boolean(previous));
+      const close = !previous || (previous === 2 && Boolean(next));
+      /** @type {Run} */
+      const run = {
+        tokens: tokens.slice(index, end),
+        markers: [],
+        start: 0,
+        end: 0,
+        // Underscores are strict, they cannot open or close inside words.
+        open: strict ? open && (Boolean(previous) || !close) : open,
+        close: strict ? close && (Boolean(next) || !open) : close,
+        // All builtins can split runs.
+        split: strict !== undefined
+      };
+
+      for (const token of run.tokens) {
+        // Every sequence is wrong until it pairs with its other sequence.
+        wrong.set(token, [...run.tokens]);
+        runOf.set(token, run);
+        let size = token.value.length;
+        while (size--) run.markers.push(token);
+      }
+
+      run.end = run.markers.length;
+      runs.push(run);
+      index = end;
+    }
+
+    pair(runs, wrong);
+
+    index = -1;
+
+    while (++index < tokens.length) {
+      const involved = wrong.get(tokens[index]);
+      if (involved) return {attention: candidates(tokens, involved, runOf), index}
+    }
+  }
+
+  /**
+   * Serialize the children of a parent that contains phrasing children.
+   *
+   * @param {PhrasingParents} parent
+   *   Parent of phrasing nodes.
+   * @param {State} state
+   *   Info passed around about the current state.
+   * @param {Info} info
+   *   Info on where we are in the document we are generating.
+   * @returns {string}
+   *   Serialized result.
+   */
+  function containerPhrasing(parent, state, info) {
+    return serialize$1(phrasing(parent, state, info), info.before, info.after)
+  }
+
+  /**
+   * Encode the first or last character of tokens as a character reference,
+   * if it is text.
+   *
+   * @param {Array<Token>} tokens
+   *   Tokens.
+   * @param {boolean} start
+   *   Whether to encode the first or last character.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function encode(tokens, start) {
+    const token = tokens[start ? 0 : tokens.length - 1];
+
+    if (!token || token.attention) return
+
+    const character = start
+      ? firstCharacter(token.value)
+      : lastCharacter(token.value);
+    const reference = encodeCharacterReference(
+      /** @type {number} */ (character.codePointAt(0))
+    );
+
+    if (start) {
+      token.value = reference + token.value.slice(character.length);
+    } else {
+      let value = token.value.slice(0, token.value.length - character.length);
+      let escapes = 0;
+
+      while (value.charCodeAt(value.length - 1 - escapes) === 92 /* `\` */) {
+        escapes++;
+      }
+
+      // Odd number would escape the `&` again.
+      if (escapes % 2) value += '\\';
+      token.value = value + reference;
+    }
+  }
+
+  /**
+   * Try other sequences for the candidates of a mistake and use the first that
+   * moves the mistake further.
+   *
+   * @param {Array<Item>} items
+   *   Items.
+   * @param {Map<AttentionResult, string>} chosen
+   *   Sequences to use instead of preferred sequences.
+   * @param {Mistake} mistake
+   *   Mistake.
+   * @param {string} before
+   *   Characters before.
+   * @param {string} after
+   *   Characters after.
+   * @returns {Improvement | undefined}
+   *   Result if better.
+   */
+  function improve(items, chosen, mistake, before, after) {
+    for (const attention of mistake.attention) {
+      const current = chosen.get(attention) || attention.sequences[0];
+
+      for (const sequence of attention.sequences) {
+        if (sequence === current) continue
+        const trial = new Map(chosen);
+        trial.set(attention, sequence);
+        const tokens = render(items, trial, before, after);
+        const next = check(tokens, before, after);
+
+        if (!next || next.index > mistake.index) {
+          return {chosen: trial, mistake: next, tokens}
+        }
+      }
+    }
+  }
+
+  /**
+   * Pair runs like `micromark` and mark sequences that do form their attention
+   * as fine.
+   *
+   * Each pair uses markers from the end of an opener and the start of a closer.
+   * It forms the intended attention if those markers are exactly the whole
+   * opening and closing sequence of one attention.
+   * Otherwise attention is mixed up:
+   * either sequences of different attention pair,
+   * part of a sequence is used (such as `**` of strong as `*`),
+   * or several sequences are used together (such as `*` and `*` as `**`).
+   * Then the sequences involved are recorded with each other.
+   *
+   * @param {Array<Run>} runs
+   *   Runs.
+   * @param {Map<Token, Array<Token>>} wrong
+   *   Sequences that are wrong, with the sequences involved.
+   * @returns {undefined}
+   *   Nothing, `wrong` is changed.
+   */
+  function pair(runs, wrong) {
+    /** @type {Map<string, Array<Run>>} */
+    const openersByMarker = new Map();
+
+    for (const closer of runs) {
+      const marker = closer.tokens[0].value.charAt(0);
+      let openers = openersByMarker.get(marker);
+
+      if (!openers) {
+        openers = [];
+        openersByMarker.set(marker, openers);
+      }
+
+      let open = closer.close ? openers.length : 0;
+
+      while (open-- && closer.start < closer.end) {
+        const opener = openers[open];
+        const openerSize = opener.end - opener.start;
+        const closerSize = closer.end - closer.start;
+
+        if (
+          closer.split
+            ? // The rule of 3, on the sizes that are left.
+              (opener.close || closer.open) &&
+              closerSize % 3 &&
+              !((openerSize + closerSize) % 3)
+            : // Others pair whole runs of the same size.
+              openerSize !== opener.markers.length || openerSize !== closerSize
+        ) {
+          continue
+        }
+
+        const size = closer.split
+          ? openerSize > 1 && closerSize > 1
+            ? 2
+            : 1
+          : closerSize;
+        const opening = opener.markers.slice(opener.end - size, opener.end);
+        const closing = closer.markers.slice(closer.start, closer.start + size);
+        const openToken = opening[0];
+        const closeToken = closing[0];
+
+        if (
+          // Whole sequences:
+          // the markers of a sequence are next to each other,
+          // so if the first and last marker are of one sequence of that size,
+          // all markers are exactly that sequence.
+          openToken === opening[size - 1] &&
+          openToken.value.length === size &&
+          closeToken === closing[size - 1] &&
+          closeToken.value.length === size &&
+          // Of the same attention, so its opening and closing sequence.
+          openToken.attention === closeToken.attention
+        ) {
+          wrong.delete(openToken);
+          wrong.delete(closeToken);
+        } else {
+          const involved = [...new Set([...opening, ...closing])];
+          // Add to what is involved already: a sequence can be in several pairs.
+          for (const token of involved) {
+            const list = wrong.get(token);
+            if (list) list.push(...involved);
+          }
+        }
+
+        opener.end -= size;
+        closer.start += size;
+
+        if (opener.start === opener.end) openers.splice(open, 1);
+
+        // Search again from the start, as this run may close more.
+        open = openers.length;
+      }
+
+      if (closer.open && closer.start < closer.end) openers.push(closer);
+    }
+  }
+
+  /**
+   * Get the sequences that can be used for attention, in order of preference.
+   *
+   * @param {string} type
+   *   Node type.
+   * @param {Array<string>} markers
+   *   Markers.
+   * @param {Array<number>} sizes
+   *   Sizes.
+   * @returns {Array<string>}
+   *   Sequences.
+   */
+  function attentionSequences(type, markers, sizes) {
+    if (markers.length === 0) {
+      throw new Error(
+        'Cannot serialize `' +
+          type +
+          '` as attention without markers, expected one or more markers'
+      )
+    }
+
+    if (sizes.length === 0) {
+      throw new Error(
+        'Cannot serialize `' +
+          type +
+          '` as attention without sizes, expected one or more sizes'
+      )
+    }
+
+    for (const size of sizes) {
+      if (!Number.isSafeInteger(size) || size < 1) {
+        throw new Error(
+          'Cannot serialize `' +
+            type +
+            '` as attention with `' +
+            size +
+            '` as size, expected positive integer'
+        )
+      }
+    }
+
+    /** @type {Array<string>} */
+    const sequences = [];
+
+    for (const marker of markers) {
+      if (marker.length !== 1) {
+        throw new Error(
+          'Cannot serialize `' +
+            type +
+            '` as attention with `' +
+            marker +
+            '` as marker, expected a single ascii character'
+        )
+      }
+
+      if (!asciiPunctuation(marker.charCodeAt(0))) {
+        throw new Error(
+          'Cannot serialize `' +
+            type +
+            '` as attention with `' +
+            marker +
+            '` as marker, expected ascii punctuation'
+        )
+      }
+
+      for (const size of sizes) {
+        sequences.push(marker.repeat(size));
+      }
+    }
+
+    return sequences
+  }
+
+  /**
+   * Serialize the children of a parent that contains phrasing children,
+   * keeping attention separate,
+   * so that its markers can be chosen later.
+   *
+   * @param {PhrasingParents} parent
+   *   Parent of phrasing nodes.
+   * @param {State} state
+   *   Info passed around about the current state.
+   * @param {Info} info
+   *   Info on where we are in the document we are generating.
+   * @returns {Array<Item>}
+   *   Items.
+   */
+  function phrasing(parent, state, info) {
+    const indexStack = state.indexStack;
+    const children = parent.children || [];
+    /** @type {Array<Item>} */
+    const results = [];
+    let index = -1;
+    let before = info.before;
+
+    indexStack.push(-1);
+    let tracker = state.createTracker(info);
+
+    while (++index < children.length) {
+      const child = children[index];
+      /** @type {string} */
+      let after;
+
+      indexStack[indexStack.length - 1] = index;
+
+      if (index + 1 < children.length) {
+        /** @type {Handle} */
+        // @ts-expect-error: hush, it’s actually a `zwitch`.
+        let handle = state.handle.handlers[children[index + 1].type];
+        // @ts-expect-error: hush, it’s actually a `zwitch`.
+        if (handle && handle.peek) handle = handle.peek;
+        after = handle
+          ? firstCharacter(
+              handle(children[index + 1], parent, state, {
+                before: '',
+                after: '',
+                ...tracker.current()
+              })
+            )
+          : '';
+      } else {
+        after = info.after;
+      }
+
+      // In some cases, html (text) can be found in phrasing right after an eol.
+      // When we’d serialize that, it could be seen as html (flow): all its kinds
+      // except 7 can interrupt a paragraph.
+      // As we can’t escape or so to prevent it from happening,
+      // we take a somewhat reasonable approach:
+      // replace that eol with a space.
+      // See: <https://github.com/syntax-tree/mdast-util-to-markdown/issues/15>
+      const previous = results[results.length - 1];
+
+      if (
+        typeof previous === 'string' &&
+        (before === '\r' || before === '\n') &&
+        child.type === 'html' &&
+        htmlKind(child.value) !== 7
+      ) {
+        results[results.length - 1] = previous.replace(/(\r?\n|\r)$/, ' ');
+        before = ' ';
+
+        // To do: does this work to reset tracker?
+        tracker = state.createTracker(info);
+        tracker.move(serialize$1(results, info.before, info.after));
+      }
+
+      /** @type {(Handle & {attention?: Attention | undefined}) | undefined} */
+      // @ts-expect-error: hush, it’s actually a `zwitch`.
+      const handle = state.handle.handlers[child.type];
+
+      if (handle && handle.attention) {
+        const item = attentionItem(
+          /** @type {PhrasingParents} */ (child),
+          handle.attention,
+          state,
+          tracker
+        );
+        if (!item) continue
+        results.push(item);
+        before = lastCharacter(item.sequences[0]);
+      } else {
+        const value = state.handle(child, parent, state, {
+          ...tracker.current(),
+          after,
+          before
+        });
+
+        if (!value) continue
+        tracker.move(value);
+        results.push(value);
+        before = lastCharacter(value);
+      }
+    }
+
+    indexStack.pop();
+
+    return results
+  }
+
+  /**
+   * Serialize a node as attention,
+   * with its sequence chosen later.
+   *
+   * @param {PhrasingParents} node
+   *   Node.
+   * @param {Attention} attention
+   *   Attention of the node.
+   * @param {State} state
+   *   Info passed around about the current state.
+   * @param {Tracker} tracker
+   *   Tracker.
+   * @returns {AttentionResult | undefined}
+   *   Attention or nothing.
+   */
+  function attentionItem(node, attention, state, tracker) {
+    const {construct, markers, sizes} = attention(node, state);
+    const sequences = attentionSequences(node.type, markers, sizes);
+    const sequence = sequences[0];
+    const exit = state.enter(construct);
+    const inside = state.createTracker(tracker.current());
+    inside.move(sequence);
+    const children = phrasing(node, state, {
+      ...inside.current(),
+      before: sequence,
+      after: sequence
+    });
+    exit();
+
+    // Empty attention cannot form.
+    if (children.length === 0) return
+
+    tracker.move(sequence);
+    tracker.move(serialize$1(children, sequence, sequence));
+    tracker.move(sequence);
+    return {children, sequences}
+  }
+
+  /**
+   * Fix mistakes one at a time.
+   *
+   * @param {Array<Item>} items
+   *   Phrasing items.
+   * @param {Map<AttentionResult, string>} chosen
+   *   Sequences to start with.
+   * @param {string} before
+   *   Characters before.
+   * @param {string} after
+   *   Characters after.
+   * @returns {Array<Token> | undefined}
+   *   Tokens, if all mistakes could be fixed.
+   */
+  function fix(items, chosen, before, after) {
+    let tokens = render(items, chosen, before, after);
+    let mistake = check(tokens, before, after);
+
+    while (mistake) {
+      const next = improve(items, chosen, mistake, before, after);
+      if (!next) return
+      chosen = next.chosen;
+      tokens = next.tokens;
+      mistake = next.mistake;
+    }
+
+    return tokens
+  }
+
+  /**
+   * Guess sequences for attention so that few mistakes are left to fix because
+   * each fix is slow.
+   *
+   * Prefers another marker when a sequence would touch one with the same marker
+   * of a sibling or parent (`**a**` and `*b*` as `**a***b*`).
+   * Except for an only child with a longer builtin sequence,
+   * as that forms (`***a***`).
+   *
+   * @param {Array<Item>} items
+   *   Phrasing items.
+   * @param {Map<AttentionResult, string>} chosen
+   *   Guesses that are not the preferred sequence.
+   * @param {string} before
+   *   Sequence of the parent or characters before.
+   * @param {string} after
+   *   Sequence of the parent or characters after.
+   * @returns {undefined}
+   *   Nothing.
+   */
+  function guess(items, chosen, before, after) {
+    let previous = before;
+    let index = -1;
+
+    while (++index < items.length) {
+      const item = items[index];
+
+      if (typeof item === 'string') {
+        previous = '';
+        continue
+      }
+
+      const next = index === items.length - 1 ? after : '';
+      const sequence =
+        item.sequences.find(function (value) {
+          const marker = value.charAt(0);
+          return (
+            (marker !== previous.charAt(0) && marker !== next.charAt(0)) ||
+            (items.length === 1 &&
+              builtins.has(marker) &&
+              value.length > before.length)
+          )
+        }) || item.sequences[0];
+      if (sequence !== item.sequences[0]) chosen.set(item, sequence);
+      guess(item.children, chosen, sequence, sequence);
+      previous = sequence;
+    }
+  }
+
+  /**
+   * Render items with sequences;
+   * encoding characters around attention where needed.
+   *
+   * @param {Array<Item>} items
+   *   Serialized phrasing.
+   * @param {Map<AttentionResult, string>} chosen
+   *   Sequences to use instead of preferred sequences.
+   * @param {string} before
+   *   Characters before.
+   * @param {string} after
+   *   Characters after.
+   * @returns {Array<Token>}
+   *   Tokens.
+   */
+  function render(items, chosen, before, after) {
+    /** @type {Array<Token>} */
+    const tokens = [];
+    /** @type {string | undefined} */
+    let encodeAfter;
+    let previous = lastCharacter(before);
+    let index = -1;
+
+    while (++index < items.length) {
+      const item = items[index];
+
+      if (typeof item === 'string') {
+        /** @type {Token} */
+        const token = {value: item, attention: undefined};
+
+        // If attention before had to encode the character after it, encode it.
+        if (encodeAfter && encodeAfter === firstCharacter(item)) {
+          encode([token], true);
+        }
+
+        encodeAfter = undefined;
+        tokens.push(token);
+        if (token.value) previous = lastCharacter(token.value);
+        continue
+      }
+
+      const sequence = chosen.get(item) || item.sequences[0];
+      const marker = sequence.charAt(0);
+      const next = items[index + 1];
+      const outsideBefore = previous;
+      const outsideAfter = firstCharacter(
+        next === undefined
+          ? after
+          : typeof next === 'string'
+            ? next
+            : chosen.get(next) || next.sequences[0]
+      );
+      const inside = render(item.children, chosen, sequence, sequence);
+      const head = inside[0].value;
+      const open = encodeInfo(
+        outsideBefore.charCodeAt(outsideBefore.length - 1),
+        head.charCodeAt(0),
+        marker
+      );
+
+      if (open.inside) encode(inside, true);
+
+      const tail = lastCharacter(inside[inside.length - 1].value);
+      const close = encodeInfo(
+        outsideAfter.charCodeAt(0),
+        tail.charCodeAt(tail.length - 1),
+        marker
+      );
+
+      if (close.inside) encode(inside, false);
+
+      if (open.outside && outsideBefore !== '\n' && outsideBefore !== '\r') {
+        encode(tokens, false);
+      }
+
+      if (close.outside) encodeAfter = outsideAfter;
+
+      tokens.push({value: sequence, attention: item}, ...inside, {
+        value: sequence,
+        attention: item
+      });
+      previous = sequence.charAt(sequence.length - 1);
+    }
+
+    return tokens
+  }
+
+  /**
+   * Serialize phrasing with attention.
+   *
+   * Whether attention forms depends on everything around it.
+   * This checks that it does and tries other sequences if not.
+   *
+   * @param {Array<Item>} items
+   *   Phrasing items.
+   * @param {string} before
+   *   Characters before.
+   * @param {string} after
+   *   Characters after.
+   * @returns {string}
+   *   Serialized markdown.
+   */
+  function serialize$1(items, before, after) {
+    /** @type {Map<AttentionResult, string>} */
+    const guessed = new Map();
+    guess(items, guessed, before, after);
+    const tokens =
+      // Start from guesses (based on the preferred sequences).
+      (guessed.size > 0 ? fix(items, guessed, before, after) : undefined) ||
+      // If stuck, start from the preferred sequences instead.
+      fix(items, new Map(), before, after) ||
+      // If stuck again, use the preferred sequences as they are.
+      render(items, new Map(), before, after);
+
+    // Join the tokens.
+    let result = '';
+    for (const token of tokens) result += token.value;
+    return result
+  }
+
+  /**
    * @import {AttentionInfo, Info, State} from 'mdast-util-to-markdown'
    * @import {Emphasis, Parents} from 'mdast'
    */
@@ -13296,7 +14305,8 @@
    */
   function emphasis(node, _, state, info) {
     const exit = state.enter('phrasing');
-    const value = state.containerPhrasing({type: 'root', children: [node]}, info);
+    const item = attentionItem(node, attention$1, state, state.createTracker(info));
+    const value = item ? serialize$1([item], info.before, info.after) : '';
     exit();
     return value
   }
@@ -13334,18 +14344,6 @@
    */
   function peek$1(_, _1, state) {
     return state.options.emphasis || '*'
-  }
-
-  /**
-   * Encode a code point as a character reference.
-   *
-   * @param {number} code
-   *   Code point to encode.
-   * @returns {string}
-   *   Encoded character reference.
-   */
-  function encodeCharacterReference(code) {
-    return '&#x' + code.toString(16).toUpperCase() + ';'
   }
 
   /**
@@ -14129,21 +15127,56 @@
     const exit = state.enter('link');
     let subexit = state.enter('label');
     let value = tracker.move('[');
-    value += tracker.move(
-      state.containerPhrasing(node, {
-        before: value,
-        after: '](',
-        ...tracker.current()
-      })
-    );
-    value += tracker.move('](');
+    const text = state.containerPhrasing(node, {
+      before: value,
+      after: '](',
+      ...tracker.current()
+    });
+    value += tracker.move(text);
     subexit();
+    value += tracker.move('](');
+
+    // A link could accidentally turn into a definition in certain contexts:
+    // at the start of a line, without title, when its text has a `]` that
+    // cannot be escaped (such as in code).
+    //
+    // We can prevent that with an empty title:
+    //
+    // ```
+    // [`a]:`](b)
+    // ```
+    //
+    // …is a definition with `` `](b) `` as its destination.
+    //
+    // Using:
+    //
+    // ```
+    // [`a]:`](b "")
+    // ```
+    //
+    // …instead fixes it.
+    //
+    // Control characters or whitespace in the url need an enclosed destination,
+    // which also prevents this.
+    const enclose = /[\0- \u007F]/.test(node.url);
+    const last = info.before.charAt(info.before.length - 1);
+    let title = node.title || undefined;
+
+    if (!title && !enclose && (last === '\n' || last === '\r')) {
+      let index = 0;
+
+      while (index < text.length && text.charCodeAt(index) !== 93 /* `]` */) {
+        index += text.charCodeAt(index) === 92 /* `\` */ ? 2 : 1;
+      }
+
+      if (text.charCodeAt(index + 1) === 58 /* `:` */) title = '';
+    }
 
     if (
       // If there’s no url but there is a title…
-      (!node.url && node.title) ||
+      (!node.url && typeof title === 'string') ||
       // If there are control characters or whitespace.
-      /[\0- \u007F]/.test(node.url)
+      enclose
     ) {
       subexit = state.enter('destinationLiteral');
       value += tracker.move('<');
@@ -14157,7 +15190,7 @@
       value += tracker.move(
         state.safe(node.url, {
           before: value,
-          after: node.title ? ' ' : ')',
+          after: typeof title === 'string' ? ' ' : ')',
           ...tracker.current()
         })
       );
@@ -14165,11 +15198,11 @@
 
     subexit();
 
-    if (node.title) {
+    if (typeof title === 'string') {
       subexit = state.enter(`title${suffix}`);
       value += tracker.move(' ' + quote);
       value += tracker.move(
-        state.safe(node.title, {
+        state.safe(title, {
           before: value,
           after: quote,
           ...tracker.current()
@@ -14717,7 +15750,8 @@
    */
   function strong(node, _, state, info) {
     const exit = state.enter('phrasing');
-    const value = state.containerPhrasing({type: 'root', children: [node]}, info);
+    const item = attentionItem(node, attention, state, state.createTracker(info));
+    const value = item ? serialize$1([item], info.before, info.after) : '';
     exit();
     return value
   }
@@ -14779,7 +15813,7 @@
   function text$1(node, parent, state, info) {
     /* c8 ignore next -- parent always passed */
     const siblings = parent ? parent.children : [];
-    const index = siblings.indexOf(node);
+    const index = state.indexStack[state.indexStack.length - 1];
 
     return state.safe(node.value, {
       ...info,
@@ -14867,67 +15901,6 @@
   };
 
   /**
-   * @typedef {1 | 2 | 3 | 4 | 5 | 6 | 7} Kind
-   *   Kind of HTML (flow) element.
-   */
-
-  /**
-   * Infer the kind of HTML that `value` is.
-   *
-   * This works on valid trees as produced by `micromark`.
-   * Kinds:
-   *
-   * 1. raw
-   * 2. comment
-   * 3. instruction
-   * 4. declaration
-   * 5. cdata
-   * 6. block
-   * 7. other
-   *
-   * See: <https://spec.commonmark.org/0.31.2/#html-blocks>.
-   *
-   * @param {string} value
-   *   HTML.
-   * @returns {Kind | undefined}
-   *   Kind; `undefined` if unknown.
-   */
-  function htmlKind(value) {
-    if (value.charCodeAt(0) !== 60 /* `<` */) return
-
-    const next = value.charCodeAt(1);
-
-    if (next === 33 /* `!` */) {
-      const code = value.charCodeAt(2);
-      if (code === 45 /* `-` */) return 2
-      if (code === 91 /* `[` */) return 5
-      if (asciiAlpha(code)) return 4
-      return
-    }
-
-    if (next === 63 /* `?` */) return 3
-
-    const closing = next === 47; /* `/` */
-    const start = closing ? 2 : 1;
-    let end = start;
-    let code = value.charCodeAt(end);
-
-    if (!asciiAlpha(code)) return
-
-    while (code === 45 /* `-` */ || asciiAlphanumeric(code)) {
-      code = value.charCodeAt(++end);
-    }
-
-    const name = value.slice(start, end).toLowerCase();
-
-    if (!closing && code !== 47 /* `/` */ && htmlRawNames.includes(name)) {
-      return 1
-    }
-
-    return htmlBlockNames.includes(name) ? 6 : 7
-  }
-
-  /**
    * @import {Join} from 'mdast-util-to-markdown'
    */
 
@@ -14954,30 +15927,74 @@
     // Join children of a list or an item.
     // In which case, `parent` has a `spread` field.
     if ('spread' in parent && typeof parent.spread === 'boolean') {
-      if (
-        left.type === 'paragraph' &&
-        // Two paragraphs.
-        (left.type === right.type ||
-          right.type === 'definition' ||
-          // Paragraph followed by a setext heading.
-          (right.type === 'heading' && formatHeadingAsSetext(right, state)))
-      ) {
-        return
-      }
+      if (parent.spread) return 1
 
-      // HTML that only ends at a blank line followed by something.
+      // HTML that only ends at a blank line.
       if (left.type === 'html') {
         const kind = htmlKind(left.value);
         if (kind === undefined || kind === 6 || kind === 7) return 1
       }
 
-      // HTML that cannot interrupt a paragraph (kind 7) after one.
-      if (left.type === 'paragraph' && right.type === 'html') {
+      if (left.type === 'blockquote' && right.type === 'blockquote') return 1
+
+      // Lists with non-1 start would turn into a paragraph.
+      if (
+        (left.type === 'definition' || left.type === 'paragraph') &&
+        right.type === 'list' &&
+        ((right.ordered &&
+          typeof right.start === 'number' &&
+          right.start !== 1) ||
+          (right.children.length > 0 && right.children[0].children.length === 0))
+      ) {
+        return 1
+      }
+
+      // Thematic break with dashes would turn into a setext heading.
+      if (
+        left.type === 'paragraph' &&
+        right.type === 'thematicBreak' &&
+        checkRule(state) === '-' &&
+        !state.options.ruleSpaces
+      ) {
+        return 1
+      }
+
+      // We have to “delve” into containers that form from the left margin.
+      let tail = left;
+
+      while (
+        (tail.type === 'blockquote' ||
+          tail.type === 'list' ||
+          tail.type === 'listItem') &&
+        tail.children.length > 0
+      ) {
+        tail = tail.children[tail.children.length - 1];
+      }
+
+      if (tail.type !== 'definition' && tail.type !== 'paragraph') return 0
+
+      // Indented code would turn into a paragraph.
+      if (right.type === 'code' && formatCodeAsIndented(right, state)) return 1
+
+      // Kind 7 HTML would turn into a paragraph.
+      if (right.type === 'html') {
         const kind = htmlKind(right.value);
         if (kind === undefined || kind === 7) return 1
       }
 
-      return parent.spread ? 1 : 0
+      // Text joins the paragraph before it, also one at the end of a container.
+      // Not a definition before it: definitions are parsed out of the start of
+      // a paragraph, so they and the text after them are read back the same.
+      if (
+        (left.type === 'paragraph' || left !== tail) &&
+        (right.type === 'definition' ||
+          (right.type === 'heading' && formatHeadingAsSetext(right, state)) ||
+          right.type === 'paragraph')
+      ) {
+        return 1
+      }
+
+      return 0
     }
   }
 
@@ -15057,7 +16074,22 @@
     {character: '#', inConstruct: 'headingAtx', after: '(?:[\r\n]|$)'},
     // Dollar sign and percentage are not used in markdown.
     // An ampersand could start a character reference.
-    {character: '&', after: '[#A-Za-z]', inConstruct: 'phrasing'},
+    // Labels match on their source.
+    {
+      character: '&',
+      after: '[#A-Za-z]',
+      inConstruct: [
+        'codeFencedLangGraveAccent',
+        'codeFencedLangTilde',
+        'codeFencedMetaGraveAccent',
+        'codeFencedMetaTilde',
+        'destinationLiteral',
+        'destinationRaw',
+        'phrasing',
+        'titleApostrophe',
+        'titleQuote'
+      ]
+    },
     // An apostrophe can break out of a title.
     {character: "'", inConstruct: 'titleApostrophe'},
     // A left paren could break out of a destination raw.
@@ -15204,820 +16236,6 @@
     }
 
     return pattern._compiled
-  }
-
-  /**
-   * Get the first character of a value.
-   *
-   * Is aware of astral characters (such as emoji).
-   *
-   * @param {string} value
-   *   Value.
-   * @returns {string}
-   *   First character; empty if `value` is empty.
-   */
-  function firstCharacter(value) {
-    const code = value.codePointAt(0);
-    return code === undefined ? '' : String.fromCodePoint(code)
-  }
-
-  /**
-   * Get the last character of a value.
-   *
-   * Is aware of astral characters (such as emoji).
-   *
-   * @param {string} value
-   *   Value.
-   * @returns {string}
-   *   Last character; empty if `value` is empty.
-   */
-  function lastCharacter(value) {
-    // Only a surrogate pair gives a code point above the BMP.
-    const code = value.codePointAt(value.length - 2);
-    return code !== undefined && code > 0xff_ff
-      ? value.slice(-2)
-      : value.slice(-1)
-  }
-
-  /**
-   * @import {EncodeSides} from '../types.js'
-   */
-
-
-  /**
-   * Check whether to encode (as a character reference) the characters
-   * surrounding an attention run.
-   *
-   * Which characters are around an attention run influence whether it works or
-   * not.
-   *
-   * See <https://github.com/orgs/syntax-tree/discussions/60> for more info.
-   * See this markdown in a particular renderer to see what works:
-   *
-   * ```markdown
-   * |                         | A (letter inside) | B (punctuation inside) | C (whitespace inside) | D (nothing inside) |
-   * | ----------------------- | ----------------- | ---------------------- | --------------------- | ------------------ |
-   * | 1 (letter outside)      | x*y*z             | x*.*z                  | x* *z                 | x**z               |
-   * | 2 (punctuation outside) | .*y*.             | .*.*.                  | .* *.                 | .**.               |
-   * | 3 (whitespace outside)  | x *y* z           | x *.* z                | x * * z               | x ** z             |
-   * | 4 (nothing outside)     | *x*               | *.*                    | * *                   | **                 |
-   * ```
-   *
-   * @param {number} outside
-   *   Code point on the outer side of the run.
-   * @param {number} inside
-   *   Code point on the inner side of the run.
-   * @param {string} marker
-   *   Marker of the run.
-   *   Underscores are handled more strictly (they form less often) than
-   *   asterisks.
-   * @returns {EncodeSides}
-   *   Whether to encode characters.
-   */
-  // Important: punctuation must never be encoded.
-  // Punctuation is solely used by markdown constructs.
-  // And by encoding itself.
-  // Encoding them will break constructs or double encode things.
-  function encodeInfo(outside, inside, marker) {
-    const outsideKind = classifyCharacter(outside);
-    const insideKind = classifyCharacter(inside);
-
-    // Letter outside:
-    if (outsideKind === undefined) {
-      return insideKind === undefined
-        ? // Letter inside:
-          // we have to encode *both* letters for `_` as it is looser.
-          // it already forms for `*` (and GFMs `~`).
-          marker === '_'
-          ? {inside: true, outside: true}
-          : {inside: false, outside: false}
-        : insideKind === 1
-          ? // Whitespace inside: encode both (letter, whitespace).
-            {inside: true, outside: true}
-          : // Punctuation inside: encode outer (letter)
-            {inside: false, outside: true}
-    }
-
-    // Whitespace outside:
-    if (outsideKind === 1) {
-      return insideKind === undefined
-        ? // Letter inside: already forms.
-          {inside: false, outside: false}
-        : insideKind === 1
-          ? // Whitespace inside: encode both (whitespace).
-            {inside: true, outside: true}
-          : // Punctuation inside: already forms.
-            {inside: false, outside: false}
-    }
-
-    // Punctuation outside:
-    return insideKind === undefined
-      ? // Letter inside: already forms.
-        {inside: false, outside: false}
-      : insideKind === 1
-        ? // Whitespace inside: encode inner (whitespace).
-          {inside: true, outside: false}
-        : // Punctuation inside: already forms.
-          {inside: false, outside: false}
-  }
-
-  /**
-   * @import {Attention, Handle, Info, State} from 'mdast-util-to-markdown'
-   * @import {PhrasingParents} from '../types.js'
-   */
-
-
-  /**
-   * Markers for builtin attention (emphasis, strong) to whether they are stricter:
-   * whether they cannot open and close inside words.
-   *
-   * Builtin runs pair following CommonMark rules for emphasis and strong:
-   * they are split,
-   * using one or two markers at a time,
-   * with the rule of 3.
-   * Other markers pair like GFM strikethrough:
-   * whole runs pair with a run of the same size.
-   *
-   * @type {Map<string, boolean>}
-   */
-  const builtins = new Map([
-    ['*', false],
-    ['_', true]
-  ]);
-
-  /**
-   * @typedef AttentionResult
-   *   Attention, of which the sequence is chosen later.
-   * @property {Array<Item>} children
-   *   Serialized children.
-   * @property {Array<string>} sequences
-   *   Sequences that can be used, in order of preference.
-   */
-
-  /**
-   * @typedef Improvement
-   *   Improvement of attention sequences.
-   * @property {Map<AttentionResult, string>} chosen
-   *   Chosen sequences for each attention.
-   * @property {Array<Token>} tokens
-   *   Tokens involved in the improvement.
-   * @property {Mistake | undefined} mistake
-   *   Mistake that led to this improvement, if any.
-   */
-
-  /**
-   * @typedef {AttentionResult | string} Item
-   *   Serialized phrasing.
-   */
-
-  /**
-   * @typedef Mistake
-   *   Sequence that does not form its attention.
-   * @property {Array<AttentionResult>} attention
-   *   Attention to try other sequences for.
-   * @property {number} index
-   *   Index of the token.
-   */
-
-  /**
-   * @typedef Run
-   *   Sequences next to each other with the same marker.
-   * @property {boolean} close
-   *   Whether it can close.
-   * @property {number} end
-   *   Index after the last marker not used (to open).
-   * @property {Array<Token>} markers
-   *   Sequence of each marker.
-   * @property {boolean} open
-   *   Whether it can open.
-   * @property {boolean} split
-   *   Whether it can be split (built-in attention).
-   * @property {number} start
-   *   Index of the first marker not used (to close).
-   * @property {Array<Token>} tokens
-   *   Sequences.
-   */
-
-  /**
-   * @typedef Token
-   *   Rendered phrasing.
-   * @property {AttentionResult | undefined} attention
-   *   Attention, if this is one of its sequences.
-   * @property {string} value
-   *   Value.
-   */
-
-  /**
-   * Get candidates for a mistake:
-   * attention to try other sequences for,
-   * later first.
-   *
-   * @param {Array<Token>} tokens
-   *   Tokens.
-   * @param {Array<Token>} involved
-   *   Sequences involved in the mistake.
-   * @param {Map<Token, Run>} runOf
-   *   Run of each sequence.
-   * @returns {Array<AttentionResult>}
-   *   Candidates.
-   */
-  function candidates(tokens, involved, runOf) {
-    /** @type {Set<AttentionResult | undefined>} */
-    const related = new Set();
-
-    // The attention involved, and attention in runs with its sequences.
-    for (const token of tokens) {
-      const siblings = runOf.get(token);
-      if (
-        siblings &&
-        token.attention &&
-        involved.some((d) => d.attention === token.attention)
-      ) {
-        for (const sibling of siblings.tokens) {
-          related.add(sibling.attention);
-        }
-      }
-    }
-
-    /** @type {Array<AttentionResult>} */
-    const ordered = [];
-
-    for (const token of tokens) {
-      if (token.attention && related.delete(token.attention)) {
-        ordered.push(token.attention);
-      }
-    }
-
-    // Later first: attention that opens later is inner or next.
-    ordered.reverse();
-    return ordered
-  }
-
-  /**
-   * Check whether sequences form their attention, like `micromark`.
-   *
-   * Sequences of `*` and `_` pair like emphasis and strong in CommonMark,
-   * others like strikethrough in GFM.
-   *
-   * @param {Array<Token>} tokens
-   *   Tokens.
-   * @param {string} before
-   *   Characters before.
-   * @param {string} after
-   *   Characters after.
-   * @returns {Mistake | undefined}
-   *   First mistake, if any.
-   */
-  function check(tokens, before, after) {
-    /** @type {Array<Run>} */
-    const runs = [];
-    /** @type {Map<Token, Array<Token>>} */
-    const wrong = new Map();
-    /** @type {Map<Token, Run>} */
-    const runOf = new Map();
-    let index = 0;
-
-    while (index < tokens.length) {
-      if (!tokens[index].attention) {
-        index++;
-        continue
-      }
-
-      const marker = tokens[index].value.charAt(0);
-      const strict = builtins.get(marker);
-      let end = index + 1;
-
-      while (
-        end < tokens.length &&
-        tokens[end].attention &&
-        tokens[end].value.charAt(0) === marker
-      ) {
-        end++;
-      }
-
-      const head = index ? tokens[index - 1].value : before;
-      const previous = classifyCharacter(head.charCodeAt(head.length - 1));
-      const next = classifyCharacter(
-        (end < tokens.length ? tokens[end].value : after).charCodeAt(0)
-      );
-      const open = !next || (next === 2 && Boolean(previous));
-      const close = !previous || (previous === 2 && Boolean(next));
-      /** @type {Run} */
-      const run = {
-        tokens: tokens.slice(index, end),
-        markers: [],
-        start: 0,
-        end: 0,
-        // Underscores are strict, they cannot open or close inside words.
-        open: strict ? open && (Boolean(previous) || !close) : open,
-        close: strict ? close && (Boolean(next) || !open) : close,
-        // All builtins can split runs.
-        split: strict !== undefined
-      };
-
-      for (const token of run.tokens) {
-        // Every sequence is wrong until it pairs with its other sequence.
-        wrong.set(token, [...run.tokens]);
-        runOf.set(token, run);
-        let size = token.value.length;
-        while (size--) run.markers.push(token);
-      }
-
-      run.end = run.markers.length;
-      runs.push(run);
-      index = end;
-    }
-
-    pair(runs, wrong);
-
-    index = -1;
-
-    while (++index < tokens.length) {
-      const involved = wrong.get(tokens[index]);
-      if (involved) return {attention: candidates(tokens, involved, runOf), index}
-    }
-  }
-
-  /**
-   * Serialize the children of a parent that contains phrasing children.
-   *
-   * @param {PhrasingParents} parent
-   *   Parent of phrasing nodes.
-   * @param {State} state
-   *   Info passed around about the current state.
-   * @param {Info} info
-   *   Info on where we are in the document we are generating.
-   * @returns {string}
-   *   Serialized result.
-   */
-  function containerPhrasing(parent, state, info) {
-    return serialize$1(phrasing(parent, state, info), info.before, info.after)
-  }
-
-  /**
-   * Encode the first or last character of tokens as a character reference,
-   * if it is text.
-   *
-   * @param {Array<Token>} tokens
-   *   Tokens.
-   * @param {boolean} start
-   *   Whether to encode the first or last character.
-   * @returns {undefined}
-   *   Nothing.
-   */
-  function encode(tokens, start) {
-    const token = tokens[start ? 0 : tokens.length - 1];
-
-    if (!token || token.attention) return
-
-    const character = start
-      ? firstCharacter(token.value)
-      : lastCharacter(token.value);
-    const reference = encodeCharacterReference(
-      /** @type {number} */ (character.codePointAt(0))
-    );
-
-    token.value = start
-      ? reference + token.value.slice(character.length)
-      : token.value.slice(0, token.value.length - character.length) + reference;
-  }
-
-  /**
-   * Try other sequences for the candidates of a mistake and use the first that
-   * moves the mistake further.
-   *
-   * @param {Array<Item>} items
-   *   Items.
-   * @param {Map<AttentionResult, string>} chosen
-   *   Sequences to use instead of preferred sequences.
-   * @param {Mistake} mistake
-   *   Mistake.
-   * @param {string} before
-   *   Characters before.
-   * @param {string} after
-   *   Characters after.
-   * @returns {Improvement | undefined}
-   *   Result if better.
-   */
-  function improve(items, chosen, mistake, before, after) {
-    for (const attention of mistake.attention) {
-      const current = chosen.get(attention) || attention.sequences[0];
-
-      for (const sequence of attention.sequences) {
-        if (sequence === current) continue
-        const trial = new Map(chosen);
-        trial.set(attention, sequence);
-        const tokens = render(items, trial, before, after);
-        const next = check(tokens, before, after);
-
-        if (!next || next.index > mistake.index) {
-          return {chosen: trial, mistake: next, tokens}
-        }
-      }
-    }
-  }
-
-  /**
-   * Pair runs like `micromark` and mark sequences that do form their attention
-   * as fine.
-   *
-   * Each pair uses markers from the end of an opener and the start of a closer.
-   * It forms the intended attention if those markers are exactly the whole
-   * opening and closing sequence of one attention.
-   * Otherwise attention is mixed up:
-   * either sequences of different attention pair,
-   * part of a sequence is used (such as `**` of strong as `*`),
-   * or several sequences are used together (such as `*` and `*` as `**`).
-   * Then the sequences involved are recorded with each other.
-   *
-   * @param {Array<Run>} runs
-   *   Runs.
-   * @param {Map<Token, Array<Token>>} wrong
-   *   Sequences that are wrong, with the sequences involved.
-   * @returns {undefined}
-   *   Nothing, `wrong` is changed.
-   */
-  function pair(runs, wrong) {
-    let index = 0;
-
-    while (index < runs.length) {
-      const closer = runs[index];
-      const marker = closer.tokens[0].value.charAt(0);
-      const closerSize = closer.end - closer.start;
-      let open = closer.close && closerSize ? index : 0;
-
-      while (open--) {
-        const opener = runs[open];
-        const openerSize = opener.end - opener.start;
-
-        if (
-          opener.tokens[0].value.charAt(0) === marker &&
-          opener.open &&
-          openerSize &&
-          (closer.split
-            ? // The rule of 3, on the sizes that are left.
-              !((opener.close || closer.open) && closerSize % 3) ||
-              (openerSize + closerSize) % 3
-            : // Others pair whole runs of the same size.
-              openerSize === opener.markers.length && openerSize === closerSize)
-        ) {
-          const size = closer.split
-            ? openerSize > 1 && closerSize > 1
-              ? 2
-              : 1
-            : closerSize;
-          const opening = opener.markers.slice(opener.end - size, opener.end);
-          const closing = closer.markers.slice(closer.start, closer.start + size);
-          const openToken = opening[0];
-          const closeToken = closing[0];
-
-          if (
-            // Whole sequences:
-            // the markers of a sequence are next to each other,
-            // so if the first and last marker are of one sequence of that size,
-            // all markers are exactly that sequence.
-            openToken === opening[size - 1] &&
-            openToken.value.length === size &&
-            closeToken === closing[size - 1] &&
-            closeToken.value.length === size &&
-            // Of the same attention, so its opening and closing sequence.
-            openToken.attention === closeToken.attention
-          ) {
-            wrong.delete(openToken);
-            wrong.delete(closeToken);
-          } else {
-            const involved = [...new Set([...opening, ...closing])];
-            // Add to what is involved already: a sequence can be in several pairs.
-            for (const token of involved) {
-              const list = wrong.get(token);
-              if (list) list.push(...involved);
-            }
-          }
-
-          opener.end -= size;
-          closer.start += size;
-          break
-        }
-      }
-
-      // Stay on this run if it can close more.
-      if (open === -1 || closer.start === closer.end) index++;
-    }
-  }
-
-  /**
-   * Get the sequences that can be used for attention, in order of preference.
-   *
-   * @param {string} type
-   *   Node type.
-   * @param {Array<string>} markers
-   *   Markers.
-   * @param {Array<number>} sizes
-   *   Sizes.
-   * @returns {Array<string>}
-   *   Sequences.
-   */
-  function attentionSequences(type, markers, sizes) {
-    if (markers.length === 0) {
-      throw new Error(
-        'Cannot serialize `' +
-          type +
-          '` as attention without markers, expected one or more markers'
-      )
-    }
-
-    if (sizes.length === 0) {
-      throw new Error(
-        'Cannot serialize `' +
-          type +
-          '` as attention without sizes, expected one or more sizes'
-      )
-    }
-
-    for (const size of sizes) {
-      if (!Number.isSafeInteger(size) || size < 1) {
-        throw new Error(
-          'Cannot serialize `' +
-            type +
-            '` as attention with `' +
-            size +
-            '` as size, expected positive integer'
-        )
-      }
-    }
-
-    /** @type {Array<string>} */
-    const sequences = [];
-
-    for (const marker of markers) {
-      if (marker.length !== 1) {
-        throw new Error(
-          'Cannot serialize `' +
-            type +
-            '` as attention with `' +
-            marker +
-            '` as marker, expected a single ascii character'
-        )
-      }
-
-      if (!asciiPunctuation(marker.charCodeAt(0))) {
-        throw new Error(
-          'Cannot serialize `' +
-            type +
-            '` as attention with `' +
-            marker +
-            '` as marker, expected ascii punctuation'
-        )
-      }
-
-      for (const size of sizes) {
-        sequences.push(marker.repeat(size));
-      }
-    }
-
-    return sequences
-  }
-
-  /**
-   * Serialize the children of a parent that contains phrasing children,
-   * keeping attention separate,
-   * so that its markers can be chosen later.
-   *
-   * @param {PhrasingParents} parent
-   *   Parent of phrasing nodes.
-   * @param {State} state
-   *   Info passed around about the current state.
-   * @param {Info} info
-   *   Info on where we are in the document we are generating.
-   * @returns {Array<Item>}
-   *   Items.
-   */
-  function phrasing(parent, state, info) {
-    const indexStack = state.indexStack;
-    const children = parent.children || [];
-    /** @type {Array<Item>} */
-    const results = [];
-    let index = -1;
-    let before = info.before;
-
-    indexStack.push(-1);
-    let tracker = state.createTracker(info);
-
-    while (++index < children.length) {
-      const child = children[index];
-      /** @type {string} */
-      let after;
-
-      indexStack[indexStack.length - 1] = index;
-
-      if (index + 1 < children.length) {
-        /** @type {Handle} */
-        // @ts-expect-error: hush, it’s actually a `zwitch`.
-        let handle = state.handle.handlers[children[index + 1].type];
-        // @ts-expect-error: hush, it’s actually a `zwitch`.
-        if (handle && handle.peek) handle = handle.peek;
-        after = handle
-          ? firstCharacter(
-              handle(children[index + 1], parent, state, {
-                before: '',
-                after: '',
-                ...tracker.current()
-              })
-            )
-          : '';
-      } else {
-        after = info.after;
-      }
-
-      // In some cases, html (text) can be found in phrasing right after an eol.
-      // When we’d serialize that, it could be seen as html (flow): all its kinds
-      // except 7 can interrupt a paragraph.
-      // As we can’t escape or so to prevent it from happening,
-      // we take a somewhat reasonable approach:
-      // replace that eol with a space.
-      // See: <https://github.com/syntax-tree/mdast-util-to-markdown/issues/15>
-      const previous = results[results.length - 1];
-
-      if (
-        typeof previous === 'string' &&
-        (before === '\r' || before === '\n') &&
-        child.type === 'html' &&
-        htmlKind(child.value) !== 7
-      ) {
-        results[results.length - 1] = previous.replace(/(\r?\n|\r)$/, ' ');
-        before = ' ';
-
-        // To do: does this work to reset tracker?
-        tracker = state.createTracker(info);
-        tracker.move(serialize$1(results, info.before, info.after));
-      }
-
-      /** @type {(Handle & {attention?: Attention | undefined}) | undefined} */
-      // @ts-expect-error: hush, it’s actually a `zwitch`.
-      const handle = state.handle.handlers[child.type];
-
-      if (handle && handle.attention) {
-        const {construct, markers, sizes} = handle.attention(child, state);
-        const sequences = attentionSequences(child.type, markers, sizes);
-        const sequence = sequences[0];
-        const exit = state.enter(construct);
-        tracker.move(sequence);
-        const inside = phrasing(/** @type {PhrasingParents} */ (child), state, {
-          ...tracker.current(),
-          before: sequence,
-          after: sequence
-        });
-        tracker.move(serialize$1(inside, sequence, sequence));
-        tracker.move(sequence);
-        exit();
-        results.push({children: inside, sequences});
-        before = sequence.charAt(sequence.length - 1);
-      } else {
-        const value = state.handle(child, parent, state, {
-          ...tracker.current(),
-          after,
-          before
-        });
-
-        if (!value) continue
-        tracker.move(value);
-        results.push(value);
-        before = lastCharacter(value);
-      }
-    }
-
-    indexStack.pop();
-
-    return results
-  }
-
-  /**
-   * Render items with sequences;
-   * encoding characters around attention where needed.
-   *
-   * @param {Array<Item>} items
-   *   Serialized phrasing.
-   * @param {Map<AttentionResult, string>} chosen
-   *   Sequences to use instead of preferred sequences.
-   * @param {string} before
-   *   Characters before.
-   * @param {string} after
-   *   Characters after.
-   * @returns {Array<Token>}
-   *   Tokens.
-   */
-  function render(items, chosen, before, after) {
-    /** @type {Array<Token>} */
-    const tokens = [];
-    /** @type {string | undefined} */
-    let encodeAfter;
-    let previous = lastCharacter(before);
-    let index = -1;
-
-    while (++index < items.length) {
-      const item = items[index];
-
-      if (typeof item === 'string') {
-        /** @type {Token} */
-        const token = {value: item, attention: undefined};
-
-        // If attention before had to encode the character after it, encode it.
-        if (encodeAfter && encodeAfter === firstCharacter(item)) {
-          encode([token], true);
-        }
-
-        encodeAfter = undefined;
-        tokens.push(token);
-        if (token.value) previous = lastCharacter(token.value);
-        continue
-      }
-
-      const sequence = chosen.get(item) || item.sequences[0];
-      const marker = sequence.charAt(0);
-      const next = items[index + 1];
-      const outsideBefore = previous;
-      const outsideAfter = firstCharacter(
-        next === undefined
-          ? after
-          : typeof next === 'string'
-            ? next
-            : chosen.get(next) || next.sequences[0]
-      );
-      const inside = render(item.children, chosen, sequence, sequence);
-      const head = inside.length > 0 ? inside[0].value : '';
-      const open = encodeInfo(
-        outsideBefore.charCodeAt(outsideBefore.length - 1),
-        head.charCodeAt(0),
-        marker
-      );
-
-      if (open.inside) encode(inside, true);
-
-      const tail =
-        inside.length > 0 ? lastCharacter(inside[inside.length - 1].value) : '';
-      const close = encodeInfo(
-        outsideAfter.charCodeAt(0),
-        tail.charCodeAt(tail.length - 1),
-        marker
-      );
-
-      if (close.inside) encode(inside, false);
-
-      if (open.outside && outsideBefore !== '\n' && outsideBefore !== '\r') {
-        encode(tokens, false);
-      }
-
-      if (close.outside) encodeAfter = outsideAfter;
-
-      tokens.push({value: sequence, attention: item}, ...inside, {
-        value: sequence,
-        attention: item
-      });
-      previous = sequence.charAt(sequence.length - 1);
-    }
-
-    return tokens
-  }
-
-  /**
-   * Serialize phrasing with attention.
-   *
-   * Whether attention forms depends on everything around it.
-   * This checks that it does and tries other sequences if not.
-   *
-   * @param {Array<Item>} items
-   *   Phrasing items.
-   * @param {string} before
-   *   Characters before.
-   * @param {string} after
-   *   Characters after.
-   * @returns {string}
-   *   Serialized markdown.
-   */
-  function serialize$1(items, before, after) {
-    /** @type {Map<AttentionResult, string>} */
-    let chosen = new Map();
-    const initial = render(items, chosen, before, after);
-    let tokens = initial;
-    let mistake = check(tokens, before, after);
-
-    while (mistake) {
-      const next = improve(items, chosen, mistake, before, after);
-
-      if (!next) {
-        tokens = initial;
-        break
-      }
-
-      chosen = next.chosen;
-      tokens = next.tokens;
-      mistake = next.mistake;
-    }
-
-    // Join the tokens.
-    let result = '';
-    for (const token of tokens) result += token.value;
-    return result
   }
 
   /**
@@ -16221,8 +16439,8 @@
       let match;
 
       while ((match = expression.exec(subject))) {
-        const before = 'before' in pattern || Boolean(pattern.atBreak);
-        const after = 'after' in pattern;
+        const before = Boolean(pattern.before || pattern.atBreak);
+        const after = Boolean(pattern.after);
         const position = from + match.index + (before ? match[1].length : 0);
 
         if (own$1.call(infos, position)) {
@@ -16300,7 +16518,8 @@
           infos[position].after &&
           !infos[position + 1].before &&
           !infos[position + 1].after) ||
-        (positions[index - 1] === position - 1 &&
+        (position - 1 >= offset &&
+          positions[index - 1] === position - 1 &&
           infos[position].before &&
           !infos[position - 1].before &&
           !infos[position - 1].after)
@@ -16316,7 +16535,7 @@
         result.push(percentEncode ? slice : escapeBackslashes(slice, '\\'));
       }
 
-      start = position;
+      start = position + 1;
 
       // Percent-encoding such as `%20`.
       if (percentEncode) {
@@ -16324,17 +16543,15 @@
           '%' +
             value.charCodeAt(position).toString(16).toUpperCase().padStart(2, '0')
         );
-        start++;
       } else if (
         /[!-/:-@[-`{-~]/.test(value.charAt(position)) &&
         (!config.encode || !config.encode.includes(value.charAt(position)))
       ) {
         // Character escape.
-        result.push('\\');
+        result.push('\\' + value.charAt(position));
       } else {
         // Character reference.
         result.push(encodeCharacterReference(value.charCodeAt(position)));
-        start++;
       }
     }
 

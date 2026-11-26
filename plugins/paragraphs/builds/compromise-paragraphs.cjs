@@ -4,7 +4,7 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.compromiseParagraphs = factory());
 })(this, (function () { 'use strict';
 
-  var version = '0.2.1';
+  var version = '0.3.0';
 
   const concatArr = function (views, fn) {
     const arr = [];
@@ -125,7 +125,7 @@
 
     /** */
     View.prototype.paragraphs = function () {
-      const hasTwoNewline = /\n\n/;
+      const hasTwoNewline = /\n\r?\n/;
       const all = [];
       let run = [];
       this.all().forEach(s => {

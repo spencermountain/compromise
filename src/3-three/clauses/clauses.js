@@ -1,15 +1,14 @@
 // a comma, but not a clause break
 const notClause = [
   '@hasComma @hasComma', //fun, cool...
-  '@hasComma (and|or) .', //cool, and fun
   '(#City && @hasComma) #Country', //'toronto, canada'
   '(#WeekDay && @hasComma) #Date', //'tuesday, march 2nd'
   '(#Date+ && @hasComma) #Val', //'july 6, 1992'
   '(#Adj && @hasComma) #Adj', //nice, pretty
-  // '@hasComma (too|also)$', //at end of sentence
 ]
 
-const byComma = function (doc) {
+const byComma = function (doc, rules) {
+  const skip = notClause.concat(rules.notClause || [])
   let commas = doc.match('@hasComma')
   // remove any non-clause uses
   commas = commas.filter(m => {
@@ -22,13 +21,17 @@ const byComma = function (doc) {
       return false
     }
     const more = m.grow('.') // grow by 1 word in either direction
-    return !notClause.some(str => more.has(str))
+    return !skip.some(str => more.has(str))
   })
   return doc.splitAfter(commas)
 }
 
 // should we split-out a clause (in brackets)?
 const splitParentheses = function (doc) {
+  // from the misc plugin
+  if (!doc.parentheses) {
+    return doc
+  }
   let matches = doc.parentheses()
   matches = matches.filter(m => {
     return m.wordCount() >= 3 && m.has('#Verb') && m.has('#NN')
@@ -38,6 +41,10 @@ const splitParentheses = function (doc) {
 
 // split-out a long quotion, but not 'inline quotes'.
 const splitQuotes = function (doc) {
+  // from the misc plugin
+  if (!doc.quotations) {
+    return doc
+  }
   let matches = doc.quotations()
   matches = matches.filter(m => {
     return m.wordCount() >= 3 && m.has('#Verb') && m.has('#NN')
@@ -45,52 +52,32 @@ const splitQuotes = function (doc) {
   return doc.splitOn(matches)
 }
 
-// split a clause before these
-const splitBefore = [
-  // ... said John.
-  '(said|says) #Prop$',
-  // ... if it was
-  '. . if .{4}',
-  // various conjunctions
-  'and while',
-  'now that',
-  'ever since',
-  '(supposing|although)',
-  'even (while|if|though)',
-  '(whereas|whose)',
-  // 'as (far|long|much|soon) as',
-  'as (though|if)',
-  '(til|until)',
-]
-
 const clauses = function (n) {
   let found = this
+  // word-rules, like 'but' and 'until', are in the model
+  const rules = this.model.three?.clauses || {}
 
   found = splitParentheses(found)
   found = splitQuotes(found)
 
-  found = byComma(found)
+  found = byComma(found, rules)
 
   found = found.splitAfter('(@hasEllipses|@hasSemicolon|@hasDash|@hasColon)')
 
-  // i said
-  found = found.splitAfter('^#Pron (said|says)')
+  // each language's own rules
+  const { splitAfter = [], splitBefore = [], splitBeforeGroup = [] } = rules
+  splitAfter.forEach(str => {
+    found = found.splitAfter(str)
+  })
   splitBefore.forEach(str => {
     found = found.splitBefore(str)
   })
-
-  // it is cool but it is ..
-  const m = found.match('#Verb .* [but] .* #Verb', 0)
-  if (m.found) {
-    found = found.splitBefore(m)
-  }
-  // it is cool and it is ..
-  // let conjunctions = found.if('#Copula #Adjective #Conjunction (#Pronoun|#Determiner) #Verb').match('#Conjunction')
-  // found = found.splitBefore(conjunctions)
-
-  // if it is this then that
-  const condition = found.if('if .{2,9} then .').match('then')
-  found = found.splitBefore(condition)
+  splitBeforeGroup.forEach(str => {
+    const m = found.match(str, 0)
+    if (m.found) {
+      found = found.splitBefore(m)
+    }
+  })
 
   // // misc clause partitions
   // found = found.splitBefore('as well as .')

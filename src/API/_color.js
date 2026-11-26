@@ -7,10 +7,12 @@ const red = color(31)
 const blue = color(34)
 const cyan = color(36)
 const yellow = color(33)
+// used by name, from the tagset colors
+const magenta = color(35)
 const dim = color(2)
 const i = color(3)
 const b = color(1)
 const ul = color(4)
 const grey = color(90)
 
-export { green, red, blue, cyan, yellow, dim, i, b, ul, grey }
+export { green, red, blue, cyan, yellow, magenta, dim, i, b, ul, grey }
